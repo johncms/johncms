@@ -13,28 +13,28 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // История активности
-$textl = htmlspecialchars($user['name']) . ': ' . _t('Activity');
+$textl = htmlspecialchars($foundUser['name']) . ': ' . _t('Activity');
 
-echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Activity') . '</div>';
+echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Activity') . '</div>';
 $menu = [
-    (! $mod ? '<b>' . _t('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Messages') . '</a>'),
-    ($mod == 'topic' ? '<b>' . _t('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _t('Themes') . '</a>'),
-    ($mod == 'comments' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . _t('Comments') . '</a>'),
+    (! $mod ? '<b>' . _t('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $foundUser['id'] . '">' . _t('Messages') . '</a>'),
+    ($mod == 'topic' ? '<b>' . _t('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'] . '">' . _t('Themes') . '</a>'),
+    ($mod == 'comments' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'] . '">' . _t('Comments') . '</a>'),
 ];
 echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
-    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>';
+    '<div class="user"><p>' . $tools->displayUser($foundUser, ['iphide' => 1]) . '</p></div>';
 
 switch ($mod) {
     case 'comments':
         // Список сообщений в Гостевой
-        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Comments') . '</b></div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
+        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             $i = 0;
@@ -51,20 +51,20 @@ switch ($mod) {
 
     case 'topic':
         // Список тем Форума
-        $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Themes') . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             $i = 0;
 
             while ($res = $req->fetch()) {
-                $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . ' ORDER BY `id` ASC LIMIT 1')->fetch();
+                $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . ' ORDER BY `id` ASC LIMIT 1')->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
@@ -86,14 +86,14 @@ switch ($mod) {
 
     default:
         // Список постов Форума
-        $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Messages') . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "' " . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
+        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             $i = 0;
@@ -124,8 +124,8 @@ switch ($mod) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="?act=activity&amp;user=' . $user['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form action="?act=activity&amp;user=' . $foundUser['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';

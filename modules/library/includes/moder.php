@@ -23,7 +23,7 @@ if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
     Utils::redir404();
 }
 
-$author = ($type == 'article' && $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) ? 1 : 0;
+$author = ($type == 'article' && $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $user->id && $user->isValid()) ? 1 : 0;
 
 if (! $adm || (! $author && $type == 'article')) {
     Utils::redir404();
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
             if (isset($_POST['tags'])) {
                 $obj->delCache();
                 $tags = array_map('trim', explode(',', $_POST['tags']));
-                if (count($tags > 0)) {
+                if (count($tags)) {
                     $obj->addTags($tags);
                 }
             }
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
                 ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
                 : ''))
         . ($type == 'article'
-            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout($obj->getAllStatTags()) . '" /></div>'
+            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout((string) $obj->getAllStatTags()) . '" /></div>'
             : '');
     if ($adm) {
         if ($sqlsel->rowCount() > 1) {

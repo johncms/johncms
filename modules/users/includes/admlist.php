@@ -20,7 +20,7 @@ $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchCo
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, ${kmess}");
 
 for ($i = 0; $res = $req->fetch(); ++$i) {
-    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
     echo $tools->displayUser($res) . '</div>';
 }
 

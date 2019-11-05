@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Edit Profile');
 
-if (($systemUser->id != $user['id'] && $systemUser->rights < 7) || $user['rights'] > $systemUser->rights) {
+if (($user->id != $foundUser['id'] && $user->rights < 7) || $foundUser['rights'] > $user->rights) {
     // Если не хватает прав, выводим ошибку
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));
     require 'system/end.php';
@@ -24,12 +24,12 @@ if (($systemUser->id != $user['id'] && $systemUser->rights < 7) || $user['rights
 switch ($mod) {
     case 'avatar':
         // Выгружаем аватар
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Avatar') . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Avatar') . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
-                $handle->file_new_name_body = $user['id'];
+                $handle->file_new_name_body = $foundUser['id'];
                 //$handle->mime_check = false;
                 $handle->allowed = [
                     'image/jpeg',
@@ -45,14 +45,14 @@ switch ($mod) {
                 $handle->process('../files/users/avatar/');
                 if ($handle->processed) {
                     echo '<div class="gmenu"><p>' . _t('The avatar is successfully uploaded') . '<br />' .
-                        '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
+                        '<a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
                 } else {
                     echo $tools->displayError($handle->error);
                 }
                 $handle->clean();
             }
         } else {
-            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">'
+            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'] . '">'
                 . '<div class="menu"><p>' . _t('Select Image') . ':<br />'
                 . '<input type="file" name="imagefile" value="" />'
                 . '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" /></p>'
@@ -66,12 +66,12 @@ switch ($mod) {
         break;
 
     case 'up_photo':
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Photo') . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Photo') . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
-                $handle->file_new_name_body = $user['id'];
+                $handle->file_new_name_body = $foundUser['id'];
                 //$handle->mime_check = false;
                 $handle->allowed = [
                     'image/jpeg',
@@ -89,7 +89,7 @@ switch ($mod) {
                 $handle->process('../files/users/photo/');
                 if ($handle->processed) {
                     // Обрабатываем превьюшку
-                    $handle->file_new_name_body = $user['id'] . '_small';
+                    $handle->file_new_name_body = $foundUser['id'] . '_small';
                     $handle->file_overwrite = true;
                     $handle->image_resize = true;
                     $handle->image_x = 100;
@@ -97,7 +97,7 @@ switch ($mod) {
                     $handle->image_convert = 'jpg';
                     $handle->process('../files/users/photo/');
                     if ($handle->processed) {
-                        echo '<div class="gmenu"><p>' . _t('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
+                        echo '<div class="gmenu"><p>' . _t('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
                     } else {
                         echo $tools->displayError($handle->error);
                     }
@@ -107,7 +107,7 @@ switch ($mod) {
                 $handle->clean();
             }
         } else {
-            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . _t('Select image') . ':<br />' .
+            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'] . '"><div class="menu"><p>' . _t('Select image') . ':<br />' .
                 '<input type="file" name="imagefile" value="" />' .
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" /></p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .

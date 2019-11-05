@@ -42,7 +42,7 @@ $bbcode = $container->get(BbcodeInterface::class);
 $config = $container->get(ConfigInterface::class);
 $view = $container->get(Engine::class);
 
-// Регистрируем языки модуля
+// Регистрируем папку с языками модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;

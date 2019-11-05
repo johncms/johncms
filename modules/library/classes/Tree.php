@@ -72,7 +72,7 @@ class Tree
         $stmt = $this->db->prepare('SELECT `id` FROM ' . ($dirtype ? '`library_cats`' : '`library_texts`') . ' WHERE ' . ($dirtype ? '`parent`' : '`cat_id`') . ' = ?');
         $stmt->execute([$id]);
         $this->result['dirs'][$id] = $id;
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->rowCount()) {
             while ($this->child = $stmt->fetch()) {
                 $this->result[($dirtype ? 'dirs' : 'texts')][$this->child['id']] = $this->child['id'];
                 if ($dirtype) {
@@ -148,7 +148,7 @@ class Tree
         $parent = $parent == 0 ? $this->start_id : $parent;
         $stmt = $this->db->prepare('SELECT `id` FROM `library_cats` WHERE `parent` = ? AND `dir` = 1');
         $stmt->execute([$parent]);
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->rowCount()) {
             while ($this->child = $stmt->fetch()) {
                 $this->result[] = $this->child['id'];
                 $this->getChildsDir($this->child['id']);

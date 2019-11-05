@@ -13,22 +13,23 @@ declare(strict_types=1);
 use Johncms\Api\ConfigInterface;
 use Psr\Container\ContainerInterface;
 
-/** @var ContainerInterface $container */
+/**
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var PDO                $db
+ */
+
 $container = App::getContainer();
-
-/** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
-
-/** @var PDO $db */
 $db = $container->get(PDO::class);
 
 header('content-type: application/rss+xml');
 echo '<?xml version="1.0" encoding="utf-8"?>' .
-     '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>' .
-     '<title>' . htmlspecialchars($config->copyright) . ' | News</title>' .
-     '<link>' . $config->homeurl . '</link>' .
-     '<description>News</description>' .
-     '<language>ru-RU</language>';
+    '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>' .
+    '<title>' . htmlspecialchars($config->copyright) . ' | News</title>' .
+    '<link>' . $config->homeurl . '</link>' .
+    '<description>News</description>' .
+    '<language>ru-RU</language>';
 
 // Новости
 $req = $db->query('SELECT * FROM `news` ORDER BY `time` DESC LIMIT 15;');
@@ -36,13 +37,13 @@ $req = $db->query('SELECT * FROM `news` ORDER BY `time` DESC LIMIT 15;');
 if ($req->rowCount()) {
     while ($res = $req->fetch()) {
         echo '<item>' .
-             '<title>News: ' . $res['name'] . '</title>' .
-             '<link>' . $config->homeurl . '/news/</link>' .
-             '<author>' . htmlspecialchars($res['avt']) . '</author>' .
-             '<description>' . htmlspecialchars($res['text']) . '</description>' .
-             '<pubDate>' . date('r', (int) $res['time']) .
-             '</pubDate>' .
-             '</item>';
+            '<title>News: ' . $res['name'] . '</title>' .
+            '<link>' . $config->homeurl . '/news/</link>' .
+            '<author>' . htmlspecialchars($res['avt']) . '</author>' .
+            '<description>' . htmlspecialchars($res['text']) . '</description>' .
+            '<pubDate>' . date('r', (int) $res['time']) .
+            '</pubDate>' .
+            '</item>';
     }
 }
 
@@ -52,13 +53,13 @@ $req = $db->query('select * from `library_texts` where `premod`=1 limit 15;');
 if ($req->rowCount()) {
     while ($res = $req->fetch()) {
         echo '<item>' .
-             '<title>Library: ' . htmlspecialchars($res['name']) . '</title>' .
-             '<link>' . $config->homeurl . '/library/?id=' . $res['id'] . '</link>' .
-             '<author>' . htmlspecialchars($res['uploader']) . '</author>' .
-             '<description>' . htmlspecialchars($res['announce']) .
-             '</description>' .
-             '<pubDate>' . date('r', (int) $res['time']) . '</pubDate>' .
-             '</item>';
+            '<title>Library: ' . htmlspecialchars($res['name']) . '</title>' .
+            '<link>' . $config->homeurl . '/library/?id=' . $res['id'] . '</link>' .
+            '<author>' . htmlspecialchars($res['uploader']) . '</author>' .
+            '<description>' . htmlspecialchars($res['announce']) .
+            '</description>' .
+            '<pubDate>' . date('r', (int) $res['time']) . '</pubDate>' .
+            '</item>';
     }
 }
 

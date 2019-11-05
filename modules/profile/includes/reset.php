@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
+if ($user->rights >= 7 && $user->rights > $foundUser['rights']) {
     // Сброс настроек пользователя
-    $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
-    $db->query("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
+    $textl = htmlspecialchars($foundUser['name']) . ': ' . _t('Edit Profile');
+    $db->query("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $foundUser['id']);
 
-    echo '<div class="gmenu"><p>' . sprintf(_t('For user %s default settings were set.'), $user['name'])
+    echo '<div class="gmenu"><p>' . sprintf(_t('For user %s default settings were set.'), $foundUser['name'])
         . '<br />'
-        . '<a href="?user=' . $user['id'] . '">' . _t('Profile') . '</a></p></div>';
+        . '<a href="?user=' . $foundUser['id'] . '">' . _t('Profile') . '</a></p></div>';
 }

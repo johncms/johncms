@@ -21,7 +21,7 @@ $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 $menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="?act=online">' . _t('Users') . '</a>';
 $menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="?act=online&amp;mod=history">' . _t('History') . '</a> ';
 
-if ($systemUser->rights) {
+if ($user->rights) {
     $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
     $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
 }
@@ -54,7 +54,7 @@ switch ($mod) {
             ++$i;
         }
 
-        if ($total && $systemUser->rights) {
+        if ($total && $user->rights) {
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>';
             }
@@ -125,7 +125,7 @@ if ($total) {
     while ($res = $req->fetch()) {
         $res['id'] = $res['id'] ?? 0;
 
-        if ($res['id'] == $systemUser->id) {
+        if ($res['id'] == $user->id) {
             echo '<div class="gmenu">';
         } else {
             echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';

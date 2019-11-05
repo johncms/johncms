@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = _t('Mail');
 
 if ($id) {
-    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '${id}' AND `file_name` != '' AND `delete`!='" . $systemUser->id . "' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '${id}' AND `file_name` != '' AND `delete`!='" . $user->id . "' LIMIT 1");
 
     if (! $req->rowCount()) {
         //Выводим ошибку

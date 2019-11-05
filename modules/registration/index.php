@@ -17,28 +17,28 @@ use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
-/** @var ContainerInterface $container */
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
 $container = App::getContainer();
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ToolsInterface $tools */
-$tools = $container->get(ToolsInterface::class);
-
-/** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
-
-// Регистрируем языки модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Engine $view */
+$tools = $container->get(ToolsInterface::class);
+$user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 
-ob_start();
+// Регистрируем папку с языками модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Если регистрация закрыта, выводим предупреждение
-if (! $config->mod_reg || $systemUser->isValid()) {
+if (! $config->mod_reg || $user->isValid()) {
     echo '<div class="menu padding">' . _t('Registration is temporarily closed') . '</div>';
     echo $view->render('system::app/old_content', [
         'title'   => _t('Registration'),

@@ -14,14 +14,19 @@ use Johncms\Api\ConfigInterface;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 
-/** @var ContainerInterface $container */
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var ContainerInterface $container
+ * @var ConfigInterface    $config
+ * @var Engine             $view
+ */
+
 $container = App::getContainer();
-
-/** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
-
-/** @var Engine $view */
 $view = $container->get(Engine::class);
+
+// Регистрируем Namespace для шаблонов модуля
 $view->addFolder('language', __DIR__ . '/templates/');
 
 echo $view->render('language::index');

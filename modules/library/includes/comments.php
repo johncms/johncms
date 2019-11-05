@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-if (! $systemUser->isValid()) {
+if (! $user->isValid()) {
     echo $view->render('system::app/old_content', [
         'title'   => $textl,
         'content' => $tools->displayError(_t('Access forbidden')),

@@ -16,36 +16,36 @@ use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
-$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var ContainerInterface $container */
+/**
+ * @var ContainerInterface $container
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
 $container = App::getContainer();
-
-/** @var PDO $db */
 $db = $container->get(PDO::class);
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ToolsInterface $tools */
 $tools = $container->get(ToolsInterface::class);
+$user = $container->get(UserInterface::class);
+$view = $container->get(Engine::class);
 
 // Регистрируем языки модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-/** @var Engine $view */
-$view = $container->get(Engine::class);
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $textl = _t('News');
-
-ob_start();
 
 switch ($do) {
     case 'add':
         // Добавление новости
-        if ($systemUser->rights >= 6) {
+        if ($user->rights >= 6) {
             echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
             $old = 20;
 
@@ -97,8 +97,8 @@ switch ($do) {
                                 ')->execute([
                                     $v,
                                     $date,
-                                    $systemUser->id,
-                                    $systemUser->name,
+                                    $user->id,
+                                    $user->name,
                                     $name,
                                     time(),
                                 ]);
@@ -120,8 +120,8 @@ switch ($do) {
                                 ')->execute([
                                     $rid,
                                     time(),
-                                    $systemUser->id,
-                                    $systemUser->name,
+                                    $user->id,
+                                    $user->name,
                                     $env->getIp(),
                                     $env->getIpViaProxy(),
                                     $env->getUserAgent(),
@@ -141,13 +141,13 @@ switch ($do) {
                       `kom` = ?
                     ')->execute([
                         time(),
-                        $systemUser->name,
+                        $user->name,
                         $name,
                         $text,
                         $rid,
                     ]);
 
-                    $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
+                    $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
                     echo '<p>' . _t('News added') . '<br /><a href="./">' . _t('Back to news') . '</a></p>';
                 } else {
                     echo $tools->displayError($error, '<a href="./">' . _t('Back to news') . '</a>');
@@ -157,7 +157,7 @@ switch ($do) {
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $systemUser->config->fieldHeight . '" name="text"></textarea></p>' .
+                    '<textarea rows="' . $user->config->fieldHeight . '" name="text"></textarea></p>' .
                     '<p><h3>' . _t('Discussion') . '</h3>';
                 $fr = $db->query('SELECT * FROM `forum_sections` WHERE `section_type` = 0');
                 echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
@@ -184,7 +184,7 @@ switch ($do) {
 
     case 'edit':
         // Редактирование новости
-        if ($systemUser->rights >= 6) {
+        if ($user->rights >= 6) {
             echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
             if (! $id) {
@@ -231,7 +231,7 @@ switch ($do) {
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $systemUser->config->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
+                    '<textarea rows="' . $user->config->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '</form></div>' .
                     '<div class="phdr"><a href="./">' . _t('Back to news') . '</a></div>';
@@ -243,7 +243,7 @@ switch ($do) {
 
     case 'clean':
         // Чистка новостей
-        if ($systemUser->rights >= 7) {
+        if ($user->rights >= 7) {
             echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
 
             if (isset($_POST['submit'])) {
@@ -287,7 +287,7 @@ switch ($do) {
 
     case 'del':
         // Удаление новости
-        if ($systemUser->rights >= 6) {
+        if ($user->rights >= 6) {
             echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
 
             if (isset($_GET['yes'])) {
@@ -306,7 +306,7 @@ switch ($do) {
         // Вывод списка новостей
         echo '<div class="phdr"><b>' . _t('News') . '</b></div>';
 
-        if ($systemUser->rights >= 6) {
+        if ($user->rights >= 6) {
             echo '<div class="topmenu"><a href="?do=add">' . _t('Add') . '</a> | <a href="?do=clean">' . _t('Clear') . '</a></div>';
         }
 
@@ -333,7 +333,7 @@ switch ($do) {
                 }
             }
 
-            if ($systemUser->rights >= 6) {
+            if ($user->rights >= 6) {
                 echo '<a href="?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
                     '<a href="?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
             }

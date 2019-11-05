@@ -32,9 +32,11 @@ $db = $container->get(PDO::class);
 $tools = $container->get(ToolsInterface::class);
 $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
+
+// Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
 
-// Регистрируем языки модуля
+// Регистрируем папку с языками модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;

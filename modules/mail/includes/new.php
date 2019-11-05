@@ -14,11 +14,11 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Mail');
 echo '<div class="phdr"><b>' . _t('New Messages') . '</b></div>';
-$total = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_mail` WHERE `from_id` = ' . $systemUser->id . ' AND `delete` != ' . $systemUser->id . ' AND `read` = 0')->fetchColumn();
+$total = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_mail` WHERE `from_id` = ' . $user->id . ' AND `delete` != ' . $user->id . ' AND `read` = 0')->fetchColumn();
 
 if ($total == 1) {
     //Если все новые сообщения от одного итого же чела показываем сразу переписку
-    $res = $db->query("SELECT `user_id` FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`='0' AND `delete` != " . $systemUser->id)->fetch();
+    $res = $db->query("SELECT `user_id` FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `read`='0' AND `sys`='0' AND `delete` != " . $user->id)->fetch();
     header('Location: ?act=write&id=' . $res['user_id']);
     exit();
 }
@@ -32,9 +32,9 @@ if ($total) {
     $query = $db->query("SELECT `users`.* FROM `cms_mail`
 		LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
 		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`user_id`
-		WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
+		WHERE `cms_mail`.`from_id`='" . $user->id . "'
 		AND `cms_mail`.`read`='0'
-		AND `cms_mail`.`delete` != " . $systemUser->id . "
+		AND `cms_mail`.`delete` != " . $user->id . "
 		GROUP BY `cms_mail`.`user_id`
 		ORDER BY `cms_contact`.`time` DESC
 		LIMIT ${start}, ${kmess}"
@@ -43,8 +43,8 @@ if ($total) {
     for ($i = 0; ($row = $query->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
         $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block Sender') . '</a>';
-        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $systemUser->id . "' AND `spam`='0'")->rowCount();
-        $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $systemUser->id . "' AND `read`='0' AND `delete`!='" . $systemUser->id . "' AND `spam`='0'")->rowCount();
+        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount();
+        $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount();
         $arg = [
             'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
             'sub'    => $subtext,

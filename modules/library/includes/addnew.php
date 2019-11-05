@@ -15,7 +15,13 @@ use Verot\Upload\Upload;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ * @var League\Plates\Engine      $view
+ */
+
+if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount()) && isset($id) && $user->isValid())) {
     // Проверка на флуд
     $flood = $tools->antiflood();
 
@@ -87,7 +93,7 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
 
         $md = $adm ? 1 : 0;
 
-        if (count($err) > 0) {
+        if (count($err)) {
             foreach ($err as $e) {
                 echo $tools->displayError($e);
             }
@@ -99,8 +105,8 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 `name` = " . $db->quote($name) . ',
                 `announce` = ' . $db->quote($announce) . ',
                 `text` = ' . $db->quote($text) . ",
-                `uploader` = '" . $systemUser->name . "',
-                `uploader_id` = " . $systemUser->id . ",
+                `uploader` = '" . $user->name . "',
+                `uploader_id` = " . $user->id . ",
                 `premod` = ${md},
                 `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ',
                 `time` = ' . time() . '
@@ -165,7 +171,7 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 }
 
                 echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
-                $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
+                $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
                 echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
                 echo $view->render('system::app/old_content', [
                     'title'   => $textl,
@@ -186,7 +192,7 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
         . '<p><h3>' . _t('Text') . ':</h3>'
         . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form',
-            'text') . '<textarea name="text" rows="' . $systemUser->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
+            'text') . '<textarea name="text" rows="' . $user->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
         . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
         . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'

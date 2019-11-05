@@ -15,10 +15,10 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = _t('Settings');
 
 /** @var Johncms\Users\UserConfig $userConfig */
-$userConfig = $systemUser->config;
+$userConfig = $user->config;
 
 // Проверяем права доступа
-if ($user['id'] != $systemUser->id) {
+if ($foundUser['id'] != $user->id) {
     echo $view->render('system::app/old_content', [
         'title'   => $textl,
         'content' => $tools->displayError(_t('Access forbidden')),
@@ -38,13 +38,13 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
-        $set_mail_user = unserialize($systemUser->set_mail);
+        $set_mail_user = unserialize($user->set_mail);
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
             $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([
                 serialize($set_mail_user),
-                $systemUser->id,
+                $user->id,
             ]);
         }
 
@@ -62,7 +62,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         $set_forum = [];
-        $set_forum = unserialize($systemUser->set_forum);
+        $set_forum = unserialize($user->set_forum);
 
         if (isset($_POST['submit'])) {
             $set_forum['farea'] = isset($_POST['farea']);
@@ -76,7 +76,7 @@ switch ($mod) {
 
             $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
                 serialize($set_forum),
-                $systemUser->id,
+                $user->id,
             ]);
 
             echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
@@ -91,7 +91,7 @@ switch ($mod) {
 
             $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
                 serialize($set_forum),
-                $systemUser->id,
+                $user->id,
             ]);
 
             echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
@@ -158,13 +158,13 @@ switch ($mod) {
             }
 
             // Записываем настройки
-            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $systemUser->id]);
+            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $user->id]);
             $_SESSION['set_ok'] = 1;
             header('Location: ?act=settings');
             exit;
         } elseif (isset($_GET['reset'])) {
             // Задаем настройки по-умолчанию
-            $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = " . $systemUser->id);
+            $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = " . $user->id);
             $_SESSION['reset_ok'] = 1;
             header('Location: ?act=settings');
             exit;

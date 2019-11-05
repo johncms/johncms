@@ -24,6 +24,28 @@ use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var Assets             $assets
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
+$container = App::getContainer();
+$assets = $container->get(Assets::class);
+$config = $container->get(ConfigInterface::class);
+$db = $container->get(PDO::class);
+$tools = $container->get(ToolsInterface::class);
+$user = $container->get(UserInterface::class);
+$view = $container->get(Engine::class);
+
+// Регистрируем языки модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader;
@@ -35,46 +57,19 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
-/** @var ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Assets $assets */
-$assets = $container->get(Assets::class);
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ToolsInterface $tools */
-$tools = $container->get(ToolsInterface::class);
-
-/** @var ConfigInterface $config */
-$config = $container->get(ConfigInterface::class);
-
-// Регистрируем языки модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Engine $view */
-$view = $container->get(Engine::class);
-
-$adm = ($systemUser->rights > 4) ? true : false;
+$adm = ($user->rights > 4) ? true : false;
 $i = 0;
 
 $textl = _t('Library');
 
-// Ограничиваем доступ к Библиотеке
-
 $error = '';
 
-if (! $config['mod_lib'] && $systemUser->rights < 7) {
+// Ограничиваем доступ к Библиотеке
+if (! $config['mod_lib'] && $user->rights < 7) {
     $error = _t('Library is closed');
-} elseif ($config['mod_lib'] == 1 && ! $systemUser->isValid()) {
+} elseif ($config['mod_lib'] == 1 && ! $user->isValid()) {
     $error = _t('Access forbidden');
 }
-
-ob_start();
 
 if ($error) {
     echo $view->render('system::app/old_content', [
@@ -332,7 +327,7 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
                     echo $nav;
 
-                    if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() > 0)) && isset($id) && $systemUser->isValid()) {
+                    if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() > 0)) && isset($id) && $user->isValid()) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . _t('Write Article') . '</a>'
                             . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
                                 . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a>') : '')
@@ -429,7 +424,7 @@ if (in_array($act, $array_includes)) {
                                 PHP_EOL), Utils::position($tmp, ' ')) - ($page == 1 ? 0 : min(Utils::position($text,
                                 PHP_EOL), Utils::position($text, ' '))))), 1, 1);
 
-                    $text = $tools->smilies($text, $systemUser->rights ? 1 : 0);
+                    $text = $tools->smilies($text, $user->rights ? 1 : 0);
 
                     echo '<div class="list2" style="padding: 8px">';
 
@@ -450,9 +445,9 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . _t('Download file') . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a>'
                         . ' | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
 
-                    echo $nav . ($systemUser->isValid() && $page == 1 ? $rate->printVote() : '');
+                    echo $nav . ($user->isValid() && $page == 1 ? $rate->printVote() : '');
 
-                    if ($adm || $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) {
+                    if ($adm || $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $user->id && $user->isValid()) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Delete') . '</a></p>';
                     }

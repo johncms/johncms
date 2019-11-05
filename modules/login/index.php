@@ -18,17 +18,21 @@ use Johncms\Users\User;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 
-/** @var ContainerInterface $container */
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
 $container = App::getContainer();
-
-/** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
-
-/** @var UserInterface $user */
 $user = $container->get(UserInterface::class);
-
-/** @var Engine $view */
 $view = $container->get(Engine::class);
+
+// Регистрируем Namespace для шаблонов модуля
 $view->addFolder('login', __DIR__ . '/templates/');
 
 $id = isset($_POST['id']) ? abs((int) ($_POST['id'])) : 0;

@@ -15,15 +15,18 @@ use Johncms\Utility\NewsWidget;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 
-/** @var ContainerInterface $container */
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var ContainerInterface $container
+ * @var Engine             $view
+ */
+
 $container = App::getContainer();
-
-/** @var Engine $view */
 $view = $container->get(Engine::class);
-$view->addFolder('homepage', __DIR__ . '/templates/');
 
-// Если нужно показать ссылку "На главную", то добавляем строку ниже
-//$view->addData(['homeButton' => true]);
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('homepage', __DIR__ . '/templates/');
 
 echo $view->render('homepage::mainmenu', [
     'counters' => $container->get('counters'),

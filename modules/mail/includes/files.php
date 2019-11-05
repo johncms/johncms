@@ -16,7 +16,7 @@ $textl = _t('Mail') . ' | ' . _t('Files');
 echo '<div class="phdr"><b>' . _t('Files') . '</b></div>';
 
 //Отображаем список файлов
-$total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `delete`!='" . $systemUser->id . "' AND `file_name`!=''")->fetchColumn();
+$total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `delete`!='" . $user->id . "' AND `file_name`!=''")->fetchColumn();
 
 if ($total) {
     if ($total > $kmess) {
@@ -26,8 +26,8 @@ if ($total) {
     $req = $db->query("SELECT `cms_mail`.*, `users`.`name`
         FROM `cms_mail`
         LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
-	    WHERE (`cms_mail`.`user_id`='" . $systemUser->id . "' OR `cms_mail`.`from_id`='" . $systemUser->id . "')
-	    AND `cms_mail`.`delete`!='" . $systemUser->id . "'
+	    WHERE (`cms_mail`.`user_id`='" . $user->id . "' OR `cms_mail`.`from_id`='" . $user->id . "')
+	    AND `cms_mail`.`delete`!='" . $user->id . "'
 	    AND `cms_mail`.`file_name`!=''
 	    ORDER BY `cms_mail`.`time` DESC
 	    LIMIT " . $start . ',' . $kmess);

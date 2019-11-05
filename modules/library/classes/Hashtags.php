@@ -193,7 +193,7 @@ class Hashtags
      */
     public function cloud($array)
     {
-        if (count($array) > 0) {
+        if (count($array)) {
             $obj = new Links($array);
 
             return $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();

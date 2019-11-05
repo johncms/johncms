@@ -16,11 +16,11 @@ $textl = _t('Mail');
 
 if ($id) {
     if (isset($_POST['submit'])) {
-        $req = $db->query('SELECT * FROM `cms_mail` WHERE ((`user_id` = ' . $id . ' AND `from_id` = ' . $systemUser->id . ') OR (`user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id . ')) AND `delete` != ' . $systemUser->id);
+        $req = $db->query('SELECT * FROM `cms_mail` WHERE ((`user_id` = ' . $id . ' AND `from_id` = ' . $user->id . ') OR (`user_id` = ' . $user->id . ' AND `from_id` = ' . $id . ')) AND `delete` != ' . $user->id);
 
         while ($row = $req->fetch()) {
             //Удаляем сообщения
-            if ($row['delete'] > 0 || ($row['read'] == 0 && $row['user_id'] == $systemUser->id)) {
+            if ($row['delete'] > 0 || ($row['read'] == 0 && $row['user_id'] == $user->id)) {
                 //Удаляем файлы
                 if (! empty($row['file_name']) && file_exists(UPLOAD_PATH . 'mail/' . $row['file_name'])) {
                     @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
@@ -28,12 +28,12 @@ if ($id) {
 
                 $db->exec('DELETE FROM `cms_mail` WHERE `id` = ' . $row['id']);
             } else {
-                $db->exec('UPDATE `cms_mail` SET `delete` = ' . $systemUser->id . ' WHERE `id` = ' . $row['id']);
+                $db->exec('UPDATE `cms_mail` SET `delete` = ' . $user->id . ' WHERE `id` = ' . $row['id']);
             }
         }
 
         //Удаляем контакт
-        $db->exec('DELETE FROM `cms_contact` WHERE `user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id . ' LIMIT 1');
+        $db->exec('DELETE FROM `cms_contact` WHERE `user_id` = ' . $user->id . ' AND `from_id` = ' . $id . ' LIMIT 1');
         echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="./">' . _t('Continue') . '</a></p></div>';
     } else {
         echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>

@@ -22,7 +22,7 @@ if ($total) {
     $req = $db->query("SELECT * FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1' LIMIT ${start}, ${kmess}");
 
     while ($res = $req->fetch()) {
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+        echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
         echo $tools->displayUser($res) . '</div>';
         ++$i;
     }

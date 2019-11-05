@@ -17,11 +17,11 @@ $ban = isset($_GET['ban']) ? (int) ($_GET['ban']) : 0;
 switch ($mod) {
     case 'do':
         // Баним пользователя (добавляем Бан в базу)
-        if ($systemUser->rights < 1 || ($systemUser->rights < 6 && $user['rights']) || ($systemUser->rights <= $user['rights'])) {
+        if ($user->rights < 1 || ($user->rights < 6 && $foundUser['rights']) || ($user->rights <= $foundUser['rights'])) {
             echo $tools->displayError(_t('You do not have enought rights to ban this user'));
         } else {
             echo '<div class="phdr"><b>' . _t('Ban the User') . '</b></div>';
-            echo '<div class="rmenu"><p>' . $tools->displayUser($user) . '</p></div>';
+            echo '<div class="rmenu"><p>' . $tools->displayUser($foundUser) . '</p></div>';
 
             if (isset($_POST['submit'])) {
                 $error = false;
@@ -39,11 +39,11 @@ switch ($mod) {
                     $error = _t('There is no required data');
                 }
 
-                if ($systemUser->rights == 1 && $term != 14 || $systemUser->rights == 2 && $term != 12 || $systemUser->rights == 3 && $term != 11 || $systemUser->rights == 4 && $term != 16 || $systemUser->rights == 5 && $term != 15) {
+                if ($user->rights == 1 && $term != 14 || $user->rights == 2 && $term != 12 || $user->rights == 3 && $term != 11 || $user->rights == 4 && $term != 16 || $user->rights == 5 && $term != 15) {
                     $error = _t('You have no rights to ban in this section');
                 }
 
-                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '${term}'")->fetchColumn()) {
+                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '${term}'")->fetchColumn()) {
                     $error = _t('Ban already active');
                 }
 
@@ -77,11 +77,11 @@ switch ($mod) {
                         $timeval = $timeval * 60;
                 }
 
-                if ($systemUser->rights < 6 && $timeval > 86400) {
+                if ($user->rights < 6 && $timeval > 86400) {
                     $timeval = 86400;
                 }
 
-                if ($systemUser->rights < 7 && $timeval > 2592000) {
+                if ($user->rights < 7 && $timeval > 2592000) {
                     $timeval = 2592000;
                 }
 
@@ -97,11 +97,11 @@ switch ($mod) {
                     ');
 
                     $stmt->execute([
-                        $user['id'],
+                        $foundUser['id'],
                         (time() + $timeval),
                         time(),
                         $term,
-                        $systemUser->name,
+                        $user->name,
                         $reason,
                     ]);
 
@@ -119,13 +119,13 @@ switch ($mod) {
 
                         $stmt->execute([
                             _t('System'),
-                            $user['id'],
+                            $foundUser['id'],
                             $points,
                             time(),
                             _t('Ban'),
                         ]);
 
-                        $db->exec('UPDATE `users` SET `karma_minus` = ' . (int) ($user['karma_minus'] + $points) . ' WHERE `id` = ' . $user['id']);
+                        $db->exec('UPDATE `users` SET `karma_minus` = ' . (int) ($foundUser['karma_minus'] + $points) . ' WHERE `id` = ' . $foundUser['id']);
                     }
 
                     echo '<div class="rmenu"><p><h3>' . _t('User banned') . '</h3></p></div>';
@@ -134,10 +134,10 @@ switch ($mod) {
                 }
             } else {
                 // Форма параметров бана
-                echo '<form action="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '" method="post">' .
+                echo '<form action="?act=ban&amp;mod=do&amp;user=' . $foundUser['id'] . '" method="post">' .
                     '<div class="menu"><p><h3>' . _t('Ban type') . '</h3>';
 
-                if ($systemUser->rights >= 6) {
+                if ($user->rights >= 6) {
                     // Блокировка
                     echo '<div><input name="term" type="radio" value="1" checked="checked" />&#160;' . _t('Full block') . '</div>';
                     // Приват
@@ -148,13 +148,13 @@ switch ($mod) {
                     echo '<div><input name="term" type="radio" value="13" />&#160;' . _t('Guestbook') . '</div>';
                 }
 
-                if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
+                if ($user->rights == 3 || $user->rights >= 6) {
                     // Форум
-                    echo '<div><input name="term" type="radio" value="11" ' . ($systemUser->rights == 3 ? 'checked="checked"'
+                    echo '<div><input name="term" type="radio" value="11" ' . ($user->rights == 3 ? 'checked="checked"'
                             : '') . '/>&#160;' . _t('Forum') . '</div>';
                 }
 
-                if ($systemUser->rights == 5 || $systemUser->rights >= 6) {
+                if ($user->rights == 5 || $user->rights >= 6) {
                     // Библиотека
                     echo '<div><input name="term" type="radio" value="15" />&#160;' . _t('Library') . '</div>';
                 }
@@ -164,11 +164,11 @@ switch ($mod) {
                     '<input name="time" type="radio" value="1" />&#160;' . _t('Minutes (60 max.)') . '<br />' .
                     '<input name="time" type="radio" value="2" checked="checked" />&#160;' . _t('Hours (24 max.)') . '<br />';
 
-                if ($systemUser->rights >= 6) {
+                if ($user->rights >= 6) {
                     echo '<input name="time" type="radio" value="3" />&#160;' . _t('Days (30 max.)') . '<br />';
                 }
 
-                if ($systemUser->rights >= 7) {
+                if ($user->rights >= 7) {
                     echo '<input name="time" type="radio" value="4" />&#160;<span class="red">' . _t('Till cancel') . '</span>';
                 }
 
@@ -181,20 +181,20 @@ switch ($mod) {
                         '<input type="hidden" value="' . $fid . '" name="banref" />';
                 }
 
-                echo '&#160;<textarea rows="' . $systemUser->config->fieldHeight . '" name="reason"></textarea>' .
+                echo '&#160;<textarea rows="' . $user->config->fieldHeight . '" name="reason"></textarea>' .
                     '</p><p><input type="submit" value="' . _t('Apply Ban') . '" name="submit" />' .
                     '</p></div></form>';
             }
-            echo '<div class="phdr"><a href="?user=' . $user['id'] . '">' . _t('Profile') . '</a></div>';
+            echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '">' . _t('Profile') . '</a></div>';
         }
         break;
 
     case 'cancel':
         // Разбаниваем пользователя (с сохранением истории)
-        if (! $ban || $user['id'] == $systemUser->id || $systemUser->rights < 7) {
+        if (! $ban || $foundUser['id'] == $user->id || $user->rights < 7) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $foundUser['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -206,17 +206,17 @@ switch ($mod) {
 
                 if (! $error) {
                     echo '<div class="phdr"><b>' . _t('Ban termination') . '</b></div>';
-                    echo '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
+                    echo '<div class="gmenu"><p>' . $tools->displayUser($foundUser) . '</p></div>';
 
                     if (isset($_POST['submit'])) {
                         $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '${ban}'");
                         echo '<div class="gmenu"><p><h3>' . _t('Ban terminated') . '</h3></p></div>';
                     } else {
-                        echo '<form action="?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
+                        echo '<form action="?act=ban&amp;mod=cancel&amp;user=' . $foundUser['id'] . '&amp;ban=' . $ban . '" method="POST">' .
                             '<div class="menu"><p>' . _t('Ban time is going to the end. Infrigement will be saved in the bans history') . '</p>' .
                             '<p><input type="submit" name="submit" value="' . _t('Terminate Ban') . '" /></p>' .
                             '</div></form>' .
-                            '<div class="phdr"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
+                            '<div class="phdr"><a href="?act=ban&amp;user=' . $foundUser['id'] . '">' . _t('Back') . '</a></div>';
                     }
                 } else {
                     echo $tools->displayError($error);
@@ -229,30 +229,30 @@ switch ($mod) {
 
     case 'delete':
         // Удаляем бан (с удалением записи из истории)
-        if (! $ban || $systemUser->rights < 9) {
+        if (! $ban || $user->rights < 9) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $foundUser['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 echo '<div class="phdr"><b>' . _t('Delete Ban') . '</b></div>' .
-                    '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
+                    '<div class="gmenu"><p>' . $tools->displayUser($foundUser) . '</p></div>';
 
                 if (isset($_POST['submit'])) {
-                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
+                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
                     $points = $set_karma['karma_points'] * 2;
                     $db->exec("UPDATE `users` SET
-                        `karma_minus` = '" . ($user['karma_minus'] > $points ? $user['karma_minus'] - $points : 0) . "'
-                        WHERE `id` = " . $user['id']);
+                        `karma_minus` = '" . ($foundUser['karma_minus'] > $points ? $foundUser['karma_minus'] - $points : 0) . "'
+                        WHERE `id` = " . $foundUser['id']);
                     $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '${ban}'");
-                    echo '<div class="gmenu"><p><h3>' . _t('Ban deleted') . '</h3><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
+                    echo '<div class="gmenu"><p><h3>' . _t('Ban deleted') . '</h3><a href="?act=ban&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
                 } else {
-                    echo '<form action="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
+                    echo '<form action="?act=ban&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;ban=' . $ban . '" method="POST">' .
                         '<div class="menu"><p>' . _t('Removing ban along with a record in the bans history') . '</p>' .
                         '<p><input type="submit" name="submit" value="' . _t('Delete') . '" /></p>' .
                         '</div></form>' .
-                        '<div class="phdr"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
+                        '<div class="phdr"><a href="?act=ban&amp;user=' . $foundUser['id'] . '">' . _t('Back') . '</a></div>';
                 }
             } else {
                 echo $tools->displayError(_t('Wrong data'));
@@ -262,24 +262,24 @@ switch ($mod) {
 
     case 'delhist':
         // Очищаем историю нарушений юзера
-        if ($systemUser->rights == 9) {
+        if ($user->rights == 9) {
             echo '<div class="phdr"><b>' . _t('Violations history') . '</b></div>' .
-                '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
+                '<div class="gmenu"><p>' . $tools->displayUser($foundUser) . '</p></div>';
 
             if (isset($_POST['submit'])) {
-                $db->exec('DELETE FROM `cms_ban_users` WHERE `user_id` = ' . $user['id']);
+                $db->exec('DELETE FROM `cms_ban_users` WHERE `user_id` = ' . $foundUser['id']);
                 echo '<div class="gmenu"><h3>' . _t('Violations history cleared') . '</h3></div>';
             } else {
-                echo '<form action="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '" method="post">' .
+                echo '<form action="?act=ban&amp;mod=delhist&amp;user=' . $foundUser['id'] . '" method="post">' .
                     '<div class="menu"><p>' . _t('Are you sure want to clean entire history of user violations?') . '</p>' .
                     '<p><input type="submit" value="' . _t('Clear') . '" name="submit" />' .
                     '</p></div></form>';
             }
 
-            $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
                 '<p>' . ($total
-                    ? '<a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Violations history') . '</a><br />'
+                    ? '<a href="?act=ban&amp;user=' . $foundUser['id'] . '">' . _t('Violations history') . '</a><br />'
                     : '') .
                 '<a href="../admin/?act=ban_panel">' . _t('Ban Panel') . '</a></p>';
         } else {
@@ -289,32 +289,32 @@ switch ($mod) {
 
     default:
         // История нарушений
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Violations History') . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Violations History') . '</div>';
         // Меню
         $menu = [];
 
-        if ($systemUser->rights >= 6) {
+        if ($user->rights >= 6) {
             $menu[] = '<a href="../admin/?act=ban_panel">' . _t('Ban Panel') . '</a>';
         }
 
-        if ($systemUser->rights == 9) {
-            $menu[] = '<a href="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . _t('Clear history') . '</a>';
+        if ($user->rights == 9) {
+            $menu[] = '<a href="?act=ban&amp;mod=delhist&amp;user=' . $foundUser['id'] . '">' . _t('Clear history') . '</a>';
         }
 
         if (! empty($menu)) {
             echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         }
 
-        if ($user['id'] != $systemUser->id) {
-            echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>';
+        if ($foundUser['id'] != $user->id) {
+            echo '<div class="user"><p>' . $tools->displayUser($foundUser) . '</p></div>';
         } else {
             echo '<div class="list2"><p>' . _t('My Violations') . '</p></div>';
         }
 
-        $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, ${kmess}");
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, ${kmess}");
             $i = 0;
 
             $types = [
@@ -337,7 +337,7 @@ switch ($mod) {
                     '<br />' . $tools->checkout($res['ban_reason']) .
                     '<div class="sub">';
 
-                if ($systemUser->rights > 0) {
+                if ($user->rights > 0) {
                     echo '<span class="gray">' . _t('Who applied the Ban?') . ':</span> ' . $res['ban_who'] . '<br />';
                 }
 
@@ -351,12 +351,12 @@ switch ($mod) {
                 // Меню отдельного бана
                 $menu = [];
 
-                if ($systemUser->rights >= 7 && $remain > 0) {
-                    $menu[] = '<a href="?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Cancel Ban') . '</a>';
+                if ($user->rights >= 7 && $remain > 0) {
+                    $menu[] = '<a href="?act=ban&amp;mod=cancel&amp;user=' . $foundUser['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Cancel Ban') . '</a>';
                 }
 
-                if ($systemUser->rights == 9) {
-                    $menu[] = '<a href="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Delete Ban') . '</a>';
+                if ($user->rights == 9) {
+                    $menu[] = '<a href="?act=ban&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Delete Ban') . '</a>';
                 }
 
                 if (! empty($menu)) {
@@ -373,8 +373,8 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<p>' . $tools->displayPagination('?act=ban&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>' .
-                '<p><form action="?act=ban&amp;user=' . $user['id'] . '" method="post">' .
+            echo '<p>' . $tools->displayPagination('?act=ban&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $kmess) . '</p>' .
+                '<p><form action="?act=ban&amp;user=' . $foundUser['id'] . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }

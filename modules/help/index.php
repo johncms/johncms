@@ -17,24 +17,28 @@ use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+/**
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var Engine             $view
+ */
+
+$container = App::getContainer();
+$config = $container->get(ConfigInterface::class);
+$view = $container->get(Engine::class);
+
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('help', __DIR__ . '/templates/');
+
+// Регистрируем папку с языками модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-/** @var ContainerInterface $container */
-$container = App::getContainer();
-
-// Регистрируем языки модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Engine $view */
-$view = $container->get(Engine::class);
-$view->addFolder('help', __DIR__ . '/templates/');
-
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    /** @var ConfigInterface $config */
-    $config = $container->get(ConfigInterface::class);
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 
@@ -73,7 +77,7 @@ $array = [
 ];
 
 if ($act && ($key = array_search($act, $array)) !== false && file_exists(__DIR__ . '/includes/' . $array[$key] . '.php')) {
-    ob_start();
+    ob_start(); // Перехват вывода скриптов без шаблона
     require __DIR__ . '/includes/' . $array[$key] . '.php';
     echo $view->render('system::app/old_content', [
         'title'   => $textl ?? _t('Information, FAQ'),

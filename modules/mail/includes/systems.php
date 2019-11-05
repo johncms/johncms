@@ -18,10 +18,10 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 if ($mod == 'clear') {
     if (isset($_POST['clear'])) {
-        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1';")->fetchColumn();
+        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `sys`='1';")->fetchColumn();
 
         if ($count_message) {
-            $req = $db->query("SELECT `id` FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' LIMIT " . $count_message);
+            $req = $db->query("SELECT `id` FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `sys`='1' LIMIT " . $count_message);
             $mass_del = [];
 
             while ($row = $req->fetch()) {
@@ -44,7 +44,7 @@ if ($mod == 'clear') {
 		</div>';
     }
 } else {
-    $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `sys`='1' AND `delete`!='" . $user->id . "'")->fetchColumn();
 
     if ($total) {
         function time_parce($var)
@@ -58,13 +58,13 @@ if ($mod == 'clear') {
             $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `delete`!='" . $systemUser->id . "' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
+        $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `sys`='1' AND `delete`!='" . $user->id . "' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
         $mass_read = [];
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
             $out .= $i % 2 ? '<div class="list1">' : '<div class="list2">';
 
-            if ($row['read'] == 0 && $row['from_id'] == $systemUser->id) {
+            if ($row['read'] == 0 && $row['from_id'] == $user->id) {
                 $mass_read[] = $row['id'];
             }
 
@@ -81,7 +81,7 @@ if ($mod == 'clear') {
         //Ставим метку о прочтении
         if ($mass_read) {
             $result = implode(',', $mass_read);
-            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `id` IN (" . $result . ')');
+            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='" . $user->id . "' AND `sys`='1' AND `id` IN (" . $result . ')');
         }
     } else {
         $out .= '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

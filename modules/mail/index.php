@@ -11,10 +11,33 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
+$container = App::getContainer();
+$config = $container->get(ConfigInterface::class);
+$db = $container->get(PDO::class);
+$tools = $container->get(ToolsInterface::class);
+$user = $container->get(UserInterface::class);
+$view = $container->get(Engine::class);
+
+// Регистрируем языки модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -24,29 +47,8 @@ if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
 
-/** @var ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ConfigInterface $config */
-$config = $container->get(ConfigInterface::class);
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-// Регистрируем языки модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Engine $view */
-$view = $container->get(Engine::class);
-
 //Проверка авторизации
-if (! $systemUser->isValid()) {
+if (! $user->isValid()) {
     header('Location: ' . $config->homeurl);
     exit;
 }
@@ -66,8 +68,6 @@ function formatsize($size)
 
     return $size;
 }
-
-ob_start();
 
 // Массив подключаемых функций
 $mods = [
@@ -103,16 +103,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         $res = $req->fetch();
 
-        if ($id == $systemUser->id) {
+        if ($id == $user->id) {
             echo '<div class="rmenu">' . _t('You cannot add yourself as a contact') . '</div>';
         } else {
             //Добавляем в заблокированные
             if (isset($_POST['submit'])) {
-                $q = $db->query('SELECT * FROM `cms_contact` WHERE `user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id);
+                $q = $db->query('SELECT * FROM `cms_contact` WHERE `user_id` = ' . $user->id . ' AND `from_id` = ' . $id);
 
                 if (! $q->rowCount()) {
                     $db->query('INSERT INTO `cms_contact` SET
-					`user_id` = ' . $systemUser->id . ',
+					`user_id` = ' . $user->id . ',
 					`from_id` = ' . $id . ',
 					`time` = ' . time());
                 }
@@ -128,7 +128,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     } else {
         echo '<div class="topmenu"><b>' . _t('My Contacts') . '</b> | <a href="?act=ignor">' . _t('Blocklist') . '</a></div>';
         //Получаем список контактов
-        $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `ban`!='1'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user->id . "' AND `ban`!='1'")->fetchColumn();
 
         if ($total) {
             if ($total > $kmess) {
@@ -138,7 +138,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             $req = $db->query("SELECT `users`.*, `cms_contact`.`from_id` AS `id`
                 FROM `cms_contact`
 			    LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id`
-			    WHERE `cms_contact`.`user_id`='" . $systemUser->id . "'
+			    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 			    AND `cms_contact`.`ban`!='1'
 			    ORDER BY `users`.`name` ASC
 			    LIMIT ${start}, ${kmess}"
@@ -147,8 +147,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                 echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
                 $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block User') . '</a>';
-                $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $systemUser->id . "'")->rowCount();
-                $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $systemUser->id . "'")->rowCount();
+                $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'")->rowCount();
+                $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'")->rowCount();
                 $arg = [
                     'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                     'sub'    => $subtext,

@@ -19,50 +19,46 @@ use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var Assets             $assets
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
+$container = App::getContainer();
+$assets = $container->get(Assets::class);
+$config = $container->get(ConfigInterface::class);
+$db = $container->get(PDO::class);
+$tools = $container->get(ToolsInterface::class);
+$user = $container->get(UserInterface::class);
+$view = $container->get(Engine::class);
+
+// Регистрируем языки модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-/** @var ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Assets $assets */
-$assets = $container->get(Assets::class);
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ToolsInterface $tools */
-$tools = $container->get(ToolsInterface::class);
-
-/** @var ConfigInterface $config */
-$config = $container->get(ConfigInterface::class);
-
-// Регистрируем языки модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Engine $view */
-$view = $container->get(Engine::class);
-
 // Закрываем от неавторизованных юзеров
-if (! $systemUser->isValid()) {
-    require 'system/head.php';
+if (! $user->isValid()) {
     echo $tools->displayError(_t('For registered users only'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
 // Получаем данные пользователя
-$user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
+$foundUser = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
-if (! $user) {
-    require 'system/head.php';
+if (! $foundUser) {
     echo $tools->displayError(_t('This User does not exists'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -105,8 +101,6 @@ function is_contact($id = 0)
     return $return;
 }
 
-ob_start();
-
 // Переключаем режимы работы
 $mods = [
     'activity',
@@ -124,26 +118,25 @@ $mods = [
     'stat',
 ];
 
-if ($act && ($key = array_search($act,
-        $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     // Анкета пользователя
-    echo '<div class="phdr"><b>' . ($user['id'] != $systemUser->id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
+    echo '<div class="phdr"><b>' . ($foundUser['id'] != $user->id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
 
     // Меню анкеты
     $menu = [];
 
-    if ($user['id'] == $systemUser->id || $systemUser->rights == 9 || ($systemUser->rights == 7 && $systemUser->rights > $user['rights'])) {
-        $menu[] = '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>';
+    if ($foundUser['id'] == $user->id || $user->rights == 9 || ($user->rights == 7 && $user->rights > $foundUser['rights'])) {
+        $menu[] = '<a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Edit') . '</a>';
     }
 
-    if ($user['id'] != $systemUser->id && $systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
-        $menu[] = '<a href="' . $config['homeurl'] . '/admin/?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
+    if ($foundUser['id'] != $user->id && $user->rights >= 7 && $user->rights > $foundUser['rights']) {
+        $menu[] = '<a href="' . $config['homeurl'] . '/admin/?act=usr_del&amp;id=' . $foundUser['id'] . '">' . _t('Delete') . '</a>';
     }
 
-    if ($user['id'] != $systemUser->id && $systemUser->rights > $user['rights']) {
-        $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
+    if ($foundUser['id'] != $user->id && $user->rights > $foundUser['rights']) {
+        $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $foundUser['id'] . '">' . _t('Ban') . '</a>';
     }
 
     if (! empty($menu)) {
@@ -151,7 +144,7 @@ if ($act && ($key = array_search($act,
     }
 
     //Уведомление о дне рожденья
-    if ($user['dayb'] == date('j', time()) && $user['monthb'] == date('n', time())) {
+    if ($foundUser['dayb'] == date('j', time()) && $foundUser['monthb'] == date('n', time())) {
         echo '<div class="gmenu">' . _t('Birthday') . '!</div>';
     }
 
@@ -159,31 +152,30 @@ if ($act && ($key = array_search($act,
     $arg = [
         'lastvisit' => 1,
         'iphist'    => 1,
-        'header'    => '<b>ID:' . $user['id'] . '</b>',
+        'header'    => '<b>ID:' . $foundUser['id'] . '</b>',
     ];
 
-    if ($user['id'] != $systemUser->id) {
-        $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . $tools->displayPlace($user['id'],
-                $user['place']);
+    if ($foundUser['id'] != $user->id) {
+        $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . $tools->displayPlace($foundUser['id'], $foundUser['place']);
     }
 
-    echo '<div class="user"><p>' . $tools->displayUser($user, $arg) . '</p></div>';
+    echo '<div class="user"><p>' . $tools->displayUser($foundUser, $arg) . '</p></div>';
 
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
-    if ($systemUser->rights >= 7 && ! $user['preg'] && empty($user['regadm'])) {
+    if ($user->rights >= 7 && ! $foundUser['preg'] && empty($foundUser['regadm'])) {
         echo '<div class="rmenu">' . _t('Pending confirmation') . '</div>';
     }
 
     // Карма
     if ($config->karma['on']) {
-        $karma = $user['karma_plus'] - $user['karma_minus'];
+        $karma = $foundUser['karma_plus'] - $foundUser['karma_minus'];
 
         if ($karma > 0) {
-            $images = ($user['karma_minus'] ? ceil($user['karma_plus'] / $user['karma_minus']) : $user['karma_plus']) > 10 ? '2' : '1';
+            $images = ($foundUser['karma_minus'] ? ceil($foundUser['karma_plus'] / $foundUser['karma_minus']) : $foundUser['karma_plus']) > 10 ? '2' : '1';
             echo '<div class="gmenu">';
         } else {
             if ($karma < 0) {
-                $images = ($user['karma_plus'] ? ceil($user['karma_minus'] / $user['karma_plus']) : $user['karma_minus']) > 10 ? '-2' : '-1';
+                $images = ($foundUser['karma_plus'] ? ceil($foundUser['karma_minus'] / $foundUser['karma_plus']) : $foundUser['karma_minus']) > 10 ? '-2' : '-1';
                 echo '<div class="rmenu">';
             } else {
                 $images = 0;
@@ -194,20 +186,20 @@ if ($act && ($key = array_search($act,
         echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $assets->url('images/old/k_' . $images . '.gif') . '"/></td><td>' .
             '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
             '<div class="sub">' .
-            '<span class="green"><a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _t('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .
-            '<span class="red"><a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
+            '<span class="green"><a href="?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=1">' . _t('For') . ' (' . $foundUser['karma_plus'] . ')</a></span> | ' .
+            '<span class="red"><a href="?act=karma&amp;user=' . $foundUser['id'] . '">' . _t('Against') . ' (' . $foundUser['karma_minus'] . ')</a></span>';
 
-        if ($user['id'] != $systemUser->id) {
-            if (! $systemUser->karma_off && (! $user['rights'] || ($user['rights'] && ! $set_karma['adm'])) && $user['ip'] != $systemUser->ip) {
-                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
-                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
+        if ($foundUser['id'] != $user->id) {
+            if (! $user->karma_off && (! $foundUser['rights'] || ($foundUser['rights'] && ! $set_karma['adm'])) && $foundUser['ip'] != $user->ip) {
+                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `time` >= '" . $user->karma_time . "'")->fetchColumn();
+                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `karma_user` = '" . $foundUser['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
-                if (empty($systemUser->ban) && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && ! $count) {
-                    echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
+                if (empty($user->ban) && $user->postforum >= $set_karma['forum'] && $user->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && ! $count) {
+                    echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $foundUser['id'] . '">' . _t('Vote') . '</a>';
                 }
             }
         } else {
-            $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
+            $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total_karma > 0) {
                 echo '<br /><a href="?act=karma&amp;mod=new">' . _t('New reviews') . '</a> (' . $total_karma . ')';
@@ -217,52 +209,52 @@ if ($act && ($key = array_search($act,
     }
 
     // Меню выбора
-    $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
     echo '<div class="list2"><p>' .
-        '<div><img src="' . $assets->url('images/old/contacts.png') . '" alt="" class="icon"><a href="?act=info&amp;user=' . $user['id'] . '">' . _t('Information') . '</a></div>' .
-        '<div><img src="' . $assets->url('images/old/activity.gif') . '" alt="" class="icon"><a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Activity') . '</a></div>' .
-        '<div><img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=stat&amp;user=' . $user['id'] . '">' . _t('Statistic') . '</a></div>';
-    $bancount = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+        '<div><img src="' . $assets->url('images/old/contacts.png') . '" alt="" class="icon"><a href="?act=info&amp;user=' . $foundUser['id'] . '">' . _t('Information') . '</a></div>' .
+        '<div><img src="' . $assets->url('images/old/activity.gif') . '" alt="" class="icon"><a href="?act=activity&amp;user=' . $foundUser['id'] . '">' . _t('Activity') . '</a></div>' .
+        '<div><img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=stat&amp;user=' . $foundUser['id'] . '">' . _t('Statistic') . '</a></div>';
+    $bancount = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
 
     if ($bancount) {
-        echo '<div><img src="' . $assets->url('images/old/block.gif') . '" alt="" class="icon"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Violations') . '</a> (' . $bancount . ')</div>';
+        echo '<div><img src="' . $assets->url('images/old/block.gif') . '" alt="" class="icon"><a href="?act=ban&amp;user=' . $foundUser['id'] . '">' . _t('Violations') . '</a> (' . $bancount . ')</div>';
     }
 
     echo '<br />' .
-        '<div><img src="' . $assets->url('images/old/photo.gif') . '" alt="" class="icon"><a href="../album/?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
-        '<div><img src="' . $assets->url('images/old/guestbook.gif') . '" alt="" class="icon"><a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
+        '<div><img src="' . $assets->url('images/old/photo.gif') . '" alt="" class="icon"><a href="../album/?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div><img src="' . $assets->url('images/old/guestbook.gif') . '" alt="" class="icon"><a href="?act=guestbook&amp;user=' . $foundUser['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $foundUser['comm_count'] . ')</div>' .
         '</p></div>';
-    if ($user['id'] != $systemUser->id) {
+    if ($foundUser['id'] != $user->id) {
         echo '<div class="menu"><p>';
         // Контакты
-        if (is_contact($user['id']) != 2) {
-            if (! is_contact($user['id'])) {
-                echo '<div><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon"><a href="../mail/?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
+        if (is_contact($foundUser['id']) != 2) {
+            if (! is_contact($foundUser['id'])) {
+                echo '<div><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon"><a href="../mail/?id=' . $foundUser['id'] . '">' . _t('Add to Contacts') . '</a></div>';
             } else {
-                echo '<div><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon"><a href="../mail/?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
+                echo '<div><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon"><a href="../mail/?act=deluser&amp;id=' . $foundUser['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
             }
         }
 
-        if (is_contact($user['id']) != 2) {
-            echo '<div><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
+        if (is_contact($foundUser['id']) != 2) {
+            echo '<div><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="../mail/?act=ignor&amp;id=' . $foundUser['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
         } else {
-            echo '<div><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
+            echo '<div><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="../mail/?act=ignor&amp;id=' . $foundUser['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
         }
 
         echo '</p>';
 
-        if (! $tools->isIgnor($user['id'])
-            && is_contact($user['id']) != 2
-            && ! isset($systemUser->ban['1'])
-            && ! isset($systemUser->ban['3'])
+        if (! $tools->isIgnor($foundUser['id'])
+            && is_contact($foundUser['id']) != 2
+            && ! isset($user->ban['1'])
+            && ! isset($user->ban['3'])
         ) {
-            echo '<p><form action="../mail/?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
+            echo '<p><form action="../mail/?act=write&amp;id=' . $foundUser['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
         }
 
         echo '</div>';
     }
 
-    $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
+    $textl = _t('Profile') . ': ' . htmlspecialchars($foundUser['name']);
 }
 
 echo $view->render('system::app/old_content', [

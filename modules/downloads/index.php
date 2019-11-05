@@ -40,7 +40,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 
-// Регистрируем языки модуля
+// Регистрируем папку с языками модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $url = $config['homeurl'] . '/downloads/';
