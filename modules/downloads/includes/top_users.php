@@ -35,10 +35,10 @@ if ($total) {
 
     while ($res_down = $req_down->fetch()) {
         $foundUser = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
-        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
             $tools->displayUser($foundUser, [
                 'iphide' => 0,
-                'sub'    => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']
+                'sub'    => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count'],
             ]) . '</div>';
     }
 } else {

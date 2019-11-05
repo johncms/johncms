@@ -208,7 +208,7 @@ if ($total_files_more) {
     while ($res_file_more = $req_file_more->fetch()) {
         $res_file_more['dir'] = $res_down['dir'];
         $res_file_more['text'] = $res_file_more['rus_name'];
-        echo (($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
+        echo(($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
             Download::downloadLlink([
                 'format' => pathinfo($res_file_more['name'], PATHINFO_EXTENSION),
                 'res'    => $res_file_more,

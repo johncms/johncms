@@ -49,7 +49,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 ORDER B
 $i = 0;
 
 while ($res_down = $req_down->fetch()) {
-    echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down, 1) . '</div>';
+    echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down, 1) . '</div>';
 }
 
 echo '<div class="phdr"><a href="?">' . _t('Downloads') . '</a></div>';

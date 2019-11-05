@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
         for ($i = 0; $i < $total; $i++) {
             $screen_name = htmlentities($screen[$i], ENT_QUOTES, 'utf-8');
             $file = preg_replace('#^' . DOWNLOADS_SCR . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
-            echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
+            echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                 '<table  width="100%"><tr><td width="40" valign="top">' .
                 '<a href="' . $screen_name . '"><img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[$i]) . '" alt="screen" /></a></td><td>' .
                 '<a href="?act=edit_screen&amp;id=' . $id . '&amp;do=' . basename($file) . '">' . _t('Delete') . '</a></td></tr></table></div>';

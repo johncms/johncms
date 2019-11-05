@@ -82,7 +82,7 @@ switch ($format_file) {
 }
 
 if (! isset($_SESSION['down_' . $id])) {
-    $db->exec("UPDATE `download__files` SET `field`=`field`+1 WHERE `id`=" . $id);
+    $db->exec('UPDATE `download__files` SET `field`=`field`+1 WHERE `id`=' . $id);
     $_SESSION['down_' . $id] = 1;
 }
 

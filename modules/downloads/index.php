@@ -170,7 +170,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $navigation = Download::navigation([
             'dir'   => $res_down_cat['dir'],
             'refid' => $res_down_cat['refid'],
-            'name'  => $res_down_cat['rus_name']
+            'name'  => $res_down_cat['rus_name'],
         ]);
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
@@ -221,7 +221,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $i = 0;
 
             while ($res_down = $req_down->fetch()) {
-                echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+                echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $url . '?id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['total'] . ')';
 
                 if ($res_down['field']) {
@@ -295,7 +295,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $i = 0;
 
             while ($res_down = $req_down->fetch()) {
-                echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+                echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
             }
         }
     } else {
