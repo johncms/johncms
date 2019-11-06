@@ -234,7 +234,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
     echo '<div class="phdr"><a href="?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
 
     if ($msg && $th && ! isset($_POST['submit'])) {
-        echo '<div class="list1">' . $tools->image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
+        echo '<div class="list1"><img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon"><strong>' . $th . '</strong></div>' .
             '<div class="list2">' . $tools->displayUser($user, [
                 'iphide' => 1,
                 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',

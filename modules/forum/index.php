@@ -402,10 +402,22 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
                         // Значки
                         $icons = [
-                            ($res['np'] ? (! $res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
-                            ($res['pinned'] ? $tools->image('pt.gif') : ''),
-                            ($res['has_poll'] ? $tools->image('rate.gif') : ''),
-                            ($res['closed'] ? $tools->image('tz.gif') : ''),
+                            ($res['np']
+                                ? (! $res['pinned'] ? '<img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon">' : '')
+                                : '<img src="' . $assets->url('images/old/np.gif') . '" alt="" class="icon">'
+                            ),
+                            ($res['pinned']
+                                ? '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">'
+                                : ''
+                            ),
+                            ($res['has_poll']
+                                ? '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">'
+                                : ''
+                            ),
+                            ($res['closed']
+                                ? '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">'
+                                : ''
+                            ),
                         ];
                         echo implode('', array_filter($icons));
 
@@ -439,7 +451,8 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
                 if ($total > $user->config->kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
+                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start,
+                            $total, $user->config->kmess) . '</div>' .
                         '<p><form action="?type=topics&id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -494,15 +507,16 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
                 if ($start >= $colmes) {
                     // Исправляем запрос на несуществующую страницу
-                    $start = max(0, $colmes - (($colmes % $user->config->kmess) == 0 ? $user->config->kmess : ($colmes % $user->config->kmess)));
+                    $start = max(0,
+                        $colmes - (($colmes % $user->config->kmess) == 0 ? $user->config->kmess : ($colmes % $user->config->kmess)));
                 }
 
                 // Выводим название топика
-                echo '<div class="phdr"><a href="#down">' . $tools->image('down.png',
-                        ['class' => '']) . '</a>&#160;&#160;<b>' . (empty($type1['name']) ? '-----' : $type1['name']) . '</b></div>';
+                echo '<div class="phdr"><a href="#down"><img src="' . $assets->url('images/old/down.png') . '" alt=""></a>&#160;&#160;<b>' . (empty($type1['name']) ? '-----' : $type1['name']) . '</b></div>';
 
                 if ($colmes > $user->config->kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;', $start, $colmes, $user->config->kmess) . '</div>';
+                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;',
+                            $start, $colmes, $user->config->kmess) . '</div>';
                 }
 
                 // Метка удаления темы
@@ -695,18 +709,17 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     echo '<table cellpadding="0" cellspacing="0"><tr><td>';
 
                     if (file_exists(('upload/users/avatar/' . $res['user_id'] . '.png'))) {
-                        echo '<img src="../upload/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
+                        echo '<img src="../upload/users/avatar/' . $res['user_id'] . '.png" alt="" />&#160;';
                     } else {
-                        echo '<img src="' . $assets->url('images/old/empty.png') . '" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
+                        echo '<img src="' . $assets->url('images/old/empty.png') . '" alt="">&#160;';
                     }
                     echo '</td><td>';
 
                     // Метка пола
                     if ($res['sex']) {
-                        echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png',
-                            ['class' => 'icon-inline']);
+                        echo '<img src="' . $assets->url('images/old/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png') . '" alt="" class="icon-inline">';
                     } else {
-                        echo $tools->image('del.png');
+                        echo '<img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon">';
                     }
 
                     // Ник юзера и ссылка на его анкету
@@ -742,8 +755,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
                     // Статус пользователя
                     if (! empty($res['status'])) {
-                        echo '<div class="status">' . $tools->image('label.png',
-                                ['class' => 'icon-inline']) . $res['status'] . '</div>';
+                        echo '<div class="status"><img src="' . $assets->url('images/old/label.png') . '" alt="" class="icon-inline">' . $res['status'] . '</div>';
                     }
 
                     // Закрываем таблицу с аватаром
@@ -881,13 +893,12 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
                 }
 
-                echo '<div class="phdr"><a id="down"></a><a href="#up">' . $tools->image('up.png',
-                        ['class' => '']) . '</a>' .
-                    '&#160;&#160;' . _t('Total') . ': ' . $colmes . '</div>';
+                echo '<div class="phdr"><a id="down"></a><a href="#up"><img src="' . $assets->url('images/old/up.png') . '" alt=""></a>&#160;&#160;' . _t('Total') . ': ' . $colmes . '</div>';
 
                 // Постраничная навигация
                 if ($colmes > $user->config->kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;', $start, $colmes, $user->config->kmess) . '</div>' .
+                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;',
+                            $start, $colmes, $user->config->kmess) . '</div>' .
                         '<p><form action="?type=topic&amp;id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

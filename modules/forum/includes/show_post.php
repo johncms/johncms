@@ -35,18 +35,17 @@ echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $them['name'] . '</div><
 
 // Данные пользователя
 echo '<table cellpadding="0" cellspacing="0"><tr><td>';
-if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
-    echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
+if (file_exists(('upload/users/avatar/' . $res['user_id'] . '.png'))) {
+    echo '<img src="../upload/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
 } else {
-    echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
+    echo '<img src="' . $assets->url('images/old/empty.png') . '" alt="">&#160;';
 }
 echo '</td><td>';
 
 if ($res['sex']) {
-    echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png',
-        ['class' => 'icon-inline']);
+    echo '<img src="' . $assets->url('images/old/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png') . '" alt="" class="icon-inline">';
 } else {
-    echo $tools->image('del.png');
+    echo '<img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon">';
 }
 
 // Ник юзера и ссылка на его анкету
@@ -80,7 +79,7 @@ echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br 
 
 // Статус юзера
 if (! empty($res['status'])) {
-    echo '<div class="status">' . $tools->image('label.png', ['class' => 'icon-inline']) . $res['status'] . '</div>';
+    echo '<div class="status"><img src="' . $assets->url('images/old/label.png') . '" alt="" class="icon-inline">' . $res['status'] . '</div>';
 }
 
 echo '</td></tr></table>';

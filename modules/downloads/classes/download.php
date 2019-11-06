@@ -57,7 +57,8 @@ class download
         } elseif ($format_file == 'thm') {
             require_once 'Tar.php';
             $theme = new Archive_Tar($file);
-            if (! $file_th = $theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(pathinfo($file, PATHINFO_FILENAME) . '.xml')) {
+            if (! $file_th = $theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(pathinfo($file,
+                        PATHINFO_FILENAME) . '.xml')) {
                 $list = $theme->listContent();
                 $all = count($list);
                 for ($i = 0; $i < $all; ++$i) {
@@ -71,18 +72,18 @@ class download
                 preg_match('/<\?\s*xml\s*version\s*=\s*"1\.0"\s*\?>(.*)<\/.+>/isU', file_get_contents($file), $array);
                 $file_th = trim($array[0]);
             }
-            $load_file = trim((string )simplexml_load_string($file_th)->Standby_image['Source']);
+            $load_file = trim((string ) simplexml_load_string($file_th)->Standby_image['Source']);
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
             if (! $load_file) {
-                $load_file = trim((string )simplexml_load_string($file_th)->Desktop_image['Source']);
+                $load_file = trim((string ) simplexml_load_string($file_th)->Desktop_image['Source']);
             }
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
             if (! $load_file) {
-                $load_file = trim((string )simplexml_load_string($file_th)->Desktop_image['Source']);
+                $load_file = trim((string ) simplexml_load_string($file_th)->Desktop_image['Source']);
             }
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
@@ -129,6 +130,9 @@ class download
         /** @var Psr\Container\ContainerInterface $container */
         $container = App::getContainer();
 
+        /** @var Johncms\View\Extension\Assets $assets */
+        $assets = $container->get(Johncms\View\Extension\Assets::class);
+
         /** @var Johncms\Api\UserInterface $systemUser */
         $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
@@ -138,7 +142,7 @@ class download
         /** @var Johncms\Api\ConfigInterface $config */
         $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-        $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
+        $out .= '<img src="' . $assets->url('images/old/system/' . $icon_id . '.png') . '" alt="" class="icon">';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
 
         if ($res_down['time'] > $old) {
@@ -205,11 +209,14 @@ class download
         /** @var Johncms\Api\ToolsInterface $tools */
         $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
+        /** @var Johncms\View\Extension\Assets $assets */
+        $assets = App::getContainer()->get(Johncms\View\Extension\Assets::class);
+
         $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
         $out = '<table  width="100%"><tr><td width="16" valign="top">';
         $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
-        $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
+        $out .= '<img src="' . $assets->url('images/old/system/' . $icon_id . '.png') . '" alt="" class="icon">&nbsp;';
         $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
 
         if ($array['res']['time'] > $old) {
@@ -291,7 +298,8 @@ class download
             if ($sql) {
                 /** @var PDO $db */
                 $db = App::getContainer()->get(PDO::class);
-                $req_cat = $db->query("SELECT * FROM `download__category` WHERE `dir` IN ('" . implode("','", $sql) . "') ORDER BY `id` ASC");
+                $req_cat = $db->query("SELECT * FROM `download__category` WHERE `dir` IN ('" . implode("','",
+                        $sql) . "') ORDER BY `id` ASC");
                 while ($res_cat = $req_cat->fetch()) {
                     $category[] = '<a href="?id=' . $res_cat['id'] . '">' . htmlspecialchars($res_cat['rus_name']) . '</a>';
                 }

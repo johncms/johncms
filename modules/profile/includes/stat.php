@@ -17,7 +17,7 @@ $textl = htmlspecialchars($foundUser['name']) . ': ' . _t('Statistic');
 echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Statistic') . '</div>' .
     '<div class="user"><p>' . $tools->displayUser($foundUser, ['iphide' => 1]) . '</p></div>' .
     '<div class="list2">' .
-    '<p><h3>' . $tools->image('rate.gif') . _t('Statistic') . '</h3><ul>';
+    '<p><h3>' . _t('Statistic') . '</h3><ul>';
 
 if ($user->rights >= 7) {
     if (! $foundUser['preg'] && empty($foundUser['regadm'])) {
@@ -38,12 +38,12 @@ if ($lastvisit) {
 }
 
 echo '</ul></p><p>' .
-    '<h3>' . $tools->image('activity.gif') . _t('Activity') . '</h3><ul>' .
+    '<h3>' . _t('Activity') . '</h3><ul>' .
     '<li><span class="gray">' . _t('Forum') . ':</span> <a href="?act=activity&amp;user=' . $foundUser['id'] . '">' . $foundUser['postforum'] . '</a></li>' .
     '<li><span class="gray">' . _t('Guestbook') . ':</span> <a href="?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'] . '">' . $foundUser['postguest'] . '</a></li>' .
     '<li><span class="gray">' . _t('Comments') . ':</span> ' . $foundUser['komm'] . '</li>' .
     '</ul></p>' .
-    '<p><h3>' . $tools->image('award.png') . _t('Achievements') . '</h3>';
+    '<p><h3>' . _t('Achievements') . '</h3>';
 $num = [
     50,
     100,

@@ -325,7 +325,7 @@ class Tools implements ToolsInterface
                 $iconName = ($user['sex'] === 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png';
                 $out .= '<img src="' . $this->assets->url('images/old/' . $iconName) . '" alt="" class="icon-inline">';
             } else {
-                $out .= $this->image('del.png');
+                $out .= '<img src="' . $this->assets->url('images/old/del.png') . '" alt="" class="icon-inline">';
             }
 
             $out .= ! $this->user->isValid() || $this->user->id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
@@ -349,7 +349,7 @@ class Tools implements ToolsInterface
             }
 
             if (! isset($arg['stshide']) && ! empty($user['status'])) {
-                $out .= '<div class="status">' . $this->image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
+                $out .= '<div class="status"><img src="' . $this->assets->url('images/old/label.png') . '" alt="" class="icon-inline">' . $user['status'] . '</div>';
             }
 
             $out .= '</td></tr></table>';
@@ -454,29 +454,6 @@ class Tools implements ToolsInterface
         }
 
         return $this->user;
-    }
-
-    /**
-     * @param string $name
-     * @param array  $args
-     * @return bool|string
-     */
-    public function image($name, array $args = [])
-    {
-        $homeurl = $this->config['homeurl'];
-
-        if (is_file(ROOT_PATH . 'theme/' . $this->getSkin() . '/images/' . $name)) {
-            $src = $homeurl . '/theme/' . $this->getSkin() . '/images/' . $name;
-        } elseif (is_file(ROOT_PATH . 'images/' . $name)) {
-            $src = $homeurl . '/images/' . $name;
-        } else {
-            return false;
-        }
-
-        return '<img src="' . $src . '" alt="' . ($args['alt'] ?? '') . '"' .
-            (isset($args['width']) ? ' width="' . $args['width'] . '"' : '') .
-            (isset($args['height']) ? ' height="' . $args['height'] . '"' : '') .
-            ' class="' . ($args['class'] ?? 'icon') . '"/>';
     }
 
     /**

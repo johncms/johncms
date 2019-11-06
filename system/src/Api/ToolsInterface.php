@@ -34,8 +34,6 @@ interface ToolsInterface
 
     public function getUser($id);
 
-    public function image($name, array $args = []);
-
     public function isIgnor($id);
 
     public function rusLat($str);

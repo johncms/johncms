@@ -90,24 +90,24 @@ if ($user->isValid()) {
                 }
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
                     $colmes1 = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
                     $cpg = ceil($colmes1 / $user->config->kmess);
 
                     if ($res['closed']) {
-                        echo $tools->image('tz.gif');
+                        echo '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">';
                     } elseif ($res['deleted']) {
-                        echo $tools->image('dl.gif');
+                        echo '<img src="' . $assets->url('images/old/dl.gif') . '" alt="" class="icon">';
                     } else {
-                        echo $tools->image('np.gif');
+                        echo '<img src="' . $assets->url('images/old/np.gif') . '" alt="" class="icon">';
                     }
 
                     if ($res['pinned']) {
-                        echo $tools->image('pt.gif');
+                        echo '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">';
                     }
 
                     if ($res['has_poll'] == 1) {
-                        echo $tools->image('rate.gif');
+                        echo '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">';
                     }
 
                     echo '&#160;<a href="?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
@@ -171,10 +171,22 @@ if ($user->isValid()) {
 
                     // Значки
                     $icons = [
-                        (isset($np) ? (! $res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
-                        ($res['pinned'] ? $tools->image('pt.gif') : ''),
-                        ($res['has_poll'] ? $tools->image('rate.gif') : ''),
-                        ($res['closed'] ? $tools->image('tz.gif') : ''),
+                        (isset($np)
+                            ? (! $res['pinned'] ? '<img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon">' : '')
+                            : '<img src="' . $assets->url('images/old/np.gif') . '" alt="" class="icon">'
+                        ),
+                        ($res['pinned']
+                            ? '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">'
+                            : ''
+                        ),
+                        ($res['has_poll']
+                            ? '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">'
+                            : ''
+                        ),
+                        ($res['closed']
+                            ? '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">'
+                            : ''
+                        ),
                     ];
                     echo implode('', array_filter($icons));
                     echo '<a href="?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
@@ -228,9 +240,18 @@ if ($user->isValid()) {
             echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
             // Значки
             $icons = [
-                ($res['pinned'] ? $tools->image('pt.gif') : ''),
-                ($res['has_poll'] ? $tools->image('rate.gif') : ''),
-                ($res['closed'] ? $tools->image('tz.gif') : ''),
+                ($res['pinned']
+                    ? '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">'
+                    : ''
+                ),
+                ($res['has_poll']
+                    ? '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">'
+                    : ''
+                ),
+                ($res['closed']
+                    ? '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">'
+                    : ''
+                ),
             ];
             echo implode('', array_filter($icons));
             echo '<a href="?type=topic&id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a>&#160;[' . $colmes1 . ']';
