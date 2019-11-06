@@ -10,9 +10,8 @@ $this->layout('system::layout/old_default', [
         <?php foreach ($config->lng_list as $key => $val): ?>
             <div>
                 <label>
-                    <input type="radio" value="<?= $key ?>"
-                           name="setlng"<?= ($key == $locale ? ' checked="checked"' : '') ?>/>&#160;
-                    <?= $tools->getFlag($key) ?>
+                    <input type="radio" value="<?= $key ?>" name="setlng"<?= ($key == $locale ? ' checked="checked"' : '') ?>/>&#160;
+                    <img src="<?= $this->asset('images/flags/' . strtolower($key) . '.png') ?>" alt="" style="margin-right: 8px; vertical-align: middle">
                     <?= $val ?>
                 </label>
             </div>

@@ -37,7 +37,9 @@
         <?php if (count($config->lng_list) > 1): ?>
             <td style="text-align: right">
                 <a href="<?= $config->homeurl ?>/language/"><strong><?= strtoupper($locale) ?></strong></a>&#160;
-                <a href="<?= $config->homeurl ?>/language/"><?= $tools->getFlag($locale) ?></a>
+                <a href="<?= $config->homeurl ?>/language/">
+                    <img src="<?= $this->asset('images/flags/' . strtolower($locale) . '.png') ?>" alt="" style="margin-right: 8px; vertical-align: middle">
+                </a>
             </td>
         <?php endif ?>
     </tr>
