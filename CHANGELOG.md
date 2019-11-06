@@ -25,6 +25,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 
 #### Removed
 - Из сканера безопасности удалена функция "Сканирование по дистрибутиву"
+- Удален старый метод для вывода картинок `Tools::image()`
 - Удалена библиотека geshi/geshi
 - Удалены старые темы оформления
 
