@@ -156,7 +156,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     ];
 
     if ($foundUser['id'] != $user->id) {
-        $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . $tools->displayPlace($foundUser['id'], $foundUser['place']);
+        $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . $tools->displayPlace($foundUser['place'], $foundUser['id']);
     }
 
     echo '<div class="user"><p>' . $tools->displayUser($foundUser, $arg) . '</p></div>';
