@@ -183,8 +183,7 @@ if ($config->mod_reg == 1) {
     echo '<div class="rmenu"><p>' . _t('You can get authorized on the site after confirmation of your registration.') . '</p></div>';
 }
 
-$captcha = new Batumibiz\Captcha\Captcha;
-$code = $captcha->generateCode();
+$code = (string) new Batumibiz\Captcha\Code;
 $_SESSION['code'] = $code;
 
 echo $view->render('reg::index', [
@@ -193,5 +192,5 @@ echo $view->render('reg::index', [
     'reg_pass'  => $reg_pass,
     'reg_name'  => $reg_name,
     'reg_about' => $reg_about,
-    'captcha'   => $captcha->generateImage($code),
+    'captcha'   => new Batumibiz\Captcha\Image($code),
 ]);
