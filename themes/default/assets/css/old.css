@@ -460,3 +460,28 @@ h4 {
 .padding {
     padding: 12px 6px
 }
+
+.label-h {
+    display: block;
+    font-size: medium;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.label-h:first-child{
+    margin-top: 0;
+}
+
+.caption-s {
+    font-size: .85em;
+    margin-top: 2px;
+}
+
+.caption-error{
+    color: red;
+    font-size: .9em;
+}
+
+.small{
+    font-size: .85em;
+}
