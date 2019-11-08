@@ -1,0 +1,47 @@
+<?php $this->layout('system::layout/old_default', ['title' => _t('News'), 'homeButton' => true]) ?>
+<div class="phdr"><strong><?= _t('News') ?></strong></div>
+<!-- Переключение страниц -->
+<?php if ($total > $user->config->kmess): ?>
+    <div class="topmenu"><?= $pagination ?></div>
+<?php endif ?>
+<!-- Вывод списка новостей -->
+<div class="list-striped">
+    <?php foreach ($out as $news): ?>
+        <div>
+            <!-- Показываем новость -->
+            <h3><?= $this->e($news['name']) ?></h3>
+            <div class="gray small"><?= _t('Author') ?>: <?= $news['avt'] ?> (<?= $tools->displayDate($news['time']) ?>)</div>
+            <div><?= $news['text'] ?></div>
+            <!-- Показываем модерские ссылки -->
+            <?php if ($user->rights >= 6): ?>
+                <div class="sub">
+                    <a href="?do=edit&amp;id=<?= $news['id'] ?>"><?= _t('Edit') ?></a> |
+                    <a href="?do=del&amp;id=<?= $news['id'] ?>"><?= _t('Delete') ?></a>
+                </div>
+            <?php endif ?>
+            <!-- Показываем ссылку на форум -->
+            <?php if (! empty($news['kom'])): ?>
+                <div class="sub">
+                    <a href="../forum/?type=topic&id=<?= $news['kom'] ?>">
+                        <?= _t('Discuss in Forum') ?> (<?= $news['kom_count'] ?>)
+                    </a>
+                </div>
+            <?php endif ?>
+        </div>
+    <?php endforeach ?>
+</div>
+<div class="phdr"><?= _t('Total') ?>:&#160;<?= $total ?></div>
+<!-- Переключение страниц -->
+<?php if ($total > $user->config->kmess): ?>
+    <div class="topmenu"><?= $pagination ?></div>
+    <form method="post">
+        <input type="text" name="page" size="2"/>
+        <input type="submit" value="<?= _t('To Page') ?> &gt;&gt;"/>
+    </form>
+<?php endif ?>
+<?php if ($user->rights >= 6): ?>
+    <p>
+        <a href="?do=add"><?= _t('Add') ?></a><br>
+        <a href="?do=clean"><?= _t('Clear') ?></a>
+    </p>
+<?php endif ?>
