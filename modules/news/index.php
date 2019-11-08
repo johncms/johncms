@@ -61,31 +61,27 @@ if (($key = array_search($act, $actions)) !== false) {
     $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
     $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 
-    function newsList($query)
-    {
-        global $tools, $db;
-
-        while ($res = $query->fetch()) {
-            $text = $tools->checkout($res['text'], 1, 1);
-            $res['text'] = $tools->smilies($text, 1);
-
-            if (! empty($res['kom'])) {
-                $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
-
-                if ($mes = $res_mes->fetch()) {
-                    $res['kom_count'] = $mes['post_count'] - 1;
-                } else {
-                    $res['kom_count'] = 0;
-                }
-            }
-
-            yield $res;
-        }
-    }
-
     echo $view->render('news::index', [
-        'out'        => newsList($req),
         'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
         'total'      => $total,
+        'list'       =>
+            function () use ($req, $tools, $db) {
+                while ($res = $req->fetch()) {
+                    $text = $tools->checkout($res['text'], 1, 1);
+                    $res['text'] = $tools->smilies($text, 1);
+
+                    if (! empty($res['kom'])) {
+                        $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
+
+                        if ($mes = $res_mes->fetch()) {
+                            $res['kom_count'] = $mes['post_count'] - 1;
+                        } else {
+                            $res['kom_count'] = 0;
+                        }
+                    }
+
+                    yield $res;
+                }
+            },
     ]);
 }

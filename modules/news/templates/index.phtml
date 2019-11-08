@@ -6,7 +6,7 @@
 <?php endif ?>
 <!-- Вывод списка новостей -->
 <div class="list-striped">
-    <?php foreach ($out as $news): ?>
+    <?php foreach ($list() as $news): ?>
         <div>
             <!-- Показываем новость -->
             <h3><?= $this->e($news['name']) ?></h3>
