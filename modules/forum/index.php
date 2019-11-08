@@ -181,18 +181,12 @@ if ($act && ($key = array_search($act,
     } else {
         // Фиксируем местоположение и получаем заголовок страницы
         switch ($show_type) {
-            case 'section':
-                $headmod = 'forum,' . $id . ',section';
-                $res = $db->query('SELECT `name` FROM `forum_sections` WHERE `id`= ' . $id)->fetch();
-                break;
-
             case 'topics':
-                $headmod = 'forum,' . $id . ',topics';
+            case 'section':
                 $res = $db->query('SELECT `name` FROM `forum_sections` WHERE `id`= ' . $id)->fetch();
                 break;
 
             case 'topic':
-                $headmod = 'forum,' . $id . ',topic';
                 $res = $db->query('SELECT `name` FROM `forum_topic` WHERE `id`= ' . $id)->fetch();
                 break;
 
@@ -323,8 +317,8 @@ if ($act && ($key = array_search($act,
 
         if ($user->isValid() && $show_type == 'topic') {
             $online = $db->query('SELECT (
-SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum,${id},topic') AS online_u, (
-SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,${id},topic') AS online_g")->fetch();
+SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_u, (
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g")->fetch();
             $wholink = '<a href="?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</span>';
         }
 
