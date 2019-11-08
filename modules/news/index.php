@@ -37,321 +37,75 @@ $view = $container->get(Engine::class);
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
+$act = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
-$textl = _t('News');
+$actions = [
+    'add',
+    'clean',
+    'del',
+    'edit',
+];
 
-switch ($do) {
-    case 'add':
-        // Добавление новости
-        if ($user->rights >= 6) {
-            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
-            $old = 20;
+if (($key = array_search($act, $actions)) !== false) {
+    ob_start(); // Перехват вывода скриптов без шаблона
+    require __DIR__ . '/includes/' . $actions[$key] . '.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => _t('News'),
+        'content' => ob_get_clean(),
+    ]);
+} else {
+    ob_start(); // Перехват вывода скриптов без шаблона
 
-            if (isset($_POST['submit'])) {
-                $error = [];
-                $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : false;
-                $text = isset($_POST['text']) ? trim($_POST['text']) : false;
+    // Вывод списка новостей
+    echo '<div class="phdr"><b>' . _t('News') . '</b></div>';
 
-                if (! $name) {
-                    $error[] = _t('You have not entered news title');
-                }
+    if ($user->rights >= 6) {
+        echo '<div class="topmenu"><a href="?do=add">' . _t('Add') . '</a> | <a href="?do=clean">' . _t('Clear') . '</a></div>';
+    }
 
-                if (! $text) {
-                    $error[] = _t('You have not entered news text');
-                }
+    $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
+    $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+    $i = 0;
 
-                $flood = $tools->antiflood();
+    while ($res = $req->fetch()) {
+        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+        $text = $tools->checkout($res['text'], 1, 1);
+        $text = $tools->smilies($text, 1);
+        echo '<h3>' . $res['name'] . '</h3>' .
+            '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . $tools->displayDate($res['time']) . ')</small></span>' .
+            '<br />' . $text . '<div class="sub">';
 
-                if ($flood) {
-                    $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
-                }
-
-                if (! $error) {
-                    $rid = 0;
-
-                    if (! empty($_POST['pf']) && ($_POST['pf'] != '0')) {
-                        $pf = (int) ($_POST['pf']);
-                        $rz = $_POST['rz'];
-                        $pr = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${pf}'");
-
-                        while ($pr1 = $pr->fetch()) {
-                            $arr[] = $pr1['id'];
-                        }
-
-                        foreach ($rz as $v) {
-                            if (in_array($v, $arr)) {
-                                $date = new DateTime();
-                                $date = $date->format('Y-m-d H:i:s');
-
-                                $db->prepare('
-                                  INSERT INTO `forum_topic` SET
-                                  `section_id` = ?,
-                                  `created_at` = ?,
-                                  `user_id` = ?,
-                                  `user_name` = ?,
-                                  `name` = ?,
-                                  `last_post_date` = ?,
-                                  `post_count` = 0
-                                ')->execute([
-                                    $v,
-                                    $date,
-                                    $user->id,
-                                    $user->name,
-                                    $name,
-                                    time(),
-                                ]);
-
-                                /** @var Johncms\Api\EnvironmentInterface $env */
-                                $env = $container->get(Johncms\Api\EnvironmentInterface::class);
-                                $rid = $db->lastInsertId();
-
-                                $db->prepare('
-                                  INSERT INTO `forum_messages` SET
-                                  `topic_id` = ?,
-                                  `date` = ?,
-                                  `user_id` = ?,
-                                  `user_name` = ?,
-                                  `ip` = ?,
-                                  `ip_via_proxy` = ?,
-                                  `user_agent` = ?,
-                                  `text` = ?
-                                ')->execute([
-                                    $rid,
-                                    time(),
-                                    $user->id,
-                                    $user->name,
-                                    $env->getIp(),
-                                    $env->getIpViaProxy(),
-                                    $env->getUserAgent(),
-                                    $text,
-                                ]);
-                                $tools->recountForumTopic($rid);
-                            }
-                        }
-                    }
-
-                    $db->prepare('
-                      INSERT INTO `news` SET
-                      `time` = ?,
-                      `avt` = ?,
-                      `name` = ?,
-                      `text` = ?,
-                      `kom` = ?
-                    ')->execute([
-                        time(),
-                        $user->name,
-                        $name,
-                        $text,
-                        $rid,
-                    ]);
-
-                    $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-                    echo '<p>' . _t('News added') . '<br /><a href="./">' . _t('Back to news') . '</a></p>';
-                } else {
-                    echo $tools->displayError($error, '<a href="./">' . _t('Back to news') . '</a>');
-                }
-            } else {
-                echo '<form action="?do=add" method="post"><div class="menu">' .
-                    '<p><h3>' . _t('Title') . '</h3>' .
-                    '<input type="text" name="name"/></p>' .
-                    '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $user->config->fieldHeight . '" name="text"></textarea></p>' .
-                    '<p><h3>' . _t('Discussion') . '</h3>';
-                $fr = $db->query('SELECT * FROM `forum_sections` WHERE `section_type` = 0');
-                echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
-
-                while ($fr1 = $fr->fetch()) {
-                    echo '<input type="radio" name="pf" value="' . $fr1['id'] . '"/>' . $fr1['name'] . '<select name="rz[]">';
-                    $pr = $db->query("SELECT * FROM `forum_sections` WHERE `section_type` = 1 AND `parent` = '" . $fr1['id'] . "'");
-
-                    while ($pr1 = $pr->fetch()) {
-                        echo '<option value="' . $pr1['id'] . '">' . $pr1['name'] . '</option>';
-                    }
-                    echo '</select><br>';
-                }
-
-                echo '</p></div><div class="bmenu">' .
-                    '<input type="submit" name="submit" value="' . _t('Save') . '"/>' .
-                    '</div></form>' .
-                    '<p><a href="./">' . _t('Back to news') . '</a></p>';
+        if ($res['kom'] != 0 && $res['kom'] != '') {
+            $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
+            $komm = 0;
+            if ($mes = $res_mes->fetch()) {
+                $komm = $mes['post_count'] - 1;
             }
-        } else {
-            header('location: ./');
+            if ($komm >= 0) {
+                echo '<a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss in Forum') . ' (' . $komm . ')</a><br>';
+            }
         }
-        break;
-
-    case 'edit':
-        // Редактирование новости
-        if ($user->rights >= 6) {
-            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
-
-            if (! $id) {
-                echo $view->render('system::app/old_content', [
-                    'title'   => $textl,
-                    'content' => $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Back to news') . '</a>'),
-                ]);
-                exit;
-            }
-
-            if (isset($_POST['submit'])) {
-                $error = [];
-
-                if (empty($_POST['name'])) {
-                    $error[] = _t('You have not entered news title');
-                }
-
-                if (empty($_POST['text'])) {
-                    $error[] = _t('You have not entered news text');
-                }
-
-                $name = htmlspecialchars(trim($_POST['name']));
-                $text = trim($_POST['text']);
-
-                if (! $error) {
-                    $db->prepare('
-                      UPDATE `news` SET
-                      `name` = ?,
-                      `text` = ?
-                      WHERE `id` = ?
-                    ')->execute([
-                        $name,
-                        $text,
-                        $id,
-                    ]);
-                } else {
-                    echo $tools->displayError($error, '<a href="?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                }
-                echo '<p>' . _t('Article changed') . '<br /><a href="./">' . _t('Continue') . '</a></p>';
-            } else {
-                $res = $db->query("SELECT * FROM `news` WHERE `id` = '${id}'")->fetch();
-
-                echo '<div class="menu"><form action="?do=edit&amp;id=' . $id . '" method="post">' .
-                    '<p><h3>' . _t('Title') . '</h3>' .
-                    '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
-                    '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $user->config->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="./">' . _t('Back to news') . '</a></div>';
-            }
-        } else {
-            header('location: ./');
-        }
-        break;
-
-    case 'clean':
-        // Чистка новостей
-        if ($user->rights >= 7) {
-            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
-
-            if (isset($_POST['submit'])) {
-                $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
-
-                switch ($cl) {
-                    case '1':
-                        // Чистим новости, старше 1 недели
-                        $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 604800));
-                        $db->query('OPTIMIZE TABLE `news`');
-
-                        echo '<p>' . _t('Delete all news older than 1 week') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
-                        break;
-
-                    case '2':
-                        // Проводим полную очистку
-                        $db->query('TRUNCATE TABLE `news`');
-                        echo '<p>' . _t('Delete all news') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
-                        break;
-                    default:
-                        // Чистим сообщения, старше 1 месяца
-                        $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 2592000));
-                        $db->query('OPTIMIZE TABLE `news`;');
-
-                        echo '<p>' . _t('Delete all news older than 1 month') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
-                }
-            } else {
-                echo '<div class="menu"><form id="clean" method="post" action="?do=clean">' .
-                    '<p><h3>' . _t('Clearing parameters') . '</h3>' .
-                    '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 month') . '<br />' .
-                    '<input type="radio" name="cl" value="1" />' . _t('Older than 1 week') . '<br />' .
-                    '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="./">' . _t('Cancel') . '</a></div>';
-            }
-        } else {
-            header('location: ./');
-        }
-        break;
-
-    case 'del':
-        // Удаление новости
-        if ($user->rights >= 6) {
-            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
-
-            if (isset($_GET['yes'])) {
-                $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
-                echo '<p>' . _t('Article deleted') . '<br><a href="./">' . _t('Back to news') . '</a></p>';
-            } else {
-                echo '<p>' . _t('Do you really want to delete?') . '<br>' .
-                    '<a href="?do=del&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="./">' . _t('Cancel') . '</a></p>';
-            }
-        } else {
-            header('location: ./');
-        }
-        break;
-
-    default:
-        // Вывод списка новостей
-        echo '<div class="phdr"><b>' . _t('News') . '</b></div>';
 
         if ($user->rights >= 6) {
-            echo '<div class="topmenu"><a href="?do=add">' . _t('Add') . '</a> | <a href="?do=clean">' . _t('Clear') . '</a></div>';
+            echo '<a href="?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
+                '<a href="?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
         }
 
-        $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
-        $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
-        $i = 0;
+        echo '</div></div>';
+        ++$i;
+    }
+    echo '<div class="phdr">' . _t('Total') . ':&#160;' . $total . '</div>';
 
-        while ($res = $req->fetch()) {
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $text = $tools->checkout($res['text'], 1, 1);
-            $text = $tools->smilies($text, 1);
-            echo '<h3>' . $res['name'] . '</h3>' .
-                '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . $tools->displayDate($res['time']) . ')</small></span>' .
-                '<br />' . $text . '<div class="sub">';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>' .
+            '<p><form method="post">' .
+            '<input type="text" name="page" size="2"/>' .
+            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
+    }
 
-            if ($res['kom'] != 0 && $res['kom'] != '') {
-                $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
-                $komm = 0;
-                if ($mes = $res_mes->fetch()) {
-                    $komm = $mes['post_count'] - 1;
-                }
-                if ($komm >= 0) {
-                    echo '<a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss in Forum') . ' (' . $komm . ')</a><br>';
-                }
-            }
-
-            if ($user->rights >= 6) {
-                echo '<a href="?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
-                    '<a href="?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
-            }
-
-            echo '</div></div>';
-            ++$i;
-        }
-        echo '<div class="phdr">' . _t('Total') . ':&#160;' . $total . '</div>';
-
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>' .
-                '<p><form method="post">' .
-                '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-        }
+    echo $view->render('system::app/old_content', [
+        'title'   => _t('News'),
+        'content' => ob_get_clean(),
+    ]);
 }
-
-echo $view->render('system::app/old_content', [
-    'title'   => $textl,
-    'content' => ob_get_clean(),
-]);
