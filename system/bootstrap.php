@@ -13,7 +13,6 @@ declare(strict_types=1);
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\UserInterface;
 use Psr\Container\ContainerInterface;
-use Zend\I18n\Translator\Translator;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\Config;
 use Zend\Stdlib\ArrayUtils;
@@ -118,46 +117,6 @@ $cacheFile = CACHE_PATH . 'system-cleanup.cache';
 if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     new Johncms\Utility\Cleanup($db);
     file_put_contents($cacheFile, time());
-}
-
-/**
- * Translate a message
- *
- * @param string $message
- * @param string $textDomain
- * @return string
- */
-function _t($message, $textDomain = 'default')
-{
-    /** @var Translator $translator */
-    static $translator;
-
-    if (null === $translator) {
-        $translator = App::getContainer()->get(Translator::class);
-    }
-
-    return $translator->translate($message, $textDomain);
-}
-
-/**
- * Translate a plural message
- *
- * @param string $singular
- * @param string $plural
- * @param int    $number
- * @param string $textDomain
- * @return string
- */
-function _p($singular, $plural, $number, $textDomain = 'default')
-{
-    /** @var Translator $translator */
-    static $translator;
-
-    if (null === $translator) {
-        $translator = App::getContainer()->get(Translator::class);
-    }
-
-    return $translator->translatePlural($singular, $plural, $number, $textDomain);
 }
 
 /** @var UserInterface $userConfig */
