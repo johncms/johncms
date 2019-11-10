@@ -9,6 +9,11 @@
 $counters = $container->get('counters');
 $new_mail = $counters->mail();
 $forum_counters = $counters->forumCounters();
+$guestbook_counters = $counters->guestbookCounters();
+$downloads_counters = $counters->downloadsCounters();
+$library_counters = $counters->libraryCounters();
+$users_counters = $counters->usersCounters();
+$album_counters = $counters->albumCounters();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -124,6 +129,12 @@ $forum_counters = $counters->forumCounters();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
                             </svg>
                             <span class="flex-grow-1"><?= _t('Guestbook', 'system') ?></span>
+                            <?php if($guestbook_counters['guestbook'] > 0 || $guestbook_counters['admin_club'] > 0): ?>
+                                <span class="badge badge-pill badge-secondary">
+                                    <?= $tools->formatNumber($guestbook_counters['guestbook']) ?>
+                                    <?= $guestbook_counters['admin_club'] > 0 ? ' / ' . $tools->formatNumber($guestbook_counters['admin_club']) : '' ?>
+                                </span>
+                            <?php endif ?>
                         </a>
                     </li>
                 <?php endif ?>
@@ -134,6 +145,12 @@ $forum_counters = $counters->forumCounters();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
                             </svg>
                             <span class="flex-grow-1"><?= _t('Downloads', 'system') ?></span>
+                            <?php if($downloads_counters['total'] > 0): ?>
+                                <span class="badge badge-pill <?= ($downloads_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
+                                    <?= $tools->formatNumber($downloads_counters['total']) ?>
+                                    <?= ($downloads_counters['new'] > 0 ? '/ +'.$tools->formatNumber($downloads_counters['new']) : '') ?>
+                                </span>
+                            <?php endif ?>
                         </a>
                     </li>
                 <?php endif ?>
@@ -144,6 +161,12 @@ $forum_counters = $counters->forumCounters();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#text"/>
                             </svg>
                             <span class="flex-grow-1"><?= _t('Library', 'system') ?></span>
+                            <?php if($library_counters['total'] > 0): ?>
+                                <span class="badge badge-pill <?= ($library_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
+                                    <?= $tools->formatNumber($library_counters['total']) ?>
+                                    <?= ($library_counters['new'] > 0 ? '/ +'.$tools->formatNumber($library_counters['new']) : '') ?>
+                                </span>
+                            <?php endif ?>
                         </a>
                     </li>
                 <?php endif ?>
@@ -153,6 +176,12 @@ $forum_counters = $counters->forumCounters();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('Users', 'system') ?></span>
+                        <?php if($users_counters['total'] > 0): ?>
+                            <span class="badge badge-pill <?= ($users_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
+                                <?= $tools->formatNumber($users_counters['total']) ?>
+                                <?= ($users_counters['new'] > 0 ? '/ +'.$tools->formatNumber($users_counters['new']) : '') ?>
+                            </span>
+                        <?php endif ?>
                     </a>
                 </li>
                 <li>
@@ -161,6 +190,12 @@ $forum_counters = $counters->forumCounters();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#picasa"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('Photo Albums', 'system') ?></span>
+                        <?php if($album_counters['photo'] > 0): ?>
+                            <span class="badge badge-pill <?= ($album_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
+                                <?= $tools->formatNumber($album_counters['album']) ?> / <?= $tools->formatNumber($album_counters['photo']) ?>
+                                <?= ($album_counters['new'] > 0 ? '/ +'.$tools->formatNumber($album_counters['new']) : '') ?>
+                            </span>
+                        <?php endif ?>
                     </a>
                 </li>
                 <li>

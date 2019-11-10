@@ -49,6 +49,8 @@ class Counters
      * Счетчик Фотоальбомов пользователей
      *
      * @return string
+     * @deprecated use albumCounters
+     * TODO: содержимое albumCounters перенести в этот метод после проверки на использование
      */
     public function album()
     {
@@ -83,6 +85,8 @@ class Counters
      * Счетчик загруз центра
      *
      * @return string
+     * @deprecated use downloadsCounters
+     * TODO: содержимое downloadsCounters перенести в этот метод после проверки на использование
      */
     public function downloads()
     {
@@ -120,6 +124,7 @@ class Counters
      *
      * @return string
      * @deprecated use forumCounters
+     * TODO: содержимое forumCounters перенести в этот метод после проверки на использование
      */
     public function forum()
     {
@@ -183,6 +188,8 @@ class Counters
      *
      * @param int $mod
      * @return int|string
+     * @deprecated use guestbookCounters
+     * TODO: содержимое guestbookCounters перенести в этот метод после проверки на использование
      */
     public function guestbook($mod = 0)
     {
@@ -216,6 +223,8 @@ class Counters
      * Статистика библиотеки
      *
      * @return string
+     * @deprecated use libraryCounters
+     * TODO: содержимое libraryCounters перенести в этот метод после проверки на использование
      */
     public function library()
     {
@@ -272,6 +281,8 @@ class Counters
      * Количество зарегистрированных пользователей
      *
      * @return string
+     * @deprecated use usersCounters
+     * TODO: содержимое usersCounters перенести в этот метод после проверки на использование
      */
     public function users()
     {
@@ -343,6 +354,147 @@ class Counters
             'messages' => $message,
             'new_messages' => $new_messages,
         ];
+    }
+
+
+    /**
+     * Счетчики гостевой и админклуба
+     *
+     * @param int $mod
+     * @return array
+     */
+    public function guestbookCounters($mod = 0): array
+    {
+        $guestbook = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
+        $admin_club = 0;
+        if ($this->systemUser->rights >= 1) {
+            $admin_club = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
+        }
+
+        return [
+            'guestbook' => $guestbook,
+            'admin_club' => $admin_club,
+        ];
+    }
+
+
+    /**
+     * Счетчики загруз-центра
+     *
+     * @return array
+     */
+    public function downloadsCounters(): array
+    {
+        $file = CACHE_PATH . 'counters-downloads.cache';
+
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
+            $res = json_decode(file_get_contents($file), true);
+            $total = $res['total'] ?? 0;
+            $new = $res['new'] ?? 0;
+        } else {
+
+            $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
+            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
+
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
+        }
+
+        return [
+            'total' => $total,
+            'new' => $new,
+        ];
+    }
+
+
+    /**
+     * Статистика библиотеки
+     *
+     * @return array
+     */
+    public function libraryCounters(): array
+    {
+        $file = CACHE_PATH . 'counters-library.cache';
+
+        if (file_exists($file) && filemtime($file) > (time() - 3200)) {
+            $res = json_decode(file_get_contents($file), true);
+            $total = $res['total'];
+            $new = $res['new'];
+        } else {
+            $total = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1')->fetchColumn();
+            $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
+
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
+        }
+
+        return [
+            'total' => $total,
+            'new' => $new,
+        ];
+    }
+
+
+    /**
+     * Количество зарегистрированных пользователей
+     *
+     * @return array
+     */
+    public function usersCounters(): array
+    {
+        $file = CACHE_PATH . 'counters-users.dat';
+
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
+            $res = json_decode(file_get_contents($file), true);
+            $total = $res['total'];
+            $new = $res['new'];
+        } else {
+            $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
+            $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
+
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
+        }
+
+        return [
+            'total' => $total,
+            'new' => $new,
+        ];
+    }
+
+
+    /**
+     * Счетчик Фотоальбомов пользователей
+     *
+     * @return array
+     */
+    public function albumCounters(): array
+    {
+        $file = CACHE_PATH . 'counters-albums.cache';
+
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
+            $res = json_decode(file_get_contents($file), true);
+            $album = $res['album'];
+            $photo = $res['photo'];
+            $new = $res['new'];
+            $new_adm = $res['new_adm'];
+        } else {
+            $album = $this->db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
+            $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
+            $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
+            $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
+            file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
+        }
+
+        if ($this->systemUser->rights >= 6 && $new_adm) {
+            $newcount = $new_adm;
+        } elseif ($new) {
+            $newcount = $new;
+        }
+
+        return [
+            'album' => $album,
+            'photo' => $photo,
+            'new' => $newcount,
+        ];
+
     }
 
 }
