@@ -46,9 +46,6 @@
   "autoload": {
     "psr-4": {
       "Johncms\\": "system/src/"
-    },
-    "files": [
-      "system/helpers.php"
-    ]
+    }
   }
 }

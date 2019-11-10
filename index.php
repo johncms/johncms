@@ -53,5 +53,5 @@ switch ($match[0]) {
         break;
 
     default:
-        echo '404 Not Found';
+        pageNotFound();
 }
