@@ -119,6 +119,7 @@ class Counters
      * Статистика Форума
      *
      * @return string
+     * @deprecated use forumCounters
      */
     public function forum()
     {
@@ -311,4 +312,37 @@ class Counters
 
         return $new_mail;
     }
+
+
+    /**
+     * Метод возвращает количество тем, сообщений и непрочитанных сообщений на форуме
+     *
+     * @return array
+     */
+    public function forumCounters(): array
+    {
+        $file = CACHE_PATH . 'counters-forum.cache';
+        $new_messages = 0;
+
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
+            $res = json_decode(file_get_contents($file), true);
+            $topics = $res['topics'];
+            $message = $res['messages'];
+        } else {
+            $topics = $this->db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
+            $message = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
+            file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message]), LOCK_EX);
+        }
+
+        if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
+            $new_messages = $new_msg;
+        }
+
+        return [
+            'topics' => $topics,
+            'messages' => $message,
+            'new_messages' => $new_messages,
+        ];
+    }
+
 }

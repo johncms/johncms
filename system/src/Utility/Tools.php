@@ -676,4 +676,25 @@ class Tools implements ToolsInterface
             WHERE `id` = '${topic_id}'
         ");
     }
+
+
+    /**
+     * Форматирует числа в сокращенный формат
+     *
+     * @param $number
+     * @return int|string
+     */
+    public function formatNumber($number)
+    {
+        $prefixes = 'KMGTPEZY';
+        if ($number >= 1000) {
+            for ($i=-1; $number>=1000; ++$i) {
+                $number /= 1000;
+            }
+            return round($number, 2).$prefixes[$i];
+        }
+
+        return $number;
+    }
+
 }

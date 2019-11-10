@@ -8,6 +8,7 @@
 /** @var \Johncms\Utility\Counters $counters */
 $counters = $container->get('counters');
 $new_mail = $counters->mail();
+$forum_counters = $counters->forumCounters();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -33,7 +34,7 @@ $new_mail = $counters->mail();
 <div class="wrapper justify-content-end d-flex" id="app">
     <div class="sidebar">
         <div class="sidebar__logo">
-            <a href="#">
+            <a href="/">
                 <span class="logo__image">
                     <img src="<?= $this->asset('images/logo.gif') ?>" alt="logo" style="width: 170px;" class="img-fluid">
                 </span>
@@ -109,7 +110,10 @@ $new_mail = $counters->mail();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                             </svg>
                             <span class="flex-grow-1">Форум</span>
-                            <span class="badge badge-danger badge-pill">15</span>
+                            <span class="badge badge-pill <?= ($forum_counters['new_messages'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
+                                <?= $tools->formatNumber($forum_counters['topics']) ?> / <?= $tools->formatNumber($forum_counters['messages']) ?>
+                                <?= ($forum_counters['new_messages'] > 0 ? '/ +'.$tools->formatNumber($forum_counters['new_messages']) : '') ?>
+                            </span>
                         </a>
                     </li>
                 <?php endif ?>

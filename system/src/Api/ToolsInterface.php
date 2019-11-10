@@ -44,5 +44,7 @@ interface ToolsInterface
 
     public function recountForumTopic($topic_id);
 
+    public function formatNumber(int $number);
+
     public function trans($str); // DEPRECATED!!!
 }
