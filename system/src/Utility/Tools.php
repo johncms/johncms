@@ -233,13 +233,8 @@ class Tools implements ToolsInterface
 
     /**
      * Показываем местоположение пользователя
-     *
-     * @param int    $user_id
-     * @param string $place
-     * @param mixed $headmod
-     * @return string
      */
-    public function displayPlace($place, $userId = 0) : string
+    public function displayPlace(string $place, int $userId = 0) : string
     {
         $place = rtrim($place, '/');
 
@@ -251,19 +246,20 @@ class Tools implements ToolsInterface
 
         $placelist = [
             '/'                 => '<a href="#home#/">' . _t('On the Homepage', 'system') . '</a>',
-            '/users?act=online' => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
-            '/news'             => '<a href="#home#/news/">' . _t('Reading the news', 'system') . '</a>',
-            '/users'            => '<a href="#home#/users/">' . _t('List of users', 'system') . '</a>',
             '/album'            => '<a href="#home#/album/">' . _t('Watching the photo album', 'system') . '</a>',
             '/downloads'        => '<a href="#home#/downloads/">' . _t('Downloads', 'system') . '</a>',
-            '/help'             => '<a href="#home#/help/">' . _t('Reading the FAQ', 'system') . '</a>',
             '/forum'            => '<a href="#home#/forum/">' . _t('Forum', 'system') . '</a>&#160;/&#160;<a href="#home#/forum/?act=who">&gt;&gt;</a>',
             '/guestbook'        => '<a href="#home#/guestbook/">' . _t('Guestbook', 'system') . '</a>',
+            '/help'             => '<a href="#home#/help/">' . _t('Reading the FAQ', 'system') . '</a>',
             '/library'          => '<a href="#home#/library/">' . _t('Library', 'system') . '</a>',
-            '/redirect'         => _t('Redirect on external link to another site', 'system'),
+            '/login'            => _t('Login', 'system'),
             '/mail'             => _t('Personal correspondence', 'system'),
+            '/news'             => '<a href="#home#/news/">' . _t('Reading the news', 'system') . '</a>',
             '/profile'          => _t('Profile', 'system'),
+            '/redirect'         => _t('Redirect on external link to another site', 'system'),
             '/registration'     => _t('Registered on the site', 'system'),
+            '/users'            => '<a href="#home#/users/">' . _t('List of users', 'system') . '</a>',
+            '/users?act=online' => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
         ];
 
         if (array_key_exists($place, $placelist)) {
