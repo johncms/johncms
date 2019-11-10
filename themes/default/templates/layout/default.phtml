@@ -14,6 +14,7 @@ $downloads_counters = $counters->downloadsCounters();
 $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
 $album_counters = $counters->albumCounters();
+$news_counters = $counters->news();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -106,6 +107,12 @@ $album_counters = $counters->albumCounters();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('News archive', 'system') ?></span>
+                        <?php if($news_counters['total'] > 0): ?>
+                            <span class="badge badge-pill <?= ($news_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
+                                    <?= $tools->formatNumber($news_counters['total']) ?>
+                                    <?= ($news_counters['new'] > 0 ? '/ +'.$tools->formatNumber($news_counters['new']) : '') ?>
+                                </span>
+                        <?php endif ?>
                     </a>
                 </li>
                 <?php if ($config->mod_forum || $user->rights >= 7): ?>
