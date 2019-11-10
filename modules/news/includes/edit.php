@@ -12,6 +12,13 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ * @var League\Plates\Engine       $view
+ */
+
 // Редактирование новости
 if ($user->rights >= 6) {
     echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
@@ -65,6 +72,11 @@ if ($user->rights >= 6) {
             '</form></div>' .
             '<div class="phdr"><a href="./">' . _t('Back to news') . '</a></div>';
     }
+
+    echo $view->render('system::app/old_content', [
+        'title'   => _t('News'),
+        'content' => ob_get_clean(),
+    ]);
 } else {
-    header('location: ./');
+    pageNotFound();
 }
