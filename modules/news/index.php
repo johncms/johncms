@@ -39,10 +39,11 @@ $view->addFolder('news', __DIR__ . '/templates/');
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
+$act = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : 'index';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $actions = [
+    'index',
     'add',
     'clean',
     'del',
@@ -50,37 +51,7 @@ $actions = [
 ];
 
 if (($key = array_search($act, $actions)) !== false) {
-    ob_start(); // Перехват вывода скриптов без шаблона
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
-    echo $view->render('system::app/old_content', [
-        'title'   => _t('News'),
-        'content' => ob_get_clean(),
-    ]);
 } else {
-    $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
-    $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
-
-    echo $view->render('news::index', [
-        'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
-        'total'      => $total,
-        'list'       =>
-            function () use ($req, $tools, $db) {
-                while ($res = $req->fetch()) {
-                    $text = $tools->checkout($res['text'], 1, 1);
-                    $res['text'] = $tools->smilies($text, 1);
-
-                    if (! empty($res['kom'])) {
-                        $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
-
-                        if ($mes = $res_mes->fetch()) {
-                            $res['kom_count'] = $mes['post_count'] - 1;
-                        } else {
-                            $res['kom_count'] = 0;
-                        }
-                    }
-
-                    yield $res;
-                }
-            },
-    ]);
+    pageNotFound();
 }
