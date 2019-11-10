@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use League\Plates\Engine;
 use Zend\I18n\Translator\Translator;
 
 /**
@@ -50,6 +51,32 @@ function _p(string $singular, string $plural, int $number, string $textDomain = 
     }
 
     return $translator->translatePlural($singular, $plural, $number, $textDomain);
+}
+
+/**
+ * Отображение ошибки 404
+ *
+ * @param string $template
+ * @param string $title
+ * @param string $message
+ */
+function pageNotFound(
+    string $template = 'system::error/404',
+    string $title = 'ERROR: 404 Not Found',
+    string $message = ''
+) : void {
+    $engine = App::getContainer()->get(Engine::class);
+
+    if (! headers_sent()) {
+        header('HTTP/1.0 404 Not Found');
+    }
+
+    exit($engine->render($template, [
+        'title'   => $title,
+        'message' => ! empty($message)
+            ? $message
+            : _t('You are looking for something that doesn\'t exist or may have moved')
+    ]));
 }
 
 /**
