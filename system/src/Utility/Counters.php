@@ -289,4 +289,26 @@ class Counters
 
         return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
     }
+
+
+    /**
+     * Количество непрочитанных личных сообщений
+     *
+     * @return mixed
+     */
+    public function mail()
+    {
+        $new_mail = 0;
+        if (!$this->systemUser->isValid()) {
+            $new_mail = $this->db->query("SELECT COUNT(*) FROM `cms_mail`
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
+                            WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
+                            AND `cms_mail`.`sys`='0'
+                            AND `cms_mail`.`read`='0'
+                            AND `cms_mail`.`delete`!='" . $this->systemUser->id . "'
+                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
+        }
+
+        return $new_mail;
+    }
 }

@@ -4,6 +4,10 @@
  * @var Johncms\Api\ToolsInterface $tools
  * @var Johncms\Api\UserInterface  $user
  */
+
+/** @var \Johncms\Utility\Counters $counters */
+$counters = $container->get('counters');
+$new_mail = $counters->mail();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -38,11 +42,8 @@
         <div class="sidebar__wrapper">
             <!-- Пользователь -->
             <div class="sidebar__user">
-                <a class="nav-link user__link"
-                   href="#"
-                   data-toggle="dropdown"
-                   aria-expanded="false">
-                    Алексей Иванов
+                <a class="nav-link user__link" href="#" data-toggle="dropdown" aria-expanded="false">
+                    <?= ($user->id ? $user->name : _t('Guest', 'system') ) ?>
                     <span>
                         <svg class="icon icon-chevron-bottom">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
@@ -50,38 +51,46 @@
                     </span>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Изменить профиль</a>
-                    <a class="dropdown-item" href="#">Настройки</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Выход</a>
+                    <?php if ($user->isValid()): ?>
+                        <a class="dropdown-item" href="/profile/?act=office"><?= _t('Personal', 'system') ?></a>
+                    <?php else: ?>
+                        <a class="dropdown-item" href="/login/"><?= _t('Login', 'system') ?></a>
+                        <a class="dropdown-item" href="/registration/"><?= _t('Registration', 'system') ?></a>
+                    <?php endif ?>
                 </div>
             </div>
 
+            <?php if ($user->isValid()): ?>
             <!-- Группа кнопок -->
             <div class="sidebar__buttons btn-group">
                 <div class="group_item">
-                    <a href="#">
+                    <a href="/mail/?act=input" title="<?= _t('Mail', 'system') ?>">
                         <svg class="icon icon_messages">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
                         </svg>
-                        <span class="badge badge-danger badge-pill">3</span>
+                        <?php if($new_mail): ?>
+                            <span class="badge badge-danger badge-pill"><?= $new_mail ?></span>
+                        <?php endif ?>
                     </a>
                 </div>
                 <div class="group_item">
-                    <a href="">
+                    <a href="/profile/">
                         <svg class="icon icon_add">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
                         </svg>
                     </a>
                 </div>
                 <div class="group_item">
-                    <a href="">
+                    <a href="/profile/?act=settings">
                         <svg class="icon icon_search">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
                         </svg>
                     </a>
                 </div>
             </div>
+            <?php else: ?>
+                <div class="border-bottom"></div>
+            <?php endif ?>
 
             <!-- Меню -->
             <ul class="nav nav__vertical">
@@ -173,10 +182,14 @@
                         </button>
                     </div>
                     <div>
-                        <a href="#" class="icon_with_badge mr-2">
-                            <svg class="icon icon_messages"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/></svg>
-                            <span class="badge badge-danger badge-pill">3</span>
-                        </a>
+                        <?php if($user->isValid()): ?>
+                            <a href="#" class="icon_with_badge mr-2">
+                                <svg class="icon icon_messages"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/></svg>
+                                <?php if($new_mail): ?>
+                                    <span class="badge badge-danger badge-pill"><?= $new_mail ?></span>
+                                <?php endif ?>
+                            </a>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
