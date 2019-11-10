@@ -171,3 +171,5 @@ if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
 } else {
     ob_start();
 }
+
+require 'helpers.php';
