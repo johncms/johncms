@@ -71,7 +71,7 @@ $news_counters = $counters->news();
             <!-- Группа кнопок -->
             <div class="sidebar__buttons btn-group">
                 <div class="group_item">
-                    <a href="/mail/?act=input" title="<?= _t('Mail', 'system') ?>">
+                    <a href="/notifications/" title="<?= _t('Notifications', 'system') ?>">
                         <svg class="icon icon_messages">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
                         </svg>
@@ -229,7 +229,7 @@ $news_counters = $counters->news();
                     </div>
                     <div>
                         <?php if($user->isValid()): ?>
-                            <a href="#" class="icon_with_badge mr-2">
+                            <a href="/notifications/" class="icon_with_badge mr-2">
                                 <svg class="icon icon_messages"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/></svg>
                                 <?php if($new_mail): ?>
                                     <span class="badge badge-danger badge-pill"><?= $new_mail ?></span>
