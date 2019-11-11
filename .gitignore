@@ -10,6 +10,8 @@
 # Data folder ignores
 /data/cache/*
 !/data/cache/.gitkeep
+/data/logs/*
+!/data/logs/.gitkeep
 
 # Upload folder ignores
 /upload/downloads/files/*
