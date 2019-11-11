@@ -302,7 +302,6 @@ class Counters
         return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
     }
 
-
     /**
      * Количество непрочитанных личных сообщений
      *
@@ -311,7 +310,7 @@ class Counters
     public function mail()
     {
         $new_mail = 0;
-        if (!$this->systemUser->isValid()) {
+        if (! $this->systemUser->isValid()) {
             $new_mail = $this->db->query("SELECT COUNT(*) FROM `cms_mail`
                             LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
                             WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
@@ -323,7 +322,6 @@ class Counters
 
         return $new_mail;
     }
-
 
     /**
      * Метод возвращает количество тем, сообщений и непрочитанных сообщений на форуме
@@ -356,7 +354,6 @@ class Counters
         ];
     }
 
-
     /**
      * Счетчики гостевой и админклуба
      *
@@ -377,7 +374,6 @@ class Counters
         ];
     }
 
-
     /**
      * Счетчики загруз-центра
      *
@@ -392,7 +388,6 @@ class Counters
             $total = $res['total'] ?? 0;
             $new = $res['new'] ?? 0;
         } else {
-
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
             $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
 
@@ -404,7 +399,6 @@ class Counters
             'new' => $new,
         ];
     }
-
 
     /**
      * Статистика библиотеки
@@ -432,7 +426,6 @@ class Counters
         ];
     }
 
-
     /**
      * Количество зарегистрированных пользователей
      *
@@ -458,7 +451,6 @@ class Counters
             'new' => $new,
         ];
     }
-
 
     /**
      * Счетчик Фотоальбомов пользователей
@@ -494,9 +486,7 @@ class Counters
             'photo' => $photo,
             'new' => $newcount,
         ];
-
     }
-
 
     /**
      * Счетчик всех новостей
@@ -514,10 +504,9 @@ class Counters
         ];
     }
 
-
     /**
      * Уведомления
-     * 
+     *
      * @return array
      */
     public function notifications()
@@ -529,7 +518,7 @@ class Counters
             $notifications['downloads_mod'] = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
         }
 
-        if (!empty($this->systemUser->ban)) {
+        if (! empty($this->systemUser->ban)) {
             $notifications['ban'] = 1;
         }
 
@@ -552,6 +541,4 @@ class Counters
 
         return $notifications;
     }
-
-
 }

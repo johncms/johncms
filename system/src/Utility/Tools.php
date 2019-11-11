@@ -677,7 +677,6 @@ class Tools implements ToolsInterface
         ");
     }
 
-
     /**
      * Форматирует числа в сокращенный формат
      *
@@ -688,18 +687,17 @@ class Tools implements ToolsInterface
     {
         $prefixes = 'KMGTPEZY';
         if ($number >= 1000) {
-            for ($i=-1; $number>=1000; ++$i) {
+            for ($i=-1; $number >= 1000; ++$i) {
                 $number /= 1000;
             }
 
-            if($number > 100) {
+            if ($number > 100) {
                 $number = floor($number);
             }
 
-            return round($number, 2).$prefixes[$i];
+            return round($number, 2) . $prefixes[$i];
         }
 
         return $number;
     }
-
 }

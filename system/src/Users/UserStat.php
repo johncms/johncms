@@ -145,7 +145,6 @@ class UserStat
         $id = $_GET['id'] ?? '';
         $query = [];
 
-
         if (! empty($act)) {
             $query[] = 'act=' . substr($act, 0, 15);
         }

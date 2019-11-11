@@ -111,9 +111,9 @@ if ($id) {
             // Вычисляем местоположение
             $place = '';
             $parsed_url = [];
-            if (!empty($res['place'])) {
+            if (! empty($res['place'])) {
                 $parsed_url = parse_url($res['place']);
-                if (!empty($parsed_url['query'])) {
+                if (! empty($parsed_url['query'])) {
                     parse_str($parsed_url['query'], $parsed_url);
                 }
             }
@@ -122,18 +122,17 @@ if ($id) {
             $act_type = '';
             $place = 'forum';
 
-            if (!empty($parsed_url['act'])) {
+            if (! empty($parsed_url['act'])) {
                 $place = $parsed_url['act'];
                 $place_id = $parsed_url['id'] ?? 0;
                 $act_type = $parsed_url['type'] ?? '';
-            } elseif (!empty($parsed_url['type'])) {
+            } elseif (! empty($parsed_url['type'])) {
                 $place = $parsed_url['type'];
                 $place_id = $parsed_url['id'];
-            } elseif (!empty($parsed_url['id'])) {
+            } elseif (! empty($parsed_url['id'])) {
                 $place = 'section';
                 $place_id = $parsed_url['id'];
             }
-
 
             switch ($place) {
                 case 'forum':
@@ -158,7 +157,7 @@ if ($id) {
 
                 case 'section':
                     $section = $db->query('SELECT * FROM `forum_sections` WHERE `id`= ' . $place_id)->fetch();
-                    if (!empty($section)) {
+                    if (! empty($section)) {
                         $link = '<a href="?id=' . $section['id'] . '">' . (empty($section['name']) ? '-----' : $section['name']) . '</a>';
                         $place = _t('In the Category') . ' &quot;' . $link . '&quot;';
                     } else {
@@ -187,12 +186,10 @@ if ($id) {
                         } else {
                             $place = (($place == 'say') ? _t('Writes in the Topic') . ' &quot;' : _t('In the Topic') . ' &quot;') . $link . '&quot;';
                         }
-
                     } else {
                         $place = '<a href="./">' . _t('In the forum Main') . '</a>';
                     }
                     break;
-
 
                 case 'show_post':
                     $message = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '" . $place_id . "'")->fetch();

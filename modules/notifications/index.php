@@ -39,9 +39,8 @@ $all_counters = $counters->notifications();
 
 // Дополнительные уведомления для администраторов
 if ($user->rights >= 7) {
-
     // Пользователи на регистрации
-    if (!empty($all_counters['reg_total'])) {
+    if (! empty($all_counters['reg_total'])) {
         $notifications[] = [
             'name' => _t('Users on registration'),
             'url' => '/admin/?act=reg',
@@ -51,7 +50,7 @@ if ($user->rights >= 7) {
     }
 
     // Статьи на модерации
-    if (!empty($all_counters['library_mod'])) {
+    if (! empty($all_counters['library_mod'])) {
         $notifications[] = [
             'name' => _t('Articles on moderation'),
             'url' => '/library/?act=premod',
@@ -61,19 +60,18 @@ if ($user->rights >= 7) {
     }
 
     // Загрузки на модерации
-    if (!empty($all_counters['downloads_mod'])) {
+    if (! empty($all_counters['downloads_mod'])) {
         $notifications[] = [
             'name' => _t('Downloads on moderation'),
             'url' => 'downloads/?act=mod_files',
-            'counter' => !empty($all_counters['downloads_mod']),
+            'counter' => ! empty($all_counters['downloads_mod']),
             'type' => 'info',
         ];
     }
-
 }
 
 // Сообщение о бане
-if (!empty($all_counters['ban'])) {
+if (! empty($all_counters['ban'])) {
     $notifications[] = [
         'name' => _t('Ban', 'system'),
         'url' => '/profile/?act=ban',
@@ -84,7 +82,7 @@ if (!empty($all_counters['ban'])) {
 
 // Системные сообщения
 $list = [];
-if (!empty($all_counters['new_sys_mail'])) {
+if (! empty($all_counters['new_sys_mail'])) {
     $notifications[] = [
         'name' => _t('System messages', 'system'),
         'url' => '/mail/?act=systems',
@@ -94,7 +92,7 @@ if (!empty($all_counters['new_sys_mail'])) {
 }
 
 // Личные сообщения
-if (!empty($all_counters['new_mail'])) {
+if (! empty($all_counters['new_mail'])) {
     $notifications[] = [
         'name' => _t('Mail', 'system'),
         'url' => '/mail/?act=new',
@@ -104,7 +102,7 @@ if (!empty($all_counters['new_mail'])) {
 }
 
 // Комментарии в личной гостевой
-if (!empty($all_counters['guestbook_comment'])) {
+if (! empty($all_counters['guestbook_comment'])) {
     $notifications[] = [
         'name' => _t('Guestbook', 'system'),
         'url' => '/profile/?act=guestbook&amp;user=' . $user->id,
@@ -114,7 +112,7 @@ if (!empty($all_counters['guestbook_comment'])) {
 }
 
 // Комментарии в альбомах
-if (!empty($all_counters['new_album_comm'])) {
+if (! empty($all_counters['new_album_comm'])) {
     $notifications[] = [
         'name' => _t('Comments', 'system'),
         'url' => '/album/?act=top&amp;mod=my_new_comm',

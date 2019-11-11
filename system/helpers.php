@@ -75,7 +75,7 @@ function pageNotFound(
         'title'   => $title,
         'message' => ! empty($message)
             ? $message
-            : _t('You are looking for something that doesn\'t exist or may have moved')
+            : _t('You are looking for something that doesn\'t exist or may have moved'),
     ]));
 }
 
@@ -89,9 +89,9 @@ if (! function_exists('d')) {
     function d($var = false, $to_file = false)
     {
         if ($to_file) {
-            $file = fopen(DATA_PATH . 'debug.log', "a");
+            $file = fopen(DATA_PATH . 'debug.log', 'a');
             if ($file) {
-                fputs($file, print_r($var, true) . "\r\n");
+                fwrite($file, print_r($var, true) . "\r\n");
                 fclose($file);
             }
         }
