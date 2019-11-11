@@ -44,7 +44,7 @@ if ($user->rights >= 7) {
     if (!empty($all_counters['reg_total'])) {
         $notifications[] = [
             'name' => _t('Users on registration'),
-            'url' => '/admin/index.php?act=reg',
+            'url' => '/admin/?act=reg',
             'counter' => $all_counters['reg_total'],
             'type' => 'info',
         ];
@@ -87,7 +87,7 @@ $list = [];
 if (!empty($all_counters['new_sys_mail'])) {
     $notifications[] = [
         'name' => _t('System messages', 'system'),
-        'url' => '/mail/index.php?act=systems',
+        'url' => '/mail/?act=systems',
         'counter' => $all_counters['new_sys_mail'],
         'type' => 'info',
     ];
@@ -97,7 +97,7 @@ if (!empty($all_counters['new_sys_mail'])) {
 if (!empty($all_counters['new_mail'])) {
     $notifications[] = [
         'name' => _t('Mail', 'system'),
-        'url' => '/mail/index.php?act=new',
+        'url' => '/mail/?act=new',
         'counter' => $all_counters['new_mail'],
         'type' => 'info',
     ];
@@ -117,7 +117,7 @@ if (!empty($all_counters['guestbook_comment'])) {
 if (!empty($all_counters['new_album_comm'])) {
     $notifications[] = [
         'name' => _t('Comments', 'system'),
-        'url' => '/album/index.php?act=top&amp;mod=my_new_comm',
+        'url' => '/album/?act=top&amp;mod=my_new_comm',
         'counter' => $all_counters['new_album_comm'],
         'type' => 'info',
     ];
