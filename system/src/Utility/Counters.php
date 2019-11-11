@@ -514,4 +514,44 @@ class Counters
         ];
     }
 
+
+    /**
+     * Уведомления
+     * 
+     * @return array
+     */
+    public function notifications()
+    {
+        $notifications = [];
+        if ($this->systemUser->rights >= 7) {
+            $notifications['reg_total'] = $this->db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
+            $notifications['library_mod'] = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
+            $notifications['downloads_mod'] = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
+        }
+
+        if (!empty($this->systemUser->ban)) {
+            $notifications['ban'] = 1;
+        }
+
+        if ($this->systemUser->comm_count > $this->systemUser->comm_old) {
+            $notifications['guestbook_comments'] = ($this->systemUser->comm_count - $this->systemUser->comm_old);
+        }
+
+        $notifications['new_sys_mail'] = $this->db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $this->systemUser->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $this->systemUser->id . "'")->fetchColumn();
+        $notifications['new_mail'] = $this->db->query("SELECT COUNT(*) FROM `cms_mail`
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
+                            WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
+                            AND `cms_mail`.`sys`='0'
+                            AND `cms_mail`.`read`='0'
+                            AND `cms_mail`.`delete`!='" . $this->systemUser->id . "'
+                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
+
+        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->systemUser->id . '\' AND `unread_comments` = 1')->fetchColumn();
+
+        $notifications['all'] = array_sum($notifications);
+
+        return $notifications;
+    }
+
+
 }

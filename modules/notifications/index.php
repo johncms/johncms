@@ -11,7 +11,6 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\UserInterface;
-use Johncms\Utility\NewsWidget;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 
@@ -19,49 +18,54 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var ContainerInterface $container
+ * @var PDO $db
+ * @var Johncms\Utility\Counters $counters
  * @var Engine $view
+ * @var UserInterface $user
  */
 
 $container = App::getContainer();
+$db = $container->get(PDO::class);
+$counters = $container->get('counters');
 $view = $container->get(Engine::class);
+$user = $container->get(UserInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');
 
 $notifications = [];
 
+$all_counters = $counters->notifications();
+
 // Дополнительные уведомления для администраторов
 if ($user->rights >= 7) {
 
     // Пользователи на регистрации
-    $reg_total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
-    if ($reg_total) {
+    if (!empty($all_counters['reg_total'])) {
         $notifications[] = [
             'name' => _t('Users on registration'),
             'url' => '/admin/index.php?act=reg',
-            'counter' => $reg_total,
+            'counter' => $all_counters['reg_total'],
             'type' => 'info',
         ];
     }
 
     // Статьи на модерации
-    $library_mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
-    if ($library_mod) {
+    if (!empty($all_counters['library_mod'])) {
         $notifications[] = [
             'name' => _t('Articles on moderation'),
             'url' => '/library/?act=premod',
-            'counter' => $library_mod,
+            'counter' => $all_counters['library_mod'],
             'type' => 'info',
         ];
     }
 
     // Загрузки на модерации
-    $downloads_mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
-    if ($downloads_mod) {
+    if (!empty($all_counters['downloads_mod'])) {
         $notifications[] = [
             'name' => _t('Downloads on moderation'),
             'url' => 'downloads/?act=mod_files',
-            'counter' => $downloads_mod,
+            'counter' => !empty($all_counters['downloads_mod']),
             'type' => 'info',
         ];
     }
@@ -69,7 +73,7 @@ if ($user->rights >= 7) {
 }
 
 // Сообщение о бане
-if (!empty($user->ban)) {
+if (!empty($all_counters['ban'])) {
     $notifications[] = [
         'name' => _t('Ban', 'system'),
         'url' => '/profile/?act=ban',
@@ -80,50 +84,41 @@ if (!empty($user->ban)) {
 
 // Системные сообщения
 $list = [];
-$new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $user->id . "'")->fetchColumn();
-if ($new_sys_mail) {
+if (!empty($all_counters['new_sys_mail'])) {
     $notifications[] = [
         'name' => _t('System messages', 'system'),
         'url' => '/mail/index.php?act=systems',
-        'counter' => $new_sys_mail,
+        'counter' => $all_counters['new_sys_mail'],
         'type' => 'info',
     ];
 }
 
 // Личные сообщения
-$new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
-                            WHERE `cms_mail`.`from_id`='" . $user->id . "'
-                            AND `cms_mail`.`sys`='0'
-                            AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $user->id . "'
-                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
-if ($new_mail) {
+if (!empty($all_counters['new_mail'])) {
     $notifications[] = [
         'name' => _t('Mail', 'system'),
         'url' => '/mail/index.php?act=new',
-        'counter' => $new_mail,
+        'counter' => $all_counters['new_mail'],
         'type' => 'info',
     ];
 }
 
 // Комментарии в личной гостевой
-if ($user->comm_count > $user->comm_old) {
+if (!empty($all_counters['guestbook_comment'])) {
     $notifications[] = [
         'name' => _t('Guestbook', 'system'),
         'url' => '/profile/?act=guestbook&amp;user=' . $user->id,
-        'counter' => ($user->comm_count - $user->comm_old),
+        'counter' => $all_counters['guestbook_comment'],
         'type' => 'info',
     ];
 }
 
 // Комментарии в альбомах
-$new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $user->id . '\' AND `unread_comments` = 1')->fetchColumn();
-if ($new_album_comm) {
+if (!empty($all_counters['new_album_comm'])) {
     $notifications[] = [
         'name' => _t('Comments', 'system'),
         'url' => '/album/index.php?act=top&amp;mod=my_new_comm',
-        'counter' => 0,
+        'counter' => $all_counters['new_album_comm'],
         'type' => 'info',
     ];
 }

@@ -7,7 +7,7 @@
 
 /** @var \Johncms\Utility\Counters $counters */
 $counters = $container->get('counters');
-$new_mail = $counters->mail();
+$notifications = $counters->notifications();
 $forum_counters = $counters->forumCounters();
 $guestbook_counters = $counters->guestbookCounters();
 $downloads_counters = $counters->downloadsCounters();
@@ -75,8 +75,8 @@ $news_counters = $counters->news();
                         <svg class="icon icon_messages">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
                         </svg>
-                        <?php if($new_mail): ?>
-                            <span class="badge badge-danger badge-pill"><?= $new_mail ?></span>
+                        <?php if(!empty($notifications['all'])): ?>
+                            <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
                         <?php endif ?>
                     </a>
                 </div>
@@ -231,8 +231,8 @@ $news_counters = $counters->news();
                         <?php if($user->isValid()): ?>
                             <a href="/notifications/" class="icon_with_badge mr-2">
                                 <svg class="icon icon_messages"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/></svg>
-                                <?php if($new_mail): ?>
-                                    <span class="badge badge-danger badge-pill"><?= $new_mail ?></span>
+                                <?php if(!empty($notifications['all'])): ?>
+                                    <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
                                 <?php endif ?>
                             </a>
                         <?php endif ?>
