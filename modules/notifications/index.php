@@ -28,8 +28,45 @@ $view = $container->get(Engine::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');
 
-
 $notifications = [];
+
+// Дополнительные уведомления для администраторов
+if ($user->rights >= 7) {
+
+    // Пользователи на регистрации
+    $reg_total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
+    if ($reg_total) {
+        $notifications[] = [
+            'name' => _t('Users on registration'),
+            'url' => '/admin/index.php?act=reg',
+            'counter' => $reg_total,
+            'type' => 'info',
+        ];
+    }
+
+    // Статьи на модерации
+    $library_mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
+    if ($library_mod) {
+        $notifications[] = [
+            'name' => _t('Articles on moderation'),
+            'url' => '/library/?act=premod',
+            'counter' => $library_mod,
+            'type' => 'info',
+        ];
+    }
+
+    // Загрузки на модерации
+    $downloads_mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
+    if ($downloads_mod) {
+        $notifications[] = [
+            'name' => _t('Downloads on moderation'),
+            'url' => 'downloads/?act=mod_files',
+            'counter' => $downloads_mod,
+            'type' => 'info',
+        ];
+    }
+
+}
 
 // Сообщение о бане
 if (!empty($user->ban)) {
@@ -90,8 +127,6 @@ if ($new_album_comm) {
         'type' => 'info',
     ];
 }
-
-// TODO: Добавить уведомления для админов о наличии статей, загрузок на модерации, о пользователях на регистрации.
 
 echo $view->render('notifications::index', [
     'notifications' => $notifications,
