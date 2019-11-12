@@ -328,7 +328,7 @@ class Counters
      *
      * @return array
      */
-    public function forumCounters(): array
+    public function forumCounters() : array
     {
         $file = CACHE_PATH . 'counters-forum.cache';
         $new_messages = 0;
@@ -348,8 +348,8 @@ class Counters
         }
 
         return [
-            'topics' => $topics,
-            'messages' => $message,
+            'topics'       => $topics,
+            'messages'     => $message,
             'new_messages' => $new_messages,
         ];
     }
@@ -360,7 +360,7 @@ class Counters
      * @param int $mod
      * @return array
      */
-    public function guestbookCounters($mod = 0): array
+    public function guestbookCounters($mod = 0) : array
     {
         $guestbook = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
         $admin_club = 0;
@@ -369,7 +369,7 @@ class Counters
         }
 
         return [
-            'guestbook' => $guestbook,
+            'guestbook'  => $guestbook,
             'admin_club' => $admin_club,
         ];
     }
@@ -379,7 +379,7 @@ class Counters
      *
      * @return array
      */
-    public function downloadsCounters(): array
+    public function downloadsCounters() : array
     {
         $file = CACHE_PATH . 'counters-downloads.cache';
 
@@ -388,6 +388,7 @@ class Counters
             $total = $res['total'] ?? 0;
             $new = $res['new'] ?? 0;
         } else {
+            $old = time() - (3 * 24 * 3600);
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
             $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
 
@@ -396,7 +397,7 @@ class Counters
 
         return [
             'total' => $total,
-            'new' => $new,
+            'new'   => $new,
         ];
     }
 
@@ -405,7 +406,7 @@ class Counters
      *
      * @return array
      */
-    public function libraryCounters(): array
+    public function libraryCounters() : array
     {
         $file = CACHE_PATH . 'counters-library.cache';
 
@@ -422,7 +423,7 @@ class Counters
 
         return [
             'total' => $total,
-            'new' => $new,
+            'new'   => $new,
         ];
     }
 
@@ -431,7 +432,7 @@ class Counters
      *
      * @return array
      */
-    public function usersCounters(): array
+    public function usersCounters() : array
     {
         $file = CACHE_PATH . 'counters-users.dat';
 
@@ -448,7 +449,7 @@ class Counters
 
         return [
             'total' => $total,
-            'new' => $new,
+            'new'   => $new,
         ];
     }
 
@@ -457,7 +458,7 @@ class Counters
      *
      * @return array
      */
-    public function albumCounters(): array
+    public function albumCounters() : array
     {
         $file = CACHE_PATH . 'counters-albums.cache';
 
@@ -484,7 +485,7 @@ class Counters
         return [
             'album' => $album,
             'photo' => $photo,
-            'new' => $newcount,
+            'new'   => $newcount,
         ];
     }
 
@@ -493,14 +494,14 @@ class Counters
      *
      * @return array
      */
-    public function news(): array
+    public function news() : array
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
         $new = $this->db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
 
         return [
             'total' => $total,
-            'new' => $new,
+            'new'   => $new,
         ];
     }
 
