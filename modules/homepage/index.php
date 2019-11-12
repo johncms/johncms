@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\UserInterface;
-use Johncms\Utility\NewsWidget;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 
@@ -28,8 +26,4 @@ $view = $container->get(Engine::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('homepage', __DIR__ . '/templates/');
 
-echo $view->render('homepage::mainmenu', [
-    'counters' => $container->get('counters'),
-    'news'     => new NewsWidget(),
-    'rights'   => $container->get(UserInterface::class)->rights,
-]);
+echo $view->render('homepage::mainmenu');

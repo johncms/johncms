@@ -18,14 +18,15 @@ $indigo: #6574cd;
 $purple: #9561e2;
 $pink: #f66D9b;
 $red: #c81f4c;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+$orange: #EB5E28;
+$yellow: #F3BB45;
+$green: #42A084;
+$teal: #7A9E9F;
+$cyan: #68B3C8;
+$brown: #66615B;
 
 $theme-colors: (
-        "orange": $orange,
+    "orange": $orange,
 );
 
 // Color system
@@ -41,6 +42,15 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black: #000 !default;
+
+$primary: $brown !default;
+$secondary: $teal !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $orange !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
 
 
 // Размеры шрифтов
@@ -77,3 +87,8 @@ $breadcrumb-border-radius: $border-radius;
 $box-shadow-sm: 0 .125rem .25rem rgba($black, .075) !default;
 $box-shadow: 0 6px 10px -4px rgba(0, 0, 0, .15);
 $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
+
+
+$btn-border-radius: 1.3rem;
+$btn-border-radius-lg: 1.3rem;
+$btn-border-radius-sm: 1.3rem;
