@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var $breadcrumbs
+ */
+?>
+<?php if (! empty($breadcrumbs)): ?>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb): ?>
+                <li class="breadcrumb-item <?= ! empty($breadcrumb['active']) ? 'active' : '' ?>">
+                    <?php if (! empty($breadcrumb['url'])): ?>
+                        <a href="<?= $breadcrumb['url'] ?>"><?= $breadcrumb['name'] ?></a>
+                    <?php else: ?>
+                        <?= $breadcrumb['name'] ?>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </nav>
+<?php endif; ?>
+

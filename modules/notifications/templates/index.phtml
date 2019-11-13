@@ -1,19 +1,17 @@
 <?php
 /**
  * @var array $notifications
+ * @var array $breadcrumbs
  */
 
-$this->layout('system::layout/default', ['title' => _t('Notifications')])
+$this->layout('system::layout/default', [
+    'title'       => _t('Notifications'),
+    'page_title'  => _t('Notifications'),
+    'breadcrumbs' => $breadcrumbs,
+]);
 ?>
-<h1 class="mb-0"><?= _t('Notifications') ?></h1>
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/"><?= _t('Home page') ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= _t('Notifications') ?></li>
-    </ol>
-</nav>
 
-<?php if(empty($notifications)):?>
+<?php if (empty($notifications)): ?>
     <div class="alert alert-success shadow border-radius-12">
         <?= _t('All notifications have already been read') ?>
     </div>
@@ -23,11 +21,11 @@ $this->layout('system::layout/default', ['title' => _t('Notifications')])
             <a href="<?= $notification['url'] ?>" class="list-item d-flex">
                 <div class="flex-grow-1 item-content">
                     <div class="item-name"><?= $notification['name'] ?></div>
-                    <?php if(!empty($notification['description'])): ?>
+                    <?php if (! empty($notification['description'])): ?>
                         <div class="item-desc"><?= $notification['description'] ?></div>
                     <?php endif; ?>
                 </div>
-                <?php if(!empty($notification['counter'])): ?>
+                <?php if (! empty($notification['counter'])): ?>
                     <div class="icon-right d-flex align-items-center pr-0">
                         <div class="badge badge-danger badge-pill"><?= $notification['counter'] ?></div>
                     </div>

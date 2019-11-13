@@ -50,7 +50,7 @@ $news_counters = $counters->news();
             <!-- Пользователь -->
             <div class="sidebar__user">
                 <a class="nav-link user__link" href="#" data-toggle="dropdown" aria-expanded="false">
-                    <?= ($user->id ? $user->name : _t('Guest', 'system') ) ?>
+                    <?= ($user->id ? $user->name : _t('Guest', 'system')) ?>
                     <span>
                         <svg class="icon icon-chevron-bottom">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
@@ -68,33 +68,33 @@ $news_counters = $counters->news();
             </div>
 
             <?php if ($user->isValid()): ?>
-            <!-- Группа кнопок -->
-            <div class="sidebar__buttons btn-group">
-                <div class="group_item">
-                    <a href="/notifications/" title="<?= _t('Notifications', 'system') ?>">
-                        <svg class="icon icon_messages">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
-                        </svg>
-                        <?php if(!empty($notifications['all'])): ?>
-                            <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
-                        <?php endif ?>
-                    </a>
+                <!-- Группа кнопок -->
+                <div class="sidebar__buttons btn-group">
+                    <div class="group_item">
+                        <a href="/notifications/" title="<?= _t('Notifications', 'system') ?>">
+                            <svg class="icon icon_messages">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
+                            </svg>
+                            <?php if (! empty($notifications['all'])): ?>
+                                <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
+                            <?php endif ?>
+                        </a>
+                    </div>
+                    <div class="group_item">
+                        <a href="/profile/">
+                            <svg class="icon icon_add">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="group_item">
+                        <a href="/profile/?act=settings">
+                            <svg class="icon icon_search">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
-                <div class="group_item">
-                    <a href="/profile/">
-                        <svg class="icon icon_add">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="group_item">
-                    <a href="/profile/?act=settings">
-                        <svg class="icon icon_search">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
             <?php else: ?>
                 <div class="border-bottom"></div>
             <?php endif ?>
@@ -107,10 +107,10 @@ $news_counters = $counters->news();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('News archive', 'system') ?></span>
-                        <?php if($news_counters['total'] > 0): ?>
+                        <?php if ($news_counters['total'] > 0): ?>
                             <span class="badge badge-pill <?= ($news_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
                                     <?= $tools->formatNumber($news_counters['total']) ?>
-                                    <?= ($news_counters['new'] > 0 ? '/ +'.$tools->formatNumber($news_counters['new']) : '') ?>
+                                    <?= ($news_counters['new'] > 0 ? '/ +' . $tools->formatNumber($news_counters['new']) : '') ?>
                                 </span>
                         <?php endif ?>
                     </a>
@@ -124,7 +124,7 @@ $news_counters = $counters->news();
                             <span class="flex-grow-1">Форум</span>
                             <span class="badge badge-pill <?= ($forum_counters['new_messages'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
                                 <?= $tools->formatNumber($forum_counters['topics']) ?> / <?= $tools->formatNumber($forum_counters['messages']) ?>
-                                <?= ($forum_counters['new_messages'] > 0 ? '/ +'.$tools->formatNumber($forum_counters['new_messages']) : '') ?>
+                                <?= ($forum_counters['new_messages'] > 0 ? '/ +' . $tools->formatNumber($forum_counters['new_messages']) : '') ?>
                             </span>
                         </a>
                     </li>
@@ -136,7 +136,7 @@ $news_counters = $counters->news();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
                             </svg>
                             <span class="flex-grow-1"><?= _t('Guestbook', 'system') ?></span>
-                            <?php if($guestbook_counters['guestbook'] > 0 || $guestbook_counters['admin_club'] > 0): ?>
+                            <?php if ($guestbook_counters['guestbook'] > 0 || $guestbook_counters['admin_club'] > 0): ?>
                                 <span class="badge badge-pill badge-secondary">
                                     <?= $tools->formatNumber($guestbook_counters['guestbook']) ?>
                                     <?= $guestbook_counters['admin_club'] > 0 ? ' / ' . $tools->formatNumber($guestbook_counters['admin_club']) : '' ?>
@@ -152,10 +152,10 @@ $news_counters = $counters->news();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
                             </svg>
                             <span class="flex-grow-1"><?= _t('Downloads', 'system') ?></span>
-                            <?php if($downloads_counters['total'] > 0): ?>
+                            <?php if ($downloads_counters['total'] > 0): ?>
                                 <span class="badge badge-pill <?= ($downloads_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
                                     <?= $tools->formatNumber($downloads_counters['total']) ?>
-                                    <?= ($downloads_counters['new'] > 0 ? '/ +'.$tools->formatNumber($downloads_counters['new']) : '') ?>
+                                    <?= ($downloads_counters['new'] > 0 ? '/ +' . $tools->formatNumber($downloads_counters['new']) : '') ?>
                                 </span>
                             <?php endif ?>
                         </a>
@@ -168,10 +168,10 @@ $news_counters = $counters->news();
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#text"/>
                             </svg>
                             <span class="flex-grow-1"><?= _t('Library', 'system') ?></span>
-                            <?php if($library_counters['total'] > 0): ?>
+                            <?php if ($library_counters['total'] > 0): ?>
                                 <span class="badge badge-pill <?= ($library_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
                                     <?= $tools->formatNumber($library_counters['total']) ?>
-                                    <?= ($library_counters['new'] > 0 ? '/ +'.$tools->formatNumber($library_counters['new']) : '') ?>
+                                    <?= ($library_counters['new'] > 0 ? '/ +' . $tools->formatNumber($library_counters['new']) : '') ?>
                                 </span>
                             <?php endif ?>
                         </a>
@@ -183,10 +183,10 @@ $news_counters = $counters->news();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('Users', 'system') ?></span>
-                        <?php if($users_counters['total'] > 0): ?>
+                        <?php if ($users_counters['total'] > 0): ?>
                             <span class="badge badge-pill <?= ($users_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
                                 <?= $tools->formatNumber($users_counters['total']) ?>
-                                <?= ($users_counters['new'] > 0 ? '/ +'.$tools->formatNumber($users_counters['new']) : '') ?>
+                                <?= ($users_counters['new'] > 0 ? '/ +' . $tools->formatNumber($users_counters['new']) : '') ?>
                             </span>
                         <?php endif ?>
                     </a>
@@ -197,10 +197,10 @@ $news_counters = $counters->news();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#picasa"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('Photo Albums', 'system') ?></span>
-                        <?php if($album_counters['photo'] > 0): ?>
+                        <?php if ($album_counters['photo'] > 0): ?>
                             <span class="badge badge-pill <?= ($album_counters['new'] > 0 ? 'badge-danger' : 'badge-secondary') ?>">
                                 <?= $tools->formatNumber($album_counters['album']) ?> / <?= $tools->formatNumber($album_counters['photo']) ?>
-                                <?= ($album_counters['new'] > 0 ? '/ +'.$tools->formatNumber($album_counters['new']) : '') ?>
+                                <?= ($album_counters['new'] > 0 ? '/ +' . $tools->formatNumber($album_counters['new']) : '') ?>
                             </span>
                         <?php endif ?>
                     </a>
@@ -228,10 +228,12 @@ $news_counters = $counters->news();
                         </button>
                     </div>
                     <div>
-                        <?php if($user->isValid()): ?>
+                        <?php if ($user->isValid()): ?>
                             <a href="/notifications/" class="icon_with_badge mr-2">
-                                <svg class="icon icon_messages"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/></svg>
-                                <?php if(!empty($notifications['all'])): ?>
+                                <svg class="icon icon_messages">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
+                                </svg>
+                                <?php if (! empty($notifications['all'])): ?>
                                     <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
                                 <?php endif ?>
                             </a>
@@ -241,6 +243,13 @@ $news_counters = $counters->news();
             </div>
         </nav>
         <div class="container-fluid">
+            <?php if (! empty($page_title)): ?>
+                <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
+            <?php endif; ?>
+            <?php if (! empty($breadcrumbs)): ?>
+                <?php $this->insert('system::app/breadcrumbs', ['breadcrumbs' => $breadcrumbs]); ?>
+            <?php endif; ?>
+
             <?= $this->section('content') ?>
         </div>
     </div>

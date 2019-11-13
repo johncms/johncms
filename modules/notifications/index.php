@@ -17,11 +17,11 @@ use Psr\Container\ContainerInterface;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ContainerInterface $container
- * @var PDO $db
+ * @var ContainerInterface       $container
+ * @var PDO                      $db
  * @var Johncms\Utility\Counters $counters
- * @var Engine $view
- * @var UserInterface $user
+ * @var Engine                   $view
+ * @var UserInterface            $user
  */
 
 $container = App::getContainer();
@@ -42,30 +42,30 @@ if ($user->rights >= 7) {
     // Пользователи на регистрации
     if (! empty($all_counters['reg_total'])) {
         $notifications[] = [
-            'name' => _t('Users on registration'),
-            'url' => '/admin/?act=reg',
+            'name'    => _t('Users on registration'),
+            'url'     => '/admin/?act=reg',
             'counter' => $all_counters['reg_total'],
-            'type' => 'info',
+            'type'    => 'info',
         ];
     }
 
     // Статьи на модерации
     if (! empty($all_counters['library_mod'])) {
         $notifications[] = [
-            'name' => _t('Articles on moderation'),
-            'url' => '/library/?act=premod',
+            'name'    => _t('Articles on moderation'),
+            'url'     => '/library/?act=premod',
             'counter' => $all_counters['library_mod'],
-            'type' => 'info',
+            'type'    => 'info',
         ];
     }
 
     // Загрузки на модерации
     if (! empty($all_counters['downloads_mod'])) {
         $notifications[] = [
-            'name' => _t('Downloads on moderation'),
-            'url' => 'downloads/?act=mod_files',
+            'name'    => _t('Downloads on moderation'),
+            'url'     => 'downloads/?act=mod_files',
             'counter' => ! empty($all_counters['downloads_mod']),
-            'type' => 'info',
+            'type'    => 'info',
         ];
     }
 }
@@ -73,10 +73,10 @@ if ($user->rights >= 7) {
 // Сообщение о бане
 if (! empty($all_counters['ban'])) {
     $notifications[] = [
-        'name' => _t('Ban', 'system'),
-        'url' => '/profile/?act=ban',
+        'name'    => _t('Ban', 'system'),
+        'url'     => '/profile/?act=ban',
         'counter' => 0,
-        'type' => 'warning',
+        'type'    => 'warning',
     ];
 }
 
@@ -84,43 +84,55 @@ if (! empty($all_counters['ban'])) {
 $list = [];
 if (! empty($all_counters['new_sys_mail'])) {
     $notifications[] = [
-        'name' => _t('System messages', 'system'),
-        'url' => '/mail/?act=systems',
+        'name'    => _t('System messages', 'system'),
+        'url'     => '/mail/?act=systems',
         'counter' => $all_counters['new_sys_mail'],
-        'type' => 'info',
+        'type'    => 'info',
     ];
 }
 
 // Личные сообщения
 if (! empty($all_counters['new_mail'])) {
     $notifications[] = [
-        'name' => _t('Mail', 'system'),
-        'url' => '/mail/?act=new',
+        'name'    => _t('Mail', 'system'),
+        'url'     => '/mail/?act=new',
         'counter' => $all_counters['new_mail'],
-        'type' => 'info',
+        'type'    => 'info',
     ];
 }
 
 // Комментарии в личной гостевой
 if (! empty($all_counters['guestbook_comment'])) {
     $notifications[] = [
-        'name' => _t('Guestbook', 'system'),
-        'url' => '/profile/?act=guestbook&amp;user=' . $user->id,
+        'name'    => _t('Guestbook', 'system'),
+        'url'     => '/profile/?act=guestbook&amp;user=' . $user->id,
         'counter' => $all_counters['guestbook_comment'],
-        'type' => 'info',
+        'type'    => 'info',
     ];
 }
 
 // Комментарии в альбомах
 if (! empty($all_counters['new_album_comm'])) {
     $notifications[] = [
-        'name' => _t('Comments', 'system'),
-        'url' => '/album/?act=top&amp;mod=my_new_comm',
+        'name'    => _t('Comments', 'system'),
+        'url'     => '/album/?act=top&amp;mod=my_new_comm',
         'counter' => $all_counters['new_album_comm'],
-        'type' => 'info',
+        'type'    => 'info',
     ];
 }
-
+$breadcrumbs = [
+    [
+        'url'    => '/',
+        'name'   => _t('Home', 'system'),
+        'active' => false,
+    ],
+    [
+        'url'    => '/notifications/',
+        'name'   => _t('Notifications'),
+        'active' => true,
+    ],
+];
 echo $view->render('notifications::index', [
     'notifications' => $notifications,
+    'breadcrumbs'   => $breadcrumbs,
 ]);
