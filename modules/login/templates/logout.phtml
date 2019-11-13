@@ -1,8 +1,14 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('Login', 'system'), 'homeButton' => true]) ?>
-<div class="rmenu">
-    <p><?= _t('Are you sure you want to leave the site?', 'system') ?></p>
-    <form method="post">
-        <p><input type="submit" name="logout" value="<?= _t('Logout', 'system') ?>"/></p>
-        <p><a href="<?= $referer ?>"><?= _t('Cancel', 'system') ?></a></p>
-    </form>
+<?php $this->layout('system::layout/default', [
+    'title'       => _t('Logout', 'system'),
+    'page_title'  => _t('Logout', 'system'),
+    'breadcrumbs' => $breadcrumbs,
+]) ?>
+<div class="card shadow border-0 border-radius-12">
+    <div class="card-body">
+        <p class="h3 pb-2"><?= _t('Are you sure you want to leave the site?', 'system') ?></p>
+        <form method="post">
+            <input type="submit" name="logout" value="<?= _t('Logout', 'system') ?>" class="btn btn-danger"/>
+            <a class="btn btn-link" href="<?= $referer ?>"><?= _t('Cancel', 'system') ?></a>
+        </form>
+    </div>
 </div>

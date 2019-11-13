@@ -37,6 +37,14 @@ $view->addFolder('login', __DIR__ . '/templates/');
 $id = isset($_POST['id']) ? abs((int) ($_POST['id'])) : 0;
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 
+$breadcrumbs = [
+    [
+        'url'    => '/',
+        'name'   => _t('Home', 'system'),
+        'active' => false,
+    ]
+];
+
 if ($user->isValid()) {
     ////////////////////////////////////////////////////////////
     // Выход с сайта                                          //
@@ -48,8 +56,18 @@ if ($user->isValid()) {
         $_SESSION = [];
         header('Location: ' . $config->homeurl);
     } else {
+        $breadcrumbs[] = [
+            'url'    => '/profile/?act=office',
+            'name'   => _t('Personal', 'system'),
+            'active' => false,
+        ];
+        $breadcrumbs[] = [
+            'url'    => '',
+            'name'   => _t('Logout', 'system'),
+            'active' => true,
+        ];
         // Показываем запрос на подтверждение выхода с сайта
-        echo $view->render('login::logout', ['referer' => $referer]);
+        echo $view->render('login::logout', ['referer' => $referer, 'breadcrumbs' => $breadcrumbs]);
     }
 } else {
     ////////////////////////////////////////////////////////////
@@ -120,6 +138,7 @@ if ($user->isValid()) {
                     $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $loginUser->id);
 
                     if (! $loginUser->preg) {
+                        // TODO: Вынести в шаблон
                         // Если регистрация не подтверждена
                         echo '<div class="rmenu"><p>' . _t('Sorry, but your request for registration is not considered yet. Please, be patient.',
                                 'system') . '</p></div>';
@@ -159,18 +178,10 @@ if ($user->isValid()) {
     }
 
     if ($display_form) {
-
-        $breadcrumbs = [
-            [
-                'url'    => '/',
-                'name'   => _t('Home', 'system'),
-                'active' => false,
-            ],
-            [
-                'url'    => '/login/',
-                'name'   => _t('Login', 'system'),
-                'active' => true,
-            ],
+        $breadcrumbs[] = [
+            'url'    => '/login/',
+            'name'   => _t('Login', 'system'),
+            'active' => true,
         ];
 
         // Показываем LOGIN форму
