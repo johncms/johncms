@@ -125,11 +125,20 @@
   }
 }
 
+.sidebar__footer {
+    padding: 0.7rem 1.4rem;
+    .sidebar_online {
+        height: 17px;
+        width: 17px;
+        margin: -3px 0 0 0;
+    }
+}
+
 
 .user__link {
   display: flex;
   justify-content: space-between;
-  padding: 0.7rem 1rem;
+  padding: .7rem 1.4rem;
 }
 
 .icon_with_badge {
