@@ -40,11 +40,23 @@ $view->addFolder('reg', __DIR__ . '/templates/');
 // Регистрируем папку с языками модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+$breadcrumbs = [
+    [
+        'url'    => '/',
+        'name'   => _t('Home', 'system'),
+        'active' => false,
+    ],
+    [
+        'url'    => '',
+        'name'   => _t('Registration'),
+        'active' => true,
+    ],
+];
+
 // Если регистрация закрыта, выводим предупреждение
 if (! $config->mod_reg || $user->isValid()) {
-    echo $view->render('system::app/old_content', [
-        'title'   => _t('Registration'),
-        'content' => '<div class="menu padding">' . _t('Registration is temporarily closed') . '</div>',
+    echo $view->render('reg::registration_closed', [
+        'breadcrumbs' => $breadcrumbs,
     ]);
     exit;
 }
@@ -57,12 +69,11 @@ $reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
 $reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
 $reg_sex = isset($_POST['sex']) ? trim($_POST['sex']) : '';
 
+$error = [];
+
 if (isset($_POST['submit'])) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
-
-    // Принимаем переменные
-    $error = [];
 
     // Проверка Логина
     if (empty($reg_nick)) {
@@ -155,42 +166,32 @@ if (isset($_POST['submit'])) {
 
         $usid = $db->lastInsertId();
 
-        echo '<div class="menu"><p><h3>' . _t('Your registratiton data') . '</h3>'
-            . _t('Your ID') . ': <b>' . $usid . '</b><br>'
-            . _t('Your Username') . ': <b>' . $reg_nick . '</b><br>'
-            . _t('Your Password') . ': <b>' . $reg_pass . '</b></p>';
-
-        if ($config->mod_reg == 1) {
-            echo '<p><span class="red"><b>' . _t('Please, wait until a moderator approves your registration') . '</b></span></p>';
-        } else {
+        if ($config->mod_reg != 1) {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
-            echo '<p><a href="' . $config->homeurl . '">' . _t('Enter') . '</a></p>';
         }
 
-        echo '</div>';
-
-        echo $view->render('system::app/old_content', [
-            'title'   => _t('Registration'),
-            'content' => ob_get_clean(),
+        echo $view->render('reg::registration_result', [
+            'usid'        => $usid,
+            'reg_nick'    => $reg_nick,
+            'reg_pass'    => $reg_pass,
+            'breadcrumbs' => $breadcrumbs,
         ]);
         exit;
     }
 }
 
 // Форма регистрации
-if ($config->mod_reg == 1) {
-    echo '<div class="rmenu"><p>' . _t('You can get authorized on the site after confirmation of your registration.') . '</p></div>';
-}
-
 $code = (string) new Batumibiz\Captcha\Code;
 $_SESSION['code'] = $code;
 
 echo $view->render('reg::index', [
-    'error'     => $error,
-    'reg_nick'  => $reg_nick,
-    'reg_pass'  => $reg_pass,
-    'reg_name'  => $reg_name,
-    'reg_about' => $reg_about,
-    'captcha'   => new Batumibiz\Captcha\Image($code),
+    'error'       => $error,
+    'reg_nick'    => $reg_nick,
+    'reg_pass'    => $reg_pass,
+    'reg_name'    => $reg_name,
+    'reg_sex'     => $reg_sex,
+    'reg_about'   => $reg_about,
+    'captcha'     => new Batumibiz\Captcha\Image($code),
+    'breadcrumbs' => $breadcrumbs,
 ]);

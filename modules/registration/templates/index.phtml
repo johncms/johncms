@@ -1,88 +1,109 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('Information, FAQ'), 'homeButton' => true]) ?>
-<div class="phdr"><strong><?= _t('Registration') ?></strong></div>
-<?php if ($config->mod_reg == 1): ?>
-    <div class="rmenu padding"><?= _t('You can get authorized on the site after confirmation of your registration.') ?></div>
-<?php endif ?>
-<form method="post">
-    <div class="gmenu padding">
-        <div>
-            <?= _t('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') ?>
+<?php $this->layout('system::layout/default', [
+    'title'       => _t('Registration'),
+    'page_title'  => _t('Registration'),
+    'breadcrumbs' => $breadcrumbs,
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-10">
+        <div class="card shadow border-0 border-radius-12">
+            <form method="post">
+                <div class="card-body">
+                    <h4 class="card-title"><?= _t('Registration') ?></h4>
+
+                    <?php if ($config->mod_reg == 1): ?>
+                        <div class="alert alert-warning"><?= _t('You can get authorized on the site after confirmation of your registration.') ?></div>
+                    <?php endif ?>
+
+                    <div class="alert alert-info">
+                        <?= _t('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login"><?= _t('Choose Nickname') ?></label>
+                        <input type="text"
+                               class="form-control <?= (isset($error['login']) ? 'is-invalid' : '') ?>"
+                               maxlength="20"
+                               minlength="2"
+                               name="nick"
+                               id="login"
+                               required
+                               value="<?= $this->e($reg_nick) ?>"
+                               placeholder="<?= _t('Username', 'system') ?>"
+                        >
+                        <?php if (isset($error['login'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $error['login']) ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= _t('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)') ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><?= _t('Assign a password') ?></label>
+                        <input type="password"
+                               class="form-control <?= (isset($error['password']) ? 'is-invalid' : '') ?>"
+                               maxlength="20"
+                               minlength="2"
+                               name="password"
+                               id="password"
+                               required
+                               value="<?= $this->e($reg_pass) ?>"
+                               placeholder="<?= _t('Assign a password') ?>"
+                        >
+                        <?php if (isset($error['password'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $error['password']) ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= _t('Min. 3 characters') ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender"><?= _t('Select Gender') ?></label>
+                        <select id="gender" name="sex" class="form-control <?= (isset($error['sex']) ? 'is-invalid' : '') ?>">
+                            <option value="?">- ? -</option>
+                            <option value="m"<?= ($reg_sex == 'm' ? ' selected="selected"' : '') ?>><?= _t('Man') ?></option>
+                            <option value="zh"<?= ($reg_sex == 'zh' ? ' selected="selected"' : '') ?>><?= _t('Woman') ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="imname"><?= _t('Your name') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="20"
+                               name="imname"
+                               id="imname"
+                               value="<?= $this->e($reg_name) ?>"
+                               placeholder="<?= _t('Your name') ?>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="about"><?= _t('Tell us a little about yourself') ?></label>
+                        <textarea class="form-control" name="about" id="about" rows="3"><?= $this->e($reg_about) ?></textarea>
+                        <div class="text-muted small"><?= _t('Max. 1000 characters') ?></div>
+                    </div>
+
+                    <img alt="<?= _t('Verification code') ?>" src="<?= $captcha ?>">
+                    <div class="form-group">
+                        <label for="captcha"><?= _t('Enter verification code', 'system') ?></label>
+                        <input type="text"
+                               class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
+                               maxlength="6"
+                               name="captcha"
+                               id="captcha"
+                               autocomplete="off"
+                               required
+                               placeholder="<?= _t('Verification code') ?>"
+                        >
+                        <?php if (isset($error['captcha'])): ?>
+                            <div class="invalid-feedback"><?= $error['captcha'] ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= _t('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
+                        </div>
+                    </div>
+
+                    <input type="submit" name="submit" class="btn btn-primary" value="<?= _t('Registration') ?>">
+                </div>
+            </form>
         </div>
-        <!-- Nickname -->
-        <label for="nick" class="label-h">
-            <?= _t('Choose Nickname') ?>
-        </label>
-        <?php if (isset($error['login'])): ?>
-            <div class="caption-error">
-                <?= implode('<br>', $error['login']) ?>
-            </div>
-        <?php endif ?>
-        <input type="text" id="nick" name="nick" maxlength="15" value="<?= $this->e($reg_nick) ?>"<?= (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') ?>>
-        <div class="caption-s">
-            <?= _t('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)') ?>
-        </div>
-        <!-- Password -->
-        <label for="password" class="label-h">
-            <?= _t('Assign a password') ?>
-        </label>
-        <?php if (isset($error['password'])): ?>
-            <div class="caption-error">
-                <?= implode('<br>', $error['password']) ?>
-            </div>
-        <?php endif ?>
-        <input type="text" id="password" name="password" value="<?= $this->e($reg_pass) ?>"<?= (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') ?>>
-        <div class="caption-s">
-            <?= _t('Min. 3 characters') ?>
-        </div>
-        <!-- Gender -->
-        <label for="sex" class="label-h">
-            <?= _t('Select Gender') ?>
-        </label>
-        <?php if (isset($error['login'])): ?>
-            <div class="caption-error">
-                <?= $error['sex'] ?>
-            </div>
-        <?php endif ?>
-        <select id="sex" name="sex"<?= (isset($error['sex']) ? ' style="background-color: #FFCCCC"' : '') ?>>
-            <option value="?">- ? -</option>
-            <option value="m"<?= ($reg_sex == 'm' ? ' selected="selected"' : '') ?>><?= _t('Man') ?></option>
-            <option value="zh"<?= ($reg_sex == 'zh' ? ' selected="selected"' : '') ?>><?= _t('Woman') ?></option>
-        </select>
     </div>
-    <div class="menu padding">
-        <!-- Your Name -->
-        <label for="imname" class="label-h">
-            <?= _t('Your name') ?>
-        </label>
-        <input type="text" id="imname" name="imname" maxlength="50" value="<?= $this->e($reg_name) ?>">
-        <div class="caption-s">
-            <?= _t('Max. 50 characters') ?>
-        </div>
-        <!-- About Yourself -->
-        <label for="about" class="label-h">
-            <?= _t('Tell us a little about yourself') ?>
-        </label>
-        <textarea rows="3" name="about" id="about"><?= $this->e($reg_about) ?></textarea>
-        <div class="caption-s">
-            <?= _t('Max. 1000 characters') ?>
-        </div>
-    </div>
-    <div class="gmenu padding">
-        <!-- CAPTCHA -->
-        <label for="captcha" class="label-h">
-            <?= _t('Verification code') ?>
-        </label>
-        <img alt="<?= _t('Verification code') ?>" src="<?= $captcha ?>" style="display: block">
-        <?php if (isset($error['captcha'])): ?>
-            <div class="caption-error">
-                <?= $error['captcha'] ?>
-            </div>
-        <?php endif ?>
-        <input type="text" id="captcha" name="captcha" size="5" maxlength="6"<?= (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') ?>>
-        <div class="caption-s">
-            <?= _t('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
-        </div>
-        <br>
-        <input type="submit" name="submit" value="<?= _t('Registration') ?>">
-    </div>
-</form>
+</div>

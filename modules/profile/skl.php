@@ -49,7 +49,6 @@ $breadcrumbs = [
     ],
 ];
 
-
 function passgen($length)
 {
     $vals = 'abcdefghijklmnopqrstuvwxyz0123456789';
