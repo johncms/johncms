@@ -6,12 +6,17 @@
 /package-lock.json
 /system/vendor
 /config/autoload/*.local.php
+/mix-manifest.json
 
 # Data folder ignores
 /data/cache/*
 !/data/cache/.gitkeep
 /data/logs/*
 !/data/logs/.gitkeep
+
+# Themes folder ignores
+/themes/default/assets/css/app.css
+/themes/default/assets/js/app.js
 
 # Upload folder ignores
 /upload/downloads/files/*
