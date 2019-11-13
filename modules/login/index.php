@@ -54,7 +54,8 @@ if ($user->isValid()) {
         setcookie('cuid', '', time() - 3600, '/');
         setcookie('cups', '', time() - 3600, '/');
         $_SESSION = [];
-        header('Location: ' . $config->homeurl);
+        header('Location: /');
+        exit;
     } else {
         $breadcrumbs[] = [
             'url'    => '/profile/?act=office',
@@ -120,13 +121,18 @@ if ($user->isValid()) {
                     $display_form = 0;
                     $code = (string) new Batumibiz\Captcha\Code;
                     $_SESSION['code'] = $code;
-
+                    $breadcrumbs[] = [
+                        'url'    => '',
+                        'name'   => _t('Login', 'system'),
+                        'active' => true,
+                    ];
                     echo $view->render('login::captcha', [
-                        'captcha'    => new Batumibiz\Captcha\Image($code),
-                        'user_login' => $user_login,
-                        'user_pass'  => $user_pass,
-                        'remember'   => $remember,
-                        'id'         => $loginUser->id,
+                        'captcha'     => new Batumibiz\Captcha\Image($code),
+                        'user_login'  => $user_login,
+                        'user_pass'   => $user_pass,
+                        'remember'    => $remember,
+                        'id'          => $loginUser->id,
+                        'breadcrumbs' => $breadcrumbs,
                     ]);
                 }
             }
@@ -138,10 +144,15 @@ if ($user->isValid()) {
                     $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $loginUser->id);
 
                     if (! $loginUser->preg) {
-                        // TODO: Вынести в шаблон
-                        // Если регистрация не подтверждена
-                        echo '<div class="rmenu"><p>' . _t('Sorry, but your request for registration is not considered yet. Please, be patient.',
-                                'system') . '</p></div>';
+                        // Показываем сообщение о неподтвержденной регистрации
+                        $breadcrumbs[] = [
+                            'url'    => '',
+                            'name'   => _t('Login', 'system'),
+                            'active' => true,
+                        ];
+                        echo $view->render('login::confirm', [
+                            'breadcrumbs' => $breadcrumbs,
+                        ]);
                     } else {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
                         if (isset($_POST['mem'])) {
@@ -157,10 +168,8 @@ if ($user->isValid()) {
                         $_SESSION['ups'] = md5(md5($user_pass));
 
                         $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $loginUser->id);
-                        header('Location: ' . $config->homeurl);
-
-                        echo '<div class="gmenu"><p><b><a href="' . $config->homeurl . '">' . _t('Enter site',
-                                'system') . '</a></b></p></div>';
+                        header('Location: /');
+                        exit;
                     }
                 } else {
                     // Если логин неудачный
@@ -179,7 +188,7 @@ if ($user->isValid()) {
 
     if ($display_form) {
         $breadcrumbs[] = [
-            'url'    => '/login/',
+            'url'    => '',
             'name'   => _t('Login', 'system'),
             'active' => true,
         ];
