@@ -46,7 +46,7 @@ $breadcrumbs = [
         'url'    => '',
         'name'   => _t('Restore password', 'system'),
         'active' => true,
-    ]
+    ],
 ];
 
 
@@ -196,7 +196,7 @@ switch ($act) {
         // Показываем запрос на подтверждение выхода с сайта
         echo $view->render('profile::restore_password', [
             'captcha'     => new Batumibiz\Captcha\Image($code),
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
         ]);
         break;
 }
