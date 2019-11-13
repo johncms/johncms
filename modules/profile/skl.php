@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require '../system/bootstrap.php';
+use League\Plates\Engine;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -31,15 +31,31 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-$textl = _t('Password recovery');
-require 'system/head.php';
+$view = $container->get(Engine::class);
+
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('profile', __DIR__ . '/templates/');
+
+$breadcrumbs = [
+    [
+        'url'    => '/',
+        'name'   => _t('Home', 'system'),
+        'active' => false,
+    ],
+    [
+        'url'    => '',
+        'name'   => _t('Restore password', 'system'),
+        'active' => true,
+    ]
+];
+
 
 function passgen($length)
 {
     $vals = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $result = '';
     for ($i = 1; $i <= $length; $i++) {
-        $result .= $vals[rand(0, strlen($vals))];
+        $result .= $vals[rand(0, strlen($vals) - 1)];
     }
 
     return $result;
@@ -51,8 +67,10 @@ switch ($act) {
         $nick = isset($_POST['nick']) ? $tools->rusLat($_POST['nick']) : '';
         $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : '';
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
-        $check_code = md5(rand(1000, 9999));
+        $rand = (string) rand(1000, 9999);
+        $check_code = md5($rand);
         $error = false;
+        $type = 'error';
 
         if (! $nick || ! $email || ! $code) {
             $error = _t('The required fields are not filled');
@@ -95,40 +113,50 @@ switch ($act) {
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
                 $db->exec('UPDATE `users` SET `rest_code` = ' . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
-                echo '<div class="gmenu"><p>' . _t('Check your e-mail for further information') . '</p></div>';
+                $type = 'success';
+                $message = _t('Check your e-mail for further information');
             } else {
-                echo '<div class="rmenu"><p>' . _t('Error sending E-mail') . '</p></div>';
+                $message = _t('Error sending E-mail');
             }
         } else {
             // Выводим сообщение об ошибке
-            echo $tools->displayError($error, '<a href="skl.php">' . _t('Back') . '</a>');
+            $message = $error;
         }
+
+        echo $view->render('profile::restore_password_result', [
+            'breadcrumbs' => $breadcrumbs,
+            'type'        => $type,
+            'message'     => $message,
+        ]);
         break;
 
     case 'set':
         // Устанавливаем новый пароль
         $code = isset($_GET['code']) ? trim($_GET['code']) : '';
         $error = false;
+        $type = 'error';
 
         if (! $id || ! $code) {
             $error = _t('Wrong data');
         }
 
-        $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
+        if (! empty($id)) {
+            $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
-        if ($req->rowCount()) {
-            $res = $req->fetch();
+            if ($req->rowCount()) {
+                $res = $req->fetch();
 
-            if (empty($res['rest_code']) || empty($res['rest_time'])) {
-                $error = _t('Password recovery is impossible');
+                if (empty($res['rest_code']) || empty($res['rest_time'])) {
+                    $error = _t('Password recovery is impossible');
+                }
+
+                if (! $error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
+                    $error = _t('Time allotted for the password recovery has been exceeded');
+                    $db->exec("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = " . $id);
+                }
+            } else {
+                $error = _t('User does not exists');
             }
-
-            if (! $error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
-                $error = _t('Time allotted for the password recovery has been exceeded');
-                $db->exec("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = " . $id);
-            }
-        } else {
-            _t('User does not exists');
         }
 
         if (! $error) {
@@ -145,28 +173,30 @@ switch ($act) {
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
                 $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . ' WHERE `id` = ' . $id);
-                echo '<div class="phdr">' . _t('Change password') . '</div>';
-                echo '<div class="gmenu"><p>' . _t('Password successfully changed.<br>New password sent to your E-mail address.') . '</p></div>';
+                $type = 'success';
+                $message = _t('Password successfully changed.<br>New password sent to your E-mail address.');
             } else {
-                echo '<div class="rmenu"><p>' . _t('Error sending Email') . '</p></div>';
+                $message = _t('Error sending E-mail');
             }
         } else {
             // Выводим сообщение об ошибке
-            echo $tools->displayError($error);
+            $message = $error;
         }
+
+        echo $view->render('profile::restore_password_result', [
+            'breadcrumbs' => $breadcrumbs,
+            'type'        => $type,
+            'message'     => $message,
+        ]);
         break;
 
     default:
-        // Форма для восстановления пароля
-        echo '<div class="phdr"><b>' . _t('Password recovery') . '</b></div>';
-        echo '<div class="menu"><form action="skl.php?act=sent" method="post">';
-        echo '<p>' . _t('Username') . ':<br><input type="text" name="nick" /><br>';
-        echo _t('Your E-mail') . ':<br><input type="text" name="email" /></p>';
-        echo '<p><img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . _t('Verification code') . '"/><br />';
-        echo '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Enter code') . '</p>';
-        echo '<p><input type="submit" value="' . _t('Send') . '"/></p></form></div>';
-        echo '<div class="phdr"><small>' . _t('Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password.') . '</small></div>';
+        $code = (string) new Batumibiz\Captcha\Code;
+        $_SESSION['code'] = $code;
+        // Показываем запрос на подтверждение выхода с сайта
+        echo $view->render('profile::restore_password', [
+            'captcha'     => new Batumibiz\Captcha\Image($code),
+            'breadcrumbs' => $breadcrumbs
+        ]);
         break;
 }
-
-require 'system/end.php';

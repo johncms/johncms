@@ -35,6 +35,7 @@ $map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');  
 $map->addRoute(['GET', 'POST'], '/login[/]', 'modules/login/index.php');               // Вход / выход с сайта
 $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                 // Почта
 $map->addRoute(['GET', 'POST'], '/news[/]', 'modules/news/index.php');                 // Новости
+$map->addRoute(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php');        // Восстановление пароля
 $map->addRoute(['GET', 'POST'], '/profile[/]', 'modules/profile/index.php');           // Пользовательские профили
 $map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');           // Редирект по ссылке
 $map->addRoute(['GET', 'POST'], '/registration[/]', 'modules/registration/index.php'); // Регистрация
