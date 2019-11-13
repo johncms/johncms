@@ -485,7 +485,7 @@ class Counters
         return [
             'album' => $album,
             'photo' => $photo,
-            'new'   => $newcount,
+            'new'   => $newcount ?? 0,
         ];
     }
 
