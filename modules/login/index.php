@@ -69,7 +69,6 @@ if ($user->isValid()) {
     ];
     // Показываем запрос на подтверждение выхода с сайта
     echo $view->render('login::logout', ['referer' => $referer, 'breadcrumbs' => $breadcrumbs]);
-
 } else {
     ////////////////////////////////////////////////////////////
     // Вход на сайт                                           //
@@ -175,7 +174,8 @@ if ($user->isValid()) {
                     // Если логин неудачный
                     if ($loginUser->failed_login < 3) {
                         // Прибавляем к счетчику неудачных логинов
-                        $db->exec("UPDATE `users` SET `failed_login` = '" . ++$loginUser->failed_login . "' WHERE `id` = " . $loginUser->id);
+                        $failed_login = $loginUser->failed_login + 1;
+                        $db->exec("UPDATE `users` SET `failed_login` = '" . $failed_login . "' WHERE `id` = " . $loginUser->id);
                     }
 
                     $error[] = _t('Authorization failed', 'system');
