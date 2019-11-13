@@ -56,20 +56,20 @@ if ($user->isValid()) {
         $_SESSION = [];
         header('Location: /');
         exit;
-    } else {
-        $breadcrumbs[] = [
-            'url'    => '/profile/?act=office',
-            'name'   => _t('Personal', 'system'),
-            'active' => false,
-        ];
-        $breadcrumbs[] = [
-            'url'    => '',
-            'name'   => _t('Logout', 'system'),
-            'active' => true,
-        ];
-        // Показываем запрос на подтверждение выхода с сайта
-        echo $view->render('login::logout', ['referer' => $referer, 'breadcrumbs' => $breadcrumbs]);
     }
+    $breadcrumbs[] = [
+        'url'    => '/profile/?act=office',
+        'name'   => _t('Personal', 'system'),
+        'active' => false,
+    ];
+    $breadcrumbs[] = [
+        'url'    => '',
+        'name'   => _t('Logout', 'system'),
+        'active' => true,
+    ];
+    // Показываем запрос на подтверждение выхода с сайта
+    echo $view->render('login::logout', ['referer' => $referer, 'breadcrumbs' => $breadcrumbs]);
+
 } else {
     ////////////////////////////////////////////////////////////
     // Вход на сайт                                           //
