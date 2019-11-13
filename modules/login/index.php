@@ -159,10 +159,25 @@ if ($user->isValid()) {
     }
 
     if ($display_form) {
+
+        $breadcrumbs = [
+            [
+                'url'    => '/',
+                'name'   => _t('Home', 'system'),
+                'active' => false,
+            ],
+            [
+                'url'    => '/login/',
+                'name'   => _t('Login', 'system'),
+                'active' => true,
+            ],
+        ];
+
         // Показываем LOGIN форму
         echo $view->render('login::login', [
-            'error'      => isset($_POST['login']) ? $error : [],
-            'user_login' => $user_login ?? '',
+            'error'       => isset($_POST['login']) ? $error : [],
+            'user_login'  => $user_login ?? '',
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 }

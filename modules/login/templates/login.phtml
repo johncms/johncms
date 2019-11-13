@@ -1,44 +1,59 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('Login', 'system'), 'homeButton' => true]) ?>
-<div class="phdr">
-    <b><?= _t('Login', 'system') ?></b>
-</div>
-<?php if (! empty($error)): ?>
-    <?= $tools->displayError($error) ?>
-<?php endif ?>
-<div class="gmenu">
-    <form method="post">
-        <p>
-            <label>
-                <?= _t('Username', 'system') ?>:<br>
-                <input type="text" name="n" value="<?= $this->e($user_login) ?>" maxlength="20"/>
-            </label>
-        </p>
-        <p>
-            <label>
-                <?= _t('Password', 'system') ?>:<br>
-                <input type="password" name="p" maxlength="20"/>
-            </label>
-        </p>
-        <p>
-            <label>
-                <input type="checkbox" name="mem" value="1" checked="checked"/>
-                <?= _t('Remember', 'system') ?>
-            </label>
-        </p>
-        <p>
-            <input type="submit" name="login" value="<?= _t('Login', 'system') ?>"/>
-        </p>
-    </form>
-</div>
-<div class="menu">
-    <p>
-        <img src="<?= $this->asset('images/old_user.png') ?>" alt="">
-        <a href="../registration"><?= _t('Registration', 'system') ?></a>
-    </p>
-</div>
-<div class="bmenu">
-    <p>
-        <img src="<?= $this->asset('images/old_lock.png') ?>" alt="">
-        <a href="../profile/skl.php?continue"><?= _t('Forgot password?', 'system') ?></a>
-    </p>
+<?php $this->layout('system::layout/default', [
+        'title'       => _t('Login', 'system'),
+        'page_title'  => _t('Login', 'system'),
+        'homeButton'  => true,
+        'breadcrumbs' => $breadcrumbs,
+    ]
+) ?>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <form method="post">
+                <div class="card-body">
+                    <h4 class="card-title"><?= _t('Authorization', 'system') ?></h4>
+                    <?php if (! empty($error)): ?>
+                        <?= $this->insert('system::app/alert', ['alert_type' => 'alert-danger', 'alert' => $error]) ?>
+                    <?php endif ?>
+                    <div class="form-group">
+                        <label for="login"><?= _t('Username', 'system') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="20"
+                               name="n"
+                               id="login"
+                               required
+                               value="<?= $this->e($user_login) ?>"
+                               placeholder="<?= _t('Username', 'system') ?>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><?= _t('Password', 'system') ?></label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            name="p"
+                            maxlength="20"
+                            id="password"
+                            required
+                            placeholder="<?= _t('Password', 'system') ?>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input id="remember" type="checkbox" name="mem" value="1" checked="checked" class="custom-control-input">
+                            <label for="remember" class="custom-control-label">
+                                <?= _t('Remember', 'system') ?>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" name="login" value="1" class="btn btn-fill btn-primary"><?= _t('Login', 'system') ?></button>
+                    <!-- TODO: ссылка на восстановление пароля не работает как и страница восстановления -->
+                    <a href="../profile/skl.php?continue" class="btn btn-link"><?= _t('Forgot password?', 'system') ?></a>
+                    <div class="mt-3">
+                        <a href="../registration" class="mr-2"><?= _t('Registration', 'system') ?></a>
+                    </div>
+                </div>
+            </form>
+        </div> <!-- end card -->
+    </div>
 </div>
