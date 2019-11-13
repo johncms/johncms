@@ -42,7 +42,7 @@ $breadcrumbs = [
         'url'    => '/',
         'name'   => _t('Home', 'system'),
         'active' => false,
-    ]
+    ],
 ];
 
 if ($user->isValid()) {
