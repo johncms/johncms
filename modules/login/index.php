@@ -16,6 +16,7 @@ use Johncms\Api\UserInterface;
 use Johncms\Users\User;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
+use Johncms\Api\NavChainInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -24,26 +25,20 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var ContainerInterface $container
  * @var UserInterface      $user
  * @var Engine             $view
+ * @var NavChainInterface  $nav_chain
  */
 
 $container = App::getContainer();
 $config = $container->get(ConfigInterface::class);
 $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
+$nav_chain = $container->get(NavChainInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('login', __DIR__ . '/templates/');
 
 $id = isset($_POST['id']) ? abs((int) ($_POST['id'])) : 0;
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
-
-$breadcrumbs = [
-    [
-        'url'    => '/',
-        'name'   => _t('Home', 'system'),
-        'active' => false,
-    ],
-];
 
 if ($user->isValid()) {
     ////////////////////////////////////////////////////////////
@@ -57,18 +52,10 @@ if ($user->isValid()) {
         header('Location: /');
         exit;
     }
-    $breadcrumbs[] = [
-        'url'    => '/profile/?act=office',
-        'name'   => _t('Personal', 'system'),
-        'active' => false,
-    ];
-    $breadcrumbs[] = [
-        'url'    => '',
-        'name'   => _t('Logout', 'system'),
-        'active' => true,
-    ];
+    $nav_chain->add(_t('Personal', 'system'), '/profile/?act=office');
+    $nav_chain->add(_t('Logout', 'system'));
     // Показываем запрос на подтверждение выхода с сайта
-    echo $view->render('login::logout', ['referer' => $referer, 'breadcrumbs' => $breadcrumbs]);
+    echo $view->render('login::logout', ['referer' => $referer]);
 } else {
     ////////////////////////////////////////////////////////////
     // Вход на сайт                                           //
@@ -79,6 +66,8 @@ if ($user->isValid()) {
 
     /** @var ToolsInterface $tools */
     $tools = $container->get(ToolsInterface::class);
+
+    $nav_chain->add(_t('Login', 'system'));
 
     $error = [];
     $captcha = false;
@@ -120,18 +109,12 @@ if ($user->isValid()) {
                     $display_form = 0;
                     $code = (string) new Batumibiz\Captcha\Code;
                     $_SESSION['code'] = $code;
-                    $breadcrumbs[] = [
-                        'url'    => '',
-                        'name'   => _t('Login', 'system'),
-                        'active' => true,
-                    ];
                     echo $view->render('login::captcha', [
-                        'captcha'     => new Batumibiz\Captcha\Image($code),
-                        'user_login'  => $user_login,
-                        'user_pass'   => $user_pass,
-                        'remember'    => $remember,
-                        'id'          => $loginUser->id,
-                        'breadcrumbs' => $breadcrumbs,
+                        'captcha'    => new Batumibiz\Captcha\Image($code),
+                        'user_login' => $user_login,
+                        'user_pass'  => $user_pass,
+                        'remember'   => $remember,
+                        'id'         => $loginUser->id,
                     ]);
                 }
             }
@@ -144,14 +127,7 @@ if ($user->isValid()) {
 
                     if (! $loginUser->preg) {
                         // Показываем сообщение о неподтвержденной регистрации
-                        $breadcrumbs[] = [
-                            'url'    => '',
-                            'name'   => _t('Login', 'system'),
-                            'active' => true,
-                        ];
-                        echo $view->render('login::confirm', [
-                            'breadcrumbs' => $breadcrumbs,
-                        ]);
+                        echo $view->render('login::confirm');
                     } else {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
                         if (isset($_POST['mem'])) {
@@ -187,17 +163,10 @@ if ($user->isValid()) {
     }
 
     if ($display_form) {
-        $breadcrumbs[] = [
-            'url'    => '',
-            'name'   => _t('Login', 'system'),
-            'active' => true,
-        ];
-
         // Показываем LOGIN форму
         echo $view->render('login::login', [
-            'error'       => isset($_POST['login']) ? $error : [],
-            'user_login'  => $user_login ?? '',
-            'breadcrumbs' => $breadcrumbs,
+            'error'      => isset($_POST['login']) ? $error : [],
+            'user_login' => $user_login ?? '',
         ]);
     }
 }

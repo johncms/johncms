@@ -2,6 +2,11 @@
 /**
  * @var $breadcrumbs
  */
+
+use Johncms\Api\NavChainInterface;
+
+$nav_chain = $container->get(NavChainInterface::class);
+$breadcrumbs = $nav_chain->getAll();
 ?>
 <?php if (! empty($breadcrumbs)): ?>
     <nav aria-label="breadcrumb">

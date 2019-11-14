@@ -59,9 +59,7 @@
             <?php if (! empty($page_title)): ?>
                 <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
             <?php endif; ?>
-            <?php if (! empty($breadcrumbs)): ?>
-                <?php $this->insert('system::app/breadcrumbs', ['breadcrumbs' => $breadcrumbs]); ?>
-            <?php endif; ?>
+            <?php $this->insert('system::app/breadcrumbs'); ?>
 
             <?= $this->section('content') ?>
         </div>

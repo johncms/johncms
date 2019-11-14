@@ -21,6 +21,7 @@ return [
             Api\EnvironmentInterface::class => Johncms\Http\Environment::class,
             Api\ToolsInterface::class       => Johncms\Utility\Tools::class,
             Api\UserInterface::class        => Johncms\Users\UserFactory::class,
+            Api\NavChainInterface::class    => Johncms\Utility\NavChain::class,
             Assets::class                   => Assets::class,
             FastRoute\RouteCollector::class => Johncms\Router\RouteCollectorFactory::class,
             League\Plates\Engine::class     => Johncms\View\PlatesEngineFactory::class,

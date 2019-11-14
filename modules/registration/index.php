@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
+use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
@@ -26,6 +27,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
  * @var Engine             $view
+ * @var NavChainInterface  $nav_chain
  */
 
 $container = App::getContainer();
@@ -33,6 +35,7 @@ $config = $container->get(ConfigInterface::class);
 $tools = $container->get(ToolsInterface::class);
 $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
+$nav_chain = $container->get(NavChainInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('reg', __DIR__ . '/templates/');
@@ -40,18 +43,7 @@ $view->addFolder('reg', __DIR__ . '/templates/');
 // Регистрируем папку с языками модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$breadcrumbs = [
-    [
-        'url'    => '/',
-        'name'   => _t('Home', 'system'),
-        'active' => false,
-    ],
-    [
-        'url'    => '',
-        'name'   => _t('Registration'),
-        'active' => true,
-    ],
-];
+$nav_chain->add(_t('Registration'));
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config->mod_reg || $user->isValid()) {
@@ -172,10 +164,9 @@ if (isset($_POST['submit'])) {
         }
 
         echo $view->render('reg::registration_result', [
-            'usid'        => $usid,
-            'reg_nick'    => $reg_nick,
-            'reg_pass'    => $reg_pass,
-            'breadcrumbs' => $breadcrumbs,
+            'usid'     => $usid,
+            'reg_nick' => $reg_nick,
+            'reg_pass' => $reg_pass,
         ]);
         exit;
     }
@@ -186,12 +177,11 @@ $code = (string) new Batumibiz\Captcha\Code;
 $_SESSION['code'] = $code;
 
 echo $view->render('reg::index', [
-    'error'       => $error,
-    'reg_nick'    => $reg_nick,
-    'reg_pass'    => $reg_pass,
-    'reg_name'    => $reg_name,
-    'reg_sex'     => $reg_sex,
-    'reg_about'   => $reg_about,
-    'captcha'     => new Batumibiz\Captcha\Image($code),
-    'breadcrumbs' => $breadcrumbs,
+    'error'     => $error,
+    'reg_nick'  => $reg_nick,
+    'reg_pass'  => $reg_pass,
+    'reg_name'  => $reg_name,
+    'reg_sex'   => $reg_sex,
+    'reg_about' => $reg_about,
+    'captcha'   => new Batumibiz\Captcha\Image($code),
 ]);

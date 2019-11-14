@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\NavChainInterface;
 use League\Plates\Engine;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
@@ -33,21 +34,13 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $view = $container->get(Engine::class);
 
+/** @var NavChainInterface $nav_chain */
+$nav_chain = $container->get(NavChainInterface::class);
+
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');
 
-$breadcrumbs = [
-    [
-        'url'    => '/',
-        'name'   => _t('Home', 'system'),
-        'active' => false,
-    ],
-    [
-        'url'    => '',
-        'name'   => _t('Restore password', 'system'),
-        'active' => true,
-    ],
-];
+$nav_chain->add(_t('Restore password', 'system'));
 
 function passgen($length)
 {
@@ -123,9 +116,8 @@ switch ($act) {
         }
 
         echo $view->render('profile::restore_password_result', [
-            'breadcrumbs' => $breadcrumbs,
-            'type'        => $type,
-            'message'     => $message,
+            'type'    => $type,
+            'message' => $message,
         ]);
         break;
 
@@ -183,9 +175,8 @@ switch ($act) {
         }
 
         echo $view->render('profile::restore_password_result', [
-            'breadcrumbs' => $breadcrumbs,
-            'type'        => $type,
-            'message'     => $message,
+            'type'    => $type,
+            'message' => $message,
         ]);
         break;
 
@@ -194,8 +185,7 @@ switch ($act) {
         $_SESSION['code'] = $code;
         // Показываем запрос на подтверждение выхода с сайта
         echo $view->render('profile::restore_password', [
-            'captcha'     => new Batumibiz\Captcha\Image($code),
-            'breadcrumbs' => $breadcrumbs,
+            'captcha' => new Batumibiz\Captcha\Image($code),
         ]);
         break;
 }
