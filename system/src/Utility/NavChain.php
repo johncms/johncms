@@ -17,9 +17,10 @@ use Psr\Container\ContainerInterface;
 
 class NavChain implements NavChainInterface
 {
-
     private $items = [];
+
     private $show_home_page = true;
+
     private $last_is_active = true;
 
     public function __invoke(ContainerInterface $container)
@@ -88,5 +89,4 @@ class NavChain implements NavChainInterface
     {
         $this->last_is_active = $value;
     }
-
 }

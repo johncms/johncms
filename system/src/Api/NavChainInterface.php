@@ -14,7 +14,6 @@ namespace Johncms\Api;
 
 interface NavChainInterface
 {
-
     /**
      * Метод добавляет элемент в навигационную цепочку
      *
@@ -30,5 +29,4 @@ interface NavChainInterface
      * @return array
      */
     public function getAll() : array;
-
 }
