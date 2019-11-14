@@ -45,7 +45,7 @@ if ($user->rights >= 6) {
             $rid = 0;
 
             if (! empty($_POST['rz'])) {
-                $rz = intval($_POST['rz']);
+                $rz = (int) $_POST['rz'];
                 $pr = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${rz}'");
                 if ($pr1 = $pr->fetch()) {
                     $date = new DateTime();

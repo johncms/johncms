@@ -30,7 +30,7 @@ if ($user->rights >= 6) {
         exit;
     }
 
-    if (!empty($_POST)) {
+    if (! empty($_POST)) {
         $error = [];
 
         if (empty($_POST['name'])) {
