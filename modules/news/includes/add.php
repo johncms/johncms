@@ -17,14 +17,12 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\Api\ToolsInterface $tools
  * @var Johncms\Api\UserInterface  $user
  * @var League\Plates\Engine       $view
+ * @var \Johncms\Utility\NavChain  $nav_chain
  */
-
+$nav_chain->add(_t('Add news'), '');
 // Добавление новости
 if ($user->rights >= 6) {
-    echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
-    $old = 20;
-
-    if (isset($_POST['submit'])) {
+    if (! empty($_POST)) {
         $error = [];
         $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : false;
         $text = isset($_POST['text']) ? trim($_POST['text']) : false;
@@ -46,21 +44,14 @@ if ($user->rights >= 6) {
         if (! $error) {
             $rid = 0;
 
-            if (! empty($_POST['pf']) && ($_POST['pf'] != '0')) {
-                $pf = (int) ($_POST['pf']);
-                $rz = $_POST['rz'];
-                $pr = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${pf}'");
+            if (! empty($_POST['rz'])) {
+                $rz = intval($_POST['rz']);
+                $pr = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${rz}'");
+                if ($pr1 = $pr->fetch()) {
+                    $date = new DateTime();
+                    $date = $date->format('Y-m-d H:i:s');
 
-                while ($pr1 = $pr->fetch()) {
-                    $arr[] = $pr1['id'];
-                }
-
-                foreach ($rz as $v) {
-                    if (in_array($v, $arr)) {
-                        $date = new DateTime();
-                        $date = $date->format('Y-m-d H:i:s');
-
-                        $db->prepare('
+                    $db->prepare('
                                   INSERT INTO `forum_topic` SET
                                   `section_id` = ?,
                                   `created_at` = ?,
@@ -70,19 +61,19 @@ if ($user->rights >= 6) {
                                   `last_post_date` = ?,
                                   `post_count` = 0
                                 ')->execute([
-                            $v,
-                            $date,
-                            $user->id,
-                            $user->name,
-                            $name,
-                            time(),
-                        ]);
+                        $pr1['id'],
+                        $date,
+                        $user->id,
+                        $user->name,
+                        $name,
+                        time(),
+                    ]);
 
-                        /** @var Johncms\Api\EnvironmentInterface $env */
-                        $env = $container->get(Johncms\Api\EnvironmentInterface::class);
-                        $rid = $db->lastInsertId();
+                    /** @var Johncms\Api\EnvironmentInterface $env */
+                    $env = $container->get(Johncms\Api\EnvironmentInterface::class);
+                    $rid = $db->lastInsertId();
 
-                        $db->prepare('
+                    $db->prepare('
                                   INSERT INTO `forum_messages` SET
                                   `topic_id` = ?,
                                   `date` = ?,
@@ -93,17 +84,16 @@ if ($user->rights >= 6) {
                                   `user_agent` = ?,
                                   `text` = ?
                                 ')->execute([
-                            $rid,
-                            time(),
-                            $user->id,
-                            $user->name,
-                            $env->getIp(),
-                            $env->getIpViaProxy(),
-                            $env->getUserAgent(),
-                            $text,
-                        ]);
-                        $tools->recountForumTopic($rid);
-                    }
+                        $rid,
+                        time(),
+                        $user->id,
+                        $user->name,
+                        $env->getIp(),
+                        $env->getIpViaProxy(),
+                        $env->getUserAgent(),
+                        $text,
+                    ]);
+                    $tools->recountForumTopic($rid);
                 }
             }
 
@@ -123,38 +113,44 @@ if ($user->rights >= 6) {
             ]);
 
             $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-            echo '<p>' . _t('News added') . '<br /><a href="./">' . _t('Back to news') . '</a></p>';
+            echo $view->render('news::result', [
+                'title'    => _t('News add'),
+                'message'  => _t('News added'),
+                'type'     => 'success',
+                'back_url' => '/news/',
+            ]);
         } else {
-            echo $tools->displayError($error, '<a href="./">' . _t('Back to news') . '</a>');
+            echo $view->render('news::result', [
+                'title'    => _t('News add'),
+                'message'  => $error,
+                'type'     => 'error',
+                'back_url' => '/news/?do=add',
+            ]);
         }
     } else {
-        echo '<form action="?do=add" method="post"><div class="menu">' .
-            '<p><h3>' . _t('Title') . '</h3>' .
-            '<input type="text" name="name"/></p>' .
-            '<p><h3>' . _t('Text') . '</h3>' .
-            '<textarea rows="' . $user->config->fieldHeight . '" name="text"></textarea></p>' .
-            '<p><h3>' . _t('Discussion') . '</h3>';
+        $discussion_items = [];
+
+        // Собираем массив форумов для обсуждений
         $fr = $db->query('SELECT * FROM `forum_sections` WHERE `section_type` = 0');
-        echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
-
         while ($fr1 = $fr->fetch()) {
-            echo '<input type="radio" name="pf" value="' . $fr1['id'] . '"/>' . $fr1['name'] . '<select name="rz[]">';
+            $sections = [];
             $pr = $db->query("SELECT * FROM `forum_sections` WHERE `section_type` = 1 AND `parent` = '" . $fr1['id'] . "'");
-
             while ($pr1 = $pr->fetch()) {
-                echo '<option value="' . $pr1['id'] . '">' . $pr1['name'] . '</option>';
+                $sections[] = [
+                    'id'   => $pr1['id'],
+                    'name' => $pr1['name'],
+                ];
             }
-            echo '</select><br>';
+            $parent = [
+                'id'       => $fr1['id'],
+                'name'     => $fr1['name'],
+                'sections' => $sections,
+            ];
+            $discussion_items[] = $parent;
         }
 
-        echo '</p></div><div class="bmenu">' .
-            '<input type="submit" name="submit" value="' . _t('Save') . '"/>' .
-            '</div></form>' .
-            '<p><a href="./">' . _t('Back to news') . '</a></p>';
-
-        echo $view->render('system::app/old_content', [
-            'title'   => _t('News'),
-            'content' => ob_get_clean(),
+        echo $view->render('news::add', [
+            'discussions' => $discussion_items,
         ]);
     }
 } else {

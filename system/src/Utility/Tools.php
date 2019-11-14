@@ -184,10 +184,11 @@ class Tools implements ToolsInterface
         if ($start >= $total) {
             $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
         } else {
-            $start = max(0, (int)$start - ((int)$start % (int)$kmess));
+            $start = max(0, (int) $start - ((int) $start % (int) $kmess));
         }
 
-        $base_link = '<a class="pagenav" href="' . strtr($url, ['%' => '%%']) . 'page=%d' . '">%s</a>';
+        $out[] = '<ul class="pagination">';
+        $base_link = '<li class="page-item"><a class="page-link" href="' . strtr($url, ['%' => '%%']) . 'page=%d' . '">%s</a></li>';
         $out[] = $start == 0 ? '' : sprintf($base_link, $start / $kmess, '&lt;&lt;');
 
         if ($start > $kmess * $neighbors) {
@@ -195,7 +196,7 @@ class Tools implements ToolsInterface
         }
 
         if ($start > $kmess * ($neighbors + 1)) {
-            $out[] = '<span style="font-weight: bold;">...</span>';
+            $out[] = '<li class="page-item disabled"><a class="page-link" href="#">...</a></li>';
         }
 
         for ($nCont = $neighbors; $nCont >= 1; $nCont--) {
@@ -205,8 +206,8 @@ class Tools implements ToolsInterface
             }
         }
 
-        $out[] = '<span class="currentpage"><b>' . ($start / $kmess + 1) . '</b></span>';
-        $tmpMaxPages = (int)(($total - 1) / $kmess) * $kmess;
+        $out[] = '<li class="page-item active"><a class="page-link" href="#">' . ($start / $kmess + 1) . '</a></li>';
+        $tmpMaxPages = (int) (($total - 1) / $kmess) * $kmess;
 
         for ($nCont = 1; $nCont <= $neighbors; $nCont++) {
             if ($start + $kmess * $nCont <= $tmpMaxPages) {
@@ -216,7 +217,7 @@ class Tools implements ToolsInterface
         }
 
         if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages) {
-            $out[] = '<span style="font-weight: bold;">...</span>';
+            $out[] = '<li class="page-item disabled"><a class="page-link" href="#">...</a></li>';
         }
 
         if ($start + $kmess * $neighbors < $tmpMaxPages) {
@@ -227,6 +228,8 @@ class Tools implements ToolsInterface
             $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
             $out[] = sprintf($base_link, $display_page, '&gt;&gt;');
         }
+
+        $out[] = '</ul>';
 
         return implode(' ', $out);
     }
@@ -410,9 +413,9 @@ class Tools implements ToolsInterface
     /**
      * Получение флага для выбранной локали
      *
-     * @deprecated
      * @param string $locale
      * @return string
+     * @deprecated
      */
     public function getFlag($locale) : string
     {
@@ -687,7 +690,7 @@ class Tools implements ToolsInterface
     {
         $prefixes = 'KMGTPEZY';
         if ($number >= 1000) {
-            for ($i=-1; $number >= 1000; ++$i) {
+            for ($i = -1; $number >= 1000; ++$i) {
                 $number /= 1000;
             }
 

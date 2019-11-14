@@ -21,17 +21,16 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Редактирование новости
 if ($user->rights >= 6) {
-    echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
-
     if (! $id) {
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl,
-            'content' => $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Back to news') . '</a>'),
+        echo $view->render('news::result', [
+            'message'  => _t('Wrong data'),
+            'type'     => 'success',
+            'back_url' => '/news/',
         ]);
         exit;
     }
 
-    if (isset($_POST['submit'])) {
+    if (!empty($_POST)) {
         $error = [];
 
         if (empty($_POST['name'])) {
@@ -57,26 +56,28 @@ if ($user->rights >= 6) {
                 $id,
             ]);
         } else {
-            echo $tools->displayError($error, '<a href="?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $view->render('news::result', [
+                'title'    => _t('News edit'),
+                'message'  => $error,
+                'type'     => 'error',
+                'back_url' => '/news/?act=edit&amp;id=' . $id . '',
+            ]);
         }
-        echo '<p>' . _t('Article changed') . '<br /><a href="./">' . _t('Continue') . '</a></p>';
+
+        echo $view->render('news::result', [
+            'title'    => _t('News edit'),
+            'message'  => _t('Article changed'),
+            'type'     => 'success',
+            'back_url' => '/news/',
+        ]);
     } else {
         $res = $db->query("SELECT * FROM `news` WHERE `id` = '${id}'")->fetch();
-
-        echo '<div class="menu"><form action="?do=edit&amp;id=' . $id . '" method="post">' .
-            '<p><h3>' . _t('Title') . '</h3>' .
-            '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
-            '<p><h3>' . _t('Text') . '</h3>' .
-            '<textarea rows="' . $user->config->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
-            '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
-            '</form></div>' .
-            '<div class="phdr"><a href="./">' . _t('Back to news') . '</a></div>';
+        echo $view->render('news::edit', [
+            'id'   => $id,
+            'name' => $res['name'],
+            'text' => htmlentities($res['text'], ENT_QUOTES, 'UTF-8'),
+        ]);
     }
-
-    echo $view->render('system::app/old_content', [
-        'title'   => _t('News'),
-        'content' => ob_get_clean(),
-    ]);
 } else {
     pageNotFound();
 }

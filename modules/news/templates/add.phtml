@@ -1,0 +1,50 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => _t('Add news'),
+    'page_title' => _t('Add news'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+        <div class="card shadow border-0 border-radius-12">
+            <div class="card-body">
+                <h4 class="card-title"><?= _t('Add news') ?></h4>
+                <form action="?do=add" method="post">
+                    <div class="form-group">
+                        <label for="title"><?= _t('Title') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="255"
+                               name="name"
+                               id="title"
+                               required
+                               value=""
+                               placeholder="<?= _t('Title') ?>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="text"><?= _t('Text') ?></label>
+                        <textarea id="text" class="form-control" name="text" rows="<?= $user->config->fieldHeight ?>"></textarea>
+                    </div>
+                    <?php if (! empty($discussions)): ?>
+                        <div class="form-group">
+                            <label for="discussion"><?= _t('Discussion') ?></label>
+                            <select size="5" name="rz" class="form-control" id="discussion">
+                                <option value="0" selected><?= _t('Do not discuss') ?></option>
+                                <?php foreach ($discussions as $forum): ?>
+                                    <optgroup label="<?= $forum['name'] ?>">
+                                        <?php foreach ($forum['sections'] as $subsection): ?>
+                                            <option value="<?= $subsection['id'] ?>"><?= $subsection['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </optgroup>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+                    <div>
+                        <button type="submit" class="btn btn-primary"><?= _t('Save') ?></button>
+                        <a href="/news/" class="btn btn-outline-primary ml-2"><?= _t('Back to news') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

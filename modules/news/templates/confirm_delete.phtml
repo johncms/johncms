@@ -1,0 +1,15 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => _t('Delete'),
+    'page_title' => _t('Delete'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+        <div class="card shadow border-0 border-radius-12">
+            <div class="card-body">
+                <h4 class="card-title"><?= _t('Do you really want to delete?') ?></h4>
+                <a href="?do=del&amp;id=<?= $id ?>&amp;yes" class="btn btn-danger"><?= _t('Delete') ?></a>
+                <a href="/news/" class="btn btn-link"><?= _t('Cancel') ?></a></div>
+            </div>
+        </div>
+    </div>
+</div>

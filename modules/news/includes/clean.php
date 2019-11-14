@@ -13,16 +13,14 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\UserInterface  $user
- * @var League\Plates\Engine       $view
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ * @var League\Plates\Engine      $view
  */
 
 // Чистка новостей
 if ($user->rights >= 7) {
-    echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
-
-    if (isset($_POST['submit'])) {
+    if (! empty($_POST)) {
         $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
         switch ($cl) {
@@ -30,36 +28,29 @@ if ($user->rights >= 7) {
                 // Чистим новости, старше 1 недели
                 $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 604800));
                 $db->query('OPTIMIZE TABLE `news`');
-
-                echo '<p>' . _t('Delete all news older than 1 week') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
+                $message = _t('Delete all news older than 1 week');
                 break;
 
             case '2':
                 // Проводим полную очистку
                 $db->query('TRUNCATE TABLE `news`');
-                echo '<p>' . _t('Delete all news') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
+                $message = _t('Delete all news');
                 break;
             default:
                 // Чистим сообщения, старше 1 месяца
                 $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 2592000));
                 $db->query('OPTIMIZE TABLE `news`;');
-
-                echo '<p>' . _t('Delete all news older than 1 month') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
+                $message = _t('Delete all news older than 1 month');
         }
-    } else {
-        echo '<div class="menu"><form id="clean" method="post" action="?do=clean">' .
-            '<p><h3>' . _t('Clearing parameters') . '</h3>' .
-            '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 month') . '<br />' .
-            '<input type="radio" name="cl" value="1" />' . _t('Older than 1 week') . '<br />' .
-            '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
-            '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
-            '</form></div>' .
-            '<div class="phdr"><a href="./">' . _t('Cancel') . '</a></div>';
 
-        echo $view->render('system::app/old_content', [
-            'title'   => _t('News'),
-            'content' => ob_get_clean(),
+        echo $view->render('news::result', [
+            'title'    => _t('Clear'),
+            'message'  => $message,
+            'type'     => 'success',
+            'back_url' => '/news/',
         ]);
+    } else {
+        echo $view->render('news::clear');
     }
 } else {
     pageNotFound();
