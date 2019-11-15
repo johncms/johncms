@@ -718,7 +718,7 @@ CREATE TABLE `users`
   `rest_code`     VARCHAR(32)         NOT NULL DEFAULT '',
   `rest_time`     INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `movings`       INT(10) UNSIGNED    NOT NULL DEFAULT '0',
-  `place`         VARCHAR(30)         NOT NULL DEFAULT '',
+  `place`         VARCHAR(100)        NOT NULL DEFAULT '',
   `set_user`      TEXT                NOT NULL,
   `set_forum`     TEXT                NOT NULL,
   `set_mail`      TEXT                NOT NULL,
