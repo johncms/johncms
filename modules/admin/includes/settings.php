@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
         exit;
     }
 
-    echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
+    $confirmation = true;
 
     if (function_exists('opcache_reset')) {
         opcache_reset();
@@ -50,6 +50,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo $view->render('admin::settings', [
-    'sysconf'   => $config,
-    'themelist' => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
+    'sysconf'      => $config,
+    'confirmation' => $confirmation ?? false,
+    'themelist'    => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
 ]);

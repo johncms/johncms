@@ -9,6 +9,9 @@ $this->layout('system::layout/old_default', ['title' => _t('Admin Panel'), 'home
     <a href="./"><strong><?= _t('Admin Panel') ?></strong></a> | <?= _t('System Settings') ?>
 </div>
 <form action="?act=settings" method="post">
+    <?php if($confirmation): ?>
+        <div class="gmenu padding"><?= _t('Settings are saved successfully') ?></div>
+    <?php endif ?>
     <div class="menu padding">
         <!-- Общие настройки -->
         <h3><?= _t('Common Settings') ?></h3>
