@@ -11,7 +11,6 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var Psr\Container\ContainerInterface $container
@@ -23,8 +22,6 @@ if ($user->rights < 9) {
 }
 
 $config = $container->get('config')['johncms'];
-
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы
@@ -52,55 +49,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-// Форма ввода параметров системы
-echo '<form action="?act=settings" method="post"><div class="menu">';
-
-// Общие настройки
-echo '<p>' .
-    '<h3>' . _t('Common Settings') . '</h3>' .
-    _t('Web site address without the slash at the end') . '<br>' . '<input type="text" name="homeurl" value="' . htmlentities($config['homeurl']) . '"/><br>' .
-    _t('Site copyright') . '<br>' . '<input type="text" name="copyright" value="' . htmlentities($config['copyright'],
-        ENT_QUOTES, 'UTF-8') . '"/><br>' .
-    _t('Site Email') . '<br>' . '<input name="madm" maxlength="50" value="' . htmlentities($config['email']) . '"/><br>' .
-    _t('Max. file size') . ' (kb):<br>' . '<input type="text" name="flsz" value="' . (int) ($config['flsz']) . '"/><br>' .
-    '<input name="gz" type="checkbox" value="1" ' . ($config['gzip'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Gzip compression') .
-    '</p>';
-
-// Настройка времени
-echo '<p>' .
-    '<h3>' . _t('Time shift') . '</h3>' .
-    '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $config['timeshift'] . '"/> (+-12)<br>' .
-    '<span style="font-weight:bold; background-color:#C0FFC0">' . date('H:i',
-        time() + $config['timeshift'] * 3600) . '</span> ' . _t('System Time') .
-    '<br><span style="font-weight:bold; background-color:#FFC0C0">' . date('H:i') . '</span> ' . _t('Server Time') .
-    '</p>';
-
-// META тэги
-echo '<p>' .
-    '<h3>' . _t('META tags') . '</h3>' .
-    '&#160;' . _t('Keywords') . '<br>&#160;<textarea rows="' . $user->config->fieldHeight . '" name="meta_key">' . $config['meta_key'] . '</textarea><br>' .
-    '&#160;' . _t('Description') . '<br>&#160;<textarea rows="' . $user->config->fieldHeight . '" name="meta_desc">' . $config['meta_desc'] . '</textarea>' .
-    '</p>';
-
-// Выбор темы оформления
-echo '<p><h3>' . _t('Themes') . '</h3>&#160;<select name="skindef">';
-$dir = opendir(ROOT_PATH . 'themes');
-
-while ($skindef = readdir($dir)) {
-    if (($skindef != '.') && ($skindef != '..') && ($skindef != '.svn')) {
-        $skindef = str_replace('.css', '', $skindef);
-        echo '<option' . ($config['skindef'] == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';
-    }
-}
-
-closedir($dir);
-
-echo '</select>' .
-    '</p><br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
-    '<div class="phdr">&#160;</div>' .
-    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
-
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
+echo $view->render('admin::settings', [
+    'sysconf'   => $config,
+    'themelist' => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
 ]);

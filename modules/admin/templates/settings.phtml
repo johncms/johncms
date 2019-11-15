@@ -1,0 +1,67 @@
+<?php
+/**
+ * @var array $sysconf
+ * @var array $themelist
+ */
+$this->layout('system::layout/old_default', ['title' => _t('Admin Panel'), 'homeButton' => true]);
+?>
+<div class="phdr">
+    <a href="./"><strong><?= _t('Admin Panel') ?></strong></a> | <?= _t('System Settings') ?>
+</div>
+<form action="?act=settings" method="post">
+    <div class="menu padding">
+        <!-- Общие настройки -->
+        <h3><?= _t('Common Settings') ?></h3>
+        <label>
+            <?= _t('Web site address without the slash at the end') ?><br>
+            <input type="text" name="homeurl" value="<?= $this->e($sysconf['homeurl']) ?>"/>
+        </label>
+        <br>
+        <label>
+            <?= _t('Site copyright') ?><br>
+            <input type="text" name="copyright" value="<?= $this->e($sysconf['copyright']) ?>"/>
+        </label>
+        <br>
+        <label>
+            <?= _t('Site Email') ?><br>
+            <input name="madm" maxlength="50" value="<?= $this->e($sysconf['email']) ?>"/>
+        </label>
+        <br>
+        <label>
+            <?= _t('Max. file size') ?> (kb)<br>
+            <input type="text" name="flsz" value="<?= (int) ($sysconf['flsz']) ?>"/>
+        </label>
+        <br>
+        <label>
+            <input name="gz" type="checkbox" value="1" <?= ($sysconf['gzip'] ? 'checked="checked"' : '') ?>>&nbsp;<?= _t('Gzip compression') ?>
+        </label>
+        <br><br>
+        <!-- Настройка времени -->
+        <h3><?= _t('Time shift') ?></h3>
+        <input type="text" name="timeshift" size="2" maxlength="3" value="<?= $sysconf['timeshift'] ?>"/>&nbsp;(+-12)<br>
+        <span style="font-weight:bold; background-color:#C0FFC0"><?= date('H:i', time() + $sysconf['timeshift'] * 3600) ?></span>&nbsp;<?= _t('System Time') ?><br>
+        <span style="font-weight:bold; background-color:#FFC0C0"><?= date('H:i') ?></span>&nbsp;<?= _t('Server Time') ?>
+        <br><br>
+        <!-- META тэги -->
+        <h3><?= _t('META tags') ?></h3>
+        <label>
+            <?= _t('Keywords') ?><br>
+            <textarea rows="<?= $user->config->fieldHeight ?>" name="meta_key"><?= $this->e($sysconf['meta_key']) ?></textarea>
+        </label>
+        <br>
+        <label>
+            <?= _t('Description') ?><br>
+            <textarea rows="<?= $user->config->fieldHeight ?>" name="meta_key"><?= $this->e($sysconf['meta_desc']) ?></textarea>
+        </label>
+        <br><br>
+        <!-- Выбор темы оформления -->
+        <h3><?= _t('Themes') ?></h3>
+        <select name="skindef">
+            <?php foreach ($themelist as $theme): ?>
+                <option<?= ($sysconf['skindef'] == $theme ? ' selected="selected"' : '') ?>><?= $theme ?></option>
+            <?php endforeach ?>
+        </select>
+        <br><br>
+        <input type="submit" name="submit" value="<?= _t('Save') ?>"/>
+    </div>
+</form>
