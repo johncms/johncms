@@ -53,6 +53,7 @@ return [
     'error_table_prepare'      => 'An error occurred while preparing the tables',
     'error'                    => 'ERROR!',
     'errors'                   => 'Errors',
+    'final'                    => 'Finish',
     'final_note'               => 'Do not forget to delete the folder <span class="red"><b>/install</b></span>',
     'final_warning'            => '<h2 class="red">WARNING!</h2><h3>After installation, you must delete folder /<span class="red">install</span></h3>',
     'go_to_site'               => 'Go to Site',

@@ -573,7 +573,7 @@ switch ($act) {
             echo '<h1 class="red">' . $lng['error'] . '</h1>';
             echo '<h2 class="red">' . $lng['already_installed'] . '</h2>';
             echo '<p>' . $lng['to_install_again'] . '.</p>';
-            echo '<ul><li>/system/config/<strong class="red">database.local.php</strong></li><li>/system/config/<strong class="red">system.local.php</strong></li></ul>';
+            echo '<ul><li>/config/autoload/<strong class="red">database.local.php</strong></li><li>/config/autoload/<strong class="red">system.local.php</strong></li></ul>';
         } else {
             // Проверка настроек PHP и прав доступа
             echo '<p>' . $lng['install_note'] . '</p>';
