@@ -20,11 +20,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Удаление новости
 if ($user->rights >= 6) {
+    // Добавляем элемент в цепочку навигации
+    $nav_chain->add(_t('Delete news'), '');
+
     if (isset($_GET['yes'])) {
         $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
         echo $view->render('news::result', [
-            'title'    => _t('Delete'),
-            'message'  => _t('Article deleted'),
+            'title'    => _t('Delete news'),
+            'message'  => _t('News deleted'),
             'type'     => 'success',
             'back_url' => '/news/',
         ]);

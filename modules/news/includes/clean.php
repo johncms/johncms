@@ -20,6 +20,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Чистка новостей
 if ($user->rights >= 7) {
+    // Добавляем элемент в цепочку навигации
+    $nav_chain->add(_t('Clear news'), '');
     if (! empty($_POST)) {
         $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
@@ -44,7 +46,7 @@ if ($user->rights >= 7) {
         }
 
         echo $view->render('news::result', [
-            'title'    => _t('Clear'),
+            'title'    => _t('Clear news'),
             'message'  => $message,
             'type'     => 'success',
             'back_url' => '/news/',

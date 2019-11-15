@@ -21,6 +21,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Редактирование новости
 if ($user->rights >= 6) {
+    // Добавляем элемент в цепочку навигации
+    $nav_chain->add(_t('Edit news'), '');
+
     if (! $id) {
         echo $view->render('news::result', [
             'message'  => _t('Wrong data'),
@@ -57,7 +60,7 @@ if ($user->rights >= 6) {
             ]);
         } else {
             echo $view->render('news::result', [
-                'title'    => _t('News edit'),
+                'title'    => _t('Edit news'),
                 'message'  => $error,
                 'type'     => 'error',
                 'back_url' => '/news/?act=edit&amp;id=' . $id . '',
@@ -65,8 +68,8 @@ if ($user->rights >= 6) {
         }
 
         echo $view->render('news::result', [
-            'title'    => _t('News edit'),
-            'message'  => _t('Article changed'),
+            'title'    => _t('Edit news'),
+            'message'  => _t('News changed'),
             'type'     => 'success',
             'back_url' => '/news/',
         ]);

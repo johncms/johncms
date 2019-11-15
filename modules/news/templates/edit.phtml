@@ -1,12 +1,12 @@
 <?php $this->layout('system::layout/default', [
-    'title'      => _t('Add news'),
-    'page_title' => _t('Add news'),
+    'title'      => _t('Edit news'),
+    'page_title' => _t('Edit news'),
 ]) ?>
 <div class="row">
     <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
         <div class="card shadow border-0 border-radius-12">
             <div class="card-body">
-                <h4 class="card-title"><?= _t('Add news') ?></h4>
+                <h4 class="card-title"><?= _t('Edit news') ?></h4>
                 <form action="/news/?do=edit&amp;id=<?= $id ?>" method="post">
                     <div class="form-group">
                         <label for="title"><?= _t('Title') ?></label>
@@ -25,8 +25,8 @@
                         <textarea id="text" class="form-control" name="text" rows="<?= $user->config->fieldHeight ?>"><?= $text ?></textarea>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary"><?= _t('Save') ?></button>
-                        <a href="/news/" class="btn btn-outline-primary ml-2"><?= _t('Back to news') ?></a>
+                        <button type="submit" class="btn btn-primary mr-2"><?= _t('Save') ?></button>
+                        <a href="/news/" class="btn btn-outline-primary"><?= _t('Back to news') ?></a>
                     </div>
                 </form>
             </div>

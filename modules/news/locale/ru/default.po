@@ -1,156 +1,188 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-03-25 19:16+0400\n"
-"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"POT-Creation-Date: 2019-11-15 11:40+0300\n"
+"PO-Revision-Date: 2019-11-15 11:41+0300\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: .\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /news/default.pot\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: index.php:38 index.php:45 index.php:182 index.php:239 index.php:284
-#: index.php:301
-msgid "News"
-msgstr "Новости"
+#: includes/add.php:22 includes/add.php:117 includes/add.php:124
+#: templates/add.phtml:2 templates/add.phtml:3 templates/add.phtml:9
+msgid "Add news"
+msgstr "Добавить новость"
 
-#: index.php:45 index.php:304
-msgid "Add"
-msgstr "Добавить"
-
-#: index.php:54 index.php:194
+#: includes/add.php:31 includes/edit.php:40
 msgid "You have not entered news title"
 msgstr "Вы не ввели заголовок статьи"
 
-#: index.php:58 index.php:198
+#: includes/add.php:35 includes/edit.php:44
 msgid "You have not entered news text"
 msgstr "Вы не ввели текст статьи"
 
-#: index.php:64
+#: includes/add.php:41
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d seconds."
-msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
+msgstr ""
+"Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
 
-#: index.php:145
+#: includes/add.php:118
 msgid "News added"
 msgstr "Новость добавлена"
 
-#: index.php:145 index.php:147 index.php:172 index.php:185 index.php:229
-#: index.php:250 index.php:257 index.php:264 index.php:289
-msgid "Back to news"
-msgstr "К новостям"
+#: includes/clean.php:24 includes/clean.php:49 templates/clear.phtml:2
+#: templates/clear.phtml:3 templates/clear.phtml:9
+msgid "Clear news"
+msgstr "Очистить новости"
 
-#: index.php:151 index.php:223
-msgid "Title"
-msgstr "Заголовок"
-
-#: index.php:153 index.php:225
-msgid "Text"
-msgstr "Текст"
-
-#: index.php:155
-msgid "Discussion"
-msgstr "Обсуждение"
-
-#: index.php:157
-msgid "Do not discuss"
-msgstr "Не обсуждать"
-
-#: index.php:170 index.php:227
-msgid "Save"
-msgstr "Сохранить"
-
-#: index.php:182 index.php:328
-msgid "Edit"
-msgstr "Изменить"
-
-#: index.php:185
-msgid "Wrong data"
-msgstr "Неверные данные"
-
-#: index.php:216
-msgid "Repeat"
-msgstr "Повторить"
-
-#: index.php:218
-msgid "Article changed"
-msgstr "Статья добавлена"
-
-#: index.php:218
-msgid "Continue"
-msgstr "Продолжить"
-
-#: index.php:239 index.php:272 index.php:304
-msgid "Clear"
-msgstr "Очистить"
-
-#: index.php:250
+#: includes/clean.php:33
 msgid "Delete all news older than 1 week"
 msgstr "Удалены все новости, старше 1 недели"
 
-#: index.php:257
+#: includes/clean.php:39
 msgid "Delete all news"
 msgstr "Удалены все новости"
 
-#: index.php:264
+#: includes/clean.php:45
 msgid "Delete all news older than 1 month"
 msgstr "Удалены все новости, старше 1 месяца"
 
-#: index.php:268
+#: includes/del.php:24 includes/del.php:29 templates/confirm_delete.phtml:2
+#: templates/confirm_delete.phtml:3
+msgid "Delete news"
+msgstr "Удалить новость"
+
+#: includes/del.php:30
+msgid "News deleted"
+msgstr "Новость удалена"
+
+#: includes/edit.php:25 includes/edit.php:63 includes/edit.php:71
+#: templates/edit.phtml:2 templates/edit.phtml:3 templates/edit.phtml:9
+msgid "Edit news"
+msgstr "Изменить новость"
+
+#: includes/edit.php:29
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: includes/edit.php:72
+msgid "News changed"
+msgstr "Новость изменена"
+
+#: index.php:45 templates/index.phtml:2 templates/index.phtml:3
+msgid "News"
+msgstr "Новости"
+
+#: templates/add.phtml:12 templates/add.phtml:20 templates/edit.phtml:12
+#: templates/edit.phtml:20
+msgid "Title"
+msgstr "Заголовок"
+
+#: templates/add.phtml:24 templates/edit.phtml:24
+msgid "Text"
+msgstr "Текст"
+
+#: templates/add.phtml:29
+msgid "Discussion"
+msgstr "Обсуждение"
+
+#: templates/add.phtml:31
+msgid "Do not discuss"
+msgstr "Не обсуждать"
+
+#: templates/add.phtml:43 templates/edit.phtml:28
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/add.phtml:44 templates/edit.phtml:29
+msgid "Back to news"
+msgstr "К новостям"
+
+#: templates/clear.phtml:11
 msgid "Clearing parameters"
 msgstr "Параметры очистки"
 
-#: index.php:269
+#: templates/clear.phtml:14
 msgid "Older than 1 month"
 msgstr "Старше 1 месяца"
 
-#: index.php:270
+#: templates/clear.phtml:18
 msgid "Older than 1 week"
 msgstr "Старше 1 недели"
 
-#: index.php:271
+#: templates/clear.phtml:22
 msgid "Clear all"
-msgstr "Очищаем все"
+msgstr "Очистить всё"
 
-#: index.php:274 index.php:292
+#: templates/clear.phtml:25 templates/index.phtml:8
+msgid "Clear"
+msgstr "Очистить"
+
+#: templates/clear.phtml:26 templates/confirm_delete.phtml:11
 msgid "Cancel"
 msgstr "Отмена"
 
-#: index.php:284 index.php:292 index.php:329
-msgid "Delete"
-msgstr "Удалить"
-
-#: index.php:289
-msgid "Article deleted"
-msgstr "Статья удалена"
-
-#: index.php:291
+#: templates/confirm_delete.phtml:9
 msgid "Do you really want to delete?"
 msgstr "Действительно хотите удалить?"
 
-#: index.php:316
+#: templates/confirm_delete.phtml:10 templates/index.phtml:34
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/index.phtml:7
+msgid "Add"
+msgstr "Добавить"
+
+#: templates/index.phtml:18
 msgid "Author"
 msgstr "Автор"
 
-#: index.php:323
+#: templates/index.phtml:26
 msgid "Discuss in Forum"
 msgstr "Обсудить на форуме"
 
-#: index.php:335
+#: templates/index.phtml:33
+msgid "Edit"
+msgstr "Изменить"
+
+#: templates/index.phtml:42
 msgid "Total"
 msgstr "Всего"
 
-#: index.php:341
-msgid "To Page"
-msgstr "На страницу"
+#: templates/result.phtml:15
+msgid "Back"
+msgstr "Назад"
 
+#~ msgid "Article deleted"
+#~ msgstr "Статья удалена"
+
+#~ msgid "Article changed"
+#~ msgstr "Статья изменена"
+
+#, fuzzy
+#~| msgid "News added"
+#~ msgid "News add"
+#~ msgstr "Новость добавлена"
+
+#~ msgid "Repeat"
+#~ msgstr "Повторить"
+
+#~ msgid "Continue"
+#~ msgstr "Продолжить"
+
+#~ msgid "To Page"
+#~ msgstr "На страницу"
