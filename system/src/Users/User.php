@@ -37,4 +37,21 @@ class User extends ArrayObject implements UserInterface
     {
         throw new \LogicException('User object are immutable');
     }
+
+    /**
+     * Метод возвращает путь к аватару пользователя
+     *
+     * @return string
+     */
+    public function getAvatar() : string
+    {
+        if ($this->isValid()) {
+            $avatar = 'users/avatar/' . $this->id . '.png';
+            if (file_exists(UPLOAD_PATH . $avatar)) {
+                return UPLOAD_PUBLIC_PATH . $avatar;
+            }
+        }
+
+        return '';
+    }
 }
