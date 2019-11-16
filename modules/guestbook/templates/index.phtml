@@ -1,0 +1,153 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $title,
+]) ?>
+<?php if (! $config->mod_guest): ?>
+    <!-- Уведомление о закрытой гостевой -->
+    <?= $this->insert('system::app/alert', [
+        'alert_type' => 'alert-danger',
+        'alert'      => _t('The guestbook is closed'),
+    ]) ?>
+<?php endif; ?>
+<?php if ($data['access_to_buttons']): ?>
+    <div class="d-flex">
+        <a href="?act=ga" class="btn btn-outline-primary mr-2 <?= $data['is_guestbook'] ? 'active' : '' ?>"><?= _t('Guestbook') ?></a>
+        <a href="?act=ga&amp;do=set" class="btn btn-outline-primary <?= $data['is_guestbook'] ? '' : 'active' ?>"><?= _t('Admin Club') ?></a>
+        <?php if ($user->rights >= 7): ?>
+            <a href="?act=clean" class="btn btn-danger ml-auto"><?= _t('Clear') ?></a>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+<?php if ($data['access_to_form']): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <form name="form" action="?act=say" method="post" class="mt-3 ">
+                <input type="hidden" name="token" value="<?= $data['token'] ?>"/>
+                <?php if (! $user->isValid()): ?>
+                    <div class="form-group">
+                        <label for="name"><?= _t('Name') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="25"
+                               name="name"
+                               id="name"
+                               required
+                               value=""
+                               placeholder="<?= _t('Name') ?>"
+                        >
+                    </div>
+                <?php endif; ?>
+                <div class="form-group">
+                    <label for="msg"><?= _t('Message') ?></label>
+                    <div>
+                        <?= $data['bbcode'] ?>
+                    </div>
+                    <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    <div class="text-muted">Max: 5000</div>
+                </div>
+
+                <?php if (! $user->isValid()): ?>
+                    <img alt="<?= _t('Verification code') ?>" src="<?= $data['captcha'] ?>">
+                    <div class="form-group">
+                        <label for="code"><?= _t('Symbols on the picture') ?></label>
+                        <input type="text"
+                               class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
+                               maxlength="6"
+                               name="code"
+                               id="code"
+                               autocomplete="off"
+                               required
+                               placeholder="<?= _t('Symbols on the picture') ?>"
+                        >
+                        <?php if (isset($error['captcha'])): ?>
+                            <div class="invalid-feedback"><?= $error['captcha'] ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= _t('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <input type="submit" class="btn btn-primary" name="submit" value="<?= _t('Send') ?>"/>
+            </form>
+        </div>
+    </div>
+<?php else: ?>
+    <!-- Гостевая только для зарегистрированных -->
+    <?= $this->insert('system::app/alert', [
+        'alert_type' => 'alert-danger',
+        'alert'      => _t('For registered users only'),
+    ]) ?>
+<?php endif; ?>
+<div class="mt-4"></div>
+<!-- Отображаем сообщения -->
+<?php if (empty($data['items'])): ?>
+    <div class="alert alert-info"><?= _t('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
+<?php else: ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <div class="shadow border-radius-12 post-item mb-4">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    <?php if (! empty($item['user_id'])): ?>
+                        <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                    <?php else: ?>
+                        <a class="user-login mr-2"><?= (_t('Guest', 'system') . ': ' . $item['name']) ?></a>
+                    <?php endif; ?>
+                    <span class="post-date"><?= $item['created'] ?></span>
+                </div>
+                <div class="post-actions">
+                    <?php if ($user->rights >= 6): ?>
+                        <a href="?act=otvet&amp;id=<?= $item['message_id'] ?>" class="btn btn-sm btn-dark-brown"><?= _t('Reply') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar mr-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <?php if (! empty($item['user_avatar'])): ?>
+                            <img src="<?= $item['user_avatar'] ?>" class="img-fluid" alt=".">
+                        <?php else: ?>
+                            <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
+                        <?php endif; ?>
+                    </div>
+                    <div class="user-status online shadow"></div>
+                </div>
+                <div><?= $item['post_text'] ?></div>
+            </div>
+            <?php if (! empty($item['otvet'])): ?>
+                <div class="alert alert-warning mt-2 mb-2">
+                    <b><?= $item['admin'] ?></b> <?= $item['reply_time'] ?><br>
+                    <?= $item['reply_text'] ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($user->rights || ! empty($item['edit_count'])): ?>
+                <div class="post-footer d-flex justify-content-between border-top pt-2">
+                    <div class="d-flex overflow-hidden small align-items-center">
+                        <?php if ($user->rights): ?>
+                            <div class="user-ip mr-2">
+                                <a href="#"><?= $item['ip'] ?></a>
+                            </div>
+                            <div class="useragent">
+                                <span>User-Agent:</span>
+                                <span><?= $item['browser'] ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text-nowrap post-actions">
+                        <?php if (! empty($item['edit_count'])): ?>
+                            <span class="text-muted pr-2"><?= _t('Edited:') ?> <?= $item['edit_who'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]</span>
+                        <?php endif; ?>
+                        <?php if ($user->rights >= $item['rights']): ?>
+                            <a href="?act=edit&amp;id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= _t('Edit') ?></a>
+                            <a href="?act=delpost&amp;id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+
+    <?php if (! empty($data['pagination'])): ?>
+        <?= $data['pagination'] ?>
+    <?php endif; ?>
+<?php endif; ?>

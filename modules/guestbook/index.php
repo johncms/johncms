@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Johncms\Api\BbcodeInterface;
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\EnvironmentInterface;
+use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
@@ -31,6 +32,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var ToolsInterface       $tools
  * @var UserInterface        $user
  * @var Engine               $view
+ * @var NavChainInterface    $nav_chain
  */
 
 $container = App::getContainer();
@@ -41,6 +43,10 @@ $env = $container->get(EnvironmentInterface::class);
 $bbcode = $container->get(BbcodeInterface::class);
 $config = $container->get(ConfigInterface::class);
 $view = $container->get(Engine::class);
+$nav_chain = $container->get(NavChainInterface::class);
+
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('guestbook', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -64,11 +70,15 @@ if (isset($_SESSION['ga']) && $user->rights < 1 && ! in_array($user->id, $guestA
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 
+$nav_chain->add($textl);
+
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (! $config->mod_guest && $user->rights < 7) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl,
-        'content' => '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>',
+    echo $view->render('guestbook::result', [
+        'title'    => $textl,
+        'message'  => _t('Guestbook is closed'),
+        'type'     => 'error',
+        'back_url' => '/',
     ]);
     exit;
 }
@@ -81,10 +91,7 @@ switch ($act) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
                 header('Location: ./');
             } else {
-                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Delete message') . '</div>' .
-                    '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '?<br>' .
-                    '<a href="?act=delpost&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | ' .
-                    '<a href="./">' . _t('Cancel') . '</a></p></div>';
+                echo $view->render('guestbook::confirm_delete', ['id' => $id]);
             }
         }
         break;
@@ -114,7 +121,7 @@ switch ($act) {
             $error[] = _t('You have not entered the message');
         }
 
-        if ($user->ban['1'] || $user->ban['13']) {
+        if (! empty($user->ban['1']) || ! empty($user->ban['13'])) {
             $error[] = _t('Access forbidden');
         }
 
@@ -182,7 +189,12 @@ switch ($act) {
 
             header('location: ./');
         } else {
-            echo $tools->displayError($error, '<a href="./">' . _t('Back') . '</a>');
+            echo $view->render('guestbook::result', [
+                'title'    => _t('Add message'),
+                'message'  => $error,
+                'type'     => 'error',
+                'back_url' => '/guestbook/',
+            ]);
         }
         break;
 
@@ -201,28 +213,23 @@ switch ($act) {
                 ");
                 header('location: ./');
             } else {
-                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Reply') . '</div>';
                 $req = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'");
                 $res = $req->fetch();
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
-
-                echo '<div class="menu">' .
-                    '<div class="quote"><b>' . $res['name'] . '</b>' .
-                    '<br />' . $tools->checkout($res['text']) . '</div>' .
-                    '<form name="form" action="?act=otvet&amp;id=' . $id . '" method="post">' .
-                    '<p><h3>' . _t('Reply') . '</h3>' . $bbcode->buttons('form', 'otv') .
-                    '<textarea rows="' . $user->config->fieldHeight . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
-                    '<input type="hidden" name="token" value="' . $token . '"/>' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
+                echo $view->render('guestbook::reply', [
+                    'id'         => $id,
+                    'token'      => $token,
+                    'message'    => $res,
+                    'reply_text' => $tools->checkout($res['otvet'], 0, 0),
+                    'text'       => $tools->checkout($res['text'], 1, 1),
+                    'bbcode'     => $bbcode->buttons('form', 'otv'),
+                ]);
             }
         }
         break;
 
-    case
-    'edit':
+    case 'edit':
         // Редактирование поста
         if ($user->rights >= 6 && $id) {
             if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
@@ -253,16 +260,14 @@ switch ($act) {
                 $_SESSION['token'] = $token;
                 $res = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'")->fetch();
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Edit') . '</div>' .
-                    '<div class="rmenu">' .
-                    '<form name="form" action="?act=edit&amp;id=' . $id . '" method="post">' .
-                    '<p><b>' . _t('Author') . ':</b> ' . $res['name'] . '</p><p>';
-                echo $bbcode->buttons('form', 'msg');
-                echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . $text . '</textarea></p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
-                    '<input type="hidden" name="token" value="' . $token . '"/>' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
+
+                echo $view->render('guestbook::edit', [
+                    'id'      => $id,
+                    'token'   => $token,
+                    'message' => $res,
+                    'text'    => $text,
+                    'bbcode'  => $bbcode->buttons('form', 'msg'),
+                ]);
             }
         }
         break;
@@ -270,7 +275,7 @@ switch ($act) {
     case 'clean':
         // Очистка Гостевой
         if ($user->rights >= 7) {
-            if (isset($_POST['submit'])) {
+            if (! empty($_POST)) {
                 // Проводим очистку Гостевой, согласно заданным параметрам
                 $adm = isset($_SESSION['ga']) ? 1 : 0;
                 $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
@@ -279,35 +284,34 @@ switch ($act) {
                     case '1':
                         // Чистим сообщения, старше 1 дня
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time` < '" . (time() - 86400) . "'");
-                        echo '<p>' . _t('All messages older than 1 day were deleted') . '</p>';
+                        $message = _t('All messages older than 1 day were deleted');
                         break;
 
                     case '2':
                         // Проводим полную очистку
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}'");
-                        echo '<p>' . _t('Full clearing is finished') . '</p>';
+                        $message = _t('Full clearing is finished');
                         break;
                     default:
                         // Чистим сообщения, старше 1 недели
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time`<='" . (time() - 604800) . "';");
-                        echo '<p>' . _t('All messages older than 1 week were deleted') . '</p>';
+                        $message = _t('All messages older than 1 week were deleted');
                 }
 
                 $db->query('OPTIMIZE TABLE `guest`');
-                echo '<p><a href="./">' . _t('Guestbook') . '</a></p>';
+                echo $view->render('guestbook::result', [
+                    'title'    => _t('Clear guestbook'),
+                    'message'  => $message,
+                    'type'     => 'success',
+                    'back_url' => '/guestbook/',
+                ]);
             } else {
                 // Запрос параметров очистки
-                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Clear') . '</div>' .
-                    '<div class="menu">' .
-                    '<form id="clean" method="post" action="?act=clean">' .
-                    '<p><h3>' . _t('Clearing parameters') . '</h3>' .
-                    '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 week') . '<br />' .
-                    '<input type="radio" name="cl" value="1" />' . _t('Older than 1 day') . '<br />' .
-                    '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="./">' . _t('Cancel') . '</a></div>';
+                echo $view->render('guestbook::clear');
             }
+        } else {
+            header('Location: /');
+            exit;
         }
         break;
 
@@ -320,64 +324,40 @@ switch ($act) {
                 unset($_SESSION['ga']);
             }
         }
-
+        header('Location: /guestbook/');
+        exit;
+        break;
     default:
-        // Отображаем Гостевую, или Админ клуб
-        if (! $config->mod_guest) {
-            echo '<div class="alarm">' . _t('The guestbook is closed') . '</div>';
-        }
+        $data = [
+            'access_to_buttons' => ($user->rights > 0 || in_array($user->id, $guestAccess)),
+            'is_guestbook'      => ! isset($_SESSION['ga']),
+            'access_to_form'    => ($user->isValid() || $config->mod_guest == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13']),
+            'bbcode'            => $bbcode->buttons('form', 'msg'),
+            'pagination'        => '',
+        ];
 
-        echo '<div class="phdr"><b>' . _t('Guestbook') . '</b></div>';
-
-        if ($user->rights > 0 || in_array($user->id, $guestAccess)) {
-            $menu = [
-                isset($_SESSION['ga']) ? '<a href="?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
-                isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
-                $user->rights >= 7 ? '<a href="?act=clean">' . _t('Clear') . '</a>' : '',
-            ];
-            echo '<div class="topmenu">' . implode(' | ', array_filter($menu)) . '</div>';
-        }
-
-        // Форма ввода нового сообщения
-        if (($user->isValid() || $config->mod_guest == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13'])) {
+        if ($data['access_to_form']) {
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
-            echo '<div class="gmenu"><form name="form" action="?act=say" method="post">';
-
-            if (! $user->isValid()) {
-                echo _t('Name') . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
-            }
-
-            echo '<b>' . _t('Message') . '</b> <small>(max 5000)</small>:<br>';
-            echo $bbcode->buttons('form', 'msg');
-            echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg"></textarea><br>';
+            $data['token'] = $token;
 
             if (! $user->isValid()) {
                 // CAPTCHA для гостей
                 $captcha = new Batumibiz\Captcha\Captcha;
                 $code = $captcha->generateCode();
                 $_SESSION['code'] = $code;
-
-                echo '<img alt="' . _t('Verification code') . '" width="' . $captcha->width . '" height="' . $captcha->height . '" src="' . $captcha->generateImage($code) . '"/><br />' .
-                    '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Symbols on the picture') . '<br><br>';
+                $data['captcha'] = $captcha->generateImage($code);
             }
-            echo '<input type="hidden" name="token" value="' . $token . '"/>' .
-                '<input type="submit" name="submit" value="' . _t('Send') . '"/></form></div>';
-        } else {
-            echo '<div class="rmenu">' . _t('For registered users only') . '</div>';
         }
 
         $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `adm`='" . (isset($_SESSION['ga']) ? 1 : 0) . "'")->fetchColumn();
-        echo '<div class="phdr"><b>' . _t('Comments') . '</b></div>';
-
+        $data['total'] = $total;
         if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
+            $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
         }
 
         if ($total) {
             if (isset($_SESSION['ga']) && ($user->rights >= 1 || in_array($user->id, $guestAccess))) {
-                // Запрос для Админ клуба
-                echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
                 WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
@@ -388,18 +368,18 @@ switch ($act) {
                 WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
             }
 
-            for ($i = 0; $res = $req->fetch(); ++$i) {
-                $text = '';
-                echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-
+            $items = [];
+            while ($res = $req->fetch()) {
+                // Приводим в порядок массив для шаблона
+                $item = $res;
                 if (! $res['id']) {
                     // Запрос по гостям
                     $res_g = $db->query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1")->fetch();
-                    $res['lastdate'] = $res_g['lastdate'];
+                    $item['user_lastdate'] = $res_g['lastdate'];
                 }
 
-                // Время создания поста
-                $text = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
+                $item['created'] = $tools->displayDate($res['time']);
+                $item['ip'] = long2ip((int) $res['ip']);
 
                 if ($res['user_id']) {
                     // Для зарегистрированных показываем ссылки и смайлы
@@ -429,50 +409,37 @@ switch ($act) {
                     $post = strtr($post, $replace);
                 }
 
-                if ($res['edit_count']) {
-                    // Если пост редактировался, показываем кем и когда
-                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
-                }
+                $item['post_text'] = $post;
 
+                $item['reply_text'] = '';
                 if (! empty($res['otvet'])) {
                     // Ответ Администрации
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
                     $otvet = $tools->smilies($otvet, 1);
-                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
+                    $item['reply_text'] = $otvet;
+                    $item['reply_time'] = $tools->displayDate($res['otime']);
                 }
 
-                if ($user->rights >= 6) {
-                    $subtext = '<a href="?act=otvet&amp;id=' . $res['gid'] . '">' . _t('Reply') . '</a>' .
-                        ($user->rights >= $res['rights'] ? ' | <a href="?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
-                } else {
-                    $subtext = '';
+                if ($res['edit_count']) {
+                    $item['edit_time'] = $tools->displayDate($res['edit_time']);
                 }
 
-                $arg = [
-                    'header' => $text,
-                    'body'   => $post,
-                    'sub'    => $subtext,
-                ];
+                $item['user_avatar'] = '';
+                $avatar = 'users/avatar/' . $item['user_id'] . '.png';
+                if (file_exists(UPLOAD_PATH . $avatar)) {
+                    $item['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                }
 
-                echo $tools->displayUser($res, $arg);
-                echo '</div>';
+                $item['message_id'] = $res['gid'];
+                $items[] = $item;
             }
-        } else {
-            echo '<div class="menu"><p>' . _t('The guestbook is empty.<br><strong>Be the first! :)</strong>') . '</p></div>';
+
+            $data['items'] = $items;
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>' .
-                '<p><form method="get"><input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-        }
-
+        echo $view->render('guestbook::index', [
+            'title' => $textl,
+            'data'  => $data,
+        ]);
         break;
 }
-
-echo $view->render('system::app/old_content', [
-    'title'   => $textl,
-    'content' => ob_get_clean(),
-]);

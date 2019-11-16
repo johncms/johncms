@@ -1,53 +1,72 @@
-.posts-item {
-
+.post-item {
+    background: #ffffff;
+    padding: 0.6rem 1rem;
 }
 
-.avatar-container {
-  position: relative;
-  .post, .status {
-    position: absolute;
-    right: -2px;
-  }
-  .post {
-    bottom: 0;
-    color: #ffffff;
-    font-size: 0.6rem;
-  }
-  .status {
-    top: 0;
-  }
+.post-header {
+    .user-login {
+        color: #7d4e3c;
+        font-size: 1.1rem;
+        font-weight: 300;
+    }
+
+    .post-date {
+        font-size: 0.75rem;
+        color: #252422;
+        font-weight: 300;
+        line-height: 2;
+    }
 }
 
-.avatar-image {
-  max-width: 50px;
-  max-height: 50px;
+.user-avatar {
+    position: relative;
+
+    .avatar-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-status {
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        bottom: -8px;
+        left: 42px;
+
+        &.online {
+            background: #4dec6b;
+        }
+
+        &.offline {
+            background: #cd2828;
+        }
+    }
 }
 
-.user-name-container {
-  padding: 0 10px;
+.post-actions {
+    font-size: .75rem;
+
+    .btn-sm {
+        padding: 0.1rem 0.3rem;
+    }
 }
 
-.user-name  {
-  font-size: 16px;
-  color: #000;
-  font-weight: 700;
-}
+.post-footer {
+    .user-ip {
+        color: #252422;
 
-.user-status-text {
-  font-size: 0.85rem;
-}
+        a {
+            text-decoration: underline;
+        }
 
-.post-text {
-  padding: 0.4rem 0 0;
-}
+    }
 
-.user-soft {
-  overflow: hidden;
-  font-size: 0.7rem;
-  padding-right: 0.5rem;
-  .useragent {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+    .useragent {
+        color: #726e69 !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+    }
 }
