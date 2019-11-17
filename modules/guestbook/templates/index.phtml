@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="post-body d-flex align-items-start pt-3 pb-3">
-                <div class="user-avatar mr-4">
+                <div class="user-avatar mr-2 mr-md-4">
                     <div class="avatar-image rounded-circle overflow-hidden">
                         <?php if (! empty($item['user_avatar'])): ?>
                             <img src="<?= $item['user_avatar'] ?>" class="img-fluid" alt=".">
@@ -112,7 +112,7 @@
                     </div>
                     <div class="user-status online shadow"></div>
                 </div>
-                <div><?= $item['post_text'] ?></div>
+                <div class="overflow-auto"><?= $item['post_text'] ?></div>
             </div>
             <?php if (! empty($item['otvet'])): ?>
                 <div class="alert alert-warning mt-2 mb-2">
@@ -122,7 +122,7 @@
             <?php endif; ?>
             <?php if ($user->rights || ! empty($item['edit_count'])): ?>
                 <div class="post-footer d-flex justify-content-between border-top pt-2">
-                    <div class="d-flex overflow-hidden small align-items-center">
+                    <div class="post-user-info d-flex overflow-hidden small align-items-center">
                         <?php if ($user->rights): ?>
                             <div class="user-ip mr-2">
                                 <a href="#"><?= $item['ip'] ?></a>
@@ -134,11 +134,13 @@
                         <?php endif; ?>
                     </div>
                     <div class="text-nowrap post-actions">
-                        <?php if (! empty($item['edit_count'])): ?>
-                            <span class="text-muted pr-2"><?= _t('Edited:') ?> <?= $item['edit_who'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]</span>
-                        <?php endif; ?>
+                        <span class="text-muted pr-2 flex-grow-1">
+                            <?php if (! empty($item['edit_count'])): ?>
+                                <?= _t('Edited:') ?> <?= $item['edit_who'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                            <?php endif; ?>
+                        </span>
                         <?php if ($user->rights >= $item['rights']): ?>
-                            <a href="?act=edit&amp;id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= _t('Edit') ?></a>
+                            <a href="?act=edit&amp;id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
                             <a href="?act=delpost&amp;id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
                         <?php endif; ?>
                     </div>

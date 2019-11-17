@@ -31,8 +31,8 @@
         height: 16px;
         width: 16px;
         border-radius: 50%;
-        bottom: -8px;
-        left: 42px;
+        bottom: 0;
+        left: 70%;
 
         &.online {
             background: #4dec6b;
@@ -41,6 +41,21 @@
         &.offline {
             background: #cd2828;
         }
+    }
+
+    @media (max-width: 991px) {
+        .avatar-image {
+            width: 40px;
+            height: 40px;
+        }
+        .user-status {
+            height: 10px;
+            width: 10px;
+        }
+    }
+
+    @media (max-width: 374px) {
+        display: none;
     }
 }
 
@@ -68,5 +83,19 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         max-width: 100%;
+    }
+
+    @media (max-width: 600px) {
+        flex-wrap: wrap;
+        .post-user-info {
+            padding-bottom: 0.3rem;
+        }
+        .post-actions {
+            display: flex;
+            flex-basis: 100%;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
     }
 }
