@@ -63,7 +63,7 @@ if ($user->rights >= 6) {
                 'title'    => _t('Edit news'),
                 'message'  => $error,
                 'type'     => 'error',
-                'back_url' => '/news/edit/?id=' . $id . '',
+                'back_url' => '/news/edit/' . $id,
             ]);
         }
 
