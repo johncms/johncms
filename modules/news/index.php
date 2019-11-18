@@ -34,6 +34,7 @@ $tools = $container->get(ToolsInterface::class);
 $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 $nav_chain = $container->get(NavChainInterface::class);
+$route = $container->get('route');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('news', __DIR__ . '/templates/');
@@ -44,9 +45,8 @@ $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__
 // Добавляем раздел в навигационную цепочку
 $nav_chain->add(_t('News'), '/news/');
 
-$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = $match[2]['action'] ?? 'index';
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$id = $route['id'] ?? 0;
+$act = $route['action'] ?? 'index';
 
 $actions = [
     'index',

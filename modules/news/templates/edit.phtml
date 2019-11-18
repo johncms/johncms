@@ -7,7 +7,7 @@
         <div class="card shadow border-0 border-radius-12">
             <div class="card-body">
                 <h4 class="card-title"><?= _t('Edit news') ?></h4>
-                <form action="/news/edit/?id=<?= $id ?>" method="post">
+                <form action="/news/edit/<?= $id ?>/" method="post">
                     <div class="form-group">
                         <label for="title"><?= _t('Title') ?></label>
                         <input type="text"

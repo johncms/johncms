@@ -124,7 +124,7 @@ if ($user->rights >= 6) {
                 'title'    => _t('Add news'),
                 'message'  => $error,
                 'type'     => 'error',
-                'back_url' => '/news/add',
+                'back_url' => '/news/add/',
             ]);
         }
     } else {
