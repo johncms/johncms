@@ -45,7 +45,7 @@ $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__
 $nav_chain->add(_t('News'), '/news/');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : 'index';
+$act = $match[2]['action'] ?? 'index';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $actions = [
