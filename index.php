@@ -44,6 +44,7 @@ switch ($match[0]) {
         if (is_callable($match[1])) {
             call_user_func_array($match[1], $match[2]);
         } else {
+            $container->setService('route', $match[2]);
             include ROOT_PATH . $match[1];
         }
         break;
