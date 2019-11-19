@@ -16,26 +16,23 @@ use League\Plates\Engine;
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
 /** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+$config = di(Johncms\Api\ConfigInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator = di(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var PDO $db */
-$db = $container->get(PDO::class);
+$db = di(PDO::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+$tools = di(Johncms\Api\ToolsInterface::class);
 
-$view = $container->get(Engine::class);
+$view = di(Engine::class);
 
 /** @var NavChainInterface $nav_chain */
-$nav_chain = $container->get(NavChainInterface::class);
+$nav_chain = di(NavChainInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');

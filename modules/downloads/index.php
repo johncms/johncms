@@ -14,7 +14,6 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -26,22 +25,20 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 /**
  * @var ConfigInterface    $config
- * @var ContainerInterface $container
  * @var PDO                $db
  * @var ToolsInterface     $tools
  * @var Engine             $view
  * @var UserInterface      $user
  */
 
-$container = App::getContainer();
-$config = $container->get(ConfigInterface::class);
-$db = $container->get(PDO::class);
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-$user = $container->get(UserInterface::class);
-$view = $container->get(Engine::class);
+$config = di(ConfigInterface::class);
+$db = di(PDO::class);
+$tools = di(Johncms\Api\ToolsInterface::class);
+$user = di(UserInterface::class);
+$view = di(Engine::class);
 
 // Регистрируем папку с языками модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $url = $config['homeurl'] . '/downloads/';
 

@@ -38,7 +38,7 @@ class Hashtags
     public function __construct($id = 0)
     {
         $this->lib_id = $id;
-        $this->db = \App::getContainer()->get(\PDO::class);
+        $this->db = di(\PDO::class);
     }
 
     /**

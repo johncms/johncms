@@ -42,7 +42,7 @@ if ($search && (mb_strlen($search) < 4 || mb_strlen($search) > 64)) {
 
 if ($search && ! $error) {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = di(PDO::class);
 
     // Выводим результаты запроса
     $array = explode(' ', $search);

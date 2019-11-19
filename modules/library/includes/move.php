@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if ($adm) {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = di(PDO::class);
     $stmt = $db->query('SELECT `id`, `pos` FROM `library_cats` WHERE ' . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC');
     $y = 0;
     $arrsort = [];

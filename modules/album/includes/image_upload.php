@@ -13,14 +13,13 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Psr\Container\ContainerInterface $container
  * @var PDO                              $db
  * @var Johncms\Api\ToolsInterface       $tools
  * @var Johncms\Api\UserInterface        $user
  */
 
 /** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+$config = di(Johncms\Api\ConfigInterface::class);
 
 // Выгрузка фотографии
 if ($al && $foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {

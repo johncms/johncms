@@ -176,7 +176,7 @@ switch ($mod) {
 
         if (count($scaner->track_files) == 0) {
             /** @var Johncms\Api\ToolsInterface $tools */
-            $tools = \App::getContainer()->get(Johncms\Api\ToolsInterface::class);
+            $tools = di(Johncms\Api\ToolsInterface::class);
 
             echo $tools->displayError(_t('Snapshot is not created'),
                 '<a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');

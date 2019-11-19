@@ -34,7 +34,7 @@ echo '' .
     '<div><img src="' . $assets->url('images/old/guestbook.gif') . '" alt="" class="icon"><a href="?act=guestbook">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
 if ($user->rights >= 1) {
-    $guest = $container->get('counters')->guestbook(2);
+    $guest = di('counters')->guestbook(2);
     echo '<div><img src="' . $assets->url('images/old/forbidden.png') . '" alt="" class="icon"><a href="../guestbook/?act=ga&amp;do=set">' . _t('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }
 echo '</p></div>';

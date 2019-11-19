@@ -31,7 +31,7 @@ function _t(string $message, string $textDomain = 'default') : string
     static $translator;
 
     if (null === $translator) {
-        $translator = App::getContainer()->get(Translator::class);
+        $translator = di(Translator::class);
     }
 
     return $translator->translate($message, $textDomain);
@@ -52,7 +52,7 @@ function _p(string $singular, string $plural, int $number, string $textDomain = 
     static $translator;
 
     if (null === $translator) {
-        $translator = App::getContainer()->get(Translator::class);
+        $translator = di(Translator::class);
     }
 
     return $translator->translatePlural($singular, $plural, $number, $textDomain);
@@ -70,7 +70,7 @@ function pageNotFound(
     string $title = 'ERROR: 404 Not Found',
     string $message = ''
 ) : void {
-    $engine = App::getContainer()->get(Engine::class);
+    $engine = di(Engine::class);
 
     if (! headers_sent()) {
         header('HTTP/1.0 404 Not Found');

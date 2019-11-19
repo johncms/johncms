@@ -13,13 +13,12 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Psr\Container\ContainerInterface $container
  * @var Johncms\Utility\Counters         $counters
  * @var PDO                              $db
  * @var League\Plates\Engine             $view
  */
 
-$counters = $container->get('counters');
+$counters = di('counters');
 
 $count_adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0')->fetchColumn();
 $birthDays = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j') . "' AND `monthb` = '" . date('n') . "' AND `preg` = '1'")->fetchColumn();

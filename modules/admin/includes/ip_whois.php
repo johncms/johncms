@@ -17,11 +17,10 @@ $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
 /**
- * @var Johncms\Api\ToolsInterface $tools
- * @param mixed $whoisserver
- * @param mixed $domain
+ * @param $whoisserver
+ * @param $domain
+ * @return bool|string
  */
-
 function whoisQuery($whoisserver, $domain)
 {
     $port = 43;

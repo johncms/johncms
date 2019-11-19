@@ -19,7 +19,6 @@ use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -28,23 +27,21 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var Assets             $assets
  * @var ConfigInterface    $config
- * @var ContainerInterface $container
  * @var PDO                $db
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
  * @var Engine             $view
  */
 
-$container = App::getContainer();
-$assets = $container->get(Assets::class);
-$config = $container->get(ConfigInterface::class);
-$db = $container->get(PDO::class);
-$tools = $container->get(ToolsInterface::class);
-$user = $container->get(UserInterface::class);
-$view = $container->get(Engine::class);
+$assets = di(Assets::class);
+$config = di(ConfigInterface::class);
+$db = di(PDO::class);
+$tools = di(ToolsInterface::class);
+$user = di(UserInterface::class);
+$view = di(Engine::class);
 
 // Регистрируем языки модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader;

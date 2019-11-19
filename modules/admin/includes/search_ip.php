@@ -88,7 +88,7 @@ if ($search) {
 
 if ($search && ! $error) {
     /** @var PDO $db */
-    $db = $container->get(PDO::class);
+    $db = di(PDO::class);
 
     // Выводим результаты поиска
     echo '<div class="phdr">' . _t('Search results') . '</div>';

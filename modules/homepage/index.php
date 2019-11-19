@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 use Johncms\Api\NavChainInterface;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ContainerInterface       $container
  * @var Engine                   $view
  * @var Johncms\Utility\NavChain $nav_chain
  */
 
-$container = App::getContainer();
-$view = $container->get(Engine::class);
-$nav_chain = $container->get(NavChainInterface::class);
+$view = di(Engine::class);
+$nav_chain = di(NavChainInterface::class);
 $nav_chain->showHomePage(false);
 
 // Регистрируем Namespace для шаблонов модуля

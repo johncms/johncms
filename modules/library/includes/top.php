@@ -55,7 +55,7 @@ if (! $total) {
         // Описание к статье
         $obj = new Hashtags($row['id']);
         $rate = new Rating($row['id']);
-        $uploader = $row['uploader_id'] ? '<a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' : $tools->checkout($row['uploader']);
+        $uploader = $row['uploader_id'] ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' : $tools->checkout($row['uploader']);
         echo '<table class="desc">'
             // Раздел
             . '<tr>'

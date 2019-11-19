@@ -178,7 +178,7 @@ switch ($post_type) {
                 } else {
                     $update = false;
                     /** @var Johncms\Api\EnvironmentInterface $env */
-                    $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+                    $env = di(Johncms\Api\EnvironmentInterface::class);
 
                     // Добавляем сообщение в базу
                     $db->prepare('
@@ -252,7 +252,7 @@ switch ($post_type) {
 
         echo '<form name="form" action="?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
             '<p><h3>' . _t('Message') . '</h3>';
-        echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
+        echo '</p><p>' . di(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
         echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
             '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
@@ -304,7 +304,7 @@ switch ($post_type) {
         if (! empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
-            $citata = $container->get(Johncms\Api\BbcodeInterface::class)->notags($citata);
+            $citata = di(Johncms\Api\BbcodeInterface::class)->notags($citata);
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date('d.m.Y H:i', $type1['date']);
@@ -371,7 +371,7 @@ switch ($post_type) {
             unset($_SESSION['token']);
 
             /** @var Johncms\Api\EnvironmentInterface $env */
-            $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+            $env = di(Johncms\Api\EnvironmentInterface::class);
 
             // Добавляем сообщение в базу
             $db->prepare('
@@ -458,7 +458,7 @@ switch ($post_type) {
         }
 
         echo '<p><h3>' . _t('Message') . '</h3>';
-        echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
+        echo '</p><p>' . di(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
         echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
             '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 

@@ -44,9 +44,8 @@ class Rating
      */
     public function __construct($id)
     {
-        $container = \App::getContainer();
-        $this->db = $container->get(\PDO::class);
-        $this->asset = $container->get(Assets::class);
+        $this->db = di(\PDO::class);
+        $this->asset = di(Assets::class);
 
         $this->lib_id = $id;
         $this->check();

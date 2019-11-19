@@ -53,7 +53,7 @@ switch ($do) {
 
     default:
         /** @var PDO $db */
-        $db = $container->get(PDO::class);
+        $db = di(PDO::class);
 
         // Показываем список авторов темы, с возможностью выбора
         $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '${id}' GROUP BY `user_id` ORDER BY `user_name`");

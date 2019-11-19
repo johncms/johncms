@@ -14,11 +14,10 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Psr\Container\ContainerInterface $container
  * @var PDO                              $db
  */
 
-$config = $container->get('config')['johncms'];
+$config = di('config')['johncms'];
 $set_af = $config['antiflood'];
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';

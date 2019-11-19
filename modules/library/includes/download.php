@@ -28,7 +28,7 @@ $image_lib = file_exists(UPLOAD_PATH . 'library/images/orig/' . $id . '.png')
 $out = '';
 
 /** @var Johncms\Api\BbcodeInterface $bbcode */
-$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
+$bbcode = di(Johncms\Api\BbcodeInterface::class);
 
 switch ($type) {
     case 'txt':
