@@ -13,16 +13,16 @@ declare(strict_types=1);
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
+use Psr\Container\ContainerInterface;
 
 const DEBUG = true;
 const _IN_JOHNCMS = true;
 
 require 'system/bootstrap.php';
-require CONFIG_PATH . 'routes.php';
 
-$dispatcher = new GroupCountBased(
-    App::getContainer()->get(RouteCollector::class)->getData()
-);
+/** @var ContainerInterface $container */
+$container = App::getContainer();
+$dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
 
 $match = $dispatcher->dispatch(
     $_SERVER['REQUEST_METHOD'],
@@ -38,13 +38,13 @@ $match = $dispatcher->dispatch(
 
 switch ($match[0]) {
     case Dispatcher::FOUND:
-        // Фиксируем местоположение посетителя
+        // Register the location of the visitor on the site
         new Johncms\Users\UserStat(App::getContainer());
+        $container->setService('route', $match[2]);
 
         if (is_callable($match[1])) {
             call_user_func_array($match[1], $match[2]);
         } else {
-            $container->setService('route', $match[2]);
             include ROOT_PATH . $match[1];
         }
         break;
