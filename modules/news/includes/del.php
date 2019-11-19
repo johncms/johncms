@@ -18,9 +18,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var League\Plates\Engine      $view
  */
 
-// Удаление новости
+// Delete news
 if ($user->rights >= 6) {
-    // Добавляем элемент в цепочку навигации
+    // Add an item to the navigation chain
     $nav_chain->add(_t('Delete news'), '');
 
     if (isset($_GET['yes'])) {

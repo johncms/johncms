@@ -7,7 +7,7 @@
         <div class="card shadow border-0 border-radius-12">
             <div class="card-body">
                 <h4 class="card-title"><?= _t('Reply') ?></h4>
-                <form action="/guestbook/otvet/<?= $id ?>/" method="post">
+                <form action="/guestbook/otvet?id=<?= $id ?>" method="post">
                     <input type="hidden" name="token" value="<?= $token ?>"/>
                     <p>
                         <b><?= _t('Author') ?>:</b> <?= $message['name'] ?> <br>

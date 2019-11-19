@@ -11,7 +11,7 @@
 <?php endif; ?>
 <?php if ($data['access_to_buttons']): ?>
     <div class="d-flex">
-        <a href="/guestbook/ga/" class="btn btn-outline-primary mr-2 <?= $data['is_guestbook'] ? 'active' : '' ?>"><?= _t('Guestbook') ?></a>
+        <a href="/guestbook/ga" class="btn btn-outline-primary mr-2 <?= $data['is_guestbook'] ? 'active' : '' ?>"><?= _t('Guestbook') ?></a>
         <a href="/guestbook/ga?do=set" class="btn btn-outline-primary <?= $data['is_guestbook'] ? '' : 'active' ?>"><?= _t('Admin Club') ?></a>
         <?php if ($user->rights >= 7): ?>
             <a href="/guestbook/clean" class="btn btn-danger ml-auto"><?= _t('Clear') ?></a>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="post-actions">
                     <?php if ($user->rights >= 6): ?>
-                        <a href="/guestbook/otvet/<?= $item['message_id'] ?>/" class="btn btn-sm btn-dark-brown"><?= _t('Reply') ?></a>
+                        <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>" class="btn btn-sm btn-dark-brown"><?= _t('Reply') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -140,8 +140,8 @@
                             <?php endif; ?>
                         </span>
                         <?php if ($user->rights >= $item['rights']): ?>
-                            <a href="/guestbook/edit/<?= $item['message_id'] ?>/" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
-                            <a href="/guestbook/delpost/<?= $item['message_id'] ?>/" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                            <a href="/guestbook/edit?id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
+                            <a href="/guestbook/delpost?id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
                         <?php endif; ?>
                     </div>
                 </div>

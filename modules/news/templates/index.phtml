@@ -8,7 +8,7 @@
         <a href="clean" class="btn btn-danger"><?= _t('Clear') ?></a>
     </p>
 <?php endif ?>
-<!-- Вывод списка новостей -->
+<!-- Listing News -->
 <?php foreach ($list() as $news): ?>
     <div class="card mb-3 shadow border-0">
         <div class="card-body">
@@ -21,17 +21,17 @@
                 <div class="border-top pt-3 d-flex justify-content-between">
                     <div>
                         <?php if (! empty($news['kom'])): ?>
-                            <!-- Обсуждение на форуме -->
+                            <!-- Forum discussion -->
                             <a href="/forum/?type=topic&id=<?= $news['kom'] ?>">
                                 <?= _t('Discuss in Forum') ?> (<?= $news['kom_count'] ?>)
                             </a>
                         <?php endif ?>
                     </div>
                     <?php if ($user->rights >= 6): ?>
-                        <!-- Кнопки удаления и изменения новости -->
+                        <!-- Buttons for deleting and changing news -->
                         <div>
-                            <a href="/news/edit/<?= $news['id'] ?>/" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
-                            <a href="/news/del/<?= $news['id'] ?>/" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
+                            <a href="/news/edit?id=<?= $news['id'] ?>" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
+                            <a href="/news/del?id=<?= $news['id'] ?>" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
                         </div>
                     <?php endif ?>
                 </div>
@@ -40,7 +40,7 @@
     </div>
 <?php endforeach ?>
 <div class="pt-2 pb-2"><?= _t('Total') ?>:&#160;<?= $total ?></div>
-<!-- Переключение страниц -->
+<!-- Page switching -->
 <?php if ($total > $user->config->kmess): ?>
     <div><?= $pagination ?></div>
 <?php endif ?>

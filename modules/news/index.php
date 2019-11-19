@@ -36,16 +36,16 @@ $view = $container->get(Engine::class);
 $nav_chain = $container->get(NavChainInterface::class);
 $route = $container->get('route');
 
-// Регистрируем Namespace для шаблонов модуля
+// Register Namespace for module templates
 $view->addFolder('news', __DIR__ . '/templates/');
 
-// Регистрируем языки модуля
+// Register module languages
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-// Добавляем раздел в навигационную цепочку
+// Add a section to the navigation chain
 $nav_chain->add(_t('News'), '/news/');
 
-$id = $route['id'] ?? 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';
 
 $actions = [

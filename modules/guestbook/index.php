@@ -52,7 +52,7 @@ $view->addFolder('guestbook', __DIR__ . '/templates/');
 // Register the module languages folder
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$id = $route['id'] ?? 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? '';
 
 // Here you can (separated by commas) add the ID of those users who are not in the administration.
