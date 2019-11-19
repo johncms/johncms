@@ -49,7 +49,7 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 // Закрываем от неавторизованных юзеров
-if (! $user->isValid() && ! $config->active) {
+if (! $config->active && ! $user->isValid()) {
     echo $view->render('system::app/old_content', [
         'content' => $tools->displayError(_t('For registered users only')),
     ]);
@@ -73,7 +73,7 @@ if (($key = array_search($act, $actions)) !== false) {
     $counters = $container->get('counters');
 
     $count_adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0')->fetchColumn();
-    $birthDays = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
+    $birthDays = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j') . "' AND `monthb` = '" . date('n') . "' AND `preg` = '1'")->fetchColumn();
 
     echo $view->render('users::index', [
         'usersCount' => $counters->users(),
