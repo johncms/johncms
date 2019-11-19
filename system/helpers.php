@@ -13,6 +13,11 @@ declare(strict_types=1);
 use League\Plates\Engine;
 use Zend\I18n\Translator\Translator;
 
+function di(string $service)
+{
+    return App::getContainer()->get($service);
+}
+
 /**
  * Translate a message
  *
