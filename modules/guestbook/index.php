@@ -49,7 +49,7 @@ $route = $container->get('route');
 // Register Namespace for module templates
 $view->addFolder('guestbook', __DIR__ . '/templates/');
 
-// Register the module languages ​​folder
+// Register the module languages folder
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = $route['id'] ?? 0;
@@ -343,7 +343,7 @@ switch ($act) {
             $data['token'] = $token;
 
             if (! $user->isValid()) {
-                // CAPTCHA for guests 
+                // CAPTCHA for guests
                 $captcha = new Batumibiz\Captcha\Captcha;
                 $code = $captcha->generateCode();
                 $_SESSION['code'] = $code;
