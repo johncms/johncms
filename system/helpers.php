@@ -116,3 +116,41 @@ if (! function_exists('d')) {
         }
     }
 }
+
+/**
+ * Application container
+ */
+if (! function_exists('app')) {
+    function app()
+    {
+       return App::getContainer();
+    }
+}
+
+/**
+ * Path to root directory
+ *
+ * @return string
+ */
+if (! function_exists('root_path')) {
+    function root_path(string $path = ''): string
+    {
+        $path = preg_replace('/(\/+)/', DS, $path);
+
+        return dirname(__DIR__) . DS.$path.DS;
+    }
+}
+
+/**
+ * Path to assets directory
+ *
+ * @return string
+ */
+if (! function_exists('assets_path')) {
+    function assets_path(string $path = ''): string
+    {
+        $path = preg_replace('/(\/+)/', DS, $path);
+
+        return root_path('assets'.DS.$path);
+    }
+}

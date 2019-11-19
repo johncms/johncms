@@ -20,7 +20,6 @@ use Zend\I18n\Translator\Translator;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ContainerInterface $container
  * @var PDO                $db
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
@@ -28,19 +27,18 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var NavChainInterface  $nav_chain
  */
 
-$container = App::getContainer();
-$db = $container->get(PDO::class);
-$tools = $container->get(ToolsInterface::class);
-$user = $container->get(UserInterface::class);
-$view = $container->get(Engine::class);
-$nav_chain = $container->get(NavChainInterface::class);
-$route = $container->get('route');
+$db = app()->get(PDO::class);
+$tools = app()->get(ToolsInterface::class);
+$user = app()->get(UserInterface::class);
+$view = app()->get(Engine::class);
+$nav_chain = app()->get(NavChainInterface::class);
+$route = app()->get('route');
 
 // Register Namespace for module templates
 $view->addFolder('news', __DIR__ . '/templates/');
 
 // Register module languages
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+app()->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Add a section to the navigation chain
 $nav_chain->add(_t('News'), '/news/');
