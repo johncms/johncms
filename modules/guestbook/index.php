@@ -44,35 +44,36 @@ $bbcode = $container->get(BbcodeInterface::class);
 $config = $container->get(ConfigInterface::class);
 $view = $container->get(Engine::class);
 $nav_chain = $container->get(NavChainInterface::class);
+$route = $container->get('route');
 
-// Регистрируем Namespace для шаблонов модуля
+// Register Namespace for module templates
 $view->addFolder('guestbook', __DIR__ . '/templates/');
 
-// Регистрируем папку с языками модуля
+// Register the module languages folder
 $container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+$act = $route['action'] ?? '';
 
-// Сюда можно (через запятую) добавить ID тех юзеров, кто не в администрации,
-// но которым разрешено читать и писать в Админ клубе
+// Here you can (separated by commas) add the ID of those users who are not in the administration.
+// But who are allowed to read and write in the admin club
 $guestAccess = [];
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
 
-// Проверяем права доступа в Админ-Клуб
+// Check the access rights to the Admin Club
 if (isset($_SESSION['ga']) && $user->rights < 1 && ! in_array($user->id, $guestAccess)) {
     unset($_SESSION['ga']);
 }
 
-// Задаем заголовки страницы
+// Set page headers
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 
 $nav_chain->add($textl);
 
-// Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
+// If the guest is closed, display a message and close access (except for Admins)
 if (! $config->mod_guest && $user->rights < 7) {
     echo $view->render('guestbook::result', [
         'title'    => $textl,
@@ -85,7 +86,7 @@ if (! $config->mod_guest && $user->rights < 7) {
 
 switch ($act) {
     case 'delpost':
-        // Удаление отдельного поста
+        // Delete a single post
         if ($user->rights >= 6 && $id) {
             if (isset($_GET['yes'])) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
@@ -97,15 +98,15 @@ switch ($act) {
         break;
 
     case 'say':
-        // Добавление нового поста
+        // Add a new post
         $admset = isset($_SESSION['ga']) ? 1 : 0; // Задаем куда вставляем, в Админ клуб (1), или в Гастивуху (0)
-        // Принимаем и обрабатываем данные
+        // Receive and process data
         $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 20) : '';
         $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $from = $user->isValid() ? $user->name : $name;
-        // Проверяем на ошибки
+        // Check for errors
         $error = [];
         $flood = false;
 
@@ -125,7 +126,7 @@ switch ($act) {
             $error[] = _t('Access forbidden');
         }
 
-        // CAPTCHA для гостей
+        // CAPTCHA for guests
         if (! $user->isValid() && (empty($code) || mb_strlen($code) < 3 || strtolower($code) != strtolower($_SESSION['code']))) {
             $error[] = _t('The security code is not correct');
         }
@@ -133,10 +134,10 @@ switch ($act) {
         unset($_SESSION['code']);
 
         if ($user->isValid()) {
-            // Антифлуд для зарегистрированных пользователей
+            // Anti-flood for registered users
             $flood = $tools->antiflood();
         } else {
-            // Антифлуд для гостей
+            // Anti-flood for guests
             $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '" . $env->getIp() . "' AND `browser` = " . $db->quote($env->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");
 
             if ($req->rowCount()) {
@@ -150,7 +151,7 @@ switch ($act) {
         }
 
         if (! $error) {
-            // Проверка на одинаковые сообщения
+            // Check for duplicate messages
             $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user->id . "' ORDER BY `time` DESC");
             $res = $req->fetch();
 
@@ -161,7 +162,7 @@ switch ($act) {
         }
 
         if (! $error) {
-            // Вставляем сообщение в базу
+            // Insert the message into the database
             $db->prepare("INSERT INTO `guest` SET
                 `adm` = ?,
                 `time` = ?,
@@ -181,7 +182,7 @@ switch ($act) {
                 $env->getUserAgent(),
             ]);
 
-            // Фиксируем время последнего поста (антиспам)
+            // Fix the time of the last post (antispam)
             if ($user->isValid()) {
                 $postguest = $user->postguest + 1;
                 $db->exec("UPDATE `users` SET `postguest` = '${postguest}', `lastpost` = '" . time() . "' WHERE `id` = " . $user->id);
@@ -199,7 +200,7 @@ switch ($act) {
         break;
 
     case 'otvet':
-        // Добавление "ответа Админа"
+        // Add "admin response"
         if ($user->rights >= 6 && $id) {
             if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
@@ -230,7 +231,7 @@ switch ($act) {
         break;
 
     case 'edit':
-        // Редактирование поста
+        // Edit post
         if ($user->rights >= 6 && $id) {
             if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
@@ -273,27 +274,27 @@ switch ($act) {
         break;
 
     case 'clean':
-        // Очистка Гостевой
+        // Cleaning Guest
         if ($user->rights >= 7) {
             if (! empty($_POST)) {
-                // Проводим очистку Гостевой, согласно заданным параметрам
+                // We clean the Guest, according to the specified parameters
                 $adm = isset($_SESSION['ga']) ? 1 : 0;
                 $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
                 switch ($cl) {
                     case '1':
-                        // Чистим сообщения, старше 1 дня
+                        // Clean messages older than 1 day
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time` < '" . (time() - 86400) . "'");
                         $message = _t('All messages older than 1 day were deleted');
                         break;
 
                     case '2':
-                        // Проводим полную очистку
+                        // Perform a full cleanup
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}'");
                         $message = _t('Full clearing is finished');
                         break;
                     default:
-                        // Чистим сообщения, старше 1 недели
+                        // Clean messages older than 1 week""
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time`<='" . (time() - 604800) . "';");
                         $message = _t('All messages older than 1 week were deleted');
                 }
@@ -306,7 +307,7 @@ switch ($act) {
                     'back_url' => '/guestbook/',
                 ]);
             } else {
-                // Запрос параметров очистки
+                // Request cleaning options
                 echo $view->render('guestbook::clear');
             }
         } else {
@@ -316,7 +317,7 @@ switch ($act) {
         break;
 
     case 'ga':
-        // Переключение режима работы Гостевая / Админ-клуб
+        // Switching the mode of operation Guest / admin club
         if ($user->rights >= 1 || in_array($user->id, $guestAccess)) {
             if (isset($_GET['do']) && $_GET['do'] == 'set') {
                 $_SESSION['ga'] = 1;
@@ -342,7 +343,7 @@ switch ($act) {
             $data['token'] = $token;
 
             if (! $user->isValid()) {
-                // CAPTCHA для гостей
+                // CAPTCHA for guests
                 $captcha = new Batumibiz\Captcha\Captcha;
                 $code = $captcha->generateCode();
                 $_SESSION['code'] = $code;
@@ -362,7 +363,7 @@ switch ($act) {
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
                 WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
             } else {
-                // Запрос для обычной Гастивухи
+                // Request for regular
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
                 WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
@@ -370,10 +371,10 @@ switch ($act) {
 
             $items = [];
             while ($res = $req->fetch()) {
-                // Приводим в порядок массив для шаблона
+                // Tidy up the array for the template
                 $item = $res;
                 if (! $res['id']) {
-                    // Запрос по гостям
+                    // Request for guests
                     $res_g = $db->query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1")->fetch();
                     $item['user_lastdate'] = $res_g['lastdate'];
                 }
@@ -382,11 +383,11 @@ switch ($act) {
                 $item['ip'] = long2ip((int) $res['ip']);
 
                 if ($res['user_id']) {
-                    // Для зарегистрированных показываем ссылки и смайлы
+                    // For registered we show links and smiles
                     $post = $tools->checkout($res['text'], 1, 1);
                     $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
                 } else {
-                    // Для гостей обрабатываем имя и фильтруем ссылки
+                    // For guests, process the name and filter the links
                     $res['name'] = $tools->checkout($res['name']);
                     $post = $tools->checkout($res['text'], 0, 2);
                     $post = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
@@ -413,7 +414,7 @@ switch ($act) {
 
                 $item['reply_text'] = '';
                 if (! empty($res['otvet'])) {
-                    // Ответ Администрации
+                    // Administration Response
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
                     $otvet = $tools->smilies($otvet, 1);
                     $item['reply_text'] = $otvet;

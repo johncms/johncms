@@ -19,8 +19,10 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var League\Plates\Engine       $view
  * @var \Johncms\Utility\NavChain  $nav_chain
  */
+
+// Add news
 $nav_chain->add(_t('Add news'), '');
-// Добавление новости
+
 if ($user->rights >= 6) {
     if (! empty($_POST)) {
         $error = [];
@@ -124,13 +126,13 @@ if ($user->rights >= 6) {
                 'title'    => _t('Add news'),
                 'message'  => $error,
                 'type'     => 'error',
-                'back_url' => '/news/add/',
+                'back_url' => '/news/add',
             ]);
         }
     } else {
         $discussion_items = [];
 
-        // Собираем массив форумов для обсуждений
+        // Putting an array of discussion forums
         $fr = $db->query('SELECT * FROM `forum_sections` WHERE `section_type` = 0');
         while ($fr1 = $fr->fetch()) {
             $sections = [];

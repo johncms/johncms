@@ -18,28 +18,28 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var League\Plates\Engine      $view
  */
 
-// Чистка новостей
+// News cleaning
 if ($user->rights >= 7) {
-    // Добавляем элемент в цепочку навигации
+    // Add an item to the navigation chain
     $nav_chain->add(_t('Clear news'), '');
     if (! empty($_POST)) {
         $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
         switch ($cl) {
             case '1':
-                // Чистим новости, старше 1 недели
+                // We clean the news, older than 1 week
                 $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 604800));
                 $db->query('OPTIMIZE TABLE `news`');
                 $message = _t('Delete all news older than 1 week');
                 break;
 
             case '2':
-                // Проводим полную очистку
+                // Perform a full cleanup
                 $db->query('TRUNCATE TABLE `news`');
                 $message = _t('Delete all news');
                 break;
             default:
-                // Чистим сообщения, старше 1 месяца
+                // Clean messages older than 1 month
                 $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 2592000));
                 $db->query('OPTIMIZE TABLE `news`;');
                 $message = _t('Delete all news older than 1 month');

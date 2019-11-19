@@ -19,9 +19,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var League\Plates\Engine       $view
  */
 
-// Редактирование новости
+// Editing news
 if ($user->rights >= 6) {
-    // Добавляем элемент в цепочку навигации
+    // Add an item to the navigation chain
     $nav_chain->add(_t('Edit news'), '');
 
     if (! $id) {
@@ -63,7 +63,7 @@ if ($user->rights >= 6) {
                 'title'    => _t('Edit news'),
                 'message'  => $error,
                 'type'     => 'error',
-                'back_url' => '/news/edit/' . $id,
+                'back_url' => '/news/edit?id=' . $id,
             ]);
         }
 
