@@ -12,12 +12,12 @@
 </div>
 <div class="menu padding">
     <img src="<?= $this->asset('images/old/contacts.png') ?>" alt="">&nbsp;
-    <a href="?act=userlist"><?= _t('Users') ?></a> (<?= $usersCount ?>)<br>
+    <a href="?act=users"><?= _t('Users') ?></a> (<?= $usersCount ?>)<br>
     <img src="<?= $this->asset('images/old/users.png') ?>" alt="">&nbsp;
-    <a href="?act=admlist"><?= _t('Administration') ?></a> (<?= $adminCount ?>)<br>
+    <a href="?act=administration"><?= _t('Administration') ?></a> (<?= $adminCount ?>)<br>
     <?php if ($birthDays): ?>
         <img src="<?= $this->asset('images/old/award.png') ?>" alt="">&nbsp;
-        <a href="?act=birth"><?= _t('Birthdays') ?></a> (<?= $birthDays ?>)<br>
+        <a href="?act=birthdays"><?= _t('Birthdays') ?></a> (<?= $birthDays ?>)<br>
     <?php endif ?>
     <img src="<?= $this->asset('images/old/photo.gif') ?>" alt="">&nbsp;
     <a href="../album/"><?= _t('Photo Albums') ?></a> (<?= $albumCount ?>)<br>

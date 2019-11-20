@@ -19,12 +19,12 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var League\Plates\Engine       $view
  */
 
-$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchColumn();
-$req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, " . $user->config->kmess);
+$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `preg` = 1')->fetchColumn();
+$req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT ${start}, " . $user->config->kmess);
 
-echo $view->render('users::userlist', [
-    'pagination' => $tools->displayPagination('?act=userlist&amp;', $start, $total, $user->config->kmess),
-    'title'      => _t('Administration'),
+echo $view->render('users::users', [
+    'pagination' => $tools->displayPagination('?act=users&amp;', $start, $total, $user->config->kmess),
+    'title'      => _t('List of users'),
     'total'      => $total,
     'list'       =>
         function () use ($req) {

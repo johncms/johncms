@@ -30,7 +30,7 @@ if ($total) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $user->config->kmess) {
-        echo '<p>' . $tools->displayPagination('?act=birth&amp;', $start, $total, $user->config->kmess) . '</p>';
+        echo '<p>' . $tools->displayPagination('?act=birthdays&amp;', $start, $total, $user->config->kmess) . '</p>';
         echo '<p><form action="?act=birth" method="post">' .
              '<input type="text" name="page" size="2"/>' .
              '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

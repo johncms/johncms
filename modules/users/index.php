@@ -20,12 +20,12 @@ use Zend\I18n\Translator\Translator;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Assets             $assets
- * @var ConfigInterface    $config
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Engine             $view
+ * @var Assets          $assets
+ * @var ConfigInterface $config
+ * @var PDO             $db
+ * @var ToolsInterface  $tools
+ * @var UserInterface   $user
+ * @var Engine          $view
  */
 
 $assets = di(Assets::class);
@@ -55,13 +55,13 @@ if (! $config->active && ! $user->isValid()) {
 
 // Переключаем режимы работы
 $actions = [
-    'admlist',
-    'birth',
+    'administration',
+    'birthdays',
     'index',
     'online',
     'search',
     'top',
-    'userlist',
+    'users',
 ];
 
 if (($key = array_search($act, $actions)) !== false) {
