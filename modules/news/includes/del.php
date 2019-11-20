@@ -25,12 +25,11 @@ if ($user->rights >= 6) {
 
     if (isset($_POST['yes'])) {
         $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
-        echo $view->render('news::result', [
+        echo $view->render('system::pages/result', [
             'title'    => _t('Delete news'),
             'message'  => _t('News deleted'),
             'type'     => 'success',
             'back_url' => '/news/',
-            'id'       => $id,
         ]);
     } else {
         echo $view->render('news::confirm_delete', ['id' => $id]);

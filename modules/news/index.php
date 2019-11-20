@@ -14,17 +14,16 @@ use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Engine             $view
- * @var NavChainInterface  $nav_chain
+ * @var PDO               $db
+ * @var ToolsInterface    $tools
+ * @var UserInterface     $user
+ * @var Engine            $view
+ * @var NavChainInterface $nav_chain
  */
 
 $db = di(PDO::class);

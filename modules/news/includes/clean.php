@@ -45,7 +45,7 @@ if ($user->rights >= 7) {
                 $message = _t('Delete all news older than 1 month');
         }
 
-        echo $view->render('news::result', [
+        echo $view->render('system::pages/result', [
             'title'    => _t('Clear news'),
             'message'  => $message,
             'type'     => 'success',

@@ -115,18 +115,18 @@ if ($user->rights >= 6) {
             ]);
 
             $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-            echo $view->render('news::result', [
+            echo $view->render('system::pages/result', [
                 'title'    => _t('Add news'),
                 'message'  => _t('News added'),
                 'type'     => 'success',
                 'back_url' => '/news/',
             ]);
         } else {
-            echo $view->render('news::result', [
+            echo $view->render('system::pages/result', [
                 'title'    => _t('Add news'),
                 'message'  => $error,
                 'type'     => 'error',
-                'back_url' => '/news/add',
+                'back_url' => '/news/add/',
             ]);
         }
     } else {

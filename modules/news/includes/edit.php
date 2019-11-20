@@ -25,9 +25,10 @@ if ($user->rights >= 6) {
     $nav_chain->add(_t('Edit news'), '');
 
     if (! $id) {
-        echo $view->render('news::result', [
+        echo $view->render('system::pages/result', [
+            'title'    => _t('News'),
+            'type'     => 'error',
             'message'  => _t('Wrong data'),
-            'type'     => 'success',
             'back_url' => '/news/',
         ]);
         exit;
@@ -59,15 +60,15 @@ if ($user->rights >= 6) {
                 $id,
             ]);
         } else {
-            echo $view->render('news::result', [
+            echo $view->render('system::pages/result', [
                 'title'    => _t('Edit news'),
                 'message'  => $error,
                 'type'     => 'error',
-                'back_url' => '/news/edit?id=' . $id,
+                'back_url' => '/news/edit/' . $id,
             ]);
         }
 
-        echo $view->render('news::result', [
+        echo $view->render('system::pages/result', [
             'title'    => _t('Edit news'),
             'message'  => _t('News changed'),
             'type'     => 'success',
