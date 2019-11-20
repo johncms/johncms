@@ -12,32 +12,24 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-ob_start();
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ * @var League\Plates\Engine       $view
+ */
 
-// Выводим список администрации
-echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Administration') . '</div>';
 $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchColumn();
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, " . $user->config->kmess);
 
-for ($i = 0; $res = $req->fetch(); ++$i) {
-    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-    echo $tools->displayUser($res) . '</div>';
-}
-
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-if ($total > $user->config->kmess) {
-    echo '<p>' . $tools->displayPagination('?act=admlist&amp;', $start, $total, $user->config->kmess) . '</p>' .
-        '<p><form action="?act=admlist" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-        '</form></p>';
-}
-
-echo'<p><a href="?act=search">' . _t('User Search') . '</a><br />' .
-    '<a href="./">' . _t('Back') . '</a></p>';
-
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Administration'),
-    'content' => ob_get_clean(),
+echo $view->render('users::userlist', [
+    'pagination' => $tools->displayPagination('?act=userlist&amp;', $start, $total, $user->config->kmess),
+    'title'      => _t('Administration'),
+    'total'      => $total,
+    'list'       =>
+        function () use ($req) {
+            while ($res = $req->fetch()) {
+                yield $res;
+            }
+        },
 ]);

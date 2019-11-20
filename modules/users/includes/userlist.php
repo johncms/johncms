@@ -24,6 +24,7 @@ $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, 
 
 echo $view->render('users::userlist', [
     'pagination' => $tools->displayPagination('?act=userlist&amp;', $start, $total, $user->config->kmess),
+    'title'      => _t('List of users'),
     'total'      => $total,
     'list'       =>
         function () use ($req) {

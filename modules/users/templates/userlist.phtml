@@ -1,5 +1,5 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('List of users'), 'homeButton' => true]) ?>
-<div class="phdr"><a href="./"><strong><?= _t('Community') ?></strong></a> | <?= _t('List of users') ?></div>
+<?php $this->layout('system::layout/old_default', ['title' => $title, 'homeButton' => true]) ?>
+<div class="phdr"><a href="./"><strong><?= _t('Community') ?></strong></a> | <?= $title ?></div>
 <!-- List of Users -->
 <div class="list-striped">
     <?php foreach ($list() as $usr): ?>
