@@ -16,7 +16,7 @@ $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', 
 $req = $db->query("SELECT * FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1' LIMIT ${start}, " . $user->config->kmess);
 
 echo $view->render('users::users', [
-    'pagination' => $tools->displayPagination('?act=users&amp;', $start, $total, $user->config->kmess),
+    'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
     'title'      => _t('Birthdays'),
     'total'      => $total,
     'list'       =>

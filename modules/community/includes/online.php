@@ -16,14 +16,15 @@ ob_start();
 
 /** @var Johncms\Api\EnvironmentInterface $env */
 $env = di(Johncms\Api\EnvironmentInterface::class);
+$url = $config->homeurl . '/community/online/';
 
 // Показываем список Online
-$menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="?act=online">' . _t('Users') . '</a>';
-$menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="?act=online&amp;mod=history">' . _t('History') . '</a> ';
+$menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="' . $url . '">' . _t('Users') . '</a>';
+$menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="' . $url . 'history/">' . _t('History') . '</a> ';
 
 if ($user->rights) {
-    $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
-    $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
+    $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="' . $url . 'guest/">' . _t('Guests') . '</a>';
+    $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="' . $url . 'ip/">' . _t('IP Activity') . '</a>';
 }
 
 echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div>' .
@@ -76,10 +77,7 @@ switch ($mod) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $user->config->kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $user->config->kmess) . '</div>' .
-                    '<p><form action="?act=online&amp;mod=ip" method="post">' .
-                    '<input type="text" name="page" size="2"/>' .
-                    '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
+                echo '<div class="topmenu">' . $tools->displayPagination($url . 'ip/?', $start, $total, $user->config->kmess) . '</div>';
             }
         }
 
@@ -115,7 +113,7 @@ if ($start >= $total) {
 }
 
 if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $user->config->kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination($url . ($mod ? $mod . '/?' : ''), $start, $total, $user->config->kmess) . '</div>';
 }
 
 if ($total) {
@@ -152,11 +150,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?act=online' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-        '</form></p>';
+    echo '<div class="topmenu">' . $tools->displayPagination($url . ($mod ? $mod . '/?' : ''), $start, $total, $user->config->kmess) . '</div>';
 }
 
 echo $view->render('system::app/old_content', [

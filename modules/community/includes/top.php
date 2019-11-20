@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+$url = $config->homeurl . '/community/top/';
 ob_start();
 
 // Функция отображения списков
@@ -38,19 +39,19 @@ function get_top($order = 'postforum')
 
 // Меню выбора
 $menu = [
-    (! $mod ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=top">' . _t('Forum') . '</a>'),
-    ($mod == 'guest' ? '<b>' . _t('Guestbook') . '</b>' : '<a href="?act=top&amp;mod=guest">' . _t('Guestbook') . '</a>'),
-    ($mod == 'comm' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=top&amp;mod=comm">' . _t('Comments') . '</a>'),
+    (! $mod ? '<b>' . _t('Forum') . '</b>' : '<a href="' . $url . '">' . _t('Forum') . '</a>'),
+    ($mod == 'guest' ? '<b>' . _t('Guestbook') . '</b>' : '<a href="' . $url . 'guest/">' . _t('Guestbook') . '</a>'),
+    ($mod == 'comm' ? '<b>' . _t('Comments') . '</b>' : '<a href="' . $url . 'comm/">' . _t('Comments') . '</a>'),
 ];
 
 if ($config->karma) {
-    $menu[] = $mod == 'karma' ? '<b>' . _t('Karma') . '</b>' : '<a href="?act=top&amp;mod=karma">' . _t('Karma') . '</a>';
+    $menu[] = $mod == 'karma' ? '<b>' . _t('Karma') . '</b>' : '<a href="' . $url . 'karma/">' . _t('Karma') . '</a>';
 }
 
 switch ($mod) {
     case 'guest':
         // Топ Гостевой
-        echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Guestbook') . '</div>';
+        echo '<div class="phdr"><a href="../../"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Guestbook') . '</div>';
         echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         echo get_top('postguest');
         echo '<div class="phdr"><a href="../guestbook/">' . _t('Guestbook') . '</a></div>';
@@ -58,7 +59,7 @@ switch ($mod) {
 
     case 'comm':
         // Топ комментариев
-        echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Most commentators') . '</div>';
+        echo '<div class="phdr"><a href="../../"><b>' . _t('Community') . '</b></a> | ' . _t('Most commentators') . '</div>';
         echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         echo get_top('komm');
         echo '<div class="phdr"><a href="../">' . _t('Home') . '</a></div>';
@@ -67,7 +68,7 @@ switch ($mod) {
     case 'karma':
         // Топ Кармы
         if ($config->karma) {
-            echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Best Karma') . '</div>';
+            echo '<div class="phdr"><a href="../../"><b>' . _t('Community') . '</b></a> | ' . _t('Best Karma') . '</div>';
             echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
             $req = $db->query('SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9');
 
@@ -87,13 +88,11 @@ switch ($mod) {
 
     default:
         // Топ Форума
-        echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Forum') . '</div>';
+        echo '<div class="phdr"><a href="../"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Forum') . '</div>';
         echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         echo get_top('postforum');
-        echo '<div class="phdr"><a href="../forum/">' . _t('Forum') . '</a></div>';
+        echo '<div class="phdr"><a href="../../forum/">' . _t('Forum') . '</a></div>';
 }
-
-echo '<p><a href="./">' . _t('Back') . '</a></p>';
 
 echo $view->render('system::app/old_content', [
     'title'   => _t('Top Activity'),

@@ -23,7 +23,7 @@ $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `preg` = 1')->fetchColum
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT ${start}, " . $user->config->kmess);
 
 echo $view->render('users::users', [
-    'pagination' => $tools->displayPagination('?act=users&amp;', $start, $total, $user->config->kmess),
+    'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
     'title'      => _t('List of users'),
     'total'      => $total,
     'list'       =>

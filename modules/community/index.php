@@ -31,6 +31,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $assets = di(Assets::class);
 $config = di(ConfigInterface::class);
 $db = di(PDO::class);
+$route = di('route');
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
 $view = di(Engine::class);
@@ -42,8 +43,8 @@ $view->addFolder('users', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_GET['act']) ? trim($_GET['act']) : 'index';
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$act = $route['action'] ?? 'index';
+$mod = $route['mod'] ?? '';
 
 // Закрываем от неавторизованных юзеров
 if (! $config->active && ! $user->isValid()) {

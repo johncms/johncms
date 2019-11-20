@@ -23,7 +23,7 @@ $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchCo
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, " . $user->config->kmess);
 
 echo $view->render('users::users', [
-    'pagination' => $tools->displayPagination('?act=administration&amp;', $start, $total, $user->config->kmess),
+    'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
     'title'      => _t('Administration'),
     'total'      => $total,
     'list'       =>

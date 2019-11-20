@@ -21,8 +21,8 @@ $tools = di(Johncms\Api\ToolsInterface::class);
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
-echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
-    '<form action="?act=search" method="post">' .
+echo '<div class="phdr"><a href="../"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
+    '<form method="post">' .
     '<div class="gmenu"><p>' .
     '<input type="text" name="search" value="' . $tools->checkout($search) . '" />' .
     '<input type="submit" value="' . _t('Search') . '" name="submit" />' .
@@ -75,7 +75,7 @@ if ($search && ! $error) {
 
     if ($total > $user->config->kmess) {
         echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-            '<p><form action="?act=search&amp;search=' . urlencode($search) . '" method="post">' .
+            '<p><form action="?search=' . urlencode($search) . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
             '</form></p>';
