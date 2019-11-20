@@ -44,9 +44,7 @@ $nav_chain->add(_t('Registration'));
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config->mod_reg || $user->isValid()) {
-    echo $view->render('reg::registration_closed', [
-        'breadcrumbs' => $breadcrumbs,
-    ]);
+    echo $view->render('reg::registration_closed', []);
     exit;
 }
 
