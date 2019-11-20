@@ -20,7 +20,6 @@ use Zend\I18n\Translator\Translator;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ContainerInterface $container
  * @var PDO                $db
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
@@ -28,13 +27,12 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var NavChainInterface  $nav_chain
  */
 
-$container = App::getContainer();
-$db = $container->get(PDO::class);
-$tools = $container->get(ToolsInterface::class);
-$user = $container->get(UserInterface::class);
-$view = $container->get(Engine::class);
-$nav_chain = $container->get(NavChainInterface::class);
-$route = $container->get('route');
+$db = di(PDO::class);
+$tools = di(ToolsInterface::class);
+$user = di(UserInterface::class);
+$view = di(Engine::class);
+$nav_chain = di(NavChainInterface::class);
+$route = di('route');
 
 // Register Namespace for module templates
 $view->addFolder('news', __DIR__ . '/templates/');
