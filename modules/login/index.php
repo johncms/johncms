@@ -15,24 +15,21 @@ use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Users\User;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Johncms\Api\NavChainInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var ConfigInterface    $config
- * @var ContainerInterface $container
  * @var UserInterface      $user
  * @var Engine             $view
  * @var NavChainInterface  $nav_chain
  */
 
-$container = App::getContainer();
-$config = $container->get(ConfigInterface::class);
-$user = $container->get(UserInterface::class);
-$view = $container->get(Engine::class);
-$nav_chain = $container->get(NavChainInterface::class);
+$config = di(ConfigInterface::class);
+$user = di(UserInterface::class);
+$view = di(Engine::class);
+$nav_chain = di(NavChainInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('login', __DIR__ . '/templates/');
@@ -62,10 +59,10 @@ if ($user->isValid()) {
     ////////////////////////////////////////////////////////////
 
     /** @var PDO $db */
-    $db = $container->get(PDO::class);
+    $db = di(PDO::class);
 
     /** @var ToolsInterface $tools */
-    $tools = $container->get(ToolsInterface::class);
+    $tools = di(ToolsInterface::class);
 
     $nav_chain->add(_t('Login', 'system'));
 

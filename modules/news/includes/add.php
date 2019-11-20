@@ -72,7 +72,7 @@ if ($user->rights >= 6) {
                     ]);
 
                     /** @var Johncms\Api\EnvironmentInterface $env */
-                    $env = $container->get(Johncms\Api\EnvironmentInterface::class);
+                    $env = di(Johncms\Api\EnvironmentInterface::class);
                     $rid = $db->lastInsertId();
 
                     $db->prepare('

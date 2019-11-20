@@ -16,7 +16,7 @@ $textl = _t('Mail');
 echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';
 
 /** @var Johncms\Api\BbcodeInterface $bbcode */
-$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
+$bbcode = di(Johncms\Api\BbcodeInterface::class);
 
 $total = $db->query("
 	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)

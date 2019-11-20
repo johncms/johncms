@@ -127,20 +127,17 @@ class download
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
 
-        /** @var Psr\Container\ContainerInterface $container */
-        $container = App::getContainer();
-
         /** @var Johncms\View\Extension\Assets $assets */
-        $assets = $container->get(Johncms\View\Extension\Assets::class);
+        $assets = di(Johncms\View\Extension\Assets::class);
 
         /** @var Johncms\Api\UserInterface $systemUser */
-        $systemUser = $container->get(Johncms\Api\UserInterface::class);
+        $systemUser = di(Johncms\Api\UserInterface::class);
 
         /** @var Johncms\Api\ToolsInterface $tools */
-        $tools = $container->get(Johncms\Api\ToolsInterface::class);
+        $tools = di(Johncms\Api\ToolsInterface::class);
 
         /** @var Johncms\Api\ConfigInterface $config */
-        $config = $container->get(Johncms\Api\ConfigInterface::class);
+        $config = di(Johncms\Api\ConfigInterface::class);
 
         $out .= '<img src="' . $assets->url('images/old/system/' . $icon_id . '.png') . '" alt="" class="icon">';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
@@ -207,10 +204,10 @@ class download
         global $old;
 
         /** @var Johncms\Api\ToolsInterface $tools */
-        $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
+        $tools = di(Johncms\Api\ToolsInterface::class);
 
         /** @var Johncms\View\Extension\Assets $assets */
-        $assets = App::getContainer()->get(Johncms\View\Extension\Assets::class);
+        $assets = di(Johncms\View\Extension\Assets::class);
 
         $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
@@ -297,7 +294,7 @@ class download
 
             if ($sql) {
                 /** @var PDO $db */
-                $db = App::getContainer()->get(PDO::class);
+                $db = di(PDO::class);
                 $req_cat = $db->query("SELECT * FROM `download__category` WHERE `dir` IN ('" . implode("','",
                         $sql) . "') ORDER BY `id` ASC");
                 while ($res_cat = $req_cat->fetch()) {

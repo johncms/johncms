@@ -13,15 +13,14 @@ declare(strict_types=1);
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
- * @var Psr\Container\ContainerInterface $container
- * @var Johncms\Api\UserInterface        $user
+ * @var Johncms\Api\UserInterface $user
  */
 
 if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
 
-$config = $container->get('config')['johncms'];
+$config = di('config')['johncms'];
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы

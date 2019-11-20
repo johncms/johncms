@@ -14,12 +14,11 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Psr\Container\ContainerInterface $container
  * @var PDO                              $db
  * @var Johncms\Api\UserInterface        $user
  */
 
-$config = $container->get('config')['johncms'];
+$config = di('config')['johncms'];
 
 // Проверяем права доступа
 if ($user->rights < 9) {

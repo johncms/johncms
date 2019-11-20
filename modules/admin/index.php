@@ -13,31 +13,28 @@ declare(strict_types=1);
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
 /**
- * @var ContainerInterface $container
- * @var Engine             $view
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
+ * @var Engine         $view
+ * @var PDO            $db
+ * @var ToolsInterface $tools
+ * @var UserInterface  $user
  */
 
-$container = App::getContainer();
-$db = $container->get(PDO::class);
-$tools = $container->get(ToolsInterface::class);
-$user = $container->get(UserInterface::class);
-$view = $container->get(Engine::class);
+$db = di(PDO::class);
+$tools = di(ToolsInterface::class);
+$user = di(UserInterface::class);
+$view = di(Engine::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING) ?? '';

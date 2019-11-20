@@ -26,7 +26,7 @@ class Utils
     public static function redir404()
     {
         /** @var \Johncms\Api\ConfigInterface $config */
-        $config = \App::getContainer()->get(\Johncms\Api\ConfigInterface::class);
+        $config = di(\Johncms\Api\ConfigInterface::class);
 
         ob_get_level() && ob_end_clean();
         header('Location: ' . $config['homeurl'] . '/?err');

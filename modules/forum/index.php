@@ -16,7 +16,6 @@ use Johncms\Api\UserInterface;
 use Johncms\Utility\Counters;
 use Johncms\View\Extension\Assets;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -24,7 +23,6 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 /**
  * @var Assets             $assets
- * @var ContainerInterface $container
  * @var ConfigInterface    $config
  * @var Counters           $counters
  * @var PDO                $db
@@ -32,17 +30,16 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var UserInterface      $user
  * @var Engine             $view
  */
-$container = App::getContainer();
-$assets = $container->get(Assets::class);
-$config = $container->get(ConfigInterface::class);
-$counters = App::getContainer()->get('counters');
-$db = $container->get(PDO::class);
-$user = $container->get(UserInterface::class);
-$tools = $container->get(ToolsInterface::class);
-$view = $container->get(Engine::class);
+$assets = di(Assets::class);
+$config = di(ConfigInterface::class);
+$counters = di('counters');
+$db = di(PDO::class);
+$user = di(UserInterface::class);
+$tools = di(ToolsInterface::class);
+$view = di(Engine::class);
 
 // Регистрируем папку с языками модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -670,7 +667,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>' .
-                            $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form1', 'msg') .
+                            di(Johncms\Api\BbcodeInterface::class)->buttons('form1', 'msg') .
                             '<textarea rows="' . $user->config->fieldHeight . '" name="msg"></textarea></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
                             '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
@@ -874,7 +871,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>';
-                        echo $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form2', 'msg');
+                        echo di(Johncms\Api\BbcodeInterface::class)->buttons('form2', 'msg');
                         echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg"></textarea><br></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
 

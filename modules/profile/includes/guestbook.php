@@ -38,6 +38,6 @@ $comm = new Johncms\Utility\Comments($arg);
 // Обновляем счетчик непрочитанного
 if (! $mod && $foundUser['id'] == $user->id && $foundUser['comm_count'] != $foundUser['comm_old']) {
     /** @var PDO $db */
-    $db = $container->get(PDO::class);
+    $db = di(PDO::class);
     $db->query("UPDATE `users` SET `comm_old` = '" . $foundUser['comm_count'] . "' WHERE `id` = " . $user->id);
 }

@@ -11,17 +11,14 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
-use Psr\Container\ContainerInterface;
 
 /**
  * @var ConfigInterface    $config
- * @var ContainerInterface $container
  * @var PDO                $db
  */
 
-$container = App::getContainer();
-$config = $container->get(ConfigInterface::class);
-$db = $container->get(PDO::class);
+$config = di(ConfigInterface::class);
+$db = di(PDO::class);
 
 header('content-type: application/rss+xml');
 echo '<?xml version="1.0" encoding="utf-8"?>' .

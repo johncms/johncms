@@ -48,9 +48,8 @@ class Links
     {
         $this->link_url = $link_url;
         $this->in = $in;
-        $container = \App::getContainer();
-        $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get(\Johncms\Api\ToolsInterface::class);
+        $this->db = di(\PDO::class);
+        $this->tools = di(\Johncms\Api\ToolsInterface::class);
     }
 
     /**

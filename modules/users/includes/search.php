@@ -10,28 +10,19 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'usersearch';
-require '../system/bootstrap.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
 /** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator = di(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-$textl = _t('User Search');
-require 'system/head.php';
+$tools = di(Johncms\Api\ToolsInterface::class);
 
 // Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
-    '<form action="search.php" method="post">' .
+    '<form action="?act=search" method="post">' .
     '<div class="gmenu"><p>' .
     '<input type="text" name="search" value="' . $tools->checkout($search) . '" />' .
     '<input type="submit" value="' . _t('Search') . '" name="submit" />' .
@@ -50,7 +41,7 @@ if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $tools->rusLat($search)))
 
 if ($search && ! $error) {
     /** @var PDO $db */
-    $db = $container->get(PDO::class);
+    $db = di(PDO::class);
 
     // Выводим результаты поиска
     $search_db = $tools->rusLat($search);
@@ -63,7 +54,7 @@ if ($search && ! $error) {
     echo '<div class="phdr"><b>' . _t('Searching results') . '</b></div>';
 
     if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     if ($total) {
@@ -83,8 +74,8 @@ if ($search && ! $error) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-            '<p><form action="search.php?search=' . urlencode($search) . '" method="post">' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
+            '<p><form action="?act=search&amp;search=' . urlencode($search) . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
             '</form></p>';
@@ -96,7 +87,10 @@ if ($search && ! $error) {
     echo '<div class="phdr"><small>' . _t('Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical.') . '</small></div>';
 }
 
-echo '<p>' . ($search && ! $error ? '<a href="search.php">' . _t('New search') . '</a><br />' : '') .
+echo '<p>' . ($search && ! $error ? '<a href="?act=search">' . _t('New search') . '</a><br />' : '') .
     '<a href="./">' . _t('Back') . '</a></p>';
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => _t('User Search'),
+    'content' => ob_get_clean(),
+]);

@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start();
 
 /** @var Johncms\Api\EnvironmentInterface $env */
-$env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+$env = di(Johncms\Api\EnvironmentInterface::class);
 
 // Показываем список Online
 $menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="?act=online">' . _t('Users') . '</a>';
@@ -63,7 +63,7 @@ switch ($mod) {
                 $ipLong = key($ip_list[$i]);
                 $ip = long2ip($ipLong);
 
-                if ($ipLong == $container->get(Johncms\Api\EnvironmentInterface::class)->getIp()) {
+                if ($ipLong == di(Johncms\Api\EnvironmentInterface::class)->getIp()) {
                     echo '<div class="gmenu">';
                 } else {
                     echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';

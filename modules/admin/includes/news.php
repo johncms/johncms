@@ -13,11 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
-/**
- * @var Psr\Container\ContainerInterface $container
- */
-
-$config = $container->get('config')['johncms'];
+$config = di('config')['johncms'];
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 

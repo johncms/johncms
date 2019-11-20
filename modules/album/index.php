@@ -14,14 +14,12 @@ use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Extension\Assets;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var ContainerInterface $container
  * @var Assets             $assets
  * @var PDO                $db
  * @var ToolsInterface     $tools
@@ -29,15 +27,14 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Engine             $view
  */
 
-$container = App::getContainer();
-$assets = $container->get(Assets::class);
-$db = $container->get(PDO::class);
-$user = $container->get(UserInterface::class);
-$tools = $container->get(ToolsInterface::class);
-$view = $container->get(Engine::class);
+$assets = di(Assets::class);
+$db = di(PDO::class);
+$user = di(UserInterface::class);
+$tools = di(ToolsInterface::class);
+$view = di(Engine::class);
 
 // Регистрируем папку с языками модуля
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

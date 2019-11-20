@@ -143,7 +143,7 @@ if ($user->isValid()) {
 
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
-            $total = $container->get('counters')->forumNew();
+            $total = di('counters')->forumNew();
             echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
 
             if ($total > $user->config->kmess) {

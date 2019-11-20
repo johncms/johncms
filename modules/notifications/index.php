@@ -12,23 +12,20 @@ declare(strict_types=1);
 
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ContainerInterface       $container
  * @var PDO                      $db
  * @var Johncms\Utility\Counters $counters
  * @var Engine                   $view
  * @var UserInterface            $user
  */
 
-$container = App::getContainer();
-$db = $container->get(PDO::class);
-$counters = $container->get('counters');
-$view = $container->get(Engine::class);
-$user = $container->get(UserInterface::class);
+$db = di(PDO::class);
+$counters = di('counters');
+$view = di(Engine::class);
+$user = di(UserInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');

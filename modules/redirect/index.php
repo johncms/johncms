@@ -11,17 +11,12 @@ declare(strict_types=1);
  */
 
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/**
- * @var ContainerInterface $container
- * @var Engine             $view
- */
+/** @var Engine $view */
 
-$container = App::getContainer();
-$view = $container->get(Engine::class);
+$view = di(Engine::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('redirect', __DIR__ . '/templates/');

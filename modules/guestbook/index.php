@@ -17,7 +17,6 @@ use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
-use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -26,7 +25,6 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var BbcodeInterface      $bbcode
  * @var ConfigInterface      $config
- * @var ContainerInterface   $container
  * @var PDO                  $db
  * @var EnvironmentInterface $env
  * @var ToolsInterface       $tools
@@ -35,22 +33,21 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var NavChainInterface    $nav_chain
  */
 
-$container = App::getContainer();
-$db = $container->get(PDO::class);
-$user = $container->get(UserInterface::class);
-$tools = $container->get(ToolsInterface::class);
-$env = $container->get(EnvironmentInterface::class);
-$bbcode = $container->get(BbcodeInterface::class);
-$config = $container->get(ConfigInterface::class);
-$view = $container->get(Engine::class);
-$nav_chain = $container->get(NavChainInterface::class);
-$route = $container->get('route');
+$db = di(PDO::class);
+$user = di(UserInterface::class);
+$tools = di(ToolsInterface::class);
+$env = di(EnvironmentInterface::class);
+$bbcode = di(BbcodeInterface::class);
+$config = di(ConfigInterface::class);
+$view = di(Engine::class);
+$nav_chain = di(NavChainInterface::class);
+$route = di('route');
 
 // Register Namespace for module templates
 $view->addFolder('guestbook', __DIR__ . '/templates/');
 
 // Register the module languages folder
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? '';
