@@ -33,7 +33,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 - Исправлены замеченные ошибки
 
 #### Security
-- Nothing
+- Администратор мог непреднамеренно удалить новость, перейдя по специально сформированной ссылке.
 
 
 ## 8.0.0 - 2019-10-23
