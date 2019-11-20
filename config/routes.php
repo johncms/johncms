@@ -28,7 +28,7 @@ return function (RouteCollector $map, UserInterface $user) {
     $map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                   // Language switcher
     $map->addRoute(['GET', 'POST'], '/login[/]', 'modules/login/index.php');                         // Login / Logout
     $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                           // Personal Messages
-    $map->addRoute(['GET', 'POST'], '/news[/[{action}]]', 'modules/news/index.php'); // News
+    $map->addRoute(['GET', 'POST'], '/news[/[{action}[/[{id:\d+}[/]]]]]', 'modules/news/index.php'); // News
     $map->addRoute(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php');                  // Restore Password
     $map->addRoute(['GET', 'POST'], '/profile[/]', 'modules/profile/index.php');                     // User Profile
     $map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');                     // Redirect on link

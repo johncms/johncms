@@ -30,8 +30,8 @@
                     <?php if ($user->rights >= 6): ?>
                         <!-- Buttons for deleting and changing news -->
                         <div>
-                            <a href="/news/edit?id=<?= $news['id'] ?>" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
-                            <a href="/news/del?id=<?= $news['id'] ?>" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
+                            <a href="/news/edit/<?= $news['id'] ?>/" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
+                            <a href="/news/del/<?= $news['id'] ?>/" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
                         </div>
                     <?php endif ?>
                 </div>
