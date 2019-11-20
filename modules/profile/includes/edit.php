@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+$foundUser = $foundUser->getArrayCopy();
 $textl = htmlspecialchars($foundUser['name']) . ': ' . _t('Edit Profile');
 
 // Проверяем права доступа для редактирования Профиля
