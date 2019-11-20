@@ -43,7 +43,7 @@ $menu = [
     ($mod == 'comm' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=top&amp;mod=comm">' . _t('Comments') . '</a>'),
 ];
 
-if ($set_karma['on']) {
+if ($config->karma) {
     $menu[] = $mod == 'karma' ? '<b>' . _t('Karma') . '</b>' : '<a href="?act=top&amp;mod=karma">' . _t('Karma') . '</a>';
 }
 
@@ -66,7 +66,7 @@ switch ($mod) {
 
     case 'karma':
         // Топ Кармы
-        if ($set_karma['on']) {
+        if ($config->karma) {
             echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Best Karma') . '</div>';
             echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
             $req = $db->query('SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9');
