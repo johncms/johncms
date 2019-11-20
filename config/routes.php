@@ -22,7 +22,7 @@ return function (RouteCollector $map, UserInterface $user) {
     $map->addRoute(['GET', 'POST'], '/album[/]', 'modules/album/index.php');                         // Photo Album
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                 // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                         // Forum
-    $map->addRoute(['GET', 'POST'], '/guestbook[/[{action}]]', 'modules/guestbook/index.php');                 // Guestbook, mini-chat
+    $map->addRoute(['GET', 'POST'], '/guestbook[/[{action}]]', 'modules/guestbook/index.php');       // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                           // Help
     $map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');                     // Articles Library
     $map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                   // Language switcher
@@ -33,7 +33,7 @@ return function (RouteCollector $map, UserInterface $user) {
     $map->addRoute(['GET', 'POST'], '/profile[/]', 'modules/profile/index.php');                     // User Profile
     $map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');                     // Redirect on link
     $map->addRoute(['GET', 'POST'], '/registration[/]', 'modules/registration/index.php');           // New users registration
-    $map->addRoute(['GET', 'POST'], '/users[/]', 'modules/users/index.php');                         // Users
+    $map->addRoute(['GET', 'POST'], '/community[/]', 'modules/community/index.php');                 // Users community
 
     if ($user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/notifications[/]', 'modules/notifications/index.php');     // Notifications
