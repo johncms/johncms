@@ -30,8 +30,6 @@ interface ToolsInterface
 
     public function getFlag($locale);
 
-    public function getSkin();
-
     public function getUser($id);
 
     public function isIgnor($id);

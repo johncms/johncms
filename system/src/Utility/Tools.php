@@ -425,24 +425,11 @@ class Tools implements ToolsInterface
     }
 
     /**
-     * @return string
-     */
-    public function getSkin()
-    {
-        return $this->user->isValid() && ! empty($this->userConfig->skin)
-            ? $this->userConfig->skin
-            : $this->config->skindef;
-    }
-
-    /**
      * Получаем данные пользователя
-     *
-     * @param int $id Идентификатор пользователя
-     * @return array|bool
      */
     public function getUser($id = 0)
     {
-        if ($id && $id != $this->user->id) {
+        if ($id && $id !== $this->user->id) {
             $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
 
             if ($req->rowCount()) {
