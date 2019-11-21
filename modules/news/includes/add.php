@@ -118,14 +118,14 @@ if ($user->rights >= 6) {
             echo $view->render('system::pages/result', [
                 'title'    => _t('Add news'),
                 'message'  => _t('News added'),
-                'type'     => 'success',
+                'type'     => 'alert-success',
                 'back_url' => '/news/',
             ]);
         } else {
             echo $view->render('system::pages/result', [
                 'title'    => _t('Add news'),
                 'message'  => $error,
-                'type'     => 'error',
+                'type'     => 'alert-danger',
                 'back_url' => '/news/add/',
             ]);
         }

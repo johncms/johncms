@@ -48,7 +48,7 @@ if ($user->rights >= 7) {
         echo $view->render('system::pages/result', [
             'title'    => _t('Clear news'),
             'message'  => $message,
-            'type'     => 'success',
+            'type'     => 'alert-success',
             'back_url' => '/news/',
         ]);
     } else {

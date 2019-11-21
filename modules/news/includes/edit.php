@@ -27,7 +27,7 @@ if ($user->rights >= 6) {
     if (! $id) {
         echo $view->render('system::pages/result', [
             'title'    => _t('News'),
-            'type'     => 'error',
+            'type'     => 'alert-danger',
             'message'  => _t('Wrong data'),
             'back_url' => '/news/',
         ]);
@@ -63,7 +63,7 @@ if ($user->rights >= 6) {
             echo $view->render('system::pages/result', [
                 'title'    => _t('Edit news'),
                 'message'  => $error,
-                'type'     => 'error',
+                'type'     => 'alert-danger',
                 'back_url' => '/news/edit/' . $id,
             ]);
         }
@@ -71,7 +71,7 @@ if ($user->rights >= 6) {
         echo $view->render('system::pages/result', [
             'title'    => _t('Edit news'),
             'message'  => _t('News changed'),
-            'type'     => 'success',
+            'type'     => 'alert-success',
             'back_url' => '/news/',
         ]);
     } else {

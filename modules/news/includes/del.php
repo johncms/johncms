@@ -28,7 +28,7 @@ if ($user->rights >= 6) {
         echo $view->render('system::pages/result', [
             'title'    => _t('Delete news'),
             'message'  => _t('News deleted'),
-            'type'     => 'success',
+            'type'     => 'alert-success',
             'back_url' => '/news/',
         ]);
     } else {
