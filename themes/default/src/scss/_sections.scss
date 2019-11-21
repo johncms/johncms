@@ -1,0 +1,29 @@
+.forum-section {
+
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 1.3rem;
+    font-weight: 300;
+    padding-bottom: 0.5rem;
+
+    .badge {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    .toggle {
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+}
+
+.section-name {
+
+}

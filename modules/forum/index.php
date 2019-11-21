@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
+use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Utility\Counters;
@@ -22,13 +23,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Assets             $assets
- * @var ConfigInterface    $config
- * @var Counters           $counters
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Engine             $view
+ * @var Assets            $assets
+ * @var ConfigInterface   $config
+ * @var Counters          $counters
+ * @var PDO               $db
+ * @var ToolsInterface    $tools
+ * @var UserInterface     $user
+ * @var Engine            $view
+ * @var NavChainInterface $nav_chain
  */
 $assets = di(Assets::class);
 $config = di(ConfigInterface::class);
@@ -37,9 +39,16 @@ $db = di(PDO::class);
 $user = di(UserInterface::class);
 $tools = di(ToolsInterface::class);
 $view = di(Engine::class);
+$nav_chain = di(NavChainInterface::class);
 
 // Регистрируем папку с языками модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('forum', __DIR__ . '/templates/');
+
+// Добавляем раздел в навигационную цепочку
+$nav_chain->add(_t('Forum'), '/forum/');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -131,8 +140,11 @@ if (! $config->mod_forum && $user->rights < 7) {
 }
 
 if ($error) {
-    echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'   => _t('Forum'),
+        'type'    => 'alert-danger',
+        'message' => $error,
+    ]);
     exit;
 }
 $show_type = $_REQUEST['type'] ?? 'section';
@@ -167,15 +179,11 @@ $mods = [
     'curators',
 ];
 
-if ($act && ($key = array_search($act,
-        $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     // Заголовки страниц форума
-    if (empty($id)) {
-        $headmod = 'forum';
-        $textl = _t('Forum');
-    } else {
+    if (! empty($id)) {
         // Фиксируем местоположение и получаем заголовок страницы
         switch ($show_type) {
             case 'topics':
@@ -220,11 +228,13 @@ if ($act && ($key = array_search($act,
     }
 
     // Если форум закрыт, то для Админов выводим напоминание
-    if (! $config->mod_forum) {
-        echo '<div class="alarm">' . _t('Forum is closed') . '</div>';
-    } elseif ($config->mod_forum == 3) {
-        echo '<div class="rmenu">' . _t('Read only') . '</div>';
-    }
+    //TODO: Move to template
+
+    /*  if (! $config->mod_forum) {
+            echo '<div class="alarm">' . _t('Forum is closed') . '</div>';
+        } elseif ($config->mod_forum == 3) {
+            echo '<div class="rmenu">' . _t('Read only') . '</div>';
+        }*/
 
     if (! $user->isValid()) {
         if (isset($_GET['newup'])) {
@@ -246,9 +256,12 @@ if ($act && ($key = array_search($act,
 
         if (! $type->rowCount()) {
             // Если темы не существует, показываем ошибку
-            echo $tools->displayError(_t('Topic has been deleted or does not exists'),
-                '<a href="./">' . _t('Forum') . '</a>');
-            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+            echo $view->render('system::pages/result', [
+                'title'    => _t('Forum'),
+                'type'     => 'alert-danger',
+                'message'  => _t('Topic has been deleted or does not exists'),
+                'back_url' => '/forum/',
+            ]);
             exit;
         }
 
@@ -270,6 +283,7 @@ if ($act && ($key = array_search($act,
         while (! empty($parent) && $res != false) {
             $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
 
+            // TODO: Replace to nav chain
             $tree[] = '<a href="?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $parent . '">' . $res['name'] . '</a>';
 
             /*if ($res['type'] == 'r' && !empty($res['edit'])) {
@@ -969,34 +983,43 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 break;
         }
     } else {
-        ////////////////////////////////////////////////////////////
-        // Список Категорий форума                                //
-        ////////////////////////////////////////////////////////////
+        // Forum categories
+
         $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files`' . ($user->rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
-        echo '<p>' . $counters->forumNew(1) . '</p>' .
-            '<div class="phdr"><b>' . _t('Forum') . '</b></div>' .
-            '<div class="topmenu"><a href="?act=search">' . _t('Search') . '</a> | <a href="?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';
         $req = $db->query('SELECT sct.`id`, sct.`name`, sct.`description`, (
 SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
 FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`');
-        $i = 0;
 
+        $sections = [];
         while ($res = $req->fetch()) {
-            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-            echo '<a href="?id=' . $res['id'] . '">' . $res['name'] . '</a> [' . $res['cnt'] . ']';
-
-            if (! empty($res['description'])) {
-                echo '<div class="sub"><span class="gray">' . $res['description'] . '</span></div>';
+            $subsections_array = [];
+            $subsections = $db->query('SELECT * FROM `forum_sections` WHERE parent = ' . $res['id'] . ' ORDER BY `sort`');
+            while ($arr = $subsections->fetch()) {
+                $type = ! empty($arr['section_type']) ? 'topics' : 'sections';
+                $arr['url'] = '/forum/?type=' . $type . '&id=' . $arr['id'];
+                $subsections_array[] = $arr;
             }
 
-            echo '</div>';
-            ++$i;
+            $res['subsections'] = $subsections_array;
+            $res['url'] = '/forum/?id=' . $res['id'];
+            $sections[] = $res;
         }
+
+        // TODO: Fix this
         $online = $db->query('SELECT (
 SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum%') AS online_u, (
 SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%') AS online_g")->fetch();
-        echo '<div class="phdr">' . ($user->isValid() ? '<a href="?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</div>';
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+
+        echo $view->render('forum::index', [
+            'title'        => _t('Forum'),
+            'page_title'   => _t('Forum'),
+            'sections'     => $sections,
+            'online'       => $online,
+            'files_count'  => $count,
+            'unread_links' => $counters->forumNew(1), // TODO: refactoring
+        ]);
+        exit;
     }
 
     // Навигация внизу страницы

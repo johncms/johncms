@@ -167,8 +167,7 @@ class Counters
                 ')->fetchColumn();
 
             if ($mod) {
-                return '<a href="?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .
-                    ($total ? '<br><a href="?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+                return ($total ? '<a href="?act=new" class="pr-2">' . _t('Unread', 'system') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '');
             }
 
             return $total;
