@@ -429,8 +429,11 @@ class Tools implements ToolsInterface
 
     /**
      * Получаем данные пользователя
+     *
+     * @param int $id
+     * @return bool|UserInterface|mixed
      */
-    public function getUser($id = 0)
+    public function getUser(int $id = 0)
     {
         if ($id && $id !== $this->user->id) {
             $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
