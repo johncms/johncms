@@ -1,175 +1,170 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-03-25 19:18+0400\n"
-"PO-Revision-Date: 2017-04-30 13:45-0400\n"
+"POT-Creation-Date: 2019-11-21 12:49+0400\n"
+"PO-Revision-Date: 2019-11-21 12:53+0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Romanian\n"
+"Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
-"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n"
+"%100<20)) ? 1 : 2);\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: .\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: ro\n"
 "X-Crowdin-File: /users/default.pot\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: includes/admlist.php:15 includes/admlist.php:29 index.php:80
+#: includes/administration.php:27 templates/index.phtml:17
 msgid "Administration"
 msgstr "Administratie"
 
-#: includes/admlist.php:29 includes/birth.php:29 includes/top.php:64
-#: includes/top.php:72 includes/top.php:81 includes/top.php:101
-#: includes/userlist.php:30 index.php:66 index.php:72 search.php:35
-msgid "Community"
-msgstr "Comunitate"
-
-#: includes/admlist.php:38 includes/birth.php:41 includes/online.php:93
-#: includes/online.php:165 includes/userlist.php:43 search.php:85
-msgid "Total"
-msgstr "Total"
-
-#: includes/admlist.php:44 includes/birth.php:47 includes/online.php:99
-#: includes/online.php:171 includes/userlist.php:49 search.php:91
-msgid "To Page"
-msgstr "La pagina"
-
-#: includes/admlist.php:48 includes/userlist.php:53 search.php:28 search.php:35
-msgid "User Search"
-msgstr "Cauta utilizatori"
-
-#: includes/admlist.php:49 includes/birth.php:54 includes/top.php:107
-#: includes/userlist.php:54 index.php:85 search.php:102
-msgid "Back"
-msgstr "Inapoi"
-
-#: includes/birth.php:15 includes/birth.php:29 index.php:81
+#: includes/birthdays.php:20 templates/index.phtml:20
 msgid "Birthdays"
 msgstr "Aniversari"
 
-#: includes/birth.php:51 includes/online.php:162 includes/top.php:46
-#: includes/top.php:92
-msgid "The list is empty"
-msgstr "Lista este goala"
+#: includes/search.php:24 includes/top.php:54 includes/top.php:62
+#: includes/top.php:71 includes/top.php:91 templates/index.phtml:1
+#: templates/index.phtml:2 templates/users.phtml:2
+msgid "Community"
+msgstr "Comunitate"
 
-#: includes/online.php:16
-msgid "Online"
-msgstr "Online"
+#: includes/search.php:24 includes/search.php:94 templates/users.phtml:22
+msgid "User Search"
+msgstr "Cauta utilizatori"
 
-#: includes/online.php:38 index.php:79
-msgid "Users"
-msgstr "Utilizatori"
-
-#: includes/online.php:39
-msgid "History"
-msgstr "Istoric"
-
-#: includes/online.php:42
-msgid "Guests"
-msgstr "Oaspeti"
-
-#: includes/online.php:43
-msgid "IP Activity"
-msgstr "Activitate IP"
-
-#: includes/online.php:46
-msgid "Who is online?"
-msgstr "Cine este online?"
-
-#: includes/top.php:16 index.php:83
-msgid "Top Activity"
-msgstr "Activitati de top"
-
-#: includes/top.php:52 includes/top.php:104
-msgid "Forum"
-msgstr "Forum"
-
-#: includes/top.php:53 includes/top.php:67
-msgid "Guestbook"
-msgstr "Guestbook"
-
-#: includes/top.php:54
-msgid "Comments"
-msgstr "Comentarii"
-
-#: includes/top.php:58
-msgid "Karma"
-msgstr "Karma"
-
-#: includes/top.php:64
-msgid "Most active in Guestbook"
-msgstr "Cei mai activi in Guestbook"
-
-#: includes/top.php:72
-msgid "Most commentators"
-msgstr "Cei mai multi comentatori"
-
-#: includes/top.php:75 includes/top.php:95
-msgid "Home"
-msgstr "Acasa"
-
-#: includes/top.php:81
-msgid "Best Karma"
-msgstr "Cea mai buna Karma"
-
-#: includes/top.php:101
-msgid "Most active in Forum"
-msgstr "Cei mai activi in Forum"
-
-#: includes/userlist.php:15 includes/userlist.php:30
-msgid "List of users"
-msgstr "Lista de utilizatori"
-
-#: index.php:41
-msgid "For registered users only"
-msgstr "Doar pentru utilizatori inregistrati"
-
-#: index.php:74
-msgid "Look for the User"
-msgstr "Cauta utilizatorul"
-
-#: index.php:76 search.php:39
+#: includes/search.php:28 templates/index.phtml:8
 msgid "Search"
 msgstr "Cauta"
 
-#: index.php:77
-msgid "The search is performed by Nickname and are case-insensitive."
-msgstr "Cautarea se face dupa Nickname.Ai grija la majuscule. "
-
-#: index.php:82
-msgid "Photo Albums"
-msgstr "Albume Foto"
-
-#: search.php:46 search.php:50
+#: includes/search.php:35 includes/search.php:39
 msgid "Nickname"
 msgstr "Nickname"
 
-#: search.php:46
+#: includes/search.php:35
 msgid "Invalid length"
 msgstr "Lungime invalida"
 
-#: search.php:50
+#: includes/search.php:39
 msgid "Invalid characters"
 msgstr "Caractere invalide"
 
-#: search.php:65
+#: includes/search.php:54
 msgid "Searching results"
 msgstr "Rezultatele cautarii"
 
-#: search.php:82
+#: includes/search.php:71
 msgid "Your search did not match any results"
 msgstr "Cautarea ta nu corescunde cu nici in rezultat"
 
-#: search.php:98
-msgid "Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical."
-msgstr "Cautarea dupa Nickname difera in functie de majuscule. De exemplu <strong>UsEr</strong> si <strong>user</strong> sunt identice"
+#: includes/search.php:74 templates/users.phtml:15
+msgid "Total"
+msgstr "Total"
 
-#: search.php:101
+#: includes/search.php:80
+msgid "To Page"
+msgstr "La pagina"
+
+#: includes/search.php:87
+msgid ""
+"Search by Nickname are case insensitive. For example <strong>UsEr</strong> "
+"and <strong>user</strong> are identical."
+msgstr ""
+"Cautarea dupa Nickname difera in functie de majuscule. De exemplu "
+"<strong>UsEr</strong> si <strong>user</strong> sunt identice."
+
+#: includes/search.php:90
 msgid "New search"
 msgstr "Cautare noua"
 
+#: includes/search.php:91 templates/users.phtml:23
+msgid "Back"
+msgstr "Inapoi"
+
+#: includes/top.php:37 includes/top.php:82 templates/users.phtml:12
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: includes/top.php:42 includes/top.php:94
+msgid "Forum"
+msgstr "Forum"
+
+#: includes/top.php:43 includes/top.php:57
+msgid "Guestbook"
+msgstr "Guestbook"
+
+#: includes/top.php:44
+msgid "Comments"
+msgstr "Comentarii"
+
+#: includes/top.php:48
+msgid "Karma"
+msgstr "Karma"
+
+#: includes/top.php:54
+msgid "Most active in Guestbook"
+msgstr "Cei mai activi in Guestbook"
+
+#: includes/top.php:62
+msgid "Most commentators"
+msgstr "Cei mai multi comentatori"
+
+#: includes/top.php:65 includes/top.php:85
+msgid "Home"
+msgstr "Acasa"
+
+#: includes/top.php:71
+msgid "Best Karma"
+msgstr "Cea mai buna Karma"
+
+#: includes/top.php:91
+msgid "Most active in Forum"
+msgstr "Cei mai activi in Forum"
+
+#: includes/top.php:98 templates/index.phtml:25
+msgid "Top Activity"
+msgstr "Activitati de top"
+
+#: includes/users.php:27
+msgid "List of users"
+msgstr "Lista de utilizatori"
+
+#: index.php:52
+msgid "For registered users only"
+msgstr "Doar pentru utilizatori inregistrati"
+
+#: templates/index.phtml:6
+msgid "Look for the User"
+msgstr "Cauta utilizatorul"
+
+#: templates/index.phtml:9
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr "Cautarea se face dupa Nickname.Ai grija la majuscule."
+
+#: templates/index.phtml:15
+msgid "Users"
+msgstr "Utilizatori"
+
+#: templates/index.phtml:23
+msgid "Photo Albums"
+msgstr "Albume Foto"
+
+#~ msgid "Online"
+#~ msgstr "Online"
+
+#~ msgid "History"
+#~ msgstr "Istoric"
+
+#~ msgid "Guests"
+#~ msgstr "Oaspeti"
+
+#~ msgid "IP Activity"
+#~ msgstr "Activitate IP"
+
+#~ msgid "Who is online?"
+#~ msgstr "Cine este online?"

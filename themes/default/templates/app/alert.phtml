@@ -4,7 +4,7 @@
  */
 ?>
 <?php if (! empty($alert)): ?>
-    <div class="alert <?= $alert_type ?? '' ?>">
+    <div class="alert shadow <?= $alert_type ?? '' ?>">
         <?= is_array($alert) ? implode('<br>', $alert) : $alert ?>
     </div>
 <?php endif; ?>

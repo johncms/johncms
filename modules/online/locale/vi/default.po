@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2019-11-21 12:42+0400\n"
+"PO-Revision-Date: 2019-11-21 12:48+0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /users/default.pot\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/index.php:22
+msgid "Users"
+msgstr "Thành viên"
+
+#: includes/index.php:23
+msgid "History"
+msgstr "Lịch sử"
+
+#: includes/index.php:26
+msgid "Guests"
+msgstr "Khách"
+
+#: includes/index.php:27
+msgid "IP Activity"
+msgstr "Hoạt động IP"
+
+#: includes/index.php:30
+msgid "Who is online?"
+msgstr "Ai đang trực tuyến?"
+
+#: includes/index.php:77 includes/index.php:150 templates/users.phtml:15
+msgid "Total"
+msgstr "Tổng số"
+
+#: includes/index.php:85 includes/index.php:157 index.php:52
+msgid "Online"
+msgstr "Trực tuyến"
+
+#: includes/index.php:147 templates/users.phtml:12
+msgid "The list is empty"
+msgstr "Danh sách trống"
+
+#: index.php:54
+msgid "For registered users only"
+msgstr "Chỉ dành cho thành viên đã đăng ký"
+
+#: templates/users.phtml:2
+msgid "Community"
+msgstr "Cộng đồng"
+
+#: templates/users.phtml:22
+msgid "User Search"
+msgstr "Tìm người dùng"
+
+#: templates/users.phtml:23
+msgid "Back"
+msgstr "Trở lại"
+
+#~ msgid "Administration"
+#~ msgstr "Quản trị"
+
+#~ msgid "To Page"
+#~ msgstr "Đến trang"
+
+#~ msgid "Birthdays"
+#~ msgstr "Sinh nhật"
+
+#~ msgid "Top Activity"
+#~ msgstr "Hoạt động nhiều nhất"
+
+#~ msgid "Forum"
+#~ msgstr "Diễn đàn"
+
+#~ msgid "Guestbook"
+#~ msgstr "Phòng trò truyện"
+
+#~ msgid "Comments"
+#~ msgstr "Bình luận"
+
+#~ msgid "Karma"
+#~ msgstr "Nghiệp chướng"
+
+#~ msgid "Most active in Guestbook"
+#~ msgstr "Hoạt động nhiều nhất trong Lưu bút"
+
+#~ msgid "Most commentators"
+#~ msgstr "Đầu trang bình luận"
+
+#~ msgid "Home"
+#~ msgstr "Trang chủ"
+
+#~ msgid "Best Karma"
+#~ msgstr "Tốt Nhất Karma"
+
+#~ msgid "Most active in Forum"
+#~ msgstr "Hoạt động nhiều nhất trong Diễn đàn"
+
+#~ msgid "List of users"
+#~ msgstr "Danh sách người dùng"
+
+#~ msgid "Look for the User"
+#~ msgstr "Tìm kiếm người dùng"
+
+#~ msgid "Search"
+#~ msgstr "Tìm kiếm"
+
+#~ msgid "The search is performed by Nickname and are case-insensitive."
+#~ msgstr "Tìm kiếm được thực hiện bằng biệt hiệu và được quản."
+
+#~ msgid "Photo Albums"
+#~ msgstr "Album"
+
+#~ msgid "Nickname"
+#~ msgstr "Biệt danh"
+
+#~ msgid "Invalid length"
+#~ msgstr "Chiều dài không hợp lệ"
+
+#~ msgid "Invalid characters"
+#~ msgstr "Ký tự không hợp lệ"
+
+#~ msgid "Searching results"
+#~ msgstr "Kết quả tìm kiếm"
+
+#~ msgid "Your search did not match any results"
+#~ msgstr "Tìm kiếm của bạn không phù hợp"
+
+#~ msgid "Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical."
+#~ msgstr "Tìm kiếm không phân biệt chữ hoa với chữ thường. Ví dụ, <strong>AdMin</strong> và <strong>admin</strong> là giống hệt nhau."
+
+#~ msgid "New search"
+#~ msgstr "Tìm kiếm mới"

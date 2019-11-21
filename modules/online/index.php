@@ -44,24 +44,23 @@ di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale',
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';
-$mod = $route['mod'] ?? '';
 
 // Закрываем от неавторизованных юзеров
 if (! $config->active && ! $user->isValid()) {
-    echo $view->render('system::app/old_content', [
-        'content' => $tools->displayError(_t('For registered users only')),
+    echo $view->render('system::pages/result', [
+        'title'   => _t('Online'),
+        'type'    => 'alert-danger',
+        'message' => _t('For registered users only'),
     ]);
     exit;
 }
 
 // Переключаем режимы работы
 $actions = [
-    'administration',
-    'birthdays',
     'index',
-    'search',
-    'top',
-    'users',
+    'guest',
+    'history',
+    'ip',
 ];
 
 if (($key = array_search($act, $actions)) !== false) {

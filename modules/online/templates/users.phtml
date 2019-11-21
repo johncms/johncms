@@ -1,0 +1,24 @@
+<?php $this->layout('system::layout/old_default', ['title' => $title, 'homeButton' => true]) ?>
+<div class="phdr"><a href="../"><strong><?= _t('Community') ?></strong></a> | <?= $title ?></div>
+<!-- List of Users -->
+<?php if ($total): ?>
+    <div class="list-striped">
+        <?php foreach ($list() as $usr): ?>
+            <div><?= $tools->displayUser($usr) ?></div>
+        <?php endforeach ?>
+    </div>
+<?php else: ?>
+    <div class="menu padding">
+        <?= _t('The list is empty') ?>
+    </div>
+<?php endif ?>
+<div class="phdr"><?= _t('Total') . ': ' . $total ?></div>
+<!-- Pagination -->
+<?php if ($total > $user->config->kmess): ?>
+    <div class="topmenu"><?= $pagination ?></div>
+<?php endif ?>
+<p>
+    <!-- Misc links -->
+    <a href="search.php"><?= _t('User Search') ?></a><br/>
+    <a href="./"><?= _t('Back') ?></a>
+</p>
