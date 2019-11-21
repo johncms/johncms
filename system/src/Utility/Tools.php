@@ -262,7 +262,10 @@ class Tools implements ToolsInterface
             '/redirect'         => _t('Redirect on external link to another site', 'system'),
             '/registration'     => _t('Registered on the site', 'system'),
             '/users'            => '<a href="#home#/users/">' . _t('List of users', 'system') . '</a>',
-            '/community/online' => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
+            '/online'           => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
+            '/online/history'   => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
+            '/online/guest'     => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
+            '/online/ip'        => '<a href="#home#/users/?act=online">' . _t('Who is online?', 'system') . '</a>',
         ];
 
         if (array_key_exists($place, $placelist)) {
