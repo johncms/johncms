@@ -452,7 +452,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     'create_access' => $create_access,
                     'title'         => $type1['name'],
                     'page_title'    => $type1['name'],
-                    'topics'        => $topics,
+                    'topics'        => $topics ?? [],
                     'online'        => $online,
                     'total'         => $total,
                     'files_count'   => $count,
