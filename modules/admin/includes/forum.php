@@ -226,7 +226,7 @@ switch ($mod) {
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
-                $cat_name = $res['text'];
+                $cat_name = $res['name'];
             } else {
                 echo $tools->displayError(_t('Wrong data'),
                     '<a href="?act=forum">' . _t('Forum Management') . '</a>');
