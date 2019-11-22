@@ -1005,10 +1005,8 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             $sections[] = $res;
         }
 
-        // TODO: Fix this
-        $online = $db->query('SELECT (
-SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum%') AS online_u, (
-SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%') AS online_g")->fetch();
+        $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u, 
+       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
         echo $view->render('forum::index', [
@@ -1017,7 +1015,7 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
             'sections'     => $sections,
             'online'       => $online,
             'files_count'  => $count,
-            'unread_links' => $counters->forumNew(1), // TODO: refactoring
+            'unread_count' => $counters->forumUnreadCount(),
         ]);
         exit;
     }

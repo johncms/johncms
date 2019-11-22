@@ -156,6 +156,7 @@ class Counters
      *
      * @param int $mod
      * @return bool|int|string
+     * @deprecated use forumUnreadCount
      */
     public function forumNew($mod = 0)
     {
@@ -177,6 +178,23 @@ class Counters
         }
 
         return false;
+    }
+
+    /**
+     * @return int|mixed
+     */
+    public function forumUnreadCount()
+    {
+        $total = 0;
+        if ($this->systemUser->isValid()) {
+            $total = $this->db->query("SELECT COUNT(*) FROM `forum_topic`
+                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
+                WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`) 
+                " . ($this->systemUser->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
+                ')->fetchColumn();
+        }
+
+        return $total;
     }
 
     /**
