@@ -17,8 +17,17 @@
 
     .toggle {
         .icon {
+            transition: all 0.2s;
             width: 20px;
             height: 20px;
+        }
+    }
+
+    &[aria-expanded="true"] {
+        .toggle {
+            .icon {
+                transform: rotate(-180deg);
+            }
         }
     }
 

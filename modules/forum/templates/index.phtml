@@ -67,7 +67,7 @@ $this->layout('system::layout/default', [
 
 <?php foreach ($sections as $section): ?>
     <div class="shadow border-radius-12 forum-section post-item">
-        <div class="section-header" data-toggle="collapse" data-target="#subsections" aria-expanded="false" aria-controls="subsections">
+        <div class="section-header collapsed" data-toggle="collapse" data-target="#subsections" aria-expanded="false" aria-controls="subsections">
             <div class="d-flex align-items-center">
                 <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
                 <span class="badge badge-pill badge-danger ml-3"><?= $section['cnt'] ?></span>
@@ -101,6 +101,6 @@ $this->layout('system::layout/default', [
         <span class="badge badge-pill badge-secondary"><?= $online['online_u'] . '&#160;/&#160;' . $online['online_g'] ?></span>
     </div>
     <div>
-        <a href="../help/?act=forum"><?= _t('Forum rules') ?></a>
+        <a href="/help/?act=forum"><?= _t('Forum rules') ?></a>
     </div>
 </div>
