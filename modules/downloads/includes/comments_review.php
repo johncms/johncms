@@ -53,7 +53,7 @@ if ($total) {
         $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
 
         $subtext = '<a href="?act=view&amp;id=' . $res['sub_id'] . '">' . htmlspecialchars($res['rus_name']) . '</a> | <a href="?act=comments&amp;id=' . $res['sub_id'] . '">' . _t('Comments') . '</a>';
-        $attributes = unserialize($res['attributes']);
+        $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
         $res['nickname'] = $attributes['author_name'];
         $res['ip'] = $attributes['author_ip'];
         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;

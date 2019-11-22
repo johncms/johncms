@@ -38,7 +38,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
-        $set_mail_user = unserialize($user->set_mail);
+        $set_mail_user = unserialize($user->set_mail, ['allowed_classes' => false]);
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
@@ -62,7 +62,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         $set_forum = [];
-        $set_forum = unserialize($user->set_forum);
+        $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 
         if (isset($_POST['submit'])) {
             $set_forum['farea'] = isset($_POST['farea']);

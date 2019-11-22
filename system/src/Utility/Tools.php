@@ -540,7 +540,7 @@ class Tools implements ToolsInterface
             $file = CACHE_PATH . 'smilies-list.cache';
 
             if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
-                $smiliesCache = unserialize($smileys);
+                $smiliesCache = unserialize($smileys, ['allowed_classes' => false]);
 
                 return strtr($str, ($adm ? array_merge($smiliesCache['usr'], $smiliesCache['adm']) : $smiliesCache['usr']));
             }

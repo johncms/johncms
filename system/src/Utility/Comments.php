@@ -123,7 +123,7 @@ class Comments
 
                     if ($req->rowCount()) {
                         $res = $req->fetch();
-                        $attributes = unserialize($res['attributes']);
+                        $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
 
                         if (! empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
                             echo $this->tools->displayError(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
@@ -173,7 +173,7 @@ class Comments
 
                     if ($req->rowCount()) {
                         $res = $req->fetch();
-                        $attributes = unserialize($res['attributes']);
+                        $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
                         $user = $this->tools->getUser($res['user_id']);
 
                         if ($user['rights'] > $this->systemUser->rights) {
@@ -306,7 +306,7 @@ class Comments
                     $i = 0;
 
                     while ($res = $req->fetch()) {
-                        $attributes = unserialize($res['attributes']);
+                        $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
                         $res['name'] = $attributes['author_name'];
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;

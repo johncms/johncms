@@ -19,7 +19,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\Api\UserInterface  $user
  */
 
-$set_forum = unserialize($user->set_forum);
+$set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 
 if (! isset($set_forum) || empty($set_forum)) {
     $set_forum = [

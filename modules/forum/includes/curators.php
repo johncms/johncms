@@ -35,7 +35,7 @@ if ($user->rights >= 7) {
     echo '<div class="phdr"><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
         '<div class="bmenu">' . $topic['name'] . '</div>';
     $curators = [];
-    $users = ! empty($topic['curators']) ? unserialize($topic['curators']) : [];
+    $users = ! empty($topic['curators']) ? unserialize($topic['curators'], ['allowed_classes' => false]) : [];
 
     if (isset($_POST['submit'])) {
         $users = $_POST['users'] ?? [];

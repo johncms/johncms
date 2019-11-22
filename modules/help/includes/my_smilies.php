@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Список своих смайлов
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';
-$smileys = ! empty($user->smileys) ? unserialize($user->smileys) : [];
+$smileys = ! empty($user->smileys) ? unserialize($user->smileys, ['allowed_classes' => false]) : [];
 $total = count($smileys);
 
 if ($total) {

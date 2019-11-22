@@ -60,7 +60,7 @@ if (isset($_SESSION['ref'])) {
 }
 
 // Настройки форума
-$set_forum = $user->isValid() ? unserialize($user->set_forum) : [
+$set_forum = $user->isValid() ? unserialize($user->set_forum, ['allowed_classes' => false]) : [
     'farea'    => 0,
     'upfp'     => 0,
     'preview'  => 1,
@@ -472,7 +472,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     // Подготавливаем запрос на фильтрацию юзеров
                     $sw = 0;
                     $sql = ' AND (';
-                    $fsort_users = unserialize($_SESSION['fsort_users']);
+                    $fsort_users = unserialize($_SESSION['fsort_users'], ['allowed_classes' => false]);
 
                     foreach ($fsort_users as $val) {
                         if ($sw) {
@@ -598,7 +598,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 }
 
                 // Получаем данные о кураторах темы
-                $curators = ! empty($type1['curators']) ? unserialize($type1['curators']) : [];
+                $curators = ! empty($type1['curators']) ? unserialize($type1['curators'], ['allowed_classes' => false]) : [];
                 $curator = false;
 
                 if ($user->rights < 6 && $user->rights != 3 && $user->isValid()) {

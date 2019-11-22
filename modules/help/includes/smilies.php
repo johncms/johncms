@@ -20,7 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Smilies') . '</div>';
 
 if ($user->isValid()) {
-    $mycount = ! empty($user->smileys) ? count(unserialize($user->smileys)) : '0';
+    $mycount = ! empty($user->smileys) ? count(unserialize($user->smileys, ['allowed_classes' => false])) : '0';
     echo '<div class="topmenu"><a href="?act=my_smilies">' . _t('My smilies') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
 }
 

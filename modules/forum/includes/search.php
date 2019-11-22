@@ -193,7 +193,7 @@ switch ($mod) {
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
-                $history = unserialize($res['val']);
+                $history = unserialize($res['val'], ['allowed_classes' => false]);
 
                 // Добавляем запрос в историю
                 if ($to_history && ! in_array($search, $history)) {

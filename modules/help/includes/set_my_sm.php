@@ -29,7 +29,7 @@ if (($adm && ! $user->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_P
     exit;
 }
 
-$smileys = unserialize($user->smileys);
+$smileys = unserialize($user->smileys, ['allowed_classes' => false]);
 
 if (! is_array($smileys)) {
     $smileys = [];

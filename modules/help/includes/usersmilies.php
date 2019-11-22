@@ -40,7 +40,7 @@ echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> 
 
 if ($total) {
     if ($user->isValid()) {
-        $user_sm = isset($user->smileys) ? unserialize($user->smileys) : '';
+        $user_sm = isset($user->smileys) ? unserialize($user->smileys, ['allowed_classes' => false]) : '';
 
         if (! is_array($user_sm)) {
             $user_sm = [];

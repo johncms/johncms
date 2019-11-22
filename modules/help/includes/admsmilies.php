@@ -25,7 +25,7 @@ if ($user->rights < 1) {
 }
 
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('For administration') . '</div>';
-$user_sm = unserialize($user->smileys);
+$user_sm = unserialize($user->smileys, ['allowed_classes' => false]);
 
 if (! is_array($user_sm)) {
     $user_sm = [];

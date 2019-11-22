@@ -152,7 +152,7 @@ class Bbcode implements BbcodeInterface
         }
 
         // Смайлы
-        $smileys = ! empty($this->user->smileys) ? unserialize($this->user->smileys) : [];
+        $smileys = ! empty($this->user->smileys) ? unserialize($this->user->smileys, ['allowed_classes' => false]) : [];
 
         if (! empty($smileys)) {
             $res_sm = '';

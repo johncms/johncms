@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$set_mail = unserialize((string) $foundUser['set_mail']);
+$set_mail = unserialize((string) $foundUser['set_mail'], ['allowed_classes' => false]);
 $out = '';
 $total = 0;
 $ch = 0;
@@ -133,10 +133,10 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
             } else {
                 $foundUser = $query->fetch();
                 $id = $foundUser['id'];
-                $set_mail = unserialize($foundUser['set_mail']);
+                $set_mail = unserialize($foundUser['set_mail'], ['allowed_classes' => false]);
             }
         } else {
-            $set_mail = unserialize($qs['set_mail']);
+            $set_mail = unserialize($qs['set_mail'], ['allowed_classes' => false]);
         }
 
         if (empty($error)) {

@@ -19,7 +19,7 @@ class UserConfig extends ArrayObject implements UserConfigInterface
 {
     public function __construct(User $user)
     {
-        $input = empty($user->set_user) ? $this->getDefaults() : unserialize($user->set_user);
+        $input = empty($user->set_user) ? $this->getDefaults() : unserialize($user->set_user, ['allowed_classes' => false]);
         parent::__construct($input, parent::ARRAY_AS_PROPS);
     }
 

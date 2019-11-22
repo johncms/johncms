@@ -31,7 +31,7 @@ if ($req->rowCount()) {
     $res = $req->fetch();
 
     $topic = $db->query('SELECT `section_id`, `curators` FROM `forum_topic` WHERE `id` = ' . $res['topic_id'])->fetch();
-    $curators = ! empty($topic['curators']) ? unserialize($topic['curators']) : [];
+    $curators = ! empty($topic['curators']) ? unserialize($topic['curators'], ['allowed_classes' => false]) : [];
 
     if (array_key_exists($user->id, $curators)) {
         $user->rights = 3;
