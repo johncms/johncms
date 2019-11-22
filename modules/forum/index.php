@@ -283,6 +283,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         while (! empty($parent) && $res != false) {
             $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
 
+            $nav_chain->add($res['name'], '/forum/?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $parent);
+
             // TODO: Replace to nav chain
             $tree[] = '<a href="?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $parent . '">' . $res['name'] . '</a>';
 
@@ -297,6 +299,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         krsort($tree);
 
         $tree[] = '<b>' . $type1['name'] . '</b>';
+
+        $nav_chain->add($type1['name']);
 
         // Счетчик файлов и ссылка на них
         $sql = ($user->rights == 9) ? '' : " AND `del` != '1'";
@@ -333,7 +337,7 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
             $wholink = '<a href="?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</span>';
         }
 
-        if ($show_type !== 'section') {
+        if ($show_type !== 'section' && $show_type !== 'topics') {
             // Выводим верхнюю панель навигации
             echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
                 '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
@@ -377,31 +381,37 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                 break;
 
             case 'topics':
-                ////////////////////////////////////////////////////////////
-                // Список топиков                                         //
-                ////////////////////////////////////////////////////////////
+                // List of forum topics
                 $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
-
-                if (($user->isValid() && ! isset($user->ban['1']) && ! isset($user->ban['11']) && $config->mod_forum != 4) || $user->rights) {
-                    // Кнопка создания новой темы
-                    echo '<div class="gmenu"><form action="?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . _t('New Topic') . '" /></form></div>';
-                }
-
                 if ($total) {
                     $req = $db->query('SELECT tpc.*, (
 SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= tpc.last_post_date AND `topic_id` = tpc.id AND `user_id` = ' . $user->id . ") as `np`
 FROM `forum_topic` tpc WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` <> '1' OR deleted IS NULL)") . "
 ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config->kmess);
-                    $i = 0;
 
+                    $topics = [];
                     while ($res = $req->fetch()) {
-                        if ($res['deleted']) {
-                            echo '<div class="rmenu">';
+
+                        if ($user->rights >= 7) {
+                            $res['show_posts_count'] = $res['mod_post_count'];
+                            $res['show_last_author'] = $res['mod_last_post_author_name'];
+                            $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                         } else {
-                            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
+                            $res['show_posts_count'] = $res['post_count'];
+                            $res['show_last_author'] = $res['last_post_author_name'];
+                            $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
                         }
 
-                        // Значки
+                        $res['url'] = '/forum/?type=topic&amp;id=' . $res['id'];
+
+                        // Url to last page
+                        $res['last_page_url'] = '';
+                        $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
+                        if ($cpg > 1) {
+                            $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
+                        }
+
+                        // Icons
                         $icons = [
                             ($res['np']
                                 ? (! $res['pinned'] ? '<img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon">' : '')
@@ -420,45 +430,35 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                                 : ''
                             ),
                         ];
-                        echo implode('', array_filter($icons));
+                        $res['icons'] = implode('', array_filter($icons));
 
-                        $post_count = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
-                        echo '<a href="?type=topic&amp;id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a> [' . $post_count . ']';
-
-                        $cpg = ceil($post_count / $user->config->kmess);
-                        if ($cpg > 1) {
-                            echo '<a href="?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg . '">&#160;&gt;&gt;</a>';
-                        }
-
-                        echo '<div class="sub">';
-                        echo $res['user_name'];
-
-                        $last_author = $user->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
-
-                        if (! empty($last_author)) {
-                            echo '&#160;/&#160;' . $last_author;
-                        }
-
-                        $last_post_date = $user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
-
-                        echo ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span></div></div>';
-                        ++$i;
+                        $topics[] = $res;
                     }
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
-                } else {
-                    echo '<div class="menu"><p>' . _t('No topics in this section') . '</p></div>';
                 }
 
-                echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u, 
+       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
 
-                if ($total > $user->config->kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start,
-                            $total, $user->config->kmess) . '</div>' .
-                        '<p><form action="?type=topics&id=' . $id . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-                        '</form></p>';
+                // Check access to create topic
+                $create_access = false;
+                if (($user->isValid() && ! isset($user->ban['1']) && ! isset($user->ban['11']) && $config->mod_forum != 4) || $user->rights) {
+                    $create_access = true;
                 }
+
+                echo $view->render('forum::topics', [
+                    'pagination'    => $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+                    'id'            => $id,
+                    'create_access' => $create_access,
+                    'title'         => $type1['name'],
+                    'page_title'    => $type1['name'],
+                    'topics'        => $topics,
+                    'online'        => $online,
+                    'total'         => $total,
+                    'files_count'   => $count,
+                    'unread_count'  => $counters->forumUnreadCount(),
+                ]);
+                exit; // TODO: Remove this later
                 break;
 
             case 'topic':
