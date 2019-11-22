@@ -333,51 +333,47 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
             $wholink = '<a href="?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</span>';
         }
 
-        // Выводим верхнюю панель навигации
-        echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
-            '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
-            '<div class="topmenu"><a href="?act=search&amp;id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
+        if ($show_type !== 'section') {
+            // Выводим верхнюю панель навигации
+            echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
+                '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
+                '<div class="topmenu"><a href="?act=search&amp;id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
+        }
 
         switch ($show_type) {
             case 'section':
-                ////////////////////////////////////////////////////////////
-                // Список разделов форума                                 //
-                ////////////////////////////////////////////////////////////
+                // List of forum sections
                 $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent`='${id}' ORDER BY `sort`");
                 $total = $req->rowCount();
-
+                $sections = [];
                 if ($total) {
-                    $i = 0;
-
                     while ($res = $req->fetch()) {
-                        echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-
                         if ($res['section_type'] == 1) {
-                            $coltem = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                            $children_count = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
                         } else {
-                            $coltem = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn();
+                            $children_count = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn();
                         }
 
-                        echo '<a href="?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res['id'] . '">' . $res['name'] . '</a>';
-
-                        if ($coltem) {
-                            echo " [${coltem}]";
-                        }
-
-                        if (! empty($res['description'])) {
-                            echo '<div class="sub"><span class="gray">' . $res['description'] . '</span></div>';
-                        }
-
-                        echo '</div>';
-                        ++$i;
+                        $res['children_count'] = $children_count;
+                        $res['url'] = '?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res['id'];
+                        $sections[] = $res;
                     }
-
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
-                } else {
-                    echo '<div class="menu"><p>' . _t('There are no sections in this category') . '</p></div>';
                 }
 
-                echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u, 
+       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
+
+                echo $view->render('forum::section', [
+                    'title'        => $type1['name'],
+                    'page_title'   => $type1['name'],
+                    'sections'     => $sections,
+                    'online'       => $online,
+                    'total'        => $total,
+                    'files_count'  => $count,
+                    'unread_count' => $counters->forumUnreadCount(),
+                ]);
+                exit; // TODO: Remove this later
                 break;
 
             case 'topics':
@@ -1017,7 +1013,7 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             'files_count'  => $count,
             'unread_count' => $counters->forumUnreadCount(),
         ]);
-        exit;
+        exit; // TODO: Remove this later
     }
 
     // Навигация внизу страницы
