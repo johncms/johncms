@@ -66,20 +66,22 @@ $this->layout('system::layout/default', [
 </div>
 
 <?php foreach ($sections as $section): ?>
-    <div class="shadow border-radius-12 forum-section post-item">
-        <div class="section-header collapsed" data-toggle="collapse" data-target="#subsections" aria-expanded="false" aria-controls="subsections">
+    <div class="shadow border-radius-12 forum-section post-item mb-3">
+        <div class="section-header collapsed" data-toggle="collapse" data-target="#subsections_<?= $section['id'] ?>" aria-expanded="false" aria-controls="subsections">
             <div class="d-flex align-items-center">
                 <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
                 <span class="badge badge-pill badge-danger ml-3"><?= $section['cnt'] ?></span>
             </div>
-            <div class="toggle d-flex align-items-center pr-2">
-                <svg class="icon icon-chevron-bottom text-dark-brown">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
-                </svg>
-            </div>
+            <?php if (! empty($section['subsections'])): ?>
+                <div class="toggle d-flex align-items-center pr-2">
+                    <svg class="icon icon-chevron-bottom text-dark-brown">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+                    </svg>
+                </div>
+            <?php endif; ?>
         </div>
         <?php if (! empty($section['subsections'])): ?>
-            <div class="collapse subsections" id="subsections">
+            <div class="collapse subsections" id="subsections_<?= $section['id'] ?>">
                 <div class="pt-2 pb-2">
                     <?php foreach ($section['subsections'] as $subsection): ?>
                         <span class="pr-2">&raquo;</span><a href="<?= $subsection['url'] ?>" class="text-dark-brown"><?= $subsection['name'] ?></a><br>

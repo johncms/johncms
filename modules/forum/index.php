@@ -391,7 +391,6 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
                     $topics = [];
                     while ($res = $req->fetch()) {
-
                         if ($user->rights >= 7) {
                             $res['show_posts_count'] = $res['mod_post_count'];
                             $res['show_last_author'] = $res['mod_last_post_author_name'];
@@ -410,27 +409,6 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                         if ($cpg > 1) {
                             $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                         }
-
-                        // Icons
-                        $icons = [
-                            ($res['np']
-                                ? (! $res['pinned'] ? '<img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon">' : '')
-                                : '<img src="' . $assets->url('images/old/np.gif') . '" alt="" class="icon">'
-                            ),
-                            ($res['pinned']
-                                ? '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">'
-                                : ''
-                            ),
-                            ($res['has_poll']
-                                ? '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">'
-                                : ''
-                            ),
-                            ($res['closed']
-                                ? '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">'
-                                : ''
-                            ),
-                        ];
-                        $res['icons'] = implode('', array_filter($icons));
 
                         $topics[] = $res;
                     }
