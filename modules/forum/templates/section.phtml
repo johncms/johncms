@@ -78,7 +78,7 @@ $this->layout('system::layout/default', [
         <div class="section-header <?= (empty($section['description']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
-                <span class="badge badge-pill badge-danger ml-3"><?= $section['children_count'] ?></span>
+                <span class="badge badge-pill badge-light border ml-3"><?= $section['children_count'] ?></span>
             </div>
         </div>
         <?php if (! empty($section['description'])): ?>
