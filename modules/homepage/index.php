@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Johncms\Api\NavChainInterface;
 use League\Plates\Engine;
+use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -24,7 +25,10 @@ $view = di(Engine::class);
 $nav_chain = di(NavChainInterface::class);
 $nav_chain->showHomePage(false);
 
-// Регистрируем Namespace для шаблонов модуля
+// Register Namespace for module templates
 $view->addFolder('homepage', __DIR__ . '/templates/');
 
-echo $view->render('homepage::mainmenu');
+// Register the module languages folder
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+echo $view->render('homepage::index');
