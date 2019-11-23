@@ -66,11 +66,11 @@ $this->layout('system::layout/default', [
 </div>
 
 <?php foreach ($sections as $section): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-3">
+    <div class="shadow forum-section post-item mb-3">
         <div class="section-header collapsed" data-toggle="collapse" data-target="#subsections_<?= $section['id'] ?>" aria-expanded="false" aria-controls="subsections">
             <div class="d-flex align-items-center">
                 <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
-                <span class="badge badge-pill badge-danger ml-3"><?= $section['cnt'] ?></span>
+                <span class="badge badge-pill badge-light ml-3"><?= $section['cnt'] ?></span>
             </div>
             <?php if (! empty($section['subsections'])): ?>
                 <div class="toggle d-flex align-items-center pr-2">
