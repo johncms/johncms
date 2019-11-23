@@ -401,6 +401,8 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                             $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
                         }
 
+                        $res['has_icons'] = ($res['pinned'] || $res['has_poll'] || $res['closed'] || $res['deleted']);
+
                         $res['url'] = '/forum/?type=topic&amp;id=' . $res['id'];
 
                         // Url to last page

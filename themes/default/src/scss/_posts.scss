@@ -3,6 +3,22 @@
     padding: 0.6rem 1rem;
 }
 
+.closed-topic {
+    background: #ecebe6;
+
+    .section-header {
+        border-bottom: 1px solid #cecece;
+    }
+}
+
+.deleted-post {
+    background: #fbdfd4;
+
+    .section-header {
+        border-bottom: 1px solid #f9b2b2;
+    }
+}
+
 .post-header {
     .user-login {
         color: #7d4e3c;

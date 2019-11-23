@@ -80,9 +80,41 @@ $this->layout('system::layout/default', [
 <?php endif; ?>
 
 <?php foreach ($topics as $topic): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-3">
+    <div class="shadow border-radius-12 forum-section post-item mb-3<?= $topic['deleted'] ? ' deleted-post' : '' ?><?= $topic['closed'] ? ' closed-topic' : '' ?>">
         <div class="section-header">
             <div class="d-flex align-items-center">
+                <?php if ($topic['has_icons']): ?>
+                    <div class="topic-icons mr-1 d-flex align-items-center">
+                        <?php if ($topic['pinned']): ?>
+                            <div class="mr-1" title="<?= _t('Pinned topic') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pin"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($topic['has_poll']): ?>
+                            <div class="mr-1" title="<?= _t('Topic has poll') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bar-chart"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($topic['closed']): ?>
+                            <div class="mr-1" title="<?= _t('Closed topic') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#lock"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($topic['deleted']): ?>
+                            <div class="mr-1" title="<?= _t('Deleted topic') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#x"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
                 <a href="<?= $topic['url'] ?>" class="text-dark-brown"><?= $topic['name'] ?></a>
                 <span class="badge badge-pill badge-danger ml-3"><?= $topic['show_posts_count'] ?></span>
             </div>
