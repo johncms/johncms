@@ -1,0 +1,20 @@
+<?php
+/**
+ * @var string $who_url
+ * @var string $who_name
+ * @var array  $online
+ */
+?>
+<div class="border-top d-flex mt-4 pt-3 pb-3 align-items-center">
+    <div class="pr-3 d-flex align-items-center">
+        <?php if ($user->isValid()): ?>
+            <a href="<?= $who_url ?>" class="pr-1"><?= $who_name ?></a>
+        <?php else: ?>
+            <span class="pr-1"><?= $who_name ?></span>
+        <?php endif; ?>
+        <span class="badge badge-pill badge-secondary"><?= $online['online_u'] . '&#160;/&#160;' . $online['online_g'] ?></span>
+    </div>
+    <div>
+        <a href="/help/?act=forum"><?= _t('Forum rules') ?></a>
+    </div>
+</div>

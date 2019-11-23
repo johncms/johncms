@@ -371,6 +371,7 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                 echo $view->render('forum::section', [
                     'title'        => $type1['name'],
                     'page_title'   => $type1['name'],
+                    'id'           => $type1['id'],
                     'sections'     => $sections,
                     'online'       => $online,
                     'total'        => $total,
