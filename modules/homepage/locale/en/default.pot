@@ -74,3 +74,11 @@ msgstr ""
 #: index.phtml:83
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
 msgstr ""
+
+#: index.phtml:87
+msgid "Free License"
+msgstr ""
+
+#: index.phtml:97
+msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
+msgstr ""
