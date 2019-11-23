@@ -85,7 +85,7 @@
     <div class="alert alert-info"><?= _t('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
-        <div class="shadow border-radius-12 post-item mb-4">
+        <div class="shadow post-item mb-2">
             <div class="post-header d-flex justify-content-between border-bottom pb-1">
                 <div class="d-flex align-items-end">
                     <?php if (! empty($item['user_id'])): ?>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="post-actions">
                     <?php if ($user->rights >= 6): ?>
-                        <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>" class="btn btn-sm btn-dark-brown"><?= _t('Reply') ?></a>
+                        <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>" class="btn btn-sm btn-secondary"><?= _t('Reply') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
