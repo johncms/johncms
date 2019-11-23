@@ -374,8 +374,8 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                     'sections'     => $sections,
                     'online'       => $online,
                     'total'        => $total,
-                    'files_count'  => $count,
-                    'unread_count' => $counters->forumUnreadCount(),
+                    'files_count'  => $tools->formatNumber($count),
+                    'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
                 ]);
                 exit; // TODO: Remove this later
                 break;
@@ -392,11 +392,11 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     $topics = [];
                     while ($res = $req->fetch()) {
                         if ($user->rights >= 7) {
-                            $res['show_posts_count'] = $res['mod_post_count'];
+                            $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                             $res['show_last_author'] = $res['mod_last_post_author_name'];
                             $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                         } else {
-                            $res['show_posts_count'] = $res['post_count'];
+                            $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                             $res['show_last_author'] = $res['last_post_author_name'];
                             $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
                         }
@@ -435,8 +435,8 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     'topics'        => $topics ?? [],
                     'online'        => $online,
                     'total'         => $total,
-                    'files_count'   => $count,
-                    'unread_count'  => $counters->forumUnreadCount(),
+                    'files_count'   => $tools->formatNumber($count),
+                    'unread_count'  => $tools->formatNumber($counters->forumUnreadCount()),
                 ]);
                 exit; // TODO: Remove this later
                 break;
@@ -990,8 +990,8 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             'page_title'   => _t('Forum'),
             'sections'     => $sections,
             'online'       => $online,
-            'files_count'  => $count,
-            'unread_count' => $counters->forumUnreadCount(),
+            'files_count'  => $tools->formatNumber($count),
+            'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
         ]);
         exit; // TODO: Remove this later
     }

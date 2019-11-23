@@ -74,7 +74,7 @@ $this->layout('system::layout/default', [
 <?php endif; ?>
 
 <?php foreach ($sections as $section): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-3">
+    <div class="shadow border-radius-12 forum-section post-item mb-2">
         <div class="section-header <?= (empty($section['description']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>

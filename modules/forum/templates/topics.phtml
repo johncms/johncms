@@ -6,6 +6,7 @@
  * @var $online
  * @var $files_count
  * @var $unread_count
+ * @var $create_access
  */
 
 $this->layout('system::layout/default', [
@@ -80,7 +81,7 @@ $this->layout('system::layout/default', [
 <?php endif; ?>
 
 <?php foreach ($topics as $topic): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-3<?= $topic['deleted'] ? ' deleted-post' : '' ?><?= $topic['closed'] ? ' closed-topic' : '' ?>">
+    <div class="shadow border-radius-12 forum-section post-item mb-2<?= $topic['deleted'] ? ' deleted-post' : '' ?><?= $topic['closed'] ? ' closed-topic' : '' ?>">
         <div class="section-header">
             <div class="d-flex align-items-center">
                 <?php if ($topic['has_icons']): ?>
@@ -119,7 +120,10 @@ $this->layout('system::layout/default', [
                 <span class="badge badge-pill badge-danger ml-3"><?= $topic['show_posts_count'] ?></span>
             </div>
         </div>
-        <div class="small pt-2 text-muted"><?= _t('Last post author') ?>: <?= $topic['show_last_author'] ?>, <?= _t('Last post') ?>: <?= $topic['show_last_post_date'] ?></div>
+        <div class="small pt-2 text-muted">
+            <?= _t('Author') ?>: <?= $topic['user_name'] ?>,
+            <?= _t('Last post') ?>: <?= $topic['show_last_post_date'] ?>, <?= $topic['show_last_author'] ?>
+        </div>
     </div>
 <?php endforeach; ?>
 
