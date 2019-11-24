@@ -274,31 +274,23 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)");
         }
 
-        // Получаем структуру форума
+        // Nav chain
         $res = true;
         $allow = 0;
-
         $parent = $show_type == 'topic' ? $type1['section_id'] : $type1['parent'];
-
+        $tree = [];
         while (! empty($parent) && $res != false) {
             $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
-
-            $nav_chain->add($res['name'], '/forum/?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $parent);
-
-            // TODO: Replace to nav chain
-            $tree[] = '<a href="?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $parent . '">' . $res['name'] . '</a>';
-
-            /*if ($res['type'] == 'r' && !empty($res['edit'])) {
-                $allow = intval($res['edit']);
-            }*/
-
+            $tree[] = $res;
+            if ($res['section_type'] == 1 && ! empty($res['access'])) {
+                $allow = intval($res['access']);
+            }
             $parent = $res['parent'];
         }
-
-        $tree[] = '<a href="./">' . _t('Forum') . '</a>';
         krsort($tree);
-
-        $tree[] = '<b>' . $type1['name'] . '</b>';
+        foreach ($tree as $item) {
+            $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
+        }
 
         $nav_chain->add($type1['name']);
 
@@ -714,7 +706,6 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         if ($user->rights >= 7 && $res['deleted'] == 1) {
                             $res['restore_url'] = '?act=editpost&amp;do=restore&amp;id=' . $res['id'];
                         }
-
                     }
 
                     $messages[] = $res;
