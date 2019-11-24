@@ -39,6 +39,16 @@ $this->layout('system::layout/default', [
     </div>
 <?php endif; ?>
 
+<?php if ($topic['deleted']): ?>
+    <div class="alert alert-danger">
+        <?= _t('Topic deleted by') ?> <b><?= $topic['deleted_by'] ?></b>
+    </div>
+<?php elseif (! empty($topic['deleted_by']) && $user->rights >= 7): ?>
+    <div class="alert alert-success">
+        <?= _t('Undelete topic') ?> <b><?= $topic['deleted_by'] ?></b>
+    </div>
+<?php endif; ?>
+
 <?php if ($write_access && $settings_forum['upfp']): ?>
     <div class="row">
         <div class="col-md-6">

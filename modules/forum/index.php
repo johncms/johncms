@@ -227,15 +227,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         }
     }
 
-    // Если форум закрыт, то для Админов выводим напоминание
-    //TODO: Move to template
-
-    /*  if (! $config->mod_forum) {
-            echo '<div class="alarm">' . _t('Forum is closed') . '</div>';
-        } elseif ($config->mod_forum == 3) {
-            echo '<div class="rmenu">' . _t('Read only') . '</div>';
-        }*/
-
     if (! $user->isValid()) {
         if (isset($_GET['newup'])) {
             $_SESSION['uppost'] = 1;
@@ -283,7 +274,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
             $tree[] = $res;
             if ($res['section_type'] == 1 && ! empty($res['access'])) {
-                $allow = intval($res['access']);
+                $allow = (int) $res['access'];
             }
             $parent = $res['parent'];
         }
@@ -299,28 +290,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         if ($show_type == 'topic') {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `topic` = '${id}'" . $sql)->fetchColumn();
-
-            if ($count > 0) {
-                $filelink = '<a href="?act=files&amp;t=' . $id . '">' . _t('Topic Files') . '</a>';
-            }
         } elseif ($type1['section_type'] == 0) {
             $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = ' . $type1['id'] . $sql)->fetchColumn();
-
-            if ($count > 0) {
-                $filelink = '<a href="?act=files&amp;c=' . $id . '">' . _t('Category Files') . '</a>';
-            }
         } elseif ($type1['section_type'] == 1) {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `subcat` = '${id}'" . $sql)->fetchColumn();
-
-            if ($count > 0) {
-                $filelink = '<a href="?act=files&amp;s=' . $id . '">' . _t('Section Files') . '</a>';
-            }
         }
-
-        $filelink = isset($filelink) ? $filelink . '&#160;<span class="red">(' . $count . ')</span>' : false;
-
-        // Счетчик "Кто в теме?"
-        $wholink = false;
 
         if ($user->isValid() && $show_type == 'topic') {
             $online = $db->query('SELECT (
@@ -454,7 +428,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     echo $view->render('system::pages/result', [
                         'title'         => _t('Topic deleted'),
                         'type'          => 'alert-danger',
-                        'message'       => $error,
+                        'message'       => _t('Topic deleted'),
                         'back_url'      => '?type=topics&amp;id=' . $type1['section_id'],
                         'back_url_name' => _t('Go to Section'),
                     ]);
@@ -475,13 +449,6 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                 if ($start >= $total) {
                     // Исправляем запрос на несуществующую страницу
                     $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
-                }
-
-                // Метка удаления темы
-                if ($type1['deleted']) {
-                    echo '<div class="rmenu">' . _t('Topic deleted by') . ': <b>' . $type1['deleted_by'] . '</b></div>';
-                } elseif (! empty($type1['deleted_by']) && $user->rights >= 7) {
-                    echo '<div class="gmenu"><small>' . _t('Undelete topic') . ': <b>' . $type1['deleted_by'] . '</b></small></div>';
                 }
 
                 // Блок голосований

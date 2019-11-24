@@ -6,6 +6,12 @@
  * @var string $files_count
  */
 ?>
+<?php if (! $config->mod_forum): ?>
+    <div class="alert alert-danger"><?= _t('Forum is closed') ?></div>
+<?php elseif ($config->mod_forum == 3): ?>
+    <div class="alert alert-danger"><?= _t('Read only') ?></div>
+<?php endif; ?>
+
 <div class="border-top border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
     <div class="mr-auto d-flex pt-2 pb-2">
         <?php if ($user->isValid()): ?>
