@@ -10,7 +10,7 @@ let mix = require('laravel-mix');
  | file for your application, as well as bundling up your JS files.
  |
  */
-
+mix.disableNotifications();
 mix.js('themes/default/src/js/app.js', 'themes/default/assets/js')
     .sass('themes/default/src/scss/app.scss', 'themes/default/assets/css')
     .then(() => {
