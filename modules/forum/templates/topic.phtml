@@ -1,0 +1,285 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $sections
+ * @var $online
+ * @var $files_count
+ * @var $unread_count
+ * @var $pagination
+ * @var $settings_forum
+ * @var $topic
+ * @var $write_access
+ * @var $filter_by_author
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+<?= $this->insert('forum::header', [
+    'unread_count' => $unread_count,
+    'files_count'  => $files_count,
+    'files_url'    => '/forum/?act=files&t=' . $id,
+    'files_name'   => _t('Topic Files'),
+]) ?>
+<?php if ($filter_by_author): ?>
+    <div class="alert alert-warning">
+        <div>
+            <?= _t('Filter by author is activated') ?>
+        </div>
+        <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= _t('Cancel Filter') ?></a>
+    </div>
+<?php endif; ?>
+
+<?php if ($topic['closed']): ?>
+    <div class="alert alert-danger">
+        <?= _t('Topic closed') ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($write_access && $settings_forum['upfp']): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
+                <?php if (! empty($settings_forum['farea'])): ?>
+                    <input type="hidden" name="token" value="<?= $token ?>"/>
+                    <?php if (! $user->isValid()): ?>
+                        <div class="form-group">
+                            <label for="name"><?= _t('Name') ?></label>
+                            <input type="text"
+                                   class="form-control"
+                                   maxlength="25"
+                                   name="name"
+                                   id="name"
+                                   required
+                                   value=""
+                                   placeholder="<?= _t('Name') ?>"
+                            >
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-group">
+                        <label for="msg"><?= _t('Message') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                        <label class="custom-control-label" for="addfiles"><?= _t('Add File') ?></label>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Write') ?></button>
+                        <?php if (! empty($settings_forum['preview'])): ?>
+                            <button type="submit" class="btn btn-secondary"><?= _t('Preview') ?></button>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Write') ?></button>
+                <?php endif; ?>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if ($user->rights == 3 || $user->rights >= 6): ?>
+<form action="?act=massdel" method="post">
+    <?php endif; ?>
+
+    <?php foreach ($messages as $item): ?>
+        <div class="shadow post-item mb-2">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    <?php if ($user->rights == 3 || $user->rights >= 6): ?>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="delch[]" value="<?= $item['id'] ?>" id="check_<?= $item['id'] ?>">
+                            <label class="custom-control-label" for="check_<?= $item['id'] ?>"></label>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (! empty($item['user_profile_link'])): ?>
+                        <a href="<?= $item['user_profile_link'] ?>" class="user-login mr-2"><?= $item['user_name'] ?></a>
+                    <?php else: ?>
+                        <a class="user-login mr-2"><?= $item['user_name'] ?></a>
+                    <?php endif; ?>
+                    <span class="post-date"><?= $item['post_time'] ?></span>
+                </div>
+                <div class="post-actions">
+                    <?php if (! empty($item['reply_url'])): ?>
+                        <a href="<?= $item['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Reply') ?></a>
+                    <?php endif; ?>
+                    <?php if (! empty($item['quote_url'])): ?>
+                        <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Quote') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar mr-2 mr-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <?php if (! empty($item['user_avatar'])): ?>
+                            <img src="<?= $item['user_avatar'] ?>" class="img-fluid" alt=".">
+                        <?php else: ?>
+                            <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
+                        <?php endif; ?>
+                    </div>
+                    <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+                </div>
+                <div class="overflow-auto"><?= $item['post_text'] ?></div>
+            </div>
+
+            <?php if ($user->rights || ! empty($item['edit_count'])): ?>
+                <div class="post-footer d-flex justify-content-between border-top pt-2">
+                    <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                        <?php if ($user->rights): ?>
+                            <div class="user-ip mr-2">
+                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                                <?php if (! empty($item['ip_via_proxy'])): ?>
+                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="useragent">
+                                <span>User-Agent:</span>
+                                <span><?= $item['user_agent'] ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text-nowrap post-actions">
+                        <span class="text-muted pr-2 flex-grow-1">
+                            <?php if (! empty($item['edit_count'])): ?>
+                                <?= _t('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                            <?php endif; ?>
+                        </span>
+                        <?php if ($item['has_edit']): ?>
+                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
+                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                            <?php if (! empty($item['restore_url'])): ?>
+                                <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    <?php endforeach; ?>
+
+    <?php if ($user->rights == 3 || $user->rights >= 6): ?>
+    <div class="d-flex align-items-center mt-3 mb-3">
+        <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm mr-1"><?= _t('Delete selected') ?></button>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?= _t('Actions with topic') ?>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="actions">
+                <?php if ($topic_vote): ?>
+                    <a class="dropdown-item" href="/forum/?act=editvote&amp;id=<?= $id ?>"><?= _t('Edit Poll') ?></a>
+                    <a class="dropdown-item" href="/forum/?act=delvote&amp;id=<?= $id ?>"><?= _t('Delete Poll') ?></a>
+                <?php else: ?>
+                    <a class="dropdown-item" href="/forum/?act=addvote&amp;id=<?= $id ?>"><?= _t('Add Poll') ?></a>
+                <?php endif; ?>
+
+                <?php if ($user->rights >= 7): ?>
+                    <a class="dropdown-item" href="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= _t('Curators of the Topic') ?></a>
+                <?php endif; ?>
+
+                <a class="dropdown-item" href="/forum/?act=ren&amp;id=<?= $id ?>"><?= _t('Rename Topic') ?></a>
+
+                <?php if ($topic['closed'] == 1): ?>
+                    <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>"><?= _t('Open Topic') ?></a>
+                <?php else: ?>
+                    <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>&amp;closed"><?= _t('Close Topic') ?></a>
+                <?php endif; ?>
+
+                <?php if ($topic['deleted'] == 1): ?>
+                    <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= _t('Restore Topic') ?></a>
+                <?php endif; ?>
+
+                <a class="dropdown-item" href="/forum/?act=deltema&amp;id=<?= $id ?>"><?= _t('Delete Topic') ?></a>
+
+                <?php if ($topic['pinned'] == 1): ?>
+                    <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>"><?= _t('Unfix Topic') ?></a>
+                <?php else: ?>
+                    <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>&amp;vip"><?= _t('Pin Topic') ?></a>
+                <?php endif; ?>
+
+                <a class="dropdown-item" href="/forum/?act=per&amp;id=<?= $id ?>"><?= _t('Move Topic') ?></a>
+            </div>
+        </div>
+    </div>
+</form>
+<?php endif; ?>
+
+<?php if ($write_access && ! $settings_forum['upfp']): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1">
+                <?php if (! empty($settings_forum['farea'])): ?>
+                    <input type="hidden" name="token" value="<?= $token ?>"/>
+                    <?php if (! $user->isValid()): ?>
+                        <div class="form-group">
+                            <label for="name"><?= _t('Name') ?></label>
+                            <input type="text"
+                                   class="form-control"
+                                   maxlength="25"
+                                   name="name"
+                                   id="name"
+                                   required
+                                   value=""
+                                   placeholder="<?= _t('Name') ?>"
+                            >
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-group">
+                        <label for="msg"><?= _t('Message') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                        <label class="custom-control-label" for="addfiles"><?= _t('Add File') ?></label>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Write') ?></button>
+                        <?php if (! empty($settings_forum['preview'])): ?>
+                            <button type="submit" class="btn btn-secondary"><?= _t('Preview') ?></button>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Write') ?></button>
+                <?php endif; ?>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div>
+    <div><?= _t('Total') ?>: <?= $total ?></div>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div class="mt-1"><?= $pagination ?></div>
+    <?php endif ?>
+</div>
+<?php if (! empty($curators_array)): ?>
+    <div class="alert alert-secondary">
+        <?= _t('Curators') ?>: <?= implode(', ', $curators_array) ?>
+    </div>
+<?php endif; ?>
+<div>
+    <div>
+        <?php if ($filter_by_author): ?>
+            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= _t('Cancel Filter') ?></a>
+        <?php else: ?>
+            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= _t('Filter by author') ?></a>
+        <?php endif; ?>
+    </div>
+    <div>
+        <a href="?act=tema&amp;id=<?= $id ?>"><?= _t('Download Topic') ?></a>
+    </div>
+</div>
+
+
+<?= $this->insert('forum::footer', [
+    'online'   => $online,
+    'who_url'  => '/forum/?act=who&id=' . $id,
+    'who_name' => _t('Who is here'),
+]) ?>

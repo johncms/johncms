@@ -334,14 +334,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             $online = $db->query('SELECT (
 SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_u, (
 SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g")->fetch();
-            $wholink = '<a href="?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</span>';
-        }
-
-        if ($show_type !== 'section' && $show_type !== 'topics') {
-            // Выводим верхнюю панель навигации
-            echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
-                '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
-                '<div class="topmenu"><a href="?act=search&amp;id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
         }
 
         switch ($show_type) {
@@ -443,9 +435,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                 break;
 
             case 'topic':
-                ////////////////////////////////////////////////////////////
-                // Показываем тему с постами                              //
-                ////////////////////////////////////////////////////////////
+                // List messages
                 $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $id ? 1 : 0;
                 $sql = '';
 
@@ -469,36 +459,30 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
                 // Если тема помечена для удаления, разрешаем доступ только администрации
                 if ($user->rights < 6 && $type1['deleted'] == 1) {
-                    echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?type=topics&amp;id=' . $type1['section_id'] . '">' . _t('Go to Section') . '</a></p></div>';
-                    echo $view->render('system::app/old_content',
-                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $view->render('system::pages/result', [
+                        'title'         => _t('Topic deleted'),
+                        'type'          => 'alert-danger',
+                        'message'       => $error,
+                        'back_url'      => '?type=topics&amp;id=' . $type1['section_id'],
+                        'back_url_name' => _t('Go to Section'),
+                    ]);
                     exit;
                 }
 
-                $view_count = (int) ($type1['view_count']);
+                $view_count = (int) $type1['view_count'];
                 // Фиксируем количество просмотров топика
-                if (! empty($type1['id']) && (empty($_SESSION['viewed_topics']) || ! in_array($type1['id'],
-                            $_SESSION['viewed_topics']))) {
-                    $view_count = (int) ($type1['view_count']) + 1;
+                if (! empty($type1['id']) && (empty($_SESSION['viewed_topics']) || ! in_array($type1['id'], $_SESSION['viewed_topics']))) {
+                    $view_count = (int) $type1['view_count'] + 1;
                     $db->query('UPDATE forum_topic SET view_count = ' . $view_count . ' WHERE id = ' . $type1['id']);
                     $_SESSION['viewed_topics'][] = $type1['id'];
                 }
 
                 // Счетчик постов темы
-                $colmes = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id`='${id}'${sql}" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)"))->fetchColumn();
+                $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id`='${id}'${sql}" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)"))->fetchColumn();
 
-                if ($start >= $colmes) {
+                if ($start >= $total) {
                     // Исправляем запрос на несуществующую страницу
-                    $start = max(0,
-                        $colmes - (($colmes % $user->config->kmess) == 0 ? $user->config->kmess : ($colmes % $user->config->kmess)));
-                }
-
-                // Выводим название топика
-                echo '<div class="phdr"><a href="#down"><img src="' . $assets->url('images/old/down.png') . '" alt=""></a>&#160;&#160;<b>' . (empty($type1['name']) ? '-----' : $type1['name']) . '</b></div>';
-
-                if ($colmes > $user->config->kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;',
-                            $start, $colmes, $user->config->kmess) . '</div>';
+                    $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
                 }
 
                 // Метка удаления темы
@@ -506,11 +490,6 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     echo '<div class="rmenu">' . _t('Topic deleted by') . ': <b>' . $type1['deleted_by'] . '</b></div>';
                 } elseif (! empty($type1['deleted_by']) && $user->rights >= 7) {
                     echo '<div class="gmenu"><small>' . _t('Undelete topic') . ': <b>' . $type1['deleted_by'] . '</b></small></div>';
-                }
-
-                // Метка закрытия темы
-                if ($type1['closed']) {
-                    echo '<div class="rmenu">' . _t('Topic closed') . '</div>';
                 }
 
                 // Блок голосований
@@ -627,11 +606,6 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     echo '</p></div>';
                 }
 
-                // Памятка, что включен фильтр
-                if ($filter) {
-                    echo '<div class="rmenu">' . _t('Filter by author is activated') . '</div>';
-                }
-
                 // Задаем правила сортировки (новые внизу / вверху)
                 if ($user->isValid()) {
                     $order = $set_forum['upfp'] ? 'DESC' : 'ASC';
@@ -639,9 +613,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     $order = ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) ? 'ASC' : 'DESC';
                 }
 
-                ////////////////////////////////////////////////////////////
-                // Основной запрос в базу, получаем список постов темы    //
-                ////////////////////////////////////////////////////////////
+                // Messages
                 $req = $db->query("
                   SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`, (
                   SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = forum_messages.id) as file
@@ -650,65 +622,18 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "${sql}
                   ORDER BY `forum_messages`.`id` ${order} LIMIT ${start}, " . $user->config->kmess);
 
-                // Верхнее поле "Написать"
-                if (($user->isValid() && ! $type1['closed'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($user->rights >= 7 && $set_forum['upfp'])) {
-                    echo '<div class="gmenu"><form name="form1" action="?act=say&amp;id=' . $id . '" method="post">';
-
-                    if ($set_forum['farea']) {
-                        $token = mt_rand(1000, 100000);
-                        $_SESSION['token'] = $token;
-                        echo '<p>' .
-                            di(Johncms\Api\BbcodeInterface::class)->buttons('form1', 'msg') .
-                            '<textarea rows="' . $user->config->fieldHeight . '" name="msg"></textarea></p>' .
-                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
-                            '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
-                            (isset($set_forum['preview']) && $set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
-                            '<input type="hidden" name="token" value="' . $token . '"/>' .
-                            '</p></form></div>';
-                    } else {
-                        echo '<p><input type="submit" name="submit" value="' . _t('Write') . '"/></p></form></div>';
-                    }
-                }
-
-                // Для администрации включаем форму массового удаления постов
-                if ($user->rights == 3 || $user->rights >= 6) {
-                    echo '<form action="?act=massdel" method="post">';
-                }
                 $i = 1;
-
-                ////////////////////////////////////////////////////////////
-                // Основной список постов                                 //
-                ////////////////////////////////////////////////////////////
+                $messages = [];
                 while ($res = $req->fetch()) {
-                    // Фон поста
-                    if ($res['deleted']) {
-                        echo '<div class="rmenu">';
-                    } else {
-                        echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
+                    $res['user_avatar'] = '';
+                    $avatar = 'users/avatar/' . $res['user_id'] . '.png';
+                    if (file_exists(UPLOAD_PATH . $avatar)) {
+                        $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
                     }
 
-                    // Пользовательский аватар
-                    echo '<table cellpadding="0" cellspacing="0"><tr><td>';
-
-                    if (file_exists(('upload/users/avatar/' . $res['user_id'] . '.png'))) {
-                        echo '<img src="../upload/users/avatar/' . $res['user_id'] . '.png" alt="" />&#160;';
-                    } else {
-                        echo '<img src="' . $assets->url('images/old/empty.png') . '" alt="">&#160;';
-                    }
-                    echo '</td><td>';
-
-                    // Метка пола
-                    if ($res['sex']) {
-                        echo '<img src="' . $assets->url('images/old/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png') . '" alt="" class="icon-inline">';
-                    } else {
-                        echo '<img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon">';
-                    }
-
-                    // Ник юзера и ссылка на его анкету
+                    $res['user_profile_link'] = '';
                     if ($user->isValid() && $user->id != $res['user_id']) {
-                        echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> ';
-                    } else {
-                        echo '<b>' . $res['user_name'] . '</b> ';
+                        $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
                     }
 
                     // Метка должности
@@ -718,67 +643,47 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         7 => '(Adm)',
                         9 => '(SV!)',
                     ];
-                    echo $user_rights[$res['rights']] ?? '';
+                    $res['user_rights_name'] = $user_rights[$res['rights']] ?? '';
 
-                    // Метка онлайн/офлайн
-                    echo time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ';
+                    $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+                    $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
 
-                    // Ссылка на пост
-                    echo '<a href="?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
-
-                    // Ссылки на ответ и цитирование
+                    $res['reply_url'] = '';
+                    $res['quote_url'] = '';
                     if ($user->isValid() && $user->id != $res['user_id']) {
-                        echo '&#160;<a href="?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
-                            '<a href="?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
+                        $res['reply_url'] = '/forum/?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start;
+                        $res['quote_url'] = '/forum/?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt';
                     }
 
-                    // Время поста
-                    echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br />';
+                    $res['post_time'] = $tools->displayDate($res['date']);
 
-                    // Статус пользователя
-                    if (! empty($res['status'])) {
-                        echo '<div class="status"><img src="' . $assets->url('images/old/label.png') . '" alt="" class="icon-inline">' . $res['status'] . '</div>';
-                    }
-
-                    // Закрываем таблицу с аватаром
-                    echo '</td></tr></table>';
-
-                    ////////////////////////////////////////////////////////////
-                    // Вывод текста поста                                     //
-                    ////////////////////////////////////////////////////////////
                     $text = $res['text'];
                     $text = $tools->checkout($text, 1, 1);
                     $text = $tools->smilies($text, $res['rights'] ? 1 : 0);
-                    echo $text;
+                    $res['post_text'] = $text;
 
-                    // Если пост редактировался, показываем кем и когда
-                    if ($res['edit_count']) {
-                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['editor_name'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
-                    }
+                    $res['edit_time'] = $res['edit_count'] ? $tools->displayDate($res['edit_time']) : '';
 
-                    // Задаем права на редактирование постов
+                    // Access to edit post
+                    $res['has_edit'] = false;
                     if (
                         (($user->rights == 3 || $user->rights >= 6 || $curator) && $user->rights >= $res['rights'])
-                        || ($res['user_id'] == $user->id && ! $set_forum['upfp'] && ($start + $i) == $colmes && $res['date'] > time() - 300)
+                        || ($res['user_id'] == $user->id && ! $set_forum['upfp'] && ($start + $i) == $total && $res['date'] > time() - 300)
                         || ($res['user_id'] == $user->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['date'] > time() - 300)
                         || ($i == 1 && $allow == 2 && $res['user_id'] == $user->id)
                     ) {
-                        $allowEdit = true;
-                    } else {
-                        $allowEdit = false;
+                        $res['has_edit'] = true;
                     }
 
-                    // Если есть прикрепленные файлы, выводим их
+                    // Attachments
+                    $res['files'] = [];
                     if ($res['file']) {
                         $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
-
-                        echo '<div class="post-files">';
                         while ($fres = $freq->fetch()) {
-                            $fls = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
-                            echo '<div class="gray" style="font-size: x-small;background-color: rgba(128, 128, 128, 0.1);padding: 2px 4px;float: left;margin: 4px 4px 0 0;">' . _t('Attachment') . ':';
-                            // Предпросмотр изображений
-                            $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename'],
-                                PATHINFO_EXTENSION));
+                            $file_params = [];
+                            $file_params['file_size'] = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
+
+                            $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
                             $pic_ext = [
                                 'gif',
                                 'jpg',
@@ -786,172 +691,76 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                                 'png',
                             ];
 
+                            $file_params['file_preview'] = '';
+                            $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
+                            $file_params['delete_url'] = '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'];
                             if (in_array($att_ext, $pic_ext)) {
-                                echo '<div><a class="image-preview" title="' . $fres['filename'] . '" data-source="?act=file&amp;id=' . $fres['id'] . '" href="?act=file&amp;id=' . $fres['id'] . '">';
-                                echo '<img src="../assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
-                            } else {
-                                echo '<br><a href="?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+                                $file_params['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename']));
                             }
 
-                            echo ' (' . $fls . ' кб.)<br>';
-                            echo _t('Downloads') . ': ' . $fres['dlcount'] . ' ' . _t('Time');
-
-                            if ($allowEdit) {
-                                echo '<br><a href="?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
-                            }
-
-                            echo '</div>';
-                            $file_id = $fres['id'];
+                            $res['files'][] = array_merge($fres, $file_params);
                         }
-                        echo '<div style="clear: both;"></div></div>';
                     }
 
-                    // Ссылки на редактирование / удаление постов
-                    if ($allowEdit) {
-                        echo '<div class="sub">';
+                    $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+                    $res['ip'] = long2ip($res['ip']);
+                    $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']);
+                    $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
 
-                        // Чекбокс массового удаления постов
-                        if ($user->rights == 3 || $user->rights >= 6) {
-                            echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>&#160;';
+                    if ($res['has_edit']) {
+                        $res['edit_url'] = '/forum/?act=editpost&amp;id=' . $res['id'];
+                        $res['delete_url'] = '/forum/?act=editpost&amp;do=del&amp;id=' . $res['id'];
+                        $res['restore_url'] = '';
+                        if ($user->rights >= 7 && $res['deleted'] == 1) {
+                            $res['restore_url'] = '?act=editpost&amp;do=restore&amp;id=' . $res['id'];
                         }
 
-                        // Служебное меню поста
-                        $menu = [
-                            '<a href="?act=editpost&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a>',
-                            ($user->rights >= 7 && $res['deleted'] == 1 ? '<a href="?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . _t('Restore') . '</a>' : ''),
-                            ($res['deleted'] == 1 ? '' : '<a href="?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>'),
-                        ];
-                        echo implode(' | ', array_filter($menu));
-
-                        // Показываем, кто удалил пост
-                        if ($res['deleted']) {
-                            echo '<div class="red">' . _t('Post deleted') . ': <b>' . $res['deleted_by'] . '</b></div>';
-                        } elseif (! empty($res['deleted_by'])) {
-                            echo '<div class="green">' . _t('Post restored by') . ': <b>' . $res['deleted_by'] . '</b></div>';
-                        }
-
-                        // Показываем IP и Useragent
-                        if ($user->rights == 3 || $user->rights >= 6) {
-                            if ($res['ip_via_proxy']) {
-                                echo '<div class="gray"><b class="red"><a href="' . $config->homeurl . '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
-                                    '<a href="' . $config->homeurl . '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
-                                    ' - ' . $res['user_agent'] . '</div>';
-                            } else {
-                                echo '<div class="gray"><a href="' . $config->homeurl . '/admin/?act=search_ip&amp;ip=' . long2ip((int) $res['ip']) . '">' . long2ip((int) $res['ip']) . '</a> - ' . $res['user_agent'] . '</div>';
-                            }
-                        }
-
-                        echo '</div>';
                     }
 
-                    echo '</div>';
-                    ++$i;
-                }
-
-                // Кнопка массового удаления постов
-                if ($user->rights == 3 || $user->rights >= 6) {
-                    echo '<div class="rmenu"><input type="submit" value=" ' . _t('Delete') . ' "/></div>';
-                    echo '</form>';
+                    $messages[] = $res;
+                    $i++;
                 }
 
                 // Нижнее поле "Написать"
-                if (($user->isValid() && ! $type1['closed'] && ! $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($user->rights >= 7 && ! $set_forum['upfp'])) {
-                    echo '<div class="gmenu"><form name="form2" action="?act=say&amp;type=post&amp;id=' . $id . '" method="post">';
-
+                $write_access = false;
+                if (($user->isValid() && ! $type1['closed'] && $config->mod_forum != 3 && $allow != 4) || ($user->rights >= 7)) {
+                    $write_access = true;
                     if ($set_forum['farea']) {
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
-                        echo '<p>';
-                        echo di(Johncms\Api\BbcodeInterface::class)->buttons('form2', 'msg');
-                        echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg"></textarea><br></p>' .
-                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
-
-                        echo '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
-                            (isset($set_forum['preview']) && $set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
-                            '<input type="hidden" name="token" value="' . $token . '"/>' .
-                            '</p></form></div>';
-                    } else {
-                        echo '<p><input type="submit" name="submit" value="' . _t('Write') . '"/></p></form></div>';
                     }
-                }
-
-                echo '<div class="phdr"><a id="down"></a><a href="#up"><img src="' . $assets->url('images/old/up.png') . '" alt=""></a>&#160;&#160;' . _t('Total') . ': ' . $colmes . '</div>';
-
-                // Постраничная навигация
-                if ($colmes > $user->config->kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;',
-                            $start, $colmes, $user->config->kmess) . '</div>' .
-                        '<p><form action="?type=topic&amp;id=' . $id . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-                        '</form></p>';
-                } else {
-                    echo '<br />';
                 }
 
                 // Список кураторов
+                $curators_array = [];
                 if ($curators) {
-                    $array = [];
-
                     foreach ($curators as $key => $value) {
-                        $array[] = '<a href="../profile/?user=' . $key . '">' . $value . '</a>';
+                        $curators_array[] = '<a href="/profile/?user=' . $key . '">' . $value . '</a>';
                     }
-
-                    echo '<p><div class="func">' . _t('Curators') . ': ' . implode(', ', $array) . '</div></p>';
                 }
 
-                // Ссылки на модерские функции управления темой
-                if ($user->rights == 3 || $user->rights >= 6) {
-                    echo '<p><div class="func">';
-
-                    if ($user->rights >= 7) {
-                        echo '<a href="?act=curators&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Curators of the Topic') . '</a><br />';
-                    }
-
-                    echo isset($topic_vote) && $topic_vote > 0
-                        ? '<a href="?act=editvote&amp;id=' . $id . '">' . _t('Edit Poll') . '</a><br><a href="?act=delvote&amp;id=' . $id . '">' . _t('Delete Poll') . '</a><br>'
-                        : '<a href="?act=addvote&amp;id=' . $id . '">' . _t('Add Poll') . '</a><br>';
-                    echo '<a href="?act=ren&amp;id=' . $id . '">' . _t('Rename Topic') . '</a><br>';
-
-                    // Закрыть - открыть тему
-                    if ($type1['closed'] == 1) {
-                        echo '<a href="?act=close&amp;id=' . $id . '">' . _t('Open Topic') . '</a><br>';
-                    } else {
-                        echo '<a href="?act=close&amp;id=' . $id . '&amp;closed">' . _t('Close Topic') . '</a><br>';
-                    }
-
-                    // Удалить - восстановить тему
-                    if ($type1['deleted'] == 1) {
-                        echo '<a href="?act=restore&amp;id=' . $id . '">' . _t('Restore Topic') . '</a><br>';
-                    }
-
-                    echo '<a href="?act=deltema&amp;id=' . $id . '">' . _t('Delete Topic') . '</a><br>';
-
-                    if ($type1['pinned'] == 1) {
-                        echo '<a href="?act=vip&amp;id=' . $id . '">' . _t('Unfix Topic') . '</a>';
-                    } else {
-                        echo '<a href="?act=vip&amp;id=' . $id . '&amp;vip">' . _t('Pin Topic') . '</a>';
-                    }
-
-                    echo '<br><a href="?act=per&amp;id=' . $id . '">' . _t('Move Topic') . '</a></div></p>';
-                }
-
-                echo '<div>' . _t('Views') . ': ' . $view_count . '</div>';
-
-                // Ссылка на список "Кто в теме"
-                if ($wholink) {
-                    echo '<div>' . $wholink . '</div>';
-                }
-
-                // Ссылка на фильтр постов
-                if ($filter) {
-                    echo '<div><a href="?act=filter&amp;id=' . $id . '&amp;do=unset">' . _t('Cancel Filter') . '</a></div>';
-                } else {
-                    echo '<div><a href="?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Filter by author') . '</a></div>';
-                }
-
-                // Ссылка на скачку темы
-                echo '<a href="?act=tema&amp;id=' . $id . '">' . _t('Download Topic') . '</a>';
+                echo $view->render('forum::topic', [
+                    'topic'            => $type1,
+                    'topic_vote'       => $topic_vote ?? null,
+                    'curators_array'   => $curators_array,
+                    'view_count'       => $view_count,
+                    'pagination'       => $tools->displayPagination('/forum/?type=topic&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+                    'start'            => $start,
+                    'id'               => $id,
+                    'token'            => $token ?? null,
+                    'bbcode'           => di(Johncms\Api\BbcodeInterface::class)->buttons('new_message', 'msg'),
+                    'settings_forum'   => $set_forum,
+                    'write_access'     => $write_access,
+                    'title'            => $type1['name'],
+                    'page_title'       => $type1['name'],
+                    'messages'         => $messages ?? [],
+                    'online'           => $online,
+                    'total'            => $total,
+                    'files_count'      => $tools->formatNumber($count),
+                    'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
+                    'filter_by_author' => $filter,
+                ]);
+                exit; // TODO: Remove this later
                 break;
 
             default:

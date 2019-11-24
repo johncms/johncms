@@ -42,7 +42,7 @@ $this->layout('system::layout/default', [
     </div>
 <?php endforeach; ?>
 
-<div><?= _t('Total') ?>: <?= $total ?></div>
+<div class="mb-n3 pt-1"><?= _t('Total') ?>: <?= $total ?></div>
 
 <?= $this->insert('forum::footer', [
     'online'   => $online,

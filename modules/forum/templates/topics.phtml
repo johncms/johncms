@@ -82,12 +82,13 @@ $this->layout('system::layout/default', [
         </div>
     </div>
 <?php endforeach; ?>
-
-<div><?= _t('Total') ?>: <?= $total ?></div>
-<!-- Page switching -->
-<?php if ($total > $user->config->kmess): ?>
-    <div class="mt-1"><?= $pagination ?></div>
-<?php endif ?>
+<div class="mb-n2 pt-1">
+    <div><?= _t('Total') ?>: <?= $total ?></div>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div class="mt-1"><?= $pagination ?></div>
+    <?php endif ?>
+</div>
 
 <?= $this->insert('forum::footer', [
     'online'   => $online,
