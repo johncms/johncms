@@ -49,6 +49,55 @@ $this->layout('system::layout/default', [
     </div>
 <?php endif; ?>
 
+<?php if (! empty($poll_data)): ?>
+    <!-- Poll block -->
+    <div class="h3"><?= $poll_data['poll']['name'] ?></div>
+    <?php if ($poll_data['show_form']): ?>
+        <form action="/forum/?act=vote&amp;id=<?= $id ?>" method="post" class="mb-3">
+            <?php foreach ($poll_data['results'] as $item): ?>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="vote_<?= $item['id'] ?>" name="vote" value="<?= $item['id'] ?>" required class="custom-control-input">
+                    <label class="custom-control-label" for="vote_<?= $item['id'] ?>"><?= $item['name'] ?></label>
+                </div>
+            <?php endforeach; ?>
+            <div class="mt-2">
+                <button type="submit" name="submit" value="1" class="btn btn-success btn-sm"><?= _t('Vote') ?></button>
+                <a class="btn btn-outline-secondary btn-sm" href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;vote_result<?= $poll_data['clip'] ?>"><?= _t('Results') ?></a>
+            </div>
+        </form>
+    <?php else: ?>
+        <div class="row">
+            <div class="col-sm-6">
+                <?php foreach ($poll_data['results'] as $item): ?>
+                    <div>
+                        <?= $item['name'] ?> (<?= $item['count'] ?>)
+                    </div>
+                    <div class="progress mb-2 border">
+                        <div class="progress-bar <?= $item['color_class'] ?? 'text-dark' ?>" style="width: <?= $item['vote_percent'] ?>%">
+                            <span class="p-2"><?= $item['vote_percent'] ?>%</span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div>
+                <?= _t('Total votes') ?>:
+                <?php if ($user->rights > 6): ?>
+                    <a href="?act=users&amp;id=<?= $id ?>"><?= $poll_data['poll']['count'] ?></a>
+                <?php else: ?>
+                    <?= $poll_data['poll']['count'] ?>
+                <?php endif; ?>
+            </div>
+            <?php if ($user->isValid() && $poll_data['poll']['vote_user'] == 0): ?>
+                <div>
+                    <a href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start . $poll_data['clip'] ?>"><?= _t('Vote') ?></a>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
 <?php if ($write_access && $settings_forum['upfp']): ?>
     <div class="row">
         <div class="col-md-6">

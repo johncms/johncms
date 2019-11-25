@@ -451,69 +451,39 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                     $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
                 }
 
-                // Блок голосований
+                $poll_data = [];
                 if ($type1['has_poll']) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
                     $topic_vote = $db->query("SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
 SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $user->id . "' AND `topic`='" . $id . "') as vote_user
 FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . "' LIMIT 1")->fetch();
-                    echo '<div  class="gmenu"><b>' . $tools->checkout($topic_vote['name']) . '</b><br />';
+                    $topic_vote['name'] = $tools->checkout($topic_vote['name'], 0, 0);
+                    $poll_data['poll'] = $topic_vote;
+                    $poll_data['show_form'] = (! $type1['closed'] && ! isset($_GET['vote_result']) && $user->isValid() && $topic_vote['vote_user'] == 0);
+                    $poll_data['results'] = [];
+
                     $vote_result = $db->query("SELECT `id`, `name`, `count` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "' ORDER BY `id` ASC");
+                    while ($vote = $vote_result->fetch()) {
+                        $vote['name'] = $tools->checkout($vote['name'], 0, 1);
+                        $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
 
-                    if (! $type1['closed'] && ! isset($_GET['vote_result']) && $user->isValid() && $topic_vote['vote_user'] == 0) {
-                        // Выводим форму с опросами
-                        echo '<form action="?act=vote&amp;id=' . $id . '" method="post">';
-
-                        while ($vote = $vote_result->fetch()) {
-                            echo '<input type="radio" value="' . $vote['id'] . '" name="vote"/> ' . $tools->checkout($vote['name'],
-                                    0, 1) . '<br />';
+                        $color = null;
+                        if ($count_vote > 0 && $count_vote <= 25) {
+                            $color = 'bg-success';
+                        } elseif ($count_vote > 25 && $count_vote <= 50) {
+                            $color = 'bg-info';
+                        } elseif ($count_vote > 50 && $count_vote <= 75) {
+                            $color = 'bg-warning';
+                        } elseif ($count_vote > 75 && $count_vote <= 100) {
+                            $color = 'bg-danger';
                         }
 
-                        echo '<p><input type="submit" name="submit" value="' . _t('Vote') . '"/><br /><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '&amp;vote_result' . $clip_forum .
-                            '">' . _t('Results') . '</a></p></form></div>';
-                    } else {
-                        // Выводим результаты голосования?>
-                        <div class="vote-results">
-                            <?php
-                            while ($vote = $vote_result->fetch()) {
-                                $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
-                                $color = '';
-                                if ($count_vote > 0 && $count_vote <= 25) {
-                                    $color = 'progress-bg-green';
-                                } elseif ($count_vote > 25 && $count_vote <= 50) {
-                                    $color = 'progress-bg-blue';
-                                } elseif ($count_vote > 50 && $count_vote <= 75) {
-                                    $color = 'progress-bg-yellow';
-                                } elseif ($count_vote > 75 && $count_vote <= 100) {
-                                    $color = 'progress-bg-red';
-                                } ?>
-                                <div class="vote-name">
-                                    <?= ($tools->checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']') ?>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar <?= $color ?>"
-                                         style="width: <?= $count_vote ?>%"><?= $count_vote ?>%
-                                    </div>
-                                </div>
-                                <?php
-                            } ?>
-                        </div>
-                        <?php
-
-                        echo '</div><div class="bmenu">' . _t('Total votes') . ': ';
-
-                        if ($user->rights > 6) {
-                            echo '<a href="?act=users&amp;id=' . $id . '">' . $topic_vote['count'] . '</a>';
-                        } else {
-                            echo $topic_vote['count'];
-                        }
-
-                        echo '</div>';
-
-                        if ($user->isValid() && $topic_vote['vote_user'] == 0) {
-                            echo '<div class="bmenu"><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . $clip_forum . '">' . _t('Vote') . '</a></div>';
-                        }
+                        $vote['color_class'] = $color;
+                        $vote['vote_percent'] = $count_vote;
+                        $poll_data['results'][] = $vote;
                     }
+
+                    $poll_data['clip'] = $clip_forum;
                 }
 
                 // Получаем данные о кураторах темы
@@ -717,6 +687,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     'files_count'      => $tools->formatNumber($count),
                     'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
                     'filter_by_author' => $filter,
+                    'poll_data'        => $poll_data,
                 ]);
                 exit; // TODO: Remove this later
                 break;
