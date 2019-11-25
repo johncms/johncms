@@ -93,7 +93,7 @@ return [
         // Спойлер
         'spoiler' => [
             'from' => '#\[spoiler=(.+?)](.+?)\[/spoiler]#is',
-            'to'   => '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>',
+            'to'   => '<div><div class="btn btn-light btn-sm" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="card card-body mt-2 p-2" style="display:none">$2</div></div>',
             'data' => '$1',
         ],
     ],
