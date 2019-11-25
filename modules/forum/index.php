@@ -130,6 +130,13 @@ $ext_win = [
 // Другие типы файлов (что не перечислены выше)
 $ext_other = ['wmf'];
 
+$user_rights_names = [
+    3 => '(FMod)',
+    6 => '(Smd)',
+    7 => '(Adm)',
+    9 => '(SV!)',
+];
+
 // Ограничиваем доступ к Форуму
 $error = '';
 
@@ -496,43 +503,32 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
                 }
 
-                // Фиксация первого поста в теме
-                if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($colmes - $user->config->kmess)) : $start > 0)) || isset($_GET['clip'])) {
-                    $postres = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+                // Fixed first post
+                $first_post = [];
+                if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($total - $user->config->kmess)) : $start > 0)) || isset($_GET['clip'])) {
+                    $message = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
                     FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
                     WHERE `forum_messages`.`topic_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . '
                     ORDER BY `forum_messages`.`id` LIMIT 1')->fetch();
-                    echo '<div class="topmenu"><p>';
 
-                    if ($user->isValid() && $user->id != $postres['user_id']) {
-                        echo '<a href="../profile/?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['user_name'] . '</b></a> ' .
-                            '<a href="?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . _t('[r]') . '</a> ' .
-                            '<a href="?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '&amp;cyt"> ' . _t('[q]') . '</a> ';
-                    } else {
-                        echo '<b>' . $postres['user_name'] . '</b> ';
+                    $message['user_profile_link'] = '';
+                    if ($user->isValid() && $user->id != $message['user_id']) {
+                        $message['user_profile_link'] = '/profile/?user=' . $message['user_id'];
+                    }
+                    $message['user_rights_name'] = $user_rights_names[$message['rights']] ?? '';
+                    $message['user_is_online'] = time() <= $message['lastdate'] + 300;
+                    $message['post_time'] = $tools->displayDate($message['date']);
+
+                    $message['post_text'] = $tools->checkout($message['text'], 1, 1);
+                    $message['post_text'] = $tools->smilies($message['post_text'], $message['rights'] ? 1 : 0);
+
+                    $message['post_preview'] = '';
+                    if (mb_strlen($message['text']) > 500) {
+                        $message['post_preview'] = $tools->checkout(mb_substr($message['text'], 0, 500), 0, 2);
+                        $message['post_preview'] = $message['post_preview'] . '...';
                     }
 
-                    $user_rights = [
-                        3 => '(FMod)',
-                        6 => '(Smd)',
-                        7 => '(Adm)',
-                        9 => '(SV!)',
-                    ];
-                    echo @$user_rights[$postres['rights']];
-                    echo time() > $postres['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>';
-                    echo ' <span class="gray">(' . $tools->displayDate($postres['date']) . ')</span><br>';
-
-                    if ($postres['deleted']) {
-                        echo '<span class="red">' . _t('Post deleted') . '</span><br>';
-                    }
-
-                    echo $tools->checkout(mb_substr($postres['text'], 0, 500), 0, 2);
-
-                    if (mb_strlen($postres['text']) > 500) {
-                        echo '...<a href="?act=show_post&amp;id=' . $postres['id'] . '">' . _t('Read more') . '</a>';
-                    }
-
-                    echo '</p></div>';
+                    $first_post = $message;
                 }
 
                 // Задаем правила сортировки (новые внизу / вверху)
@@ -565,14 +561,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
                     }
 
-                    // Метка должности
-                    $user_rights = [
-                        3 => '(FMod)',
-                        6 => '(Smd)',
-                        7 => '(Adm)',
-                        9 => '(SV!)',
-                    ];
-                    $res['user_rights_name'] = $user_rights[$res['rights']] ?? '';
+                    $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
 
                     $res['user_is_online'] = time() <= $res['lastdate'] + 300;
                     $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
@@ -668,6 +657,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 }
 
                 echo $view->render('forum::topic', [
+                    'first_post'       => $first_post,
                     'topic'            => $type1,
                     'topic_vote'       => $topic_vote ?? null,
                     'curators_array'   => $curators_array,
