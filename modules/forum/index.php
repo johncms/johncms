@@ -296,12 +296,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `subcat` = '${id}'" . $sql)->fetchColumn();
         }
 
-        if ($user->isValid() && $show_type == 'topic') {
-            $online = $db->query('SELECT (
-SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_u, (
-SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g")->fetch();
-        }
-
         switch ($show_type) {
             case 'section':
                 // List of forum sections
@@ -402,6 +396,12 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
             case 'topic':
                 // List messages
+                if ($user->isValid()) {
+                    $online = $db->query('SELECT (
+SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_u, (
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g")->fetch();
+                }
+
                 $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $id ? 1 : 0;
                 $sql = '';
 
@@ -712,7 +712,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     'title'            => $type1['name'],
                     'page_title'       => $type1['name'],
                     'messages'         => $messages ?? [],
-                    'online'           => $online,
+                    'online'           => $online ?? [],
                     'total'            => $total,
                     'files_count'      => $tools->formatNumber($count),
                     'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
