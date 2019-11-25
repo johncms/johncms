@@ -145,3 +145,29 @@
 
     }
 }
+
+.attached-file {
+    max-width: 130px;
+    text-align: center;
+
+    .attachment-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .thumb-limit-height {
+        max-height: 80px;
+    }
+
+    .file-name {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .downloads-icon {
+        width: 16px;
+        height: 16px;
+        margin-top: -2px;
+    }
+}

@@ -33,7 +33,7 @@ if (! empty($file) && file_exists('../../../upload/forum/attach/' . $file)) {
     }
 
     if ($att_ext) {
-        $razm = 50;
+        $razm = 100;
         $x_ratio = $razm / $width;
         $y_ratio = $razm / $height;
 
