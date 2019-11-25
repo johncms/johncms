@@ -97,7 +97,7 @@ $this->layout('system::layout/default', [
     <?php endif; ?>
 
     <?php foreach ($messages as $item): ?>
-        <div class="shadow post-item mb-2">
+        <div class="shadow post-item mb-2<?= $item['deleted'] ? ' deleted-post' : '' ?>">
             <div class="post-header d-flex justify-content-between border-bottom pb-1">
                 <div class="d-flex align-items-end">
                     <?php if ($user->rights == 3 || $user->rights >= 6): ?>
@@ -157,12 +157,19 @@ $this->layout('system::layout/default', [
                             <?php if (! empty($item['edit_count'])): ?>
                                 <?= _t('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
                             <?php endif; ?>
+                            <?php if ($item['has_edit']): ?>
+                                <?php if (! empty($item['deleted'])): ?>
+                                    <?= _t('Post deleted:') ?> <?= $item['deleted_by'] ?>
+                                <?php elseif (! empty($item['deleted_by'])): ?>
+                                    <?= _t('Post restored by:') ?> <?= $item['deleted_by'] ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </span>
                         <?php if ($item['has_edit']): ?>
                             <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
                             <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
                             <?php if (! empty($item['restore_url'])): ?>
-                                <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                                <a href="<?= $item['restore_url'] ?>" class="btn btn-light btn-sm"><?= _t('Restore') ?></a>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>

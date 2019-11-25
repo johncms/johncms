@@ -15,8 +15,12 @@
 .deleted-post {
     background: #fbdfd4;
 
-    .section-header {
-        border-bottom: 1px solid #f9b2b2;
+    .section-header, .border-bottom {
+        border-bottom: 1px solid #f9b2b2!important;
+    }
+
+    .border-top {
+        border-top: 1px solid #f9b2b2!important;
     }
 }
 
