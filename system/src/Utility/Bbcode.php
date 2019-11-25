@@ -435,12 +435,12 @@ class Bbcode implements BbcodeInterface
     private function codeCallback($code)
     {
         $parsers = [
-            'php' => 'php',
-            'css' => 'css',
+            'php'  => 'php',
+            'css'  => 'css',
             'html' => 'html',
-            'js' => 'javascript',
-            'sql' => 'sql',
-            'xml' => 'xml',
+            'js'   => 'javascript',
+            'sql'  => 'sql',
+            'xml'  => 'xml',
         ];
         $text = trim(strtr($code[2], ['<br />' => '']));
 
@@ -517,27 +517,21 @@ class Bbcode implements BbcodeInterface
     {
         if ($this->userConfig->youtube) {
             return '
-<style>.video-container {
-	position:relative;
-	padding-bottom:56.25%;
-	padding-top:30px;
-	height:0;
-	overflow:hidden;
-}
-.video-container iframe, .video-container object, .video-container embed {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-}
-</style>
-<div style="max-width: 500px">
-<div class="video-container">
+<div style="max-width: 600px">
+<div class="embed-responsive embed-responsive-16by9">
 <iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $result . '" frameborder="0"></iframe>
 </div></div>';
         }
 
-        return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $result . '"><img src="//img.youtube.com/vi/' . $result . '/1.jpg" border="0" alt="youtube.com/embed/' . $result . '"></a></div>';
+        return '<div>
+        <a class="youtube-preview" target="_blank" href="//m.youtube.com/watch?v=' . $result . '">
+            <div class="play-button">
+                <svg class="icon icon-youtube">
+                    <use xlink:href="' . $this->asset->url('icons/sprite.svg') . '#youtube"/>
+                </svg>
+            </div>
+            <img src="//img.youtube.com/vi/' . $result . '/mqdefault.jpg" alt="youtube.com/embed/' . $result . '">
+        </a>
+        </div>';
     }
 }

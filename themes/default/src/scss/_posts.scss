@@ -16,11 +16,11 @@
     background: #fbdfd4;
 
     .section-header, .border-bottom {
-        border-bottom: 1px solid #f9b2b2!important;
+        border-bottom: 1px solid #f9b2b2 !important;
     }
 
     .border-top {
-        border-top: 1px solid #f9b2b2!important;
+        border-top: 1px solid #f9b2b2 !important;
     }
 }
 
@@ -118,5 +118,30 @@
             align-items: center;
             flex-wrap: wrap;
         }
+    }
+}
+
+.youtube-preview {
+    position: relative;
+    display: inline-block;
+
+    .play-button {
+        position: absolute;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-youtube {
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    &:hover {
+        .icon-youtube {
+            color: #ff0000;
+        }
+
     }
 }
