@@ -88,7 +88,7 @@ switch ($post_type) {
     case 'post':
         $type1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'")->fetch();
         // Добавление простого сообщения
-        if (($type1['edit'] == 1 || $type1['close'] == 1) && $user->rights < 7) {
+        if (($type1['deleted'] == 1 || $type1['closed'] == 1) && $user->rights < 7) {
             // Проверка, закрыта ли тема
             echo $tools->displayError(_t('You cannot write in a closed topic'),
                 '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
