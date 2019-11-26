@@ -87,39 +87,38 @@ if ($user->rights == 3 || $user->rights >= 6) {
             ]);
         }
         exit;
-    } else {
-        $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : 0;
-
-        if (isset($_POST['plus'])) {
-            ++$count_vote;
-        } elseif (isset($_POST['minus'])) {
-            --$count_vote;
-        }
-
-        if (empty($_POST['count_vote']) || $_POST['count_vote'] < 2) {
-            $count_vote = 2;
-        } elseif ($_POST['count_vote'] > 20) {
-            $count_vote = 20;
-        }
-
-        $votes = [];
-        for ($vote = 0; $vote < $count_vote; $vote++) {
-            $votes[] = [
-                'input_name'  => $vote,
-                'input_label' => _t('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
-            ];
-        }
-
-        echo $view->render('forum::add_poll', [
-            'title'      => _t('Add File'),
-            'page_title' => _t('Add File'),
-            'id'         => $id,
-            'back_url'   => '?type=topic&id=' . $id,
-            'count_vote' => $count_vote,
-            'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
-            'votes'      => $votes,
-        ]);
-        exit; // TODO: Remove it later
     }
+    $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : 0;
+
+    if (isset($_POST['plus'])) {
+        ++$count_vote;
+    } elseif (isset($_POST['minus'])) {
+        --$count_vote;
+    }
+
+    if (empty($_POST['count_vote']) || $_POST['count_vote'] < 2) {
+        $count_vote = 2;
+    } elseif ($_POST['count_vote'] > 20) {
+        $count_vote = 20;
+    }
+
+    $votes = [];
+    for ($vote = 0; $vote < $count_vote; $vote++) {
+        $votes[] = [
+            'input_name'  => $vote,
+            'input_label' => _t('Answer') . ' ' . ($vote + 1),
+            'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
+        ];
+    }
+
+    echo $view->render('forum::add_poll', [
+        'title'      => _t('Add File'),
+        'page_title' => _t('Add File'),
+        'id'         => $id,
+        'back_url'   => '?type=topic&id=' . $id,
+        'count_vote' => $count_vote,
+        'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
+        'votes'      => $votes,
+    ]);
+    exit; // TODO: Remove it later
 }
