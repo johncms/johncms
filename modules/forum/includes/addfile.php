@@ -89,15 +89,10 @@ if (isset($_POST['submit'])) {
 
         // Replace invalid symbols
         $name = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $name);
-        $name = trim($name, "_");
+        $name = trim($name, '_');
         // Delete repeated replacement
         $name = preg_replace('/-{2,}/', '_', $name);
         $fname = mb_substr($name, 0, 70) . '.' . $ext;
-
-        // Проверка на запрещенные символы
-        if (preg_match("/[^\da-zA-Z_\-.]+/", $fname)) {
-            $error[] = _t('File name contains invalid characters');
-        }
 
         // Проверка наличия файла с таким же именем
         if (file_exists(UPLOAD_PATH . 'forum/attach/' . $fname)) {
