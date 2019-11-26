@@ -19,15 +19,21 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\Api\UserInterface   $user
  */
 
-// Закрываем доступ для определенных ситуаций
+// Check access
 if (! $id
     || ! $user->isValid()
     || isset($user->ban['1'])
     || isset($user->ban['11'])
     || (! $user->rights && $config['mod_forum'] == 3)
 ) {
-    echo $tools->displayError(_t('Access forbidden'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(403);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Access forbidden'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Access forbidden'),
+        'back_url'      => '?type=topics&amp;id=' . $id,
+        'back_url_name' => _t('Go to Section'),
+    ]);
     exit;
 }
 
@@ -74,17 +80,26 @@ function forum_link($m)
 $flood = $tools->antiflood();
 
 if ($flood) {
-    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'),
-            $flood) . ', <a href="?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('New Topic'),
+        'type'          => 'alert-danger',
+        'message'       => sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+        'back_url'      => '?type=topics&amp;id=' . $id . '&amp;start=' . $start,
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
 $req_r = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}' AND `section_type` = 1 LIMIT 1");
 
 if (! $req_r->rowCount()) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('New Topic'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Wrong data'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
@@ -221,9 +236,13 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
             header("Location: ?type=topic&id=${rid}");
         }
     } else {
-        // Выводим сообщение об ошибке
-        echo $tools->displayError($error, '<a href="?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('New Topic'),
+            'type'          => 'alert-danger',
+            'message'       => $error,
+            'back_url'      => '/forum/?act=nt&amp;id=' . $id,
+            'back_url_name' => _t('Repeat'),
+        ]);
         exit;
     }
 } else {
@@ -231,34 +250,28 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
     $msg_pre = $tools->checkout($msg, 1, 1);
     $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-    echo '<div class="phdr"><a href="?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
 
-    if ($msg && $th && ! isset($_POST['submit'])) {
-        echo '<div class="list1"><img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon"><strong>' . $th . '</strong></div>' .
-            '<div class="list2">' . $tools->displayUser($user, [
-                'iphide' => 1,
-                'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
-                'body'   => $msg_pre,
-            ]) . '</div>';
-    }
-
-    echo '<form name="form" action="?act=nt&amp;id=' . $id . '" method="post">' .
-        '<div class="gmenu">' .
-        '<p><h3>' . _t('Section') . '</h3>' .
-        '<a href="?' . ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_c['id'] . '">' . $res_c['name'] . '</a> | <a href="?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id'] . '">' . $res_r['name'] . '</a></p>' .
-        '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
-        '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
-        '<p><h3>' . _t('Message') . '</h3>';
-    echo '</p><p>' . di(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-    echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
-        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
+    $nav_chain->add($res_c['name'], '/forum/?' . ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_c['id']);
+    $nav_chain->add($res_r['name'], '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id']);
+    $nav_chain->add(_t('New Topic'));
 
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
-    echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
-        ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
-        '<input type="hidden" name="token" value="' . $token . '"/>' .
-        '</p></div></form>' .
-        '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
-        '<p><a href="?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id . '">' . _t('Back') . '</a></p>';
+
+    echo $view->render('forum::new_topic', [
+        'title'             => _t('New Topic'),
+        'page_title'        => _t('New Topic'),
+        'settings_forum'    => $set_forum,
+        'id'                => $id,
+        'token'             => $token,
+        'th'                => $th,
+        'add_files'         => isset($_POST['addfiles']),
+        'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
+        'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('new_topic', 'msg'),
+        'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
+        'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
+        'preview_message'   => $msg_pre,
+        'user_avatar'       => $user->getAvatar(),
+    ]);
+    exit; // TODO: Remove it later
 }
