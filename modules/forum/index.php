@@ -683,8 +683,13 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 break;
 
             default:
-                // Если неверные данные, показываем ошибку
-                echo $tools->displayError(_t('Wrong data'));
+                echo $view->render('system::pages/result', [
+                    'title'         => _t('Wrong data'),
+                    'type'          => 'alert-danger',
+                    'message'       => _t('Wrong data'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => _t('Go to Forum'),
+                ]);
                 break;
         }
     } else {
@@ -723,23 +728,6 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
         ]);
         exit; // TODO: Remove this later
-    }
-
-    // Навигация внизу страницы
-    echo '<p>' . ($id ? '<a href="">' . _t('Forum') . '</a><br />' : '');
-
-    if (! $id) {
-        echo '<a href="../help/?act=forum">' . _t('Forum rules') . '</a>';
-    }
-
-    echo '</p>';
-
-    if (! $user->isValid()) {
-        if ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) {
-            echo '<a href="?id=' . $id . '&amp;page=' . $page . '&amp;newup">' . _t('New at the top') . '</a>';
-        } else {
-            echo '<a href="?id=' . $id . '&amp;page=' . $page . '&amp;newdown">' . _t('New at the bottom') . '</a>';
-        }
     }
 }
 
