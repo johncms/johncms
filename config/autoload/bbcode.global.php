@@ -81,7 +81,7 @@ return [
         // Цитата
         'quote'   => [
             'from' => '#\[(quote|c)](.+?)\[/(quote|c)]#is',
-            'to'   => '<span class="quote" style="display:block">$2</span>',
+            'to'   => '<blockquote class="blockquote post-quote p-2 bg-light border rounded">$2</blockquote>',
             'data' => '$2',
         ],
         // Список
