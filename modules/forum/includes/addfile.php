@@ -73,34 +73,29 @@ if (isset($_POST['submit'])) {
     if ($do_file) {
         // Список допустимых расширений файлов.
         $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
-        $ext = explode('.', $file);
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $name = pathinfo($file, PATHINFO_FILENAME);
         $error = [];
 
-        // Проверка на допустимый размер файла
+        // Check file size
         if ($fsize > 1024 * $config['flsz']) {
             $error[] = _t('File size exceed') . ' ' . $config['flsz'] . 'kb.';
         }
 
-        // Проверка файла на наличие только одного расширения
-        if (count($ext) != 2) {
-            $error[] = _t('You may upload only files with a name and one extension <b>(name.ext</b>). Files without a name, extension, or with double extension are forbidden.');
-        }
-
-        // Проверка допустимых расширений файлов
-        if (! in_array($ext[1], $al_ext)) {
+        // Check allowed extensions
+        if (! in_array($ext, $al_ext)) {
             $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
         }
 
-        // Обработка названия файла
-        if (mb_strlen($ext[0]) == 0) {
-            $ext[0] = '---';
-        }
-
-        $ext[0] = str_replace(' ', '_', $ext[0]);
-        $fname = mb_substr($ext[0], 0, 32) . '.' . $ext[1];
+        // Replace invalid symbols
+        $name = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $name);
+        $name = trim($name, "_");
+        // Delete repeated replacement
+        $name = preg_replace('/-{2,}/', '_', $name);
+        $fname = mb_substr($name, 0, 70) . '.' . $ext;
 
         // Проверка на запрещенные символы
-        if (preg_match("/[^\da-z_\-.]+/", $fname)) {
+        if (preg_match("/[^\da-zA-Z_\-.]+/", $fname)) {
             $error[] = _t('File name contains invalid characters');
         }
 
@@ -159,7 +154,6 @@ if (isset($_POST['submit'])) {
               `filetype` = '${type}'
             ");
         } else {
-
             echo $view->render('system::pages/result', [
                 'title'         => _t('Add file'),
                 'page_title'    => _t('Error uploading file'),
