@@ -255,6 +255,11 @@ $this->layout('system::layout/default', [
                                     <div class="file-name">
                                         <a href="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>"><?= $file['filename'] ?></a>
                                     </div>
+                                    <?php if ($item['has_edit']): ?>
+                                        <div class="delete-link">
+                                            <a href="<?= $file['delete_url'] ?>"><?= _t('Delete') ?></a>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -262,7 +267,7 @@ $this->layout('system::layout/default', [
                 </div>
             <?php endif; ?>
 
-            <?php if ($user->rights || ! empty($item['edit_count'])): ?>
+            <?php if ($item['has_edit'] || ! empty($item['edit_count'])): ?>
                 <div class="post-footer d-flex justify-content-between border-top pt-2">
                     <div class="post-user-info d-flex overflow-hidden small align-items-center">
                         <?php if ($user->rights): ?>
