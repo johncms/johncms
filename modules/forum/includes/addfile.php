@@ -20,8 +20,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if (! $id || ! $user->isValid()) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(403);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Access forbidden'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Access forbidden'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
@@ -29,16 +35,25 @@ if (! $id || ! $user->isValid()) {
 $res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'")->fetch();
 
 if (empty($res) || $res['user_id'] != $user->id) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Wrong data'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Wrong data'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['date'] < (time() - 3600)) {
-    echo $tools->displayError(_t('The time allotted for the file upload has expired'),
-        '<a href="?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Add file'),
+        'type'          => 'alert-danger',
+        'message'       => _t('The time allotted for the file upload has expired'),
+        'back_url'      => '/forum/?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
@@ -57,8 +72,7 @@ if (isset($_POST['submit'])) {
     // Обработка файла (если есть), проверка на ошибки
     if ($do_file) {
         // Список допустимых расширений файлов.
-        $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio,
-            $ext_other);
+        $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
         $ext = explode('.', $file);
         $error = [];
 
@@ -74,8 +88,7 @@ if (isset($_POST['submit'])) {
 
         // Проверка допустимых расширений файлов
         if (! in_array($ext[1], $al_ext)) {
-            $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ',
-                    $al_ext);
+            $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
         }
 
         // Обработка названия файла
@@ -102,7 +115,6 @@ if (isset($_POST['submit'])) {
             if ((move_uploaded_file($_FILES['fail']['tmp_name'], UPLOAD_PATH . 'forum/attach/' . $fname)) == true) {
                 @chmod("${fname}", 0777);
                 @chmod(UPLOAD_PATH . 'forum/attach/' . $fname, 0777);
-                echo _t('File attached') . '<br>';
             } else {
                 $error[] = _t('Error uploading file');
             }
@@ -147,21 +159,39 @@ if (isset($_POST['submit'])) {
               `filetype` = '${type}'
             ");
         } else {
-            echo $tools->displayError($error, '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Add file'),
+                'page_title'    => _t('Error uploading file'),
+                'type'          => 'alert-danger',
+                'message'       => $error,
+                'back_url'      => '/forum/?act=addfile&id=' . $id,
+                'back_url_name' => _t('Repeat'),
+            ]);
+            exit;
         }
     } else {
-        echo $tools->displayError(_t('Error uploading file'),
-            '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Add file'),
+            'page_title'    => _t('Add file'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Error uploading file'),
+            'back_url'      => '/forum/?act=addfile&id=' . $id,
+            'back_url_name' => _t('Repeat'),
+        ]);
+        exit;
     }
-
     $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();
     $page = ceil($pa2 / $user->config->kmess);
-    echo '<br><a href="?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
-} else {
-    // Форма выбора файла для выгрузки
-    echo '<div class="phdr"><b>' . _t('Add File') . '</b></div>'
-        . '<div class="gmenu"><form action="?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>'
-        . '<input type="file" name="fail"/>'
-        . '</p><p><input type="submit" name="submit" value="' . _t('Upload') . '"/></p></form></div>'
-        . '<div class="phdr">' . _t('Max. Size') . ': ' . $config['flsz'] . 'kb.</div>';
+    $file_attached = true;
 }
+
+echo $view->render('forum::add_file', [
+    'title'         => _t('Add File'),
+    'page_title'    => _t('Add File'),
+    'id'            => $id,
+    'file_attached' => $file_attached ?? false,
+    'topic_id'      => $res['topic_id'],
+    'back_url'      => '?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+]);
+exit; // TODO: Remove it later
