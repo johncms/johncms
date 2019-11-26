@@ -23,9 +23,14 @@ if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
 
     if ($topic_vote != 0 || $topic == 0) {
-        echo $tools->displayError(_t('Wrong data'),
-            '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a>');
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Add Poll'),
+            'page_title'    => _t('Add Poll'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 
@@ -63,37 +68,58 @@ if ($user->rights == 3 || $user->rights >= 6) {
                     `topic`='${id}'
                 ");
             }
-            echo _t('Poll added') . '<br /><a href="?type=topic&amp;id=' . $id . '">' . _t('Continue') . '</a>';
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Add Poll'),
+                'page_title'    => _t('Add Poll'),
+                'type'          => 'alert-success',
+                'message'       => _t('Poll added'),
+                'back_url'      => '/forum/?type=topic&amp;id=' . $id,
+                'back_url_name' => _t('Continue'),
+            ]);
         } else {
-            echo _t('The required fields are not filled') . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Add Poll'),
+                'page_title'    => _t('Add Poll'),
+                'type'          => 'alert-danger',
+                'message'       => _t('The required fields are not filled'),
+                'back_url'      => '/forum/?act=addvote&amp;id=' . $id,
+                'back_url_name' => _t('Repeat'),
+            ]);
         }
+        exit;
     } else {
-        echo '<form action="?act=addvote&amp;id=' . $id . '" method="post">' .
-            '<br />' . _t('Poll (max. 150)') . ':<br>' .
-            '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'],
-                ENT_QUOTES, 'UTF-8') . '"/><br>';
+        $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : 0;
 
         if (isset($_POST['plus'])) {
-            ++$_POST['count_vote'];
+            ++$count_vote;
         } elseif (isset($_POST['minus'])) {
-            --$_POST['count_vote'];
+            --$count_vote;
         }
 
-        if ($_POST['count_vote'] < 2 || empty($_POST['count_vote'])) {
-            $_POST['count_vote'] = 2;
+        if (empty($_POST['count_vote']) || $_POST['count_vote'] < 2) {
+            $count_vote = 2;
         } elseif ($_POST['count_vote'] > 20) {
-            $_POST['count_vote'] = 20;
+            $count_vote = 20;
         }
 
-        for ($vote = 0; $vote < $_POST['count_vote']; $vote++) {
-            echo _t('Answer') . ' ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote],
-                    ENT_QUOTES, 'UTF-8') . '"/><br>';
+        $votes = [];
+        for ($vote = 0; $vote < $count_vote; $vote++) {
+            $votes[] = [
+                'input_name'  => $vote,
+                'input_label' => _t('Answer') . ' ' . ($vote + 1),
+                'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
+            ];
         }
 
-        echo '<input type="hidden" name="count_vote" value="' . abs((int) ($_POST['count_vote'])) . '"/>';
-        echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . _t('Add Answer') . '"/>' : '';
-        echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/><br>' : '<br>';
-        echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form>';
-        echo '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>';
+        echo $view->render('forum::add_poll', [
+            'title'      => _t('Add File'),
+            'page_title' => _t('Add File'),
+            'id'         => $id,
+            'back_url'   => '?type=topic&id=' . $id,
+            'count_vote' => $count_vote,
+            'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
+            'votes'      => $votes,
+        ]);
+        exit; // TODO: Remove it later
     }
 }

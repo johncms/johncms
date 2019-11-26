@@ -1,0 +1,51 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $poll_name
+ * @var $back_url
+ * @var $count_vote
+ * @var $votes
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+<div class="row">
+    <div class="col-md-6">
+        <form name="new_topic" action="/forum/?act=addvote&amp;id=<?= $id ?>" method="post">
+            <input type="hidden" name="count_vote" value="<?= $count_vote ?>">
+            <div class="form-group">
+                <label for="name_vote"><?= _t('Poll') ?></label>
+                <input type="text" class="form-control" id="name_vote" placeholder="<?= _t('Poll') ?>"
+                       name="name_vote" value="<?= $poll_name ?>" maxlength="150" required>
+                <div class="small text-muted"><?= _t('Maximum length: 150 characters') ?></div>
+            </div>
+
+            <h4><?= _t('Answers') ?></h4>
+            <?php foreach ($votes as $vote): ?>
+                <div class="form-group">
+                    <label for="vote_<?= $vote['input_name'] ?>"><?= $vote['input_label'] ?></label>
+                    <input type="text" class="form-control" id="vote_<?= $vote['input_name'] ?>" placeholder="<?= $vote['input_label'] ?>"
+                           name="<?= $vote['input_name'] ?>" value="<?= $vote['input_value'] ?>" maxlength="50">
+                    <div class="small text-muted"><?= _t('Maximum length: 50 characters') ?></div>
+                </div>
+            <?php endforeach; ?>
+
+            <div class="mb-4">
+                <?php if ($count_vote < 20): ?>
+                    <button type="submit" name="plus" value="1" class="btn btn-outline-primary btn-sm"><?= _t('Add Answer') ?></button>
+                <?php endif; ?>
+                <?php if ($count_vote > 2): ?>
+                    <button type="submit" name="minus" value="1" class="btn btn-outline-danger btn-sm"><?= _t('Delete last') ?></button>
+                <?php endif; ?>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= _t('Back to topic') ?></a>
+            </div>
+        </form>
+    </div>
+</div>
