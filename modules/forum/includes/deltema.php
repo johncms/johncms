@@ -72,14 +72,14 @@ if ($user->rights == 3 || $user->rights >= 6) {
         }
         header('Location: /forum/?type=topics&id=' . $res['section_id']);
         exit;
-    } else {
-        echo $view->render('forum::delete_topic', [
-            'title'      => _t('Delete Topic'),
-            'page_title' => _t('Delete Topic'),
-            'id'         => $id,
-            'back_url'   => '/forum/?type=topic&id=' . $id,
-        ]);
     }
+
+    echo $view->render('forum::delete_topic', [
+        'title'      => _t('Delete Topic'),
+        'page_title' => _t('Delete Topic'),
+        'id'         => $id,
+        'back_url'   => '/forum/?type=topic&id=' . $id,
+    ]);
 } else {
     http_response_code(403);
     echo $view->render('system::pages/result', [
