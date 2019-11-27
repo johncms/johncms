@@ -1,0 +1,62 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $show_post_preview
+ * @var $preview_message
+ * @var $back_url
+ * @var $msg
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+
+<?php if ($show_post_preview): ?>
+    <div class="shadow post-item post-item mb-2" id="first_post_block">
+        <div class="post-header d-flex justify-content-between border-bottom pb-1">
+            <div class="d-flex align-items-center">
+                <a class="user-login mr-2"><?= $message_author['name'] ?? '' ?></a>
+                <span class="post-date"><?= $tools->displayDate(time()) ?></span>
+            </div>
+        </div>
+        <div class="post-body d-flex align-items-start pt-3 pb-3">
+            <div class="user-avatar mr-2 mr-md-4">
+                <div class="avatar-image rounded-circle overflow-hidden">
+                    <?php if (! empty($user_avatar)): ?>
+                        <img src="<?= $user_avatar ?>" class="img-fluid" alt=".">
+                    <?php else: ?>
+                        <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
+                    <?php endif; ?>
+                </div>
+                <div class="user-status online shadow"></div>
+            </div>
+            <div class="overflow-auto flex-grow-1"><?= $preview_message ?></div>
+        </div>
+    </div>
+    <div class="border-bottom mt-4 mb-3"></div>
+<?php endif; ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <form name="edit_post" action="/forum/?act=editpost&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
+            <div class="form-group">
+                <label for="msg"><?= _t('Message') ?></label>
+                <div><?= $bbcode ?></div>
+                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
+                <?php if (! empty($settings_forum['preview'])): ?>
+                    <button type="submit" class="btn btn-secondary"><?= _t('Preview') ?></button>
+                <?php endif; ?>
+            </div>
+            <div class="mt-3">
+                <a href="/help/?act=smileys" class="pr-2"><?= _t('Smilies') ?></a> <a href="<?= $back_url ?>"><?= _t('Back') ?></a>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $back_url
+ * @var $posts
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= _t('Do you really want to delete?') ?>
+            </div>
+            <div>
+                <form action="/forum/?act=editpost&amp;do=deletefile&amp;fid=<?= $fid ?>&amp;id=<?= $id ?>" method="post">
+                    <button type="submit" name="delfile" value="1" class="btn btn-danger btn-sm"><?= _t('Delete') ?></button>
+                    <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= _t('Cancel') ?></a>
+                </form>
+            </div>
+            <div class="mt-2 text-muted small">
+                <?= _t('After deleting, one point will be subtracted from the counter of forum posts') ?>
+            </div>
+        </div>
+    </div>
+</div>

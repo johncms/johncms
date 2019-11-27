@@ -19,8 +19,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if (! $user->isValid() || ! $id) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Edit Message'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Wrong data'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
@@ -116,13 +121,13 @@ if (! $error) {
             break;
 
         case 'delfile':
-            // Удаление поста, предварительное напоминание
-            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete file') . '</div>'
-                . '<div class="rmenu"><p>'
-                . _t('Do you really want to delete?') . '</p>'
-                . '<form method="post" action="?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '"><input type="submit" name="delfile" value="' . _t('Delete') . '" /></form>'
-                . '<p><a href="' . $link . '">' . _t('Cancel') . '</a></p>'
-                . '</div>';
+            echo $view->render('forum::delete_file', [
+                'title'      => _t('Delete file'),
+                'page_title' => _t('Delete file'),
+                'id'         => $id,
+                'fid'        => $fid,
+                'back_url'   => $link,
+            ]);
             break;
 
         case 'deletefile':
@@ -135,9 +140,12 @@ if (! $error) {
                     unlink(UPLOAD_PATH . 'forum/attach/' . $res_f['filename']); //TODO: Разобраться с путем
                     header('Location: ' . $link);
                 } else {
-                    echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
-                    echo $view->render('system::app/old_content',
-                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $view->render('system::pages/result', [
+                        'title'    => _t('Edit Message'),
+                        'type'     => 'alert-danger',
+                        'message'  => _t('You cannot edit your posts after 5 minutes'),
+                        'back_url' => $link,
+                    ]);
                     exit;
                 }
             }
@@ -203,27 +211,16 @@ if (! $error) {
 
             // Пересчитываем топик
             $tools->recountForumTopic($res['topic_id']);
-
             break;
 
         case 'del':
-            // Удаление поста, предварительное напоминание
-            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Message') . '</div>' .
-                '<div class="rmenu"><p>';
-
-            if ($posts == 1) {
-                echo _t('WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too') . '<br>';
-            }
-
-            echo _t('Do you really want to delete?') . '</p>' .
-                '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="?act=editpost&amp;do=delete&amp;id=' . $id . '">' . _t('Delete') . '</a>';
-
-            if ($user->rights == 9) {
-                echo ' | <a href="?act=editpost&amp;do=delete&amp;hide&amp;id=' . $id . '">' . _t('Hide') . '</a>';
-            }
-
-            echo '</p></div>';
-            echo '<div class="phdr"><small>' . _t('After deleting, one point will be subtracted from the counter of forum posts') . '</small></div>';
+            echo $view->render('forum::delete_post', [
+                'title'      => _t('Delete Message'),
+                'page_title' => _t('Delete Message'),
+                'id'         => $id,
+                'posts'      => $posts,
+                'back_url'   => $link,
+            ]);
             break;
 
         default:
@@ -232,10 +229,13 @@ if (! $error) {
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
-                    echo $tools->displayError(_t('You have not entered the message'),
-                        '<a href="?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    echo $view->render('system::app/old_content',
-                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $view->render('system::pages/result', [
+                        'title'         => _t('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => _t('You have not entered the message'),
+                        'back_url'      => '/forum/?act=editpost&amp;id=' . $id,
+                        'back_url_name' => _t('Repeat'),
+                    ]);
                     exit;
                 }
 
@@ -255,34 +255,43 @@ if (! $error) {
                 ]);
 
                 header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
+                exit;
             } else {
                 $msg_pre = $tools->checkout($msg, 1, 1);
                 $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
                 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-                echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit Message') . '</div>';
 
                 if ($msg && ! isset($_POST['submit'])) {
                     $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                    echo '<div class="list1">' . $tools->displayUser($foundUser, [
-                            'iphide' => 1,
-                            'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>',
-                            'body'   => $msg_pre,
-                        ]) . '</div>';
+                    $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
+                    if (file_exists(UPLOAD_PATH . $avatar)) {
+                        $user_avatar = UPLOAD_PUBLIC_PATH . $avatar;
+                    }
                 }
 
-                echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
-                echo di(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-                echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'],
-                        ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'])) . '</textarea><br>';
+                $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
 
-                echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
-                    ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
-                    '</p></form></div>' .
-                    '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
-                    '<p><a href="' . $link . '">' . _t('Back') . '</a></p>';
+                echo $view->render('forum::edit_post', [
+                    'title'             => _t('Edit Message'),
+                    'page_title'        => _t('Edit Message'),
+                    'id'                => $id,
+                    'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('edit_post', 'msg'),
+                    'msg'               => $message,
+                    'start'             => $start,
+                    'back_url'          => $link,
+                    'settings_forum'    => $set_forum,
+                    'show_post_preview' => $msg && ! isset($_POST['submit']),
+                    'preview_message'   => $msg_pre,
+                    'user_avatar'       => $user_avatar ?? '',
+                    'message_author'    => $foundUser ?? [],
+                ]);
             }
     }
-} else {
-    // Выводим сообщения об ошибках
-    echo $tools->displayError($error);
+    exit;
 }
+echo $view->render('system::pages/result', [
+    'title'   => _t('Error'),
+    'type'    => 'alert-danger',
+    'message' => $error,
+]);
+exit;
