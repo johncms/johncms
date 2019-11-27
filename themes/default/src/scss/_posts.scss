@@ -45,6 +45,10 @@
     .avatar-image {
         width: 100px;
         height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.15);
     }
 
     .user-status {
