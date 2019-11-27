@@ -22,8 +22,13 @@ if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '${id}'")->fetchColumn();
 
     if ($topic_vote == 0) {
-        echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Delete Poll'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 
@@ -31,11 +36,31 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '${id}'");
         $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '${id}'");
         $db->exec("UPDATE `forum_topic` SET  `has_poll` = NULL  WHERE `id` = '${id}'");
-        echo _t('Poll deleted') . '<br /><a href="' . $_SESSION['prd'] . '">' . _t('Continue') . '</a>';
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Delete Poll'),
+            'type'          => 'alert-success',
+            'message'       => _t('Poll deleted'),
+            'back_url'      => '/forum/?type=topic&id=' . $id,
+            'back_url_name' => _t('Back'),
+        ]);
+        exit;
     } else {
-        echo '<p>' . _t('Do you really want to delete a poll?') . '</p>';
-        echo '<p><a href="?act=delvote&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a><br />';
-        echo '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Cancel') . '</a></p>';
-        $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
+        echo $view->render('forum::delete_poll', [
+            'title'      => _t('Delete Poll'),
+            'page_title' => _t('Delete Poll'),
+            'id'         => $id,
+            'back_url'   => '/forum/?type=topic&id=' . $id,
+        ]);
     }
+} else {
+    http_response_code(403);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Access forbidden'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Access forbidden'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
 }
+
+exit; // TODO: Remove it later

@@ -1,0 +1,26 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $back_url
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= _t('Do you really want to delete a poll?') ?>
+            </div>
+            <div>
+                <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="pr-2"><?= _t('Delete') ?></a>
+                <a href="<?= $back_url ?>"><?= _t('Cancel') ?></a>
+            </div>
+        </div>
+    </div>
+</div>
