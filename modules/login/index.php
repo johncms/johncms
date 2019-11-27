@@ -14,7 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Users\User;
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 use Johncms\Api\NavChainInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

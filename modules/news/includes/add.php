@@ -16,7 +16,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO                        $db
  * @var Johncms\Api\ToolsInterface $tools
  * @var Johncms\Api\UserInterface  $user
- * @var League\Plates\Engine       $view
+ * @var Mobicms\Render\Engine       $view
  * @var \Johncms\Utility\NavChain  $nav_chain
  */
 

@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

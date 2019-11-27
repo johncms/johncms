@@ -14,7 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Extension\Assets;
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;

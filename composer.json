@@ -1,51 +1,53 @@
 {
-  "name": "simba77/johncms",
-  "description": "Mobile Content Management System",
-  "homepage": "http://johncms.com",
-  "license": "GPL-3.0-only",
-  "keywords": [
-    "johncms",
-    "cms",
-    "php",
-    "mysql",
-    "mobile"
-  ],
-  "authors": [
-    {
-      "name": "JohnCMS Contributors",
-      "homepage": "https://github.com/simba77/johncms/graphs/contributors"
+    "name": "simba77/johncms",
+    "description": "Mobile Content Management System",
+    "homepage": "http://johncms.com",
+    "license": "GPL-3.0-only",
+    "keywords": [
+        "johncms",
+        "cms",
+        "php",
+        "mysql",
+        "mobile"
+    ],
+    "authors": [
+        {
+            "name": "JohnCMS Contributors",
+            "homepage": "https://github.com/simba77/johncms/graphs/contributors"
+        }
+    ],
+    "support": {
+        "forum": "https://johncms.com/forum",
+        "source": "https://github.com/simba77/johncms",
+        "issues": "https://johncms.com/forum/index.php?id=67"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "vendor-dir": "system/vendor"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.2",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "aura/autoload": "^2.0",
+        "batumibiz/captcha": "^3.0",
+        "mobicms/render": "dev-develop",
+        "nikic/fast-route": "^1.3",
+        "verot/class.upload.php": "^2.0",
+        "zendframework/zend-i18n": "^2.10",
+        "zendframework/zend-servicemanager": "^3.4"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Johncms\\": "system/src/"
+        }
     }
-  ],
-  "support": {
-    "forum": "https://johncms.com/forum",
-    "source": "https://github.com/simba77/johncms",
-    "issues": "https://johncms.com/forum/index.php?id=67"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true,
-    "vendor-dir": "system/vendor"
-  },
-  "require": {
-    "php": "^7.2",
-    "ext-gd": "*",
-    "ext-json": "*",
-    "ext-mbstring": "*",
-    "ext-pdo": "*",
-    "aura/autoload": "^2.0",
-    "batumibiz/captcha": "^3.0",
-    "league/plates": "^3.3",
-    "nikic/fast-route": "^1.3",
-    "verot/class.upload.php": "^2.0",
-    "zendframework/zend-i18n": "^2.9",
-    "zendframework/zend-servicemanager": "^3.4"
-  },
-  "require-dev": {
-    "roave/security-advisories": "dev-master"
-  },
-  "autoload": {
-    "psr-4": {
-      "Johncms\\": "system/src/"
-    }
-  }
 }

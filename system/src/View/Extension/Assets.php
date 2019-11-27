@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Johncms\View\Extension;
 
 use Johncms\Api\ConfigInterface;
-use League\Plates\Engine;
-use League\Plates\Extension\ExtensionInterface;
+use Mobicms\Render\Engine;
+use Mobicms\Render\ExtensionInterface;
 use Psr\Container\ContainerInterface;
 
 class Assets implements ExtensionInterface
@@ -29,7 +29,7 @@ class Assets implements ExtensionInterface
         return $this;
     }
 
-    public function register(Engine $engine)
+    public function register(Engine $engine) : void
     {
         $engine->registerFunction('asset', [$this, 'url']);
     }

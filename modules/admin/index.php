@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 use Zend\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');

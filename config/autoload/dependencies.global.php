@@ -24,7 +24,7 @@ return [
             Api\NavChainInterface::class    => Johncms\Utility\NavChain::class,
             Assets::class                   => Assets::class,
             FastRoute\RouteCollector::class => Johncms\Router\RouteCollectorFactory::class,
-            League\Plates\Engine::class     => Johncms\View\PlatesEngineFactory::class,
+            Mobicms\Render\Engine::class    => Johncms\View\RenderEngineFactory::class,
             PDO::class                      => Johncms\Database\PdoFactory::class,
             'counters'                      => Johncms\Utility\Counters::class,
         ],

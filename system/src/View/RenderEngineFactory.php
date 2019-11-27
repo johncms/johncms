@@ -15,12 +15,12 @@ namespace Johncms\View;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Extension\Assets;
-use League\Plates\Engine;
 use Johncms\Api\ConfigInterface;
+use Mobicms\Render\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
-class PlatesEngineFactory
+class RenderEngineFactory
 {
     public function __invoke(ContainerInterface $container)
     {

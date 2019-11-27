@@ -16,7 +16,7 @@ use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Utility\Counters;
 use Johncms\View\Extension\Assets;
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
