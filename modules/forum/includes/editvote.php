@@ -22,8 +22,14 @@ if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
 
     if ($topic_vote == 0) {
-        echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Edit Poll'),
+            'page_title'    => _t('Edit Poll'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 
@@ -46,9 +52,14 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `vote` = '${vote}'");
                 header('location: ?act=editvote&id=' . $id . '');
             } else {
-                echo '<div class="rmenu"><p>' . _t('Do you really want to delete the answer?') . '<br />' .
-                    '<a href="?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes">' . _t('Delete') . '</a><br />' .
-                    '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Cancel') . '</a></p></div>';
+                echo $view->render('forum::delete_answer', [
+                    'title'      => _t('Delete Answer'),
+                    'page_title' => _t('Delete Answer'),
+                    'id'         => $id,
+                    'delete_url' => '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes',
+                    'back_url'   => '?act=editvote&id=' . $id,
+                ]);
+                exit;
             }
         } else {
             header('location: ?act=editvote&id=' . $id . '');
@@ -78,59 +89,67 @@ if ($user->rights == 3 || $user->rights >= 6) {
                     $db->exec('INSERT INTO `cms_forum_vote` SET `name` = ' . $db->quote($text) . ",  `type` = '2', `topic` = '${id}'");
                 }
             }
-
-            echo '<div class="gmenu"><p>' . _t('Poll changed') . '<br /><a href="?type=topic&amp;id=' . $id . '">' . _t('Continue') . '</a></p></div>';
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Edit Poll'),
+                'page_title'    => _t('Edit Poll'),
+                'type'          => 'alert-success',
+                'message'       => _t('Poll changed'),
+                'back_url'      => '/forum/?type=topic&amp;id=' . $id,
+                'back_url_name' => _t('Continue'),
+            ]);
+            exit;
         } else {
             // Форма редактирования опроса
             $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'")->fetchColumn();
             $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
-            echo '<div class="phdr"><a href="?type=topic&amp;id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit Poll') . '</div>' .
-                '<form action="?act=editvote&amp;id=' . $id . '" method="post">' .
-                '<div class="gmenu"><p>' .
-                '<b>' . _t('Poll (max. 150)') . ':</b><br>' .
-                '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($topic_vote['name'],
-                    ENT_QUOTES, 'UTF-8') . '"/>' .
-                '</p></div>' .
-                '<div class="menu"><p>';
             $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'");
 
+            $votes = [];
+            $i = 0;
             while ($vote = $vote_result->fetch()) {
-                echo _t('Answer') . ' ' . ($i + 1) . ' (max. 50): <br>' .
-                    '<input type="text" name="' . $vote['id'] . 'vote" value="' . htmlentities($vote['name'],
-                        ENT_QUOTES, 'UTF-8') . '"/>';
-
-                if ($countvote > 2) {
-                    echo '&nbsp;<a href="?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote">[x]</a>';
-                }
-
-                echo '<br>';
+                $votes[] = [
+                    'input_name'  => $vote['id'] . 'vote',
+                    'input_label' => _t('Answer') . ' ' . ($i + 1),
+                    'input_value' => htmlentities($vote['name'], ENT_QUOTES, 'UTF-8'),
+                    'delete_url'  => $countvote > 2 ? '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote' : '',
+                ];
                 ++$i;
             }
 
+            $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : $countvote;
             if ($countvote < 20) {
                 if (isset($_POST['plus'])) {
-                    ++$_POST['count_vote'];
+                    ++$count_vote;
                 } elseif (isset($_POST['minus'])) {
-                    --$_POST['count_vote'];
+                    --$count_vote;
                 }
 
-                if (empty($_POST['count_vote'])) {
-                    $_POST['count_vote'] = $countvote;
-                } elseif ($_POST['count_vote'] > 20) {
-                    $_POST['count_vote'] = 20;
+                if (empty($count_vote)) {
+                    $count_vote = $countvote;
+                } elseif ($count_vote > 20) {
+                    $count_vote = 20;
                 }
 
-                for ($vote = $i; $vote < $_POST['count_vote']; $vote++) {
-                    echo 'Ответ ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . $tools->checkout($_POST[$vote]) . '"/><br>';
+                for ($vote = $i; $vote < $count_vote; $vote++) {
+                    $votes[] = [
+                        'input_name'  => $vote,
+                        'input_label' => _t('Answer') . ' ' . ($vote + 1),
+                        'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
+                    ];
                 }
-
-                echo '<input type="hidden" name="count_vote" value="' . abs((int) ($_POST['count_vote'])) . '"/>' . ($_POST['count_vote'] < 20 ? '<input type="submit" name="plus" value="' . _t('Add') . '"/>' : '')
-                    . ($_POST['count_vote'] - $countvote ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/>' : '');
             }
-            echo '</p></div><div class="gmenu">' .
-                '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
-                '</div></form>' .
-                '<div class="phdr"><a href="?type=topic&amp;id=' . $id . '">' . _t('Cancel') . '</a></div>';
+
+            echo $view->render('forum::edit_poll', [
+                'title'      => _t('Edit Poll'),
+                'page_title' => _t('Edit Poll'),
+                'id'         => $id,
+                'back_url'   => '?type=topic&id=' . $id,
+                'saved_vote' => $countvote,
+                'count_vote' => $count_vote,
+                'poll_name'  => htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8'),
+                'votes'      => $votes,
+            ]);
+            exit; // TODO: Remove it later
         }
     }
 }
