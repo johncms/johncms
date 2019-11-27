@@ -20,8 +20,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if ($user->rights == 3 || $user->rights >= 6) {
     if (! $id) {
-        echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Delete Topic'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 
@@ -29,8 +34,14 @@ if ($user->rights == 3 || $user->rights >= 6) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
     if (! $req->rowCount()) {
-        echo $tools->displayError(_t('Topic has been deleted or does not exists'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Curators'),
+            'page_title'    => _t('Curators'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Topic has been deleted or does not exists'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 
@@ -59,17 +70,25 @@ if ($user->rights == 3 || $user->rights >= 6) {
             $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
             $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '${id}'");
         }
-        header('Location: ?type=topics&id=' . $res['section_id']);
+        header('Location: /forum/?type=topics&id=' . $res['section_id']);
+        exit;
     } else {
-        // Меню выбора режима удаления темы
-        echo '<div class="phdr"><a href="?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
-            '<div class="rmenu"><form method="post" action="?act=deltema&amp;id=' . $id . '">' .
-            '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
-            '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . _t('Hide') . '<br />' .
-            ($user->rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
-            '<p><input type="submit" name="submit" value="' . _t('Perform') . '" /></p>' .
-            '<p><a href="?type=topic&id=' . $id . '">' . _t('Cancel') . '</a>' .
-            '</p></form></div>' .
-            '<div class="phdr">&#160;</div>';
+        echo $view->render('forum::delete_topic', [
+            'title'      => _t('Delete Topic'),
+            'page_title' => _t('Delete Topic'),
+            'id'         => $id,
+            'back_url'   => '/forum/?type=topic&id=' . $id,
+        ]);
     }
+} else {
+    http_response_code(403);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Access forbidden'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Access forbidden'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
 }
+
+exit; // TODO: Remove it later
