@@ -256,36 +256,35 @@ if (! $error) {
 
                 header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 exit;
-            } else {
-                $msg_pre = $tools->checkout($msg, 1, 1);
-                $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-                $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-
-                if ($msg && ! isset($_POST['submit'])) {
-                    $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                    $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
-                    if (file_exists(UPLOAD_PATH . $avatar)) {
-                        $user_avatar = UPLOAD_PUBLIC_PATH . $avatar;
-                    }
-                }
-
-                $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
-
-                echo $view->render('forum::edit_post', [
-                    'title'             => _t('Edit Message'),
-                    'page_title'        => _t('Edit Message'),
-                    'id'                => $id,
-                    'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('edit_post', 'msg'),
-                    'msg'               => $message,
-                    'start'             => $start,
-                    'back_url'          => $link,
-                    'settings_forum'    => $set_forum,
-                    'show_post_preview' => $msg && ! isset($_POST['submit']),
-                    'preview_message'   => $msg_pre,
-                    'user_avatar'       => $user_avatar ?? '',
-                    'message_author'    => $foundUser ?? [],
-                ]);
             }
+            $msg_pre = $tools->checkout($msg, 1, 1);
+            $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
+            $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
+
+            if ($msg && ! isset($_POST['submit'])) {
+                $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
+                $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
+                if (file_exists(UPLOAD_PATH . $avatar)) {
+                    $user_avatar = UPLOAD_PUBLIC_PATH . $avatar;
+                }
+            }
+
+            $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
+
+            echo $view->render('forum::edit_post', [
+                'title'             => _t('Edit Message'),
+                'page_title'        => _t('Edit Message'),
+                'id'                => $id,
+                'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('edit_post', 'msg'),
+                'msg'               => $message,
+                'start'             => $start,
+                'back_url'          => $link,
+                'settings_forum'    => $set_forum,
+                'show_post_preview' => $msg && ! isset($_POST['submit']),
+                'preview_message'   => $msg_pre,
+                'user_avatar'       => $user_avatar ?? '',
+                'message_author'    => $foundUser ?? [],
+            ]);
     }
     exit;
 }
