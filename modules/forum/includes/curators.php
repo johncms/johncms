@@ -21,9 +21,15 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 if ($user->rights >= 7) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
-    if (! $req->rowCount() || $user->rights < 7) {
-        echo $tools->displayError(_t('Topic has been deleted or does not exists'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    if (! $req->rowCount()) {
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Curators'),
+            'page_title'    => _t('Curators'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Topic has been deleted or does not exists'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 
@@ -32,8 +38,6 @@ if ($user->rights >= 7) {
         FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
         WHERE `forum_messages`.`topic_id`='${id}' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum_messages`.`user_id` ORDER BY `forum_messages`.`user_name`");
     $total = $req->rowCount();
-    echo '<div class="phdr"><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
-        '<div class="bmenu">' . $topic['name'] . '</div>';
     $curators = [];
     $users = ! empty($topic['curators']) ? unserialize($topic['curators'], ['allowed_classes' => false]) : [];
 
@@ -45,29 +49,41 @@ if ($user->rights >= 7) {
     }
 
     if ($total > 0) {
-        echo '<form action="?act=curators&amp;id=' . $id . '&amp;start=' . $start . '" method="post">';
-        $i = 0;
-
         while ($res = $req->fetch()) {
-            $checked = array_key_exists($res['user_id'], $users) ? true : false;
-
+            $checked = array_key_exists($res['user_id'], $users);
             if ($checked) {
                 $curators[$res['user_id']] = $res['user_name'];
             }
-
-            echo($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
-                '<input type="checkbox" name="users[' . $res['user_id'] . ']" value="' . $res['user_name'] . '"' . ($checked ? ' checked="checked"' : '') . '/>&#160;' .
-                '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a></div>';
+            $res['checked'] = $checked;
+            $curators_list[] = $res;
         }
-
-        echo '<div class="gmenu"><input type="submit" value="' . _t('Assign') . '" name="submit" /></div></form>';
 
         if (isset($_POST['submit'])) {
             $db->exec('UPDATE `forum_topic` SET `curators`=' . $db->quote(serialize($curators)) . " WHERE `id` = '${id}'");
+            $saved = true;
         }
-    } else {
-        echo $tools->displayError(_t('The list is empty'));
     }
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-        '<p><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
+
+    echo $view->render('forum::curators', [
+        'title'         => _t('Curators'),
+        'page_title'    => _t('Curators'),
+        'id'            => $id,
+        'start'         => $start,
+        'back_url'      => '?type=topic&id=' . $id . '&amp;start=' . $start,
+        'total'         => $total,
+        'curators_list' => $curators_list ?? [],
+        'topic'         => $topic ?? [],
+        'saved'         => $saved ?? false,
+    ]);
+} else {
+    http_response_code(403);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Access forbidden'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Access forbidden'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
 }
+
+exit; // TODO: Remove it later

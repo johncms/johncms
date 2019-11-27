@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $curators_list
+ * @var $back_url
+ * @var $start
+ * @var $topic
+ * @var $saved
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3><?= $topic['name'] ?></h3>
+        <?php if ($saved): ?>
+            <div class="alert alert-success"><?= _t('Changes saved') ?></div>
+        <?php endif; ?>
+        <form action="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
+            <?php if (empty($curators_list)): ?>
+                <div class="alert alert-info">
+                    <?= _t('The list is empty') ?>
+                </div>
+            <?php else: ?>
+                <?php foreach ($curators_list as $item): ?>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" name="users[<?= $item['user_id'] ?>]" value="<?= $item['user_name'] ?>"
+                                   id="user_<?= $item['user_id'] ?>" <?= $item['checked'] ? ' checked="checked"' : '' ?>>
+                            <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <div>
+                <?php if (! empty($curators_list)): ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Assign') ?></button>
+                <?php endif; ?>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= _t('Back to topic') ?></a>
+            </div>
+        </form>
+    </div>
+</div>
