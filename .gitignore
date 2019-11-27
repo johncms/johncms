@@ -1,11 +1,12 @@
 # Common ignores
+/.idea
+/composer.lock
+/config/autoload/*.local.php
 /dist
 /distributive
 /node_modules
-/.idea
 /package-lock.json
 /system/vendor
-/config/autoload/*.local.php
 /mix-manifest.json
 
 # Data folder ignores
