@@ -1,0 +1,55 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $curators_list
+ * @var $back_url
+ * @var $start
+ * @var $topic
+ * @var $saved
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $page_title,
+]);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <?php if ($saved): ?>
+            <div class="alert alert-success"><?= _t('Changes saved') ?></div>
+        <?php endif; ?>
+        <form action="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;do=set" method="post">
+            <?php if (empty($list)): ?>
+                <div class="alert alert-info">
+                    <?= _t('The list is empty') ?>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-warning mb-3 shadow"><?= _t('Filter will be display posts from selected authors only') ?></div>
+                <div class="card shadow mb-3">
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <?php foreach ($list as $item): ?>
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="users[]" value="<?= $item['user_id'] ?>"
+                                               id="user_<?= $item['user_id'] ?>">
+                                        <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
+                                    </div>
+                                    <div class="badge badge-pill badge-secondary"><?= $item['count'] ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div>
+                <?php if (! empty($list)): ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Filter') ?></button>
+                <?php endif; ?>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= _t('Back to topic') ?></a>
+            </div>
+        </form>
+    </div>
+</div>

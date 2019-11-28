@@ -17,8 +17,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if (! $id) {
-    echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Forum') . '</a>');
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Filter by author'),
+        'page_title'    => _t('Filter by author'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Wrong data'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
@@ -35,8 +41,14 @@ switch ($do) {
         $users = $_POST['users'] ?? '';
 
         if (empty($_POST['users'])) {
-            echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
-            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Filter by author'),
+                'page_title'    => _t('Filter by author'),
+                'type'          => 'alert-danger',
+                'message'       => _t('You have not selected any author'),
+                'back_url'      => '?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start,
+                'back_url_name' => _t('Back'),
+            ]);
             exit;
         }
 
@@ -54,29 +66,36 @@ switch ($do) {
     default:
         /** @var PDO $db */
         $db = di(PDO::class);
-
         // Показываем список авторов темы, с возможностью выбора
         $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '${id}' GROUP BY `user_id` ORDER BY `user_name`");
         $total = $req->rowCount();
-
         if ($total) {
-            echo '<div class="phdr"><a href="?type=topic&id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Filter by author') . '</div>' .
-                '<form action="?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
-            $i = 0;
-
+            $list = [];
             while ($res = $req->fetch()) {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<input type="checkbox" name="users[]" value="' . $res['user_id'] . '"/>&#160;' .
-                    '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a> [' . $res['count'] . ']</div>';
-                ++$i;
+                $list[] = $res;
             }
-
-            echo '<div class="gmenu"><input type="submit" value="' . _t('Filter') . '" name="submit" /></div>' .
-                '<div class="phdr"><small>' . _t('Filter will be display posts from selected authors only') . '</small></div>' .
-                '</form>';
         } else {
-            echo $tools->displayError(_t('Wrong data'));
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Filter by author'),
+                'page_title'    => _t('Filter by author'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '?type=topic&id=' . $id . '&amp;start=' . $start,
+                'back_url_name' => _t('Back'),
+            ]);
+            exit;
         }
 }
 
-echo '<p><a href="?id=' . $id . '&amp;start=' . $start . '">' . _t('Back to topic') . '</a></p>';
+echo $view->render('forum::filter_by_author', [
+    'title'      => _t('Filter by author'),
+    'page_title' => _t('Filter by author'),
+    'id'         => $id,
+    'start'      => $start,
+    'back_url'   => '?type=topic&id=' . $id . '&amp;start=' . $start,
+    'total'      => $total,
+    'list'       => $list ?? [],
+    'topic'      => $topic ?? [],
+    'saved'      => $saved ?? false,
+]);
+exit;
