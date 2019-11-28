@@ -38,8 +38,14 @@ if ($id) {
     }
 
     if ($error) {
-        echo $tools->displayError(_t('File does not exist'), '<a href="./">' . _t('Forum') . '</a>');
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        http_response_code(404);
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Download file'),
+            'type'          => 'alert-danger',
+            'message'       => _t('File does not exist'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]);
         exit;
     }
 } else {
