@@ -39,30 +39,29 @@ if ($user->rights == 3 || $user->rights >= 6) {
             'back_url_name' => _t('Back'),
         ]);
         exit;
-    } else {
-        if (empty($_POST['delch'])) {
-            echo $view->render('system::pages/result', [
-                'title'         => _t('Delete posts'),
-                'page_title'    => _t('Delete posts'),
-                'type'          => 'alert-danger',
-                'message'       => _t('You did not choose something to delete'),
-                'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
-                'back_url_name' => _t('Back'),
-            ]);
-            exit;
-        }
-
-        foreach ($_POST['delch'] as $v) {
-            $dc[] = (int) $v;
-        }
-
-        $_SESSION['dc'] = $dc;
-        $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
-        echo $view->render('forum::mass_delete', [
-            'title'      => _t('Delete posts'),
-            'page_title' => _t('Delete posts'),
-            'back_url'   => htmlspecialchars(getenv('HTTP_REFERER')),
+    }
+    if (empty($_POST['delch'])) {
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Delete posts'),
+            'page_title'    => _t('Delete posts'),
+            'type'          => 'alert-danger',
+            'message'       => _t('You did not choose something to delete'),
+            'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
+            'back_url_name' => _t('Back'),
         ]);
         exit;
     }
+
+    foreach ($_POST['delch'] as $v) {
+        $dc[] = (int) $v;
+    }
+
+    $_SESSION['dc'] = $dc;
+    $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
+    echo $view->render('forum::mass_delete', [
+        'title'      => _t('Delete posts'),
+        'page_title' => _t('Delete posts'),
+        'back_url'   => htmlspecialchars(getenv('HTTP_REFERER')),
+    ]);
+    exit;
 }
