@@ -41,56 +41,70 @@ if ($c) {
     $id = $c;
     $lnk = '&amp;c=' . $c;
     $sql = " AND `cat` = '" . $c . "'";
-    $caption = '<b>' . _t('Category Files') . '</b>: ';
+    $caption = _t('Category Files');
     $input = '<input type="hidden" name="c" value="' . $c . '"/>';
+    $type = '';
 } elseif ($s) {
     $id = $s;
     $lnk = '&amp;s=' . $s;
     $sql = " AND `subcat` = '" . $s . "'";
-    $caption = '<b>' . _t('Section files') . '</b>: ';
+    $caption = _t('Section files');
     $input = '<input type="hidden" name="s" value="' . $s . '"/>';
+    $type = 'type=topics';
 } elseif ($t) {
     $id = $t;
     $lnk = '&amp;t=' . $t;
     $sql = " AND `topic` = '" . $t . "'";
-    $caption = '<b>' . _t('Topic Files') . '</b>: ';
+    $caption = _t('Topic Files');
     $input = '<input type="hidden" name="t" value="' . $t . '"/>';
+    $type = 'type=topic';
 } else {
     $id = false;
     $sql = '';
     $lnk = '';
-    $caption = '<b>' . _t('Forum Files') . '</b>';
+    $caption = _t('Forum Files');
     $input = '';
+    $type = '';
 }
 
 if ($c || $s || $t) {
     // Получаем имя нужной категории форума
-
     if (! empty($t)) {
-        $req = $db->query("SELECT `text` FROM `forum_messages` WHERE `id` = '${id}'");
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
     } elseif (! empty($s)) {
         $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
     } elseif (! empty($c)) {
-        $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '${id}'");
+        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
     }
 
     if ($req->rowCount()) {
         $res = $req->fetch();
-        $caption .= $res['name'];
+        $nav_chain->add($res['name'], '/forum/?' . $type . '&amp;id=' . $res['id']);
     } else {
-        echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Forum') . '</a>');
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        echo $view->render('system::pages/result', [
+            'title'         => $caption,
+            'page_title'    => $caption,
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]);
         exit;
     }
 }
+
+$nav_chain->add($caption);
 
 if ($do || isset($_GET['new'])) {
     // Выводим список файлов нужного раздела
     $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE ' . (isset($_GET['new']) ? " `time` > '${new}'" : " `filetype` = '${do}'") . $sql)->fetchColumn();
 
+    if (isset($_GET['new'])) {
+        $caption = _t('New Files');
+    }
+    $files = [];
+
     if ($total) {
-        // Заголовок раздела
-        echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . _t('New Files') : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
         $req = $db->query('SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
             FROM `cms_forum_files`
             LEFT JOIN `forum_messages` ON `cms_forum_files`.`post` = `forum_messages`.`id`
@@ -98,23 +112,42 @@ if ($do || isset($_GET['new'])) {
             WHERE ' . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
             "ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 
-        for ($i = 0; $res = $req->fetch(); ++$i) {
+        while ($res = $req->fetch()) {
             $res_u = $db->query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'")->fetch();
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            // Выводим текст поста
             $text = mb_substr($res['text'], 0, 500);
             $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
-            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $user->config->kmess);
-            $text = '<b><a href="?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
+            $res['post_text'] = $text;
 
-            if (mb_strlen($res['text']) > 500) {
-                $text .= '<br /><a href="?act=show_post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
+            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $user->config->kmess);
+
+            $res['post_time'] = $tools->displayDate($res['time']);
+            $res['user_avatar'] = '';
+            $avatar = 'users/avatar/' . $res['user_id'] . '.png';
+            if (file_exists(UPLOAD_PATH . $avatar)) {
+                $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
             }
 
-            // Формируем ссылку на файл
+            $res['user_profile_link'] = '';
+            if ($user->isValid() && $user->id != $res['user_id'] && ! empty($res_u)) {
+                $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
+            }
+
+            $res['user_is_online'] = false;
+            $res['user_rights_name'] = '';
+            $res['user_name'] = _t('Guest');
+            if (! empty($res_u)) {
+                $res['user_is_online'] = time() <= $res_u['lastdate'] + 300;
+                $res['user_rights_name'] = $user_rights_names[$res_u['rights']] ?? '';
+                $res['user_name'] = $res_u['name'];
+            }
+
+            $res['post_url'] = null;
+            $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['post'];
+            $res['topic_url'] = '/forum/?type=topic&id=' . $res['topic'] . '&amp;page=' . $page;
+
             $fls = @filesize(UPLOAD_PATH . 'forum/attach/' . $res['filename']);
-            $fls = round($fls / 1024, 0);
+            $res['file_size'] = round($fls / 1024, 0);
             $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $res['filename'], PATHINFO_EXTENSION));
             $pic_ext = [
                 'gif',
@@ -123,78 +156,53 @@ if ($do || isset($_GET['new'])) {
                 'png',
             ];
 
+            $res['file_preview'] = '';
+            $res['file_url'] = '/forum/?act=file&amp;id=' . $res['id'];
             if (in_array($att_ext, $pic_ext)) {
-                // Если картинка, то выводим предпросмотр
-                $file = '<div><a class="image-preview" title="' . $res['filename'] . '" data-source="?act=file&amp;id=' . $res['id'] . '" href="?act=file&amp;id=' . $res['id'] . '">';
-                //TODO: thumbinal.php переместить в /assets
-                $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
-            } else {
-                // Если обычный файл, выводим значок и ссылку
-                $file = ($res['del'] ? '<img src="../images/del.png" width="16" height="16" />'
-                        : '') . '<img src="../images/system/' . $res['filetype'] . '.png" width="16" height="16" />&#160;';
+                $res['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($res['filename']));
             }
 
-            $file .= '<a href="?act=file&amp;id=' . $res['id'] . '">' . htmlspecialchars($res['filename']) . '</a><br />';
-            $file .= '<small><span class="gray">' . _t('Size') . ': ' . $fls . ' kb.<br />' . _t('Downloaded') . ': ' . $res['dlcount'] . ' ' . _t('Time') . '</span></small>';
-            $arg = [
-                'iphide' => 1,
-                'sub'    => $file,
-                'body'   => $text,
-            ];
-
-            echo $tools->displayUser($res_u, $arg);
-            echo '</div>';
-        }
-
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-        if ($total > $user->config->kmess) {
-            // Постраничная навигация
-            echo '<p>' . $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
-                '<p><form method="get">' .
-                '<input type="hidden" name="act" value="files"/>' .
-                '<input type="hidden" name="do" value="' . $do . '"/>' . $input . '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-        }
-    } else {
-        echo '<div class="list1">' . _t('The list is empty') . '</div>';
-    }
-} else {
-    // Выводим список разделов, в которых есть файлы
-    $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '${new}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
-    echo '<p>' . ($countnew > 0
-            ? '<a href="?act=files&amp;new' . $lnk . '">' . _t('New Files') . ' (' . $countnew . ')</a>'
-            : _t('No new files')) . '</p>';
-    echo '<div class="phdr">' . $caption . '</div>';
-    $link = [];
-    $total = 0;
-    for ($i = 1; $i < 10; $i++) {
-        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '${i}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
-
-        if ($count > 0) {
-            $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';
-            $total = $total + $count;
+            $files[] = $res;
         }
     }
 
-    foreach ($link as $var) {
-        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
-        ++$i;
-    }
-
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+    echo $view->render('forum::files_list', [
+        'title'         => $caption,
+        'page_title'    => $caption,
+        'pagination'    => $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $user->config->kmess),
+        'back_url'      => '/forum/?act=files' . $lnk,
+        'back_url_name' => _t('List of sections'),
+        'files'         => $files,
+        'total'         => $total,
+        'new_url'       => '?act=files&amp;new' . $lnk,
+    ]);
+    exit; // TODO: Remove it later
 }
 
-$type = '';
-
-if ($c) {
-    $type = '';
-} elseif ($s) {
-    $type = 'type=topics';
-} elseif ($t) {
-    $type = 'type=topic';
+// Выводим список разделов, в которых есть файлы
+$countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '${new}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+$link = [];
+$total = 0;
+$sections = [];
+foreach ($types as $key => $type) {
+    $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '${key}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+    if ($count > 0) {
+        $sections[] = [
+            'url'   => '/forum/?act=files&amp;do=' . $key . $lnk,
+            'name'  => $type,
+            'count' => $count,
+        ];
+    }
+    $total = $total + $count;
 }
 
-echo '<p>' . (($do || isset($_GET['new']))
-        ? '<a href="?act=files' . $lnk . '">' . _t('List of sections') . '</a><br />'
-        : '') . '<a href="./' . ($id ? '?id=' . $id . '&' . $type : '?' . $type) . '">' . _t('Forum') . '</a></p>';
+echo $view->render('forum::files_sections', [
+    'title'      => $caption,
+    'page_title' => $caption,
+    'back_url'   => '?type=topic&id=' . $id,
+    'sections'   => $sections,
+    'total'      => $total,
+    'new_url'    => '?act=files&amp;new' . $lnk,
+    'new_count'  => $countnew,
+]);
+exit; // TODO: Remove it later
