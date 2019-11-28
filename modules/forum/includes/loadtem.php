@@ -17,8 +17,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if (empty($_GET['n'])) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Download topic'),
+        'page_title'    => _t('Download topic'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Wrong data'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
@@ -37,8 +43,14 @@ while ($f = readdir($o)) {
 $tt = count($a);
 
 if (! in_array($n, $b)) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render('system::pages/result', [
+        'title'         => _t('Download topic'),
+        'page_title'    => _t('Download topic'),
+        'type'          => 'alert-danger',
+        'message'       => _t('Wrong data'),
+        'back_url'      => '/forum/',
+        'back_url_name' => _t('Back'),
+    ]);
     exit;
 }
 
