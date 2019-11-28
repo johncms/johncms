@@ -30,12 +30,25 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 WHERE `id` IN (" . implode(',', $dc) . ')
             ');
         }
-
-        echo _t('Marked posts are deleted') . '<br><a href="' . $prd . '">' . _t('Back') . '</a><br>';
+        echo $view->render('system::pages/result', [
+            'title'         => _t('Delete posts'),
+            'page_title'    => _t('Delete posts'),
+            'type'          => 'alert-success',
+            'message'       => _t('Marked posts are deleted'),
+            'back_url'      => $prd,
+            'back_url_name' => _t('Back'),
+        ]);
+        exit;
     } else {
         if (empty($_POST['delch'])) {
-            echo '<p>' . _t('You did not choose something to delete') . '<br><a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a></p>';
-            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Delete posts'),
+                'page_title'    => _t('Delete posts'),
+                'type'          => 'alert-danger',
+                'message'       => _t('You did not choose something to delete'),
+                'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
+                'back_url_name' => _t('Back'),
+            ]);
             exit;
         }
 
@@ -45,7 +58,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
 
         $_SESSION['dc'] = $dc;
         $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
-        echo '<p>' . _t('Do you really want to delete?') . '<br><a href="?act=massdel&amp;yes">' . _t('Delete') . '</a> | ' .
-            '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Cancel') . '</a></p>';
+        echo $view->render('forum::mass_delete', [
+            'title'      => _t('Delete posts'),
+            'page_title' => _t('Delete posts'),
+            'back_url'   => htmlspecialchars(getenv('HTTP_REFERER')),
+        ]);
+        exit;
     }
 }
