@@ -98,48 +98,48 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 'back_url_name' => _t('Continue'),
             ]);
             exit;
-        } else {
-            // Форма редактирования опроса
-            $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'")->fetchColumn();
-            $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
-            $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'");
+        }
+        // Форма редактирования опроса
+        $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'")->fetchColumn();
+        $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
+        $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'");
 
-            $votes = [];
-            $i = 0;
-            while ($vote = $vote_result->fetch()) {
-                $votes[] = [
+        $votes = [];
+        $i = 0;
+        while ($vote = $vote_result->fetch()) {
+            $votes[] = [
                     'input_name'  => $vote['id'] . 'vote',
                     'input_label' => _t('Answer') . ' ' . ($i + 1),
                     'input_value' => htmlentities($vote['name'], ENT_QUOTES, 'UTF-8'),
                     'delete_url'  => $countvote > 2 ? '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote' : '',
                 ];
-                ++$i;
+            ++$i;
+        }
+
+        $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : $countvote;
+        if ($countvote < 20) {
+            if (isset($_POST['plus'])) {
+                ++$count_vote;
+            } elseif (isset($_POST['minus'])) {
+                --$count_vote;
             }
 
-            $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : $countvote;
-            if ($countvote < 20) {
-                if (isset($_POST['plus'])) {
-                    ++$count_vote;
-                } elseif (isset($_POST['minus'])) {
-                    --$count_vote;
-                }
+            if (empty($count_vote)) {
+                $count_vote = $countvote;
+            } elseif ($count_vote > 20) {
+                $count_vote = 20;
+            }
 
-                if (empty($count_vote)) {
-                    $count_vote = $countvote;
-                } elseif ($count_vote > 20) {
-                    $count_vote = 20;
-                }
-
-                for ($vote = $i; $vote < $count_vote; $vote++) {
-                    $votes[] = [
+            for ($vote = $i; $vote < $count_vote; $vote++) {
+                $votes[] = [
                         'input_name'  => $vote,
                         'input_label' => _t('Answer') . ' ' . ($vote + 1),
                         'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
                     ];
-                }
             }
+        }
 
-            echo $view->render('forum::edit_poll', [
+        echo $view->render('forum::edit_poll', [
                 'title'      => _t('Edit Poll'),
                 'page_title' => _t('Edit Poll'),
                 'id'         => $id,
@@ -149,7 +149,6 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 'poll_name'  => htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8'),
                 'votes'      => $votes,
             ]);
-            exit; // TODO: Remove it later
-        }
+        exit; // TODO: Remove it later
     }
 }
