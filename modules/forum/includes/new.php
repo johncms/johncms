@@ -18,7 +18,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\Api\UserInterface  $user
  */
 
-$textl = _t('Forum') . ' | ' . _t('Unread');
 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
 if (empty($_SESSION['uid'])) {
@@ -45,8 +44,13 @@ if ($user->isValid()) {
                 $db->query('INSERT INTO cms_forum_rdm (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
                     ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)');
             }
-
-            echo '<div class="menu"><p>' . _t('All topics marked as read') . '<br /><a href="./">' . _t('Forum') . '</a></p></div>';
+            echo $view->render('system::pages/result', [
+                'title'         => _t('Unread'),
+                'type'          => 'alert-success',
+                'message'       => _t('All topics marked as read'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Forum'),
+            ]);
             break;
 
         case 'period':
@@ -59,20 +63,7 @@ if ($user->isValid()) {
             } else {
                 $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > '${vr1}' AND (`deleted` != '1' OR deleted IS NULL)");
             }
-
             $count = $req->fetchColumn();
-            echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . sprintf(_t('All for period %d hours'),
-                    $vr) . '</div>';
-
-            // Форма выбора периода времени
-            echo '<div class="topmenu"><form action="?act=new&amp;do=period" method="post">' .
-                '<input type="text" maxlength="3" name="vr" value="' . $vr . '" size="3"/>' .
-                '<input type="submit" name="submit" value="' . _t('Show period') . '"/>' .
-                '</form></div>';
-
-            if ($count > $user->config->kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess) . '</div>';
-            }
 
             if ($count) {
                 if ($user->rights == 9) {
@@ -89,67 +80,47 @@ if ($user->isValid()) {
                     WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess);
                 }
 
-                for ($i = 0; $res = $req->fetch(); ++$i) {
-                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-                    $colmes1 = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
-                    $cpg = ceil($colmes1 / $user->config->kmess);
-
-                    if ($res['closed']) {
-                        echo '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">';
-                    } elseif ($res['deleted']) {
-                        echo '<img src="' . $assets->url('images/old/dl.gif') . '" alt="" class="icon">';
+                $topics = [];
+                while ($res = $req->fetch()) {
+                    if ($user->rights >= 7) {
+                        $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
+                        $res['show_last_author'] = $res['mod_last_post_author_name'];
+                        $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                     } else {
-                        echo '<img src="' . $assets->url('images/old/np.gif') . '" alt="" class="icon">';
+                        $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
+                        $res['show_last_author'] = $res['last_post_author_name'];
+                        $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
                     }
 
-                    if ($res['pinned']) {
-                        echo '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">';
-                    }
+                    $res['has_icons'] = ($res['pinned'] || $res['has_poll'] || $res['closed'] || $res['deleted']);
 
-                    if ($res['has_poll'] == 1) {
-                        echo '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">';
-                    }
+                    $res['url'] = '/forum/?type=topic&amp;id=' . $res['id'];
 
-                    echo '&#160;<a href="?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
-                        '</a>&#160;[' . $colmes1 . ']';
+                    // Url to last page
+                    $res['last_page_url'] = $res['url'];
+                    $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                     if ($cpg > 1) {
-                        echo '<a href="?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
+                        $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                     }
 
-                    echo '<br /><div class="sub"><a href="?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
-
-                    echo $res['user_name'];
-
-                    if ($colmes1 > 1) {
-                        echo '&#160;/&#160;' . ($user->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name']);
-                    }
-
-                    echo ' <span class="gray">' . $tools->displayDate(($user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
-                    echo '</div></div>';
+                    $topics[] = $res;
                 }
-            } else {
-                echo '<div class="menu"><p>' . _t('There is nothing new in this forum for selected period') . '</p></div>';
             }
 
-            echo '<div class="phdr">' . _t('Total') . ': ' . $count . '</div>';
-
-            if ($count > $user->config->kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess) . '</div>' .
-                    '<p><form action="?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
-                    <input type="text" name="page" size="2"/>
-                    <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-            }
+            echo $view->render('forum::new_topics', [
+                'pagination'    => $tools->displayPagination('/forum/?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess),
+                'title'         => sprintf(_t('All for period %d hours'), $vr),
+                'page_title'    => sprintf(_t('All for period %d hours'), $vr),
+                'empty_message' => _t('There is nothing new in this forum for selected period'),
+                'topics'        => $topics ?? [],
+                'total'         => $count,
+                'show_period'   => true,
+            ]);
             break;
 
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
             $total = di('counters')->forumNew();
-            echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
-
-            if ($total > $user->config->kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>';
-            }
-
             if ($total > 0) {
                 $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.id as frm_id, frm.`name` AS frm_name
                 FROM `forum_topic` tpc
@@ -159,119 +130,112 @@ if ($user->isValid()) {
                 WHERE " . ($user->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
                 ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, " . $user->config->kmess);
 
-                for ($i = 0; $res = $req->fetch(); ++$i) {
-                    if ($res['deleted']) {
-                        echo '<div class="rmenu">';
+                $topics = [];
+                while ($res = $req->fetch()) {
+                    if ($user->rights >= 7) {
+                        $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
+                        $res['show_last_author'] = $res['mod_last_post_author_name'];
+                        $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                     } else {
-                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                        $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
+                        $res['show_last_author'] = $res['last_post_author_name'];
+                        $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
                     }
 
-                    $post_count = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
-                    $cpg = ceil($post_count / $user->config->kmess);
+                    $res['has_icons'] = ($res['pinned'] || $res['has_poll'] || $res['closed'] || $res['deleted']);
 
-                    // Значки
-                    $icons = [
-                        (isset($np)
-                            ? (! $res['pinned'] ? '<img src="' . $assets->url('images/old/op.gif') . '" alt="" class="icon">' : '')
-                            : '<img src="' . $assets->url('images/old/np.gif') . '" alt="" class="icon">'
-                        ),
-                        ($res['pinned']
-                            ? '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">'
-                            : ''
-                        ),
-                        ($res['has_poll']
-                            ? '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">'
-                            : ''
-                        ),
-                        ($res['closed']
-                            ? '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">'
-                            : ''
-                        ),
-                    ];
-                    echo implode('', array_filter($icons));
-                    echo '<a href="?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
-                        '</a>&#160;[' . $post_count . ']';
+                    $res['url'] = '/forum/?type=topic&amp;id=' . $res['id'];
 
+                    // Url to last page
+                    $res['last_page_url'] = $res['url'];
+                    $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                     if ($cpg > 1) {
-                        echo '&#160;<a href="?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
+                        $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                     }
 
-                    $last_author = $user->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
-                    $last_post_date = $user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
+                    $res['forum_url'] = '';
+                    if (! empty($res['frm_id'])) {
+                        $res['forum_url'] = '/forum/?id=' . $res['frm_id'];
+                    }
 
-                    echo '<div class="sub">' . $res['user_name'] . ($post_count > 1 ? '&#160;/&#160;' . $last_author : '') .
-                        ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span><br />' .
-                        '<a href="?id=' . $res['frm_id'] . '">' . $res['frm_name'] . '</a>&#160;/&#160;<a href="?type=topics&id=' . $res['section_id'] . '">' . $res['rzd_name'] . '</a>' .
-                        '</div></div>';
+                    $res['section_url'] = '';
+                    if (! empty($res['section_id'])) {
+                        $res['section_url'] = '/forum/?type=topics&id=' . $res['section_id'];
+                    }
+
+                    $topics[] = $res;
                 }
-            } else {
-                echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
             }
 
-            echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-            if ($total > $user->config->kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>' .
-                    '<p><form method="get">' .
-                    '<input type="hidden" name="act" value="new"/>' .
-                    '<input type="text" name="page" size="2"/>' .
-                    '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-                    '</form></p>';
-            }
-
-            if ($total) {
-                echo '<p><a href="?act=new&amp;do=reset">' . _t('Mark as read') . '</a></p>';
-            }
+            echo $view->render('forum::new_topics', [
+                'pagination'    => $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess),
+                'title'         => _t('Unread'),
+                'page_title'    => _t('Unread'),
+                'empty_message' => _t('The list is empty'),
+                'topics'        => $topics ?? [],
+                'total'         => $total,
+                'show_period'   => false,
+                'mark_as_read'  => '?act=new&amp;do=reset',
+            ]);
+            break;
     }
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
-    echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Last 10') . '</div>';
-    $req = $db->query('SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name 
+    $req = $db->query('SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
     FROM `forum_topic` tpc
     JOIN forum_sections rzd ON rzd.id = tpc.section_id
     JOIN forum_sections frm ON frm.id = rzd.parent
     WHERE (`deleted` <> 1 OR deleted IS NULL)
     ORDER BY `last_post_date` DESC LIMIT 10');
 
-    if ($req->rowCount()) {
-        for ($i = 0; $res = $req->fetch(); ++$i) {
-            $colmes1 = $res['post_count'];
-            $cpg = ceil($colmes1 / $user->config->kmess);
-            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-            // Значки
-            $icons = [
-                ($res['pinned']
-                    ? '<img src="' . $assets->url('images/old/pt.gif') . '" alt="" class="icon">'
-                    : ''
-                ),
-                ($res['has_poll']
-                    ? '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">'
-                    : ''
-                ),
-                ($res['closed']
-                    ? '<img src="' . $assets->url('images/old/tz.gif') . '" alt="" class="icon">'
-                    : ''
-                ),
-            ];
-            echo implode('', array_filter($icons));
-            echo '<a href="?type=topic&id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a>&#160;[' . $colmes1 . ']';
+    $total = $req->rowCount();
+    if ($total) {
+        $topics = [];
+        while ($res = $req->fetch()) {
+            if ($user->rights >= 7) {
+                $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
+                $res['show_last_author'] = $res['mod_last_post_author_name'];
+                $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
+            } else {
+                $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
+                $res['show_last_author'] = $res['last_post_author_name'];
+                $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
+            }
 
+            $res['has_icons'] = ($res['pinned'] || $res['has_poll'] || $res['closed'] || $res['deleted']);
+
+            $res['url'] = '/forum/?type=topic&amp;id=' . $res['id'];
+
+            // Url to last page
+            $res['last_page_url'] = $res['url'];
+            $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
             if ($cpg > 1) {
-                echo '&#160;<a href="?type=topic&id=' . $res['id'] . '&amp;clip&amp;page=' . $cpg . '">&gt;&gt;</a>';
+                $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
             }
 
-            echo '<br><div class="sub"><a href="?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
-            echo $res['user_name'];
-
-            if (! empty($res['last_post_author_name'])) {
-                echo '&#160;/&#160;' . $res['last_post_author_name'];
+            $res['forum_url'] = '';
+            if (! empty($res['frm_id'])) {
+                $res['forum_url'] = '/forum/?id=' . $res['frm_id'];
             }
 
-            echo ' <span class="gray">' . date('d.m.y / H:i', $res['last_post_date']) . '</span>';
-            echo '</div></div>';
+            $res['section_url'] = '';
+            if (! empty($res['section_id'])) {
+                $res['section_url'] = '/forum/?type=topics&id=' . $res['section_id'];
+            }
+
+            $topics[] = $res;
         }
-    } else {
-        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
-    echo '<div class="phdr"><a href="./">' . _t('Forum') . '</a></div>';
+
+    echo $view->render('forum::new_topics', [
+        'pagination'    => '',
+        'title'         => _t('Last 10'),
+        'page_title'    => _t('Last 10'),
+        'empty_message' => _t('The list is empty'),
+        'topics'        => $topics ?? [],
+        'total'         => $total,
+        'show_period'   => false,
+    ]);
 }
+
+exit;

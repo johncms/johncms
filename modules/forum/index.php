@@ -324,7 +324,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
                 }
 
-                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u, 
+                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
        (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
 
                 echo $view->render('forum::section', [
@@ -377,7 +377,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
                 }
 
-                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u, 
+                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
        (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
 
                 // Check access to create topic
@@ -715,7 +715,7 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             $sections[] = $res;
         }
 
-        $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u, 
+        $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
        (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
