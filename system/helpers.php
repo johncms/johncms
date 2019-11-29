@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 use Zend\I18n\Translator\Translator;
 
 function di(string $service)
