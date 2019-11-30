@@ -9,7 +9,6 @@ enabled:
   - binary_operator_spaces
   - blank_line_after_opening_tag
   - blank_line_before_declare
-  - blank_line_before_return
   - blank_line_before_try
   - combine_consecutive_issets
   - combine_consecutive_unsets
@@ -72,7 +71,6 @@ enabled:
   - object_operator_without_whitespace
   - phpdoc_add_missing_param_annotation
   - phpdoc_indent
-  - phpdoc_order
   - phpdoc_scalar
   - phpdoc_types
   - property_separation
