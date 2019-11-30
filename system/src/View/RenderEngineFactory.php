@@ -24,8 +24,7 @@ class RenderEngineFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $engine = new Engine;
-        $engine->setFileExtension('phtml');
+        $engine = new Engine('phtml');
         $engine->addFolder('system', ROOT_PATH . 'themes/default/templates');
         $engine->loadExtension($container->get(Assets::class));
 
