@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var PDO                       $db
  * @var Johncms\Api\UserInterface $user
- * @var Mobicms\Render\Engine      $view
+ * @var Johncms\View\Render      $view
  */
 
 // News cleaning

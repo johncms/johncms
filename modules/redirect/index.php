@@ -10,13 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Engine $view */
+/** @var Render $view */
 
-$view = di(Engine::class);
+$view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('redirect', __DIR__ . '/templates/');

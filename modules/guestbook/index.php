@@ -16,7 +16,7 @@ use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -29,7 +29,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var EnvironmentInterface $env
  * @var ToolsInterface       $tools
  * @var UserInterface        $user
- * @var Engine               $view
+ * @var Render               $view
  * @var NavChainInterface    $nav_chain
  */
 
@@ -39,7 +39,7 @@ $tools = di(ToolsInterface::class);
 $env = di(EnvironmentInterface::class);
 $bbcode = di(BbcodeInterface::class);
 $config = di(ConfigInterface::class);
-$view = di(Engine::class);
+$view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 $route = di('route');
 

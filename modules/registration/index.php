@@ -14,7 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -24,14 +24,14 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var ConfigInterface    $config
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
- * @var Engine             $view
+ * @var Render             $view
  * @var NavChainInterface  $nav_chain
  */
 
 $config = di(ConfigInterface::class);
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
-$view = di(Engine::class);
+$view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля

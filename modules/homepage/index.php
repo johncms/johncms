@@ -11,17 +11,17 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\NavChainInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Engine                   $view
+ * @var Render                   $view
  * @var Johncms\Utility\NavChain $nav_chain
  */
 
-$view = di(Engine::class);
+$view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 $nav_chain->showHomePage(false);
 
