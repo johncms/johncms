@@ -1,0 +1,87 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $sections
+ * @var $online
+ * @var $files_count
+ * @var $unread_count
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form action="/forum/?act=search" method="post">
+            <div class="form-group">
+                <label for="search_query"><?= _t('Search query') ?></label>
+                <input type="text" class="form-control" id="search_query" placeholder="<?= _t('Search query') ?>"
+                       name="search" value="<?= $query ?>" maxlength="150" minlength="4" required>
+                <div class="small text-muted"><?= _t('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') ?></div>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= ($search_t ? 'checked="checked"' : '') ?>>
+                    <label class="custom-control-label" for="search_t"><?= _t('Search in the topic names') ?></label>
+                </div>
+            </div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Search') ?></button>
+        </form>
+    </div>
+</div>
+
+<?php if (! empty($query) && empty($total)): ?>
+    <div class="alert alert-info">
+        <?= _t('Your search did not match any results') ?>
+    </div>
+<?php endif; ?>
+
+<?php foreach ($results as $result): ?>
+    <div class="shadow post-item post-item mb-2">
+        <div class="post-header d-flex justify-content-between border-bottom pb-1">
+            <div class="d-flex align-items-end">
+                <a href="<?= $result['topic_url'] ?>" class="user-login mr-2"><?= $result['name'] ?></a>
+                <span class="post-date"><?= $result['formatted_date'] ?></span>
+            </div>
+            <div class="post-actions">
+                <a href="<?= $result['topic_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Go to Topic') ?></a>
+                <?php if (! empty($result['post_url'])): ?>
+                    <a href="<?= $result['post_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Go to Message') ?></a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="pt-2">
+            <?php if (! $search_t): ?>
+                <div class="border-bottom pb-2 mb-2">
+                    <?= $result['formatted_text'] ?>
+                </div>
+            <?php endif; ?>
+            <?= _t('Author') ?>: <a href="/profile/?id=<?= $result['user_id'] ?>"><?= $result['user_name'] ?></a>
+        </div>
+    </div>
+<?php endforeach; ?>
+<div class="mb-3 pt-1">
+    <div><?= _t('Total') ?>: <?= $total ?></div>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div class="mt-1"><?= $pagination ?></div>
+    <?php endif ?>
+</div>
+<?php if (! empty($search_history)): ?>
+    <div class="mb-2 alert alert-secondary">
+        <div class="h5"><?= _t('Search History') ?></div>
+        <div><?= implode(' / ', $search_history) ?></div>
+        <div class="mt-1">
+            <a href="<?= $history_reset_url ?>"><?= _t('Clear history') ?></a>
+        </div>
+    </div>
+<?php endif; ?>
+<a href="/forum/" class="mb-2"><?= _t('Forum') ?></a>
+
