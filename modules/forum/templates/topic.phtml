@@ -206,6 +206,7 @@ $this->layout('system::layout/default', [
                     <?php if (! empty($item['quote_url'])): ?>
                         <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Quote') ?></a>
                     <?php endif; ?>
+                    <a href="<?= $item['post_url'] ?>" class="btn btn-secondary btn-sm">#</a>
                 </div>
             </div>
             <div class="post-body d-flex align-items-start pt-3 pb-3">
