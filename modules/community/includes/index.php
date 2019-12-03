@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var Johncms\Utility\Counters         $counters
  * @var PDO                              $db
- * @var Mobicms\Render\Engine             $view
+ * @var Johncms\View\Render             $view
  */
 
 $counters = di('counters');

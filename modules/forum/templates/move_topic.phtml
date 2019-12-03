@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $current_section
+ * @var $back_url
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="row">
+    <div class="col-md-6">
+        <form name="move_topic" class="card card-body shadow" action="/forum/?act=per&amp;id=<?= $id ?>" method="post">
+            <div class="mb-2">
+                <div><?= _t('Category') ?></div>
+                <b><?= $current_section['name'] ?></b>
+            </div>
+            <?php if (! empty($current_sections)): ?>
+                <div class="form-group">
+                    <label for="section"><?= _t('New section') ?></label>
+                    <select class="form-control" name="razd" id="section">
+                        <?php foreach ($current_sections as $section): ?>
+                            <option value="<?= $section['id'] ?>"><?= $section['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-warning">
+                    <?= _t('Category is empty') ?>
+                </div>
+            <?php endif; ?>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Move') ?></button>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= _t('Back to topic') ?></a>
+            </div>
+            <?php if (! empty($other_categories)): ?>
+                <div class="mt-4">
+                    <div class="h4"><?= _t('Other categories') ?></div>
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($other_categories as $category): ?>
+                            <li class="list-group-item">
+                                <a href="?act=per&amp;id=<?= $id ?>&amp;other=<?= $category['id'] ?>"><?= $category['name'] ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+        </form>
+    </div>
+</div>

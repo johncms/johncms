@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
 /**
- * @var Engine         $view
+ * @var Render         $view
  * @var PDO            $db
  * @var ToolsInterface $tools
  * @var UserInterface  $user
@@ -28,7 +28,7 @@ define('_IN_JOHNADM', 1);
 $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
-$view = di(Engine::class);
+$view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');

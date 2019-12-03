@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -27,7 +27,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
  * @var ConfigInterface    $config
  * @var PDO                $db
  * @var ToolsInterface     $tools
- * @var Engine             $view
+ * @var Render             $view
  * @var UserInterface      $user
  */
 
@@ -35,7 +35,7 @@ $config = di(ConfigInterface::class);
 $db = di(PDO::class);
 $tools = di(Johncms\Api\ToolsInterface::class);
 $user = di(UserInterface::class);
-$view = di(Engine::class);
+$view = di(Render::class);
 
 // Регистрируем папку с языками модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');

@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\NavChainInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -29,7 +29,7 @@ $db = di(PDO::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = di(Johncms\Api\ToolsInterface::class);
 
-$view = di(Engine::class);
+$view = di(Render::class);
 
 /** @var NavChainInterface $nav_chain */
 $nav_chain = di(NavChainInterface::class);

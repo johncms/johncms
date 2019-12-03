@@ -13,22 +13,24 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\Api\UserInterface $user
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$textl = _t('Forum search');
-echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
+$nav_chain->add(_t('Forum search'));
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)
 {
     $search = str_replace('*', '', $search);
 
-    return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu',
-        '<span style="background-color: #FFFF33">$1</span>', $text);
+    return mb_strlen($search) < 3 ? $text : preg_replace(
+        '|(' . preg_quote($search, '/') . ')|siu',
+        '<span style="background-color: #FFFF33">$1</span>',
+        $text
+    );
 }
 
 switch ($mod) {
@@ -39,13 +41,15 @@ switch ($mod) {
                 $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . $user->id . "' AND `key` = 'forum_search' LIMIT 1");
                 header('Location: ?act=search');
             } else {
-                echo '<form action="?act=search&amp;mod=reset" method="post">' .
-                    '<div class="rmenu">' .
-                    '<p>' . _t('Do you really want to clear the search history?') . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
-                    '<p><a href="?act=search">' . _t('Cancel') . '</a></p>' .
-                    '</div>' .
-                    '</form>';
+                echo $view->render(
+                    'forum::clear_search_history',
+                    [
+                        'title'    => _t('Forum search'),
+                        'page_title'    => _t('Forum search'),
+                        'back_url' => '/forum/?act=search',
+                    ]
+                );
+                exit;
             }
         }
         break;
@@ -58,68 +62,64 @@ switch ($mod) {
         //$search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
         $search_t = isset($_REQUEST['t']);
         $to_history = false;
-        echo '<div class="gmenu"><form action="?act=search" method="post"><p>' .
-            '<input type="text" value="' . ($search ? $tools->checkout($search) : '') . '" name="search" />' .
-            '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
-            '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in the topic names') .
-            '</p></form></div>';
+        $total = 0;
 
         // Проверям на ошибки
         $error = $search && mb_strlen($search) < 4 || mb_strlen($search) > 64 ? true : false;
-
+        $results = [];
         if ($search && ! $error) {
             // Выводим результаты запроса
             $array = explode(' ', $search);
             $count = count($array);
             if ($search_t) {
                 $query = $db->quote('%' . $search . '%');
-                $total = $db->query('
+                $total = $db->query(
+                    '
                 SELECT COUNT(*) FROM `forum_topic`
                 WHERE `name` LIKE ' . $query . '
-                ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)")
+                )->fetchColumn();
             } else {
                 $query = $db->quote($search);
-                $total = $db->query("
+                $total = $db->query(
+                    "
                 SELECT COUNT(*) FROM `forum_messages`
                 WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
-                " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
-            }
-
-            echo '<div class="phdr">' . _t('Search results') . '</div>';
-
-            if ($total > $user->config->kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
+                " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)")
+                )->fetchColumn();
             }
 
             if ($total) {
                 $to_history = true;
                 if ($search_t) {
-                    $req = $db->query('
+                    $req = $db->query(
+                        '
                     SELECT *
                     FROM `forum_topic`
                     WHERE `name` LIKE ' . $query . '
                     ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `name` DESC
-                    LIMIT ${start}, " . $user->config->kmess);
+                    LIMIT ${start}, " . $user->config->kmess
+                    );
                 } else {
-                    $req = $db->query("
+                    $req = $db->query(
+                        "
                     SELECT *, MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE) as `rel`
                     FROM `forum_messages`
                     WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
                     " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `rel` DESC
-                    LIMIT ${start}, " . $user->config->kmess);
+                    LIMIT ${start}, " . $user->config->kmess
+                    );
                 }
 
                 $i = 0;
 
                 while ($res = $req->fetch()) {
-                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-
                     if (! $search_t) {
                         // Поиск только в тексте
                         $res_t = $db->query("SELECT `id`,`name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
-                        echo '<b>' . $res_t['name'] . '</b><br />';
+                        $res['name'] = $res_t['name'];
                     } else {
                         // Поиск в названиях тем
                         $res_p = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '" . $res['id'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
@@ -127,11 +127,7 @@ switch ($mod) {
                         foreach ($array as $val) {
                             $res['name'] = ReplaceKeywords($val, $res['name']);
                         }
-
-                        echo '<b>' . $res['name'] . '</b><br />';
                     }
-
-                    echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a> ';
 
                     if ($search_t) {
                         $date = $user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
@@ -139,55 +135,61 @@ switch ($mod) {
                         $date = $res['date'];
                     }
 
-                    echo ' <span class="gray">(' . $tools->displayDate((int) $date) . ')</span><br>';
+                    $res['formatted_date'] = $tools->displayDate($date);
+
                     $text = $search_t ? $res_p['name'] : $res['text'];
 
                     foreach ($array as $srch) {
                         $needle = strtolower(str_replace('*', '', $srch));
                         $pos = mb_stripos($res['text'] ?? '', $needle);
-
                         if ($pos !== false) {
                             break;
                         }
                     }
-
                     if (! isset($pos) || $pos < 100) {
                         $pos = 100;
                     }
-
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
                     $text = $tools->checkout(mb_substr($text, ($pos - 100), 400), 1);
-
                     if (! $search_t) {
                         foreach ($array as $val) {
                             $text = ReplaceKeywords($val, $text);
                         }
                     }
 
-                    echo $text;
-
+                    $res['formatted_text'] = $text;
+                    $res['read_more'] = '';
                     if (mb_strlen($res['text'] ?? '') > 500) {
-                        echo '...<a href="?act=show_post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
+                        $res['read_more'] = '/forum/?act=show_post&amp;id=' . $res['id'];
+                    }
+                    $res['topic_url'] = '/forum/?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']);
+
+                    $res['post_url'] = '';
+                    if (! $search_t) {
+                        $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
                     }
 
-                    echo '<br /><a href="?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
-                            : ' | <a href="?act=show_post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
-                    echo '</div>';
-                    ++$i;
+                    $results[] = $res;
                 }
-            } else {
-                echo '<div class="rmenu"><p>' . _t('Your search did not match any results') . '</p></div>';
             }
-            echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
         } else {
             if ($error) {
-                echo $tools->displayError(_t('Invalid length'));
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => _t('Forum search'),
+                        'type'          => 'alert-danger',
+                        'message'       => _t('Invalid length'),
+                        'back_url'      => '/forum/?act=search',
+                        'back_url_name' => _t('Repeat'),
+                    ]
+                );
+                exit;
             }
-
-            echo '<div class="phdr"><small>' . _t('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') . '</small></div>';
         }
 
         // Обрабатываем и показываем историю личных поисковых запросов
+        $history_list = [];
         if ($user->isValid()) {
             $req = $db->query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . $user->id . "' AND `key` = 'forum_search' LIMIT 1");
 
@@ -202,11 +204,13 @@ switch ($mod) {
                     }
 
                     $history[] = $search;
-                    $db->exec('UPDATE `cms_users_data` SET
+                    $db->exec(
+                        'UPDATE `cms_users_data` SET
                         `val` = ' . $db->quote(serialize($history)) . "
                         WHERE `user_id` = '" . $user->id . "' AND `key` = 'forum_search'
                         LIMIT 1
-                    ");
+                    "
+                    );
                 }
 
                 sort($history);
@@ -214,32 +218,31 @@ switch ($mod) {
                 foreach ($history as $val) {
                     $history_list[] = '<a href="?act=search&amp;search=' . urlencode($val) . '">' . htmlspecialchars($val) . '</a>';
                 }
-
-                // Показываем историю запросов
-                echo '<div class="topmenu">' .
-                    '<b>' . _t('Search History') . '</b> <span class="red"><a href="?act=search&amp;mod=reset">[x]</a></span><br />' .
-                    implode(' | ', $history_list) .
-                    '</div>';
             } elseif ($to_history) {
                 $history[] = $search;
-                $db->exec("INSERT INTO `cms_users_data` SET
+                $db->exec(
+                    "INSERT INTO `cms_users_data` SET
                     `user_id` = '" . $user->id . "',
                     `key` = 'forum_search',
                     `val` = " . $db->quote(serialize($history)) . '
-                ');
+                '
+                );
             }
         }
 
-        // Постраничная навигация
-        if (isset($total) && $total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-                '<p><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
-                '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-                '</form></p>';
-        }
-
-        echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br />' : '') . '<a href="./">' . _t('Forum') . '</a></p>';
+        echo $view->render(
+            'forum::forum_search',
+            [
+                'title'             => _t('Forum search'),
+                'page_title'        => _t('Forum search'),
+                'pagination'        => $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess),
+                'query'             => $tools->checkout($search, 0, 0),
+                'search_t'          => $search_t,
+                'results'           => $results,
+                'total'             => $total,
+                'search_history'    => $history_list,
+                'history_reset_url' => '/forum/?act=search&amp;mod=reset',
+            ]
+        );
+        exit;
 }
-
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

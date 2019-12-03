@@ -5,6 +5,7 @@
  * @var string $files_name
  * @var string $files_count
  */
+
 ?>
 <?php if (! $config->mod_forum): ?>
     <div class="alert alert-danger"><?= _t('Forum is closed') ?></div>
@@ -54,10 +55,10 @@
             </a>
         </div>
     </div>
-    <form class="form-inline search-in-nav mb-0" action="?act=search">
+    <form class="form-inline search-in-nav mb-0" action="?act=search" method="post">
         <div class="input-with-inner-btn">
-            <input class="form-control pr-5 border-radius-12" name="search" type="search" placeholder="<?= _t('Search') ?>">
-            <button class="btn icon-button" type="submit" name="submit" value="s">
+            <input class="form-control pr-5 border-radius-12" name="search" type="search" minlength="4" placeholder="<?= _t('Search') ?>">
+            <button class="btn icon-button" type="submit" name="submit" value="1">
                 <svg class="icon">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
                 </svg>

@@ -1,0 +1,103 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $show_post_preview
+ * @var $preview_message
+ * @var $back_url
+ * @var $msg
+ * @var $form_action
+ * @var $is_new_message
+ * @var $is_quote
+ * @var $message
+ * @var $add_file
+ * @var $topic
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if ($show_post_preview): ?>
+    <div class="shadow post-item post-item mb-2" id="first_post_block">
+        <div class="post-header d-flex justify-content-between border-bottom pb-1">
+            <div class="d-flex align-items-center">
+                <a class="user-login mr-2"><?= $user->name ?></a>
+                <span class="post-date"><?= $tools->displayDate(time()) ?></span>
+            </div>
+        </div>
+        <div class="post-body d-flex align-items-start pt-3 pb-3">
+            <div class="user-avatar mr-2 mr-md-4">
+                <div class="avatar-image rounded-circle overflow-hidden">
+                    <?php if (! empty($user_avatar)): ?>
+                        <img src="<?= $user_avatar ?>" class="img-fluid" alt=".">
+                    <?php else: ?>
+                        <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
+                    <?php endif; ?>
+                </div>
+                <div class="user-status online shadow"></div>
+            </div>
+            <div class="overflow-auto flex-grow-1"><?= $preview_message ?></div>
+        </div>
+    </div>
+    <div class="border-bottom mt-4 mb-3"></div>
+<?php endif; ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <form name="message_form" action="<?= $form_action ?>" method="post">
+            <input type="hidden" name="token" value="<?= $token ?>">
+            <div class="h4"><?= _t('Topic') ?>: <?= $topic['name'] ?></div>
+            <?php if (! $is_new_message): ?>
+                <?php if ($is_quote): ?>
+                    <div>
+                        <?= $message['user_name'] ?> (<a href="?act=show_post&amp;id=<?= $message['id'] ?>"><?= $message['time_formatted'] ?></a>)
+                    </div>
+                    <div class="form-group">
+                        <label for="quote"><?= _t('Quote') ?></label>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="citata" id="quote" required class="form-control"><?= $quote_msg ?></textarea>
+                        <div class="text-muted small"><?= _t('Only allowed 200 characters, other text will be cropped.') ?></div>
+                    </div>
+                <?php else: ?>
+                    <h4><?= _t('Appeal') ?></h4>
+                    <div class="custom-control custom-radio mb-1">
+                        <input type="radio" class="custom-control-input" name="txt" value="0" id="txt_0" <?= ! $txt ? 'checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="txt_0"><b><?= $message['user_name'] ?></b>,</label>
+                    </div>
+                    <div class="custom-control custom-radio mb-1">
+                        <input type="radio" class="custom-control-input" name="txt" value="2" id="txt_1" <?= $txt == 2 ? 'checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="txt_1"><b><?= $message['user_name'] ?></b>, <?= _t('I am glad to answer you') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="txt" value="3" id="txt_2" <?= $txt == 3 ? 'checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="txt_2"><b><?= $message['user_name'] ?></b>, <?= _t('respond to Your message') ?> </label>
+                        (<a href="?act=show_post&amp;id=<?= $message['id'] ?>"><?= $message['time_formatted'] ?></a>)
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <div class="form-group">
+                <label for="msg"><?= _t('Message') ?></label>
+                <div><?= $bbcode ?></div>
+                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
+            </div>
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles" <?= $add_file ? 'checked="checked"' : '' ?>>
+                <label class="custom-control-label" for="addfiles"><?= _t('Add File') ?></label>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
+                <?php if (! empty($settings_forum['preview'])): ?>
+                    <button type="submit" class="btn btn-secondary"><?= _t('Preview') ?></button>
+                <?php endif; ?>
+            </div>
+            <div class="mt-3">
+                <a href="/help/?act=smileys" class="pr-2"><?= _t('Smilies') ?></a> <a href="<?= $back_url ?>"><?= _t('Back') ?></a>
+            </div>
+        </form>
+    </div>
+</div>

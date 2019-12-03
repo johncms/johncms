@@ -14,7 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Extension\Assets;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
@@ -30,7 +30,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var PDO                $db
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
- * @var Engine             $view
+ * @var Render             $view
  */
 
 $assets = di(Assets::class);
@@ -38,7 +38,7 @@ $config = di(ConfigInterface::class);
 $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
-$view = di(Engine::class);
+$view = di(Render::class);
 
 // Регистрируем языки модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');

@@ -11,20 +11,20 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\UserInterface;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO                      $db
  * @var Johncms\Utility\Counters $counters
- * @var Engine                   $view
+ * @var Render                   $view
  * @var UserInterface            $user
  */
 
 $db = di(PDO::class);
 $counters = di('counters');
-$view = di(Engine::class);
+$view = di(Render::class);
 $user = di(UserInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля

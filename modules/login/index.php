@@ -14,7 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Users\User;
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Johncms\Api\NavChainInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -22,13 +22,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var ConfigInterface    $config
  * @var UserInterface      $user
- * @var Engine             $view
+ * @var Render             $view
  * @var NavChainInterface  $nav_chain
  */
 
 $config = di(ConfigInterface::class);
 $user = di(UserInterface::class);
-$view = di(Engine::class);
+$view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 
 // Регистрируем Namespace для шаблонов модуля

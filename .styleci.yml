@@ -1,4 +1,4 @@
-preset: psr2
+preset: none
 
 finder:
   exclude:
@@ -7,10 +7,12 @@ finder:
 
 enabled:
   - binary_operator_spaces
+  - blank_line_after_namespace
   - blank_line_after_opening_tag
   - blank_line_before_declare
-  - blank_line_before_return
   - blank_line_before_try
+  - braces
+  - class_definition
   - combine_consecutive_issets
   - combine_consecutive_unsets
   - combine_nested_dirname
@@ -20,21 +22,30 @@ enabled:
   - const_visibility_required
   - declare_strict_types
   - dir_constant
+  - elseif
+  - encoding
   - explicit_string_variable
   - final_internal_class
+  - full_opening_tag
   - fully_qualified_strict_types
+  - function_declaration
   - function_to_constant
   - function_typehint_space
   - hash_to_slash_comment
   - implode_call
   - include
+  - indentation
   - is_null
   - linebreak_after_opening_tag
   - logical_operators
+  - lowercase_constants
+  - lowercase_keywords
   - lowercase_static_reference
   - magic_constant_casing
   - magic_method_casing
+  - method_argument_space
   - method_separation
+  - method_visibility_required
   - modernize_types_casting
   - multiline_comment_opening_closing
   - native_function_casing
@@ -43,6 +54,7 @@ enabled:
   - no_blank_lines_after_class_opening
   - no_blank_lines_after_return
   - no_blank_lines_after_throw
+  - no_closing_tag
   - no_empty_comment
   - no_empty_phpdoc
   - no_empty_statement
@@ -54,8 +66,12 @@ enabled:
   - no_php4_constructor
   - no_short_bool_cast
   - no_singleline_whitespace_before_semicolons
+  - no_spaces_after_function_name
+  - no_spaces_inside_parenthesis
   - no_trailing_comma_in_list_call
   - no_trailing_comma_in_singleline_array
+  - no_trailing_whitespace
+  - no_trailing_whitespace_in_comment
   - no_unneeded_control_parentheses
   - no_unneeded_curly_braces
   - no_unneeded_final_method
@@ -72,19 +88,26 @@ enabled:
   - object_operator_without_whitespace
   - phpdoc_add_missing_param_annotation
   - phpdoc_indent
-  - phpdoc_order
   - phpdoc_scalar
   - phpdoc_types
   - property_separation
+  - property_visibility_required
+  - psr4
   - self_accessor
   - short_array_syntax
   - short_scalar_cast
+  - single_blank_line_at_eof
   - single_blank_line_before_namespace
+  - single_class_element_per_statement
+  - single_line_after_imports
   - single_quote
   - standardize_not_equals
+  - switch_case_semicolon_to_colon
+  - switch_case_space
   - ternary_operator_spaces
   - ternary_to_null_coalescing
   - trailing_comma_in_multiline_array
+  - unix_line_endings
   - whitespace_after_comma_in_array
 
 risky: true

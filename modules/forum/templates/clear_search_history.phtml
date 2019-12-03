@@ -1,0 +1,30 @@
+<?php
+/**
+ * @var $title
+ * @var $page_title
+ * @var $file_attached
+ * @var $back_url
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="/forum/?act=search&amp;mod=reset" method="post">
+            <div class="alert alert-danger">
+                <?= _t('Do you really want to clear the search history?') ?>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Clear') ?></button>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+            </div>
+        </form>
+    </div>
+</div>
