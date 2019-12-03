@@ -14,9 +14,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\ToolsInterface  $tools
- * @var Johncms\Api\UserInterface   $user
+ * @var PDO $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface $user
  */
 
 $delf = opendir(UPLOAD_PATH . 'forum/topics');
@@ -41,16 +41,34 @@ for ($it = 0; $it < $totalt; $it++) {
 }
 
 if (! $id) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Download topic'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]
+    );
     exit;
 }
 
 $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}' AND (`deleted` != '1' OR `deleted` IS NULL)");
 
 if (! $req->rowCount()) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Download topic'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]
+    );
     exit;
 }
 
@@ -84,7 +102,7 @@ if (isset($_POST['submit'])) {
             fclose($fp);
             @chmod("${fp}", 0777);
             @chmod(UPLOAD_PATH . 'forum/topics/' . $num . '.txt', 0777);
-            echo '<a href="?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="./">' . _t('Forum') . '</a><br>';
+            $link_to_download = '/forum/?act=loadtem&amp;n=' . $num;
             break;
 
         case 2:
@@ -99,8 +117,7 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
 .quote{font-size: x-small; padding: 2px 0px 2px 4px; color: #878787; border-left: 3px solid #c0c0c0;
 }
 </style></head>
-<body><p><b><u>{$type1['text']}</u></b></p>";
-
+<body><p><b><u>{$type1['name']}</u></b></p>";
             $i = 1;
 
             while ($arr = $tema->fetch()) {
@@ -119,8 +136,10 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $txt_tmp = di(Johncms\Api\BbcodeInterface::class)->tags($txt_tmp);
                 $txt_tmp = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $txt_tmp);
                 $txt_tmp = str_replace("\r\n", '<br>', $txt_tmp);
-                $stroka = "${div} <b>" . $arr['user_name'] . '</b>(' . date('d.m.Y/H:i',
-                        $arr['date']) . ")<br>${txt_tmp}</div>";
+                $stroka = "${div} <b>" . $arr['user_name'] . '</b>(' . date(
+                        'd.m.Y/H:i',
+                        $arr['date']
+                    ) . ")<br>${txt_tmp}</div>";
                 $text = "${text} ${stroka}";
                 ++$i;
             }
@@ -134,14 +153,19 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
             fclose($fp);
             @chmod("${fp}", 0777);
             @chmod(UPLOAD_PATH . 'forum/topics/' . $num . '.htm', 0777);
-            echo '<a href="?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="./">' . _t('Forum') . '</a><br>';
+            $link_to_download = '/forum/?act=loadtem&amp;n=' . $num;
             break;
     }
-} else {
-    echo '<p>' . _t('Select format') . '<br>' .
-        '<form action="?act=tema&amp;id=' . $id . '" method="post">' .
-        '<select name="mod"><option value="1">.txt</option>' .
-        '<option value="2">.htm</option></select>' .
-        '<input type="submit" name="submit" value="' . _t('Download') . '"/>' .
-        '</form></p>';
 }
+
+echo $view->render(
+    'forum::download_topic',
+    [
+        'title'            => _t('Download topic'),
+        'page_title'       => _t('Download topic'),
+        'id'               => $id,
+        'back_url'         => '/forum/?type=topic&id=' . $id,
+        'link_to_download' => $link_to_download ?? null,
+    ]
+);
+exit;
