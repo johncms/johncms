@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\Api\UserInterface $user
  */
 
 if ($user->isValid()) {
@@ -25,13 +25,35 @@ if ($user->isValid()) {
     $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user` = '" . $user->id . "' AND `topic` = '${id}'")->fetchColumn();
 
     if ($topic_vote == 0 || $vote_user > 0 || $topic == 0) {
-        echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        http_response_code(404);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Forum'),
+                'page_title'    => _t('Forum'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 
     $db->exec("INSERT INTO `cms_forum_vote_users` SET `topic` = '${id}', `user` = '" . $user->id . "', `vote` = '${vote}'");
     $db->exec("UPDATE `cms_forum_vote` SET `count` = count + 1 WHERE id = '${vote}'");
     $db->exec("UPDATE `cms_forum_vote` SET `count` = count + 1 WHERE topic = '${id}' AND `type` = '1'");
-    echo _t('Vote accepted') . '<br /><a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a>';
+
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Forum'),
+            'page_title'    => _t('Forum'),
+            'type'          => 'alert-success',
+            'message'       => _t('Vote accepted'),
+            'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
+            'back_url_name' => _t('Back'),
+        ]
+    );
+    exit;
 }
