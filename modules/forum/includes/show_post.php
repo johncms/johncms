@@ -13,90 +13,76 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\Api\UserInterface $user
  */
 
 if (empty($_GET['id'])) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Show post'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]
+    );
     exit;
 }
 
 // Запрос сообщения
-$res = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+$res = $db->query(
+    "SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-WHERE `forum_messages`.`id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1')->fetch();
+WHERE `forum_messages`.`id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1'
+)->fetch();
 
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
-echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $them['name'] . '</div><div class="menu">';
 
-// Данные пользователя
-echo '<table cellpadding="0" cellspacing="0"><tr><td>';
-if (file_exists(('upload/users/avatar/' . $res['user_id'] . '.png'))) {
-    echo '<img src="../upload/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
-} else {
-    echo '<img src="' . $assets->url('images/old/empty.png') . '" alt="">&#160;';
-}
-echo '</td><td>';
+$post = [];
 
-if ($res['sex']) {
-    echo '<img src="' . $assets->url('images/old/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png') . '" alt="" class="icon-inline">';
-} else {
-    echo '<img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon">';
+$res['user_avatar'] = '';
+$avatar = 'users/avatar/' . $res['user_id'] . '.png';
+if (file_exists(UPLOAD_PATH . $avatar)) {
+    $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
 }
 
-// Ник юзера и ссылка на его анкету
+$res['user_profile_link'] = '';
 if ($user->isValid() && $user->id != $res['user_id']) {
-    echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> ';
-} else {
-    echo '<b>' . $res['user_name'] . '</b> ';
+    $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
 }
 
-// Метка должности
-$user_rights = [
-    3 => '(FMod)',
-    6 => '(Smd)',
-    7 => '(Adm)',
-    9 => '(SV!)',
-];
-echo @$user_rights[$res['rights']];
+$res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
 
-// Метка Онлайн / Офлайн
-echo time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ';
-echo '<a href="?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
+$res['user_is_online'] = time() <= $res['lastdate'] + 300;
+$res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
 
-// Ссылки на ответ и цитирование
+$res['reply_url'] = '';
+$res['quote_url'] = '';
 if ($user->isValid() && $user->id != $res['user_id']) {
-    echo '&#160;<a href="?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
-        '<a href="?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
+    $res['reply_url'] = '/forum/?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start;
+    $res['quote_url'] = '/forum/?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt';
 }
 
-// Время поста
-echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br />';
+$res['post_time'] = $tools->displayDate($res['date']);
 
-// Статус юзера
-if (! empty($res['status'])) {
-    echo '<div class="status"><img src="' . $assets->url('images/old/label.png') . '" alt="" class="icon-inline">' . $res['status'] . '</div>';
-}
-
-echo '</td></tr></table>';
-
-// Вывод текста поста
-$text = $tools->checkout($res['text'], 1, 1);
-$text = $tools->smilies($text, ($res['rights'] >= 1) ? 1 : 0);
-echo $text . '';
+$text = $res['text'];
+$text = $tools->checkout($text, 1, 1);
+$text = $tools->smilies($text, $res['rights'] ? 1 : 0);
+$res['post_text'] = $text;
 
 // Если есть прикрепленный файл, выводим его описание
 $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
-
+$res['files'] = [];
 if ($freq->rowCount()) {
     $fres = $freq->fetch();
-    $fls = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
-    echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . _t('Attachment') . ':';
-    // Предпросмотр изображений
+    $file_params = [];
+    $file_params['file_size'] = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
+
     $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
     $pic_ext = [
         'gif',
@@ -105,22 +91,29 @@ if ($freq->rowCount()) {
         'png',
     ];
 
+    $file_params['file_preview'] = '';
+    $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
+    $file_params['delete_url'] = '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'];
     if (in_array($att_ext, $pic_ext)) {
-        echo '<div><a class="image-preview" title="' . $fres['filename'] . '" data-source="?act=file&amp;id=' . $fres['id'] . '" href="?act=file&amp;id=' . $fres['id'] . '">';
-        //TODO: thumbinal.php переместить в /assets
-        echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
-    } else {
-        echo '<br /><a href="?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+        $file_params['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename']));
     }
 
-    echo ' (' . $fls . ' кб.)<br>';
-    echo _t('Downloads') . ': ' . $fres['dlcount'] . '</div>';
-    $file_id = $fres['id'];
+    $res['files'][] = array_merge($fres, $file_params);
 }
 
-echo '</div>';
+$post = $res;
 
 // Вычисляем, на какой странице сообщение?
 $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'")->fetchColumn() / $user->config->kmess);
-echo '<div class="phdr"><a href="?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
-echo '<p><a href="./">' . _t('Forum') . '</a></p>';
+
+echo $view->render(
+    'forum::show_post',
+    [
+        'title'         => _t('Show post'),
+        'page_title'    => _t('Show post'),
+        'post'          => $post,
+        'topic'         => $them,
+        'back_to_topic' => '/forum/?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+    ]
+);
+exit;
