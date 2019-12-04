@@ -119,20 +119,6 @@ $this->layout(
             <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
                 <?php if (! empty($settings_forum['farea'])): ?>
                     <input type="hidden" name="token" value="<?= $token ?>"/>
-                    <?php if (! $user->isValid()): ?>
-                        <div class="form-group">
-                            <label for="name"><?= _t('Name') ?></label>
-                            <input type="text"
-                                   class="form-control"
-                                   maxlength="25"
-                                   name="name"
-                                   id="name"
-                                   required
-                                   value=""
-                                   placeholder="<?= _t('Name') ?>"
-                            >
-                        </div>
-                    <?php endif; ?>
                     <div class="form-group">
                         <label for="msg"><?= _t('Message') ?></label>
                         <div><?= $bbcode ?></div>
@@ -379,20 +365,6 @@ $this->layout(
             <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1">
                 <?php if (! empty($settings_forum['farea'])): ?>
                     <input type="hidden" name="token" value="<?= $token ?>"/>
-                    <?php if (! $user->isValid()): ?>
-                        <div class="form-group">
-                            <label for="name"><?= _t('Name') ?></label>
-                            <input type="text"
-                                   class="form-control"
-                                   maxlength="25"
-                                   name="name"
-                                   id="name"
-                                   required
-                                   value=""
-                                   placeholder="<?= _t('Name') ?>"
-                            >
-                        </div>
-                    <?php endif; ?>
                     <div class="form-group">
                         <label for="msg"><?= _t('Message') ?></label>
                         <div><?= $bbcode ?></div>
