@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,15 +8,15 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\Api\UserInterface $user
  */
-
-$textl = _t('Who in Forum');
 
 if (! $user->isValid()) {
     header('Location: ./');
@@ -30,15 +28,7 @@ if ($id) {
     $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '${id}'");
 
     if ($req->rowCount()) {
-        $res = $req->fetch();
-        echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="?type=topic&id=' . $id . '">' . $res['name'] . '</a></div>';
-
-        if ($user->rights > 0) {
-            echo '<div class="topmenu">' .
-                ($do == 'guest' ? '<a href="?act=who&amp;id=' . $id . '">' . _t('Authorized') . '</a> | ' . _t('Guests') : _t('Authorized') . ' | <a href="?act=who&amp;do=guest&amp;id=' . $id . '">' . _t('Guests') . '</a>') .
-                '</div>';
-        }
-
+        $topic = $req->fetch();
         $total = $db->query('SELECT COUNT(*) FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%'")->fetchColumn();
 
         if ($start >= $total) {
@@ -46,47 +36,69 @@ if ($id) {
             $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
         }
 
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>';
-        }
-
         if ($total) {
-            $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess);
+            $req = $db->query(
+                'SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time(
+                    ) - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess
+            );
 
             for ($i = 0; $res = $req->fetch(); ++$i) {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                $set_user['avatar'] = 0;
-                echo $tools->displayUser($res,
-                    ['iphide' => ($act == 'guest' || ($user->rights >= 1 && $user->rights >= $res['rights']) ? 0 : 1)]);
-                echo '</div>';
+                if (empty($res['name'])) {
+                    $res['name'] = _t('Guest', 'system');
+                }
+
+                $res['user_avatar'] = '';
+                if (! empty($res['id'])) {
+                    $avatar = 'users/avatar/' . $res['id'] . '.png';
+                    if (file_exists(UPLOAD_PATH . $avatar)) {
+                        $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                    }
+                }
+
+                $res['user_profile_link'] = '';
+                if (! empty($res['id']) && $user->isValid() && $user->id != $res['id']) {
+                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+                }
+
+                $res['user_rights_name'] = '';
+                if (! empty($res['rights'])) {
+                    $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+                }
+
+                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+
+                $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+                $res['ip'] = long2ip($res['ip']);
+                $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']);
+                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+
+                $res['place'] = '';
+                $items[] = $res;
             }
-        } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
     } else {
         header('Location: ./');
     }
 
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>' .
-            '<p><form action="?act=who&amp;id=' . $id . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
-            '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-            '</form></p>';
-    }
-
-    echo '<p><a href="?type=topic&id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
+    echo $view->render(
+        'forum::who',
+        [
+            'title'           => _t('Who in Topic'),
+            'page_title'      => _t('Who in Topic'),
+            'empty_message'   => _t('The list is empty'),
+            'items'           => $items ?? [],
+            'pagination'      => $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess),
+            'total'           => $total,
+            'topic'           => $topic,
+            'is_users'        => $do !== 'guest',
+            'users_list_url'  => '?act=who&amp;id=' . $id,
+            'guests_list_url' => '?act=who&amp;do=guest&amp;id=' . $id,
+            'show_period'     => false,
+            'id'              => $id,
+        ]
+    );
 } else {
     // Показываем общий список тех, кто в форуме
-    echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Who in Forum') . '</div>';
-
-    if ($user->rights > 0) {
-        echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="?act=who">' . _t('Users') . '</a> | <b>' . _t('Guests') . '</b>'
-                : '<b>' . _t('Users') . '</b> | <a href="?act=who&amp;do=guest">' . _t('Guests') . '</a>') . '</div>';
-    }
-
     $total = $db->query('SELECT COUNT(*) FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%'")->fetchColumn();
 
     if ($start >= $total) {
@@ -94,20 +106,14 @@ if ($id) {
         $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
     }
 
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>';
-    }
-
+    $items = [];
     if ($total) {
-        $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess);
+        $req = $db->query(
+            'SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time(
+                ) - 300) . " AND `place` LIKE '/forum%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess
+        );
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
-            if ($res['id'] == $user->id) {
-                echo '<div class="gmenu">';
-            } else {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            }
-
             // Вычисляем местоположение
             $place = '';
             $parsed_url = [];
@@ -206,25 +212,54 @@ if ($id) {
                     $place = '<a href="./">' . _t('In the forum Main') . '</a>';
             }
 
-            $arg = [
-                'stshide' => 1,
-                'header'  => ('<br /><img src="../images/info.png" width="16" height="16" align="middle" />&#160;' . $place),
-            ];
-            echo $tools->displayUser($res, $arg);
-            echo '</div>';
+            if (empty($res['name'])) {
+                $res['name'] = _t('Guest', 'system');
+            }
+
+            $res['user_avatar'] = '';
+            if (! empty($res['id'])) {
+                $avatar = 'users/avatar/' . $res['id'] . '.png';
+                if (file_exists(UPLOAD_PATH . $avatar)) {
+                    $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                }
+            }
+
+            $res['user_profile_link'] = '';
+            if (! empty($res['id']) && $user->isValid() && $user->id != $res['id']) {
+                $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+            }
+
+            $res['user_rights_name'] = '';
+            if (! empty($res['rights'])) {
+                $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+            }
+
+            $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+
+            $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+            $res['ip'] = long2ip($res['ip']);
+            $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']);
+            $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+
+            $res['place'] = $place;
+            $items[] = $res;
         }
-    } else {
-        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>' .
-            '<p><form action="?act=who' . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
-            '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-            '</form></p>';
-    }
-    echo '<p><a href="./">' . _t('Forum') . '</a></p>';
+    echo $view->render(
+        'forum::who',
+        [
+            'title'           => _t('Who in Forum'),
+            'page_title'      => _t('Who in Forum'),
+            'empty_message'   => _t('The list is empty'),
+            'items'           => $items ?? [],
+            'pagination'      => $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess),
+            'total'           => $total,
+            'is_users'        => $do !== 'guest',
+            'users_list_url'  => '?act=who',
+            'guests_list_url' => '?act=who&amp;do=guest',
+            'show_period'     => false,
+        ]
+    );
 }
+exit;

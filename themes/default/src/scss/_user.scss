@@ -1,0 +1,19 @@
+.user-row {
+    .user-avatar {
+        .avatar-image {
+            width: 40px;
+            height: 40px;
+        }
+
+        .user-status {
+            width: 10px;
+            height: 10px;
+        }
+    }
+
+    .user-login {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+}
