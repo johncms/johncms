@@ -13,46 +13,77 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\Api\UserInterface $user
  */
 
 $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}'")->fetchColumn();
 
 if ($topic_vote == 0 || $user->rights < 7) {
-    echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Download topic'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]
+    );
     exit;
 }
 $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
-echo '<div  class="phdr">' . _t('Who voted in the poll') . ' &laquo;<b>' . htmlentities($topic_vote['name'], ENT_QUOTES,
-        'UTF-8') . '</b>&raquo;</div>';
 $total = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `topic`='${id}'")->fetchColumn();
-$req = $db->query("SELECT `cms_forum_vote_users`.*, `users`.`rights`, `users`.`lastdate`, `users`.`name`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+$req = $db->query(
+    "SELECT `cms_forum_vote_users`.*, `users`.`rights`, `users`.`lastdate`, `users`.`name`, `users`.`sex`, `users`.`status`, `users`.`datereg`,
+       `users`.`id`, users.ip, users.ip_via_proxy, users.browser
     FROM `cms_forum_vote_users` LEFT JOIN `users` ON `cms_forum_vote_users`.`user` = `users`.`id`
-    WHERE `cms_forum_vote_users`.`topic`='${id}' LIMIT ${start}, " . $user->config->kmess);
-$i = 0;
+    WHERE `cms_forum_vote_users`.`topic`='${id}' LIMIT ${start}, " . $user->config->kmess
+);
 
+$items = [];
 while ($res = $req->fetch()) {
-    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-    echo $tools->displayUser($res, ['iphide' => 1]);
-    echo '</div>';
-    ++$i;
+    $res['user_avatar'] = '';
+    if (! empty($res['id'])) {
+        $avatar = 'users/avatar/' . $res['id'] . '.png';
+        if (file_exists(UPLOAD_PATH . $avatar)) {
+            $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+        }
+    }
+
+    $res['user_profile_link'] = '';
+    if (! empty($res['id']) && $user->isValid() && $user->id != $res['id']) {
+        $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+    }
+
+    $res['user_rights_name'] = '';
+    if (! empty($res['rights'])) {
+        $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+    }
+
+    $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+
+    $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+    $res['ip'] = long2ip($res['ip']);
+    $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']);
+    $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+
+    $res['place'] = '';
+    $items[] = $res;
 }
 
-if ($total == 0) {
-    echo '<div class="menu">' . _t('No one has voted in this poll yet') . '</div>';
-}
-
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-if ($total > $user->config->kmess) {
-    echo '<p>' . $tools->displayPagination('?act=users&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
-        '<p><form action="?act=users&amp;id=' . $id . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-}
-
-echo '<p><a href="?&type=topic&amp;id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+echo $view->render(
+    'forum::voted_users',
+    [
+        'title'         => _t('Who voted in the poll'),
+        'page_title'    => _t('Who voted in the poll'),
+        'empty_message' => _t('No one has voted in this poll yet'),
+        'poll_name'     => htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8'),
+        'items'         => $items ?? [],
+        'pagination'    => $tools->displayPagination('?act=users&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+        'total'         => $total,
+        'id'            => $id,
+    ]
+);
