@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,25 +8,30 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\Api\UserInterface $user
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
     if (empty($_GET['id'])) {
         http_response_code(404);
-        echo $view->render('system::pages/result', [
-            'title'         => _t('Forum'),
-            'page_title'    => _t('Forum'),
-            'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
-            'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Forum'),
+                'page_title'    => _t('Forum'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 
@@ -37,14 +40,28 @@ if ($user->rights == 3 || $user->rights >= 6) {
         header('Location: ?type=topic&id=' . $id);
     } else {
         http_response_code(404);
-        echo $view->render('system::pages/result', [
-            'title'         => _t('Forum'),
-            'page_title'    => _t('Forum'),
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Forum'),
+                'page_title'    => _t('Forum'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
+    }
+} else {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => _t('Access forbidden'),
             'back_url'      => '/forum/',
             'back_url_name' => _t('Back'),
-        ]);
-        exit;
-    }
+        ]
+    );
 }

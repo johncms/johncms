@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /**
  * @var $title
  * @var $page_title
@@ -8,24 +17,33 @@
  * @var $unread_count
  */
 
-$this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $page_title,
-]);
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
 ?>
 
-<?= $this->insert('forum::header', [
-    'unread_count' => $unread_count,
-    'files_count'  => $files_count,
-    'files_url'    => '/forum/?act=files&c=' . $id,
-    'files_name'   => _t('Section Files'),
-]) ?>
+<?= $this->insert(
+    'forum::header',
+    [
+        'unread_count' => $unread_count,
+        'files_count'  => $files_count,
+        'files_url'    => '/forum/?act=files&c=' . $id,
+        'files_name'   => _t('Section Files'),
+    ]
+) ?>
 
 <?php if (empty($sections)): ?>
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-info',
-        'alert'      => _t('There are no sections in this category'),
-    ]) ?>
+    <?= $this->insert(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => _t('There are no sections in this category'),
+        ]
+    ) ?>
 <?php endif; ?>
 
 <?php foreach ($sections as $section): ?>
@@ -44,8 +62,11 @@ $this->layout('system::layout/default', [
 
 <div class="mb-n3 pt-1"><?= _t('Total') ?>: <?= $total ?></div>
 
-<?= $this->insert('forum::footer', [
-    'online'   => $online,
-    'who_url'  => '/forum/?act=who',
-    'who_name' => _t('Who in Forum'),
-]) ?>
+<?= $this->insert(
+    'forum::footer',
+    [
+        'online'   => $online,
+        'who_url'  => '/forum/?act=who',
+        'who_name' => _t('Who in Forum'),
+    ]
+) ?>

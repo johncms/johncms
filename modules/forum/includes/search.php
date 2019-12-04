@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -44,9 +44,9 @@ switch ($mod) {
                 echo $view->render(
                     'forum::clear_search_history',
                     [
-                        'title'    => _t('Forum search'),
-                        'page_title'    => _t('Forum search'),
-                        'back_url' => '/forum/?act=search',
+                        'title'      => _t('Forum search'),
+                        'page_title' => _t('Forum search'),
+                        'back_url'   => '/forum/?act=search',
                     ]
                 );
                 exit;
@@ -172,20 +172,18 @@ switch ($mod) {
                     $results[] = $res;
                 }
             }
-        } else {
-            if ($error) {
-                echo $view->render(
-                    'system::pages/result',
-                    [
-                        'title'         => _t('Forum search'),
-                        'type'          => 'alert-danger',
-                        'message'       => _t('Invalid length'),
-                        'back_url'      => '/forum/?act=search',
-                        'back_url_name' => _t('Repeat'),
-                    ]
-                );
-                exit;
-            }
+        } elseif ($error) {
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Forum search'),
+                    'type'          => 'alert-danger',
+                    'message'       => _t('Invalid length'),
+                    'back_url'      => '/forum/?act=search',
+                    'back_url_name' => _t('Repeat'),
+                ]
+            );
+            exit;
         }
 
         // Обрабатываем и показываем историю личных поисковых запросов
@@ -244,5 +242,4 @@ switch ($mod) {
                 'history_reset_url' => '/forum/?act=search&amp;mod=reset',
             ]
         );
-        exit;
 }

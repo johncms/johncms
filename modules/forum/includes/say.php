@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -311,7 +311,6 @@ switch ($post_type) {
                 'is_new_message'    => true,
             ]
         );
-        exit;
         break;
 
     case 'reply':
@@ -570,7 +569,6 @@ switch ($post_type) {
                 'is_new_message'    => false,
             ]
         );
-        exit;
         break;
 
     default:
@@ -584,5 +582,4 @@ switch ($post_type) {
                 'back_url_name' => _t('Forum'),
             ]
         );
-        exit;
 }

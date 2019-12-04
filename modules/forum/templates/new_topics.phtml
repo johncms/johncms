@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /**
  * @var $title
  * @var $page_title
@@ -12,10 +21,13 @@
  * @var $is_unread
  */
 
-$this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $page_title,
-]);
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
 ?>
 <?php if (! empty($show_period)): ?>
     <div class="row">
@@ -31,10 +43,13 @@ $this->layout('system::layout/default', [
 <?php endif; ?>
 
 <?php if (empty($topics)): ?>
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-info',
-        'alert'      => $empty_message,
-    ]) ?>
+    <?= $this->insert(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => $empty_message,
+        ]
+    ) ?>
 <?php endif; ?>
 
 <?php foreach ($topics as $topic): ?>

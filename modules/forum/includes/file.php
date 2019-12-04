@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,10 +8,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
  */
 
@@ -39,14 +39,16 @@ if ($id) {
 
     if ($error) {
         http_response_code(404);
-        echo $view->render('system::pages/result', [
-            'title'         => _t('Download file'),
-            'type'          => 'alert-danger',
-            'message'       => _t('File does not exist'),
-            'back_url'      => '/forum/',
-            'back_url_name' => _t('Forum'),
-        ]);
-        exit;
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Download file'),
+                'type'          => 'alert-danger',
+                'message'       => _t('File does not exist'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Forum'),
+            ]
+        );
     }
 } else {
     header('location: ./');

@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /**
  * @var $title
  * @var $page_title
@@ -8,18 +17,24 @@
  * @var $unread_count
  */
 
-$this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $page_title,
-]);
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
 ?>
 
-<?= $this->insert('forum::header', [
-    'unread_count' => $unread_count,
-    'files_count'  => $files_count,
-    'files_url'    => '/forum/?act=files',
-    'files_name'   => _t('Files'),
-]) ?>
+<?= $this->insert(
+    'forum::header',
+    [
+        'unread_count' => $unread_count,
+        'files_count'  => $files_count,
+        'files_url'    => '/forum/?act=files',
+        'files_name'   => _t('Files'),
+    ]
+) ?>
 
 <?php foreach ($sections as $section): ?>
     <div class="shadow forum-section post-item mb-2">
@@ -50,8 +65,11 @@ $this->layout('system::layout/default', [
     </div>
 <?php endforeach; ?>
 
-<?= $this->insert('forum::footer', [
-    'online'   => $online,
-    'who_url'  => '/forum/?act=who',
-    'who_name' => _t('Who in Forum'),
-]) ?>
+<?= $this->insert(
+    'forum::footer',
+    [
+        'online'   => $online,
+        'who_url'  => '/forum/?act=who',
+        'who_name' => _t('Who in Forum'),
+    ]
+) ?>

@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\NavChainInterface;
@@ -20,16 +20,15 @@ use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Assets            $assets
- * @var ConfigInterface   $config
- * @var Counters          $counters
- * @var PDO               $db
- * @var ToolsInterface    $tools
- * @var UserInterface     $user
- * @var Render            $view
+ * @var Assets $assets
+ * @var ConfigInterface $config
+ * @var Counters $counters
+ * @var PDO $db
+ * @var ToolsInterface $tools
+ * @var UserInterface $user
+ * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 $assets = di(Assets::class);
@@ -147,11 +146,14 @@ if (! $config->mod_forum && $user->rights < 7) {
 }
 
 if ($error) {
-    echo $view->render('system::pages/result', [
-        'title'   => _t('Forum'),
-        'type'    => 'alert-danger',
-        'message' => $error,
-    ]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => _t('Forum'),
+            'type'    => 'alert-danger',
+            'message' => $error,
+        ]
+    );
     exit;
 }
 $show_type = $_REQUEST['type'] ?? 'section';
@@ -207,15 +209,18 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         }
 
         $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['name']);
-        $hdr = strtr($hdr, [
-            '&laquo;' => '',
-            '&raquo;' => '',
-            '&quot;'  => '',
-            '&amp;'   => '',
-            '&lt;'    => '',
-            '&gt;'    => '',
-            '&#039;'  => '',
-        ]);
+        $hdr = strtr(
+            $hdr,
+            [
+                '&laquo;' => '',
+                '&raquo;' => '',
+                '&quot;'  => '',
+                '&amp;'   => '',
+                '&lt;'    => '',
+                '&gt;'    => '',
+                '&#039;'  => '',
+            ]
+        );
         $hdr = mb_substr($hdr, 0, 30);
         $hdr = $tools->checkout($hdr, 2, 2);
         $textl = empty($hdr) ? _t('Forum') : $hdr;
@@ -254,12 +259,15 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         if (! $type->rowCount()) {
             // Если темы не существует, показываем ошибку
-            echo $view->render('system::pages/result', [
-                'title'    => _t('Forum'),
-                'type'     => 'alert-danger',
-                'message'  => _t('Topic has been deleted or does not exists'),
-                'back_url' => '/forum/',
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => _t('Forum'),
+                    'type'     => 'alert-danger',
+                    'message'  => _t('Topic has been deleted or does not exists'),
+                    'back_url' => '/forum/',
+                ]
+            );
             exit;
         }
 
@@ -267,9 +275,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         // Фиксация факта прочтения Топика
         if ($user->isValid() && $show_type == 'topic') {
-            $db->query("INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
+            $db->query(
+                "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
                 VALUES ('${id}', '" . $user->id . "', '" . time() . "')
-                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)");
+                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
+            );
         }
 
         // Nav chain
@@ -324,30 +334,36 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
                 }
 
-                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
-       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
+                $online = $db->query(
+                    'SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
+       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g"
+                )->fetch();
 
-                echo $view->render('forum::section', [
-                    'title'        => $type1['name'],
-                    'page_title'   => $type1['name'],
-                    'id'           => $type1['id'],
-                    'sections'     => $sections,
-                    'online'       => $online,
-                    'total'        => $total,
-                    'files_count'  => $tools->formatNumber($count),
-                    'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
-                ]);
-                exit; // TODO: Remove this later
+                echo $view->render(
+                    'forum::section',
+                    [
+                        'title'        => $type1['name'],
+                        'page_title'   => $type1['name'],
+                        'id'           => $type1['id'],
+                        'sections'     => $sections,
+                        'online'       => $online,
+                        'total'        => $total,
+                        'files_count'  => $tools->formatNumber($count),
+                        'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
+                    ]
+                );
                 break;
 
             case 'topics':
                 // List of forum topics
                 $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
                 if ($total) {
-                    $req = $db->query('SELECT tpc.*, (
+                    $req = $db->query(
+                        'SELECT tpc.*, (
 SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= tpc.last_post_date AND `topic_id` = tpc.id AND `user_id` = ' . $user->id . ") as `np`
 FROM `forum_topic` tpc WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` <> '1' OR deleted IS NULL)") . "
-ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config->kmess);
+ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config->kmess
+                    );
 
                     $topics = [];
                     while ($res = $req->fetch()) {
@@ -377,8 +393,10 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
                 }
 
-                $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
-       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
+                $online = $db->query(
+                    'SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
+       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g"
+                )->fetch();
 
                 // Check access to create topic
                 $create_access = false;
@@ -386,27 +404,31 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     $create_access = true;
                 }
 
-                echo $view->render('forum::topics', [
-                    'pagination'    => $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
-                    'id'            => $id,
-                    'create_access' => $create_access,
-                    'title'         => $type1['name'],
-                    'page_title'    => $type1['name'],
-                    'topics'        => $topics ?? [],
-                    'online'        => $online,
-                    'total'         => $total,
-                    'files_count'   => $tools->formatNumber($count),
-                    'unread_count'  => $tools->formatNumber($counters->forumUnreadCount()),
-                ]);
-                exit; // TODO: Remove this later
+                echo $view->render(
+                    'forum::topics',
+                    [
+                        'pagination'    => $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+                        'id'            => $id,
+                        'create_access' => $create_access,
+                        'title'         => $type1['name'],
+                        'page_title'    => $type1['name'],
+                        'topics'        => $topics ?? [],
+                        'online'        => $online,
+                        'total'         => $total,
+                        'files_count'   => $tools->formatNumber($count),
+                        'unread_count'  => $tools->formatNumber($counters->forumUnreadCount()),
+                    ]
+                );
                 break;
 
             case 'topic':
                 // List messages
                 if ($user->isValid()) {
-                    $online = $db->query('SELECT (
+                    $online = $db->query(
+                        'SELECT (
 SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_u, (
-SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g")->fetch();
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g"
+                    )->fetch();
                 }
 
                 $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $id ? 1 : 0;
@@ -432,13 +454,16 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
 
                 // Если тема помечена для удаления, разрешаем доступ только администрации
                 if ($user->rights < 6 && $type1['deleted'] == 1) {
-                    echo $view->render('system::pages/result', [
-                        'title'         => _t('Topic deleted'),
-                        'type'          => 'alert-danger',
-                        'message'       => _t('Topic deleted'),
-                        'back_url'      => '?type=topics&amp;id=' . $type1['section_id'],
-                        'back_url_name' => _t('Go to Section'),
-                    ]);
+                    echo $view->render(
+                        'system::pages/result',
+                        [
+                            'title'         => _t('Topic deleted'),
+                            'type'          => 'alert-danger',
+                            'message'       => _t('Topic deleted'),
+                            'back_url'      => '?type=topics&amp;id=' . $type1['section_id'],
+                            'back_url_name' => _t('Go to Section'),
+                        ]
+                    );
                     exit;
                 }
 
@@ -461,9 +486,11 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                 $poll_data = [];
                 if ($type1['has_poll']) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
-                    $topic_vote = $db->query("SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
+                    $topic_vote = $db->query(
+                        "SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
 SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $user->id . "' AND `topic`='" . $id . "') as vote_user
-FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . "' LIMIT 1")->fetch();
+FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . "' LIMIT 1"
+                    )->fetch();
                     $topic_vote['name'] = $tools->checkout($topic_vote['name'], 0, 0);
                     $poll_data['poll'] = $topic_vote;
                     $poll_data['show_form'] = (! $type1['closed'] && ! isset($_GET['vote_result']) && $user->isValid() && $topic_vote['vote_user'] == 0);
@@ -506,10 +533,12 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 // Fixed first post
                 $first_post = [];
                 if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($total - $user->config->kmess)) : $start > 0)) || isset($_GET['clip'])) {
-                    $message = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+                    $message = $db->query(
+                        "SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
                     FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
                     WHERE `forum_messages`.`topic_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . '
-                    ORDER BY `forum_messages`.`id` LIMIT 1')->fetch();
+                    ORDER BY `forum_messages`.`id` LIMIT 1'
+                    )->fetch();
 
                     $message['user_profile_link'] = '';
                     if ($user->isValid() && $user->id != $message['user_id']) {
@@ -539,13 +568,15 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 }
 
                 // Messages
-                $req = $db->query("
+                $req = $db->query(
+                    "
                   SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`, (
                   SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = forum_messages.id) as file
                   FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
                   WHERE `forum_messages`.`topic_id` = '${id}'"
                     . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "${sql}
-                  ORDER BY `forum_messages`.`id` ${order} LIMIT ${start}, " . $user->config->kmess);
+                  ORDER BY `forum_messages`.`id` ${order} LIMIT ${start}, " . $user->config->kmess
+                );
 
                 $i = 1;
                 $messages = [];
@@ -656,49 +687,56 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
                 }
 
-                echo $view->render('forum::topic', [
-                    'first_post'       => $first_post,
-                    'topic'            => $type1,
-                    'topic_vote'       => $topic_vote ?? null,
-                    'curators_array'   => $curators_array,
-                    'view_count'       => $view_count,
-                    'pagination'       => $tools->displayPagination('/forum/?type=topic&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
-                    'start'            => $start,
-                    'id'               => $id,
-                    'token'            => $token ?? null,
-                    'bbcode'           => di(Johncms\Api\BbcodeInterface::class)->buttons('new_message', 'msg'),
-                    'settings_forum'   => $set_forum,
-                    'write_access'     => $write_access,
-                    'title'            => $type1['name'],
-                    'page_title'       => $type1['name'],
-                    'messages'         => $messages ?? [],
-                    'online'           => $online ?? [],
-                    'total'            => $total,
-                    'files_count'      => $tools->formatNumber($count),
-                    'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
-                    'filter_by_author' => $filter,
-                    'poll_data'        => $poll_data,
-                ]);
-                exit; // TODO: Remove this later
+                echo $view->render(
+                    'forum::topic',
+                    [
+                        'first_post'       => $first_post,
+                        'topic'            => $type1,
+                        'topic_vote'       => $topic_vote ?? null,
+                        'curators_array'   => $curators_array,
+                        'view_count'       => $view_count,
+                        'pagination'       => $tools->displayPagination('/forum/?type=topic&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+                        'start'            => $start,
+                        'id'               => $id,
+                        'token'            => $token ?? null,
+                        'bbcode'           => di(Johncms\Api\BbcodeInterface::class)->buttons('new_message', 'msg'),
+                        'settings_forum'   => $set_forum,
+                        'write_access'     => $write_access,
+                        'title'            => $type1['name'],
+                        'page_title'       => $type1['name'],
+                        'messages'         => $messages ?? [],
+                        'online'           => $online ?? [],
+                        'total'            => $total,
+                        'files_count'      => $tools->formatNumber($count),
+                        'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
+                        'filter_by_author' => $filter,
+                        'poll_data'        => $poll_data,
+                    ]
+                );
                 break;
 
             default:
-                echo $view->render('system::pages/result', [
-                    'title'         => _t('Wrong data'),
-                    'type'          => 'alert-danger',
-                    'message'       => _t('Wrong data'),
-                    'back_url'      => '/forum/',
-                    'back_url_name' => _t('Go to Forum'),
-                ]);
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => _t('Wrong data'),
+                        'type'          => 'alert-danger',
+                        'message'       => _t('Wrong data'),
+                        'back_url'      => '/forum/',
+                        'back_url_name' => _t('Go to Forum'),
+                    ]
+                );
                 break;
         }
     } else {
         // Forum categories
 
         $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files`' . ($user->rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
-        $req = $db->query('SELECT sct.`id`, sct.`name`, sct.`description`, (
+        $req = $db->query(
+            'SELECT sct.`id`, sct.`name`, sct.`description`, (
 SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
-FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`');
+FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`'
+        );
 
         $sections = [];
         while ($res = $req->fetch()) {
@@ -715,20 +753,22 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             $sections[] = $res;
         }
 
-        $online = $db->query('SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
-       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g")->fetch();
+        $online = $db->query(
+            'SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
+       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g"
+        )->fetch();
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
-        echo $view->render('forum::index', [
-            'title'        => _t('Forum'),
-            'page_title'   => _t('Forum'),
-            'sections'     => $sections,
-            'online'       => $online,
-            'files_count'  => $tools->formatNumber($count),
-            'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
-        ]);
-        exit; // TODO: Remove this later
+        echo $view->render(
+            'forum::index',
+            [
+                'title'        => _t('Forum'),
+                'page_title'   => _t('Forum'),
+                'sections'     => $sections,
+                'online'       => $online,
+                'files_count'  => $tools->formatNumber($count),
+                'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
+            ]
+        );
     }
 }
-
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
