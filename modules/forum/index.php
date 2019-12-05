@@ -59,13 +59,16 @@ if (isset($_SESSION['ref'])) {
 }
 
 // Настройки форума
-$set_forum = $user->isValid() ? unserialize($user->set_forum, ['allowed_classes' => false]) : [
+$set_forum = [
     'farea'    => 0,
     'upfp'     => 0,
     'preview'  => 1,
     'postclip' => 1,
     'postcut'  => 2,
 ];
+if( $user->isValid() && !empty($user->set_forum)) {
+    unserialize($user->set_forum, ['allowed_classes' => false]);
+}
 
 // Список расширений файлов, разрешенных к выгрузке
 
