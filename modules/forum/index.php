@@ -66,8 +66,8 @@ $set_forum = [
     'postclip' => 1,
     'postcut'  => 2,
 ];
-if( $user->isValid() && !empty($user->set_forum)) {
-    unserialize($user->set_forum, ['allowed_classes' => false]);
+if ($user->isValid() && ! empty($user->set_forum)) {
+    $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 }
 
 // Список расширений файлов, разрешенных к выгрузке
