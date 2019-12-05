@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
 
         if (! $error) {
             // Определяем тип файла
-            $ext = strtolower($ext[1]);
+            $ext = strtolower($ext);
             if (in_array($ext, $ext_win)) {
                 $type = 1;
             } elseif (in_array($ext, $ext_java)) {
