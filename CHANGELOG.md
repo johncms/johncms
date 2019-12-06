@@ -7,16 +7,17 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 
 #### Added
 - Внедрен роутер [nikic/fast-route](https://github.com/nikic/FastRoute)
-- Внедрен шаблонизатор [league/plates](https://platesphp.com/)
+- Внедрен нативный PHP шаблонизатор [mobicms/render](https://github.com/mobicms/render)
 - Для классов модулей используется отдельный автозагрузчик [Aura.Autoload](https://github.com/auraphp/Aura.Autoload)
 - Добавлен класс Assets, который формирует ссылки с учетом текущей темы оформления
 - Для подсветки синтаксиса кода в сообщениях используется JS библиотека [Prism](https://prismjs.com)
+- Модули используют шаблоны
 
 #### Changed
 - Полный рефакторинг кода системы
 - Для работы требуется версия PHP 7.2, или новее
 - Строгая типизация, проверка кода по [Style-CI](https://github.styleci.io/repos/30122305)
-- Заменена CAPTCHA, используется пакет [batumibiz/captcha](https://github.com/batumibiz/captcha)
+- Заменена CAPTCHA, используется пакет [mobicms/captcha](https://github.com/mobicms/captcha)
 - Весь функционал распределен по модулям и перемещен в папку `/modules`
 - Оптимизированы ссылки, удалены фрагменты `index.php`
 
