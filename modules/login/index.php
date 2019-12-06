@@ -104,10 +104,10 @@ if ($user->isValid()) {
                 } else {
                     // Показываем CAPTCHA
                     $display_form = 0;
-                    $code = (string) new Batumibiz\Captcha\Code;
+                    $code = (string) new Mobicms\Captcha\Code;
                     $_SESSION['code'] = $code;
                     echo $view->render('login::captcha', [
-                        'captcha'    => new Batumibiz\Captcha\Image($code),
+                        'captcha'    => new Mobicms\Captcha\Image($code),
                         'user_login' => $user_login,
                         'user_pass'  => $user_pass,
                         'remember'   => $remember,

@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Форма регистрации
-$code = (string) new Batumibiz\Captcha\Code;
+$code = (string) new Mobicms\Captcha\Code;
 $_SESSION['code'] = $code;
 
 echo $view->render('reg::index', [
@@ -178,5 +178,5 @@ echo $view->render('reg::index', [
     'reg_name'  => $reg_name,
     'reg_sex'   => $reg_sex,
     'reg_about' => $reg_about,
-    'captcha'   => new Batumibiz\Captcha\Image($code),
+    'captcha'   => new Mobicms\Captcha\Image($code),
 ]);

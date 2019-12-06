@@ -35,7 +35,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "aura/autoload": "^2.0",
-        "batumibiz/captcha": "^3.0",
+        "mobicms/captcha": "^2.0",
         "mobicms/render": "^1.0",
         "nikic/fast-route": "^1.3",
         "verot/class.upload.php": "^2.0",

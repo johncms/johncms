@@ -341,10 +341,9 @@ switch ($act) {
 
             if (! $user->isValid()) {
                 // CAPTCHA for guests
-                $captcha = new Batumibiz\Captcha\Captcha;
-                $code = $captcha->generateCode();
+                $code = (new Mobicms\Captcha\Code())->generate();
                 $_SESSION['code'] = $code;
-                $data['captcha'] = $captcha->generateImage($code);
+                $data['captcha'] = (new Mobicms\Captcha\Image($code))->generate();
             }
         }
 
