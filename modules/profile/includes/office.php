@@ -53,22 +53,22 @@ $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
 
 //Входящие сообщения
 $count_input = $db->query("
-	SELECT COUNT(*) 
-	FROM `cms_mail` 
-	LEFT JOIN `cms_contact` 
-	ON `cms_mail`.`user_id`=`cms_contact`.`from_id` 
-	AND `cms_contact`.`user_id`='" . $user->id . "' 
-	WHERE `cms_mail`.`from_id`='" . $user->id . "' 
-	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='" . $user->id . "' 
+	SELECT COUNT(*)
+	FROM `cms_mail`
+	LEFT JOIN `cms_contact`
+	ON `cms_mail`.`user_id`=`cms_contact`.`from_id`
+	AND `cms_contact`.`user_id`='" . $user->id . "'
+	WHERE `cms_mail`.`from_id`='" . $user->id . "'
+	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='" . $user->id . "'
 	AND `cms_contact`.`ban`!='1' AND `spam`='0'")->fetchColumn();
 echo '<div><img src="' . $assets->url('images/old/mail-inbox.png') . '" alt="" class="icon"><a href="../mail/?act=input">' . _t('Received') . '</a>&nbsp;(' . $count_input . ($new_mail ? '/<span class="red">+' . $new_mail . '</span>' : '') . ')</div>';
 
 //Исходящие сообщения
-$count_output = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "' 
+$count_output = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
 WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`delete`!='" . $user->id . "' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
 
 //Исходящие непрочитанные сообщения
-$count_output_new = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "' 
+$count_output_new = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
 WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`delete`!='" . $user->id . "' AND `cms_mail`.`read`='0' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
 echo '<div><img src="' . $assets->url('images/old/mail-send.png') . '" alt="" class="icon"><a href="../mail/?act=output">' . _t('Sent') . '</a>&nbsp;(' . $count_output . ($count_output_new ? '/<span class="red">+' . $count_output_new . '</span>' : '') . ')</div>';
 $count_systems = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `delete`!='" . $user->id . "' AND `sys`='1'")->fetchColumn();
@@ -102,9 +102,6 @@ echo '<div class="bmenu"><p><h3>' . _t('Settings') . '</h3>' .
     '<div><img src="' . $assets->url('images/old/user-edit.png') . '" alt="" class="icon"><a href="?act=edit">' . _t('Edit Profile') . '</a></div>' .
     '<div><img src="' . $assets->url('images/old/lock.png') . '" alt="" class="icon"><a href="?act=password">' . _t('Change Password') . '</a></div>' .
     '<div><img src="' . $assets->url('images/old/settings.png') . '" alt="" class="icon"><a href="?act=settings">' . _t('System Settings') . '</a></div>';
-if ($user->rights >= 7) {
-    echo '<div><img src="' . $assets->url('images/old/forbidden.png') . '" alt="" class="icon"><span class="red"><a href="../admin/"><b>' . _t('Admin Panel') . '</b></a></span></div>';
-}
 echo '</p></div>';
 
 // Выход с сайта
