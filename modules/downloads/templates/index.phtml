@@ -32,6 +32,14 @@ $this->layout(
     </div>
 <?php endif; ?>
 
+<?php if (empty($id)): ?>
+    <div class="mb-3">
+        <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1"><?= _t('Search') ?></a>
+        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1"><?= _t('Top Files') ?></a>
+        <a href="?act=top_users" class="btn btn-outline-primary btn-sm"><?= _t('Top Users') ?></a>
+    </div>
+<?php endif; ?>
+
 <?php foreach ($categories as $category): ?>
     <div class="shadow border-radius-12 forum-section post-item mb-2">
         <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
@@ -41,8 +49,10 @@ $this->layout(
             </div>
             <?php if ($category['has_edit']): ?>
                 <div class="actions">
-                    <a href="<?= $category['up_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Up') ?></a>
-                    <a href="<?= $category['down_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Down') ?></a>
+                    <?php if ($total_cat > 1): ?>
+                        <a href="<?= $category['up_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Up') ?></a>
+                        <a href="<?= $category['down_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Down') ?></a>
+                    <?php endif; ?>
                     <a href="<?= $category['edit_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Edit') ?></a>
                     <a href="<?= $category['delete_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Delete') ?></a>
                 </div>
@@ -61,8 +71,12 @@ $this->layout(
     </div>
 <?php endforeach; ?>
 
+<?php if ($total_cat > 0 && $total_files > 0): ?>
+    <h4 class="mt-3"><?= _t('List of files') ?></h4>
+<?php endif; ?>
+
 <?php if (! empty($urls['sort_action'])): ?>
-    <form class="form-inline" method="post" action="<?= $urls['sort_action'] ?>">
+    <form class="form-inline mb-2" method="post" action="<?= $urls['sort_action'] ?>">
         <label class="my-1 mr-2" for="sort_down"><?= _t('Sorting') ?></label>
         <select class="custom-select my-1 mr-sm-2" name="sort_down" id="sort_down">
             <option value="0" <?= ! $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= _t('by time') ?></option>
@@ -105,31 +119,49 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<?php if ($user->rights == 4 || $user->rights >= 6): ?>
-    <!--TODO: Переделать внешний вид -->
-    <?php if (! empty($id)): ?>
-        <div><a href="?act=down_file&amp;id=<?= $id ?>"><?= _t('Upload File') ?></a></div>
-        <div><a href="?act=import&amp;id=<?= $id ?>"><?= _t('Import File') ?></a></div>
+<div class="mt-3">
+    <?php if ($user->rights == 4 || $user->rights >= 6): ?>
 
-        <div><a href="?act=folder_edit&amp;id=<?= $id ?>"><?= _t('Change Folder') ?></a></div>
-        <div><a href="?act=folder_delete&amp;id=<?= $id ?>"><?= _t('Delete Folder') ?></a></div>
+        <div class="btn-group">
+            <?php if (! empty($id)): ?>
+                <div class="dropdown mr-2">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?= _t('Add file') ?>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="?act=down_file&amp;id=<?= $id ?>"><?= _t('Upload File') ?></a>
+                        <a class="dropdown-item" href="?act=import&amp;id=<?= $id ?>"><?= _t('Import File') ?></a>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="dropdown">
+                <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= _t('Section actions') ?>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php if (! empty($id)): ?>
+                        <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= _t('Change Folder') ?></a>
+                        <a class="dropdown-item" href="?act=folder_delete&amp;id=<?= $id ?>"><?= _t('Delete Folder') ?></a>
+                        <a class="dropdown-item" href="?act=folder_add&amp;id=<?= $id ?>"><?= _t('Create Folder') ?></a>
+                        <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?>"><?= _t('Update Files') ?></a>
+                        <a class="dropdown-item" href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a>
+                        <a class="dropdown-item" href="?act=recount&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($can_upload): ?>
+        <div><a href="?act=down_file&amp;id=<?= $id ?>" class="btn btn-primary"><?= _t('Upload File') ?></a></div>
     <?php endif; ?>
 
-    <div><a href="?act=folder_add&amp;id=<?= $id ?>"><?= _t('Create Folder') ?></a></div>
-
-    <div><a href="?act=scan_dir&amp;id=<?= $id ?>"><?= _t('Update Files') ?></a></div>
-    <div><a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a></div>
-    <div><a href="?act=recount&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a></div>
-
-<?php elseif ($can_upload): ?>
-    <div><a href="?act=down_file&amp;id=<?= $id ?>"><?= _t('Upload File') ?></a></div>
-<?php endif; ?>
-
-<?php if ($id): ?>
-    <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
-<?php else: ?>
-    <?php if ($user->rights >= 7 || isset($config->mod_down_comm) && $config->mod_down_comm): ?>
-        <a href="?act=review_comments"><?= _t('Review comments') ?></a><br>
-    <?php endif; ?>
-    <a href="?act=bookmark"><?= _t('Favorites') ?></a>
-<?php endif; ?>
+    <div class="mt-2">
+        <?php if ($id): ?>
+            <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+        <?php else: ?>
+            <?php if ($user->rights >= 7 || isset($config->mod_down_comm) && $config->mod_down_comm): ?>
+                <a href="?act=review_comments"><?= _t('Review comments') ?></a><br>
+            <?php endif; ?>
+            <a href="?act=bookmark"><?= _t('Favorites') ?></a>
+        <?php endif; ?>
+    </div>
+</div>

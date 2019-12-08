@@ -199,10 +199,6 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $new_url = $url . '?act=new_files&amp;id=' . $id;
         }
     } else {
-        $navigation = '<b>' . _t('Downloads') . '</b></div>' .
-            '<div class="topmenu"><a href="' . $url . '?act=search">' . _t('Search') . '</a> | ' .
-            '<a href="' . $url . '?act=top_files&amp;id=0">' . _t('Top Files') . '</a> | ' .
-            '<a href="' . $url . '?act=top_users">' . _t('Top Users') . '</a>';
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old}")->fetchColumn();
 
         if ($total_new) {
@@ -222,9 +218,6 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     }
 
     $counters['mod_files'] = $mod_files ?? 0;
-
-    // Навигация
-    //echo '<div class="phdr">' . $navigation . '</div>';
 
     // Выводим список папок и файлов
     $total_cat = $db->query("SELECT COUNT(*) FROM `download__category` WHERE `refid` = '" . $id . "'")->fetchColumn();
