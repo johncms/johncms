@@ -9,15 +9,6 @@
         'alert'      => _t('The guestbook is closed'),
     ]) ?>
 <?php endif; ?>
-<?php if ($data['access_to_buttons']): ?>
-    <div class="d-flex">
-        <a href="/guestbook/ga" class="btn btn-outline-primary mr-2 <?= $data['is_guestbook'] ? 'active' : '' ?>"><?= _t('Guestbook') ?></a>
-        <a href="/guestbook/ga?do=set" class="btn btn-outline-primary <?= $data['is_guestbook'] ? '' : 'active' ?>"><?= _t('Admin Club') ?></a>
-        <?php if ($user->rights >= 7): ?>
-            <a href="/guestbook/clean" class="btn btn-danger ml-auto"><?= _t('Clear') ?></a>
-        <?php endif; ?>
-    </div>
-<?php endif; ?>
 <?php if ($data['access_to_form']): ?>
     <div class="row">
         <div class="col-md-6">
@@ -153,3 +144,11 @@
         <?= $data['pagination'] ?>
     <?php endif; ?>
 <?php endif; ?>
+<hr class="mt-4">
+<?php if ($data['access_to_buttons']): ?>
+    <div class="d-flex mt-4">
+        <?php if ($user->rights >= 7): ?>
+            <a href="/guestbook/clean" class="btn btn-danger"><?= _t('Clear') ?></a>
+        <?php endif; ?>
+    </div>
+<?php endif ?>

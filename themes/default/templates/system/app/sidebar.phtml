@@ -108,8 +108,8 @@ $user_avatar = $user->getAvatar();
             <?php endif ?>
             <?php if ($config->mod_guest || $user->rights >= 7): ?>
                 <li>
-                    <a href="/guestbook/">
-                        <svg class="icon guest-book-icon">
+                    <a href="/guestbook/ga">
+                        <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('Guestbook', 'system') ?></span>
@@ -190,14 +190,29 @@ $user_avatar = $user->getAvatar();
                     <span class="flex-grow-1"><?= _t('Information, FAQ', 'system') ?></span>
                 </a>
             </li>
-            <?php if ($user->rights >= 7): ?>
+            <?php if ($user->rights >= 1): ?>
+                <?php if ($user->rights >= 7): ?>
+                    <li>
+                        <div class="border-bottom mt-3 mb-3"></div>
+                        <a href="/admin/">
+                            <svg class="icon text-danger">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
+                            </svg>
+                            <span class="flex-grow-1 text-danger"><?= _t('Admin Panel', 'system') ?></span>
+                        </a>
+                    </li>
+                <?php endif ?>
                 <li>
-                    <div class="border-bottom mt-3 mb-3"></div>
-                    <a href="/admin/">
+                    <a href="/guestbook/ga?do=set">
                         <svg class="icon text-danger">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                         </svg>
-                        <span class="flex-grow-1 text-danger"><?= _t('Admin Panel', 'system') ?></span>
+                        <span class="flex-grow-1 text-danger"><?= _t('Admin Chat', 'system') ?></span>
+                        <?php if ($guestbook_counters['admin_club'] > 0): ?>
+                            <span class="badge badge-pill badge-danger">
+                                <?= $tools->formatNumber($guestbook_counters['admin_club']) ?>
+                            </span>
+                        <?php endif ?>
                     </a>
                 </li>
             <?php endif ?>
