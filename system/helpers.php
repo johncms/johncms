@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Mobicms\Render\Engine;
+use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 function di(string $service)
@@ -70,7 +70,7 @@ function pageNotFound(
     string $title = 'ERROR: 404 Not Found',
     string $message = ''
 ) : void {
-    $engine = di(Engine::class);
+    $engine = di(Render::class);
 
     if (! headers_sent()) {
         header('HTTP/1.0 404 Not Found');
