@@ -57,8 +57,12 @@ class download
         } elseif ($format_file == 'thm') {
             require_once 'Tar.php';
             $theme = new Archive_Tar($file);
-            if (! $file_th = $theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(pathinfo($file,
-                        PATHINFO_FILENAME) . '.xml')) {
+            if (! $file_th = $theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(
+                    pathinfo(
+                        $file,
+                        PATHINFO_FILENAME
+                    ) . '.xml'
+                )) {
                 $list = $theme->listContent();
                 $all = count($list);
                 for ($i = 0; $i < $all; ++$i) {
@@ -123,7 +127,7 @@ class download
     public static function displayFile($res_down = [], $rate = 0)
     {
         global $old;
-        $out = false;
+        $file = $res_down;
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
 
@@ -133,43 +137,37 @@ class download
         /** @var Johncms\Api\UserInterface $systemUser */
         $systemUser = di(Johncms\Api\UserInterface::class);
 
-        /** @var Johncms\Api\ToolsInterface $tools */
-        $tools = di(Johncms\Api\ToolsInterface::class);
-
         /** @var Johncms\Api\ConfigInterface $config */
         $config = di(Johncms\Api\ConfigInterface::class);
 
-        $out .= '<img src="' . $assets->url('images/old/system/' . $icon_id . '.png') . '" alt="" class="icon">';
-        $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
+        $file['icon'] = $assets->url('images/old/system/' . $icon_id . '.png');
+        $file['detail_url'] = '?act=view&amp;id=' . $res_down['id'];
+        $file['filtered_name'] = htmlspecialchars($res_down['rus_name']);
 
-        if ($res_down['time'] > $old) {
-            $out .= ' <span class="red">(NEW)</span>';
-        }
+        $file['is_new'] = ($res_down['time'] > $old);
 
+        $file['rating'] = [];
         if ($rate) {
             $file_rate = explode('|', $res_down['rate']);
-            $out .= '<br>' . _t('Rating') . ': <span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span>';
+            $file['rating']['plus'] = $file_rate[0];
+            $file['rating']['minus'] = $file_rate[1];
         }
 
-        $sub = false;
-
+        $file['preview_text'] = '';
         if ($res_down['about']) {
             $about = $res_down['about'];
             if (mb_strlen($about) > 100) {
                 $about = mb_substr($about, 0, 90) . '...';
             }
-            $sub = '<div>' . htmlspecialchars($about, 2) . '</div>';
+            $file['preview_text'] = htmlspecialchars($about, 2);
         }
 
+        $file['comments_url'] = '';
         if ($config->mod_down_comm || $systemUser->rights >= 7) {
-            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')';
+            $file['comments_url'] = '?act=comments&amp;id=' . $res_down['id'];
         }
 
-        if ($sub) {
-            $out .= '<div class="sub">' . $sub . '</div>';
-        }
-
-        return $out;
+        return $file;
     }
 
     // Форматирование размера файлов
@@ -271,7 +269,8 @@ class download
     // Навигация по папкам
     public static function navigation($array = [])
     {
-        $category = ['<a href="?"><b>' . _t('Downloads') . '</b></a>'];
+        /** @var Johncms\Api\NavChainInterface $nav_chain */
+        $nav_chain = di(Johncms\Api\NavChainInterface::class);
 
         if ($array['refid']) {
             $sql = [];
@@ -295,18 +294,20 @@ class download
             if ($sql) {
                 /** @var PDO $db */
                 $db = di(PDO::class);
-                $req_cat = $db->query("SELECT * FROM `download__category` WHERE `dir` IN ('" . implode("','",
-                        $sql) . "') ORDER BY `id` ASC");
+                $req_cat = $db->query(
+                    "SELECT * FROM `download__category` WHERE `dir` IN ('" . implode(
+                        "','",
+                        $sql
+                    ) . "') ORDER BY `id` ASC"
+                );
                 while ($res_cat = $req_cat->fetch()) {
-                    $category[] = '<a href="?id=' . $res_cat['id'] . '">' . htmlspecialchars($res_cat['rus_name']) . '</a>';
+                    $nav_chain->add(htmlspecialchars($res_cat['rus_name']), '?id=' . $res_cat['id']);
                 }
             }
         }
 
         if (isset($array['name'])) {
-            $category[] = htmlspecialchars($array['name']);
+            $nav_chain->add(htmlspecialchars($array['name']));
         }
-
-        return implode(' | ', $category);
     }
 }
