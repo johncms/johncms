@@ -17,7 +17,9 @@
 
 # Themes folder ignores
 /themes/default/assets/css/app.css
+/themes/default/assets/css/app.css.map
 /themes/default/assets/js/app.js
+/themes/default/assets/js/app.js.map
 
 # Upload folder ignores
 /upload/downloads/files/*
