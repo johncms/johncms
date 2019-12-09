@@ -113,10 +113,9 @@ $user_avatar = $user->getAvatar();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
                         </svg>
                         <span class="flex-grow-1"><?= _t('Guestbook', 'system') ?></span>
-                        <?php if ($guestbook_counters['guestbook'] > 0 || $guestbook_counters['admin_club'] > 0): ?>
+                        <?php if ($guestbook_counters['guestbook'] > 0): ?>
                             <span class="badge badge-pill badge-light">
                                 <?= $tools->formatNumber($guestbook_counters['guestbook']) ?>
-                                <?= $guestbook_counters['admin_club'] > 0 ? ' / ' . $tools->formatNumber($guestbook_counters['admin_club']) : '' ?>
                             </span>
                         <?php endif ?>
                     </a>
