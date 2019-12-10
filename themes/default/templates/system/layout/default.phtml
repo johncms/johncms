@@ -27,7 +27,7 @@
 <body>
 <div class="wrapper justify-content-end d-flex" id="app">
     <div class="sidebar shadow">
-        <?php $this->insert('system::app/sidebar') ?>
+        <?= $this->section('sidebar', $this->insert('system::app/sidebar')) ?>
     </div>
     <div class="content-container content-container-padding">
         <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
