@@ -27,7 +27,15 @@
 <body>
 <div class="wrapper justify-content-end d-flex" id="app">
     <div class="sidebar shadow">
-        <?= $this->section('sidebar', $this->insert('system::app/sidebar')) ?>
+        <div class="sidebar__logo">
+            <a href="/">
+                <span class="logo__image"><img src="<?= $this->asset('images/logo.svg') ?>" alt="logo" style="width: 70%;" class="img-fluid"></span>
+            </a>
+        </div>
+        <div class="sidebar__wrapper d-flex flex-column">
+            <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu')) ?>
+            <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-main-menu')) ?>
+        </div>
     </div>
     <div class="content-container content-container-padding">
         <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
@@ -58,9 +66,8 @@
         <div class="container-fluid">
             <?php if (! empty($page_title)): ?>
                 <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
-            <?php endif; ?>
-            <?php $this->insert('system::app/breadcrumbs'); ?>
-
+            <?php endif ?>
+            <?= $this->fetch('system::app/breadcrumbs') ?>
             <?= $this->section('content') ?>
         </div>
     </div>

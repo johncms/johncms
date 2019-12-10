@@ -1,0 +1,90 @@
+<?php
+/**
+ * @var string $locale
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface $user
+ * @var \Johncms\Utility\Counters $counters
+ */
+
+$counters = $container->get('counters');
+$notifications = $counters->notifications();
+$user_avatar = $user->getAvatar();
+?>
+<!-- Пользователь -->
+<div class="accordion sidebar__user" id="accordion">
+    <div class="border-bottom"></div>
+    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
+        <div class="sidebar_user_avatar d-flex align-items-center">
+            <div class="position-relative">
+                <?php if (! empty($notifications['all'])): ?>
+                    <div class="sidebar__notifications badge badge-danger badge-pill"><?= $notifications['all'] ?></div>
+                <?php endif ?>
+                <div class="user_photo border rounded-circle mr-2 overflow-hidden">
+                    <?php if (! empty($user_avatar)): ?>
+                        <img src="<?= $user_avatar ?>" class="img-fluid" alt=".">
+                    <?php else: ?>
+                        <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div>
+                <?= ($user->id ? $user->name : _t('Guest', 'system')) ?>
+            </div>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <ul class="nav nav__vertical pl-2 pt-0">
+            <!-- Выпадающее меню для пользователей -->
+            <?php if ($user->isValid()): ?>
+                <li>
+                    <a href="/notifications/">
+                        <svg class="icon text-info">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
+                        </svg>
+                        <span class="flex-grow-1 text-info"><?= _t('Notifications', 'system') ?></span>
+                        <?php if (! empty($notifications['all'])): ?>
+                            <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
+                            </span>
+                        <?php endif ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile/?act=office">
+                        <svg class="icon text-info">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+                        </svg>
+                        <span class="flex-grow-1 text-info"><?= _t('Personal', 'system') ?></span>
+                    </a>
+                </li>
+            <?php else: ?>
+                <!-- Выпадающее меню для гостей -->
+                <li>
+                    <a href="/registration/">
+                        <svg class="icon text-info">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
+                        </svg>
+                        <span class="flex-grow-1 text-info"><?= _t('Registration', 'system') ?></span>
+                        <?php if (! empty($notifications['all'])): ?>
+                            <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
+                            </span>
+                        <?php endif ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="/login/">
+                        <svg class="icon text-info">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+                        </svg>
+                        <span class="flex-grow-1 text-info"><?= _t('Login', 'system') ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+</div>
