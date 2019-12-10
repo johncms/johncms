@@ -1,7 +1,7 @@
 {
-    "name": "simba77/johncms",
-    "description": "Mobile Content Management System",
-    "homepage": "http://johncms.com",
+    "name": "johncms/johncms",
+    "description": "Content Management System",
+    "homepage": "https://johncms.com",
     "license": "GPL-3.0-only",
     "keywords": [
         "johncms",
@@ -13,12 +13,12 @@
     "authors": [
         {
             "name": "JohnCMS Contributors",
-            "homepage": "https://github.com/simba77/johncms/graphs/contributors"
+            "homepage": "https://github.com/johncms/johncms/graphs/contributors"
         }
     ],
     "support": {
         "forum": "https://johncms.com/forum",
-        "source": "https://github.com/simba77/johncms",
+        "source": "https://github.com/johncms/johncms",
         "issues": "https://johncms.com/forum/index.php?id=67"
     },
     "config": {

@@ -1,7 +1,7 @@
 # Changelog 
 This project follows [semantic versioning](https://semver.org/).  
 All notable changes to this project will be documented in this file.  
-Detailed change can see in the [repository log](https://github.com/simba77/johncms/commits).
+Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
 ## 9.0.0 - Unreleased
 

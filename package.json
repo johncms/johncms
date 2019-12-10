@@ -1,7 +1,7 @@
 {
   "name": "JohnCMS",
   "version": "8.0.0",
-  "description": "JohnCMS Mobile Content Management System",
+  "description": "JohnCMS Content Management System",
   "homepage": "https://johncms.com",
   "license": "GPL-3.0",
   "keywords": [
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/simba77/johncms"
+    "url": "https://github.com/johncms/johncms"
   },
   "engines": {
     "node": ">= 0.12.0"
