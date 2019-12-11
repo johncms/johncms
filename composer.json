@@ -36,7 +36,7 @@
         "ext-pdo": "*",
         "aura/autoload": "^2.0",
         "mobicms/captcha": "^2.0",
-        "mobicms/render": "^1.0",
+        "mobicms/render": "^1.1",
         "nikic/fast-route": "^1.3",
         "verot/class.upload.php": "^2.0",
         "zendframework/zend-i18n": "^2.10",
