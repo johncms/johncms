@@ -197,7 +197,7 @@ class download
     }
 
     // Вывод ссылок на файл
-    public static function downloadLlink($array = [])
+    public static function downloadLlink($array = []): array
     {
         global $old;
 
@@ -209,17 +209,15 @@ class download
 
         $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
-        $out = '<table  width="100%"><tr><td width="16" valign="top">';
         $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
-        $out .= '<img src="' . $assets->url('images/old/system/' . $icon_id . '.png') . '" alt="" class="icon">&nbsp;';
-        $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
-
-        if ($array['res']['time'] > $old) {
-            $out .= ' <span class="red">(NEW)</span>';
-        }
-
-        $out .= '<div class="sub">' . _t('Uploaded') . ': ' . $tools->displayDate((int) $array['res']['time']);
-        $out .= '</div></td></tr></table>';
+        $out = [
+            'icon'        => $assets->url('images/old/system/' . $icon_id . '.png'),
+            'url'         => '?act=load_file&amp;id=' . $id . $morelink,
+            'name'        => $array['res']['text'],
+            'size'        => self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))),
+            'is_new'      => $array['res']['time'] > $old,
+            'upload_date' => $tools->displayDate((int) $array['res']['time']),
+        ];
 
         return $out;
     }

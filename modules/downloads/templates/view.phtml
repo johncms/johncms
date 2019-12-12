@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $in_bookmarks
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (! $config->mod_down): ?>
+    <div class="alert alert-danger border-0 shadow">
+        <?= _t('Downloads are closed') ?>
+    </div>
+<?php endif; ?>
+
+<?php if (! empty($file['description'])): ?>
+    <div>
+        <?= $file['description'] ?>
+    </div>
+<?php endif; ?>
+<div class="text-muted mt-2 mb-2">
+    <div><?= _t('File name:') ?> <?= $file['name'] ?></div>
+    <div><?= _t('Uploaded by:') ?> <?= $file['upload_user']['name'] ?></div>
+    <div><?= _t('Downloads:') ?> <?= $file['field'] ?></div>
+</div>
+<div class="mb-3">
+    <a href="<?= $file['main_file']['url'] ?>" class="btn btn-primary"><?= $file['main_file']['name'] ?></a>
+</div>
+
+<div class="mt-3">
+    <?php if ($user->rights == 4 || $user->rights >= 6): ?>
+        <div class="btn-group">
+            <div class="dropdown">
+                <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= _t('Actions') ?>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php if (! empty($id)): ?>
+                        <a class="dropdown-item" href="?act=edit_file&amp;id=<?= $id ?>"><?= _t('Edit File') ?></a>
+                        <a class="dropdown-item" href="?act=edit_about&amp;id=<?= $id ?>"><?= _t('Edit Description') ?></a>
+                        <a class="dropdown-item" href="?act=edit_screen&amp;id=<?= $id ?>"><?= _t('Managing Screenshots') ?></a>
+                        <a class="dropdown-item" href="?act=files_more&amp;id=<?= $id ?>"><?= _t('Additional Files') ?></a>
+                        <a class="dropdown-item" href="?act=delete_file&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Delete File') ?></a>
+                        <a class="dropdown-item" href="?act=transfer_file&amp;id=<?= $id ?>"><?= _t('Move File') ?></a>
+                        <a class="dropdown-item" href="?act=mp3tags&amp;id=<?= $id ?>"><?= _t('Edit MP3 Tags') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if ($user->isValid()): ?>
+        <div class="mt-3">
+            <?php if ($in_bookmarks): ?>
+                <a href="?act=view&amp;id=<?= $id ?>&amp;delBookmark"><?= _t('Remove from Favorites') ?></a>
+            <?php else: ?>
+                <a href="?act=view&amp;id=<?= $id ?>&amp;addBookmark"><?= _t('Add to Favorites') ?></a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="mt-2">
+        <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+    </div>
+</div>
