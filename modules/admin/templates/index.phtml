@@ -1,58 +1,6 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('Admin Panel'), 'homeButton' => true]) ?>
-<div class="phdr"><strong><?= _t('Admin Panel') ?></strong></div>
-<!-- Блок пользователей -->
-<div class="user padding">
-    <h3><?= _t('Users') ?></h3>
-    <ul>
-        <?php if ($regtotal): ?>
-            <li>
-                <span class="red"><a href="?act=reg"><?= _t('On registration') ?></a>&nbsp;(<?= $regtotal ?>)</span>
-            </li>
-        <?php endif ?>
-        <li><a href="?act=usr"><?= _t('Users') ?></a>&nbsp;(<?= $countusers ?>)</li>
-        <li><a href="?act=usr_adm"><?= _t('Administration') ?></a>&nbsp;(<?= $countadm ?>)</li>
-        <li><a href="?act=ban_panel"><?= _t('Ban Panel') ?></a>&#160;(<?= $bantotal ?>)</li>
-        <?php if ($user->rights == 9): ?>
-            <li><a href="?act=usr_clean"><?= _t('Database cleanup') ?></a></li>
-            <li><a href="?act=antiflood"><?= _t('Antiflood') ?></a></li>
-            <li><a href="?act=karma"><?= _t('Karma') ?></a></li>
-        <?php endif ?>
-        <li style="margin-top: 12px"><a href="../community/search/"><?= _t('Search by Nickname') ?></a></li>
-        <li><a href="?act=search_ip"><?= _t('Search IP') ?></a></li>
-    </ul>
-</div>
-<!-- Блок модулей -->
-<div class="gmenu padding">
-    <h3><?= _t('Modules') ?></h3>
-    <ul>
-        <li><a href="?act=forum"><?= _t('Forum') ?></a></li>
-        <li><a href="?act=news"><?= _t('News') ?></a></li>
-        <li><a href="?act=ads"><?= _t('Advertisement') ?></a></li>
-        <?php if ($user->rights == 9): ?>
-            <li><a href="?act=counters"><?= _t('Counters') ?></a></li>
-        <?php endif ?>
-    </ul>
-</div>
-<!-- Блок системных настроек -->
-<div class="menu padding">
-    <h3><?= _t('System') ?></h3>
-    <ul>
-        <?php if ($user->rights == 9): ?>
-            <li><a href="?act=settings"><?= _t('System Settings') ?></a></li>
-            <li><a href="?act=smilies"><?= _t('Update Smilies') ?></a></li>
-            <li><a href="?act=languages"><?= _t('Language Settings') ?></a></li>
-        <?php endif ?>
-        <li><a href="?act=access"><?= _t('Permissions') ?></a></li>
-    </ul>
-</div>
-<?php if ($user->rights == 9): ?>
-    <!-- Блок безопасности -->
-    <div class="rmenu padding">
-        <h3><?= _t('Security') ?></h3>
-        <ul>
-            <li><a href="?act=antispy"><?= _t('Anti-Spyware') ?></a></li>
-            <li><a href="?act=ipban"><?= _t('Ban by IP') ?></a></li>
-        </ul>
-    </div>
-<?php endif ?>
-<div class="phdr"><small>JohnCMS 9.0.0</small></div>
+<?php $this->layout('system::layout/default', ['title' => _t('Admin Panel'), 'homeButton' => true]) ?>
+<?php $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu')) ?>
+
+<h1>DASHBOARD</h1>
+<p>Эта страница видна по умолчанию, когда переходим в админку.<br>Надо придумать, что тут показывать...</p>
+<p>Всякие счетчики, пузомерки и прочая информационная и красивая хуета тут будет уместна.</p>

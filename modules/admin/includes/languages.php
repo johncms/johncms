@@ -70,7 +70,7 @@ foreach ($config['lng_list'] as $key => $val) {
     echo '<div><input type="radio" value="' . $key . '" name="lng" ' . ($key == $config['lng'] ? 'checked="checked"' : '') . '/>&#160;' .
         $tools->getFlag($key) .
         $val .
-        ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
+        ($key == $config['lng'] ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
         '</div>';
 }
 

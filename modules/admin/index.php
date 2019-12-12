@@ -19,10 +19,10 @@ use Zend\I18n\Translator\Translator;
 define('_IN_JOHNADM', 1);
 
 /**
- * @var Render         $view
- * @var PDO            $db
+ * @var Render $view
+ * @var PDO $db
  * @var ToolsInterface $tools
- * @var UserInterface  $user
+ * @var UserInterface $user
  */
 
 $db = di(PDO::class);
@@ -72,13 +72,20 @@ $actions = [
     'social_setting',
 ];
 
+$view->addData(
+    [
+        'regtotal'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
+        'countusers' => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
+        'countadm'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
+        'bantotal'   => $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
+    ],
+    [
+        'admin::sidebar-admin-menu',
+    ]
+);
+
 if (($key = array_search($act, $actions)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
-    echo $view->render('admin::index', [
-        'countusers' => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
-        'countadm'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
-        'regtotal'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
-        'bantotal'   => $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
-    ]);
+    echo $view->render('admin::index');
 }
