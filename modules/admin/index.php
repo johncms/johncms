@@ -29,6 +29,7 @@ $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
 $view = di(Render::class);
+$route = di('route');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
@@ -37,7 +38,7 @@ $view->addFolder('admin', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
-$act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING) ?? '';
+$act = $route['action'] ?? 'index';
 $mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
 $do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
 
@@ -47,6 +48,7 @@ if ($user->rights < 7) {
 }
 
 $actions = [
+    'index',
     'forum',
     'news',
     'ads',
@@ -65,8 +67,8 @@ $actions = [
     'reg',
     'mail',
     'search_ip',
-    'usr',
-    'usr_adm',
+    'userlist',
+    'adminlist',
     'usr_clean',
     'usr_del',
     'social_setting',
@@ -87,5 +89,5 @@ $view->addData(
 if (($key = array_search($act, $actions)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
-    echo $view->render('admin::index');
+    pageNotFound();
 }

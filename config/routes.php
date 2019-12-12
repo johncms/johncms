@@ -41,6 +41,6 @@ return function (RouteCollector $map, UserInterface $user) {
     }
 
     if ($user->isValid() && $user->rights >= 6) {
-        $map->addRoute(['GET', 'POST'], '/admin[/]', 'modules/admin/index.php');                      // Administration
+        $map->addRoute(['GET', 'POST'], '/admin/[{action}/]', 'modules/admin/index.php');                      // Administration
     }
 };
