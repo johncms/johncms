@@ -12,6 +12,7 @@
  * @var $title
  * @var $page_title
  * @var $in_bookmarks
+ * @var $file
  */
 
 $this->layout(
@@ -29,12 +30,30 @@ $this->layout(
     </div>
 <?php endif; ?>
 
+<?php if (! empty($file['screenshots'])): ?>
+    <div class="screenshots border-bottom mb-2 pb-3 swiper-container">
+        <div class="swiper-wrapper">
+            <?php foreach ($file['screenshots'] as $number => $screenshot): ?>
+                <div class="swiper-slide">
+                    <a href="<?= $screenshot['file'] ?>"
+                       title="<?= _t('Screenshot:') ?> <?= ($number + 1) ?>"
+                       date-source="<?= $screenshot['file'] ?>"
+                       class="image-preview">
+                        <img src="<?= $screenshot['preview'] ?>" alt=".">
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+<?php endif; ?>
+
 <?php if (! empty($file['description'])): ?>
-    <div>
+    <div class="border-bottom pb-2">
         <?= $file['description'] ?>
     </div>
 <?php endif; ?>
-<div class="text-muted mt-2 mb-2">
+<div class="text-muted mt-2 mb-3 border-bottom pb-2">
     <div><?= _t('File name:') ?> <?= $file['name'] ?></div>
     <div><?= _t('Uploaded by:') ?> <?= $file['upload_user']['name'] ?></div>
     <div><?= _t('Downloads:') ?> <?= $file['field'] ?></div>

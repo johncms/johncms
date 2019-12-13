@@ -12,3 +12,4 @@ require('./menu');
 require('./prism');
 require('./forum');
 require('./modals');
+require('./slider');
