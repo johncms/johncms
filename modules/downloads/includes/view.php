@@ -176,6 +176,8 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_f
 
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
 
+$file_array['rate'] = $file_rate;
+
 // Запрашиваем дополнительные файлы
 $req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id . ' ORDER BY `time` ASC');
 $total_files_more = $req_file_more->rowCount();
