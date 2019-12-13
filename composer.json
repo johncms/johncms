@@ -35,6 +35,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "aura/autoload": "^2.0",
+        "johncms/system": "dev-develop",
         "mobicms/captcha": "^2.0",
         "mobicms/render": "^1.1",
         "nikic/fast-route": "^1.3",
