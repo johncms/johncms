@@ -12,16 +12,19 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Johncms\System\Container\Factory;
+use PDO;
+
 class UserClean
 {
     /**
-     * @var \PDO
+     * @var PDO
      */
     private $db;
 
     public function __construct()
     {
-        $this->db = \App::getContainer()->get(\PDO::class);
+        $this->db = Factory::getContainer()->get(PDO::class);
     }
 
     public function removeUser($clean_id)

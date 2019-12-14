@@ -60,38 +60,11 @@ if (DEBUG) {
 
 require __DIR__ . '/vendor/autoload.php';
 
-class App
-{
-    private static $container;
-
-    /**
-     * @return ServiceManager
-     */
-    public static function getContainer()
-    {
-        if (null === self::$container) {
-            $config = [];
-
-            // Read configuration
-            foreach (Glob::glob(CONFIG_PATH . 'autoload/' . '{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
-                $config = ArrayUtils::merge($config, include $file);
-            }
-
-            $container = new ServiceManager;
-            (new Config($config['dependencies']))->configureServiceManager($container);
-            $container->setService('config', $config);
-            self::$container = $container;
-        }
-
-        return self::$container;
-    }
-}
-
 session_name('SESID');
 session_start();
 
 /** @var ContainerInterface $container */
-$container = App::getContainer();
+$container = Johncms\System\Container\Factory::getContainer();
 
 /** @var EnvironmentInterface $env */
 $env = $container->get(EnvironmentInterface::class);
@@ -137,7 +110,7 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     file_put_contents($cacheFile, time());
 }
 
-/** @var UserInterface $userConfig */
+/** @var \Johncms\Api\UserConfigInterface $userConfig */
 $userConfig = $container->get(UserInterface::class)->config;
 
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;

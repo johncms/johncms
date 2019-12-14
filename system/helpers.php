@@ -10,12 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\System\Container\Factory;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 function di(string $service)
 {
-    return App::getContainer()->get($service);
+    return Factory::getContainer()->get($service);
 }
 
 /**

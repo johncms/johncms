@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Utility;
 
 use Johncms\Api\ToolsInterface;
+use Johncms\System\Container\Factory;
 
 class NewsWidget
 {
@@ -37,7 +38,7 @@ class NewsWidget
     public function __construct()
     {
         /** @var \Psr\Container\ContainerInterface $container */
-        $container = \App::getContainer();
+        $container = Factory::getContainer();
 
         $this->db = $container->get(\PDO::class);
         $this->tools = $container->get(ToolsInterface::class);

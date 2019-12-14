@@ -13,9 +13,11 @@ declare(strict_types=1);
 namespace Johncms\Utility;
 
 use Johncms\Api\BbcodeInterface;
+use Johncms\Api\ConfigInterface;
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\System\Container\Factory;
 
 class Comments
 {
@@ -75,14 +77,14 @@ class Comments
         global $mod, $start, $kmess;
 
         /** @var \Psr\Container\ContainerInterface $container */
-        $container = \App::getContainer();
+        $container = Factory::getContainer();
         $this->tools = $container->get(ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
         $this->systemUser = $container->get(UserInterface::class);
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
-        $homeurl = \App::getContainer()->get('config')['johncms']['homeurl'];
+        $homeurl = $container->get(ConfigInterface::class)->homeurl;
 
         if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];
@@ -368,7 +370,7 @@ class Comments
     private function add_comment($message)
     {
         /** @var \Psr\Container\ContainerInterface $container */
-        $container = \App::getContainer();
+        $container = Factory::getContainer();
 
         /** @var EnvironmentInterface $env */
         $env = $container->get(EnvironmentInterface::class);
@@ -414,7 +416,7 @@ class Comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
             (! empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
             '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-            '</p><p>' . \App::getContainer()->get(BbcodeInterface::class)->buttons('form', 'message') .
+            '</p><p>' . Factory::getContainer()->get(BbcodeInterface::class)->buttons('form', 'message') .
             '<textarea rows="' . $this->systemUser->config->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
             '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }
@@ -439,7 +441,7 @@ class Comments
             $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
-            $flood = \App::getContainer()->get(ToolsInterface::class)->antiflood();
+            $flood = Factory::getContainer()->get(ToolsInterface::class)->antiflood();
 
             if ($flood) {
                 $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');

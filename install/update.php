@@ -13,7 +13,7 @@ define('_IN_JOHNCMS', 1);
 require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+$container = Johncms\System\Container\Factory::getContainer();
 
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
@@ -168,8 +168,8 @@ switch ($step) {
         <?php
         $first_sections = $db->query("SELECT * FROM forum where type = 'f'")->fetchAll();
         foreach ($first_sections as $section) {
-            $db->query("INSERT INTO forum_sections SET 
-                parent = 0, 
+            $db->query("INSERT INTO forum_sections SET
+                parent = 0,
                 name = '" . $section['text'] . "',
                 description = '" . $section['soft'] . "',
                 sort = 100,
@@ -181,8 +181,8 @@ switch ($step) {
             $section_id = $db->lastInsertId();
             $subsections = $db->query("SELECT * FROM forum where type = 'r' AND refid = '" . $section['id'] . "'")->fetchAll();
             foreach ($subsections as $subsection) {
-                $db->query("INSERT INTO forum_sections SET 
-                    parent = '" . $section_id . "', 
+                $db->query("INSERT INTO forum_sections SET
+                    parent = '" . $section_id . "',
                     name = '" . $subsection['text'] . "',
                     description = '" . $subsection['soft'] . "',
                     sort = 100,
@@ -431,8 +431,8 @@ switch ($step) {
             $post = $db->query("SELECT * FROM forum_messages where old_id = '" . $file['post'] . "'")->fetch();
 
             $db->query("UPDATE cms_forum_files SET
-                cat = '" . $cat['id'] . "',   
-                subcat = '" . $subcat['id'] . "',   
+                cat = '" . $cat['id'] . "',
+                subcat = '" . $subcat['id'] . "',
                 topic = '" . $topic['id'] . "',
                 post = '" . $post['id'] . "'
                 WHERE id = " . $file['id'] . '
@@ -486,7 +486,7 @@ switch ($step) {
         $votes = $db->query('SELECT * FROM `cms_forum_vote` ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($vote = $votes->fetch()) {
             $topic = $db->query("SELECT * FROM forum_topic where old_id = '" . $vote['topic'] . "'")->fetch();
-            $db->query("UPDATE cms_forum_vote SET 
+            $db->query("UPDATE cms_forum_vote SET
               topic = '" . $topic['id'] . "'
               WHERE id = " . $vote['id'] . '
             ');
@@ -539,7 +539,7 @@ switch ($step) {
         $votes = $db->query('SELECT * FROM `cms_forum_vote_users` ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($vote = $votes->fetch()) {
             $topic = $db->query("SELECT * FROM forum_topic where old_id = '" . $vote['topic'] . "'")->fetch();
-            $db->query("UPDATE cms_forum_vote_users SET 
+            $db->query("UPDATE cms_forum_vote_users SET
               topic = '" . $topic['id'] . "'
               WHERE id = " . $vote['id'] . '
             ');

@@ -16,6 +16,7 @@ use Johncms\Api\BbcodeInterface;
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\System\Container\Factory;
 use Johncms\Users\UserConfig;
 use Johncms\View\Extension\Assets;
 use Psr\Container\ContainerInterface;
@@ -163,7 +164,7 @@ class Bbcode implements BbcodeInterface
             }
 
             /** @var ToolsInterface $tools */
-            $tools = \App::getContainer()->get(ToolsInterface::class);
+            $tools = Factory::getContainer()->get(ToolsInterface::class);
 
             $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
         } else {
