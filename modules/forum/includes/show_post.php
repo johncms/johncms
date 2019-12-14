@@ -52,7 +52,7 @@ if (! $res) {
             'back_url_name' => _t('Forum'),
         ]
     );
-    exit;    
+    exit;
 }
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
