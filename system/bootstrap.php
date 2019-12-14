@@ -13,10 +13,6 @@ declare(strict_types=1);
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\UserInterface;
 use Psr\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\Config;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Glob;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
