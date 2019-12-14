@@ -84,7 +84,7 @@ $this->layout(
         </select>
         <select class="custom-select my-1 mr-sm-2" name="sort_down2" id="sort_down2">
             <option value="0" <?= ! $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= _t('descending') ?></option>
-            <option value="1" <?= $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= _t('descending') ?></option>
+            <option value="1" <?= $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= _t('ascending') ?></option>
         </select>
         <button type="submit" class="btn btn-primary my-1"><?= _t('Sort') ?></button>
     </form>

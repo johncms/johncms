@@ -54,6 +54,14 @@ $this->layout(
     </div>
 <?php endif; ?>
 
+<?php if (! empty($file['mp3_properties'])): ?>
+    <div class="mt-2 mb-3 border-bottom pb-2">
+        <?php foreach ($file['mp3_properties'] as $property): ?>
+            <div><?= $property['name'] ?>: <?= $property['value'] ?></div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
 <div class="text-muted mt-2 mb-3 border-bottom pb-2">
     <div><?= _t('File name:') ?> <?= $file['name'] ?></div>
     <div><?= _t('Uploaded by:') ?> <?= $file['upload_user']['name'] ?></div>
