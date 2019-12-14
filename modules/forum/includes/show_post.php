@@ -40,6 +40,20 @@ FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.
 WHERE `forum_messages`.`id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1'
 )->fetch();
 
+if (! $res) {
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Show post'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]
+    );
+    exit;    
+}
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
 
