@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\i18n\TranslatorServiceFactory;
+use Johncms\System\i18n\TranslatorServiceFactory;
 use Zend\I18n\Translator;
 
 return [
@@ -22,18 +22,6 @@ return [
                 'pattern'     => '/%s/system.mo',
                 'text_domain' => 'system',
             ],
-        ],
-    ],
-
-    'dependencies' => [
-        'aliases' => [
-            'TranslatorPluginManager'             => Translator\LoaderPluginManager::class,
-            Translator\TranslatorInterface::class => Translator\Translator::class,
-        ],
-
-        'factories' => [
-            Translator\Translator::class          => TranslatorServiceFactory::class,
-            Translator\LoaderPluginManager::class => Translator\LoaderPluginManagerFactory::class,
         ],
     ],
 ];
