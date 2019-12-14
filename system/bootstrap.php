@@ -106,7 +106,7 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     file_put_contents($cacheFile, time());
 }
 
-/** @var \Johncms\Api\UserConfigInterface $userConfig */
+/** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;
 
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
