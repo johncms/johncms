@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
@@ -20,12 +20,12 @@ use Zend\I18n\Translator\Translator;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Assets          $assets
- * @var Config          $config
- * @var PDO             $db
- * @var ToolsInterface  $tools
- * @var UserInterface   $user
- * @var Render          $view
+ * @var Assets $assets
+ * @var Config $config
+ * @var PDO $db
+ * @var ToolsInterface $tools
+ * @var User $user
+ * @var Render $view
  */
 
 $assets = di(Assets::class);
@@ -33,7 +33,7 @@ $config = di(Config::class);
 $db = di(PDO::class);
 $route = di('route');
 $tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля
@@ -48,9 +48,12 @@ $mod = $route['mod'] ?? '';
 
 // Закрываем от неавторизованных юзеров
 if (! $config->active && ! $user->isValid()) {
-    echo $view->render('system::app/old_content', [
-        'content' => $tools->displayError(_t('For registered users only')),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'content' => $tools->displayError(_t('For registered users only')),
+        ]
+    );
     exit;
 }
 

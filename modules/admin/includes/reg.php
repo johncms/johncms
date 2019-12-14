@@ -16,7 +16,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var PDO                        $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\System\Users\User  $user
  */
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';

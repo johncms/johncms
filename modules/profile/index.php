@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
@@ -25,7 +25,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Config $config
  * @var PDO $db
  * @var ToolsInterface $tools
- * @var UserInterface $user
+ * @var User $user
  * @var Render $view
  */
 
@@ -33,7 +33,7 @@ $assets = di(Assets::class);
 $config = di(Config::class);
 $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем языки модуля

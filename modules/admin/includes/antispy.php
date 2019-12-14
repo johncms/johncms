@@ -16,7 +16,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 const ROOT_DIR = ROOT_PATH;
 
 /**
- * @var Johncms\Api\UserInterface $user
+ * @var Johncms\System\Users\User $user
  */
 
 // Проверяем права доступа

@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
@@ -20,16 +20,16 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Assets             $assets
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Render             $view
+ * @var Assets $assets
+ * @var PDO $db
+ * @var ToolsInterface $tools
+ * @var User $user
+ * @var Render $view
  */
 
 $assets = di(Assets::class);
 $db = di(PDO::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $tools = di(ToolsInterface::class);
 $view = di(Render::class);
 
@@ -49,10 +49,13 @@ $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
 if (! $user->isValid()) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? '',
-        'content' => $tools->displayError(_t('For registered users only')),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? '',
+            'content' => $tools->displayError(_t('For registered users only')),
+        ]
+    );
     exit;
 }
 
@@ -60,10 +63,13 @@ if (! $user->isValid()) {
 $foundUser = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
 if (! $foundUser) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? '',
-        'content' => $tools->displayError(_t('User does not exists')),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? '',
+            'content' => $tools->displayError(_t('User does not exists')),
+        ]
+    );
     exit;
 }
 
@@ -125,16 +131,20 @@ if (($key = array_search($act, $actions)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
     $albumcount = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-    $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
+    $total_mans = $db->query(
+        "SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
       WHERE `users`.`sex` = 'm'
-    ")->fetchColumn();
-    $total_womans = $db->query("SELECT COUNT(DISTINCT `user_id`)
+    "
+    )->fetchColumn();
+    $total_womans = $db->query(
+        "SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
       WHERE `users`.`sex` = 'zh'
-    ")->fetchColumn();
+    "
+    )->fetchColumn();
     $newcount = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
     echo '<div class="phdr"><b>' . _t('Photo Albums') . '</b></div>' .
         '<div class="gmenu"><p>' . '<img src="' . $assets->url('images/old/user-ok.png') . '" alt="" class="icon">' .
@@ -161,7 +171,10 @@ if (($key = array_search($act, $actions)) !== false) {
         '</div>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => $textl ?? '',
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => $textl ?? '',
+        'content' => ob_get_clean(),
+    ]
+);

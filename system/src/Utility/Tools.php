@@ -15,8 +15,8 @@ namespace Johncms\Utility;
 use Johncms\Api\BbcodeInterface;
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\Users\UserConfig;
+use Johncms\System\Users\User;
+use Johncms\System\Users\UserConfig;
 use Johncms\View\Extension\Assets;
 use Psr\Container\ContainerInterface;
 
@@ -38,7 +38,7 @@ class Tools implements ToolsInterface
     private $db;
 
     /**
-     * @var UserInterface::class
+     * @var User
      */
     private $user;
 
@@ -58,7 +58,7 @@ class Tools implements ToolsInterface
         $this->assets = $container->get(Assets::class);
         $this->config = $container->get(Config::class);
         $this->db = $container->get(\PDO::class);
-        $this->user = $container->get(UserInterface::class);
+        $this->user = $container->get(User::class);
         $this->userConfig = $this->user->config;
 
         return $this;

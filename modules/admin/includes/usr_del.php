@@ -16,7 +16,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var PDO                        $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\System\Users\User  $user
  */
 
 if ($user->rights < 9) {

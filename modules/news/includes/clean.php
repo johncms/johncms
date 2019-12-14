@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
- * @var Johncms\Api\UserInterface $user
- * @var Johncms\View\Render      $view
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\View\Render $view
  */
 
 // News cleaning
@@ -45,12 +45,15 @@ if ($user->rights >= 7) {
                 $message = _t('Delete all news older than 1 month');
         }
 
-        echo $view->render('system::pages/result', [
-            'title'    => _t('Clear news'),
-            'message'  => $message,
-            'type'     => 'alert-success',
-            'back_url' => '/news/',
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => _t('Clear news'),
+                'message'  => $message,
+                'type'     => 'alert-success',
+                'back_url' => '/news/',
+            ]
+        );
     } else {
         echo $view->render('news::clear');
     }

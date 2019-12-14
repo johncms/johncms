@@ -16,7 +16,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var PDO                        $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\System\Users\User  $user
  */
 
 $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
@@ -553,15 +553,15 @@ switch ($mod) {
                 echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `forum_topic`.*, 
-            `forum_topic`.`id` AS `fid`, 
-            `forum_topic`.`name` AS `topic_name`, 
-            `forum_topic`.`user_id` AS `id`, 
-            `forum_topic`.`user_name` AS `name`, 
-            `users`.`rights`, 
-            `users`.`lastdate`, 
-            `users`.`sex`, 
-            `users`.`status`, 
+            $req = $db->query("SELECT `forum_topic`.*,
+            `forum_topic`.`id` AS `fid`,
+            `forum_topic`.`name` AS `topic_name`,
+            `forum_topic`.`user_id` AS `id`,
+            `forum_topic`.`user_name` AS `name`,
+            `users`.`rights`,
+            `users`.`lastdate`,
+            `users`.`sex`,
+            `users`.`status`,
             `users`.`datereg`,
             `users`.`ip`,
             `users`.`browser`,
@@ -661,15 +661,15 @@ switch ($mod) {
                 echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `forum_messages`.*, 
-            `forum_messages`.`id` AS `fid`, 
-            `forum_messages`.`user_id` AS `id`, 
-            `forum_messages`.`user_name` AS `name`, 
+            $req = $db->query("SELECT `forum_messages`.*,
+            `forum_messages`.`id` AS `fid`,
+            `forum_messages`.`user_id` AS `id`,
+            `forum_messages`.`user_name` AS `name`,
             `forum_messages`.`user_agent` AS `browser`,
-            `users`.`rights`, 
-            `users`.`lastdate`, 
-            `users`.`sex`, 
-            `users`.`status`, 
+            `users`.`rights`,
+            `users`.`lastdate`,
+            `users`.`sex`,
+            `users`.`status`,
             `users`.`datereg`
             FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
             WHERE `forum_messages`.`deleted` = '1' ${sort} ORDER BY `forum_messages`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess);

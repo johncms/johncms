@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Utility;
 
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 
 class Counters
@@ -24,7 +24,7 @@ class Counters
     private $db;
 
     /**
-     * @var UserInterface
+     * @var User
      */
     private $systemUser;
 
@@ -38,7 +38,7 @@ class Counters
     public function __invoke(ContainerInterface $container)
     {
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(UserInterface::class);
+        $this->systemUser = $container->get(User::class);
         $this->tools = $container->get(ToolsInterface::class);
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
 

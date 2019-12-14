@@ -12,23 +12,23 @@ declare(strict_types=1);
 
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO               $db
- * @var ToolsInterface    $tools
- * @var UserInterface     $user
- * @var Render            $view
+ * @var PDO $db
+ * @var ToolsInterface $tools
+ * @var User $user
+ * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 
 $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 $route = di('route');

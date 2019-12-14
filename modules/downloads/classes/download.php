@@ -136,8 +136,8 @@ class download
         /** @var Johncms\View\Extension\Assets $assets */
         $assets = di(Johncms\View\Extension\Assets::class);
 
-        /** @var Johncms\Api\UserInterface $systemUser */
-        $systemUser = di(Johncms\Api\UserInterface::class);
+        /** @var Johncms\System\Users\User $systemUser */
+        $systemUser = di(Johncms\System\Users\User::class);
 
         /** @var Config $config */
         $config = di(Config::class);

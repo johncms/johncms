@@ -15,7 +15,7 @@ use Johncms\System\Config\Config;
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
@@ -28,13 +28,13 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var PDO $db
  * @var EnvironmentInterface $env
  * @var ToolsInterface $tools
- * @var UserInterface $user
+ * @var User $user
  * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 
 $db = di(PDO::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $tools = di(ToolsInterface::class);
 $env = di(EnvironmentInterface::class);
 $bbcode = di(BbcodeInterface::class);

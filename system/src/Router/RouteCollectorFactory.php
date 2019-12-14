@@ -15,22 +15,22 @@ namespace Johncms\Router;
 use FastRoute\RouteCollector;
 use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteParser\Std as RouteParser;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 
 class RouteCollectorFactory
 {
     public function __invoke(ContainerInterface $container) : RouteCollector
     {
-        /** @var UserInterface $user */
-        $user = $container->get(UserInterface::class);
+        /** @var User $user */
+        $user = $container->get(User::class);
         $router = new RouteCollector(new RouteParser(), new GroupCountBased());
         $this->addRoutesFromConfig($router, $user);
 
         return $router;
     }
 
-    private function addRoutesFromConfig(RouteCollector $map, UserInterface $user) : void
+    private function addRoutesFromConfig(RouteCollector $map, User $user) : void
     {
         (require CONFIG_PATH . 'routes.php')($map, $user);
     }

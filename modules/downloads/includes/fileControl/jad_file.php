@@ -13,7 +13,7 @@ declare(strict_types=1);
 /**
  * @var Johncms\System\Config\Config $config
  * @var PDO $db
- * @var Johncms\Api\UserInterface $user
+ * @var Johncms\System\Users\User $user
  */
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");

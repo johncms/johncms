@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\System\Config\Config;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
@@ -23,14 +23,14 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var Config $config
  * @var ToolsInterface $tools
- * @var UserInterface $user
+ * @var User $user
  * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 
 $config = di(Config::class);
 $tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 

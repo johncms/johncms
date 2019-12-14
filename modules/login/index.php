@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\Users\User;
+use Johncms\System\Users\User;
 use Johncms\View\Render;
 use Johncms\Api\NavChainInterface;
 
@@ -21,13 +20,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Config $config
- * @var UserInterface $user
+ * @var User $user
  * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 
 $config = di(Config::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 

@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\UserInterface $user
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights < 9) {

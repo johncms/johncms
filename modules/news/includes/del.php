@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
- * @var Johncms\Api\UserInterface $user
- * @var Johncms\View\Render      $view
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\View\Render $view
  */
 
 // Delete news
@@ -25,12 +25,15 @@ if ($user->rights >= 6) {
 
     if (isset($_POST['yes'])) {
         $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
-        echo $view->render('system::pages/result', [
-            'title'    => _t('Delete news'),
-            'message'  => _t('News deleted'),
-            'type'     => 'alert-success',
-            'back_url' => '/news/',
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => _t('Delete news'),
+                'message'  => _t('News deleted'),
+                'type'     => 'alert-success',
+                'back_url' => '/news/',
+            ]
+        );
     } else {
         echo $view->render('news::confirm_delete', ['id' => $id]);
     }

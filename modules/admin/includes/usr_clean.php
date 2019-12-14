@@ -34,7 +34,7 @@ switch ($mod) {
         ");
 
         if ($req->rowCount()) {
-            $del = new Johncms\Users\UserClean;
+            $del = new Johncms\System\Users\UserClean;
 
             // Удаляем всю информацию
             while ($res = $req->fetch()) {
@@ -47,7 +47,7 @@ switch ($mod) {
                 $db->exec('DELETE FROM `cms_forum_rdm` WHERE `user_id` = ' . $res['id']);
             }
 
-            $db->query('
+            $db->exec('
                 OPTIMIZE TABLE
                 `users`,
                 `cms_album_cat`,

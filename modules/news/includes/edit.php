@@ -13,10 +13,10 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
+ * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
- * @var Johncms\View\Render       $view
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\View\Render $view
  */
 
 // Editing news
@@ -25,12 +25,15 @@ if ($user->rights >= 6) {
     $nav_chain->add(_t('Edit news'), '');
 
     if (! $id) {
-        echo $view->render('system::pages/result', [
-            'title'    => _t('News'),
-            'type'     => 'alert-danger',
-            'message'  => _t('Wrong data'),
-            'back_url' => '/news/',
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => _t('News'),
+                'type'     => 'alert-danger',
+                'message'  => _t('Wrong data'),
+                'back_url' => '/news/',
+            ]
+        );
         exit;
     }
 
@@ -49,38 +52,51 @@ if ($user->rights >= 6) {
         $text = trim($_POST['text']);
 
         if (! $error) {
-            $db->prepare('
+            $db->prepare(
+                '
                       UPDATE `news` SET
                       `name` = ?,
                       `text` = ?
                       WHERE `id` = ?
-                    ')->execute([
-                $name,
-                $text,
-                $id,
-            ]);
+                    '
+            )->execute(
+                [
+                    $name,
+                    $text,
+                    $id,
+                ]
+            );
         } else {
-            echo $view->render('system::pages/result', [
-                'title'    => _t('Edit news'),
-                'message'  => $error,
-                'type'     => 'alert-danger',
-                'back_url' => '/news/edit/' . $id,
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => _t('Edit news'),
+                    'message'  => $error,
+                    'type'     => 'alert-danger',
+                    'back_url' => '/news/edit/' . $id,
+                ]
+            );
         }
 
-        echo $view->render('system::pages/result', [
-            'title'    => _t('Edit news'),
-            'message'  => _t('News changed'),
-            'type'     => 'alert-success',
-            'back_url' => '/news/',
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => _t('Edit news'),
+                'message'  => _t('News changed'),
+                'type'     => 'alert-success',
+                'back_url' => '/news/',
+            ]
+        );
     } else {
         $res = $db->query("SELECT * FROM `news` WHERE `id` = '${id}'")->fetch();
-        echo $view->render('news::edit', [
-            'id'   => $id,
-            'name' => $res['name'],
-            'text' => htmlentities($res['text'], ENT_QUOTES, 'UTF-8'),
-        ]);
+        echo $view->render(
+            'news::edit',
+            [
+                'id'   => $id,
+                'name' => $res['name'],
+                'text' => htmlentities($res['text'], ENT_QUOTES, 'UTF-8'),
+            ]
+        );
     }
 } else {
     pageNotFound();

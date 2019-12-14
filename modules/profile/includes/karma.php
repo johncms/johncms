@@ -19,8 +19,8 @@ if ($set_karma['on']) {
     /** @var PDO $db */
     $db = di(PDO::class);
 
-    /** @var Johncms\Api\UserInterface $user */
-    $user = di(Johncms\Api\UserInterface::class);
+    /** @var Johncms\System\Users\User $user */
+    $user = di(Johncms\System\Users\User::class);
 
     /** @var Johncms\Api\ToolsInterface $tools */
     $tools = di(Johncms\Api\ToolsInterface::class);

@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
- * @var Johncms\Api\UserInterface $user
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
  */
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -46,8 +46,10 @@ if ($user->rights > 6) {
             if ($catId) {
                 if ($catId == $res_down['refid']) {
                     echo '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
-                    echo $view->render('system::app/old_content',
-                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $view->render(
+                        'system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]
+                    );
                     exit;
                 }
 
@@ -57,8 +59,10 @@ if ($user->rights > 6) {
 
                     if ($req_file_more->rowCount()) {
                         while ($res_file_more = $req_file_more->fetch()) {
-                            copy($res_down['dir'] . '/' . $res_file_more['name'],
-                                $resDir['dir'] . '/' . $res_file_more['name']);
+                            copy(
+                                $res_down['dir'] . '/' . $res_file_more['name'],
+                                $resDir['dir'] . '/' . $res_file_more['name']
+                            );
                             unlink($res_down['dir'] . '/' . $res_file_more['name']);
                         }
                     }
@@ -74,20 +78,24 @@ if ($user->rights > 6) {
                     copy($res_down['dir'] . '/' . $res_down['name'], $newFile);
                     unlink($res_down['dir'] . '/' . $res_down['name']);
 
-                    $stmt = $db->prepare('
+                    $stmt = $db->prepare(
+                        '
                         UPDATE `download__files` SET
                         `name`     = ?,
                         `dir`      = ?,
                         `refid`    = ?
                         WHERE `id` = ?
-                    ');
+                    '
+                    );
 
-                    $stmt->execute([
-                        $name,
-                        $resDir['dir'],
-                        $catId,
-                        $id,
-                    ]);
+                    $stmt->execute(
+                        [
+                            $name,
+                            $resDir['dir'],
+                            $catId,
+                            $id,
+                        ]
+                    );
 
                     echo '<div class="menu"><p>' . _t('The file has been moved') . '</p></div>' .
                         '<div class="phdr"><a href="?act=recount">' . _t('Update counters') . '</a></div>';

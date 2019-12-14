@@ -39,7 +39,7 @@ $match = $dispatcher->dispatch(
 switch ($match[0]) {
     case Dispatcher::FOUND:
         // Register the location of the visitor on the site
-        new Johncms\Users\UserStat($container);
+        new Johncms\System\Users\UserStat($container);
         $container->setService('route', $match[2]);
 
         if (is_callable($match[1])) {

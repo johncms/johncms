@@ -15,9 +15,9 @@ namespace Johncms\Utility;
 use Johncms\Api\BbcodeInterface;
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\System\Container\Factory;
-use Johncms\Users\UserConfig;
+use Johncms\System\Users\UserConfig;
 use Johncms\View\Extension\Assets;
 use Psr\Container\ContainerInterface;
 
@@ -32,7 +32,7 @@ class Bbcode implements BbcodeInterface
     protected $config;
 
     /**
-     * @var UserInterface
+     * @var User
      */
     protected $user;
 
@@ -55,7 +55,7 @@ class Bbcode implements BbcodeInterface
     {
         $this->asset = $container->get(Assets::class);
         $this->config = $container->get(Config::class);
-        $this->user = $container->get(UserInterface::class);
+        $this->user = $container->get(User::class);
         $this->userConfig = $this->user->config;
         $this->homeUrl = $this->config['homeurl'];
 

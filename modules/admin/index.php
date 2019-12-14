@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
@@ -22,12 +22,12 @@ define('_IN_JOHNADM', 1);
  * @var Render $view
  * @var PDO $db
  * @var ToolsInterface $tools
- * @var UserInterface $user
+ * @var User $user
  */
 
 $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 $route = di('route');
 

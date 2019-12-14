@@ -16,7 +16,7 @@ use Johncms\Api\BbcodeInterface;
 use Johncms\System\Config\Config;
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\System\Container\Factory;
 
 class Comments
@@ -47,7 +47,7 @@ class Comments
     private $tools;
 
     /**
-     * @var UserInterface
+     * @var User
      */
     private $systemUser;
 
@@ -80,7 +80,7 @@ class Comments
         $container = Factory::getContainer();
         $this->tools = $container->get(ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(UserInterface::class);
+        $this->systemUser = $container->get(User::class);
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;

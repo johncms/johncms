@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Johncms\View\Render;
 use Zend\I18n\Translator\Translator;
 
@@ -21,13 +21,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var Config $config
  * @var ToolsInterface $tools
- * @var UserInterface $user
+ * @var User $user
  * @var Render $view
  */
 
 $config = di(Config::class);
 $tools = di(Johncms\Api\ToolsInterface::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля

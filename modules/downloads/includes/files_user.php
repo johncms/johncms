@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var PDO                        $db
  * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\System\Users\User  $user
  */
 
 $textl = _t('User Files');

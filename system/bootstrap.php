@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\EnvironmentInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -107,7 +107,7 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
 }
 
 /** @var \Johncms\Api\UserConfigInterface $userConfig */
-$userConfig = $container->get(UserInterface::class)->config;
+$userConfig = $container->get(User::class)->config;
 
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
