@@ -25,7 +25,6 @@ return [
             Assets::class                   => Assets::class,
             FastRoute\RouteCollector::class => Johncms\Router\RouteCollectorFactory::class,
             Johncms\View\Render::class      => Johncms\View\RenderEngineFactory::class,
-            PDO::class                      => Johncms\Database\PdoFactory::class,
             'counters'                      => Johncms\Utility\Counters::class,
         ],
     ],
