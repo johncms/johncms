@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
+ * @var Johncms\System\Config\Config $config
  * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
  * @var Johncms\Api\UserInterface $user

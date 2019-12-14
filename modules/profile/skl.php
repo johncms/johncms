@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,14 +8,17 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use Johncms\Api\NavChainInterface;
+use Johncms\System\Config\Config;
 use Johncms\View\Render;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = di(Johncms\Api\ConfigInterface::class);
+/** @var Config $config */
+$config = di(Config::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = di(Zend\I18n\Translator\Translator::class);

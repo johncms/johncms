@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -15,7 +15,7 @@ namespace Johncms\View;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Extension\Assets;
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
@@ -23,8 +23,8 @@ class RenderEngineFactory
 {
     public function __invoke(ContainerInterface $container): Render
     {
-        /** @var ConfigInterface $config */
-        $config = $container->get(ConfigInterface::class);
+        /** @var Config $config */
+        $config = $container->get(Config::class);
         $engine = new Render('phtml');
         $engine->setTheme($config->skindef);
         $engine->addFolder('system', realpath(ROOT_PATH . 'themes/default/templates/system'));
@@ -32,7 +32,7 @@ class RenderEngineFactory
         $engine->addData(
             [
                 'container' => $container,
-                'config'    => $container->get(ConfigInterface::class),
+                'config'    => $config,
                 'locale'    => $container->get(Translator::class)->getLocale(),
                 'tools'     => $container->get(ToolsInterface::class),
                 'user'      => $container->get(UserInterface::class),

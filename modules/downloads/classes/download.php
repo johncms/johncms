@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\System\Config\Config;
+
 /**
  * @package     mobiCMS
  * @link        http://mobicms.net
@@ -57,12 +59,12 @@ class download
         } elseif ($format_file == 'thm') {
             require_once 'Tar.php';
             $theme = new Archive_Tar($file);
-            if (! $file_th = $theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(
+            if (! $file_th = ($theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(
                     pathinfo(
                         $file,
                         PATHINFO_FILENAME
                     ) . '.xml'
-                )) {
+                ))) {
                 $list = $theme->listContent();
                 $all = count($list);
                 for ($i = 0; $i < $all; ++$i) {
@@ -137,8 +139,8 @@ class download
         /** @var Johncms\Api\UserInterface $systemUser */
         $systemUser = di(Johncms\Api\UserInterface::class);
 
-        /** @var Johncms\Api\ConfigInterface $config */
-        $config = di(Johncms\Api\ConfigInterface::class);
+        /** @var Config $config */
+        $config = di(Config::class);
 
         $file['icon'] = $assets->url('images/old/system/' . $icon_id . '.png');
         $file['detail_url'] = '?act=view&amp;id=' . $res_down['id'];

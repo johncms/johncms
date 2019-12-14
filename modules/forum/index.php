@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Assets $assets
- * @var ConfigInterface $config
+ * @var Config $config
  * @var Counters $counters
  * @var PDO $db
  * @var ToolsInterface $tools
@@ -32,7 +32,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var NavChainInterface $nav_chain
  */
 $assets = di(Assets::class);
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $counters = di('counters');
 $db = di(PDO::class);
 $user = di(UserInterface::class);

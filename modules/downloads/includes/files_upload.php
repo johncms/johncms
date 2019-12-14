@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\UserInterface   $user
+ * @var Johncms\System\Config\Config $config
+ * @var PDO $db
+ * @var Johncms\Api\UserInterface $user
  */
 
 $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
@@ -39,8 +39,13 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $error = [];
                 $new_file = isset($_POST['new_file']) ? trim($_POST['new_file']) : null;
                 $name = isset($_POST['text']) ? trim($_POST['text']) : null;
-                $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0,
-                    200)) : null;
+                $name_link = isset($_POST['name_link']) ? htmlspecialchars(
+                    mb_substr(
+                        $_POST['name_link'],
+                        0,
+                        200
+                    )
+                ) : null;
                 $text = isset($_POST['opis']) ? trim($_POST['opis']) : null;
                 $ext = explode('.', $fname);
 
@@ -62,8 +67,10 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 }
 
                 if (! in_array($ext[(count($ext) - 1)], $al_ext)) {
-                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ',
-                            $al_ext);
+                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(
+                            ', ',
+                            $al_ext
+                        );
                 }
 
                 if (strlen($fname) > 100) {
@@ -97,23 +104,27 @@ if ($req->rowCount() && is_dir($res['dir'])) {
 
                         echo '</div>';
 
-                        $stmt = $db->prepare("
+                        $stmt = $db->prepare(
+                            "
                             INSERT INTO `download__files`
                             (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`, `desc`)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '')
-                        ");
+                        "
+                        );
 
-                        $stmt->execute([
-                            $id,
-                            $load_cat,
-                            time(),
-                            $fname,
-                            $name_link,
-                            mb_substr($name, 0, 200),
-                            $type,
-                            $user->id,
-                            $text,
-                        ]);
+                        $stmt->execute(
+                            [
+                                $id,
+                                $load_cat,
+                                time(),
+                                $fname,
+                                $name_link,
+                                mb_substr($name, 0, 200),
+                                $type,
+                                $user->id,
+                                $text,
+                            ]
+                        );
                         $file_id = $db->lastInsertId();
 
                         $handle = new \Verot\Upload\Upload($_FILES['screen']);
@@ -186,8 +197,10 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
                 '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $config['flsz'] . 'kb<br>' .
-                _t('Allowed extensions') . ': ' . implode(', ',
-                    $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
+                _t('Allowed extensions') . ': ' . implode(
+                    ', ',
+                    $al_ext
+                ) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
                 '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     } else {

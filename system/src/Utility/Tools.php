@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Utility;
 
 use Johncms\Api\BbcodeInterface;
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Users\UserConfig;
@@ -48,7 +48,7 @@ class Tools implements ToolsInterface
     private $userConfig;
 
     /**
-     * @var ConfigInterface
+     * @var Config
      */
     private $config;
 
@@ -56,7 +56,7 @@ class Tools implements ToolsInterface
     {
         $this->container = $container;
         $this->assets = $container->get(Assets::class);
-        $this->config = $container->get(ConfigInterface::class);
+        $this->config = $container->get(Config::class);
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(UserInterface::class);
         $this->userConfig = $this->user->config;

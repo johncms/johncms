@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\i18n;
 
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Johncms\Api\UserInterface;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
@@ -36,8 +36,8 @@ class TranslatorServiceFactory
 
     private function determineLocale(ContainerInterface $container) : string
     {
-        /** @var ConfigInterface $config */
-        $config = $container->get(ConfigInterface::class);
+        /** @var Config $config */
+        $config = $container->get(Config::class);
 
         /** @var UserInterface $userConfig */
         $userConfig = $container->get(UserInterface::class)->config;

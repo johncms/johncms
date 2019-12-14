@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,7 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Users\User;
@@ -20,13 +20,13 @@ use Johncms\Api\NavChainInterface;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ConfigInterface    $config
- * @var UserInterface      $user
- * @var Render             $view
- * @var NavChainInterface  $nav_chain
+ * @var Config $config
+ * @var UserInterface $user
+ * @var Render $view
+ * @var NavChainInterface $nav_chain
  */
 
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $user = di(UserInterface::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
@@ -106,13 +106,16 @@ if ($user->isValid()) {
                     $display_form = 0;
                     $code = (string) new Mobicms\Captcha\Code;
                     $_SESSION['code'] = $code;
-                    echo $view->render('login::captcha', [
-                        'captcha'    => new Mobicms\Captcha\Image($code),
-                        'user_login' => $user_login,
-                        'user_pass'  => $user_pass,
-                        'remember'   => $remember,
-                        'id'         => $loginUser->id,
-                    ]);
+                    echo $view->render(
+                        'login::captcha',
+                        [
+                            'captcha'    => new Mobicms\Captcha\Image($code),
+                            'user_login' => $user_login,
+                            'user_pass'  => $user_pass,
+                            'remember'   => $remember,
+                            'id'         => $loginUser->id,
+                        ]
+                    );
                 }
             }
 
@@ -161,9 +164,12 @@ if ($user->isValid()) {
 
     if ($display_form) {
         // Показываем LOGIN форму
-        echo $view->render('login::login', [
-            'error'      => isset($_POST['login']) ? $error : [],
-            'user_login' => $user_login ?? '',
-        ]);
+        echo $view->render(
+            'login::login',
+            [
+                'error'      => isset($_POST['login']) ? $error : [],
+                'user_login' => $user_login ?? '',
+            ]
+        );
     }
 }

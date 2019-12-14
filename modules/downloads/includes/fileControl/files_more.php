@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,13 +8,15 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\ToolsInterface  $tools
- * @var Johncms\Api\UserInterface   $user
+ * @var Johncms\System\Config\Config $config
+ * @var PDO $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface $user
  */
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -37,16 +37,20 @@ if ($edit) {
     $req_file_more = $db->query("SELECT `rus_name` FROM `download__more` WHERE `id` = '${edit}' LIMIT 1");
 
     if ($name_link && $req_file_more->rowCount() && isset($_POST['submit'])) {
-        $stmt = $db->prepare('
+        $stmt = $db->prepare(
+            '
             UPDATE `download__more` SET
             `rus_name` = ?
             WHERE `id` = ?
-        ');
+        '
+        );
 
-        $stmt->execute([
-            $name_link,
-            $edit,
-        ]);
+        $stmt->execute(
+            [
+                $name_link,
+                $edit,
+            ]
+        );
 
         header('Location: ?act=files_more&id=' . $id);
     } else {
@@ -74,7 +78,9 @@ if ($edit) {
             $db->exec("DELETE FROM `download__more` WHERE `id` = '${del}' LIMIT 1");
             header('Location: ?act=files_more&id=' . $id);
         } else {
-            echo '<div class="rmenu">' . _t('Do you really want to delete?') . '<br> <a href="?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . _t('Delete') . '</a> | <a href="?act=files_more&amp;id=' . $id . '">' . _t('Cancel') . '</a></div>';
+            echo '<div class="rmenu">' . _t('Do you really want to delete?') . '<br> <a href="?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . _t('Delete') . '</a> | <a href="?act=files_more&amp;id=' . $id . '">' . _t(
+                    'Cancel'
+                ) . '</a></div>';
         }
     } else {
         if (isset($_POST['submit'])) {
@@ -111,8 +117,13 @@ if ($edit) {
 
             if ($do_file) {
                 $new_file = isset($_POST['new_file']) ? trim($_POST['new_file']) : null;
-                $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0,
-                    200)) : null;
+                $name_link = isset($_POST['name_link']) ? htmlspecialchars(
+                    mb_substr(
+                        $_POST['name_link'],
+                        0,
+                        200
+                    )
+                ) : null;
                 $ext = explode('.', $fname);
 
                 if (! empty($new_file)) {
@@ -129,8 +140,10 @@ if ($edit) {
                 }
 
                 if (! in_array($ext[(count($ext) - 1)], $defaultExt)) {
-                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ',
-                            $defaultExt);
+                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(
+                            ', ',
+                            $defaultExt
+                        );
                 }
 
                 if (strlen($fname) > 100) {
@@ -166,19 +179,23 @@ if ($edit) {
                         echo '<div class="gmenu">' . _t('File attached') . '<br>' .
                             '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Upload more') . '</a> | <a href="?id=' . $id . '&amp;act=view">' . _t('Back') . '</a></div>';
 
-                        $stmt = $db->prepare('
+                        $stmt = $db->prepare(
+                            '
                           INSERT INTO `download__more`
                           (`refid`, `time`, `name`, `rus_name`, `size`)
                           VALUES (?, ?, ?, ?, ?)
-                        ');
+                        '
+                        );
 
-                        $stmt->execute([
-                            $id,
-                            time(),
-                            $fname,
-                            $name_link,
-                            (int) $fsize,
-                        ]);
+                        $stmt->execute(
+                            [
+                                $id,
+                                time(),
+                                $fname,
+                                $name_link,
+                                (int) $fsize,
+                            ]
+                        );
                     } else {
                         echo '<div class="rmenu">' . _t('File not attached') . '<br><a href="?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
@@ -198,8 +215,10 @@ if ($edit) {
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/>' .
                 '</form></div>' .
                 '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $config['flsz'] . 'kb<br>' .
-                _t('Allowed extensions') . ': ' . implode(', ',
-                    $defaultExt) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
+                _t('Allowed extensions') . ': ' . implode(
+                    ', ',
+                    $defaultExt
+                ) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
 
             // Дополнительные файлы
             $req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id);

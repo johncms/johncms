@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Utility;
 
 use Johncms\Api\BbcodeInterface;
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
@@ -84,7 +84,7 @@ class Comments
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
-        $homeurl = $container->get(ConfigInterface::class)->homeurl;
+        $homeurl = $container->get(Config::class)->homeurl;
 
         if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];

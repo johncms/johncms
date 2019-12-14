@@ -1,14 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -18,8 +20,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\Api\UserInterface        $user
  */
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = di(Johncms\Api\ConfigInterface::class);
+/** @var Config $config */
+$config = di(Config::class);
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 

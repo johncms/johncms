@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,7 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Render;
@@ -20,14 +20,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var ConfigInterface    $config
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Render             $view
+ * @var Config $config
+ * @var PDO $db
+ * @var ToolsInterface $tools
+ * @var UserInterface $user
+ * @var Render $view
  */
 
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $db = di(PDO::class);
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
@@ -91,10 +91,13 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
 
         if (! $req->rowCount()) {
-            echo $view->render('system::app/old_content', [
-                'title'   => $textl,
-                'content' => $tools->displayError(_t('User does not exists')),
-            ]);
+            echo $view->render(
+                'system::app/old_content',
+                [
+                    'title'   => $textl,
+                    'content' => $tools->displayError(_t('User does not exists')),
+                ]
+            );
             exit;
         }
 
@@ -108,10 +111,12 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 $q = $db->query('SELECT * FROM `cms_contact` WHERE `user_id` = ' . $user->id . ' AND `from_id` = ' . $id);
 
                 if (! $q->rowCount()) {
-                    $db->query('INSERT INTO `cms_contact` SET
+                    $db->query(
+                        'INSERT INTO `cms_contact` SET
 					`user_id` = ' . $user->id . ',
 					`from_id` = ' . $id . ',
-					`time` = ' . time());
+					`time` = ' . time()
+                    );
                 }
                 echo '<div class="gmenu"><p>' . _t('User has been added to your contact list') . '</p><p><a href="./">' . _t('Continue') . '</a></p></div>';
             } else {
@@ -132,19 +137,27 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `users`.*, `cms_contact`.`from_id` AS `id`
+            $req = $db->query(
+                "SELECT `users`.*, `cms_contact`.`from_id` AS `id`
                 FROM `cms_contact`
 			    LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id`
 			    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 			    AND `cms_contact`.`ban`!='1'
 			    ORDER BY `users`.`name` ASC
-			    LIMIT ${start}, " . $user->config->kmess);
+			    LIMIT ${start}, " . $user->config->kmess
+            );
 
             for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                 echo ($i % 2) ? '<div class="list1">' : '<div class="list2">';
-                $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block User') . '</a>';
-                $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'")->rowCount();
-                $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'")->rowCount();
+                $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t(
+                        'Delete'
+                    ) . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block User') . '</a>';
+                $count_message = $db->query(
+                    "SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'"
+                )->rowCount();
+                $new_count_message = $db->query(
+                    "SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'"
+                )->rowCount();
                 $arg = [
                     'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                     'sub'    => $subtext,
@@ -169,7 +182,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => $textl,
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => $textl,
+        'content' => ob_get_clean(),
+    ]
+);

@@ -12,19 +12,19 @@ declare(strict_types=1);
 
 namespace Johncms\View\Extension;
 
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
 use Psr\Container\ContainerInterface;
 
 class Assets implements ExtensionInterface
 {
-    /** @var ConfigInterface */
+    /** @var Config */
     private $config;
 
     public function __invoke(ContainerInterface $container) : self
     {
-        $this->config = $container->get(ConfigInterface::class);
+        $this->config = $container->get(Config::class);
 
         return $this;
     }

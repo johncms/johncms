@@ -12,9 +12,12 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Johncms\System\Config\Config;
+
 /**
  * Статические методы помошники
  * Class Utils
+ *
  * @package Library
  * @author  Koenig(Compolomus)
  */
@@ -25,8 +28,8 @@ class Utils
      */
     public static function redir404()
     {
-        /** @var \Johncms\Api\ConfigInterface $config */
-        $config = di(\Johncms\Api\ConfigInterface::class);
+        /** @var Config $config */
+        $config = di(Config::class);
 
         ob_get_level() && ob_end_clean();
         header('Location: ' . $config['homeurl'] . '/?err');

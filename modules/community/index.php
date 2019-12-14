@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,7 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Extension\Assets;
@@ -21,7 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Assets          $assets
- * @var ConfigInterface $config
+ * @var Config          $config
  * @var PDO             $db
  * @var ToolsInterface  $tools
  * @var UserInterface   $user
@@ -29,7 +29,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $assets = di(Assets::class);
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $db = di(PDO::class);
 $route = di('route');
 $tools = di(ToolsInterface::class);

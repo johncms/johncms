@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\View\Render;
@@ -25,14 +25,14 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 /**
- * @var ConfigInterface $config
+ * @var Config $config
  * @var PDO $db
  * @var ToolsInterface $tools
  * @var Render $view
  * @var UserInterface $user
  */
 
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $db = di(PDO::class);
 $tools = di(Johncms\Api\ToolsInterface::class);
 $user = di(UserInterface::class);

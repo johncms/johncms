@@ -10,17 +10,17 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\ConfigInterface;
+use Johncms\System\Config\Config;
 use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ConfigInterface $config
+ * @var Config $config
  * @var Render $view
  */
 
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля

@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,14 +8,16 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 
 /**
- * @var ConfigInterface    $config
- * @var PDO                $db
+ * @var Config $config
+ * @var PDO $db
  */
 
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $db = di(PDO::class);
 
 header('content-type: application/rss+xml');

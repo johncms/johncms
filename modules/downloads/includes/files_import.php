@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\UserInterface   $user
+ * @var Johncms\System\Config\Config $config
+ * @var PDO $db
+ * @var Johncms\Api\UserInterface $user
  */
 
 if ($user->rights == 4 || $user->rights >= 6) {
@@ -65,8 +65,10 @@ if ($user->rights == 4 || $user->rights >= 6) {
             }
 
             if (! in_array($ext[(count($ext) - 1)], $al_ext)) {
-                $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ',
-                        $al_ext);
+                $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(
+                        ', ',
+                        $al_ext
+                    );
             }
 
             if (strlen($fname) > 100) {
@@ -92,22 +94,26 @@ if ($user->rights == 4 || $user->rights >= 6) {
                 echo '<div class="phdr"><b>' . _t('File import') . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>';
                 echo '<div class="gmenu">' . _t('File attached') . '</div>';
 
-                $stmt = $db->prepare("
+                $stmt = $db->prepare(
+                    "
                     INSERT INTO `download__files`
                     (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`, `desc`)
                     VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?, '')
-                ");
+                "
+                );
 
-                $stmt->execute([
-                    $id,
-                    $load_cat,
-                    time(),
-                    $fname,
-                    $name_link,
-                    mb_substr($name, 0, 200),
-                    $user->id,
-                    $text,
-                ]);
+                $stmt->execute(
+                    [
+                        $id,
+                        $load_cat,
+                        time(),
+                        $fname,
+                        $name_link,
+                        mb_substr($name, 0, 200),
+                        $user->id,
+                        $text,
+                    ]
+                );
                 $file_id = $db->lastInsertId();
 
                 $handle = new \Verot\Upload\Upload($_FILES['screen']);
@@ -173,8 +179,10 @@ if ($user->rights == 4 || $user->rights >= 6) {
             '<input type="text" name="name_link" value="Скачать файл"/><br>' .
             _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea>' .
             '<br><input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
-            '<div class="phdr"><small>' . _t('Allowed extensions') . ': ' . implode(', ',
-                $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
+            '<div class="phdr"><small>' . _t('Allowed extensions') . ': ' . implode(
+                ', ',
+                $al_ext
+            ) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
             '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
 

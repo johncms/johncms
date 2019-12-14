@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,7 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
@@ -21,14 +21,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var ConfigInterface    $config
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Render             $view
- * @var NavChainInterface  $nav_chain
+ * @var Config $config
+ * @var ToolsInterface $tools
+ * @var UserInterface $user
+ * @var Render $view
+ * @var NavChainInterface $nav_chain
  */
 
-$config = di(ConfigInterface::class);
+$config = di(Config::class);
 $tools = di(ToolsInterface::class);
 $user = di(UserInterface::class);
 $view = di(Render::class);
@@ -115,7 +115,8 @@ if (isset($_POST['submit'])) {
         $env = di(Johncms\Api\EnvironmentInterface::class);
 
         $preg = $config->mod_reg > 1 ? 1 : 0;
-        $db->prepare('
+        $db->prepare(
+            '
           INSERT INTO `users` SET
           `name` = ?,
           `name_lat` = ?,
@@ -135,21 +136,24 @@ if (isset($_POST['submit'])) {
           `set_forum` = \'\',
           `set_mail` = \'\',
           `smileys` = \'\'
-        ')->execute([
-            $reg_nick,
-            $lat_nick,
-            $pass,
-            $reg_name,
-            $reg_about,
-            $reg_sex,
-            $env->getIp(),
-            $env->getIpViaProxy(),
-            $env->getUserAgent(),
-            time(),
-            time(),
-            time(),
-            $preg,
-        ]);
+        '
+        )->execute(
+            [
+                $reg_nick,
+                $lat_nick,
+                $pass,
+                $reg_name,
+                $reg_about,
+                $reg_sex,
+                $env->getIp(),
+                $env->getIpViaProxy(),
+                $env->getUserAgent(),
+                time(),
+                time(),
+                time(),
+                $preg,
+            ]
+        );
 
         $usid = $db->lastInsertId();
 
@@ -158,11 +162,14 @@ if (isset($_POST['submit'])) {
             $_SESSION['ups'] = md5(md5($reg_pass));
         }
 
-        echo $view->render('reg::registration_result', [
-            'usid'     => $usid,
-            'reg_nick' => $reg_nick,
-            'reg_pass' => $reg_pass,
-        ]);
+        echo $view->render(
+            'reg::registration_result',
+            [
+                'usid'     => $usid,
+                'reg_nick' => $reg_nick,
+                'reg_pass' => $reg_pass,
+            ]
+        );
         exit;
     }
 }
@@ -171,12 +178,15 @@ if (isset($_POST['submit'])) {
 $code = (string) new Mobicms\Captcha\Code;
 $_SESSION['code'] = $code;
 
-echo $view->render('reg::index', [
-    'error'     => $error,
-    'reg_nick'  => $reg_nick,
-    'reg_pass'  => $reg_pass,
-    'reg_name'  => $reg_name,
-    'reg_sex'   => $reg_sex,
-    'reg_about' => $reg_about,
-    'captcha'   => new Mobicms\Captcha\Image($code),
-]);
+echo $view->render(
+    'reg::index',
+    [
+        'error'     => $error,
+        'reg_nick'  => $reg_nick,
+        'reg_pass'  => $reg_pass,
+        'reg_name'  => $reg_name,
+        'reg_sex'   => $reg_sex,
+        'reg_about' => $reg_about,
+        'captcha'   => new Mobicms\Captcha\Image($code),
+    ]
+);

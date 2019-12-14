@@ -1,14 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
+
+use Johncms\System\Config\Config;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
@@ -17,8 +19,8 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\Api\ToolsInterface       $tools
  */
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = di(Johncms\Api\ConfigInterface::class);
+/** @var Config $config */
+$config = di(Config::class);
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 
