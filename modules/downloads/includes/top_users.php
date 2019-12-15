@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -17,46 +17,54 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Utility\Tools $tools
  */
 
-$textl = _t('Top Users');
-echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
+$title = _t('Top Users');
+$nav_chain->add($title);
 $req = $db->query('SELECT * FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY COUNT(`user_id`)');
 $total = $req->rowCount();
 
-// Навигация
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=top_users&amp;', $start, $total, $user->config->kmess) . '</div>';
-}
-
-// Список файлов
-$i = 0;
-
+$users = [];
 if ($total) {
     $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC LIMIT ${start}, " . $user->config->kmess);
-
     while ($res_down = $req_down->fetch()) {
         $foundUser = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-            $tools->displayUser(
-                $foundUser,
-                [
-                    'iphide' => 0,
-                    'sub'    => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count'],
-                ]
-            ) . '</div>';
+        $foundUser['files_link'] = '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ': ' . $res_down['count'] . '</a>';
+
+        $foundUser['user_avatar'] = '';
+        if (! empty($foundUser['id'])) {
+            $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
+            if (file_exists(UPLOAD_PATH . $avatar)) {
+                $foundUser['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+            }
+        }
+
+        $foundUser['user_profile_link'] = '';
+        if (! empty($foundUser['id']) && $user->isValid() && $user->id !== $foundUser['id']) {
+            $foundUser['user_profile_link'] = '/profile/?user=' . $foundUser['id'];
+        }
+
+        $foundUser['user_rights_name'] = '';
+        if (! empty($foundUser['rights'])) {
+            $foundUser['user_rights_name'] = $user_rights_names[$foundUser['rights']] ?? '';
+        }
+
+        $foundUser['user_is_online'] = time() <= $foundUser['lastdate'] + 300;
+        $foundUser['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($foundUser['ip']);
+        $foundUser['ip'] = long2ip($foundUser['ip']);
+        $foundUser['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($foundUser['ip_via_proxy']);
+        $foundUser['ip_via_proxy'] = ! empty($foundUser['ip_via_proxy']) ? long2ip($foundUser['ip_via_proxy']) : 0;
+
+        $users[] = $foundUser;
     }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-// Навигация
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=top_users&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?" method="get">' .
-        '<input type="hidden" value="top_users" name="act" />' .
-        '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-}
-
-echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+echo $view->render(
+    'downloads::top_users',
+    [
+        'title'       => $title,
+        'page_title'  => $title,
+        'pagination'  => $tools->displayPagination('?act=top_users&amp;', $start, $total, $user->config->kmess),
+        'users'       => $users ?? [],
+        'total_files' => $total,
+        'urls'        => $urls,
+    ]
+);

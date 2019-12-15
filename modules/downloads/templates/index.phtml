@@ -123,10 +123,10 @@ $this->layout(
                     <?= _t('Section actions') ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?act=folder_add&amp;id=<?= $id ?? '' ?>"><?= _t('Create Folder') ?></a>
                     <?php if (! empty($id)): ?>
                         <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= _t('Change Folder') ?></a>
                         <a class="dropdown-item" href="?act=folder_delete&amp;id=<?= $id ?>"><?= _t('Delete Folder') ?></a>
-                        <a class="dropdown-item" href="?act=folder_add&amp;id=<?= $id ?>"><?= _t('Create Folder') ?></a>
                         <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?>"><?= _t('Update Files') ?></a>
                         <a class="dropdown-item" href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a>
                         <a class="dropdown-item" href="?act=recount&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a>

@@ -31,14 +31,8 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div class="mb-3">
-    <?php foreach ($buttons as $button): ?>
-        <a href="<?= $button['url'] ?>" class="btn btn-outline-primary btn-sm mr-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
-    <?php endforeach; ?>
-</div>
-
-<?php foreach ($files as $file): ?>
-    <?php $this->insert('downloads::file_row', ['file' => $file]); ?>
+<?php foreach ($users as $user): ?>
+    <?php $this->insert('downloads::user_row', ['item' => $user]); ?>
 <?php endforeach; ?>
 
 <div class="mt-3">
