@@ -14,7 +14,7 @@ namespace Johncms\Utility;
 
 use Johncms\Api\BbcodeInterface;
 use Johncms\System\Config\Config;
-use Johncms\Api\EnvironmentInterface;
+use Johncms\System\Http\Environment;
 use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
 use Johncms\System\Container\Factory;
@@ -372,8 +372,8 @@ class Comments
         /** @var \Psr\Container\ContainerInterface $container */
         $container = Factory::getContainer();
 
-        /** @var EnvironmentInterface $env */
-        $env = $container->get(EnvironmentInterface::class);
+        /** @var Environment $env */
+        $env = $container->get(Environment::class);
 
         // Формируем атрибуты сообщения
         $attributes = [

@@ -218,8 +218,8 @@ switch ($post_type) {
                     )->execute([$newpost, time()]);
                 } else {
                     $update = false;
-                    /** @var Johncms\Api\EnvironmentInterface $env */
-                    $env = di(Johncms\Api\EnvironmentInterface::class);
+                    /** @var Johncms\System\Http\Environment $env */
+                    $env = di(Johncms\System\Http\Environment::class);
 
                     // Добавляем сообщение в базу
                     $db->prepare(
@@ -474,8 +474,8 @@ switch ($post_type) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\Api\EnvironmentInterface $env */
-            $env = di(Johncms\Api\EnvironmentInterface::class);
+            /** @var Johncms\System\Http\Environment $env */
+            $env = di(Johncms\System\Http\Environment::class);
 
             // Добавляем сообщение в базу
             $db->prepare(

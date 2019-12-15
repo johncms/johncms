@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\Api\BbcodeInterface;
 use Johncms\System\Config\Config;
-use Johncms\Api\EnvironmentInterface;
+use Johncms\System\Http\Environment;
 use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
@@ -26,7 +26,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var BbcodeInterface $bbcode
  * @var Config $config
  * @var PDO $db
- * @var EnvironmentInterface $env
+ * @var Environment $env
  * @var ToolsInterface $tools
  * @var User $user
  * @var Render $view
@@ -36,7 +36,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 $db = di(PDO::class);
 $user = di(User::class);
 $tools = di(ToolsInterface::class);
-$env = di(EnvironmentInterface::class);
+$env = di(Environment::class);
 $bbcode = di(BbcodeInterface::class);
 $config = di(Config::class);
 $view = di(Render::class);

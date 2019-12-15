@@ -14,8 +14,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 ob_start();
 
-/** @var Johncms\Api\EnvironmentInterface $env */
-$env = di(Johncms\Api\EnvironmentInterface::class);
+/** @var Johncms\System\Http\Environment $env */
+$env = di(Johncms\System\Http\Environment::class);
 
 // Показываем список Online
 $menu[] = '<strong>' . _t('Users') . '</strong>';

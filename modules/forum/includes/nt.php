@@ -206,8 +206,8 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
             ]
         );
 
-        /** @var Johncms\Api\EnvironmentInterface $env */
-        $env = di(Johncms\Api\EnvironmentInterface::class);
+        /** @var Johncms\System\Http\Environment $env */
+        $env = di(Johncms\System\Http\Environment::class);
         $rid = $db->lastInsertId();
 
         // Добавляем текст поста

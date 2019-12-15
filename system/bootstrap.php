@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\EnvironmentInterface;
+use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 
@@ -62,8 +62,8 @@ session_start();
 /** @var ContainerInterface $container */
 $container = Johncms\System\Container\Factory::getContainer();
 
-/** @var EnvironmentInterface $env */
-$env = $container->get(EnvironmentInterface::class);
+/** @var Environment $env */
+$env = $container->get(Environment::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
