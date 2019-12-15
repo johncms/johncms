@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\System\Config\Config;
-use Johncms\View\Render;
+use Johncms\System\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

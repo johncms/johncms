@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
-use Johncms\View\Render;
+use Johncms\System\View\Render;
 use Johncms\Api\NavChainInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

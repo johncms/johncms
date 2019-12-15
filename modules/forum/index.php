@@ -15,8 +15,8 @@ use Johncms\Api\NavChainInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
 use Johncms\Utility\Counters;
-use Johncms\View\Extension\Assets;
-use Johncms\View\Render;
+use Johncms\System\View\Extension\Assets;
+use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

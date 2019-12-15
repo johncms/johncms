@@ -18,7 +18,7 @@ use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
 use Johncms\System\Container\Factory;
 use Johncms\System\Users\UserConfig;
-use Johncms\View\Extension\Assets;
+use Johncms\System\View\Extension\Assets;
 use Psr\Container\ContainerInterface;
 
 class Bbcode implements BbcodeInterface

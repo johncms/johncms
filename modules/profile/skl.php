@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\Api\NavChainInterface;
 use Johncms\System\Config\Config;
-use Johncms\View\Render;
+use Johncms\System\View\Render;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

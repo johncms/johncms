@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,9 +8,11 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
-use Johncms\View\Render;
+use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');

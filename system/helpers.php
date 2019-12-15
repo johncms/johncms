@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,10 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use Johncms\System\Container\Factory;
-use Johncms\View\Render;
+use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
 
 function di(string $service)

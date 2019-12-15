@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 use Library\Hashtags;
 use Verot\Upload\Upload;
@@ -18,7 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Users\User $user
- * @var Johncms\View\Render $view
+ * @var Johncms\System\View\Render $view
  */
 
 if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount()) && isset($id) && $user->isValid())) {

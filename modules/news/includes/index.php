@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,13 +8,15 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
  * @var Johncms\Api\ToolsInterface $tools
  * @var Johncms\System\Users\User $user
- * @var Johncms\View\Render $view
+ * @var Johncms\System\View\Render $view
  */
 
 $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
