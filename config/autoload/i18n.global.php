@@ -10,9 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\System\i18n\TranslatorServiceFactory;
-use Zend\I18n\Translator;
-
 return [
     'translator' => [
         'translation_file_patterns' => [
