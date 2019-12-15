@@ -37,6 +37,14 @@ $this->layout(
     <?php endforeach; ?>
 </div>
 
+<?php if (empty($files)): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <?php foreach ($files as $file): ?>
     <?php $this->insert('downloads::file_row', ['file' => $file]); ?>
 <?php endforeach; ?>

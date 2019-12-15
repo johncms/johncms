@@ -31,6 +31,14 @@ $this->layout(
     </div>
 <?php endif; ?>
 
+<?php if (empty($users)): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <?php foreach ($users as $user): ?>
     <?php $this->insert('downloads::user_row', ['item' => $user]); ?>
 <?php endforeach; ?>
