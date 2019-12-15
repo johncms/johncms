@@ -10,15 +10,14 @@
 
 declare(strict_types=1);
 
+use Johncms\Api\NavChainInterface;
 use Johncms\System\Config\Config;
-use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
+use Johncms\System\Utility\Tools;
 use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
-use Johncms\Api\NavChainInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -209,7 +208,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     $counters['total_new'] = $total_new;
 
     $urls['mod_files'] = '';
-    if ($user->rights == 4 || $user->rights >= 6) {
+    if ($user->rights === 4 || $user->rights >= 6) {
         $mod_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
         if ($mod_files > 0) {
@@ -274,7 +273,6 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             // Выводи данные
             $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` ASC ${sql_sort} LIMIT ${start}, " . $user->config->kmess);
-            $i = 0;
             $files = [];
             while ($res_down = $req_down->fetch()) {
                 $files[] = Download::displayFile($res_down);
