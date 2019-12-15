@@ -29,7 +29,7 @@ $this->layout(
 ?>
 <?php if (! empty($topic)): ?>
     <div class="pb-2">
-        <h4><?= _t('Who in Topic') ?>: <?= $topic['name'] ?></h4>
+        <h4><?= _t('Who in Topic') ?>: <?= $topic ?></h4>
     </div>
 <?php endif; ?>
 
@@ -55,7 +55,7 @@ $this->layout(
             <div class="mt-1"><?= $pagination ?></div>
         <?php endif ?>
     </div>
-<?php endif ?>
+<?php endif; ?>
 
 <?php if (! empty($id)): ?>
     <div class="mt-3">

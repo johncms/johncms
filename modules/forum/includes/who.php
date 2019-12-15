@@ -23,13 +23,24 @@ if (! $user->isValid()) {
     exit;
 }
 
+$sql = 'SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ? AND `place` LIKE ?';
+$sql2 = 'SELECT * FROM `cms_sessions` WHERE `lastdate` > ? AND `place` LIKE ? ORDER BY `movings` DESC LIMIT ?, ?';
+
 if ($id) {
     // Показываем общий список тех, кто в выбранной теме
-    $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '${id}'");
+    $topic = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '${id}'")->fetchColumn();
 
-    if ($req->rowCount()) {
-        $topic = $req->fetch();
-        $total = $db->query('SELECT COUNT(*) FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%'")->fetchColumn();
+    if ($topic) {
+
+        $params = [(time() - 300), '/forum?type=topic&id=' . $id . '%'];
+        if (! $do) {
+            $sql = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ? AND `place` LIKE ? OR `place` = ?';
+            $sql2 = 'SELECT * FROM `users` WHERE `lastdate` > ? AND `place` LIKE ? OR `place` = ? ORDER BY `name` LIMIT ?, ?';
+            $params = [(time() - 300), '/forum?type=topic&id=' . $id . '%', '/forum?act=who&id=' . $id];
+        }
+        $req = $db->prepare($sql);
+        $req->execute($params);
+        $total = $req->fetchColumn();
 
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
@@ -37,12 +48,11 @@ if ($id) {
         }
 
         if ($total) {
-            $req = $db->query(
-                'SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time(
-                    ) - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess
-            );
+            $params = array_merge($params, [$start, $user->config->kmess]);
+            $req = $db->prepare($sql2);
+            $req->execute($params);
 
-            for ($i = 0; $res = $req->fetch(); ++$i) {
+            foreach ($req as $res) {
                 if (empty($res['name'])) {
                     $res['name'] = _t('Guest', 'system');
                 }
@@ -99,7 +109,14 @@ if ($id) {
     );
 } else {
     // Показываем общий список тех, кто в форуме
-    $total = $db->query('SELECT COUNT(*) FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%'")->fetchColumn();
+    $params = [(time() - 300), '/forum%'];
+    if (! $do) {
+        $sql = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ? AND `place` LIKE ?';
+        $sql2 = 'SELECT * FROM `users` WHERE `lastdate` > ? AND `place` LIKE ? ORDER BY `name` LIMIT ?, ?';
+    }
+    $req = $db->prepare($sql);
+    $req->execute($params);
+    $total = $req->fetchColumn();
 
     if ($start >= $total) {
         // Исправляем запрос на несуществующую страницу
@@ -108,12 +125,12 @@ if ($id) {
 
     $items = [];
     if ($total) {
-        $req = $db->query(
-            'SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time(
-                ) - 300) . " AND `place` LIKE '/forum%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess
-        );
+        $params = array_merge($params, [$start, $user->config->kmess]);
+        $req = $db->prepare($sql2);
+        $req->execute($params);
+        unset($sql, $sql2);
 
-        for ($i = 0; $res = $req->fetch(); ++$i) {
+        foreach ($req as $res) {
             // Вычисляем местоположение
             $place = '';
             $parsed_url = [];
@@ -182,8 +199,17 @@ if ($id) {
                     break;
 
                 case 'say':
+                    $sql = 'SELECT `frt`.`id`, `frt`.`name` FROM `forum_messages` frm
+LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id`= ?';
                 case 'topic':
-                    $topic = $db->query('SELECT * FROM `forum_topic` WHERE `id`= ' . $place_id)->fetch();
+                    if (empty($sql)) {
+                        $sql = 'SELECT `id`, `name` FROM `forum_topic` WHERE `id`= ?';
+                    }
+                    $req = $db->prepare($sql);
+                    $req->execute([$place_id]);
+
+                    $topic = $req->fetch();
+
                     if (! empty($topic)) {
                         $link = '<a href="?type=topic&id=' . $topic['id'] . '">' . (empty($topic['name']) ? '-----' : $topic['name']) . '</a>';
 
@@ -198,13 +224,12 @@ if ($id) {
                     break;
 
                 case 'show_post':
-                    $message = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '" . $place_id . "'")->fetch();
+                    $message = $db->query("SELECT `frt`.`id`, `frt`.`name` FROM `forum_messages` frm
+LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id` = '" . $place_id . "'")->fetch();
                     if (! empty($message)) {
-                        $req_m = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $message['topic_id'] . "'");
-                        if ($req_m->rowCount()) {
-                            $res_m = $req_m->fetch();
-                            $place = _t('In the Topic') . ' &quot;<a href="?type=topic&id=' . $res_m['id'] . '">' . (empty($res_m['name']) ? '-----' : $res_m['name']) . '</a>&quot;';
-                        }
+                        $place = _t('In the Topic') . ' &quot;<a href="?type=topic&id=' . $message['id'] . '">' . (empty($message['name']) ? '-----' : $message['name']) . '</a>&quot;';
+                    } else {
+                        $place = '<a href="./">' . _t('In the forum Main') . '</a>';
                     }
                     break;
 
