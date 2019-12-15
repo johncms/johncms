@@ -211,9 +211,7 @@ switch ($mod) {
                 '<small>' . _t('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') . '</small></p><p>' .
                 '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 1') . '<br>' .
                 '<input type="radio" value="3" ' . ($mode == 3 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 2') . '</p></div>' .
-                '<div class="rmenu"><small>' . _t(
-                    'WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.'
-                ) . '</small></div>';
+                '<div class="rmenu"><small>' . _t('WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') . '</small></div>'; // phpcs:ignore
 
             if ($id) {
                 echo '<input type="hidden" value="' . $id . '" name="id" />';

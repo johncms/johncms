@@ -55,10 +55,7 @@ switch ($mod) {
                 $array = explode('-', $get_ip);
                 $get_ip = trim($array[0]);
 
-                if (! preg_match(
-                    '#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
-                    $get_ip
-                )) {
+                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error[] = _t('First IP is entered incorrectly');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -66,10 +63,7 @@ switch ($mod) {
 
                 $get_ip = trim($array[1]);
 
-                if (! preg_match(
-                    '#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
-                    $get_ip
-                )) {
+                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error[] = _t('Second IP is entered incorrectly');
                 } else {
                     $ip2 = ip2long($get_ip);
@@ -97,10 +91,7 @@ switch ($mod) {
                 // Обрабатываем одиночный адрес
                 $mode = 3;
 
-                if (! preg_match(
-                    '#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
-                    $get_ip
-                )) {
+                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error = _t('Invalid IP');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -217,9 +208,7 @@ switch ($mod) {
                 '<p><h3>' . _t('Reason') . '</h3>' .
                 '&nbsp;<textarea rows="' . $user->config->fieldHeight . '" name="reason"></textarea></small></p>' .
                 '<p><input type="submit" name="submit" value=" ' . _t('Add Ban') . ' "/></p></div>' .
-                '<div class="phdr"><small>' . _t(
-                    'Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255'
-                ) . '</small></div>' .
+                '<div class="phdr"><small>' . _t('Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') . '</small></div>' . // phpcs:ignore
                 '</form>' .
                 '<p><a href="?act=ipban">' . _t('Cancel') . '</a><br><a href="./">' . _t('Admin Panel') . '</a></p>';
         }
@@ -432,7 +421,7 @@ switch ($mod) {
 echo $view->render(
     'system::app/old_content',
     [
-        'title' => _t('Admin Panel'),
+        'title'   => _t('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

@@ -34,7 +34,6 @@ if (! isset($set_forum) || empty($set_forum)) {
 
 switch ($mod) {
     case 'del':
-
         // Удаление категории, или раздела
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="?act=forum">' . _t('Forum Management') . '</a>');
@@ -104,9 +103,8 @@ switch ($mod) {
 
                         // Для супервайзоров запрос на полное удаление
                         if ($user->rights == 9) {
-                            echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') . ' <a href="?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t(
-                                    'subsections'
-                                ) . '</a></p></div>';
+                            echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') .
+                                ' <a href="?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
                         }
 
                         echo '</form>';

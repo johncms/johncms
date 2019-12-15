@@ -71,18 +71,13 @@ if (! $error) {
     echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
 
     // Выводим краткие данные
-    echo '<div class="user"><p>' . $tools->displayUser(
-            $foundUser,
-            [
-                'lastvisit' => 1,
-                'iphist'    => 1,
-            ]
-        ) . '</p></div>';
+    echo '<div class="user"><p>' .
+        $tools->displayUser($foundUser, ['lastvisit' => 1, 'iphist' => 1]) . '</p></div>';
 
     switch ($mod) {
         case 'del':
             // Удаляем личные данные
-            $del = new Johncms\Users\UserClean;
+            $del = new Johncms\Users\UserClean();
             $del->removeAlbum($foundUser['id']);         // Удаляем личные Фотоальбомы
             $del->removeGuestbook($foundUser['id']);     // Удаляем личную Гостевую
             $del->removeMail($foundUser['id']);          // Удаляем почту

@@ -149,9 +149,7 @@ if ($search && ! $error) {
     }
 
     // Инструкции для поиска
-    echo '<div class="phdr"><small>' . _t(
-            '<b>Sample queries:</b><br><span class="red">10.5.7.1</span> - Search for a single address<br><span class="red">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class="red">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255'
-        ) . '</small></div>';
+    echo '<div class="phdr"><small>' . _t('<b>Sample queries:</b><br><span class="red">10.5.7.1</span> - Search for a single address<br><span class="red">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class="red">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255') . '</small></div>'; // phpcs:ignore
     echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 }
 

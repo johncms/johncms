@@ -24,7 +24,7 @@ if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
 
-class scaner
+class scaner // phpcs:ignore
 {
     // Сканер - антишпион
     public $scan_folders = [
@@ -69,7 +69,7 @@ class scaner
         }
 
         foreach ($this->scan_folders as $data) {
-            $this->scan_files(ROOT_DIR . $data);
+            $this->scanFiles(ROOT_DIR . $data);
         }
     }
 
@@ -77,7 +77,7 @@ class scaner
     {
         // Добавляем снимок надежных файлов в базу
         foreach ($this->scan_folders as $data) {
-            $this->scan_files(ROOT_DIR . $data, true);
+            $this->scanFiles(ROOT_DIR . $data, true);
         }
 
         $filecontents = '';
@@ -92,7 +92,7 @@ class scaner
         @chmod(CACHE_PATH . $this->snap_base, 0666);
     }
 
-    public function scan_files($dir, $snap = false)
+    public function scanFiles($dir, $snap = false)
     {
         $this->checked_folders[] = $dir . '/';
 
@@ -104,7 +104,7 @@ class scaner
 
                 if (is_dir($dir . '/' . $file)) {
                     if ($dir != ROOT_DIR) {
-                        $this->scan_files($dir . '/' . $file, $snap);
+                        $this->scanFiles($dir . '/' . $file, $snap);
                     }
                 } else {
                     if ($this->snap || $snap) {
@@ -113,8 +113,7 @@ class scaner
                         $templates = '';
                     }
 
-                    if (preg_match("#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess" . $templates . ')$#i',
-                        $file)) {
+                    if (preg_match("#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess" . $templates . ')$#i', $file)) {
                         $folder = str_replace('../..', '.', $dir);
                         $file_size = filesize($dir . '/' . $file);
                         $file_crc = strtoupper(dechex(crc32(file_get_contents($dir . '/' . $file))));
@@ -127,8 +126,7 @@ class scaner
                             ];
                         } else {
                             if ($this->snap) {
-                                if ($this->track_files[$folder . '/' . $file] != $file_crc && ! in_array($folder . '/' . $file,
-                                        $this->cache_files)) {
+                                if ($this->track_files[$folder . '/' . $file] != $file_crc && ! in_array($folder . '/' . $file, $this->cache_files)) {
                                     $this->bad_files[] = [
                                         'file_path' => $folder . '/' . $file,
                                         'file_name' => $file,
@@ -155,7 +153,7 @@ switch ($mod) {
         echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Distributive scan') . '</div>';
 
         if (count($scaner->bad_files)) {
-            echo '<div class="rmenu"><small>' . _t('Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.') . '</small></div>';
+            echo '<div class="rmenu"><small>' . _t('Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.') . '</small></div>'; // phpcs:ignore
             echo '<div class="menu">';
 
             foreach ($scaner->bad_files as $idx => $data) {
@@ -178,8 +176,10 @@ switch ($mod) {
             /** @var Johncms\System\Utility\Tools $tools */
             $tools = di(Johncms\System\Utility\Tools::class);
 
-            echo $tools->displayError(_t('Snapshot is not created'),
-                '<a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
+            echo $tools->displayError(
+                _t('Snapshot is not created'),
+                '<a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>'
+            );
         } else {
             if (count($scaner->bad_files)) {
                 echo '<div class="rmenu">' . _t('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';
@@ -227,7 +227,10 @@ switch ($mod) {
 
 echo '<p>' . ($mod ? '<a href="?act=antispy">' . _t('Scanner menu') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title' => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

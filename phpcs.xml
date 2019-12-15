@@ -24,5 +24,6 @@
     </rule>
 
     <!-- Paths to check -->
+    <file>modules/admin</file>
     <file>system/src</file>
 </ruleset>

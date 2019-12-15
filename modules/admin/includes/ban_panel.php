@@ -90,9 +90,7 @@ switch ($mod) {
             while ($res = $req->fetch()) {
                 echo '<div class="' . ($res['bantime'] > time() ? 'r' : '') . 'menu">';
                 $arg = [
-                    'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t(
-                            'Violations history'
-                        ) . '</a> [' . $res['bancount'] . ']</small>',
+                    'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>', // phpcs:ignore
                 ];
                 echo $tools->displayUser($res, $arg);
                 echo '</div>';
