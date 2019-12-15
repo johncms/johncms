@@ -203,8 +203,8 @@ class download
     {
         global $old;
 
-        /** @var Johncms\Api\ToolsInterface $tools */
-        $tools = di(Johncms\Api\ToolsInterface::class);
+        /** @var Johncms\System\Utility\Tools $tools */
+        $tools = di(Johncms\System\Utility\Tools::class);
 
         /** @var Johncms\System\View\Extension\Assets $assets */
         $assets = di(Johncms\System\View\Extension\Assets::class);

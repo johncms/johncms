@@ -14,8 +14,8 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('List of Users') . '</div>';
@@ -63,7 +63,10 @@ if ($total > $user->config->kmess) {
 
 echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

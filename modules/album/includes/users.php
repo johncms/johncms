@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -40,16 +40,20 @@ $menu = [
 echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
     '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
-$total = $db->query("SELECT COUNT(DISTINCT `user_id`)
+$total = $db->query(
+    "SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`
     LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
-")->fetchColumn();
+"
+)->fetchColumn();
 
 if ($total) {
-    $req = $db->query("SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
+    $req = $db->query(
+        "SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
         FROM `cms_album_files`
         LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
-        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
+        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, " . $user->config->kmess
+    );
     $i = 0;
 
     while ($res = $req->fetch()) {

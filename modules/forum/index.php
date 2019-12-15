@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Config\Config;
 use Johncms\Api\NavChainInterface;
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\Utility\Counters;
 use Johncms\System\View\Extension\Assets;
@@ -26,7 +26,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Config $config
  * @var Counters $counters
  * @var PDO $db
- * @var ToolsInterface $tools
+ * @var Tools $tools
  * @var User $user
  * @var Render $view
  * @var NavChainInterface $nav_chain
@@ -36,7 +36,7 @@ $config = di(Config::class);
 $counters = di('counters');
 $db = di(PDO::class);
 $user = di(User::class);
-$tools = di(ToolsInterface::class);
+$tools = di(Tools::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 

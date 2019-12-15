@@ -22,8 +22,8 @@ if ($set_karma['on']) {
     /** @var Johncms\System\Users\User $user */
     $user = di(Johncms\System\Users\User::class);
 
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = di(Johncms\Api\ToolsInterface::class);
+    /** @var Johncms\System\Utility\Tools $tools */
+    $tools = di(Johncms\System\Utility\Tools::class);
 
     switch ($mod) {
         case 'vote':

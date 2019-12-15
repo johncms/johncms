@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights < 9) {
@@ -71,10 +71,13 @@ if (! $error) {
     echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
 
     // Выводим краткие данные
-    echo '<div class="user"><p>' . $tools->displayUser($foundUser, [
-            'lastvisit' => 1,
-            'iphist'    => 1,
-        ]) . '</p></div>';
+    echo '<div class="user"><p>' . $tools->displayUser(
+            $foundUser,
+            [
+                'lastvisit' => 1,
+                'iphist'    => 1,
+            ]
+        ) . '</p></div>';
 
     switch ($mod) {
         case 'del':
@@ -96,7 +99,8 @@ if (! $error) {
             $del->removeUser($foundUser['id']);          // Удаляем пользователя
 
             // Оптимизируем таблицы
-            $db->query('
+            $db->query(
+                '
                 OPTIMIZE TABLE
                 `cms_users_iphistory`,
                 `cms_ban_users`,
@@ -110,7 +114,8 @@ if (! $error) {
                 `cms_album_cat`,
                 `cms_album_files`,
                 `cms_forum_rdm`
-            ');
+            '
+            );
 
             echo '<div class="rmenu"><p><h3>' . _t('User deleted') . '</h3></p></div>';
             break;
@@ -138,7 +143,10 @@ if (! $error) {
 
 echo '<p><a href="./">' . _t('Cancel') . '</a></p>';
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

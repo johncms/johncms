@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -24,10 +24,13 @@ $ref = isset($_SERVER['HTTP_REFERER']) && ! empty($_SERVER['HTTP_REFERER']) ? $_
 // Голосуем за фотографию
 if (! $img) {
     echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? '',
-        'content' => ob_get_clean(),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? '',
+            'content' => ob_get_clean(),
+        ]
+    );
     exit;
 }
 
@@ -48,11 +51,13 @@ if ($req->rowCount()) {
             /**
              * Отдаем положительный голос
              */
-            $db->exec("INSERT INTO `cms_album_votes` SET
+            $db->exec(
+                "INSERT INTO `cms_album_votes` SET
                 `user_id` = '" . $user->id . "',
                 `file_id` = '${img}',
                 `vote` = '1'
-            ");
+            "
+            );
             $db->exec("UPDATE `cms_album_files` SET `vote_plus` = '" . ($res['vote_plus'] + 1) . "' WHERE `id` = '${img}'");
             break;
 
@@ -60,11 +65,13 @@ if ($req->rowCount()) {
             /**
              * Отдаем отрицательный голос
              */
-            $db->exec("INSERT INTO `cms_album_votes` SET
+            $db->exec(
+                "INSERT INTO `cms_album_votes` SET
                 `user_id` = '" . $user->id . "',
                 `file_id` = '${img}',
                 `vote` = '-1'
-            ");
+            "
+            );
             $db->exec("UPDATE `cms_album_files` SET `vote_minus` = '" . ($res['vote_minus'] + 1) . "' WHERE `id` = '${img}'");
             break;
     }

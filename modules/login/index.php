@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\System\Config\Config;
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\Api\NavChainInterface;
@@ -60,8 +60,8 @@ if ($user->isValid()) {
     /** @var PDO $db */
     $db = di(PDO::class);
 
-    /** @var ToolsInterface $tools */
-    $tools = di(ToolsInterface::class);
+    /** @var Tools $tools */
+    $tools = di(Tools::class);
 
     $nav_chain->add(_t('Login', 'system'));
 

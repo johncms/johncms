@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\System\Users\User  $user
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 // Удалить картинку

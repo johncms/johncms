@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 // Список своих смайлов
@@ -47,7 +47,7 @@ $i = 0;
 
 foreach ($smileys as $value) {
     $smile = ':' . $value . ':';
-    echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+    echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
         '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' .
         $tools->smilies($smile, $user->rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . $tools->trans($smile) . '</div>';
     $i++;

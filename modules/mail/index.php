@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\System\Config\Config;
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
@@ -22,14 +22,14 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var Config $config
  * @var PDO $db
- * @var ToolsInterface $tools
+ * @var Tools $tools
  * @var User $user
  * @var Render $view
  */
 
 $config = di(Config::class);
 $db = di(PDO::class);
-$tools = di(ToolsInterface::class);
+$tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 

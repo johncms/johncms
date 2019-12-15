@@ -15,9 +15,9 @@ use Johncms\System\Config\Config;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                              $db
- * @var Johncms\Api\ToolsInterface       $tools
- * @var Johncms\System\Users\User        $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 /** @var Config $config */
@@ -30,10 +30,13 @@ if (($al && $foundUser['id'] == $user->id && empty($user->ban)) || $user->rights
     if (! $req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
         echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl ?? '',
-            'content' => ob_get_clean(),
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl ?? '',
+                'content' => ob_get_clean(),
+            ]
+        );
         exit;
     }
 
@@ -83,7 +86,8 @@ if (($al && $foundUser['id'] == $user->id && empty($user->ban)) || $user->rights
                     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
                     $description = mb_substr($description, 0, 500);
 
-                    $db->prepare('
+                    $db->prepare(
+                        '
                       INSERT INTO `cms_album_files` SET
                       `album_id` = ?,
                       `user_id` = ?,
@@ -92,15 +96,18 @@ if (($al && $foundUser['id'] == $user->id && empty($user->ban)) || $user->rights
                       `description` = ?,
                       `time` = ?,
                       `access` = ?
-                    ')->execute([
-                        $al,
-                        $foundUser['id'],
-                        $img_name,
-                        $tmb_name,
-                        $description,
-                        time(),
-                        $res_a['access'],
-                    ]);
+                    '
+                    )->execute(
+                        [
+                            $al,
+                            $foundUser['id'],
+                            $img_name,
+                            $tmb_name,
+                            $description,
+                            time(),
+                            $res_a['access'],
+                        ]
+                    );
 
                     echo '<div class="gmenu"><p>' . _t('Image uploaded') . '<br>' .
                         '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>' .
@@ -125,8 +132,10 @@ if (($al && $foundUser['id'] == $user->id && empty($user->ban)) || $user->rights
             '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" />' .
             '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
             '</div></form>' .
-            '<div class="phdr"><small>' . sprintf(_t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'),
-                $config['flsz']) . '</small></div>' .
+            '<div class="phdr"><small>' . sprintf(
+                _t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'),
+                $config['flsz']
+            ) . '</small></div>' .
             '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Back') . '</a></p>';
     }
 }

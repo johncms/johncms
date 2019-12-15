@@ -14,8 +14,8 @@ declare(strict_types=1);
 $translator = di(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = di(Johncms\Api\ToolsInterface::class);
+/** @var Johncms\System\Utility\Tools $tools */
+$tools = di(Johncms\System\Utility\Tools::class);
 
 // Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;

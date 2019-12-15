@@ -13,19 +13,22 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 $itmOnPage = $user->config->kmess;
 
 if (! $al) {
     echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? '',
-        'content' => ob_get_clean(),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? '',
+            'content' => ob_get_clean(),
+        ]
+    );
     exit;
 }
 
@@ -33,10 +36,13 @@ $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}'");
 
 if (! $req->rowCount()) {
     echo $tools->displayError(_t('Wrong data'));
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? '',
-        'content' => ob_get_clean(),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? '',
+            'content' => ob_get_clean(),
+        ]
+    );
     exit;
 }
 
@@ -70,12 +76,17 @@ if (($album['access'] == 1 || $album['access'] == 3)
     && $user->rights < 7
 ) {
     // Доступ закрыт
-    echo $tools->displayError(_t('Access forbidden'),
-        '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Album List') . '</a>');
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? '',
-        'content' => ob_get_clean(),
-    ]);
+    echo $tools->displayError(
+        _t('Access forbidden'),
+        '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Album List') . '</a>'
+    );
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? '',
+            'content' => ob_get_clean(),
+        ]
+    );
     exit;
 } elseif ($album['access'] == 2
     && $foundUser['id'] != $user->id
@@ -97,10 +108,13 @@ if (($album['access'] == 1 || $album['access'] == 3)
             '<p><input type="submit" name="submit" value="' . _t('Login') . '"/></p>' .
             '</div></form>' .
             '<div class="phdr"><a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Album List') . '</a></div>';
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl ?? '',
-            'content' => ob_get_clean(),
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl ?? '',
+                'content' => ob_get_clean(),
+            ]
+        );
         exit;
     }
 }
@@ -122,8 +136,12 @@ if ($show) {
 $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
 
 if ($total > $itmOnPage) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
-            $start, $total, $itmOnPage) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination(
+            '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
+            $start,
+            $total,
+            $itmOnPage
+        ) . '</div>';
 }
 
 if ($total) {
@@ -167,11 +185,14 @@ if ($total) {
         echo '<div class="sub">';
 
         if ($foundUser['id'] == $user->id || $user->rights >= 6) {
-            echo implode(' | ', [
-                '<a href="?act=image_edit&amp;img=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Edit') . '</a>',
-                '<a href="?act=image_move&amp;img=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Move') . '</a>',
-                '<a href="?act=image_delete&amp;img=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Delete') . '</a>',
-            ]);
+            echo implode(
+                ' | ',
+                [
+                    '<a href="?act=image_edit&amp;img=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Edit') . '</a>',
+                    '<a href="?act=image_move&amp;img=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Move') . '</a>',
+                    '<a href="?act=image_delete&amp;img=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Delete') . '</a>',
+                ]
+            );
 
             if ($foundUser['id'] == $user->id && $show) {
                 echo ' | <a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;view&amp;img=' . $res['id'] . '&amp;profile">' . _t('Add to Profile') . '</a>';
@@ -193,8 +214,12 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $itmOnPage) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
-            $start, $total, $itmOnPage) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination(
+            '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
+            $start,
+            $total,
+            $itmOnPage
+        ) . '</div>' .
         '<p><form action="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . ($show ? '&amp;view' : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

@@ -15,9 +15,8 @@ use Johncms\Api;
 return [
     'dependencies' => [
         'factories' => [
-            Api\ToolsInterface::class         => Johncms\Utility\Tools::class,
-            Api\NavChainInterface::class      => Johncms\Utility\NavChain::class,
-            'counters'                        => Johncms\Utility\Counters::class,
+            Api\NavChainInterface::class        => Johncms\Utility\NavChain::class,
+            'counters'                          => Johncms\Utility\Counters::class,
         ],
     ],
 ];

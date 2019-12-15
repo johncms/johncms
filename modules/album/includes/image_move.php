@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 // Перемещение картинки в другой альбом
@@ -29,11 +29,13 @@ if ($img && $foundUser['id'] == $user->id || $user->rights >= 6) {
 
             if ($req_a->rowCount()) {
                 $res_a = $req_a->fetch();
-                $db->exec("UPDATE `cms_album_files` SET
+                $db->exec(
+                    "UPDATE `cms_album_files` SET
                     `album_id` = '${al}',
                     `access` = '" . $res_a['access'] . "'
                     WHERE `id` = '${img}'
-                ");
+                "
+                );
                 echo '<div class="gmenu"><p>' . _t('Image successfully moved to the selected album') . '<br>' .
                     '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
             } else {
@@ -56,8 +58,10 @@ if ($img && $foundUser['id'] == $user->id || $user->rights >= 6) {
                     '</div></form>' .
                     '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Cancel') . '</a></div>';
             } else {
-                echo $tools->displayError(_t('You must create at least one additional album in order to move the image'),
-                    '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a>');
+                echo $tools->displayError(
+                    _t('You must create at least one additional album in order to move the image'),
+                    '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a>'
+                );
             }
         }
     } else {

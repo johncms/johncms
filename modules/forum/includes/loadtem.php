@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 if (empty($_GET['n'])) {

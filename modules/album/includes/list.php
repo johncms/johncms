@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 // Список альбомов юзера
@@ -37,7 +37,7 @@ if ($total) {
     $i = 0;
     while ($res = $req->fetch()) {
         $count = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '" . $res['id'] . "'")->fetchColumn();
-        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
             '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
             '<a href="?act=show&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '"><b>' . $tools->checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
 
@@ -49,10 +49,15 @@ if ($total) {
                 '<a href="?act=delete&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Delete') . '</a>',
             ];
             echo '<div class="sub">' .
-                (! empty($res['description']) ? '<div class="gray">' . $tools->checkout($res['description'], 1,
-                        1) . '</div>' : '') .
-                ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 6 ? implode(' | ',
-                    $menu) : '') .
+                (! empty($res['description']) ? '<div class="gray">' . $tools->checkout(
+                        $res['description'],
+                        1,
+                        1
+                    ) . '</div>' : '') .
+                ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 6 ? implode(
+                    ' | ',
+                    $menu
+                ) : '') .
                 '</div>';
         }
 

@@ -16,7 +16,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Johncms\Api\ToolsInterface       $tools
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 /** @var Config $config */
@@ -67,7 +67,10 @@ $total = count($smileys['adm']) + count($smileys['usr']);
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
     '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

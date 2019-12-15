@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\System\Config\Config;
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Assets $assets
  * @var Config $config
  * @var PDO $db
- * @var ToolsInterface $tools
+ * @var Tools $tools
  * @var User $user
  * @var Render $view
  */
@@ -32,7 +32,7 @@ $assets = di(Assets::class);
 $config = di(Config::class);
 $db = di(PDO::class);
 $route = di('route');
-$tools = di(ToolsInterface::class);
+$tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 

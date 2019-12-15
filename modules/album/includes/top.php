@@ -15,9 +15,9 @@ use Johncms\System\Config\Config;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                              $db
- * @var Johncms\Api\ToolsInterface       $tools
- * @var Johncms\System\Users\User        $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 /** @var Config $config */
@@ -30,10 +30,13 @@ switch ($mod) {
         // Непрочитанные комментарии в личных альбомах
         if (! $user->isValid() || $user->id != $foundUser['id']) {
             echo $tools->displayError(_t('Wrong data'));
-            echo $view->render('system::app/old_content', [
-                'title'   => $textl ?? '',
-                'content' => ob_get_clean(),
-            ]);
+            echo $view->render(
+                'system::app/old_content',
+                [
+                    'title'   => $textl ?? '',
+                    'content' => ob_get_clean(),
+                ]
+            );
             exit;
         }
 
@@ -131,7 +134,8 @@ if ($total) {
         echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
-    $req = $db->query("
+    $req = $db->query(
+        "
       SELECT `cms_album_files`.*, `users`.`name` AS `user_name`, `cms_album_cat`.`name` AS `album_name` ${select}
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
@@ -139,7 +143,8 @@ if ($total) {
       ${join}
       WHERE ${where}
       ORDER BY ${order}
-      LIMIT ${start}, " . $user->config->kmess);
+      LIMIT ${start}, " . $user->config->kmess
+    );
 
     for ($i = 0; $res = $req->fetch(); ++$i) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

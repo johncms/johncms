@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights < 9) {
@@ -36,8 +36,10 @@ switch ($mod) {
             $reason = isset($_POST['reason']) ? htmlentities(trim($_POST['reason']), ENT_QUOTES, 'UTF-8') : '';
 
             if (empty($get_ip)) {
-                echo $tools->displayError(_t('Invalid IP'),
-                    '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
+                echo $tools->displayError(
+                    _t('Invalid IP'),
+                    '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>'
+                );
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
@@ -53,8 +55,10 @@ switch ($mod) {
                 $array = explode('-', $get_ip);
                 $get_ip = trim($array[0]);
 
-                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
-                    $get_ip)) {
+                if (! preg_match(
+                    '#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
+                    $get_ip
+                )) {
                     $error[] = _t('First IP is entered incorrectly');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -62,8 +66,10 @@ switch ($mod) {
 
                 $get_ip = trim($array[1]);
 
-                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
-                    $get_ip)) {
+                if (! preg_match(
+                    '#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
+                    $get_ip
+                )) {
                     $error[] = _t('Second IP is entered incorrectly');
                 } else {
                     $ip2 = ip2long($get_ip);
@@ -91,8 +97,10 @@ switch ($mod) {
                 // Обрабатываем одиночный адрес
                 $mode = 3;
 
-                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
-                    $get_ip)) {
+                if (! preg_match(
+                    '#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#',
+                    $get_ip
+                )) {
                     $error = _t('Invalid IP');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -189,8 +197,10 @@ switch ($mod) {
                     '</form>' .
                     '<p><a href="?act=ipban">' . _t('Cancel') . '</a><br><a href="./">' . _t('Admin Panel') . '</a></p>';
             } else {
-                echo $tools->displayError($error,
-                    '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
+                echo $tools->displayError(
+                    $error,
+                    '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>'
+                );
             }
         } else {
             // Форма ввода IP адреса для Бана
@@ -207,7 +217,9 @@ switch ($mod) {
                 '<p><h3>' . _t('Reason') . '</h3>' .
                 '&nbsp;<textarea rows="' . $user->config->fieldHeight . '" name="reason"></textarea></small></p>' .
                 '<p><input type="submit" name="submit" value=" ' . _t('Add Ban') . ' "/></p></div>' .
-                '<div class="phdr"><small>' . _t('Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') . '</small></div>' .
+                '<div class="phdr"><small>' . _t(
+                    'Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255'
+                ) . '</small></div>' .
                 '</form>' .
                 '<p><a href="?act=ipban">' . _t('Cancel') . '</a><br><a href="./">' . _t('Admin Panel') . '</a></p>';
         }
@@ -222,13 +234,16 @@ switch ($mod) {
         $reason = isset($_POST['reason']) ? htmlspecialchars(trim($_POST['reason'])) : '';
 
         if (! $ip1 || ! $ip2) {
-            echo $tools->displayError(_t('Invalid IP'),
-                '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
+            echo $tools->displayError(
+                _t('Invalid IP'),
+                '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>'
+            );
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
-        $db->prepare('
+        $db->prepare(
+            '
           INSERT INTO `cms_ban_ip` SET
           `ip1` = ?,
           `ip2` = ?,
@@ -237,15 +252,18 @@ switch ($mod) {
           `who` = ?,
           `reason` = ?,
           `date` = ?
-        ')->execute([
-            $ip1,
-            $ip2,
-            $ban_term,
-            $ban_url,
-            $user->name,
-            $reason,
-            time(),
-        ]);
+        '
+        )->execute(
+            [
+                $ip1,
+                $ip2,
+                $ban_term,
+                $ban_url,
+                $user->name,
+                $reason,
+                time(),
+            ]
+        );
 
         header('Location: ?act=ipban');
         break;
@@ -275,16 +293,20 @@ switch ($mod) {
             $get_ip = ip2long($_POST['ip']);
 
             if (! $get_ip) {
-                echo $tools->displayError(_t('Invalid IP'),
-                    '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
+                echo $tools->displayError(
+                    _t('Invalid IP'),
+                    '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>'
+                );
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
             $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '${get_ip}' BETWEEN `ip1` AND `ip2` LIMIT 1");
         } else {
-            echo $tools->displayError(_t('Invalid IP'),
-                '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
+            echo $tools->displayError(
+                _t('Invalid IP'),
+                '<a href="?act=ipban&amp;mod=new">' . _t('Back') . '</a>'
+            );
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
@@ -407,7 +429,10 @@ switch ($mod) {
         echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title' => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

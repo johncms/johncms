@@ -13,13 +13,13 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\System\Users\User  $user
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 // Создать / изменить альбом
-if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
+if (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) {
     if ($al) {
         $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
 
@@ -31,10 +31,13 @@ if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
             $password = htmlspecialchars($res['password']);
             $access = $res['access'];
         } else {
-            echo $view->render('system::app/old_content', [
-                'title'   => $textl ?? '',
-                'content' => $tools->displayError(_t('Wrong data')),
-            ]);
+            echo $view->render(
+                'system::app/old_content',
+                [
+                    'title'   => $textl ?? '',
+                    'content' => $tools->displayError(_t('Wrong data')),
+                ]
+            );
             exit;
         }
     } else {
@@ -82,21 +85,25 @@ if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
             if ($al) {
                 // Изменяем данные в базе
                 $db->exec("UPDATE `cms_album_files` SET `access` = '${access}' WHERE `album_id` = '${al}' AND `user_id` = " . $foundUser['id']);
-                $db->prepare('
+                $db->prepare(
+                    '
                   UPDATE `cms_album_cat` SET
                   `name` = ?,
                   `description` = ?,
                   `password` = ?,
                   `access` = ?
                   WHERE `id` = ? AND `user_id` = ?
-                ')->execute([
-                    $name,
-                    $description,
-                    $password,
-                    $access,
-                    $al,
-                    $foundUser['id'],
-                ]);
+                '
+                )->execute(
+                    [
+                        $name,
+                        $description,
+                        $password,
+                        $access,
+                        $al,
+                        $foundUser['id'],
+                    ]
+                );
             } else {
                 // Вычисляем сортировку
                 $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `sort` DESC LIMIT 1");
@@ -109,7 +116,8 @@ if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
                 }
 
                 // Заносим данные в базу
-                $db->prepare('
+                $db->prepare(
+                    '
                   INSERT INTO `cms_album_cat` SET
                   `user_id` = ?,
                   `name` = ?,
@@ -117,22 +125,28 @@ if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
                   `password` = ?,
                   `access` = ?,
                   `sort` = ?
-                ')->execute([
-                    $foundUser['id'],
-                    $name,
-                    $description,
-                    $password,
-                    $access,
-                    $sort,
-                ]);
+                '
+                )->execute(
+                    [
+                        $foundUser['id'],
+                        $name,
+                        $description,
+                        $password,
+                        $access,
+                        $sort,
+                    ]
+                );
             }
 
             echo '<div class="gmenu"><p>' . ($al ? _t('Album successfully changed') : _t('Album successfully created')) . '<br>' .
                 '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
-            echo $view->render('system::app/old_content', [
-                'title'   => $textl ?? '',
-                'content' => ob_get_clean(),
-            ]);
+            echo $view->render(
+                'system::app/old_content',
+                [
+                    'title'   => $textl ?? '',
+                    'content' => ob_get_clean(),
+                ]
+            );
             exit;
         }
     }

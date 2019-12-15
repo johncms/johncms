@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Container\Factory;
 
 class NewsWidget
@@ -31,7 +31,7 @@ class NewsWidget
     private $db;
 
     /**
-     * @var ToolsInterface
+     * @var Tools
      */
     private $tools;
 
@@ -41,7 +41,7 @@ class NewsWidget
         $container = Factory::getContainer();
 
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get(ToolsInterface::class);
+        $this->tools = $container->get(Tools::class);
         $this->settings = $container->get('config')['johncms']['news'];
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();

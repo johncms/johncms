@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights < 9) {
@@ -41,7 +41,7 @@ switch ($mod) {
                 $res = $req->fetch();
                 echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
                 echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
-                echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
+                echo ($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
                 echo '<p><h3>' . _t('Option 2') . '</h3>' . $res['link2'] . '</p>';
                 echo '<p><h3>' . _t('Display mode') . '</h3>';
 
@@ -153,8 +153,10 @@ switch ($mod) {
             $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
             if (empty($name) || empty($link1)) {
-                echo $tools->displayError(_t('The required fields are not filled'),
-                    '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(
+                    _t('The required fields are not filled'),
+                    '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>'
+                );
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
@@ -209,7 +211,9 @@ switch ($mod) {
                 '<small>' . _t('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') . '</small></p><p>' .
                 '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 1') . '<br>' .
                 '<input type="radio" value="3" ' . ($mode == 3 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 2') . '</p></div>' .
-                '<div class="rmenu"><small>' . _t('WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') . '</small></div>';
+                '<div class="rmenu"><small>' . _t(
+                    'WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.'
+                ) . '</small></div>';
 
             if ($id) {
                 echo '<input type="hidden" value="' . $id . '" name="id" />';
@@ -228,8 +232,10 @@ switch ($mod) {
         $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
         if (empty($name) || empty($link1)) {
-            echo $tools->displayError(_t('The required fields are not filled'),
-                '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(
+                _t('The required fields are not filled'),
+                '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>'
+            );
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
@@ -244,20 +250,24 @@ switch ($mod) {
                 exit;
             }
 
-            $db->prepare('
+            $db->prepare(
+                '
               UPDATE `cms_counters` SET
               `name` = ?,
               `link1` = ?,
               `link2` = ?,
               `mode` = ?
               WHERE `id` = ?
-            ')->execute([
-                $name,
-                $link1,
-                $link2,
-                $mode,
-                $id,
-            ]);
+            '
+            )->execute(
+                [
+                    $name,
+                    $link1,
+                    $link2,
+                    $mode,
+                    $id,
+                ]
+            );
         } else {
             // Получаем значение сортировки
             $req = $db->query('SELECT `sort` FROM `cms_counters` ORDER BY `sort` DESC LIMIT 1');
@@ -270,20 +280,24 @@ switch ($mod) {
             }
 
             // Режим добавления
-            $db->prepare('
+            $db->prepare(
+                '
               INSERT INTO `cms_counters` SET
               `name` = ?,
               `sort` = ?,
               `link1` = ?,
               `link2` = ?,
               `mode` = ?
-            ')->execute([
-                $name,
-                $sort,
-                $link1,
-                $link2,
-                $mode,
-            ]);
+            '
+            )->execute(
+                [
+                    $name,
+                    $sort,
+                    $link1,
+                    $link2,
+                    $mode,
+                ]
+            );
         }
 
         echo '<div class="gmenu"><p>' . ($id ? _t('Counter successfully changed') : _t('Counter successfully added')) . '</p></div>';
@@ -314,7 +328,10 @@ switch ($mod) {
 
 echo '<p>' . ($mod ? '<a href="?act=counters">' . _t('Counters') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title' => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

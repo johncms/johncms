@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\System\Users\User  $user
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 $textl = _t('Favorites');
@@ -37,13 +37,15 @@ if ($total > $user->config->kmess) {
 
 // Список закладок
 if ($total) {
-    $req_down = $db->query('SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
+    $req_down = $db->query(
+        'SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
     FROM `download__files` LEFT JOIN `download__bookmark` ON `download__files`.`id` = `download__bookmark`.`file_id`
-    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, " . $user->config->kmess);
+    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, " . $user->config->kmess
+    );
     $i = 0;
 
     while ($res_down = $req_down->fetch()) {
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

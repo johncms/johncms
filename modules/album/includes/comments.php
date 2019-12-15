@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\System\Users\User  $user
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 // Проверяем наличие комментируемого объекта
@@ -28,10 +28,13 @@ if ($req_obj->rowCount()) {
     $owner = $tools->getUser($res_obj['user_id']);
 
     if (! $owner) {
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl ?? '',
-            'content' => $tools->displayError(_t('User does not exists')),
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl ?? '',
+                'content' => $tools->displayError(_t('User does not exists')),
+            ]
+        );
         exit;
     }
 
@@ -41,11 +44,14 @@ if ($req_obj->rowCount()) {
 
     if (($res_a['access'] == 1 && $owner['id'] != $user->id && $user->rights < 7) || ($res_a['access'] == 2 && $user->rights < 7 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user->id)) {
         // Если доступ закрыт
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl ?? '',
-            'content' => $tools->displayError(_t('Access forbidden')) .
-                '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Album List') . '</a></div>',
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl ?? '',
+                'content' => $tools->displayError(_t('Access forbidden')) .
+                    '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Album List') . '</a></div>',
+            ]
+        );
         exit;
     }
 

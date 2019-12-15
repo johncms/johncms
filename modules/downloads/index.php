@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\System\Config\Config;
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
@@ -27,14 +27,14 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 /**
  * @var Config $config
  * @var PDO $db
- * @var ToolsInterface $tools
+ * @var Tools $tools
  * @var Render $view
  * @var User $user
  */
 
 $config = di(Config::class);
 $db = di(PDO::class);
-$tools = di(Johncms\Api\ToolsInterface::class);
+$tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);

@@ -15,7 +15,7 @@ namespace Johncms\Utility;
 use Johncms\System\Utility\Bbcode;
 use Johncms\System\Config\Config;
 use Johncms\System\Http\Environment;
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\Container\Factory;
 
@@ -42,7 +42,7 @@ class Comments
     private $db;
 
     /**
-     * @var ToolsInterface
+     * @var Tools
      */
     private $tools;
 
@@ -78,7 +78,7 @@ class Comments
 
         /** @var \Psr\Container\ContainerInterface $container */
         $container = Factory::getContainer();
-        $this->tools = $container->get(ToolsInterface::class);
+        $this->tools = $container->get(Tools::class);
         $this->db = $container->get(\PDO::class);
         $this->systemUser = $container->get(User::class);
 
@@ -441,7 +441,7 @@ class Comments
             $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
-            $flood = Factory::getContainer()->get(ToolsInterface::class)->antiflood();
+            $flood = Factory::getContainer()->get(Tools::class)->antiflood();
 
             if ($flood) {
                 $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');

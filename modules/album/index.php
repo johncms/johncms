@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\ToolsInterface;
+use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
@@ -22,7 +22,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 /**
  * @var Assets $assets
  * @var PDO $db
- * @var ToolsInterface $tools
+ * @var Tools $tools
  * @var User $user
  * @var Render $view
  */
@@ -30,7 +30,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 $assets = di(Assets::class);
 $db = di(PDO::class);
 $user = di(User::class);
-$tools = di(ToolsInterface::class);
+$tools = di(Tools::class);
 $view = di(Render::class);
 
 // Регистрируем папку с языками модуля

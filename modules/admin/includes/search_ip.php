@@ -14,7 +14,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 $error = [];
@@ -105,15 +105,19 @@ if ($search && ! $error) {
 
     if ($total) {
         if ($mod == 'history') {
-            $req = $db->query("SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
+            $req = $db->query(
+                "SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
                 FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
                 WHERE `cms_users_iphistory`.`ip` BETWEEN ${ip1} AND ${ip2} OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
                 GROUP BY `users`.`id`
-                ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess);
+                ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess
+            );
         } else {
-            $req = $db->query("SELECT * FROM `users`
+            $req = $db->query(
+                "SELECT * FROM `users`
             WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
-            ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess);
+            ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess
+            );
         }
 
         $i = 0;
@@ -145,11 +149,16 @@ if ($search && ! $error) {
     }
 
     // Инструкции для поиска
-    echo '<div class="phdr"><small>' . _t('<b>Sample queries:</b><br><span class="red">10.5.7.1</span> - Search for a single address<br><span class="red">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class="red">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255') . '</small></div>';
+    echo '<div class="phdr"><small>' . _t(
+            '<b>Sample queries:</b><br><span class="red">10.5.7.1</span> - Search for a single address<br><span class="red">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class="red">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255'
+        ) . '</small></div>';
     echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title' => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

@@ -29,8 +29,8 @@ $systemUser = $container->get(User::class);
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/** @var Johncms\System\Utility\Tools $tools */
+$tools = $container->get(Johncms\System\Utility\Tools::class);
 
 // TODO: Сделать перевод
 

@@ -12,9 +12,12 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Johncms\System\Utility\Tools;
+
 /**
  * Класс дерева (Nested Sets)
  * Class Tree
+ *
  * @package Library
  * @author  Koenig(Compolomus)
  */
@@ -42,11 +45,11 @@ class Tree
 
     private $parent;
 
-    /** @var PDO $db */
+    /** @var \PDO $db */
     private $db;
 
     /**
-     * @var \Johncms\Api\ToolsInterface
+     * @var Tools
      */
     private $tools;
 
@@ -54,7 +57,7 @@ class Tree
     {
         $this->start_id = $id;
         $this->db = di(\PDO::class);
-        $this->tools = di(\Johncms\Api\ToolsInterface::class);
+        $this->tools = di(Tools::class);
     }
 
     /**

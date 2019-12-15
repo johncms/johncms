@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 $textl = _t('Top Users');
@@ -35,11 +35,14 @@ if ($total) {
 
     while ($res_down = $req_down->fetch()) {
         $foundUser = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-            $tools->displayUser($foundUser, [
-                'iphide' => 0,
-                'sub'    => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count'],
-            ]) . '</div>';
+        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+            $tools->displayUser(
+                $foundUser,
+                [
+                    'iphide' => 0,
+                    'sub'    => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count'],
+                ]
+            ) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

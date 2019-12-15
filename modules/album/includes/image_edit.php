@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\System\Users\User  $user
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Utility\Tools $tools
  */
 
 // Редактировать картинку
@@ -151,10 +151,12 @@ if ($img && $foundUser['id'] == $user->id || $user->rights >= 6) {
                     $sql = '`img_name` = ' . $db->quote($img_name) . ', `tmb_name` = ' . $db->quote($tmb_name) . ',';
                 }
 
-                $db->exec("UPDATE `cms_album_files` SET ${sql}
+                $db->exec(
+                    "UPDATE `cms_album_files` SET ${sql}
                     `description` = " . $db->quote($description) . "
                     WHERE `id` = '${img}'
-                ");
+                "
+                );
             }
 
             echo '<div class="gmenu"><p>' . _t('Image successfully changed') . '<br>' .
