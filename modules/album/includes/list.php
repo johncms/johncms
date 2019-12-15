@@ -37,7 +37,7 @@ if ($total) {
     $i = 0;
     while ($res = $req->fetch()) {
         $count = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '" . $res['id'] . "'")->fetchColumn();
-        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
             '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
             '<a href="?act=show&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '"><b>' . $tools->checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
 

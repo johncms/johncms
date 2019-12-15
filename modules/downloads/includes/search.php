@@ -64,7 +64,7 @@ if ($search && ! $error) {
         $i = 0;
 
         while ($res_down = $req_down->fetch()) {
-            echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+            echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
         }
     } else {
         echo '<div class="rmenu"><p>' . _t('No items found') . '</p></div>';

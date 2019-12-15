@@ -41,7 +41,7 @@ switch ($mod) {
                 $res = $req->fetch();
                 echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
                 echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
-                echo ($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
+                echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
                 echo '<p><h3>' . _t('Option 2') . '</h3>' . $res['link2'] . '</p>';
                 echo '<p><h3>' . _t('Display mode') . '</h3>';
 
