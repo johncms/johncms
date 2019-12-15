@@ -48,15 +48,33 @@ $this->layout(
     </div>
 <?php endif; ?>
 
+<?php if ($file['file_type'] === 'audio'): ?>
+    <div class="row">
+        <div class="col-xl-8">
+            <audio src="<?= $file['main_file']['source_url'] ?>" controls></audio>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if ($file['file_type'] === 'video'): ?>
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="embed-responsive embed-responsive-16by9">
+                <video src="<?= $file['main_file']['source_url'] ?>" controls></video>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <?php if (! empty($file['description'])): ?>
     <div class="border-bottom pb-2">
         <?= $file['description'] ?>
     </div>
 <?php endif; ?>
 
-<?php if (! empty($file['mp3_properties'])): ?>
+<?php if (! empty($file['file_properties'])): ?>
     <div class="mt-2 mb-3 border-bottom pb-2">
-        <?php foreach ($file['mp3_properties'] as $property): ?>
+        <?php foreach ($file['file_properties'] as $property): ?>
             <div><?= $property['name'] ?>: <?= $property['value'] ?></div>
         <?php endforeach; ?>
     </div>

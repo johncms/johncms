@@ -58,7 +58,10 @@ if ($res_down['type'] == 3 && $user->rights < 6 && $user->rights != 4) {
 }
 
 Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]);
-$extension = pathinfo($res_down['name'], PATHINFO_EXTENSION);
+
+$nav_chain->add($res_down['rus_name']);
+
+$extension = strtolower(pathinfo($res_down['name'], PATHINFO_EXTENSION));
 
 $urls = [
     'downloads' => $url,
@@ -84,9 +87,9 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
     }
     closedir($dir);
 }
-
+$file_data['file_type'] = 'other';
 $file_data['screenshots'] = $screen;
-
+$file_properties = [];
 switch ($extension) {
     case 'mp3':
         $getID3 = new getID3();
@@ -102,7 +105,7 @@ switch ($extension) {
             $mp3info = false;
         }
 
-        $mp3_properties = [
+        $file_properties = [
             [
                 'name'  => _t('Channels'),
                 'value' => $getid['audio']['channels'] . ' (' . $getid['audio']['channelmode'] . ')',
@@ -117,50 +120,87 @@ switch ($extension) {
             ],
             [
                 'name'  => _t('Duration'),
-                'value' => date('i:s', (int) $getid['playtime_seconds']),
+                'value' => $getid['playtime_string'],
             ],
         ];
 
         if ($mp3info) {
             if (isset($tagsArray['artist'][0])) {
-                $mp3_properties[] = [
+                $file_properties[] = [
                     'name'  => _t('Artist'),
                     'value' => Download::mp3tagsOut($tagsArray['artist'][0]),
                 ];
             }
             if (isset($tagsArray['title'][0])) {
-                $mp3_properties[] = [
+                $file_properties[] = [
                     'name'  => _t('Title'),
                     'value' => Download::mp3tagsOut($tagsArray['title'][0]),
                 ];
             }
             if (isset($tagsArray['album'][0])) {
-                $mp3_properties[] = [
+                $file_properties[] = [
                     'name'  => _t('Album'),
                     'value' => Download::mp3tagsOut($tagsArray['album'][0]),
                 ];
             }
             if (isset($tagsArray['genre'][0])) {
-                $mp3_properties[] = [
+                $file_properties[] = [
                     'name'  => _t('Genre'),
                     'value' => Download::mp3tagsOut($tagsArray['genre'][0]),
                 ];
             }
             if (isset($tagsArray['year'][0])) {
-                $mp3_properties[] = [
+                $file_properties[] = [
                     'name'  => _t('Year'),
                     'value' => Download::mp3tagsOut($tagsArray['year'][0]),
                 ];
             }
         }
 
-        $file_data['mp3_properties'] = $mp3_properties;
         $file_data['file_type'] = 'audio';
         break;
 
     case 'avi':
     case 'webm':
+    case 'mov':
     case 'mp4':
+
+        $getID3 = new getID3();
+        $getID3->encoding = 'cp1251';
+        $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
+        if (! empty($getid['video'])) {
+            if (isset($getid['video']['fourcc_lookup'])) {
+                $file_properties[] = [
+                    'name'  => _t('Codec'),
+                    'value' => $getid['video']['fourcc_lookup'],
+                ];
+            }
+            if (isset($getid['video']['frame_rate'])) {
+                $file_properties[] = [
+                    'name'  => _t('Frame rate'),
+                    'value' => $getid['video']['frame_rate'] . ' FPS',
+                ];
+            }
+            if (isset($getid['video']['bitrate'])) {
+                $file_properties[] = [
+                    'name'  => _t('Bitrate'),
+                    'value' => ceil($getid['video']['bitrate'] / 1000) . ' Kbit/s',
+                ];
+            }
+            if (isset($getid['playtime_string'])) {
+                $file_properties[] = [
+                    'name'  => _t('Duration'),
+                    'value' => $getid['playtime_string'],
+                ];
+            }
+            if (isset($getid['video']['resolution_x'])) {
+                $file_properties[] = [
+                    'name'  => _t('Resolution'),
+                    'value' => $getid['video']['resolution_x'] . 'x' . $getid['video']['resolution_y'] . 'px',
+                ];
+            }
+        }
+
         $file_data['file_type'] = 'video';
         break;
 
@@ -182,6 +222,8 @@ switch ($extension) {
         $file_data['file_type'] = 'image';
         break;
 }
+
+$file_data['file_properties'] = $file_properties;
 
 $file_data['description'] = $tools->checkout($res_down['about'], 1, 1);
 

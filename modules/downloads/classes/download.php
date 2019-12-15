@@ -133,8 +133,8 @@ class download
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
 
-        /** @var Johncms\View\Extension\Assets $assets */
-        $assets = di(Johncms\View\Extension\Assets::class);
+        /** @var Johncms\System\View\Extension\Assets $assets */
+        $assets = di(Johncms\System\View\Extension\Assets::class);
 
         /** @var Johncms\System\Users\User $systemUser */
         $systemUser = di(Johncms\System\Users\User::class);
@@ -206,14 +206,15 @@ class download
         /** @var Johncms\Api\ToolsInterface $tools */
         $tools = di(Johncms\Api\ToolsInterface::class);
 
-        /** @var Johncms\View\Extension\Assets $assets */
-        $assets = di(Johncms\View\Extension\Assets::class);
+        /** @var Johncms\System\View\Extension\Assets $assets */
+        $assets = di(Johncms\System\View\Extension\Assets::class);
 
         $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
-        $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
+        $icon_id = self::$extensions[$array['format']] ?? 9;
         $out = [
             'icon'        => $assets->url('images/old/system/' . $icon_id . '.png'),
+            'source_url'  => '/' . $array['res']['dir'] . '/' . $array['res']['name'],
             'url'         => '?act=load_file&amp;id=' . $id . $morelink,
             'name'        => $array['res']['text'],
             'size'        => self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))),
