@@ -19,7 +19,6 @@ return [
             Api\EnvironmentInterface::class   => Johncms\Http\Environment::class,
             Api\ToolsInterface::class         => Johncms\Utility\Tools::class,
             Api\NavChainInterface::class      => Johncms\Utility\NavChain::class,
-            FastRoute\RouteCollector::class   => Johncms\Router\RouteCollectorFactory::class,
             'counters'                        => Johncms\Utility\Counters::class,
         ],
     ],
