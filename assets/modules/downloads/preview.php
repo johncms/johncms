@@ -22,12 +22,12 @@ $width = 220;
 $height = 300;
 
 $copyright = '';
-$type = isset($_GET['type']) ? abs(intval($_GET['type'])) : 0;
+$type = isset($_GET['type']) ? (int) $_GET['type'] : 0;
 $image = htmlspecialchars(rawurldecode($_GET['img']));
 $image = '../../../' . strtr($image, ['../' => '', '//' => '/', './' => '_',]);
 
 if ($image && file_exists($image)) {
-    $att_ext = pathinfo($image, PATHINFO_EXTENSION);
+    $att_ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
     $pic_ext = [
         'gif',
         'jpg',
@@ -35,7 +35,7 @@ if ($image && file_exists($image)) {
         'png',
     ];
 
-    if (in_array($att_ext, $pic_ext)) {
+    if (in_array($att_ext, $pic_ext, true)) {
         $manager = new ImageManager(['driver' => 'imagick']);
         $resized = $manager->make($image)
             ->resize(
@@ -44,6 +44,7 @@ if ($image && file_exists($image)) {
                 function ($constraint) {
                     /** @var $constraint Intervention\Image\Constraint */
                     $constraint->aspectRatio();
+                    $constraint->upsize();
                 }
             );
         $bg = $manager->make($image)

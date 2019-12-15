@@ -31,7 +31,6 @@ if ($id) {
     $topic = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '${id}'")->fetchColumn();
 
     if ($topic) {
-
         $params = [(time() - 300), '/forum?type=topic&id=' . $id . '%'];
         if (! $do) {
             $sql = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ? AND `place` LIKE ? OR `place` = ?';

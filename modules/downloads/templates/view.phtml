@@ -31,10 +31,10 @@ $this->layout(
 <?php endif; ?>
 
 <?php if (! empty($file['screenshots'])): ?>
-    <div class="screenshots border-bottom mb-2 pb-3 swiper-container">
+    <div class="<?= count($file['screenshots']) > 1 ? 'screenshots' : '' ?> border-bottom mb-2 pb-3 swiper-container">
         <div class="swiper-wrapper">
             <?php foreach ($file['screenshots'] as $number => $screenshot): ?>
-                <div class="swiper-slide">
+                <div class="swiper-slide <?= count($file['screenshots']) < 2 ? 'text-left' : '' ?>">
                     <a href="<?= $screenshot['file'] ?>"
                        title="<?= _t('Screenshot:') ?> <?= ($number + 1) ?>"
                        date-source="<?= $screenshot['file'] ?>"
