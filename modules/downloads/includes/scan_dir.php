@@ -68,7 +68,6 @@ if ($user->rights === 4 || $user->rights >= 6) {
             $db->exec("UPDATE `download__category` SET `total` = '${dir_files}' WHERE `id` = '" . $res_down['id'] . "'");
         }
 
-        $db->exec('OPTIMIZE TABLE `download__bookmark`, `download__files`, `download__comments`,`download__more`');
         echo $view->render(
             'system::pages/result',
             [
@@ -144,7 +143,8 @@ if ($user->rights === 4 || $user->rights >= 6) {
                         }
                     } else {
                         $file_name = basename($val);
-                        if ($file_name != '.' && $file_name != '..' && $file_name != 'index.php' && $file_name != '.htaccess') {
+                        $array_scan = ['.', '..', 'index.php', '.htaccess'];
+                        if (! in_array($file_name, $array_scan, true)) {
                             $array_scan[] = $val;
                         }
                     }
