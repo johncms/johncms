@@ -39,7 +39,7 @@ switch ($mod) {
         if ($req->rowCount()) {
             $i = 0;
             while ($res = $req->fetch()) {
-                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
+                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
                     '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
@@ -69,7 +69,7 @@ switch ($mod) {
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
-                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
+                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
                     '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
@@ -93,7 +93,9 @@ switch ($mod) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess);
+        $req = $db->query(
+            "SELECT * FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess
+        );
 
         if ($req->rowCount()) {
             $i = 0;
@@ -106,7 +108,7 @@ switch ($mod) {
                 $text = $tools->checkout($text, 2, 1);
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
-                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
+                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
                     '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .

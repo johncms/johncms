@@ -94,7 +94,7 @@ switch ($act) {
             $link = $config['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
             $subject = _t('Password recovery');
             $mail = sprintf(
-                _t("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"),
+                _t("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"), // phpcs:ignore
                 $res['name'],
                 $config['homeurl'],
                 $link
@@ -179,7 +179,7 @@ switch ($act) {
         break;
 
     default:
-        $code = (string) new Mobicms\Captcha\Code;
+        $code = (string) new Mobicms\Captcha\Code();
         $_SESSION['code'] = $code;
         // Показываем запрос на подтверждение выхода с сайта
         echo $view->render('profile::restore_password', [

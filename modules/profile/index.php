@@ -240,7 +240,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         echo '</p>';
 
-        if (! $tools->isIgnor($foundUser['id'])
+        if (
+            ! $tools->isIgnor($foundUser['id'])
             && is_contact($foundUser['id']) != 2
             && ! isset($user->ban['1'])
             && ! isset($user->ban['3'])

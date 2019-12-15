@@ -19,10 +19,13 @@ $userConfig = $user->config;
 
 // Проверяем права доступа
 if ($foundUser['id'] != $user->id) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl,
-        'content' => $tools->displayError(_t('Access forbidden')),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl,
+            'content' => $tools->displayError(_t('Access forbidden')),
+        ]
+    );
     exit;
 }
 
@@ -42,10 +45,12 @@ switch ($mod) {
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
-            $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([
-                serialize($set_mail_user),
-                $user->id,
-            ]);
+            $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute(
+                [
+                    serialize($set_mail_user),
+                    $user->id,
+                ]
+            );
         }
 
         echo '<form method="post" action="?act=settings&amp;mod=mail">' .
@@ -74,10 +79,12 @@ switch ($mod) {
                 $set_forum['postclip'] = 1;
             }
 
-            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
-                serialize($set_forum),
-                $user->id,
-            ]);
+            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute(
+                [
+                    serialize($set_forum),
+                    $user->id,
+                ]
+            );
 
             echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
         }
@@ -89,10 +96,12 @@ switch ($mod) {
             $set_forum['preview'] = 1;
             $set_forum['postclip'] = 1;
 
-            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
-                serialize($set_forum),
-                $user->id,
-            ]);
+            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute(
+                [
+                    serialize($set_forum),
+                    $user->id,
+                ]
+            );
 
             echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
         }
@@ -184,8 +193,7 @@ switch ($mod) {
         echo '<form action="?act=settings" method="post" >' .
             '<div class="menu"><p><h3>' . _t('Time settings') . '</h3>' .
             '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $userConfig->timeshift . '"/> ' . _t('Shift of time') . ' (+-12)<br />' .
-            '<span style="font-weight:bold; background-color:#CCC">' . date('H:i',
-                time() + ($config['timeshift'] + $userConfig->timeshift) * 3600) . '</span> ' . _t('System time') .
+            '<span style="font-weight:bold; background-color:#CCC">' . date('H:i', time() + ($config['timeshift'] + $userConfig->timeshift) * 3600) . '</span> ' . _t('System time') .
             '</p><p><h3>' . _t('System Functions') . '</h3>' .
             '<input name="directUrl" type="checkbox" value="1" ' . ($userConfig->directUrl ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
             '<input name="youtube" type="checkbox" value="1" ' . ($userConfig->youtube ? 'checked="checked"' : '') . ' />&#160;' . _t('Youtube Player') . '<br />' .

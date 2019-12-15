@@ -86,7 +86,8 @@ if (isset($_POST['submit'])) {
     }
 
     // Проверка кода CAPTCHA
-    if (! $captcha
+    if (
+        ! $captcha
         || ! isset($_SESSION['code'])
         || mb_strlen($captcha) < 3
         || strtolower($captcha) != strtolower($_SESSION['code'])
@@ -175,7 +176,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Форма регистрации
-$code = (string) new Mobicms\Captcha\Code;
+$code = (string) new Mobicms\Captcha\Code();
 $_SESSION['code'] = $code;
 
 echo $view->render(

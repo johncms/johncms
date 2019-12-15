@@ -52,7 +52,7 @@ $show = isset($_GET['view']);
 // Показываем выбранный альбом с фотографиями
 echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | <a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Personal') . '</a></div>';
 
-if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
+if (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) {
     echo '<div class="topmenu"><a href="?act=image_upload&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Add image') . '</a></div>';
 }
 
@@ -71,7 +71,8 @@ if ($album['access'] != 2) {
     unset($_SESSION['ap']);
 }
 
-if (($album['access'] == 1 || $album['access'] == 3)
+if (
+    ($album['access'] == 1 || $album['access'] == 3)
     && $foundUser['id'] != $user->id
     && $user->rights < 7
 ) {
@@ -88,7 +89,10 @@ if (($album['access'] == 1 || $album['access'] == 3)
         ]
     );
     exit;
-} elseif ($album['access'] == 2
+}
+
+if (
+    $album['access'] == 2
     && $foundUser['id'] != $user->id
     && $user->rights < 7
 ) {
@@ -136,12 +140,7 @@ if ($show) {
 $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
 
 if ($total > $itmOnPage) {
-    echo '<div class="topmenu">' . $tools->displayPagination(
-            '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
-            $start,
-            $total,
-            $itmOnPage
-        ) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $itmOnPage) . '</div>';
 }
 
 if ($total) {
@@ -214,12 +213,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $itmOnPage) {
-    echo '<div class="topmenu">' . $tools->displayPagination(
-            '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
-            $start,
-            $total,
-            $itmOnPage
-        ) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $itmOnPage) . '</div>' .
         '<p><form action="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . ($show ? '&amp;view' : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

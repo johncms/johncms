@@ -24,6 +24,8 @@
     </rule>
 
     <!-- Paths to check -->
-    <file>modules/admin</file>
+    <file>modules</file>
     <file>system/src</file>
+    <exclude-pattern>/modules/downloads/*</exclude-pattern>
+    <exclude-pattern>/modules/forum/*</exclude-pattern>
 </ruleset>

@@ -209,7 +209,8 @@ switch ($act) {
     case 'otvet':
         // Add "admin response"
         if ($user->rights >= 6 && $id) {
-            if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+            if (
+                isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
@@ -245,7 +246,8 @@ switch ($act) {
     case 'edit':
         // Edit post
         if ($user->rights >= 6 && $id) {
-            if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+            if (
+                isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='${id}'")->fetch();

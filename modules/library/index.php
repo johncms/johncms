@@ -44,7 +44,7 @@ $view = di(Render::class);
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Регистрируем автозагрузчик для классов библиотеки
-$loader = new Aura\Autoload\Loader;
+$loader = new Aura\Autoload\Loader();
 $loader->register();
 $loader->addPrefix('Library', __DIR__ . '/classes');
 
@@ -288,7 +288,10 @@ if (in_array($act, $array_includes)) {
 
                     if ($total) {
                         $sql2 = $db->query(
-                            'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id . ' ORDER BY `id` DESC LIMIT ' . $start . ',' . $user->config->kmess
+                            'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce`
+                            FROM `library_texts`
+                            WHERE `premod`=1 AND `cat_id`=' . $id . '
+                            ORDER BY `id` DESC LIMIT ' . $start . ',' . $user->config->kmess
                         );
                         echo $nav;
 
@@ -362,12 +365,7 @@ if (in_array($act, $array_includes)) {
                         Utils::redir404();
                     }
 
-                    $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination(
-                            '?id=' . $id . '&amp;',
-                            $page == 1 ? 0 : ($page - 1) * 1,
-                            $count_pages,
-                            1
-                        ) . '</div>' : '';
+                    $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'] . ' LIMIT 1')->fetch();
                     echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a>'
                         . ' | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a>'
@@ -375,12 +373,7 @@ if (in_array($act, $array_includes)) {
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
-                        echo '<div class="topmenu">' . $tools->displayPagination(
-                                '?id=' . $id . '&amp;',
-                                $page == 1 ? 0 : ($page - 1) * 1,
-                                $count_pages,
-                                1
-                            ) . '</div>';
+                        echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
                     }
 
                     if ($page == 1) {
@@ -430,28 +423,7 @@ if (in_array($act, $array_includes)) {
                         echo '</div>';
                     }
 
-                    $text = $tools->checkout(
-                        mb_substr(
-                            $text,
-                            ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))),
-                            (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(
-                                    Utils::position(
-                                        $tmp,
-                                        PHP_EOL
-                                    ),
-                                    Utils::position($tmp, ' ')
-                                ) - ($page == 1 ? 0 : min(
-                                    Utils::position(
-                                        $text,
-                                        PHP_EOL
-                                    ),
-                                    Utils::position($text, ' ')
-                                )))
-                        ),
-                        1,
-                        1
-                    );
-
+                    $text = $tools->checkout(mb_substr($text, ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(Utils::position($tmp, PHP_EOL), Utils::position($tmp, ' ')) - ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))))), 1, 1); // phpcs:ignore
                     $text = $tools->smilies($text, $user->rights ? 1 : 0);
 
                     echo '<div class="list2" style="padding: 8px">';

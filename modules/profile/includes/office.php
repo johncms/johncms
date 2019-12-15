@@ -61,7 +61,7 @@ $count_input = $db->query("
 	WHERE `cms_mail`.`from_id`='" . $user->id . "'
 	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='" . $user->id . "'
 	AND `cms_contact`.`ban`!='1' AND `spam`='0'")->fetchColumn();
-echo '<div><img src="' . $assets->url('images/old/mail-inbox.png') . '" alt="" class="icon"><a href="../mail/?act=input">' . _t('Received') . '</a>&nbsp;(' . $count_input . ($new_mail ? '/<span class="red">+' . $new_mail . '</span>' : '') . ')</div>';
+echo '<div><img src="' . $assets->url('images/old/mail-inbox.png') . '" alt="" class="icon"><a href="../mail/?act=input">' . _t('Received') . '</a>&nbsp;(' . $count_input . ($new_mail ? '/<span class="red">+' . $new_mail . '</span>' : '') . ')</div>'; // phpcs:ignore
 
 //Исходящие сообщения
 $count_output = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
@@ -70,12 +70,12 @@ WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`delete`!='" . $us
 //Исходящие непрочитанные сообщения
 $count_output_new = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
 WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`delete`!='" . $user->id . "' AND `cms_mail`.`read`='0' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
-echo '<div><img src="' . $assets->url('images/old/mail-send.png') . '" alt="" class="icon"><a href="../mail/?act=output">' . _t('Sent') . '</a>&nbsp;(' . $count_output . ($count_output_new ? '/<span class="red">+' . $count_output_new . '</span>' : '') . ')</div>';
+echo '<div><img src="' . $assets->url('images/old/mail-send.png') . '" alt="" class="icon"><a href="../mail/?act=output">' . _t('Sent') . '</a>&nbsp;(' . $count_output . ($count_output_new ? '/<span class="red">+' . $count_output_new . '</span>' : '') . ')</div>'; // phpcs:ignore
 $count_systems = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `delete`!='" . $user->id . "' AND `sys`='1'")->fetchColumn();
 
 //Системные сообщения
 $count_systems_new = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `delete`!='" . $user->id . "' AND `sys`='1' AND `read`='0'")->fetchColumn();
-echo '<div><img src="' . $assets->url('images/old/mail-info.png') . '" alt="" class="icon"><a href="../mail/?act=systems">' . _t('System') . '</a>&nbsp;(' . $count_systems . ($count_systems_new ? '/<span class="red">+' . $count_systems_new . '</span>' : '') . ')</div>';
+echo '<div><img src="' . $assets->url('images/old/mail-info.png') . '" alt="" class="icon"><a href="../mail/?act=systems">' . _t('System') . '</a>&nbsp;(' . $count_systems . ($count_systems_new ? '/<span class="red">+' . $count_systems_new . '</span>' : '') . ')</div>'; // phpcs:ignore
 
 //Файлы
 $count_file = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `delete`!='" . $user->id . "' AND `file_name`!='';")->fetchColumn();

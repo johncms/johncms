@@ -41,8 +41,8 @@ if ($total) {
 
     for ($i = 0; ($row = $query->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-        $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block Sender') . '</a>';
-        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount();
+        $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block Sender') . '</a>'; // phpcs:ignore
+        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount(); // phpcs:ignore
         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount();
         $arg = [
             'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',

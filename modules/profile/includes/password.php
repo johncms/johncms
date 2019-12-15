@@ -16,10 +16,13 @@ $textl = htmlspecialchars($foundUser['name']) . ': ' . _t('Change Password');
 
 // Проверяем права доступа
 if ($foundUser['id'] != $user->id && ($user->rights < 7 || $foundUser['rights'] > $user->rights)) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl,
-        'content' => $tools->displayError(_t('Access forbidden')),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl,
+            'content' => $tools->displayError(_t('Access forbidden')),
+        ]
+    );
     exit;
 }
 
@@ -56,10 +59,12 @@ switch ($mod) {
 
         if (! $error) {
             // Записываем в базу
-            $db->prepare('UPDATE `users` SET `password` = ? WHERE `id` = ?')->execute([
-                md5(md5($newpass)),
-                $foundUser['id'],
-            ]);
+            $db->prepare('UPDATE `users` SET `password` = ? WHERE `id` = ?')->execute(
+                [
+                    md5(md5($newpass)),
+                    $foundUser['id'],
+                ]
+            );
 
             // Проверяем и записываем COOKIES
             if (isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
@@ -70,8 +75,7 @@ switch ($mod) {
                 '<a href="' . ($user->id == $foundUser['id'] ? '../login.php' : '?user=' . $foundUser['id']) . '">' . _t('Continue') . '</a></p>';
             echo '</div>';
         } else {
-            echo $tools->displayError($error,
-                '<a href="?act=password&amp;user=' . $foundUser['id'] . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError($error, '<a href="?act=password&amp;user=' . $foundUser['id'] . '">' . _t('Repeat') . '</a>');
         }
         break;
 

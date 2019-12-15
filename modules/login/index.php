@@ -103,7 +103,7 @@ if ($user->isValid()) {
                 } else {
                     // Показываем CAPTCHA
                     $display_form = 0;
-                    $code = (string) new Mobicms\Captcha\Code;
+                    $code = (string) new Mobicms\Captcha\Code();
                     $_SESSION['code'] = $code;
                     echo $view->render(
                         'login::captcha',
