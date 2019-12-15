@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\Api\BbcodeInterface;
+use Johncms\System\Utility\Bbcode;
 use Johncms\System\Config\Config;
 use Johncms\System\Http\Environment;
 use Johncms\Api\ToolsInterface;
@@ -416,7 +416,7 @@ class Comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
             (! empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
             '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-            '</p><p>' . Factory::getContainer()->get(BbcodeInterface::class)->buttons('form', 'message') .
+            '</p><p>' . Factory::getContainer()->get(Bbcode::class)->buttons('form', 'message') .
             '<textarea rows="' . $this->systemUser->config->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
             '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }

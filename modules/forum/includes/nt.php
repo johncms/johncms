@@ -301,7 +301,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
             'th'                => $th,
             'add_files'         => isset($_POST['addfiles']),
             'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
-            'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('new_topic', 'msg'),
+            'bbcode'            => di(Johncms\System\Utility\Bbcode::class)->buttons('new_topic', 'msg'),
             'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
             'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
             'preview_message'   => $msg_pre,

@@ -421,7 +421,7 @@ if (! $tools->isIgnor($id) && empty($user->ban['1']) && empty($user->ban['3'])) 
         '<form name="form" action="?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (! empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
-    $out .= di(Johncms\Api\BbcodeInterface::class)->buttons('form', 'text');
+    $out .= di(Johncms\System\Utility\Bbcode::class)->buttons('form', 'text');
     $out .= '<textarea rows="' . $user->config->fieldHeight . '" name="text"></textarea></p>';
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
     $out .= '<p><input type="submit" name="submit" value="' . _t('Send') . '"/></p>' .

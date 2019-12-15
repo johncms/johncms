@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\BbcodeInterface;
+use Johncms\System\Utility\Bbcode;
 use Johncms\System\Config\Config;
 use Johncms\System\Http\Environment;
 use Johncms\Api\NavChainInterface;
@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var BbcodeInterface $bbcode
+ * @var Bbcode $bbcode
  * @var Config $config
  * @var PDO $db
  * @var Environment $env
@@ -37,7 +37,7 @@ $db = di(PDO::class);
 $user = di(User::class);
 $tools = di(ToolsInterface::class);
 $env = di(Environment::class);
-$bbcode = di(BbcodeInterface::class);
+$bbcode = di(Bbcode::class);
 $config = di(Config::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);

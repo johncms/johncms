@@ -15,7 +15,6 @@ use Johncms\Api;
 return [
     'dependencies' => [
         'factories' => [
-            Api\BbcodeInterface::class        => Johncms\Utility\Bbcode::class,
             Api\ToolsInterface::class         => Johncms\Utility\Tools::class,
             Api\NavChainInterface::class      => Johncms\Utility\NavChain::class,
             'counters'                        => Johncms\Utility\Counters::class,

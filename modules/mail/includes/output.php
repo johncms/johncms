@@ -15,8 +15,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = _t('Mail');
 echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
 
-/** @var Johncms\Api\BbcodeInterface $bbcode */
-$bbcode = di(Johncms\Api\BbcodeInterface::class);
+/** @var Johncms\System\Utility\Bbcode $bbcode */
+$bbcode = di(Johncms\System\Utility\Bbcode::class);
 
 $total = $db->query("
   SELECT COUNT(DISTINCT `cms_mail`.`from_id`)

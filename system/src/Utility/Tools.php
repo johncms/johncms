@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\Api\BbcodeInterface;
+use Johncms\System\Utility\Bbcode;
 use Johncms\System\Config\Config;
 use Johncms\Api\ToolsInterface;
 use Johncms\System\Users\User;
@@ -124,9 +124,9 @@ class Tools implements ToolsInterface
         }
 
         if ($tags == 1) {
-            $str = $this->container->get(BbcodeInterface::class)->tags($str);
+            $str = $this->container->get(Bbcode::class)->tags($str);
         } elseif ($tags == 2) {
-            $str = $this->container->get(BbcodeInterface::class)->notags($str);
+            $str = $this->container->get(Bbcode::class)->notags($str);
         }
 
         return trim($str);
