@@ -48,7 +48,9 @@ $view->addFolder('downloads', __DIR__ . '/templates/');
 $nav_chain->add(_t('Downloads'), '/downloads/');
 
 $url = '/downloads/';
-
+$urls = [
+    'downloads' => $url,
+];
 const DOWNLOADS = UPLOAD_PATH . 'downloads' . DS;
 const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DS;
 $files_path = 'upload/downloads/files';
@@ -71,7 +73,7 @@ $error = '';
 
 if (! $config['mod_down'] && $user->rights < 7) {
     $error = _t('Downloads are closed');
-} elseif ($config['mod_down'] == 1 && ! $user->id) {
+} elseif ($config['mod_down'] === 1 && ! $user->id) {
     $error = _t('For registered users only');
 }
 
@@ -159,9 +161,6 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     // Получаем список файлов и папок
     $notice = false;
-    $urls = [
-        'downloads' => $url,
-    ];
     $counters = [];
 
     if ($id) {

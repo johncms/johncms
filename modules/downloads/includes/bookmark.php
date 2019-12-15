@@ -57,5 +57,6 @@ echo $view->render(
         'pagination'  => $tools->displayPagination('?act=bookmark&amp;', $start, $total, $user->config->kmess),
         'files'       => $files ?? [],
         'total_files' => $total,
+        'urls'        => $urls,
     ]
 );
