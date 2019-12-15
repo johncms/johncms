@@ -92,6 +92,8 @@ $file_data['screenshots'] = $screen;
 $file_properties = [];
 switch ($extension) {
     case 'mp3':
+    case 'aac':
+    case 'm4a':
         $getID3 = new getID3();
         $getID3->encoding = 'cp1251';
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);

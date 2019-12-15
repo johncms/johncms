@@ -120,6 +120,11 @@ $defaultExt = [
     'apk',
     'djvu',
     'fb2',
+    'webm',
+    'avi',
+    'mov',
+    'aac',
+    'm4a',
 ];
 
 // Переключаем режимы работы
