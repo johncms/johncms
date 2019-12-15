@@ -161,11 +161,13 @@ class Counters
     public function forumNew($mod = 0)
     {
         if ($this->systemUser->isValid()) {
-            $total = $this->db->query("SELECT COUNT(*) FROM `forum_topic`
+            $total = $this->db->query(
+                "SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
                 " . ($this->systemUser->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
-                ')->fetchColumn();
+                '
+            )->fetchColumn();
 
             if ($mod) {
                 return $total ? '<a href="?act=new" class="pr-2">' . _t('Unread', 'system') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '';
@@ -187,11 +189,13 @@ class Counters
     {
         $total = 0;
         if ($this->systemUser->isValid()) {
-            $total = $this->db->query("SELECT COUNT(*) FROM `forum_topic`
+            $total = $this->db->query(
+                "SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
                 " . ($this->systemUser->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
-                ')->fetchColumn();
+                '
+            )->fetchColumn();
         }
 
         return $total;
@@ -328,13 +332,15 @@ class Counters
     {
         $new_mail = 0;
         if (! $this->systemUser->isValid()) {
-            $new_mail = $this->db->query("SELECT COUNT(*) FROM `cms_mail`
+            $new_mail = $this->db->query(
+                "SELECT COUNT(*) FROM `cms_mail`
                             LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
                             WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
                             AND `cms_mail`.`delete`!='" . $this->systemUser->id . "'
-                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
+                            AND `cms_contact`.`ban`!='1'"
+            )->fetchColumn();
         }
 
         return $new_mail;
@@ -345,7 +351,7 @@ class Counters
      *
      * @return array
      */
-    public function forumCounters() : array
+    public function forumCounters(): array
     {
         $file = CACHE_PATH . 'counters-forum.cache';
         $new_messages = 0;
@@ -355,8 +361,18 @@ class Counters
             $topics = $res['topics'];
             $message = $res['messages'];
         } else {
-            $topics = $this->db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
-            $message = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
+            $topics = $this->db->query(
+                "SELECT COUNT(*)
+                FROM `forum_topic`
+                WHERE `deleted` != '1'
+                OR deleted IS NULL"
+            )->fetchColumn();
+            $message = $this->db->query(
+                "SELECT COUNT(*)
+                FROM `forum_messages`
+                WHERE `deleted` != '1'
+                OR deleted IS NULL"
+            )->fetchColumn();
             file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message]), LOCK_EX);
         }
 
@@ -377,7 +393,7 @@ class Counters
      * @param int $mod
      * @return array
      */
-    public function guestbookCounters($mod = 0) : array
+    public function guestbookCounters($mod = 0): array
     {
         $guestbook = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
         $admin_club = 0;
@@ -396,7 +412,7 @@ class Counters
      *
      * @return array
      */
-    public function downloadsCounters() : array
+    public function downloadsCounters(): array
     {
         $file = CACHE_PATH . 'counters-downloads.cache';
 
@@ -423,7 +439,7 @@ class Counters
      *
      * @return array
      */
-    public function libraryCounters() : array
+    public function libraryCounters(): array
     {
         $file = CACHE_PATH . 'counters-library.cache';
 
@@ -449,7 +465,7 @@ class Counters
      *
      * @return array
      */
-    public function usersCounters() : array
+    public function usersCounters(): array
     {
         $file = CACHE_PATH . 'counters-users.dat';
 
@@ -475,7 +491,7 @@ class Counters
      *
      * @return array
      */
-    public function albumCounters() : array
+    public function albumCounters(): array
     {
         $file = CACHE_PATH . 'counters-albums.cache';
 
@@ -511,7 +527,7 @@ class Counters
      *
      * @return array
      */
-    public function news() : array
+    public function news(): array
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
         $new = $this->db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
@@ -545,13 +561,15 @@ class Counters
         }
 
         $notifications['new_sys_mail'] = $this->db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $this->systemUser->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $this->systemUser->id . "'")->fetchColumn();
-        $notifications['new_mail'] = $this->db->query("SELECT COUNT(*) FROM `cms_mail`
+        $notifications['new_mail'] = $this->db->query(
+            "SELECT COUNT(*) FROM `cms_mail`
                             LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
                             WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
                             AND `cms_mail`.`delete`!='" . $this->systemUser->id . "'
-                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
+                            AND `cms_contact`.`ban`!='1'"
+        )->fetchColumn();
 
         $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->systemUser->id . '\' AND `unread_comments` = 1')->fetchColumn();
 

@@ -48,7 +48,7 @@ class NavChain implements NavChainInterface
      *
      * @return array
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         $all_items = $this->items;
 

@@ -28,5 +28,5 @@ interface NavChainInterface
      *
      * @return array
      */
-    public function getAll() : array;
+    public function getAll(): array;
 }

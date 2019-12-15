@@ -52,7 +52,10 @@ class NewsWidget
     {
         if ($this->settings['view'] > 0) {
             $reqtime = $this->settings['days'] ? time() - ($this->settings['days'] * 86400) : 0;
-            $req = $this->db->query("SELECT * FROM `news` WHERE `time` > '${reqtime}' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
+            $req = $this->db->query(
+                "SELECT * FROM `news` WHERE `time` > '${reqtime}' ORDER BY `time` DESC LIMIT " .
+                $this->settings['quantity']
+            );
 
             if ($req->rowCount()) {
                 $i = 0;
@@ -103,7 +106,8 @@ class NewsWidget
                             $komm = $mes['post_count'] - 1;
                         }
                         if ($komm >= 0) {
-                            $news .= '<br /><a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss', 'system') . '</a> (' . $komm . ')';
+                            $news .= '<br /><a href="../forum/?type=topic&id=' . $res['kom'] . '">' .
+                                _t('Discuss', 'system') . '</a> (' . $komm . ')';
                         }
                     }
                     $news .= '</div>';
@@ -136,7 +140,9 @@ class NewsWidget
      */
     private function lastnewscount()
     {
-        $count = $this->db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
+        $count = $this->db->query(
+            "SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'"
+        )->fetchColumn();
 
         return $count > 0 ? '/<span class="red">+' . $count . '</span>' : false;
     }

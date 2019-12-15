@@ -130,7 +130,7 @@ class Comments
                         if (! empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
                             echo $this->tools->displayError(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
-                            $message = $this->msg_check();
+                            $message = $this->msgCheck();
 
                             if (empty($message['error'])) {
                                 $attributes['reply_id'] = $this->systemUser->id;
@@ -158,7 +158,7 @@ class Comments
                                 ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
                                 $this->tools->checkout($res['text']);
                             $reply = $this->tools->checkout($res['reply']);
-                            echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
+                            echo $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
                                 '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                         }
                     } else {
@@ -181,7 +181,7 @@ class Comments
                         if ($user['rights'] > $this->systemUser->rights) {
                             echo $this->tools->displayError(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
-                            $message = $this->msg_check();
+                            $message = $this->msgCheck();
 
                             if (empty($message['error'])) {
                                 $attributes['edit_id'] = $this->systemUser->id;
@@ -213,7 +213,7 @@ class Comments
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
                             $text = $this->tools->checkout($res['text']);
-                            echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
+                            echo $this->msgForm('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
                     } else {
                         echo $this->tools->displayError(_t('Wrong data', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
@@ -252,7 +252,7 @@ class Comments
                             }
 
                             // Обновляем счетчик комментариев
-                            $this->msg_total(1);
+                            $this->msgTotal(1);
                         }
                         header('Location: ' . str_replace('&amp;', '&', $this->url));
                     } else {
@@ -274,24 +274,24 @@ class Comments
                 }
 
                 // Добавляем новый комментарий
-                if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
+                if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msgCheck(1)) !== false) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
-                        $this->add_comment($message['text']);
-                        $this->total = $this->msg_total(1);
+                        $this->addComment($message['text']);
+                        $this->total = $this->msgTotal(1);
                         $_SESSION['code'] = $message['code'];
                     } else {
                         // Показываем ошибки, если есть
                         echo $this->tools->displayError($message['error']);
-                        $this->total = $this->msg_total();
+                        $this->total = $this->msgTotal();
                     }
                 } else {
-                    $this->total = $this->msg_total();
+                    $this->total = $this->msgTotal();
                 }
 
                 // Показываем форму ввода
                 if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner)) {
-                    echo $this->msg_form();
+                    echo $this->msgForm();
                 }
 
                 // Показываем список комментариев
@@ -367,7 +367,7 @@ class Comments
     }
 
     // Добавляем комментарий в базу
-    private function add_comment($message)
+    private function addComment($message)
     {
         /** @var \Psr\Container\ContainerInterface $container */
         $container = Factory::getContainer();
@@ -411,7 +411,7 @@ class Comments
     }
 
     // Форма ввода комментария
-    private function msg_form($submit_link = '', $text = '', $reply = '')
+    private function msgForm($submit_link = '', $text = '', $reply = '')
     {
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
             (! empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
@@ -423,7 +423,7 @@ class Comments
 
     // Проверка текста сообщения
     // $rpt_check (boolean)    проверка на повтор сообщений
-    private function msg_check($rpt_check = false)
+    private function msgCheck($rpt_check = false)
     {
         $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
@@ -467,7 +467,7 @@ class Comments
     }
 
     // Счетчик комментариев
-    private function msg_total($update = false)
+    private function msgTotal($update = false)
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
 
