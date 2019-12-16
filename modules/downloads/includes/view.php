@@ -42,7 +42,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
 
 $title_page = htmlspecialchars($res_down['rus_name']);
 
-if ($res_down['type'] == 3 && $user->rights < 6 && $user->rights != 4) {
+if ($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) {
     http_response_code(403);
     echo $view->render(
         'system::pages/result',
@@ -65,6 +65,7 @@ $extension = strtolower(pathinfo($res_down['name'], PATHINFO_EXTENSION));
 
 $urls = [
     'downloads' => $url,
+    'back'      => '?id=' . $res_down['refid'],
 ];
 
 $file_data = $res_down;

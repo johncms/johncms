@@ -26,6 +26,8 @@ $search = $search_post ?: $search_get;
 
 require __DIR__ . '/../classes/download.php';
 
+$nav_chain->add(_t('Search'));
+
 // Проверяем на коректность ввода
 $error = false;
 
