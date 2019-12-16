@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,14 +8,18 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
+ * @var PDO $db
  * @var Johncms\System\Users\User $user
  */
 
-if ($user->rights == 4 || $user->rights >= 6) {
+if ($user->rights === 4 || $user->rights >= 6) {
+    $nav_chain->add(_t('Create Folder'));
+
     if (! $id) {
         $load_cat = $files_path;
     } else {
@@ -25,7 +27,16 @@ if ($user->rights == 4 || $user->rights >= 6) {
         $res_down = $req_down->fetch();
 
         if (! $req_down->rowCount() || ! is_dir($res_down['dir'])) {
-            echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Create Folder'),
+                    'type'          => 'alert-danger',
+                    'message'       => _t('The directory does not exist'),
+                    'back_url'      => $urls['downloads'],
+                    'back_url_name' => _t('Downloads'),
+                ]
+            );
             exit;
         }
 
@@ -48,9 +59,9 @@ if ($user->rights == 4 || $user->rights >= 6) {
             $error[] = _t('Invalid characters');
         }
 
-        if ($user->rights == 9 && $user_down) {
+        if ($user->rights === 9 && $user_down) {
             foreach (explode(',', $format) as $value) {
-                if (! in_array(trim($value), $defaultExt)) {
+                if (! in_array(trim($value), $defaultExt, true)) {
                     $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
                     break;
                 }
@@ -58,12 +69,16 @@ if ($user->rights == 4 || $user->rights >= 6) {
         }
 
         if ($error) {
-            echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>';
-            echo '<div class="rmenu"><p>' . implode(
-                '<br>',
-                $error
-            ) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
-            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Create Folder'),
+                    'type'          => 'alert-danger',
+                    'message'       => $error,
+                    'back_url'      => '?act=folder_add&amp;id=' . $id,
+                    'back_url_name' => _t('Repeat'),
+                ]
+            );
             exit;
         }
 
@@ -72,64 +87,77 @@ if ($user->rights == 4 || $user->rights >= 6) {
         }
 
         $dir = false;
-        $load_cat = $load_cat . '/' . $name;
+        $load_cat .= '/' . $name;
 
         if (! is_dir($load_cat)) {
             $dir = mkdir($load_cat, 0777);
         }
 
-        if ($dir == true) {
+        if ($dir) {
             chmod($load_cat, 0777);
 
-            $stmt = $db->prepare('
+            $stmt = $db->prepare(
+                '
                 INSERT INTO `download__category`
                 (`refid`, `dir`, `sort`, `name`, `desc`, `field`, `text`, `rus_name`)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ');
+            '
+            );
 
-            $stmt->execute([
-                $id,
-                $load_cat,
-                time(),
-                $name,
-                $desc,
-                $user_down,
-                $format,
-                $rus_name,
-            ]);
+            $stmt->execute(
+                [
+                    $id,
+                    $load_cat,
+                    time(),
+                    $name,
+                    $desc,
+                    $user_down,
+                    $format,
+                    $rus_name,
+                ]
+            );
             $cat_id = $db->lastInsertId();
 
-            echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>' .
-                '<div class="list1"><p>' . _t('The Folder is created') . '<br><a href="?id=' . $cat_id . '">' . _t('Continue') . '</a></p></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Create Folder'),
+                    'type'          => 'alert-success',
+                    'message'       => _t('The Folder is created'),
+                    'back_url'      => '?id=' . $cat_id,
+                    'back_url_name' => _t('Continue'),
+                ]
+            );
         } else {
-            echo _t('Error creating categories') . '<a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
-            exit;
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Create Folder'),
+                    'type'          => 'alert-danger',
+                    'message'       => _t('Error creating categories'),
+                    'back_url'      => '?act=folder_add&amp;id=' . $id,
+                    'back_url_name' => _t('Repeat'),
+                ]
+            );
         }
     } else {
-        echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div><div class="menu">' .
-            '<form action="?act=folder_add&amp;id=' . $id . '" method="post">' .
-            '<p>' . _t('Folder Name') . ' [A-Za-z0-9]:<br><input type="text" name="name"/></p>' .
-            '<p>' . _t('Title to display') . '<br><input type="text" name="rus_name"/></p>' .
-            '<p>' . _t('Description') . ' (max. 500)<br><textarea name="desc" cols="24" rows="4"></textarea></p>';
-
-        if ($user->rights == 9) {
-            echo '<p><input type="checkbox" name="user_down" value="1" /> ' . _t('Allow users to upload files') . '</p>' .
-                _t('Allowed extensions') . ':<br><input type="text" name="format"/>' .
-                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(
-                    ', ',
-                    $defaultExt
-                ) . '</div>';
-        }
-
-        echo '<p><input type="submit" name="submit" value="' . _t('Create') . '"/></p></form></div>';
+        $folder_params = [
+            'name'      => '',
+            'rus_name'  => '',
+            'desc'      => '',
+            'user_down' => '',
+            'format'    => '',
+        ];
+        echo $view->render(
+            'downloads::folder_form',
+            [
+                'title'         => _t('Downloads'),
+                'page_title'    => _t('Downloads'),
+                'id'            => $id,
+                'urls'          => $urls,
+                'folder_params' => $folder_params,
+                'extensions'    => implode(', ', $defaultExt),
+            ]
+        );
     }
-
-    echo '<div class="phdr">';
-
-    if ($id) {
-        echo '<a href="?id=' . $id . '">' . _t('Back') . '</a> | ';
-    }
-
-    echo '<a href="?">' . _t('Back') . '</a></div>';
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }
