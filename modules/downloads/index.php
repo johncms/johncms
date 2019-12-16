@@ -29,6 +29,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
  * @var Tools $tools
  * @var Render $view
  * @var User $user
+ * @var NavChainInterface $nav_chain
  */
 
 $config = di(Config::class);
@@ -166,6 +167,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     // Получаем список файлов и папок
     $notice = false;
+    $title = _t('Downloads');
     $counters = [];
 
     if ($id) {
@@ -195,7 +197,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                 'name'  => $res_down_cat['rus_name'],
             ]
         );
-
+        $title = $res_down_cat['rus_name'];
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
@@ -229,7 +231,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     if ($sum_total) {
         if ($total_cat > 0) {
-            $req_down = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $id . "' ORDER BY `sort` ASC ");
+            $req_down = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $id . "' ORDER BY `sort`");
             $i = 0;
             $categories = [];
             while ($res_down = $req_down->fetch()) {
@@ -276,7 +278,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             }
 
             // Выводи данные
-            $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` ASC ${sql_sort} LIMIT ${start}, " . $user->config->kmess);
+            $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` ${sql_sort} LIMIT ${start}, " . $user->config->kmess);
             $files = [];
             while ($res_down = $req_down->fetch()) {
                 $files[] = Download::displayFile($res_down);
@@ -287,8 +289,8 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     echo $view->render(
         'downloads::index',
         [
-            'title'       => _t('Downloads'),
-            'page_title'  => _t('Downloads'),
+            'title'       => $title,
+            'page_title'  => $title,
             'id'          => $id,
             'urls'        => $urls,
             'counters'    => $counters,
