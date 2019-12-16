@@ -1,5 +1,12 @@
 name: Node CI
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.js'
+      - '**.css'
+      - '**.scss'
+      - '**.json'
+      - '**.vue'
 jobs:
   build:
     runs-on: ubuntu-latest
