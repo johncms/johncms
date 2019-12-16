@@ -127,38 +127,23 @@ if ($user->rights === 4 || $user->rights >= 6) {
                 $array_more[] = $result_more['name'];
             }
 
-            $array_scan = [];
-
-            function scan_dir($dir = '')
-            {
-                static $array_scan;
-                global $mod;
-                $arr_dir = glob($dir . '/*');
-
-                foreach ($arr_dir as $val) {
-                    if (is_dir($val)) {
-                        $array_scan[] = $val;
-                        if (! $mod) {
-                            scan_dir($val);
-                        }
-                    } else {
-                        $file_name = basename($val);
-                        $array_scan = ['.', '..', 'index.php', '.htaccess'];
-                        if (! in_array($file_name, $array_scan, true)) {
-                            $array_scan[] = $val;
-                        }
-                    }
-                }
-
-                return $array_scan;
-            }
-
             $i = 0;
             $i_two = 0;
             $i_three = 0;
-            $arr_scan_dir = scan_dir($scan_dir);
+            $arr_scan_dir = [];
 
-            if ($arr_scan_dir) {
+            $ignore_files = ['name.dat', 'index.php'];
+            $fileSPLObjects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($scan_dir), RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ($fileSPLObjects as $fullFileName => $fileSPLObject) {
+                /** @var $fileSPLObject SplFileObject */
+                $file_name = $fileSPLObject->getFilename();
+                if (in_array($file_name, $ignore_files, true) || strpos($file_name, '.') === 0) {
+                    continue;
+                }
+                $arr_scan_dir[] = $fullFileName;
+            }
+
+            if (! empty($arr_scan_dir)) {
                 $stmt_c = $db->prepare(
                     "
                         INSERT INTO `download__category`
@@ -189,7 +174,7 @@ if ($user->rights === 4 || $user->rights >= 6) {
                             $name = basename($val);
                             $dir = dirname($val);
                             $refid = isset($array_id[$dir]) ? (int) $array_id[$dir] : 0;
-                            $sort = isset($sort) ? ($sort + 1) : time();
+                            $sort = isset($sort) ? ++$sort : time();
 
                             $stmt_c->execute(
                                 [
