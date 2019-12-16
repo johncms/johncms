@@ -112,8 +112,10 @@ if ($user->rights == 4 || $user->rights >= 6) {
         if ($user->rights == 9) {
             echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . _t('Allow users to upload files') . '<br>' .
                 _t('Allowed extensions') . ':<br><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
-                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ',
-                    $defaultExt) . '</div>';
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(
+                    ', ',
+                    $defaultExt
+                ) . '</div>';
         }
 
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form></div>';

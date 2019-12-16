@@ -79,8 +79,8 @@ if ($edit) {
             header('Location: ?act=files_more&id=' . $id);
         } else {
             echo '<div class="rmenu">' . _t('Do you really want to delete?') . '<br> <a href="?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . _t('Delete') . '</a> | <a href="?act=files_more&amp;id=' . $id . '">' . _t(
-                    'Cancel'
-                ) . '</a></div>';
+                'Cancel'
+            ) . '</a></div>';
         }
     } else {
         if (isset($_POST['submit'])) {
@@ -141,9 +141,9 @@ if ($edit) {
 
                 if (! in_array($ext[(count($ext) - 1)], $defaultExt)) {
                     $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(
-                            ', ',
-                            $defaultExt
-                        );
+                        ', ',
+                        $defaultExt
+                    );
                 }
 
                 if (strlen($fname) > 100) {

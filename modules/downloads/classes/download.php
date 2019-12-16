@@ -20,7 +20,7 @@ use Johncms\System\Config\Config;
  * @version     VERSION.txt (see attached file)
  * @author      http://mobicms.net/about
  */
-class download
+class download // phpcs:ignore
 {
     private static $extensions =
         [
@@ -59,12 +59,14 @@ class download
         } elseif ($format_file == 'thm') {
             require_once 'Tar.php';
             $theme = new Archive_Tar($file);
-            if (! $file_th = ($theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(
+            if (
+                ! $file_th = ($theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(
                     pathinfo(
                         $file,
                         PATHINFO_FILENAME
                     ) . '.xml'
-                ))) {
+                ))
+            ) {
                 $list = $theme->listContent();
                 $all = count($list);
                 for ($i = 0; $i < $all; ++$i) {
@@ -78,18 +80,18 @@ class download
                 preg_match('/<\?\s*xml\s*version\s*=\s*"1\.0"\s*\?>(.*)<\/.+>/isU', file_get_contents($file), $array);
                 $file_th = trim($array[0]);
             }
-            $load_file = trim((string ) simplexml_load_string($file_th)->Standby_image['Source']);
+            $load_file = trim((string) simplexml_load_string($file_th)->Standby_image['Source']);
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
             if (! $load_file) {
-                $load_file = trim((string ) simplexml_load_string($file_th)->Desktop_image['Source']);
+                $load_file = trim((string) simplexml_load_string($file_th)->Desktop_image['Source']);
             }
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
             if (! $load_file) {
-                $load_file = trim((string ) simplexml_load_string($file_th)->Desktop_image['Source']);
+                $load_file = trim((string) simplexml_load_string($file_th)->Desktop_image['Source']);
             }
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';

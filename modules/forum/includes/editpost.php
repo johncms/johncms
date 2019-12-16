@@ -91,7 +91,8 @@ if ($req->rowCount()) {
 
                 if ($res_m['user_id'] != $user->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
-                } elseif ($res['date'] < time() - 300
+                } elseif (
+                    $res['date'] < time() - 300
                     && $res_m['user_id'] != $user->id && $res_m['date'] + 3600 > strtotime('+ 1 hour')
                 ) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';

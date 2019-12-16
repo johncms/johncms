@@ -20,7 +20,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Check access
-if (! $id
+if (
+    ! $id
     || ! $user->isValid()
     || isset($user->ban['1'])
     || isset($user->ban['11'])
@@ -128,7 +129,8 @@ $msg = preg_replace_callback(
     $msg
 );
 
-if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+if (
+    isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
     && $_POST['token'] == $_SESSION['token']
 ) {
     $error = [];

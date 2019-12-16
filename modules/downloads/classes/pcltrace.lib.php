@@ -72,7 +72,7 @@ if (! defined('PCLTRACE_LIB')) {
     //                        TrDisplay() function. (default)
     //             'log'    : messages are writed in the file $p_filename
     // --------------------------------------------------------------------------------
-    function TrOn($p_level=1, $p_mode='memory', $p_filename='trace.txt')
+    function TrOn($p_level = 1, $p_mode = 'memory', $p_filename = 'trace.txt')
     {
         global $g_pcl_trace_level;
         global $g_pcl_trace_mode;
@@ -83,14 +83,14 @@ if (! defined('PCLTRACE_LIB')) {
 
         // ----- Memorize mode and filename
         switch ($p_mode) {
-      case 'normal':
-      case 'memory':
-      case 'log':
-        $g_pcl_trace_mode = $p_mode;
-      break;
-      default:
-        $g_pcl_trace_mode = 'logged';
-    }
+            case 'normal':
+            case 'memory':
+            case 'log':
+                $g_pcl_trace_mode = $p_mode;
+                break;
+            default:
+                $g_pcl_trace_mode = 'logged';
+        }
 
         // ----- Memorize filename
         $g_pcl_trace_filename = $p_filename;
@@ -140,7 +140,7 @@ if (! defined('PCLTRACE_LIB')) {
     // Parameters :
     //   $p_level : Level of trace required.
     // --------------------------------------------------------------------------------
-    function TrFctStart($p_file, $p_line, $p_name, $p_param='', $p_message='')
+    function TrFctStart($p_file, $p_line, $p_name, $p_param = '', $p_message = '')
     {
         global $g_pcl_trace_level;
         global $g_pcl_trace_name;
@@ -196,7 +196,7 @@ if (! defined('PCLTRACE_LIB')) {
     // Parameters :
     //   $p_level : Level of trace required.
     // --------------------------------------------------------------------------------
-    function TrFctEnd($p_file, $p_line, $p_return=1, $p_message='')
+    function TrFctEnd($p_file, $p_line, $p_return = 1, $p_message = '')
     {
         global $g_pcl_trace_level;
         global $g_pcl_trace_name;
@@ -252,7 +252,7 @@ if (! defined('PCLTRACE_LIB')) {
     // Description :
     // Parameters :
     // --------------------------------------------------------------------------------
-    function TrFctMessage($p_file, $p_line, $p_level, $p_message='')
+    function TrFctMessage($p_file, $p_line, $p_level, $p_message = '')
     {
         global $g_pcl_trace_level;
         global $g_pcl_trace_index;
@@ -282,7 +282,7 @@ if (! defined('PCLTRACE_LIB')) {
     // Description :
     // Parameters :
     // --------------------------------------------------------------------------------
-    function TrMessage($p_file, $p_line, $p_level, $p_message='')
+    function TrMessage($p_file, $p_line, $p_level, $p_message = '')
     {
         global $g_pcl_trace_level;
         global $g_pcl_trace_index;
@@ -340,14 +340,14 @@ if (! defined('PCLTRACE_LIB')) {
         echo '<table width=100% border=0 cellspacing=0 cellpadding=0>';
 
         // ----- Display
-        for ($i=0; $i < count($g_pcl_trace_entries); $i++) {
+        for ($i = 0; $i < count($g_pcl_trace_entries); $i++) {
             // ---- Row header
             echo '<tr>';
             echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><tr>';
             $n = ($g_pcl_trace_entries[$i][index] + 1) * 10;
             echo '<td width=' . $n . '><table width=100% border=0 cellspacing=0 cellpadding=0><tr>';
 
-            for ($j=0; $j <= $g_pcl_trace_entries[$i][index]; $j++) {
+            for ($j = 0; $j <= $g_pcl_trace_entries[$i][index]; $j++) {
                 if ($j == $g_pcl_trace_entries[$i][index]) {
                     if (($g_pcl_trace_entries[$i][type] == 1) || ($g_pcl_trace_entries[$i][type] == 2)) {
                         echo "<td width=10><div align=center><font size=2 face=${v_font}>+</font></div></td>";
@@ -361,21 +361,21 @@ if (! defined('PCLTRACE_LIB')) {
 
             echo '<td width=2></td>';
             switch ($g_pcl_trace_entries[$i][type]) {
-        case 1:
-          echo "<td><font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][name] . '(' . $g_pcl_trace_entries[$i][param] . ')</font></td>';
-        break;
-        case 2:
-          echo "<td><font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][name] . '()=' . $g_pcl_trace_entries[$i][param] . '</font></td>';
-        break;
-        case 3:
-        case 4:
-          echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><td width=20></td><td>';
-          echo "<font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][message] . '</font>';
-          echo '</td></table></td>';
-        break;
-        default:
-        echo "<td><font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][name] . '(' . $g_pcl_trace_entries[$i][param] . ')</font></td>';
-      }
+                case 1:
+                    echo "<td><font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][name] . '(' . $g_pcl_trace_entries[$i][param] . ')</font></td>';
+                    break;
+                case 2:
+                    echo "<td><font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][name] . '()=' . $g_pcl_trace_entries[$i][param] . '</font></td>';
+                    break;
+                case 3:
+                case 4:
+                    echo '<td><table width=100% border=0 cellspacing=0 cellpadding=0><td width=20></td><td>';
+                    echo "<font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][message] . '</font>';
+                    echo '</td></table></td>';
+                    break;
+                default:
+                    echo "<td><font size=2 face=${v_font}>" . $g_pcl_trace_entries[$i][name] . '(' . $g_pcl_trace_entries[$i][param] . ')</font></td>';
+            }
             echo '</tr></table></td>';
             echo '<td width=5></td>';
             echo "<td><font size=1 face=${v_font}>" . basename($g_pcl_trace_entries[$i][file]) . '</font></td>';
@@ -411,7 +411,7 @@ if (! defined('PCLTRACE_LIB')) {
         global $g_pcl_trace_mode;
 
         if ($g_pcl_trace_mode == 'normal') {
-            for ($i=0; $i < $p_entry[index]; $i++) {
+            for ($i = 0; $i < $p_entry[index]; $i++) {
                 echo '---';
             }
             if ($p_entry[type] == 1) {

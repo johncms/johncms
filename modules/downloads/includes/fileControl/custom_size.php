@@ -31,7 +31,8 @@ if ($val < 50 || $val > 100) {
     $val = 100;
 }
 
-if (! $req_down->rowCount()
+if (
+    ! $req_down->rowCount()
     || ! is_file($res_down['dir'] . '/' . $res_down['name'])
     || ! in_array($format_file, $pic_ext)
     || ($res_down['type'] == 3 && $user->rights < 6 && $user->rights != 4)

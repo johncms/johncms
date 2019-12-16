@@ -32,7 +32,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
 
 echo '<div class="phdr"><b>' . _t('Edit MP3 Tags') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>';
 
-$getID3 = new getID3;
+$getID3 = new getID3();
 $getID3->encoding = 'cp1251';
 $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
 
@@ -45,13 +45,17 @@ if (! empty($getid['tags']['id3v2'])) {
 if (isset($_POST['submit'])) {
     $tagsArray['artist'][0] = isset($_POST['artist']) ? Download::mp3tagsOut($_POST['artist'], 1) : '';
     $tagsArray['title'][0] = isset($_POST['title']) ? Download::mp3tagsOut($_POST['title'], 1) : '';
-    $tagsArray['album'][0] = isset($_POST['album']) && ! empty($_POST['album']) ? Download::mp3tagsOut($_POST['album'],
-        1) : '';
-    $tagsArray['genre'][0] = isset($_POST['genre']) && ! empty($_POST['genre']) ? Download::mp3tagsOut($_POST['genre'],
-        1) : '';
+    $tagsArray['album'][0] = isset($_POST['album']) && ! empty($_POST['album']) ? Download::mp3tagsOut(
+        $_POST['album'],
+        1
+    ) : '';
+    $tagsArray['genre'][0] = isset($_POST['genre']) && ! empty($_POST['genre']) ? Download::mp3tagsOut(
+        $_POST['genre'],
+        1
+    ) : '';
     $tagsArray['year'][0] = isset($_POST['year']) ? (int) $_POST['year'] : 0;
     require 'classes/getid3/write.php';
-    $tagsWriter = new getid3_writetags;
+    $tagsWriter = new getid3_writetags();
     $tagsWriter->filename = $res_down['dir'] . '/' . $res_down['name'];
     $tagsWriter->tagformats = ['id3v1', 'id3v2.3'];
     $tagsWriter->tag_encoding = 'cp1251';

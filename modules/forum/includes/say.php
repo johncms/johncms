@@ -20,7 +20,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Закрываем доступ для определенных ситуаций
-if (! $id
+if (
+    ! $id
     || ! $user->isValid()
     || isset($user->ban[1])
     || isset($user->ban[11])
@@ -128,7 +129,8 @@ switch ($post_type) {
             $msg
         );
 
-        if (isset($_POST['submit'])
+        if (
+            isset($_POST['submit'])
             && ! empty($_POST['msg'])
             && isset($_POST['token'], $_SESSION['token'])
 
@@ -414,7 +416,8 @@ switch ($post_type) {
             $msg
         );
 
-        if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+        if (
+            isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
             && $_POST['token'] == $_SESSION['token']
         ) {
             if (empty($_POST['msg'])) {

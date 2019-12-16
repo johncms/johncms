@@ -37,7 +37,11 @@ $total = $db->query('SELECT COUNT(*) FROM `download__comments`')->fetchColumn();
 if ($total) {
     $req = $db->query(
         "SELECT `download__comments`.*, `download__comments`.`id` AS `cid`, `users`.`rights`, `users`.`name`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `download__files`.`rus_name`
-	FROM `download__comments` LEFT JOIN `users` ON `download__comments`.`user_id` = `users`.`id` LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id` ORDER BY `download__comments`.`time` DESC LIMIT ${start}, " . $user->config->kmess
+	    FROM `download__comments`
+	    LEFT JOIN `users` ON `download__comments`.`user_id` = `users`.`id`
+	    LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id`
+	    ORDER BY `download__comments`.`time` DESC
+	    LIMIT ${start}, " . $user->config->kmess
     );
     $i = 0;
 

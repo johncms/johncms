@@ -59,8 +59,10 @@ if ($user->rights == 4 || $user->rights >= 6) {
 
         if ($error) {
             echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>';
-            echo '<div class="rmenu"><p>' . implode('<br>',
-                    $error) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
+            echo '<div class="rmenu"><p>' . implode(
+                '<br>',
+                $error
+            ) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
@@ -113,8 +115,10 @@ if ($user->rights == 4 || $user->rights >= 6) {
         if ($user->rights == 9) {
             echo '<p><input type="checkbox" name="user_down" value="1" /> ' . _t('Allow users to upload files') . '</p>' .
                 _t('Allowed extensions') . ':<br><input type="text" name="format"/>' .
-                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ',
-                    $defaultExt) . '</div>';
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(
+                    ', ',
+                    $defaultExt
+                ) . '</div>';
         }
 
         echo '<p><input type="submit" name="submit" value="' . _t('Create') . '"/></p></form></div>';

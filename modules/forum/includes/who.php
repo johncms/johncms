@@ -197,9 +197,9 @@ if ($id) {
                     }
                     break;
 
-                case 'say':
+                case 'say': // phpcs:ignore
                     $sql = 'SELECT `frt`.`id`, `frt`.`name` FROM `forum_messages` frm
-LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id`= ?';
+                    LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id`= ?';
                 case 'topic':
                     if (empty($sql)) {
                         $sql = 'SELECT `id`, `name` FROM `forum_topic` WHERE `id`= ?';

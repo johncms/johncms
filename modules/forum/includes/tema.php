@@ -137,9 +137,9 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $txt_tmp = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $txt_tmp);
                 $txt_tmp = str_replace("\r\n", '<br>', $txt_tmp);
                 $stroka = "${div} <b>" . $arr['user_name'] . '</b>(' . date(
-                        'd.m.Y/H:i',
-                        $arr['date']
-                    ) . ")<br>${txt_tmp}</div>";
+                    'd.m.Y/H:i',
+                    $arr['date']
+                ) . ")<br>${txt_tmp}</div>";
                 $text = "${text} ${stroka}";
                 ++$i;
             }

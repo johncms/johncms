@@ -26,6 +26,5 @@
     <!-- Paths to check -->
     <file>modules</file>
     <file>system/src</file>
-    <exclude-pattern>/modules/downloads/*</exclude-pattern>
-    <exclude-pattern>/modules/forum/*</exclude-pattern>
+    <exclude-pattern>/modules/downloads/classes/pear.php</exclude-pattern>
 </ruleset>

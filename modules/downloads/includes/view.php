@@ -166,7 +166,6 @@ switch ($extension) {
     case 'webm':
     case 'mov':
     case 'mp4':
-
         $getID3 = new getID3();
         $getID3->encoding = 'cp1251';
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
