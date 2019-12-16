@@ -156,7 +156,9 @@ if ($user->rights === 4 || $user->rights >= 6) {
                 'id'            => $id,
                 'urls'          => $urls,
                 'folder_params' => $folder_params,
+                'action_url'    => '?act=folder_add&amp;id=' . $id,
                 'extensions'    => implode(', ', $defaultExt),
+                'edit_form'     => false,
             ]
         );
     }
