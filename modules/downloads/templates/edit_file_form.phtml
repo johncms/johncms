@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $folder_params
+ * @var $action_url
+ * @var $extensions
+ * @var bool $edit_form
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <form name="folder_form" action="<?= $action_url ?>" method="post">
+                    <div class="form-group">
+                        <label for="text"><?= _t('Name for display') ?></label>
+                        <input type="text" class="form-control" id="text" placeholder="<?= _t('Name for display') ?>"
+                               name="text" value="<?= $file_data['text'] ?>" maxlength="200" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name_link"><?= _t('Link to download file') ?></label>
+                        <input type="text" class="form-control" id="name_link" placeholder="<?= _t('Link to download file') ?>"
+                               name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="200" required>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
+                        <a href="?act=view&amp;id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
