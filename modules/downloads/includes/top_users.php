@@ -19,41 +19,51 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = _t('Top Users');
 $nav_chain->add($title);
-$req = $db->query('SELECT * FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY COUNT(`user_id`)');
-$total = $req->rowCount();
+$total = $db->query('SELECT COUNT(DISTINCT user_id) FROM `download__files` WHERE `user_id` > 0 AND `type`<>3')->fetchColumn();
 
 $users = [];
 if ($total) {
-    $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC LIMIT ${start}, " . $user->config->kmess);
+    $req_down = $db->query("SELECT DISTINCT(d.user_id),
+    u.id,
+    u.`name`,
+    u.rights,
+    u.lastdate,
+    u.browser,
+    u.ip,
+    u.ip_via_proxy, (
+SELECT COUNT(*) FROM download__files WHERE d.user_id = user_id AND `type` <> 3) AS cnt
+FROM download__files d
+JOIN users u ON u.id = d.user_id
+WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess);
     while ($res_down = $req_down->fetch()) {
-        $foundUser = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
-        $foundUser['files_link'] = '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ': ' . $res_down['count'] . '</a>';
+        $res_down['files_link'] = '<a href="?act=user_files&amp;id=' .
+        $res_down['id'] . '">' . _t('User Files') . ': ' . $res_down['cnt'] . '</a>';
 
-        $foundUser['user_avatar'] = '';
-        if (! empty($foundUser['id'])) {
-            $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
+        $res_down['user_avatar'] = '';
+        if (! empty($res_down['id'])) {
+            $avatar = 'users/avatar/' . $res_down['id'] . '.png';
             if (file_exists(UPLOAD_PATH . $avatar)) {
-                $foundUser['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                $res_down['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
             }
         }
 
-        $foundUser['user_profile_link'] = '';
-        if (! empty($foundUser['id']) && $user->isValid() && $user->id !== $foundUser['id']) {
-            $foundUser['user_profile_link'] = '/profile/?user=' . $foundUser['id'];
+        $res_down['user_profile_link'] = '';
+        if (! empty($res_down['id']) && $user->isValid() && $user->id !== $res_down['id']) {
+            $res_down['user_profile_link'] = '/profile/?user=' . $res_down['id'];
         }
 
-        $foundUser['user_rights_name'] = '';
-        if (! empty($foundUser['rights'])) {
-            $foundUser['user_rights_name'] = $user_rights_names[$foundUser['rights']] ?? '';
+        $res_down['user_rights_name'] = '';
+        if (! empty($res_down['rights'])) {
+            $res_down['user_rights_name'] = $user_rights_names[$res_down['rights']] ?? '';
         }
 
-        $foundUser['user_is_online'] = time() <= $foundUser['lastdate'] + 300;
-        $foundUser['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($foundUser['ip']);
-        $foundUser['ip'] = long2ip($foundUser['ip']);
-        $foundUser['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($foundUser['ip_via_proxy']);
-        $foundUser['ip_via_proxy'] = ! empty($foundUser['ip_via_proxy']) ? long2ip($foundUser['ip_via_proxy']) : 0;
+        $res_down['user_is_online'] = time() <= $res_down['lastdate'] + 300;
+        $res_down['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res_down['ip']);
+        $res_down['ip'] = long2ip($res_down['ip']);
+        $res_down['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res_down['ip_via_proxy']);
+        $res_down['ip_via_proxy'] = ! empty($res_down['ip_via_proxy']) ? long2ip($res_down['ip_via_proxy']) : 0;
 
-        $users[] = $foundUser;
+        $users[] = $res_down;
     }
 }
 
