@@ -47,9 +47,9 @@ $items = [];
 while ($res = $req->fetch()) {
     $res['user_avatar'] = '';
     if (! empty($res['id'])) {
-        $avatar = 'users/avatar/' . $res['id'] . '.png';
-        if (file_exists(UPLOAD_PATH . $avatar)) {
-            $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+        $avatar = UPLOAD_PATH . 'users/avatar/' . $res['id'] . '.png';
+        if (file_exists($avatar)) {
+            $res['user_avatar'] = pathToUrl($avatar);
         }
     }
 

@@ -79,7 +79,7 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
     $ignore_files = ['.', '..', 'name.dat', '.svn', 'index.php'];
     while ($file = readdir($dir)) {
         if (! in_array($file, $ignore_files, true)) {
-            $file_path = UPLOAD_PUBLIC_PATH . 'downloads/screen/' . $id . '/' . $file;
+            $file_path = pathToUrl(UPLOAD_PATH . 'downloads/screen/' . $id . '/' . $file);
             $screen[] = [
                 'file'    => $file_path,
                 'preview' => '../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($file_path),

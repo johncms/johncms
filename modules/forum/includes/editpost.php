@@ -287,9 +287,9 @@ if (! $error) {
 
             if ($msg && ! isset($_POST['submit'])) {
                 $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
-                if (file_exists(UPLOAD_PATH . $avatar)) {
-                    $user_avatar = UPLOAD_PUBLIC_PATH . $avatar;
+                $avatar = UPLOAD_PATH . 'users/avatar/' . $foundUser['id'] . '.png';
+                if (file_exists($avatar)) {
+                    $user_avatar = pathToUrl($avatar);
                 }
             }
 

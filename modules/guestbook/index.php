@@ -456,9 +456,9 @@ switch ($act) {
                 }
 
                 $item['user_avatar'] = '';
-                $avatar = 'users/avatar/' . $item['user_id'] . '.png';
-                if (file_exists(UPLOAD_PATH . $avatar)) {
-                    $item['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                $avatar = UPLOAD_PATH . 'users/avatar/' . $item['user_id'] . '.png';
+                if (file_exists($avatar)) {
+                    $item['user_avatar'] = pathToUrl($avatar);
                 }
 
                 $item['message_id'] = $res['gid'];

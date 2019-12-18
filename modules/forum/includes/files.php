@@ -128,9 +128,9 @@ if ($do || isset($_GET['new'])) {
 
             $res['post_time'] = $tools->displayDate($res['time']);
             $res['user_avatar'] = '';
-            $avatar = 'users/avatar/' . $res['user_id'] . '.png';
-            if (file_exists(UPLOAD_PATH . $avatar)) {
-                $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+            $avatar = UPLOAD_PATH . 'users/avatar/' . $res['user_id'] . '.png';
+            if (file_exists($avatar)) {
+                $res['user_avatar'] = pathToUrl($avatar);
             }
 
             $res['user_profile_link'] = '';

@@ -60,9 +60,9 @@ $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id
 $post = [];
 
 $res['user_avatar'] = '';
-$avatar = 'users/avatar/' . $res['user_id'] . '.png';
-if (file_exists(UPLOAD_PATH . $avatar)) {
-    $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+$avatar = UPLOAD_PATH . 'users/avatar/' . $res['user_id'] . '.png';
+if (file_exists($avatar)) {
+    $res['user_avatar'] = pathToUrl($avatar);
 }
 
 $res['user_profile_link'] = '';

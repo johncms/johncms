@@ -309,7 +309,6 @@ switch ($post_type) {
                 'show_post_preview' => ($msg && ! isset($_POST['submit'])),
                 'back_url'          => '?type=topic&id=' . $id . '&amp;start=' . $start,
                 'preview_message'   => $msg_pre,
-                'user_avatar'       => $user->getAvatar(),
                 'is_new_message'    => true,
             ]
         );
@@ -568,7 +567,6 @@ switch ($post_type) {
                 'show_post_preview' => (! empty($_POST['msg']) && ! isset($_POST['submit'])),
                 'back_url'          => '?type=topic&id=' . $th1['id'] . '&amp;start=' . $start,
                 'preview_message'   => $msg_pre,
-                'user_avatar'       => $user->getAvatar(),
                 'is_new_message'    => false,
             ]
         );

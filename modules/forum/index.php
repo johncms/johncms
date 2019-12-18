@@ -585,9 +585,9 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 $messages = [];
                 while ($res = $req->fetch()) {
                     $res['user_avatar'] = '';
-                    $avatar = 'users/avatar/' . $res['user_id'] . '.png';
-                    if (file_exists(UPLOAD_PATH . $avatar)) {
-                        $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                    $avatar = UPLOAD_PATH . 'users/avatar/' . $res['user_id'] . '.png';
+                    if (file_exists($avatar)) {
+                        $res['user_avatar'] = pathToUrl($avatar);
                     }
 
                     $res['user_profile_link'] = '';

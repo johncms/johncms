@@ -58,9 +58,9 @@ if ($id) {
 
                 $res['user_avatar'] = '';
                 if (! empty($res['id'])) {
-                    $avatar = 'users/avatar/' . $res['id'] . '.png';
-                    if (file_exists(UPLOAD_PATH . $avatar)) {
-                        $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                    $avatar = UPLOAD_PATH . 'users/avatar/' . $res['id'] . '.png';
+                    if (file_exists($avatar)) {
+                        $res['user_avatar'] = pathToUrl($avatar);
                     }
                 }
 
@@ -242,9 +242,9 @@ LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id` = '"
 
             $res['user_avatar'] = '';
             if (! empty($res['id'])) {
-                $avatar = 'users/avatar/' . $res['id'] . '.png';
-                if (file_exists(UPLOAD_PATH . $avatar)) {
-                    $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+                $avatar = UPLOAD_PATH . 'users/avatar/' . $res['id'] . '.png';
+                if (file_exists($avatar)) {
+                    $res['user_avatar'] = pathToUrl($avatar);
                 }
             }
 

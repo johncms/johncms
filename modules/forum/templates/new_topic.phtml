@@ -40,11 +40,7 @@ $this->layout(
         <div class="post-body d-flex align-items-start pt-3 pb-3">
             <div class="user-avatar mr-2 mr-md-4">
                 <div class="avatar-image rounded-circle overflow-hidden">
-                    <?php if (! empty($user_avatar)): ?>
-                        <img src="<?= $user_avatar ?>" class="img-fluid" alt=".">
-                    <?php else: ?>
-                        <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
-                    <?php endif; ?>
+                    <img src="<?= $this->avatar($user->id) ?>" class="img-fluid" alt=".">
                 </div>
                 <div class="user-status online shadow"></div>
             </div>

@@ -41,9 +41,9 @@ WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess);
 
         $res_down['user_avatar'] = '';
         if (! empty($res_down['id'])) {
-            $avatar = 'users/avatar/' . $res_down['id'] . '.png';
-            if (file_exists(UPLOAD_PATH . $avatar)) {
-                $res_down['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
+            $avatar = UPLOAD_PATH . 'users/avatar/' . $res_down['id'] . '.png';
+            if (file_exists($avatar)) {
+                $res_down['user_avatar'] = pathToUrl($avatar);
             }
         }
 

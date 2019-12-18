@@ -8,7 +8,6 @@
 
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
-$user_avatar = $user->getAvatar();
 ?>
 <!-- Пользователь -->
 <div class="accordion sidebar__user" id="accordion">
@@ -20,11 +19,7 @@ $user_avatar = $user->getAvatar();
                     <div class="sidebar__notifications badge badge-danger badge-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
                 <div class="user_photo border rounded-circle mr-2 overflow-hidden">
-                    <?php if (! empty($user_avatar)): ?>
-                        <img src="<?= $user_avatar ?>" class="img-fluid" alt=".">
-                    <?php else: ?>
-                        <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
-                    <?php endif; ?>
+                    <img src="<?= $this->avatar($user->id) ?>" class="img-fluid" alt=".">
                 </div>
             </div>
             <div>

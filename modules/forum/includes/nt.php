@@ -307,7 +307,6 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
             'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
             'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
             'preview_message'   => $msg_pre,
-            'user_avatar'       => $user->getAvatar(),
         ]
     );
 }
