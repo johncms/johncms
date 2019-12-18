@@ -29,17 +29,18 @@ $this->layout(
     <div class="col-md-6">
         <div class="card shadow border-0">
             <div class="card-body">
-                <form name="folder_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
+                <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
 
-                    <div class="input-group">
+                    <div class="form-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
                             <label class="custom-file-label" for="fail"><?= _t('Choose file') ?></label>
                         </div>
+                        <div class="text-muted mb-3 small">
+                            <?= _t('Max. Size') ?>: <?= $config['flsz'] ?> kb.
+                        </div>
                     </div>
-                    <div class="text-muted mb-3 small">
-                        <?= _t('Max. Size') ?>: <?= $config['flsz'] ?> kb.
-                    </div>
+
 
                     <div class="form-group">
                         <label for="new_file"><?= _t('Save as') ?></label>
@@ -62,15 +63,16 @@ $this->layout(
                     </div>
 
                     <div class="form-group">
-                        <label for="desc"><?= _t('Description') ?></label>
-                        <textarea id="desc" class="form-control" maxlength="500" name="opis" cols="24" rows="4"></textarea>
-                    </div>
-
-                    <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="screen" name="screen" aria-describedby="screen">
                             <label class="custom-file-label" for="screen"><?= _t('Choose screenshot') ?></label>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="desc"><?= _t('Description') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea id="desc" class="form-control" maxlength="500" name="opis" cols="24" rows="4"></textarea>
                     </div>
 
                     <div class="alert alert-warning mt-3">

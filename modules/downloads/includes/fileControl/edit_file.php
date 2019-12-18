@@ -110,6 +110,7 @@ if ($request->getMethod() === 'POST') {
             'urls'       => $urls,
             'file_data'  => $file_data,
             'action_url' => '?act=edit_file&amp;id=' . $id,
+            'bbcode'     => di(Johncms\System\Utility\Bbcode::class)->buttons('file_edit_form', 'desc'),
         ]
     );
 }

@@ -227,6 +227,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     'urls'       => $urls,
                     'action_url' => '?act=files_upload&amp;id=' . $id,
                     'extensions' => implode(', ', $al_ext),
+                    'bbcode'     => di(Johncms\System\Utility\Bbcode::class)->buttons('file_upload_form', 'desc'),
                 ]
             );
         }

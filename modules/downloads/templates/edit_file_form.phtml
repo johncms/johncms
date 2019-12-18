@@ -30,7 +30,7 @@ $this->layout(
     <div class="col-md-6">
         <div class="card shadow border-0">
             <div class="card-body">
-                <form name="folder_form" action="<?= $action_url ?>" method="post">
+                <form name="file_edit_form" action="<?= $action_url ?>" method="post">
                     <div class="form-group">
                         <label for="text"><?= _t('Name for display') ?></label>
                         <input type="text" class="form-control" id="text" placeholder="<?= _t('Name for display') ?>"
@@ -43,6 +43,7 @@ $this->layout(
                     </div>
                     <div class="form-group">
                         <label for="desc"><?= _t('Description') ?></label>
+                        <div><?= $bbcode ?></div>
                         <textarea id="desc" class="form-control" maxlength="500" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
                     </div>
                     <div>
