@@ -59,6 +59,7 @@ if ($request->getMethod() === 'POST') {
     $post = $request->getParsedBody();
 
     $name = isset($post['text']) ? trim($post['text']) : null;
+    $desc = isset($post['desc']) ? trim($post['desc']) : null;
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
 
     if ($name_link && $name) {
@@ -66,7 +67,8 @@ if ($request->getMethod() === 'POST') {
             '
             UPDATE `download__files` SET
             `rus_name` = ?,
-            `text`     = ?
+            `text`     = ?,
+            `about`    = ?
             WHERE `id` = ?
         '
         );
@@ -75,6 +77,7 @@ if ($request->getMethod() === 'POST') {
             [
                 $name,
                 $name_link,
+                $desc,
                 $id,
             ]
         );
@@ -96,6 +99,7 @@ if ($request->getMethod() === 'POST') {
     $file_data = [
         'text'      => htmlspecialchars($res_down['rus_name']),
         'name_link' => htmlspecialchars($res_down['text']),
+        'desc'      => htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8'),
     ];
     echo $view->render(
         'downloads::edit_file_form',

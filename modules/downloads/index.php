@@ -135,7 +135,6 @@ $actions = [
     'custom_size'     => 'fileControl/custom_size.php',
     'delete_file'     => 'fileControl/delete_file.php',
     'files_upload'    => 'files_upload.php',
-    'edit_about'      => 'fileControl/edit_about.php',
     'edit_file'       => 'fileControl/edit_file.php',
     'edit_screen'     => 'fileControl/edit_screen.php',
     'files_more'      => 'fileControl/files_more.php',

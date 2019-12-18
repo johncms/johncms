@@ -113,7 +113,6 @@ $this->layout(
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <?php if (! empty($id)): ?>
                         <a class="dropdown-item" href="?act=edit_file&amp;id=<?= $id ?>"><?= _t('Edit File') ?></a>
-                        <a class="dropdown-item" href="?act=edit_about&amp;id=<?= $id ?>"><?= _t('Edit Description') ?></a>
                         <a class="dropdown-item" href="?act=edit_screen&amp;id=<?= $id ?>"><?= _t('Managing Screenshots') ?></a>
                         <a class="dropdown-item" href="?act=files_more&amp;id=<?= $id ?>"><?= _t('Additional Files') ?></a>
                         <a class="dropdown-item" href="?act=delete_file&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Delete File') ?></a>

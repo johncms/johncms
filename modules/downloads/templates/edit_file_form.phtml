@@ -41,6 +41,10 @@ $this->layout(
                         <input type="text" class="form-control" id="name_link" placeholder="<?= _t('Link to download file') ?>"
                                name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="200" required>
                     </div>
+                    <div class="form-group">
+                        <label for="desc"><?= _t('Description') ?></label>
+                        <textarea id="desc" class="form-control" maxlength="500" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
+                    </div>
                     <div>
                         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
                         <a href="?act=view&amp;id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
