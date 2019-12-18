@@ -24,6 +24,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 $request = di(ServerRequestInterface::class);
 
+require __DIR__ . '/../../classes/download.php';
+
 if ($user->rights !== 4 && $user->rights < 6) {
     http_response_code(403);
     echo $view->render(
@@ -55,9 +57,28 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     exit;
 }
 
+$audio_files = ['mp3', 'aac'];
+$audio_tags = [];
+$extension = strtolower(pathinfo($res_down['name'], PATHINFO_EXTENSION));
+if (in_array($extension, $audio_files, true)) {
+    $getID3 = new getID3();
+    $getID3->encoding = 'cp1251';
+    $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
+
+    if (! empty($getid['tags']['id3v2'])) {
+        $tagsArray = $getid['tags']['id3v2'];
+    } elseif (! empty($getid['tags']['id3v1'])) {
+        $tagsArray = $getid['tags']['id3v1'];
+    }
+
+    $tags_keys = ['artist', 'title', 'album', 'genre', 'year'];
+    foreach ($tags_keys as $key) {
+        $audio_tags[$key] = Download::mp3tagsOut($tagsArray[$key][0] ?? '');
+    }
+}
+
 if ($request->getMethod() === 'POST') {
     $post = $request->getParsedBody();
-
     $name = isset($post['text']) ? trim($post['text']) : null;
     $desc = isset($post['desc']) ? trim($post['desc']) : null;
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
@@ -81,6 +102,19 @@ if ($request->getMethod() === 'POST') {
                 $id,
             ]
         );
+
+        if (! empty($audio_tags) && ! empty($post['audio'])) {
+            $save_tags = [];
+            foreach ($audio_tags as $key => $tag) {
+                $save_tags[$key][0] = Download::mp3tagsOut($post['audio'][$key] ?? '', 1);
+            }
+            $tagsWriter = new getid3_writetags();
+            $tagsWriter->filename = $res_down['dir'] . '/' . $res_down['name'];
+            $tagsWriter->tagformats = ['id3v1', 'id3v2.3'];
+            $tagsWriter->tag_encoding = 'cp1251';
+            $tagsWriter->tag_data = $save_tags;
+            $tagsWriter->WriteTags();
+        }
 
         header('Location: ?act=view&id=' . $id);
     } else {
@@ -109,6 +143,7 @@ if ($request->getMethod() === 'POST') {
             'id'         => $id,
             'urls'       => $urls,
             'file_data'  => $file_data,
+            'audio_tags' => $audio_tags,
             'action_url' => '?act=edit_file&amp;id=' . $id,
             'bbcode'     => di(Johncms\System\Utility\Bbcode::class)->buttons('file_edit_form', 'desc'),
         ]
