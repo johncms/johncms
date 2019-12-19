@@ -34,6 +34,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-iconv": "*",
+        "ext-simplexml": "*",
         "aura/autoload": "^2.0",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",

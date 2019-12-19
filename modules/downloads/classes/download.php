@@ -133,13 +133,16 @@ class download // phpcs:ignore
         global $old;
         $file = $res_down;
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
-        $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
+        $icon_id = self::$extensions[$format_file] ?? 9;
 
         /** @var Johncms\System\View\Extension\Assets $assets */
         $assets = di(Johncms\System\View\Extension\Assets::class);
 
         /** @var Johncms\System\Users\User $systemUser */
         $systemUser = di(Johncms\System\Users\User::class);
+
+        /** @var Johncms\System\Utility\Tools $tools */
+        $tools = di(Johncms\System\Utility\Tools::class);
 
         /** @var Config $config */
         $config = di(Config::class);
@@ -163,7 +166,7 @@ class download // phpcs:ignore
             if (mb_strlen($about) > 100) {
                 $about = mb_substr($about, 0, 90) . '...';
             }
-            $file['preview_text'] = htmlspecialchars($about, 2);
+            $file['preview_text'] = $tools->checkout($about, 0, 1);
         }
 
         $file['comments_url'] = '';
@@ -184,7 +187,7 @@ class download // phpcs:ignore
         } elseif ($size >= 1024) {
             $size = round($size / 1024 * 100) / 100 . ' Kb';
         } else {
-            $size = $size . ' b';
+            $size .= ' b';
         }
 
         return $size;
