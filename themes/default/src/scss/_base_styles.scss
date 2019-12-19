@@ -19,6 +19,13 @@
     }
 }
 
+.page-footer {
+    margin: 0.8rem -0.8rem -0.8rem;
+    @media (max-width: 768px) {
+        margin: 0.4rem 0 -0.4rem;
+    }
+}
+
 .border-radius-12 {
     border-radius: 12px;
 }
