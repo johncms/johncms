@@ -29,8 +29,27 @@ $this->layout(
     <div class="col-md-6">
         <div class="card shadow border-0">
             <div class="card-body">
-                <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
+                <?php if (! empty($additional_files)): ?>
+                    <div class="h4 font-weight-bold"><?= _t('Current files') ?></div>
+                    <div class="mt-3 mb-4">
+                        <?php foreach ($additional_files as $file): ?>
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="font-weight-bold mb-1"><?= $file['rus_name'] ?></h5>
+                                    <small class="text-muted"><?= $file['display_date'] ?></small>
+                                </div>
+                                <p class="mb-1"><?= $file['name'] ?> (<?= $file['display_size'] ?>)</p>
+                                <div>
+                                    <a href="<?= $file['edit_url'] ?>" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
+                                    <a href="<?= $file['delete_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
 
+                <div class="h4 font-weight-bold"><?= _t('Add file') ?></div>
+                <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
@@ -67,26 +86,6 @@ $this->layout(
                         <a href="?act=view&amp;id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
                     </div>
                 </form>
-
-                <?php if (! empty($additional_files)): ?>
-                    <div class="h4 font-weight-bold mt-4 pt-3"><?= _t('Attached files') ?></div>
-                    <div class="mt-3">
-                        <?php foreach ($additional_files as $file): ?>
-                            <div class="border-bottom pb-3 mb-3">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="font-weight-bold mb-1"><?= $file['rus_name'] ?></h5>
-                                    <small class="text-muted"><?= $file['display_date'] ?></small>
-                                </div>
-                                <p class="mb-1"><?= $file['name'] ?> (<?= $file['display_size'] ?>)</p>
-                                <div>
-                                    <a href="<?= $file['edit_url'] ?>" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
-                                    <a href="<?= $file['delete_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-
             </div>
         </div>
     </div>
