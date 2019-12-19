@@ -26,7 +26,7 @@ $this->layout(
 );
 ?>
 
-<?= $this->insert(
+<?= $this->fetch(
     'forum::header',
     [
         'unread_count' => $unread_count,
@@ -37,7 +37,7 @@ $this->layout(
 ) ?>
 
 <?php if (empty($sections)): ?>
-    <?= $this->insert(
+    <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
@@ -62,7 +62,7 @@ $this->layout(
 
 <div class="mb-n3 pt-1"><?= _t('Total') ?>: <?= $total ?></div>
 
-<?= $this->insert(
+<?= $this->fetch(
     'forum::footer',
     [
         'online'   => $online,

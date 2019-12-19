@@ -41,7 +41,7 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($files as $file): ?>
-    <?php $this->insert('downloads::file_row', ['file' => $file]); ?>
+    <?= $this->fetch('downloads::file_row', ['file' => $file]) ?>
 <?php endforeach; ?>
 
 <?php if ($total_files): ?>

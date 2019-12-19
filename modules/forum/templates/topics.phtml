@@ -28,7 +28,7 @@ $this->layout(
 );
 ?>
 
-<?= $this->insert(
+<?= $this->fetch(
     'forum::header',
     [
         'unread_count' => $unread_count,
@@ -39,7 +39,7 @@ $this->layout(
 ) ?>
 
 <?php if (empty($topics)): ?>
-    <?= $this->insert(
+    <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
@@ -109,7 +109,7 @@ $this->layout(
     <?php endif ?>
 </div>
 
-<?= $this->insert(
+<?= $this->fetch(
     'forum::footer',
     [
         'online'   => $online,

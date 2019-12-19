@@ -7,7 +7,7 @@
 ) ?>
 <?php if (! $config->mod_guest): ?>
     <!-- Уведомление о закрытой гостевой -->
-    <?= $this->insert(
+    <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-danger',
@@ -71,7 +71,7 @@
     </div>
 <?php else: ?>
     <!-- Гостевая только для зарегистрированных -->
-    <?= $this->insert(
+    <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-danger',

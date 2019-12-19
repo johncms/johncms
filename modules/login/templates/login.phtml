@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><?= _t('Authorization', 'system') ?></h4>
                     <?php if (! empty($error)): ?>
-                        <?= $this->insert('system::app/alert', ['alert_type' => 'alert-danger', 'alert' => $error]) ?>
+                        <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-danger', 'alert' => $error]) ?>
                     <?php endif ?>
                     <div class="form-group">
                         <label for="login"><?= _t('Username', 'system') ?></label>

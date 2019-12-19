@@ -40,7 +40,7 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($users as $list_user): ?>
-    <?php $this->insert('downloads::user_row', ['item' => $list_user]); ?>
+    <?= $this->fetch('downloads::user_row', ['item' => $list_user]) ?>
 <?php endforeach; ?>
 
 <div class="mt-3">

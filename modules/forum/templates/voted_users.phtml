@@ -32,7 +32,7 @@ $this->layout(
 <h3><?= $poll_name ?></h3>
 
 <?php foreach ($items as $item): ?>
-    <?php $this->insert('forum::user_row', ['item' => $item]); ?>
+    <?= $this->fetch('forum::user_row', ['item' => $item]) ?>
 <?php endforeach; ?>
 
 <?php if (empty($total)): ?>
