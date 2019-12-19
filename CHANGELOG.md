@@ -10,6 +10,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Внедрен нативный PHP шаблонизатор [mobicms/render](https://github.com/mobicms/render)
 - Для классов модулей используется отдельный автозагрузчик [Aura.Autoload](https://github.com/auraphp/Aura.Autoload)
 - Добавлен класс Assets, который формирует ссылки с учетом текущей темы оформления
+- Для работы с пользовательскими аватарами используется хелпер шаблонов `avatar()`
 - Для подсветки синтаксиса кода в сообщениях используется JS библиотека [Prism](https://prismjs.com)
 - Модули используют шаблоны
 
@@ -19,6 +20,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Строгая типизация, проверка кода по [Style-CI](https://github.styleci.io/repos/30122305)
 - Заменена CAPTCHA, используется пакет [mobicms/captcha](https://github.com/mobicms/captcha)
 - Весь функционал распределен по модулям и перемещен в папку `/modules`
+- Ядро системы выделено в отдельный пакет [johncms/system](https://github.com/johncms/system)
 - Оптимизированы ссылки, удалены фрагменты `index.php`
 
 #### Deprecated
