@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Fetch repositories
+        run: sudo apt-get update
+
       - name: Install PHP extensions
         run: sudo apt-get -y install php-mbstring php-intl
 
