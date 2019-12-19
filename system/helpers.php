@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\System\Container\Factory;
 use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
@@ -22,12 +21,11 @@ function di(string $service)
 
 function pathToUrl(string $path): string
 {
-    $config = di(Config::class);
     $diff = array_diff(
         explode(DIRECTORY_SEPARATOR, realpath($path)),
         explode(DIRECTORY_SEPARATOR, realpath(ROOT_PATH))
     );
-    return rtrim($config->homeurl, '/') . '/' . implode('/', $diff);
+    return '/' . implode('/', $diff);
 }
 
 /**
@@ -89,15 +87,15 @@ function pageNotFound(
     }
 
     exit(
-    $engine->render(
-        $template,
-        [
+        $engine->render(
+            $template,
+            [
             'title'   => $title,
             'message' => ! empty($message)
                 ? $message
                 : _t('You are looking for something that doesn\'t exist or may have moved'),
-        ]
-    )
+            ]
+        )
     );
 }
 
