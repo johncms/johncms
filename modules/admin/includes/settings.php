@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\NavChainInterface;
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
@@ -21,6 +23,10 @@ if ($user->rights < 9) {
 }
 
 $config = di('config')['johncms'];
+/** @var NavChainInterface $navChain */
+$navChain = di(NavChainInterface::class);
+$navChain->add(_t('Admin Panel'), '../');
+$navChain->add(_t('System Settings'));
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы

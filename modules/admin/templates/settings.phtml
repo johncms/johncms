@@ -1,70 +1,76 @@
 <?php
+
 /**
+ * @var bool $confirmation
  * @var array $sysconf
  * @var array $themelist
  */
-$this->layout('system::layout/old_default', ['title' => _t('Admin Panel'), 'homeButton' => true]);
+$this->layout('system::layout/default', ['title' => _t('Admin Panel'), 'page_title' => _t('System Settings')]);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu'));
 ?>
-<div class="phdr">
-    <a href="./"><strong><?= _t('Admin Panel') ?></strong></a> | <?= _t('System Settings') ?>
-</div>
-<form action="?act=settings" method="post">
-    <?php if($confirmation): ?>
-        <div class="gmenu padding"><?= _t('Settings are saved successfully') ?></div>
+
+<div style="max-width: 640px">
+    <?php if ($confirmation): ?>
+        <div class="alert alert-success shadow" role="alert">
+            <?= _t('Settings are saved successfully') ?>
+        </div>
     <?php endif ?>
-    <div class="menu padding">
-        <!-- Общие настройки -->
-        <h3><?= _t('Common Settings') ?></h3>
-        <label>
-            <?= _t('Web site address without the slash at the end') ?><br>
-            <input type="text" name="homeurl" value="<?= $this->e($sysconf['homeurl']) ?>"/>
-        </label>
-        <br>
-        <label>
-            <?= _t('Site copyright') ?><br>
-            <input type="text" name="copyright" value="<?= $this->e($sysconf['copyright']) ?>"/>
-        </label>
-        <br>
-        <label>
-            <?= _t('Site Email') ?><br>
-            <input name="madm" maxlength="50" value="<?= $this->e($sysconf['email']) ?>"/>
-        </label>
-        <br>
-        <label>
-            <?= _t('Max. file size') ?> (kb)<br>
-            <input type="text" name="flsz" value="<?= (int) ($sysconf['flsz']) ?>"/>
-        </label>
-        <br>
-        <label>
-            <input name="gz" type="checkbox" value="1" <?= ($sysconf['gzip'] ? 'checked="checked"' : '') ?>>&nbsp;<?= _t('Gzip compression') ?>
-        </label>
-        <br><br>
-        <!-- Настройка времени -->
-        <h3><?= _t('Time shift') ?></h3>
-        <input type="text" name="timeshift" size="2" maxlength="3" value="<?= $sysconf['timeshift'] ?>"/>&nbsp;(+-12)<br>
-        <span style="font-weight:bold; background-color:#C0FFC0"><?= date('H:i', time() + $sysconf['timeshift'] * 3600) ?></span>&nbsp;<?= _t('System Time') ?><br>
-        <span style="font-weight:bold; background-color:#FFC0C0"><?= date('H:i') ?></span>&nbsp;<?= _t('Server Time') ?>
-        <br><br>
-        <!-- META тэги -->
-        <h3><?= _t('META tags') ?></h3>
-        <label>
-            <?= _t('Keywords') ?><br>
-            <textarea rows="<?= $user->config->fieldHeight ?>" name="meta_key"><?= $this->e($sysconf['meta_key']) ?></textarea>
-        </label>
-        <br>
-        <label>
-            <?= _t('Description') ?><br>
-            <textarea rows="<?= $user->config->fieldHeight ?>" name="meta_key"><?= $this->e($sysconf['meta_desc']) ?></textarea>
-        </label>
-        <br><br>
-        <!-- Выбор темы оформления -->
-        <h3><?= _t('Themes') ?></h3>
-        <select name="skindef">
-            <?php foreach ($themelist as $theme): ?>
-                <option<?= ($sysconf['skindef'] == $theme ? ' selected="selected"' : '') ?>><?= $theme ?></option>
-            <?php endforeach ?>
-        </select>
-        <br><br>
-        <input type="submit" name="submit" value="<?= _t('Save') ?>"/>
-    </div>
-</form>
+
+    <form action="?act=settings" method="post">
+        <fieldset>
+            <legend><?= _t('Common Settings') ?></legend>
+            <div class="form-group">
+                <label for="homeurl"><?= _t('Web site address without the slash at the end') ?></label>
+                <input type="text" id="homeurl" name="homeurl" class="form-control" value="<?= $this->e($sysconf['homeurl']) ?>"/>
+            </div>
+            <div class="form-group">
+                <label for="copyright"><?= _t('Site copyright') ?></label>
+                <input type="text" id="copyright" name="copyright" class="form-control" value="<?= $this->e($sysconf['copyright']) ?>"/>
+            </div>
+            <div class="form-group">
+                <label for="madm"><?= _t('Site Email') ?></label>
+                <input type="text" id="madm" name="madm" maxlength="50" class="form-control" value="<?= $this->e($sysconf['email']) ?>"/>
+            </div>
+            <div class="form-group">
+                <label for="flsz"><?= _t('Max. file size') ?> (kb)</label>
+                <input type="text" id="flsz" name="flsz" class="form-control  col-sm-2" value="<?= (int) ($sysconf['flsz']) ?>"/>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gz" name="gz" value="1" <?= ($sysconf['gzip'] ? 'checked="checked"' : '') ?>>
+                <label class="form-check-label" for="gz"><?= _t('Gzip compression') ?></label>
+            </div>
+        </fieldset>
+        <fieldset class="mt-3">
+            <legend><?= _t('Time shift') ?></legend>
+            <div class="form-group">
+                <label for="timeshift">+ - 12 Hour</label>
+                <input type="text" id="timeshift" name="timeshift" class="form-control  col-sm-2" value="<?= (int) ($sysconf['timeshift']) ?>"/>
+            </div>
+            <div class="form-group">
+                <span style="font-weight:bold; background-color:#C0FFC0"> <?= date('H:i', time() + $sysconf['timeshift'] * 3600) ?> </span>&nbsp;<?= _t('System Time') ?><br>
+                <span style="font-weight:bold; background-color:#FFC0C0"> <?= date('H:i') ?> </span>&nbsp;<?= _t('Server Time') ?>
+            </div>
+        </fieldset>
+        <fieldset class="mt-3">
+            <legend><?= _t('META tags') ?></legend>
+            <div class="form-group">
+                <label for="meta_key"><?= _t('Keywords') ?></label>
+                <textarea rows="<?= $user->config->fieldHeight ?>" id="meta_key" name="meta_key" class="form-control"><?= $this->e($sysconf['meta_key']) ?></textarea>
+            </div>
+            <div class="form-group">
+                <label for="meta_desc"><?= _t('Description') ?></label>
+                <textarea rows="<?= $user->config->fieldHeight ?>" id="meta_desc" name="meta_desc" class="form-control"><?= $this->e($sysconf['meta_desc']) ?></textarea>
+            </div>
+        </fieldset>
+        <fieldset class="mt-3">
+            <legend><?= _t('Themes') ?></legend>
+            <select id="skindef" name="skindef" class="form-control">
+                <?php foreach ($themelist as $theme): ?>
+                    <option <?= ($sysconf['skindef'] == $theme ? ' selected="selected"' : '') ?>><?= $theme ?></option>
+                <?php endforeach ?>
+            </select>
+        </fieldset>
+        <hr class="mt-4">
+        <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="<?= _t('Save') ?>"/>
+    </form>
+</div>
