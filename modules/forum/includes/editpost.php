@@ -287,10 +287,6 @@ if (! $error) {
 
             if ($msg && ! isset($_POST['submit'])) {
                 $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                $avatar = UPLOAD_PATH . 'users/avatar/' . $foundUser['id'] . '.png';
-                if (file_exists($avatar)) {
-                    $user_avatar = pathToUrl($avatar);
-                }
             }
 
             $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
@@ -308,7 +304,7 @@ if (! $error) {
                     'settings_forum'    => $set_forum,
                     'show_post_preview' => $msg && ! isset($_POST['submit']),
                     'preview_message'   => $msg_pre,
-                    'user_avatar'       => $user_avatar ?? '',
+                    'user_id'           => $foundUser['id'] ?? 0,
                     'message_author'    => $foundUser ?? [],
                 ]
             );

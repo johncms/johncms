@@ -127,12 +127,6 @@ if ($do || isset($_GET['new'])) {
             $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $user->config->kmess);
 
             $res['post_time'] = $tools->displayDate($res['time']);
-            $res['user_avatar'] = '';
-            $avatar = UPLOAD_PATH . 'users/avatar/' . $res['user_id'] . '.png';
-            if (file_exists($avatar)) {
-                $res['user_avatar'] = pathToUrl($avatar);
-            }
-
             $res['user_profile_link'] = '';
             if ($user->isValid() && $user->id != $res['user_id'] && ! empty($res_u)) {
                 $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
@@ -147,7 +141,6 @@ if ($do || isset($_GET['new'])) {
                 $res['user_name'] = $res_u['name'];
             }
 
-            $res['post_url'] = null;
             $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['post'];
             $res['topic_url'] = '/forum/?type=topic&id=' . $res['topic'] . '&amp;page=' . $page;
 

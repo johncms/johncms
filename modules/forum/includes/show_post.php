@@ -59,12 +59,6 @@ $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id
 
 $post = [];
 
-$res['user_avatar'] = '';
-$avatar = UPLOAD_PATH . 'users/avatar/' . $res['user_id'] . '.png';
-if (file_exists($avatar)) {
-    $res['user_avatar'] = pathToUrl($avatar);
-}
-
 $res['user_profile_link'] = '';
 if ($user->isValid() && $user->id != $res['user_id']) {
     $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];

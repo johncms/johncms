@@ -39,8 +39,8 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<?php foreach ($users as $user): ?>
-    <?php $this->insert('downloads::user_row', ['item' => $user]); ?>
+<?php foreach ($users as $list_user): ?>
+    <?php $this->insert('downloads::user_row', ['item' => $list_user]); ?>
 <?php endforeach; ?>
 
 <div class="mt-3">

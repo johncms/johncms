@@ -455,12 +455,6 @@ switch ($act) {
                     $item['edit_time'] = $tools->displayDate($res['edit_time']);
                 }
 
-                $item['user_avatar'] = '';
-                $avatar = UPLOAD_PATH . 'users/avatar/' . $item['user_id'] . '.png';
-                if (file_exists($avatar)) {
-                    $item['user_avatar'] = pathToUrl($avatar);
-                }
-
                 $item['message_id'] = $res['gid'];
                 $items[] = $item;
             }

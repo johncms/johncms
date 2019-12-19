@@ -39,14 +39,6 @@ WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess);
         $res_down['files_link'] = '<a href="?act=user_files&amp;id=' .
         $res_down['id'] . '">' . _t('User Files') . ': ' . $res_down['cnt'] . '</a>';
 
-        $res_down['user_avatar'] = '';
-        if (! empty($res_down['id'])) {
-            $avatar = UPLOAD_PATH . 'users/avatar/' . $res_down['id'] . '.png';
-            if (file_exists($avatar)) {
-                $res_down['user_avatar'] = pathToUrl($avatar);
-            }
-        }
-
         $res_down['user_profile_link'] = '';
         if (! empty($res_down['id']) && $user->isValid() && $user->id !== $res_down['id']) {
             $res_down['user_profile_link'] = '/profile/?user=' . $res_down['id'];

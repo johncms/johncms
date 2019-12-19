@@ -1,13 +1,19 @@
-<?php $this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $title,
-]) ?>
+<?php $this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+) ?>
 <?php if (! $config->mod_guest): ?>
     <!-- Уведомление о закрытой гостевой -->
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-danger',
-        'alert'      => _t('The guestbook is closed'),
-    ]) ?>
+    <?= $this->insert(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => _t('The guestbook is closed'),
+        ]
+    ) ?>
 <?php endif; ?>
 <?php if ($data['access_to_form']): ?>
     <div class="row">
@@ -65,10 +71,13 @@
     </div>
 <?php else: ?>
     <!-- Гостевая только для зарегистрированных -->
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-danger',
-        'alert'      => _t('For registered users only'),
-    ]) ?>
+    <?= $this->insert(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => _t('For registered users only'),
+        ]
+    ) ?>
 <?php endif; ?>
 <div class="mt-4"></div>
 <!-- Отображаем сообщения -->
@@ -95,11 +104,7 @@
             <div class="post-body d-flex align-items-start pt-3 pb-3">
                 <div class="user-avatar mr-2 mr-md-4">
                     <div class="avatar-image rounded-circle overflow-hidden">
-                        <?php if (! empty($item['user_avatar'])): ?>
-                            <img src="<?= $item['user_avatar'] ?>" class="img-fluid" alt=".">
-                        <?php else: ?>
-                            <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
-                        <?php endif; ?>
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
                     </div>
                     <div class="user-status online shadow"></div>
                 </div>

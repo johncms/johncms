@@ -56,14 +56,6 @@ if ($id) {
                     $res['name'] = _t('Guest', 'system');
                 }
 
-                $res['user_avatar'] = '';
-                if (! empty($res['id'])) {
-                    $avatar = UPLOAD_PATH . 'users/avatar/' . $res['id'] . '.png';
-                    if (file_exists($avatar)) {
-                        $res['user_avatar'] = pathToUrl($avatar);
-                    }
-                }
-
                 $res['user_profile_link'] = '';
                 if (! empty($res['id']) && $user->isValid() && $user->id != $res['id']) {
                     $res['user_profile_link'] = '/profile/?user=' . $res['id'];
