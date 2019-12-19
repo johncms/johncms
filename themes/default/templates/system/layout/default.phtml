@@ -37,7 +37,7 @@
             <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-main-menu')) ?>
         </div>
     </div>
-    <div class="content-container content-container-padding">
+    <div class="content-container content-container-padding d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
             <div class="container-fluid">
                 <div class="navbar-wrapper d-flex w-100 justify-content-between">
@@ -63,14 +63,14 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid">
+        <div class="container-fluid flex-grow-1">
             <?php if (! empty($page_title)): ?>
                 <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
             <?php endif ?>
             <?= $this->fetch('system::app/breadcrumbs') ?>
             <?= $this->section('content') ?>
         </div>
-        <div class="d-flex justify-content-between align-items-center border-top p-4" style="margin: 0 -0.8rem -0.8rem;">
+        <div class="d-flex justify-content-between align-items-center border-top p-4" style="margin: 0.8rem -0.8rem -0.8rem;">
             <div class="pl-1">
                 <!-- TODO: Поэкспериментировать с заменой на иконки -->
                 <a href="https://twitter.com/johncms" title="Twitter" target="_blank" class="mr-4 text-muted">Twitter</a>
