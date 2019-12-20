@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Intervention\Image\ImageManagerStatic as Image;
 use Johncms\Api\NavChainInterface;
+use Johncms\Utility\FileInfo;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -52,20 +53,14 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $file = $files['fail'];
 
                 $fname = $file->getClientFilename();
-                $ext = strtolower(pathinfo($fname, PATHINFO_EXTENSION));
-                $fname = pathinfo($fname, PATHINFO_FILENAME);
+                $file_name = new FileInfo($fname);
+                $ext = strtolower($file_name->getExtension());
 
                 if (! empty($new_file)) {
-                    $fname = $new_file;
+                    $file_name = new FileInfo($new_file . '.' . $ext);
                 }
 
-                // Replace invalid symbols
-                $fname = $tools->rusLat($fname);
-                $fname = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $fname);
-                $fname = trim($fname, '_');
-                // Delete repeated replacement
-                $fname = preg_replace('/-{2,}/', '_', $fname);
-                $fname = mb_substr($fname, 0, 100) . '.' . $ext;
+                $fname = $file_name->getCleanName();
 
                 if (empty($name)) {
                     $name = $fname;
