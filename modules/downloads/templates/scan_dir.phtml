@@ -45,29 +45,26 @@ $this->layout(
         </div>
     </div>
 <?php else: ?>
-<div class="row">
-    <div class="col-md-5">
-        <div class="alert alert-info">
-            <b><?= _t('Added') ?>:</b><br>
-            <?= _t('Categories') ?>: <?= $updated_info['categories'] ?><br>
-            <?= _t('Files') ?>: <?= $updated_info['files'] ?><br>
-            <?= _t('Additional Files') ?>: <?= $updated_info['additional_files'] ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-info">
+                <b><?= _t('Added') ?>:</b><br>
+                <?= _t('Categories') ?>: <?= $updated_info['categories'] ?><br>
+                <?= _t('Files') ?>: <?= $updated_info['files'] ?><br>
+                <?= _t('Additional Files') ?>: <?= $updated_info['additional_files'] ?>
+            </div>
         </div>
     </div>
-</div>
-<div>
     <div>
-        <a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a>
+        <div>
+            <a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a>
+        </div>
+        <div>
+            <a href="?act=recount&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a>
+        </div>
+        <a href="?act=scan_dir&amp;yes"><?= _t('Entire Downloads') ?></a>
+        <div class="mt-2">
+            <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+        </div>
     </div>
-    <div>
-        <a href="?act=recount&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a>
-    </div>
-    <a href="?act=scan_dir&amp;yes"><?= _t('Entire Downloads') ?></a>
-    <div>
-    </div>
-    <?php endif; ?>
-
-    <div class="mt-2">
-        <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
-    </div>
-</div>
+<?php endif; ?>
