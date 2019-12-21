@@ -371,10 +371,12 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     $topics = [];
                     while ($res = $req->fetch()) {
                         if ($user->rights >= 7) {
+                            $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                             $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                             $res['show_last_author'] = $res['mod_last_post_author_name'];
                             $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                         } else {
+                            $cpg = ceil($res['post_count'] / $user->config->kmess);
                             $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                             $res['show_last_author'] = $res['last_post_author_name'];
                             $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -386,7 +388,6 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
                         // Url to last page
                         $res['last_page_url'] = '';
-                        $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                         if ($cpg > 1) {
                             $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                         }
