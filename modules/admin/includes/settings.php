@@ -23,6 +23,8 @@ if ($user->rights < 9) {
 }
 
 $config = di('config')['johncms'];
+$view->addData(['showSystemMenu' => true]);
+
 /** @var NavChainInterface $navChain */
 $navChain = di(NavChainInterface::class);
 $navChain->add(_t('Admin Panel'), '../');

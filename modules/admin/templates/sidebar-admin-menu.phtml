@@ -1,6 +1,10 @@
 <?php
 /**
+ * @var int $bantotal
+ * @var int $countadm
+ * @var int $countusers
  * @var string $locale
+ * @var int $regtotal
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
  */
@@ -14,12 +18,16 @@ $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
 $album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
+$showUsers = isset($showUsersMenu) ? ' show' : '';
+$showModules = isset($showModulesMenu) ? ' show' : '';
+$showSystem = isset($showSystemMenu) ? ' show' : '';
+$showSecurity = isset($showSecurityMenu) ? ' show' : '';
 ?>
 <div style="background-color: #bd0719; height: 5px">&nbsp;</div>
 
 <div class="accordion flex-grow-1" id="accordionAdmin">
     <!-- Users Button -->
-    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true">
+    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false">
         <div class="nav__vertical pt-2 pb-2 text-danger">
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
@@ -36,11 +44,11 @@ $news_counters = $counters->news();
         </div>
     </a>
     <!-- Users Slider -->
-    <div id="collapseUsers" class="collapse show" data-parent="#accordionAdmin">
+    <div id="collapseUsers" class="collapse<?= $showUsers ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="search_ip/">
+                <a href="<?= $config->homeurl ?>/admin/search_ip/">
                     <svg class="icon text-info">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
                     </svg>
@@ -49,7 +57,7 @@ $news_counters = $counters->news();
             </li>
             <?php if ($regtotal): ?>
                 <li>
-                    <a href="reg/">
+                    <a href="<?= $config->homeurl ?>/admin/reg/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
                         </svg>
@@ -59,7 +67,7 @@ $news_counters = $counters->news();
                 </li>
             <?php endif ?>
             <li>
-                <a href="userlist/">
+                <a href="<?= $config->homeurl ?>/admin/userlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                     </svg>
@@ -68,7 +76,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="adminlist/">
+                <a href="<?= $config->homeurl ?>/admin/adminlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
                     </svg>
@@ -77,7 +85,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="ban_panel/">
+                <a href="<?= $config->homeurl ?>/admin/ban_panel/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
@@ -87,7 +95,7 @@ $news_counters = $counters->news();
             </li>
             <?php if ($user->rights === 9): ?>
                 <li>
-                    <a href="usr_clean/">
+                    <a href="<?= $config->homeurl ?>/admin/usr_clean/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
                         </svg>
@@ -95,7 +103,7 @@ $news_counters = $counters->news();
                     </a>
                 </li>
                 <li>
-                    <a href="antiflood/">
+                    <a href="<?= $config->homeurl ?>/admin/antiflood/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bell-off"/>
                         </svg>
@@ -103,7 +111,7 @@ $news_counters = $counters->news();
                     </a>
                 </li>
                 <li>
-                    <a href="karma/">
+                    <a href="<?= $config->homeurl ?>/admin/karma/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                         </svg>
@@ -130,11 +138,11 @@ $news_counters = $counters->news();
         </div>
     </a>
     <!-- Modules Slider -->
-    <div id="collapseModules" class="collapse" data-parent="#accordionAdmin">
+    <div id="collapseModules" class="collapse<?= $showModules ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="forum/">
+                <a href="<?= $config->homeurl ?>/admin/forum/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
@@ -142,7 +150,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="news/">
+                <a href="<?= $config->homeurl ?>/admin/news/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                     </svg>
@@ -150,7 +158,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="ads/">
+                <a href="<?= $config->homeurl ?>/admin/ads/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
                     </svg>
@@ -159,7 +167,7 @@ $news_counters = $counters->news();
             </li>
             <?php if ($user->rights == 9): ?>
                 <li>
-                    <a href="counters/">
+                    <a href="<?= $config->homeurl ?>/admin/counters/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
                         </svg>
@@ -186,11 +194,11 @@ $news_counters = $counters->news();
         </div>
     </a>
     <!-- System Slider -->
-    <div id="collapseSystem" class="collapse" data-parent="#accordionAdmin">
+    <div id="collapseSystem" class="collapse<?= $showSystem ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="settings/">
+                <a href="<?= $config->homeurl ?>/admin/settings/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
                     </svg>
@@ -198,7 +206,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="smilies/">
+                <a href="<?= $config->homeurl ?>/admin/smilies/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#smile"/>
                     </svg>
@@ -206,7 +214,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="languages/">
+                <a href="<?= $config->homeurl ?>/admin/languages/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
@@ -232,11 +240,11 @@ $news_counters = $counters->news();
         </div>
     </a>
     <!-- Security Slider -->
-    <div id="collapseSecurity" class="collapse" data-parent="#accordionAdmin">
+    <div id="collapseSecurity" class="collapse<?= $showSecurity ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="antispy/">
+                <a href="<?= $config->homeurl ?>/admin/antispy/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                     </svg>
@@ -244,7 +252,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li>
-                <a href="ipban/">
+                <a href="<?= $config->homeurl ?>/admin/ipban/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
