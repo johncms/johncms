@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get update
 
       - name: Install PHP extensions
-        run: sudo apt-get -y install php-mbstring php7.2-intl php7.3-intl
+        run: DEBIAN_FRONTEND=noninteractive sudo apt-get -y install php-mbstring php7.2-intl php7.3-intl
 
       - name: Install dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --no-interaction
