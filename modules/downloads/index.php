@@ -42,6 +42,10 @@ $nav_chain = di(NavChainInterface::class);
 // Регистрируем папку с языками модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+$loader = new Aura\Autoload\Loader();
+$loader->register();
+$loader->addPrefix('Downloads', __DIR__ . '/classes');
+
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('downloads', __DIR__ . '/templates/');
 

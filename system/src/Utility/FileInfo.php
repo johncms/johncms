@@ -13,8 +13,9 @@ declare(strict_types=1);
 namespace Johncms\Utility;
 
 use Johncms\System\Utility\Tools;
+use SplFileInfo;
 
-class FileInfo extends \SplFileInfo
+class FileInfo extends SplFileInfo
 {
 
     /**
@@ -44,5 +45,15 @@ class FileInfo extends \SplFileInfo
         $name = mb_substr($name, 0, 150) . '.' . $this->getExtension();
 
         return $name;
+    }
+
+    /**
+     * Get public file path
+     *
+     * @return string
+     */
+    public function getPublicPath(): string
+    {
+        return pathToUrl($this->getRealPath());
     }
 }

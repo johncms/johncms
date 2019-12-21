@@ -35,9 +35,9 @@ $this->layout(
         <div class="swiper-wrapper">
             <?php foreach ($file['screenshots'] as $number => $screenshot): ?>
                 <div class="swiper-slide <?= count($file['screenshots']) < 2 ? 'text-left' : '' ?>">
-                    <a href="<?= $screenshot['file'] ?>"
+                    <a href="<?= $screenshot['url'] ?>"
                        title="<?= _t('Screenshot:') ?> <?= ($number + 1) ?>"
-                       date-source="<?= $screenshot['file'] ?>"
+                       data-source="<?= $screenshot['url'] ?>"
                        class="image-preview">
                         <img src="<?= $screenshot['preview'] ?>" alt=".">
                     </a>

@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Downloads\Screen;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -72,22 +74,7 @@ $file_data = $res_down;
 
 // Получаем список скриншотов
 $text_info = '';
-$screen = [];
-
-if (is_dir(DOWNLOADS_SCR . $id)) {
-    $dir = opendir(DOWNLOADS_SCR . $id);
-    $ignore_files = ['.', '..', 'name.dat', '.svn', 'index.php'];
-    while ($file = readdir($dir)) {
-        if (! in_array($file, $ignore_files, true)) {
-            $file_path = pathToUrl(DOWNLOADS_SCR . $id . '/' . $file);
-            $screen[] = [
-                'file'    => $file_path,
-                'preview' => '../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($file_path),
-            ];
-        }
-    }
-    closedir($dir);
-}
+$screen = Screen::getScreens($id);
 $file_data['file_type'] = 'other';
 $file_data['screenshots'] = $screen;
 $file_properties = [];
@@ -212,7 +199,7 @@ switch ($extension) {
     case 'png':
         $file_path = $res_down['dir'] . '/' . $res_down['name'];
         $screen[] = [
-            'file'    => '/' . $file_path,
+            'url'     => '/' . $file_path,
             'preview' => '/assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($file_path),
         ];
         $file_data['screenshots'] = $screen;
@@ -235,7 +222,8 @@ $file_data['upload_user'] = $foundUser;
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
-if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_file_' . $id]) && $user->isValid()) {
+$session_index = 'rate_file_' . $id;
+if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION[$session_index]) && $user->isValid()) {
     if (isset($_GET['plus'])) {
         $file_rate[0] = $file_rate[0] + 1;
     } else {
@@ -252,7 +240,7 @@ $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate
 $file_data['rate'] = $file_rate;
 
 // Запрашиваем дополнительные файлы
-$req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id . ' ORDER BY `time` ASC');
+$req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id . ' ORDER BY `time`');
 $total_files_more = $req_file_more->rowCount();
 
 $file_data['main_file'] = Download::downloadLlink(
