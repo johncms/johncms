@@ -66,38 +66,38 @@ if ($user->isValid()) {
             $vr1 = time() - $vr * 3600;
 
             if ($user->rights == 9) {
-                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > '${vr1}'");
+                $sql = 'SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > ?';
+                $sql2 = 'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+FROM `forum_topic` tpc
+JOIN forum_sections rzd ON rzd.id = tpc.section_id
+JOIN forum_sections frm ON frm.id = rzd.parent
+WHERE `mod_last_post_date` > ? ORDER BY `mod_last_post_date` DESC LIMIT ?, ?';
             } else {
-                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > '${vr1}' AND (`deleted` != '1' OR deleted IS NULL)");
+                $sql = 'SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL)';
+                $sql2 = 'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+FROM `forum_topic` tpc
+JOIN forum_sections rzd ON rzd.id = tpc.section_id
+JOIN forum_sections frm ON frm.id = rzd.parent
+WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT ?, ?';
             }
-            $count = $req->fetchColumn();
+            $sth = $db->prepare($sql);
+            $sth->execute([$vr1]);
+            $count = $sth->fetchColumn();
 
             if ($count) {
-                if ($user->rights == 9) {
-                    $req = $db->query(
-                        "SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
-                    FROM `forum_topic` tpc
-                    JOIN forum_sections rzd ON rzd.id = tpc.section_id
-                    JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess
-                    );
-                } else {
-                    $req = $db->query(
-                        "SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
-                    FROM `forum_topic` tpc
-                    JOIN forum_sections rzd ON rzd.id = tpc.section_id
-                    JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess
-                    );
-                }
+                $param = array_merge([$vr1], [$start, $user->config->kmess]);
+                $req = $db->prepare($sql2);
+                $req->execute($param);
 
                 $topics = [];
                 while ($res = $req->fetch()) {
                     if ($user->rights >= 7) {
+                        $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                         $res['show_last_author'] = $res['mod_last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                     } else {
+                        $cpg = ceil($res['post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                         $res['show_last_author'] = $res['last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -109,7 +109,6 @@ if ($user->isValid()) {
 
                     // Url to last page
                     $res['last_page_url'] = $res['url'];
-                    $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                     if ($cpg > 1) {
                         $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                     }
@@ -149,10 +148,12 @@ if ($user->isValid()) {
                 $topics = [];
                 while ($res = $req->fetch()) {
                     if ($user->rights >= 7) {
+                        $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                         $res['show_last_author'] = $res['mod_last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                     } else {
+                        $cpg = ceil($res['post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                         $res['show_last_author'] = $res['last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -164,7 +165,6 @@ if ($user->isValid()) {
 
                     // Url to last page
                     $res['last_page_url'] = $res['url'];
-                    $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                     if ($cpg > 1) {
                         $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                     }
@@ -214,10 +214,12 @@ if ($user->isValid()) {
         $topics = [];
         while ($res = $req->fetch()) {
             if ($user->rights >= 7) {
+                $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                 $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                 $res['show_last_author'] = $res['mod_last_post_author_name'];
                 $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
             } else {
+                $cpg = ceil($res['post_count'] / $user->config->kmess);
                 $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                 $res['show_last_author'] = $res['last_post_author_name'];
                 $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -229,7 +231,6 @@ if ($user->isValid()) {
 
             // Url to last page
             $res['last_page_url'] = $res['url'];
-            $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
             if ($cpg > 1) {
                 $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
             }
