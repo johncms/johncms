@@ -120,4 +120,3 @@ echo $view->render(
         'back_url'     => '?act=view&amp;id=' . $id,
     ]
 );
-
