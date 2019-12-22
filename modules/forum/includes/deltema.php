@@ -71,6 +71,10 @@ if ($user->rights == 3 || $user->rights >= 6) {
 
             $db->exec("DELETE FROM `forum_messages` WHERE `topic_id` = '${id}'");
             $db->exec("DELETE FROM `forum_topic` WHERE `id`='${id}'");
+            $db->exec("DELETE FROM `cms_forum_rdm` WHERE `topic_id` = '${id}'");
+            $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '${id}'");
+            $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '${id}'");
+            $db->query('OPTIMIZE TABLE `forum_messages`, `forum_topic`, `cms_forum_rdm`, `cms_forum_vote`, `cms_forum_vote_users`;');
         } elseif ($del = 1) {
             // Скрываем топик
             $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
