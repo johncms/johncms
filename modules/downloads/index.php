@@ -136,30 +136,35 @@ $defaultExt = [
 $actions = [
     'bookmark'        => 'bookmark.php',
     'comments'        => 'comments.php',
-    'delete_file'     => 'fileControl/delete_file.php',
     'files_upload'    => 'files_upload.php',
-    'edit_file'       => 'fileControl/edit_file.php',
-    'edit_screen'     => 'fileControl/edit_screen.php',
-    'files_more'      => 'fileControl/files_more.php',
-    'folder_add'      => 'folder_add.php',
-    'folder_delete'   => 'folder_delete.php',
-    'folder_edit'     => 'folder_edit.php',
-    'import'          => 'files_import.php',
     'load_file'       => 'fileControl/load_file.php',
-    'mod_files'       => 'files_moderation.php',
-    'mp3tags'         => 'fileControl/mp3tags.php',
     'new_files'       => 'files_new.php',
-    'recount'         => 'recount.php',
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
-    'scan_dir'        => 'scan_dir.php',
     'search'          => 'search.php',
     'top_files'       => 'files_top.php',
     'top_users'       => 'top_users.php',
-    'transfer_file'   => 'fileControl/transfer_file.php',
     'user_files'      => 'files_user.php',
     'view'            => 'view.php',
 ];
+
+if (($user->rights >= 6 || $user->rights === 4)) {
+    $admin_actions = [
+        'delete_file'   => 'fileControl/delete_file.php',
+        'edit_file'     => 'fileControl/edit_file.php',
+        'edit_screen'   => 'fileControl/edit_screen.php',
+        'files_more'    => 'fileControl/files_more.php',
+        'transfer_file' => 'fileControl/transfer_file.php',
+        'import'        => 'files_import.php',
+        'mod_files'     => 'files_moderation.php',
+        'folder_add'    => 'folder_add.php',
+        'folder_delete' => 'folder_delete.php',
+        'folder_edit'   => 'folder_edit.php',
+        'recount'       => 'recount.php',
+        'scan_dir'      => 'scan_dir.php',
+    ];
+    $actions = array_merge($actions, $admin_actions);
+}
 
 if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     require_once __DIR__ . '/includes/' . $actions[$act];
@@ -176,6 +181,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $res_down_cat = $cat->fetch();
 
         if (! $cat->rowCount() || ! is_dir($res_down_cat['dir'])) {
+            http_response_code(404);
             echo $view->render(
                 'system::pages/result',
                 [

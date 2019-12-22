@@ -26,21 +26,6 @@ $request = di(ServerRequestInterface::class);
 
 require __DIR__ . '/../../classes/download.php';
 
-if ($user->rights !== 4 && $user->rights < 6) {
-    http_response_code(403);
-    echo $view->render(
-        'system::pages/result',
-        [
-            'title'         => _t('Edit File'),
-            'type'          => 'alert-danger',
-            'message'       => _t('Access denied'),
-            'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
-        ]
-    );
-    exit;
-}
-
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {

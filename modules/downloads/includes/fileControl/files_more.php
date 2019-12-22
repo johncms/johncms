@@ -30,14 +30,14 @@ $request = di(ServerRequestInterface::class);
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (($user->rights < 6 && $user->rights !== 4) || ! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     http_response_code(403);
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access denied'),
+            'title'         => _t('File not found'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access denied'),
+            'message'       => _t('File not found'),
             'back_url'      => $urls['downloads'],
             'back_url_name' => _t('Downloads'),
         ]

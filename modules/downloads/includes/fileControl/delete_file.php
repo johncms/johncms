@@ -25,21 +25,6 @@ $request = di(ServerRequestInterface::class);
 $get = $request->getQueryParams();
 $post = $request->getParsedBody();
 
-if (($user->rights < 6 && $user->rights !== 4)) {
-    http_response_code(403);
-    echo $view->render(
-        'system::pages/result',
-        [
-            'title'         => _t('Access denied'),
-            'type'          => 'alert-danger',
-            'message'       => _t('Access denied'),
-            'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
-        ]
-    );
-    exit;
-}
-
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
