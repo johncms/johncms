@@ -15,6 +15,7 @@
  * @var $urls
  * @var $pagination
  * @var $can_upload
+ * @var $total_new
  */
 
 $this->layout(
@@ -34,6 +35,11 @@ $this->layout(
 
 <?php if (empty($id)): ?>
     <div class="mb-3">
+        <?php if (! empty($urls['new'])): ?>
+            <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1">
+                <?= _t('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
+            </a>
+        <?php endif; ?>
         <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1"><?= _t('Search') ?></a>
         <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1"><?= _t('Top Files') ?></a>
         <a href="?act=top_users" class="btn btn-outline-primary btn-sm"><?= _t('Top Users') ?></a>

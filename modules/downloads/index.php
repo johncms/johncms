@@ -304,6 +304,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             'pagination'  => $tools->displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $user->config->kmess),
             'files'       => $files ?? [],
             'total_files' => $total_files,
+            'total_new'   => $total_new,
             'categories'  => $categories ?? [],
             'total_cat'   => $total_cat,
             'can_upload'  => (isset($res_down_cat['field']) && $res_down_cat['field'] && $user->isValid() && $id),
