@@ -37,11 +37,10 @@ if ($user->rights >= 7) {
     }
 
     $topic = $req->fetch();
-    $req = $db->query(
-        "SELECT `forum_messages`.*, `users`.`id`
-        FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-        WHERE `forum_messages`.`topic_id`='${id}' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum_messages`.`user_id` ORDER BY `forum_messages`.`user_name`"
-    );
+    $req = $db->query("SELECT `fm`.`user_id`, `fm`.`user_name` FROM `forum_messages` fm
+JOIN `users` u ON `u`.`id`=`fm`.`user_id`
+WHERE `topic_id` = '${id}' AND `u`.`rights` < 6 AND `u`.`rights` <> 3
+GROUP BY `fm`.`user_id`, `fm`.`user_name` ORDER BY `fm`.`user_name`");
     $total = $req->rowCount();
     $curators = [];
     $users = ! empty($topic['curators']) ? unserialize($topic['curators'], ['allowed_classes' => false]) : [];
