@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -17,8 +19,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  */
-
-require __DIR__ . '/../classes/download.php';
 
 // Топ файлов
 if ($id === 2) {

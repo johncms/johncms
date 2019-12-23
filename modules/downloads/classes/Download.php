@@ -10,7 +10,11 @@
 
 declare(strict_types=1);
 
+namespace Downloads;
+
+use Johncms;
 use Johncms\System\Config\Config;
+use PDO;
 
 /**
  * @package     mobiCMS
@@ -20,7 +24,7 @@ use Johncms\System\Config\Config;
  * @version     VERSION.txt (see attached file)
  * @author      http://mobicms.net/about
  */
-class download // phpcs:ignore
+class Download // phpcs:ignore
 {
     private static $extensions =
         [
@@ -175,7 +179,7 @@ class download // phpcs:ignore
                     "SELECT * FROM `download__category` WHERE `dir` IN ('" . implode(
                         "','",
                         $sql
-                    ) . "') ORDER BY `id` ASC"
+                    ) . "') ORDER BY `id`"
                 );
                 while ($res_cat = $req_cat->fetch()) {
                     $nav_chain->add(htmlspecialchars($res_cat['rus_name']), '?id=' . $res_cat['id']);

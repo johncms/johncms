@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -23,8 +25,6 @@ $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ?: $search_get;
-
-require __DIR__ . '/../classes/download.php';
 
 $nav_chain->add(_t('Search'));
 

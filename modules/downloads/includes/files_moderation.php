@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -17,8 +19,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
  */
-
-require 'classes/download.php';
 
 $textl = _t('Files on moderation');
 

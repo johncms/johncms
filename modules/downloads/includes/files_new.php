@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
  */
-
-require __DIR__ . '/../classes/download.php';
 
 // Новые файлы
 $title = _t('New Files');

@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -18,7 +20,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-require __DIR__ . '/../classes/download.php';
 
 if (! $user->isValid()) {
     http_response_code(403);

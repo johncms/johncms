@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -22,8 +23,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $title = _t('User Files');
-
-require __DIR__ . '/../classes/download.php';
 
 $request = di(ServerRequestInterface::class);
 $get = $request->getQueryParams();

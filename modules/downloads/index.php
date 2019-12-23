@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
 use Johncms\Api\NavChainInterface;
 use Johncms\System\Config\Config;
 use Johncms\System\Users\User;
@@ -169,8 +170,6 @@ if (($user->rights >= 6 || $user->rights === 4)) {
 if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     require_once __DIR__ . '/includes/' . $actions[$act];
 } else {
-    require __DIR__ . '/classes/download.php';
-
     // Получаем список файлов и папок
     $notice = false;
     $title = _t('Downloads');

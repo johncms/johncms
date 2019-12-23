@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
 use Downloads\Screen;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -20,8 +21,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
  */
-
-require __DIR__ . '/../classes/download.php';
 
 // Выводим файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");

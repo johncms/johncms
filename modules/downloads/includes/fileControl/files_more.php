@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
 use Johncms\Api\NavChainInterface;
 use Johncms\Utility\FileInfo;
 use Psr\Http\Message\ServerRequestInterface;
@@ -261,7 +262,6 @@ if ($edit) {
     // Дополнительные файлы
     $req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id);
     $additional_files = [];
-    require __DIR__ . '/../../classes/download.php';
     while ($res_file_more = $req_file_more->fetch()) {
         $format = explode('.', $res_file_more['name']);
         $format_file = strtolower($format[count($format) - 1]);
