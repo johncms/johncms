@@ -57,31 +57,33 @@ $title = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title
 // Параметры комментариев
 $arg = [
     // Поле с числом комментариев
-    'object_comm_count' => 'total',
+    'object_comm_count'   => 'total',
     // Таблица с комментариями
-    'comments_table'    => 'download__comments',
+    'comments_table'      => 'download__comments',
     // Таблица комментируемых объектов
-    'object_table'      => 'download__files',
+    'object_table'        => 'download__files',
     // Имя скрипта (с параметрами вызова)
-    'script'            => '?act=comments',
+    'script'              => '?act=comments',
     // Имя идентификатора комментируемого объекта
-    'sub_id_name'       => 'id',
+    'sub_id_name'         => 'id',
     // Идентификатор комментируемого объекта
-    'sub_id'            => $id,
+    'sub_id'              => $id,
     // Владелец объекта
-    'owner'             => false,
+    'owner'               => false,
     // Возможность владельцу удалять комментарий
-    'owner_delete'      => false,
+    'owner_delete'        => false,
     // Возможность владельцу отвечать на комментарий
-    'owner_reply'       => false,
+    'owner_reply'         => false,
     // Возможность владельцу редактировать комментарий
-    'owner_edit'        => false,
+    'owner_edit'          => false,
     // Название раздела
-    'title'             => _t('Comments'),
+    'title'               => _t('Comments'),
+    // Namespace для шаблонов. Заменить для кастомных шаблонов
+    'templates_namespace' => 'system',
     // Выводится вверху списка
-    'context_top'       => '<div class="phdr"><b>' . $title . '</b></div>',
+    'context_top'         => '<div class="phdr"><b>' . $title . '</b></div>',
     // Выводится внизу списка
-    'context_bottom'    => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>',
+    'context_bottom'      => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>',
 ];
 
 // Показываем комментарии

@@ -29,6 +29,8 @@ class Comments
 
     private $comments_table;                              // Таблица с комментариями
 
+    private $templates_namespace;                         // Namespace для шаблонов
+
     private $sub_id = false;                              // Идентификатор комментируемого объекта
 
     private $item;                                        // Локальный идентификатор
@@ -91,6 +93,7 @@ class Comments
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
+        $this->templates_namespace = ! empty($arg['templates_namespace']) ? $arg['templates_namespace'] : 'system';
         $homeurl = $container->get(Config::class)->homeurl;
 
         if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
@@ -193,7 +196,7 @@ class Comments
                             $data['back_url_name'] = _t('Back', 'system');
 
                             echo $this->view->render(
-                                'system::pages/comments_reply',
+                                $this->templates_namespace . '::pages/comments_reply',
                                 [
                                     'title'      => $arg['title'],
                                     'page_title' => $arg['title'],
@@ -291,7 +294,7 @@ class Comments
                             $data['back_url_name'] = _t('Back', 'system');
 
                             echo $this->view->render(
-                                'system::pages/comments_reply',
+                                $this->templates_namespace . '::pages/comments_reply',
                                 [
                                     'title'      => $arg['title'],
                                     'page_title' => $arg['title'],
@@ -355,7 +358,7 @@ class Comments
                         ];
 
                         echo $this->view->render(
-                            'system::pages/comments_delete',
+                            $this->templates_namespace . '::pages/comments_delete',
                             [
                                 'title'      => _t('Delete', 'system'),
                                 'page_title' => _t('Delete', 'system'),
@@ -463,7 +466,7 @@ class Comments
                 }
 
                 echo $this->view->render(
-                    'system::pages/comments_list',
+                    $this->templates_namespace . '::pages/comments_list',
                     [
                         'title'      => $arg['title'],
                         'page_title' => $arg['title'],
@@ -526,7 +529,7 @@ class Comments
     private function msgForm($submit_link = '', $text = '', $reply = '')
     {
         return $this->view->render(
-            'system::pages/comments_form',
+            $this->templates_namespace . '::pages/comments_form',
             [
                 'action_url' => $this->url . $submit_link,
                 'text'       => $text,
