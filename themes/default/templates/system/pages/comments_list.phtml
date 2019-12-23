@@ -1,0 +1,111 @@
+<?php
+/**
+ * @var array|string $message
+ * @var string $type
+ * @var string $title
+ * @var string $page_title
+ * @var string $back_url
+ * @var string $back_url_name
+ * @var string $message_form
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<?php if (! empty($data['error'])): ?>
+    <?= $this->insert(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => $data['error'],
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php if (! empty($data['message_form'])): ?>
+    <div class="mb-3">
+        <?= $data['message_form'] ?>
+    </div>
+<?php endif; ?>
+
+<!-- Отображаем комментарии -->
+<?php if (empty($data['items'])): ?>
+    <div class="alert alert-info"><?= _t('The list is empty') ?></div>
+<?php else: ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <div class="shadow post-item mb-2">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                    <span class="post-date"><?= $item['created'] ?></span>
+                </div>
+                <div class="post-actions">
+                    <?php if (! empty($item['reply_url'])): ?>
+                        <a href="<?= $item['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Reply', 'system') ?></a>
+                    <?php endif; ?>
+                    <?php if (! empty($item['quote_url'])): ?>
+                        <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Quote', 'system') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar mr-2 mr-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                    </div>
+                    <div class="user-status online shadow"></div>
+                </div>
+                <div class="overflow-auto flex-grow-1"><?= $item['post_text'] ?></div>
+            </div>
+            <?php if (! empty($item['reply_text'])): ?>
+                <div class="alert alert-warning mt-2 mb-2">
+                    <b><a href="<?= $item['reply_author_url'] ?>"><?= $item['reply_author_name'] ?></a></b> <?= $item['reply_time'] ?><br>
+                    <?= $item['reply_text'] ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($item['has_edit'] || ! empty($item['edit_count'])): ?>
+                <div class="post-footer d-flex justify-content-between border-top pt-2">
+                    <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                        <?php if ($user->rights): ?>
+                            <div class="user-ip mr-2">
+                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                                <?php if (! empty($item['ip_via_proxy'])): ?>
+                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="useragent">
+                                <span>User-Agent:</span>
+                                <span><?= $item['user_agent'] ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text-nowrap post-actions">
+                        <span class="text-muted pr-2 flex-grow-1">
+                            <?php if (! empty($item['edit_count'])): ?>
+                                <?= _t('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                            <?php endif; ?>
+                        </span>
+                        <?php if (! empty($item['edit_url'])): ?>
+                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit', 'system') ?></a>
+                        <?php endif; ?>
+                        <?php if (! empty($item['delete_url'])): ?>
+                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete', 'system') ?></a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+
+    <?php if (! empty($data['pagination'])): ?>
+        <?= $data['pagination'] ?>
+    <?php endif; ?>
+<?php endif; ?>
+

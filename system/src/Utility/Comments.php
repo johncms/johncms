@@ -12,12 +12,15 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\System\Utility\Bbcode;
 use Johncms\System\Config\Config;
-use Johncms\System\Http\Environment;
-use Johncms\System\Utility\Tools;
-use Johncms\System\Users\User;
 use Johncms\System\Container\Factory;
+use Johncms\System\Http\Environment;
+use Johncms\System\Users\User;
+use Johncms\System\Utility\Bbcode;
+use Johncms\System\Utility\Tools;
+use Johncms\System\View\Render;
+use PDO;
+use Psr\Container\ContainerInterface;
 
 class Comments
 {
@@ -36,8 +39,10 @@ class Comments
 
     private $url;                                         // URL формируемых ссылок
 
+    private $view;
+
     /**
-     * @var \PDO
+     * @var PDO
      */
     private $db;
 
@@ -74,13 +79,15 @@ class Comments
 
     public function __construct($arg = [])
     {
-        global $mod, $start, $kmess;
-
-        /** @var \Psr\Container\ContainerInterface $container */
+        global $mod, $start;
+        /** @var ContainerInterface $container */
         $container = Factory::getContainer();
         $this->tools = $container->get(Tools::class);
-        $this->db = $container->get(\PDO::class);
+        $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
+        $this->view = di(Render::class);
+
+        $kmess = $this->systemUser->config->kmess;
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
@@ -120,7 +127,6 @@ class Comments
             case 'reply':
                 // Отвечаем на комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_reply && ! $this->ban) {
-                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Reply', 'system') . '</div>';
                     $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -128,7 +134,16 @@ class Comments
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
 
                         if (! empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
-                            echo $this->tools->displayError(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                            echo $this->view->render(
+                                'system::pages/result',
+                                [
+                                    'title'         => _t('Downloads'),
+                                    'type'          => 'alert-danger',
+                                    'message'       => _t('Administrator already replied to this message', 'system'),
+                                    'back_url'      => $this->url,
+                                    'back_url_name' => _t('Back', 'system'),
+                                ]
+                            );
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msgCheck();
 
@@ -138,31 +153,66 @@ class Comments
                                 $attributes['reply_name'] = $this->systemUser->name;
                                 $attributes['reply_time'] = time();
 
-                                $this->db->prepare('
+                                $this->db->prepare(
+                                    '
                                   UPDATE `' . $this->comments_table . '` SET
                                   `reply` = ?,
                                   `attributes` = ?
                                   WHERE `id` = ?
-                                ')->execute([
-                                    $message['text'],
-                                    serialize($attributes),
-                                    $this->item,
-                                ]);
+                                '
+                                )->execute(
+                                    [
+                                        $message['text'],
+                                        serialize($attributes),
+                                        $this->item,
+                                    ]
+                                );
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo $this->tools->displayError($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
+                                echo $this->view->render(
+                                    'system::pages/result',
+                                    [
+                                        'title'         => _t('Downloads'),
+                                        'type'          => 'alert-danger',
+                                        'message'       => $message['error'],
+                                        'back_url'      => $this->url . '&amp;mod=reply&amp;item=' . $this->item,
+                                        'back_url_name' => _t('Back', 'system'),
+                                    ]
+                                );
                             }
                         } else {
+                            $data = [];
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
                                 ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
                                 $this->tools->checkout($res['text']);
                             $reply = $this->tools->checkout($res['reply']);
-                            echo $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
-                                '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
+                            $data['message_form'] = $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply);
+
+                            $data['back_url'] = $this->url;
+                            $data['back_url_name'] = _t('Back', 'system');
+
+                            echo $this->view->render(
+                                'system::pages/comments_reply',
+                                [
+                                    'title'      => $arg['title'],
+                                    'page_title' => $arg['title'],
+                                    'data'       => $data,
+
+                                ]
+                            );
                         }
                     } else {
-                        echo $this->tools->displayError(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                        echo $this->view->render(
+                            'system::pages/result',
+                            [
+                                'title'         => _t('Downloads'),
+                                'type'          => 'alert-danger',
+                                'message'       => _t('Wrong data', 'system'),
+                                'back_url'      => $this->url,
+                                'back_url_name' => _t('Back', 'system'),
+                            ]
+                        );
                     }
                 }
                 break;
@@ -170,7 +220,6 @@ class Comments
             case 'edit':
                 // Редактируем комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_edit && ! $this->ban) {
-                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Edit', 'system') . '</div>';
                     $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -179,7 +228,16 @@ class Comments
                         $user = $this->tools->getUser($res['user_id']);
 
                         if ($user['rights'] > $this->systemUser->rights) {
-                            echo $this->tools->displayError(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                            echo $this->view->render(
+                                'system::pages/result',
+                                [
+                                    'title'         => _t('Downloads'),
+                                    'type'          => 'alert-danger',
+                                    'message'       => _t('You cannot edit posts of higher administration', 'system'),
+                                    'back_url'      => $this->url,
+                                    'back_url_name' => _t('Back', 'system'),
+                                ]
+                            );
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msgCheck();
 
@@ -194,32 +252,66 @@ class Comments
                                     $attributes['edit_count'] = 1;
                                 }
 
-                                $this->db->prepare('
+                                $this->db->prepare(
+                                    '
                                   UPDATE `' . $this->comments_table . '` SET
                                   `text` = ?,
                                   `attributes` = ?
                                   WHERE `id` = ?
-                                ')->execute([
-                                    $message['text'],
-                                    serialize($attributes),
-                                    $this->item,
-                                ]);
+                                '
+                                )->execute(
+                                    [
+                                        $message['text'],
+                                        serialize($attributes),
+                                        $this->item,
+                                    ]
+                                );
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo $this->tools->displayError($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
+                                echo $this->view->render(
+                                    'system::pages/result',
+                                    [
+                                        'title'         => _t('Downloads'),
+                                        'type'          => 'alert-danger',
+                                        'message'       => $message['error'],
+                                        'back_url'      => $this->url . '&amp;mod=edit&amp;item=' . $this->item,
+                                        'back_url_name' => _t('Back', 'system'),
+                                    ]
+                                );
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
+                            $author .= $this->tools->checkout($res['text'], 1, 1);
                             $text = $this->tools->checkout($res['text']);
-                            echo $this->msgForm('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
+                            $data = [];
+                            $data['message_form'] = $this->msgForm('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
+                            $data['back_url'] = $this->url;
+                            $data['back_url_name'] = _t('Back', 'system');
+
+                            echo $this->view->render(
+                                'system::pages/comments_reply',
+                                [
+                                    'title'      => $arg['title'],
+                                    'page_title' => $arg['title'],
+                                    'data'       => $data,
+
+                                ]
+                            );
                         }
                     } else {
-                        echo $this->tools->displayError(_t('Wrong data', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                        echo $this->view->render(
+                            'system::pages/result',
+                            [
+                                'title'         => _t('Downloads'),
+                                'type'          => 'alert-danger',
+                                'message'       => _t('Wrong data', 'system'),
+                                'back_url'      => $this->url,
+                                'back_url_name' => _t('Back', 'system'),
+                            ]
+                        );
                     }
-
-                    echo '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                 }
                 break;
 
@@ -256,25 +348,35 @@ class Comments
                         }
                         header('Location: ' . str_replace('&amp;', '&', $this->url));
                     } else {
-                        echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Delete', 'system') . '</div>' .
-                            '<div class="rmenu"><p>' . _t('Do you really want to delete?', 'system') . '<br />' .
-                            '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . _t('Delete', 'system') . '</a> | ' .
-                            '<a href="' . $this->url . '">' . _t('Cancel', 'system') . '</a><br />' .
-                            '<div class="sub">' . _t('Clear all messages from this user', 'system') . '<br />' .
-                            '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . _t('Clear', 'system') . '</a></span>' .
-                            '</div></p></div>' .
-                            '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
+                        $data = [
+                            'delete_url' => $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes',
+                            'back_url'   => $this->url,
+                            'clear_url'  => $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all',
+                        ];
+
+                        echo $this->view->render(
+                            'system::pages/comments_delete',
+                            [
+                                'title'      => _t('Delete', 'system'),
+                                'page_title' => _t('Delete', 'system'),
+                                'data'       => $data,
+
+                            ]
+                        );
                     }
                 }
                 break;
 
             default:
-                if (! empty($arg['context_top'])) {
-                    echo $arg['context_top'];
-                }
+                $data = [];
 
-                // Добавляем новый комментарий
-                if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msgCheck(1)) !== false) {
+                if (
+                    ! $this->ban &&
+                    isset($_POST['submit']) &&
+                    $this->systemUser->isValid() &&
+                    ! $this->tools->isIgnor($this->owner) &&
+                    ($message = $this->msgCheck(1)) !== false
+                ) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
                         $this->addComment($message['text']);
@@ -282,94 +384,100 @@ class Comments
                         $_SESSION['code'] = $message['code'];
                     } else {
                         // Показываем ошибки, если есть
-                        echo $this->tools->displayError($message['error']);
+                        $data['error'] = $message['error'];
                         $this->total = $this->msgTotal();
                     }
                 } else {
                     $this->total = $this->msgTotal();
                 }
 
-                // Показываем форму ввода
-                if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner)) {
-                    echo $this->msgForm();
-                }
-
-                // Показываем список комментариев
-                echo '<div class="phdr"><b>' . $arg['title'] . '</b></div>';
-
-                if ($this->total > $kmess) {
-                    echo '<div class="topmenu">' . $this->tools->displayPagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
-                }
-
+                $items = [];
                 if ($this->total) {
-                    $req = $this->db->query('SELECT `' . $this->comments_table . '`.*, `' . $this->comments_table . '`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                    $req = $this->db->query(
+                        'SELECT `' . $this->comments_table . '`.*, `' . $this->comments_table . '`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                     FROM `' . $this->comments_table . '` LEFT JOIN `users` ON `' . $this->comments_table . "`.`user_id` = `users`.`id`
-                    WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT ${start}, ${kmess}");
-                    $i = 0;
+                    WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT ${start}, ${kmess}"
+                    );
 
                     while ($res = $req->fetch()) {
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
                         $res['name'] = $attributes['author_name'];
+
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
-                        $res['browser'] = $attributes['author_browser'];
-                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                        $menu = [
-                            $this->access_reply ? '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $res['subid'] . '">' . _t('Reply', 'system') . '</a>' : '',
-                            $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . _t('Edit', 'system') . '</a>' : '',
-                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . _t('Delete', 'system') . '</a>' : '',
-                        ];
+                        $res['user_agent'] = $attributes['author_browser'];
+                        $res['created'] = $this->tools->displayDate($res['time']);
+
+                        $res['reply_url'] = '';
+                        $res['edit_url'] = '';
+                        $res['delete_url'] = '';
+                        if ($this->access_reply) {
+                            $res['reply_url'] = $this->url . '&amp;mod=reply&amp;item=' . $res['subid'];
+                        }
+                        if ($this->access_edit) {
+                            $res['edit_url'] = $this->url . '&amp;mod=edit&amp;item=' . $res['subid'];
+                        }
+                        if ($this->access_delete) {
+                            $res['delete_url'] = $this->url . '&amp;mod=del&amp;item=' . $res['subid'];
+                        }
+
+                        $res['has_edit'] = ($this->access_edit || $this->access_delete);
+
                         $text = $this->tools->checkout($res['text'], 1, 1);
                         $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
 
-                        if (isset($attributes['edit_count'])) {
-                            $text .= '<br /><span class="gray"><small>' . _t('Edited', 'system') . ': <b>' . $attributes['edit_name'] . '</b>' .
-                                ' (' . $this->tools->displayDate((int) $attributes['edit_time']) . ') <b>' .
-                                '[' . $attributes['edit_count'] . ']</b></small></span>';
-                        }
+                        $res['post_text'] = $text;
 
+                        $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+                        $res['ip'] = long2ip($res['ip']);
+                        $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']);
+                        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+
+                        $res['edit_count'] = $attributes['edit_count'] ?? 0;
+                        $res['editor_name'] = $attributes['edit_name'] ?? '';
+                        $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->tools->displayDate($attributes['edit_time']) : '';
+
+                        $res['reply_text'] = '';
                         if (! empty($res['reply'])) {
                             $reply = $this->tools->checkout($res['reply'], 1, 1);
                             $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
-                            $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
-                                '<a href="' . $homeurl . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                                ' (' . $this->tools->displayDate((int) $attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
+                            $res['reply_text'] = $reply;
+                            $res['reply_time'] = $this->tools->displayDate($attributes['reply_time']);
+                            $res['reply_author_url'] = '/profile/?user=' . $attributes['reply_id'];
+                            $res['reply_author_name'] = $attributes['reply_name'];
                         }
-
-                        $user_arg = [
-                            'header' => ' <span class="gray">(' . $this->tools->displayDate($res['time']) . ')</span>',
-                            'body' => $text,
-                            'sub' => implode(' | ', array_filter($menu)),
-                            'iphide' => ($this->systemUser->rights ? false : true),
-                        ];
-                        echo $this->tools->displayUser($res, $user_arg);
-                        echo '</div>';
-                        ++$i;
+                        $items[] = $res;
                     }
-                } else {
-                    echo '<div class="menu"><p>' . _t('The list is empty', 'system') . '</p></div>';
                 }
 
-                echo '<div class="phdr">' . _t('Total', 'system') . ': ' . $this->total . '</div>';
 
-                if ($this->total > $kmess) {
-                    echo '<div class="topmenu">' . $this->tools->displayPagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
-                        '<p><form action="' . $this->url . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . _t('To Page', 'system') . ' &gt;&gt;"/>' .
-                        '</form></p>';
+                $data['items'] = $items;
+                $data['total'] = $this->total;
+
+                if (! $this->ban && $this->systemUser->isValid() && ! $this->tools->isIgnor($this->owner)) {
+                    $data['message_form'] = $this->msgForm();
                 }
 
-                if (! empty($arg['context_bottom'])) {
-                    echo $arg['context_bottom'];
+                if ($this->total > $this->systemUser->config->kmess) {
+                    $data['pagination'] = $this->tools->displayPagination($this->url . '&amp;', $start, $this->total, $this->systemUser->config->kmess);
                 }
+
+                echo $this->view->render(
+                    'system::pages/comments_list',
+                    [
+                        'title'      => $arg['title'],
+                        'page_title' => $arg['title'],
+                        'data'       => $data,
+
+                    ]
+                );
         }
     }
 
     // Добавляем комментарий в базу
     private function addComment($message)
     {
-        /** @var \Psr\Container\ContainerInterface $container */
+        /** @var ContainerInterface $container */
         $container = Factory::getContainer();
 
         /** @var Environment $env */
@@ -377,14 +485,15 @@ class Comments
 
         // Формируем атрибуты сообщения
         $attributes = [
-            'author_name' => $this->systemUser->name,
-            'author_ip' => $env->getIp(),
+            'author_name'         => $this->systemUser->name,
+            'author_ip'           => $env->getIp(),
             'author_ip_via_proxy' => $env->getIpViaProxy(),
-            'author_browser' => $env->getUserAgent(),
+            'author_browser'      => $env->getUserAgent(),
         ];
 
         // Записываем комментарий в базу
-        $this->db->prepare('
+        $this->db->prepare(
+            '
           INSERT INTO `' . $this->comments_table . '` SET
           `sub_id` = ?,
           `user_id` = ?,
@@ -392,13 +501,16 @@ class Comments
           `reply` = \'\',
           `time` = ?,
           `attributes` = ?
-        ')->execute([
-            (int) ($this->sub_id),
-            $this->systemUser->id,
-            $message,
-            time(),
-            serialize($attributes),
-        ]);
+        '
+        )->execute(
+            [
+                (int) ($this->sub_id),
+                $this->systemUser->id,
+                $message,
+                time(),
+                serialize($attributes),
+            ]
+        );
 
         // Обновляем статистику пользователя
         $this->db->exec("UPDATE `users` SET `komm` = '" . ($this->systemUser->komm + 1) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->systemUser->id . "'");
@@ -413,12 +525,17 @@ class Comments
     // Форма ввода комментария
     private function msgForm($submit_link = '', $text = '', $reply = '')
     {
-        return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
-            (! empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
-            '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-            '</p><p>' . Factory::getContainer()->get(Bbcode::class)->buttons('form', 'message') .
-            '<textarea rows="' . $this->systemUser->config->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
-            '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
+        return $this->view->render(
+            'system::pages/comments_form',
+            [
+                'action_url' => $this->url . $submit_link,
+                'text'       => $text,
+                'reply'      => $reply,
+                'max_length' => $this->max_lenght,
+                'bb_codes'   => di(Bbcode::class)->buttons('form', 'message'),
+                'code'       => rand(1000, 9999),
+            ]
+        );
     }
 
     // Проверка текста сообщения
@@ -460,8 +577,8 @@ class Comments
 
         // Возвращаем результат
         return [
-            'code' => $code,
-            'text' => $message,
+            'code'  => $code,
+            'text'  => $message,
             'error' => $error,
         ];
     }

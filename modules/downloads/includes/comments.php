@@ -19,25 +19,40 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if (! $config->mod_down_comm && $user->rights < 7) {
-    echo _t('Comments are disabled') . ' <a href="?">' . _t('Downloads') . '</a>';
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Comments'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Comments are disabled'),
+            'back_url'      => $url,
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $user->rights < 6 && $user->rights != 4)) {
-    echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+if (($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) || ! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('File not found'),
+            'type'          => 'alert-danger',
+            'message'       => _t('File not found'),
+            'back_url'      => $url,
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
-if (! $config->mod_down_comm) {
-    echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
-}
-
 $title_pages = htmlspecialchars(mb_substr($res_down['rus_name'], 0, 30));
-$textl = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
+$title = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
 
 // Параметры комментариев
 $arg = [
@@ -64,12 +79,10 @@ $arg = [
     // Название раздела
     'title'             => _t('Comments'),
     // Выводится вверху списка
-    'context_top'       => '<div class="phdr"><b>' . $textl . '</b></div>',
+    'context_top'       => '<div class="phdr"><b>' . $title . '</b></div>',
     // Выводится внизу списка
     'context_bottom'    => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>',
 ];
 
 // Показываем комментарии
-$comm = new Johncms\Utility\Comments($arg);
-
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+new Johncms\Utility\Comments($arg);
