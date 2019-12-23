@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
+use Johncms\Api\NavChainInterface;
 use Johncms\System\Config\Config;
 use Johncms\System\Container\Factory;
 use Johncms\System\Http\Environment;
@@ -79,6 +80,11 @@ class Comments
 
     public $added = false;                                // Метка добавления нового комментария
 
+    public $back_url = '';                                // Страница возврата назад
+
+    /** @var NavChainInterface $nav_chain */
+    public $nav_chain;
+
     public function __construct($arg = [])
     {
         global $mod, $start;
@@ -88,11 +94,13 @@ class Comments
         $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
         $this->view = di(Render::class);
+        $this->nav_chain = di(NavChainInterface::class);
 
         $kmess = $this->systemUser->config->kmess;
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
+        $this->back_url = ! empty($arg['back_url']) ? $arg['back_url'] : '';
         $this->templates_namespace = ! empty($arg['templates_namespace']) ? $arg['templates_namespace'] : 'system';
         $homeurl = $container->get(Config::class)->homeurl;
 
@@ -130,6 +138,7 @@ class Comments
             case 'reply':
                 // Отвечаем на комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_reply && ! $this->ban) {
+                    $this->nav_chain->add(_t('Reply', 'system'));
                     $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -198,8 +207,8 @@ class Comments
                             echo $this->view->render(
                                 $this->templates_namespace . '::pages/comments_reply',
                                 [
-                                    'title'      => $arg['title'],
-                                    'page_title' => $arg['title'],
+                                    'title'      => _t('Reply', 'system'),
+                                    'page_title' => _t('Reply', 'system'),
                                     'data'       => $data,
 
                                 ]
@@ -223,6 +232,7 @@ class Comments
             case 'edit':
                 // Редактируем комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_edit && ! $this->ban) {
+                    $this->nav_chain->add(_t('Edit', 'system'));
                     $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -296,8 +306,8 @@ class Comments
                             echo $this->view->render(
                                 $this->templates_namespace . '::pages/comments_reply',
                                 [
-                                    'title'      => $arg['title'],
-                                    'page_title' => $arg['title'],
+                                    'title'      => _t('Edit', 'system'),
+                                    'page_title' => _t('Edit', 'system'),
                                     'data'       => $data,
 
                                 ]
@@ -321,6 +331,7 @@ class Comments
             case 'del':
                 // Удаляем комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_delete && ! $this->ban) {
+                    $this->nav_chain->add(_t('Delete', 'system'));
                     if (isset($_GET['yes'])) {
                         $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
@@ -471,6 +482,7 @@ class Comments
                         'title'      => $arg['title'],
                         'page_title' => $arg['title'],
                         'data'       => $data,
+                        'back_url'   => $this->back_url,
 
                     ]
                 );

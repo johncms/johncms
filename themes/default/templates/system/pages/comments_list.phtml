@@ -109,3 +109,8 @@ $this->layout(
     <?php endif; ?>
 <?php endif; ?>
 
+<?php if (! empty($back_url)): ?>
+    <div class="mt-4">
+        <a href="<?= $back_url ?>"><?= _t('Back', 'system') ?></a>
+    </div>
+<?php endif; ?>

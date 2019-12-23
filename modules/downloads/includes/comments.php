@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -51,8 +53,12 @@ if (($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) || ! $
     exit;
 }
 
+Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]);
+$nav_chain->add(htmlspecialchars($res_down['rus_name']), '/downloads/?act=view&id=' . $res_down['id']);
+$nav_chain->add(_t('Comments'), '/downloads/?act=comments&id=' . $res_down['id']);
+
 $title_pages = htmlspecialchars(mb_substr($res_down['rus_name'], 0, 30));
-$title = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
+$title = (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages) . ' - ' . _t('Comments');
 
 // Параметры комментариев
 $arg = [
@@ -80,10 +86,8 @@ $arg = [
     'title'               => _t('Comments'),
     // Namespace для шаблонов. Заменить для кастомных шаблонов
     'templates_namespace' => 'system',
-    // Выводится вверху списка
-    'context_top'         => '<div class="phdr"><b>' . $title . '</b></div>',
-    // Выводится внизу списка
-    'context_bottom'      => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>',
+    // Ссылка на страницу назад
+    'back_url'            => '/downloads/?act=view&id=' . $res_down['id'],
 ];
 
 // Показываем комментарии
