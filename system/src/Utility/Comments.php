@@ -583,9 +583,7 @@ class Comments
         // Проверка на повтор сообщений
         if (! $error && $rpt_check) {
             $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `user_id` = '" . $this->systemUser->id . "' ORDER BY `id` DESC LIMIT 1");
-            $res = $req->fetch();
-
-            if (mb_strtolower($message) == mb_strtolower((string) $res['text'])) {
+            if (($res = $req->fetch()) && mb_strtolower($message) === mb_strtolower((string) $res['text'])) {
                 $error[] = _t('Message already exists', 'system');
             }
         }
