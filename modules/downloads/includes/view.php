@@ -234,6 +234,11 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION[$sessio
     $_SESSION['rate_file_' . $id] = true;
 }
 
+$file_data['can_vote'] = false;
+if (! isset($_SESSION[$session_index]) && $user->isValid()) {
+    $file_data['can_vote'] = true;
+}
+
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
 
 $file_data['rate'] = $file_rate;
