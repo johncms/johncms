@@ -10,14 +10,15 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Utility\Tools;
+use Johncms\Api\NavChainInterface;
+use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
+use Johncms\System\Utility\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var Assets $assets
@@ -33,16 +34,33 @@ $user = di(User::class);
 $tools = di(Tools::class);
 $view = di(Render::class);
 
+/** @var NavChainInterface $nav_chain */
+$nav_chain = di(NavChainInterface::class);
+
+/** @var Request $request */
+$request = di(Request::class);
+
 // Регистрируем папку с языками модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$al = isset($_REQUEST['al']) ? abs((int) ($_REQUEST['al'])) : null;
-$img = isset($_REQUEST['img']) ? abs((int) ($_REQUEST['img'])) : null;
+$loader = new Aura\Autoload\Loader();
+$loader->register();
+$loader->addPrefix('Albums', __DIR__ . '/lib');
 
-$textl = _t('Album');
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('album', __DIR__ . '/templates/');
+
+$title = _t('Album');
+
+// Добавляем раздел в навигационную цепочку
+$nav_chain->add($title, '/album/');
+
+$id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
+$act = $request->getQuery('act', 'index');
+$mod = $request->getQuery('mod', '');
+$al = $request->getQuery('al', null, FILTER_SANITIZE_NUMBER_INT);
+$img = $request->getQuery('img', null, FILTER_SANITIZE_NUMBER_INT);
+
 
 $max_album = 20;
 $max_photo = 400;
@@ -50,10 +68,11 @@ $max_photo = 400;
 // Закрываем от неавторизованных юзеров
 if (! $user->isValid()) {
     echo $view->render(
-        'system::app/old_content',
+        'system::pages/result',
         [
-            'title'   => $textl ?? '',
-            'content' => $tools->displayError(_t('For registered users only')),
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('For registered users only'),
         ]
     );
     exit;
@@ -61,13 +80,13 @@ if (! $user->isValid()) {
 
 // Получаем данные пользователя
 $foundUser = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
-
 if (! $foundUser) {
     echo $view->render(
-        'system::app/old_content',
+        'system::pages/result',
         [
-            'title'   => $textl ?? '',
-            'content' => $tools->displayError(_t('User does not exists')),
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('User does not exists'),
         ]
     );
     exit;
@@ -125,56 +144,11 @@ $actions = [
     'top',
     'users',
     'vote',
+    'index',
 ];
 
-if (($key = array_search($act, $actions)) !== false) {
+if (($key = array_search($act, $actions, true)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
-    $albumcount = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-    $total_mans = $db->query(
-        "SELECT COUNT(DISTINCT `user_id`)
-      FROM `cms_album_files`
-      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
-      WHERE `users`.`sex` = 'm'
-    "
-    )->fetchColumn();
-    $total_womans = $db->query(
-        "SELECT COUNT(DISTINCT `user_id`)
-      FROM `cms_album_files`
-      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
-      WHERE `users`.`sex` = 'zh'
-    "
-    )->fetchColumn();
-    $newcount = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
-    echo '<div class="phdr"><b>' . _t('Photo Albums') . '</b></div>' .
-        '<div class="gmenu"><p>' . '<img src="' . $assets->url('images/old/user-ok.png') . '" alt="" class="icon">' .
-        '<a href="?act=top">' . _t('New Photos') . '</a> (' . $newcount . ')<br>' .
-        '<img src="' . $assets->url('images/old/talk.gif') . '" alt="" class="icon">' . '<a href="?act=top&amp;mod=last_comm">' . _t('New Comments') . '</a>' .
-        '</p></div>' .
-        '<div class="menu">' .
-        '<p><h3><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon">' . _t('Albums') . '</h3><ul>' .
-        '<li><a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a> (' . $total_mans . ')</li>' .
-        '<li><a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a> (' . $total_womans . ')</li>';
-
-    if ($user->isValid()) {
-        echo '<li><a href="?act=list">' . _t('My Album') . '</a></li>';
-    }
-
-    echo '</ul></p>' .
-        '<p><h3><img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">' . _t('Rating') . '</h3><ul>' .
-        '<li><a href="?act=top&amp;mod=votes">' . _t('Top Votes') . '</a></li>' .
-        '<li><a href="?act=top&amp;mod=downloads">' . _t('Top Downloads') . '</a></li>' .
-        '<li><a href="?act=top&amp;mod=views">' . _t('Top Views') . '</a></li>' .
-        '<li><a href="?act=top&amp;mod=comments">' . _t('Top Comments') . '</a></li>' .
-        '<li><a href="?act=top&amp;mod=trash">' . _t('Top Worst') . '</a></li>' .
-        '</ul></p>' .
-        '</div>';
+    pageNotFound();
 }
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => $textl ?? '',
-        'content' => ob_get_clean(),
-    ]
-);
