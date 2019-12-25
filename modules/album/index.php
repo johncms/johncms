@@ -79,8 +79,10 @@ if (! $user->isValid()) {
 }
 
 // Получаем данные пользователя
-$foundUser = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
-if (! $foundUser) {
+/** @var int $user_id */
+$user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);
+$req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $user_id);
+if (! $foundUser = $req->fetch()) {
     echo $view->render(
         'system::pages/result',
         [

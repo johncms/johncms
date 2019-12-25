@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -23,42 +23,70 @@ if (isset($_SESSION['ap'])) {
     unset($_SESSION['ap']);
 }
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('Personal') . '</div>';
-$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' " . ($foundUser['id'] == $user->id || $user->rights >= 6 ? '' : 'AND `access` > 1') . ' ORDER BY `sort` ASC');
+$data = [];
+
+$req = $db->query(
+    "SELECT cms_album_cat.*, (SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = cms_album_cat.id) as count_photos
+FROM `cms_album_cat`
+WHERE `user_id` = '" . $foundUser['id'] . "' " . ($foundUser['id'] === $user->id || $user->rights >= 6 ? '' : 'AND `access` > 1') . '
+ORDER BY `sort`'
+);
 $total = $req->rowCount();
 
-if ($foundUser['id'] == $user->id && $total < $max_album && empty($user->ban) || $user->rights >= 7) {
-    echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Create Album') . '</a></div>';
+$data['create_url'] = '';
+if (($foundUser['id'] === $user->id && $total < $max_album && empty($user->ban)) || $user->rights >= 7) {
+    $data['create_url'] = '?act=edit&amp;user=' . $foundUser['id'];
+    //echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Create Album') . '</a></div>';
 }
 
-echo '<div class="user"><p>' . $tools->displayUser($foundUser, ['iphide' => 1]) . '</p></div>';
+$foundUser['nick'] = $foundUser['name'];
+$foundUser['album_url'] = '/profile/?user=' . $foundUser['id'];
+$foundUser['user_is_online'] = time() <= $foundUser['lastdate'] + 300;
 
+$data['user'] = $foundUser;
+$data['total'] = $total;
+
+$albums = [];
 if ($total) {
-    $i = 0;
     while ($res = $req->fetch()) {
-        $count = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '" . $res['id'] . "'")->fetchColumn();
-        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
-            '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
-            '<a href="?act=show&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '"><b>' . $tools->checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
+        $res['name'] = $tools->checkout($res['name']);
+        $res['description'] = $tools->checkout($res['description'], 1, 1);
+        $res['album_url'] = '?act=show&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
 
-        if ($foundUser['id'] == $user->id || $user->rights >= 6 || ! empty($res['description'])) {
-            $menu = [
-                '<a href="?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Up') . '</a>',
-                '<a href="?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Down') . '</a>',
-                '<a href="?act=edit&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Edit') . '</a>',
-                '<a href="?act=delete&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Delete') . '</a>',
-            ];
-            echo '<div class="sub">' .
-                (! empty($res['description']) ? '<div class="gray">' . $tools->checkout($res['description'], 1, 1) . '</div>' : '') .
-                (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 6 ? implode(' | ', $menu) : '') .
-                '</div>';
+        $res['has_edit'] = false;
+        if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 6) {
+            $res['up_url'] = '?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['down_url'] = '?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['edit_url'] = '?act=edit&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['delete_url'] = '?act=delete&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['has_edit'] = true;
         }
-
-        echo '</div>';
-        ++$i;
+        $albums[] = $res;
     }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+$count_photos = array_column($albums, 'count_photos');
+$data['total_photos'] = array_sum($count_photos);
+$data['albums'] = $albums;
+
+$data['user']['count_albums'] = $total;
+$data['user']['count'] = $data['total_photos'];
+
+
+if ($user->id === $data['user']['id']) {
+    $title = _t('Your albums');
+    $nav_chain->add($title);
+} else {
+    $title = _t('User albums:') . ' ' . $data['user']['name'];
+    $nav_chain->add(_t('User albums'));
+}
+
+
+echo $view->render(
+    'album::list',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
