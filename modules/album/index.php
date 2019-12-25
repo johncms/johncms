@@ -50,14 +50,14 @@ $loader->addPrefix('Albums', __DIR__ . '/lib');
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('album', __DIR__ . '/templates/');
 
-$title = _t('Album');
+$title = _t('Albums');
 
 // Добавляем раздел в навигационную цепочку
 $nav_chain->add($title, '/album/');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $act = $request->getQuery('act', 'index');
-$mod = $request->getQuery('mod', '');
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 $al = $request->getQuery('al', null, FILTER_SANITIZE_NUMBER_INT);
 $img = $request->getQuery('img', null, FILTER_SANITIZE_NUMBER_INT);
 

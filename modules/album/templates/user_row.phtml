@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $item
+ */
+?>
+
+<div class="user-row card shadow border-0 mb-2">
+    <div class="card-body">
+        <div class="d-flex align-items-start">
+            <div class="user-avatar mr-2 mr-md-4">
+                <div class="avatar-image rounded-circle overflow-hidden">
+                    <img src="<?= $this->avatar($item['id']) ?>" class="img-fluid" alt=".">
+                </div>
+                <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+            </div>
+            <div class="overflow-auto flex-grow-1">
+                <div class="user-name">
+                    <?php if (! empty($item['album_url'])): ?>
+                        <a href="<?= $item['album_url'] ?>" class="user-login mr-2"><?= $item['nick'] ?></a>
+                    <?php else: ?>
+                        <a class="user-login mr-2"><?= $item['nick'] ?></a>
+                    <?php endif; ?>
+                </div>
+                <div>
+                    <?= $item['count_albums'] ?> <?= _p('album', 'albums', $item['count_albums']) ?>,
+                    <?= $item['count'] ?> <?= _p('photo', 'photos', $item['count']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
