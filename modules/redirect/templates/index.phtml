@@ -13,7 +13,7 @@
         <p>
             <?= _t('Administration of our site is not responsible for the content of external sites', 'system') ?><br>
             <?= sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'),
-                '<strong>' . parse_url($config->homeurl, PHP_URL_HOST) . '</strong>') ?>
+                '<strong>' . parse_url($config['homeurl'], PHP_URL_HOST) . '</strong>') ?>
         </p>
         <br><input type="submit" name="submit" value="<?= _t('Go to Link', 'system') ?>"/>
     </form>

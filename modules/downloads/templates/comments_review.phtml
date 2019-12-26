@@ -25,7 +25,7 @@ $this->layout(
 );
 ?>
 
-<?php if (! $config->mod_down_comm): ?>
+<?php if (! $config['mod_down_comm']): ?>
     <div class="alert alert-danger border-0 shadow">
         <?= _t('Comments are disabled') ?>
     </div>

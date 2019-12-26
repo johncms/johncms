@@ -32,7 +32,7 @@ $news_counters = $counters->news();
                 <?php endif ?>
             </a>
         </li>
-        <?php if ($config->mod_forum || $user->rights >= 7): ?>
+        <?php if ($config['mod_forum'] || $user->rights >= 7): ?>
             <li>
                 <a href="/forum/">
                     <svg class="icon">
@@ -46,7 +46,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
         <?php endif ?>
-        <?php if ($config->mod_guest || $user->rights >= 7): ?>
+        <?php if ($config['mod_guest'] || $user->rights >= 7): ?>
             <li>
                 <a href="/guestbook/ga">
                     <svg class="icon">
@@ -61,7 +61,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
         <?php endif ?>
-        <?php if ($config->mod_down || $user->rights >= 7): ?>
+        <?php if ($config['mod_down'] || $user->rights >= 7): ?>
             <li>
                 <a href="/downloads/">
                     <svg class="icon">
@@ -77,7 +77,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
         <?php endif ?>
-        <?php if ($config->mod_lib || $user->rights >= 7): ?>
+        <?php if ($config['mod_lib'] || $user->rights >= 7): ?>
             <li>
                 <a href="/library/">
                     <svg class="icon">
@@ -168,7 +168,7 @@ $news_counters = $counters->news();
         </a>
     </div>
 
-    <?php if (count($config->lng_list) > 1): ?>
+    <?php if (count($config['lng_list']) > 1): ?>
         <div class="mt-1">
             <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
                 <img src="<?= $this->asset('images/flags/' . strtolower($locale) . '.png') ?>" alt="<?= $locale ?>">

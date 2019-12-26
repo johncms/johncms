@@ -15,7 +15,7 @@
 </div>
 <div class="modal-body">
     <form action="/language/" method="post" name="select_language">
-        <?php foreach ($config->lng_list as $key => $val): ?>
+        <?php foreach ($config['lng_list'] as $key => $val): ?>
             <div class="custom-control custom-radio mb-2">
                 <input type="radio" id="lang_<?= $key ?>" name="setlng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $locale ? ' checked="checked"' : '') ?>>
                 <label class="custom-control-label" for="lang_<?= $key ?>">

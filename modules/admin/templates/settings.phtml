@@ -48,7 +48,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu'))
             </div>
             <div class="form-group">
                 <span style="font-weight:bold; background-color:#C0FFC0"> <?= date('H:i', time() + $sysconf['timeshift'] * 3600) ?> </span>&nbsp;<?= _t('System Time') ?><br>
-                <span style="font-weight:bold; background-color:#FFC0C0"> <?= date('H:i') ?> </span>&nbsp;<?= _t('Server Time') ?>
+                <span style="font-weight:bold; background-color:#FFC0C0"> <?= date('H:i') ?> </span>&nbsp;UTC
             </div>
         </fieldset>
         <fieldset class="mt-3">

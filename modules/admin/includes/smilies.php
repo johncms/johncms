@@ -13,7 +13,6 @@ declare(strict_types=1);
 use Johncms\System\Config\Config;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var Johncms\System\Utility\Tools $tools

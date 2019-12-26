@@ -27,7 +27,7 @@ $this->layout(
 );
 ?>
 
-<?php if (! $config->mod_down): ?>
+<?php if (! $config['mod_down']): ?>
     <div class="alert alert-danger border-0 shadow">
         <?= _t('Downloads are closed') ?>
     </div>
@@ -157,7 +157,7 @@ $this->layout(
         <?php if ($id): ?>
             <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
         <?php else: ?>
-            <?php if ($user->rights >= 7 || (isset($config->mod_down_comm) && $config->mod_down_comm)): ?>
+            <?php if ($user->rights >= 7 || (isset($config['mod_down_comm']) && $config['mod_down_comm'])): ?>
                 <a href="?act=review_comments"><?= _t('Review comments') ?></a><br>
             <?php endif; ?>
             <a href="?act=bookmark"><?= _t('Favorites') ?></a>

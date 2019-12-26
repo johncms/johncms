@@ -28,7 +28,7 @@ $this->layout(
 );
 ?>
 
-<?php if (! $config->mod_down): ?>
+<?php if (! $config['mod_down']): ?>
     <div class="alert alert-danger border-0 shadow">
         <?= _t('Downloads are closed') ?>
     </div>

@@ -48,7 +48,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="<?= $config->homeurl ?>/admin/search_ip/">
+                <a href="<?= $config['homeurl'] ?>/admin/search_ip/">
                     <svg class="icon text-info">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
                     </svg>
@@ -57,7 +57,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
             </li>
             <?php if ($regtotal): ?>
                 <li>
-                    <a href="<?= $config->homeurl ?>/admin/reg/">
+                    <a href="<?= $config['homeurl'] ?>/admin/reg/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
                         </svg>
@@ -67,7 +67,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </li>
             <?php endif ?>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/userlist/">
+                <a href="<?= $config['homeurl'] ?>/admin/userlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                     </svg>
@@ -76,7 +76,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/adminlist/">
+                <a href="<?= $config['homeurl'] ?>/admin/adminlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
                     </svg>
@@ -85,7 +85,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/ban_panel/">
+                <a href="<?= $config['homeurl'] ?>/admin/ban_panel/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
@@ -95,7 +95,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
             </li>
             <?php if ($user->rights === 9): ?>
                 <li>
-                    <a href="<?= $config->homeurl ?>/admin/usr_clean/">
+                    <a href="<?= $config['homeurl'] ?>/admin/usr_clean/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
                         </svg>
@@ -103,7 +103,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     </a>
                 </li>
                 <li>
-                    <a href="<?= $config->homeurl ?>/admin/antiflood/">
+                    <a href="<?= $config['homeurl'] ?>/admin/antiflood/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bell-off"/>
                         </svg>
@@ -111,7 +111,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     </a>
                 </li>
                 <li>
-                    <a href="<?= $config->homeurl ?>/admin/karma/">
+                    <a href="<?= $config['homeurl'] ?>/admin/karma/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                         </svg>
@@ -142,7 +142,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="<?= $config->homeurl ?>/admin/forum/">
+                <a href="<?= $config['homeurl'] ?>/admin/forum/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
@@ -150,7 +150,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/news/">
+                <a href="<?= $config['homeurl'] ?>/admin/news/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                     </svg>
@@ -158,7 +158,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/ads/">
+                <a href="<?= $config['homeurl'] ?>/admin/ads/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
                     </svg>
@@ -167,7 +167,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
             </li>
             <?php if ($user->rights == 9): ?>
                 <li>
-                    <a href="<?= $config->homeurl ?>/admin/counters/">
+                    <a href="<?= $config['homeurl'] ?>/admin/counters/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
                         </svg>
@@ -198,7 +198,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="<?= $config->homeurl ?>/admin/settings/">
+                <a href="<?= $config['homeurl'] ?>/admin/settings/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
                     </svg>
@@ -206,7 +206,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/smilies/">
+                <a href="<?= $config['homeurl'] ?>/admin/smilies/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#smile"/>
                     </svg>
@@ -214,7 +214,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/languages/">
+                <a href="<?= $config['homeurl'] ?>/admin/languages/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
@@ -244,7 +244,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
             <li>
-                <a href="<?= $config->homeurl ?>/admin/antispy/">
+                <a href="<?= $config['homeurl'] ?>/admin/antispy/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                     </svg>
@@ -252,7 +252,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <li>
-                <a href="<?= $config->homeurl ?>/admin/ipban/">
+                <a href="<?= $config['homeurl'] ?>/admin/ipban/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
@@ -275,7 +275,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         </a>
     </div>
 
-    <?php if (count($config->lng_list) > 1): ?>
+    <?php if (count($config['lng_list']) > 1): ?>
         <div class="mt-1">
             <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
                 <img src="<?= $this->asset('images/flags/' . strtolower($locale) . '.png') ?>" alt="<?= $locale ?>">
