@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Albums\Photo;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -20,18 +22,18 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $config = di('config')['johncms'];
 
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 
 switch ($mod) {
     case 'my_new_comm':
         // Непрочитанные комментарии в личных альбомах
-        if (! $user->isValid() || $user->id != $foundUser['id']) {
-            echo $tools->displayError(_t('Wrong data'));
+        if ($user->id !== $foundUser['id'] || ! $user->isValid()) {
             echo $view->render(
-                'system::app/old_content',
+                'system::pages/result',
                 [
-                    'title'   => $textl ?? '',
-                    'content' => ob_get_clean(),
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => _t('Wrong data'),
                 ]
             );
             exit;
@@ -116,21 +118,19 @@ switch ($mod) {
         $link = '';
 }
 
+$data = [];
+
 // Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
-echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
 
-if ($mod == 'my_new_comm') {
+if ($mod === 'my_new_comm') {
     $total = $new_album_comm; //TODO: разобраться
 } elseif (! isset($total)) {
     $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE ${where}")->fetchColumn();
 }
 
+$photos = [];
 if ($total) {
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-    }
-
     $req = $db->query(
         "
       SELECT `cms_album_files`.*, `users`.`name` AS `user_name`, `cms_album_cat`.`name` AS `album_name` ${select}
@@ -143,46 +143,22 @@ if ($total) {
       LIMIT ${start}, " . $user->config->kmess
     );
 
-    for ($i = 0; $res = $req->fetch(); ++$i) {
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-
-        if ($res['access'] == 4 || $user->rights >= 7) {
-            // Если доступ открыт всем, или смотрит Администратор
-            echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../upload/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
-            if (! empty($res['description'])) {
-                echo '<div class="gray">' . $tools->smilies($tools->checkout($res['description'], 1)) . '</div>';
-            }
-        } elseif ($res['access'] == 3) {
-            // Если доступ открыт друзьям
-            echo 'Только для друзей';
-        } elseif ($res['access'] == 2) {
-            // Если доступ по паролю
-            echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '"><img src="' . $config['homeurl'] . '/images/stop.gif" width="50" height="50"/></a>';
-        }
-
-        echo '<div class="sub">' .
-            '<a href="?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . $tools->checkout($res['album_name']) . '</a>';
-
-        if ($res['access'] == 4 || $user->rights >= 6) {
-            echo vote_photo($res) .
-                '<div class="gray">' . _t('Views') . ': ' . $res['views'] . ', ' . _t('Downloads') . ': ' . $res['downloads'] . '</div>' .
-                '<div class="gray">' . _t('Date') . ': ' . $tools->displayDate($res['time']) . '</div>' .
-                '<a href="?act=comments&amp;img=' . $res['id'] . '">' . _t('Comments') . '</a> (' . $res['comm_count'] . ')' .
-                '<br><a href="?act=image_download&amp;img=' . $res['id'] . '">' . _t('Download') . '</a>';
-        }
-
-        echo '</div></div>';
+    while ($res = $req->fetch()) {
+        $photos[] = new Photo($res);
     }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+$data['photos'] = $photos;
+$data['total'] = $total;
+$data['pagination'] = $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess);
 
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?act=top' . $link . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-        '</form></p>';
-}
+$nav_chain->add($title);
+
+echo $view->render(
+    'album::top',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

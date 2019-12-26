@@ -18,6 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
+//TODO: Проверить зачем это и если не нужно, удалить.
 // Список альбомов юзера
 if (isset($_SESSION['ap'])) {
     unset($_SESSION['ap']);
@@ -36,7 +37,6 @@ $total = $req->rowCount();
 $data['create_url'] = '';
 if (($foundUser['id'] === $user->id && $total < $max_album && empty($user->ban)) || $user->rights >= 7) {
     $data['create_url'] = '?act=edit&amp;user=' . $foundUser['id'];
-    //echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Create Album') . '</a></div>';
 }
 
 $foundUser['nick'] = $foundUser['name'];
@@ -72,7 +72,6 @@ $data['albums'] = $albums;
 $data['user']['count_albums'] = $total;
 $data['user']['count'] = $data['total_photos'];
 
-
 if ($user->id === $data['user']['id']) {
     $title = _t('Your albums');
     $nav_chain->add($title);
@@ -80,7 +79,6 @@ if ($user->id === $data['user']['id']) {
     $title = _t('User albums:') . ' ' . $data['user']['name'];
     $nav_chain->add(_t('User albums'));
 }
-
 
 echo $view->render(
     'album::list',
