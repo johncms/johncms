@@ -23,6 +23,8 @@ use PDO;
  * @property int $user_id
  * @property int $album_id
  * @property string $description
+ * @property string $formatted_description
+ * @property string $preview_text
  * @property string $img_name
  * @property string $tmb_name
  * @property int $time
@@ -137,10 +139,24 @@ class Photo
      * @param $value
      * @return string
      */
-    public function getDescriptionAttribute($value): string
+    public function getFormattedDescriptionAttribute($value): string
     {
         $value = $this->tools->checkout($value, 1, 0);
         return $this->tools->smilies($value);
+    }
+
+    /**
+     * Укороченный текст описания
+     *
+     * @return string
+     */
+    public function getPreviewTextAttribute(): string
+    {
+        $text = $this->tools->checkout($this->description, 0, 0);
+        if (mb_strlen($text) > 100) {
+            $text = mb_substr($text, 0, 97) . '...';
+        }
+        return $text;
     }
 
     /**

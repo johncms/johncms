@@ -29,6 +29,16 @@ $this->layout(
     <?php endforeach; ?>
 </div>
 
+<?php if (empty($data['users'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => _t('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+
 <?php foreach ($data['users'] as $user_row): ?>
     <?= $this->fetch('album::user_row', ['item' => $user_row]) ?>
 <?php endforeach; ?>
