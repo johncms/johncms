@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\System\Config\Config $config
+ * @var array $config
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
@@ -54,7 +54,7 @@ function forum_link($m)
     }
     $p = parse_url($m[3]);
 
-    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config->homeurl . '/forum/?id=') {
+    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
         $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
         $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
 

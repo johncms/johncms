@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
@@ -19,13 +18,12 @@ use Johncms\Api\NavChainInterface;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Config $config
  * @var User $user
  * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
@@ -34,7 +32,7 @@ $nav_chain = di(NavChainInterface::class);
 $view->addFolder('login', __DIR__ . '/templates/');
 
 $id = isset($_POST['id']) ? abs((int) ($_POST['id'])) : 0;
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
+$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 
 if ($user->isValid()) {
     ////////////////////////////////////////////////////////////

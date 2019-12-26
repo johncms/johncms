@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 use Downloads\Download;
 use Johncms\Api\NavChainInterface;
-use Johncms\System\Config\Config;
 use Johncms\System\Users\User;
 use Johncms\System\Utility\Tools;
 use Johncms\System\View\Render;
@@ -25,7 +24,6 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 /**
- * @var Config $config
  * @var PDO $db
  * @var Tools $tools
  * @var Render $view
@@ -33,7 +31,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
  * @var NavChainInterface $nav_chain
  */
 
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);

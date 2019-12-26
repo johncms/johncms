@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
@@ -22,7 +21,6 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 /**
  * @var Assets $assets
- * @var Config $config
  * @var PDO $db
  * @var Tools $tools
  * @var User $user
@@ -30,7 +28,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  */
 
 $assets = di(Assets::class);
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);
@@ -164,7 +162,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 
     // Карма
-    if ($config->karma['on']) {
+    if ($config['karma']) { //TODO: разобраться, что за фигня тут была $config->karma['on']
         $karma = $foundUser['karma_plus'] - $foundUser['karma_minus'];
 
         if ($karma > 0) {

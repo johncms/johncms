@@ -16,7 +16,6 @@ use Psr\Http\Message\ServerRequestInterface;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\System\Config\Config $config
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  * @var ServerRequestInterface $request

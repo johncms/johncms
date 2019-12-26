@@ -11,7 +11,6 @@
 declare(strict_types=1);
 
 use Johncms\System\Utility\Bbcode;
-use Johncms\System\Config\Config;
 use Johncms\System\Http\Environment;
 use Johncms\Api\NavChainInterface;
 use Johncms\System\Utility\Tools;
@@ -24,7 +23,6 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 /**
  * @var Bbcode $bbcode
- * @var Config $config
  * @var PDO $db
  * @var Environment $env
  * @var Tools $tools
@@ -38,7 +36,7 @@ $user = di(User::class);
 $tools = di(Tools::class);
 $env = di(Environment::class);
 $bbcode = di(Bbcode::class);
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $view = di(Render::class);
 $nav_chain = di(NavChainInterface::class);
 $route = di('route');
@@ -71,7 +69,7 @@ $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 $nav_chain->add($textl);
 
 // If the guest is closed, display a message and close access (except for Admins)
-if (! $config->mod_guest && $user->rights < 7) {
+if (! $config['mod_guest'] && $user->rights < 7) {
     echo $view->render(
         'guestbook::result',
         [
@@ -356,7 +354,7 @@ switch ($act) {
         $data = [
             'access_to_buttons' => ($user->rights > 0 || in_array($user->id, $guestAccess)),
             'is_guestbook'      => ! isset($_SESSION['ga']),
-            'access_to_form'    => ($user->isValid() || $config->mod_guest == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13']),
+            'access_to_form'    => ($user->isValid() || $config['mod_guest'] == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13']),
             'bbcode'            => $bbcode->buttons('form', 'msg'),
             'pagination'        => '',
         ];

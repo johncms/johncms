@@ -15,12 +15,11 @@ use Downloads\Download;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\System\Config\Config $config
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  */
 
-if (! $config->mod_down_comm && $user->rights < 7) {
+if (! $config['mod_down_comm'] && $user->rights < 7) {
     http_response_code(403);
     echo $view->render(
         'system::pages/result',

@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\Api\NavChainInterface;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
@@ -21,14 +20,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Config $config
  * @var Tools $tools
  * @var User $user
  * @var Render $view
  * @var NavChainInterface $nav_chain
  */
 
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
@@ -43,7 +41,7 @@ di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale',
 $nav_chain->add(_t('Registration'));
 
 // Если регистрация закрыта, выводим предупреждение
-if (! $config->mod_reg || $user->isValid()) {
+if (! $config['mod_reg'] || $user->isValid()) {
     echo $view->render('reg::registration_closed', []);
     exit;
 }
@@ -115,7 +113,7 @@ if (isset($_POST['submit'])) {
         /** @var Johncms\System\Http\Environment $env */
         $env = di(Johncms\System\Http\Environment::class);
 
-        $preg = $config->mod_reg > 1 ? 1 : 0;
+        $preg = $config['mod_reg'] > 1 ? 1 : 0;
         $db->prepare(
             '
           INSERT INTO `users` SET
@@ -158,7 +156,7 @@ if (isset($_POST['submit'])) {
 
         $usid = $db->lastInsertId();
 
-        if ($config->mod_reg != 1) {
+        if ($config['mod_reg'] != 1) {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
         }

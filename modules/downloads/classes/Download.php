@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Downloads;
 
 use Johncms;
-use Johncms\System\Config\Config;
 use PDO;
 
 /**
@@ -61,8 +60,7 @@ class Download // phpcs:ignore
         /** @var Johncms\System\Utility\Tools $tools */
         $tools = di(Johncms\System\Utility\Tools::class);
 
-        /** @var Config $config */
-        $config = di(Config::class);
+        $config = di('config')['johncms'];
 
         $file['icon'] = $assets->url('images/old/system/' . $icon_id . '.png');
         $file['detail_url'] = '?act=view&amp;id=' . $res_down['id'];
@@ -87,7 +85,7 @@ class Download // phpcs:ignore
         }
 
         $file['comments_url'] = '';
-        if ($config->mod_down_comm || $systemUser->rights >= 7) {
+        if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
             $file['comments_url'] = '?act=comments&amp;id=' . $res_down['id'];
         }
 

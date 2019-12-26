@@ -11,14 +11,12 @@
 declare(strict_types=1);
 
 use Johncms\Api\NavChainInterface;
-use Johncms\System\Config\Config;
 use Johncms\System\View\Render;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
-/** @var Config $config */
-$config = di(Config::class);
+$config = di('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = di(Zend\I18n\Translator\Translator::class);

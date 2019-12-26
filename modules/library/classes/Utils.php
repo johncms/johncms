@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Library;
 
-use Johncms\System\Config\Config;
-
 /**
  * Статические методы помошники
  * Class Utils
@@ -28,9 +26,7 @@ class Utils
      */
     public static function redir404()
     {
-        /** @var Config $config */
-        $config = di(Config::class);
-
+        $config = di('config')['johncms'];
         ob_get_level() && ob_end_clean();
         header('Location: ' . $config['homeurl'] . '/?err');
         exit;

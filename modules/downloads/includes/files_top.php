@@ -15,7 +15,7 @@ use Downloads\Download;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\System\Config\Config $config
+ * @var array $config
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  */

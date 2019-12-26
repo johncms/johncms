@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\Api\NavChainInterface;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
@@ -23,7 +22,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Assets $assets
- * @var Config $config
  * @var Counters $counters
  * @var PDO $db
  * @var Tools $tools
@@ -32,7 +30,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var NavChainInterface $nav_chain
  */
 $assets = di(Assets::class);
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $counters = di('counters');
 $db = di(PDO::class);
 $user = di(User::class);
@@ -142,9 +140,9 @@ $user_rights_names = [
 // Ограничиваем доступ к Форуму
 $error = '';
 
-if (! $config->mod_forum && $user->rights < 7) {
+if (! $config['mod_forum'] && $user->rights < 7) {
     $error = _t('Forum is closed');
-} elseif ($config->mod_forum == 1 && ! $user->isValid()) {
+} elseif ($config['mod_forum'] == 1 && ! $user->isValid()) {
     $error = _t('For registered users only');
 }
 
@@ -404,7 +402,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
 
                 // Check access to create topic
                 $create_access = false;
-                if (($user->isValid() && ! isset($user->ban['1']) && ! isset($user->ban['11']) && $config->mod_forum != 4) || $user->rights) {
+                if (($user->isValid() && ! isset($user->ban['1']) && ! isset($user->ban['11']) && $config['mod_forum'] != 4) || $user->rights) {
                     $create_access = true;
                 }
 
@@ -669,7 +667,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
                 // Нижнее поле "Написать"
                 $write_access = false;
-                if (($user->isValid() && ! $type1['closed'] && $config->mod_forum != 3 && $allow != 4) || ($user->rights >= 7)) {
+                if (($user->isValid() && ! $type1['closed'] && $config['mod_forum'] != 3 && $allow != 4) || ($user->rights >= 7)) {
                     $write_access = true;
                     if ($set_forum['farea']) {
                         $token = mt_rand(1000, 100000);

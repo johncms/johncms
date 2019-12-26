@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
@@ -21,7 +20,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Assets $assets
- * @var Config $config
  * @var PDO $db
  * @var Tools $tools
  * @var User $user
@@ -29,7 +27,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $assets = di(Assets::class);
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $db = di(PDO::class);
 $route = di('route');
 $tools = di(Tools::class);
@@ -47,7 +45,7 @@ $act = $route['action'] ?? 'index';
 $mod = $route['mod'] ?? '';
 
 // Закрываем от неавторизованных юзеров
-if (! $config->active && ! $user->isValid()) {
+if (! $config['active'] && ! $user->isValid()) {
     echo $view->render(
         'system::app/old_content',
         [

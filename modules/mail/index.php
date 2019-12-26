@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
@@ -20,14 +19,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Config $config
  * @var PDO $db
  * @var Tools $tools
  * @var User $user
  * @var Render $view
  */
 
-$config = di(Config::class);
+$config = di('config')['johncms'];
 $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);
@@ -46,7 +44,7 @@ if (isset($_SESSION['ref'])) {
 
 //Проверка авторизации
 if (! $user->isValid()) {
-    header('Location: ' . $config->homeurl);
+    header('Location: ' . $config['homeurl']);
     exit;
 }
 

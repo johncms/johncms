@@ -10,16 +10,13 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Config\Config;
-
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
  * @var Johncms\System\Utility\Tools $tools
  */
 
-/** @var Config $config */
-$config = di(Config::class);
+$config = di('config')['johncms'];
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 
