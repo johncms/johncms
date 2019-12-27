@@ -10,81 +10,82 @@
 
 declare(strict_types=1);
 
+use Intervention\Image\ImageManagerStatic as Image;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Http\Request $request
+ * @var Johncms\Utility\NavChain $nav_chain
  */
 
 $config = di('config')['johncms'];
 
+$data = [];
+$title = _t('Upload image');
 // Выгрузка фотографии
-if (($al && $foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) {
+if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7) {
+    $nav_chain->add($title);
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
-
     if (! $req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
-        echo $tools->displayError(_t('Wrong data'));
         echo $view->render(
-            'system::app/old_content',
+            'system::pages/result',
             [
-                'title'   => $textl ?? '',
-                'content' => ob_get_clean(),
+                'title'    => $title,
+                'type'     => 'alert-danger',
+                'message'  => _t('Wrong data'),
+                'back_url' => '/album/',
             ]
         );
         exit;
     }
 
     $res_a = $req_a->fetch();
-    echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Upload image') . '</div>';
+    if ($request->getMethod() === 'POST') {
+        Image::configure(['driver' => 'imagick']);
 
-    if (isset($_POST['submit'])) {
-        $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
+        $files = $request->getUploadedFiles();
+        /** @var GuzzleHttp\Psr7\UploadedFile $file */
+        $file = $files['imagefile'];
 
-        if ($handle->uploaded) {
-            // Обрабатываем фото
-            $handle->file_new_name_body = 'img_' . time();
-            $handle->allowed = [
-                'image/jpeg',
-                'image/gif',
-                'image/png',
-            ];
-            $handle->file_max_size = 1024 * $config['flsz'];
-            $handle->image_resize = true;
-            $handle->image_x = 1920;
-            $handle->image_y = 1024;
-            $handle->image_ratio_no_zoom_in = true;
-            $handle->image_convert = 'jpg';
-            // Поставить в зависимость от настроек в Админке
-            //$handle->image_text = $set['homeurl'];
-            //$handle->image_text_x = 0;
-            //$handle->image_text_y = 0;
-            //$handle->image_text_font = 3;
-            //$handle->image_text_background = '#AAAAAA';
-            //$handle->image_text_background_percent = 50;
-            //$handle->image_text_padding = 1;
-            $handle->process(UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/');
-            $img_name = $handle->file_dst_name;
+        if ($file->getSize() > 1024 * $config['flsz']) {
+            $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+        }
 
-            if ($handle->processed) {
-                // Обрабатываем превьюшку
-                $handle->file_new_name_body = 'tmb_' . time();
-                $handle->image_resize = true;
-                $handle->image_x = 100;
-                $handle->image_y = 100;
-                $handle->image_ratio_no_zoom_in = true;
-                $handle->image_convert = 'jpg';
-                $handle->process(UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/');
-                $tmb_name = $handle->file_dst_name;
+        $dir = UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/';
+        $original_file = 'img_' . time() . '.jpg';
+        $tmb_file = 'tmb_' . time() . '.jpg';
 
-                if ($handle->processed) {
-                    $description = isset($_POST['description']) ? trim($_POST['description']) : '';
-                    $description = mb_substr($description, 0, 500);
+        $image_uploaded = false;
+        if (empty($error) && (is_dir($dir) || mkdir($dir, 0777) || is_dir($dir))) {
+            try {
+                // Сохраняем оригинал
+                $img = Image::make($file->getStream());
+                $img->resize(
+                    1920,
+                    1080,
+                    static function ($constraint) {
+                        /** @var $constraint Intervention\Image\Constraint */
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    }
+                );
 
-                    $db->prepare(
-                        '
+                $img->save($dir . '/' . $original_file, 100, 'jpg');
+
+                // Создаем превью
+                $img->fit(400, 300);
+                $img->save($dir . '/' . $tmb_file, 100, 'jpg');
+
+                $description = $request->getPost('description', '');
+                $description = mb_substr($description, 0, 1500);
+
+                $db->prepare(
+                    '
                       INSERT INTO `cms_album_files` SET
                       `album_id` = ?,
                       `user_id` = ?,
@@ -94,45 +95,43 @@ if (($al && $foundUser['id'] == $user->id && empty($user->ban)) || $user->rights
                       `time` = ?,
                       `access` = ?
                     '
-                    )->execute(
-                        [
-                            $al,
-                            $foundUser['id'],
-                            $img_name,
-                            $tmb_name,
-                            $description,
-                            time(),
-                            $res_a['access'],
-                        ]
-                    );
+                )->execute(
+                    [
+                        $al,
+                        $foundUser['id'],
+                        $original_file,
+                        $tmb_file,
+                        $description,
+                        time(),
+                        $res_a['access'],
+                    ]
+                );
 
-                    echo '<div class="gmenu"><p>' . _t('Image uploaded') . '<br>' .
-                        '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>' .
-                        '<div class="phdr"><a href="../profile/?user=' . $foundUser['id'] . '">' . _t('Profile') . '</a></div>';
-                } else {
-                    echo $tools->displayError($handle->error);
-                }
-            } else {
-                echo $tools->displayError($handle->error);
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-success',
+                        'message'       => _t('Image uploaded'),
+                        'back_url'      => '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'],
+                        'back_url_name' => _t('Continue'),
+                    ]
+                );
+                exit;
+            } catch (Exception $exception) {
+                $error[] = $exception->getMessage();
             }
-            $handle->clean();
-        } else {
-            echo $tools->displayError(_t('File not selected'));
         }
-    } else {
-        echo '<form enctype="multipart/form-data" method="post" action="?act=image_upload&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' .
-            '<div class="menu"><p><h3>' . _t('Image') . '</h3>' .
-            '<input type="file" name="imagefile" value="" /></p>' .
-            '<p><h3>' . _t('Description') . '</h3>' .
-            '<textarea name="description" rows="' . $user->config->fieldHeight . '"></textarea><br>' .
-            '<small>' . _t('Optional field') . ', max. 500</small></p>' .
-            '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" />' .
-            '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
-            '</div></form>' .
-            '<div class="phdr"><small>' . sprintf(
-                _t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'),
-                $config['flsz']
-            ) . '</small></div>' .
-            '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Back') . '</a></p>';
     }
+    $data['action_url'] = '?act=image_upload&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
+    $data['back_url'] = '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
+    $data['error_message'] = $error ?? [];
+    echo $view->render(
+        'album::add_photo',
+        [
+            'title'      => $title,
+            'page_title' => $title,
+            'data'       => $data,
+        ]
+    );
 }
