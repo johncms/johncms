@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,21 +8,27 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Http\Request $request
+ * @var Johncms\Utility\NavChain $nav_chain
  */
 
+$data = [];
+
 // Создать / изменить альбом
-if (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) {
+if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7) {
     if ($al) {
+        $title = _t('Edit Album');
         $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
 
         if ($req->rowCount()) {
-            echo '<div class="phdr"><b>' . _t('Edit Album') . '</b></div>';
             $res = $req->fetch();
             $name = htmlspecialchars($res['name']);
             $description = htmlspecialchars($res['description']);
@@ -32,43 +36,45 @@ if (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) 
             $access = $res['access'];
         } else {
             echo $view->render(
-                'system::app/old_content',
+                'system::pages/result',
                 [
-                    'title'   => $textl ?? '',
-                    'content' => $tools->displayError(_t('Wrong data')),
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => _t('Wrong data'),
                 ]
             );
             exit;
         }
     } else {
-        echo '<div class="phdr"><b>' . _t('Create Album') . '</b></div>';
+        $title = _t('Create Album');
         $name = '';
         $description = '';
         $password = '';
         $access = 0;
     }
 
+    $nav_chain->add($title);
+
     $error = [];
 
-    if (isset($_POST['submit'])) {
+    if ($request->getMethod() === 'POST') {
         // Принимаем данные
-        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-        $description = isset($_POST['description']) ? trim($_POST['description']) : '';
-        $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-        $access = isset($_POST['access']) ? abs((int) ($_POST['access'])) : null;
+        $name = trim($request->getPost('name', '', FILTER_SANITIZE_STRING));
+        $description = trim($request->getPost('description', ''));
+        $password = trim($request->getPost('password', ''));
+        $access = $request->getPost('access', null, FILTER_SANITIZE_NUMBER_INT);
 
         // Проверяем на ошибки
-        if (empty($name)) {
-            $error[] = _t('You have not entered Title');
-        } elseif (mb_strlen($name) < 2 || mb_strlen($name) > 50) {
+        $length_name = mb_strlen($name);
+        if ($length_name < 2 || $length_name > 150) {
             $error[] = _t('Title') . ': ' . _t('Invalid length');
         }
 
         $description = mb_substr($description, 0, 500);
 
-        if ($access == 2 && empty($password)) {
+        if ($access === 2 && empty($password)) {
             $error[] = _t('You have not entered password');
-        } elseif ($access == 2 && mb_strlen($password) < 3 || mb_strlen($password) > 15) {
+        } elseif (($access === 2 && mb_strlen($password) < 3) || mb_strlen($password) > 15) {
             $error[] = _t('Password') . ': ' . _t('Invalid length');
         }
 
@@ -138,13 +144,13 @@ if (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) 
                 );
             }
 
-            echo '<div class="gmenu"><p>' . ($al ? _t('Album successfully changed') : _t('Album successfully created')) . '<br>' .
-                '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
             echo $view->render(
-                'system::app/old_content',
+                'system::pages/result',
                 [
-                    'title'   => $textl ?? '',
-                    'content' => ob_get_clean(),
+                    'title'    => $title,
+                    'type'     => 'alert-success',
+                    'message'  => ($al ? _t('Album successfully changed') : _t('Album successfully created')),
+                    'back_url' => '?act=list&amp;user=' . $foundUser['id'],
                 ]
             );
             exit;
@@ -152,25 +158,23 @@ if (($foundUser['id'] == $user->id && empty($user->ban)) || $user->rights >= 7) 
     }
 
     if ($error) {
-        echo $tools->displayError($error);
+        $data['error_message'] = $error;
     }
 
-    echo '<div class="menu">' .
-        '<form action="?act=edit&amp;user=' . $foundUser['id'] . '&amp;al=' . $al . '" method="post">' .
-        '<p><h3>' . _t('Title') . '</h3>' .
-        '<input type="text" name="name" value="' . $tools->checkout($name) . '" maxlength="30" /><br>' .
-        '<small>' . _t('Min. 2, Max. 30') . '</small></p>' .
-        '<p><h3>' . _t('Description') . '</h3>' .
-        '<textarea name="description" rows="' . $user->config->fieldHeight . '">' . $tools->checkout($description) . '</textarea><br>' .
-        '<small>' . _t('Optional field') . '. ' . _t('Max. 500') . '</small></p>' .
-        '<p><h3>' . _t('Password') . '</h3>' .
-        '<input type="text" name="password" value="' . $tools->checkout($password) . '" maxlength="15" /><br>' .
-        '<small>' . _t('This field is required if the password access is activated') . '<br>Min. 3, Max. 15</small></p>' .
-        '<p><h3>' . _t('Access') . '</h3>' .
-        '<input type="radio" name="access" value="4" ' . (! $access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Everyone') . '<br>' .
-        '<input type="radio" name="access" value="2" ' . ($access == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('With Password') . '<br>' .
-        '<input type="radio" name="access" value="1" ' . ($access == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for me') . '</p>' .
-        '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>' .
-        '</form></div>' .
-        '<div class="phdr"><a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Cancel') . '</a></div>';
+    $data['action_url'] = '?act=edit&amp;user=' . $foundUser['id'] . '&amp;al=' . $al;
+    $data['back_url'] = '?act=list&amp;user=' . $foundUser['id'];
+    $data['form_data'] = [
+        'name'        => $tools->checkout($name),
+        'description' => $tools->checkout($description),
+        'password'    => $tools->checkout($password),
+        'access'      => (int) $access,
+    ];
+    echo $view->render(
+        'album::album_form',
+        [
+            'title'      => $title,
+            'page_title' => $title,
+            'data'       => $data,
+        ]
+    );
 }
