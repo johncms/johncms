@@ -160,7 +160,7 @@ if ($total) {
     }
 }
 
-$data['photos'] = $photos;
+$data['photos'] = $photos ?? [];
 $data['total'] = $total;
 $data['per_page'] = $itmOnPage;
 $data['pagination'] = $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view=1&amp;' : ''), $start, $total, $itmOnPage);
