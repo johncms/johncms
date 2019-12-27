@@ -51,7 +51,7 @@ if (! $req->rowCount()) {
 }
 
 $album = $req->fetch();
-$show = isset($_GET['view']);
+$show = ! empty($request->getQuery('view', ''));
 $data['album'] = $album;
 $data['has_add_photo'] = (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7);
 $nav_chain->add($tools->checkout($album['name']), '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id']);
@@ -94,22 +94,19 @@ if (
         if ($album['password'] === trim($_POST['password'])) {
             $_SESSION['ap'] = $album['password'];
         } else {
-            echo $tools->displayError(_t('Incorrect Password'));
+            $data['error_message'] = _t('Incorrect Password');
         }
     }
 
     if (! isset($_SESSION['ap']) || $_SESSION['ap'] !== $album['password']) {
-        echo '<form action="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '" method="post"><div class="menu"><p>' .
-            _t('You must type a password to view this album') . '<br>' .
-            '<input type="text" name="password"/></p>' .
-            '<p><input type="submit" name="submit" value="' . _t('Login') . '"/></p>' .
-            '</div></form>' .
-            '<div class="phdr"><a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Album List') . '</a></div>';
+        $data['action_url'] = '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
+        $data['back_url'] = '?act=list&amp;user=' . $foundUser['id'];
         echo $view->render(
-            'system::app/old_content',
+            'album::enter_password',
             [
-                'title'   => $textl ?? '',
-                'content' => ob_get_clean(),
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
             ]
         );
         exit;

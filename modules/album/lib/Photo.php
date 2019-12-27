@@ -169,7 +169,7 @@ class Photo
      */
     public function getDetailUrlAttribute(): string
     {
-        return '?act=show&amp;al=' . $this->album_id . '&amp;img=' . $this->id . '&amp;user=' . $this->user_id . '&amp;view';
+        return '?act=show&amp;al=' . $this->album_id . '&amp;img=' . $this->id . '&amp;user=' . $this->user_id . '&amp;view=1';
     }
 
     /**
