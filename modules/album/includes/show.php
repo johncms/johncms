@@ -18,6 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Http\Request $request
  */
 
 $itmOnPage = $user->config->kmess;
@@ -57,7 +58,8 @@ $data['has_add_photo'] = (($foundUser['id'] === $user->id && empty($user->ban)) 
 $nav_chain->add($tools->checkout($album['name']), '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id']);
 
 if ($show) {
-    $nav_chain->add(_t('View photo'));
+    $title = _t('View photo');
+    $nav_chain->add($title);
 }
 
 // Проверяем права доступа к альбому
@@ -89,9 +91,10 @@ if (
     && $foundUser['id'] !== $user->id
     && $user->rights < 7
 ) {
+    $password = $request->getPost('password', null);
     // Доступ через пароль
-    if (isset($_POST['password'])) {
-        if ($album['password'] === trim($_POST['password'])) {
+    if (isset($password)) {
+        if ($album['password'] === trim($password)) {
             $_SESSION['ap'] = $album['password'];
         } else {
             $data['error_message'] = _t('Incorrect Password');
@@ -116,15 +119,8 @@ if (
 // Просмотр альбома и фотографий
 if ($show) {
     $itmOnPage = 1;
-    $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
-    $start = isset($_REQUEST['page']) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}' AND `id` > '${img}'")->fetchColumn());
-
-    // Обрабатываем ссылку для возврата
-    if (empty($_SESSION['ref'])) {
-        $_SESSION['ref'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
-    }
-} else {
-    unset($_SESSION['ref']);
+    $page = $request->getQuery('page', null, FILTER_SANITIZE_NUMBER_INT);
+    $start = isset($page) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}' AND `id` > '${img}'")->fetchColumn());
 }
 
 $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
@@ -167,7 +163,7 @@ if ($total) {
 $data['photos'] = $photos;
 $data['total'] = $total;
 $data['per_page'] = $itmOnPage;
-$data['pagination'] = $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $itmOnPage);
+$data['pagination'] = $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view=1&amp;' : ''), $start, $total, $itmOnPage);
 
 $template = $show ? 'album::show_one' : 'album::show';
 echo $view->render(
