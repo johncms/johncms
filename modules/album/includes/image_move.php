@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,61 +8,102 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Http\Request $request
+ * @var Johncms\Utility\NavChain $nav_chain
  */
 
+$title = _t('Move image');
+$nav_chain->add($title);
 // Перемещение картинки в другой альбом
-if ($img && $foundUser['id'] == $user->id || $user->rights >= 6) {
+if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = " . $foundUser['id']);
-    if ($req->rowCount()) {
-        $image = $req->fetch();
-        echo '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Move image') . '</div>';
-        if (isset($_POST['submit'])) {
-            $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
+    if (! $req->rowCount()) {
+        // Если альбома не существует, завершаем скрипт
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => $title,
+                'type'     => 'alert-danger',
+                'message'  => _t('Wrong data'),
+                'back_url' => '/album/',
+            ]
+        );
+        exit;
+    }
+    $image = $req->fetch();
+    if ($request->getMethod() === 'POST') {
+        $al = $request->getPost('al', 0, FILTER_SANITIZE_NUMBER_INT);
+        $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
 
-            if ($req_a->rowCount()) {
-                $res_a = $req_a->fetch();
-                $db->exec(
-                    "UPDATE `cms_album_files` SET
+        if ($req_a->rowCount()) {
+            $res_a = $req_a->fetch();
+            $db->exec(
+                "UPDATE `cms_album_files` SET
                     `album_id` = '${al}',
                     `access` = '" . $res_a['access'] . "'
                     WHERE `id` = '${img}'
                 "
-                );
-                echo '<div class="gmenu"><p>' . _t('Image successfully moved to the selected album') . '<br>' .
-                    '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
-            } else {
-                echo $tools->displayError(_t('Wrong data'));
-            }
+            );
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => _t('Image successfully moved to the selected album'),
+                    'back_url'      => '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'],
+                    'back_url_name' => _t('Continue'),
+                ]
+            );
         } else {
-            $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' AND `id` != '" . $image['album_id'] . "' ORDER BY `sort` ASC");
-
-            if ($req->rowCount()) {
-                echo '<form action="?act=image_move&amp;img=' . $img . '&amp;user=' . $foundUser['id'] . '" method="post">' .
-                    '<div class="menu"><p><h3>' . _t('Select Album') . '</h3>' .
-                    '<select name="al">';
-
-                while ($res = $req->fetch()) {
-                    echo '<option value="' . $res['id'] . '">' . $tools->checkout($res['name']) . '</option>';
-                }
-
-                echo '</select></p>' .
-                    '<p><input type="submit" name="submit" value="' . _t('Move') . '"/></p>' .
-                    '</div></form>' .
-                    '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'] . '">' . _t('Cancel') . '</a></div>';
-            } else {
-                echo $tools->displayError(
-                    _t('You must create at least one additional album in order to move the image'),
-                    '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a>'
-                );
-            }
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => $title,
+                    'type'     => 'alert-danger',
+                    'message'  => _t('Wrong data'),
+                    'back_url' => '/album/',
+                ]
+            );
         }
     } else {
-        echo $tools->displayError(_t('Wrong data'));
+        $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' AND `id` != '" . $image['album_id'] . "' ORDER BY `sort` ASC");
+
+        if ($req->rowCount()) {
+            $albums = [];
+            while ($res = $req->fetch()) {
+                $res['name'] = $tools->checkout($res['name']);
+                $albums[] = $res;
+            }
+            $data['action_url'] = '?act=image_move&amp;img=' . $img . '&amp;user=' . $foundUser['id'];
+            $data['back_url'] = '?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'];
+            $data['albums'] = $albums ?? [];
+            echo $view->render(
+                'album::move_photo',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
+        } else {
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-info',
+                    'message'       => _t('You must create at least one additional album in order to move the image'),
+                    'back_url'      => '?act=list&amp;user=' . $foundUser['id'],
+                    'back_url_name' => _t('Continue'),
+                ]
+            );
+        }
     }
 }

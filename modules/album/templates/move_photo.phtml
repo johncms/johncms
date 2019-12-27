@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$form_data = $data['form_data'] ?? [];
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <form name="file_edit_form" action="<?= $data['action_url'] ?>" method="post">
+                    <div class="form-group">
+                        <label for="al"><?= _t('Select Album') ?></label>
+                        <select name="al" id="al" class="form-control">
+                            <?php foreach ($data['albums'] as $album): ?>
+                                <option value="<?= $album['id'] ?>"><?= $album['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mt-3">
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Move') ?></button>
+                        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
