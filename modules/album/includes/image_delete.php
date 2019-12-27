@@ -50,6 +50,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             $data['delete_token'] = $delete_token;
             $data['action_url'] = '?act=image_delete&amp;img=' . $img . '&amp;user=' . $foundUser['id'];
             $data['back_url'] = '?act=show&amp;al=' . $album . 'user=' . $foundUser['id'];
+            $data['message'] = _t('Are you sure you want to delete this image?');
             echo $view->render(
                 'album::image_delete',
                 [
