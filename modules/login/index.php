@@ -13,20 +13,20 @@ declare(strict_types=1);
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Johncms\Api\NavChainInterface;
+use Johncms\Utility\NavChain;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var User $user
  * @var Render $view
- * @var NavChainInterface $nav_chain
+ * @var NavChain $nav_chain
  */
 
 $config = di('config')['johncms'];
 $user = di(User::class);
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('login', __DIR__ . '/templates/');

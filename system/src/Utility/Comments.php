@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\Api\NavChainInterface;
 use Johncms\System\Container\Factory;
 use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
@@ -81,7 +80,7 @@ class Comments
 
     public $back_url = '';                                // Страница возврата назад
 
-    /** @var NavChainInterface $nav_chain */
+    /** @var NavChain $nav_chain */
     public $nav_chain;
 
     public function __construct($arg = [])
@@ -93,7 +92,7 @@ class Comments
         $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
         $this->view = di(Render::class);
-        $this->nav_chain = di(NavChainInterface::class);
+        $this->nav_chain = di(NavChain::class);
 
         $kmess = $this->systemUser->config->kmess;
 

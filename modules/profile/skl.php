@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\NavChainInterface;
 use Johncms\System\View\Render;
+use Johncms\Utility\NavChain;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -30,8 +30,8 @@ $tools = di(Johncms\System\Utility\Tools::class);
 
 $view = di(Render::class);
 
-/** @var NavChainInterface $nav_chain */
-$nav_chain = di(NavChainInterface::class);
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');

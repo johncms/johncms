@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\NavChainInterface;
 use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
 use Johncms\System\Utility\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
+use Johncms\Utility\NavChain;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -34,8 +34,8 @@ $user = di(User::class);
 $tools = di(Tools::class);
 $view = di(Render::class);
 
-/** @var NavChainInterface $nav_chain */
-$nav_chain = di(NavChainInterface::class);
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
 
 /** @var Request $request */
 $request = di(Request::class);

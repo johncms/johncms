@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-use Johncms\Api\NavChainInterface;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
+use Johncms\Utility\NavChain;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -23,14 +23,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Tools $tools
  * @var User $user
  * @var Render $view
- * @var NavChainInterface $nav_chain
+ * @var NavChain $nav_chain
  */
 
 $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 $route = di('route');
 
 // Register Namespace for module templates

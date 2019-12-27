@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Downloads\Download;
-use Johncms\Api\NavChainInterface;
 use Johncms\Utility\FileInfo;
+use Johncms\Utility\NavChain;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -21,7 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var array $config
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
- * @var NavChainInterface $nav_chain
+ * @var NavChain $nav_chain
  * @var Johncms\System\Users\User $user
  * @var ServerRequestInterface $request
  */

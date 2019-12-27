@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Downloads;
 
 use Johncms;
+use Johncms\Utility\NavChain;
 use PDO;
 
 /**
@@ -148,8 +149,8 @@ class Download // phpcs:ignore
     // Навигация по папкам
     public static function navigation($array = [])
     {
-        /** @var Johncms\Api\NavChainInterface $nav_chain */
-        $nav_chain = di(Johncms\Api\NavChainInterface::class);
+        /** @var NavChain $nav_chain */
+        $nav_chain = di(NavChain::class);
 
         if ($array['refid']) {
             $sql = [];

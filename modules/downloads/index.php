@@ -11,10 +11,10 @@
 declare(strict_types=1);
 
 use Downloads\Download;
-use Johncms\Api\NavChainInterface;
 use Johncms\System\Users\User;
 use Johncms\System\Utility\Tools;
 use Johncms\System\View\Render;
+use Johncms\Utility\NavChain;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -28,7 +28,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
  * @var Tools $tools
  * @var Render $view
  * @var User $user
- * @var NavChainInterface $nav_chain
+ * @var NavChain $nav_chain
  */
 
 $config = di('config')['johncms'];
@@ -36,7 +36,7 @@ $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 
 // Регистрируем папку с языками модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');

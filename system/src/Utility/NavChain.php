@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\Api\NavChainInterface;
 use Psr\Container\ContainerInterface;
 
-class NavChain implements NavChainInterface
+class NavChain
 {
     private $items = [];
 

@@ -10,13 +10,11 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api;
-
 return [
     'dependencies' => [
         'factories' => [
-            Api\NavChainInterface::class        => Johncms\Utility\NavChain::class,
-            'counters'                          => Johncms\Utility\Counters::class,
+            Johncms\Utility\NavChain::class => Johncms\Utility\NavChain::class,
+            'counters'                      => Johncms\Utility\Counters::class,
         ],
     ],
 ];
