@@ -105,4 +105,4 @@ echo '<div class="bmenu"><p><h3>' . _t('Settings') . '</h3>' .
 echo '</p></div>';
 
 // Выход с сайта
-echo '<div class="rmenu padding"><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="' . $config->homeurl . '/login">' . _t('Exit') . '</a></div>';
+echo '<div class="rmenu padding"><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="' . $config['homeurl'] . '/login">' . _t('Exit') . '</a></div>';
