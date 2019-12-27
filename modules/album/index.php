@@ -94,42 +94,6 @@ if (! $foundUser = $req->fetch()) {
     exit;
 }
 
-/**
- * Функция голосований за фотографии
- *
- * @param array $arg
- * @return bool|string
- */
-function vote_photo(array $arg)
-{
-    global $db, $user;
-
-    $rating = $arg['vote_plus'] - $arg['vote_minus'];
-
-    if ($rating > 0) {
-        $color = 'C0FFC0';
-    } elseif ($rating < 0) {
-        $color = 'F196A8';
-    } else {
-        $color = 'CCC';
-    }
-
-    $out = '<div class="gray">' . _t('Rating') . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
-        '(' . _t('Against') . ': ' . $arg['vote_minus'] . ', ' . _t('For') . ': ' . $arg['vote_plus'] . ')';
-
-    if ($user->id != $arg['user_id'] && empty($user->ban) && $user->postforum > 10 && $user->total_on_site > 1200) {
-        // Проверяем, имеет ли юзер право голоса
-        $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
-
-        if (! $req->rowCount()) {
-            $out .= '<br>' . _t('Vote') . ': <a href="?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | <a href="?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
-        }
-    }
-    $out .= '</div>';
-
-    return $out;
-}
-
 $actions = [
     'comments',
     'delete',

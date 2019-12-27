@@ -34,6 +34,15 @@ $this->layout(
         ]
     ) ?>
 <?php endif; ?>
+
+<?php if ($data['has_add_photo']): ?>
+    <div class="mb-3">
+        <a href="?act=image_upload&amp;al=<?= $data['album']['id'] ?>&amp;user=<?= $data['album']['user_id'] ?>"
+           class="btn btn-primary"
+        ><?= _t('Add image') ?></a>
+    </div>
+<?php endif; ?>
+
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
     <?php foreach ($data['photos'] as $photo): ?>
         <div class="col mb-4">
@@ -43,8 +52,8 @@ $this->layout(
                 </a>
                 <div class="card-body d-flex flex-column justify-content-between">
                     <p class="card-text"><?= $photo->preview_text ?></p>
-                    <div class="small">
-                        <div>
+                    <?php if (! empty($photo->user_name || ! empty($photo->album_name))): ?>
+                        <div class="small">
                             <span class="text-nowrap pr-2">
                                 <?= _t('User:') ?> <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
                             </span>
@@ -52,7 +61,7 @@ $this->layout(
                                 <?= _t('Album:') ?> <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
                             </span>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <div>
@@ -106,7 +115,7 @@ $this->layout(
     <?php endforeach; ?>
 </div>
 
-<?php if ($data['total'] > $user->config->kmess): ?>
+<?php if ($data['total'] > $data['per_page']): ?>
     <div>
         <?= $data['pagination'] ?>
     </div>

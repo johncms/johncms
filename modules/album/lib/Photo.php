@@ -21,6 +21,7 @@ use PDO;
  *
  * @property int $id
  * @property int $user_id
+ * @property string $user_name
  * @property int $album_id
  * @property string $description
  * @property string $formatted_description
@@ -33,11 +34,13 @@ use PDO;
  * @property int $access
  * @property int $vote_plus
  * @property int $vote_minus
+ * @property int $rating
  * @property int $views
  * @property int $downloads
  * @property int $unread_comments
  * @property string $detail_url
  * @property string $preview_picture
+ * @property string $picture
  * @property string $comments_url
  * @property string $download_url
  * @property string $user_albums_url
@@ -46,6 +49,7 @@ use PDO;
  * @property string $dislike_url
  * @property string $album_name
  * @property bool $can_vote
+ * @property string $display_date
  *
  * @package Albums
  */
@@ -136,12 +140,11 @@ class Photo
     /**
      * Обработка описания
      *
-     * @param $value
      * @return string
      */
-    public function getFormattedDescriptionAttribute($value): string
+    public function getFormattedDescriptionAttribute(): string
     {
-        $value = $this->tools->checkout($value, 1, 0);
+        $value = $this->tools->checkout($this->description, 1, 0);
         return $this->tools->smilies($value);
     }
 
@@ -179,6 +182,20 @@ class Photo
         $preview = UPLOAD_PATH . 'users/album/' . $this->user_id . '/' . $this->tmb_name;
         if (is_file($preview)) {
             return pathToUrl($preview);
+        }
+        return '';
+    }
+
+    /**
+     * Фотография для предпросмотра
+     *
+     * @return string
+     */
+    public function getPictureAttribute(): string
+    {
+        $picture = UPLOAD_PATH . 'users/album/' . $this->user_id . '/' . $this->img_name;
+        if (is_file($picture)) {
+            return pathToUrl($picture);
         }
         return '';
     }
@@ -279,5 +296,15 @@ class Photo
             }
         }
         return false;
+    }
+
+    /**
+     * Рейтинг
+     *
+     * @return int
+     */
+    public function getRatingAttribute(): int
+    {
+        return ($this->vote_plus - $this->vote_minus);
     }
 }
