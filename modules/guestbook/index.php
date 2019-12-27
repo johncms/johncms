@@ -401,7 +401,7 @@ switch ($act) {
                 if (! $res['id']) {
                     // Request for guests
                     $res_g = $db->query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1")->fetch();
-                    $item['user_lastdate'] = $res_g['lastdate'];
+                    $item['user_lastdate'] = $res_g['lastdate'] ?? 0;
                 }
 
                 $item['created'] = $tools->displayDate($res['time']);
