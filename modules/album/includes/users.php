@@ -25,14 +25,14 @@ $nav_chain->add($title);
 // Список посетителей. у которых есть фотографии
 switch ($mod) {
     case 'boys':
-        $sql = "WHERE `users`.`sex` = 'm'";
+        $sql = "WHERE `u`.`sex` = 'm'";
         break;
 
     case 'girls':
-        $sql = "WHERE `users`.`sex` = 'zh'";
+        $sql = "WHERE `u`.`sex` = 'zh'";
         break;
     default:
-        $sql = "WHERE `users`.`sex` != ''";
+        $sql = "WHERE `u`.`sex` != ''";
 }
 
 $data = [];
@@ -57,23 +57,22 @@ $data['filters'] = [
 $total = $db->query(
     "SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`
-    LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
+    LEFT JOIN `users` u ON `cms_album_files`.`user_id` = `u`.`id` ${sql}
 "
 )->fetchColumn();
 
-if ($total) {
+if ($total) {$db->query('set sql_mode="";');
     $album_access = ($foundUser['id'] === $user->id || $user->rights >= 6 ? '' : ' AND albums.access > 1');
-    $req = $db->query(
-        "SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, users.lastdate, `users`.`name` AS `nick`,
-        (SELECT COUNT(*) FROM cms_album_cat as albums WHERE albums.user_id = users.id ${album_access}) AS count_albums
-        FROM `cms_album_files`
-        LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
-        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, " . $user->config->kmess
-    );
+    $req = $db->query("SELECT distinct(`a`.user_id) AS id, `u`.`lastdate`,`u`.`name` AS `nick`, (
+SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = `u`.`id`) AS `count`, (
+SELECT COUNT(*) FROM `cms_album_cat` AS albums WHERE `albums`.`user_id` = `u`.`id` ${album_access}) AS count_albums
+FROM `cms_album_files` a
+LEFT JOIN `users` u ON `a`.`user_id` = `u`.`id` ${sql}
+ORDER BY `u`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
     $users = [];
     while ($res = $req->fetch()) {
         $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-        $res['album_url'] = '?act=list&amp;user=' . $res['uid'];
+        $res['album_url'] = '?act=list&amp;user=' . $res['id'];
         $users[] = $res;
     }
 }
