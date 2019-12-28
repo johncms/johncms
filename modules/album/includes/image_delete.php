@@ -68,7 +68,19 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 'title'   => $title,
                 'type'    => 'alert-danger',
                 'message' => _t('Wrong data'),
+                'back_url' => '/album/',
             ]
         );
     }
+} else {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('Wrong data'),
+            'back_url' => '/album/',
+        ]
+    );
 }

@@ -134,4 +134,16 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
             'data'       => $data,
         ]
     );
+} else {
+    // У пользователя не достаточно прав - завершаем скрипт
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'    => $title,
+            'type'     => 'alert-danger',
+            'message'  => _t('Wrong data'),
+            'back_url' => '/album/',
+        ]
+    );
+    exit;
 }
