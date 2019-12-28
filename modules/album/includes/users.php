@@ -61,7 +61,7 @@ $total = $db->query(
 "
 )->fetchColumn();
 
-if ($total) {$db->query('set sql_mode="";');
+if ($total) {
     $album_access = ($foundUser['id'] === $user->id || $user->rights >= 6 ? '' : ' AND albums.access > 1');
     $req = $db->query("SELECT distinct(`a`.user_id) AS id, `u`.`lastdate`,`u`.`name` AS `nick`, (
 SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = `u`.`id`) AS `count`, (
