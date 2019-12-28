@@ -18,7 +18,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-//TODO: Проверить зачем это и если не нужно, удалить.
 // Список альбомов юзера
 if (isset($_SESSION['ap'])) {
     unset($_SESSION['ap']);

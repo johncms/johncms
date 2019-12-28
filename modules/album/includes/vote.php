@@ -1,14 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+declare(strict_types=1);
+
+use Albums\Photo;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -16,28 +17,23 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO $db
  * @var Johncms\System\Utility\Tools $tools
  * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Http\Request $request
  */
 
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$ref = isset($_SERVER['HTTP_REFERER']) && ! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : './';
+$mod = trim($request->getQuery('mod', '', FILTER_SANITIZE_STRING));
+$referer = $request->getHeader('Referer')[0] ?? './';
+$ref = filter_var($referer, FILTER_SANITIZE_URL);
 
 // Голосуем за фотографию
 if (! $img) {
-    echo $tools->displayError(_t('Wrong data'));
     echo $view->render(
-        'system::app/old_content',
+        'system::pages/result',
         [
-            'title'   => $textl ?? '',
-            'content' => ob_get_clean(),
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('Wrong data'),
         ]
     );
-    exit;
-}
-
-$check = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '${img}' LIMIT 1");
-
-if ($check->rowCount()) {
-    header('Location: ' . $ref);
     exit;
 }
 
@@ -45,38 +41,57 @@ $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `us
 
 if ($req->rowCount()) {
     $res = $req->fetch();
+    $photo = new Photo($res);
 
-    switch ($mod) {
-        case 'plus':
-            /**
-             * Отдаем положительный голос
-             */
-            $db->exec(
-                "INSERT INTO `cms_album_votes` SET
+    if ($photo->can_vote) {
+        switch ($mod) {
+            case 'plus':
+                /**
+                 * Отдаем положительный голос
+                 */
+                $db->exec(
+                    "INSERT INTO `cms_album_votes` SET
                 `user_id` = '" . $user->id . "',
                 `file_id` = '${img}',
                 `vote` = '1'
             "
-            );
-            $db->exec("UPDATE `cms_album_files` SET `vote_plus` = '" . ($res['vote_plus'] + 1) . "' WHERE `id` = '${img}'");
-            break;
+                );
+                $db->exec("UPDATE `cms_album_files` SET `vote_plus` = '" . ($res['vote_plus'] + 1) . "' WHERE `id` = '${img}'");
+                break;
 
-        case 'minus':
-            /**
-             * Отдаем отрицательный голос
-             */
-            $db->exec(
-                "INSERT INTO `cms_album_votes` SET
+            case 'minus':
+                /**
+                 * Отдаем отрицательный голос
+                 */
+                $db->exec(
+                    "INSERT INTO `cms_album_votes` SET
                 `user_id` = '" . $user->id . "',
                 `file_id` = '${img}',
                 `vote` = '-1'
             "
-            );
-            $db->exec("UPDATE `cms_album_files` SET `vote_minus` = '" . ($res['vote_minus'] + 1) . "' WHERE `id` = '${img}'");
-            break;
+                );
+                $db->exec("UPDATE `cms_album_files` SET `vote_minus` = '" . ($res['vote_minus'] + 1) . "' WHERE `id` = '${img}'");
+                break;
+        }
+        header('Location: ' . $ref);
+    } else {
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => $title,
+                'type'     => 'alert-danger',
+                'message'  => _t('You cannot vote for this photo.'),
+                'back_url' => htmlspecialchars($ref),
+            ]
+        );
     }
-
-    header('Location: ' . $ref);
 } else {
-    echo $tools->displayError(_t('Wrong data'));
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('Wrong data'),
+        ]
+    );
 }
