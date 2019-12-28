@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManager;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -46,7 +46,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
 
     $res_a = $req_a->fetch();
     if ($request->getMethod() === 'POST') {
-        Image::configure(['driver' => 'imagick']);
+        $image_manager = new ImageManager(['driver' => 'imagick']);
 
         $files = $request->getUploadedFiles();
         /** @var GuzzleHttp\Psr7\UploadedFile $file */
@@ -64,7 +64,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
         if (empty($error) && (is_dir($dir) || mkdir($dir, 0777) || is_dir($dir))) {
             try {
                 // Сохраняем оригинал
-                $img = Image::make($file->getStream());
+                $img = $image_manager->make($file->getStream());
                 $img->resize(
                     1920,
                     1080,
@@ -77,9 +77,25 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
 
                 $img->save($dir . '/' . $original_file, 100, 'jpg');
 
+                $width = 400;
+                $height = 300;
                 // Создаем превью
-                $img->fit(400, 300);
-                $img->save($dir . '/' . $tmb_file, 100, 'jpg');
+                $resized = $image_manager->make($file->getStream())->resize(
+                    $width,
+                    $height,
+                    static function ($constraint) {
+                        /** @var $constraint Intervention\Image\Constraint */
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    }
+                );
+
+                // Создаем подложку для картинки и помещаем в неё сжатую до нужных размеров копию
+                $bg = $img->fit($width, $height)
+                    ->blur(20)
+                    ->insert($resized, 'center');
+
+                $bg->save($dir . '/' . $tmb_file, 100, 'jpg');
 
                 $description = $request->getPost('description', '');
                 $description = mb_substr($description, 0, 1500);
