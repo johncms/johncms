@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\System\Http\Request;
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
@@ -18,12 +19,14 @@ use Johncms\Utility\NavChain;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
+ * @var Request $request
  * @var User $user
  * @var Render $view
  * @var NavChain $nav_chain
  */
 
 $config = di('config')['johncms'];
+$request = di(Request::class);
 $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
@@ -31,8 +34,8 @@ $nav_chain = di(NavChain::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('login', __DIR__ . '/templates/');
 
-$id = isset($_POST['id']) ? abs((int) ($_POST['id'])) : 0;
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
+$id = $request->getPost('id', 0, FILTER_SANITIZE_NUMBER_INT);
+$referer = $request->getServer('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($user->isValid()) {
     ////////////////////////////////////////////////////////////
@@ -66,10 +69,9 @@ if ($user->isValid()) {
     $error = [];
     $captcha = false;
     $display_form = 1;
-    $user_login = filter_input(INPUT_POST, 'n', FILTER_SANITIZE_STRING);
-    $user_pass = filter_input(INPUT_POST, 'p', FILTER_SANITIZE_STRING);
-    $captchaCode = filter_input(INPUT_POST, 'code', FILTER_SANITIZE_STRING);
-    $remember = isset($_POST['mem']);
+    $user_login = $request->getPost('n', null, FILTER_SANITIZE_STRING);
+    $user_pass = $request->getPost('p', null, FILTER_SANITIZE_STRING);
+    $captchaCode = $request->getPost('code', null, FILTER_SANITIZE_STRING);
 
     if (empty($user_login)) {
         $error[] = _t('You have not entered login', 'system');
@@ -109,7 +111,6 @@ if ($user->isValid()) {
                             'captcha'    => new Mobicms\Captcha\Image($code),
                             'user_login' => $user_login,
                             'user_pass'  => $user_pass,
-                            'remember'   => $remember,
                             'id'         => $loginUser->id,
                         ]
                     );
@@ -127,17 +128,8 @@ if ($user->isValid()) {
                         echo $view->render('login::confirm');
                     } else {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
-                        if (isset($_POST['mem'])) {
-                            // Установка данных COOKIE
-                            $cuid = (string) $loginUser->id;
-                            $cups = md5($user_pass);
-                            setcookie('cuid', $cuid, time() + 3600 * 24 * 365, '/');
-                            setcookie('cups', $cups, time() + 3600 * 24 * 365, '/');
-                        }
-
-                        // Установка данных сессии
-                        $_SESSION['uid'] = $loginUser->id;
-                        $_SESSION['ups'] = md5(md5($user_pass));
+                        setcookie('cuid', (string) $loginUser->id, time() + 3600 * 24 * 365, '/');
+                        setcookie('cups', md5($user_pass), time() + 3600 * 24 * 365, '/');
 
                         $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $loginUser->id);
                         header('Location: /');

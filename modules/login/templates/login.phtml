@@ -1,4 +1,6 @@
-<?php $this->layout('system::layout/default', [
+<?php $this->layout(
+    'system::layout/default',
+    [
         'title'      => _t('Login', 'system'),
         'page_title' => _t('Login', 'system'),
     ]
@@ -35,14 +37,6 @@
                             required
                             placeholder="<?= _t('Password', 'system') ?>"
                         >
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input id="remember" type="checkbox" name="mem" value="1" checked="checked" class="custom-control-input">
-                            <label for="remember" class="custom-control-label">
-                                <?= _t('Remember', 'system') ?>
-                            </label>
-                        </div>
                     </div>
                     <button type="submit" name="login" value="1" class="btn btn-fill btn-primary"><?= _t('Login', 'system') ?></button>
                     <a href="/profile/skl.php?continue" class="btn btn-link"><?= _t('Forgot password?', 'system') ?></a>
