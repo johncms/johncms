@@ -66,8 +66,8 @@ if ($total && $user->rights) {
             echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
         }
 
-        echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-            '&#160;&#160;<small>[<a href="' . $config->homeurl . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
+        echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config['homeurl'] . '/admin/?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
+            '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
     }
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
