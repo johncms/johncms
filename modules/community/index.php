@@ -10,10 +10,12 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Utility\Tools;
+use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
+use Johncms\System\Utility\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
+use Johncms\Utility\NavChain;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -34,6 +36,12 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
+
+/** @var Request $request */
+$request = di(Request::class);
+
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('users', __DIR__ . '/templates/');
 
@@ -44,12 +52,18 @@ $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';
 $mod = $route['mod'] ?? '';
 
+$title = _t('Community');
+
+$nav_chain->add($title, '/community/');
+
 // Закрываем от неавторизованных юзеров
 if (! $config['active'] && ! $user->isValid()) {
     echo $view->render(
-        'system::app/old_content',
+        'system::pages/result',
         [
-            'content' => $tools->displayError(_t('For registered users only')),
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('For registered users only'),
         ]
     );
     exit;

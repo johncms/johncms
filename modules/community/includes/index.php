@@ -23,12 +23,19 @@ $counters = di('counters');
 $count_adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0')->fetchColumn();
 $birthDays = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j') . "' AND `monthb` = '" . date('n') . "' AND `preg` = '1'")->fetchColumn();
 
-echo $view->render(
-    'users::index',
-    [
+$data = [
+    'counters' => [
         'usersCount' => $counters->users(),
         'adminCount' => $count_adm,
         'birthDays'  => $birthDays,
-        'albumCount' => $counters->album(),
+    ],
+];
+
+echo $view->render(
+    'users::index',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
     ]
 );
