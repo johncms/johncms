@@ -11,7 +11,6 @@
 /**
  * @var $item
  */
-
 ?>
 
 <div class="user-row card shadow border-0 mb-2">
@@ -31,6 +30,19 @@
                         <a class="user-login mr-2"><?= $item['name'] ?></a>
                     <?php endif; ?>
                 </div>
+                <?php if (! empty($active_tab)): ?>
+                    <div>
+                        <?php if ($active_tab === 'guest'): ?>
+                            <?= $item['postguest'] ?> <?= _p('post', 'posts', $item['postguest']) ?>
+                        <?php elseif ($active_tab === 'comm'): ?>
+                            <?= $item['komm'] ?> <?= _p('comment', 'comments', $item['komm']) ?>
+                        <?php elseif ($active_tab === 'karma'): ?>
+                            <?= $item['karma'] ?> <?= _p('point', 'points', $item['karma']) ?>
+                        <?php elseif ($active_tab === 'forum'): ?>
+                            <?= $item['postforum'] ?> <?= _p('post', 'posts', $item['postforum']) ?>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         <?php if ($user->rights >= 3): ?>

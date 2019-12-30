@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,91 +8,99 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$url = $config->homeurl . '/community/top/';
-ob_start();
+$url = '/community/top/';
 
-// Функция отображения списков
-function get_top($order = 'postforum')
-{
-    global $db, $tools;
-    $req = $db->query("SELECT * FROM `users` WHERE `${order}` > 0 ORDER BY `${order}` DESC LIMIT 9");
-
-    if ($req->rowCount()) {
-        $out = '';
-        $i = 0;
-
-        while ($res = $req->fetch()) {
-            $out .= $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $out .= $tools->displayUser($res, ['header' => ('<b>' . $res[$order]) . '</b>']) . '</div>';
-            ++$i;
-        }
-
-        return $out;
-    }
-
-    return '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
-}
-
-// Меню выбора
-$menu = [
-    (! $mod ? '<b>' . _t('Forum') . '</b>' : '<a href="' . $url . '">' . _t('Forum') . '</a>'),
-    ($mod == 'guest' ? '<b>' . _t('Guestbook') . '</b>' : '<a href="' . $url . 'guest/">' . _t('Guestbook') . '</a>'),
-    ($mod == 'comm' ? '<b>' . _t('Comments') . '</b>' : '<a href="' . $url . 'comm/">' . _t('Comments') . '</a>'),
+$tabs = [
+    'forum' => [
+        'name'   => _t('Forum'),
+        'url'    => $url,
+        'active' => false,
+    ],
+    'guest' => [
+        'name'   => _t('Guestbook'),
+        'url'    => $url . 'guest/',
+        'active' => false,
+    ],
+    'comm'  => [
+        'name'   => _t('Comments'),
+        'url'    => $url . 'comm/',
+        'active' => false,
+    ],
 ];
 
-if ($config->karma) {
-    $menu[] = $mod == 'karma' ? '<b>' . _t('Karma') . '</b>' : '<a href="' . $url . 'karma/">' . _t('Karma') . '</a>';
+if ($config['karma']) {
+    $tabs['karma'] = [
+        'name'   => _t('Karma'),
+        'url'    => $url . 'karma/',
+        'active' => false,
+    ];
 }
+
 
 switch ($mod) {
     case 'guest':
         // Топ Гостевой
-        echo '<div class="phdr"><a href="../../"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Guestbook') . '</div>';
-        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-        echo get_top('postguest');
-        echo '<div class="phdr"><a href="../guestbook/">' . _t('Guestbook') . '</a></div>';
+        $req = $db->query('SELECT * FROM `users` WHERE `postguest` > 0 ORDER BY `postguest` DESC LIMIT 9');
+        $title = _t('Most active in Guestbook');
+        $active = 'guest';
         break;
 
     case 'comm':
         // Топ комментариев
-        echo '<div class="phdr"><a href="../../"><b>' . _t('Community') . '</b></a> | ' . _t('Most commentators') . '</div>';
-        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-        echo get_top('komm');
-        echo '<div class="phdr"><a href="../">' . _t('Home') . '</a></div>';
+        $req = $db->query('SELECT * FROM `users` WHERE `komm` > 0 ORDER BY `komm` DESC LIMIT 9');
+        $title = _t('Most commentators');
+        $active = 'comm';
         break;
 
     case 'karma':
         // Топ Кармы
-        if ($config->karma) {
-            echo '<div class="phdr"><a href="../../"><b>' . _t('Community') . '</b></a> | ' . _t('Best Karma') . '</div>';
-            echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
+        if ($config['karma']) {
             $req = $db->query('SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9');
-
-            if ($req->rowCount()) {
-                while ($res = $req->fetch()) {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo $tools->displayUser($res, ['header' => ('<b>' . $res['karma']) . '</b>']) . '</div>';
-                    ++$i;
-                }
-            } else {
-                echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
-            }
-
-            echo '<div class="phdr"><a href="../">' . _t('Home') . '</a></div>';
+            $title = _t('Best Karma');
+            $active = 'karma';
         }
         break;
 
     default:
         // Топ Форума
-        echo '<div class="phdr"><a href="../"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Forum') . '</div>';
-        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-        echo get_top('postforum');
-        echo '<div class="phdr"><a href="../../forum/">' . _t('Forum') . '</a></div>';
+        $req = $db->query('SELECT * FROM `users` WHERE `postforum` > 0 ORDER BY `postforum` DESC LIMIT 9');
+        $title = _t('Most active in Forum');
+        $active = 'forum';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Top Activity'),
-    'content' => ob_get_clean(),
-]);
+$tabs[$active]['active'] = true;
+
+$nav_chain->add($title);
+
+$data = [
+    'total'      => $req->rowCount(),
+    'active_tab' => $active,
+    'tabs'       => $tabs,
+    'list'       => static function () use ($req, $user) {
+        while ($res = $req->fetch()) {
+            $res['user_profile_link'] = '';
+            if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
+                $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+            }
+            $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+            $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+            $res['ip'] = long2ip($res['ip']);
+            $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+            $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . $res['ip_via_proxy'];
+            yield $res;
+        }
+    },
+];
+
+echo $view->render(
+    'users::top',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
