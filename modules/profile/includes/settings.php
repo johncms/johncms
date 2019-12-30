@@ -14,11 +14,11 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Settings');
 
-/** @var Johncms\Users\UserConfig $userConfig */
+/** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $user->config;
 
 // Проверяем права доступа
-if ($foundUser['id'] != $user->id) {
+if ($foundUser->id != $user->id) {
     echo $view->render(
         'system::app/old_content',
         [
@@ -124,7 +124,7 @@ switch ($mod) {
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
         if (isset($_POST['submit'])) {
-            $set_user = $userConfig->getArrayCopy();
+            $set_user = (array) $userConfig;
 
             // Записываем новые настройки, заданные пользователем
             $set_user['timeshift'] = isset($_POST['timeshift']) ? (int) ($_POST['timeshift']) : 0;
@@ -161,7 +161,7 @@ switch ($mod) {
             // Устанавливаем язык
             $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;
 
-            if ($lng_select && array_key_exists($lng_select, $config->lng_list)) {
+            if ($lng_select && array_key_exists($lng_select, $config['lng_list'])) {
                 $set_user['lng'] = $lng_select;
                 $_SESSION['lng'] = $lng_select;
             }
@@ -215,11 +215,11 @@ switch ($mod) {
             '</p>';
 
         // Выбор языка
-        if (count($config->lng_list) > 1) {
+        if (count($config['lng_list']) > 1) {
             echo '<p><h3>' . _t('Select Language') . '</h3>';
-            $user_lng = $userConfig['lng'] ?? $config->lng;
+            $user_lng = $userConfig->lng ?? $config['lng'];
 
-            foreach ($config->lng_list as $key => $val) {
+            foreach ($config['lng_list'] as $key => $val) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
                     $tools->getFlag($key) . $val .
                     ($key == $config['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
