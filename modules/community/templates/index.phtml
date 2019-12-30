@@ -29,9 +29,9 @@ $counters = $data['counters'] ?? [];
         <form action="./search/" method="post" class="mb-3">
             <label for="search"><?= _t('Look for the User') ?></label>
             <div class="input-group">
-                <input type="text" id="search" class="form-control" placeholder="<?= _t('Username') ?>">
+                <input type="text" name="search" id="search" class="form-control" placeholder="<?= _t('Username') ?>">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"><?= _t('Search') ?></button>
+                    <button class="btn btn-outline-secondary" type="submit"><?= _t('Search') ?></button>
                 </div>
             </div>
             <div class="text-muted mb-2 small"><?= _t('The search is performed by Nickname and are case-insensitive.') ?></div>
