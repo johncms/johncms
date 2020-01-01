@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<h3><?= _t('Statistic') ?></h3>
+
+<ul>
+    <li>
+        <?php if ($user->rights >= 7): ?>
+            <?php if (! $data['user']['preg'] && empty($data['user']['regadm'])): ?>
+                <?= _t('Pending confirmation') ?>
+            <?php elseif (! $data['user']['preg'] && ! empty($data['user']['regadm'])): ?>
+                <?= _t('Registration confirmed') ?>: <?= $data['user']['regadm'] ?>
+            <?php else: ?>
+                <?= _t('Free registration') ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    </li>
+    <li>
+        <?= _t('Registered') ?>: <?= date('d.m.Y', (int) $data['user']['datereg']) ?>
+    </li>
+    <li>
+        <?= ($data['user']['sex'] === 'm' ? _t('He stay on the site') : _t('She stay on the site')) ?>: <?= $data['user']['total_on_site'] ?>
+    </li>
+    <?php if (! empty($data['user']['last_visit'])): ?>
+        <li>
+            <?= _t('Last visit') ?>: <?= $data['user']['last_visit'] ?>
+        </li>
+    <?php endif; ?>
+</ul>
+
+<h3><?= _t('Activity') ?></h3>
+<ul>
+    <li><span class="gray"><?= _t('Forum') ?>:</span> <a href="?act=activity&amp;user=<?= $data['user']['id'] ?>"><?= $data['user']['postforum'] ?></a></li>
+    <li><span class="gray"><?= _t('Guestbook') ?>:</span> <a href="?act=activity&amp;mod=comments&amp;user=<?= $data['user']['id'] ?>"><?= $data['user']['postguest'] ?></a></li>
+    <li><span class="gray"><?= _t('Comments') ?>:</span> <?= $data['user']['komm'] ?></li>
+</ul>
+
+<div class="mt-2">
+    <a href="?user=<?= $data['user']['id'] ?>"><?= _t('Back') ?></a>
+</div>
