@@ -19,7 +19,7 @@ $this->layout(
 ?>
 
 <?php if (! empty($data['error'])): ?>
-    <?= $this->insert(
+    <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-danger',

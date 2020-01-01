@@ -48,22 +48,35 @@ $view->addFolder('profile', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
-$act = $request->getQuery('act', 0, FILTER_SANITIZE_STRING);
-$mod = $request->getQuery('mod', 0, FILTER_SANITIZE_STRING);
+$user_id = $request->getQuery('user', 0, FILTER_SANITIZE_NUMBER_INT);
+$act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 
 // Закрываем от неавторизованных юзеров
 if (! $user->isValid()) {
-    echo $tools->displayError(_t('For registered users only'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => _t('User Profile'),
+            'type'    => 'alert-danger',
+            'message' => _t('For registered users only'),
+        ]
+    );
     exit;
 }
 
 // Получаем данные пользователя
-$foundUser = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
+$foundUser = $tools->getUser((int) $user_id);
 
 if (! $foundUser) {
-    echo $tools->displayError(_t('This User does not exists'));
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => _t('User Profile'),
+            'type'    => 'alert-danger',
+            'message' => _t('This User does not exists'),
+        ]
+    );
     exit;
 }
 
