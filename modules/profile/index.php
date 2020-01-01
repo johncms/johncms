@@ -10,14 +10,15 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Utility\Tools;
+use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
+use Johncms\System\Utility\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
+use Johncms\Utility\NavChain;
 use Zend\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var Assets $assets
@@ -34,12 +35,21 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 
+/** @var Request $request */
+$request = di(Request::class);
+
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
+
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('profile', __DIR__ . '/templates/');
+
 // Регистрируем языки модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
+$act = $request->getQuery('act', 0, FILTER_SANITIZE_STRING);
+$mod = $request->getQuery('mod', 0, FILTER_SANITIZE_STRING);
 
 // Закрываем от неавторизованных юзеров
 if (! $user->isValid()) {
@@ -252,11 +262,3 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
     $textl = _t('Profile') . ': ' . htmlspecialchars($foundUser->name);
 }
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => $textl ?? '',
-        'content' => ob_get_clean(),
-    ]
-);
