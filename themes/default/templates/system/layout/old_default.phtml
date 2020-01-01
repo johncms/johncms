@@ -73,7 +73,7 @@
 
 <div class="maintxt">
     <!-- Уведомления -->
-    <?php $this->insert('system::app/old_notifications') ?>
+    <?php $this->fetch('system::app/old_notifications') ?>
 
     <!-- Основная информация -->
     <?= $this->section('content') ?>
@@ -87,7 +87,7 @@
 <div style="text-align:center">
     <p><?= $this->e($config['copyright']) ?></p>
     <!-- Внешние счетчики -->
-    <?php $this->insert('system::app/old_counters') ?>
+    <?php $this->fetch('system::app/old_counters') ?>
     <div>
         <small>&copy; <a href="https://johncms.com">JohnCMS</a></small>
     </div>
