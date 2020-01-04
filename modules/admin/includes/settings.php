@@ -23,7 +23,6 @@ if ($user->rights < 9) {
 }
 
 $config = di('config')['johncms'];
-$view->addData(['showSystemMenu' => true]);
 
 /** @var NavChain $navChain */
 $navChain = di(NavChain::class);

@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @var bool $confirmation
+ */
+$this->layout('system::layout/default', ['title' => _t('Admin Panel'), 'page_title' => _t('Default language')]);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['showSystemMenu' => true]));
+?>
+<div style="max-width: 640px">
+    <?php if ($confirmation): ?>
+        <div class="alert alert-success shadow" role="alert">
+            <?= _t('Descriptions have been updated successfully') ?>
+        </div>
+    <?php endif ?>
+    <form method="post">
+        <fieldset>
+            <legend><?= _t('Select language') ?></legend>
+            <?php foreach ($config['lng_list'] as $key => $val): ?>
+                <div class="custom-control custom-radio mb-2">
+                    <input type="radio" id="<?= $key ?>" name="lng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
+                    <label class="custom-control-label" for="<?= $key ?>">
+                        <img src="<?= $this->asset('images/flags/' . strtolower($key) . '.png') ?>" alt=".">
+                        <?= $val ?>
+                        <?php if ($key == $config['lng']): ?>
+                            <span class="badge badge-pill badge-secondary"><?= _t('Default', 'system') ?></span>
+                        <?php endif ?>
+                    </label>
+                </div>
+            <?php endforeach ?>
+        </fieldset>
+        <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="<?= _t('Save') ?>"/>
+        <input type="submit" class="btn btn-sm btn-secondary mt-4 mb-2" name="update" value="<?= _t('Update List') ?>"/>
+    </form>
+</div>

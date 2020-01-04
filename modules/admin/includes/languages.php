@@ -10,8 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Utility\NavChain;
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
@@ -19,24 +20,30 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\System\Users\User $user
  */
 
-$config = di('config')['johncms'];
-
-// Проверяем права доступа
 if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
 
-// Выводим список доступных языков
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
+$config = di('config')['johncms'];
 
-if (isset($_POST['lng']) || isset($_GET['refresh'])) {
+/** @var NavChain $navChain */
+$navChain = di(NavChain::class);
+$navChain->add(_t('Admin Panel'), '../');
+$navChain->add(_t('Default language'));
+
+// Выводим список доступных языков
+//echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
+
+if (isset($_POST['lng']) || isset($_POST['update'])) {
     if (isset($_POST['lng'])) {
         $select = trim($_POST['lng']);
 
         if (isset($config['lng_list'][$select])) {
             $config['lng'] = $select;
         }
-    } elseif (isset($_GET['refresh'])) {
+    }
+
+    if (isset($_POST['update'])) {
         // Обновляем список имеющихся языков
         $lng_list = [];
 
@@ -47,7 +54,7 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
         }
 
         $config['lng_list'] = $lng_list;
-        echo '<div class="gmenu"><p>' . _t('Descriptions have been updated successfully') . '</p></div>';
+        $confirmation = true;
     }
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
@@ -62,29 +69,10 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
     }
 }
 
-echo '<div class="menu">'
-    . '<form action="?act=languages" method="post">'
-    . '<p><h3>' . _t('Select language') . '</h3>';
-
-foreach ($config['lng_list'] as $key => $val) {
-    echo '<div><input type="radio" value="' . $key . '" name="lng" ' . ($key == $config['lng'] ? 'checked="checked"' : '') . '/>&#160;' .
-        $tools->getFlag($key) .
-        $val .
-        ($key == $config['lng'] ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
-        '</div>';
-}
-
-echo '</p><p>'
-    . '<input type="submit" name="submit" value="' . _t('Apply') . '" />'
-    . '</p></form></div>'
-    . '<div class="phdr">' . _t('Total') . ': <b>' . count($config['lng_list']) . '</b></div><p>'
-    . '<a href="?act=languages&amp;refresh">' . _t('Update List') . '</a><br>'
-    . '<a href="./">' . _t('Admin Panel') . '</a></p>';
-
 echo $view->render(
-    'system::app/old_content',
+    'admin::languages',
     [
-        'title'   => _t('Admin Panel'),
-        'content' => ob_get_clean(),
+        'config'       => $config,
+        'confirmation' => $confirmation ?? false,
     ]
 );
