@@ -18,10 +18,6 @@ $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
 $album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
-$showUsers = isset($showUsersMenu) ? ' show' : '';
-$showModules = isset($showModulesMenu) ? ' show' : '';
-$showSystem = isset($showSystemMenu) ? ' show' : '';
-$showSecurity = isset($showSecurityMenu) ? ' show' : '';
 ?>
 <div style="background-color: #bd0719; height: 5px">&nbsp;</div>
 
@@ -44,10 +40,10 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         </div>
     </a>
     <!-- Users Slider -->
-    <div id="collapseUsers" class="collapse<?= $showUsers ?>" data-parent="#accordionAdmin">
+    <div id="collapseUsers" class="collapse<?= isset($usr_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
-            <li>
+            <li class="<?= isset($usr_menu['search_ip']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/search_ip/">
                     <svg class="icon text-info">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
@@ -56,7 +52,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <?php if ($regtotal): ?>
-                <li>
+                <li class="<?= isset($usr_menu['reg']) ? 'active' : '' ?>">
                     <a href="<?= $config['homeurl'] ?>/admin/reg/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
@@ -66,7 +62,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     </a>
                 </li>
             <?php endif ?>
-            <li>
+            <li class="<?= isset($usr_menu['userlist']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/userlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
@@ -75,7 +71,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     <span class="badge badge-pill badge-light"><?= $tools->formatNumber($countusers) ?></span>
                 </a>
             </li>
-            <li>
+            <li class="<?= isset($usr_menu['adminlist']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/adminlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
@@ -84,7 +80,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     <span class="badge badge-pill badge-light"><?= $tools->formatNumber($countadm) ?></span>
                 </a>
             </li>
-            <li>
+            <li class="<?= isset($usr_menu['ban_panel']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/ban_panel/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
@@ -94,7 +90,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <?php if ($user->rights === 9): ?>
-                <li>
+                <li class="<?= isset($usr_menu['usr_clean']) ? 'active' : '' ?>">
                     <a href="<?= $config['homeurl'] ?>/admin/usr_clean/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
@@ -102,7 +98,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                         <span class="flex-grow-1"><?= _t('Database cleanup') ?></span>
                     </a>
                 </li>
-                <li>
+                <li class="<?= isset($usr_menu['antiflood']) ? 'active' : '' ?>">
                     <a href="<?= $config['homeurl'] ?>/admin/antiflood/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bell-off"/>
@@ -110,7 +106,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                         <span class="flex-grow-1"><?= _t('Antiflood') ?></span>
                     </a>
                 </li>
-                <li>
+                <li class="<?= isset($usr_menu['karma']) ? 'active' : '' ?>">
                     <a href="<?= $config['homeurl'] ?>/admin/karma/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
@@ -138,10 +134,10 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         </div>
     </a>
     <!-- Modules Slider -->
-    <div id="collapseModules" class="collapse<?= $showModules ?>" data-parent="#accordionAdmin">
+    <div id="collapseModules" class="collapse<?= isset($module_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
-            <li>
+            <li class="<?= isset($module_menu['forum']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/forum/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
@@ -149,7 +145,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     <span class="flex-grow-1"><?= _t('Forum') ?></span>
                 </a>
             </li>
-            <li>
+            <li class="<?= isset($module_menu['news']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/news/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
@@ -157,7 +153,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     <span class="flex-grow-1"><?= _t('News') ?></span>
                 </a>
             </li>
-            <li>
+            <li class="<?= isset($module_menu['ads']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/ads/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
@@ -166,7 +162,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                 </a>
             </li>
             <?php if ($user->rights == 9): ?>
-                <li>
+                <li class="<?= isset($module_menu['counters']) ? 'active' : '' ?>">
                     <a href="<?= $config['homeurl'] ?>/admin/counters/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
@@ -194,10 +190,10 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         </div>
     </a>
     <!-- System Slider -->
-    <div id="collapseSystem" class="collapse<?= $showSystem ?>" data-parent="#accordionAdmin">
+    <div id="collapseSystem" class="collapse<?= isset($sys_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
-            <li>
+            <li class="<?= isset($sys_menu['settings']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/settings/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
@@ -205,15 +201,15 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     <span class="flex-grow-1"><?= _t('System Settings') ?></span>
                 </a>
             </li>
-            <li>
-                <a href="<?= $config['homeurl'] ?>/admin/smilies/">
+            <li class="<?= isset($sys_menu['emoticons']) ? 'active' : '' ?>">
+                <a href="<?= $config['homeurl'] ?>/admin/emoticons/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#smile"/>
                     </svg>
                     <span class="flex-grow-1"><?= _t('Update Smilies') ?></span>
                 </a>
             </li>
-            <li>
+            <li class="<?= isset($sys_menu['languages']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/languages/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
@@ -240,10 +236,10 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
         </div>
     </a>
     <!-- Security Slider -->
-    <div id="collapseSecurity" class="collapse<?= $showSecurity ?>" data-parent="#accordionAdmin">
+    <div id="collapseSecurity" class="collapse<?= isset($sec_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical" style="background-color: rgba(230, 230, 230, 0.2)">
-            <li>
+            <li class="<?= isset($sec_menu['antispy']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/antispy/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
@@ -251,7 +247,7 @@ $showSecurity = isset($showSecurityMenu) ? ' show' : '';
                     <span class="flex-grow-1"><?= _t('Anti-Spyware') ?></span>
                 </a>
             </li>
-            <li>
+            <li class="<?= isset($sec_menu['ipban']) ? 'active' : '' ?>">
                 <a href="<?= $config['homeurl'] ?>/admin/ipban/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>

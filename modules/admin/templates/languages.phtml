@@ -4,7 +4,7 @@
  * @var bool $confirmation
  */
 $this->layout('system::layout/default', ['title' => _t('Admin Panel'), 'page_title' => _t('Default language')]);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['showSystemMenu' => true]));
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['languages' => true]]));
 ?>
 <div style="max-width: 640px">
     <?php if ($confirmation): ?>

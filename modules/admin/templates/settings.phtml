@@ -6,7 +6,7 @@
  * @var array $themelist
  */
 $this->layout('system::layout/default', ['title' => _t('Admin Panel'), 'page_title' => _t('System Settings')]);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['showSystemMenu' => true]));
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['settings' => true]]));
 ?>
 
 <div style="max-width: 640px">
