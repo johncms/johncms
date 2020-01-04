@@ -18,7 +18,7 @@ use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона

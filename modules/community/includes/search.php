@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = di(Zend\I18n\Translator\Translator::class);
+/** @var Laminas\I18n\Translator\Translator $translator */
+$translator = di(Laminas\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var Johncms\System\Utility\Tools $tools */

@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\System\Utility\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);

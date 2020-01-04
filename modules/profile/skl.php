@@ -18,8 +18,8 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 $config = di('config')['johncms'];
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = di(Zend\I18n\Translator\Translator::class);
+/** @var Laminas\I18n\Translator\Translator $translator */
+$translator = di(Laminas\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var PDO $db */

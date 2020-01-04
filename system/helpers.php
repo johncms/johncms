@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Container\Factory;
 use Johncms\System\View\Render;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 function di(string $service)
 {
