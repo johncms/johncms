@@ -77,7 +77,7 @@ if (! $error) {
     switch ($mod) {
         case 'del':
             // Удаляем личные данные
-            $del = new Johncms\Users\UserClean();
+            $del = new Johncms\System\Users\UserClean($db);
             $del->removeAlbum($foundUser['id']);         // Удаляем личные Фотоальбомы
             $del->removeGuestbook($foundUser['id']);     // Удаляем личную Гостевую
             $del->removeMail($foundUser['id']);          // Удаляем почту
