@@ -83,7 +83,7 @@ if ($req_obj->rowCount()) {
     }
 
     // Показываем комментарии
-    $comm = new Johncms\Utility\Comments($arg);
+    $comm = new Johncms\Comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев
     if ($comm->added && $user->id !== $owner['id']) {

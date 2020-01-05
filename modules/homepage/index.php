@@ -11,14 +11,14 @@ declare(strict_types=1);
  */
 
 use Johncms\System\View\Render;
-use Johncms\Utility\NavChain;
+use Johncms\NavChain;
 use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Render                   $view
- * @var Johncms\Utility\NavChain $nav_chain
+ * @var NavChain $nav_chain
  */
 
 $view = di(Render::class);

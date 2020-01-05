@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Downloads;
 
 use Johncms;
-use Johncms\Utility\NavChain;
+use Johncms\NavChain;
 use PDO;
 
 /**

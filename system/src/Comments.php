@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Utility;
+namespace Johncms;
 
 use Johncms\System\Container\Factory;
 use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
-use Johncms\System\Utility\Bbcode;
+use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use PDO;

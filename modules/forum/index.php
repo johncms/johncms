@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
-use Johncms\Utility\Counters;
+use Johncms\Counters;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
-use Johncms\Utility\NavChain;
+use Johncms\NavChain;
 use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Utility\NavChain;
+use Johncms\NavChain;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 

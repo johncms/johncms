@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Downloads;
 
-use Johncms\Utility\FileInfo;
+use Johncms\FileInfo;
 
 class Screen
 {

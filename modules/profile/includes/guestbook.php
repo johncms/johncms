@@ -31,7 +31,7 @@ $arg = [
 ];
 
 // Показываем комментарии
-new Johncms\Utility\Comments($arg);
+new Johncms\Comments($arg);
 
 // Обновляем счетчик непрочитанного
 if (! $mod && $foundUser->id === $user->id && $foundUser->comm_count !== $foundUser->comm_old) {

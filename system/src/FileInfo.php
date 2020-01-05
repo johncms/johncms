@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Utility;
+namespace Johncms;
 
 use Johncms\System\Legacy\Tools;
 use SplFileInfo;

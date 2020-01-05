@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\System\View\Render;
-use Johncms\Utility\NavChain;
+use Johncms\NavChain;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

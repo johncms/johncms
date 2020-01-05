@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\Utility\Counters $counters
+ * @var Johncms\Counters $counters
  * @var Render $view
  * @var User $user
  */

@@ -90,4 +90,4 @@ $arg = [
 ];
 
 // Показываем комментарии
-new Johncms\Utility\Comments($arg);
+new Johncms\Comments($arg);

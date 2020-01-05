@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Utility\Counters $counters
+ * @var Johncms\Counters $counters
  * @var PDO $db
  * @var Johncms\System\View\Render $view
  */

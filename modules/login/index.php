@@ -14,7 +14,7 @@ use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Johncms\Utility\NavChain;
+use Johncms\NavChain;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

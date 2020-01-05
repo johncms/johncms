@@ -13,8 +13,8 @@ declare(strict_types=1);
 return [
     'dependencies' => [
         'factories' => [
-            Johncms\Utility\NavChain::class => Johncms\Utility\NavChain::class,
-            'counters'                      => Johncms\Utility\Counters::class,
+            Johncms\NavChain::class => Johncms\NavChain::class,
+            'counters'                      => Johncms\Counters::class,
         ],
     ],
 ];

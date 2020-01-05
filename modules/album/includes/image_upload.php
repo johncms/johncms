@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  * @var Johncms\System\Http\Request $request
- * @var Johncms\Utility\NavChain $nav_chain
+ * @var Johncms\NavChain $nav_chain
  */
 
 $config = di('config')['johncms'];

@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Downloads\Download;
-use Johncms\Utility\FileInfo;
-use Johncms\Utility\NavChain;
+use Johncms\FileInfo;
+use Johncms\NavChain;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

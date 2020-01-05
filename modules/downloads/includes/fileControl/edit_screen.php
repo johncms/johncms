@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Downloads\Screen;
 use Intervention\Image\ImageManagerStatic as Image;
-use Johncms\Utility\FileInfo;
+use Johncms\FileInfo;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
