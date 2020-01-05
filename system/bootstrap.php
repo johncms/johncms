@@ -102,7 +102,7 @@ if ($req->rowCount()) {
 $cacheFile = CACHE_PATH . 'system-cleanup.cache';
 
 if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
-    new Johncms\Utility\Cleanup($db);
+    new Johncms\System\Utility\Cleanup($db);
     file_put_contents($cacheFile, time());
 }
 
