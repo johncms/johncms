@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Library;
 
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 
 /**
  * Класс дерева (Nested Sets)

@@ -15,7 +15,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 /**
  * @var PDO $db
- * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
 $sw = 0;

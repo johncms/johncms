@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\Utility\Counters;
 use Johncms\System\View\Extension\Assets;

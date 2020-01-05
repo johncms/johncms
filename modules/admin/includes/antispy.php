@@ -173,8 +173,8 @@ switch ($mod) {
         echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Snapshot scan') . '</div>';
 
         if (count($scaner->track_files) == 0) {
-            /** @var Johncms\System\Utility\Tools $tools */
-            $tools = di(Johncms\System\Utility\Tools::class);
+            /** @var Johncms\System\Legacy\Tools $tools */
+            $tools = di(Johncms\System\Legacy\Tools::class);
 
             echo $tools->displayError(
                 _t('Snapshot is not created'),

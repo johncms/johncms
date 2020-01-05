@@ -15,7 +15,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 /**
  * @var PDO $db
- * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('List of Users') . '</div>';

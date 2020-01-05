@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Downloads\Download;
 use Johncms\System\Users\User;
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Utility\NavChain;
 use Laminas\I18n\Translator\Translator;

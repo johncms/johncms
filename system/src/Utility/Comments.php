@@ -16,7 +16,7 @@ use Johncms\System\Container\Factory;
 use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
 use Johncms\System\Utility\Bbcode;
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use PDO;
 use Psr\Container\ContainerInterface;

@@ -25,8 +25,8 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 /** @var PDO $db */
 $db = di(PDO::class);
 
-/** @var Johncms\System\Utility\Tools $tools */
-$tools = di(Johncms\System\Utility\Tools::class);
+/** @var Johncms\System\Legacy\Tools $tools */
+$tools = di(Johncms\System\Legacy\Tools::class);
 
 $view = di(Render::class);
 

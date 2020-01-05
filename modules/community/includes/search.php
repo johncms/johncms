@@ -14,8 +14,8 @@ declare(strict_types=1);
 $translator = di(Laminas\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-/** @var Johncms\System\Utility\Tools $tools */
-$tools = di(Johncms\System\Utility\Tools::class);
+/** @var Johncms\System\Legacy\Tools $tools */
+$tools = di(Johncms\System\Legacy\Tools::class);
 
 // Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;

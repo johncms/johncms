@@ -16,7 +16,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;

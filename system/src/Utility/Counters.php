@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 

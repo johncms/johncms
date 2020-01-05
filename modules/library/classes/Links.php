@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Library;
 
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 
 /**
  * Класс помошник формирования ссылок для тегов
@@ -43,7 +43,7 @@ class Links
     private $db;
 
     /**
-     * @var \Johncms\System\Utility\Tools
+     * @var \Johncms\System\Legacy\Tools
      */
     private $tools;
 

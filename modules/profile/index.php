@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\Utility\NavChain;

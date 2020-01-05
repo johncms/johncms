@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Albums;
 
 use Johncms\System\Users\User;
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use PDO;
 
 /**

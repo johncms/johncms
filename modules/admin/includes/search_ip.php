@@ -14,7 +14,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Johncms\System\Utility\Tools $tools
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
 $error = [];

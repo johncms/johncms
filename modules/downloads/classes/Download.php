@@ -58,8 +58,8 @@ class Download // phpcs:ignore
         /** @var Johncms\System\Users\User $systemUser */
         $systemUser = di(Johncms\System\Users\User::class);
 
-        /** @var Johncms\System\Utility\Tools $tools */
-        $tools = di(Johncms\System\Utility\Tools::class);
+        /** @var Johncms\System\Legacy\Tools $tools */
+        $tools = di(Johncms\System\Legacy\Tools::class);
 
         $config = di('config')['johncms'];
 
@@ -124,8 +124,8 @@ class Download // phpcs:ignore
     {
         global $old;
 
-        /** @var Johncms\System\Utility\Tools $tools */
-        $tools = di(Johncms\System\Utility\Tools::class);
+        /** @var Johncms\System\Legacy\Tools $tools */
+        $tools = di(Johncms\System\Legacy\Tools::class);
 
         /** @var Johncms\System\View\Extension\Assets $assets */
         $assets = di(Johncms\System\View\Extension\Assets::class);

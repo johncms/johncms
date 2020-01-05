@@ -25,12 +25,12 @@ $container = Johncms\System\Container\Factory::getContainer();
 /** @var User $systemUser */
 $systemUser = $container->get(User::class);
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+/** @var Laminas\I18n\Translator\Translator $translator */
+$translator = $container->get(Laminas\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-/** @var Johncms\System\Utility\Tools $tools */
-$tools = $container->get(Johncms\System\Utility\Tools::class);
+/** @var Johncms\System\Legacy\Tools $tools */
+$tools = $container->get(Johncms\System\Legacy\Tools::class);
 
 // TODO: Сделать перевод
 
