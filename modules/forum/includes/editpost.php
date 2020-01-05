@@ -297,7 +297,7 @@ if (! $error) {
                     'title'             => _t('Edit Message'),
                     'page_title'        => _t('Edit Message'),
                     'id'                => $id,
-                    'bbcode'            => di(Johncms\System\Utility\Bbcode::class)->buttons('edit_post', 'msg'),
+                    'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('edit_post', 'msg'),
                     'msg'               => $message,
                     'start'             => $start,
                     'back_url'          => $link,

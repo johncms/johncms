@@ -217,7 +217,7 @@ if ($request->getMethod() === 'POST') {
             'urls'       => $urls,
             'action_url' => '?act=import&amp;id=' . $id,
             'extensions' => implode(', ', $al_ext),
-            'bbcode'     => di(Johncms\System\Utility\Bbcode::class)->buttons('file_import_form', 'desc'),
+            'bbcode'     => di(Johncms\System\Legacy\Bbcode::class)->buttons('file_import_form', 'desc'),
         ]
     );
 }

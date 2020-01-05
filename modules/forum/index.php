@@ -695,7 +695,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         'start'            => $start,
                         'id'               => $id,
                         'token'            => $token ?? null,
-                        'bbcode'           => di(Johncms\System\Utility\Bbcode::class)->buttons('new_message', 'msg'),
+                        'bbcode'           => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_message', 'msg'),
                         'settings_forum'   => $set_forum,
                         'write_access'     => $write_access,
                         'title'            => $type1['name'],

@@ -299,7 +299,7 @@ switch ($post_type) {
                 'title'             => _t('New message'),
                 'page_title'        => _t('New message'),
                 'id'                => $id,
-                'bbcode'            => di(Johncms\System\Utility\Bbcode::class)->buttons('message_form', 'msg'),
+                'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
                 'token'             => $token,
                 'topic'             => $type1,
                 'form_action'       => '?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start,
@@ -386,7 +386,7 @@ switch ($post_type) {
         if (! empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
-            $citata = di(Johncms\System\Utility\Bbcode::class)->notags($citata);
+            $citata = di(Johncms\System\Legacy\Bbcode::class)->notags($citata);
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date('d.m.Y H:i', $type1['date']);
@@ -553,7 +553,7 @@ switch ($post_type) {
                 'title'             => _t('Reply to message'),
                 'page_title'        => _t('Reply to message'),
                 'id'                => $id,
-                'bbcode'            => di(Johncms\System\Utility\Bbcode::class)->buttons('message_form', 'msg'),
+                'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
                 'token'             => $token,
                 'topic'             => $th1,
                 'form_action'       => '/forum/?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : ''),

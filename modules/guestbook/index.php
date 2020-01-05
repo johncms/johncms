@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Utility\Bbcode;
+use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Http\Environment;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;

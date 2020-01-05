@@ -208,7 +208,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
         . '<p><h3>' . _t('Announce') . ' (max. 500):</h3>'
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
         . '<p><h3>' . _t('Text') . ':</h3>'
-        . di(Johncms\System\Utility\Bbcode::class)->buttons(
+        . di(Johncms\System\Legacy\Bbcode::class)->buttons(
             'form',
             'text'
         ) . '<textarea name="text" rows="' . $user->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'

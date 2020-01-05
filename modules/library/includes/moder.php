@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . di(Johncms\System\Utility\Bbcode::class)->buttons(
+            ? '<h3>' . _t('Text') . '</h3><div>' . di(Johncms\System\Legacy\Bbcode::class)->buttons(
                 'form',
                 'text'
             ) . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])

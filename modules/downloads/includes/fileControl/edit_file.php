@@ -129,7 +129,7 @@ if ($request->getMethod() === 'POST') {
             'file_data'  => $file_data,
             'audio_tags' => $audio_tags,
             'action_url' => '?act=edit_file&amp;id=' . $id,
-            'bbcode'     => di(Johncms\System\Utility\Bbcode::class)->buttons('file_edit_form', 'desc'),
+            'bbcode'     => di(Johncms\System\Legacy\Bbcode::class)->buttons('file_edit_form', 'desc'),
         ]
     );
 }
