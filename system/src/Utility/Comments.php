@@ -236,9 +236,9 @@ class Comments
                     if ($req->rowCount()) {
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
-                        $user = $this->tools->getUser($res['user_id']);
+                        $user = $this->tools->getUser((int) $res['user_id']);
 
-                        if ($user['rights'] > $this->systemUser->rights) {
+                        if ($user->rights > $this->systemUser->rights) {
                             echo $this->view->render(
                                 'system::pages/result',
                                 [

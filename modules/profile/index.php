@@ -65,10 +65,10 @@ if (! $user->isValid()) {
     exit;
 }
 
-// Получаем данные пользователя
+/** @var User $foundUser Получаем данные пользователя */
 $foundUser = $tools->getUser((int) $user_id);
 
-if (! $foundUser) {
+if (! $foundUser->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
@@ -91,18 +91,18 @@ if (! $foundUser) {
  */
 function is_contact($id = 0)
 {
-    global $db, $systemUser;
+    global $db, $user;
 
     static $user_id = null;
     static $return = 0;
 
-    if (! $systemUser->isValid() && ! $id) {
+    if (! $user->isValid() && ! $id) {
         return 0;
     }
 
     if (null === $user_id || $id != $user_id) {
         $user_id = $id;
-        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $systemUser->id . "' AND `from_id` = '${id}'");
+        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $user->id . "' AND `from_id` = '${id}'");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
