@@ -48,7 +48,7 @@ $view->addFolder('profile', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
-$user_id = $request->getQuery('user', 0, FILTER_SANITIZE_NUMBER_INT);
+$user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);
 $act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
 $mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 
