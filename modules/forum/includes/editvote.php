@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,26 +8,31 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
 
     if ($topic_vote == 0) {
-        echo $view->render('system::pages/result', [
-            'title'         => _t('Edit Poll'),
-            'page_title'    => _t('Edit Poll'),
-            'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
-            'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Edit Poll'),
+                'page_title'    => _t('Edit Poll'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 
@@ -52,13 +55,16 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `vote` = '${vote}'");
                 header('location: ?act=editvote&id=' . $id . '');
             } else {
-                echo $view->render('forum::delete_answer', [
-                    'title'      => _t('Delete Answer'),
-                    'page_title' => _t('Delete Answer'),
-                    'id'         => $id,
-                    'delete_url' => '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes',
-                    'back_url'   => '?act=editvote&id=' . $id,
-                ]);
+                echo $view->render(
+                    'forum::delete_answer',
+                    [
+                        'title'      => _t('Delete Answer'),
+                        'page_title' => _t('Delete Answer'),
+                        'id'         => $id,
+                        'delete_url' => '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes',
+                        'back_url'   => '?act=editvote&id=' . $id,
+                    ]
+                );
                 exit;
             }
         } else {
@@ -89,14 +95,17 @@ if ($user->rights == 3 || $user->rights >= 6) {
                     $db->exec('INSERT INTO `cms_forum_vote` SET `name` = ' . $db->quote($text) . ",  `type` = '2', `topic` = '${id}'");
                 }
             }
-            echo $view->render('system::pages/result', [
-                'title'         => _t('Edit Poll'),
-                'page_title'    => _t('Edit Poll'),
-                'type'          => 'alert-success',
-                'message'       => _t('Poll changed'),
-                'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                'back_url_name' => _t('Continue'),
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Edit Poll'),
+                    'page_title'    => _t('Edit Poll'),
+                    'type'          => 'alert-success',
+                    'message'       => _t('Poll changed'),
+                    'back_url'      => '/forum/?type=topic&amp;id=' . $id,
+                    'back_url_name' => _t('Continue'),
+                ]
+            );
             exit;
         }
         // Форма редактирования опроса
@@ -108,11 +117,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $i = 0;
         while ($vote = $vote_result->fetch()) {
             $votes[] = [
-                    'input_name'  => $vote['id'] . 'vote',
-                    'input_label' => _t('Answer') . ' ' . ($i + 1),
-                    'input_value' => htmlentities($vote['name'], ENT_QUOTES, 'UTF-8'),
-                    'delete_url'  => $countvote > 2 ? '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote' : '',
-                ];
+                'input_name'  => $vote['id'] . 'vote',
+                'input_label' => _t('Answer') . ' ' . ($i + 1),
+                'input_value' => htmlentities($vote['name'], ENT_QUOTES, 'UTF-8'),
+                'delete_url'  => $countvote > 2 ? '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote' : '',
+            ];
             ++$i;
         }
 
@@ -132,14 +141,16 @@ if ($user->rights == 3 || $user->rights >= 6) {
 
             for ($vote = $i; $vote < $count_vote; $vote++) {
                 $votes[] = [
-                        'input_name'  => $vote,
-                        'input_label' => _t('Answer') . ' ' . ($vote + 1),
-                        'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
-                    ];
+                    'input_name'  => $vote,
+                    'input_label' => _t('Answer') . ' ' . ($vote + 1),
+                    'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
+                ];
             }
         }
 
-        echo $view->render('forum::edit_poll', [
+        echo $view->render(
+            'forum::edit_poll',
+            [
                 'title'      => _t('Edit Poll'),
                 'page_title' => _t('Edit Poll'),
                 'id'         => $id,
@@ -148,7 +159,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 'count_vote' => $count_vote,
                 'poll_name'  => htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8'),
                 'votes'      => $votes,
-            ]);
-        exit; // TODO: Remove it later
+            ]
+        );
     }
 }

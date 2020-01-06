@@ -23,10 +23,13 @@ if ($id) {
 
     if (! $req->rowCount()) {
         $textl = _t('Mail');
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl,
-            'content' => $tools->displayError(_t('User does not exists')),
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl,
+                'content' => $tools->displayError(_t('User does not exists')),
+            ]
+        );
         exit;
     }
 
@@ -37,10 +40,18 @@ if ($id) {
         echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
 
         if (isset($_POST['clear'])) {
-            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}')) AND `delete`!='" . $user->id . "'")->fetchColumn();
+            $count_message = $db->query(
+                "SELECT COUNT(*) FROM `cms_mail`
+                WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}'))
+                AND `delete`!='" . $user->id . "'"
+            )->fetchColumn();
 
             if ($count_message) {
-                $req = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='${id}' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='${id}')) AND `cms_mail`.`delete`!='" . $user->id . "' LIMIT " . $count_message);
+                $req = $db->query(
+                    "SELECT `cms_mail`.* FROM `cms_mail`
+                    WHERE ((`cms_mail`.`user_id`='${id}' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='${id}'))
+                    AND `cms_mail`.`delete`!='" . $user->id . "' LIMIT " . $count_message
+                );
 
                 while ($row = $req->fetch()) {
                     if ($row['delete']) {
@@ -79,10 +90,13 @@ if ($id) {
 
         echo '<div class="phdr"><a href="?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
         echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl,
-            'content' => ob_get_clean(),
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl,
+                'content' => ob_get_clean(),
+            ]
+        );
         exit;
     }
 }
@@ -296,20 +310,24 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
     }
 
     if (empty($error)) {
-        $ignor = $db->query("SELECT COUNT(*) FROM `cms_contact`
+        $ignor = $db->query(
+            "SELECT COUNT(*) FROM `cms_contact`
 		WHERE `user_id`='" . $user->id . "'
 		AND `from_id`='" . $id . "'
-		AND `ban`='1';")->fetchColumn();
+		AND `ban`='1';"
+        )->fetchColumn();
 
         if ($ignor) {
             $error[] = _t('The user at your ignore list. Sending the message is impossible.');
         }
 
         if (empty($error)) {
-            $ignor_m = $db->query("SELECT COUNT(*) FROM `cms_contact`
+            $ignor_m = $db->query(
+                "SELECT COUNT(*) FROM `cms_contact`
 			WHERE `user_id`='" . $id . "'
 			AND `from_id`='" . $user->id . "'
-			AND `ban`='1';")->fetchColumn();
+			AND `ban`='1';"
+            )->fetchColumn();
 
             if ($ignor_m) {
                 $error[] = _t('The user added you in the ignore list. Sending the message isn\'t possible.');
@@ -318,25 +336,33 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
     }
 
     if (empty($error)) {
-        $q = $db->query("SELECT * FROM `cms_contact`
-		WHERE `user_id`='" . $user->id . "' AND `from_id`='" . $id . "'");
+        $q = $db->query(
+            "SELECT * FROM `cms_contact`
+		WHERE `user_id`='" . $user->id . "' AND `from_id`='" . $id . "'"
+        );
 
         if (! $q->rowCount()) {
-            $db->exec("INSERT INTO `cms_contact` SET
+            $db->exec(
+                "INSERT INTO `cms_contact` SET
 			`user_id` = '" . $user->id . "',
 			`from_id` = '" . $id . "',
-			`time` = '" . time() . "'");
+			`time` = '" . time() . "'"
+            );
             $ch = 1;
         }
 
-        $q1 = $db->query("SELECT * FROM `cms_contact`
-		WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "'");
+        $q1 = $db->query(
+            "SELECT * FROM `cms_contact`
+		WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "'"
+        );
 
         if (! $q1->rowCount()) {
-            $db->exec("INSERT INTO `cms_contact` SET
+            $db->exec(
+                "INSERT INTO `cms_contact` SET
 			`user_id` = '" . $id . "',
 			`from_id` = '" . $user->id . "',
-			`time` = '" . time() . "'");
+			`time` = '" . time() . "'"
+            );
             $ch = 1;
         }
     }
@@ -381,12 +407,14 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
 
     // Проверяем на повтор сообщения
     if (empty($error)) {
-        $rres = $db->query('SELECT * FROM `cms_mail`
+        $rres = $db->query(
+            'SELECT * FROM `cms_mail`
         WHERE `user_id` = ' . $user->id . "
         AND `from_id` = ${id}
         ORDER BY `id` DESC
         LIMIT 1
-        ")->fetch();
+        "
+        )->fetch();
 
         if ($rres['text'] == $text) {
             $error[] = _t('Message already exists');
@@ -394,13 +422,15 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
     }
 
     if (empty($error)) {
-        $db->query("INSERT INTO `cms_mail` SET
+        $db->query(
+            "INSERT INTO `cms_mail` SET
 		`user_id` = '" . $user->id . "',
 		`from_id` = '" . $id . "',
 		`text` = " . $db->quote($text) . ",
 		`time` = '" . time() . "',
 		`file_name` = " . $db->quote($newfile) . ",
-		`size` = '" . $sizefile . "'");
+		`size` = '" . $sizefile . "'"
+        );
 
         $db->exec("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $user->id . "'");
 
@@ -421,7 +451,7 @@ if (! $tools->isIgnor($id) && empty($user->ban['1']) && empty($user->ban['3'])) 
         '<form name="form" action="?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (! empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
-    $out .= di(Johncms\Api\BbcodeInterface::class)->buttons('form', 'text');
+    $out .= di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text');
     $out .= '<textarea rows="' . $user->config->fieldHeight . '" name="text"></textarea></p>';
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
     $out .= '<p><input type="submit" name="submit" value="' . _t('Send') . '"/></p>' .
@@ -430,14 +460,17 @@ if (! $tools->isIgnor($id) && empty($user->ban['1']) && empty($user->ban['3'])) 
 }
 
 if ($id) {
-    $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}')) AND `sys`!='1' AND `delete`!='" . $user->id . "' AND `spam`='0'")->fetchColumn();
+    $total = $db->query(
+        "SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}')) AND `sys`!='1' AND `delete`!='" . $user->id . "' AND `spam`='0'"
+    )->fetchColumn();
 
     if ($total) {
         if ($total > $user->config->kmess) {
             $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
+        $req = $db->query(
+            "SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
             FROM `cms_mail`
             LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
             WHERE ((`cms_mail`.`user_id`='${id}' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='${id}'))
@@ -445,7 +478,8 @@ if ($id) {
             AND `cms_mail`.`sys`!='1'
             AND `cms_mail`.`spam`='0'
             ORDER BY `cms_mail`.`time` DESC
-            LIMIT " . $start . ',' . $user->config->kmess);
+            LIMIT " . $start . ',' . $user->config->kmess
+        );
 
         $i = 1;
         $mass_read = [];

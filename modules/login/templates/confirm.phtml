@@ -3,7 +3,7 @@
     'page_title' => _t('Login', 'system'),
 ]) ?>
 
-<?= $this->insert('system::app/alert', [
+<?= $this->fetch('system::app/alert', [
     'alert_type' => 'alert-info shadow border-0',
     'alert'      => _t('Sorry, but your request for registration is not considered yet. Please, be patient.', 'system'),
 ]) ?>

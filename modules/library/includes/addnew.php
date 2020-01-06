@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,15 +8,17 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use Library\Hashtags;
 use Verot\Upload\Upload;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
- * @var Johncms\Api\UserInterface $user
- * @var Johncms\View\Render      $view
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\View\Render $view
  */
 
 if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount()) && isset($id) && $user->isValid())) {
@@ -26,11 +26,16 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
     $flood = $tools->antiflood();
 
     if ($flood) {
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl,
-            'content' => $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
-                '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>'),
-        ]);
+        echo $view->render(
+            'system::app/old_content',
+            [
+                'title'   => $textl,
+                'content' => $tools->displayError(
+                    sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
+                    '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>'
+                ),
+            ]
+        );
         exit;
     }
 
@@ -58,27 +63,36 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo $view->render('system::app/old_content', [
-                            'title'   => $textl,
-                            'content' => $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
-                        ]);
+                        echo $view->render(
+                            'system::app/old_content',
+                            [
+                                'title'   => $textl,
+                                'content' => $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                            ]
+                        );
                         exit;
                     }
 
                     $text = trim($txt);
                     unlink(UPLOAD_PATH . 'library/tmp' . DS . $newname);
                 } else {
-                    echo $view->render('system::app/old_content', [
-                        'title'   => $textl,
-                        'content' => $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
-                    ]);
+                    echo $view->render(
+                        'system::app/old_content',
+                        [
+                            'title'   => $textl,
+                            'content' => $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                        ]
+                    );
                     exit;
                 }
             } else {
-                echo $view->render('system::app/old_content', [
-                    'title'   => $textl,
-                    'content' => $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
-                ]);
+                echo $view->render(
+                    'system::app/old_content',
+                    [
+                        'title'   => $textl,
+                        'content' => $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                    ]
+                );
                 exit;
             }
         } elseif (! empty($_POST['text'])) {
@@ -173,10 +187,13 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
                 $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
                 echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
-                echo $view->render('system::app/old_content', [
-                    'title'   => $textl,
-                    'content' => ob_get_clean(),
-                ]);
+                echo $view->render(
+                    'system::app/old_content',
+                    [
+                        'title'   => $textl,
+                        'content' => ob_get_clean(),
+                    ]
+                );
                 exit;
             }
             echo $db->errorInfo();
@@ -191,8 +208,10 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
         . '<p><h3>' . _t('Announce') . ' (max. 500):</h3>'
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
         . '<p><h3>' . _t('Text') . ':</h3>'
-        . di(Johncms\Api\BbcodeInterface::class)->buttons('form',
-            'text') . '<textarea name="text" rows="' . $user->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
+        . di(Johncms\System\Legacy\Bbcode::class)->buttons(
+            'form',
+            'text'
+        ) . '<textarea name="text" rows="' . $user->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
         . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
         . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'

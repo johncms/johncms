@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,18 +8,30 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
     if (empty($_GET['id'])) {
-        echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        http_response_code(404);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Forum'),
+                'page_title'    => _t('Forum'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 
@@ -29,8 +39,29 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $db->exec("UPDATE `forum_topic` SET  `pinned` = '" . (isset($_GET['vip']) ? '1' : null) . "' WHERE `id` = '${id}'");
         header('Location: ?type=topic&id=' . $id);
     } else {
-        echo $tools->displayError(_t('Wrong data'));
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
-        exit;
+        http_response_code(404);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Forum'),
+                'page_title'    => _t('Forum'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
     }
+} else {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Access forbidden'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Access forbidden'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]
+    );
 }

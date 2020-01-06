@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,31 +8,39 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Extension\Assets;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+declare(strict_types=1);
+
+use Johncms\System\Http\Request;
+use Johncms\System\Users\User;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\View\Extension\Assets;
+use Johncms\System\View\Render;
+use Johncms\NavChain;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Assets          $assets
- * @var ConfigInterface $config
- * @var PDO             $db
- * @var ToolsInterface  $tools
- * @var UserInterface   $user
- * @var Render          $view
+ * @var Assets $assets
+ * @var PDO $db
+ * @var Tools $tools
+ * @var User $user
+ * @var Render $view
  */
 
 $assets = di(Assets::class);
-$config = di(ConfigInterface::class);
+$config = di('config')['johncms'];
 $db = di(PDO::class);
 $route = di('route');
-$tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$tools = di(Tools::class);
+$user = di(User::class);
 $view = di(Render::class);
+
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('users', __DIR__ . '/templates/');
@@ -46,11 +52,20 @@ $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';
 $mod = $route['mod'] ?? '';
 
+$title = _t('Community');
+
+$nav_chain->add($title, '/community/');
+
 // Закрываем от неавторизованных юзеров
-if (! $config->active && ! $user->isValid()) {
-    echo $view->render('system::app/old_content', [
-        'content' => $tools->displayError(_t('For registered users only')),
-    ]);
+if (! $config['active'] && ! $user->isValid()) {
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => _t('For registered users only'),
+        ]
+    );
     exit;
 }
 

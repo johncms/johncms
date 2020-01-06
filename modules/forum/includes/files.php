@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 $types = [
@@ -81,14 +81,17 @@ if ($c || $s || $t) {
         $res = $req->fetch();
         $nav_chain->add($res['name'], '/forum/?' . $type . '&amp;id=' . $res['id']);
     } else {
-        echo $view->render('system::pages/result', [
-            'title'         => $caption,
-            'page_title'    => $caption,
-            'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
-            'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $caption,
+                'page_title'    => $caption,
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 }
@@ -105,12 +108,14 @@ if ($do || isset($_GET['new'])) {
     $files = [];
 
     if ($total) {
-        $req = $db->query('SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
+        $req = $db->query(
+            'SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
             FROM `cms_forum_files`
             LEFT JOIN `forum_messages` ON `cms_forum_files`.`post` = `forum_messages`.`id`
             LEFT JOIN `forum_topic` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
             WHERE ' . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
-            "ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+            "ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess
+        );
 
         while ($res = $req->fetch()) {
             $res_u = $db->query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'")->fetch();
@@ -122,12 +127,6 @@ if ($do || isset($_GET['new'])) {
             $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $user->config->kmess);
 
             $res['post_time'] = $tools->displayDate($res['time']);
-            $res['user_avatar'] = '';
-            $avatar = 'users/avatar/' . $res['user_id'] . '.png';
-            if (file_exists(UPLOAD_PATH . $avatar)) {
-                $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
-            }
-
             $res['user_profile_link'] = '';
             if ($user->isValid() && $user->id != $res['user_id'] && ! empty($res_u)) {
                 $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
@@ -142,7 +141,6 @@ if ($do || isset($_GET['new'])) {
                 $res['user_name'] = $res_u['name'];
             }
 
-            $res['post_url'] = null;
             $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['post'];
             $res['topic_url'] = '/forum/?type=topic&id=' . $res['topic'] . '&amp;page=' . $page;
 
@@ -166,17 +164,20 @@ if ($do || isset($_GET['new'])) {
         }
     }
 
-    echo $view->render('forum::files_list', [
-        'title'         => $caption,
-        'page_title'    => $caption,
-        'pagination'    => $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $user->config->kmess),
-        'back_url'      => '/forum/?act=files' . $lnk,
-        'back_url_name' => _t('List of sections'),
-        'files'         => $files,
-        'total'         => $total,
-        'new_url'       => '?act=files&amp;new' . $lnk,
-    ]);
-    exit; // TODO: Remove it later
+    echo $view->render(
+        'forum::files_list',
+        [
+            'title'         => $caption,
+            'page_title'    => $caption,
+            'pagination'    => $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $user->config->kmess),
+            'back_url'      => '/forum/?act=files' . $lnk,
+            'back_url_name' => _t('List of sections'),
+            'files'         => $files,
+            'total'         => $total,
+            'new_url'       => '?act=files&amp;new' . $lnk,
+        ]
+    );
+    exit;
 }
 
 // Выводим список разделов, в которых есть файлы
@@ -196,13 +197,15 @@ foreach ($types as $key => $type) {
     $total = $total + $count;
 }
 
-echo $view->render('forum::files_sections', [
-    'title'      => $caption,
-    'page_title' => $caption,
-    'back_url'   => '?type=topic&id=' . $id,
-    'sections'   => $sections,
-    'total'      => $total,
-    'new_url'    => '?act=files&amp;new' . $lnk,
-    'new_count'  => $countnew,
-]);
-exit; // TODO: Remove it later
+echo $view->render(
+    'forum::files_sections',
+    [
+        'title'      => $caption,
+        'page_title' => $caption,
+        'back_url'   => '?type=topic&id=' . $id,
+        'sections'   => $sections,
+        'total'      => $total,
+        'new_url'    => '?act=files&amp;new' . $lnk,
+        'new_count'  => $countnew,
+    ]
+);

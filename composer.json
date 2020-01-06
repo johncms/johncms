@@ -1,7 +1,7 @@
 {
-    "name": "simba77/johncms",
-    "description": "Mobile Content Management System",
-    "homepage": "http://johncms.com",
+    "name": "johncms/johncms",
+    "description": "Content Management System",
+    "homepage": "https://johncms.com",
     "license": "GPL-3.0-only",
     "keywords": [
         "johncms",
@@ -13,12 +13,12 @@
     "authors": [
         {
             "name": "JohnCMS Contributors",
-            "homepage": "https://github.com/simba77/johncms/graphs/contributors"
+            "homepage": "https://github.com/johncms/johncms/graphs/contributors"
         }
     ],
     "support": {
         "forum": "https://johncms.com/forum",
-        "source": "https://github.com/simba77/johncms",
+        "source": "https://github.com/johncms/johncms",
         "issues": "https://johncms.com/forum/index.php?id=67"
     },
     "config": {
@@ -34,20 +34,29 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
+        "ext-iconv": "*",
+        "ext-simplexml": "*",
         "aura/autoload": "^2.0",
-        "batumibiz/captcha": "^3.0",
-        "mobicms/render": "dev-develop",
-        "nikic/fast-route": "^1.3",
-        "verot/class.upload.php": "^2.0",
-        "zendframework/zend-i18n": "^2.10",
-        "zendframework/zend-servicemanager": "^3.4"
+        "intervention/image": "^2.5",
+        "james-heinrich/getid3": "^1.9",
+        "johncms/system": "dev-develop",
+        "mobicms/captcha": "^2.0",
+        "verot/class.upload.php": "^2.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
             "Johncms\\": "system/src/"
         }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf"
     }
 }

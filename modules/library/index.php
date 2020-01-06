@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,41 +8,41 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Extension\Assets;
-use Johncms\View\Render;
+declare(strict_types=1);
+
+use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\User;
+use Johncms\System\View\Extension\Assets;
+use Johncms\System\View\Render;
 use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var Assets             $assets
- * @var ConfigInterface    $config
- * @var PDO                $db
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Render             $view
+ * @var Assets $assets
+ * @var PDO $db
+ * @var Tools $tools
+ * @var User $user
+ * @var Render $view
  */
 
 $assets = di(Assets::class);
-$config = di(ConfigInterface::class);
+$config = di('config')['johncms'];
 $db = di(PDO::class);
-$tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$tools = di(Tools::class);
+$user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем языки модуля
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Регистрируем автозагрузчик для классов библиотеки
-$loader = new Aura\Autoload\Loader;
+$loader = new Aura\Autoload\Loader();
 $loader->register();
 $loader->addPrefix('Library', __DIR__ . '/classes');
 
@@ -68,10 +66,13 @@ if (! $config['mod_lib'] && $user->rights < 7) {
 }
 
 if ($error) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl,
-        'content' => $tools->displayError($error),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl,
+            'content' => $tools->displayError($error),
+        ]
+    );
     exit;
 }
 
@@ -215,8 +216,10 @@ if (in_array($act, $array_includes)) {
         switch ($do) {
             case 'dir':
                 // dir
-                $actdir = $db->query('SELECT `id`, `dir` FROM `library_cats` WHERE '
-                    . ($id !== null ? '`id`=' . $id : 1) . ' LIMIT 1')->fetch();
+                $actdir = $db->query(
+                    'SELECT `id`, `dir` FROM `library_cats` WHERE '
+                    . ($id !== null ? '`id`=' . $id : 1) . ' LIMIT 1'
+                )->fetch();
                 if ($actdir['id'] > 0) {
                     $actdir = $actdir['dir'];
                 } else {
@@ -225,22 +228,28 @@ if (in_array($act, $array_includes)) {
                 echo '<div class="phdr">' . $dir_nav->printNavPanel() . '</div>';
 
                 if ($actdir) {
-                    $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE '
-                        . ($id !== null ? '`parent`=' . $id : '`parent`=0'))->fetchColumn();
+                    $total = $db->query(
+                        'SELECT COUNT(*) FROM `library_cats` WHERE '
+                        . ($id !== null ? '`parent`=' . $id : '`parent`=0')
+                    )->fetchColumn();
                     $nav = ($total > $user->config->kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' : '';
                     $y = 0;
 
                     if ($total) {
-                        $sql = $db->query('SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE '
-                            . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $user->config->kmess);
+                        $sql = $db->query(
+                            'SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE '
+                            . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $user->config->kmess
+                        );
                         echo $nav;
 
                         while ($row = $sql->fetch()) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a> ('
-                                . $db->query('SELECT COUNT(*) FROM `' . ($row['dir'] ? 'library_cats' : 'library_texts') . '` WHERE '
-                                    . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ' '
+                                . $db->query(
+                                    'SELECT COUNT(*) FROM `' . ($row['dir'] ? 'library_cats' : 'library_texts') . '` WHERE '
+                                    . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])
+                                )->fetchColumn() . ' '
                                 . ($row['dir'] ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')'
                                 . '<div class="sub"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
 
@@ -276,7 +285,12 @@ if (in_array($act, $array_includes)) {
                     $nav = ($total > $user->config->kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' : '';
 
                     if ($total) {
-                        $sql2 = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id . ' ORDER BY `id` DESC LIMIT ' . $start . ',' . $user->config->kmess);
+                        $sql2 = $db->query(
+                            'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce`
+                            FROM `library_texts`
+                            WHERE `premod`=1 AND `cat_id`=' . $id . '
+                            ORDER BY `id` DESC LIMIT ' . $start . ',' . $user->config->kmess
+                        );
                         echo $nav;
 
                         while ($row = $sql2->fetch()) {
@@ -349,8 +363,7 @@ if (in_array($act, $array_includes)) {
                         Utils::redir404();
                     }
 
-                    $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;',
-                            $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
+                    $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'] . ' LIMIT 1')->fetch();
                     echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a>'
                         . ' | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a>'
@@ -358,8 +371,7 @@ if (in_array($act, $array_includes)) {
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
-                        echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;',
-                                $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
+                        echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
                     }
 
                     if ($page == 1) {
@@ -409,12 +421,7 @@ if (in_array($act, $array_includes)) {
                         echo '</div>';
                     }
 
-                    $text = $tools->checkout(mb_substr($text,
-                        ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))),
-                        (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(Utils::position($tmp,
-                                PHP_EOL), Utils::position($tmp, ' ')) - ($page == 1 ? 0 : min(Utils::position($text,
-                                PHP_EOL), Utils::position($text, ' '))))), 1, 1);
-
+                    $text = $tools->checkout(mb_substr($text, ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(Utils::position($tmp, PHP_EOL), Utils::position($tmp, ' ')) - ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))))), 1, 1); // phpcs:ignore
                     $text = $tools->smilies($text, $user->rights ? 1 : 0);
 
                     echo '<div class="list2" style="padding: 8px">';
@@ -449,7 +456,10 @@ if (in_array($act, $array_includes)) {
     } // end else !id
 } // end else $act
 
-echo $view->render('system::app/old_content', [
-    'title'   => $textl,
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => $textl,
+        'content' => ob_get_clean(),
+    ]
+);

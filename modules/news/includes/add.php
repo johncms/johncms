@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,14 +8,16 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
- * @var Johncms\View\Render       $view
- * @var \Johncms\Utility\NavChain  $nav_chain
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\View\Render $view
+ * @var Johncms\NavChain $nav_chain
  */
 
 // Add news
@@ -53,7 +53,8 @@ if ($user->rights >= 6) {
                     $date = new DateTime();
                     $date = $date->format('Y-m-d H:i:s');
 
-                    $db->prepare('
+                    $db->prepare(
+                        '
                                   INSERT INTO `forum_topic` SET
                                   `section_id` = ?,
                                   `created_at` = ?,
@@ -62,20 +63,24 @@ if ($user->rights >= 6) {
                                   `name` = ?,
                                   `last_post_date` = ?,
                                   `post_count` = 0
-                                ')->execute([
-                        $pr1['id'],
-                        $date,
-                        $user->id,
-                        $user->name,
-                        $name,
-                        time(),
-                    ]);
+                                '
+                    )->execute(
+                        [
+                            $pr1['id'],
+                            $date,
+                            $user->id,
+                            $user->name,
+                            $name,
+                            time(),
+                        ]
+                    );
 
-                    /** @var Johncms\Api\EnvironmentInterface $env */
-                    $env = di(Johncms\Api\EnvironmentInterface::class);
+                    /** @var Johncms\System\Http\Environment $env */
+                    $env = di(Johncms\System\Http\Environment::class);
                     $rid = $db->lastInsertId();
 
-                    $db->prepare('
+                    $db->prepare(
+                        '
                                   INSERT INTO `forum_messages` SET
                                   `topic_id` = ?,
                                   `date` = ?,
@@ -85,49 +90,62 @@ if ($user->rights >= 6) {
                                   `ip_via_proxy` = ?,
                                   `user_agent` = ?,
                                   `text` = ?
-                                ')->execute([
-                        $rid,
-                        time(),
-                        $user->id,
-                        $user->name,
-                        $env->getIp(),
-                        $env->getIpViaProxy(),
-                        $env->getUserAgent(),
-                        $text,
-                    ]);
+                                '
+                    )->execute(
+                        [
+                            $rid,
+                            time(),
+                            $user->id,
+                            $user->name,
+                            $env->getIp(),
+                            $env->getIpViaProxy(),
+                            $env->getUserAgent(),
+                            $text,
+                        ]
+                    );
                     $tools->recountForumTopic($rid);
                 }
             }
 
-            $db->prepare('
+            $db->prepare(
+                '
                       INSERT INTO `news` SET
                       `time` = ?,
                       `avt` = ?,
                       `name` = ?,
                       `text` = ?,
                       `kom` = ?
-                    ')->execute([
-                time(),
-                $user->name,
-                $name,
-                $text,
-                $rid,
-            ]);
+                    '
+            )->execute(
+                [
+                    time(),
+                    $user->name,
+                    $name,
+                    $text,
+                    $rid,
+                ]
+            );
 
             $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-            echo $view->render('system::pages/result', [
-                'title'    => _t('Add news'),
-                'message'  => _t('News added'),
-                'type'     => 'alert-success',
-                'back_url' => '/news/',
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => _t('Add news'),
+                    'message'  => _t('News added'),
+                    'type'     => 'alert-success',
+                    'back_url' => '/news/',
+                ]
+            );
         } else {
-            echo $view->render('system::pages/result', [
-                'title'    => _t('Add news'),
-                'message'  => $error,
-                'type'     => 'alert-danger',
-                'back_url' => '/news/add/',
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => _t('Add news'),
+                    'message'  => $error,
+                    'type'     => 'alert-danger',
+                    'back_url' => '/news/add/',
+                ]
+            );
         }
     } else {
         $discussion_items = [];
@@ -151,9 +169,12 @@ if ($user->rights >= 6) {
             $discussion_items[] = $parent;
         }
 
-        echo $view->render('news::add', [
-            'discussions' => $discussion_items,
-        ]);
+        echo $view->render(
+            'news::add',
+            [
+                'discussions' => $discussion_items,
+            ]
+        );
     }
 } else {
     pageNotFound();

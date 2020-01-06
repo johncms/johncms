@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $files
+ * @var $total_files
+ * @var $urls
+ * @var $pagination
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (! $config['mod_down']): ?>
+    <div class="alert alert-danger border-0 shadow">
+        <?= _t('Downloads are closed') ?>
+    </div>
+<?php endif; ?>
+
+<?php if (empty($files)): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php foreach ($files as $file): ?>
+    <?= $this->fetch('downloads::file_row', ['file' => $file]) ?>
+<?php endforeach; ?>
+
+<?php if ($total_files): ?>
+    <div>
+        <div><?= _t('Total') ?>: <?= $total_files ?></div>
+        <!-- Page switching -->
+        <?php if ($total_files > $user->config->kmess): ?>
+            <div class="mt-1"><?= $pagination ?></div>
+        <?php endif ?>
+    </div>
+<?php endif; ?>
+
+<div class="mt-2">
+    <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+</div>

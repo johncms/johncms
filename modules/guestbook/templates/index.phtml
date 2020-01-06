@@ -1,22 +1,19 @@
-<?php $this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $title,
-]) ?>
-<?php if (! $config->mod_guest): ?>
+<?php $this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+) ?>
+<?php if (! $config['mod_guest']): ?>
     <!-- Уведомление о закрытой гостевой -->
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-danger',
-        'alert'      => _t('The guestbook is closed'),
-    ]) ?>
-<?php endif; ?>
-<?php if ($data['access_to_buttons']): ?>
-    <div class="d-flex">
-        <a href="/guestbook/ga" class="btn btn-outline-primary mr-2 <?= $data['is_guestbook'] ? 'active' : '' ?>"><?= _t('Guestbook') ?></a>
-        <a href="/guestbook/ga?do=set" class="btn btn-outline-primary <?= $data['is_guestbook'] ? '' : 'active' ?>"><?= _t('Admin Club') ?></a>
-        <?php if ($user->rights >= 7): ?>
-            <a href="/guestbook/clean" class="btn btn-danger ml-auto"><?= _t('Clear') ?></a>
-        <?php endif; ?>
-    </div>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => _t('The guestbook is closed'),
+        ]
+    ) ?>
 <?php endif; ?>
 <?php if ($data['access_to_form']): ?>
     <div class="row">
@@ -74,10 +71,13 @@
     </div>
 <?php else: ?>
     <!-- Гостевая только для зарегистрированных -->
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-danger',
-        'alert'      => _t('For registered users only'),
-    ]) ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => _t('For registered users only'),
+        ]
+    ) ?>
 <?php endif; ?>
 <div class="mt-4"></div>
 <!-- Отображаем сообщения -->
@@ -104,11 +104,7 @@
             <div class="post-body d-flex align-items-start pt-3 pb-3">
                 <div class="user-avatar mr-2 mr-md-4">
                     <div class="avatar-image rounded-circle overflow-hidden">
-                        <?php if (! empty($item['user_avatar'])): ?>
-                            <img src="<?= $item['user_avatar'] ?>" class="img-fluid" alt=".">
-                        <?php else: ?>
-                            <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
-                        <?php endif; ?>
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
                     </div>
                     <div class="user-status online shadow"></div>
                 </div>
@@ -153,3 +149,11 @@
         <?= $data['pagination'] ?>
     <?php endif; ?>
 <?php endif; ?>
+<hr class="mt-4">
+<?php if ($data['access_to_buttons']): ?>
+    <div class="d-flex mt-4">
+        <?php if ($user->rights >= 7): ?>
+            <a href="/guestbook/clean" class="btn btn-danger"><?= _t('Clear') ?></a>
+        <?php endif; ?>
+    </div>
+<?php endif ?>

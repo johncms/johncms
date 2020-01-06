@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,54 +8,128 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Download;
+use Johncms\NavChain;
+use Psr\Http\Message\ServerRequestInterface;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
- * @var Johncms\Api\UserInterface $user
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var $urls
+ * @var NavChain $nav_chain
+ * @var ServerRequestInterface $request
  */
+$request = di(ServerRequestInterface::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Edit File'),
+            'type'          => 'alert-danger',
+            'message'       => _t('File not found'),
+            'back_url'      => $urls['downloads'],
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
+    exit;
+}
 
-if ($user->rights == 4 || $user->rights >= 6) {
-    if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
-        echo '<a href="?">' . _t('Downloads') . '</a>';
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
-        exit;
+$audio_files = ['mp3', 'aac'];
+$audio_tags = [];
+$extension = strtolower(pathinfo($res_down['name'], PATHINFO_EXTENSION));
+if (in_array($extension, $audio_files, true)) {
+    $getID3 = new getID3();
+    $getID3->encoding = 'cp1251';
+    $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
+
+    if (! empty($getid['tags']['id3v2'])) {
+        $tagsArray = $getid['tags']['id3v2'];
+    } elseif (! empty($getid['tags']['id3v1'])) {
+        $tagsArray = $getid['tags']['id3v1'];
     }
 
-    if (isset($_POST['submit'])) {
-        $name = isset($_POST['text']) ? trim($_POST['text']) : null;
-        $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0, 200)) : null;
+    $tags_keys = ['artist', 'title', 'album', 'genre', 'year'];
+    foreach ($tags_keys as $key) {
+        $audio_tags[$key] = Download::mp3tagsOut($tagsArray[$key][0] ?? '');
+    }
+}
 
-        if ($name_link && $name) {
-            $stmt = $db->prepare('
+if ($request->getMethod() === 'POST') {
+    $post = $request->getParsedBody();
+    $name = isset($post['text']) ? trim($post['text']) : null;
+    $desc = isset($post['desc']) ? trim($post['desc']) : null;
+    $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
+
+    if ($name_link && $name) {
+        $stmt = $db->prepare(
+            '
             UPDATE `download__files` SET
             `rus_name` = ?,
-            `text`     = ?
+            `text`     = ?,
+            `about`    = ?
             WHERE `id` = ?
-        ');
+        '
+        );
 
-            $stmt->execute([
+        $stmt->execute(
+            [
                 $name,
                 $name_link,
+                $desc,
                 $id,
-            ]);
+            ]
+        );
 
-            header('Location: ?act=view&id=' . $id);
-        } else {
-            echo _t('The required fields are not filled') . ' <a href="?act=edit_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+        if (! empty($audio_tags) && ! empty($post['audio'])) {
+            $save_tags = [];
+            foreach ($audio_tags as $key => $tag) {
+                $save_tags[$key][0] = Download::mp3tagsOut($post['audio'][$key] ?? '', 1);
+            }
+            $tagsWriter = new getid3_writetags();
+            $tagsWriter->filename = $res_down['dir'] . '/' . $res_down['name'];
+            $tagsWriter->tagformats = ['id3v1', 'id3v2.3'];
+            $tagsWriter->tag_encoding = 'cp1251';
+            $tagsWriter->tag_data = $save_tags;
+            $tagsWriter->WriteTags();
         }
-    } else {
-        $file_name = htmlspecialchars($res_down['rus_name']);
-        echo '<div class="phdr"><b>' . $file_name . '</b></div>' .
-            '<div class="list1"><form action="?act=edit_file&amp;id=' . $id . '" method="post">' .
-            '<p>' . _t('Name for display') . ' (мах. 200):<br><input type="text" name="text" value="' . $file_name . '"/></p>' .
-            '<p>' . _t('Link to download file') . ' (мах. 200):<br><input type="text" name="name_link" value="' . $res_down['text'] . '"/></p>' .
-            '<p><br><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form></div>' .
-            '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
-    }
 
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+        header('Location: ?act=view&id=' . $id);
+    } else {
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Edit File'),
+                'type'          => 'alert-danger',
+                'message'       => _t('The required fields are not filled'),
+                'back_url'      => '?act=edit_file&amp;id=' . $id,
+                'back_url_name' => _t('Repeat'),
+            ]
+        );
+    }
+} else {
+    $file_data = [
+        'text'      => htmlspecialchars($res_down['rus_name']),
+        'name_link' => htmlspecialchars($res_down['text']),
+        'desc'      => htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8'),
+    ];
+    echo $view->render(
+        'downloads::edit_file_form',
+        [
+            'title'      => _t('Edit File'),
+            'page_title' => _t('Edit File'),
+            'id'         => $id,
+            'urls'       => $urls,
+            'file_data'  => $file_data,
+            'audio_tags' => $audio_tags,
+            'action_url' => '?act=edit_file&amp;id=' . $id,
+            'bbcode'     => di(Johncms\System\Legacy\Bbcode::class)->buttons('file_edit_form', 'desc'),
+        ]
+    );
 }

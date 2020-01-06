@@ -10,19 +10,19 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\NavChainInterface;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+use Johncms\System\View\Render;
+use Johncms\NavChain;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Render                   $view
- * @var Johncms\Utility\NavChain $nav_chain
+ * @var NavChain $nav_chain
  */
 
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 $nav_chain->showHomePage(false);
 
 // Register Namespace for module templates

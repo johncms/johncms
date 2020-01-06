@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,27 +8,29 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\NavChainInterface;
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+declare(strict_types=1);
+
+use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\User;
+use Johncms\System\View\Render;
+use Johncms\NavChain;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO               $db
- * @var ToolsInterface    $tools
- * @var UserInterface     $user
- * @var Render            $view
- * @var NavChainInterface $nav_chain
+ * @var PDO $db
+ * @var Tools $tools
+ * @var User $user
+ * @var Render $view
+ * @var NavChain $nav_chain
  */
 
 $db = di(PDO::class);
-$tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$tools = di(Tools::class);
+$user = di(User::class);
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 $route = di('route');
 
 // Register Namespace for module templates

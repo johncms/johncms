@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,58 +8,78 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Download;
+use Psr\Http\Message\ServerRequestInterface;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
+ * @var ServerRequestInterface $request
  */
 
-$textl = _t('User Files');
+$title = _t('User Files');
 
-require 'classes/download.php';
+$request = di(ServerRequestInterface::class);
+$get = $request->getQueryParams();
 
-if (($foundUser = $tools->getUser($id)) === false) {
-    echo _t('User does not exists');
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+$id = isset($get['id']) ? (int) $get['id'] : 0;
+$req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
+
+if (! $show_user = $req->fetch()) {
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Downloads'),
+            'type'          => 'alert-danger',
+            'message'       => _t('User does not exists'),
+            'back_url'      => $urls['downloads'],
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
-echo '<div class="phdr"><a href="/profile?user=' . $id . '">' . _t('Profile') . '</a></div>' .
-    '<div class="user"><p>' . $tools->displayUser($foundUser, ['iphide' => 0]) . '</p></div>' .
-    '<div class="phdr"><b>' . _t('User Files') . '</b></div>';
-
 $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `user_id` = " . $id)->fetchColumn();
-
-// Навигация
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=user_files&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-}
-
 // Список файлов
-$i = 0;
-
+$files = [];
 if ($total) {
     $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `user_id` = " . $id . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
-
     while ($res_down = $req_down->fetch()) {
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+        $files[] = Download::displayFile($res_down);
     }
-} else {
-    echo '<div class="rmenu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-// Навигация
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=user_files&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?" method="get">' .
-        '<input type="hidden" name="USER" value="' . $id . '"/>' .
-        '<input type="hidden" value="user_files" name="act" />' .
-        '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
+$show_user['user_profile_link'] = '';
+if (! empty($show_user['id']) && $user->isValid() && $user->id !== $show_user['id']) {
+    $show_user['user_profile_link'] = '/profile/?user=' . $show_user['id'];
 }
 
-echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+$show_user['user_rights_name'] = '';
+if (! empty($show_user['rights'])) {
+    $show_user['user_rights_name'] = $user_rights_names[$show_user['rights']] ?? '';
+}
+
+$show_user['user_is_online'] = time() <= $show_user['lastdate'] + 300;
+$show_user['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($show_user['ip']);
+$show_user['ip'] = long2ip($show_user['ip']);
+$show_user['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($show_user['ip_via_proxy']);
+$show_user['ip_via_proxy'] = ! empty($show_user['ip_via_proxy']) ? long2ip($show_user['ip_via_proxy']) : 0;
+
+echo $view->render(
+    'downloads::files_user',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'pagination' => $tools->displayPagination('?act=user_files&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+        'show_user'  => $show_user ?? [],
+        'files'      => $files ?? [],
+        'total'      => $total,
+        'urls'       => $urls,
+    ]
+);

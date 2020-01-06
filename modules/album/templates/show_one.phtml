@@ -1,0 +1,159 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+use Albums\Photo;
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ * @var $photo Photo
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+
+$photo = $data['photos'][0] ?? [];
+?>
+<?php if (empty($data['photos'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => _t('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+<?php if (! empty($data['success_message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-success border-0',
+            'alert'      => $data['success_message'],
+        ]
+    ) ?>
+<?php endif; ?>
+<?php if (! empty($photo)): ?>
+    <div class="row">
+        <div class="col-md-5">
+            <a href="<?= $photo->picture ?>" title="<?= _t('Photo') ?> "
+               data-source="<?= $photo->download_url ?>" class="image-preview">
+                <img src="<?= $photo->preview_picture ?>" alt=".">
+            </a>
+        </div>
+    </div>
+    <?php if (! empty($photo->formatted_description)): ?>
+        <div class="description mt-3 border-top pt-3">
+            <?= $photo->formatted_description ?>
+        </div>
+    <?php endif; ?>
+    <div class="text-muted mt-3 mb-3 border-top border-bottom pt-2 pb-2">
+        <div><?= _t('Views') ?>: <?= $photo->views ?></div>
+        <div><?= _t('Downloads') ?>: <?= $photo->downloads ?></div>
+        <div><?= _t('Date') ?>: <?= $photo->display_date ?></div>
+        <div>
+            <?= _t('User') ?>: <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
+        </div>
+        <div>
+            <?= _t('Album') ?>: <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
+        </div>
+        <div>
+            <span><?= _t('Rating') ?>:</span>
+            <span class="pr-2 font-weight-bold"><?= $photo->rating ?></span>
+            <!-- Vote -->
+            <?php if ($photo->can_vote): ?>
+                <a href="<?= $photo->like_url ?>" class="text-decoration-none pr-2">
+                    <svg class="icon download-button-icon mt-n2">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"></use>
+                    </svg>
+                    <span><?= $photo->vote_plus ?></span>
+                </a>
+                <a href="<?= $photo->dislike_url ?>" class="text-decoration-none pr-2">
+                    <svg class="icon download-button-icon mr-1">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"></use>
+                    </svg>
+                    <span><?= $photo->vote_minus ?></span>
+                </a>
+            <?php else: ?>
+                <div class="d-inline pr-2 text-muted">
+                    <svg class="icon download-button-icon mt-n2">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"></use>
+                    </svg>
+                    <span><?= $photo->vote_plus ?></span>
+                </div>
+                <div class="d-inline pr-2 text-muted">
+                    <svg class="icon download-button-icon mr-1">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"></use>
+                    </svg>
+                    <span><?= $photo->vote_minus ?></span>
+                </div>
+            <?php endif; ?>
+            <!-- // Vote -->
+        </div>
+    </div>
+
+    <div class="border-bottom pb-3">
+        <svg class="icon download-button-icon mr-1 mt-n1">
+            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+        </svg>
+        <a href="<?= $photo->download_url ?>"><?= _t('Download') ?></a>
+    </div>
+
+    <?php if ($config['mod_down_comm'] || $systemUser->rights >= 7): ?>
+        <div class="mt-3 pb-3 border-bottom">
+            <svg class="icon download-button-icon mr-1">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+            </svg>
+            <a href="<?= $photo->comments_url ?>"><?= _t('Comments') ?></a> (<?= $photo->comm_count ?>)
+        </div>
+    <?php endif; ?>
+
+    <?php if ($user->rights >= 6 || $user->id === $photo->user_id): ?>
+        <div class="btn-group mt-3">
+            <div class="dropdown">
+                <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= _t('Actions') ?>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php if ($user->id === $photo->user_id): ?>
+                        <a class="dropdown-item"
+                           href="?act=show&amp;al=<?= $photo->album_id ?>&amp;user=<?= $photo->user_id ?>&amp;view&amp;img=<?= $photo->id ?>&amp;profile">
+                            <?= _t('Add to Profile') ?>
+                        </a>
+                    <?php endif; ?>
+                    <a class="dropdown-item" href="?act=image_edit&amp;img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Edit') ?></a>
+                    <a class="dropdown-item" href="?act=image_move&amp;img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Move') ?></a>
+                    <a class="dropdown-item" href="?act=image_delete&amp;img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Delete') ?></a>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+<?php endif; ?>
+
+<?php if ($data['total'] > $data['per_page']): ?>
+    <div class="mt-4">
+        <?= $data['pagination'] ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($data['total'] > 0): ?>
+    <div><?= _t('Total') ?>: <?= $data['total'] ?></div>
+<?php endif; ?>
+
+<div class="mt-2">
+    <a href="<?= $photo->user_album_url ?>"><?= _t('Back') ?></a><br>
+    <a href="?act=list&amp;user=<?= $photo->user_id ?>"><?= _t('Album List') ?></a>
+</div>

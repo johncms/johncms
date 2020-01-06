@@ -38,7 +38,9 @@ switch ($type) {
             switch ($mode) {
                 case 'moveaction':
                     if (! isset($_GET['movedeny'])) {
-                        echo '<div class="alarm"><div>' . _t('Are you sure you want to move the contents?') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' . (int) ($_POST['move']) . '">' . _t('Move') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
+                        echo '<div class="alarm"><div>' . _t('Are you sure you want to move the contents?') .
+                            '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' .
+                            (int) ($_POST['move']) . '">' . _t('Move') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
                         $move = (int) ($_GET['move']);
                         if ($dirtype) {
@@ -80,14 +82,20 @@ switch ($type) {
 
                 case 'delall':
                     if (! isset($_GET['deldeny'])) {
-                        echo '<div class="alarm"><div>' . _t('Are you sure you want to delete content?') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' . _t('Delete') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
+                        echo '<div class="alarm"><div>' . _t('Are you sure you want to delete content?') .
+                            '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' .
+                            _t('Delete') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
                         $childs = new Tree($id);
                         $deleted = $childs->getAllChildsId()->cleanDir();
-                        echo '<div class="gmenu">' . sprintf(_t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
-                                $deleted['dirs'], $deleted['texts'], $deleted['tags'],
-                                $deleted['comments'],
-                                $deleted['images']) . '</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
+                        echo '<div class="gmenu">' . sprintf(
+                            _t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
+                            $deleted['dirs'],
+                            $deleted['texts'],
+                            $deleted['tags'],
+                            $deleted['comments'],
+                            $deleted['images']
+                        ) . '</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
                     }
                     break;
 
@@ -105,7 +113,9 @@ switch ($type) {
         } else {
             $sql = 'DELETE FROM `library_cats` WHERE `id`=' . $id;
             if (! isset($_GET['yes'])) {
-                echo '<div class="alarm"><div>' . _t('Delete confirmation') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="?do=dir&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
+                echo '<div class="alarm"><div>' . _t('Delete confirmation') .
+                    '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' .
+                    _t('Delete') . '</a> | <a href="?do=dir&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
             }
         }
         break;
@@ -122,7 +132,9 @@ switch ($type) {
         break;
     case 'image':
         if (! isset($_GET['yes'])) {
-            echo '<div class="alarm"><div>' . _t('Delete confirmation') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
+            echo '<div class="alarm"><div>' . _t('Delete confirmation') .
+                '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' .
+                _t('Delete') . '</a> | <a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
         }
         break;
 }

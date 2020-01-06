@@ -13,20 +13,25 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Http\Request $request
  */
 
 // Удалить альбом
-if ($al && $foundUser['id'] == $user->id || $user->rights >= 6) {
-    $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
+if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
+    $post = $request->getParsedBody();
 
+    $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
     if ($req_a->rowCount()) {
         $res_a = $req_a->fetch();
-        echo '<div class="phdr"><a href="?act=list&amp;user=' . $foundUser['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Delete') . '</div>';
-
-        if (isset($_POST['submit'])) {
+        $title = _t('Delete album:') . ' ' . $tools->checkout($res_a['name']);
+        if (
+            isset($post['delete_token'], $_SESSION['delete_token']) &&
+            $_SESSION['delete_token'] === $post['delete_token'] &&
+            $request->getMethod() === 'POST'
+        ) {
             $req = $db->query('SELECT * FROM `cms_album_files` WHERE `album_id` = ' . $res_a['id']);
 
             while ($res = $req->fetch()) {
@@ -43,17 +48,40 @@ if ($al && $foundUser['id'] == $user->id || $user->rights >= 6) {
             $db->exec('DELETE FROM `cms_album_files` WHERE `album_id` = ' . $res_a['id']);
             $db->exec('DELETE FROM `cms_album_cat` WHERE `id` = ' . $res_a['id']);
 
-            echo '<div class="menu"><p>' . _t('Album deleted') . '<br>' .
-                '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => $title,
+                    'type'     => 'alert-success',
+                    'message'  => _t('Album deleted'),
+                    'back_url' => '?act=list&amp;user=' . $foundUser['id'],
+                ]
+            );
         } else {
-            echo '<div class="rmenu"><form action="?act=delete&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '" method="post">' .
-                '<p>' . _t('Album') . ': <b>' . $tools->checkout($res_a['name']) . '</b></p>' .
-                '<p>' . _t('Are you sure you want to delete this album? If it contains photos, they also will be deleted.') . '</p>' .
-                '<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>' .
-                '</form></div>' .
-                '<div class="phdr"><a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Cancel') . '</a></div>';
+            $delete_token = uniqid('', true);
+            $_SESSION['delete_token'] = $delete_token;
+            $data['delete_token'] = $delete_token;
+            $data['action_url'] = '?act=delete&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
+            $data['back_url'] = '?act=list&amp;user=' . $foundUser['id'];
+            $data['message'] = _t('Are you sure you want to delete this album? If it contains photos, they also will be deleted.');
+            echo $view->render(
+                'album::image_delete',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
     } else {
-        echo $tools->displayError(_t('Wrong data'));
+        http_response_code(403);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'   => $title,
+                'type'    => 'alert-danger',
+                'message' => _t('Wrong data'),
+            ]
+        );
     }
 }

@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 // Настраиваем список своих смайлов

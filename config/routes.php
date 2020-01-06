@@ -11,9 +11,9 @@ declare(strict_types=1);
  */
 
 use FastRoute\RouteCollector;
-use Johncms\Api\UserInterface;
+use Johncms\System\Users\User;
 
-return function (RouteCollector $map, UserInterface $user) {
+return function (RouteCollector $map, User $user) {
     // An example of a route where the URL has optional index.php
     // $map->addRoute(['GET', 'POST'], '/users[/[index.php]]', 'modules/users/index.php');
 
@@ -41,6 +41,6 @@ return function (RouteCollector $map, UserInterface $user) {
     }
 
     if ($user->isValid() && $user->rights >= 6) {
-        $map->addRoute(['GET', 'POST'], '/admin[/]', 'modules/admin/index.php');                      // Administration
+        $map->addRoute(['GET', 'POST'], '/admin/[{action}/]', 'modules/admin/index.php');                      // Administration
     }
 };

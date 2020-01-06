@@ -1,7 +1,7 @@
 <?php
 /**
- * @var Johncms\Utility\Counters   $counters
- * @var Johncms\Utility\NewsWidget $news
+ * @var Johncms\Counters   $counters
+ * @var Johncms\NewsWidget $news
  * @var int                        $rights
  */
 
@@ -22,7 +22,7 @@ $this->layout('system::layout/default', ['title' => _t('Welcome', 'system')])
         <?= _t('Download') ?>
     </a>
     <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/"><?= _t('Documentation') ?></a>
-    <a href="https://github.com/simba77/johncms" class="btn btn-primary btn-lg-icon" target="_blank">
+    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1" target="_blank">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#github"/>
         </svg>

@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $back_url
+ * @var $action_url
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= _t('Are you sure you want to move the file?') ?>
+            </div>
+            <div>
+                <a href="<?= $action_url ?>" class="btn btn-danger btn-sm"><?= _t('Move file') ?></a>
+                <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= _t('Cancel') ?></a>
+            </div>
+        </div>
+    </div>
+</div>

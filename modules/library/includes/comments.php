@@ -43,7 +43,9 @@ if ($req_obj->rowCount()) {
         '<small>' . $tools->smilies($tools->checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->getAllStatTags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->getAllStatTags(1) . ' ]<br>' : '') .
-        '<span class="gray">' . _t('Who added') . ':</span> <a href="' . $config['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . $tools->checkout($res_obj['uploader']) . '</a> (' . $tools->displayDate($res_obj['time']) . ')<br>' .
+        '<span class="gray">' . _t('Who added') . ':</span> <a href="' . $config['homeurl'] .
+        '/profile/?user=' . $res_obj['uploader_id'] . '">' . $tools->checkout($res_obj['uploader']) .
+        '</a> (' . $tools->displayDate($res_obj['time']) . ')<br>' .
         '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = [
@@ -70,7 +72,7 @@ if ($req_obj->rowCount()) {
         'context_top' => $context_top,
         // Выводится вверху списка
     ];
-    $comm = new Johncms\Utility\Comments($arg);
+    $comm = new Johncms\Comments($arg);
 
     if ($comm->added) {
         $db->exec('UPDATE `library_texts` SET `comm_count`=' . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . ' WHERE `id`=' . $id);

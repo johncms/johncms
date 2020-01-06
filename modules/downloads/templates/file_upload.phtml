@@ -1,0 +1,90 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $urls
+ * @var $action_url
+ * @var $extensions
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
+                            <label class="custom-file-label" for="fail"><?= _t('Choose file') ?></label>
+                        </div>
+                        <div class="text-muted mb-3 small">
+                            <?= _t('Max. Size') ?>: <?= $config['flsz'] ?> kb.
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="new_file"><?= _t('Save as') ?></label>
+                        <input type="text" class="form-control" id="new_file" placeholder="<?= _t('Save as') ?>"
+                               name="new_file" value="" maxlength="100">
+                        <div class="text-muted small"><?= _t('max. 100 characters') ?></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text"><?= _t('File Name') ?></label>
+                        <input type="text" class="form-control" id="text" placeholder="<?= _t('File Name') ?>"
+                               name="text" value="" maxlength="200">
+                        <div class="text-muted small"><?= _t('max. 200 characters') ?></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name_link"><?= _t('Link to download file') ?></label>
+                        <input type="text" class="form-control" id="name_link" placeholder="<?= _t('Link to download file') ?>"
+                               name="name_link" value="<?= _t('Download') ?>" maxlength="200" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="screen" name="screen" aria-describedby="screen">
+                            <label class="custom-file-label" for="screen"><?= _t('Choose screenshot') ?></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="desc"><?= _t('Description') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea id="desc" class="form-control" maxlength="500" name="opis" cols="24" rows="4"></textarea>
+                    </div>
+
+                    <div class="alert alert-warning mt-3">
+                        <?= _t('Allowed extensions') ?>: <?= $extensions ?>
+                    </div>
+
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
+                        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

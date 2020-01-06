@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
@@ -34,7 +34,6 @@ if (! isset($set_forum) || empty($set_forum)) {
 
 switch ($mod) {
     case 'del':
-
         // Удаление категории, или раздела
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="?act=forum">' . _t('Forum Management') . '</a>');
@@ -104,7 +103,8 @@ switch ($mod) {
 
                         // Для супервайзоров запрос на полное удаление
                         if ($user->rights == 9) {
-                            echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') . ' <a href="?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
+                            echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') .
+                                ' <a href="?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
                         }
 
                         echo '</form>';
@@ -116,8 +116,10 @@ switch ($mod) {
                         $subcat = isset($_POST['subcat']) ? (int) ($_POST['subcat']) : 0;
 
                         if (! $subcat || $subcat == $id) {
-                            echo $tools->displayError(_t('Wrong data'),
-                                '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+                            echo $tools->displayError(
+                                _t('Wrong data'),
+                                '<a href="?act=forum">' . _t('Forum Management') . '</a>'
+                            );
                             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
@@ -125,8 +127,10 @@ switch ($mod) {
                         $check = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `id` = '${subcat}' AND `section_type` = 1")->fetchColumn();
 
                         if (! $check) {
-                            echo $tools->displayError(_t('Wrong data'),
-                                '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+                            echo $tools->displayError(
+                                _t('Wrong data'),
+                                '<a href="?act=forum">' . _t('Forum Management') . '</a>'
+                            );
                             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
@@ -228,8 +232,10 @@ switch ($mod) {
                 $res = $req->fetch();
                 $cat_name = $res['name'];
             } else {
-                echo $tools->displayError(_t('Wrong data'),
-                    '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+                echo $tools->displayError(
+                    _t('Wrong data'),
+                    '<a href="?act=forum">' . _t('Forum Management') . '</a>'
+                );
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
@@ -268,7 +274,8 @@ switch ($mod) {
                     $sort = 1;
                 }
 
-                $db->prepare('
+                $db->prepare(
+                    '
                   INSERT INTO `forum_sections` SET
                   `parent` = ?,
                   `name` = ?,
@@ -276,14 +283,17 @@ switch ($mod) {
                   `access` = ?,
                   `section_type` = ?,
                   `sort` = ?
-                ')->execute([
-                    ($id ? $id : 0),
-                    $name,
-                    $desc,
-                    $allow,
-                    $section_type,
-                    $sort,
-                ]);
+                '
+                )->execute(
+                    [
+                        ($id ? $id : 0),
+                        $name,
+                        $desc,
+                        $allow,
+                        $section_type,
+                        $sort,
+                    ]
+                );
 
                 header('Location: ?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
             } else {
@@ -363,7 +373,8 @@ switch ($mod) {
 
                 if (! $error) {
                     // Записываем в базу
-                    $db->prepare('
+                    $db->prepare(
+                        '
                       UPDATE `forum_sections` SET
                       `name` = ?,
                       `description` = ?,
@@ -371,14 +382,17 @@ switch ($mod) {
                       `sort` = ?,
                       `section_type` = ?
                       WHERE `id` = ?
-                    ')->execute([
-                        $name,
-                        $desc,
-                        $allow,
-                        $sort,
-                        $section_type,
-                        $id,
-                    ]);
+                    '
+                    )->execute(
+                        [
+                            $name,
+                            $desc,
+                            $allow,
+                            $sort,
+                            $section_type,
+                            $id,
+                        ]
+                    );
 
                     if ($category != $res['parent']) {
                         // Вычисляем сортировку
@@ -406,8 +420,11 @@ switch ($mod) {
                     '<input type="text" name="sort" value="' . $res['sort'] . '"/><br>' .
                     '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                     '<p><h3>' . _t('Description') . '</h3>' .
-                    '<textarea name="desc" rows="' . $user->config->fieldHeight . '">' . str_replace('<br>',
-                        "\r\n", $res['description']) . '</textarea>' .
+                    '<textarea name="desc" rows="' . $user->config->fieldHeight . '">' . str_replace(
+                        '<br>',
+                        "\r\n",
+                        $res['description']
+                    ) . '</textarea>' .
                     '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 
                 $allow = ! empty($res['access']) ? (int) ($res['access']) : 0;
@@ -553,21 +570,23 @@ switch ($mod) {
                 echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `forum_topic`.*, 
-            `forum_topic`.`id` AS `fid`, 
-            `forum_topic`.`name` AS `topic_name`, 
-            `forum_topic`.`user_id` AS `id`, 
-            `forum_topic`.`user_name` AS `name`, 
-            `users`.`rights`, 
-            `users`.`lastdate`, 
-            `users`.`sex`, 
-            `users`.`status`, 
+            $req = $db->query(
+                "SELECT `forum_topic`.*,
+            `forum_topic`.`id` AS `fid`,
+            `forum_topic`.`name` AS `topic_name`,
+            `forum_topic`.`user_id` AS `id`,
+            `forum_topic`.`user_name` AS `name`,
+            `users`.`rights`,
+            `users`.`lastdate`,
+            `users`.`sex`,
+            `users`.`status`,
             `users`.`datereg`,
             `users`.`ip`,
             `users`.`browser`,
             `users`.`ip_via_proxy`
             FROM `forum_topic` LEFT JOIN `users` ON `forum_topic`.`user_id` = `users`.`id`
-            WHERE `forum_topic`.`deleted` = '1' ${sort} ORDER BY `forum_topic`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess);
+            WHERE `forum_topic`.`deleted` = '1' ${sort} ORDER BY `forum_topic`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess
+            );
 
             if ($req->rowCount()) {
                 $i = 0;
@@ -582,11 +601,14 @@ switch ($mod) {
                     $subtext .= '<a href="?act=forum&amp;mod=htopics&amp;rsort=' . $res['section_id'] . '">' . _t('by section') . '</a> | ';
                     $subtext .= '<a href="?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo $tools->displayUser($res, [
-                        'header' => $ttime,
-                        'body'   => $text,
-                        'sub'    => $subtext,
-                    ]);
+                    echo $tools->displayUser(
+                        $res,
+                        [
+                            'header' => $ttime,
+                            'body'   => $text,
+                            'sub'    => $subtext,
+                        ]
+                    );
                     echo '</div>';
                     ++$i;
                 }
@@ -661,25 +683,29 @@ switch ($mod) {
                 echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `forum_messages`.*, 
-            `forum_messages`.`id` AS `fid`, 
-            `forum_messages`.`user_id` AS `id`, 
-            `forum_messages`.`user_name` AS `name`, 
+            $req = $db->query(
+                "SELECT `forum_messages`.*,
+            `forum_messages`.`id` AS `fid`,
+            `forum_messages`.`user_id` AS `id`,
+            `forum_messages`.`user_name` AS `name`,
             `forum_messages`.`user_agent` AS `browser`,
-            `users`.`rights`, 
-            `users`.`lastdate`, 
-            `users`.`sex`, 
-            `users`.`status`, 
+            `users`.`rights`,
+            `users`.`lastdate`,
+            `users`.`sex`,
+            `users`.`status`,
             `users`.`datereg`
             FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-            WHERE `forum_messages`.`deleted` = '1' ${sort} ORDER BY `forum_messages`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess);
+            WHERE `forum_messages`.`deleted` = '1' ${sort} ORDER BY `forum_messages`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess
+            );
 
             if ($req->rowCount()) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
                     $posttime = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
-                    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn() / $user->config->kmess);
+                    $page = ceil(
+                        $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn() / $user->config->kmess
+                    );
                     $text = mb_substr($res['text'], 0, 500);
                     $text = $tools->checkout($text, 1, 0);
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
@@ -689,11 +715,14 @@ switch ($mod) {
                     $subtext .= '<a href="?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . _t('by topic') . '</a> | ';
                     $subtext .= '<a href="?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo $tools->displayUser($res, [
-                        'header' => $posttime,
-                        'body'   => $text,
-                        'sub'    => $subtext,
-                    ]);
+                    echo $tools->displayUser(
+                        $res,
+                        [
+                            'header' => $posttime,
+                            'body'   => $text,
+                            'sub'    => $subtext,
+                        ]
+                    );
                     echo '</div>';
                     ++$i;
                 }
@@ -747,7 +776,10 @@ switch ($mod) {
 
 echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

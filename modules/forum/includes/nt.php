@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,30 +8,36 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\ToolsInterface  $tools
- * @var Johncms\Api\UserInterface   $user
+ * @var array $config
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 // Check access
-if (! $id
+if (
+    ! $id
     || ! $user->isValid()
     || isset($user->ban['1'])
     || isset($user->ban['11'])
     || (! $user->rights && $config['mod_forum'] == 3)
 ) {
     http_response_code(403);
-    echo $view->render('system::pages/result', [
-        'title'         => _t('Access forbidden'),
-        'type'          => 'alert-danger',
-        'message'       => _t('Access forbidden'),
-        'back_url'      => '?type=topics&amp;id=' . $id,
-        'back_url_name' => _t('Go to Section'),
-    ]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Access forbidden'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Access forbidden'),
+            'back_url'      => '?type=topics&amp;id=' . $id,
+            'back_url_name' => _t('Go to Section'),
+        ]
+    );
     exit;
 }
 
@@ -53,15 +57,18 @@ function forum_link($m)
 
         if ($req->rowCount()) {
             $res = $req->fetch();
-            $name = strtr($res['text'], [
-                '&quot;' => '',
-                '&amp;'  => '',
-                '&lt;'   => '',
-                '&gt;'   => '',
-                '&#039;' => '',
-                '['      => '',
-                ']'      => '',
-            ]);
+            $name = strtr(
+                $res['text'],
+                [
+                    '&quot;' => '',
+                    '&amp;'  => '',
+                    '&lt;'   => '',
+                    '&gt;'   => '',
+                    '&#039;' => '',
+                    '['      => '',
+                    ']'      => '',
+                ]
+            );
 
             if (mb_strlen($name) > 40) {
                 $name = mb_substr($name, 0, 40) . '...';
@@ -80,26 +87,32 @@ function forum_link($m)
 $flood = $tools->antiflood();
 
 if ($flood) {
-    echo $view->render('system::pages/result', [
-        'title'         => _t('New Topic'),
-        'type'          => 'alert-danger',
-        'message'       => sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-        'back_url'      => '?type=topics&amp;id=' . $id . '&amp;start=' . $start,
-        'back_url_name' => _t('Back'),
-    ]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('New Topic'),
+            'type'          => 'alert-danger',
+            'message'       => sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+            'back_url'      => '?type=topics&amp;id=' . $id . '&amp;start=' . $start,
+            'back_url_name' => _t('Back'),
+        ]
+    );
     exit;
 }
 
 $req_r = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}' AND `section_type` = 1 LIMIT 1");
 
 if (! $req_r->rowCount()) {
-    echo $view->render('system::pages/result', [
-        'title'         => _t('New Topic'),
-        'type'          => 'alert-danger',
-        'message'       => _t('Wrong data'),
-        'back_url'      => '/forum/',
-        'back_url_name' => _t('Back'),
-    ]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('New Topic'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]
+    );
     exit;
 }
 
@@ -110,10 +123,14 @@ $th = filter_has_var(INPUT_POST, 'th')
     : '';
 
 $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
-$msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-    'forum_link', $msg);
+$msg = preg_replace_callback(
+    '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+    'forum_link',
+    $msg
+);
 
-if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+if (
+    isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
     && $_POST['token'] == $_SESSION['token']
 ) {
     $error = [];
@@ -135,8 +152,11 @@ if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
     }
 
     if (! $error) {
-        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-            'forum_link', $msg);
+        $msg = preg_replace_callback(
+            '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            'forum_link',
+            $msg
+        );
 
         $sql = 'SELECT (
 SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = ? AND `name` = ?) AS topic, (
@@ -164,7 +184,8 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         $date = $date->format('Y-m-d H:i:s');
 
         // Добавляем тему
-        $db->prepare('
+        $db->prepare(
+            '
           INSERT INTO `forum_topic` SET
           `section_id` = ?,
            `created_at` = ?,
@@ -174,22 +195,26 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
            `last_post_date` = ?,
            `post_count` = 0,
            `curators` = ?
-        ')->execute([
-            $id,
-            $date,
-            $user->id,
-            $user->name,
-            $th,
-            time(),
-            $curator,
-        ]);
+        '
+        )->execute(
+            [
+                $id,
+                $date,
+                $user->id,
+                $user->name,
+                $th,
+                time(),
+                $curator,
+            ]
+        );
 
-        /** @var Johncms\Api\EnvironmentInterface $env */
-        $env = di(Johncms\Api\EnvironmentInterface::class);
+        /** @var Johncms\System\Http\Environment $env */
+        $env = di(Johncms\System\Http\Environment::class);
         $rid = $db->lastInsertId();
 
         // Добавляем текст поста
-        $db->prepare('
+        $db->prepare(
+            '
           INSERT INTO `forum_messages` SET
           `topic_id` = ?,
           `date` = ?,
@@ -199,16 +224,19 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
           `ip_via_proxy` = ?,
           `user_agent` = ?,
           `text` = ?
-        ')->execute([
-            $rid,
-            time(),
-            $user->id,
-            $user->name,
-            $env->getIp(),
-            $env->getIpViaProxy(),
-            $env->getUserAgent(),
-            $msg,
-        ]);
+        '
+        )->execute(
+            [
+                $rid,
+                time(),
+                $user->id,
+                $user->name,
+                $env->getIp(),
+                $env->getIpViaProxy(),
+                $env->getUserAgent(),
+                $msg,
+            ]
+        );
 
         $postid = $db->lastInsertId();
 
@@ -217,18 +245,22 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
 
         // Записываем счетчик постов юзера
         $fpst = $user->postforum + 1;
-        $db->exec("UPDATE `users` SET
+        $db->exec(
+            "UPDATE `users` SET
             `postforum` = '${fpst}',
             `lastpost` = '" . time() . "'
             WHERE `id` = '" . $user->id . "'
-        ");
+        "
+        );
 
         // Ставим метку о прочтении
-        $db->exec("INSERT INTO `cms_forum_rdm` SET
+        $db->exec(
+            "INSERT INTO `cms_forum_rdm` SET
             `topic_id`='${rid}',
             `user_id`='" . $user->id . "',
             `time`='" . time() . "'
-        ");
+        "
+        );
 
         if ($_POST['addfiles'] == 1) {
             header("Location: ?id=${postid}&act=addfile");
@@ -236,14 +268,16 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
             header("Location: ?type=topic&id=${rid}");
         }
     } else {
-        echo $view->render('system::pages/result', [
-            'title'         => _t('New Topic'),
-            'type'          => 'alert-danger',
-            'message'       => $error,
-            'back_url'      => '/forum/?act=nt&amp;id=' . $id,
-            'back_url_name' => _t('Repeat'),
-        ]);
-        exit;
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('New Topic'),
+                'type'          => 'alert-danger',
+                'message'       => $error,
+                'back_url'      => '/forum/?act=nt&amp;id=' . $id,
+                'back_url_name' => _t('Repeat'),
+            ]
+        );
     }
 } else {
     $res_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res_r['parent'] . "'")->fetch();
@@ -258,20 +292,21 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
 
-    echo $view->render('forum::new_topic', [
-        'title'             => _t('New Topic'),
-        'page_title'        => _t('New Topic'),
-        'settings_forum'    => $set_forum,
-        'id'                => $id,
-        'token'             => $token,
-        'th'                => $th,
-        'add_files'         => isset($_POST['addfiles']),
-        'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
-        'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('new_topic', 'msg'),
-        'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
-        'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
-        'preview_message'   => $msg_pre,
-        'user_avatar'       => $user->getAvatar(),
-    ]);
-    exit; // TODO: Remove it later
+    echo $view->render(
+        'forum::new_topic',
+        [
+            'title'             => _t('New Topic'),
+            'page_title'        => _t('New Topic'),
+            'settings_forum'    => $set_forum,
+            'id'                => $id,
+            'token'             => $token,
+            'th'                => $th,
+            'add_files'         => isset($_POST['addfiles']),
+            'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
+            'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_topic', 'msg'),
+            'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
+            'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
+            'preview_message'   => $msg_pre,
+        ]
+    );
 }

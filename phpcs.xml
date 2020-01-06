@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="JohnCMS coding standard">
+    <description>JohnCMS coding standard</description>
+
+    <!-- display progress -->
+    <arg value="p"/>
+
+    <!-- inherit rules from: -->
+    <rule ref="PSR12"/>
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>modules</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="240"/>
+            <property name="absoluteLineLimit" value="320"/>
+        </properties>
+    </rule>
+
+    <!-- Paths to check -->
+    <file>modules</file>
+    <file>system/src</file>
+    <exclude-pattern>/modules/downloads/classes/pear.php</exclude-pattern>
+</ruleset>

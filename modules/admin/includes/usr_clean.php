@@ -24,17 +24,19 @@ echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . 
 switch ($mod) {
     case 1:
         // Получаем список ID "мертвых" профилей
-        $req = $db->query("SELECT `id`
+        $req = $db->query(
+            "SELECT `id`
             FROM `users`
             WHERE `datereg` < '" . (time() - 2592000 * 6) . "'
             AND `lastdate` < '" . (time() - 2592000 * 5) . "'
             AND `postforum` = '0'
             AND `postguest` < '10'
             AND `komm` < '10'
-        ");
+        "
+        );
 
         if ($req->rowCount()) {
-            $del = new Johncms\Users\UserClean;
+            $del = new Johncms\System\Users\UserClean($db);
 
             // Удаляем всю информацию
             while ($res = $req->fetch()) {
@@ -47,7 +49,8 @@ switch ($mod) {
                 $db->exec('DELETE FROM `cms_forum_rdm` WHERE `user_id` = ' . $res['id']);
             }
 
-            $db->query('
+            $db->exec(
+                '
                 OPTIMIZE TABLE
                 `users`,
                 `cms_album_cat`,
@@ -59,19 +62,22 @@ switch ($mod) {
                 `cms_mail`,
                 `cms_contact`,
                 `cms_forum_rdm`
-            ');
+            '
+            );
         }
 
         echo '<div class="rmenu"><p>' . _t('Inactive profiles deleted') . '</p><p><a href="./">' . _t('Continue') . '</a></p></div>';
         break;
 
     default:
-        $total = $db->query("SELECT COUNT(*) FROM `users`
+        $total = $db->query(
+            "SELECT COUNT(*) FROM `users`
             WHERE `datereg` < '" . (time() - 2592000 * 6) . "'
             AND `lastdate` < '" . (time() - 2592000 * 5) . "'
             AND `postforum` = '0'
             AND `postguest` < '10'
-            AND `komm` < '10'")->fetchColumn();
+            AND `komm` < '10'"
+        )->fetchColumn();
         echo '<div class="menu">' .
             '<form action="?act=usr_clean&amp;mod=1" method="post">' .
             '<p><h3>' . _t('Inactive profiles') . '</h3>'
@@ -81,7 +87,10 @@ switch ($mod) {
             '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

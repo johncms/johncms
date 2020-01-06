@@ -17,6 +17,7 @@ mix.js('themes/default/src/js/app.js', 'themes/default/assets/js')
         //mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/*', 'dist/assets/fonts/');
     });
 
+mix.sourceMaps(true, 'source-map');
 
 // Если не нужен сервер статики, закомментировать...
 /*

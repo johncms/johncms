@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,24 +8,24 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+declare(strict_types=1);
+
+use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\User;
+use Johncms\System\View\Render;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var ConfigInterface    $config
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Render             $view
+ * @var Tools $tools
+ * @var User $user
+ * @var Render $view
  */
 
-$config = di(ConfigInterface::class);
-$tools = di(Johncms\Api\ToolsInterface::class);
-$user = di(UserInterface::class);
+$config = di('config')['johncms'];
+$tools = di(Tools::class);
+$user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля
@@ -82,10 +80,13 @@ $array = [
 if ($act && ($key = array_search($act, $array)) !== false && file_exists(__DIR__ . '/includes/' . $array[$key] . '.php')) {
     ob_start(); // Перехват вывода скриптов без шаблона
     require __DIR__ . '/includes/' . $array[$key] . '.php';
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl ?? _t('Information, FAQ'),
-        'content' => ob_get_clean(),
-    ]);
+    echo $view->render(
+        'system::app/old_content',
+        [
+            'title'   => $textl ?? _t('Information, FAQ'),
+            'content' => ob_get_clean(),
+        ]
+    );
 } else {
     // Главное меню FAQ
     echo $view->render('help::index');

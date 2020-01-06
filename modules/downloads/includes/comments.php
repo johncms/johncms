@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,66 +8,86 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\UserInterface   $user
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
  */
 
-if (! $config->mod_down_comm && $user->rights < 7) {
-    echo _t('Comments are disabled') . ' <a href="?">' . _t('Downloads') . '</a>';
+if (! $config['mod_down_comm'] && $user->rights < 7) {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Comments'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Comments are disabled'),
+            'back_url'      => $url,
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $user->rights < 6 && $user->rights != 4)) {
-    echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+if (($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) || ! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('File not found'),
+            'type'          => 'alert-danger',
+            'message'       => _t('File not found'),
+            'back_url'      => $url,
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
-if (! $config->mod_down_comm) {
-    echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
-}
+Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]);
+$nav_chain->add(htmlspecialchars($res_down['rus_name']), '/downloads/?act=view&id=' . $res_down['id']);
+$nav_chain->add(_t('Comments'), '/downloads/?act=comments&id=' . $res_down['id']);
 
 $title_pages = htmlspecialchars(mb_substr($res_down['rus_name'], 0, 30));
-$textl = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
+$title = (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages) . ' - ' . _t('Comments');
 
 // Параметры комментариев
 $arg = [
     // Поле с числом комментариев
-    'object_comm_count' => 'total',
+    'object_comm_count'   => 'total',
     // Таблица с комментариями
-    'comments_table'    => 'download__comments',
+    'comments_table'      => 'download__comments',
     // Таблица комментируемых объектов
-    'object_table'      => 'download__files',
+    'object_table'        => 'download__files',
     // Имя скрипта (с параметрами вызова)
-    'script'            => '?act=comments',
+    'script'              => '?act=comments',
     // Имя идентификатора комментируемого объекта
-    'sub_id_name'       => 'id',
+    'sub_id_name'         => 'id',
     // Идентификатор комментируемого объекта
-    'sub_id'            => $id,
+    'sub_id'              => $id,
     // Владелец объекта
-    'owner'             => false,
+    'owner'               => false,
     // Возможность владельцу удалять комментарий
-    'owner_delete'      => false,
+    'owner_delete'        => false,
     // Возможность владельцу отвечать на комментарий
-    'owner_reply'       => false,
+    'owner_reply'         => false,
     // Возможность владельцу редактировать комментарий
-    'owner_edit'        => false,
+    'owner_edit'          => false,
     // Название раздела
-    'title'             => _t('Comments'),
-    // Выводится вверху списка
-    'context_top'       => '<div class="phdr"><b>' . $textl . '</b></div>',
-    // Выводится внизу списка
-    'context_bottom'    => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>',
+    'title'               => _t('Comments'),
+    // Namespace для шаблонов. Заменить для кастомных шаблонов
+    'templates_namespace' => 'system',
+    // Ссылка на страницу назад
+    'back_url'            => '/downloads/?act=view&id=' . $res_down['id'],
 ];
 
 // Показываем комментарии
-$comm = new Johncms\Utility\Comments($arg);
-
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+new Johncms\Comments($arg);

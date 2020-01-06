@@ -10,27 +10,27 @@
 
 declare(strict_types=1);
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = di(Zend\I18n\Translator\Translator::class);
+/** @var Laminas\I18n\Translator\Translator $translator */
+$translator = di(Laminas\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = di(Johncms\Api\ToolsInterface::class);
+/** @var Johncms\System\Legacy\Tools $tools */
+$tools = di(Johncms\System\Legacy\Tools::class);
 
 // Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
-echo '<div class="phdr"><a href="../"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
-    '<form method="post">' .
-    '<div class="gmenu"><p>' .
-    '<input type="text" name="search" value="' . $tools->checkout($search) . '" />' .
-    '<input type="submit" value="' . _t('Search') . '" name="submit" />' .
-    '</p></div></form>';
+
+$data = [];
+$title = _t('User Search');
+
+$nav_chain->add($title);
+
+$data['search_query'] = $tools->checkout($search);
 
 // Проверям на ошибки
 $error = [];
-
 if (! empty($search) && (mb_strlen($search) < 2 || mb_strlen($search) > 20)) {
     $error[] = _t('Nickname') . ': ' . _t('Invalid length');
 }
@@ -45,52 +45,43 @@ if ($search && ! $error) {
 
     // Выводим результаты поиска
     $search_db = $tools->rusLat($search);
-    $search_db = strtr($search_db, [
-        '_' => '\\_',
-        '%' => '\\%',
-    ]);
+    $search_db = strtr(
+        $search_db,
+        [
+            '_' => '\\_',
+            '%' => '\\%',
+        ]
+    );
     $search_db = '%' . $search_db . '%';
     $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db))->fetchColumn();
-    echo '<div class="phdr"><b>' . _t('Searching results') . '</b></div>';
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-    }
-
     if ($total) {
         $req = $db->query('SELECT * FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db) . " ORDER BY `name` ASC LIMIT ${start}, " . $user->config->kmess);
-        $i = 0;
-        while ($res = $req->fetch()) {
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $res['name'] = mb_strlen($search) < 2 ? $res['name'] : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $res['name']);
-            echo $tools->displayUser($res);
-            echo '</div>';
-            ++$i;
-        }
-    } else {
-        echo '<div class="menu"><p>' . _t('Your search did not match any results') . '</p></div>';
+        $data['list'] = static function () use ($req, $user) {
+            while ($res = $req->fetch()) {
+                $res['user_profile_link'] = '';
+                if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
+                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+                }
+                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+                $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+                $res['ip'] = long2ip($res['ip']);
+                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+                $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . $res['ip_via_proxy'];
+                yield $res;
+            }
+        };
     }
-
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-            '<p><form action="?search=' . urlencode($search) . '" method="post">' .
-            '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-            '</form></p>';
-    }
-} else {
-    if ($error) {
-        echo $tools->displayError($error);
-    }
-    echo '<div class="phdr"><small>' . _t('Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical.') . '</small></div>';
+    $data['pagination'] = $tools->displayPagination('?search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess);
 }
 
-echo '<p>' . ($search && ! $error ? '<a href="?act=search">' . _t('New search') . '</a><br />' : '') .
-    '<a href="./">' . _t('Back') . '</a></p>';
+$data['errors'] = $error;
+$data['total'] = $total ?? 0;
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('User Search'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'users::search',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

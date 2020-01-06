@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,17 +8,19 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
-require 'classes/download.php';
-
 // Новые файлы
-$textl = _t('New Files');
+$title = _t('New Files');
 $sql_down = '';
 
 if ($id) {
@@ -28,45 +28,44 @@ if ($id) {
     $res_down_cat = $cat->fetch();
 
     if (! $cat->rowCount() || ! is_dir($res_down_cat['dir'])) {
-        echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
+        http_response_code(404);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => _t('The directory does not exist'),
+                'back_url'      => $urls['downloads'],
+                'back_url_name' => _t('Downloads'),
+            ]
+        );
         exit;
     }
 
     $title_pages = htmlspecialchars(mb_substr($res_down_cat['rus_name'], 0, 30));
-    $textl = _t('New Files') . ': ' . (mb_strlen($res_down_cat['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
     $sql_down = ' AND `dir` LIKE \'' . ($res_down_cat['dir']) . '%\' ';
 }
 
-echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down}")->fetchColumn();
-
-// Навигация
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $user->config->kmess) . '</div>';
-}
-
 // Выводим список
+$files = [];
 if ($total) {
     $i = 0;
     $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down} ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
-
     while ($res_down = $req_down->fetch()) {
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+        $files[] = Download::displayFile($res_down);
     }
-} else {
-    echo '<div class="rmenu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-// Навигация
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?" method="get">' .
-        '<input type="hidden" name="id" value="' . $id . '"/>' .
-        '<input type="hidden" value="new_files" name="act" />' .
-        '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-}
-
-echo '<p><a href="?id=' . $id . '">' . _t('Downloads') . '</a></p>';
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+echo $view->render(
+    'downloads::new_files',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'pagination' => $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $user->config->kmess),
+        'show_user'  => $show_user ?? [],
+        'files'      => $files ?? [],
+        'total'      => $total,
+        'urls'       => $urls,
+    ]
+);

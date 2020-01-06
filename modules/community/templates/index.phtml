@@ -1,26 +1,59 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('Community'), 'homeButton' => true]) ?>
-<div class="phdr"><strong><?= _t('Community') ?></strong></div>
-<div class="gmenu padding">
-    <form action="./search/" method="post">
-        <label>
-            <strong><?= _t('Look for the User') ?></strong><br>
-            <input type="text" name="search">
-            <input type="submit" value="<?= _t('Search') ?>" name="submit"><br>
-            <small><?= _t('The search is performed by Nickname and are case-insensitive.') ?></small>
-        </label>
-    </form>
-</div>
-<div class="menu padding">
-    <img src="<?= $this->asset('images/old/contacts.png') ?>" alt="">&nbsp;
-    <a href="./users/"><?= _t('Users') ?></a> (<?= $usersCount ?>)<br>
-    <img src="<?= $this->asset('images/old/users.png') ?>" alt="">&nbsp;
-    <a href="./administration/"><?= _t('Administration') ?></a> (<?= $adminCount ?>)<br>
-    <?php if ($birthDays): ?>
-        <img src="<?= $this->asset('images/old/award.png') ?>" alt="">&nbsp;
-        <a href="./birthdays/"><?= _t('Birthdays') ?></a> (<?= $birthDays ?>)<br>
-    <?php endif ?>
-    <img src="<?= $this->asset('images/old/photo.gif') ?>" alt="">&nbsp;
-    <a href="../album"><?= _t('Photo Albums') ?></a> (<?= $albumCount ?>)<br>
-    <img src="<?= $this->asset('images/old/rate.gif') ?>" alt="">&nbsp;
-    <a href="./top/"><?= _t('Top Activity') ?></a> (<?= $albumCount ?>)
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+
+$counters = $data['counters'] ?? [];
+?>
+<div class="row">
+    <div class="col-md-6">
+        <form action="./search/" method="post" class="mb-3">
+            <label for="search"><?= _t('Look for the User') ?></label>
+            <div class="input-group">
+                <input type="text" name="search" id="search" class="form-control" placeholder="<?= _t('Username') ?>">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit"><?= _t('Search') ?></button>
+                </div>
+            </div>
+            <div class="text-muted mb-2 small"><?= _t('The search is performed by Nickname and are case-insensitive.') ?></div>
+        </form>
+        <div class="list-group">
+            <a href="./users/" class="list-group-item d-flex justify-content-between align-items-center">
+                <?= _t('Users') ?>
+                <span class="badge badge-light badge-pill"><?= $counters['usersCount'] ?></span>
+            </a>
+            <a href="./administration/" class="list-group-item d-flex justify-content-between align-items-center">
+                <?= _t('Administration') ?>
+                <span class="badge badge-light badge-pill"><?= $counters['adminCount'] ?></span>
+            </a>
+            <?php if (! empty($counters['birthDays'])): ?>
+                <a href="./birthdays/" class="list-group-item d-flex justify-content-between align-items-center">
+                    <?= _t('Birthdays') ?>
+                    <span class="badge badge-light badge-pill"><?= $counters['birthDays'] ?></span>
+                </a>
+            <?php endif ?>
+            <a href="./top/" class="list-group-item d-flex justify-content-between align-items-center">
+                <?= _t('Top Activity') ?>
+            </a>
+        </div>
+    </div>
 </div>

@@ -15,7 +15,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 /**
  * @var PDO                              $db
- * @var Johncms\Api\UserInterface        $user
+ * @var Johncms\System\Users\User        $user
  */
 
 $config = di('config')['johncms'];

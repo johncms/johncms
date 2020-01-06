@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,47 +8,75 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Download;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\UserInterface   $user
+ * @var array $config
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
  */
 
-require 'classes/download.php';
-
 // Топ файлов
-if ($id == 2) {
-    $textl = _t('Most Commented');
-} elseif ($id == 1) {
-    $textl = _t('Most Downloaded');
+if ($id === 2) {
+    $title = _t('Most Commented');
+} elseif ($id === 1) {
+    $title = _t('Most Downloaded');
 } else {
-    $textl = _t('Popular Files');
+    $title = _t('Popular Files');
 }
 
-$linkTopComments = $config['mod_down_comm'] || $user->rights >= 7 ? '<br><a href="?act=top_files&amp;id=2">' . _t('Most Commented') . '</a>' : '';
-echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . ' (' . $set_down['top'] . ')</div>';
+$nav_chain->add($title);
 
-if ($id == 2 && ($config['mod_down_comm'] || $user->rights >= 7)) {
-    echo '<div class="gmenu"><a href="?act=top_files&amp;id=0">' . _t('Popular Files') . '</a><br>' .
-        '<a href="?act=top_files&amp;id=1">' . _t('Most Downloaded') . '</a></div>';
+$buttons = [];
+if ($config['mod_down_comm'] || $user->rights >= 7) {
+    $buttons['comments'] = [
+        'name'   => _t('Most Commented'),
+        'url'    => '?act=top_files&amp;id=2',
+        'active' => false,
+    ];
+}
+
+$buttons['pop'] = [
+    'name'   => _t('Popular Files'),
+    'url'    => '?act=top_files&amp;id=0',
+    'active' => false,
+];
+
+$buttons['most_downloaded'] = [
+    'name'   => _t('Most Downloaded'),
+    'url'    => '?act=top_files&amp;id=1',
+    'active' => false,
+];
+
+if ($id === 2 && ($config['mod_down_comm'] || $user->rights >= 7)) {
+    $buttons['comments']['active'] = true;
     $sql = '`comm_count`';
-} elseif ($id == 1) {
-    echo '<div class="gmenu"><a href="?act=top_files&amp;id=0">' . _t('Popular Files') . '</a>' . $linkTopComments . '</div>';
+} elseif ($id === 1) {
+    $buttons['most_downloaded']['active'] = true;
     $sql = '`field`';
 } else {
-    echo '<div class="gmenu"><a href="?act=top_files&amp;id=1">' . _t('Most Downloaded') . '</a>' . $linkTopComments . '</div>';
+    $buttons['pop']['active'] = true;
     $sql = '`rate`';
 }
 
 // Выводим список
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 ORDER BY ${sql} DESC LIMIT " . $set_down['top']);
-$i = 0;
-
+$files = [];
 while ($res_down = $req_down->fetch()) {
-    echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down, 1) . '</div>';
+    $files[] = Download::displayFile($res_down);
 }
 
-echo '<div class="phdr"><a href="?">' . _t('Downloads') . '</a></div>';
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+echo $view->render(
+    'downloads::top',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'files'      => $files ?? [],
+        'urls'       => $urls,
+        'buttons'    => $buttons,
+    ]
+);

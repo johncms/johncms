@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,17 +8,20 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
+ * @var array $config
  * @var PDO $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface $user
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 // Закрываем доступ для определенных ситуаций
-if (! $id
+if (
+    ! $id
     || ! $user->isValid()
     || isset($user->ban[1])
     || isset($user->ban[11])
@@ -53,7 +54,7 @@ function forum_link($m)
     }
     $p = parse_url($m[3]);
 
-    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config->homeurl . '/forum/?id=') {
+    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
         $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
         $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
 
@@ -128,7 +129,8 @@ switch ($post_type) {
             $msg
         );
 
-        if (isset($_POST['submit'])
+        if (
+            isset($_POST['submit'])
             && ! empty($_POST['msg'])
             && isset($_POST['token'], $_SESSION['token'])
 
@@ -218,8 +220,8 @@ switch ($post_type) {
                     )->execute([$newpost, time()]);
                 } else {
                     $update = false;
-                    /** @var Johncms\Api\EnvironmentInterface $env */
-                    $env = di(Johncms\Api\EnvironmentInterface::class);
+                    /** @var Johncms\System\Http\Environment $env */
+                    $env = di(Johncms\System\Http\Environment::class);
 
                     // Добавляем сообщение в базу
                     $db->prepare(
@@ -297,7 +299,7 @@ switch ($post_type) {
                 'title'             => _t('New message'),
                 'page_title'        => _t('New message'),
                 'id'                => $id,
-                'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('message_form', 'msg'),
+                'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
                 'token'             => $token,
                 'topic'             => $type1,
                 'form_action'       => '?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start,
@@ -307,11 +309,9 @@ switch ($post_type) {
                 'show_post_preview' => ($msg && ! isset($_POST['submit'])),
                 'back_url'          => '?type=topic&id=' . $id . '&amp;start=' . $start,
                 'preview_message'   => $msg_pre,
-                'user_avatar'       => $user->getAvatar(),
                 'is_new_message'    => true,
             ]
         );
-        exit;
         break;
 
     case 'reply':
@@ -386,7 +386,7 @@ switch ($post_type) {
         if (! empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
-            $citata = di(Johncms\Api\BbcodeInterface::class)->notags($citata);
+            $citata = di(Johncms\System\Legacy\Bbcode::class)->notags($citata);
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date('d.m.Y H:i', $type1['date']);
@@ -415,7 +415,8 @@ switch ($post_type) {
             $msg
         );
 
-        if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+        if (
+            isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
             && $_POST['token'] == $_SESSION['token']
         ) {
             if (empty($_POST['msg'])) {
@@ -475,8 +476,8 @@ switch ($post_type) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\Api\EnvironmentInterface $env */
-            $env = di(Johncms\Api\EnvironmentInterface::class);
+            /** @var Johncms\System\Http\Environment $env */
+            $env = di(Johncms\System\Http\Environment::class);
 
             // Добавляем сообщение в базу
             $db->prepare(
@@ -552,7 +553,7 @@ switch ($post_type) {
                 'title'             => _t('Reply to message'),
                 'page_title'        => _t('Reply to message'),
                 'id'                => $id,
-                'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('message_form', 'msg'),
+                'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
                 'token'             => $token,
                 'topic'             => $th1,
                 'form_action'       => '/forum/?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : ''),
@@ -566,11 +567,9 @@ switch ($post_type) {
                 'show_post_preview' => (! empty($_POST['msg']) && ! isset($_POST['submit'])),
                 'back_url'          => '?type=topic&id=' . $th1['id'] . '&amp;start=' . $start,
                 'preview_message'   => $msg_pre,
-                'user_avatar'       => $user->getAvatar(),
                 'is_new_message'    => false,
             ]
         );
-        exit;
         break;
 
     default:
@@ -584,5 +583,4 @@ switch ($post_type) {
                 'back_url_name' => _t('Forum'),
             ]
         );
-        exit;
 }

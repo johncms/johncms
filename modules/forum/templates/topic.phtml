@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /**
  * @var $title
  * @var $page_title
@@ -13,17 +22,23 @@
  * @var $filter_by_author
  */
 
-$this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $page_title,
-]);
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
 ?>
-<?= $this->insert('forum::header', [
-    'unread_count' => $unread_count,
-    'files_count'  => $files_count,
-    'files_url'    => '/forum/?act=files&t=' . $id,
-    'files_name'   => _t('Topic Files'),
-]) ?>
+<?= $this->fetch(
+    'forum::header',
+    [
+        'unread_count' => $unread_count,
+        'files_count'  => $files_count,
+        'files_url'    => '/forum/?act=files&t=' . $id,
+        'files_name'   => _t('Topic Files'),
+    ]
+) ?>
 <?php if ($filter_by_author): ?>
     <div class="alert alert-warning">
         <div>
@@ -104,20 +119,6 @@ $this->layout('system::layout/default', [
             <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
                 <?php if (! empty($settings_forum['farea'])): ?>
                     <input type="hidden" name="token" value="<?= $token ?>"/>
-                    <?php if (! $user->isValid()): ?>
-                        <div class="form-group">
-                            <label for="name"><?= _t('Name') ?></label>
-                            <input type="text"
-                                   class="form-control"
-                                   maxlength="25"
-                                   name="name"
-                                   id="name"
-                                   required
-                                   value=""
-                                   placeholder="<?= _t('Name') ?>"
-                            >
-                        </div>
-                    <?php endif; ?>
                     <div class="form-group">
                         <label for="msg"><?= _t('Message') ?></label>
                         <div><?= $bbcode ?></div>
@@ -206,16 +207,13 @@ $this->layout('system::layout/default', [
                     <?php if (! empty($item['quote_url'])): ?>
                         <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Quote') ?></a>
                     <?php endif; ?>
+                    <a href="<?= $item['post_url'] ?>" class="btn btn-secondary btn-sm">#</a>
                 </div>
             </div>
             <div class="post-body d-flex align-items-start pt-3 pb-3">
                 <div class="user-avatar mr-2 mr-md-4">
                     <div class="avatar-image rounded-circle overflow-hidden">
-                        <?php if (! empty($item['user_avatar'])): ?>
-                            <img src="<?= $item['user_avatar'] ?>" class="img-fluid" alt=".">
-                        <?php else: ?>
-                            <img src="<?= $this->asset('icons/user.svg') ?>" class="img-fluid" alt=".">
-                        <?php endif; ?>
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
                     </div>
                     <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
                 </div>
@@ -363,20 +361,6 @@ $this->layout('system::layout/default', [
             <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1">
                 <?php if (! empty($settings_forum['farea'])): ?>
                     <input type="hidden" name="token" value="<?= $token ?>"/>
-                    <?php if (! $user->isValid()): ?>
-                        <div class="form-group">
-                            <label for="name"><?= _t('Name') ?></label>
-                            <input type="text"
-                                   class="form-control"
-                                   maxlength="25"
-                                   name="name"
-                                   id="name"
-                                   required
-                                   value=""
-                                   placeholder="<?= _t('Name') ?>"
-                            >
-                        </div>
-                    <?php endif; ?>
                     <div class="form-group">
                         <label for="msg"><?= _t('Message') ?></label>
                         <div><?= $bbcode ?></div>
@@ -426,8 +410,11 @@ $this->layout('system::layout/default', [
 </div>
 
 
-<?= $this->insert('forum::footer', [
-    'online'   => $online,
-    'who_url'  => '/forum/?act=who&id=' . $id,
-    'who_name' => _t('Who is here'),
-]) ?>
+<?= $this->fetch(
+    'forum::footer',
+    [
+        'online'   => $online,
+        'who_url'  => '/forum/?act=who&id=' . $id,
+        'who_name' => _t('Who is here'),
+    ]
+) ?>

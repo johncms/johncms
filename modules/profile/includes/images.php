@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Verot\Upload\Upload;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Edit Profile');
@@ -26,7 +28,7 @@ switch ($mod) {
         // Выгружаем аватар
         echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Avatar') . '</div>';
         if (isset($_POST['submit'])) {
-            $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
+            $handle = new Upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $foundUser['id'];
@@ -59,8 +61,7 @@ switch ($mod) {
                 . '<p><input type="submit" name="submit" value="' . _t('Upload') . '" />'
                 . '</p></div></form>'
                 . '<div class="phdr"><small>'
-                . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'),
-                    $config['flsz'])
+                . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $config['flsz'])
                 . '</small></div>';
         }
         break;
@@ -68,7 +69,7 @@ switch ($mod) {
     case 'up_photo':
         echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Photo') . '</div>';
         if (isset($_POST['submit'])) {
-            $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
+            $handle = new Upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $foundUser['id'];
@@ -112,8 +113,10 @@ switch ($mod) {
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" /></p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
                 '</div></form>' .
-                '<div class="phdr"><small>' . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'),
-                    $config['flsz']) . '</small></div>';
+                '<div class="phdr"><small>' . sprintf(
+                    _t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'),
+                    $config['flsz']
+                ) . '</small></div>';
         }
         break;
 }

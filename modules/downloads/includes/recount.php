@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,20 +8,20 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                       $db
- * @var Johncms\Api\UserInterface $user
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
  */
 
-if ($user->rights == 4 || $user->rights >= 6) {
-    $req_down = $db->query('SELECT `dir`, `name`, `id` FROM `download__category`');
+$req_down = $db->query('SELECT `dir`, `name`, `id` FROM `download__category`');
 
-    while ($res_down = $req_down->fetch()) {
-        $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down['dir']) . "%'")->fetchColumn();
-        $db->exec("UPDATE `download__category` SET `total` = '${dir_files}' WHERE `id` = '" . $res_down['id'] . "'");
-    }
+while ($res_down = $req_down->fetch()) {
+    $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down['dir']) . "%'")->fetchColumn();
+    $db->exec("UPDATE `download__category` SET `total` = '${dir_files}' WHERE `id` = '" . $res_down['id'] . "'");
 }
 
 header('Location: ?id=' . $id);

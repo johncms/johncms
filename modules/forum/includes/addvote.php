@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
@@ -23,14 +23,17 @@ if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
 
     if ($topic_vote != 0 || $topic == 0) {
-        echo $view->render('system::pages/result', [
-            'title'         => _t('Add Poll'),
-            'page_title'    => _t('Add Poll'),
-            'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
-            'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Add Poll'),
+                'page_title'    => _t('Add Poll'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 
@@ -38,12 +41,14 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $vote_name = mb_substr(trim($_POST['name_vote']), 0, 50);
 
         if (! empty($vote_name) && ! empty($_POST[0]) && ! empty($_POST[1]) && ! empty($_POST['count_vote'])) {
-            $db->exec('INSERT INTO `cms_forum_vote` SET
+            $db->exec(
+                'INSERT INTO `cms_forum_vote` SET
                 `name`=' . $db->quote($vote_name) . ",
                 `time`='" . time() . "',
                 `type` = '1',
                 `topic`='${id}'
-            ");
+            "
+            );
             $db->exec("UPDATE `forum_topic` SET `has_poll` = '1'  WHERE `id` = '${id}'");
             $vote_count = abs((int) ($_POST['count_vote']));
 
@@ -62,29 +67,37 @@ if ($user->rights == 3 || $user->rights >= 6) {
                     continue;
                 }
 
-                $db->exec('INSERT INTO `cms_forum_vote` SET
+                $db->exec(
+                    'INSERT INTO `cms_forum_vote` SET
                     `name`=' . $db->quote($text) . ",
                     `type` = '2',
                     `topic`='${id}'
-                ");
+                "
+                );
             }
-            echo $view->render('system::pages/result', [
-                'title'         => _t('Add Poll'),
-                'page_title'    => _t('Add Poll'),
-                'type'          => 'alert-success',
-                'message'       => _t('Poll added'),
-                'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                'back_url_name' => _t('Continue'),
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Add Poll'),
+                    'page_title'    => _t('Add Poll'),
+                    'type'          => 'alert-success',
+                    'message'       => _t('Poll added'),
+                    'back_url'      => '/forum/?type=topic&amp;id=' . $id,
+                    'back_url_name' => _t('Continue'),
+                ]
+            );
         } else {
-            echo $view->render('system::pages/result', [
-                'title'         => _t('Add Poll'),
-                'page_title'    => _t('Add Poll'),
-                'type'          => 'alert-danger',
-                'message'       => _t('The required fields are not filled'),
-                'back_url'      => '/forum/?act=addvote&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Add Poll'),
+                    'page_title'    => _t('Add Poll'),
+                    'type'          => 'alert-danger',
+                    'message'       => _t('The required fields are not filled'),
+                    'back_url'      => '/forum/?act=addvote&amp;id=' . $id,
+                    'back_url_name' => _t('Repeat'),
+                ]
+            );
         }
         exit;
     }
@@ -111,14 +124,28 @@ if ($user->rights == 3 || $user->rights >= 6) {
         ];
     }
 
-    echo $view->render('forum::add_poll', [
-        'title'      => _t('Add File'),
-        'page_title' => _t('Add File'),
-        'id'         => $id,
-        'back_url'   => '?type=topic&id=' . $id,
-        'count_vote' => $count_vote,
-        'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
-        'votes'      => $votes,
-    ]);
-    exit; // TODO: Remove it later
+    echo $view->render(
+        'forum::add_poll',
+        [
+            'title'      => _t('Add File'),
+            'page_title' => _t('Add File'),
+            'id'         => $id,
+            'back_url'   => '?type=topic&id=' . $id,
+            'count_vote' => $count_vote,
+            'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
+            'votes'      => $votes,
+        ]
+    );
+} else {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Access forbidden'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Access forbidden'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]
+    );
 }

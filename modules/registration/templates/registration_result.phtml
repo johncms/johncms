@@ -12,7 +12,7 @@
                     <?= _t('Your Username') ?>: <b><?= $reg_nick ?></b><br>
                     <?= _t('Your Password') ?>: <b><?= $reg_pass ?></b>
                 </p>
-                <?php if ($config->mod_reg == 1): ?>
+                <?php if ($config['mod_reg'] == 1): ?>
                     <div class="alert alert-warning"><?= _t('Please, wait until a moderator approves your registration') ?></div>
                 <?php else: ?>
                     <a href="/" class="btn btn-primary"><?= _t('Enter') ?></a>

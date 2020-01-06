@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $files
+ * @var $total
+ * @var $urls
+ * @var $pagination
+ * @var $show_empty_info
+ * @var $search_query
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (! $config['mod_down']): ?>
+    <div class="alert alert-danger border-0 shadow">
+        <?= _t('Downloads are closed') ?>
+    </div>
+<?php endif; ?>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form action="?act=search" method="post">
+            <div class="form-group">
+                <label for="search_query"><?= _t('Search query') ?></label>
+                <input type="text" class="form-control" id="search_query" placeholder="<?= _t('Search query') ?>"
+                       name="search" value="<?= $search_query ?>" maxlength="64" minlength="2" required>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" name="id" value="1" id="search_t" <?= ($id ? 'checked="checked"' : '') ?>>
+                    <label class="custom-control-label" for="search_t"><?= _t('Search in description') ?></label>
+                </div>
+            </div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Search') ?></button>
+        </form>
+    </div>
+</div>
+
+<?php if (empty($files) && $show_empty_info): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php foreach ($files as $file): ?>
+    <?= $this->fetch('downloads::file_row', ['file' => $file]) ?>
+<?php endforeach; ?>
+
+<?php if ($total): ?>
+    <div>
+        <div><?= _t('Total') ?>: <?= $total ?></div>
+        <!-- Page switching -->
+        <?php if ($total > $user->config->kmess): ?>
+            <div class="mt-1"><?= $pagination ?></div>
+        <?php endif ?>
+    </div>
+<?php endif; ?>
+
+<?php if (empty($files)): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                <?= _t('Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max.') ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="mt-2">
+    <div class="pb-2">
+        <a href="?act=search"><?= _t('New Search') ?></a>
+    </div>
+
+    <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+</div>

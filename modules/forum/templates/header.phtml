@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /**
  * @var string $unread_count
  * @var string $files_url
@@ -7,9 +16,9 @@
  */
 
 ?>
-<?php if (! $config->mod_forum): ?>
+<?php if (! $config['mod_forum']): ?>
     <div class="alert alert-danger"><?= _t('Forum is closed') ?></div>
-<?php elseif ($config->mod_forum == 3): ?>
+<?php elseif ($config['mod_forum'] == 3): ?>
     <div class="alert alert-danger"><?= _t('Read only') ?></div>
 <?php endif; ?>
 

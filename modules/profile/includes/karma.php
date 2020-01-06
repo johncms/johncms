@@ -19,11 +19,11 @@ if ($set_karma['on']) {
     /** @var PDO $db */
     $db = di(PDO::class);
 
-    /** @var Johncms\Api\UserInterface $user */
-    $user = di(Johncms\Api\UserInterface::class);
+    /** @var Johncms\System\Users\User $user */
+    $user = di(Johncms\System\Users\User::class);
 
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = di(Johncms\Api\ToolsInterface::class);
+    /** @var Johncms\System\Legacy\Tools $tools */
+    $tools = di(Johncms\System\Legacy\Tools::class);
 
     switch ($mod) {
         case 'vote':
@@ -35,7 +35,7 @@ if ($set_karma['on']) {
                     $error[] = _t('It is forbidden to vote for administration');
                 }
 
-                if ($foundUser['ip'] == di(Johncms\Api\EnvironmentInterface::class)->getIp()) {
+                if ($foundUser['ip'] == di(Johncms\System\Http\Environment::class)->getIp()) {
                     $error[] = _t('Cheating karma is forbidden');
                 }
 

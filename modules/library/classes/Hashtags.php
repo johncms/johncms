@@ -15,6 +15,7 @@ namespace Library;
 /**
  * Класс хештегов
  * Class Hashtags
+ *
  * @package Library
  * @author  Koenig(Compolomus)
  */
@@ -22,6 +23,7 @@ class Hashtags
 {
     /**
      * не обязательный аргумент, индификатор статьи
+     *
      * @var bool|int
      */
     private $lib_id = false;
@@ -33,6 +35,7 @@ class Hashtags
 
     /**
      * Hashtags constructor.
+     *
      * @param int $id
      */
     public function __construct($id = 0)
@@ -43,6 +46,7 @@ class Hashtags
 
     /**
      * Получение всех статей по тегу
+     *
      * @param $tag
      * @return array|null
      */
@@ -61,6 +65,7 @@ class Hashtags
 
     /**
      * Получение всех тегов статьи
+     *
      * @param int $tpl
      * @return object|null
      */
@@ -83,6 +88,7 @@ class Hashtags
 
     /**
      * Добавление тега
+     *
      * @param $tags
      * @return int|null
      */
@@ -103,6 +109,7 @@ class Hashtags
 
     /**
      * Удаление тега
+     *
      * @return int
      */
     public function delTags()
@@ -115,6 +122,7 @@ class Hashtags
 
     /**
      * Проверка существования тега
+     *
      * @param string $tag
      * @return bool
      */
@@ -128,6 +136,7 @@ class Hashtags
 
     /**
      * Валидация корректности тега, замена спец символов
+     *
      * @param string $tag
      * @return string
      */
@@ -138,12 +147,18 @@ class Hashtags
 
     /**
      * Массив тегов с релевантностью
+     *
      * @return array|bool
      */
     public function arrayCloudTags()
     {
         $result = [];
-        $stmt = $this->db->query('SELECT `library_texts`.`id`, `library_tags`.`lib_text_id`, `library_tags`.`tag_name`, COUNT(*) as `count` FROM `library_tags` JOIN `library_texts` ON `library_texts`.`id` = `library_tags`.`lib_text_id` GROUP BY `tag_name` ORDER BY `count` DESC;');
+        $stmt = $this->db->query(
+            'SELECT `library_texts`.`id`, `library_tags`.`lib_text_id`, `library_tags`.`tag_name`, COUNT(*) as `count` FROM `library_tags`
+            JOIN `library_texts` ON `library_texts`.`id` = `library_tags`.`lib_text_id`
+            GROUP BY `tag_name`
+            ORDER BY `count` DESC'
+        );
         if ($stmt->rowCount()) {
             while ($row = $stmt->fetch()) {
                 $result[$row['tag_name']] = $row['count'];
@@ -157,6 +172,7 @@ class Hashtags
 
     /**
      * Рейтинг тегов с сортировкой по алфавиту или релевантности
+     *
      * @param string $sort
      * @return array|bool
      */
@@ -188,6 +204,7 @@ class Hashtags
 
     /**
      * Получение ссылок или кэша для отображения
+     *
      * @param $array
      * @return string
      */
@@ -213,6 +230,7 @@ class Hashtags
 
     /**
      * Получение кэша, если кэш отсутствует, создает его
+     *
      * @param string $sort
      * @return string
      */
@@ -227,6 +245,7 @@ class Hashtags
 
     /**
      * Установка кэша с сортировкой
+     *
      * @param string $sort
      * @return string
      */

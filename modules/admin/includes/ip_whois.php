@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+
 ob_start(); // Перехват вывода скриптов без шаблона
 
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;

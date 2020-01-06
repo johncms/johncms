@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,17 +8,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
-use Johncms\View\Render;
+declare(strict_types=1);
+
+use Johncms\System\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/**
- * @var ConfigInterface    $config
- * @var Render             $view
- */
-
-$config = di(ConfigInterface::class);
+/** @var Render $view */
 $view = di(Render::class);
 
 // Регистрируем Namespace для шаблонов модуля

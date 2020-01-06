@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface $user
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
@@ -98,5 +98,16 @@ if ($user->rights == 3 || $user->rights >= 6) {
             'back_url'   => '?type=topic&id=' . $id,
         ]
     );
-    exit;
+} else {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Access forbidden'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Access forbidden'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]
+    );
 }

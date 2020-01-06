@@ -12,9 +12,12 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Johncms\System\Legacy\Tools;
+
 /**
  * Класс помошник формирования ссылок для тегов
  * Class Links
+ *
  * @package Library
  * @author  Koenig(Compolomus)
  */
@@ -35,12 +38,12 @@ class Links
     private $res;
 
     /**
-     * @var PDO $db
+     * @var \PDO $db
      */
     private $db;
 
     /**
-     * @var \Johncms\Api\ToolsInterface
+     * @var \Johncms\System\Legacy\Tools
      */
     private $tools;
 
@@ -49,7 +52,7 @@ class Links
         $this->link_url = $link_url;
         $this->in = $in;
         $this->db = di(\PDO::class);
-        $this->tools = di(\Johncms\Api\ToolsInterface::class);
+        $this->tools = di(Tools::class);
     }
 
     /**

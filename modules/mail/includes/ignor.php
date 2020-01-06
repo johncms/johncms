@@ -21,10 +21,13 @@ if (isset($_GET['del'])) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if (! $req->rowCount()) {
-            echo $view->render('system::app/old_content', [
-                'title'   => $textl,
-                'content' => $tools->displayError(_t('User does not exists')),
-            ]);
+            echo $view->render(
+                'system::app/old_content',
+                [
+                    'title'   => $textl,
+                    'content' => $tools->displayError(_t('User does not exists')),
+                ]
+            );
             exit;
         }
 
@@ -52,10 +55,13 @@ if (isset($_GET['del'])) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if (! $req->rowCount()) {
-            echo $view->render('system::app/old_content', [
-                'title'   => $textl,
-                'content' => $tools->displayError(_t('User does not exists')),
-            ]);
+            echo $view->render(
+                'system::app/old_content',
+                [
+                    'title'   => $textl,
+                    'content' => $tools->displayError(_t('User does not exists')),
+                ]
+            );
             exit;
         }
 
@@ -66,15 +72,19 @@ if (isset($_GET['del'])) {
             if ($res['rights'] > $user->rights) {
                 echo '<div class="rmenu">' . _t('This user can not be blocked') . '</div>';
             } else {
-                $q = $db->query("SELECT * FROM `cms_contact`
-				WHERE `user_id`='" . $user->id . "' AND `from_id`='" . $id . "';");
+                $q = $db->query(
+                    "SELECT * FROM `cms_contact`
+				WHERE `user_id`='" . $user->id . "' AND `from_id`='" . $id . "';"
+                );
 
                 if (! $q->rowCount()) {
-                    $db->query("INSERT INTO `cms_contact` SET
+                    $db->query(
+                        "INSERT INTO `cms_contact` SET
 					`user_id` = '" . $user->id . "',
 					`from_id` = '" . $id . "',
 					`time` = '" . time() . "',
-					`ban`='1'");
+					`ban`='1'"
+                    );
                 } else {
                     $db->exec("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='" . $user->id . "' AND `from_id`='${id}'");
                     $db->exec("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='${id}' AND `from_id`='" . $user->id . "'");
@@ -103,18 +113,27 @@ if (isset($_GET['del'])) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT `users`.* FROM `cms_contact`
+        $req = $db->query(
+            "SELECT `users`.* FROM `cms_contact`
 		    LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id`
 		    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 		    AND `ban`='1'
 		    ORDER BY `cms_contact`.`time` DESC
-		    LIMIT ${start}, " . $user->config->kmess);
+		    LIMIT ${start}, " . $user->config->kmess
+        );
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
             echo ($i % 2) ? '<div class="list1">' : '<div class="list2">';
-            $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;del">' . _t('Unblock') . '</a>';
-            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $user->id . "' AND `sys`!='1' AND `spam`!='1';")->fetchColumn();
-            $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='" . $user->id . "' AND `sys`!='1' AND `spam`!='1'")->fetchColumn();
+            $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' .
+                _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;del">' . _t('Unblock') . '</a>';
+            $count_message = $db->query(
+                "SELECT COUNT(*) FROM `cms_mail`
+                WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}'))
+                AND `delete`!='" . $user->id . "' AND `sys`!='1' AND `spam`!='1'"
+            )->fetchColumn();
+            $new_count_message = $db->query(
+                "SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='" . $user->id . "' AND `sys`!='1' AND `spam`!='1'"
+            )->fetchColumn();
             $arg = [
                 'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                 'sub'    => $subtext,

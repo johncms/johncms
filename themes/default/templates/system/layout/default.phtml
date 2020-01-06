@@ -1,7 +1,7 @@
 <?php
 /**
- * @var string                     $locale
- * @var Johncms\Api\UserInterface  $user
+ * @var string $locale
+ * @var Johncms\System\Users\User $user
  */
 ?>
 <!DOCTYPE html>
@@ -14,21 +14,29 @@
     <meta name="MobileOptimized" content="width">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
-    <meta name="keywords" content="<?= $config->meta_key ?>">
-    <meta name="description" content="<?= $config->meta_desc ?>">
+    <meta name="keywords" content="<?= $config['meta_key'] ?>">
+    <meta name="description" content="<?= $config['meta_desc'] ?>">
     <meta name="theme-color" content="#586776">
     <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
     <link rel="stylesheet" href="<?= $this->asset('css/magnific-popup.css') ?>">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
-    <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config->homeurl ?>/rss/">
-    <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config->copyright ?></title>
+    <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
+    <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config['copyright'] ?></title>
 </head>
 <body>
 <div class="wrapper justify-content-end d-flex" id="app">
     <div class="sidebar shadow">
-        <?php $this->insert('system::app/sidebar') ?>
+        <div class="sidebar__logo">
+            <a href="/">
+                <span class="logo__image"><img src="<?= $this->asset('images/logo.svg') ?>" alt="logo" style="width: 70%;" class="img-fluid"></span>
+            </a>
+        </div>
+        <div class="sidebar__wrapper d-flex flex-column">
+            <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu')) ?>
+            <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-main-menu')) ?>
+        </div>
     </div>
-    <div class="content-container content-container-padding">
+    <div class="content-container content-container-padding d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
             <div class="container-fluid">
                 <div class="navbar-wrapper d-flex w-100 justify-content-between">
@@ -54,14 +62,35 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid">
+        <div class="container-fluid flex-grow-1">
             <?php if (! empty($page_title)): ?>
                 <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
-            <?php endif; ?>
-            <?php $this->insert('system::app/breadcrumbs'); ?>
-
+            <?php endif ?>
+            <?= $this->fetch('system::app/breadcrumbs') ?>
             <?= $this->section('content') ?>
         </div>
+        <div class="d-flex justify-content-between align-items-center border-top p-4 page-footer">
+            <div class="pl-1">
+                <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="mr-4 text-muted text-decoration-none">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#twitter"/>
+                    </svg>
+                </a>
+                <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="mr-2 text-muted">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#telegram"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="flex-shrink-1">
+                &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
     </div>
 </div>
 <script src="<?= $this->asset('js/app.js', true) ?>"></script>

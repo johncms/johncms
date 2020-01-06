@@ -21,7 +21,7 @@ const _IN_JOHNCMS = true;
 require 'system/bootstrap.php';
 
 /** @var ContainerInterface $container */
-$container = App::getContainer();
+$container = Johncms\System\Container\Factory::getContainer();
 $dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
 
 $match = $dispatcher->dispatch(
@@ -39,7 +39,7 @@ $match = $dispatcher->dispatch(
 switch ($match[0]) {
     case Dispatcher::FOUND:
         // Register the location of the visitor on the site
-        new Johncms\Users\UserStat(App::getContainer());
+        new Johncms\System\Users\UserStat($container);
         $container->setService('route', $match[2]);
 
         if (is_callable($match[1])) {

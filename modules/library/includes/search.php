@@ -17,8 +17,7 @@ function ReplaceKeywords($search, $text)
 {
     $search = str_replace('*', '', $search);
 
-    return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu',
-        '<span style="background-color: #FFFF33">$1</span>', $text);
+    return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $text);
 }
 
 // Принимаем данные, выводим форму поиска
@@ -48,9 +47,10 @@ if ($search && ! $error) {
     $array = explode(' ', $search);
     $count = count($array);
     $query = $db->quote($search);
-    $total = $db->query('
-        SELECT COUNT(*) FROM `library_texts`
-        WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)')->fetchColumn();
+    $total = $db->query(
+        'SELECT COUNT(*) FROM `library_texts`
+        WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)'
+    )->fetchColumn();
 
     echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search results') . '</div>';
 
@@ -59,8 +59,8 @@ if ($search && ! $error) {
     }
 
     if ($total) {
-        $req = $db->query('
-            SELECT *, MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE) AS `rel`
+        $req = $db->query(
+            'SELECT *, MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE) AS `rel`
             FROM `library_texts`
             WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)
             ORDER BY `rel` DESC

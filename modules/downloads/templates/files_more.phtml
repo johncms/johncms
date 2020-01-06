@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $urls
+ * @var $action_url
+ * @var $extensions
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <?php if (! empty($additional_files)): ?>
+                    <div class="h4 font-weight-bold"><?= _t('Current files') ?></div>
+                    <div class="mt-3 mb-4">
+                        <?php foreach ($additional_files as $file): ?>
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="font-weight-bold mb-1"><?= $file['rus_name'] ?></h5>
+                                    <small class="text-muted"><?= $file['display_date'] ?></small>
+                                </div>
+                                <p class="mb-1"><?= $file['name'] ?> (<?= $file['display_size'] ?>)</p>
+                                <div>
+                                    <a href="<?= $file['edit_url'] ?>" class="btn btn-primary btn-sm"><?= _t('Edit') ?></a>
+                                    <a href="<?= $file['delete_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="h4 font-weight-bold"><?= _t('Add file') ?></div>
+                <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
+                            <label class="custom-file-label" for="fail"><?= _t('Choose file') ?></label>
+                        </div>
+                        <div class="text-muted mb-3 small">
+                            <?= _t('Max. Size') ?>: <?= $config['flsz'] ?> kb.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="link_file"><?= _t('Or link to it') ?></label>
+                        <input type="text" class="form-control" id="link_file" placeholder="<?= _t('Link to file') ?>"
+                               name="link_file" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_file"><?= _t('Save as') ?></label>
+                        <input type="text" class="form-control" id="new_file" placeholder="<?= _t('Save as') ?>"
+                               name="new_file" value="" maxlength="100">
+                        <div class="text-muted small"><?= _t('max. 100 characters') ?></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name_link"><?= _t('Link to download file') ?></label>
+                        <input type="text" class="form-control" id="name_link" placeholder="<?= _t('Link to download file') ?>"
+                               name="name_link" value="<?= _t('Download the additional file') ?>" maxlength="200" required>
+                    </div>
+
+                    <div class="alert alert-warning mt-3">
+                        <?= _t('Allowed extensions') ?>: <?= $extensions ?>
+                    </div>
+
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Save') ?></button>
+                        <a href="?act=view&amp;id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

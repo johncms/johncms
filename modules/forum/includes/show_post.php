@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface $user
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if (empty($_GET['id'])) {
@@ -40,16 +40,24 @@ FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.
 WHERE `forum_messages`.`id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1'
 )->fetch();
 
+if (! $res) {
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Show post'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Forum'),
+        ]
+    );
+    exit;
+}
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
 
 $post = [];
-
-$res['user_avatar'] = '';
-$avatar = 'users/avatar/' . $res['user_id'] . '.png';
-if (file_exists(UPLOAD_PATH . $avatar)) {
-    $res['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
-}
 
 $res['user_profile_link'] = '';
 if ($user->isValid() && $user->id != $res['user_id']) {
@@ -116,4 +124,3 @@ echo $view->render(
         'back_to_topic' => '/forum/?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
     ]
 );
-exit;

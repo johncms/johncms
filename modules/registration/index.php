@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,29 +8,29 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
-use Johncms\Api\NavChainInterface;
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+declare(strict_types=1);
+
+use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\User;
+use Johncms\System\View\Render;
+use Johncms\NavChain;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var ConfigInterface    $config
- * @var ToolsInterface     $tools
- * @var UserInterface      $user
- * @var Render             $view
- * @var NavChainInterface  $nav_chain
+ * @var Tools $tools
+ * @var User $user
+ * @var Render $view
+ * @var NavChain $nav_chain
  */
 
-$config = di(ConfigInterface::class);
-$tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$config = di('config')['johncms'];
+$tools = di(Tools::class);
+$user = di(User::class);
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('reg', __DIR__ . '/templates/');
@@ -43,7 +41,7 @@ di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale',
 $nav_chain->add(_t('Registration'));
 
 // Если регистрация закрыта, выводим предупреждение
-if (! $config->mod_reg || $user->isValid()) {
+if (! $config['mod_reg'] || $user->isValid()) {
     echo $view->render('reg::registration_closed', []);
     exit;
 }
@@ -86,7 +84,8 @@ if (isset($_POST['submit'])) {
     }
 
     // Проверка кода CAPTCHA
-    if (! $captcha
+    if (
+        ! $captcha
         || ! isset($_SESSION['code'])
         || mb_strlen($captcha) < 3
         || strtolower($captcha) != strtolower($_SESSION['code'])
@@ -111,11 +110,12 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($error)) {
-        /** @var Johncms\Api\EnvironmentInterface $env */
-        $env = di(Johncms\Api\EnvironmentInterface::class);
+        /** @var Johncms\System\Http\Environment $env */
+        $env = di(Johncms\System\Http\Environment::class);
 
-        $preg = $config->mod_reg > 1 ? 1 : 0;
-        $db->prepare('
+        $preg = $config['mod_reg'] > 1 ? 1 : 0;
+        $db->prepare(
+            '
           INSERT INTO `users` SET
           `name` = ?,
           `name_lat` = ?,
@@ -135,48 +135,57 @@ if (isset($_POST['submit'])) {
           `set_forum` = \'\',
           `set_mail` = \'\',
           `smileys` = \'\'
-        ')->execute([
-            $reg_nick,
-            $lat_nick,
-            $pass,
-            $reg_name,
-            $reg_about,
-            $reg_sex,
-            $env->getIp(),
-            $env->getIpViaProxy(),
-            $env->getUserAgent(),
-            time(),
-            time(),
-            time(),
-            $preg,
-        ]);
+        '
+        )->execute(
+            [
+                $reg_nick,
+                $lat_nick,
+                $pass,
+                $reg_name,
+                $reg_about,
+                $reg_sex,
+                $env->getIp(),
+                $env->getIpViaProxy(),
+                $env->getUserAgent(),
+                time(),
+                time(),
+                time(),
+                $preg,
+            ]
+        );
 
         $usid = $db->lastInsertId();
 
-        if ($config->mod_reg != 1) {
+        if ($config['mod_reg'] != 1) {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
         }
 
-        echo $view->render('reg::registration_result', [
-            'usid'     => $usid,
-            'reg_nick' => $reg_nick,
-            'reg_pass' => $reg_pass,
-        ]);
+        echo $view->render(
+            'reg::registration_result',
+            [
+                'usid'     => $usid,
+                'reg_nick' => $reg_nick,
+                'reg_pass' => $reg_pass,
+            ]
+        );
         exit;
     }
 }
 
 // Форма регистрации
-$code = (string) new Batumibiz\Captcha\Code;
+$code = (string) new Mobicms\Captcha\Code();
 $_SESSION['code'] = $code;
 
-echo $view->render('reg::index', [
-    'error'     => $error,
-    'reg_nick'  => $reg_nick,
-    'reg_pass'  => $reg_pass,
-    'reg_name'  => $reg_name,
-    'reg_sex'   => $reg_sex,
-    'reg_about' => $reg_about,
-    'captcha'   => new Batumibiz\Captcha\Image($code),
-]);
+echo $view->render(
+    'reg::index',
+    [
+        'error'     => $error,
+        'reg_nick'  => $reg_nick,
+        'reg_pass'  => $reg_pass,
+        'reg_name'  => $reg_name,
+        'reg_sex'   => $reg_sex,
+        'reg_about' => $reg_about,
+        'captcha'   => new Mobicms\Captcha\Image($code),
+    ]
+);

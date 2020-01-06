@@ -15,10 +15,11 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = _t('Mail');
 echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
 
-/** @var Johncms\Api\BbcodeInterface $bbcode */
-$bbcode = di(Johncms\Api\BbcodeInterface::class);
+/** @var Johncms\System\Legacy\Bbcode $bbcode */
+$bbcode = di(Johncms\System\Legacy\Bbcode::class);
 
-$total = $db->query("
+$total = $db->query(
+    "
   SELECT COUNT(DISTINCT `cms_mail`.`from_id`)
   FROM `cms_mail`
   LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id`
@@ -27,10 +28,12 @@ $total = $db->query("
   AND `cms_mail`.`delete`!='" . $user->id . "'
   AND `cms_mail`.`sys`='0'
   AND `cms_contact`.`ban`!='1'
-")->fetchColumn();
+"
+)->fetchColumn();
 
 if ($total) {
-    $req = $db->query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
+    $req = $db->query(
+        "SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
         FROM `cms_mail`
 	    LEFT JOIN `users` ON `cms_mail`.`from_id`=`users`.`id`
 		LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
@@ -44,20 +47,24 @@ if ($total) {
     );
 
     for ($i = 0; $row = $req->fetch(); ++$i) {
-        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
+        $count_message = $db->query(
+            "SELECT COUNT(*) FROM `cms_mail`
             WHERE `user_id`='" . $user->id . "'
             AND `from_id`='{$row['id']}'
             AND `delete`!='" . $user->id . "'
             AND `sys`!='1'
-        ")->fetchColumn();
+        "
+        )->fetchColumn();
 
-        $last_msg = $db->query("SELECT *
+        $last_msg = $db->query(
+            "SELECT *
             FROM `cms_mail`
             WHERE `from_id`='{$row['id']}'
             AND `user_id` = '" . $user->id . "'
             AND `delete` != '" . $user->id . "'
             ORDER BY `id` DESC
-            LIMIT 1")->fetch();
+            LIMIT 1"
+        )->fetch();
         if (mb_strlen($last_msg['text']) > 500) {
             $text = mb_substr($last_msg['text'], 0, 500);
             $text = $tools->checkout($text, 1, 1);
@@ -73,7 +80,8 @@ if ($total) {
         $arg = [
             'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Blocklist') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
+            'sub'    => '<p><a href="?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' .
+                _t('Blocklist') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
             'iphide' => 1,
         ];
 

@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,22 +8,27 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if (! $user->isValid() || ! $id) {
-    echo $view->render('system::pages/result', [
-        'title'         => _t('Edit Message'),
-        'type'          => 'alert-danger',
-        'message'       => _t('Wrong data'),
-        'back_url'      => '/forum/',
-        'back_url_name' => _t('Back'),
-    ]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Edit Message'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Wrong data'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]
+    );
     exit;
 }
 
@@ -42,7 +45,11 @@ if ($req->rowCount()) {
         $user->rights = 3;
     }
 
-    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($user->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $user->config->kmess);
+    $page = ceil(
+        $db->query(
+            "SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($user->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : '')
+        )->fetchColumn() / $user->config->kmess
+    );
     $posts = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
     $link = '?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
     $error = false;
@@ -84,7 +91,8 @@ if ($req->rowCount()) {
 
                 if ($res_m['user_id'] != $user->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
-                } elseif ($res['date'] < time() - 300
+                } elseif (
+                    $res['date'] < time() - 300
                     && $res_m['user_id'] != $user->id && $res_m['date'] + 3600 > strtotime('+ 1 hour')
                 ) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
@@ -121,13 +129,16 @@ if (! $error) {
             break;
 
         case 'delfile':
-            echo $view->render('forum::delete_file', [
-                'title'      => _t('Delete file'),
-                'page_title' => _t('Delete file'),
-                'id'         => $id,
-                'fid'        => $fid,
-                'back_url'   => $link,
-            ]);
+            echo $view->render(
+                'forum::delete_file',
+                [
+                    'title'      => _t('Delete file'),
+                    'page_title' => _t('Delete file'),
+                    'id'         => $id,
+                    'fid'        => $fid,
+                    'back_url'   => $link,
+                ]
+            );
             break;
 
         case 'deletefile':
@@ -140,12 +151,15 @@ if (! $error) {
                     unlink(UPLOAD_PATH . 'forum/attach/' . $res_f['filename']); //TODO: Разобраться с путем
                     header('Location: ' . $link);
                 } else {
-                    echo $view->render('system::pages/result', [
-                        'title'    => _t('Edit Message'),
-                        'type'     => 'alert-danger',
-                        'message'  => _t('You cannot edit your posts after 5 minutes'),
-                        'back_url' => $link,
-                    ]);
+                    echo $view->render(
+                        'system::pages/result',
+                        [
+                            'title'    => _t('Edit Message'),
+                            'type'     => 'alert-danger',
+                            'message'  => _t('You cannot edit your posts after 5 minutes'),
+                            'back_url' => $link,
+                        ]
+                    );
                     exit;
                 }
             }
@@ -214,13 +228,16 @@ if (! $error) {
             break;
 
         case 'del':
-            echo $view->render('forum::delete_post', [
-                'title'      => _t('Delete Message'),
-                'page_title' => _t('Delete Message'),
-                'id'         => $id,
-                'posts'      => $posts,
-                'back_url'   => $link,
-            ]);
+            echo $view->render(
+                'forum::delete_post',
+                [
+                    'title'      => _t('Delete Message'),
+                    'page_title' => _t('Delete Message'),
+                    'id'         => $id,
+                    'posts'      => $posts,
+                    'back_url'   => $link,
+                ]
+            );
             break;
 
         default:
@@ -229,30 +246,37 @@ if (! $error) {
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
-                    echo $view->render('system::pages/result', [
-                        'title'         => _t('Edit Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => _t('You have not entered the message'),
-                        'back_url'      => '/forum/?act=editpost&amp;id=' . $id,
-                        'back_url_name' => _t('Repeat'),
-                    ]);
+                    echo $view->render(
+                        'system::pages/result',
+                        [
+                            'title'         => _t('Edit Message'),
+                            'type'          => 'alert-danger',
+                            'message'       => _t('You have not entered the message'),
+                            'back_url'      => '/forum/?act=editpost&amp;id=' . $id,
+                            'back_url_name' => _t('Repeat'),
+                        ]
+                    );
                     exit;
                 }
 
-                $db->prepare('
+                $db->prepare(
+                    '
                   UPDATE `forum_messages` SET
                   `edit_time` = ?,
                   `editor_name` = ?,
                   `edit_count` = ?,
                   `text` = ?
                   WHERE `id` = ?
-                ')->execute([
-                    time(),
-                    $user->name,
-                    ($res['edit_count'] + 1),
-                    $msg,
-                    $id,
-                ]);
+                '
+                )->execute(
+                    [
+                        time(),
+                        $user->name,
+                        ($res['edit_count'] + 1),
+                        $msg,
+                        $id,
+                    ]
+                );
 
                 header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 exit;
@@ -263,34 +287,35 @@ if (! $error) {
 
             if ($msg && ! isset($_POST['submit'])) {
                 $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                $avatar = 'users/avatar/' . $foundUser['id'] . '.png';
-                if (file_exists(UPLOAD_PATH . $avatar)) {
-                    $user_avatar = UPLOAD_PUBLIC_PATH . $avatar;
-                }
             }
 
             $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
 
-            echo $view->render('forum::edit_post', [
-                'title'             => _t('Edit Message'),
-                'page_title'        => _t('Edit Message'),
-                'id'                => $id,
-                'bbcode'            => di(Johncms\Api\BbcodeInterface::class)->buttons('edit_post', 'msg'),
-                'msg'               => $message,
-                'start'             => $start,
-                'back_url'          => $link,
-                'settings_forum'    => $set_forum,
-                'show_post_preview' => $msg && ! isset($_POST['submit']),
-                'preview_message'   => $msg_pre,
-                'user_avatar'       => $user_avatar ?? '',
-                'message_author'    => $foundUser ?? [],
-            ]);
+            echo $view->render(
+                'forum::edit_post',
+                [
+                    'title'             => _t('Edit Message'),
+                    'page_title'        => _t('Edit Message'),
+                    'id'                => $id,
+                    'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('edit_post', 'msg'),
+                    'msg'               => $message,
+                    'start'             => $start,
+                    'back_url'          => $link,
+                    'settings_forum'    => $set_forum,
+                    'show_post_preview' => $msg && ! isset($_POST['submit']),
+                    'preview_message'   => $msg_pre,
+                    'user_id'           => $foundUser['id'] ?? 0,
+                    'message_author'    => $foundUser ?? [],
+                ]
+            );
     }
     exit;
 }
-echo $view->render('system::pages/result', [
-    'title'   => _t('Error'),
-    'type'    => 'alert-danger',
-    'message' => $error,
-]);
-exit;
+echo $view->render(
+    'system::pages/result',
+    [
+        'title'   => _t('Error'),
+        'type'    => 'alert-danger',
+        'message' => $error,
+    ]
+);

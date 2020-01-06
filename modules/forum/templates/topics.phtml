@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /**
  * @var $title
  * @var $page_title
@@ -7,26 +16,36 @@
  * @var $files_count
  * @var $unread_count
  * @var $create_access
+ * @var $pagination
  */
 
-$this->layout('system::layout/default', [
-    'title'      => $title,
-    'page_title' => $page_title,
-]);
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
 ?>
 
-<?= $this->insert('forum::header', [
-    'unread_count' => $unread_count,
-    'files_count'  => $files_count,
-    'files_url'    => '/forum/?act=files&s=' . $id,
-    'files_name'   => _t('Category Files'),
-]) ?>
+<?= $this->fetch(
+    'forum::header',
+    [
+        'unread_count' => $unread_count,
+        'files_count'  => $files_count,
+        'files_url'    => '/forum/?act=files&s=' . $id,
+        'files_name'   => _t('Category Files'),
+    ]
+) ?>
 
 <?php if (empty($topics)): ?>
-    <?= $this->insert('system::app/alert', [
-        'alert_type' => 'alert-info',
-        'alert'      => _t('No topics in this section'),
-    ]) ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => _t('No topics in this section'),
+        ]
+    ) ?>
 <?php endif; ?>
 <?php if ($create_access): ?>
     <div class="mb-3">
@@ -90,9 +109,12 @@ $this->layout('system::layout/default', [
     <?php endif ?>
 </div>
 
-<?= $this->insert('forum::footer', [
-    'online'   => $online,
-    'who_url'  => '/forum/?act=who',
-    'who_name' => _t('Who in Forum'),
-]) ?>
+<?= $this->fetch(
+    'forum::footer',
+    [
+        'online'   => $online,
+        'who_url'  => '/forum/?act=who',
+        'who_name' => _t('Who in Forum'),
+    ]
+) ?>
 

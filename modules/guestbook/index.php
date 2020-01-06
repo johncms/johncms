@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,37 +8,37 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\BbcodeInterface;
-use Johncms\Api\ConfigInterface;
-use Johncms\Api\EnvironmentInterface;
-use Johncms\Api\NavChainInterface;
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+declare(strict_types=1);
+
+use Johncms\System\Legacy\Bbcode;
+use Johncms\System\Http\Environment;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\User;
+use Johncms\System\View\Render;
+use Johncms\NavChain;
+use Laminas\I18n\Translator\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var BbcodeInterface      $bbcode
- * @var ConfigInterface      $config
- * @var PDO                  $db
- * @var EnvironmentInterface $env
- * @var ToolsInterface       $tools
- * @var UserInterface        $user
- * @var Render               $view
- * @var NavChainInterface    $nav_chain
+ * @var Bbcode $bbcode
+ * @var PDO $db
+ * @var Environment $env
+ * @var Tools $tools
+ * @var User $user
+ * @var Render $view
+ * @var NavChain $nav_chain
  */
 
 $db = di(PDO::class);
-$user = di(UserInterface::class);
-$tools = di(ToolsInterface::class);
-$env = di(EnvironmentInterface::class);
-$bbcode = di(BbcodeInterface::class);
-$config = di(ConfigInterface::class);
+$user = di(User::class);
+$tools = di(Tools::class);
+$env = di(Environment::class);
+$bbcode = di(Bbcode::class);
+$config = di('config')['johncms'];
 $view = di(Render::class);
-$nav_chain = di(NavChainInterface::class);
+$nav_chain = di(NavChain::class);
 $route = di('route');
 
 // Register Namespace for module templates
@@ -71,13 +69,16 @@ $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 $nav_chain->add($textl);
 
 // If the guest is closed, display a message and close access (except for Admins)
-if (! $config->mod_guest && $user->rights < 7) {
-    echo $view->render('guestbook::result', [
-        'title'    => $textl,
-        'message'  => _t('Guestbook is closed'),
-        'type'     => 'error',
-        'back_url' => '/',
-    ]);
+if (! $config['mod_guest'] && $user->rights < 7) {
+    echo $view->render(
+        'guestbook::result',
+        [
+            'title'    => $textl,
+            'message'  => _t('Guestbook is closed'),
+            'type'     => 'error',
+            'back_url' => '/',
+        ]
+    );
     exit;
 }
 
@@ -160,7 +161,8 @@ switch ($act) {
 
         if (! $error) {
             // Insert the message into the database
-            $db->prepare("INSERT INTO `guest` SET
+            $db->prepare(
+                "INSERT INTO `guest` SET
                 `adm` = ?,
                 `time` = ?,
                 `user_id` = ?,
@@ -169,15 +171,18 @@ switch ($act) {
                 `ip` = ?,
                 `browser` = ?,
                 `otvet` = ''
-            ")->execute([
-                $admset,
-                time(),
-                $user->id,
-                $from,
-                $msg,
-                $env->getIp(),
-                $env->getUserAgent(),
-            ]);
+            "
+            )->execute(
+                [
+                    $admset,
+                    time(),
+                    $user->id,
+                    $from,
+                    $msg,
+                    $env->getIp(),
+                    $env->getUserAgent(),
+                ]
+            );
 
             // Fix the time of the last post (antispam)
             if ($user->isValid()) {
@@ -187,42 +192,51 @@ switch ($act) {
 
             header('location: ./');
         } else {
-            echo $view->render('guestbook::result', [
-                'title'    => _t('Add message'),
-                'message'  => $error,
-                'type'     => 'error',
-                'back_url' => '/guestbook/',
-            ]);
+            echo $view->render(
+                'guestbook::result',
+                [
+                    'title'    => _t('Add message'),
+                    'message'  => $error,
+                    'type'     => 'error',
+                    'back_url' => '/guestbook/',
+                ]
+            );
         }
         break;
 
     case 'otvet':
         // Add "admin response"
         if ($user->rights >= 6 && $id) {
-            if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+            if (
+                isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
-                $db->exec("UPDATE `guest` SET
+                $db->exec(
+                    "UPDATE `guest` SET
                     `admin` = '" . $user->name . "',
                     `otvet` = " . $db->quote($reply) . ",
                     `otime` = '" . time() . "'
                     WHERE `id` = '${id}'
-                ");
+                "
+                );
                 header('location: ./');
             } else {
                 $req = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'");
                 $res = $req->fetch();
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
-                echo $view->render('guestbook::reply', [
-                    'id'         => $id,
-                    'token'      => $token,
-                    'message'    => $res,
-                    'reply_text' => $tools->checkout($res['otvet'], 0, 0),
-                    'text'       => $tools->checkout($res['text'], 1, 1),
-                    'bbcode'     => $bbcode->buttons('form', 'otv'),
-                ]);
+                echo $view->render(
+                    'guestbook::reply',
+                    [
+                        'id'         => $id,
+                        'token'      => $token,
+                        'message'    => $res,
+                        'reply_text' => $tools->checkout($res['otvet'], 0, 0),
+                        'text'       => $tools->checkout($res['text'], 1, 1),
+                        'bbcode'     => $bbcode->buttons('form', 'otv'),
+                    ]
+                );
             }
         }
         break;
@@ -230,27 +244,32 @@ switch ($act) {
     case 'edit':
         // Edit post
         if ($user->rights >= 6 && $id) {
-            if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
+            if (
+                isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='${id}'")->fetch();
                 $edit_count = $res['edit_count'] + 1;
                 $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
 
-                $db->prepare('
+                $db->prepare(
+                    '
                   UPDATE `guest` SET
                   `text` = ?,
                   `edit_who` = ?,
                   `edit_time` = ?,
                   `edit_count` = ?
                   WHERE `id` = ?
-                ')->execute([
-                    $msg,
-                    $user->name,
-                    time(),
-                    $edit_count,
-                    $id,
-                ]);
+                '
+                )->execute(
+                    [
+                        $msg,
+                        $user->name,
+                        time(),
+                        $edit_count,
+                        $id,
+                    ]
+                );
 
                 header('location: ./');
             } else {
@@ -259,13 +278,16 @@ switch ($act) {
                 $res = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'")->fetch();
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
 
-                echo $view->render('guestbook::edit', [
-                    'id'      => $id,
-                    'token'   => $token,
-                    'message' => $res,
-                    'text'    => $text,
-                    'bbcode'  => $bbcode->buttons('form', 'msg'),
-                ]);
+                echo $view->render(
+                    'guestbook::edit',
+                    [
+                        'id'      => $id,
+                        'token'   => $token,
+                        'message' => $res,
+                        'text'    => $text,
+                        'bbcode'  => $bbcode->buttons('form', 'msg'),
+                    ]
+                );
             }
         }
         break;
@@ -297,12 +319,15 @@ switch ($act) {
                 }
 
                 $db->query('OPTIMIZE TABLE `guest`');
-                echo $view->render('guestbook::result', [
-                    'title'    => _t('Clear guestbook'),
-                    'message'  => $message,
-                    'type'     => 'success',
-                    'back_url' => '/guestbook/',
-                ]);
+                echo $view->render(
+                    'guestbook::result',
+                    [
+                        'title'    => _t('Clear guestbook'),
+                        'message'  => $message,
+                        'type'     => 'success',
+                        'back_url' => '/guestbook/',
+                    ]
+                );
             } else {
                 // Request cleaning options
                 echo $view->render('guestbook::clear');
@@ -329,7 +354,7 @@ switch ($act) {
         $data = [
             'access_to_buttons' => ($user->rights > 0 || in_array($user->id, $guestAccess)),
             'is_guestbook'      => ! isset($_SESSION['ga']),
-            'access_to_form'    => ($user->isValid() || $config->mod_guest == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13']),
+            'access_to_form'    => ($user->isValid() || $config['mod_guest'] == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13']),
             'bbcode'            => $bbcode->buttons('form', 'msg'),
             'pagination'        => '',
         ];
@@ -341,10 +366,9 @@ switch ($act) {
 
             if (! $user->isValid()) {
                 // CAPTCHA for guests
-                $captcha = new Batumibiz\Captcha\Captcha;
-                $code = $captcha->generateCode();
+                $code = (new Mobicms\Captcha\Code())->generate();
                 $_SESSION['code'] = $code;
-                $data['captcha'] = $captcha->generateImage($code);
+                $data['captcha'] = (new Mobicms\Captcha\Image($code))->generate();
             }
         }
 
@@ -356,14 +380,18 @@ switch ($act) {
 
         if ($total) {
             if (isset($_SESSION['ga']) && ($user->rights >= 1 || in_array($user->id, $guestAccess))) {
-                $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                $req = $db->query(
+                    "SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
-                WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
+                WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess
+                );
             } else {
                 // Request for regular
-                $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                $req = $db->query(
+                    "SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
-                WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
+                WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess
+                );
             }
 
             $items = [];
@@ -373,7 +401,7 @@ switch ($act) {
                 if (! $res['id']) {
                     // Request for guests
                     $res_g = $db->query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1")->fetch();
-                    $item['user_lastdate'] = $res_g['lastdate'];
+                    $item['user_lastdate'] = $res_g['lastdate'] ?? 0;
                 }
 
                 $item['created'] = $tools->displayDate($res['time']);
@@ -387,8 +415,11 @@ switch ($act) {
                     // For guests, process the name and filter the links
                     $res['name'] = $tools->checkout($res['name']);
                     $post = $tools->checkout($res['text'], 0, 2);
-                    $post = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-                        '###', $post);
+                    $post = preg_replace(
+                        '~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+                        '###',
+                        $post
+                    );
                     $replace = [
                         '.ru'   => '***',
                         '.com'  => '***',
@@ -422,12 +453,6 @@ switch ($act) {
                     $item['edit_time'] = $tools->displayDate($res['edit_time']);
                 }
 
-                $item['user_avatar'] = '';
-                $avatar = 'users/avatar/' . $item['user_id'] . '.png';
-                if (file_exists(UPLOAD_PATH . $avatar)) {
-                    $item['user_avatar'] = UPLOAD_PUBLIC_PATH . $avatar;
-                }
-
                 $item['message_id'] = $res['gid'];
                 $items[] = $item;
             }
@@ -435,9 +460,12 @@ switch ($act) {
             $data['items'] = $items;
         }
 
-        echo $view->render('guestbook::index', [
-            'title' => $textl,
-            'data'  => $data,
-        ]);
+        echo $view->render(
+            'guestbook::index',
+            [
+                'title' => $textl,
+                'data'  => $data,
+            ]
+        );
         break;
 }

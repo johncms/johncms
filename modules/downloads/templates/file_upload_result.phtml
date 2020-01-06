@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $urls
+ * @var $action_url
+ * @var $extensions
+ * @var $screen_attached
+ * @var $moderation
+ * @var $screen_attached_error
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+
+                <div class="alert alert-success">
+                    <div><?= _t('File attached') ?></div>
+                    <?php if ($screen_attached === true): ?>
+                        <div><?= _t('Screenshot is attached') ?></div>
+                    <?php elseif ($screen_attached === false): ?>
+                        <div><?= _t('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
+                    <?php endif; ?>
+                </div>
+
+                <?php if ($moderation): ?>
+                    <div class="alert alert-info">
+                        <?= _t('If you pass moderation, it will be added to the Downloads') ?>
+                    </div>
+                <?php else: ?>
+                    <div class="mb-3">
+                        <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= _t('Continue') ?></a>
+                    </div>
+                <?php endif; ?>
+
+                <div>
+                    <a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= _t('Upload more') ?></a>
+                    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

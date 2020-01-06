@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,33 +8,39 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights >= 7) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
     if (! $req->rowCount()) {
-        echo $view->render('system::pages/result', [
-            'title'         => _t('Curators'),
-            'page_title'    => _t('Curators'),
-            'type'          => 'alert-danger',
-            'message'       => _t('Topic has been deleted or does not exists'),
-            'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
-        ]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Curators'),
+                'page_title'    => _t('Curators'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Topic has been deleted or does not exists'),
+                'back_url'      => '/forum/',
+                'back_url_name' => _t('Back'),
+            ]
+        );
         exit;
     }
 
     $topic = $req->fetch();
-    $req = $db->query("SELECT `forum_messages`.*, `users`.`id`
-        FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-        WHERE `forum_messages`.`topic_id`='${id}' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum_messages`.`user_id` ORDER BY `forum_messages`.`user_name`");
+    $req = $db->query("SELECT `fm`.`user_id`, `fm`.`user_name` FROM `forum_messages` fm
+JOIN `users` u ON `u`.`id`=`fm`.`user_id`
+WHERE `topic_id` = '${id}' AND `u`.`rights` < 6 AND `u`.`rights` <> 3
+GROUP BY `fm`.`user_id`, `fm`.`user_name` ORDER BY `fm`.`user_name`");
     $total = $req->rowCount();
     $curators = [];
     $users = ! empty($topic['curators']) ? unserialize($topic['curators'], ['allowed_classes' => false]) : [];
@@ -64,26 +68,30 @@ if ($user->rights >= 7) {
         }
     }
 
-    echo $view->render('forum::curators', [
-        'title'         => _t('Curators'),
-        'page_title'    => _t('Curators'),
-        'id'            => $id,
-        'start'         => $start,
-        'back_url'      => '?type=topic&id=' . $id . '&amp;start=' . $start,
-        'total'         => $total,
-        'curators_list' => $curators_list ?? [],
-        'topic'         => $topic ?? [],
-        'saved'         => $saved ?? false,
-    ]);
+    echo $view->render(
+        'forum::curators',
+        [
+            'title'         => _t('Curators'),
+            'page_title'    => _t('Curators'),
+            'id'            => $id,
+            'start'         => $start,
+            'back_url'      => '?type=topic&id=' . $id . '&amp;start=' . $start,
+            'total'         => $total,
+            'curators_list' => $curators_list ?? [],
+            'topic'         => $topic ?? [],
+            'saved'         => $saved ?? false,
+        ]
+    );
 } else {
     http_response_code(403);
-    echo $view->render('system::pages/result', [
-        'title'         => _t('Access forbidden'),
-        'type'          => 'alert-danger',
-        'message'       => _t('Access forbidden'),
-        'back_url'      => '/forum/',
-        'back_url_name' => _t('Back'),
-    ]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Access forbidden'),
+            'type'          => 'alert-danger',
+            'message'       => _t('Access forbidden'),
+            'back_url'      => '/forum/',
+            'back_url_name' => _t('Back'),
+        ]
+    );
 }
-
-exit; // TODO: Remove it later

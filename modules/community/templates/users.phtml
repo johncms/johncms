@@ -1,24 +1,55 @@
-<?php $this->layout('system::layout/old_default', ['title' => $title, 'homeButton' => true]) ?>
-<div class="phdr"><a href="../"><strong><?= _t('Community') ?></strong></a> | <?= $title ?></div>
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
 <!-- List of Users -->
 <?php if ($total): ?>
-    <div class="list-striped">
-        <?php foreach ($list() as $usr): ?>
-            <div><?= $tools->displayUser($usr) ?></div>
-        <?php endforeach ?>
-    </div>
+    <?php foreach ($list() as $usr): ?>
+        <?= $this->fetch('users::user_row', ['item' => $usr]) ?>
+    <?php endforeach ?>
 <?php else: ?>
-    <div class="menu padding">
-        <?= _t('The list is empty') ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+        </div>
     </div>
 <?php endif ?>
-<div class="phdr"><?= _t('Total') . ': ' . $total ?></div>
-<!-- Pagination -->
-<?php if ($total > $user->config->kmess): ?>
-    <div class="topmenu"><?= $pagination ?></div>
-<?php endif ?>
-<p>
-    <!-- Misc links -->
-    <a href="search.php"><?= _t('User Search') ?></a><br/>
-    <a href="./"><?= _t('Back') ?></a>
-</p>
+
+<?php if ($total): ?>
+    <div>
+        <div><?= _t('Total') ?>: <?= $total ?></div>
+        <!-- Page switching -->
+        <?php if ($total > $user->config->kmess): ?>
+            <div class="mt-1"><?= $pagination ?></div>
+        <?php endif ?>
+    </div>
+<?php endif; ?>
+
+<div class="mt-3">
+    <div>
+        <a href="../search/"><?= _t('User Search') ?></a>
+    </div>
+    <div>
+        <a href="../"><?= _t('Back') ?></a>
+    </div>
+</div>

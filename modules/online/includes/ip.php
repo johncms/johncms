@@ -14,8 +14,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 ob_start();
 
-/** @var Johncms\Api\EnvironmentInterface $env */
-$env = di(Johncms\Api\EnvironmentInterface::class);
+/** @var Johncms\System\Http\Environment $env */
+$env = di(Johncms\System\Http\Environment::class);
 
 // Показываем список Online
 $menu[] = '<a href="../">' . _t('Users') . '</a>';
@@ -60,14 +60,14 @@ if ($total && $user->rights) {
         $ipLong = key($ip_list[$i]);
         $ip = long2ip($ipLong);
 
-        if ($ipLong == di(Johncms\Api\EnvironmentInterface::class)->getIp()) {
+        if ($ipLong == di(Johncms\System\Http\Environment::class)->getIp()) {
             echo '<div class="gmenu">';
         } else {
             echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
         }
 
-        echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-            '&#160;&#160;<small>[<a href="' . $config->homeurl . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
+        echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config['homeurl'] . '/admin/?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
+            '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
     }
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';

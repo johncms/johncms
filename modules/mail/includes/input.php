@@ -15,8 +15,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = _t('Mail');
 echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';
 
-/** @var Johncms\Api\BbcodeInterface $bbcode */
-$bbcode = di(Johncms\Api\BbcodeInterface::class);
+/** @var Johncms\System\Legacy\Bbcode $bbcode */
+$bbcode = di(Johncms\System\Legacy\Bbcode::class);
 
 $total = $db->query("
 	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)
@@ -72,7 +72,7 @@ if ($total) {
         $arg = [
             'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
+            'sub'    => '<p><a href="?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>', // phpcs:ignore
             'iphide' => 1,
         ];
 

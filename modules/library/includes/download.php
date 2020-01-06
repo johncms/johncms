@@ -27,8 +27,8 @@ $image_lib = file_exists(UPLOAD_PATH . 'library/images/orig/' . $id . '.png')
 
 $out = '';
 
-/** @var Johncms\Api\BbcodeInterface $bbcode */
-$bbcode = di(Johncms\Api\BbcodeInterface::class);
+/** @var Johncms\System\Legacy\Bbcode $bbcode */
+$bbcode = di(Johncms\System\Legacy\Bbcode::class);
 
 switch ($type) {
     case 'txt':
@@ -75,9 +75,7 @@ switch ($type) {
 
         $out .= '<p>' . $db->query('SELECT `name` FROM `library_texts` WHERE `id`=' . $id . ' LIMIT 1')->fetchColumn() . '</p>' . PHP_EOL;
         $out .= '</title>' . PHP_EOL . '<section>';
-        $out .= '<p>' . str_replace('<p></p>', '<empty-line/>',
-                str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>',
-                    $bbcode->notags($db->query('SELECT `text` FROM `library_texts` WHERE `id`=' . $id . ' LIMIT 1')->fetchColumn()))) . '</p>' . PHP_EOL;
+        $out .= '<p>' . str_replace('<p></p>', '<empty-line/>', str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', $bbcode->notags($db->query('SELECT `text` FROM `library_texts` WHERE `id`=' . $id . ' LIMIT 1')->fetchColumn()))) . '</p>' . PHP_EOL; // phpcs:ignore
         $out .= '</section>' . PHP_EOL . '</body>' . PHP_EOL;
 
         if ($image_lib) {

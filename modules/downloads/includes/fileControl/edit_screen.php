@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,106 +8,136 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Screen;
+use Intervention\Image\ImageManagerStatic as Image;
+use Johncms\FileInfo;
+use Psr\Http\Message\ServerRequestInterface;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\UserInterface   $user
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var ServerRequestInterface $request
  */
+
+$request = di(ServerRequestInterface::class);
+$get = $request->getQueryParams();
+$post = $request->getParsedBody();
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($user->rights < 6 && $user->rights != 4)) {
-    echo '<a href="?">' . _t('Downloads') . '</a>';
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+if (! $req_down->rowCount()) {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('Upload screenshot'),
+            'type'          => 'alert-danger',
+            'message'       => _t('File not found'),
+            'back_url'      => $urls['downloads'],
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
 $screen = [];
-$do = isset($_GET['do']) ? trim($_GET['do']) : '';
-
-if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
-    //TODO: Переделать форму удаления на POST запрос
-    // Удаление скриншота
-    unlink(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do);
+if (
+    isset($get['do'], $post['delete_token'], $_SESSION['delete_token']) &&
+    $_SESSION['delete_token'] === $post['delete_token'] &&
+    $request->getMethod() === 'POST'
+) {
+    $screens_dir = DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR;
+    $file = new FileInfo($screens_dir . trim($get['do']));
+    if ($file->isFile()) {
+        unlink($screens_dir . $file->getFilename());
+    }
     header('Location: ?act=edit_screen&id=' . $id);
     exit;
 }
-if (isset($_POST['submit'])) {
+
+if ($request->getMethod() === 'POST') {
     // Загрузка скриншота
-    $handle = new \Verot\Upload\Upload($_FILES['screen']);
-
-    if ($handle->uploaded) {
-        $handle->file_new_name_body = $id;
-        $handle->allowed = [
-            'image/jpeg',
-            'image/gif',
-            'image/png',
-        ];
-        $handle->file_max_size = 1024 * $config->flsz;
-
-        if ($set_down['screen_resize']) {
-            $handle->image_resize = true;
-            $handle->image_x = 240;
-            $handle->image_ratio_y = true;
-        }
-
-        $handle->process(DOWNLOADS_SCR . $id . '/');
-
-        if ($handle->processed) {
-            echo '<div class="gmenu"><b>' . _t('Screenshot is attached') . '</b>';
-        } else {
-            echo '<div class="rmenu"><b>' . _t('Screenshot not attached') . ': ' . $handle->error . '</b>';
-        }
-    } else {
-        echo '<div class="rmenu"><b>' . _t('Screenshot not attached') . '</b>';
+    $dir = DOWNLOADS_SCR . $id;
+    if (! is_dir($dir) && ! mkdir($dir, 0777) && ! is_dir($dir)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
     }
 
-    echo '<br><a href="?act=edit_screen&amp;id=' . $id . '">' . _t('Upload more') . '</a>' .
-        '<br><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
-} else {
-    // Форма выгрузки
-    echo '<div class="phdr"><b>' . _t('Screenshot') . '</b>: ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
-        '<div class="list1"><form action="?act=edit_screen&amp;id=' . $id . '"  method="post" enctype="multipart/form-data"><input type="file" name="screen"/><br>' .
-        '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
-        '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $config->flsz . 'kb' .
-        ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
+    $files = $request->getUploadedFiles();
+    if (! empty($files) && ! empty($files['screen'])) {
+        /** @var GuzzleHttp\Psr7\UploadedFile $screen */
+        $screen = $files['screen'] ?? false;
+        $file_name = $dir . '/' . $id . '.png';
+        if (file_exists($file_name)) {
+            $file_name = $dir . '/' . time() . '_' . $id . '.png';
+        }
+        // Пытаемся обработать файл и сохранить его
+        try {
+            Image::configure(['driver' => 'imagick']);
+            $img = Image::make($screen->getStream());
 
-    // Выводим скриншоты
-    $screen = [];
-
-    if (is_dir(DOWNLOADS_SCR . $id)) {
-        $dir = opendir(DOWNLOADS_SCR . $id);
-
-        while ($file = readdir($dir)) {
-            if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != 'index.php')) {
-                $screen[] = UPLOAD_PATH . 'downloads/screen/' . $id . '/' . $file;
+            if ($set_down['screen_resize']) {
+                $img->resize(
+                    1920,
+                    1080,
+                    static function ($constraint) {
+                        /** @var $constraint Intervention\Image\Constraint */
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    }
+                );
             }
+            $img->save($file_name, 100, 'png');
+            $screen_attached = true;
+        } catch (Exception $exception) {
+            $screen_attached = false;
+            $screen_attached_error = $exception->getMessage();
         }
+    }
 
-        closedir($dir);
+    if (isset($screen_attached) && $screen_attached) {
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Upload screenshot'),
+                'type'          => 'alert-success',
+                'message'       => _t('Screenshot is attached'),
+                'back_url'      => '?act=edit_screen&amp;id=' . $id,
+                'back_url_name' => _t('Back'),
+            ]
+        );
     } else {
-        if (mkdir(DOWNLOADS_SCR . $id, 0777) == true) {
-            @chmod(DOWNLOADS_SCR . $id, 0777);
-        }
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => _t('Upload screenshot'),
+                'type'          => 'alert-danger',
+                'message'       => _t('Screenshot not attached') . ' ' . ($screen_attached_error ?? ''),
+                'back_url'      => '?act=edit_screen&amp;id=' . $id,
+                'back_url_name' => _t('Repeat'),
+            ]
+        );
     }
-
-    if (! empty($screen)) {
-        $total = count($screen);
-
-        for ($i = 0; $i < $total; $i++) {
-            $screen_name = htmlentities($screen[$i], ENT_QUOTES, 'utf-8');
-            $file = preg_replace('#^' . DOWNLOADS_SCR . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
-            echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
-                '<table  width="100%"><tr><td width="40" valign="top">' .
-                '<a href="' . $screen_name . '"><img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[$i]) . '" alt="screen" /></a></td><td>' .
-                '<a href="?act=edit_screen&amp;id=' . $id . '&amp;do=' . basename($file) . '">' . _t('Delete') . '</a></td></tr></table></div>';
-        }
-    }
-
-    echo '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+} else {
+    // Выводим скриншоты
+    $screens = Screen::getScreens($id);
+    $delete_token = uniqid('', true);
+    $_SESSION['delete_token'] = $delete_token;
+    echo $view->render(
+        'downloads::edit_screen',
+        [
+            'title'        => htmlspecialchars($res_down['rus_name']),
+            'page_title'   => htmlspecialchars($res_down['rus_name']),
+            'id'           => $id,
+            'screens'      => $screens,
+            'urls'         => $urls,
+            'delete_token' => $delete_token,
+            'action_url'   => '?act=edit_screen&amp;id=' . $id,
+            'extensions'   => implode(', ', $defaultExt),
+        ]
+    );
 }
-
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

@@ -10,13 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\EnvironmentInterface;
-use Johncms\Api\UserInterface;
+use Johncms\System\Http\Environment;
+use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\Config;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Glob;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -42,9 +38,9 @@ const ASSETS_PATH = ROOT_PATH . 'assets' . DS;
 const CONFIG_PATH = ROOT_PATH . 'config' . DS;
 const DATA_PATH = ROOT_PATH . 'data' . DS;
 const UPLOAD_PATH = ROOT_PATH . 'upload' . DS;
-const UPLOAD_PUBLIC_PATH = '/upload/';
 const CACHE_PATH = DATA_PATH . 'cache' . DS;
 const LOG_PATH = DATA_PATH . 'logs' . DS;
+const THEMES_PATH = ROOT_PATH . 'themes' . DS;
 
 // Error handling
 if (DEBUG) {
@@ -60,41 +56,14 @@ if (DEBUG) {
 
 require __DIR__ . '/vendor/autoload.php';
 
-class App
-{
-    private static $container;
-
-    /**
-     * @return ServiceManager
-     */
-    public static function getContainer()
-    {
-        if (null === self::$container) {
-            $config = [];
-
-            // Read configuration
-            foreach (Glob::glob(CONFIG_PATH . 'autoload/' . '{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
-                $config = ArrayUtils::merge($config, include $file);
-            }
-
-            $container = new ServiceManager;
-            (new Config($config['dependencies']))->configureServiceManager($container);
-            $container->setService('config', $config);
-            self::$container = $container;
-        }
-
-        return self::$container;
-    }
-}
-
 session_name('SESID');
 session_start();
 
 /** @var ContainerInterface $container */
-$container = App::getContainer();
+$container = Johncms\System\Container\Factory::getContainer();
 
-/** @var EnvironmentInterface $env */
-$env = $container->get(EnvironmentInterface::class);
+/** @var Environment $env */
+$env = $container->get(Environment::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -133,12 +102,12 @@ if ($req->rowCount()) {
 $cacheFile = CACHE_PATH . 'system-cleanup.cache';
 
 if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
-    new Johncms\Utility\Cleanup($db);
+    new Johncms\System\Utility\Cleanup($db);
     file_put_contents($cacheFile, time());
 }
 
-/** @var UserInterface $userConfig */
-$userConfig = $container->get(UserInterface::class)->config;
+/** @var Johncms\System\Users\UserConfig $userConfig */
+$userConfig = $container->get(User::class)->config;
 
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);

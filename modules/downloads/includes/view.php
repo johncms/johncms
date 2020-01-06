@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,66 +8,79 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Downloads\Download;
+use Downloads\Screen;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Johncms\Api\ConfigInterface $config
- * @var PDO                         $db
- * @var Johncms\Api\ToolsInterface  $tools
- * @var Johncms\Api\UserInterface   $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
-
-require __DIR__ . '/../classes/download.php';
 
 // Выводим файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
-    echo '<div class="rmenu"><p>' . _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a></p></div>';
-    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+    http_response_code(404);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('File not found'),
+            'type'          => 'alert-danger',
+            'message'       => _t('File not found'),
+            'back_url'      => $url,
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
     exit;
 }
 
-$title_pages = htmlspecialchars(mb_substr($res_down['rus_name'], 0, 30));
-$textl = mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages;
+$title_page = htmlspecialchars($res_down['rus_name']);
 
-if ($res_down['type'] == 3) {
-    echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
-
-    if ($user->rights < 6 && $user->rights != 4) {
-        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
-        exit;
-    }
+if ($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => _t('The file is on moderation'),
+            'type'          => 'alert-danger',
+            'message'       => _t('The file is on moderation'),
+            'back_url'      => $url,
+            'back_url_name' => _t('Downloads'),
+        ]
+    );
+    exit;
 }
 
-echo '<div class="phdr">' . Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]) . '</div>';
-$format = explode('.', $res_down['name']);
-$format_file = array_pop($format);
+Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]);
+
+$nav_chain->add($res_down['rus_name']);
+
+$extension = strtolower(pathinfo($res_down['name'], PATHINFO_EXTENSION));
+
+$urls = [
+    'downloads' => $url,
+    'back'      => '?id=' . $res_down['refid'],
+];
+
+$file_data = $res_down;
 
 // Получаем список скриншотов
 $text_info = '';
-$screen = [];
-
-if (is_dir(DOWNLOADS_SCR . $id)) {
-    $dir = opendir(DOWNLOADS_SCR . $id);
-
-    while ($file = readdir($dir)) {
-        if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != '.svn') && ($file != 'index.php')) {
-            $screen[] = UPLOAD_PATH . 'downloads/screen/' . $id . '/' . $file;
-        }
-    }
-
-    closedir($dir);
-}
-
-switch ($format_file) {
+$screen = Screen::getScreens($id);
+$file_data['file_type'] = 'other';
+$file_data['screenshots'] = $screen;
+$file_properties = [];
+switch ($extension) {
     case 'mp3':
-        // Проигрываем аудио файлы
-        $text_info = '<audio src="' . $config->homeurl . str_replace('../', '/',
-                $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
-        require 'classes/getid3/getid3.php'; //TODO: Разобраться с устаревшим классом
-        $getID3 = new getID3;
+    case 'aac':
+    case 'm4a':
+        $getID3 = new getID3();
         $getID3->encoding = 'cp1251';
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
         $mp3info = true;
@@ -82,86 +93,135 @@ switch ($format_file) {
             $mp3info = false;
         }
 
-        $text_info .= '<b>' . _t('Channels') . '</b>: ' . $getid['audio']['channels'] . ' (' . $getid['audio']['channelmode'] . ')<br>' .
-            '<b>' . _t('Sample rate') . '</b>: ' . ceil($getid['audio']['sample_rate'] / 1000) . ' KHz<br>' .
-            '<b>' . _t('Bitrate') . '</b>: ' . ceil($getid['audio']['bitrate'] / 1000) . ' Kbit/s<br>' .
-            '<b>' . _t('Duration') . '</b>: ' . date('i:s', $getid['playtime_seconds']) . '<br>';
+        $file_properties = [
+            [
+                'name'  => _t('Channels'),
+                'value' => $getid['audio']['channels'] . ' (' . $getid['audio']['channelmode'] . ')',
+            ],
+            [
+                'name'  => _t('Sample rate'),
+                'value' => ceil($getid['audio']['sample_rate'] / 1000) . ' KHz',
+            ],
+            [
+                'name'  => _t('Bitrate'),
+                'value' => ceil($getid['audio']['bitrate'] / 1000) . ' Kbit/s',
+            ],
+            [
+                'name'  => _t('Duration'),
+                'value' => $getid['playtime_string'],
+            ],
+        ];
 
         if ($mp3info) {
             if (isset($tagsArray['artist'][0])) {
-                $text_info .= '<b>' . _t('Artist') . '</b>: ' . Download::mp3tagsOut($tagsArray['artist'][0]) . '<br>';
+                $file_properties[] = [
+                    'name'  => _t('Artist'),
+                    'value' => Download::mp3tagsOut($tagsArray['artist'][0]),
+                ];
             }
             if (isset($tagsArray['title'][0])) {
-                $text_info .= '<b>' . _t('Title') . '</b>: ' . Download::mp3tagsOut($tagsArray['title'][0]) . '<br>';
+                $file_properties[] = [
+                    'name'  => _t('Title'),
+                    'value' => Download::mp3tagsOut($tagsArray['title'][0]),
+                ];
             }
             if (isset($tagsArray['album'][0])) {
-                $text_info .= '<b>' . _t('Album') . '</b>: ' . Download::mp3tagsOut($tagsArray['album'][0]) . '<br>';
+                $file_properties[] = [
+                    'name'  => _t('Album'),
+                    'value' => Download::mp3tagsOut($tagsArray['album'][0]),
+                ];
             }
             if (isset($tagsArray['genre'][0])) {
-                $text_info .= '<b>' . _t('Genre') . '</b>: ' . Download::mp3tagsOut($tagsArray['genre'][0]) . '<br>';
+                $file_properties[] = [
+                    'name'  => _t('Genre'),
+                    'value' => Download::mp3tagsOut($tagsArray['genre'][0]),
+                ];
             }
-            if ((int) ($tagsArray['year'][0])) {
-                $text_info .= '<b>' . _t('Year') . '</b>: ' . (int) $tagsArray['year'][0] . '<br>';
+            if (isset($tagsArray['year'][0])) {
+                $file_properties[] = [
+                    'name'  => _t('Year'),
+                    'value' => Download::mp3tagsOut($tagsArray['year'][0]),
+                ];
             }
         }
+
+        $file_data['file_type'] = 'audio';
         break;
 
     case 'avi':
     case 'webm':
+    case 'mov':
     case 'mp4':
-        // Проигрываем видео файлы
-        echo '<div class="gmenu"><video src="' . $config->homeurl . str_replace('../', '/',
-                $res_down['dir']) . '/' . $res_down['name'] . '" controls></video></div>';
+        $getID3 = new getID3();
+        $getID3->encoding = 'cp1251';
+        $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
+        if (! empty($getid['video'])) {
+            if (isset($getid['video']['fourcc_lookup'])) {
+                $file_properties[] = [
+                    'name'  => _t('Codec'),
+                    'value' => $getid['video']['fourcc_lookup'],
+                ];
+            }
+            if (isset($getid['video']['frame_rate'])) {
+                $file_properties[] = [
+                    'name'  => _t('Frame rate'),
+                    'value' => $getid['video']['frame_rate'] . ' FPS',
+                ];
+            }
+            if (isset($getid['video']['bitrate'])) {
+                $file_properties[] = [
+                    'name'  => _t('Bitrate'),
+                    'value' => ceil($getid['video']['bitrate'] / 1000) . ' Kbit/s',
+                ];
+            }
+            if (isset($getid['playtime_string'])) {
+                $file_properties[] = [
+                    'name'  => _t('Duration'),
+                    'value' => $getid['playtime_string'],
+                ];
+            }
+            if (isset($getid['video']['resolution_x'])) {
+                $file_properties[] = [
+                    'name'  => _t('Resolution'),
+                    'value' => $getid['video']['resolution_x'] . 'x' . $getid['video']['resolution_y'] . 'px',
+                ];
+            }
+        }
+
+        $file_data['file_type'] = 'video';
         break;
 
     case 'jpg':
     case 'jpeg':
     case 'gif':
     case 'png':
+        $file_path = $res_down['dir'] . '/' . $res_down['name'];
+        $screen[] = [
+            'url'     => '/' . $file_path,
+            'preview' => '/assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($file_path),
+        ];
+        $file_data['screenshots'] = $screen;
         $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
-        echo '<div class="gmenu"><img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
-        $text_info = '<span class="gray">' . _t('Resolution') . ': </span>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
+        $file_data['image_info'] = [
+            'width'  => $info_file[0],
+            'height' => $info_file[1],
+        ];
+        $file_data['file_type'] = 'image';
         break;
 }
 
-// Выводим скриншоты
-if (! empty($screen)) {
-    $total = count($screen);
+$file_data['file_properties'] = $file_properties;
 
-    if ($total > 1) {
-        if ($page >= $total) {
-            $page = $total;
-        }
-
-        echo '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
-            '<img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
-        echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1,
-                $total, 1) . '</div>';
-    } else {
-        echo '<div class="gmenu"><b>' . _t('Screenshot') . ':</b><br>' .
-            '<img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
-    }
-}
+$file_data['description'] = $tools->checkout($res_down['about'], 1, 1);
 
 // Выводим данные
 $foundUser = $db->query('SELECT `name`, `id` FROM `users` WHERE `id` = ' . $res_down['user_id'])->fetch();
-echo '<div class="list1">'
-    . '<p><h3>' . $res_down['rus_name'] . '</h3></p>'
-    . '<span class="gray">' . _t('File name') . ':</span> ' . $res_down['name'] . '<br>'
-    . '<span class="gray">' . _t('Uploaded by') . ':</span> ' . $foundUser['name'] . '<br>' . $text_info
-    . '<span class="gray">' . _t('Downloads') . ':</span> ' . $res_down['field'];
-
-echo '</div>';
-
-if (! empty($res_down['about'])) {
-    echo '<div class="topmenu" style="font-size: small">' . $tools->checkout($res_down['about'], 1, 1) . '</div>';
-}
-
-echo '<div class="list1"><p>';
+$file_data['upload_user'] = $foundUser;
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
-if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_file_' . $id]) && $user->isValid()) {
+$session_index = 'rate_file_' . $id;
+if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION[$session_index]) && $user->isValid()) {
     if (isset($_GET['plus'])) {
         $file_rate[0] = $file_rate[0] + 1;
     } else {
@@ -169,38 +229,31 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_f
     }
 
     $db->exec("UPDATE `download__files` SET `rate`='" . $file_rate[0] . '|' . $file_rate[1] . "' WHERE `id`=" . $id);
-    echo '<b><span class="green">' . _t('Voice adopted') . '</span></b><br>';
+    $file_data['vote_accepted'] = true;
     $_SESSION['rate_file_' . $id] = true;
 }
 
+$file_data['can_vote'] = false;
+if (! isset($_SESSION[$session_index]) && $user->isValid()) {
+    $file_data['can_vote'] = true;
+}
+
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
-echo '<b>' . _t('Rating') . ' </b>';
 
-if (! isset($_SESSION['rate_file_' . $id]) && $user->isValid()) {
-    echo '(<a href="?act=view&amp;id=' . $id . '&amp;plus">+</a>/<a href="?act=view&amp;id=' . $id . '&amp;minus">-</a>)';
-} else {
-    echo '(+/-)';
-}
-
-echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
-    '<img src="../assets/modules/downloads/rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
-
-if ($config->mod_down_comm || $user->rights >= 7) {
-    echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
-}
-
-echo '</div>';
+$file_data['rate'] = $file_rate;
 
 // Запрашиваем дополнительные файлы
-$req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id . ' ORDER BY `time` ASC');
+$req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id . ' ORDER BY `time`');
 $total_files_more = $req_file_more->rowCount();
 
-// Скачка файла
-echo '<div class="phdr"><b>' . ($total_files_more ? _t('Files for Download') : _t('Files for Download')) . '</b></div>' .
-    '<div class="list1">' . Download::downloadLlink([
-        'format' => $format_file,
+$file_data['main_file'] = Download::downloadLlink(
+    [
+        'format' => $extension,
         'res'    => $res_down,
-    ]) . '</div>';
+    ]
+);
+
+$file_data['additional_files'] = [];
 
 // Дополнительные файлы
 if ($total_files_more) {
@@ -208,12 +261,14 @@ if ($total_files_more) {
     while ($res_file_more = $req_file_more->fetch()) {
         $res_file_more['dir'] = $res_down['dir'];
         $res_file_more['text'] = $res_file_more['rus_name'];
-        echo(($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
-            Download::downloadLlink([
+
+        $file_data['additional_files'][] = Download::downloadLlink(
+            [
                 'format' => pathinfo($res_file_more['name'], PATHINFO_EXTENSION),
                 'res'    => $res_file_more,
                 'more'   => $res_file_more['id'],
-            ]) . '</div>';
+            ]
+        );
     }
 }
 
@@ -228,35 +283,16 @@ if ($user->isValid()) {
         $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id` = " . $user->id);
         $bookmark = 0;
     }
-
-    echo '<div class="phdr">';
-
-    if (! $bookmark) {
-        echo '<a href="?act=view&amp;id=' . $id . '&amp;addBookmark">' . _t('Add to Favorites') . '</a>';
-    } else {
-        echo '<a href="?act=view&amp;id=' . $id . '&amp;delBookmark">' . _t('Remove from Favorites') . '</a>';
-    }
-
-    echo '</div>';
 }
 
-// Управление файлами
-if ($user->rights > 6 || $user->rights == 4) {
-    echo '<p><div class="func">' .
-        '<a href="?act=edit_file&amp;id=' . $id . '">' . _t('Edit File') . '</a><br>' .
-        '<a href="?act=edit_about&amp;id=' . $id . '">' . _t('Edit Description') . '</a><br>' .
-        '<a href="?act=edit_screen&amp;id=' . $id . '">' . _t('Managing Screenshots') . '</a><br>' .
-        '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Additional Files') . '</a><br>' .
-        '<a href="?act=delete_file&amp;id=' . $id . '">' . _t('Delete File') . '</a>';
-
-    if ($user->rights > 6) {
-        echo '<br><a href="?act=transfer_file&amp;id=' . $id . '">' . _t('Move File') . '</a>';
-        if ($format_file == 'mp3') {
-            echo '<br><a href="?act=mp3tags&amp;id=' . $id . '">' . _t('Edit MP3 Tags') . '</a>';
-        }
-    }
-
-    echo '</div></p>';
-}
-
-echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+echo $view->render(
+    'downloads::view',
+    [
+        'title'        => $title_page,
+        'page_title'   => $title_page,
+        'id'           => $id,
+        'file'         => $file_data,
+        'in_bookmarks' => $bookmark ?? 0,
+        'urls'         => $urls ?? [],
+    ]
+);

@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
@@ -33,24 +33,31 @@ if ($user->isValid()) {
     switch ($do) {
         case 'reset':
             // Отмечаем все темы как прочитанные
-            $ids = $db->query("SELECT `forum_topic`.`id`, `forum_topic`.`last_post_date`
+            $ids = $db->query(
+                "SELECT `forum_topic`.`id`, `forum_topic`.`last_post_date`
             FROM `forum_topic` LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $user->id . "'
-            WHERE `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time` OR `cms_forum_rdm`.`topic_id` IS NULL")->fetchAll(PDO::FETCH_ASSOC);
+            WHERE `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time` OR `cms_forum_rdm`.`topic_id` IS NULL"
+            )->fetchAll(PDO::FETCH_ASSOC);
 
             if (! empty($ids)) {
                 foreach ($ids as $val) {
                     $values[] = '(' . $val['id'] . ', ' . $user->id . ', ' . $val['last_post_date'] . ')';
                 }
-                $db->query('INSERT INTO cms_forum_rdm (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
-                    ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)');
+                $db->query(
+                    'INSERT INTO cms_forum_rdm (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
+                    ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)'
+                );
             }
-            echo $view->render('system::pages/result', [
-                'title'         => _t('Unread'),
-                'type'          => 'alert-success',
-                'message'       => _t('All topics marked as read'),
-                'back_url'      => '/forum/',
-                'back_url_name' => _t('Forum'),
-            ]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => _t('Unread'),
+                    'type'          => 'alert-success',
+                    'message'       => _t('All topics marked as read'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => _t('Forum'),
+                ]
+            );
             break;
 
         case 'period':
@@ -59,34 +66,38 @@ if ($user->isValid()) {
             $vr1 = time() - $vr * 3600;
 
             if ($user->rights == 9) {
-                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > '${vr1}'");
+                $sql = 'SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > ?';
+                $sql2 = 'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+FROM `forum_topic` tpc
+JOIN forum_sections rzd ON rzd.id = tpc.section_id
+JOIN forum_sections frm ON frm.id = rzd.parent
+WHERE `mod_last_post_date` > ? ORDER BY `mod_last_post_date` DESC LIMIT ?, ?';
             } else {
-                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > '${vr1}' AND (`deleted` != '1' OR deleted IS NULL)");
+                $sql = 'SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL)';
+                $sql2 = 'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+FROM `forum_topic` tpc
+JOIN forum_sections rzd ON rzd.id = tpc.section_id
+JOIN forum_sections frm ON frm.id = rzd.parent
+WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT ?, ?';
             }
-            $count = $req->fetchColumn();
+            $sth = $db->prepare($sql);
+            $sth->execute([$vr1]);
+            $count = $sth->fetchColumn();
 
             if ($count) {
-                if ($user->rights == 9) {
-                    $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
-                    FROM `forum_topic` tpc
-                    JOIN forum_sections rzd ON rzd.id = tpc.section_id
-                    JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess);
-                } else {
-                    $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
-                    FROM `forum_topic` tpc
-                    JOIN forum_sections rzd ON rzd.id = tpc.section_id
-                    JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess);
-                }
+                $param = array_merge([$vr1], [$start, $user->config->kmess]);
+                $req = $db->prepare($sql2);
+                $req->execute($param);
 
                 $topics = [];
                 while ($res = $req->fetch()) {
                     if ($user->rights >= 7) {
+                        $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                         $res['show_last_author'] = $res['mod_last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                     } else {
+                        $cpg = ceil($res['post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                         $res['show_last_author'] = $res['last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -98,7 +109,6 @@ if ($user->isValid()) {
 
                     // Url to last page
                     $res['last_page_url'] = $res['url'];
-                    $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                     if ($cpg > 1) {
                         $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                     }
@@ -107,36 +117,43 @@ if ($user->isValid()) {
                 }
             }
 
-            echo $view->render('forum::new_topics', [
-                'pagination'    => $tools->displayPagination('/forum/?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess),
-                'title'         => sprintf(_t('All for period %d hours'), $vr),
-                'page_title'    => sprintf(_t('All for period %d hours'), $vr),
-                'empty_message' => _t('There is nothing new in this forum for selected period'),
-                'topics'        => $topics ?? [],
-                'total'         => $count,
-                'show_period'   => true,
-            ]);
+            echo $view->render(
+                'forum::new_topics',
+                [
+                    'pagination'    => $tools->displayPagination('/forum/?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess),
+                    'title'         => sprintf(_t('All for period %d hours'), $vr),
+                    'page_title'    => sprintf(_t('All for period %d hours'), $vr),
+                    'empty_message' => _t('There is nothing new in this forum for selected period'),
+                    'topics'        => $topics ?? [],
+                    'total'         => $count,
+                    'show_period'   => true,
+                ]
+            );
             break;
 
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
             $total = di('counters')->forumNew();
             if ($total > 0) {
-                $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.id as frm_id, frm.`name` AS frm_name
+                $req = $db->query(
+                    "SELECT tpc.*, rzd.`name` AS rzd_name, frm.id as frm_id, frm.`name` AS frm_name
                 FROM `forum_topic` tpc
                 LEFT JOIN `cms_forum_rdm` rdm ON `tpc`.`id` = `rdm`.`topic_id` AND `rdm`.`user_id` = '" . $user->id . "'
                 JOIN forum_sections rzd ON rzd.id = tpc.section_id
                 JOIN forum_sections frm ON frm.id = rzd.parent
                 WHERE " . ($user->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
-                ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, " . $user->config->kmess);
+                ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, " . $user->config->kmess
+                );
 
                 $topics = [];
                 while ($res = $req->fetch()) {
                     if ($user->rights >= 7) {
+                        $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                         $res['show_last_author'] = $res['mod_last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
                     } else {
+                        $cpg = ceil($res['post_count'] / $user->config->kmess);
                         $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                         $res['show_last_author'] = $res['last_post_author_name'];
                         $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -148,7 +165,6 @@ if ($user->isValid()) {
 
                     // Url to last page
                     $res['last_page_url'] = $res['url'];
-                    $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
                     if ($cpg > 1) {
                         $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
                     }
@@ -167,36 +183,43 @@ if ($user->isValid()) {
                 }
             }
 
-            echo $view->render('forum::new_topics', [
-                'pagination'    => $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess),
-                'title'         => _t('Unread'),
-                'page_title'    => _t('Unread'),
-                'empty_message' => _t('The list is empty'),
-                'topics'        => $topics ?? [],
-                'total'         => $total,
-                'show_period'   => false,
-                'mark_as_read'  => '?act=new&amp;do=reset',
-            ]);
+            echo $view->render(
+                'forum::new_topics',
+                [
+                    'pagination'    => $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess),
+                    'title'         => _t('Unread'),
+                    'page_title'    => _t('Unread'),
+                    'empty_message' => _t('The list is empty'),
+                    'topics'        => $topics ?? [],
+                    'total'         => $total,
+                    'show_period'   => false,
+                    'mark_as_read'  => '?act=new&amp;do=reset',
+                ]
+            );
             break;
     }
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
-    $req = $db->query('SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+    $req = $db->query(
+        'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
     FROM `forum_topic` tpc
     JOIN forum_sections rzd ON rzd.id = tpc.section_id
     JOIN forum_sections frm ON frm.id = rzd.parent
     WHERE (`deleted` <> 1 OR deleted IS NULL)
-    ORDER BY `last_post_date` DESC LIMIT 10');
+    ORDER BY `last_post_date` DESC LIMIT 10'
+    );
 
     $total = $req->rowCount();
     if ($total) {
         $topics = [];
         while ($res = $req->fetch()) {
             if ($user->rights >= 7) {
+                $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
                 $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
                 $res['show_last_author'] = $res['mod_last_post_author_name'];
                 $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
             } else {
+                $cpg = ceil($res['post_count'] / $user->config->kmess);
                 $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
                 $res['show_last_author'] = $res['last_post_author_name'];
                 $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
@@ -208,7 +231,6 @@ if ($user->isValid()) {
 
             // Url to last page
             $res['last_page_url'] = $res['url'];
-            $cpg = ceil($res['show_posts_count'] / $user->config->kmess);
             if ($cpg > 1) {
                 $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
             }
@@ -227,15 +249,16 @@ if ($user->isValid()) {
         }
     }
 
-    echo $view->render('forum::new_topics', [
-        'pagination'    => '',
-        'title'         => _t('Last 10'),
-        'page_title'    => _t('Last 10'),
-        'empty_message' => _t('The list is empty'),
-        'topics'        => $topics ?? [],
-        'total'         => $total,
-        'show_period'   => false,
-    ]);
+    echo $view->render(
+        'forum::new_topics',
+        [
+            'pagination'    => '',
+            'title'         => _t('Last 10'),
+            'page_title'    => _t('Last 10'),
+            'empty_message' => _t('The list is empty'),
+            'topics'        => $topics ?? [],
+            'total'         => $total,
+            'show_period'   => false,
+        ]
+    );
 }
-
-exit;

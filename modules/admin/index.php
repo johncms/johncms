@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,25 +8,28 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ToolsInterface;
-use Johncms\Api\UserInterface;
-use Johncms\View\Render;
-use Zend\I18n\Translator\Translator;
+declare(strict_types=1);
+
+use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\User;
+use Johncms\System\View\Render;
+use Laminas\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
 /**
- * @var Render         $view
- * @var PDO            $db
- * @var ToolsInterface $tools
- * @var UserInterface  $user
+ * @var Render $view
+ * @var PDO $db
+ * @var Tools $tools
+ * @var User $user
  */
 
 $db = di(PDO::class);
-$tools = di(ToolsInterface::class);
-$user = di(UserInterface::class);
+$tools = di(Tools::class);
+$user = di(User::class);
 $view = di(Render::class);
+$route = di('route');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
@@ -37,7 +38,7 @@ $view->addFolder('admin', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
-$act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING) ?? '';
+$act = $route['action'] ?? 'index';
 $mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
 $do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
 
@@ -47,38 +48,44 @@ if ($user->rights < 7) {
 }
 
 $actions = [
-    'forum',
-    'news',
-    'ads',
-    'counters',
-    'ip_whois',
-    'languages',
-    'settings',
-    'smilies',
     'access',
-    'antispy',
-    'httpaf',
-    'ipban',
+    'adminlist',
+    'ads',
     'antiflood',
+    'antispy',
     'ban_panel',
+    'counters',
+    'emoticons',
+    'forum',
+    'index',
+    'ip_whois',
+    'ipban',
     'karma',
-    'reg',
+    'languages',
     'mail',
+    'news',
+    'reg',
     'search_ip',
-    'usr',
-    'usr_adm',
+    'settings',
+    'userlist',
     'usr_clean',
     'usr_del',
-    'social_setting',
 ];
+
+$view->addData(
+    [
+        'regtotal'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
+        'countusers' => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
+        'countadm'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
+        'bantotal'   => $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
+    ],
+    [
+        'admin::sidebar-admin-menu',
+    ]
+);
 
 if (($key = array_search($act, $actions)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
-    echo $view->render('admin::index', [
-        'countusers' => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
-        'countadm'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
-        'regtotal'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
-        'bantotal'   => $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
-    ]);
+    pageNotFound();
 }

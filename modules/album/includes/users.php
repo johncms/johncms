@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,61 +8,84 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+
+$title = _t('List of users');
+$nav_chain->add($title);
 
 // Список посетителей. у которых есть фотографии
 switch ($mod) {
     case 'boys':
-        $sql = "WHERE `users`.`sex` = 'm'";
+        $sql = "WHERE `u`.`sex` = 'm'";
         break;
 
     case 'girls':
-        $sql = "WHERE `users`.`sex` = 'zh'";
+        $sql = "WHERE `u`.`sex` = 'zh'";
         break;
     default:
-        $sql = "WHERE `users`.`sex` != ''";
+        $sql = "WHERE `u`.`sex` != ''";
 }
 
-$menu = [
-    (! $mod ? '<b>' . _t('All') . '</b>' : '<a href="?act=users">' . _t('All') . '</a>'),
-    ($mod == 'boys' ? '<b>' . _t('Guys') . '</b>' : '<a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a>'),
-    ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>'),
+$data = [];
+$data['filters'] = [
+    'all'   => [
+        'name'   => _t('All'),
+        'url'    => '?act=users',
+        'active' => ! $mod,
+    ],
+    'boys'  => [
+        'name'   => _t('Guys'),
+        'url'    => '?act=users&amp;mod=boys',
+        'active' => $mod === 'boys',
+    ],
+    'girls' => [
+        'name'   => _t('Girls'),
+        'url'    => '?act=users&amp;mod=girls',
+        'active' => $mod === 'girls',
+    ],
 ];
-echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
-    '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
-$total = $db->query("SELECT COUNT(DISTINCT `user_id`)
+$total = $db->query(
+    "SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`
-    LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
-")->fetchColumn();
+    LEFT JOIN `users` u ON `cms_album_files`.`user_id` = `u`.`id` ${sql}
+"
+)->fetchColumn();
 
 if ($total) {
-    $req = $db->query("SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
-        FROM `cms_album_files`
-        LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
-        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
-    $i = 0;
-
+    $album_access = ($foundUser['id'] === $user->id || $user->rights >= 6 ? '' : ' AND albums.access > 1');
+    $req = $db->query("SELECT distinct(`a`.user_id) AS id, `u`.`lastdate`,`u`.`name` AS `nick`, (
+SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = `u`.`id`) AS `count`, (
+SELECT COUNT(*) FROM `cms_album_cat` AS albums WHERE `albums`.`user_id` = `u`.`id` ${album_access}) AS count_albums
+FROM `cms_album_files` a
+LEFT JOIN `users` u ON `a`.`user_id` = `u`.`id` ${sql}
+ORDER BY `u`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
+    $users = [];
     while ($res = $req->fetch()) {
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo '<a href="?act=list&amp;user=' . $res['uid'] . '">' . $res['nick'] . '</a> (' . $res['count'] . ')</div>';
-        ++$i;
+        $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+        $res['album_url'] = '?act=list&amp;user=' . $res['id'];
+        $users[] = $res;
     }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-        '</form></p>';
-}
+
+$data['total'] = $total;
+$data['pagination'] = $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $user->config->kmess);
+$data['users'] = $users ?? [];
+
+echo $view->render(
+    'album::users',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

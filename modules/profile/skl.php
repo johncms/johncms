@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,29 +8,30 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\NavChainInterface;
-use Johncms\View\Render;
+declare(strict_types=1);
+
+use Johncms\System\View\Render;
+use Johncms\NavChain;
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = di(Johncms\Api\ConfigInterface::class);
+$config = di('config')['johncms'];
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = di(Zend\I18n\Translator\Translator::class);
+/** @var Laminas\I18n\Translator\Translator $translator */
+$translator = di(Laminas\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var PDO $db */
 $db = di(PDO::class);
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = di(Johncms\Api\ToolsInterface::class);
+/** @var Johncms\System\Legacy\Tools $tools */
+$tools = di(Johncms\System\Legacy\Tools::class);
 
 $view = di(Render::class);
 
-/** @var NavChainInterface $nav_chain */
-$nav_chain = di(NavChainInterface::class);
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');
@@ -93,7 +92,7 @@ switch ($act) {
             $link = $config['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
             $subject = _t('Password recovery');
             $mail = sprintf(
-                _t("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"),
+                _t("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"), // phpcs:ignore
                 $res['name'],
                 $config['homeurl'],
                 $link
@@ -178,11 +177,11 @@ switch ($act) {
         break;
 
     default:
-        $code = (string) new Batumibiz\Captcha\Code;
+        $code = (string) new Mobicms\Captcha\Code();
         $_SESSION['code'] = $code;
         // Показываем запрос на подтверждение выхода с сайта
         echo $view->render('profile::restore_password', [
-            'captcha' => new Batumibiz\Captcha\Image($code),
+            'captcha' => new Mobicms\Captcha\Image($code),
         ]);
         break;
 }

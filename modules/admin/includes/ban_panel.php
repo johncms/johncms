@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -77,18 +77,20 @@ switch ($mod) {
         $sort = isset($_GET['count']) ? 'bancount' : 'bantime';
         $total = $db->query('SELECT `user_id` FROM `cms_ban_users` GROUP BY `user_id`')->rowCount();
 
-        $req = $db->query("
+        $req = $db->query(
+            "
           SELECT COUNT(`cms_ban_users`.`user_id`) AS `bancount`, MAX(`cms_ban_users`.`ban_time`) AS `bantime`, `cms_ban_users`.`id` AS `ban_id`, `users`.*
           FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
           GROUP BY `user_id`
           ORDER BY `${sort}` DESC
-          LIMIT " . $start . ',' . $user->config->kmess);
+          LIMIT " . $start . ',' . $user->config->kmess
+        );
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 echo '<div class="' . ($res['bantime'] > time() ? 'r' : '') . 'menu">';
                 $arg = [
-                    'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>',
+                    'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>', // phpcs:ignore
                 ];
                 echo $tools->displayUser($res, $arg);
                 echo '</div>';
@@ -110,7 +112,10 @@ switch ($mod) {
             . '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title' => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

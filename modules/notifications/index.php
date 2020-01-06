@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,22 +8,24 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\UserInterface;
-use Johncms\View\Render;
+declare(strict_types=1);
+
+use Johncms\System\Users\User;
+use Johncms\System\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                      $db
- * @var Johncms\Utility\Counters $counters
- * @var Render                   $view
- * @var UserInterface            $user
+ * @var PDO $db
+ * @var Johncms\Counters $counters
+ * @var Render $view
+ * @var User $user
  */
 
 $db = di(PDO::class);
 $counters = di('counters');
 $view = di(Render::class);
-$user = di(UserInterface::class);
+$user = di(User::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');
@@ -129,7 +129,10 @@ $breadcrumbs = [
         'active' => true,
     ],
 ];
-echo $view->render('notifications::index', [
-    'notifications' => $notifications,
-    'breadcrumbs'   => $breadcrumbs,
-]);
+echo $view->render(
+    'notifications::index',
+    [
+        'notifications' => $notifications,
+        'breadcrumbs'   => $breadcrumbs,
+    ]
+);

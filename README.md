@@ -1,8 +1,9 @@
-# [JohnCMS](http://johncms.com)
+# [JohnCMS](https://johncms.com)
 
-[![Packagist](https://img.shields.io/packagist/l/simba77/johncms.svg)](https://packagist.org/packages/simba77/johncms)
-[![StyleCI](https://github.styleci.io/repos/30122305/shield?branch=develop)](https://github.styleci.io/repos/30122305)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/simba77/johncms.svg?label=stable)](https://github.com/simba77/johncms/releases)
+[![GitHub](https://img.shields.io/github/license/johncms/johncms?color=blue)](https://github.com/johncms/johncms/blob/develop/LICENSE)
+[![Source Code](http://img.shields.io/badge/source-johncms/johncms-blue.svg)](https://github.com/johncms/johncms)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/johncms/johncms.svg?label=stable)](https://github.com/johncms/johncms/releases)
+[![GitHub Workflow Status](https://github.com/johncms/johncms/workflows/tests/badge.svg)](https://github.com/johncms/johncms/actions)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
 

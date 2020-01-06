@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,16 +8,17 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var PDO                              $db
- * @var Johncms\Api\UserInterface        $user
- * @var Johncms\Api\ToolsInterface       $tools
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\Legacy\Tools $tools
  */
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = di(Johncms\Api\ConfigInterface::class);
+$config = di('config')['johncms'];
 
 // Загрузка выбранного файла и обработка счетчика скачиваний
 $error = [];
@@ -34,7 +33,7 @@ if ($req->rowCount()) {
 
         if ($req_a->rowCount()) {
             $res_a = $req_a->fetch();
-            if ($res_a['access'] == 1 || $res_a['access'] == 2 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password'])) {
+            if ($res_a['access'] == 1 || ($res_a['access'] == 2 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']))) {
                 $error[] = _t('Access forbidden');
             }
         } else {

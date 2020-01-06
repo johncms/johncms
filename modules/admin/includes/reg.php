@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
@@ -105,10 +105,13 @@ switch ($mod) {
                     '<a href="?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . _t('Remove IP') . '</a>',
                 ];
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo $tools->displayUser($res, [
-                    'header' => '<b>ID:' . $res['id'] . '</b>',
-                    'sub'    => implode(' | ', $link),
-                ]);
+                echo $tools->displayUser(
+                    $res,
+                    [
+                        'header' => '<b>ID:' . $res['id'] . '</b>',
+                        'sub'    => implode(' | ', $link),
+                    ]
+                );
                 echo '</div>';
                 ++$i;
             }
@@ -135,7 +138,10 @@ switch ($mod) {
         echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

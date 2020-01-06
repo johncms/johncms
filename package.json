@@ -1,7 +1,7 @@
 {
   "name": "JohnCMS",
   "version": "8.0.0",
-  "description": "JohnCMS Mobile Content Management System",
+  "description": "JohnCMS Content Management System",
   "homepage": "https://johncms.com",
   "license": "GPL-3.0",
   "keywords": [
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/simba77/johncms"
+    "url": "https://github.com/johncms/johncms"
   },
   "engines": {
     "node": ">= 0.12.0"
@@ -35,16 +35,17 @@
     "grunt-dev-update": "^2.1.0",
     "grunt-exec": "^3.0.0",
     "laravel-mix": "^5.0.0",
-    "resolve-url-loader": "^3.1.0",
-    "sass": "^1.23.3",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "cross-env": "^6.0.3",
     "jquery": "^3.4.0",
     "lodash": "^4.17.11",
-    "popper.js": "^1.15.0"
+    "popper.js": "^1.15.0",
+    "swiper": "^5.2.1"
   }
 }

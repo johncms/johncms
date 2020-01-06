@@ -14,9 +14,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
- * @var PDO                        $db
- * @var Johncms\Api\ToolsInterface $tools
- * @var Johncms\Api\UserInterface  $user
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
  */
 
 switch ($mod) {
@@ -89,7 +89,8 @@ switch ($mod) {
 
             if ($id) {
                 // Обновляем ссылку после редактирования
-                $db->prepare('
+                $db->prepare(
+                    '
                   UPDATE `cms_ads` SET
                   `type` = ?,
                   `view` = ?,
@@ -104,21 +105,24 @@ switch ($mod) {
                   `italic` = ?,
                   `underline` = ?
                   WHERE `id` = ?
-                ')->execute([
-                    $type,
-                    $view,
-                    $link,
-                    $name,
-                    $color,
-                    $count,
-                    $day,
-                    $layout,
-                    $show,
-                    $bold,
-                    $italic,
-                    $underline,
-                    $id,
-                ]);
+                '
+                )->execute(
+                    [
+                        $type,
+                        $view,
+                        $link,
+                        $name,
+                        $color,
+                        $count,
+                        $day,
+                        $layout,
+                        $show,
+                        $bold,
+                        $italic,
+                        $underline,
+                        $id,
+                    ]
+                );
             } else {
                 // Добавляем новую ссылку
                 $req = $db->query('SELECT `mesto` FROM `cms_ads` ORDER BY `mesto` DESC LIMIT 1');
@@ -130,7 +134,8 @@ switch ($mod) {
                     $mesto = 1;
                 }
 
-                $db->prepare('
+                $db->prepare(
+                    '
                   INSERT INTO `cms_ads` SET
                   `type` = ?,
                   `view` = ?,
@@ -147,22 +152,25 @@ switch ($mod) {
                   `bold` = ?,
                   `italic` = ?,
                   `underline` = ?
-                ')->execute([
-                    $type,
-                    $view,
-                    $mesto,
-                    $link,
-                    $name,
-                    $color,
-                    $count,
-                    $day,
-                    $layout,
-                    $show,
-                    time(),
-                    $bold,
-                    $italic,
-                    $underline,
-                ]);
+                '
+                )->execute(
+                    [
+                        $type,
+                        $view,
+                        $mesto,
+                        $link,
+                        $name,
+                        $color,
+                        $count,
+                        $day,
+                        $layout,
+                        $show,
+                        time(),
+                        $bold,
+                        $italic,
+                        $underline,
+                    ]
+                );
             }
 
             echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br>' .
@@ -175,8 +183,11 @@ switch ($mod) {
                 '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Direct Link') . '<br>' .
                 '<small>' . _t('Click statistics won\'t be counted, If the direct link is turned on') . '</small></p>' .
                 '<p><h3>' . _t('Title') . '</h3>' .
-                '<input type="text" name="name" value="' . htmlentities((string) $res['name'], ENT_QUOTES,
-                    'UTF-8') . '"/><br>' .
+                '<input type="text" name="name" value="' . htmlentities(
+                    (string) $res['name'],
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) . '"/><br>' .
                 '<small>' . _t('To change the name when updating pages, you must wtite names trought the symbol |') . '</small></p>' .
                 '<p><h3>' . _t('Color') . '</h3>' .
                 '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br>' .
@@ -405,8 +416,12 @@ switch ($mod) {
 
         if ($total > $user->config->kmess) {
             echo '<div class="topmenu">' .
-                $tools->displayPagination('?act=ads&amp;type=' . $type . '&amp;', $start, $total,
-                    $user->config->kmess) .
+                $tools->displayPagination(
+                    '?act=ads&amp;type=' . $type . '&amp;',
+                    $start,
+                    $total,
+                    $user->config->kmess
+                ) .
                 '</div><p><form action="?act=ads&amp;type=' . $type . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -417,7 +432,10 @@ switch ($mod) {
             '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => _t('Admin Panel'),
+        'content' => ob_get_clean(),
+    ]
+);

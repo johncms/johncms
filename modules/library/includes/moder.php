@@ -32,7 +32,10 @@ if (! $adm || (! $author && $type == 'article')) {
 if (isset($_POST['submit'])) {
     switch ($type) {
         case 'dir':
-            $sql = 'UPDATE `library_cats` SET `name`=' . $db->quote($_POST['name']) . ', `description`=' . $db->quote($_POST['description']) . ' ' . (isset($_POST['move']) && $db->query('SELECT count(*) FROM `library_cats`')->fetchColumn() > 1 ? ', `parent`=' . (int) ($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . (int) ($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' . (int) ($_POST['user_add']) : '') . ' WHERE `id`=' . $id;
+            $sql = 'UPDATE `library_cats` SET `name`=' . $db->quote($_POST['name']) . ', `description`=' .
+                $db->quote($_POST['description']) . ' ' . (isset($_POST['move']) && $db->query('SELECT count(*) FROM `library_cats`')->fetchColumn() > 1 ? ', `parent`=' .
+                    (int) ($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . (int) ($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' .
+                    (int) ($_POST['user_add']) : '') . ' WHERE `id`=' . $id;
             break;
 
         case 'article':
@@ -88,9 +91,11 @@ if (isset($_POST['submit'])) {
                 }
                 $handle->clean();
             }
-            $sql = 'UPDATE `library_texts` SET `name`=' . $db->quote($_POST['name']) . ', ' . ($_POST['text'] != 'do_not_change' ? ' `text`=' . $db->quote($_POST['text']) . ', ' : '') . ' ' . (isset($_POST['move']) ? '`cat_id`=' . (int) ($_POST['move']) . ', ' : '') . ' `announce`=' . $db->quote(mb_substr(trim($_POST['announce']),
-                    0,
-                    500)) . ' ' . ($adm ? ', `count_views`=' . (int) ($_POST['count_views']) . ', `premod`=' . (int) ($_POST['premod']) . ', `comments`=' . (isset($_POST['comments']) ? (int) ($_POST['comments']) : 0) : '') . ' WHERE `id`=' . $id;
+            $sql = 'UPDATE `library_texts` SET `name`=' . $db->quote($_POST['name']) . ', ' .
+                ($_POST['text'] != 'do_not_change' ? ' `text`=' . $db->quote($_POST['text']) . ', ' : '') . ' ' . (isset($_POST['move']) ? '`cat_id`=' .
+                    (int) ($_POST['move']) . ', ' : '') . ' `announce`=' . $db->quote(mb_substr(trim($_POST['announce']), 0, 500)) . ' ' .
+                ($adm ? ', `count_views`=' . (int) ($_POST['count_views']) . ', `premod`=' . (int) ($_POST['premod']) . ', `comments`=' .
+                    (isset($_POST['comments']) ? (int) ($_POST['comments']) : 0) : '') . ' WHERE `id`=' . $id;
             break;
     }
     $db->exec($sql);
@@ -98,11 +103,13 @@ if (isset($_POST['submit'])) {
 } else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->getChildsDir()->result();
-    $sqlsel = $db->query('SELECT ' . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ', `name` FROM `library_cats` '
-        . 'WHERE `dir`=' . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && count($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
+    $sqlsel = $db->query(
+        'SELECT ' . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ', `name` FROM `library_cats` '
+        . 'WHERE `dir`=' . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && count($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : '')
+    );
     $row = $db->query('SELECT * FROM `' . ($type == 'article' ? 'library_texts' : 'library_cats') . '` WHERE `id`=' . $id)->fetch();
     $empty = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=' . $id)->fetchColumn() > 0
-            || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0 ? 0 : 1;
+    || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0 ? 0 : 1;
 
     if (! $row) {
         Utils::redir404();
@@ -128,8 +135,10 @@ if (isset($_POST['submit'])) {
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . di(Johncms\Api\BbcodeInterface::class)->buttons('form',
-                'text') . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
+            ? '<h3>' . _t('Text') . '</h3><div>' . di(Johncms\System\Legacy\Bbcode::class)->buttons(
+                'form',
+                'text'
+            ) . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
             . '</textarea></div>'
             : ($type == 'article' && mb_strlen($row['text']) > 500000
                 ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
@@ -158,7 +167,7 @@ if (isset($_POST['submit'])) {
             }
             echo '</select></div>';
         }
-        echo(($type == 'dir' && $empty)
+        echo (($type == 'dir' && $empty)
                 ? '<h3>' . _t('Section type') . '</h3><div><input type="radio" name="dir" value="1" '
                 . ($row['dir'] == 1
                     ? 'checked="checked"'

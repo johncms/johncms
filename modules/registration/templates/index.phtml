@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><?= _t('Registration') ?></h4>
 
-                    <?php if ($config->mod_reg == 1): ?>
+                    <?php if ($config['mod_reg'] == 1): ?>
                         <div class="alert alert-warning"><?= _t('You can get authorized on the site after confirmation of your registration.') ?></div>
                     <?php endif ?>
 
