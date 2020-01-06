@@ -55,7 +55,7 @@ $album = $req->fetch();
 $show = ! empty($request->getQuery('view', ''));
 $data['album'] = $album;
 $data['has_add_photo'] = (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7);
-$nav_chain->add($tools->checkout($album['name']), '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id']);
+$nav_chain->add($tools->checkout($album['name']), './show?al=' . $al . '&amp;user=' . $foundUser['id']);
 
 if ($show) {
     $title = _t('View photo');
@@ -79,7 +79,7 @@ if (
             'title'         => $title,
             'type'          => 'alert-danger',
             'message'       => _t('Access denied'),
-            'back_url'      => '?act=list&amp;user=' . $foundUser['id'],
+            'back_url'      => './list?user=' . $foundUser['id'],
             'back_url_name' => _t('Album List'),
         ]
     );
@@ -102,8 +102,8 @@ if (
     }
 
     if (! isset($_SESSION['ap']) || $_SESSION['ap'] !== $album['password']) {
-        $data['action_url'] = '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
-        $data['back_url'] = '?act=list&amp;user=' . $foundUser['id'];
+        $data['action_url'] = './show?al=' . $al . '&amp;user=' . $foundUser['id'];
+        $data['back_url'] = './list?user=' . $foundUser['id'];
         echo $view->render(
             'album::enter_password',
             [
@@ -163,7 +163,7 @@ if ($total) {
 $data['photos'] = $photos ?? [];
 $data['total'] = $total;
 $data['per_page'] = $itmOnPage;
-$data['pagination'] = $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view=1&amp;' : ''), $start, $total, $itmOnPage);
+$data['pagination'] = $tools->displayPagination('./show?al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view=1&amp;' : ''), $start, $total, $itmOnPage);
 
 $template = $show ? 'album::show_one' : 'album::show';
 echo $view->render(

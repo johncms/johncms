@@ -150,7 +150,7 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
                     'title'    => $title,
                     'type'     => 'alert-success',
                     'message'  => ($al ? _t('Album successfully changed') : _t('Album successfully created')),
-                    'back_url' => '?act=list&amp;user=' . $foundUser['id'],
+                    'back_url' => './list?user=' . $foundUser['id'],
                 ]
             );
             exit;
@@ -161,8 +161,8 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
         $data['error_message'] = $error;
     }
 
-    $data['action_url'] = '?act=edit&amp;user=' . $foundUser['id'] . '&amp;al=' . $al;
-    $data['back_url'] = '?act=list&amp;user=' . $foundUser['id'];
+    $data['action_url'] = './edit?user=' . $foundUser['id'] . '&amp;al=' . $al;
+    $data['back_url'] = './list?user=' . $foundUser['id'];
     $data['form_data'] = [
         'name'        => $tools->checkout($name),
         'description' => $tools->checkout($description),

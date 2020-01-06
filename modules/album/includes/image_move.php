@@ -58,7 +58,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                     'title'         => $title,
                     'type'          => 'alert-success',
                     'message'       => _t('Image successfully moved to the selected album'),
-                    'back_url'      => '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'],
+                    'back_url'      => './show?al=' . $al . '&amp;user=' . $foundUser['id'],
                     'back_url_name' => _t('Continue'),
                 ]
             );
@@ -82,8 +82,8 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 $res['name'] = $tools->checkout($res['name']);
                 $albums[] = $res;
             }
-            $data['action_url'] = '?act=image_move&amp;img=' . $img . '&amp;user=' . $foundUser['id'];
-            $data['back_url'] = '?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'];
+            $data['action_url'] = './image_move?img=' . $img . '&amp;user=' . $foundUser['id'];
+            $data['back_url'] = './show?al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'];
             $data['albums'] = $albums ?? [];
             echo $view->render(
                 'album::move_photo',
@@ -100,7 +100,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                     'title'         => $title,
                     'type'          => 'alert-info',
                     'message'       => _t('You must create at least one additional album in order to move the image'),
-                    'back_url'      => '?act=list&amp;user=' . $foundUser['id'],
+                    'back_url'      => './list?user=' . $foundUser['id'],
                     'back_url_name' => _t('Continue'),
                 ]
             );

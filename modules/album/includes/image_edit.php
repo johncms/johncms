@@ -53,13 +53,13 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 'title'         => $title,
                 'type'          => 'alert-success',
                 'message'       => _t('Image successfully changed'),
-                'back_url'      => '?act=show&amp;al=' . $album . '&amp;user=' . $foundUser['id'],
+                'back_url'      => './show?al=' . $album . '&amp;user=' . $foundUser['id'],
                 'back_url_name' => _t('Continue'),
             ]
         );
     } else {
-        $data['action_url'] = '?act=image_edit&amp;img=' . $img . '&amp;user=' . $foundUser['id'];
-        $data['back_url'] = '?act=show&amp;al=' . $album . '&amp;user=' . $foundUser['id'];
+        $data['action_url'] = './image_edit?img=' . $img . '&amp;user=' . $foundUser['id'];
+        $data['back_url'] = './show?al=' . $album . '&amp;user=' . $foundUser['id'];
         $data['image_url'] = '../upload/users/album/' . $foundUser['id'] . '/' . $res['tmb_name'];
         $data['description'] = $tools->checkout($res['description']);
         $data['error_message'] = $error ?? [];
