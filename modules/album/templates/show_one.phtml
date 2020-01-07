@@ -129,13 +129,13 @@ $photo = $data['photos'][0] ?? [];
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <?php if ($user->id === $photo->user_id): ?>
                         <a class="dropdown-item"
-                           href="?act=show&amp;al=<?= $photo->album_id ?>&amp;user=<?= $photo->user_id ?>&amp;view&amp;img=<?= $photo->id ?>&amp;profile">
+                           href="./show?al=<?= $photo->album_id ?>&amp;user=<?= $photo->user_id ?>&amp;view&amp;img=<?= $photo->id ?>&amp;profile">
                             <?= _t('Add to Profile') ?>
                         </a>
                     <?php endif; ?>
-                    <a class="dropdown-item" href="?act=image_edit&amp;img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Edit') ?></a>
-                    <a class="dropdown-item" href="?act=image_move&amp;img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Move') ?></a>
-                    <a class="dropdown-item" href="?act=image_delete&amp;img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Delete') ?></a>
+                    <a class="dropdown-item" href="./image_edit?img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Edit') ?></a>
+                    <a class="dropdown-item" href="./image_move?img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Move') ?></a>
+                    <a class="dropdown-item" href="./image_delete?img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= _t('Delete') ?></a>
                 </div>
             </div>
         </div>
@@ -155,5 +155,5 @@ $photo = $data['photos'][0] ?? [];
 
 <div class="mt-2">
     <a href="<?= $photo->user_album_url ?>"><?= _t('Back') ?></a><br>
-    <a href="?act=list&amp;user=<?= $photo->user_id ?>"><?= _t('Album List') ?></a>
+    <a href="./list?user=<?= $photo->user_id ?>"><?= _t('Album List') ?></a>
 </div>

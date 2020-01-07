@@ -35,7 +35,7 @@ $total = $req->rowCount();
 
 $data['create_url'] = '';
 if (($foundUser['id'] === $user->id && $total < $max_album && empty($user->ban)) || $user->rights >= 7) {
-    $data['create_url'] = '?act=edit&amp;user=' . $foundUser['id'];
+    $data['create_url'] = './edit?user=' . $foundUser['id'];
 }
 
 $foundUser['nick'] = $foundUser['name'];
@@ -50,14 +50,14 @@ if ($total) {
     while ($res = $req->fetch()) {
         $res['name'] = $tools->checkout($res['name']);
         $res['description'] = $tools->checkout($res['description'], 1, 1);
-        $res['album_url'] = '?act=show&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+        $res['album_url'] = './show?al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
 
         $res['has_edit'] = false;
         if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 6) {
-            $res['up_url'] = '?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
-            $res['down_url'] = '?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
-            $res['edit_url'] = '?act=edit&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
-            $res['delete_url'] = '?act=delete&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['up_url'] = './sort?mod=up&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['down_url'] = './sort?mod=down&amp;al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['edit_url'] = './edit?al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
+            $res['delete_url'] = './delete?al=' . $res['id'] . '&amp;user=' . $foundUser['id'];
             $res['has_edit'] = true;
         }
         $albums[] = $res;
