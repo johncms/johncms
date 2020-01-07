@@ -39,17 +39,17 @@ $data = [];
 $data['filters'] = [
     'all'   => [
         'name'   => _t('All'),
-        'url'    => '?act=users',
+        'url'    => '?./users',
         'active' => ! $mod,
     ],
     'boys'  => [
         'name'   => _t('Guys'),
-        'url'    => '?act=users&amp;mod=boys',
+        'url'    => '?./users?mod=boys',
         'active' => $mod === 'boys',
     ],
     'girls' => [
         'name'   => _t('Girls'),
-        'url'    => '?act=users&amp;mod=girls',
+        'url'    => '?./users?mod=girls',
         'active' => $mod === 'girls',
     ],
 ];
@@ -72,13 +72,13 @@ ORDER BY `u`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
     $users = [];
     while ($res = $req->fetch()) {
         $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-        $res['album_url'] = '?act=list&amp;user=' . $res['id'];
+        $res['album_url'] = '?./list?user=' . $res['id'];
         $users[] = $res;
     }
 }
 
 $data['total'] = $total;
-$data['pagination'] = $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $user->config->kmess);
+$data['pagination'] = $tools->displayPagination('?./users' . ($mod ? '?mod=' . $mod : '') . '&amp;', $start, $total, $user->config->kmess);
 $data['users'] = $users ?? [];
 
 echo $view->render(

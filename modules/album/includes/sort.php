@@ -59,4 +59,4 @@ switch ($mod) {
         break;
 }
 
-header('Location: ?act=list&user=' . $foundUser['id']);
+header('Location: ./list?user=' . $foundUser['id']);

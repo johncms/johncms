@@ -34,7 +34,7 @@ if ($req_obj->rowCount()) {
                 'title'    => $title,
                 'type'     => 'alert-danger',
                 'message'  => _t('User does not exists'),
-                'back_url' => '?act=list&amp;user=' . $owner['id'],
+                'back_url' => './list?user=' . $owner['id'],
             ]
         );
         exit;
@@ -54,7 +54,7 @@ if ($req_obj->rowCount()) {
                 'title'    => $title,
                 'type'     => 'alert-danger',
                 'message'  => _t('Access forbidden'),
-                'back_url' => '?act=list&amp;user=' . $owner['id'],
+                'back_url' => './list?user=' . $owner['id'],
             ]
         );
         exit;
@@ -64,7 +64,7 @@ if ($req_obj->rowCount()) {
     $arg = [
         'comments_table' => 'cms_album_comments', // Таблица с комментариями
         'object_table'   => 'cms_album_files',    // Таблица комментируемых объектов
-        'script'         => '?act=comments',      // Имя скрипта (с параметрами вызова)
+        'script'         => './comments',      // Имя скрипта (с параметрами вызова)
         'sub_id_name'    => 'img',                // Имя идентификатора комментируемого объекта
         'sub_id'         => $img,                 // Идентификатор комментируемого объекта
         'owner'          => $owner['id'],         // Владелец объекта
@@ -74,7 +74,7 @@ if ($req_obj->rowCount()) {
         'title'          => _t('Comments'),       // Название раздела
         'context_top'    => '',         // Выводится вверху списка
         'context_bottom' => '',                   // Выводится внизу списка
-        'back_url'       => '?act=show&al=' . $res_obj['album_id'] . '&user=' . $owner['id'],                   // Выводится внизу списка
+        'back_url'       => './show?al=' . $res_obj['album_id'] . '&user=' . $owner['id'],                   // Выводится внизу списка
     ];
 
     // Ставим метку прочтения

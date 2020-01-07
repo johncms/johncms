@@ -54,15 +54,15 @@ if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                     'title'    => $title,
                     'type'     => 'alert-success',
                     'message'  => _t('Album deleted'),
-                    'back_url' => '?act=list&amp;user=' . $foundUser['id'],
+                    'back_url' => './list?user=' . $foundUser['id'],
                 ]
             );
         } else {
             $delete_token = uniqid('', true);
             $_SESSION['delete_token'] = $delete_token;
             $data['delete_token'] = $delete_token;
-            $data['action_url'] = '?act=delete&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
-            $data['back_url'] = '?act=list&amp;user=' . $foundUser['id'];
+            $data['action_url'] = './delete?al=' . $al . '&amp;user=' . $foundUser['id'];
+            $data['back_url'] = './list?user=' . $foundUser['id'];
             $data['message'] = _t('Are you sure you want to delete this album? If it contains photos, they also will be deleted.');
             echo $view->render(
                 'album::image_delete',

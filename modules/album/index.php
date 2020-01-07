@@ -33,6 +33,7 @@ $db = di(PDO::class);
 $user = di(User::class);
 $tools = di(Tools::class);
 $view = di(Render::class);
+$route = di('route');
 
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
@@ -56,7 +57,7 @@ $title = _t('Albums');
 $nav_chain->add($title, '/album/');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
-$act = $request->getQuery('act', 'index');
+$act = $route['action'] ?? 'index';
 $mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 $al = $request->getQuery('al', null, FILTER_SANITIZE_NUMBER_INT);
 $img = $request->getQuery('img', null, FILTER_SANITIZE_NUMBER_INT);

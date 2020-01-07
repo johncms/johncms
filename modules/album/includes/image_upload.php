@@ -129,7 +129,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
                         'title'         => $title,
                         'type'          => 'alert-success',
                         'message'       => _t('Image uploaded'),
-                        'back_url'      => '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'],
+                        'back_url'      => './show?al=' . $al . '&amp;user=' . $foundUser['id'],
                         'back_url_name' => _t('Continue'),
                     ]
                 );
@@ -139,8 +139,8 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
             }
         }
     }
-    $data['action_url'] = '?act=image_upload&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
-    $data['back_url'] = '?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'];
+    $data['action_url'] = './image_upload?al=' . $al . '&amp;user=' . $foundUser['id'];
+    $data['back_url'] = './show?al=' . $al . '&amp;user=' . $foundUser['id'];
     $data['error_message'] = $error ?? [];
     echo $view->render(
         'album::add_photo',

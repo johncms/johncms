@@ -1,4 +1,4 @@
-<?php
+H<?php
 
 /**
  * This file is part of JohnCMS Content Management System.
