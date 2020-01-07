@@ -169,7 +169,7 @@ class Photo
      */
     public function getDetailUrlAttribute(): string
     {
-        return '?act=show&amp;al=' . $this->album_id . '&amp;img=' . $this->id . '&amp;user=' . $this->user_id . '&amp;view=1';
+        return './show?al=' . $this->album_id . '&amp;img=' . $this->id . '&amp;user=' . $this->user_id . '&amp;view=1';
     }
 
     /**
@@ -217,7 +217,7 @@ class Photo
      */
     public function getCommentsUrlAttribute(): string
     {
-        return '?act=comments&amp;img=' . $this->id;
+        return './comments?img=' . $this->id;
     }
 
     /**
@@ -227,7 +227,7 @@ class Photo
      */
     public function getDownloadUrlAttribute(): string
     {
-        return '?act=image_download&amp;img=' . $this->id;
+        return './image_download?img=' . $this->id;
     }
 
     /**
@@ -237,7 +237,7 @@ class Photo
      */
     public function getUserAlbumsUrlAttribute(): string
     {
-        return '?act=list&amp;user=' . $this->user_id;
+        return './list?user=' . $this->user_id;
     }
 
     /**
@@ -247,7 +247,7 @@ class Photo
      */
     public function getUserAlbumUrlAttribute(): string
     {
-        return '?act=show&amp;al=' . $this->album_id . '&amp;user=' . $this->user_id;
+        return './show?al=' . $this->album_id . '&amp;user=' . $this->user_id;
     }
 
     /**
@@ -257,7 +257,7 @@ class Photo
      */
     public function getLikeUrlAttribute(): string
     {
-        return '?act=vote&amp;mod=plus&amp;img=' . $this->id;
+        return './vote?mod=plus&amp;img=' . $this->id;
     }
 
     /**
@@ -267,7 +267,7 @@ class Photo
      */
     public function getDislikeUrlAttribute(): string
     {
-        return '?act=vote&amp;mod=minus&amp;img=' . $this->id;
+        return './vote?mod=minus&amp;img=' . $this->id;
     }
 
     /**

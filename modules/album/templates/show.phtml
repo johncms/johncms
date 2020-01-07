@@ -37,7 +37,7 @@ $this->layout(
 
 <?php if ($data['has_add_photo']): ?>
     <div class="mb-3">
-        <a href="?act=image_upload&amp;al=<?= $data['album']['id'] ?>&amp;user=<?= $data['album']['user_id'] ?>"
+        <a href="./image_upload?al=<?= $data['album']['id'] ?>&amp;user=<?= $data['album']['user_id'] ?>"
            class="btn btn-primary"
         ><?= _t('Add image') ?></a>
     </div>

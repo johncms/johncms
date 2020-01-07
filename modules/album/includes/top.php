@@ -45,7 +45,7 @@ switch ($mod) {
         $join = 'INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`';
         $where = "`cms_album_files`.`user_id` = '" . $user->id . "' AND `cms_album_files`.`unread_comments` = 1 GROUP BY `cms_album_files`.`id`";
         $order = '`cms_album_comments`.`time` DESC';
-        $link = '&amp;mod=my_new_comm';
+        $link = '?mod=my_new_comm';
         break;
 
     case 'last_comm':
@@ -56,7 +56,7 @@ switch ($mod) {
         $join = 'INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`';
         $where = '`cms_album_comments`.`time` > ' . (time() - 86400) . ' GROUP BY `cms_album_files`.`id`';
         $order = '`cms_album_comments`.`time` DESC';
-        $link = '&amp;mod=last_comm';
+        $link = '?mod=last_comm';
         break;
 
     case 'views':
@@ -66,7 +66,7 @@ switch ($mod) {
         $join = '';
         $where = "`cms_album_files`.`views` > '0'" . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`views` DESC';
-        $link = '&amp;mod=views';
+        $link = '?mod=views';
         break;
 
     case 'downloads':
@@ -76,7 +76,7 @@ switch ($mod) {
         $join = '';
         $where = '`cms_album_files`.`downloads` > 0' . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`downloads` DESC';
-        $link = '&amp;mod=downloads';
+        $link = '?mod=downloads';
         break;
 
     case 'comments':
@@ -86,7 +86,7 @@ switch ($mod) {
         $join = '';
         $where = "`cms_album_files`.`comm_count` > '0'" . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`comm_count` DESC';
-        $link = '&amp;mod=comments';
+        $link = '?mod=comments';
         break;
 
     case 'votes':
@@ -96,7 +96,7 @@ switch ($mod) {
         $join = '';
         $where = '(`vote_plus` - `vote_minus`) > 2' . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`rating` DESC';
-        $link = '&amp;mod=votes';
+        $link = '?mod=votes';
         break;
 
     case 'trash':
@@ -106,7 +106,7 @@ switch ($mod) {
         $join = '';
         $where = '(`vote_plus` - `vote_minus`) < -2' . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`rating` ASC';
-        $link = '&amp;mod=trash';
+        $link = '?mod=trash';
         break;
 
     default:
@@ -151,7 +151,7 @@ if ($total) {
 
 $data['photos'] = $photos;
 $data['total'] = $total;
-$data['pagination'] = $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess);
+$data['pagination'] = $tools->displayPagination('./top' . $link . '&amp;', $start, $total, $user->config->kmess);
 
 $nav_chain->add($title);
 

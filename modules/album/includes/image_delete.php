@@ -43,13 +43,13 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             $db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '${img}'");
             $db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '${img}'");
 
-            header('Location: ?act=show&al=' . $album . '&user=' . $foundUser['id']);
+            header('Location: ./show?al=' . $album . '&user=' . $foundUser['id']);
         } else {
             $delete_token = uniqid('', true);
             $_SESSION['delete_token'] = $delete_token;
             $data['delete_token'] = $delete_token;
-            $data['action_url'] = '?act=image_delete&amp;img=' . $img . '&amp;user=' . $foundUser['id'];
-            $data['back_url'] = '?act=show&amp;al=' . $album . 'user=' . $foundUser['id'];
+            $data['action_url'] = './image_delete?img=' . $img . '&amp;user=' . $foundUser['id'];
+            $data['back_url'] = './show?al=' . $album . 'user=' . $foundUser['id'];
             $data['message'] = _t('Are you sure you want to delete this image?');
             echo $view->render(
                 'album::image_delete',
