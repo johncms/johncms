@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Library;
 
-use Johncms\View\Extension\Assets;
+use Johncms\System\Users\User;
+use Johncms\System\View\Extension\Assets;
+use PDO;
 
 /**
  * Звездный рейтинг статей
@@ -28,7 +30,7 @@ class Rating
     private $asset;
 
     /**
-     * @var \PDO
+     * @var PDO
      */
     private $db;
 
@@ -36,15 +38,15 @@ class Rating
      * обязательный аргумент, индификатор статьи
      * @var int
      */
-    private $lib_id = false;
+    private $lib_id;
 
     /**
      * Rating constructor.
-     * @param $id
+     * @param int $id
      */
-    public function __construct($id)
+    public function __construct(int $id)
     {
-        $this->db = di(\PDO::class);
+        $this->db = di(PDO::class);
         $this->asset = di(Assets::class);
 
         $this->lib_id = $id;
@@ -54,7 +56,7 @@ class Rating
     /**
      * Чекер события нажатия кнопки
      */
-    private function check()
+    private function check(): void
     {
         if (isset($_POST['rating_submit'])) {
             $this->addVote($_POST['vote']);
@@ -64,19 +66,19 @@ class Rating
     /**
      * Добавление|обновление рейтинговой звезды
      * @param $point (0 - 5)
-     * @return redirect на страницу для голосования
+     * return redirect на страницу для голосования
      */
-    private function addVote($point)
+    private function addVote($point): void
     {
-        global $user; //TODO: убрать эту жесть!
+        $user = di(User::class);
 
-        $point = in_array($point, range(0, 5)) ? $point : 0;
+        $point = in_array($point, range(0, 5), true) ? $point : 0;
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ?');
         $stmt->execute([$user->id, $this->lib_id]);
         if ($stmt->fetchColumn() > 0) {
             $stmt = $this->db->prepare('UPDATE `cms_library_rating` SET `point` = ? WHERE `user_id` = ? AND `st_id` = ?');
             $stmt->execute([$point, $user->id, $this->lib_id]);
-        } elseif ($user->isValid() && $this->lib_id > 0) {
+        } elseif ($this->lib_id > 0 && $user->isValid()) {
             $stmt = $this->db->prepare('INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (?, ?, ?)');
             $stmt->execute([$user->id, $this->lib_id, $point]);
         }
@@ -86,14 +88,14 @@ class Rating
 
     /**
      * Получение средней оценки (количество закрашенных звезд)
-     * @return float|int
+     * @return int
      */
-    private function getRate()
+    private function getRate(): int
     {
         $stmt = $this->db->prepare('SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
 
-        return floor($stmt->fetchColumn() * 2) / 2;
+        return (int) floor($stmt->fetchColumn() * 2) / 2;
     }
 
     /**
@@ -101,23 +103,22 @@ class Rating
      * @param int $anchor
      * @return string
      */
-    public function viewRate($anchor = 0)
+    public function viewRate(int $anchor = 0): string
     {
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
-        $res = ($anchor ? '<a href="#rating">' : '') .
+
+        return ($anchor ? '<a href="#rating">' : '') .
             '<img src="' . $this->asset->url('images/old/star.' . (str_replace('.', '-', (string) $this->getRate())) . '.gif') . '" alt="">' .
             ($anchor ? '</a>' : '') .
             ' (' . $stmt->fetchColumn() . ')';
-
-        return $res;
     }
 
     /**
      * Вывод формы для голосования
      * @return string
      */
-    public function printVote()
+    public function printVote(): string
     {
         global $user; //TODO: убрать эту жесть!
 
@@ -129,7 +130,7 @@ class Rating
         $return .= '<form action="?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
         $return .= '<a id="rating"></a>';
         for ($r = 0; $r < 6; $r++) {
-            $return .= ' <input type="radio" ' . ($r == $userVote ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
+            $return .= ' <input type="radio" ' . ($r === $userVote ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
         }
         $return .= '<br><input type="submit" name="rating_submit" value="' . _t('Vote') . '" />' . PHP_EOL;
         $return .= '</div></form>' . PHP_EOL;

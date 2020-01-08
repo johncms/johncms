@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Library;
 
 use Johncms\System\Legacy\Tools;
+use PDO;
 
 /**
  * Класс дерева (Nested Sets)
@@ -37,15 +38,15 @@ class Tree
 
     /**
      * Обязательный аргумент, индификатор текущей вложенности parent
-     * @var int|bool
+     * @var int
      */
-    private $start_id = false;
+    private $start_id;
 
     private $child;
 
     private $parent;
 
-    /** @var \PDO $db */
+    /** @var PDO $db */
     private $db;
 
     /**
@@ -53,10 +54,10 @@ class Tree
      */
     private $tools;
 
-    public function __construct($id)
+    public function __construct(int $id)
     {
         $this->start_id = $id;
-        $this->db = di(\PDO::class);
+        $this->db = di(PDO::class);
         $this->tools = di(Tools::class);
     }
 
@@ -65,9 +66,9 @@ class Tree
      * @param int $id
      * @return Tree
      */
-    public function getAllChildsId($id = 0)
+    public function getAllChildsId(int $id = 0): self
     {
-        $id = $id == 0 ? $this->start_id : $id;
+        $id = $id === 0 ? $this->start_id : $id;
         $stmt = $this->db->prepare('SELECT `dir` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
         $dirtype = $stmt->fetchColumn();
@@ -91,7 +92,7 @@ class Tree
      * @param mixed $data
      * @return array
      */
-    public function cleanTrash($data)
+    public function cleanTrash($data): array
     {
         if (! is_array($data)) {
             $stmt = $this->db->prepare('DELETE FROM `cms_library_comments` WHERE `sub_id` = ?');
@@ -119,7 +120,7 @@ class Tree
      * @param void
      * @return array
      */
-    public function cleanDir()
+    public function cleanDir(): array
     {
         $array = $this->result();
         $dirs = array_key_exists('dirs', $array) ? $array['dirs'] : 0;
@@ -145,9 +146,9 @@ class Tree
      * @param int $parent
      * @return Tree
      */
-    public function getChildsDir($parent = 0)
+    public function getChildsDir(int $parent = 0): self
     {
-        $parent = $parent == 0 ? $this->start_id : $parent;
+        $parent = $parent === 0 ? $this->start_id : $parent;
         $stmt = $this->db->prepare('SELECT `id` FROM `library_cats` WHERE `parent` = ? AND `dir` = 1');
         $stmt->execute([$parent]);
         if ($stmt->rowCount()) {
@@ -165,14 +166,14 @@ class Tree
      * @param int $id
      * @return Tree
      */
-    public function processNavPanel($id = 0)
+    public function processNavPanel(int $id = 0): self
     {
-        $id = $id == 0 ? $this->start_id : $id;
+        $id = $id === 0 ? $this->start_id : $id;
         $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
         $this->parent = $stmt->fetch();
         $this->result[] = ['id' => $this->parent['id'], 'name' => $this->parent['name']];
-        if ($this->parent['parent'] != 0) {
+        if ($this->parent['parent'] !== 0) {
             $this->processNavPanel($this->parent['parent']);
         } else {
             krsort($this->result);
@@ -186,14 +187,14 @@ class Tree
      * @param void
      * @return string
      */
-    public function printNavPanel()
+    public function printNavPanel(): string
     {
         $array = $this->result();
         $cnt = count($array);
         $return = [];
         $x = 1;
         foreach ($array as $cat) {
-            $return[] = $x == $cnt ? '<strong>' . $this->tools->checkout($cat['name']) . '</strong>' : '<a href="?do=dir&amp;id=' . $cat['id'] . '">' . $this->tools->checkout($cat['name']) . '</a>';
+            $return[] = $x === $cnt ? '<strong>' . $this->tools->checkout($cat['name']) . '</strong>' : '<a href="?do=dir&amp;id=' . $cat['id'] . '">' . $this->tools->checkout($cat['name']) . '</a>';
             $x++;
         }
 
@@ -204,7 +205,7 @@ class Tree
      * Получение результата
      * @return array
      */
-    public function result()
+    public function result(): array
     {
         return $this->result;
     }
