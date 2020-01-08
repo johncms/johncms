@@ -5,7 +5,7 @@
  * @var array $sysconf
  * @var array $themelist
  */
-$this->layout('system::layout/default', ['title' => _t('Admin Panel'), 'page_title' => _t('System Settings')]);
+$this->layout('system::layout/default', ['title' => _t('Admin Panel')]);
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['settings' => true]]));
 ?>
 
