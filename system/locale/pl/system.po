@@ -2,16 +2,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-04-05 06:22-0400\n"
+"PO-Revision-Date: 2020-01-08 11:48+0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Polish\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: pl\n"
+"X-Crowdin-File: /system/system.pot\n"
 "X-Poedit-SearchPath-0: login.php\n"
 "X-Poedit-SearchPath-1: go.php\n"
 "X-Poedit-SearchPath-2: exit.php\n"
@@ -19,478 +25,409 @@ msgstr ""
 "X-Poedit-SearchPath-4: system/head.php\n"
 "X-Poedit-SearchPath-5: system/end.php\n"
 "X-Poedit-SearchPath-6: system/mainmenu.php\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Crowdin-Project: johncms\n"
-"X-Crowdin-Language: pl\n"
-"X-Crowdin-File: /system/system.pot\n"
-"Language: pl_PL\n"
 
-#: exit.php:30
-msgid "Are you sure you want to leave the site?"
-msgstr "Czy na pewno chcesz opuścić tę stronę?"
-
-#: exit.php:31
-msgid "Logout"
-msgstr "Wyloguj"
-
-#: exit.php:32 system/johncms/Comments.php:243
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: go.php:37
-msgid "Select language"
-msgstr "Wybierz język"
-
-#: go.php:43
-msgid "Default"
-msgstr "Domyślnie"
-
-#: go.php:50
-msgid "Apply"
-msgstr "Zatwierdź"
-
-#: go.php:50 go.php:67 system/johncms/Comments.php:112
-#: system/johncms/Comments.php:135 system/johncms/Comments.php:143
-#: system/johncms/Comments.php:146 system/johncms/Comments.php:163
-#: system/johncms/Comments.php:191 system/johncms/Comments.php:200
-#: system/johncms/Comments.php:203 system/johncms/Comments.php:247
-msgid "Back"
-msgstr "Powrót"
-
-#: go.php:58
-msgid "External Link"
-msgstr "Link zewnętrzny"
-
-#: go.php:61
-msgid "ATTENTION!"
-msgstr "UWAGA!"
-
-#: go.php:62
-msgid "You are going to leave our site and go to an external link"
-msgstr "<h3>Uwaga!</h3>Właśnie zamierzasz opuścić naszą stronę i przechodzisz na link zewnętrzny"
-
-#: go.php:63
-msgid "Administration of our site is not responsible for the content of external sites"
-msgstr "Nie ponosimy żadnej odpowiedzialności za treści stron zewnętrznych"
-
-#: go.php:64
-#, php-format
-msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr "Zaleca się, aby nie podawać swoje dane, odnoszące się do %s (login, hasło), na innych stronach internetowych"
-
-#: go.php:65
-msgid "Go to Link"
-msgstr "Przejdź do linku"
-
-#: login.php:37 system/end.php:35 system/head.php:110
-msgid "Home"
-msgstr "Strona główna"
-
-#: login.php:39 login.php:158 system/head.php:112
-msgid "Login"
-msgstr "Login"
-
-#: login.php:49
-msgid "You have not entered login"
-msgstr "Nie wpisałeś loginu"
-
-#: login.php:53
-msgid "You have not entered password"
-msgstr "Nie wpisałeś hasła"
-
-#: login.php:57
-msgid "Nickname"
-msgstr "Nazwa użytkownika"
-
-#: login.php:57 login.php:61
-msgid "Invalid length"
-msgstr "Nieprawidłowa długość"
-
-#: login.php:61 login.php:155
-msgid "Password"
-msgstr "Hasło"
-
-#: login.php:81
-msgid "The security code is not correct"
-msgstr "Kod zabezpieczający nie jest poprawny"
-
-#: login.php:87
-msgid "Verification code"
-msgstr "Kod weryfikacyjny"
-
-#: login.php:88
-msgid "Enter verification code"
-msgstr "Wprowadź kod weryfikacyjny"
-
-#: login.php:92
-msgid "Continue"
-msgstr "Kontynuuj"
-
-#: login.php:104
-msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr "Przykro nam, ale wniosek o rejestrację nie został jeszcze zaakceptowany<br> Proszę, bądź cierpliwy."
-
-#: login.php:128
-msgid "Enter site"
-msgstr "Otwórz stronę"
-
-#: login.php:137 login.php:141
-msgid "Authorization failed"
-msgstr "Autoryzacja nie powiodła się"
-
-#: login.php:153
-msgid "Username"
-msgstr "Login"
-
-#: login.php:157
-msgid "Remember"
-msgstr "Zapamiętaj"
-
-#: login.php:160
-msgid "Registration"
-msgstr "Rejestracja"
-
-#: login.php:161
-msgid "Forgot password?"
-msgstr "Nie pamiętasz hasła?"
-
-#: system/head.php:53
-msgid "Site News"
-msgstr "Nowości na stronie"
-
-#: system/head.php:106
-msgid "Hi"
-msgstr "Cześć"
-
-#: system/head.php:106 system/johncms/Tools.php:299
-msgid "Guest"
-msgstr "Gość"
-
-#: system/head.php:111
-msgid "Personal"
-msgstr "Panel"
-
-#: system/head.php:198
+#: system/app/old_notifications.phtml:9
 msgid "Ban"
 msgstr "Banuj"
 
-#: system/head.php:198
+#: system/app/old_notifications.phtml:9
 msgid "Details"
 msgstr "Szczegóły"
 
-#: system/head.php:207
+#: system/app/old_notifications.phtml:16
 msgid "System"
 msgstr "System"
 
-#: system/head.php:219
+#: system/app/old_notifications.phtml:28
 msgid "Mail"
 msgstr "Wiadomości"
 
-#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
+#: system/app/old_notifications.phtml:32 system/app/sidebar-main-menu.phtml:55
 msgid "Guestbook"
 msgstr "Księga gości"
 
-#: system/head.php:229
+#: system/app/old_notifications.phtml:38
 msgid "Comments"
 msgstr "Komentarze"
 
-#: system/head.php:233 system/johncms/Counters.php:164
+#: system/app/old_notifications.phtml:42
 msgid "Unread"
 msgstr "Nieprzeczytane"
 
-#: system/johncms/Bbcode.php:164
-msgid "Edit List"
-msgstr "Edycja listy"
-
-#: system/johncms/Bbcode.php:175
-msgid "Add Smilies"
-msgstr "Dodaj emotikone"
-
-#: system/johncms/Bbcode.php:233
-msgid "Bold"
-msgstr "Pogrubienie"
-
-#: system/johncms/Bbcode.php:234
-msgid "Italic"
-msgstr "Pochylenie"
-
-#: system/johncms/Bbcode.php:235
-msgid "Underline"
-msgstr "Podkreślenie"
-
-#: system/johncms/Bbcode.php:236
-msgid "Strike"
-msgstr "Strajk"
-
-#: system/johncms/Bbcode.php:237
-msgid "Text Color"
-msgstr "Kolor tekstu"
-
-#: system/johncms/Bbcode.php:238
-msgid "Background Color"
-msgstr "Kolor tła"
-
-#: system/johncms/Bbcode.php:239
-msgid "List"
-msgstr "Lista"
-
-#: system/johncms/Bbcode.php:240
-msgid "Spoiler"
-msgstr "Spoiler"
-
-#: system/johncms/Bbcode.php:241
-msgid "Quote"
-msgstr "Cytat"
-
-#: system/johncms/Bbcode.php:242
-msgid "URL"
-msgstr "Link"
-
-#: system/johncms/Bbcode.php:243
-msgid "Code"
-msgstr "Kod"
-
-#: system/johncms/Bbcode.php:247
-msgid "Smilies"
-msgstr "Emotikonki"
-
-#: system/johncms/Bbcode.php:287
-msgid "Added"
-msgstr "Dodano"
-
-#: system/johncms/Comments.php:104 system/johncms/Comments.php:299
-msgid "Reply"
-msgstr "Odpowiedź"
-
-#: system/johncms/Comments.php:112
-msgid "Administrator already replied to this message"
-msgstr "Administrator już odpowiedział na tę wiadomość"
-
-#: system/johncms/Comments.php:146 system/johncms/Comments.php:200
-msgid "Wrong data"
-msgstr "Nieprawidłowe dane"
-
-#: system/johncms/Comments.php:154 system/johncms/Comments.php:300
-msgid "Edit"
-msgstr "Edytuj"
-
-#: system/johncms/Comments.php:163
-msgid "You cannot edit posts of higher administration"
-msgstr "Edytować posty może tylko administrator"
-
-#: system/johncms/Comments.php:240 system/johncms/Comments.php:242
-#: system/johncms/Comments.php:301
-msgid "Delete"
-msgstr "Usuń"
-
-#: system/johncms/Comments.php:241
-msgid "Do you really want to delete?"
-msgstr "Czy na pewno chcesz usunąć?"
-
-#: system/johncms/Comments.php:244
-msgid "Clear all messages from this user"
-msgstr "Usuń wszystkie wiadomości od tego użytkownika"
-
-#: system/johncms/Comments.php:245
-msgid "Clear"
-msgstr "Wyczyść"
-
-#: system/johncms/Comments.php:307
-msgid "Edited"
-msgstr "Edytowano"
-
-#: system/johncms/Comments.php:331
-msgid "The list is empty"
-msgstr "Lista jest pusta"
-
-#: system/johncms/Comments.php:334
-msgid "Total"
-msgstr "Wszystkich"
-
-#: system/johncms/Comments.php:340
-msgid "To Page"
-msgstr "Do strony"
-
-#: system/johncms/Comments.php:399
-msgid "Message"
-msgstr "Wiadomość"
-
-#: system/johncms/Comments.php:402
-msgid "Send"
-msgstr "Wyślij"
-
-#: system/johncms/Comments.php:422
-msgid "Text is too short"
-msgstr "Tekst jest za krótki"
-
-#: system/johncms/Comments.php:428
-msgid "You cannot add the message so often<br>Please, wait"
-msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać"
-
-#: system/johncms/Comments.php:428
-msgid "seconds"
-msgstr "sekund"
-
-#: system/johncms/Comments.php:438
-msgid "Message already exists"
-msgstr "Taka wiadomość już istnieje"
-
-#: system/johncms/Counters.php:163
-msgid "Show for Period"
-msgstr "Pokaż za okres"
-
-#: system/johncms/Counters.php:170
-msgid "Last activity"
-msgstr "Ostatnia aktywność"
-
-#: system/johncms/NewsWidget.php:63
-msgid "show more"
-msgstr "pokaż więcej"
-
-#: system/johncms/NewsWidget.php:98
-msgid "Discuss"
-msgstr "Dyskutuj"
-
-#: system/johncms/Tools.php:135
-msgid "Today"
-msgstr "Dzisiaj"
-
-#: system/johncms/Tools.php:138
-msgid "Yesterday"
-msgstr "Wczoraj"
-
-#: system/johncms/Tools.php:154
-msgid "ERROR"
-msgstr "BŁĄD"
-
-#: system/johncms/Tools.php:234
-msgid "List of Admins"
-msgstr "Lista adminów"
-
-#: system/johncms/Tools.php:235
-msgid "Watching the photo album"
-msgstr "Zobacz album fotograficzny"
-
-#: system/johncms/Tools.php:236
-msgid "List of birthdays"
-msgstr "Lista urodzin"
-
-#: system/johncms/Tools.php:237 system/mainmenu.php:57
-msgid "Downloads"
-msgstr "Pliki do pobrania"
-
-#: system/johncms/Tools.php:238
-msgid "Reading the FAQ"
-msgstr "Przeczytaj FAQ"
-
-#: system/johncms/Tools.php:239 system/mainmenu.php:47
-msgid "Forum"
-msgstr "Forum"
-
-#: system/johncms/Tools.php:240
-msgid "Forum Files"
-msgstr "Pliki forum"
-
-#: system/johncms/Tools.php:241
-msgid "Looking, who in Forum?"
-msgstr "Patrzy kto jest na forum?"
-
-#: system/johncms/Tools.php:243
-msgid "Here, in the list"
-msgstr "Tutaj, na liście"
-
-#: system/johncms/Tools.php:244
-msgid "On the Homepage"
-msgstr "Na stronie głównej"
-
-#: system/johncms/Tools.php:245 system/mainmenu.php:62
-msgid "Library"
-msgstr "Biblioteka"
-
-#: system/johncms/Tools.php:246
-msgid "Personal correspondence"
-msgstr "Prywatne wiadomości"
-
-#: system/johncms/Tools.php:247
-msgid "Reading the news"
-msgstr "Czyta Faq"
-
-#: system/johncms/Tools.php:248
-msgid "Who is online?"
-msgstr "Kto jest online?"
-
-#: system/johncms/Tools.php:249
-msgid "Profile"
-msgstr "Profil"
-
-#: system/johncms/Tools.php:250
-msgid "Personal Profile"
-msgstr "Wasny profil"
-
-#: system/johncms/Tools.php:251
-msgid "Registered on the site"
-msgstr "Zarejestrowany na stronie"
-
-#: system/johncms/Tools.php:252
-msgid "List of users"
-msgstr "Lista użytkowników"
-
-#: system/johncms/Tools.php:253
-msgid "Watching Top 10 Users"
-msgstr "Ogląda Top 10 użytkowników"
-
-#: system/johncms/Tools.php:367
-msgid "Last Visit"
-msgstr "Ostatnia wizyta"
-
-#: system/johncms/Tools.php:373
-msgid "Browser"
-msgstr "Przeglądarka"
-
-#: system/johncms/Tools.php:374
-msgid "IP address"
-msgstr "Adres IP"
-
-#: system/johncms/Tools.php:393
-msgid "IP History"
-msgstr "Historia IP"
-
-#: system/johncms/Tools.php:594
-msgid "Day"
-msgid_plural "Days"
-msgstr[0] "Dzień"
-msgstr[1] "Dni"
-msgstr[2] "Dni"
-
-#: system/mainmenu.php:30
-msgid "Information"
-msgstr "Informacja"
-
-#: system/mainmenu.php:32
+#: system/app/sidebar-main-menu.phtml:26
 msgid "News archive"
 msgstr "Archiwum aktualności"
 
-#: system/mainmenu.php:33
-msgid "Information, FAQ"
-msgstr "Informacje, pytania i odpowiedzi"
+#: system/app/sidebar-main-menu.phtml:41
+msgid "Forum"
+msgstr "Forum"
 
-#: system/mainmenu.php:38
-msgid "Communication"
-msgstr "Komunikacja"
+#: system/app/sidebar-main-menu.phtml:70
+msgid "Downloads"
+msgstr "Pliki do pobrania"
 
-#: system/mainmenu.php:53
-msgid "Useful"
-msgstr "Pobieralnia"
+#: system/app/sidebar-main-menu.phtml:86
+msgid "Library"
+msgstr "Biblioteka"
 
-#: system/mainmenu.php:69
-msgid "Community"
-msgstr "Społeczność"
-
-#: system/mainmenu.php:70
+#: system/app/sidebar-main-menu.phtml:101
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: system/mainmenu.php:71
+#: system/app/sidebar-main-menu.phtml:115
 msgid "Photo Albums"
 msgstr "Albumy zdjęć"
 
+#: system/app/sidebar-main-menu.phtml:129
+msgid "Information, FAQ"
+msgstr "Informacje, pytania i odpowiedzi"
+
+#: system/app/sidebar-main-menu.phtml:140
+msgid "Admin Panel"
+msgstr "Panel Administratora"
+
+#: system/app/sidebar-main-menu.phtml:149
+msgid "Admin Chat"
+msgstr "Czat administracyjny"
+
+#: system/app/sidebar-user-menu.phtml:26 system/layout/old_default.phtml:51
+msgid "Guest"
+msgstr "Gość"
+
+#: system/app/sidebar-user-menu.phtml:44
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+#: system/app/sidebar-user-menu.phtml:56 system/layout/old_default.phtml:64
+msgid "Personal"
+msgstr "Panel"
+
+#: system/app/sidebar-user-menu.phtml:64
+msgid "Exit"
+msgstr "Wyjście"
+
+#: system/app/sidebar-user-menu.phtml:74
+msgid "Registration"
+msgstr "Rejestracja"
+
+#: system/app/sidebar-user-menu.phtml:86 system/layout/old_default.phtml:69
+msgid "Login"
+msgstr "Login"
+
+#: system/layout/old_default.phtml:50
+msgid "Hi"
+msgstr "Cześć"
+
+#: system/layout/old_default.phtml:57
+msgid "Home"
+msgstr "Strona główna"
+
+#: system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr "Czy na pewno chcesz usunąć?"
+
+#: system/pages/comments_delete.phtml:26 system/pages/comments_list.phtml:99
+msgid "Delete"
+msgstr "Usuń"
+
+#: system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr "Wyczyść"
+
+#: system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr "Wiadomość"
+
+#: system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr "Wyślij"
+
+#: system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Lista jest pusta"
+
+#: system/pages/comments_list.phtml:50
+msgid "Reply"
+msgstr "Odpowiedź"
+
+#: system/pages/comments_list.phtml:53
+msgid "Quote"
+msgstr "Cytat"
+
+#: system/pages/comments_list.phtml:92
+msgid "Edited:"
+msgstr "Edytowane:"
+
+#: system/pages/comments_list.phtml:96
+msgid "Edit"
+msgstr "Edytuj"
+
+#: system/pages/comments_list.phtml:114 system/pages/result.phtml:29
+msgid "Back"
+msgstr "Powrót"
+
+#~ msgid "Are you sure you want to leave the site?"
+#~ msgstr "Czy na pewno chcesz opuścić tę stronę?"
+
+#~ msgid "Logout"
+#~ msgstr "Wyloguj"
+
+#~ msgid "Select language"
+#~ msgstr "Wybierz język"
+
+#~ msgid "Default"
+#~ msgstr "Domyślnie"
+
+#~ msgid "Apply"
+#~ msgstr "Zatwierdź"
+
+#~ msgid "External Link"
+#~ msgstr "Link zewnętrzny"
+
+#~ msgid "ATTENTION!"
+#~ msgstr "UWAGA!"
+
+#~ msgid "You are going to leave our site and go to an external link"
+#~ msgstr ""
+#~ "<h3>Uwaga!</h3>Właśnie zamierzasz opuścić naszą stronę i przechodzisz na "
+#~ "link zewnętrzny"
+
+#~ msgid ""
+#~ "Administration of our site is not responsible for the content of external "
+#~ "sites"
+#~ msgstr "Nie ponosimy żadnej odpowiedzialności za treści stron zewnętrznych"
+
+#, php-format
+#~ msgid ""
+#~ "It is recommended not to specify your data, relating to %s (Login, "
+#~ "Password), on third party sites"
+#~ msgstr ""
+#~ "Zaleca się, aby nie podawać swoje dane, odnoszące się do %s (login, "
+#~ "hasło), na innych stronach internetowych"
+
+#~ msgid "Go to Link"
+#~ msgstr "Przejdź do linku"
+
+#~ msgid "You have not entered login"
+#~ msgstr "Nie wpisałeś loginu"
+
+#~ msgid "You have not entered password"
+#~ msgstr "Nie wpisałeś hasła"
+
+#~ msgid "Nickname"
+#~ msgstr "Nazwa użytkownika"
+
+#~ msgid "Invalid length"
+#~ msgstr "Nieprawidłowa długość"
+
+#~ msgid "Password"
+#~ msgstr "Hasło"
+
+#~ msgid "The security code is not correct"
+#~ msgstr "Kod zabezpieczający nie jest poprawny"
+
+#~ msgid "Verification code"
+#~ msgstr "Kod weryfikacyjny"
+
+#~ msgid "Enter verification code"
+#~ msgstr "Wprowadź kod weryfikacyjny"
+
+#~ msgid "Continue"
+#~ msgstr "Kontynuuj"
+
+#~ msgid ""
+#~ "Sorry, but your request for registration is not considered yet. Please, "
+#~ "be patient."
+#~ msgstr ""
+#~ "Przykro nam, ale wniosek o rejestrację nie został jeszcze "
+#~ "zaakceptowany<br> Proszę, bądź cierpliwy."
+
+#~ msgid "Enter site"
+#~ msgstr "Otwórz stronę"
+
+#~ msgid "Authorization failed"
+#~ msgstr "Autoryzacja nie powiodła się"
+
+#~ msgid "Username"
+#~ msgstr "Login"
+
+#~ msgid "Remember"
+#~ msgstr "Zapamiętaj"
+
+#~ msgid "Forgot password?"
+#~ msgstr "Nie pamiętasz hasła?"
+
+#~ msgid "Site News"
+#~ msgstr "Nowości na stronie"
+
+#~ msgid "Edit List"
+#~ msgstr "Edycja listy"
+
+#~ msgid "Add Smilies"
+#~ msgstr "Dodaj emotikone"
+
+#~ msgid "Bold"
+#~ msgstr "Pogrubienie"
+
+#~ msgid "Italic"
+#~ msgstr "Pochylenie"
+
+#~ msgid "Underline"
+#~ msgstr "Podkreślenie"
+
+#~ msgid "Strike"
+#~ msgstr "Strajk"
+
+#~ msgid "Text Color"
+#~ msgstr "Kolor tekstu"
+
+#~ msgid "Background Color"
+#~ msgstr "Kolor tła"
+
+#~ msgid "List"
+#~ msgstr "Lista"
+
+#~ msgid "Spoiler"
+#~ msgstr "Spoiler"
+
+#~ msgid "URL"
+#~ msgstr "Link"
+
+#~ msgid "Code"
+#~ msgstr "Kod"
+
+#~ msgid "Smilies"
+#~ msgstr "Emotikonki"
+
+#~ msgid "Added"
+#~ msgstr "Dodano"
+
+#~ msgid "Administrator already replied to this message"
+#~ msgstr "Administrator już odpowiedział na tę wiadomość"
+
+#~ msgid "Wrong data"
+#~ msgstr "Nieprawidłowe dane"
+
+#~ msgid "You cannot edit posts of higher administration"
+#~ msgstr "Edytować posty może tylko administrator"
+
+#~ msgid "Clear all messages from this user"
+#~ msgstr "Usuń wszystkie wiadomości od tego użytkownika"
+
+#~ msgid "Total"
+#~ msgstr "Wszystkich"
+
+#~ msgid "To Page"
+#~ msgstr "Do strony"
+
+#~ msgid "Text is too short"
+#~ msgstr "Tekst jest za krótki"
+
+#~ msgid "You cannot add the message so often<br>Please, wait"
+#~ msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać"
+
+#~ msgid "seconds"
+#~ msgstr "sekund"
+
+#~ msgid "Message already exists"
+#~ msgstr "Taka wiadomość już istnieje"
+
+#~ msgid "Show for Period"
+#~ msgstr "Pokaż za okres"
+
+#~ msgid "Last activity"
+#~ msgstr "Ostatnia aktywność"
+
+#~ msgid "show more"
+#~ msgstr "pokaż więcej"
+
+#~ msgid "Discuss"
+#~ msgstr "Dyskutuj"
+
+#~ msgid "Today"
+#~ msgstr "Dzisiaj"
+
+#~ msgid "Yesterday"
+#~ msgstr "Wczoraj"
+
+#~ msgid "ERROR"
+#~ msgstr "BŁĄD"
+
+#~ msgid "List of Admins"
+#~ msgstr "Lista adminów"
+
+#~ msgid "Watching the photo album"
+#~ msgstr "Zobacz album fotograficzny"
+
+#~ msgid "List of birthdays"
+#~ msgstr "Lista urodzin"
+
+#~ msgid "Reading the FAQ"
+#~ msgstr "Przeczytaj FAQ"
+
+#~ msgid "Forum Files"
+#~ msgstr "Pliki forum"
+
+#~ msgid "Looking, who in Forum?"
+#~ msgstr "Patrzy kto jest na forum?"
+
+#~ msgid "Here, in the list"
+#~ msgstr "Tutaj, na liście"
+
+#~ msgid "On the Homepage"
+#~ msgstr "Na stronie głównej"
+
+#~ msgid "Personal correspondence"
+#~ msgstr "Prywatne wiadomości"
+
+#~ msgid "Reading the news"
+#~ msgstr "Czyta Faq"
+
+#~ msgid "Who is online?"
+#~ msgstr "Kto jest online?"
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Personal Profile"
+#~ msgstr "Wasny profil"
+
+#~ msgid "Registered on the site"
+#~ msgstr "Zarejestrowany na stronie"
+
+#~ msgid "List of users"
+#~ msgstr "Lista użytkowników"
+
+#~ msgid "Watching Top 10 Users"
+#~ msgstr "Ogląda Top 10 użytkowników"
+
+#~ msgid "Last Visit"
+#~ msgstr "Ostatnia wizyta"
+
+#~ msgid "Browser"
+#~ msgstr "Przeglądarka"
+
+#~ msgid "IP address"
+#~ msgstr "Adres IP"
+
+#~ msgid "IP History"
+#~ msgstr "Historia IP"
+
+#~ msgid "Day"
+#~ msgid_plural "Days"
+#~ msgstr[0] "Dzień"
+#~ msgstr[1] "Dni"
+#~ msgstr[2] "Dni"
+
+#~ msgid "Information"
+#~ msgstr "Informacja"
+
+#~ msgid "Useful"
+#~ msgstr "Pobieralnia"
+
+#~ msgid "Community"
+#~ msgstr "Społeczność"

@@ -2,16 +2,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-04-05 06:22-0400\n"
+"PO-Revision-Date: 2020-01-08 11:46+0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
+"Language: id_ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /system/system.pot\n"
 "X-Poedit-SearchPath-0: login.php\n"
 "X-Poedit-SearchPath-1: go.php\n"
 "X-Poedit-SearchPath-2: exit.php\n"
@@ -19,476 +24,395 @@ msgstr ""
 "X-Poedit-SearchPath-4: system/head.php\n"
 "X-Poedit-SearchPath-5: system/end.php\n"
 "X-Poedit-SearchPath-6: system/mainmenu.php\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: johncms\n"
-"X-Crowdin-Language: id\n"
-"X-Crowdin-File: /system/system.pot\n"
-"Language: id_ID\n"
 
-#: exit.php:30
-msgid "Are you sure you want to leave the site?"
-msgstr "Apakah Anda yakin ingin keluar dari situs?"
-
-#: exit.php:31
-msgid "Logout"
-msgstr "Keluar"
-
-#: exit.php:32 system/johncms/Comments.php:243
-msgid "Cancel"
-msgstr "Batal"
-
-#: go.php:37
-msgid "Select language"
-msgstr "Pilih bahasa"
-
-#: go.php:43
-msgid "Default"
-msgstr "Default"
-
-#: go.php:50
-msgid "Apply"
-msgstr "Terapkan"
-
-#: go.php:50 go.php:67 system/johncms/Comments.php:112
-#: system/johncms/Comments.php:135 system/johncms/Comments.php:143
-#: system/johncms/Comments.php:146 system/johncms/Comments.php:163
-#: system/johncms/Comments.php:191 system/johncms/Comments.php:200
-#: system/johncms/Comments.php:203 system/johncms/Comments.php:247
-msgid "Back"
-msgstr "Kembali"
-
-#: go.php:58
-msgid "External Link"
-msgstr "Tautan Eksternal"
-
-#: go.php:61
-msgid "ATTENTION!"
-msgstr "PERHATIAN!"
-
-#: go.php:62
-msgid "You are going to leave our site and go to an external link"
-msgstr "Anda akan keluar dari situs kami dan menuju ke tautan eksternal"
-
-#: go.php:63
-msgid "Administration of our site is not responsible for the content of external sites"
-msgstr "Pengurus tidak bertanggung jawab atas isi dari situs eksternal"
-
-#: go.php:64
-#, php-format
-msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr "Disarankan untuk tidak memasukkan data yang berkaitan dengan %s(Nama pengguna, Kata sandi) di situs pihak ketiga"
-
-#: go.php:65
-msgid "Go to Link"
-msgstr "Buka tautan"
-
-#: login.php:37 system/end.php:35 system/head.php:110
-msgid "Home"
-msgstr "Beranda"
-
-#: login.php:39 login.php:158 system/head.php:112
-msgid "Login"
-msgstr "Masuk"
-
-#: login.php:49
-msgid "You have not entered login"
-msgstr "Anda belum memasukkan Nama Pengguna"
-
-#: login.php:53
-msgid "You have not entered password"
-msgstr "Anda belum memasukkan kata sandi"
-
-#: login.php:57
-msgid "Nickname"
-msgstr "Nama pengguna"
-
-#: login.php:57 login.php:61
-msgid "Invalid length"
-msgstr "Panjang tidak valid"
-
-#: login.php:61 login.php:155
-msgid "Password"
-msgstr "Kata Sandi"
-
-#: login.php:81
-msgid "The security code is not correct"
-msgstr "Kode verifikasi salah"
-
-#: login.php:87
-msgid "Verification code"
-msgstr "Kode verifikasi"
-
-#: login.php:88
-msgid "Enter verification code"
-msgstr "Masukkan kode verifikasi"
-
-#: login.php:92
-msgid "Continue"
-msgstr "Lanjutkan"
-
-#: login.php:104
-msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr "Maaf, permintaan pendaftaran Anda tertunda. Mohon tunggu."
-
-#: login.php:128
-msgid "Enter site"
-msgstr "Masuk ke situs"
-
-#: login.php:137 login.php:141
-msgid "Authorization failed"
-msgstr "Otorasi gagal"
-
-#: login.php:153
-msgid "Username"
-msgstr "Nama pengguna"
-
-#: login.php:157
-msgid "Remember"
-msgstr "Ingat"
-
-#: login.php:160
-msgid "Registration"
-msgstr "Pendaftaran"
-
-#: login.php:161
-msgid "Forgot password?"
-msgstr "Lupa kata sandi?"
-
-#: system/head.php:53
-msgid "Site News"
-msgstr "Berita Situs"
-
-#: system/head.php:106
-msgid "Hi"
-msgstr "Hai"
-
-#: system/head.php:106 system/johncms/Tools.php:299
-msgid "Guest"
-msgstr "Pengunjung"
-
-#: system/head.php:111
-msgid "Personal"
-msgstr "Pribadi"
-
-#: system/head.php:198
+#: system/app/old_notifications.phtml:9
 msgid "Ban"
 msgstr "Blokir"
 
-#: system/head.php:198
+#: system/app/old_notifications.phtml:9
 msgid "Details"
 msgstr "Detail"
 
-#: system/head.php:207
+#: system/app/old_notifications.phtml:16
 msgid "System"
 msgstr "Sistem"
 
-#: system/head.php:219
+#: system/app/old_notifications.phtml:28
 msgid "Mail"
 msgstr "Pesan"
 
-#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
+#: system/app/old_notifications.phtml:32 system/app/sidebar-main-menu.phtml:55
 msgid "Guestbook"
 msgstr "Buku Tamu"
 
-#: system/head.php:229
+#: system/app/old_notifications.phtml:38
 msgid "Comments"
 msgstr "Komentar"
 
-#: system/head.php:233 system/johncms/Counters.php:164
+#: system/app/old_notifications.phtml:42
 msgid "Unread"
 msgstr "Belum dibaca"
 
-#: system/johncms/Bbcode.php:164
-msgid "Edit List"
-msgstr "Sunting Daftar"
-
-#: system/johncms/Bbcode.php:175
-msgid "Add Smilies"
-msgstr "Tambahkan Smile"
-
-#: system/johncms/Bbcode.php:233
-msgid "Bold"
-msgstr "Tebal"
-
-#: system/johncms/Bbcode.php:234
-msgid "Italic"
-msgstr "Miring"
-
-#: system/johncms/Bbcode.php:235
-msgid "Underline"
-msgstr "Garis Bawah"
-
-#: system/johncms/Bbcode.php:236
-msgid "Strike"
-msgstr "Coret"
-
-#: system/johncms/Bbcode.php:237
-msgid "Text Color"
-msgstr "Warna Teks"
-
-#: system/johncms/Bbcode.php:238
-msgid "Background Color"
-msgstr "Warna Latar belakang"
-
-#: system/johncms/Bbcode.php:239
-msgid "List"
-msgstr "Daftar"
-
-#: system/johncms/Bbcode.php:240
-msgid "Spoiler"
-msgstr "Spoiler"
-
-#: system/johncms/Bbcode.php:241
-msgid "Quote"
-msgstr "Kutipan"
-
-#: system/johncms/Bbcode.php:242
-msgid "URL"
-msgstr "URL"
-
-#: system/johncms/Bbcode.php:243
-msgid "Code"
-msgstr "Kode"
-
-#: system/johncms/Bbcode.php:247
-msgid "Smilies"
-msgstr "Smile"
-
-#: system/johncms/Bbcode.php:287
-msgid "Added"
-msgstr "Ditambahkan"
-
-#: system/johncms/Comments.php:104 system/johncms/Comments.php:299
-msgid "Reply"
-msgstr "Balas"
-
-#: system/johncms/Comments.php:112
-msgid "Administrator already replied to this message"
-msgstr "Pengurus telah membalas pesan ini"
-
-#: system/johncms/Comments.php:146 system/johncms/Comments.php:200
-msgid "Wrong data"
-msgstr "Data salah"
-
-#: system/johncms/Comments.php:154 system/johncms/Comments.php:300
-msgid "Edit"
-msgstr "Sunting"
-
-#: system/johncms/Comments.php:163
-msgid "You cannot edit posts of higher administration"
-msgstr "Anda tidak bisa menyunting pos lebih tinggi dari Pengurus"
-
-#: system/johncms/Comments.php:240 system/johncms/Comments.php:242
-#: system/johncms/Comments.php:301
-msgid "Delete"
-msgstr "Hapus"
-
-#: system/johncms/Comments.php:241
-msgid "Do you really want to delete?"
-msgstr "Apakah Anda yakin ingin menghapus?"
-
-#: system/johncms/Comments.php:244
-msgid "Clear all messages from this user"
-msgstr "Hapus semua pesan dari pengguna ini"
-
-#: system/johncms/Comments.php:245
-msgid "Clear"
-msgstr "Hapus"
-
-#: system/johncms/Comments.php:307
-msgid "Edited"
-msgstr "Disunting"
-
-#: system/johncms/Comments.php:331
-msgid "The list is empty"
-msgstr "Daftar ini kosong"
-
-#: system/johncms/Comments.php:334
-msgid "Total"
-msgstr "Total"
-
-#: system/johncms/Comments.php:340
-msgid "To Page"
-msgstr "Ke halaman"
-
-#: system/johncms/Comments.php:399
-msgid "Message"
-msgstr "Pesan"
-
-#: system/johncms/Comments.php:402
-msgid "Send"
-msgstr "Kirim"
-
-#: system/johncms/Comments.php:422
-msgid "Text is too short"
-msgstr "Teks terlalu pendek"
-
-#: system/johncms/Comments.php:428
-msgid "You cannot add the message so often<br>Please, wait"
-msgstr "Anda tidak bisa mengirim pesan terlalu sering<br>Mohon tunggu"
-
-#: system/johncms/Comments.php:428
-msgid "seconds"
-msgstr "detik"
-
-#: system/johncms/Comments.php:438
-msgid "Message already exists"
-msgstr "Pesan ini sudah ada"
-
-#: system/johncms/Counters.php:163
-msgid "Show for Period"
-msgstr "Lihat Riwayat"
-
-#: system/johncms/Counters.php:170
-msgid "Last activity"
-msgstr "Aktivitas Terakhir"
-
-#: system/johncms/NewsWidget.php:63
-msgid "show more"
-msgstr "selengkapnya"
-
-#: system/johncms/NewsWidget.php:98
-msgid "Discuss"
-msgstr "Diskusi"
-
-#: system/johncms/Tools.php:135
-msgid "Today"
-msgstr "Hari ini"
-
-#: system/johncms/Tools.php:138
-msgid "Yesterday"
-msgstr "Kemarin"
-
-#: system/johncms/Tools.php:154
-msgid "ERROR"
-msgstr "KESALAHAN"
-
-#: system/johncms/Tools.php:234
-msgid "List of Admins"
-msgstr "Daftar Pengurus"
-
-#: system/johncms/Tools.php:235
-msgid "Watching the photo album"
-msgstr "Melihat Album Foto"
-
-#: system/johncms/Tools.php:236
-msgid "List of birthdays"
-msgstr "Daftar ulang tahun"
-
-#: system/johncms/Tools.php:237 system/mainmenu.php:57
-msgid "Downloads"
-msgstr "Unduhan"
-
-#: system/johncms/Tools.php:238
-msgid "Reading the FAQ"
-msgstr "Membaca FAQ"
-
-#: system/johncms/Tools.php:239 system/mainmenu.php:47
-msgid "Forum"
-msgstr "Forum"
-
-#: system/johncms/Tools.php:240
-msgid "Forum Files"
-msgstr "Berkas forum"
-
-#: system/johncms/Tools.php:241
-msgid "Looking, who in Forum?"
-msgstr "Melihat, siapa di Forum?"
-
-#: system/johncms/Tools.php:243
-msgid "Here, in the list"
-msgstr "Disini, di daftar aktif"
-
-#: system/johncms/Tools.php:244
-msgid "On the Homepage"
-msgstr "Di Beranda"
-
-#: system/johncms/Tools.php:245 system/mainmenu.php:62
-msgid "Library"
-msgstr "Perpustakaan"
-
-#: system/johncms/Tools.php:246
-msgid "Personal correspondence"
-msgstr "Pesan Pribadi"
-
-#: system/johncms/Tools.php:247
-msgid "Reading the news"
-msgstr "Membaca berita"
-
-#: system/johncms/Tools.php:248
-msgid "Who is online?"
-msgstr "Siapa yang Aktif?"
-
-#: system/johncms/Tools.php:249
-msgid "Profile"
-msgstr "Profil"
-
-#: system/johncms/Tools.php:250
-msgid "Personal Profile"
-msgstr "Profil Pribadi"
-
-#: system/johncms/Tools.php:251
-msgid "Registered on the site"
-msgstr "Terdaftar di situs"
-
-#: system/johncms/Tools.php:252
-msgid "List of users"
-msgstr "Daftar Pengguna"
-
-#: system/johncms/Tools.php:253
-msgid "Watching Top 10 Users"
-msgstr "Melihat 10 pengguna terbaik"
-
-#: system/johncms/Tools.php:367
-msgid "Last Visit"
-msgstr "Kunjungan Terakhir"
-
-#: system/johncms/Tools.php:373
-msgid "Browser"
-msgstr "Peramban"
-
-#: system/johncms/Tools.php:374
-msgid "IP address"
-msgstr "Alamat IP"
-
-#: system/johncms/Tools.php:393
-msgid "IP History"
-msgstr "Riwayat IP"
-
-#: system/johncms/Tools.php:594
-msgid "Day"
-msgid_plural "Days"
-msgstr[0] "Hari"
-
-#: system/mainmenu.php:30
-msgid "Information"
-msgstr "Informasi"
-
-#: system/mainmenu.php:32
+#: system/app/sidebar-main-menu.phtml:26
 msgid "News archive"
 msgstr "Arsip berita"
 
-#: system/mainmenu.php:33
-msgid "Information, FAQ"
-msgstr "Informasi, FAQ"
+#: system/app/sidebar-main-menu.phtml:41
+msgid "Forum"
+msgstr "Forum"
 
-#: system/mainmenu.php:38
-msgid "Communication"
-msgstr "Komunikasi"
+#: system/app/sidebar-main-menu.phtml:70
+msgid "Downloads"
+msgstr "Unduhan"
 
-#: system/mainmenu.php:53
-msgid "Useful"
-msgstr "Berguna"
+#: system/app/sidebar-main-menu.phtml:86
+msgid "Library"
+msgstr "Perpustakaan"
 
-#: system/mainmenu.php:69
-msgid "Community"
-msgstr "Komunitas"
-
-#: system/mainmenu.php:70
+#: system/app/sidebar-main-menu.phtml:101
 msgid "Users"
 msgstr "Pengguna"
 
-#: system/mainmenu.php:71
+#: system/app/sidebar-main-menu.phtml:115
 msgid "Photo Albums"
 msgstr "Album Foto"
 
+#: system/app/sidebar-main-menu.phtml:129
+msgid "Information, FAQ"
+msgstr "Informasi, FAQ"
+
+#: system/app/sidebar-main-menu.phtml:140
+msgid "Admin Panel"
+msgstr "Panel admin"
+
+#: system/app/sidebar-main-menu.phtml:149
+msgid "Admin Chat"
+msgstr "Admin obrolan"
+
+#: system/app/sidebar-user-menu.phtml:26 system/layout/old_default.phtml:51
+msgid "Guest"
+msgstr "Pengunjung"
+
+#: system/app/sidebar-user-menu.phtml:44
+msgid "Notifications"
+msgstr "Pemberitahuan"
+
+#: system/app/sidebar-user-menu.phtml:56 system/layout/old_default.phtml:64
+msgid "Personal"
+msgstr "Pribadi"
+
+#: system/app/sidebar-user-menu.phtml:64
+msgid "Exit"
+msgstr "Keluar"
+
+#: system/app/sidebar-user-menu.phtml:74
+msgid "Registration"
+msgstr "Pendaftaran"
+
+#: system/app/sidebar-user-menu.phtml:86 system/layout/old_default.phtml:69
+msgid "Login"
+msgstr "Masuk"
+
+#: system/layout/old_default.phtml:50
+msgid "Hi"
+msgstr "Hai"
+
+#: system/layout/old_default.phtml:57
+msgid "Home"
+msgstr "Beranda"
+
+#: system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr "Apakah Anda yakin ingin menghapus?"
+
+#: system/pages/comments_delete.phtml:26 system/pages/comments_list.phtml:99
+msgid "Delete"
+msgstr "Hapus"
+
+#: system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr "Hapus"
+
+#: system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr "Batal"
+
+#: system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr "Pesan"
+
+#: system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr "Kirim"
+
+#: system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: system/pages/comments_list.phtml:50
+msgid "Reply"
+msgstr "Balas"
+
+#: system/pages/comments_list.phtml:53
+msgid "Quote"
+msgstr "Kutipan"
+
+#: system/pages/comments_list.phtml:92
+msgid "Edited:"
+msgstr "Diedit:"
+
+#: system/pages/comments_list.phtml:96
+msgid "Edit"
+msgstr "Sunting"
+
+#: system/pages/comments_list.phtml:114 system/pages/result.phtml:29
+msgid "Back"
+msgstr "Kembali"
+
+#~ msgid "Are you sure you want to leave the site?"
+#~ msgstr "Apakah Anda yakin ingin keluar dari situs?"
+
+#~ msgid "Logout"
+#~ msgstr "Keluar"
+
+#~ msgid "Select language"
+#~ msgstr "Pilih bahasa"
+
+#~ msgid "Default"
+#~ msgstr "Default"
+
+#~ msgid "Apply"
+#~ msgstr "Terapkan"
+
+#~ msgid "External Link"
+#~ msgstr "Tautan Eksternal"
+
+#~ msgid "ATTENTION!"
+#~ msgstr "PERHATIAN!"
+
+#~ msgid "You are going to leave our site and go to an external link"
+#~ msgstr "Anda akan keluar dari situs kami dan menuju ke tautan eksternal"
+
+#~ msgid "Administration of our site is not responsible for the content of external sites"
+#~ msgstr "Pengurus tidak bertanggung jawab atas isi dari situs eksternal"
+
+#, php-format
+#~ msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+#~ msgstr "Disarankan untuk tidak memasukkan data yang berkaitan dengan %s(Nama pengguna, Kata sandi) di situs pihak ketiga"
+
+#~ msgid "Go to Link"
+#~ msgstr "Buka tautan"
+
+#~ msgid "You have not entered login"
+#~ msgstr "Anda belum memasukkan Nama Pengguna"
+
+#~ msgid "You have not entered password"
+#~ msgstr "Anda belum memasukkan kata sandi"
+
+#~ msgid "Nickname"
+#~ msgstr "Nama pengguna"
+
+#~ msgid "Invalid length"
+#~ msgstr "Panjang tidak valid"
+
+#~ msgid "Password"
+#~ msgstr "Kata Sandi"
+
+#~ msgid "The security code is not correct"
+#~ msgstr "Kode verifikasi salah"
+
+#~ msgid "Verification code"
+#~ msgstr "Kode verifikasi"
+
+#~ msgid "Enter verification code"
+#~ msgstr "Masukkan kode verifikasi"
+
+#~ msgid "Continue"
+#~ msgstr "Lanjutkan"
+
+#~ msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+#~ msgstr "Maaf, permintaan pendaftaran Anda tertunda. Mohon tunggu."
+
+#~ msgid "Enter site"
+#~ msgstr "Masuk ke situs"
+
+#~ msgid "Authorization failed"
+#~ msgstr "Otorasi gagal"
+
+#~ msgid "Username"
+#~ msgstr "Nama pengguna"
+
+#~ msgid "Remember"
+#~ msgstr "Ingat"
+
+#~ msgid "Forgot password?"
+#~ msgstr "Lupa kata sandi?"
+
+#~ msgid "Site News"
+#~ msgstr "Berita Situs"
+
+#~ msgid "Edit List"
+#~ msgstr "Sunting Daftar"
+
+#~ msgid "Add Smilies"
+#~ msgstr "Tambahkan Smile"
+
+#~ msgid "Bold"
+#~ msgstr "Tebal"
+
+#~ msgid "Italic"
+#~ msgstr "Miring"
+
+#~ msgid "Underline"
+#~ msgstr "Garis Bawah"
+
+#~ msgid "Strike"
+#~ msgstr "Coret"
+
+#~ msgid "Text Color"
+#~ msgstr "Warna Teks"
+
+#~ msgid "Background Color"
+#~ msgstr "Warna Latar belakang"
+
+#~ msgid "List"
+#~ msgstr "Daftar"
+
+#~ msgid "Spoiler"
+#~ msgstr "Spoiler"
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#~ msgid "Code"
+#~ msgstr "Kode"
+
+#~ msgid "Smilies"
+#~ msgstr "Smile"
+
+#~ msgid "Added"
+#~ msgstr "Ditambahkan"
+
+#~ msgid "Administrator already replied to this message"
+#~ msgstr "Pengurus telah membalas pesan ini"
+
+#~ msgid "Wrong data"
+#~ msgstr "Data salah"
+
+#~ msgid "You cannot edit posts of higher administration"
+#~ msgstr "Anda tidak bisa menyunting pos lebih tinggi dari Pengurus"
+
+#~ msgid "Clear all messages from this user"
+#~ msgstr "Hapus semua pesan dari pengguna ini"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "To Page"
+#~ msgstr "Ke halaman"
+
+#~ msgid "Text is too short"
+#~ msgstr "Teks terlalu pendek"
+
+#~ msgid "You cannot add the message so often<br>Please, wait"
+#~ msgstr "Anda tidak bisa mengirim pesan terlalu sering<br>Mohon tunggu"
+
+#~ msgid "seconds"
+#~ msgstr "detik"
+
+#~ msgid "Message already exists"
+#~ msgstr "Pesan ini sudah ada"
+
+#~ msgid "Show for Period"
+#~ msgstr "Lihat Riwayat"
+
+#~ msgid "Last activity"
+#~ msgstr "Aktivitas Terakhir"
+
+#~ msgid "show more"
+#~ msgstr "selengkapnya"
+
+#~ msgid "Discuss"
+#~ msgstr "Diskusi"
+
+#~ msgid "Today"
+#~ msgstr "Hari ini"
+
+#~ msgid "Yesterday"
+#~ msgstr "Kemarin"
+
+#~ msgid "ERROR"
+#~ msgstr "KESALAHAN"
+
+#~ msgid "List of Admins"
+#~ msgstr "Daftar Pengurus"
+
+#~ msgid "Watching the photo album"
+#~ msgstr "Melihat Album Foto"
+
+#~ msgid "List of birthdays"
+#~ msgstr "Daftar ulang tahun"
+
+#~ msgid "Reading the FAQ"
+#~ msgstr "Membaca FAQ"
+
+#~ msgid "Forum Files"
+#~ msgstr "Berkas forum"
+
+#~ msgid "Looking, who in Forum?"
+#~ msgstr "Melihat, siapa di Forum?"
+
+#~ msgid "Here, in the list"
+#~ msgstr "Disini, di daftar aktif"
+
+#~ msgid "On the Homepage"
+#~ msgstr "Di Beranda"
+
+#~ msgid "Personal correspondence"
+#~ msgstr "Pesan Pribadi"
+
+#~ msgid "Reading the news"
+#~ msgstr "Membaca berita"
+
+#~ msgid "Who is online?"
+#~ msgstr "Siapa yang Aktif?"
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Personal Profile"
+#~ msgstr "Profil Pribadi"
+
+#~ msgid "Registered on the site"
+#~ msgstr "Terdaftar di situs"
+
+#~ msgid "List of users"
+#~ msgstr "Daftar Pengguna"
+
+#~ msgid "Watching Top 10 Users"
+#~ msgstr "Melihat 10 pengguna terbaik"
+
+#~ msgid "Last Visit"
+#~ msgstr "Kunjungan Terakhir"
+
+#~ msgid "Browser"
+#~ msgstr "Peramban"
+
+#~ msgid "IP address"
+#~ msgstr "Alamat IP"
+
+#~ msgid "IP History"
+#~ msgstr "Riwayat IP"
+
+#~ msgid "Day"
+#~ msgid_plural "Days"
+#~ msgstr[0] "Hari"
+
+#~ msgid "Information"
+#~ msgstr "Informasi"
+
+#~ msgid "Useful"
+#~ msgstr "Berguna"
+
+#~ msgid "Community"
+#~ msgstr "Komunitas"
