@@ -117,6 +117,14 @@ $this->layout(
         <div class="card border-0 shadow mt-4 mt-md-0">
             <div class="card-body">
                 <h2 class="h3 font-weight-bold text-center mb-2"><?= _t('Information') ?></h2>
+                <?php if (! empty($data['user']['photo_preview'])): ?>
+                    <div class="mb-2">
+                        <a href="<?= $data['user']['photo'] ?>" title="<?= _t('Photo') ?> "
+                           data-source="<?= $data['user']['photo'] ?>" class="image-preview">
+                            <img src="<?= $data['user']['photo_preview'] ?>" class="img-thumbnail" alt=".">
+                        </a>
+                    </div>
+                <?php endif; ?>
                 <?php if (! empty($data['user']['birthday_date'])): ?>
                     <div class="d-flex">
                         <div class="text-muted pr-2"><?= _t('Birthday') ?>:</div>
@@ -179,6 +187,51 @@ $this->layout(
                         <div><?= $data['user']['www'] ?></div>
                     </div>
                 <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="border-top mt-4"></div>
+
+<div class="row justify-content-between mt-4 mb-3">
+    <div class="col col-sm-6 col-xl-3">
+        <div class="card border-0 shadow">
+            <div class="card-body d-flex align-items-center">
+                <svg class="icon-40 text-secondary">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                </svg>
+                <a href="?act=activity&amp;user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= _t('Activity') ?></a>
+            </div>
+        </div>
+    </div>
+    <div class="col col-sm-6 col-xl-3">
+        <div class="card border-0 shadow">
+            <div class="card-body d-flex align-items-center">
+                <svg class="icon-40 text-secondary">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
+                </svg>
+                <a href="?act=stat&amp;user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= _t('Statistic') ?></a>
+            </div>
+        </div>
+    </div>
+    <div class="col col-sm-6 mt-sm-3 mt-xl-0 col-xl-3">
+        <div class="card border-0 shadow">
+            <div class="card-body d-flex align-items-center">
+                <svg class="icon-40 text-secondary">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#picasa"/>
+                </svg>
+                <a href="../album/list?user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= _t('Photo Album') ?></a>
+            </div>
+        </div>
+    </div>
+    <div class="col col-sm-6 mt-sm-3 mt-xl-0 col-xl-3">
+        <div class="card border-0 shadow h-100">
+            <div class="card-body d-flex align-items-center">
+                <svg class="icon-40 text-secondary" style="margin-top: -5px;">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
+                </svg>
+                <a href="?act=guestbook&amp;user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= _t('Guestbook') ?></a>
             </div>
         </div>
     </div>

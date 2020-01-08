@@ -125,7 +125,6 @@ $mods = [
     'ban',
     'edit',
     'images',
-    'info',
     'ip',
     'guestbook',
     'karma',

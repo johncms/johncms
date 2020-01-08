@@ -28,7 +28,6 @@ $user_rights_names = [
     9 => _t('Supervisor'),
 ];
 
-
 // Подготовка дополнительных данных пользователя
 $user_data['total_on_site'] = $tools->timecount((int) $user_data['total_on_site']);
 $user_data['last_visit'] = time() > $user_data['lastdate'] + 300 ? date('d.m.Y (H:i)', $user_data['lastdate']) : false;
@@ -49,6 +48,11 @@ $user_data['www'] = $tools->checkout($user_data['www'], 0, 1);
 $ip_total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
 $user_data['ip_history_count'] = $ip_total;
 $user_data['ip_history_url'] = '/profile/?act=ip&amp;user=' . $user_data['id'];
+
+if (file_exists(UPLOAD_PATH . 'users/photo/' . $user_data['id'] . '_small.jpg')) {
+    $user_data['photo'] = '/upload/users/photo/' . $user_data['id'] . '.jpg';
+    $user_data['photo_preview'] = '/upload/users/photo/' . $user_data['id'] . '_small.jpg';
+}
 
 if ($config['karma']['on']) {
     $user_data['karma_points'] = $user_data['karma_plus'] - $user_data['karma_minus'];
