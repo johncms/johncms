@@ -56,6 +56,14 @@ $notifications = $counters->notifications();
                         <span class="flex-grow-1 text-info"><?= _t('Personal', 'system') ?></span>
                     </a>
                 </li>
+                <li>
+                    <a href="/login">
+                        <svg class="icon text-info">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-out"/>
+                        </svg>
+                        <span class="flex-grow-1 text-info"><?= _t('Exit', 'system') ?></span>
+                    </a>
+                </li>
             <?php else: ?>
                 <!-- Выпадающее меню для гостей -->
                 <li>
@@ -73,7 +81,7 @@ $notifications = $counters->notifications();
                 <li>
                     <a href="/login/">
                         <svg class="icon text-info">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-in"/>
                         </svg>
                         <span class="flex-grow-1 text-info"><?= _t('Login', 'system') ?></span>
                     </a>
