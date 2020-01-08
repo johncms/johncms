@@ -13,3 +13,4 @@ require('./prism');
 require('./forum');
 require('./modals');
 require('./slider');
+require('./progress');
