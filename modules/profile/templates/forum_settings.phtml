@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+
+        <div class="buttons mb-3">
+            <?php foreach ($data['buttons'] as $button): ?>
+                <a href="<?= $button['url'] ?>" class="btn btn-outline-primary <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
+            <?php endforeach; ?>
+        </div>
+
+        <?php if (! empty($data['success_message'])): ?>
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['success_message'],
+                ]
+            ) ?>
+        <?php endif; ?>
+        <div class="card shadow border-0">
+            <form action="<?= $data['form_action'] ?>" method="post">
+                <div class="card-body">
+
+                    <h3><?= _t('Basic settings') ?></h3>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="upfp" value="1" id="upfp" <?= $data['set_forum']['upfp'] ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="upfp"><?= _t('Inverse sorting') ?></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="farea" value="1" id="farea" <?= $data['set_forum']['farea'] ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="farea"><?= _t('Use the form of a quick answer') ?></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="preview" value="1" id="preview" <?= $data['set_forum']['preview'] ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="preview"><?= _t('Preview of messages') ?></label>
+                    </div>
+
+                    <h3 class="mt-3"><?= _t('Attach first post') ?></h3>
+
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="postclip1" name="postclip" value="2" class="custom-control-input" <?= ($data['set_forum']['postclip'] === 2 ? 'checked="checked"' : '') ?>>
+                        <label class="custom-control-label" for="postclip1"><?= _t('Always') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="postclip2" name="postclip" value="1" class="custom-control-input" <?= ($data['set_forum']['postclip'] === 1 ? 'checked="checked"' : '') ?>>
+                        <label class="custom-control-label" for="postclip2"><?= _t('In unread topics') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="postclip3" name="postclip" value="0" class="custom-control-input" <?= (! $data['set_forum']['postclip'] ? 'checked="checked"' : '') ?>>
+                        <label class="custom-control-label" for="postclip3"><?= _t('Never') ?></label>
+                    </div>
+
+                    <div class="mt-3">
+                        <input type="submit" name="submit" value="<?= _t('Save') ?>" class="btn btn-primary"/>
+                        <a href="?act=office" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                        <a href="?act=settings&amp;mod=forum&amp;reset" class="btn btn-danger float-right"><?= _t('Reset Settings') ?></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
