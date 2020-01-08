@@ -117,6 +117,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 $announce,
                 $text,
                 $user->name,
+                $user->id,
                 $md,
                 (isset($_POST['comments']) ? 1 : 0),
                 time()
@@ -135,7 +136,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 `time` = ?
             ';
 
-            if ($db->query($sql)->execute($insert)) {
+            if ($db->prepare($sql)->execute($insert)) {
                 $cid = (int) $db->lastInsertId();
 
                 $handle = new Upload($_FILES['image']);

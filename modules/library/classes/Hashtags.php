@@ -69,9 +69,9 @@ class Hashtags
      * Получение всех тегов статьи
      *
      * @param int $tpl
-     * @return object|null
+     * @return mixed
      */
-    public function getAllStatTags(int $tpl = 0): ?object
+    public function getAllStatTags(int $tpl = 0)
     {
         $stmt = $this->db->prepare('SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);

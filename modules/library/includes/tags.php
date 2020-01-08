@@ -28,7 +28,7 @@ if (isset($_GET['tag'])) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
-        foreach (new LimitIterator(new ArrayIterator($obj->getAllTagStats($tag)), $start, $user->config->kmess) as $txt) {
+        foreach (new LimitIterator(new ArrayIterator($obj->getAllTagStats($tag)), (int) $start, $user->config->kmess) as $txt) {
             $query = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = ' . $txt);
             if ($query->rowCount()) {
                 $row = $query->fetch();
