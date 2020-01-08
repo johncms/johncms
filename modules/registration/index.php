@@ -157,8 +157,8 @@ if (isset($_POST['submit'])) {
         $usid = $db->lastInsertId();
 
         if ($config['mod_reg'] != 1) {
-            $_SESSION['uid'] = $usid;
-            $_SESSION['ups'] = md5(md5($reg_pass));
+            setcookie('cuid', (string) $usid, time() + 3600 * 24 * 365, '/');
+            setcookie('cups', md5($reg_pass), time() + 3600 * 24 * 365, '/');
         }
 
         echo $view->render(
