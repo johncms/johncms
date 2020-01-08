@@ -14,15 +14,18 @@ if ($total) {
     );
     echo $nav;
 
+    function libCounter(int $id, int $dir): string
+    {
+        $db = di(PDO::class);
+        return $db->query('SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
+                . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id))->fetchColumn()
+            . ' ' . ($dir ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')';
+    }
+
     while ($row = $sql->fetch()) {
         $y++;
         echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">'
-            . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a> ('
-            . $db->query(
-                'SELECT COUNT(*) FROM `' . ($row['dir'] ? 'library_cats' : 'library_texts') . '` WHERE '
-                . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])
-            )->fetchColumn() . ' '
-            . ($row['dir'] ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')'
+            . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a> (' . libCounter($row['id'], $row['dir']) . ')'
             . '<div class="sub"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
 
         if ($adm) {

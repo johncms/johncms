@@ -59,7 +59,7 @@ class Rating
     private function check(): void
     {
         if (isset($_POST['rating_submit'])) {
-            $this->addVote($_POST['vote']);
+            $this->addVote((int) $_POST['vote']);
         }
     }
 
@@ -68,7 +68,7 @@ class Rating
      * @param $point (0 - 5)
      * return redirect на страницу для голосования
      */
-    private function addVote($point): void
+    private function addVote(int $point): void
     {
         $user = di(User::class);
 
@@ -120,7 +120,7 @@ class Rating
      */
     public function printVote(): string
     {
-        global $user; //TODO: убрать эту жесть!
+        $user = di(User::class);
 
         $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
         $userVote = $stmt->execute([$user->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
