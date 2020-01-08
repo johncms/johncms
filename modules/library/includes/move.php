@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -28,10 +28,13 @@ if ($adm) {
 
     $type = isset($_GET['moveset']) && in_array($_GET['moveset'], ['up', 'down']) ? $_GET['moveset'] : redir404();
     $posid = isset($_GET['posid']) && $_GET['posid'] > 0 ? (int) ($_GET['posid']) : redir404();
-    list($num1, $pos1) = explode('|', $arrsort[$posid]);
-    list($num2, $pos2) = explode('|', $arrsort[($type == 'up' ? $posid - 1 : $posid + 1)]);
+
+    [$num1, $pos1] = explode('|', $arrsort[$posid]);
+    [$num2, $pos2] = explode('|', $arrsort[($type === 'up' ? $posid - 1 : $posid + 1)]);
+
     $db->exec('UPDATE `library_cats` SET `pos`=' . $pos2 . ' WHERE `id`=' . $num1);
     $db->exec('UPDATE `library_cats` SET `pos`=' . $pos1 . ' WHERE `id`=' . $num2);
+
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;
 }

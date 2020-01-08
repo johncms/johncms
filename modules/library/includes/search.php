@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -23,7 +23,7 @@ function ReplaceKeywords($search, $text)
 // Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
-$search = $search_post ? $search_post : $search_get;
+$search = $search_post ?? $search_get;
 $search_t = isset($_REQUEST['t']);
 echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search') . '</div>'
     . '<div class="gmenu"><form action="?act=search" method="post"><div>'
@@ -68,10 +68,10 @@ if ($search && ! $error) {
         );
 
         while ($res = $req->fetch()) {
-            echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">';
+            echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">';
 
             foreach ($array as $srch) {
-                if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) {
+                if (($pos = mb_stripos($res['text'], str_replace('*', '', $srch))) !== false) {
                     break;
                 }
             }

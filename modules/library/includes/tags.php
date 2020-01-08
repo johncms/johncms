@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -20,7 +20,7 @@ if (isset($_GET['tag'])) {
     if ($obj->getAllTagStats($tag)) {
         $total = count($obj->getAllTagStats($tag));
         $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
-        $start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
+        $start = $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
 
         echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Tags') . '</div>';
 
@@ -33,7 +33,7 @@ if (isset($_GET['tag'])) {
             if ($query->rowCount()) {
                 $row = $query->fetch();
                 $obj = new Library\Hashtags($row['id']);
-                echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
+                echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">'
                 . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
                     ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                     : '')

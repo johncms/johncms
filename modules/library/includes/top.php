@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -10,38 +8,45 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 use Library\Hashtags;
 use Library\Rating;
 
-$sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : (isset($_GET['sort']) && $_GET['sort'] == 'comm' ? 'comm' : 'read');
+$sort = isset($_GET['sort']) && $_GET['sort'] === 'rating'
+    ? 'rating'
+    : (isset($_GET['sort']) && $_GET['sort'] === 'comm'
+        ? 'comm'
+        : 'read'
+    );
 
-$menu[] = $sort == 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . _t('Most readings') . '</a> ';
-$menu[] = $sort == 'rating' ? '<strong>' . _t('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . _t('By rating') . '</a> ';
-$menu[] = $sort == 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . _t('By comments') . '</a>';
+$menu[] = $sort === 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . _t('Most readings') . '</a> ';
+$menu[] = $sort === 'rating' ? '<strong>' . _t('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . _t('By rating') . '</a> ';
+$menu[] = $sort === 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . _t('By comments') . '</a>';
 
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Rating articles') . '</div>' .
     '<div class="topmenu">' . _t('Sort') . ': ' . implode(' | ', $menu) . '</div>';
 
-if ($sort == 'read' || $sort == 'comm') {
-    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
+if ($sort === 'read' || $sort === 'comm') {
+    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
 } else {
     $total = $db->query('SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20')->fetchColumn(0);
 }
 
 $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
-$start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
+$start = $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
 
 if (! $total) {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 } else {
-    if ($sort == 'read' || $sort == 'comm') {
+    if ($sort === 'read' || $sort === 'comm') {
         $stmt = $db->query(
             'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce` FROM `library_texts`
-            WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0
-            ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC
-            LIMIT ' . $start . ',' . $user->config->kmess
+            WHERE ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' > 0
+            ORDER BY ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' DESC
+            LIMIT ' . $start . ', ' . $user->config->kmess
         );
     } else {
         $stmt = $db->query(
@@ -56,7 +61,7 @@ if (! $total) {
     $i = 0;
 
     while ($row = $stmt->fetch()) {
-        echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
+        echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">'
             . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
@@ -71,7 +76,7 @@ if (! $total) {
             // Раздел
             . '<tr>'
             . '<td class="caption">' . _t('Section') . ':</td>'
-            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . $tools->checkout($db->query('SELECT `name` FROM `library_cats` WHERE `id`=' . $row['cat_id'])->fetchColumn()) . '</a></td>'
+            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . $tools->checkout($db->query('SELECT `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
             . ($obj->getAllStatTags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->getAllStatTags(1) . '</td></tr>' : '')

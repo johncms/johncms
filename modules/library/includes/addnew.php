@@ -53,12 +53,11 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
 
         if (! empty($_FILES['textfile']['name'])) {
             $ext = explode('.', $_FILES['textfile']['name']);
-            if (mb_strtolower(end($ext)) == 'txt') {
+            if (mb_strtolower(end($ext)) === 'txt') {
                 $newname = $_FILES['textfile']['name'];
                 if (move_uploaded_file($_FILES['textfile']['tmp_name'], UPLOAD_PATH . 'library/tmp/' . $newname)) {
                     $txt = file_get_contents(UPLOAD_PATH . 'library/tmp/' . $newname);
-                    if (mb_check_encoding($txt, 'UTF-8')) {
-                    } elseif (mb_check_encoding($txt, 'windows-1251')) {
+                    if (mb_check_encoding($txt, 'windows-1251')) {
                         $txt = iconv('windows-1251', 'UTF-8', $txt);
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
@@ -112,22 +111,32 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 echo $tools->displayError($e);
             }
         } else {
-            $sql = "
+            $insert = [
+                $id,
+                $name,
+                $announce,
+                $text,
+                $user->name,
+                $md,
+                (isset($_POST['comments']) ? 1 : 0),
+                time()
+            ];
+            $sql = '
               INSERT INTO `library_texts`
               SET
-                `cat_id` = ${id},
-                `name` = " . $db->quote($name) . ',
-                `announce` = ' . $db->quote($announce) . ',
-                `text` = ' . $db->quote($text) . ",
-                `uploader` = '" . $user->name . "',
-                `uploader_id` = " . $user->id . ",
-                `premod` = ${md},
-                `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ',
-                `time` = ' . time() . '
+                `cat_id` = ?,
+                `name` = ?,
+                `announce` = ?,
+                `text` = ?,
+                `uploader` = ?,
+                `uploader_id` = ?,
+                `premod` = ?,
+                `comments` = ?,
+                `time` = ?
             ';
 
-            if ($db->query($sql)) {
-                $cid = $db->lastInsertId();
+            if ($db->query($sql)->execute($insert)) {
+                $cid = (int) $db->lastInsertId();
 
                 $handle = new Upload($_FILES['image']);
                 if ($handle->uploaded) {
@@ -184,9 +193,9 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     }
                 }
 
-                echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
+                echo '<div>' . _t('Article added') . '</div>' . ($md === 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
                 $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-                echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
+                echo $md === 1 ? '<div><a href="?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
                 echo $view->render(
                     'system::app/old_content',
                     [

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -10,21 +8,25 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Latest comments') . '</div>';
 
-$stmt = $db->query('SELECT `cms_library_comments`.`user_id` , `cms_library_comments`.`text` , `library_texts`.`name` , `library_texts`.`comm_count` , `library_texts`.`id` , `cms_library_comments`.`time` 
-FROM `cms_library_comments` 
-JOIN `library_texts` ON `cms_library_comments`.`sub_id` = `library_texts`.`id` 
-GROUP BY `library_texts`.`id` 
-ORDER BY `cms_library_comments`.`time` DESC 
-LIMIT 20');
+$stmt = $db->query('
+              SELECT `cms_library_comments`.`user_id`, `cms_library_comments`.`text`, `library_texts`.`name`, `library_texts`.`comm_count`, `library_texts`.`id`, `cms_library_comments`.`time`
+                FROM `cms_library_comments`
+              JOIN `library_texts` ON `cms_library_comments`.`sub_id` = `library_texts`.`id`
+                GROUP BY `library_texts`.`id`
+                ORDER BY `cms_library_comments`.`time` DESC
+                LIMIT 20
+                ');
 
 if ($stmt->rowCount()) {
     $i = 0;
     while ($row = $stmt->fetch()) {
-        echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
+        echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">'
             . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')

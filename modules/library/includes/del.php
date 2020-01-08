@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -26,11 +26,16 @@ if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image'])
 } else {
     Utils::redir404();
 }
-$change = ($type == 'dir' ? $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=' . $id)->fetchColumn() > 0 || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0 ? 0 : 1 : '');
+$change = ($type === 'dir'
+    ? $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=' . $id)->fetchColumn() > 0
+    || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0
+        ? 0
+        : 1
+    : '');
 
 switch ($type) {
     case 'dir':
-        if ($db->query('SELECT COUNT(*) FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() == 0) {
+        if ($db->query('SELECT COUNT(*) FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() === 0) {
             echo $tools->displayError(_t('Section does not exist'));
         } elseif (! $change) {
             $mode = $_POST['mode'] ?? ($do ?? false);
@@ -43,17 +48,13 @@ switch ($type) {
                             (int) ($_POST['move']) . '">' . _t('Move') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
                         $move = (int) ($_GET['move']);
-                        if ($dirtype) {
-                            $afr = $db->exec('UPDATE `library_cats` SET `parent`=' . $move . ' WHERE `parent` = ' . $id);
-                        } else {
-                            $afr = $db->exec('UPDATE `library_texts` SET `cat_id` = ' . $move . ' WHERE `cat_id` = ' . $id);
-                        }
 
-                        if ($afr) {
-                            $afr = $db->exec('DELETE FROM `library_cats` WHERE `id` = ' . $id);
-                            if ($afr) {
-                                echo '<div class="gmenu">' . _t('Successful transfer') . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . _t('Back') . '</a></div>' . PHP_EOL;
-                            }
+                        $afr = ($dirtype
+                            ? $db->exec('UPDATE `library_cats` SET `parent`=' . $move . ' WHERE `parent` = ' . $id)
+                            : $db->exec('UPDATE `library_texts` SET `cat_id` = ' . $move . ' WHERE `cat_id` = ' . $id));
+
+                        if ($afr && $db->exec('DELETE FROM `library_cats` WHERE `id` = ' . $id)) {
+                            echo '<div class="gmenu">' . _t('Successful transfer') . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . _t('Back') . '</a></div>' . PHP_EOL;
                         }
                     }
                     break;
@@ -61,7 +62,12 @@ switch ($type) {
                 case 'delmove':
                     $child_dir = new Tree($id);
                     $childrens = $child_dir->getChildsDir()->result();
-                    $list = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `dir`=' . $dirtype . ' AND ' . ($dirtype && count($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
+                    $list = $db->query(
+                        'SELECT `id`, `name` FROM `library_cats` WHERE `dir`=' . $dirtype . ' AND '
+                        . ($dirtype && count($childrens)
+                            ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')'
+                            : '`id`  != ' . $id)
+                    );
                     if ($list->rowCount()) {
                         echo '<div class="menu">'
                             . '<h3>' . _t('Move to Section') . '</h3>'
@@ -87,15 +93,10 @@ switch ($type) {
                             _t('Delete') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
                         $childs = new Tree($id);
-                        $deleted = $childs->getAllChildsId()->cleanDir();
-                        echo '<div class="gmenu">' . sprintf(
-                            _t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
-                            $deleted['dirs'],
-                            $deleted['texts'],
-                            $deleted['tags'],
-                            $deleted['comments'],
-                            $deleted['images']
-                        ) . '</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
+                        $args = [t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)')] + $childs->getAllChildsId()->cleanDir();
+                        echo '<div class="gmenu">'
+                            . sprintf(...$args)
+                            . '</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
                     }
                     break;
 
@@ -121,7 +122,7 @@ switch ($type) {
         break;
 
     case 'article':
-        if ($db->query('SELECT COUNT(*) FROM `library_texts` WHERE `id`=' . $id)->rowCount() == 0) {
+        if ($db->query('SELECT COUNT(*) FROM `library_texts` WHERE `id`=' . $id)->rowCount() === 0) {
             echo $tools->displayError(_t('Articles do not exist'));
         } else {
             $sql = 'DELETE FROM `library_texts` WHERE `id`=' . $id;
@@ -138,7 +139,7 @@ switch ($type) {
         }
         break;
 }
-if (isset($_GET['yes']) && $type == 'image') {
+if (isset($_GET['yes']) && $type === 'image') {
     if (file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) {
         @unlink(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
         @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');

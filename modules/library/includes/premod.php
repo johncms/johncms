@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -10,6 +8,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 use Library\Tree;
@@ -17,10 +17,10 @@ use Library\Tree;
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Moderation Articles') . '</div>';
 
 if ($id && isset($_GET['yes'])) {
-    $sql = 'UPDATE `library_texts` SET `premod`=1 WHERE `id`=' . $id;
+    $sql = 'UPDATE `library_texts` SET `premod` = 1 WHERE `id` = ' . $id;
     echo '<div class="rmenu">' . _t('Article') . ' <strong>' . $tools->checkout($db->query('SELECT `name` FROM `library_texts` WHERE `id`=' . $id)->fetchColumn()) . '</strong> ' . _t('Added to the database') . '</div>';
 } elseif (isset($_GET['all'])) {
-    $sql = 'UPDATE `library_texts` SET `premod`=1';
+    $sql = 'UPDATE `library_texts` SET `premod` = 1';
     echo '<div>' . _t('All Articles added in database') . '</div>';
 }
 
@@ -30,16 +30,16 @@ if (isset($_GET['yes']) || isset($_GET['all'])) {
 
 $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0')->fetchColumn();
 $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
-$start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
+$start = $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
 
 if ($total) {
-    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $user->config->kmess);
+    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod` = 0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $user->config->kmess);
     $i = 0;
 
     while ($row = $stmt->fetch()) {
         $dir_nav = new Tree($row['cat_id']);
         $dir_nav->processNavPanel();
-        echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
+        echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">'
             . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
