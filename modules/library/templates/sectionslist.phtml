@@ -1,0 +1,30 @@
+<?php if ($total) : ?>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+
+    <!-- Listing Sections -->
+    <?php $i = 0; ?>
+    <?php foreach ($list() as $section): ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <a href="?do=dir&amp;id=<?= $section['id'] ?>"><?= $section['name'] ?></a> (<?= $section['libCounter'] ?>)
+            <div class="sub"><span class="gray"><?= $section['description'] ?></span></div>
+            <?php if ($admin) : ?>
+                <?= $section['sectionListAdminPanel'] ?>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="menu"><p><?= _t('The list is empty') ?></p></div>
+<?php endif ?>
+<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+
+<!-- Page switching -->
+<?php if ($total > $user->config->kmess): ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+
+<?php if ($admin && $total) : ?>
+    <?= $section['sectionAdminPanel'] ?>
+<?php endif; ?>

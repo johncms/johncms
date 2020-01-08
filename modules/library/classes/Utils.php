@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Library;
 
+use PDO;
+
 /**
  * Статические методы помошники
  * Class Utils
@@ -65,5 +67,32 @@ class Utils
     public static function cmpalpha(array $a, array $b): int
     {
         return ($a['name'] <=> $b['name']);
+    }
+
+    public static function libCounter(int $id, int $dir): string
+    {
+        $db = di(PDO::class);
+        return $db->query('SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
+                          . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id))->fetchColumn()
+            . ' ' . ($dir ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')';
+    }
+
+    public static function sectionsListAdminPanel(int $sectionId, int $sectionItemId, int $positionId, int $total): string
+    {
+        return '<div class="sub">'
+            . ($positionId !== 1 ? '<a href="?do=dir&amp;id=' . $sectionId . '&amp;act=move&amp;moveset=up&amp;posid=' . $positionId . '">' . _t('Up')
+                . '</a> | ' : '' . _t('Up') . ' | ')
+            . ($positionId !== $total
+                ? '<a href="?do=dir&amp;id=' . $sectionId . '&amp;act=move&amp;moveset=down&amp;posid=' . $positionId . '">' . _t('Down') . '</a>'
+                : _t('Down'))
+            . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $sectionItemId . '">' . _t('Edit') . '</a>'
+            . ' | <a href="?act=del&amp;type=dir&amp;id=' . $sectionItemId . '">' . _t('Delete') . '</a></div>';
+    }
+
+    public static function sectionAdminPanel(int $id): string
+    {
+        return '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
+            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a><br>'
+            . '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Create') . '</a></p>';
     }
 }

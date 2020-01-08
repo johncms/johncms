@@ -45,6 +45,9 @@ $loader = new Loader();
 $loader->register();
 $loader->addPrefix('Library', __DIR__ . '/classes');
 
+// Регистрируем Namespace для шаблонов модуля
+$view->addFolder('library', __DIR__ . '/templates/');
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
