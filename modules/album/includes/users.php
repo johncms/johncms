@@ -39,17 +39,17 @@ $data = [];
 $data['filters'] = [
     'all'   => [
         'name'   => _t('All'),
-        'url'    => '?./users',
+        'url'    => './users',
         'active' => ! $mod,
     ],
     'boys'  => [
         'name'   => _t('Guys'),
-        'url'    => '?./users?mod=boys',
+        'url'    => './users?mod=boys',
         'active' => $mod === 'boys',
     ],
     'girls' => [
         'name'   => _t('Girls'),
-        'url'    => '?./users?mod=girls',
+        'url'    => './users?mod=girls',
         'active' => $mod === 'girls',
     ],
 ];
@@ -72,7 +72,7 @@ ORDER BY `u`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
     $users = [];
     while ($res = $req->fetch()) {
         $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-        $res['album_url'] = '?./list?user=' . $res['id'];
+        $res['album_url'] = './list?user=' . $res['id'];
         $users[] = $res;
     }
 }
