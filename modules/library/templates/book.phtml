@@ -1,0 +1,69 @@
+<div class="phdr"><a href="?"><strong><?= _t('Library') ?></strong></a>
+    | <a href="?do=dir&amp;id=<?= $catalog['id'] ?>"><?= $catalog['name'] ?></a>
+    <?php if ($page > 1) : ?>
+        | <?= $res['name'] ?>
+    <?php endif; ?>
+</div>
+<!-- Page switching -->
+<?php if ($count_pages > 1): ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?php if ($page === 1) : ?>
+    <div class="list2">
+        <h2><?= $res['name'] ?></h2>
+        <table class="desc">
+            <?php if ($tags) : ?>
+            <tr>
+                <td class="caption"><?= _t('The Tags') ?>:</td>
+                <td><?= $tags ?></td>
+                <?php endif; ?>
+            <tr>
+                <td class="caption"><?= _t('Who added') ?>:</td>
+                <td><?= $who ?></td>
+            </tr>
+            <tr>
+                <td class="caption"><?= _t('Rating') ?>:</td>
+                <td><?= $ratingView ?></td>
+            </tr>
+            <tr>
+                <td class="caption"><?= _t('Number of readings') ?>:</td>
+                <td><?= $res['count_views'] ?></td>
+            </tr>
+            <tr>
+                <?php if ($res['comments']) : ?>
+                    <td class="caption"><a href="?act=comments&amp;id=<?= $res['id'] ?>"><?= _t('Comments') ?></a>:</td>
+                    <td><?= $res['comm_count'] ?></td>
+                <?php else : ?>
+                    <td class="caption"><?= _t('Comments') ?>:</td>
+                    <td><?= _t('Comments are closed') ?></td>
+                <?php endif; ?>
+            </tr>
+        </table>
+    </div>
+    <?php if ($cover) : ?>
+        <a href="../upload/library/images/orig/<?= $res['id'] ?>.png">
+            <img style="width: 50%; max-width: 240px; height: auto; float: left; clear: both; margin: 10px"
+                 src="../upload/library/images/big/<?= $res['id'] ?>.png" alt="screen"/>
+        </a>
+    <?php endif; ?>
+<?php endif; ?>
+<div class="list2" style="padding: 8px">
+    <?= $res['text'] ?>
+    <div style="clear: both"></div>
+</div>
+<div class="phdr"><?= _t('Download file') ?>
+    <a href="?act=download&amp;type=txt&amp;id=<?= $res['id'] ?>">txt</a>
+    | <a href="?act=download&amp;type=fb2&amp;id=<?= $res['id'] ?>">fb2</a>
+</div>
+<!-- Page switching -->
+<?php if ($count_pages > 1): ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?= $ratingVote ?>
+<?php if ($moderMenu) : ?>
+    <p>
+        <a href="?act=moder&amp;type=article&amp;id=<?= $res['id'] ?>"><?= _t('Edit') ?></a>
+        <br>
+        '<a href="?act=del&amp;type=article&amp;id=<?= $res['id'] ?>"><?= _t('Delete') ?></a>
+    </p>
+<?php endif; ?>

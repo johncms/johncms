@@ -14,10 +14,6 @@ $total = $db->query(
     . ($id !== null ? '`parent` = ' . $id : '`parent` = 0')
 )->fetchColumn();
 
-$nav = ($total > $user->config->kmess)
-    ? $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess)
-    : '';
-
 if ($total) {
     $req = $db->query(
         'SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE '
