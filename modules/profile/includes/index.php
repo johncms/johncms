@@ -76,7 +76,8 @@ if ($config['karma']['on']) {
     } else {
         $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
         if ($total_karma > 0) {
-            $user_data['karma_view_url'] = '?act=karma&amp;mod=new';
+            $user_data['karma_new_url'] = '?act=karma&amp;mod=new';
+            $user_data['karma_new'] = $total_karma;
         }
     }
 }

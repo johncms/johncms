@@ -87,8 +87,11 @@ $this->layout(
                 <div class="rounded-progress <?= ($data['user']['karma_percent'] < 0) ? 'negative-progress' : '' ?> mx-auto" data-value='<?= $data['user']['karma_percent'] ?>'>
                     <span class="progress-left"><span class="progress-bar border-success"></span></span>
                     <span class="progress-right"><span class="progress-bar border-success"></span></span>
-                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
                         <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
+                        <?php if (! empty($data['user']['karma_new'])): ?>
+                            <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= _p('vote', 'votes', $data['user']['karma_new']) ?></a></div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row text-center mt-4">
