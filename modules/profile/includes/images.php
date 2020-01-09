@@ -148,7 +148,7 @@ if ($mod === 'avatar') {
                 'title'         => $title,
                 'type'          => 'alert-danger',
                 'message'       => $error,
-                'back_url'      => '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'],
+                'back_url'      => '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'],
                 'back_url_name' => _t('Repeat'),
             ]
         );
