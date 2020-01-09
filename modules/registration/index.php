@@ -36,7 +36,7 @@ $nav_chain = di(NavChain::class);
 $view->addFolder('reg', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/registration.mo');
 
 $nav_chain->add(_t('Registration'));
 

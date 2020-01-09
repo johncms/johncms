@@ -37,7 +37,7 @@ $route = di('route');
 $view->addFolder('news', __DIR__ . '/templates/');
 
 // Register module languages
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/news.mo');
 
 // Add a section to the navigation chain
 $nav_chain->add(_t('News'), '/news/');

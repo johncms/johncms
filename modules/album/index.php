@@ -42,7 +42,7 @@ $nav_chain = di(NavChain::class);
 $request = di(Request::class);
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/album.mo');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();

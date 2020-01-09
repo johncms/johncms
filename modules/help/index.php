@@ -32,7 +32,7 @@ $view = di(Render::class);
 $view->addFolder('help', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/help.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

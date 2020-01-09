@@ -35,7 +35,7 @@ $route = di('route');
 $view->addFolder('admin', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/admin.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
 $act = $route['action'] ?? 'index';

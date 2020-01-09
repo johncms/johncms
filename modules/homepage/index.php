@@ -29,6 +29,6 @@ $nav_chain->showHomePage(false);
 $view->addFolder('homepage', __DIR__ . '/templates/');
 
 // Register the module languages folder
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/homepage.mo');
 
 echo $view->render('homepage::index');

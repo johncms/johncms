@@ -39,7 +39,7 @@ $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/forum.mo');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('forum', __DIR__ . '/templates/');

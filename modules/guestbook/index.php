@@ -45,7 +45,7 @@ $route = di('route');
 $view->addFolder('guestbook', __DIR__ . '/templates/');
 
 // Register the module languages folder
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/guestbook.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? '';

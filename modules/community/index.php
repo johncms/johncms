@@ -46,7 +46,7 @@ $request = di(Request::class);
 $view->addFolder('users', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/community.mo');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';

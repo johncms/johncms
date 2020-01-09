@@ -39,7 +39,7 @@ $user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/library.mo');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader();
