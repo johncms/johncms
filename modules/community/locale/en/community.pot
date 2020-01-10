@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2019-11-21 12:49+0400\n"
+"POT-Creation-Date: 2020-01-10 10:25+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -17,29 +17,21 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/administration.php:27 templates/index.phtml:17
+#: includes/administration.php:25 includes/administration.php:31
+#: includes/administration.php:32 templates/index.phtml:45
 msgid "Administration"
 msgstr ""
 
-#: includes/birthdays.php:20 templates/index.phtml:20
+#: includes/birthdays.php:18 includes/birthdays.php:24
+#: includes/birthdays.php:25 templates/index.phtml:50
 msgid "Birthdays"
 msgstr ""
 
-#: includes/search.php:24 includes/top.php:54 includes/top.php:62
-#: includes/top.php:71 includes/top.php:91 templates/index.phtml:1
-#: templates/index.phtml:2 templates/users.phtml:2
-msgid "Community"
-msgstr ""
-
-#: includes/search.php:24 includes/search.php:94 templates/users.phtml:22
+#: includes/search.php:26 templates/search.phtml:67 templates/users.phtml:50
 msgid "User Search"
 msgstr ""
 
-#: includes/search.php:28 templates/index.phtml:8
-msgid "Search"
-msgstr ""
-
-#: includes/search.php:35 includes/search.php:39
+#: includes/search.php:35 includes/search.php:39 templates/index.phtml:32
 msgid "Nickname"
 msgstr ""
 
@@ -51,98 +43,100 @@ msgstr ""
 msgid "Invalid characters"
 msgstr ""
 
-#: includes/search.php:54
-msgid "Searching results"
-msgstr ""
-
-#: includes/search.php:71
-msgid "Your search did not match any results"
-msgstr ""
-
-#: includes/search.php:74 templates/users.phtml:15
-msgid "Total"
-msgstr ""
-
-#: includes/search.php:80
-msgid "To Page"
-msgstr ""
-
-#: includes/search.php:87
-msgid "Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical."
-msgstr ""
-
-#: includes/search.php:90
-msgid "New search"
-msgstr ""
-
-#: includes/search.php:91 templates/users.phtml:23
-msgid "Back"
-msgstr ""
-
-#: includes/top.php:37 includes/top.php:82 templates/users.phtml:12
-msgid "The list is empty"
-msgstr ""
-
-#: includes/top.php:42 includes/top.php:94
+#: includes/top.php:19
 msgid "Forum"
 msgstr ""
 
-#: includes/top.php:43 includes/top.php:57
+#: includes/top.php:24
 msgid "Guestbook"
 msgstr ""
 
-#: includes/top.php:44
+#: includes/top.php:29
 msgid "Comments"
 msgstr ""
 
-#: includes/top.php:48
+#: includes/top.php:37
 msgid "Karma"
 msgstr ""
 
-#: includes/top.php:54
+#: includes/top.php:48
 msgid "Most active in Guestbook"
 msgstr ""
 
-#: includes/top.php:62
+#: includes/top.php:55
 msgid "Most commentators"
 msgstr ""
 
-#: includes/top.php:65 includes/top.php:85
-msgid "Home"
-msgstr ""
-
-#: includes/top.php:71
+#: includes/top.php:63
 msgid "Best Karma"
 msgstr ""
 
-#: includes/top.php:91
+#: includes/top.php:71
 msgid "Most active in Forum"
 msgstr ""
 
-#: includes/top.php:98 templates/index.phtml:25
-msgid "Top Activity"
-msgstr ""
-
-#: includes/users.php:27
+#: includes/users.php:25 includes/users.php:31 includes/users.php:32
 msgid "List of users"
 msgstr ""
 
-#: index.php:52
+#: index.php:55
+msgid "Community"
+msgstr ""
+
+#: index.php:66
 msgid "For registered users only"
 msgstr ""
 
-#: templates/index.phtml:6
+#: templates/index.phtml:30 templates/search.phtml:29
 msgid "Look for the User"
 msgstr ""
 
-#: templates/index.phtml:9
+#: templates/index.phtml:34 templates/search.phtml:33
+msgid "Search"
+msgstr ""
+
+#: templates/index.phtml:37 templates/search.phtml:36
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr ""
 
-#: templates/index.phtml:15
+#: templates/index.phtml:41
 msgid "Users"
 msgstr ""
 
-#: templates/index.phtml:23
-msgid "Photo Albums"
+#: templates/index.phtml:55
+msgid "Top Activity"
 msgstr ""
+
+#: templates/search.phtml:31
+msgid "Username"
+msgstr ""
+
+#: templates/search.phtml:50 templates/top.phtml:40 templates/users.phtml:33
+msgid "List is empty"
+msgstr ""
+
+#: templates/search.phtml:57 templates/users.phtml:40
+msgid "Total"
+msgstr ""
+
+#: templates/search.phtml:70 templates/top.phtml:47 templates/users.phtml:53
+msgid "Back"
+msgstr ""
+
+#: templates/user_row.phtml:36 templates/user_row.phtml:42
+msgid "post"
+msgid_plural "posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/user_row.phtml:38
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/user_row.phtml:40
+msgid "point"
+msgid_plural "points"
+msgstr[0] ""
+msgstr[1] ""

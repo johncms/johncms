@@ -9,105 +9,106 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admsmilies.php:26 includes/set_my_sm.php:31
+#: includes/admsmilies.php:22 includes/set_my_sm.php:27
 msgid "Wrong data"
 msgstr ""
 
-#: includes/admsmilies.php:26 includes/admsmilies.php:80
-#: includes/avatars.php:35 includes/avatars.php:81 includes/avatars.php:99
-#: includes/forum.php:61 includes/my_smilies.php:72 includes/smilies.php:53
-#: includes/tags.php:81 includes/usersmilies.php:90 index.php:82
+#: includes/admsmilies.php:22 includes/admsmilies.php:76
+#: includes/avatars.php:31 includes/avatars.php:79 includes/avatars.php:97
+#: includes/forum.php:61 includes/my_smilies.php:68 includes/smilies.php:54
+#: includes/tags.php:81 includes/usersmilies.php:86 templates/index.phtml:7
 msgid "Back"
 msgstr ""
 
-#: includes/admsmilies.php:31 includes/my_smilies.php:25
-#: includes/set_my_sm.php:31 includes/smilies.php:19
-#: includes/usersmilies.php:41 index.php:81
+#: includes/admsmilies.php:27 includes/my_smilies.php:21
+#: includes/set_my_sm.php:27 includes/smilies.php:20
+#: includes/usersmilies.php:37 templates/index.phtml:6
 msgid "Smilies"
 msgstr ""
 
-#: includes/admsmilies.php:31 includes/smilies.php:27
+#: includes/admsmilies.php:27 includes/smilies.php:28
 msgid "For administration"
 msgstr ""
 
-#: includes/admsmilies.php:38 includes/my_smilies.php:25
-#: includes/smilies.php:23 includes/usersmilies.php:54
+#: includes/admsmilies.php:34 includes/my_smilies.php:21
+#: includes/smilies.php:24 includes/usersmilies.php:50
 msgid "My smilies"
 msgstr ""
 
-#: includes/admsmilies.php:64 includes/my_smilies.php:56
-#: includes/usersmilies.php:70
+#: includes/admsmilies.php:60 includes/my_smilies.php:52
+#: includes/usersmilies.php:66
 msgid "or"
 msgstr ""
 
-#: includes/admsmilies.php:67 includes/avatars.php:68
-#: includes/my_smilies.php:63 includes/usersmilies.php:78
+#: includes/admsmilies.php:63 includes/avatars.php:66
+#: includes/my_smilies.php:59 includes/usersmilies.php:74
 msgid "The list is empty"
 msgstr ""
 
-#: includes/admsmilies.php:70 includes/usersmilies.php:75
+#: includes/admsmilies.php:66 includes/usersmilies.php:71
 msgid "Add"
 msgstr ""
 
-#: includes/admsmilies.php:71 includes/avatars.php:71 includes/avatars.php:98
-#: includes/my_smilies.php:66 includes/usersmilies.php:81
+#: includes/admsmilies.php:67 includes/avatars.php:69 includes/avatars.php:96
+#: includes/my_smilies.php:62 includes/usersmilies.php:77
 msgid "Total"
 msgstr ""
 
-#: includes/admsmilies.php:77 includes/avatars.php:77
-#: includes/usersmilies.php:87
+#: includes/admsmilies.php:73 includes/avatars.php:75
+#: includes/usersmilies.php:83
 msgid "To Page"
 msgstr ""
 
-#: includes/avatars.php:32
+#: includes/avatars.php:28
 msgid "Avatar has been successfully applied"
 msgstr ""
 
-#: includes/avatars.php:33
+#: includes/avatars.php:29
 msgid "Continue"
 msgstr ""
 
-#: includes/avatars.php:35
+#: includes/avatars.php:31
 msgid "An error occurred"
 msgstr ""
 
-#: includes/avatars.php:38 includes/avatars.php:47 includes/avatars.php:85
-#: index.php:80
+#: includes/avatars.php:34 includes/avatars.php:44 includes/avatars.php:83
+#: templates/index.phtml:5
 msgid "Avatars"
 msgstr ""
 
-#: includes/avatars.php:38
+#: includes/avatars.php:34
 msgid "Set to Profile"
 msgstr ""
 
-#: includes/avatars.php:39
+#: includes/avatars.php:35
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr ""
 
-#: includes/avatars.php:41
+#: includes/avatars.php:37
 msgid "Save"
 msgstr ""
 
-#: includes/avatars.php:43
+#: includes/avatars.php:39
 msgid "Cancel"
 msgstr ""
 
-#: includes/avatars.php:62
+#: includes/avatars.php:60
 msgid "Select"
 msgstr ""
 
-#: includes/avatars.php:85 includes/forum.php:16 includes/smilies.php:19
-#: includes/tags.php:18 index.php:77
+#: includes/avatars.php:83 includes/forum.php:16 includes/smilies.php:20
+#: includes/tags.php:18 index.php:86 templates/index.phtml:1
+#: templates/index.phtml:2
 msgid "Information, FAQ"
 msgstr ""
 
-#: includes/forum.php:16 index.php:78
+#: includes/forum.php:16 templates/index.phtml:3
 msgid "Forum rules"
 msgstr ""
 
@@ -187,15 +188,15 @@ msgstr ""
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
 msgstr ""
 
-#: includes/my_smilies.php:61
+#: includes/my_smilies.php:57
 msgid "Delete"
 msgstr ""
 
-#: includes/my_smilies.php:63
+#: includes/my_smilies.php:59
 msgid "Add Smilies"
 msgstr ""
 
-#: includes/tags.php:18 index.php:79
+#: includes/tags.php:18 templates/index.phtml:4
 msgid "bbCode Tags"
 msgstr ""
 
@@ -267,50 +268,50 @@ msgstr ""
 msgid "Spoiler"
 msgstr ""
 
-#: index.php:46
+#: index.php:53
 msgid "Animals"
 msgstr ""
 
-#: index.php:47
+#: index.php:54
 msgid "Brawl, Weapons"
 msgstr ""
 
-#: index.php:48
+#: index.php:55
 msgid "Emotions"
 msgstr ""
 
-#: index.php:49
+#: index.php:56
 msgid "Flowers"
 msgstr ""
 
-#: index.php:50
+#: index.php:57
 msgid "Food, Alcohol"
 msgstr ""
 
-#: index.php:51
+#: index.php:58
 msgid "Gestures"
 msgstr ""
 
-#: index.php:52
+#: index.php:59
 msgid "Holidays"
 msgstr ""
 
-#: index.php:53
+#: index.php:60
 msgid "Love"
 msgstr ""
 
-#: index.php:54
+#: index.php:61
 msgid "Miscellaneous"
 msgstr ""
 
-#: index.php:55
+#: index.php:62
 msgid "Music, Dancing"
 msgstr ""
 
-#: index.php:56
+#: index.php:63
 msgid "Sports"
 msgstr ""
 
-#: index.php:57
+#: index.php:64
 msgid "Technology"
 msgstr ""

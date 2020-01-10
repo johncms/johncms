@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2019-11-15 11:40+0300\n"
+"POT-Creation-Date: 2020-01-10 02:46+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -17,29 +17,29 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/add.php:22 includes/add.php:117 includes/add.php:124
+#: includes/add.php:24 includes/add.php:133 includes/add.php:143
 #: templates/add.phtml:2 templates/add.phtml:3 templates/add.phtml:9
 msgid "Add news"
 msgstr ""
 
-#: includes/add.php:31 includes/edit.php:40
+#: includes/add.php:33 includes/edit.php:44
 msgid "You have not entered news title"
 msgstr ""
 
-#: includes/add.php:35 includes/edit.php:44
+#: includes/add.php:37 includes/edit.php:48
 msgid "You have not entered news text"
 msgstr ""
 
-#: includes/add.php:41
+#: includes/add.php:43
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d seconds."
 msgstr ""
 
-#: includes/add.php:118
+#: includes/add.php:134
 msgid "News added"
 msgstr ""
 
-#: includes/clean.php:24 includes/clean.php:49 templates/clear.phtml:2
+#: includes/clean.php:24 includes/clean.php:51 templates/clear.phtml:2
 #: templates/clear.phtml:3 templates/clear.phtml:9
 msgid "Clear news"
 msgstr ""
@@ -56,30 +56,31 @@ msgstr ""
 msgid "Delete all news older than 1 month"
 msgstr ""
 
-#: includes/del.php:24 includes/del.php:29 templates/confirm_delete.phtml:2
+#: includes/del.php:24 includes/del.php:31 templates/confirm_delete.phtml:2
 #: templates/confirm_delete.phtml:3
 msgid "Delete news"
 msgstr ""
 
-#: includes/del.php:30
+#: includes/del.php:32
 msgid "News deleted"
 msgstr ""
 
-#: includes/edit.php:25 includes/edit.php:63 includes/edit.php:71
+#: includes/edit.php:25 includes/edit.php:73 includes/edit.php:84
 #: templates/edit.phtml:2 templates/edit.phtml:3 templates/edit.phtml:9
 msgid "Edit news"
 msgstr ""
 
-#: includes/edit.php:29
+#: includes/edit.php:31 index.php:43 templates/index.phtml:2
+#: templates/index.phtml:3
+msgid "News"
+msgstr ""
+
+#: includes/edit.php:33
 msgid "Wrong data"
 msgstr ""
 
-#: includes/edit.php:72
+#: includes/edit.php:85
 msgid "News changed"
-msgstr ""
-
-#: index.php:45 templates/index.phtml:2 templates/index.phtml:3
-msgid "News"
 msgstr ""
 
 #: templates/add.phtml:12 templates/add.phtml:20 templates/edit.phtml:12
@@ -127,7 +128,7 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: templates/clear.phtml:26 templates/confirm_delete.phtml:11
+#: templates/clear.phtml:26 templates/confirm_delete.phtml:12
 msgid "Cancel"
 msgstr ""
 
@@ -135,7 +136,7 @@ msgstr ""
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: templates/confirm_delete.phtml:10 templates/index.phtml:34
+#: templates/confirm_delete.phtml:11 templates/index.phtml:34
 msgid "Delete"
 msgstr ""
 
@@ -157,8 +158,4 @@ msgstr ""
 
 #: templates/index.phtml:42
 msgid "Total"
-msgstr ""
-
-#: templates/result.phtml:15
-msgid "Back"
 msgstr ""

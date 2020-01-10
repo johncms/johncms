@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2019-12-04 12:44+0300\n"
+"POT-Creation-Date: 2020-01-10 02:43+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -18,35 +18,35 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/addfile.php:27 includes/addfile.php:29 includes/addvote.php:144
-#: includes/addvote.php:146 includes/curators.php:91 includes/curators.php:93
-#: includes/deltema.php:97 includes/deltema.php:99 includes/delvote.php:69
+#: includes/addvote.php:146 includes/curators.php:90 includes/curators.php:92
+#: includes/deltema.php:101 includes/deltema.php:103 includes/delvote.php:69
 #: includes/delvote.php:71 includes/massdel.php:82 includes/massdel.php:84
-#: includes/nt.php:33 includes/nt.php:35 includes/ren.php:106
-#: includes/ren.php:108 includes/say.php:35 includes/vip.php:60
+#: includes/nt.php:34 includes/nt.php:36 includes/ren.php:106
+#: includes/ren.php:108 includes/say.php:36 includes/vip.php:60
 #: includes/vip.php:62 includes/vote.php:63 includes/vote.php:65
 msgid "Access forbidden"
 msgstr ""
 
 #: includes/addfile.php:31 includes/addfile.php:48 includes/addfile.php:63
 #: includes/addvote.php:34 includes/addvote.php:148 includes/curators.php:33
-#: includes/curators.php:95 includes/deltema.php:30 includes/deltema.php:48
-#: includes/deltema.php:101 includes/delvote.php:32 includes/delvote.php:49
+#: includes/curators.php:94 includes/deltema.php:30 includes/deltema.php:48
+#: includes/deltema.php:105 includes/delvote.php:32 includes/delvote.php:49
 #: includes/delvote.php:73 includes/editpost.php:29 includes/editpost.php:66
-#: includes/editpost.php:73 includes/editpost.php:93 includes/editpost.php:97
+#: includes/editpost.php:73 includes/editpost.php:93 includes/editpost.php:98
 #: includes/editvote.php:33 includes/files.php:92 includes/filter.php:28
 #: includes/filter.php:55 includes/filter.php:92 includes/loadtem.php:28
 #: includes/loadtem.php:57 includes/massdel.php:43 includes/massdel.php:57
-#: includes/massdel.php:86 includes/nt.php:96 includes/nt.php:112
+#: includes/massdel.php:86 includes/nt.php:97 includes/nt.php:113
 #: includes/per.php:30 includes/per.php:45 includes/per.php:61
 #: includes/per.php:76 includes/ren.php:30 includes/ren.php:46
-#: includes/ren.php:110 includes/say.php:37 includes/say.php:100
-#: includes/say.php:117 includes/say.php:146 includes/say.php:165
-#: includes/say.php:328 includes/say.php:344 includes/say.php:360
-#: includes/say.php:374 includes/say.php:443 includes/say.php:463
+#: includes/ren.php:110 includes/say.php:38 includes/say.php:101
+#: includes/say.php:118 includes/say.php:148 includes/say.php:167
+#: includes/say.php:329 includes/say.php:345 includes/say.php:361
+#: includes/say.php:375 includes/say.php:445 includes/say.php:465
 #: includes/vip.php:32 includes/vip.php:51 includes/vip.php:64
 #: includes/vote.php:37 includes/vote.php:55 includes/vote.php:67
-#: templates/edit_post.phtml:69 templates/new_topic.phtml:82
-#: templates/reply_message.phtml:108
+#: templates/edit_post.phtml:65 templates/new_topic.phtml:78
+#: templates/reply_message.phtml:104
 msgid "Back"
 msgstr ""
 
@@ -54,13 +54,13 @@ msgstr ""
 #: includes/deltema.php:28 includes/delvote.php:30 includes/editpost.php:27
 #: includes/editvote.php:31 includes/files.php:90 includes/filter.php:26
 #: includes/filter.php:90 includes/loadtem.php:26 includes/loadtem.php:55
-#: includes/nt.php:110 includes/per.php:26 includes/per.php:28
+#: includes/nt.php:111 includes/per.php:26 includes/per.php:28
 #: includes/per.php:41 includes/per.php:43 includes/per.php:57
 #: includes/per.php:59 includes/per.php:72 includes/per.php:74
 #: includes/ren.php:28 includes/ren.php:44 includes/show_post.php:28
-#: includes/tema.php:50 includes/tema.php:67 includes/users.php:30
-#: includes/vip.php:30 includes/vip.php:49 includes/vote.php:35 index.php:722
-#: index.php:724
+#: includes/show_post.php:50 includes/tema.php:50 includes/tema.php:67
+#: includes/users.php:30 includes/vip.php:30 includes/vip.php:49
+#: includes/vote.php:35 index.php:718 index.php:720
 msgid "Wrong data"
 msgstr ""
 
@@ -86,21 +86,21 @@ msgid "Error uploading file"
 msgstr ""
 
 #: includes/addfile.php:171 includes/addfile.php:185 includes/addvote.php:98
-#: includes/editpost.php:255 includes/nt.php:276 includes/ren.php:63
-#: includes/ren.php:80 includes/say.php:428 includes/search.php:183
+#: includes/editpost.php:256 includes/nt.php:278 includes/ren.php:63
+#: includes/ren.php:80 includes/say.php:430 includes/search.php:183
 msgid "Repeat"
 msgstr ""
 
 #: includes/addfile.php:198 includes/addfile.php:199 includes/addvote.php:130
-#: includes/addvote.php:131 templates/new_topic.phtml:73
-#: templates/reply_message.phtml:99 templates/topic.phtml:129
-#: templates/topic.phtml:375
+#: includes/addvote.php:131 templates/new_topic.phtml:69
+#: templates/reply_message.phtml:95 templates/topic.phtml:129
+#: templates/topic.phtml:371
 msgid "Add File"
 msgstr ""
 
 #: includes/addvote.php:29 includes/addvote.php:30 includes/addvote.php:81
 #: includes/addvote.php:82 includes/addvote.php:93 includes/addvote.php:94
-#: templates/topic.phtml:328
+#: templates/topic.phtml:324
 msgid "Add Poll"
 msgstr ""
 
@@ -121,24 +121,24 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
-#: includes/curators.php:28 includes/curators.php:29 includes/curators.php:75
-#: includes/curators.php:76 includes/deltema.php:43 includes/deltema.php:44
-#: templates/topic.phtml:400
+#: includes/curators.php:28 includes/curators.php:29 includes/curators.php:74
+#: includes/curators.php:75 includes/deltema.php:43 includes/deltema.php:44
+#: templates/topic.phtml:396
 msgid "Curators"
 msgstr ""
 
-#: includes/curators.php:31 includes/deltema.php:46 includes/say.php:580
-#: index.php:267
+#: includes/curators.php:31 includes/deltema.php:46 includes/say.php:581
+#: index.php:268
 msgid "Topic has been deleted or does not exists"
 msgstr ""
 
-#: includes/deltema.php:26 includes/deltema.php:86 includes/deltema.php:87
-#: templates/topic.phtml:347
+#: includes/deltema.php:26 includes/deltema.php:90 includes/deltema.php:91
+#: templates/topic.phtml:343
 msgid "Delete Topic"
 msgstr ""
 
 #: includes/delvote.php:28 includes/delvote.php:45 includes/delvote.php:58
-#: includes/delvote.php:59 templates/topic.phtml:326
+#: includes/delvote.php:59 templates/topic.phtml:322
 msgid "Delete Poll"
 msgstr ""
 
@@ -146,8 +146,8 @@ msgstr ""
 msgid "Poll deleted"
 msgstr ""
 
-#: includes/editpost.php:25 includes/editpost.php:156 includes/editpost.php:251
-#: includes/editpost.php:300 includes/editpost.php:301
+#: includes/editpost.php:25 includes/editpost.php:157 includes/editpost.php:252
+#: includes/editpost.php:297 includes/editpost.php:298
 msgid "Edit Message"
 msgstr ""
 
@@ -163,45 +163,45 @@ msgstr ""
 msgid "Your message not already latest, you cannot change it"
 msgstr ""
 
-#: includes/editpost.php:97 includes/editpost.php:158
+#: includes/editpost.php:98 includes/editpost.php:159
 msgid "You cannot edit your posts after 5 minutes"
 msgstr ""
 
-#: includes/editpost.php:103
+#: includes/editpost.php:104
 msgid "Message does not exists or has been deleted"
 msgstr ""
 
-#: includes/editpost.php:103 includes/file.php:49 includes/new.php:58
-#: includes/say.php:582 includes/show_post.php:30 includes/tema.php:52
-#: includes/tema.php:69 includes/tema.php:111 includes/users.php:32
-#: includes/vip.php:27 includes/vip.php:28 includes/vip.php:46
-#: includes/vip.php:47 includes/vote.php:32 includes/vote.php:33
-#: includes/vote.php:50 includes/vote.php:51 index.php:50 index.php:152
-#: index.php:226 index.php:265 index.php:765 index.php:766
+#: includes/editpost.php:104 includes/file.php:49 includes/new.php:58
+#: includes/say.php:583 includes/show_post.php:30 includes/show_post.php:52
+#: includes/tema.php:52 includes/tema.php:69 includes/tema.php:111
+#: includes/users.php:32 includes/vip.php:27 includes/vip.php:28
+#: includes/vip.php:46 includes/vip.php:47 includes/vote.php:32
+#: includes/vote.php:33 includes/vote.php:50 includes/vote.php:51 index.php:48
+#: index.php:153 index.php:227 index.php:266 index.php:761 index.php:762
 #: templates/files_list.phtml:112 templates/forum_search.phtml:95
-#: templates/new_topics.phtml:121 templates/show_post.phtml:104
+#: templates/new_topics.phtml:121 templates/show_post.phtml:100
 msgid "Forum"
 msgstr ""
 
-#: includes/editpost.php:134 includes/editpost.php:135
+#: includes/editpost.php:135 includes/editpost.php:136
 msgid "Delete file"
 msgstr ""
 
-#: includes/editpost.php:233 includes/editpost.php:234
+#: includes/editpost.php:234 includes/editpost.php:235
 msgid "Delete Message"
 msgstr ""
 
-#: includes/editpost.php:253 includes/nt.php:145 includes/say.php:426
+#: includes/editpost.php:254 includes/nt.php:147 includes/say.php:428
 msgid "You have not entered the message"
 msgstr ""
 
-#: includes/editpost.php:320
+#: includes/editpost.php:317
 msgid "Error"
 msgstr ""
 
 #: includes/editvote.php:28 includes/editvote.php:29 includes/editvote.php:101
 #: includes/editvote.php:102 includes/editvote.php:154
-#: includes/editvote.php:155 templates/topic.phtml:325
+#: includes/editvote.php:155 templates/topic.phtml:321
 msgid "Edit Poll"
 msgstr ""
 
@@ -278,17 +278,17 @@ msgstr ""
 msgid "New Files"
 msgstr ""
 
-#: includes/files.php:143 includes/who.php:47 includes/who.php:216
+#: includes/files.php:137 includes/who.php:56 includes/who.php:232
 msgid "Guest"
 msgstr ""
 
-#: includes/files.php:181
+#: includes/files.php:174
 msgid "List of sections"
 msgstr ""
 
 #: includes/filter.php:23 includes/filter.php:24 includes/filter.php:50
 #: includes/filter.php:51 includes/filter.php:87 includes/filter.php:88
-#: includes/filter.php:102 includes/filter.php:103 templates/topic.phtml:408
+#: includes/filter.php:102 includes/filter.php:103 templates/topic.phtml:404
 msgid "Filter by author"
 msgstr ""
 
@@ -324,57 +324,57 @@ msgstr ""
 msgid "All topics marked as read"
 msgstr ""
 
-#: includes/new.php:125 includes/new.php:126
+#: includes/new.php:124 includes/new.php:125
 #, php-format
 msgid "All for period %d hours"
 msgstr ""
 
-#: includes/new.php:127
+#: includes/new.php:126
 msgid "There is nothing new in this forum for selected period"
 msgstr ""
 
-#: includes/new.php:192 includes/new.php:257 includes/who.php:88
-#: includes/who.php:254 templates/curators.phtml:39
+#: includes/new.php:192 includes/new.php:258 includes/who.php:89
+#: includes/who.php:270 templates/curators.phtml:39
 #: templates/files_list.phtml:36 templates/filter_by_author.phtml:38
 msgid "The list is empty"
 msgstr ""
 
-#: includes/new.php:255 includes/new.php:256
+#: includes/new.php:256 includes/new.php:257
 msgid "Last 10"
 msgstr ""
 
-#: includes/nt.php:37 index.php:464
+#: includes/nt.php:38 index.php:466
 msgid "Go to Section"
 msgstr ""
 
-#: includes/nt.php:92 includes/nt.php:108 includes/nt.php:272
-#: includes/nt.php:288 includes/nt.php:296 includes/nt.php:297
+#: includes/nt.php:93 includes/nt.php:109 includes/nt.php:274
+#: includes/nt.php:290 includes/nt.php:298 includes/nt.php:299
 #: templates/topics.phtml:53
 msgid "New Topic"
 msgstr ""
 
-#: includes/nt.php:94 includes/say.php:98 includes/say.php:342
+#: includes/nt.php:95 includes/say.php:99 includes/say.php:343
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr ""
 
-#: includes/nt.php:137 includes/ren.php:61
+#: includes/nt.php:139 includes/ren.php:61
 msgid "You have not entered topic name"
 msgstr ""
 
-#: includes/nt.php:141
+#: includes/nt.php:143
 msgid "Topic name too short"
 msgstr ""
 
-#: includes/nt.php:149 includes/say.php:144 includes/say.php:441
+#: includes/nt.php:151 includes/say.php:146 includes/say.php:443
 msgid "Text is too short"
 msgstr ""
 
-#: includes/nt.php:167 includes/ren.php:78
+#: includes/nt.php:169 includes/ren.php:78
 msgid "Topic with same name already exists in this section"
 msgstr ""
 
-#: includes/nt.php:171 includes/say.php:163 includes/say.php:461
+#: includes/nt.php:173 includes/say.php:165 includes/say.php:463
 msgid "Message already exists"
 msgstr ""
 
@@ -387,41 +387,41 @@ msgstr ""
 msgid "Rename topic"
 msgstr ""
 
-#: includes/say.php:33 includes/say.php:96 includes/say.php:113
-#: includes/say.php:142 includes/say.php:161 includes/say.php:297
-#: includes/say.php:298 includes/say.php:324 includes/say.php:340
-#: includes/say.php:356 includes/say.php:370 includes/say.php:424
-#: includes/say.php:439 includes/say.php:459 includes/say.php:578
+#: includes/say.php:34 includes/say.php:97 includes/say.php:114
+#: includes/say.php:144 includes/say.php:163 includes/say.php:299
+#: includes/say.php:300 includes/say.php:325 includes/say.php:341
+#: includes/say.php:357 includes/say.php:371 includes/say.php:426
+#: includes/say.php:441 includes/say.php:461 includes/say.php:579
 msgid "New message"
 msgstr ""
 
-#: includes/say.php:115 includes/say.php:358
+#: includes/say.php:116 includes/say.php:359
 msgid "You cannot write in a closed topic"
 msgstr ""
 
-#: includes/say.php:326
+#: includes/say.php:327
 msgid "Message not found"
 msgstr ""
 
-#: includes/say.php:372
+#: includes/say.php:373
 msgid "You can not reply to your own message"
 msgstr ""
 
-#: includes/say.php:397 templates/reply_message.phtml:83
+#: includes/say.php:398 templates/reply_message.phtml:79
 msgid "I am glad to answer you"
 msgstr ""
 
-#: includes/say.php:401 templates/reply_message.phtml:87
+#: includes/say.php:402 templates/reply_message.phtml:83
 msgid "respond to Your message"
 msgstr ""
 
-#: includes/say.php:551 includes/say.php:552
+#: includes/say.php:553 includes/say.php:554
 msgid "Reply to message"
 msgstr ""
 
 #: includes/search.php:22 includes/search.php:47 includes/search.php:48
 #: includes/search.php:179 includes/search.php:234 includes/search.php:235
-#: includes/who.php:161
+#: includes/who.php:169
 msgid "Forum search"
 msgstr ""
 
@@ -429,12 +429,12 @@ msgstr ""
 msgid "Invalid length"
 msgstr ""
 
-#: includes/show_post.php:26 includes/show_post.php:112
-#: includes/show_post.php:113
+#: includes/show_post.php:26 includes/show_post.php:48
+#: includes/show_post.php:120 includes/show_post.php:121
 msgid "Show post"
 msgstr ""
 
-#: includes/tema.php:86 templates/reply_message.phtml:71
+#: includes/tema.php:86 templates/reply_message.phtml:67
 #: templates/show_post.phtml:42 templates/topic.phtml:208
 msgid "Quote"
 msgstr ""
@@ -443,11 +443,11 @@ msgstr ""
 msgid "This theme was downloaded from the forum site"
 msgstr ""
 
-#: includes/users.php:80 includes/users.php:81
+#: includes/users.php:72 includes/users.php:73
 msgid "Who voted in the poll"
 msgstr ""
 
-#: includes/users.php:82
+#: includes/users.php:74
 msgid "No one has voted in this poll yet"
 msgstr ""
 
@@ -455,65 +455,65 @@ msgstr ""
 msgid "Vote accepted"
 msgstr ""
 
-#: includes/who.php:86 includes/who.php:87 templates/who.phtml:32
+#: includes/who.php:87 includes/who.php:88 templates/who.phtml:32
 msgid "Who in Topic"
 msgstr ""
 
-#: includes/who.php:145 includes/who.php:170 includes/who.php:180
-#: includes/who.php:196 includes/who.php:212
+#: includes/who.php:153 includes/who.php:178 includes/who.php:188
+#: includes/who.php:213 includes/who.php:223 includes/who.php:228
 msgid "In the forum Main"
 msgstr ""
 
-#: includes/who.php:149
+#: includes/who.php:157
 msgid "Here, in the List"
 msgstr ""
 
-#: includes/who.php:153
+#: includes/who.php:161
 msgid "Looking forum files"
 msgstr ""
 
-#: includes/who.php:157
+#: includes/who.php:165
 msgid "In the unreads"
 msgstr ""
 
-#: includes/who.php:168
+#: includes/who.php:176
 msgid "In the Category"
 msgstr ""
 
-#: includes/who.php:178
+#: includes/who.php:186
 msgid "In the Section"
 msgstr ""
 
-#: includes/who.php:191
+#: includes/who.php:208
 msgid "Answers in the Topic"
 msgstr ""
 
-#: includes/who.php:193
+#: includes/who.php:210
 msgid "Writes in the Topic"
 msgstr ""
 
-#: includes/who.php:193 includes/who.php:206
+#: includes/who.php:210 includes/who.php:221
 msgid "In the Topic"
 msgstr ""
 
-#: includes/who.php:252 includes/who.php:253 templates/index.phtml:73
+#: includes/who.php:268 includes/who.php:269 templates/index.phtml:73
 #: templates/section.phtml:70 templates/topics.phtml:117
 msgid "Who in Forum"
 msgstr ""
 
-#: index.php:143 templates/header.phtml:20
+#: index.php:144 templates/header.phtml:20
 msgid "Forum is closed"
 msgstr ""
 
-#: index.php:145
+#: index.php:146
 msgid "For registered users only"
 msgstr ""
 
-#: index.php:460 index.php:462
+#: index.php:462 index.php:464
 msgid "Topic deleted"
 msgstr ""
 
-#: index.php:726
+#: index.php:722
 msgid "Go to Forum"
 msgstr ""
 
@@ -530,7 +530,7 @@ msgstr ""
 #: templates/download_topic.phtml:37 templates/download_topic.phtml:52
 #: templates/edit_poll.phtml:67 templates/filter_by_author.phtml:63
 #: templates/move_topic.phtml:49 templates/rename_topic.phtml:38
-#: templates/show_post.phtml:103
+#: templates/show_post.phtml:99
 msgid "Back to topic"
 msgstr ""
 
@@ -572,8 +572,8 @@ msgid "Delete last"
 msgstr ""
 
 #: templates/add_poll.phtml:58 templates/edit_poll.phtml:66
-#: templates/edit_post.phtml:63 templates/new_topic.phtml:76
-#: templates/rename_topic.phtml:37 templates/reply_message.phtml:102
+#: templates/edit_post.phtml:59 templates/new_topic.phtml:72
+#: templates/rename_topic.phtml:37 templates/reply_message.phtml:98
 msgid "Save"
 msgstr ""
 
@@ -607,7 +607,7 @@ msgstr ""
 #: templates/delete_answer.phtml:34 templates/delete_file.phtml:35
 #: templates/delete_poll.phtml:33 templates/delete_post.phtml:39
 #: templates/delete_topic.phtml:42 templates/mass_delete.phtml:34
-#: templates/topic.phtml:262 templates/topic.phtml:303
+#: templates/topic.phtml:258 templates/topic.phtml:299
 msgid "Delete"
 msgstr ""
 
@@ -648,20 +648,20 @@ msgstr ""
 msgid "Select format"
 msgstr ""
 
-#: templates/edit_post.phtml:58 templates/new_topic.phtml:67
-#: templates/reply_message.phtml:93 templates/topic.phtml:123
-#: templates/topic.phtml:369
+#: templates/edit_post.phtml:54 templates/new_topic.phtml:63
+#: templates/reply_message.phtml:89 templates/topic.phtml:123
+#: templates/topic.phtml:365
 msgid "Message"
 msgstr ""
 
-#: templates/edit_post.phtml:65 templates/new_topic.phtml:78
-#: templates/reply_message.phtml:104 templates/topic.phtml:134
-#: templates/topic.phtml:380
+#: templates/edit_post.phtml:61 templates/new_topic.phtml:74
+#: templates/reply_message.phtml:100 templates/topic.phtml:134
+#: templates/topic.phtml:376
 msgid "Preview"
 msgstr ""
 
-#: templates/edit_post.phtml:69 templates/new_topic.phtml:89
-#: templates/reply_message.phtml:108
+#: templates/edit_post.phtml:65 templates/new_topic.phtml:85
+#: templates/reply_message.phtml:104
 msgid "Smilies"
 msgstr ""
 
@@ -675,7 +675,7 @@ msgstr ""
 
 #: templates/files_list.phtml:102 templates/forum_search.phtml:80
 #: templates/new_topics.phtml:107 templates/section.phtml:63
-#: templates/topic.phtml:392 templates/topics.phtml:105
+#: templates/topic.phtml:388 templates/topics.phtml:105
 #: templates/voted_users.phtml:44 templates/who.phtml:52
 msgid "Total"
 msgstr ""
@@ -770,11 +770,11 @@ msgstr ""
 msgid "Other categories"
 msgstr ""
 
-#: templates/new_topic.phtml:62
+#: templates/new_topic.phtml:58
 msgid "Title"
 msgstr ""
 
-#: templates/new_topic.phtml:64
+#: templates/new_topic.phtml:60
 msgid "Maximum length: 100 characters"
 msgstr ""
 
@@ -814,15 +814,15 @@ msgstr ""
 msgid "Topic name"
 msgstr ""
 
-#: templates/reply_message.phtml:64
+#: templates/reply_message.phtml:60
 msgid "Topic"
 msgstr ""
 
-#: templates/reply_message.phtml:73
+#: templates/reply_message.phtml:69
 msgid "Only allowed 200 characters, other text will be cropped."
 msgstr ""
 
-#: templates/reply_message.phtml:76
+#: templates/reply_message.phtml:72
 msgid "Appeal"
 msgstr ""
 
@@ -838,7 +838,7 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: templates/show_post.phtml:63 templates/topic.phtml:230
+#: templates/show_post.phtml:59 templates/topic.phtml:226
 msgid "Attached files"
 msgstr ""
 
@@ -846,7 +846,7 @@ msgstr ""
 msgid "Filter by author is activated"
 msgstr ""
 
-#: templates/topic.phtml:47 templates/topic.phtml:406
+#: templates/topic.phtml:47 templates/topic.phtml:402
 msgid "Cancel Filter"
 msgstr ""
 
@@ -875,75 +875,75 @@ msgid "Total votes"
 msgstr ""
 
 #: templates/topic.phtml:132 templates/topic.phtml:138
-#: templates/topic.phtml:378 templates/topic.phtml:384
+#: templates/topic.phtml:374 templates/topic.phtml:380
 msgid "Write"
 msgstr ""
 
-#: templates/topic.phtml:291
+#: templates/topic.phtml:287
 msgid "Edited:"
 msgstr ""
 
-#: templates/topic.phtml:295
+#: templates/topic.phtml:291
 msgid "Post deleted:"
 msgstr ""
 
-#: templates/topic.phtml:297
+#: templates/topic.phtml:293
 msgid "Post restored by:"
 msgstr ""
 
-#: templates/topic.phtml:302
+#: templates/topic.phtml:298
 msgid "Edit"
 msgstr ""
 
-#: templates/topic.phtml:305
+#: templates/topic.phtml:301
 msgid "Restore"
 msgstr ""
 
-#: templates/topic.phtml:317
+#: templates/topic.phtml:313
 msgid "Delete selected"
 msgstr ""
 
-#: templates/topic.phtml:321
+#: templates/topic.phtml:317
 msgid "Actions with topic"
 msgstr ""
 
-#: templates/topic.phtml:332
+#: templates/topic.phtml:328
 msgid "Curators of the Topic"
 msgstr ""
 
-#: templates/topic.phtml:335
+#: templates/topic.phtml:331
 msgid "Rename Topic"
 msgstr ""
 
-#: templates/topic.phtml:338
+#: templates/topic.phtml:334
 msgid "Open Topic"
 msgstr ""
 
-#: templates/topic.phtml:340
+#: templates/topic.phtml:336
 msgid "Close Topic"
 msgstr ""
 
-#: templates/topic.phtml:344
+#: templates/topic.phtml:340
 msgid "Restore Topic"
 msgstr ""
 
-#: templates/topic.phtml:350
+#: templates/topic.phtml:346
 msgid "Unfix Topic"
 msgstr ""
 
-#: templates/topic.phtml:352
+#: templates/topic.phtml:348
 msgid "Pin Topic"
 msgstr ""
 
-#: templates/topic.phtml:355
+#: templates/topic.phtml:351
 msgid "Move Topic"
 msgstr ""
 
-#: templates/topic.phtml:412
+#: templates/topic.phtml:408
 msgid "Download Topic"
 msgstr ""
 
-#: templates/topic.phtml:422
+#: templates/topic.phtml:418
 msgid "Who is here"
 msgstr ""
 
