@@ -1,0 +1,22 @@
+<?php return array (
+  'domain' => NULL,
+  'plural-forms' => 'nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Користувачі',
+      'History' => 'Історія',
+      'Guests' => 'Гості',
+      'IP Activity' => 'IP Активність',
+      'Who is online?' => 'Хто в мережі?',
+      'Total' => 'Разом',
+      'Online' => 'В мережі',
+      'The list is empty' => 'Список порожній',
+      'For registered users only' => 'Тільки для зареєстрованих користувачів',
+      'Community' => 'Спільнота',
+      'User Search' => 'Пошук користувача',
+      'Back' => 'Повернутися',
+    ),
+  ),
+);

@@ -1,0 +1,22 @@
+<?php return array (
+  'domain' => NULL,
+  'plural-forms' => 'nplurals=1; plural=0;',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Thành viên',
+      'History' => 'Lịch sử',
+      'Guests' => 'Khách',
+      'IP Activity' => 'Hoạt động IP',
+      'Who is online?' => 'Ai đang trực tuyến?',
+      'Total' => 'Tổng số',
+      'Online' => 'Trực tuyến',
+      'The list is empty' => 'Danh sách trống',
+      'For registered users only' => 'Chỉ dành cho thành viên đã đăng ký',
+      'Community' => 'Cộng đồng',
+      'User Search' => 'Tìm người dùng',
+      'Back' => 'Trở lại',
+    ),
+  ),
+);

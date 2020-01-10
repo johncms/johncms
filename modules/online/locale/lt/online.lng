@@ -1,0 +1,22 @@
+<?php return array (
+  'domain' => NULL,
+  'plural-forms' => 'nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Vartotojai',
+      'History' => 'Istorija',
+      'Guests' => 'Svečiai',
+      'IP Activity' => 'IP Aktyvumas',
+      'Who is online?' => 'Kas Prisijungę?',
+      'Total' => 'Viso',
+      'Online' => 'Prisijungę',
+      'The list is empty' => 'Sąrašas tuščias',
+      'For registered users only' => 'Tik registruotiems Vartotojams',
+      'Community' => 'Bendruomenė',
+      'User Search' => 'Vartotojo Paieška',
+      'Back' => 'Atgal',
+    ),
+  ),
+);

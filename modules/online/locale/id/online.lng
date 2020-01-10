@@ -1,0 +1,22 @@
+<?php return array (
+  'domain' => NULL,
+  'plural-forms' => 'nplurals=1; plural=0;',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Pengguna',
+      'History' => 'Riwayat',
+      'Guests' => 'Pengunjung',
+      'IP Activity' => 'Aktivitas IP',
+      'Who is online?' => 'Siapa yang Aktif?',
+      'Total' => 'Total',
+      'Online' => 'Aktif',
+      'The list is empty' => 'Daftar ini kosong',
+      'For registered users only' => 'Hanya untuk pengguna',
+      'Community' => 'Komunitas',
+      'User Search' => 'Cari pengguna',
+      'Back' => 'Kembali',
+    ),
+  ),
+);

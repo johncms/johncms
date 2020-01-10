@@ -1,0 +1,22 @@
+<?php return array (
+  'domain' => NULL,
+  'plural-forms' => 'nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Utilizatori',
+      'History' => 'Istoric',
+      'Guests' => 'Oaspeti',
+      'IP Activity' => 'Activitate IP',
+      'Who is online?' => 'Cine este online?',
+      'Total' => 'Total',
+      'Online' => 'Online',
+      'The list is empty' => 'Lista este goala',
+      'For registered users only' => 'Doar pentru utilizatori inregistrati',
+      'Community' => 'Comunitate',
+      'User Search' => 'Cauta utilizatori',
+      'Back' => 'Inapoi',
+    ),
+  ),
+);
