@@ -31,16 +31,8 @@ if (! is_file(__DIR__ . '/vendor/autoload.php')) {
 
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
-const DS = DIRECTORY_SEPARATOR;
 
-define('ROOT_PATH', dirname(__DIR__) . DS);
-const ASSETS_PATH = ROOT_PATH . 'assets' . DS;
-const CONFIG_PATH = ROOT_PATH . 'config' . DS;
-const DATA_PATH = ROOT_PATH . 'data' . DS;
-const UPLOAD_PATH = ROOT_PATH . 'upload' . DS;
-const CACHE_PATH = DATA_PATH . 'cache' . DS;
-const LOG_PATH = DATA_PATH . 'logs' . DS;
-const THEMES_PATH = ROOT_PATH . 'themes' . DS;
+require __DIR__ . '/vendor/autoload.php';
 
 // Error handling
 if (DEBUG) {
@@ -53,8 +45,6 @@ if (DEBUG) {
     ini_set('display_errors', 'Off');
     ini_set('log_errors', 'Off');
 }
-
-require __DIR__ . '/vendor/autoload.php';
 
 session_name('SESID');
 session_start();
@@ -69,12 +59,12 @@ $env = $container->get(Environment::class);
 $db = $container->get(PDO::class);
 
 // Проверка на IP бан
-$req = $db->query("
-  SELECT `ban_type`, `link` FROM `cms_ban_ip`
-  WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
-  " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . '
-  LIMIT 1
-');
+$req = $db->query(
+    "SELECT `ban_type`, `link` FROM `cms_ban_ip`
+    WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
+    " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . '
+    LIMIT 1'
+);
 
 if ($req->rowCount()) {
     $res = $req->fetch();
@@ -117,5 +107,3 @@ if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
 } else {
     ob_start();
 }
-
-require 'helpers.php';

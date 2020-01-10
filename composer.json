@@ -34,7 +34,6 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
-        "ext-iconv": "*",
         "ext-simplexml": "*",
         "aura/autoload": "^2.0",
         "intervention/image": "^2.5",
@@ -48,6 +47,10 @@
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
+        "files": [
+            "config/constants.php",
+            "system/helpers.php"
+        ],
         "psr-4": {
             "Johncms\\": "system/src/"
         }
