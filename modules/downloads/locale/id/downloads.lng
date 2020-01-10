@@ -1,5 +1,5 @@
 <?php return array (
-  'domain' => NULL,
+  'domain' => 'default',
   'plural-forms' => 'nplurals=1; plural=0;',
   'messages' => 
   array (
