@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -32,7 +32,7 @@ $view = di(Render::class);
 $view->addFolder('help', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/help.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/help.lng');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

@@ -16,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
@@ -45,7 +45,7 @@ $route = di('route');
 $view->addFolder('guestbook', __DIR__ . '/templates/');
 
 // Register the module languages folder
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/guestbook.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/guestbook.lng');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? '';

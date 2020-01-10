@@ -18,9 +18,9 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 $config = di('config')['johncms'];
 
-/** @var Laminas\I18n\Translator\Translator $translator */
-$translator = di(Laminas\I18n\Translator\Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+/** @var Johncms\System\i18n\Translator $translator */
+$translator = di(Johncms\System\i18n\Translator::class);
+$translator->addTranslationFilePattern(__DIR__ . '/locale/%s/profile.lng');
 
 /** @var PDO $db */
 $db = di(PDO::class);

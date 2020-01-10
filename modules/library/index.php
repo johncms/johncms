@@ -18,7 +18,7 @@ use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
@@ -39,7 +39,7 @@ $user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/library.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/library.lng');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader();

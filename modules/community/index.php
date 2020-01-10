@@ -16,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -46,7 +46,7 @@ $request = di(Request::class);
 $view->addFolder('users', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/community.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/community.lng');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';

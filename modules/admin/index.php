@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
@@ -35,7 +35,7 @@ $route = di('route');
 $view->addFolder('admin', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/admin.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/admin.lng');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
 $act = $route['action'] ?? 'index';

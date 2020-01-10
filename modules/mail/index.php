@@ -15,7 +15,7 @@ use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -39,7 +39,7 @@ $nav_chain = di(NavChain::class);
 $request = di(Request::class);
 
 // Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/mail.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/mail.lng');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('mail', __DIR__ . '/templates/');

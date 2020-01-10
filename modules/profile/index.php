@@ -16,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -45,7 +45,7 @@ $nav_chain = di(NavChain::class);
 $view->addFolder('profile', __DIR__ . '/templates/');
 
 // Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/profile.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/profile.lng');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);

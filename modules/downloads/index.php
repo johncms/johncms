@@ -15,7 +15,7 @@ use Johncms\System\Users\User;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -39,7 +39,7 @@ $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/downloads.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/downloads.lng');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();

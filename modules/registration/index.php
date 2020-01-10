@@ -14,7 +14,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
@@ -36,7 +36,7 @@ $nav_chain = di(NavChain::class);
 $view->addFolder('reg', __DIR__ . '/templates/');
 
 // Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/registration.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/registration.lng');
 
 $nav_chain->add(_t('Registration'));
 

@@ -10,10 +10,6 @@
 
 declare(strict_types=1);
 
-/** @var Laminas\I18n\Translator\Translator $translator */
-$translator = di(Laminas\I18n\Translator\Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
 /** @var Johncms\System\Legacy\Tools $tools */
 $tools = di(Johncms\System\Legacy\Tools::class);
 
