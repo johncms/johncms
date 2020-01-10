@@ -83,7 +83,6 @@ $nav_chain->add(_t('My Account'), '/profile/?act=office');
 $mods = [
     'ignor',
     'write',
-    'systems',
     'deluser',
     'load',
     'files',

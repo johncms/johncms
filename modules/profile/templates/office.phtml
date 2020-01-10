@@ -58,13 +58,6 @@ $counters = $data['counters'] ?? [];
                     <?= ($counters['unread_sent'] > 0 ? ' / +' . $counters['unread_sent'] : '') ?>
                 </span>
             </a>
-            <a href="/mail/?act=systems" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('System') ?>
-                <span class="badge badge-pill <?= ($counters['new_system_messages'] > 0 ? 'badge-danger' : 'badge-light') ?>">
-                    <?= $counters['system_messages'] ?>
-                    <?= ($counters['new_system_messages'] > 0 ? ' / +' . $counters['new_system_messages'] : '') ?>
-                </span>
-            </a>
             <a href="/mail/?act=files" class="list-group-item d-flex justify-content-between align-items-center">
                 <?= _t('Files') ?>
                 <span class="badge badge-pill badge-light"><?= $counters['files'] ?></span>
