@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\System\Http\Environment;
+use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 
@@ -95,6 +96,9 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     new Johncms\System\Utility\Cleanup($db);
     file_put_contents($cacheFile, time());
 }
+
+// Register the module languages folder
+$container->get(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/system.lng');
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;

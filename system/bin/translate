@@ -23,7 +23,15 @@ foreach ($search as $dir) {
     foreach ($files as $file) {
         $file = pathinfo($file);
         $file = $file['dirname'] . '/' . $file['filename'];
+        /** @var Gettext\Translations $translations */
         $translations = $loader->loadFile($file . '.po');
+
+        if($dir === ''){
+            $translations->setDomain('system');
+        } else {
+            $translations->setDomain('default');
+        }
+
         $generator->generateFile($translations, $file . '.lng');
     }
 }

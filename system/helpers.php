@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Johncms\System\Container\Factory;
+use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
 
 function di(string $service)
 {
@@ -32,19 +32,20 @@ function pathToUrl(string $path): string
  * Translate a message
  *
  * @param string $message
- * @param string $textDomain
+ * @param null|string $textDomain
  * @return string
  */
-function _t(string $message, string $textDomain = 'default'): string
+function _t(string $message, ?string $textDomain = null): string
 {
-    /** @var Translator $translator */
     static $translator;
 
     if (null === $translator) {
         $translator = di(Translator::class);
     }
 
-    return $translator->translate($message, $textDomain);
+    return null === $textDomain
+        ? $translator->gettext($message)
+        : $translator->dgettext($textDomain, $message);
 }
 
 /**
@@ -53,19 +54,20 @@ function _t(string $message, string $textDomain = 'default'): string
  * @param string $singular
  * @param string $plural
  * @param int $number
- * @param string $textDomain
+ * @param null|string $textDomain
  * @return string
  */
-function _p(string $singular, string $plural, int $number, string $textDomain = 'default'): string
+function _p(string $singular, string $plural, int $number, ?string $textDomain = null): string
 {
-    /** @var Translator $translator */
     static $translator;
 
     if (null === $translator) {
         $translator = di(Translator::class);
     }
 
-    return $translator->translatePlural($singular, $plural, $number, $textDomain);
+    return null === $textDomain
+        ? $translator->ngettext($singular, $plural, $number)
+        : $translator->dngettext($textDomain, $singular, $plural, $number);
 }
 
 /**
@@ -87,15 +89,15 @@ function pageNotFound(
     }
 
     exit(
-        $engine->render(
-            $template,
-            [
+    $engine->render(
+        $template,
+        [
             'title'   => $title,
             'message' => ! empty($message)
                 ? $message
                 : _t('You are looking for something that doesn\'t exist or may have moved'),
-            ]
-        )
+        ]
+    )
     );
 }
 

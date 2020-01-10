@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -29,6 +29,6 @@ $nav_chain->showHomePage(false);
 $view->addFolder('homepage', __DIR__ . '/templates/');
 
 // Register the module languages folder
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/homepage.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/homepage.lng');
 
 echo $view->render('homepage::index');
