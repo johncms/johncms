@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,24 +8,29 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$set_mail = unserialize((string) $foundUser['set_mail'], ['allowed_classes' => false]);
+$set_mail = unserialize((string) $user->set_mail, ['allowed_classes' => false]);
 $out = '';
 $total = 0;
 $ch = 0;
 $mod = $_REQUEST['mod'] ?? '';
 
+$title = _t('Mail');
+$nav_chain->add($title);
+
 if ($id) {
     $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}' LIMIT 1");
 
     if (! $req->rowCount()) {
-        $textl = _t('Mail');
         echo $view->render(
-            'system::app/old_content',
+            'system::pages/result',
             [
-                'title'   => $textl,
-                'content' => $tools->displayError(_t('User does not exists')),
+                'title'   => $title,
+                'type'    => 'alert-danger',
+                'message' => _t('User does not exists'),
             ]
         );
         exit;
@@ -35,9 +38,9 @@ if ($id) {
 
     $qs = $req->fetch();
 
-    if ($mod == 'clear') {
-        $textl = _t('Mail');
-        echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
+    if ($mod === 'clear') {
+        $title = _t('Clear messages');
+        $nav_chain->add($title);
 
         if (isset($_POST['clear'])) {
             $count_message = $db->query(
@@ -55,57 +58,50 @@ if ($id) {
 
                 while ($row = $req->fetch()) {
                     if ($row['delete']) {
-                        if ($row['file_name']) {
-                            if (file_exists(UPLOAD_PATH . 'mail/' . $row['file_name']) !== false) {
-                                @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
-                            }
+                        if ($row['file_name'] && file_exists(UPLOAD_PATH . 'mail/' . $row['file_name']) !== false) {
+                            @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
                         }
-
+                        $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
+                    } elseif ($row['read'] === 0 && $row['user_id'] === $user->id) {
+                        if ($row['file_name'] && file_exists(UPLOAD_PATH . 'mail/' . $row['file_name']) !== false) {
+                            @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
+                        }
                         $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                     } else {
-                        if ($row['read'] == 0 && $row['user_id'] == $user->id) {
-                            if ($row['file_name']) {
-                                if (file_exists(UPLOAD_PATH . 'mail/' . $row['file_name']) !== false) {
-                                    @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
-                                }
-                            }
-
-                            $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
-                        } else {
-                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user->id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
-                        }
+                        $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user->id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
                     }
                 }
             }
 
-            echo '<div class="gmenu"><p>' . _t('Messages are deleted') . '</p></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => _t('Messages are deleted'),
+                    'back_url'      => '?act=write&amp;id=' . $id,
+                    'back_url_name' => _t('Back'),
+                ]
+            );
         } else {
-            echo '<div class="rmenu">
-			<form action="?act=write&amp;mod=clear&amp;id=' . $id . '" method="post">
-			<p>' . _t('Confirm the deletion of messages') . '</p>
-			<p><input type="submit" name="clear" value="' . _t('Delete') . '"/></p>
-			</form>
-			</div>';
+            $data = [
+                'form_action'     => '?act=write&amp;mod=clear&amp;id=' . $id,
+                'message'         => _t('Confirm the deletion of messages'),
+                'back_url'        => '?act=write&amp;id=' . $id,
+                'submit_btn_name' => _t('Delete'),
+            ];
+            echo $view->render(
+                'mail::confirm',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
-
-        echo '<div class="phdr"><a href="?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
-        echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
-        echo $view->render(
-            'system::app/old_content',
-            [
-                'title'   => $textl,
-                'content' => ob_get_clean(),
-            ]
-        );
         exit;
     }
 }
-
-if (empty($_SESSION['error'])) {
-    $_SESSION['error'] = '';
-}
-
-$out .= '<div class="phdr"><b>' . _t('Mail') . '</b></div>';
 
 if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) && ! $tools->isIgnor($id)) {
     if (! $id) {
@@ -128,7 +124,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         $error[] = _t('Message cannot be empty');
     }
 
-    if (($id && $id == $user->id) || ! $id && $user->name_lat == $name) {
+    if (($id && $id === $user->id) || (! $id && $user->name_lat === $name)) {
         $error[] = _t('You cannot send messages to yourself');
     }
 
@@ -153,26 +149,18 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
             $set_mail = unserialize($qs['set_mail'], ['allowed_classes' => false]);
         }
 
-        if (empty($error)) {
-            if ($set_mail) {
-                if ($user->rights < 1) {
-                    if ($set_mail['access']) {
-                        if ($set_mail['access'] == 1) {
-                            $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "' LIMIT 1");
+        if ($set_mail && empty($error) && $user->rights < 1 && $set_mail['access']) {
+            if ($set_mail['access'] === 1) {
+                $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "' LIMIT 1");
 
-                            if (! $query->rowCount()) {
-                                $error[] = _t('To this user can write only contacts');
-                            }
-                        } else {
-                            if ($set_mail['access'] == 2) {
-                                $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "' AND `friends`='1' LIMIT 1");
+                if (! $query->rowCount()) {
+                    $error[] = _t('To this user can write only contacts');
+                }
+            } elseif ($set_mail['access'] === 2) {
+                $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "' AND `friends`='1' LIMIT 1");
 
-                                if (! $query->rowCount()) {
-                                    $error[] = _t('To this user can write only friends');
-                                }
-                            }
-                        }
-                    }
+                if (! $query->rowCount()) {
+                    $error[] = _t('To this user can write only friends');
                 }
             }
         }
@@ -202,19 +190,18 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         if (! empty($_FILES['fail']['error'])) {
             $error[] = _t('Error uploading file');
         }
-    } else {
-        if (isset($_POST['fail']) && mb_strlen($_POST['fail']) > 0) {
-            $do_file_mini = true;
-            $array = explode('file=', $_POST['fail']);
-            $fname = mb_strtolower($array[0]);
-            $filebase64 = $array[1];
-            $fsize = strlen(base64_decode($filebase64));
+    } elseif (isset($_POST['fail']) && mb_strlen($_POST['fail']) > 0) {
+        $do_file_mini = true;
+        $array = explode('file=', $_POST['fail']);
+        $fname = mb_strtolower($array[0]);
+        $filebase64 = $array[1];
+        $fsize = strlen(base64_decode($filebase64));
 
-            if (empty($fsize)) {
-                $error[] = _t('Error uploading file');
-            }
+        if (empty($fsize)) {
+            $error[] = _t('Error uploading file');
         }
     }
+
 
     if (empty($error) && ($do_file || $do_file_mini)) {
         // Файлы Windows
@@ -301,7 +288,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
             $error[] = _t('File name contains invalid characters');
         }
 
-        if (! in_array($info['fileext'], $ext)) {
+        if (! in_array($info['fileext'], $ext, true)) {
             $error[] = _t('Forbidden file type! By uploading permitted only files with the following extension') . ': ' . implode(', ', $ext);
         }
 
@@ -416,7 +403,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         "
         )->fetch();
 
-        if ($rres['text'] == $text) {
+        if ($rres['text'] === $text) {
             $error[] = _t('Message already exists');
         }
     }
@@ -434,7 +421,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
 
         $db->exec("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $user->id . "'");
 
-        if ($ch == 0) {
+        if ($ch === 0) {
             $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $user->id . "' AND `from_id` = '" . $id . "'");
             $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $id . "' AND `from_id` = '" . $user->id . "'");
         }
@@ -442,21 +429,16 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         header('Location: ?act=write' . ($id ? '&id=' . $id : ''));
         exit;
     }
-    $out .= '<div class="rmenu">' . implode('<br />', $error) . '</div>';
 }
 
-if (! $tools->isIgnor($id) && empty($user->ban['1']) && empty($user->ban['3'])) {
-    $out .= $_SESSION['error'] ?? '';
-    $out .= '<div class="gmenu">' .
-        '<form name="form" action="?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
-        ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (! empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
-        '<p>';
-    $out .= di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text');
-    $out .= '<textarea rows="' . $user->config->fieldHeight . '" name="text"></textarea></p>';
-    $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
-    $out .= '<p><input type="submit" name="submit" value="' . _t('Send') . '"/></p>' .
-        '</form></div>' .
-        '<div class="phdr"><b>' . ($id && isset($qs) ? _t('Personal correspondence with') . ' <a href="../profile/?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : _t('Send a message')) . '</b></div>';
+$data = [];
+$data['errors'] = $error ?? [];
+
+if (empty($user->ban['1']) && empty($user->ban['3']) && ! $tools->isIgnor($id)) {
+    $data['form_action'] = '?act=write' . ($id ? '&amp;id=' . $id : '');
+    $data['show_nick_input'] = empty($id);
+    $data['nick'] = (! empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '');
+    $data['bbcode'] = di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text');
 }
 
 if ($id) {
@@ -465,10 +447,6 @@ if ($id) {
     )->fetchColumn();
 
     if ($total) {
-        if ($total > $user->config->kmess) {
-            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-        }
-
         $req = $db->query(
             "SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
             FROM `cms_mail`
@@ -483,19 +461,9 @@ if ($id) {
 
         $i = 1;
         $mass_read = [];
-
+        $items = [];
         while ($row = $req->fetch()) {
-            if (! $row['read']) {
-                $out .= '<div class="gmenu">';
-            } else {
-                if ($row['from_id'] == $user->id) {
-                    $out .= '<div class="list2">';
-                } else {
-                    $out .= '<div class="list1">';
-                }
-            }
-
-            if ($row['read'] == 0 && $row['from_id'] == $user->id) {
+            if ($row['read'] === 0 && $row['from_id'] === $user->id) {
                 $mass_read[] = $row['mid'];
             }
 
@@ -503,20 +471,28 @@ if ($id) {
             $post = $tools->checkout($post, 1, 1);
             $post = $tools->smilies($post, $row['rights'] >= 1 ? 1 : 0);
 
+            $row['text'] = $post;
+            $row['display_date'] = $tools->displayDate($row['mtime']);
+            $row['user_is_online'] = time() <= $row['lastdate'] + 300;
             if ($row['file_name']) {
-                $post .= '<div class="func">' . _t('File') . ': <a href="?act=load&amp;id=' . $row['mid'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ')(' . $row['count'] . ')</div>';
+                $row['files'] = [
+                    [
+                        'file_size' => formatsize($row['size']),
+                        'file_url'  => '?act=load&amp;id=' . $row['mid'],
+                        'dlcount'   => $row['count'],
+                        'filename'  => $row['file_name'],
+                    ],
+                ];
             }
 
-            $subtext = '<a href="?act=delete&amp;id=' . $row['mid'] . '">' . _t('Delete') . '</a>';
-            $arg = [
-                'header'  => '(' . $tools->displayDate($row['mtime']) . ')',
-                'body'    => $post,
-                'sub'     => $subtext,
-                'stshide' => 1,
-            ];
-            $out .= $tools->displayUser($row, $arg);
-            $out .= '</div>';
-            ++$i;
+            $row['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($row['ip']);
+            $row['ip'] = long2ip($row['ip']);
+            $row['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($row['ip_via_proxy']);
+            $row['ip_via_proxy'] = ! empty($row['ip_via_proxy']) ? long2ip($row['ip_via_proxy']) : 0;
+            $row['browser'] = htmlspecialchars($row['browser']);
+            $row['delete_url'] = '?act=delete&amp;id=' . $row['mid'];
+
+            $items[] = $row;
         }
 
         //Ставим метку о прочтении
@@ -524,29 +500,24 @@ if ($id) {
             $result = implode(',', $mass_read);
             $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='" . $user->id . "' AND `id` IN (" . $result . ')');
         }
-    } else {
-        $out .= '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 
-    $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+    $data['back_url'] = '../profile/?act=office';
 
-    if ($total > $user->config->kmess) {
-        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-        $out .= '<p><form method="get">
-			<input type="hidden" name="act" value="write"/>
-			<input type="hidden" name="id" value="' . $id . '"/>
-			<input type="text" name="page" size="2"/>
-			<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-    }
+    $data['total'] = $total;
+    $data['pagination'] = $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess);
+    $data['items'] = $items ?? [];
+
+    echo $view->render(
+        'mail::messages',
+        [
+            'title'      => $title,
+            'page_title' => $title,
+            'data'       => $data,
+        ]
+    );
 }
-
-$textl = _t('Mail');
-echo $out;
-echo '<p>';
 
 if ($total) {
     echo '<a href="?act=write&amp;mod=clear&amp;id=' . $id . '">' . _t('Clear messages') . '</a><br>';
 }
-
-echo '<a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
-unset($_SESSION['error']);
