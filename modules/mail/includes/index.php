@@ -134,7 +134,7 @@ if ($id) {
                     'name' => _t('Delete'),
                 ],
                 [
-                    'url'  => '?act=ignor&amp;id=' . $row['id'],
+                    'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
                     'name' => _t('Block User'),
                 ],
             ];
