@@ -507,7 +507,7 @@ if ($id) {
     $data['total'] = $total;
     $data['pagination'] = $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess);
     $data['items'] = $items ?? [];
-
+    $data['clear_url'] = '?act=write&amp;mod=clear&amp;id=' . $id;
     echo $view->render(
         'mail::messages',
         [
@@ -516,8 +516,4 @@ if ($id) {
             'data'       => $data,
         ]
     );
-}
-
-if ($total) {
-    echo '<a href="?act=write&amp;mod=clear&amp;id=' . $id . '">' . _t('Clear messages') . '</a><br>';
 }

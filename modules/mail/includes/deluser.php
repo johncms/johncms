@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,9 +8,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Mail');
+$title = _t('Delete');
+$nav_chain->add($title);
 
 if ($id) {
     if (isset($_POST['submit'])) {
@@ -20,7 +21,7 @@ if ($id) {
 
         while ($row = $req->fetch()) {
             //Удаляем сообщения
-            if ($row['delete'] > 0 || ($row['read'] == 0 && $row['user_id'] == $user->id)) {
+            if ($row['delete'] > 0 || ($row['read'] === 0 && $row['user_id'] === $user->id)) {
                 //Удаляем файлы
                 if (! empty($row['file_name']) && file_exists(UPLOAD_PATH . 'mail/' . $row['file_name'])) {
                     @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
@@ -34,17 +35,40 @@ if ($id) {
 
         //Удаляем контакт
         $db->exec('DELETE FROM `cms_contact` WHERE `user_id` = ' . $user->id . ' AND `from_id` = ' . $id . ' LIMIT 1');
-        echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="./">' . _t('Continue') . '</a></p></div>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => _t('Contact deleted'),
+                'back_url'      => './',
+                'back_url_name' => _t('Back'),
+            ]
+        );
     } else {
-        echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>
-			<div class="rmenu">
-			<form action="?act=deluser&amp;id=' . $id . '" method="post">
-			<p>' . _t('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?') . '</p>
-			<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>
-			</form>
-			</div>';
-        echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './') . '">' . _t('Back') . '</a></div>';
+        $data = [
+            'form_action'     => '?act=deluser&amp;id=' . $id,
+            'message'         => _t('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
+            'back_url'        => (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './'),
+            'submit_btn_name' => _t('Delete'),
+        ];
+        echo $view->render(
+            'mail::confirm',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
     }
 } else {
-    echo '<div class="rmenu"><p>' . _t('Contact for removal isn\'t chosen') . '</p></div>';
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'    => $title,
+            'type'     => 'alert-danger',
+            'message'  => _t('Contact for removal isn\'t chosen'),
+            'back_url' => '../personal/',
+        ]
+    );
 }

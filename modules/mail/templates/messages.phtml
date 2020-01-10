@@ -156,8 +156,12 @@ $this->layout(
         </div>
     </div>
 <?php endforeach; ?>
-
-<div class="mt-4">
+<?php if ($data['total'] > 0): ?>
+    <div class="mt-3">
+        <a href="<?= $data['clear_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Clear messages') ?></a>
+    </div>
+<?php endif; ?>
+<div class="mt-3">
     <?php if ($data['total'] > $user->config->kmess): ?>
         <div>
             <?= $data['pagination'] ?>
