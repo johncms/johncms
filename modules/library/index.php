@@ -47,6 +47,7 @@ $loader->addPrefix('Library', __DIR__ . '/classes');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('library', __DIR__ . '/templates/');
+$view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

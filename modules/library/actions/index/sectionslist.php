@@ -1,6 +1,7 @@
 <?php
 
 use Library\Utils;
+use Library\ViewHelper;
 
 /**
  * @var PDO $db
@@ -36,8 +37,8 @@ echo $view->render(
                     $res['name'] = $tools->checkout($res['name']);
                     $res['libCounter'] = Utils::libCounter($res['id'], $res['dir']);
                     $res['description'] = $tools->checkout($res['description']);
-                    $res['sectionListAdminPanel'] = Utils::sectionsListAdminPanel($id, $res['id'], $i, $total);
-                    $res['sectionAdminPanel'] = Utils::sectionAdminPanel($id);
+                    $res['sectionListAdminPanel'] = ViewHelper::sectionsListAdminPanel($id, $res['id'], $i, $total);
+                    $res['sectionAdminPanel'] = ViewHelper::sectionAdminPanel($id);
 
                     yield $res;
                 }
