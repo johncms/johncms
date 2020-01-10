@@ -47,7 +47,7 @@ if (isset($_GET['del'])) {
                 [
                     'title'         => $title,
                     'type'          => 'alert-success',
-                    'message'       => _t('User has been added to your contact list'),
+                    'message'       => $message,
                     'back_url'      => './',
                     'back_url_name' => _t('Continue'),
                 ]
