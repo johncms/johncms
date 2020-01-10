@@ -107,6 +107,21 @@ $data['counters'] = [
 
 // Админские кнопки
 $buttons = [];
+
+if (is_contact($user_data['id']) !== 2) {
+    if (! is_contact($foundUser->id)) {
+        $buttons[] = [
+            'url'  => '../mail/?id=' . $user_data['id'],
+            'name' => _t('Add to Contacts'),
+        ];
+    } else {
+        $buttons[] = [
+            'url'  => '../mail/?act=deluser&amp;id=' . $user_data['id'],
+            'name' => _t('Remove from Contacts'),
+        ];
+    }
+}
+
 if ($user_data['id'] === $user->id || $user->rights === 9 || ($user->rights === 7 && $user->rights > $user_data['rights'])) {
     $buttons[] = [
         'url'  => '?act=edit&amp;user=' . $user_data['id'],
