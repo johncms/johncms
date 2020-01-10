@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,11 +8,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Mail');
-echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
-
+$title = _t('Sent messages');
+$nav_chain->add($title);
 /** @var Johncms\System\Legacy\Bbcode $bbcode */
 $bbcode = di(Johncms\System\Legacy\Bbcode::class);
 
@@ -77,35 +76,41 @@ if ($total) {
             $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
         }
 
-        $arg = [
-            'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
-            'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' .
-                _t('Blocklist') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
-            'iphide' => 1,
+        $row['count_message'] = $count_message;
+        $row['display_date'] = $tools->displayDate($last_msg['time']);
+        $row['preview_text'] = $text;
+        $row['unread'] = ! $last_msg['read'];
+        $row['user_is_online'] = time() <= $row['lastdate'] + 300;
+
+        $row['buttons'] = [
+            [
+                'url'  => '?act=write&amp;id=' . $row['id'],
+                'name' => _t('Correspondence'),
+            ],
+            [
+                'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
+                'name' => _t('Block User'),
+            ],
+            [
+                'url'  => '?act=deluser&amp;id=' . $row['id'],
+                'name' => _t('Delete'),
+            ],
         ];
 
-        if (! $last_msg['read']) {
-            echo '<div class="gmenu">';
-        } else {
-            echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-        }
-
-        echo $tools->displayUser($row, $arg);
-        echo '</div>';
+        $items[] = $row;
     }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+$data['back_url'] = '../profile/?act=office';
+$data['total'] = $total;
+$data['pagination'] = $tools->displayPagination('?act=output&amp;', $start, $total, $user->config->kmess);
+$data['items'] = $items ?? [];
 
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=output&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form method="get">
-                <input type="hidden" name="act" value="input"/>
-                <input type="text" name="page" size="2"/>
-                <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-}
-
-echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
+echo $view->render(
+    'mail::conversations',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
