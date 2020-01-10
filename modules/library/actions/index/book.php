@@ -27,6 +27,12 @@ if (! $res['premod']) {
     $text = $db->query('SELECT SUBSTRING(`text`, ' . $offset . ', ' . ($symbols + 100) . ') FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn();
     $tmp = mb_substr($text, $symbols, 100);
 
+    $tags = null;
+    $who = null;
+    $ratingVote = null;
+    $ratingView = null;
+    $cover = null;
+
     if ($page === 1) {
         $obj = new Hashtags($res['id']);
         $tags = $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null;
@@ -46,12 +52,6 @@ if (! $res['premod']) {
 
         $rating = $user->isValid() ? $rate->printVote() : null;
         $ratingView = $rate->viewRate(1);
-    } else {
-        $tags = null;
-        $who = null;
-        $ratingVote = null;
-        $ratingView = null;
-        $cover = null;
     }
 
     $moderMenu = ($adm || ($db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() === $user->id && $user->isValid()));

@@ -33,14 +33,4 @@ class ViewHelper
             ]
         );
     }
-
-    public static function sectionAdminPanel(int $id): string
-    {
-        return self::setUp()->render(
-            'libraryHelpers::sectionAdminPanel',
-            [
-                'id' => $id,
-            ]
-        );
-    }
 }

@@ -1,0 +1,52 @@
+<!-- Page switching -->
+<?php if ($total > $user->config->kmess) : ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+
+<?php if ($total) : ?>
+    <!-- Listing Sections -->
+    <?php foreach ($list() as $booklist): ?>
+        <?php $i = 0; ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <?php if ($booklist['cover']) : ?>
+                <div class="avatar"><img src="../upload/library/images/small/<?= $booklist['id'] ?>.png" alt="screen"/></div>
+            <?php endif; ?>
+            <div class="righttable"><h4><a href="?id=<?= $booklist['id'] ?>"><?= $booklist['name'] ?></a></h4>
+                <div><small><?= $booklist['announce'] ?></small></div>
+            </div>
+            <table class="desc">
+                <?php if ($booklist['tags']) : ?>
+                <tr>
+                    <td class="caption"><?= _t('The Tags') ?>:</td>
+                    <td><?= ($booklist['tags']) ?></td>
+                    <?php endif; ?>
+                <tr>
+                    <td class="caption"><?= _t('Who added') ?>:</td>
+                    <td><?= $booklist['who'] ?></td>
+                </tr>
+                <tr>
+                    <td class="caption"><?= _t('Rating') ?>:</td>
+                    <td><?= $booklist['ratingView'] ?></td>
+                </tr>
+            </table>
+        </div>
+    <?php endforeach; ?>
+<?php else : ?>
+    <div class="menu"><?= _t('The list is empty') ?></div>
+<?php endif; ?>
+<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+<!-- Page switching -->
+<?php if ($total > $user->config->kmess) : ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?php if ($moderMenu) : ?>
+    <p>
+    <a href="?act=addnew&amp;id=<?= $id ?>"><?= _t('Write Article') ?></a>
+    <?php if ($admin) : ?>
+        <br>
+        <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>"><?= _t('Edit') ?></a>
+        <br>
+        <a href="?act=del&amp;type=dir&amp;id=<?= $id ?>"><?= _t('Delete') ?></a>
+        </p>
+    <?php endif; ?>
+<?php endif; ?>

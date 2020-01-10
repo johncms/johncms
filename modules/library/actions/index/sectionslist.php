@@ -30,6 +30,7 @@ echo $view->render(
         'pagination' => $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
         'total'      => $total,
         'admin'      => $adm,
+        'id'         => $id,
         'list'       =>
             static function () use ($req, $tools, $id, $i, $total) {
                 while ($res = $req->fetch()) {
@@ -38,7 +39,6 @@ echo $view->render(
                     $res['libCounter'] = Utils::libCounter($res['id'], $res['dir']);
                     $res['description'] = $tools->checkout($res['description']);
                     $res['sectionListAdminPanel'] = ViewHelper::sectionsListAdminPanel($id, $res['id'], $i, $total);
-                    $res['sectionAdminPanel'] = ViewHelper::sectionAdminPanel($id);
 
                     yield $res;
                 }
