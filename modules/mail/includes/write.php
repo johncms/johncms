@@ -89,6 +89,12 @@ if ($id) {
                 'message'         => _t('Confirm the deletion of messages'),
                 'back_url'        => '?act=write&amp;id=' . $id,
                 'submit_btn_name' => _t('Delete'),
+                'hidden_inputs'   => [
+                    [
+                        'name'  => 'clear',
+                        'value' => true,
+                    ],
+                ],
             ];
             echo $view->render(
                 'mail::confirm',
