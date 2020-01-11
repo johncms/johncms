@@ -16,7 +16,7 @@ use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Library\Tree;
 use Library\Utils;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 use Aura\Autoload\Loader;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -38,7 +38,7 @@ $user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/admin.lng');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Loader();
@@ -157,7 +157,7 @@ if (in_array($act, $array_includes, true)) {
             // dir
             $actdir = $db->query(
                 'SELECT `id`, `dir` FROM `library_cats` WHERE '
-                . ($id !== null ? '`id`=' . $id : 1) . ' LIMIT 1'
+                . ($id !== null ? '`id` = ' . $id : 1) . ' LIMIT 1'
             )->fetch();
 
             $actdir = $actdir['id'] > 0 ? $actdir['dir'] : Utils::redir404();

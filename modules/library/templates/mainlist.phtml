@@ -1,0 +1,38 @@
+<div class="phdr"><strong>'<?= _t('Library') ?></strong></div>
+<div class="topmenu"><a href="?act=search"><?= _t('Search') ?></a> | <a href="?act=tagcloud"><?= _t('Tag Cloud') ?></a></div>
+
+<div class="gmenu">
+    <p>
+        <?php if ($admin && $premod) : ?>
+    <div><?= _t('On moderation') ?>: <a href="?act=premod"><?= $countPremod ?></a></div>
+    <?php endif; ?>
+    <?php if ($new) : ?>
+        <img src="<?= $assets->url('images/old/add.gif') ?>" alt="" class="icon"><a href="?act=new"><?= _t('New Articles') ?></a> (<?= $new ?>)
+        <br>
+    <?php endif; ?>
+    <img src="<?= $assets->url('images/old/rate.gif') ?>" alt="" class="icon"><a href="?act=top"><?= _t('Rating articles') ?></a>
+    <br>
+    <img src="<?= $assets->url('images/old/talk.gif') ?>" alt="" class="icon"><a href="?act=lastcom"><?= _t('Latest comments') ?></a>
+    </p>
+</div>
+<?php if ($total) : ?>
+    <!-- Listing Sections -->
+    <?php foreach ($list() as $main) : ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <a href="?do=dir&amp;id=<?= $main['id'] ?>"><?= $main['name'] ?></a> (<?= $main['libCounter'] ?>)
+            <?php if ($main['description']) : ?>
+                <div class="sub"><span class="gray"><?= $main['description'] ?></span></div>
+            <?php endif; ?>
+            <?php if ($admin) : ?>
+                <?= $main['sectionListAdminPanel'] ?>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php else : ?>
+    <div class="menu"><?= _t('The list is empty') ?></div>
+<?php endif; ?>
+<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+
+<?php if ($admin) : ?>
+    <p><a href="?act=mkdir&amp;id=0"><?= _t('Create Section') ?></a></p>
+<?php endif; ?>
