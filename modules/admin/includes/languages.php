@@ -47,8 +47,8 @@ if (isset($_POST['lng']) || isset($_POST['update'])) {
         // Обновляем список имеющихся языков
         $lng_list = [];
 
-        foreach (glob(ROOT_PATH . 'system/locale/*/lng.ini') as $val) {
-            $iso = basename(dirname($val));
+        foreach (glob(ROOT_PATH . 'system/locale/*.ini') as $val) {
+            $iso = pathinfo($val, PATHINFO_FILENAME);
             $desc = parse_ini_file($val);
             $lng_list[$iso] = isset($desc['name']) && ! empty($desc['name']) ? $desc['name'] : $iso;
         }

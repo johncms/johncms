@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"X-Domain: online\n"
+
+#: modules/online/includes/guest.php:21
+#: modules/online/includes/history.php:21
+#: modules/online/includes/index.php:21
+#: modules/online/includes/ip.php:21
+msgid "Users"
+msgstr ""
+
+#: modules/online/includes/guest.php:22
+#: modules/online/includes/history.php:22
+#: modules/online/includes/index.php:22
+#: modules/online/includes/ip.php:22
+msgid "History"
+msgstr ""
+
+#: modules/online/includes/guest.php:25
+#: modules/online/includes/history.php:25
+#: modules/online/includes/index.php:25
+#: modules/online/includes/ip.php:25
+msgid "Guests"
+msgstr ""
+
+#: modules/online/includes/guest.php:26
+#: modules/online/includes/history.php:26
+#: modules/online/includes/index.php:26
+#: modules/online/includes/ip.php:26
+msgid "IP Activity"
+msgstr ""
+
+#: modules/online/includes/guest.php:29
+#: modules/online/includes/history.php:29
+#: modules/online/includes/index.php:29
+#: modules/online/includes/ip.php:29
+msgid "Who is online?"
+msgstr ""
+
+#: modules/online/includes/guest.php:65
+#: modules/online/includes/history.php:64
+#: modules/online/includes/index.php:64
+#: modules/online/templates/users.phtml:12
+msgid "The list is empty"
+msgstr ""
+
+#: modules/online/includes/guest.php:68
+#: modules/online/includes/history.php:67
+#: modules/online/includes/index.php:67
+#: modules/online/includes/ip.php:73
+#: modules/online/templates/users.phtml:15
+msgid "Total"
+msgstr ""
+
+#: modules/online/includes/guest.php:75
+#: modules/online/includes/history.php:74
+#: modules/online/includes/index.php:74
+#: modules/online/includes/ip.php:81
+#: modules/online/index.php:51
+msgid "Online"
+msgstr ""
+
+#: modules/online/index.php:53
+msgid "For registered users only"
+msgstr ""
+
+#: modules/online/templates/users.phtml:2
+msgid "Community"
+msgstr ""
+
+#: modules/online/templates/users.phtml:22
+msgid "User Search"
+msgstr ""
+
+#: modules/online/templates/users.phtml:23
+msgid "Back"
+msgstr ""

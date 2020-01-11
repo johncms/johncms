@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+
+#: system/src/Comments.php:139
+#: system/src/Comments.php:208
+#: system/src/Comments.php:209
+msgid "Reply"
+msgstr ""
+
+#: system/src/Comments.php:150
+#: system/src/Comments.php:186
+#: system/src/Comments.php:219
+#: system/src/Comments.php:245
+#: system/src/Comments.php:286
+#: system/src/Comments.php:318
+msgid "Downloads"
+msgstr ""
+
+#: system/src/Comments.php:152
+msgid "Administrator already replied to this message"
+msgstr ""
+
+#: system/src/Comments.php:154
+#: system/src/Comments.php:190
+#: system/src/Comments.php:203
+#: system/src/Comments.php:223
+#: system/src/Comments.php:249
+#: system/src/Comments.php:290
+#: system/src/Comments.php:302
+#: system/src/Comments.php:322
+msgid "Back"
+msgstr ""
+
+#: system/src/Comments.php:221
+#: system/src/Comments.php:320
+msgid "Wrong data"
+msgstr ""
+
+#: system/src/Comments.php:233
+#: system/src/Comments.php:307
+#: system/src/Comments.php:308
+msgid "Edit"
+msgstr ""
+
+#: system/src/Comments.php:247
+msgid "You cannot edit posts of higher administration"
+msgstr ""
+
+#: system/src/Comments.php:332
+#: system/src/Comments.php:372
+#: system/src/Comments.php:373
+msgid "Delete"
+msgstr ""
+
+#: system/src/Comments.php:571
+msgid "Text is too short"
+msgstr ""
+
+#: system/src/Comments.php:577
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr ""
+
+#: system/src/Comments.php:577
+msgid "seconds"
+msgstr ""
+
+#: system/src/Comments.php:585
+msgid "Message already exists"
+msgstr ""
+
+#: system/src/Counters.php:173
+msgid "Unread"
+msgstr ""
+
+#: system/src/Counters.php:179
+msgid "Last activity"
+msgstr ""
+
+#: system/src/NavChain.php:57
+msgid "Home"
+msgstr ""
+
+#: system/src/NewsWidget.php:72
+msgid "show more"
+msgstr ""
+
+#: system/src/NewsWidget.php:110
+msgid "Discuss"
+msgstr ""
