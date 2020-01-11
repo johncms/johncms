@@ -70,7 +70,7 @@ if ($user->rights >= 7) {
 // Сообщение о бане
 if (! empty($all_counters['ban'])) {
     $notifications[] = [
-        'name'    => _t('Ban', 'system'),
+        'name'    => d__('system', 'Ban'),
         'url'     => '/profile/?act=ban',
         'counter' => 0,
         'type'    => 'warning',
@@ -81,7 +81,7 @@ if (! empty($all_counters['ban'])) {
 $list = [];
 if (! empty($all_counters['new_sys_mail'])) {
     $notifications[] = [
-        'name'    => _t('System messages', 'system'),
+        'name'    => d__('system', 'System messages'),
         'url'     => '/mail/?act=systems',
         'counter' => $all_counters['new_sys_mail'],
         'type'    => 'info',
@@ -91,7 +91,7 @@ if (! empty($all_counters['new_sys_mail'])) {
 // Личные сообщения
 if (! empty($all_counters['new_mail'])) {
     $notifications[] = [
-        'name'    => _t('Mail', 'system'),
+        'name'    => d__('system', 'Mail'),
         'url'     => '/mail/?act=new',
         'counter' => $all_counters['new_mail'],
         'type'    => 'info',
@@ -101,7 +101,7 @@ if (! empty($all_counters['new_mail'])) {
 // Комментарии в личной гостевой
 if (! empty($all_counters['guestbook_comment'])) {
     $notifications[] = [
-        'name'    => _t('Guestbook', 'system'),
+        'name'    => d__('system', 'Guestbook'),
         'url'     => '/profile/?act=guestbook&amp;user=' . $user->id,
         'counter' => $all_counters['guestbook_comment'],
         'type'    => 'info',
@@ -111,7 +111,7 @@ if (! empty($all_counters['guestbook_comment'])) {
 // Комментарии в альбомах
 if (! empty($all_counters['new_album_comm'])) {
     $notifications[] = [
-        'name'    => _t('Comments', 'system'),
+        'name'    => d__('system', 'Comments'),
         'url'     => '/album/?act=top&amp;mod=my_new_comm',
         'counter' => $all_counters['new_album_comm'],
         'type'    => 'info',
@@ -120,7 +120,7 @@ if (! empty($all_counters['new_album_comm'])) {
 
 if ($user->comm_count > $user->comm_old) {
     $notifications[] = [
-        'name'    => _t('Guestbook', 'system'),
+        'name'    => d__('system', 'Guestbook'),
         'url'     => '/profile/?act=guestbook&amp;user=' . $user->id,
         'counter' => $user->comm_count - $user->comm_old,
         'type'    => 'info',
@@ -130,7 +130,7 @@ if ($user->comm_count > $user->comm_old) {
 $breadcrumbs = [
     [
         'url'    => '/',
-        'name'   => _t('Home', 'system'),
+        'name'   => d__('system', 'Home'),
         'active' => false,
     ],
     [

@@ -49,8 +49,8 @@ if ($user->isValid()) {
         header('Location: /');
         exit;
     }
-    $nav_chain->add(_t('Personal', 'system'), '/profile/?act=office');
-    $nav_chain->add(_t('Logout', 'system'));
+    $nav_chain->add(d__('system', 'Personal'), '/profile/?act=office');
+    $nav_chain->add(d__('system', 'Logout'));
     // Показываем запрос на подтверждение выхода с сайта
     echo $view->render('login::logout', ['referer' => $referer]);
 } else {
@@ -64,7 +64,7 @@ if ($user->isValid()) {
     /** @var Tools $tools */
     $tools = di(Tools::class);
 
-    $nav_chain->add(_t('Login', 'system'));
+    $nav_chain->add(d__('system', 'Login'));
 
     $error = [];
     $captcha = false;
@@ -74,11 +74,11 @@ if ($user->isValid()) {
     $captchaCode = $request->getPost('code', null, FILTER_SANITIZE_STRING);
 
     if (empty($user_login)) {
-        $error[] = _t('You have not entered login', 'system');
+        $error[] = d__('system', 'You have not entered login');
     }
 
     if (empty($user_pass)) {
-        $error[] = _t('You have not entered password', 'system');
+        $error[] = d__('system', 'You have not entered password');
     }
 
     if (! $error) {
@@ -96,7 +96,7 @@ if ($user->isValid()) {
                         $captcha = true;
                     } else {
                         // Если проверочный код указан неверно
-                        $error[] = _t('The security code is not correct', 'system');
+                        $error[] = d__('system', 'The security code is not correct');
                     }
 
                     unset($_SESSION['code']);
@@ -143,11 +143,11 @@ if ($user->isValid()) {
                         $db->exec("UPDATE `users` SET `failed_login` = '" . $failed_login . "' WHERE `id` = " . $loginUser->id);
                     }
 
-                    $error[] = _t('Authorization failed', 'system');
+                    $error[] = d__('system', 'Authorization failed');
                 }
             }
         } else {
-            $error[] = _t('Authorization failed', 'system');
+            $error[] = d__('system', 'Authorization failed');
         }
     }
 

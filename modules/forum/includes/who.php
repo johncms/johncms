@@ -53,7 +53,7 @@ if ($id) {
 
             foreach ($req as $res) {
                 if (empty($res['name'])) {
-                    $res['name'] = _t('Guest', 'system');
+                    $res['name'] = _t('Guest');
                 }
 
                 $res['user_profile_link'] = '';
@@ -229,7 +229,7 @@ LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id` = '"
             }
 
             if (empty($res['name'])) {
-                $res['name'] = _t('Guest', 'system');
+                $res['name'] = _t('Guest');
             }
 
             $res['user_avatar'] = '';

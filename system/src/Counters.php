@@ -170,13 +170,13 @@ class Counters
             )->fetchColumn();
 
             if ($mod) {
-                return $total ? '<a href="?act=new" class="pr-2">' . _t('Unread', 'system') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '';
+                return $total ? '<a href="?act=new" class="pr-2">' . d__('system', 'Unread') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '';
             }
 
             return $total;
         }
         if ($mod) {
-            return '<a href="?act=new">' . _t('Last activity', 'system') . '</a>';
+            return '<a href="?act=new">' . d__('system', 'Last activity') . '</a>';
         }
 
         return false;

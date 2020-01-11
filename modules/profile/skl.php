@@ -36,7 +36,7 @@ $nav_chain = di(NavChain::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');
 
-$nav_chain->add(_t('Restore password', 'system'));
+$nav_chain->add(_t('Restore password'));
 
 function passgen($length)
 {

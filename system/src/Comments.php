@@ -136,7 +136,7 @@ class Comments
             case 'reply':
                 // Отвечаем на комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_reply && ! $this->ban) {
-                    $this->nav_chain->add(_t('Reply', 'system'));
+                    $this->nav_chain->add(d__('system', 'Reply'));
                     $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -147,11 +147,11 @@ class Comments
                             echo $this->view->render(
                                 'system::pages/result',
                                 [
-                                    'title'         => _t('Downloads'),
+                                    'title'         => d__('system', 'Downloads'),
                                     'type'          => 'alert-danger',
-                                    'message'       => _t('Administrator already replied to this message', 'system'),
+                                    'message'       => d__('system', 'Administrator already replied to this message'),
                                     'back_url'      => $this->url,
-                                    'back_url_name' => _t('Back', 'system'),
+                                    'back_url_name' => d__('system', 'Back'),
                                 ]
                             );
                         } elseif (isset($_POST['submit'])) {
@@ -183,11 +183,11 @@ class Comments
                                 echo $this->view->render(
                                     'system::pages/result',
                                     [
-                                        'title'         => _t('Downloads'),
+                                        'title'         => d__('system', 'Downloads'),
                                         'type'          => 'alert-danger',
                                         'message'       => $message['error'],
                                         'back_url'      => $this->url . '&amp;mod=reply&amp;item=' . $this->item,
-                                        'back_url_name' => _t('Back', 'system'),
+                                        'back_url_name' => d__('system', 'Back'),
                                     ]
                                 );
                             }
@@ -200,13 +200,13 @@ class Comments
                             $data['message_form'] = $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply);
 
                             $data['back_url'] = $this->url;
-                            $data['back_url_name'] = _t('Back', 'system');
+                            $data['back_url_name'] = d__('system', 'Back');
 
                             echo $this->view->render(
                                 $this->templates_namespace . '::pages/comments_reply',
                                 [
-                                    'title'      => _t('Reply', 'system'),
-                                    'page_title' => _t('Reply', 'system'),
+                                    'title'      => d__('system', 'Reply'),
+                                    'page_title' => d__('system', 'Reply'),
                                     'data'       => $data,
 
                                 ]
@@ -216,11 +216,11 @@ class Comments
                         echo $this->view->render(
                             'system::pages/result',
                             [
-                                'title'         => _t('Downloads'),
+                                'title'         => d__('system', 'Downloads'),
                                 'type'          => 'alert-danger',
-                                'message'       => _t('Wrong data', 'system'),
+                                'message'       => d__('system', 'Wrong data'),
                                 'back_url'      => $this->url,
-                                'back_url_name' => _t('Back', 'system'),
+                                'back_url_name' => d__('system', 'Back'),
                             ]
                         );
                     }
@@ -230,7 +230,7 @@ class Comments
             case 'edit':
                 // Редактируем комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_edit && ! $this->ban) {
-                    $this->nav_chain->add(_t('Edit', 'system'));
+                    $this->nav_chain->add(d__('system', 'Edit'));
                     $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -242,11 +242,11 @@ class Comments
                             echo $this->view->render(
                                 'system::pages/result',
                                 [
-                                    'title'         => _t('Downloads'),
+                                    'title'         => d__('system', 'Downloads'),
                                     'type'          => 'alert-danger',
-                                    'message'       => _t('You cannot edit posts of higher administration', 'system'),
+                                    'message'       => d__('system', 'You cannot edit posts of higher administration'),
                                     'back_url'      => $this->url,
-                                    'back_url_name' => _t('Back', 'system'),
+                                    'back_url_name' => d__('system', 'Back'),
                                 ]
                             );
                         } elseif (isset($_POST['submit'])) {
@@ -283,11 +283,11 @@ class Comments
                                 echo $this->view->render(
                                     'system::pages/result',
                                     [
-                                        'title'         => _t('Downloads'),
+                                        'title'         => d__('system', 'Downloads'),
                                         'type'          => 'alert-danger',
                                         'message'       => $message['error'],
                                         'back_url'      => $this->url . '&amp;mod=edit&amp;item=' . $this->item,
-                                        'back_url_name' => _t('Back', 'system'),
+                                        'back_url_name' => d__('system', 'Back'),
                                     ]
                                 );
                             }
@@ -299,13 +299,13 @@ class Comments
                             $data = [];
                             $data['message_form'] = $this->msgForm('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                             $data['back_url'] = $this->url;
-                            $data['back_url_name'] = _t('Back', 'system');
+                            $data['back_url_name'] = d__('system', 'Back');
 
                             echo $this->view->render(
                                 $this->templates_namespace . '::pages/comments_reply',
                                 [
-                                    'title'      => _t('Edit', 'system'),
-                                    'page_title' => _t('Edit', 'system'),
+                                    'title'      => d__('system', 'Edit'),
+                                    'page_title' => d__('system', 'Edit'),
                                     'data'       => $data,
 
                                 ]
@@ -315,11 +315,11 @@ class Comments
                         echo $this->view->render(
                             'system::pages/result',
                             [
-                                'title'         => _t('Downloads'),
+                                'title'         => d__('system', 'Downloads'),
                                 'type'          => 'alert-danger',
-                                'message'       => _t('Wrong data', 'system'),
+                                'message'       => d__('system', 'Wrong data'),
                                 'back_url'      => $this->url,
-                                'back_url_name' => _t('Back', 'system'),
+                                'back_url_name' => d__('system', 'Back'),
                             ]
                         );
                     }
@@ -329,7 +329,7 @@ class Comments
             case 'del':
                 // Удаляем комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_delete && ! $this->ban) {
-                    $this->nav_chain->add(_t('Delete', 'system'));
+                    $this->nav_chain->add(d__('system', 'Delete'));
                     if (isset($_GET['yes'])) {
                         $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
@@ -369,8 +369,8 @@ class Comments
                         echo $this->view->render(
                             $this->templates_namespace . '::pages/comments_delete',
                             [
-                                'title'      => _t('Delete', 'system'),
-                                'page_title' => _t('Delete', 'system'),
+                                'title'      => d__('system', 'Delete'),
+                                'page_title' => d__('system', 'Delete'),
                                 'data'       => $data,
 
                             ]
@@ -568,13 +568,13 @@ class Comments
 
         // Проверяем на минимально допустимую длину
         if (mb_strlen($message) < $this->min_lenght) {
-            $error[] = _t('Text is too short', 'system');
+            $error[] = d__('system', 'Text is too short');
         } else {
             // Проверка на флуд
             $flood = Factory::getContainer()->get(Tools::class)->antiflood();
 
             if ($flood) {
-                $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');
+                $error[] = d__('system', 'You cannot add the message so often<br>Please, wait') . ' ' . $flood . '&#160;' . d__('system', 'seconds');
             }
         }
 
@@ -582,7 +582,7 @@ class Comments
         if (! $error && $rpt_check) {
             $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `user_id` = '" . $this->systemUser->id . "' ORDER BY `id` DESC LIMIT 1");
             if (($res = $req->fetch()) && mb_strtolower($message) === mb_strtolower((string) $res['text'])) {
-                $error[] = _t('Message already exists', 'system');
+                $error[] = d__('system', 'Message already exists');
             }
         }
 

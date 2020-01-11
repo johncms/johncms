@@ -1,23 +1,23 @@
-<?php $this->layout('system::layout/old_default', ['title' => _t('Redirect to an external link', 'system')]) ?>
+<?php $this->layout('system::layout/old_default', ['title' => d__('system', 'Redirect to an external link')]) ?>
 
 <div class="phdr">
-    <strong><?= _t('External Link', 'system') ?></strong>
+    <strong><?= d__('system', 'External Link') ?></strong>
 </div>
 <div class="rmenu" style="padding-top: 16px; padding-bottom: 16px">
     <form action="?url=<?= $redirect_url ?>" method="post">
-        <h3><?= _t('ATTENTION!', 'system') ?></h3>
+        <h3><?= d__('system', 'ATTENTION!') ?></h3>
         <p>
-            <?= _t('You are going to leave our site and go to an external link', 'system') ?>:
+            <?= d__('system', 'You are going to leave our site and go to an external link') ?>:
             <span class="red"><?= htmlspecialchars($url) ?></span>
         </p>
         <p>
-            <?= _t('Administration of our site is not responsible for the content of external sites', 'system') ?><br>
-            <?= sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'),
+            <?= d__('system', 'Administration of our site is not responsible for the content of external sites') ?><br>
+            <?= sprintf(d__('system', 'It is recommended not to specify your data, relating to %s (Login, Password), on third party sites'),
                 '<strong>' . parse_url($config['homeurl'], PHP_URL_HOST) . '</strong>') ?>
         </p>
-        <br><input type="submit" name="submit" value="<?= _t('Go to Link', 'system') ?>"/>
+        <br><input type="submit" name="submit" value="<?= d__('system', 'Go to Link') ?>"/>
     </form>
 </div>
 <div class="phdr">
-    <a href="<?= $referer ?>"><?= _t('Back', 'system') ?></a>
+    <a href="<?= $referer ?>"><?= d__('system', 'Back') ?></a>
 </div>

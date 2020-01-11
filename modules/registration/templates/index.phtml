@@ -27,7 +27,7 @@
                                id="login"
                                required
                                value="<?= $this->e($reg_nick) ?>"
-                               placeholder="<?= _t('Username', 'system') ?>"
+                               placeholder="<?= _t('Username') ?>"
                         >
                         <?php if (isset($error['login'])): ?>
                             <div class="invalid-feedback"><?= implode('<br>', $error['login']) ?></div>
@@ -82,7 +82,7 @@
 
                     <img alt="<?= _t('Verification code') ?>" src="<?= $captcha ?>">
                     <div class="form-group">
-                        <label for="captcha"><?= _t('Enter verification code', 'system') ?></label>
+                        <label for="captcha"><?= _t('Enter verification code') ?></label>
                         <input type="text"
                                class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
                                maxlength="6"

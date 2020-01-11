@@ -54,7 +54,7 @@ class NavChain
         // Добавляем главную страницу в навигационную цепочку
         if ($this->show_home_page) {
             $home_page_item = [
-                'name' => _t('Home', 'system'),
+                'name' => d__('system', 'Home'),
                 'url'  => '/',
             ];
             $all_items = array_merge([$home_page_item], $all_items);

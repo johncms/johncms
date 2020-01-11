@@ -91,7 +91,7 @@
                     <?php if (! empty($item['user_id'])): ?>
                         <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
                     <?php else: ?>
-                        <a class="user-login mr-2"><?= (_t('Guest', 'system') . ': ' . $item['name']) ?></a>
+                        <a class="user-login mr-2"><?= (_t('Guest') . ': ' . $item['name']) ?></a>
                     <?php endif; ?>
                     <span class="post-date"><?= $item['created'] ?></span>
                 </div>

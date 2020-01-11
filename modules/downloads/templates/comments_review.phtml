@@ -47,7 +47,7 @@ $this->layout(
                         <a href="<?= $item['file_url'] ?>" class="btn btn-sm btn-secondary"><?= $item['rus_name'] ?></a>
                     <?php endif; ?>
                     <?php if (! empty($item['comments_url'])): ?>
-                        <a href="<?= $item['comments_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Comments', 'system') ?></a>
+                        <a href="<?= $item['comments_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Comments') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -90,10 +90,10 @@ $this->layout(
                             <?php endif; ?>
                         </span>
                         <?php if (! empty($item['edit_url'])): ?>
-                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit', 'system') ?></a>
+                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
                         <?php endif; ?>
                         <?php if (! empty($item['delete_url'])): ?>
-                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete', 'system') ?></a>
+                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
                         <?php endif; ?>
                     </div>
                 </div>

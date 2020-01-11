@@ -1,9 +1,9 @@
 <?php $this->layout('system::layout/default', [
-    'title'      => _t('Login', 'system'),
-    'page_title' => _t('Login', 'system'),
+    'title'      => d__('system', 'Login'),
+    'page_title' => d__('system', 'Login'),
 ]) ?>
 
 <?= $this->fetch('system::app/alert', [
     'alert_type' => 'alert-info shadow border-0',
-    'alert'      => _t('Sorry, but your request for registration is not considered yet. Please, be patient.', 'system'),
+    'alert'      => d__('system', 'Sorry, but your request for registration is not considered yet. Please, be patient.'),
 ]) ?>

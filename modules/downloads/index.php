@@ -182,7 +182,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Wrong data', 'system'),
+                    'title'         => _t('Wrong data'),
                     'type'          => 'alert-danger',
                     'message'       => _t('The directory does not exist'),
                     'back_url'      => $url,
