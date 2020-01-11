@@ -49,6 +49,24 @@ function _t(string $message, ?string $textDomain = null): string
 }
 
 /**
+ * Translate a message with domain
+ *
+ * @param string $message
+ * @param string $textDomain
+ * @return string
+ */
+function _td(string $message, string $textDomain): string
+{
+    static $translator;
+
+    if (null === $translator) {
+        $translator = di(Translator::class);
+    }
+
+    return $translator->dgettext($textDomain, $message);
+}
+
+/**
  * Translate a plural message
  *
  * @param string $singular
@@ -68,6 +86,26 @@ function _p(string $singular, string $plural, int $number, ?string $textDomain =
     return null === $textDomain
         ? $translator->ngettext($singular, $plural, $number)
         : $translator->dngettext($textDomain, $singular, $plural, $number);
+}
+
+/**
+ * Translate a plural message
+ *
+ * @param string $singular
+ * @param string $plural
+ * @param int $number
+ * @param string $textDomain
+ * @return string
+ */
+function _pd(string $singular, string $plural, int $number, string $textDomain = null): string
+{
+    static $translator;
+
+    if (null === $translator) {
+        $translator = di(Translator::class);
+    }
+
+    return $translator->dngettext($textDomain, $singular, $plural, $number);
 }
 
 /**

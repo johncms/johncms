@@ -1,0 +1,157 @@
+#!/usr/bin/env php
+<?php
+
+chdir(dirname(__DIR__, 2));
+
+if (is_file($a = 'system/vendor/autoload.php') === true) {
+    require $a;
+} else {
+    exit('ERROR: autoload.php not found');
+}
+
+use Gettext\Scanner\PhpScanner;
+use Gettext\Generator\PoGenerator;
+use Gettext\Translations;
+
+$domainSearch = [
+        'admin' => [
+                'target' => 'modules/admin/locale',
+                'scan'   => [
+                        'modules/admin',
+                ]
+        ],
+
+        'album' => [
+                'target' => 'modules/album/locale',
+                'scan'   => [
+                        'modules/album',
+                ]
+        ],
+
+        'community' => [
+                'target' => 'modules/community/locale',
+                'scan'   => [
+                        'modules/community',
+                ]
+        ],
+
+        'downloads' => [
+                'target' => 'modules/downloads/locale',
+                'scan'   => [
+                        'modules/downloads',
+                ]
+        ],
+
+        'forum' => [
+                'target' => 'modules/forum/locale',
+                'scan'   => [
+                        'modules/forum',
+                ]
+        ],
+
+        'guestbook' => [
+                'target' => 'modules/guestbook/locale',
+                'scan'   => [
+                        'modules/guestbook',
+                ]
+        ],
+
+        'help' => [
+                'target' => 'modules/help/locale',
+                'scan'   => [
+                        'modules/help',
+                ]
+        ],
+
+        'homepage' => [
+                'target' => 'modules/homepage/locale',
+                'scan'   => [
+                        'modules/homepage',
+                ]
+        ],
+
+        'library' => [
+                'target' => 'modules/library/locale',
+                'scan'   => [
+                        'modules/library',
+                ]
+        ],
+
+        'mail' => [
+                'target' => 'modules/mail/locale',
+                'scan'   => [
+                        'modules/mail',
+                ]
+        ],
+
+        'news' => [
+                'target' => 'modules/news/locale',
+                'scan'   => [
+                        'modules/news',
+                ]
+        ],
+
+        'online' => [
+                'target' => 'modules/online/locale',
+                'scan'   => [
+                        'modules/online',
+                ]
+        ],
+
+        'profile' => [
+                'target' => 'modules/profile/locale',
+                'scan'   => [
+                        'modules/profile',
+                ]
+        ],
+
+        'registration' => [
+                'target' => 'modules/registration/locale',
+                'scan'   => [
+                        'modules/registration',
+                ]
+        ],
+
+        'system' => [
+                'target' => 'system/locale',
+                'scan'   => [
+                        'modules/language',
+                        'modules/login',
+                        'modules/notifications',
+                        'modules/redirect',
+                        'system/src',
+                ],
+        ],
+];
+
+function recursiveScan($folder, $pattern)
+{
+    $dir = new RecursiveDirectoryIterator($folder);
+    $ite = new RecursiveIteratorIterator($dir);
+    $files = new RegexIterator($ite, $pattern, RegexIterator::GET_MATCH);
+    $fileList = [];
+
+    foreach ($files as $file) {
+        $fileList = array_merge($fileList, $file);
+    }
+
+    return $fileList;
+}
+
+foreach ($domainSearch as $domain => $attributes) {
+    foreach ($attributes['scan'] as $dir) {
+        $phpScanner = new PhpScanner(Translations::create($domain));
+        $phpScanner->setDefaultDomain($domain);
+        $phpScanner->setFunctions(['_t' => 'gettext', '_p' => 'ngettext']);
+        $files = recursiveScan($dir, '/^.+\.(?:phtml|php)$/i');
+
+        foreach ($files as $file) {
+            $phpScanner->scanFile(str_replace('\\', '/', $file));
+        }
+
+        $generator = new PoGenerator();
+        $generator->generateFile($phpScanner->getTranslations()[$domain], $attributes['target'] . '/' . $domain . '.pot');
+    }
+}
+
+exit('[32mLanguage templates has been created successfully[0m');

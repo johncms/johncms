@@ -58,6 +58,7 @@
         }
     },
     "bin": [
+        "system/bin/scan",
         "system/bin/translate"
     ],
     "scripts": {
@@ -66,6 +67,7 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "translate": "translate"
+        "translate": "translate",
+        "translate-scan": "scan"
     }
 }
