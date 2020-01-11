@@ -4,11 +4,14 @@
  * @var array $breadcrumbs
  */
 
-$this->layout('system::layout/default', [
-    'title'       => _t('Notifications'),
-    'page_title'  => _t('Notifications'),
-    'breadcrumbs' => $breadcrumbs,
-]);
+$this->layout(
+    'system::layout/default',
+    [
+        'title'       => _t('Notifications'),
+        'page_title'  => _t('Notifications'),
+        'breadcrumbs' => $breadcrumbs,
+    ]
+);
 ?>
 
 <?php if (empty($notifications)): ?>
@@ -16,27 +19,31 @@ $this->layout('system::layout/default', [
         <?= _t('All notifications have already been read') ?>
     </div>
 <?php else: ?>
-    <div class="small-full-width list-items shadow mb-4 border-radius-12 overflow-hidden">
-        <?php foreach ($notifications as $notification): ?>
-            <a href="<?= $notification['url'] ?>" class="list-item d-flex">
-                <div class="flex-grow-1 item-content">
-                    <div class="item-name"><?= $notification['name'] ?></div>
-                    <?php if (! empty($notification['description'])): ?>
-                        <div class="item-desc"><?= $notification['description'] ?></div>
-                    <?php endif; ?>
-                </div>
-                <?php if (! empty($notification['counter'])): ?>
-                    <div class="icon-right d-flex align-items-center pr-0">
-                        <div class="badge badge-danger badge-pill"><?= $notification['counter'] ?></div>
-                    </div>
-                <?php endif; ?>
-                <div class="icon-right">
-                    <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
-                    </svg>
-                </div>
-            </a>
-        <?php endforeach; ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="small-full-width list-items shadow mb-4 overflow-hidden">
+                <?php foreach ($notifications as $notification): ?>
+                    <a href="<?= $notification['url'] ?>" class="list-item d-flex">
+                        <div class="flex-grow-1 item-content">
+                            <div class="item-name"><?= $notification['name'] ?></div>
+                            <?php if (! empty($notification['description'])): ?>
+                                <div class="item-desc"><?= $notification['description'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if (! empty($notification['counter'])): ?>
+                            <div class="icon-right d-flex align-items-center pr-0">
+                                <div class="badge badge-danger badge-pill"><?= $notification['counter'] ?></div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="icon-right">
+                            <svg class="icon">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
+                            </svg>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
 <?php endif; ?>
 

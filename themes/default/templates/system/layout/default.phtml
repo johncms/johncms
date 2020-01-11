@@ -2,7 +2,11 @@
 /**
  * @var string $locale
  * @var Johncms\System\Users\User $user
+ * @var Johncms\Counters $counters
  */
+
+$counters = $container->get('counters');
+$notifications = $counters->notifications();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -32,7 +36,7 @@
             </a>
         </div>
         <div class="sidebar__wrapper d-flex flex-column">
-            <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu')) ?>
+            <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu', ['notifications' => $notifications])) ?>
             <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-main-menu')) ?>
         </div>
     </div>

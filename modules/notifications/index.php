@@ -40,7 +40,7 @@ if ($user->rights >= 7) {
     if (! empty($all_counters['reg_total'])) {
         $notifications[] = [
             'name'    => _t('Users on registration'),
-            'url'     => '/admin/?act=reg',
+            'url'     => '/admin/reg/',
             'counter' => $all_counters['reg_total'],
             'type'    => 'info',
         ];
@@ -60,7 +60,7 @@ if ($user->rights >= 7) {
     if (! empty($all_counters['downloads_mod'])) {
         $notifications[] = [
             'name'    => _t('Downloads on moderation'),
-            'url'     => 'downloads/?act=mod_files',
+            'url'     => '/downloads/?act=mod_files',
             'counter' => ! empty($all_counters['downloads_mod']),
             'type'    => 'info',
         ];
@@ -117,6 +117,16 @@ if (! empty($all_counters['new_album_comm'])) {
         'type'    => 'info',
     ];
 }
+
+if ($user->comm_count > $user->comm_old) {
+    $notifications[] = [
+        'name'    => _t('Guestbook', 'system'),
+        'url'     => '/profile/?act=guestbook&amp;user=' . $user->id,
+        'counter' => $user->comm_count - $user->comm_old,
+        'type'    => 'info',
+    ];
+}
+
 $breadcrumbs = [
     [
         'url'    => '/',
