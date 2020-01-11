@@ -106,7 +106,7 @@ $this->layout(
                         <div class="mt-2">
                             <a href="?act=images&amp;mod=avatar&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= _t('Upload') ?></a>
                             <?php if ($data['user']['id'] === $user->id): ?>
-                                <a href="?act=images&amp;mod=avatar&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= _t('Select in Catalog') ?></a>
+                                <a href="/help/?act=avatars" class="btn btn-primary btn-sm"><?= _t('Select in Catalog') ?></a>
                             <?php endif; ?>
                             <?php if (! empty($data['delete_avatar_url'])): ?>
                                 <a href="<?= $data['delete_avatar_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Delete') ?></a>
