@@ -58,7 +58,7 @@ switch ($mod) {
     case 'mail':
         $title = _t('Mail');
         $nav_chain->add($title);
-        $set_mail_user = unserialize($user->set_mail, ['allowed_classes' => false]);
+        $set_mail_user = !empty($user->set_mail) ? unserialize($user->set_mail, ['allowed_classes' => false]) : ['access' => 0];
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
