@@ -5,23 +5,23 @@
  * @var int                        $rights
  */
 
-$this->layout('system::layout/default', ['title' => _t('Welcome')])
+$this->layout('system::layout/default', ['title' => __('Welcome')])
 ?>
 
 
 <div class="jumbotron shadow pt-4 pb-5 bg-white mt-3">
     <h1 class="display-4 font-weight-bold">JohnCMS 9.0.0</h1>
     <p class="lead">
-        <?= _t('Free, Open Source content management system') ?>
+        <?= __('Free, Open Source content management system') ?>
     </p>
     <hr class="my-4">
     <a class="btn btn-success btn-lg mr-1" href="https://johncms.com/downloads/">
         <svg class="icon mr-2">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
         </svg>
-        <?= _t('Download') ?>
+        <?= __('Download') ?>
     </a>
-    <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/"><?= _t('Documentation') ?></a>
+    <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/"><?= __('Documentation') ?></a>
     <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1" target="_blank">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#github"/>
@@ -30,61 +30,61 @@ $this->layout('system::layout/default', ['title' => _t('Welcome')])
 </div>
 
 
-<h1 class="font-weight-bold mt-4 mb-4"><?= _t('Features') ?></h1>
+<h1 class="font-weight-bold mt-4 mb-4"><?= __('Features') ?></h1>
 
 <dl class="ml-4">
     <dt class="h3 font-weight-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
-        <?= _t('Responsive Layout') ?>
+        <?= __('Responsive Layout') ?>
     </dt>
     <dd class="mb-3">
-        <?= _t('Your site will appear equally well on both computers and mobile devices.') ?>
+        <?= __('Your site will appear equally well on both computers and mobile devices.') ?>
     </dd>
 
     <dt class="h3 font-weight-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
-        <?= _t('Template System') ?>
+        <?= __('Template System') ?>
     </dt>
     <dd class="mb-3">
-        <?= _t('Using templates, you can completely change the style of your site so that it becomes unique and not like the others.') ?>
+        <?= __('Using templates, you can completely change the style of your site so that it becomes unique and not like the others.') ?>
     </dd>
 
     <dt class="h3 font-weight-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
-        <?= _t('High Performance') ?>
+        <?= __('High Performance') ?>
     </dt>
     <dd class="mb-3">
-        <?= _t('When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.') ?>
+        <?= __('When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.') ?>
     </dd>
 
     <dt class="h3 font-weight-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
-        <?= _t('Multilingual') ?>
+        <?= __('Multilingual') ?>
     </dt>
     <dd class="mb-3">
-        <?= _t('Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.') ?>
+        <?= __('Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.') ?>
     </dd>
 
     <dt class="h3 font-weight-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
-        <?= _t('Modularity') ?>
+        <?= __('Modularity') ?>
     </dt>
     <dd>
-        <?= _t('The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers.') ?>
+        <?= __('The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers.') ?>
     </dd>
 </dl>
 
-<h1 class="font-weight-bold mt-4 mb-4"><?= _t('Free License') ?></h1>
+<h1 class="font-weight-bold mt-4 mb-4"><?= __('Free License') ?></h1>
 
 <dl class="ml-4">
     <dt class="h3 font-weight-bold">
@@ -94,6 +94,6 @@ $this->layout('system::layout/default', ['title' => _t('Welcome')])
         GPL-3
     </dt>
     <dd class="mb-3">
-        <?= _t('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') ?>
+        <?= __('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') ?>
     </dd>
 </dl>

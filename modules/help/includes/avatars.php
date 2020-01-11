@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$title = _t('Avatars');
+$title = __('Avatars');
 $nav_chain->add($title, '?act=avatars');
 $data = [];
 
@@ -34,9 +34,9 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
                     [
                         'title'         => $title,
                         'type'          => 'alert-success',
-                        'message'       => _t('Avatar has been successfully applied'),
+                        'message'       => __('Avatar has been successfully applied'),
                         'back_url'      => '../profile/?act=edit',
-                        'back_url_name' => _t('Continue'),
+                        'back_url_name' => __('Continue'),
                     ]
                 );
             } else {
@@ -45,20 +45,20 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
                     [
                         'title'         => $title,
                         'type'          => 'alert-danger',
-                        'message'       => _t('An error occurred'),
+                        'message'       => __('An error occurred'),
                         'back_url'      => './',
-                        'back_url_name' => _t('Back'),
+                        'back_url_name' => __('Back'),
                     ]
                 );
             }
         } else {
-            $title = _t('Set to Profile');
+            $title = __('Set to Profile');
             $data = [
                 'form_action'     => '?act=avatars&amp;id=' . $id . '&amp;avatar=' . $avatar,
-                'message'         => _t('Are you sure you want to set yourself this avatar?'),
+                'message'         => __('Are you sure you want to set yourself this avatar?'),
                 'img'             => '../assets/avatars/' . $id . '/' . $avatar . '.png',
                 'back_url'        => '?act=avatars&amp;id=' . $id,
-                'submit_btn_name' => _t('Save'),
+                'submit_btn_name' => __('Save'),
             ];
             echo $view->render(
                 'help::confirm',

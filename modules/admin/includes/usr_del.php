@@ -20,7 +20,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  */
 
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -36,13 +36,13 @@ if ($id && $id != $user->id) {
         $foundUser = $req->fetch();
 
         if ($foundUser['rights'] > $user->rights) {
-            $error = _t('You cannot delete higher administration');
+            $error = __('You cannot delete higher administration');
         }
     } else {
-        $error = _t('User does not exists');
+        $error = __('User does not exists');
     }
 } else {
-    $error = _t('Wrong data');
+    $error = __('Wrong data');
 }
 
 if (! $error) {
@@ -68,7 +68,7 @@ if (! $error) {
     // Считаем посты на Форуме
     $forump_count = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
 
-    echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
+    echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Delete user') . '</div>';
 
     // Выводим краткие данные
     echo '<div class="user"><p>' .
@@ -112,36 +112,36 @@ if (! $error) {
             '
             );
 
-            echo '<div class="rmenu"><p><h3>' . _t('User deleted') . '</h3></p></div>';
+            echo '<div class="rmenu"><p><h3>' . __('User deleted') . '</h3></p></div>';
             break;
 
         default:
             // Форма параметров удаления
-            echo '<form action="?act=usr_del&amp;mod=del&amp;id=' . $foundUser['id'] . '" method="post"><div class="menu"><p><h3>' . _t('Cleaning activities') . '</h3>';
+            echo '<form action="?act=usr_del&amp;mod=del&amp;id=' . $foundUser['id'] . '" method="post"><div class="menu"><p><h3>' . __('Cleaning activities') . '</h3>';
 
             if ($comm_count) {
-                echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . _t('Comments') . ' <span class="red">(' . $comm_count . ')</span></div>';
+                echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . __('Comments') . ' <span class="red">(' . $comm_count . ')</span></div>';
             }
 
             if ($forumt_count || $forump_count) {
-                echo '<div><input type="checkbox" value="1" name="forum" checked="checked" />&#160;' . _t('Forum') . ' <span class="red">(' . $forumt_count . '&nbsp;/&nbsp;' . $forump_count . ')</span></div>';
-                echo '<small><span class="gray">' . _t('All threads and posts created by the user go in the hidden state') . '</span></small>';
+                echo '<div><input type="checkbox" value="1" name="forum" checked="checked" />&#160;' . __('Forum') . ' <span class="red">(' . $forumt_count . '&nbsp;/&nbsp;' . $forump_count . ')</span></div>';
+                echo '<small><span class="gray">' . __('All threads and posts created by the user go in the hidden state') . '</span></small>';
             }
 
-            echo '</p></div><div class="rmenu"><p>' . _t('Are you sure that you want to delete this user?');
-            echo '</p><p><input type="submit" value="' . _t('Delete') . '" name="submit" />';
+            echo '</p></div><div class="rmenu"><p>' . __('Are you sure that you want to delete this user?');
+            echo '</p><p><input type="submit" value="' . __('Delete') . '" name="submit" />';
             echo '</p></div></form>';
     }
 } else {
     echo $tools->displayError($error);
 }
 
-echo '<p><a href="./">' . _t('Cancel') . '</a></p>';
+echo '<p><a href="./">' . __('Cancel') . '</a></p>';
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title'   => _t('Admin Panel'),
+        'title'   => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

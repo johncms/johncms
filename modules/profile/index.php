@@ -57,9 +57,9 @@ if (! $user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('User Profile'),
+            'title'   => __('User Profile'),
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;
@@ -72,9 +72,9 @@ if (! $foundUser->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('User Profile'),
+            'title'   => __('User Profile'),
             'type'    => 'alert-danger',
-            'message' => _t('This User does not exists'),
+            'message' => __('This User does not exists'),
         ]
     );
     exit;

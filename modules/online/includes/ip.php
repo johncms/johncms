@@ -18,12 +18,12 @@ $env = di(Johncms\System\Http\Environment::class);
 $data = [];
 $data['filters'] = [
     'users'   => [
-        'name'   => _t('Users'),
+        'name'   => __('Users'),
         'url'    => '/online/',
         'active' => false,
     ],
     'history' => [
-        'name'   => _t('History'),
+        'name'   => __('History'),
         'url'    => '/online/history/',
         'active' => false,
     ],
@@ -31,12 +31,12 @@ $data['filters'] = [
 
 if ($user->rights) {
     $data['filters']['guest'] = [
-        'name'   => _t('Guests'),
+        'name'   => __('Guests'),
         'url'    => '/online/guest/',
         'active' => false,
     ];
     $data['filters']['ip'] = [
-        'name'   => _t('IP Activity'),
+        'name'   => __('IP Activity'),
         'url'    => '/online/ip/',
         'active' => true,
     ];

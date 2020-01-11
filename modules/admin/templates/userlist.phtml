@@ -1,16 +1,16 @@
 <?php
 
-$this->layout('system::layout/default', ['title' => _t('Admin Panel')]);
+$this->layout('system::layout/default', ['title' => __('Admin Panel')]);
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['userlist' => true]]));
 ?>
 <!-- List of Users -->
 <?php if ($total): ?>
     <div class="btn-group btn-group-sm input-group-sm mb-3" role="group" aria-label="Basic example">
         <div class="input-group-prepend">
-            <div class="input-group-text"><?= _t('Sort') ?></div>
+            <div class="input-group-text"><?= __('Sort') ?></div>
         </div>
         <a href="?sort=id" class="btn btn-secondary pl-3 pr-3<?= ($sort == 'id' ? ' active' : '') ?>">ID</a>
-        <a href="?sort=nick" class="btn btn-secondary<?= ($sort == 'nick' ? ' active' : '') ?>"><?= _t('Nickname') ?></a>
+        <a href="?sort=nick" class="btn btn-secondary<?= ($sort == 'nick' ? ' active' : '') ?>"><?= __('Nickname') ?></a>
         <a href="?sort=ip" class="btn btn-secondary pl-3 pr-3<?= ($sort == 'ip' ? ' active' : '') ?>">IP</a>
     </div>
     <?php foreach ($list() as $usr): ?>
@@ -19,13 +19,13 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 <?php else: ?>
     <div class="row">
         <div class="col-md-6">
-            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+            <div class="alert alert-info"><?= __('List is empty') ?></div>
         </div>
     </div>
 <?php endif ?>
 <?php if ($total): ?>
     <div>
-        <div><?= _t('Total') ?>: <?= $total ?></div>
+        <div><?= __('Total') ?>: <?= $total ?></div>
         <!-- Page switching -->
         <?php if ($total > $user->config->kmess): ?>
             <div class="mt-1"><?= $pagination ?></div>

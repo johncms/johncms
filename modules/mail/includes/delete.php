@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Deleting messages');
+$title = __('Deleting messages');
 
 if ($id) {
     //Проверяем наличие сообщения
@@ -25,7 +25,7 @@ if ($id) {
             [
                 'title'   => $title,
                 'type'    => 'alert-danger',
-                'message' => _t('Message does not exist'),
+                'message' => __('Message does not exist'),
             ]
         );
         exit;
@@ -42,9 +42,9 @@ if ($id) {
                 [
                     'title'         => $title,
                     'type'          => 'alert-success',
-                    'message'       => _t('Message deleted'),
+                    'message'       => __('Message deleted'),
                     'back_url'      => '?act=systems',
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
         } else {
@@ -71,18 +71,18 @@ if ($id) {
                 [
                     'title'         => $title,
                     'type'          => 'alert-success',
-                    'message'       => _t('Message deleted'),
+                    'message'       => __('Message deleted'),
                     'back_url'      => '?act=write&amp;id=' . ($res['user_id'] === $user->id ? $res['from_id'] : $res['user_id']),
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
         }
     } else {
         $data = [
             'form_action'     => '?act=delete&amp;id=' . $id,
-            'message'         => _t('You really want to remove the message?'),
+            'message'         => __('You really want to remove the message?'),
             'back_url'        => '?act=write&amp;id=' . ($res['user_id'] === $user->id ? $res['from_id'] : $res['user_id']),
-            'submit_btn_name' => _t('Delete'),
+            'submit_btn_name' => __('Delete'),
         ];
         echo $view->render(
             'mail::confirm',
@@ -99,7 +99,7 @@ if ($id) {
         [
             'title'    => $title,
             'type'     => 'alert-danger',
-            'message'  => _t('The message for removal isn\'t chosen'),
+            'message'  => __('The message for removal isn\'t chosen'),
             'back_url' => '../personal/',
         ]
     );

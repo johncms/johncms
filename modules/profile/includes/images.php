@@ -22,7 +22,7 @@ if (($user->id !== $foundUser['id'] && $user->rights < 7) || $foundUser['rights'
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('You cannot edit profile of higher administration'),
+            'message' => __('You cannot edit profile of higher administration'),
         ]
     );
     exit;
@@ -35,13 +35,13 @@ $error = [];
 
 if ($mod === 'avatar') {
     // Выгружаем аватар
-    $title = _t('Upload Avatar');
+    $title = __('Upload Avatar');
     if ($request->getMethod() === 'POST') {
         $files = $request->getUploadedFiles();
         /** @var GuzzleHttp\Psr7\UploadedFile $file */
         $file = $files['imagefile'];
         if ($file->getSize() > 1024 * $config['flsz']) {
-            $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+            $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
         }
 
         if (empty($error)) {
@@ -63,9 +63,9 @@ if ($mod === 'avatar') {
                     [
                         'title'         => $title,
                         'type'          => 'alert-success',
-                        'message'       => _t('The avatar is successfully uploaded'),
+                        'message'       => __('The avatar is successfully uploaded'),
                         'back_url'      => '?act=edit&amp;user=' . $foundUser['id'],
-                        'back_url_name' => _t('Continue'),
+                        'back_url_name' => __('Continue'),
                     ]
                 );
                 exit;
@@ -80,20 +80,20 @@ if ($mod === 'avatar') {
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'],
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
         exit;
     }
     $data['form_action'] = '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'];
 } else {
-    $title = _t('Upload Photo');
+    $title = __('Upload Photo');
     if ($request->getMethod() === 'POST') {
         $files = $request->getUploadedFiles();
         /** @var GuzzleHttp\Psr7\UploadedFile $file */
         $file = $files['imagefile'];
         if ($file->getSize() > 1024 * $config['flsz']) {
-            $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+            $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
         }
 
         if (empty($error)) {
@@ -132,9 +132,9 @@ if ($mod === 'avatar') {
                     [
                         'title'         => $title,
                         'type'          => 'alert-success',
-                        'message'       => _t('The photo is successfully uploaded'),
+                        'message'       => __('The photo is successfully uploaded'),
                         'back_url'      => '?act=edit&amp;user=' . $foundUser['id'],
-                        'back_url_name' => _t('Continue'),
+                        'back_url_name' => __('Continue'),
                     ]
                 );
                 exit;
@@ -149,7 +149,7 @@ if ($mod === 'avatar') {
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'],
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
         exit;
@@ -158,7 +158,7 @@ if ($mod === 'avatar') {
     $data['form_action'] = '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'];
 }
 
-$nav_chain->add(($foundUser['id'] !== $user->id ? _t('Profile') : _t('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
 $nav_chain->add($title);
 
 $data['back_url'] = '?user=' . $foundUser['id'];

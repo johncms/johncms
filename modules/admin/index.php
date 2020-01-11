@@ -44,7 +44,7 @@ $do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
 
 // Проверяем права доступа
 if ($user->rights < 7) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 $actions = [

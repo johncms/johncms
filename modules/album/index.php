@@ -51,7 +51,7 @@ $loader->addPrefix('Albums', __DIR__ . '/lib');
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('album', __DIR__ . '/templates/');
 
-$title = _t('Albums');
+$title = __('Albums');
 
 // Добавляем раздел в навигационную цепочку
 $nav_chain->add($title, '/album/');
@@ -73,7 +73,7 @@ if (! $user->isValid()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;
@@ -89,7 +89,7 @@ if (! $foundUser = $req->fetch()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('User does not exists'),
+            'message' => __('User does not exists'),
         ]
     );
     exit;

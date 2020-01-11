@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Forum rules');
+$title = __('Forum rules');
 $nav_chain->add($title);
 
 echo $view->render(

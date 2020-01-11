@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Incoming messages');
+$title = __('Incoming messages');
 $nav_chain->add($title);
 
 /** @var Johncms\System\Legacy\Bbcode $bbcode */
@@ -70,7 +70,7 @@ if ($total) {
             $text = $tools->checkout($text, 1, 1);
             $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
             $text = $bbcode->notags($text);
-            $text .= '...<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
+            $text .= '...<a href="?act=write&amp;id=' . $row['id'] . '">' . __('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст
             $text = $tools->checkout($last_msg['text'], 1, 1);
@@ -86,15 +86,15 @@ if ($total) {
         $row['buttons'] = [
             [
                 'url'  => '?act=write&amp;id=' . $row['id'],
-                'name' => _t('Correspondence'),
+                'name' => __('Correspondence'),
             ],
             [
                 'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
-                'name' => _t('Block User'),
+                'name' => __('Block User'),
             ],
             [
                 'url'  => '?act=deluser&amp;id=' . $row['id'],
-                'name' => _t('Delete'),
+                'name' => __('Delete'),
             ],
         ];
 

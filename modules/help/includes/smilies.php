@@ -16,7 +16,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$title = _t('Smiles');
+$title = __('Smiles');
 $nav_chain->add($title, '?act=smilies');
 
 $items = [];
@@ -24,7 +24,7 @@ if ($user->isValid()) {
     $mycount = ! empty($user->smileys) ? count(unserialize($user->smileys, ['allowed_classes' => false])) : '0';
     $items[] = [
         'url'   => '?act=my_smilies',
-        'name'  => _t('My smilies'),
+        'name'  => __('My smilies'),
         'count' => $mycount . ' / ' . $user_smileys,
     ];
 }
@@ -32,7 +32,7 @@ if ($user->isValid()) {
 if ($user->rights >= 1) {
     $items[] = [
         'url'   => '?act=admsmilies',
-        'name'  => _t('For administration'),
+        'name'  => __('For administration'),
         'count' => (int) count(glob(ASSETS_PATH . 'emoticons/admin/*.gif')),
     ];
 }

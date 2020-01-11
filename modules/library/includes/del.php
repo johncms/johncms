@@ -19,7 +19,7 @@ if (! $adm) {
     Utils::redir404();
 }
 
-echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Delete') . '</div>';
+echo '<div class="phdr"><strong><a href="?">' . __('Library') . '</a></strong> | ' . __('Delete') . '</div>';
 
 if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image'])) {
     $type = $_GET['type'];
@@ -31,16 +31,16 @@ $change = ($type == 'dir' ? $db->query('SELECT COUNT(*) FROM `library_cats` WHER
 switch ($type) {
     case 'dir':
         if ($db->query('SELECT COUNT(*) FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() == 0) {
-            echo $tools->displayError(_t('Section does not exist'));
+            echo $tools->displayError(__('Section does not exist'));
         } elseif (! $change) {
             $mode = $_POST['mode'] ?? ($do ?? false);
             $dirtype = $db->query('SELECT `dir` FROM `library_cats` WHERE `id` = ' . $id . ' LIMIT 1')->fetchColumn();
             switch ($mode) {
                 case 'moveaction':
                     if (! isset($_GET['movedeny'])) {
-                        echo '<div class="alarm"><div>' . _t('Are you sure you want to move the contents?') .
+                        echo '<div class="alarm"><div>' . __('Are you sure you want to move the contents?') .
                             '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' .
-                            (int) ($_POST['move']) . '">' . _t('Move') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
+                            (int) ($_POST['move']) . '">' . __('Move') . '</a> | <a href="?">' . __('Cancel') . '</a></div></div>';
                     } else {
                         $move = (int) ($_GET['move']);
                         if ($dirtype) {
@@ -52,7 +52,7 @@ switch ($type) {
                         if ($afr) {
                             $afr = $db->exec('DELETE FROM `library_cats` WHERE `id` = ' . $id);
                             if ($afr) {
-                                echo '<div class="gmenu">' . _t('Successful transfer') . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . _t('Back') . '</a></div>' . PHP_EOL;
+                                echo '<div class="gmenu">' . __('Successful transfer') . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . __('Back') . '</a></div>' . PHP_EOL;
                             }
                         }
                     }
@@ -64,7 +64,7 @@ switch ($type) {
                     $list = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `dir`=' . $dirtype . ' AND ' . ($dirtype && count($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
                     if ($list->rowCount()) {
                         echo '<div class="menu">'
-                            . '<h3>' . _t('Move to Section') . '</h3>'
+                            . '<h3>' . __('Move to Section') . '</h3>'
                             . '<form action="?act=del&amp;type=dir&amp;id=' . $id . '" method="post">'
                             . '<div><select name="move">';
                         while ($rm = $list->fetch()) {
@@ -72,40 +72,40 @@ switch ($type) {
                         }
                         echo '</select></div>'
                             . '<div><input type="hidden" name="mode" value="moveaction" /></div>'
-                            . '<div class="bmenu"><input type="submit" name="submit" value="' . _t('Approve') . '" /></div>'
+                            . '<div class="bmenu"><input type="submit" name="submit" value="' . __('Approve') . '" /></div>'
                             . '</form>'
                             . '</div>';
                     } else {
-                        echo '<div class="rmenu">' . _t('There are no Sections for moving') . '</div><div class="bmenu"><a href="?">' . _t('Back') . '</a></div>';
+                        echo '<div class="rmenu">' . __('There are no Sections for moving') . '</div><div class="bmenu"><a href="?">' . __('Back') . '</a></div>';
                     }
                     break;
 
                 case 'delall':
                     if (! isset($_GET['deldeny'])) {
-                        echo '<div class="alarm"><div>' . _t('Are you sure you want to delete content?') .
+                        echo '<div class="alarm"><div>' . __('Are you sure you want to delete content?') .
                             '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' .
-                            _t('Delete') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
+                            __('Delete') . '</a> | <a href="?">' . __('Cancel') . '</a></div></div>';
                     } else {
                         $childs = new Tree($id);
                         $deleted = $childs->getAllChildsId()->cleanDir();
                         echo '<div class="gmenu">' . sprintf(
-                            _t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
+                            __('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
                             $deleted['dirs'],
                             $deleted['texts'],
                             $deleted['tags'],
                             $deleted['comments'],
                             $deleted['images']
-                        ) . '</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
+                        ) . '</div><div><a href="?">' . __('Back') . '</a></div>' . PHP_EOL;
                     }
                     break;
 
                 default:
-                    echo '<div class="alarm">' . _t('Section is not empty') . '</div>'
-                        . '<div class="menu"><h3>' . _t('Select action') . '</h3>'
+                    echo '<div class="alarm">' . __('Section is not empty') . '</div>'
+                        . '<div class="menu"><h3>' . __('Select action') . '</h3>'
                         . '<form action="?act=del&amp;type=dir&amp;id=' . $id . '" method="post">'
-                        . '<div><input type="radio" name="mode" value="delmove" checked="checked" /> ' . _t('Delete with movement') . '</div>'
-                        . '<div><input type="radio" name="mode" value="delall" /> <span style="color: red;"> ' . _t('Delete all Sections and Articles') . '</span></div>'
-                        . '<div class="bmenu"><input type="submit" name="submit" value="' . _t('Do') . '" /></div>'
+                        . '<div><input type="radio" name="mode" value="delmove" checked="checked" /> ' . __('Delete with movement') . '</div>'
+                        . '<div><input type="radio" name="mode" value="delall" /> <span style="color: red;"> ' . __('Delete all Sections and Articles') . '</span></div>'
+                        . '<div class="bmenu"><input type="submit" name="submit" value="' . __('Do') . '" /></div>'
                         . '</form>'
                         . '</div>';
                     break;
@@ -113,28 +113,28 @@ switch ($type) {
         } else {
             $sql = 'DELETE FROM `library_cats` WHERE `id`=' . $id;
             if (! isset($_GET['yes'])) {
-                echo '<div class="alarm"><div>' . _t('Delete confirmation') .
+                echo '<div class="alarm"><div>' . __('Delete confirmation') .
                     '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' .
-                    _t('Delete') . '</a> | <a href="?do=dir&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
+                    __('Delete') . '</a> | <a href="?do=dir&amp;id=' . $id . '">' . __('Cancel') . '</a></div></div>';
             }
         }
         break;
 
     case 'article':
         if ($db->query('SELECT COUNT(*) FROM `library_texts` WHERE `id`=' . $id)->rowCount() == 0) {
-            echo $tools->displayError(_t('Articles do not exist'));
+            echo $tools->displayError(__('Articles do not exist'));
         } else {
             $sql = 'DELETE FROM `library_texts` WHERE `id`=' . $id;
             if (! isset($_GET['yes'])) {
-                echo '<div class="rmenu"><p>' . _t('Delete confirmation') . '<br><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="?id=' . $id . '">' . _t('Cancel') . '</a></p></div>';
+                echo '<div class="rmenu"><p>' . __('Delete confirmation') . '<br><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . __('Delete') . '</a> | <a href="?id=' . $id . '">' . __('Cancel') . '</a></p></div>';
             }
         }
         break;
     case 'image':
         if (! isset($_GET['yes'])) {
-            echo '<div class="alarm"><div>' . _t('Delete confirmation') .
+            echo '<div class="alarm"><div>' . __('Delete confirmation') .
                 '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' .
-                _t('Delete') . '</a> | <a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
+                __('Delete') . '</a> | <a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . __('Cancel') . '</a></div></div>';
         }
         break;
 }
@@ -144,7 +144,7 @@ if (isset($_GET['yes']) && $type == 'image') {
         @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
         @unlink(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
     }
-    echo '<div class="gmenu">' . _t('Deleted') . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
+    echo '<div class="gmenu">' . __('Deleted') . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . __('Back') . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
     if ($db->exec($sql)) {
         if (file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) {
@@ -152,6 +152,6 @@ if (isset($_GET['yes']) && $type == 'image') {
             @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
             @unlink(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
         }
-        echo '<div class="gmenu">' . _t('Deleted') . '</div><p><a href="?">' . _t('Back') . '</a></p>' . PHP_EOL;
+        echo '<div class="gmenu">' . __('Deleted') . '</div><p><a href="?">' . __('Back') . '</a></p>' . PHP_EOL;
     }
 }

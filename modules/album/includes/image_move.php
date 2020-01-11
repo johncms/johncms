@@ -20,7 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\NavChain $nav_chain
  */
 
-$title = _t('Move image');
+$title = __('Move image');
 $nav_chain->add($title);
 // Перемещение картинки в другой альбом
 if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
@@ -32,7 +32,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             [
                 'title'    => $title,
                 'type'     => 'alert-danger',
-                'message'  => _t('Wrong data'),
+                'message'  => __('Wrong data'),
                 'back_url' => '/album/',
             ]
         );
@@ -57,9 +57,9 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 [
                     'title'         => $title,
                     'type'          => 'alert-success',
-                    'message'       => _t('Image successfully moved to the selected album'),
+                    'message'       => __('Image successfully moved to the selected album'),
                     'back_url'      => './show?al=' . $al . '&amp;user=' . $foundUser['id'],
-                    'back_url_name' => _t('Continue'),
+                    'back_url_name' => __('Continue'),
                 ]
             );
         } else {
@@ -68,7 +68,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 [
                     'title'    => $title,
                     'type'     => 'alert-danger',
-                    'message'  => _t('Wrong data'),
+                    'message'  => __('Wrong data'),
                     'back_url' => '/album/',
                 ]
             );
@@ -99,9 +99,9 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 [
                     'title'         => $title,
                     'type'          => 'alert-info',
-                    'message'       => _t('You must create at least one additional album in order to move the image'),
+                    'message'       => __('You must create at least one additional album in order to move the image'),
                     'back_url'      => './list?user=' . $foundUser['id'],
-                    'back_url_name' => _t('Continue'),
+                    'back_url_name' => __('Continue'),
                 ]
             );
         }

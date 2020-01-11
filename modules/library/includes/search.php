@@ -25,18 +25,18 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
 $search = $search_post ? $search_post : $search_get;
 $search_t = isset($_REQUEST['t']);
-echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search') . '</div>'
+echo '<div class="phdr"><a href="?"><strong>' . __('Library') . '</strong></a> | ' . __('Search') . '</div>'
     . '<div class="gmenu"><form action="?act=search" method="post"><div>'
     . '<input type="text" value="' . ($search ? $tools->checkout($search) : '') . '" name="search" />'
-    . '<input type="submit" value="' . _t('Search') . '" name="submit" /><br>'
-    . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in titles Articles')
+    . '<input type="submit" value="' . __('Search') . '" name="submit" /><br>'
+    . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . __('Search in titles Articles')
     . '</div></form></div>';
 
 // Проверям на ошибки
 $error = false;
 
 if ($search && (mb_strlen($search) < 4 || mb_strlen($search) > 64)) {
-    $error = _t('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance');
+    $error = __('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance');
 }
 
 if ($search && ! $error) {
@@ -52,7 +52,7 @@ if ($search && ! $error) {
         WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)'
     )->fetchColumn();
 
-    echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search results') . '</div>';
+    echo '<div class="phdr"><a href="?"><strong>' . __('Library') . '</strong></a> | ' . __('Search results') . '</div>';
 
     if ($total > $user->config->kmess) {
         echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
@@ -94,23 +94,23 @@ if ($search && ! $error) {
             }
 
             echo '<strong><a href="?id=' . $res['id'] . '">' . $name . '</a></strong><br>' . $text
-                . ' <div class="sub"><span class="gray">' . _t('Who added') . ':</span> ' . $tools->checkout($res['author'])
+                . ' <div class="sub"><span class="gray">' . __('Who added') . ':</span> ' . $tools->checkout($res['author'])
                 . ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br>'
-                . '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res['count_views']
+                . '<span class="gray">' . __('Number of readings') . ':</span> ' . $res['count_views']
                 . '</div></div>';
             ++$i;
         }
     } else {
-        echo '<div class="rmenu"><p>' . _t('Your search did not match any results') . '</p></div>';
+        echo '<div class="rmenu"><p>' . __('Your search did not match any results') . '</p></div>';
     }
 
-    echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
+    echo '<div class="phdr">' . __('Total') . ': ' . (int) $total . '</div>';
 
     if ($total > $user->config->kmess) {
         echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>'
             . '<div><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">'
             . '<input type="text" name="page" size="2"/>'
-            . '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>'
+            . '<input type="submit" value="' . __('To Page') . ' &gt;&gt;"/>'
             . '</form></div>';
     }
 } else {
@@ -118,8 +118,8 @@ if ($search && ! $error) {
         echo $tools->displayError($error);
     }
 
-    echo '<div class="phdr"><small>' . _t('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance') . '</small></div>';
+    echo '<div class="phdr"><small>' . __('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance') . '</small></div>';
 }
 
-echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br>' : '')
-    . '<a href="?">' . _t('To Library') . '</a></p>';
+echo '<p>' . ($search ? '<a href="?act=search">' . __('New Search') . '</a><br>' : '')
+    . '<a href="?">' . __('To Library') . '</a></p>';

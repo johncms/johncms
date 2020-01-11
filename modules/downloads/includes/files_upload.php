@@ -67,26 +67,26 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 }
 
                 if (empty($name_link)) {
-                    $error[] = _t('The required fields are not filled');
+                    $error[] = __('The required fields are not filled');
                 }
 
                 if ($file->getSize() > 1024 * $config['flsz']) {
-                    $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+                    $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
                 }
 
                 if (! in_array($ext, $al_ext, true)) {
-                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
+                    $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
                 }
 
                 if ($error) {
                     echo $view->render(
                         'system::pages/result',
                         [
-                            'title'         => _t('Upload file'),
+                            'title'         => __('Upload file'),
                             'type'          => 'alert-danger',
                             'message'       => $error,
                             'back_url'      => '?act=files_upload&amp;id=' . $id,
-                            'back_url_name' => _t('Repeat'),
+                            'back_url_name' => __('Repeat'),
                         ]
                     );
                 } else {
@@ -178,8 +178,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                         echo $view->render(
                             'downloads::file_upload_result',
                             [
-                                'title'                 => _t('Upload File'),
-                                'page_title'            => _t('Upload File'),
+                                'title'                 => __('Upload File'),
+                                'page_title'            => __('Upload File'),
                                 'id'                    => $id,
                                 'urls'                  => $urls,
                                 'moderation'            => $moderation ?? null,
@@ -191,11 +191,11 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                         echo $view->render(
                             'system::pages/result',
                             [
-                                'title'         => _t('Upload file'),
+                                'title'         => __('Upload file'),
                                 'type'          => 'alert-danger',
-                                'message'       => _t('File not attached'),
+                                'message'       => __('File not attached'),
                                 'back_url'      => '?act=files_upload&amp;id=' . $id,
-                                'back_url_name' => _t('Repeat'),
+                                'back_url_name' => __('Repeat'),
                             ]
                         );
                     }
@@ -204,11 +204,11 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 echo $view->render(
                     'system::pages/result',
                     [
-                        'title'         => _t('Upload file'),
+                        'title'         => __('Upload file'),
                         'type'          => 'alert-danger',
-                        'message'       => _t('File not attached'),
+                        'message'       => __('File not attached'),
                         'back_url'      => '?act=files_upload&amp;id=' . $id,
-                        'back_url_name' => _t('Repeat'),
+                        'back_url_name' => __('Repeat'),
                     ]
                 );
             }
@@ -216,8 +216,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
             echo $view->render(
                 'downloads::file_upload',
                 [
-                    'title'      => _t('Upload File'),
-                    'page_title' => _t('Upload File'),
+                    'title'      => __('Upload File'),
+                    'page_title' => __('Upload File'),
                     'id'         => $id,
                     'urls'       => $urls,
                     'action_url' => '?act=files_upload&amp;id=' . $id,
@@ -230,11 +230,11 @@ if ($req->rowCount() && is_dir($res['dir'])) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Upload file'),
+                'title'         => __('Upload file'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Access forbidden'),
+                'message'       => __('Access forbidden'),
                 'back_url'      => '?id=' . $id,
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
     }
@@ -242,11 +242,11 @@ if ($req->rowCount() && is_dir($res['dir'])) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Upload file'),
+            'title'         => __('Upload file'),
             'type'          => 'alert-danger',
-            'message'       => _t('The directory does not exist'),
+            'message'       => __('The directory does not exist'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

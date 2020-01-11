@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 if (! $user->isValid()) {
     echo $view->render('system::app/old_content', [
         'title'   => $textl,
-        'content' => $tools->displayError(_t('Access forbidden')),
+        'content' => $tools->displayError(__('Access forbidden')),
     ]);
     exit;
 }
@@ -29,7 +29,7 @@ if ($req_obj->rowCount()) {
     if (! $res_obj) {
         echo $view->render('system::app/old_content', [
             'title'   => $textl,
-            'content' => $tools->displayError(_t('Access forbidden')),
+            'content' => $tools->displayError(__('Access forbidden')),
         ]);
         exit;
     }
@@ -37,16 +37,16 @@ if ($req_obj->rowCount()) {
     $obj = new Library\Hashtags($id);
     $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id`=' . $res_obj['cat_id'] . ' LIMIT 1')->fetch();
     $context_top =
-        '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a></div>' .
+        '<div class="phdr"><a href="?"><strong>' . __('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
         '<p><b><a href="?id=' . $id . '">' . $tools->checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . $tools->smilies($tools->checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
-        ($obj->getAllStatTags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->getAllStatTags(1) . ' ]<br>' : '') .
-        '<span class="gray">' . _t('Who added') . ':</span> <a href="' . $config['homeurl'] .
+        ($obj->getAllStatTags() ? '<span class="gray">' . __('Tags') . ':</span> [ ' . $obj->getAllStatTags(1) . ' ]<br>' : '') .
+        '<span class="gray">' . __('Who added') . ':</span> <a href="' . $config['homeurl'] .
         '/profile/?user=' . $res_obj['uploader_id'] . '">' . $tools->checkout($res_obj['uploader']) .
         '</a> (' . $tools->displayDate($res_obj['time']) . ')<br>' .
-        '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res_obj['count_views'] .
+        '<span class="gray">' . __('Number of readings') . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = [
         'comments_table' => 'cms_library_comments',
@@ -67,7 +67,7 @@ if ($req_obj->rowCount()) {
         // Возможность владельцу отвечать на комментарий
         'owner_edit' => false,
         // Возможность владельцу редактировать комментарий
-        'title' => _t('Comments'),
+        'title' => __('Comments'),
         // Название раздела
         'context_top' => $context_top,
         // Выводится вверху списка
@@ -78,5 +78,5 @@ if ($req_obj->rowCount()) {
         $db->exec('UPDATE `library_texts` SET `comm_count`=' . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . ' WHERE `id`=' . $id);
     }
 } else {
-    echo $tools->displayError(_t('Wrong data'));
+    echo $tools->displayError(__('Wrong data'));
 }

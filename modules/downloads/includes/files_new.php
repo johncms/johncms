@@ -20,7 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Новые файлы
-$title = _t('New Files');
+$title = __('New Files');
 $sql_down = '';
 
 if ($id) {
@@ -34,9 +34,9 @@ if ($id) {
             [
                 'title'         => $title,
                 'type'          => 'alert-danger',
-                'message'       => _t('The directory does not exist'),
+                'message'       => __('The directory does not exist'),
                 'back_url'      => $urls['downloads'],
-                'back_url_name' => _t('Downloads'),
+                'back_url_name' => __('Downloads'),
             ]
         );
         exit;

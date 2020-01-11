@@ -34,27 +34,27 @@ $this->layout(
             <div class="card-body">
 
                 <div class="alert alert-success">
-                    <div><?= _t('File attached') ?></div>
+                    <div><?= __('File attached') ?></div>
                     <?php if ($screen_attached === true): ?>
-                        <div><?= _t('Screenshot is attached') ?></div>
+                        <div><?= __('Screenshot is attached') ?></div>
                     <?php elseif ($screen_attached === false): ?>
-                        <div><?= _t('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
+                        <div><?= __('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
                     <?php endif; ?>
                 </div>
 
                 <?php if ($moderation): ?>
                     <div class="alert alert-info">
-                        <?= _t('If you pass moderation, it will be added to the Downloads') ?>
+                        <?= __('If you pass moderation, it will be added to the Downloads') ?>
                     </div>
                 <?php else: ?>
                     <div class="mb-3">
-                        <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= _t('Continue') ?></a>
+                        <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Continue') ?></a>
                     </div>
                 <?php endif; ?>
 
                 <div>
-                    <a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= _t('Upload more') ?></a>
-                    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                    <a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Upload more') ?></a>
+                    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
                 </div>
             </div>
         </div>

@@ -71,11 +71,11 @@ if ($do === 'clean') {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Remove missing files'),
+            'title'         => __('Remove missing files'),
             'type'          => 'alert-success',
-            'message'       => _t('Database successfully updated'),
+            'message'       => __('Database successfully updated'),
             'back_url'      => '?id=' . $id,
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 } else {
@@ -89,11 +89,11 @@ if ($do === 'clean') {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Error'),
+                    'title'         => __('Error'),
                     'type'          => 'alert-success',
-                    'message'       => _t('The directory does not exist'),
+                    'message'       => __('The directory does not exist'),
                     'back_url'      => $url,
-                    'back_url_name' => _t('Downloads'),
+                    'back_url_name' => __('Downloads'),
                 ]
             );
             exit;
@@ -198,7 +198,7 @@ if ($do === 'clean') {
                                     mb_substr(
                                         str_replace(
                                             'file' . $refid . '_',
-                                            _t('Download') . ' ',
+                                            __('Download') . ' ',
                                             $name
                                         ),
                                         0,
@@ -302,14 +302,14 @@ if ($do === 'clean') {
     echo $view->render(
         'downloads::scan_dir',
         [
-            'title'        => _t('Update'),
-            'page_title'   => _t('Update'),
+            'title'        => __('Update'),
+            'page_title'   => __('Update'),
             'id'           => $id,
             'urls'         => $urls,
             'updated_info' => $updated_info ?? [],
             'select_mode'  => $select_mode,
             'back_url'     => '?id=' . $id,
-            'back_name'    => _t('Back'),
+            'back_name'    => __('Back'),
         ]
     );
 }

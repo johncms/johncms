@@ -20,7 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\NavChain $nav_chain
  */
 
-$title = _t('Edit image');
+$title = __('Edit image');
 
 // Редактировать картинку
 if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
@@ -33,7 +33,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             [
                 'title'    => $title,
                 'type'     => 'alert-danger',
-                'message'  => _t('Wrong data'),
+                'message'  => __('Wrong data'),
                 'back_url' => '/album/',
             ]
         );
@@ -52,9 +52,9 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             [
                 'title'         => $title,
                 'type'          => 'alert-success',
-                'message'       => _t('Image successfully changed'),
+                'message'       => __('Image successfully changed'),
                 'back_url'      => './show?al=' . $album . '&amp;user=' . $foundUser['id'],
-                'back_url_name' => _t('Continue'),
+                'back_url_name' => __('Continue'),
             ]
         );
     } else {

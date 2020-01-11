@@ -24,11 +24,11 @@ if (! $id || ! $user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -41,11 +41,11 @@ if (empty($res) || $res['user_id'] != $user->id) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Wrong data'),
+            'title'         => __('Wrong data'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -56,11 +56,11 @@ if ($res['date'] < (time() - 3600)) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Add file'),
+            'title'         => __('Add file'),
             'type'          => 'alert-danger',
-            'message'       => _t('The time allotted for the file upload has expired'),
+            'message'       => __('The time allotted for the file upload has expired'),
             'back_url'      => '/forum/?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -88,12 +88,12 @@ if (isset($_POST['submit'])) {
 
         // Check file size
         if ($fsize > 1024 * $config['flsz']) {
-            $error[] = _t('File size exceed') . ' ' . $config['flsz'] . 'kb.';
+            $error[] = __('File size exceed') . ' ' . $config['flsz'] . 'kb.';
         }
 
         // Check allowed extensions
         if (! in_array($ext, $al_ext)) {
-            $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
+            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
         }
 
         // Replace invalid symbols
@@ -115,7 +115,7 @@ if (isset($_POST['submit'])) {
                 @chmod("${fname}", 0777);
                 @chmod(UPLOAD_PATH . 'forum/attach/' . $fname, 0777);
             } else {
-                $error[] = _t('Error uploading file');
+                $error[] = __('Error uploading file');
             }
         }
 
@@ -163,12 +163,12 @@ if (isset($_POST['submit'])) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Add file'),
-                    'page_title'    => _t('Error uploading file'),
+                    'title'         => __('Add file'),
+                    'page_title'    => __('Error uploading file'),
                     'type'          => 'alert-danger',
                     'message'       => $error,
                     'back_url'      => '/forum/?act=addfile&id=' . $id,
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
             exit;
@@ -177,12 +177,12 @@ if (isset($_POST['submit'])) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Add file'),
-                'page_title'    => _t('Add file'),
+                'title'         => __('Add file'),
+                'page_title'    => __('Add file'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Error uploading file'),
+                'message'       => __('Error uploading file'),
                 'back_url'      => '/forum/?act=addfile&id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
         exit;
@@ -195,8 +195,8 @@ if (isset($_POST['submit'])) {
 echo $view->render(
     'forum::add_file',
     [
-        'title'         => _t('Add File'),
-        'page_title'    => _t('Add File'),
+        'title'         => __('Add File'),
+        'page_title'    => __('Add File'),
         'id'            => $id,
         'file_attached' => $file_attached ?? false,
         'topic_id'      => $res['topic_id'],

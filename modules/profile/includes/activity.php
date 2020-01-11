@@ -15,25 +15,25 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $foundUser = (array) $foundUser;
 
 // История активности
-$title = _t('Activity') . ' - ' . htmlspecialchars($foundUser['name']);
+$title = __('Activity') . ' - ' . htmlspecialchars($foundUser['name']);
 
-$nav_chain->add(($foundUser['id'] !== $user->id ? _t('Profile') : _t('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
 $nav_chain->add($title);
 
 $data = [];
 $data['filters'] = [
     'messages' => [
-        'name'   => _t('Messages'),
+        'name'   => __('Messages'),
         'url'    => '?act=activity&amp;user=' . $foundUser['id'],
         'active' => ! $mod,
     ],
     'topic'    => [
-        'name'   => _t('Themes'),
+        'name'   => __('Themes'),
         'url'    => '?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'],
         'active' => $mod === 'topic',
     ],
     'comments' => [
-        'name'   => _t('Comments'),
+        'name'   => __('Comments'),
         'url'    => '?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'],
         'active' => $mod === 'comments',
     ],

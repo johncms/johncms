@@ -19,15 +19,15 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $types = [
-    1 => _t('Windows applications'),
-    2 => _t('Java applications'),
-    3 => _t('SIS'),
-    4 => _t('txt'),
-    5 => _t('Pictures'),
-    6 => _t('Archive'),
-    7 => _t('Videos'),
-    8 => _t('MP3'),
-    9 => _t('Other'),
+    1 => __('Windows applications'),
+    2 => __('Java applications'),
+    3 => __('SIS'),
+    4 => __('txt'),
+    5 => __('Pictures'),
+    6 => __('Archive'),
+    7 => __('Videos'),
+    8 => __('MP3'),
+    9 => __('Other'),
 ];
 $new = time() - 86400; // Сколько времени файлы считать новыми?
 
@@ -41,28 +41,28 @@ if ($c) {
     $id = $c;
     $lnk = '&amp;c=' . $c;
     $sql = " AND `cat` = '" . $c . "'";
-    $caption = _t('Category Files');
+    $caption = __('Category Files');
     $input = '<input type="hidden" name="c" value="' . $c . '"/>';
     $type = '';
 } elseif ($s) {
     $id = $s;
     $lnk = '&amp;s=' . $s;
     $sql = " AND `subcat` = '" . $s . "'";
-    $caption = _t('Section files');
+    $caption = __('Section files');
     $input = '<input type="hidden" name="s" value="' . $s . '"/>';
     $type = 'type=topics';
 } elseif ($t) {
     $id = $t;
     $lnk = '&amp;t=' . $t;
     $sql = " AND `topic` = '" . $t . "'";
-    $caption = _t('Topic Files');
+    $caption = __('Topic Files');
     $input = '<input type="hidden" name="t" value="' . $t . '"/>';
     $type = 'type=topic';
 } else {
     $id = false;
     $sql = '';
     $lnk = '';
-    $caption = _t('Forum Files');
+    $caption = __('Forum Files');
     $input = '';
     $type = '';
 }
@@ -87,9 +87,9 @@ if ($c || $s || $t) {
                 'title'         => $caption,
                 'page_title'    => $caption,
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -103,7 +103,7 @@ if ($do || isset($_GET['new'])) {
     $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE ' . (isset($_GET['new']) ? " `time` > '${new}'" : " `filetype` = '${do}'") . $sql)->fetchColumn();
 
     if (isset($_GET['new'])) {
-        $caption = _t('New Files');
+        $caption = __('New Files');
     }
     $files = [];
 
@@ -134,7 +134,7 @@ if ($do || isset($_GET['new'])) {
 
             $res['user_is_online'] = false;
             $res['user_rights_name'] = '';
-            $res['user_name'] = _t('Guest');
+            $res['user_name'] = __('Guest');
             if (! empty($res_u)) {
                 $res['user_is_online'] = time() <= $res_u['lastdate'] + 300;
                 $res['user_rights_name'] = $user_rights_names[$res_u['rights']] ?? '';
@@ -171,7 +171,7 @@ if ($do || isset($_GET['new'])) {
             'page_title'    => $caption,
             'pagination'    => $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $user->config->kmess),
             'back_url'      => '/forum/?act=files' . $lnk,
-            'back_url_name' => _t('List of sections'),
+            'back_url_name' => __('List of sections'),
             'files'         => $files,
             'total'         => $total,
             'new_url'       => '?act=files&amp;new' . $lnk,

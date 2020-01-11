@@ -36,7 +36,7 @@ if ($end > $total) {
 
 $title = (array_key_exists($cat, smiliesCat()) ? smiliesCat()[$cat] : ucfirst(htmlspecialchars($cat)));
 
-$nav_chain->add(_t('Smilies'), '?act=smilies');
+$nav_chain->add(__('Smilies'), '?act=smilies');
 $nav_chain->add($title);
 
 if ($total) {

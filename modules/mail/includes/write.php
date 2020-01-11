@@ -18,7 +18,7 @@ $total = 0;
 $ch = 0;
 $mod = $_REQUEST['mod'] ?? '';
 
-$title = _t('Mail');
+$title = __('Mail');
 $nav_chain->add($title);
 
 if ($id) {
@@ -30,7 +30,7 @@ if ($id) {
             [
                 'title'   => $title,
                 'type'    => 'alert-danger',
-                'message' => _t('User does not exists'),
+                'message' => __('User does not exists'),
             ]
         );
         exit;
@@ -39,7 +39,7 @@ if ($id) {
     $qs = $req->fetch();
 
     if ($mod === 'clear') {
-        $title = _t('Clear messages');
+        $title = __('Clear messages');
         $nav_chain->add($title);
 
         if (isset($_POST['clear'])) {
@@ -78,17 +78,17 @@ if ($id) {
                 [
                     'title'         => $title,
                     'type'          => 'alert-success',
-                    'message'       => _t('Messages are deleted'),
+                    'message'       => __('Messages are deleted'),
                     'back_url'      => '?act=write&amp;id=' . $id,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
         } else {
             $data = [
                 'form_action'     => '?act=write&amp;mod=clear&amp;id=' . $id,
-                'message'         => _t('Confirm the deletion of messages'),
+                'message'         => __('Confirm the deletion of messages'),
                 'back_url'        => '?act=write&amp;id=' . $id,
-                'submit_btn_name' => _t('Delete'),
+                'submit_btn_name' => __('Delete'),
                 'hidden_inputs'   => [
                     [
                         'name'  => 'clear',
@@ -123,21 +123,21 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
     $error = [];
 
     if (! $id && empty($name)) {
-        $error[] = _t('Specify the recipient\'s login');
+        $error[] = __('Specify the recipient\'s login');
     }
 
     if (empty($text)) {
-        $error[] = _t('Message cannot be empty');
+        $error[] = __('Message cannot be empty');
     }
 
     if (($id && $id === $user->id) || (! $id && $user->name_lat === $name)) {
-        $error[] = _t('You cannot send messages to yourself');
+        $error[] = __('You cannot send messages to yourself');
     }
 
     $flood = $tools->antiflood();
 
     if ($flood) {
-        $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d sec.'), $flood);
+        $error[] = sprintf(__('You cannot add the message so often. Please, wait %d sec.'), $flood);
     }
 
     if (empty($error)) {
@@ -145,7 +145,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
             $query = $db->query('SELECT * FROM `users` WHERE `name_lat` = ' . $db->quote($name) . ' LIMIT 1');
 
             if (! $query->rowCount()) {
-                $error[] = _t('User does not exists');
+                $error[] = __('User does not exists');
             } else {
                 $foundUser = $query->fetch();
                 $id = $foundUser['id'];
@@ -160,13 +160,13 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
                 $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "' LIMIT 1");
 
                 if (! $query->rowCount()) {
-                    $error[] = _t('To this user can write only contacts');
+                    $error[] = __('To this user can write only contacts');
                 }
             } elseif ($set_mail['access'] === 2) {
                 $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user->id . "' AND `friends`='1' LIMIT 1");
 
                 if (! $query->rowCount()) {
-                    $error[] = _t('To this user can write only friends');
+                    $error[] = __('To this user can write only friends');
                 }
             }
         }
@@ -194,7 +194,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         $fsize = $_FILES['fail']['size'];
 
         if (! empty($_FILES['fail']['error'])) {
-            $error[] = _t('Error uploading file');
+            $error[] = __('Error uploading file');
         }
     } elseif (isset($_POST['fail']) && mb_strlen($_POST['fail']) > 0) {
         $do_file_mini = true;
@@ -204,7 +204,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         $fsize = strlen(base64_decode($filebase64));
 
         if (empty($fsize)) {
-            $error[] = _t('Error uploading file');
+            $error[] = __('Error uploading file');
         }
     }
 
@@ -279,23 +279,23 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         $info = parseFileName($fname);
 
         if (empty($info['filename'])) {
-            $error[] = _t('It is forbidden to upload files without a name');
+            $error[] = __('It is forbidden to upload files without a name');
         }
 
         if (empty($info['fileext'])) {
-            $error[] = _t('It is forbidden to upload files without extension');
+            $error[] = __('It is forbidden to upload files without extension');
         }
 
         if ($fsize > (1024 * $config['flsz'])) {
-            $error[] = _t('The size of the file exceeds the maximum allowable upload');
+            $error[] = __('The size of the file exceeds the maximum allowable upload');
         }
 
         if (preg_match('/[^a-z0-9.()+_-]/', $info['filename'])) {
-            $error[] = _t('File name contains invalid characters');
+            $error[] = __('File name contains invalid characters');
         }
 
         if (! in_array($info['fileext'], $ext, true)) {
-            $error[] = _t('Forbidden file type! By uploading permitted only files with the following extension') . ': ' . implode(', ', $ext);
+            $error[] = __('Forbidden file type! By uploading permitted only files with the following extension') . ': ' . implode(', ', $ext);
         }
 
         $newfile = $info['filename'] . '.' . $info['fileext'];
@@ -311,7 +311,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         )->fetchColumn();
 
         if ($ignor) {
-            $error[] = _t('The user at your ignore list. Sending the message is impossible.');
+            $error[] = __('The user at your ignore list. Sending the message is impossible.');
         }
 
         if (empty($error)) {
@@ -323,7 +323,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
             )->fetchColumn();
 
             if ($ignor_m) {
-                $error[] = _t('The user added you in the ignore list. Sending the message isn\'t possible.');
+                $error[] = __('The user added you in the ignore list. Sending the message isn\'t possible.');
             }
         }
     }
@@ -370,7 +370,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
             @ chmod(UPLOAD_PATH . 'mail/' . $newfile, 0666);
             @unlink($_FILES['fail']['tmp_name']);
         } else {
-            $error[] = _t('Error uploading file');
+            $error[] = __('Error uploading file');
         }
     }
 
@@ -391,10 +391,10 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
                 @ chmod($FileName, 0666);
                 unset($FileName);
             } else {
-                $error[] = _t('Error uploading file');
+                $error[] = __('Error uploading file');
             }
         } else {
-            $error[] = _t('Error uploading file');
+            $error[] = __('Error uploading file');
         }
     }
 
@@ -410,7 +410,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         )->fetch();
 
         if ($rres['text'] === $text) {
-            $error[] = _t('Message already exists');
+            $error[] = __('Message already exists');
         }
     }
 

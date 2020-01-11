@@ -26,13 +26,13 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ?: $search_get;
 
-$nav_chain->add(_t('Search'));
+$nav_chain->add(__('Search'));
 
 // Проверяем на коректность ввода
 $error = false;
 
 if ((! empty($search) && mb_strlen($search) < 2) || mb_strlen($search) > 64) {
-    $error = _t('Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters.');
+    $error = __('Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters.');
 }
 
 $total = 0;
@@ -58,11 +58,11 @@ if ($search && empty($error)) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Error'),
+            'title'         => __('Error'),
             'type'          => 'alert-danger',
             'message'       => $error,
             'back_url'      => $url,
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -71,8 +71,8 @@ if ($search && empty($error)) {
 echo $view->render(
     'downloads::search',
     [
-        'title'           => _t('Search results'),
-        'page_title'      => _t('Search results'),
+        'title'           => __('Search results'),
+        'page_title'      => __('Search results'),
         'pagination'      => $tools->displayPagination('?act=search&amp;search=' . htmlspecialchars($search ?? '') . '&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
         'files'           => $files ?? [],
         'total'           => $total,

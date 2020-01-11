@@ -51,7 +51,7 @@ if (empty($_SESSION['ref'])) {
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 
-$title = _t('Information, FAQ');
+$title = __('Information, FAQ');
 $nav_chain->add($title, '/help/');
 
 // Сколько смайлов разрешено выбрать пользователям?
@@ -61,18 +61,18 @@ $user_smileys = 20;
 function smiliesCat()
 {
     return [
-        'animals'       => _t('Animals'),
-        'brawl_weapons' => _t('Brawl, Weapons'),
-        'emotions'      => _t('Emotions'),
-        'flowers'       => _t('Flowers'),
-        'food_alcohol'  => _t('Food, Alcohol'),
-        'gestures'      => _t('Gestures'),
-        'holidays'      => _t('Holidays'),
-        'love'          => _t('Love'),
-        'misc'          => _t('Miscellaneous'),
-        'music'         => _t('Music, Dancing'),
-        'sports'        => _t('Sports'),
-        'technology'    => _t('Technology'),
+        'animals'       => __('Animals'),
+        'brawl_weapons' => __('Brawl, Weapons'),
+        'emotions'      => __('Emotions'),
+        'flowers'       => __('Flowers'),
+        'food_alcohol'  => __('Food, Alcohol'),
+        'gestures'      => __('Gestures'),
+        'holidays'      => __('Holidays'),
+        'love'          => __('Love'),
+        'misc'          => __('Miscellaneous'),
+        'music'         => __('Music, Dancing'),
+        'sports'        => __('Sports'),
+        'technology'    => __('Technology'),
     ];
 }
 

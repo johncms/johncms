@@ -48,14 +48,14 @@ $this->layout(
 <?php else: ?>
     <div class="row">
         <div class="col-md-6">
-            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+            <div class="alert alert-info"><?= __('List is empty') ?></div>
         </div>
     </div>
 <?php endif ?>
 
 <?php if ($data['total'] > 0): ?>
     <div>
-        <div><?= _t('Total') ?>: <?= $data['total'] ?></div>
+        <div><?= __('Total') ?>: <?= $data['total'] ?></div>
         <!-- Page switching -->
         <?php if ($data['total'] > $user->config->kmess): ?>
             <div class="mt-1"><?= $data['pagination'] ?></div>

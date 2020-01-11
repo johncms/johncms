@@ -3,18 +3,18 @@
 /**
  * @var bool $confirmation
  */
-$this->layout('system::layout/default', ['title' => _t('Admin Panel')]);
+$this->layout('system::layout/default', ['title' => __('Admin Panel')]);
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['languages' => true]]));
 ?>
 <div style="max-width: 640px">
     <?php if ($confirmation): ?>
         <div class="alert alert-success shadow" role="alert">
-            <?= _t('Descriptions have been updated successfully') ?>
+            <?= __('Descriptions have been updated successfully') ?>
         </div>
     <?php endif ?>
     <form method="post">
         <fieldset>
-            <legend><?= _t('Default language') ?></legend>
+            <legend><?= __('Default language') ?></legend>
             <?php foreach ($config['lng_list'] as $key => $val): ?>
                 <div class="custom-control custom-radio mb-2">
                     <input type="radio" id="<?= $key ?>" name="lng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
@@ -25,7 +25,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 </div>
             <?php endforeach ?>
         </fieldset>
-        <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="<?= _t('Save') ?>"/>
-        <input type="submit" class="btn btn-link mt-4 mb-2" name="update" value="<?= _t('Update List') ?>"/>
+        <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="<?= __('Save') ?>"/>
+        <input type="submit" class="btn btn-link mt-4 mb-2" name="update" value="<?= __('Update List') ?>"/>
     </form>
 </div>

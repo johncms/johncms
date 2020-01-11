@@ -28,7 +28,7 @@ $news_counters = $counters->news();
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
             </svg>
-            <span class="flex-grow-1"><?= _t('Users') ?></span>
+            <span class="flex-grow-1"><?= __('Users') ?></span>
             <?php if ($regtotal): ?>
                 <div class="badge badge-danger badge-pill ml-2">+&nbsp;<?= $regtotal ?></div>
             <?php endif ?>
@@ -48,7 +48,7 @@ $news_counters = $counters->news();
                     <svg class="icon text-info">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
                     </svg>
-                    <span class="flex-grow-1 text-info"><?= _t('Search') ?></span>
+                    <span class="flex-grow-1 text-info"><?= __('Search') ?></span>
                 </a>
             </li>
             <?php if ($regtotal): ?>
@@ -57,7 +57,7 @@ $news_counters = $counters->news();
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
                         </svg>
-                        <span class="flex-grow-1"><?= _t('On registration') ?></span>
+                        <span class="flex-grow-1"><?= __('On registration') ?></span>
                         <span class="badge badge-pill badge-danger"><?= $tools->formatNumber($regtotal) ?></span>
                     </a>
                 </li>
@@ -67,7 +67,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Users') ?></span>
+                    <span class="flex-grow-1"><?= __('Users') ?></span>
                     <span class="badge badge-pill badge-light"><?= $tools->formatNumber($countusers) ?></span>
                 </a>
             </li>
@@ -76,7 +76,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Administration') ?></span>
+                    <span class="flex-grow-1"><?= __('Administration') ?></span>
                     <span class="badge badge-pill badge-light"><?= $tools->formatNumber($countadm) ?></span>
                 </a>
             </li>
@@ -85,7 +85,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Ban Panel') ?></span>
+                    <span class="flex-grow-1"><?= __('Ban Panel') ?></span>
                     <span class="badge badge-pill badge-light"><?= $tools->formatNumber($bantotal) ?></span>
                 </a>
             </li>
@@ -95,7 +95,7 @@ $news_counters = $counters->news();
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
                         </svg>
-                        <span class="flex-grow-1"><?= _t('Database cleanup') ?></span>
+                        <span class="flex-grow-1"><?= __('Database cleanup') ?></span>
                     </a>
                 </li>
                 <li class="<?= isset($usr_menu['antiflood']) ? 'active' : '' ?>">
@@ -103,7 +103,7 @@ $news_counters = $counters->news();
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bell-off"/>
                         </svg>
-                        <span class="flex-grow-1"><?= _t('Antiflood') ?></span>
+                        <span class="flex-grow-1"><?= __('Antiflood') ?></span>
                     </a>
                 </li>
                 <li class="<?= isset($usr_menu['karma']) ? 'active' : '' ?>">
@@ -111,7 +111,7 @@ $news_counters = $counters->news();
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                         </svg>
-                        <span class="flex-grow-1"><?= _t('Karma') ?></span>
+                        <span class="flex-grow-1"><?= __('Karma') ?></span>
                     </a>
                 </li>
             <?php endif ?>
@@ -125,7 +125,7 @@ $news_counters = $counters->news();
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
             </svg>
-            <span class="flex-grow-1"><?= _t('Modules') ?></span>
+            <span class="flex-grow-1"><?= __('Modules') ?></span>
         </div>
         <div>
             <svg class="icon icon-chevron-bottom">
@@ -142,7 +142,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Forum') ?></span>
+                    <span class="flex-grow-1"><?= __('Forum') ?></span>
                 </a>
             </li>
             <li class="<?= isset($module_menu['news']) ? 'active' : '' ?>">
@@ -150,7 +150,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('News') ?></span>
+                    <span class="flex-grow-1"><?= __('News') ?></span>
                 </a>
             </li>
             <li class="<?= isset($module_menu['ads']) ? 'active' : '' ?>">
@@ -158,7 +158,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Advertisement') ?></span>
+                    <span class="flex-grow-1"><?= __('Advertisement') ?></span>
                 </a>
             </li>
             <?php if ($user->rights == 9): ?>
@@ -167,7 +167,7 @@ $news_counters = $counters->news();
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
                         </svg>
-                        <span class="flex-grow-1"><?= _t('Counters') ?></span>
+                        <span class="flex-grow-1"><?= __('Counters') ?></span>
                     </a>
                 </li>
             <?php endif ?>
@@ -181,7 +181,7 @@ $news_counters = $counters->news();
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
             </svg>
-            <span class="flex-grow-1"><?= _t('System') ?></span>
+            <span class="flex-grow-1"><?= __('System') ?></span>
         </div>
         <div>
             <svg class="icon icon-chevron-bottom">
@@ -198,7 +198,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('System Settings') ?></span>
+                    <span class="flex-grow-1"><?= __('System Settings') ?></span>
                 </a>
             </li>
             <li class="<?= isset($sys_menu['emoticons']) ? 'active' : '' ?>">
@@ -206,7 +206,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#smile"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Update Smilies') ?></span>
+                    <span class="flex-grow-1"><?= __('Update Smilies') ?></span>
                 </a>
             </li>
             <li class="<?= isset($sys_menu['languages']) ? 'active' : '' ?>">
@@ -214,7 +214,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Language Settings') ?></span>
+                    <span class="flex-grow-1"><?= __('Language Settings') ?></span>
                 </a>
             </li>
         </ul>
@@ -227,7 +227,7 @@ $news_counters = $counters->news();
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shield"/>
             </svg>
-            <span class="flex-grow-1"><?= _t('Security') ?></span>
+            <span class="flex-grow-1"><?= __('Security') ?></span>
         </div>
         <div>
             <svg class="icon icon-chevron-bottom">
@@ -244,7 +244,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Anti-Spyware') ?></span>
+                    <span class="flex-grow-1"><?= __('Anti-Spyware') ?></span>
                 </a>
             </li>
             <li class="<?= isset($sec_menu['ipban']) ? 'active' : '' ?>">
@@ -252,7 +252,7 @@ $news_counters = $counters->news();
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
-                    <span class="flex-grow-1"><?= _t('Ban by IP') ?></span>
+                    <span class="flex-grow-1"><?= __('Ban by IP') ?></span>
                 </a>
             </li>
         </ul>

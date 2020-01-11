@@ -33,7 +33,7 @@ if ($req_obj->rowCount()) {
             [
                 'title'    => $title,
                 'type'     => 'alert-danger',
-                'message'  => _t('User does not exists'),
+                'message'  => __('User does not exists'),
                 'back_url' => './list?user=' . $owner['id'],
             ]
         );
@@ -53,7 +53,7 @@ if ($req_obj->rowCount()) {
             [
                 'title'    => $title,
                 'type'     => 'alert-danger',
-                'message'  => _t('Access forbidden'),
+                'message'  => __('Access forbidden'),
                 'back_url' => './list?user=' . $owner['id'],
             ]
         );
@@ -71,7 +71,7 @@ if ($req_obj->rowCount()) {
         'owner_delete'   => true,                 // Возможность владельцу удалять комментарий
         'owner_reply'    => true,                 // Возможность владельцу отвечать на комментарий
         'owner_edit'     => false,                // Возможность владельцу редактировать комментарий
-        'title'          => _t('Comments'),       // Название раздела
+        'title'          => __('Comments'),       // Название раздела
         'context_top'    => '',         // Выводится вверху списка
         'context_bottom' => '',                   // Выводится внизу списка
         'back_url'       => './show?al=' . $res_obj['album_id'] . '&user=' . $owner['id'],                   // Выводится внизу списка
@@ -95,7 +95,7 @@ if ($req_obj->rowCount()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Wrong data'),
+            'message' => __('Wrong data'),
         ]
     );
 }

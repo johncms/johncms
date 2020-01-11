@@ -35,7 +35,7 @@ $this->layout(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
-            'alert'      => _t('The list is empty'),
+            'alert'      => __('The list is empty'),
         ]
     ) ?>
 <?php endif; ?>
@@ -74,7 +74,7 @@ $this->layout(
 
 <?php if (! empty($data['reset_url'])): ?>
     <div class="mt-4">
-        <a href="<?= $data['reset_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Reset Karma') ?></a>
+        <a href="<?= $data['reset_url'] ?>" class="btn btn-danger btn-sm"><?= __('Reset Karma') ?></a>
     </div>
 <?php endif; ?>
 
@@ -85,9 +85,9 @@ $this->layout(
 <?php endif; ?>
 
 <?php if ($data['total'] > 0): ?>
-    <div><?= _t('Total:') ?> <?= $data['total'] ?></div>
+    <div><?= __('Total:') ?> <?= $data['total'] ?></div>
 <?php endif; ?>
 
 <div>
-    <a href="<?= $data['back_url'] ?>"><?= _t('Back') ?></a>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
 </div>

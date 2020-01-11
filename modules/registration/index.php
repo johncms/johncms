@@ -38,7 +38,7 @@ $view->addFolder('reg', __DIR__ . '/templates/');
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('registration', __DIR__ . '/locale');
 
-$nav_chain->add(_t('Registration'));
+$nav_chain->add(__('Registration'));
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config['mod_reg'] || $user->isValid()) {
@@ -62,25 +62,25 @@ if (isset($_POST['submit'])) {
 
     // Проверка Логина
     if (empty($reg_nick)) {
-        $error['login'][] = _t('You have not entered Nickname');
+        $error['login'][] = __('You have not entered Nickname');
     } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 20) {
-        $error['login'][] = _t('Nickname wrong length');
+        $error['login'][] = __('Nickname wrong length');
     }
 
     if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
-        $error['login'][] = _t('Invalid characters');
+        $error['login'][] = __('Invalid characters');
     }
 
     // Проверка пароля
     if (empty($reg_pass)) {
-        $error['password'][] = _t('You have not entered password');
+        $error['password'][] = __('You have not entered password');
     } elseif (mb_strlen($reg_pass) < 3) {
-        $error['password'][] = _t('Invalid length');
+        $error['password'][] = __('Invalid length');
     }
 
     // Проверка пола
     if ($reg_sex != 'm' && $reg_sex != 'zh') {
-        $error['sex'] = _t('You have not selected genger');
+        $error['sex'] = __('You have not selected genger');
     }
 
     // Проверка кода CAPTCHA
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
         || mb_strlen($captcha) < 3
         || strtolower($captcha) != strtolower($_SESSION['code'])
     ) {
-        $error['captcha'] = _t('The security code is not correct');
+        $error['captcha'] = __('The security code is not correct');
     }
 
     unset($_SESSION['code']);
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
         $stmt->execute([$lat_nick]);
 
         if ($stmt->rowCount()) {
-            $error['login'][] = _t('Selected Nickname is already in use');
+            $error['login'][] = __('Selected Nickname is already in use');
         }
     }
 

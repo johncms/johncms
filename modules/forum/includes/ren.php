@@ -23,11 +23,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Rename topic'),
+                'title'         => __('Rename topic'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -39,11 +39,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Rename topic'),
+                'title'         => __('Rename topic'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -56,11 +56,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Rename topic'),
+                    'title'         => __('Rename topic'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('You have not entered topic name'),
+                    'message'       => __('You have not entered topic name'),
                     'back_url'      => '/forum/?act=ren&amp;id=' . $id,
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
             exit;
@@ -73,11 +73,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Rename topic'),
+                    'title'         => __('Rename topic'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('Topic with same name already exists in this section'),
+                    'message'       => __('Topic with same name already exists in this section'),
                     'back_url'      => '/forum/?act=ren&amp;id=' . $id,
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
             exit;
@@ -91,8 +91,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'forum::rename_topic',
         [
-            'title'      => _t('Rename topic'),
-            'page_title' => _t('Rename topic'),
+            'title'      => __('Rename topic'),
+            'page_title' => __('Rename topic'),
             'id'         => $id,
             'topic'      => $ms,
             'back_url'   => '?type=topic&id=' . $id,
@@ -103,11 +103,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

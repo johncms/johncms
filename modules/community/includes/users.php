@@ -22,14 +22,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `preg` = 1')->fetchColumn();
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT ${start}, " . $user->config->kmess);
 
-$nav_chain->add(_t('List of users'));
+$nav_chain->add(__('List of users'));
 
 echo $view->render(
     'users::users',
     [
         'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
-        'title'      => _t('List of users'),
-        'page_title' => _t('List of users'),
+        'title'      => __('List of users'),
+        'page_title' => __('List of users'),
         'total'      => $total,
         'list'       =>
             static function () use ($req, $user) {

@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $foundUser = (array) $foundUser;
-$title = _t('Edit Profile');
+$title = __('Edit Profile');
 $data = [];
 
 // Проверяем права доступа для редактирования Профиля
@@ -23,7 +23,7 @@ if ($foundUser['id'] !== $user->id && ($user->rights < 7 || $foundUser['rights']
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('You cannot edit profile of higher administration'),
+            'message' => __('You cannot edit profile of higher administration'),
         ]
     );
     exit;
@@ -35,12 +35,12 @@ if (! empty($user->ban)) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Access forbidden'),
+            'message' => __('Access forbidden'),
         ]
     );
     exit;
 }
-$nav_chain->add(($foundUser['id'] !== $user->id ? _t('Profile') : _t('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
 $nav_chain->add($title);
 
 $data['back_url'] = '?user=' . $foundUser['id'];
@@ -49,14 +49,14 @@ if (isset($_GET['delavatar'])) {
     // Удаляем аватар
     $avatar = UPLOAD_PATH . 'users/avatar/' . $foundUser['id'] . '.png';
     @unlink($avatar);
-    $data['success_message'] = _t('Avatar is successfully removed');
+    $data['success_message'] = __('Avatar is successfully removed');
 } elseif (isset($_GET['delphoto'])) {
     // Удаляем фото
     $photo = UPLOAD_PATH . 'users/photo/' . $foundUser['id'] . '.jpg';
     $small_photo = UPLOAD_PATH . 'users/photo/' . $foundUser['id'] . '_small.jpg';
     @unlink($photo);
     @unlink($small_photo);
-    $data['success_message'] = _t('Photo is successfully removed');
+    $data['success_message'] = __('Photo is successfully removed');
 } elseif (isset($_POST['submit'])) {
     // Принимаем данные из формы, проверяем и записываем в базу
     $error = [];
@@ -87,23 +87,23 @@ if (isset($_GET['delavatar'])) {
 
     if ($user->rights >= 7) {
         if (mb_strlen($foundUser['name']) < 2 || mb_strlen($foundUser['name']) > 20) {
-            $error[] = _t('Min. nick length 2, max. 20 characters');
+            $error[] = __('Min. nick length 2, max. 20 characters');
         }
 
         $lat_nick = $tools->rusLat($foundUser['name']);
 
         if (preg_match("/[^0-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick)) {
-            $error[] = _t('Nick contains invalid characters');
+            $error[] = __('Nick contains invalid characters');
         }
     }
     if ($foundUser['dayb'] || $foundUser['monthb'] || $foundUser['yearofbirth']) {
         if ($foundUser['dayb'] < 1 || $foundUser['dayb'] > 31 || $foundUser['monthb'] < 1 || $foundUser['monthb'] > 12) {
-            $error[] = _t('Invalid format date of birth');
+            $error[] = __('Invalid format date of birth');
         }
     }
 
     if ($foundUser['icq'] && ($foundUser['icq'] < 10000 || $foundUser['icq'] > 999999999)) {
-        $error[] = _t('ICQ number must be at least 5 digits and max. 10');
+        $error[] = __('ICQ number must be at least 5 digits and max. 10');
     }
 
     if (! $error) {
@@ -168,7 +168,7 @@ if (isset($_GET['delavatar'])) {
                 ]
             );
         }
-        $_SESSION['success_message'] = _t('Data saved');
+        $_SESSION['success_message'] = __('Data saved');
     } else {
         $_SESSION['edit_errors'] = $error;
     }

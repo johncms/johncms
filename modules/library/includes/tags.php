@@ -22,7 +22,7 @@ if (isset($_GET['tag'])) {
         $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
         $start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
 
-        echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Tags') . '</div>';
+        echo '<div class="phdr"><a href="?"><strong>' . __('Library') . '</strong></a> | ' . __('Tags') . '</div>';
 
         if ($total > $user->config->kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
@@ -39,23 +39,23 @@ if (isset($_GET['tag'])) {
                     : '')
                 . '<div class="righttable"><a href="?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
                 . '<div>' . $tools->checkout($db->query('SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=' . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
-                . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' .
+                . '<div class="sub">' . __('Who added') . ': ' . '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' .
                     $tools->checkout($row['uploader']) . '</a>' . ' (' . $tools->displayDate($row['time']) . ')</div>'
-                . '<div><span class="gray">' . _t('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'
-                . '<div>' . ($obj->getAllStatTags() ? _t('Tags') . ' [ ' . $obj->getAllStatTags(1) . ' ]' : '') . '</div>'
-                . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a> (' . $row['comm_count'] . ')</div>' : '')
+                . '<div><span class="gray">' . __('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'
+                . '<div>' . ($obj->getAllStatTags() ? __('Tags') . ' [ ' . $obj->getAllStatTags(1) . ' ]' : '') . '</div>'
+                . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . __('Comments') . '</a> (' . $row['comm_count'] . ')</div>' : '')
                 . '</div>';
             }
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
+        echo '<div class="phdr">' . __('Total') . ': ' . (int) $total . '</div>';
 
         if ($total > $user->config->kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
-        echo '<p><a href="?">' . _t('To Library') . '</a></p>';
+        echo '<p><a href="?">' . __('To Library') . '</a></p>';
     } else {
-        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+        echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
     }
 } else {
     Library\Utils::redir404();

@@ -131,7 +131,7 @@ class Rating
         for ($r = 0; $r < 6; $r++) {
             $return .= ' <input type="radio" ' . ($r == $userVote ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
         }
-        $return .= '<br><input type="submit" name="rating_submit" value="' . _t('Vote') . '" />' . PHP_EOL;
+        $return .= '<br><input type="submit" name="rating_submit" value="' . __('Vote') . '" />' . PHP_EOL;
         $return .= '</div></form>' . PHP_EOL;
 
         return $return;

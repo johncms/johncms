@@ -27,11 +27,11 @@ $this->layout(
     <div class="col-md-6">
         <div class="alert alert-danger">
             <div class="pb-2">
-                <?= _t('Do you really want to delete a poll?') ?>
+                <?= __('Do you really want to delete a poll?') ?>
             </div>
             <div>
-                <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="pr-2"><?= _t('Delete') ?></a>
-                <a href="<?= $back_url ?>"><?= _t('Cancel') ?></a>
+                <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="pr-2"><?= __('Delete') ?></a>
+                <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
             </div>
         </div>
     </div>

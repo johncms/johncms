@@ -31,8 +31,8 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
             [
                 'title'   => $textl,
                 'content' => $tools->displayError(
-                    sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
-                    '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>'
+                    sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
+                    '<br><a href="?do=dir&amp;id=' . $id . '">' . __('Back') . '</a>'
                 ),
             ]
         );
@@ -48,7 +48,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
         $err = [];
 
         if (empty($_POST['name'])) {
-            $err[] = _t('You have not entered the name');
+            $err[] = __('You have not entered the name');
         }
 
         if (! empty($_FILES['textfile']['name'])) {
@@ -67,7 +67,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                             'system::app/old_content',
                             [
                                 'title'   => $textl,
-                                'content' => $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                                'content' => $tools->displayError(__('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
                             ]
                         );
                         exit;
@@ -80,7 +80,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                         'system::app/old_content',
                         [
                             'title'   => $textl,
-                            'content' => $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                            'content' => $tools->displayError(__('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
                         ]
                     );
                     exit;
@@ -90,7 +90,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     'system::app/old_content',
                     [
                         'title'   => $textl,
-                        'content' => $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                        'content' => $tools->displayError(__('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
                     ]
                 );
                 exit;
@@ -98,7 +98,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
         } elseif (! empty($_POST['text'])) {
             $text = trim($_POST['text']);
         } else {
-            $err[] = _t('You have not entered text');
+            $err[] = __('You have not entered text');
         }
 
         if (empty($announce)) {
@@ -169,7 +169,7 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     $handle->process(UPLOAD_PATH . 'library/images/small/');
 
                     if ($err_image) {
-                        echo $tools->displayError(_t('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                        echo $tools->displayError(__('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>');
                     }
                     $handle->clean();
                 }
@@ -184,9 +184,9 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     }
                 }
 
-                echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
+                echo '<div>' . __('Article added') . '</div>' . ($md == 0 ? '<div>' . __('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
                 $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-                echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
+                echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . __('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . __('To Section') . '</a></div>';
                 echo $view->render(
                     'system::app/old_content',
                     [
@@ -200,28 +200,28 @@ if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
 //                exit;
         }
     }
-    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Write Article') . '</div>'
+    echo '<div class="phdr"><strong><a href="?">' . __('Library') . '</a></strong> | ' . __('Write Article') . '</div>'
         . '<form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
-        . '<p><h3>' . _t('Title') . ' (max. 100):</h3>'
+        . '<p><h3>' . __('Title') . ' (max. 100):</h3>'
         . '<input type="text" name="name" value="' . $name . '" /></p>'
-        . '<p><h3>' . _t('Announce') . ' (max. 500):</h3>'
+        . '<p><h3>' . __('Announce') . ' (max. 500):</h3>'
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
-        . '<p><h3>' . _t('Text') . ':</h3>'
+        . '<p><h3>' . __('Text') . ':</h3>'
         . di(Johncms\System\Legacy\Bbcode::class)->buttons(
             'form',
             'text'
         ) . '<textarea name="text" rows="' . $user->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
-        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
-        . '<p><h3>' . _t('To upload a photo') . '</h3>'
+        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . __('Commenting on the Article') . '</p>'
+        . '<p><h3>' . __('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'
-        . '<p><h3>' . _t('Select the text file') . '</h3>'
-        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . _t('Text entry field will be ignored') . '</small></p>'
-        . '<p><h3>' . _t('Tags') . '</h3>'
-        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . _t('Specify the Tag to the Article, separated by commas') . '</small></p>'
-        . '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>'
+        . '<p><h3>' . __('Select the text file') . '</h3>'
+        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . __('Text entry field will be ignored') . '</small></p>'
+        . '<p><h3>' . __('Tags') . '</h3>'
+        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . __('Specify the Tag to the Article, separated by commas') . '</small></p>'
+        . '<p><input type="submit" name="submit" value="' . __('Save') . '" /></p>'
         . '</div></form>'
-        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . __('Back') . '</a></div>';
 } else {
     header('location: ?');
 }

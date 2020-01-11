@@ -21,7 +21,7 @@ const ROOT_DIR = ROOT_PATH;
 
 // Проверяем права доступа
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 class scaner // phpcs:ignore
@@ -150,39 +150,39 @@ switch ($mod) {
     case 'scan':
         // Сканируем на соответствие дистрибутиву
         $scaner->scan();
-        echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Distributive scan') . '</div>';
+        echo '<div class="phdr"><a href="?act=antispy"><b>' . __('Anti-Spyware') . '</b></a> | ' . __('Distributive scan') . '</div>';
 
         if (count($scaner->bad_files)) {
-            echo '<div class="rmenu"><small>' . _t('Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.') . '</small></div>'; // phpcs:ignore
+            echo '<div class="rmenu"><small>' . __('Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.') . '</small></div>'; // phpcs:ignore
             echo '<div class="menu">';
 
             foreach ($scaner->bad_files as $idx => $data) {
                 echo $data['file_path'] . '<br>';
             }
-            echo '</div><div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
+            echo '</div><div class="phdr">' . __('Total') . ': ' . count($scaner->bad_files) . '</div>';
         } else {
-            echo '<div class="gmenu">' . _t('<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive') . '</div>';
+            echo '<div class="gmenu">' . __('<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive') . '</div>';
         }
 
-        echo '<p><a href="?act=antispy&amp;mod=scan">' . _t('Rescan') . '</a></p>';
+        echo '<p><a href="?act=antispy&amp;mod=scan">' . __('Rescan') . '</a></p>';
         break;
 
     case 'snapscan':
         // Сканируем на соответствие ранее созданному снимку
         $scaner->snapscan();
-        echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Snapshot scan') . '</div>';
+        echo '<div class="phdr"><a href="?act=antispy"><b>' . __('Anti-Spyware') . '</b></a> | ' . __('Snapshot scan') . '</div>';
 
         if (count($scaner->track_files) == 0) {
             /** @var Johncms\System\Legacy\Tools $tools */
             $tools = di(Johncms\System\Legacy\Tools::class);
 
             echo $tools->displayError(
-                _t('Snapshot is not created'),
-                '<a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>'
+                __('Snapshot is not created'),
+                '<a href="?act=antispy&amp;mod=snap">' . __('Create snapshot') . '</a>'
             );
         } else {
             if (count($scaner->bad_files)) {
-                echo '<div class="rmenu">' . _t('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';
+                echo '<div class="rmenu">' . __('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';
                 echo '<div class="menu">';
 
                 foreach ($scaner->bad_files as $idx => $data) {
@@ -190,47 +190,47 @@ switch ($mod) {
                 }
                 echo '</div>';
             } else {
-                echo '<div class="gmenu">' . _t('Excellent!<br>All files are consistent with previously made image.') . '</div>';
+                echo '<div class="gmenu">' . __('Excellent!<br>All files are consistent with previously made image.') . '</div>';
             }
 
-            echo '<div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
+            echo '<div class="phdr">' . __('Total') . ': ' . count($scaner->bad_files) . '</div>';
         }
         break;
 
     case 'snap':
         // Создаем снимок файлов
-        echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Create snapshot') . '</div>';
+        echo '<div class="phdr"><a href="?act=antispy"><b>' . __('Anti-Spyware') . '</b></a> | ' . __('Create snapshot') . '</div>';
 
         if (isset($_POST['submit'])) {
             $scaner->snap();
-            echo '<div class="gmenu"><p>' . _t('Snapshot successfully created') . '</p></div>' .
-                '<div class="phdr"><a href="?act=antispy">' . _t('Continue') . '</a></div>';
+            echo '<div class="gmenu"><p>' . __('Snapshot successfully created') . '</p></div>' .
+                '<div class="phdr"><a href="?act=antispy">' . __('Continue') . '</a></div>';
         } else {
             echo '<form action="?act=antispy&amp;mod=snap" method="post">' .
-                '<div class="menu"><p>' . _t('WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.') . '</p>' .
-                '<p><input type="submit" name="submit" value="' . _t('Create snapshot') . '" /></p>' .
+                '<div class="menu"><p>' . __('WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.') . '</p>' .
+                '<p><input type="submit" name="submit" value="' . __('Create snapshot') . '" /></p>' .
                 '</div></form>' .
-                '<div class="phdr"><small>' . _t('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') . '</small></div>';
+                '<div class="phdr"><small>' . __('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') . '</small></div>';
         }
         break;
 
     default:
         // Главное меню Сканера
-        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Anti-Spyware') . '</div>'
-            . '<div class="menu"><p><h3>' . _t('Scan mode') . '</h3><ul>'
-            . '<li><a href="?act=antispy&amp;mod=snapscan">' . _t('Snapshot scan') . '</a><br>'
-            . '<small>' . _t('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') . '</small></li>'
-            . '<li><a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a><br>'
-            . '<small>' . _t('Takes a snapshot of all script files from the site calculates their checksums and stored in the database.') . '</small></li>'
+        echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Anti-Spyware') . '</div>'
+            . '<div class="menu"><p><h3>' . __('Scan mode') . '</h3><ul>'
+            . '<li><a href="?act=antispy&amp;mod=snapscan">' . __('Snapshot scan') . '</a><br>'
+            . '<small>' . __('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') . '</small></li>'
+            . '<li><a href="?act=antispy&amp;mod=snap">' . __('Create snapshot') . '</a><br>'
+            . '<small>' . __('Takes a snapshot of all script files from the site calculates their checksums and stored in the database.') . '</small></li>'
             . '</ul></p></div><div class="phdr">&#160;</div>';
 }
 
-echo '<p>' . ($mod ? '<a href="?act=antispy">' . _t('Scanner menu') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';
+echo '<p>' . ($mod ? '<a href="?act=antispy">' . __('Scanner menu') . '</a><br>' : '') . '<a href="./">' . __('Admin Panel') . '</a></p>';
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title' => _t('Admin Panel'),
+        'title' => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

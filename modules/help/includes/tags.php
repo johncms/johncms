@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('bbCode Tags');
+$title = __('bbCode Tags');
 $nav_chain->add($title);
 
 echo $view->render(

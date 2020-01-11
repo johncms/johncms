@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('My Account');
+$title = __('My Account');
 $nav_chain->add($title);
 // Проверяем права доступа
 if ($foundUser->id !== $user->id) {
@@ -21,7 +21,7 @@ if ($foundUser->id !== $user->id) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Access forbidden'),
+            'message' => __('Access forbidden'),
         ]
     );
     exit;

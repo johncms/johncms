@@ -38,7 +38,7 @@ $this->layout(
             <form name="form" action="<?= $data['form_action'] ?>" method="post" enctype="multipart/form-data">
                 <?php if (! $user->isValid()): ?>
                     <div class="form-group">
-                        <label for="nick"><?= _t('To Whom') ?></label>
+                        <label for="nick"><?= __('To Whom') ?></label>
                         <input type="text"
                                class="form-control"
                                maxlength="25"
@@ -46,22 +46,22 @@ $this->layout(
                                id="nick"
                                required
                                value="<?= $data['nick'] ?>"
-                               placeholder="<?= _t('To Whom') ?>"
+                               placeholder="<?= __('To Whom') ?>"
                         >
                     </div>
                 <?php endif; ?>
                 <div class="form-group">
-                    <label for="text"><?= _t('Message') ?></label>
+                    <label for="text"><?= __('Message') ?></label>
                     <div><?= $data['bbcode'] ?></div>
                     <textarea rows="<?= $user->config->fieldHeight ?>" name="text" id="text" required class="form-control"></textarea>
                 </div>
                 <div class="input-group mb-3">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
-                        <label class="custom-file-label" for="fail"><?= _t('Choose file') ?></label>
+                        <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
                     </div>
                 </div>
-                <input type="submit" class="btn btn-primary" name="submit" value="<?= _t('Send') ?>"/>
+                <input type="submit" class="btn btn-primary" name="submit" value="<?= __('Send') ?>"/>
             </form>
         </div>
     </div>
@@ -72,7 +72,7 @@ $this->layout(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
-            'alert'      => _t('The list is empty'),
+            'alert'      => __('The list is empty'),
         ]
     ) ?>
 <?php endif; ?>
@@ -102,7 +102,7 @@ $this->layout(
         <?php if (! empty($item['files'])): ?>
             <!-- Files block -->
             <div class="border-top pt-1 pb-1">
-                <div class="font-weight-bold pb-1"><?= _t('Attached files') ?>:</div>
+                <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
                 <div class="d-flex flex-wrap">
                     <?php foreach ($item['files'] as $file): ?>
                         <div class="attached-file pr-3 d-flex flex-column justify-content-between">
@@ -150,7 +150,7 @@ $this->layout(
             <div class="text-nowrap post-actions">
                 <span class="text-muted pr-2 flex-grow-1"></span>
                 <?php if (! empty($item['delete_url'])): ?>
-                    <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                    <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= __('Delete') ?></a>
                 <?php endif; ?>
             </div>
         </div>
@@ -158,7 +158,7 @@ $this->layout(
 <?php endforeach; ?>
 <?php if ($data['total'] > 0): ?>
     <div class="mt-3">
-        <a href="<?= $data['clear_url'] ?>" class="btn btn-danger btn-sm"><?= _t('Clear messages') ?></a>
+        <a href="<?= $data['clear_url'] ?>" class="btn btn-danger btn-sm"><?= __('Clear messages') ?></a>
     </div>
 <?php endif; ?>
 <div class="mt-3">
@@ -169,9 +169,9 @@ $this->layout(
     <?php endif; ?>
 
     <?php if ($data['total'] > 0): ?>
-        <div><?= _t('Total:') ?> <?= $data['total'] ?></div>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
     <?php endif; ?>
 </div>
 <div>
-    <a href="<?= $data['back_url'] ?>"><?= _t('Back') ?></a>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
 </div>

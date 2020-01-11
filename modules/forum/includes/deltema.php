@@ -23,11 +23,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Delete Topic'),
+                'title'         => __('Delete Topic'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -40,12 +40,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Curators'),
-                'page_title'    => _t('Curators'),
+                'title'         => __('Curators'),
+                'page_title'    => __('Curators'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Topic has been deleted or does not exists'),
+                'message'       => __('Topic has been deleted or does not exists'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -87,8 +87,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'forum::delete_topic',
         [
-            'title'      => _t('Delete Topic'),
-            'page_title' => _t('Delete Topic'),
+            'title'      => __('Delete Topic'),
+            'page_title' => __('Delete Topic'),
             'id'         => $id,
             'back_url'   => '/forum/?type=topic&id=' . $id,
         ]
@@ -98,11 +98,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

@@ -32,8 +32,8 @@ $this->layout(
             <div>
                 <form action="<?= $data['action_url'] ?>" method="post">
                     <input type="hidden" name="delete_token" value="<?= $data['delete_token'] ?>">
-                    <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm"><?= _t('Delete') ?></button>
-                    <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary btn-sm"><?= _t('Cancel') ?></a>
+                    <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+                    <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
                 </form>
             </div>
         </div>

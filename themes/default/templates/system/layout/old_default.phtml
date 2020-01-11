@@ -47,26 +47,26 @@
 
 <!-- Верхнее меню -->
 <div class="header">
-    <?= _t('Hi', 'system') ?>,
-    <?= ($user->id ? '<b>' . $user->name . '</b>!' : _t('Guest', 'system') . '!') ?>
+    <?= d__('system', 'Hi') ?>,
+    <?= ($user->id ? '<b>' . $user->name . '</b>!' : d__('system', 'Guest') . '!') ?>
 </div>
 <div class="tmn">
     <?php if (isset($homeButton)): ?>
         <a href="<?= $config['homeurl'] ?>">
             <img src="<?= $this->asset('images/old_menu_home.png') ?>" class="icon">
-            <?= _t('Home', 'system') ?>
+            <?= d__('system', 'Home') ?>
         </a>
         <br>
     <?php endif ?>
     <?php if ($user->isValid()): ?>
         <a href="<?= $config['homeurl'] ?>/profile/?act=office">
             <img src="<?= $this->asset('images/old_menu_cabinet.png') ?>" class="icon">
-            <?= _t('Personal', 'system') ?>
+            <?= d__('system', 'Personal') ?>
         </a>
     <?php else: ?>
         <a href="<?= $config['homeurl'] ?>/login/">
             <img src="<?= $this->asset('images/old_menu_login.png') ?>" class="icon">
-            <?= _t('Login', 'system') ?>
+            <?= d__('system', 'Login') ?>
         </a>
     <?php endif ?>
 </div>

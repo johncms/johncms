@@ -17,8 +17,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$title = _t('For administration');
-$nav_chain->add(_t('Smilies'), '?act=smilies');
+$title = __('For administration');
+$nav_chain->add(__('Smilies'), '?act=smilies');
 $nav_chain->add($title);
 
 // Каталог Админских Смайлов
@@ -29,7 +29,7 @@ if ($user->rights < 1) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Access forbidden'),
+            'message' => __('Access forbidden'),
         ]
     );
     exit;

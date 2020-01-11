@@ -53,7 +53,7 @@ if ($id) {
 
             foreach ($req as $res) {
                 if (empty($res['name'])) {
-                    $res['name'] = _t('Guest');
+                    $res['name'] = __('Guest');
                 }
 
                 $res['user_profile_link'] = '';
@@ -84,9 +84,9 @@ if ($id) {
     echo $view->render(
         'forum::who',
         [
-            'title'           => _t('Who in Topic'),
-            'page_title'      => _t('Who in Topic'),
-            'empty_message'   => _t('The list is empty'),
+            'title'           => __('Who in Topic'),
+            'page_title'      => __('Who in Topic'),
+            'empty_message'   => __('The list is empty'),
             'items'           => $items ?? [],
             'pagination'      => $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess),
             'total'           => $total,
@@ -150,32 +150,32 @@ if ($id) {
 
             switch ($place) {
                 case 'forum':
-                    $place = '<a href="./">' . _t('In the forum Main') . '</a>';
+                    $place = '<a href="./">' . __('In the forum Main') . '</a>';
                     break;
 
                 case 'who':
-                    $place = _t('Here, in the List');
+                    $place = __('Here, in the List');
                     break;
 
                 case 'files':
-                    $place = '<a href="?act=files">' . _t('Looking forum files') . '</a>';
+                    $place = '<a href="?act=files">' . __('Looking forum files') . '</a>';
                     break;
 
                 case 'new':
-                    $place = '<a href="?act=new">' . _t('In the unreads') . '</a>';
+                    $place = '<a href="?act=new">' . __('In the unreads') . '</a>';
                     break;
 
                 case 'search':
-                    $place = '<a href="search.php">' . _t('Forum search') . '</a>';
+                    $place = '<a href="search.php">' . __('Forum search') . '</a>';
                     break;
 
                 case 'section':
                     $section = $db->query('SELECT * FROM `forum_sections` WHERE `id`= ' . $place_id)->fetch();
                     if (! empty($section)) {
                         $link = '<a href="?id=' . $section['id'] . '">' . (empty($section['name']) ? '-----' : $section['name']) . '</a>';
-                        $place = _t('In the Category') . ' &quot;' . $link . '&quot;';
+                        $place = __('In the Category') . ' &quot;' . $link . '&quot;';
                     } else {
-                        $place = '<a href="./">' . _t('In the forum Main') . '</a>';
+                        $place = '<a href="./">' . __('In the forum Main') . '</a>';
                     }
                     break;
 
@@ -183,9 +183,9 @@ if ($id) {
                     $topics = $db->query('SELECT * FROM `forum_sections` WHERE `id`= ' . $place_id)->fetch();
                     if (! empty($topics)) {
                         $link = '<a href="?type=topics&id=' . $topics['id'] . '">' . (empty($topics['name']) ? '-----' : $topics['name']) . '</a>';
-                        $place = _t('In the Section') . ' &quot;' . $link . '&quot;';
+                        $place = __('In the Section') . ' &quot;' . $link . '&quot;';
                     } else {
-                        $place = '<a href="./">' . _t('In the forum Main') . '</a>';
+                        $place = '<a href="./">' . __('In the forum Main') . '</a>';
                     }
                     break;
 
@@ -205,12 +205,12 @@ if ($id) {
                         $link = '<a href="?type=topic&id=' . $topic['id'] . '">' . (empty($topic['name']) ? '-----' : $topic['name']) . '</a>';
 
                         if ($act_type == 'reply') {
-                            $place = _t('Answers in the Topic') . ' &quot;' . $link . '&quot;';
+                            $place = __('Answers in the Topic') . ' &quot;' . $link . '&quot;';
                         } else {
-                            $place = (($place == 'say') ? _t('Writes in the Topic') . ' &quot;' : _t('In the Topic') . ' &quot;') . $link . '&quot;';
+                            $place = (($place == 'say') ? __('Writes in the Topic') . ' &quot;' : __('In the Topic') . ' &quot;') . $link . '&quot;';
                         }
                     } else {
-                        $place = '<a href="./">' . _t('In the forum Main') . '</a>';
+                        $place = '<a href="./">' . __('In the forum Main') . '</a>';
                     }
                     break;
 
@@ -218,18 +218,18 @@ if ($id) {
                     $message = $db->query("SELECT `frt`.`id`, `frt`.`name` FROM `forum_messages` frm
 LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id` = '" . $place_id . "'")->fetch();
                     if (! empty($message)) {
-                        $place = _t('In the Topic') . ' &quot;<a href="?type=topic&id=' . $message['id'] . '">' . (empty($message['name']) ? '-----' : $message['name']) . '</a>&quot;';
+                        $place = __('In the Topic') . ' &quot;<a href="?type=topic&id=' . $message['id'] . '">' . (empty($message['name']) ? '-----' : $message['name']) . '</a>&quot;';
                     } else {
-                        $place = '<a href="./">' . _t('In the forum Main') . '</a>';
+                        $place = '<a href="./">' . __('In the forum Main') . '</a>';
                     }
                     break;
 
                 default:
-                    $place = '<a href="./">' . _t('In the forum Main') . '</a>';
+                    $place = '<a href="./">' . __('In the forum Main') . '</a>';
             }
 
             if (empty($res['name'])) {
-                $res['name'] = _t('Guest');
+                $res['name'] = __('Guest');
             }
 
             $res['user_avatar'] = '';
@@ -265,9 +265,9 @@ LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id` = '"
     echo $view->render(
         'forum::who',
         [
-            'title'           => _t('Who in Forum'),
-            'page_title'      => _t('Who in Forum'),
-            'empty_message'   => _t('The list is empty'),
+            'title'           => __('Who in Forum'),
+            'page_title'      => __('Who in Forum'),
+            'empty_message'   => __('The list is empty'),
             'items'           => $items ?? [],
             'pagination'      => $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess),
             'total'           => $total,

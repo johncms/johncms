@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
                 $handle->image_convert = 'png';
                 $handle->process(UPLOAD_PATH . 'library/images/small/');
                 if ($err_image) {
-                    echo $tools->displayError(_t('Photo uploading error'));
+                    echo $tools->displayError(__('Photo uploading error'));
                 }
                 $handle->clean();
             }
@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
             break;
     }
     $db->exec($sql);
-    echo '<div>' . _t('Changed') . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
+    echo '<div>' . __('Changed') . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . __('Back') . '</a></div>' . PHP_EOL;
 } else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->getChildsDir()->result();
@@ -115,8 +115,8 @@ if (isset($_POST['submit'])) {
         Utils::redir404();
     }
 
-    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | '
-        . ($type == 'dir' ? _t('Edit Section') : _t('Edit Article'))
+    echo '<div class="phdr"><strong><a href="?">' . __('Library') . '</a></strong> | '
+        . ($type == 'dir' ? __('Edit Section') : __('Edit Article'))
         . '</div>'
         . '<form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=' . $type . '&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
@@ -124,37 +124,37 @@ if (isset($_POST['submit'])) {
                 ? '<div><img src="../upload/library/images/big/' . $id . '.png" alt="screen" />' . '</div>'
                 . '<div class="alarm"><a href="?act=del&amp;type=image&amp;id=' . $id . '">Удалить обложку</a></div>'
                 : '')
-            . '<h3>' . _t('To upload a photo') . '</h3>'
+            . '<h3>' . __('To upload a photo') . '</h3>'
             . '<div><input name="image" type="file" /></div>'
-            . '<h3>' . _t('Title') . '</h3>' : '')
+            . '<h3>' . __('Title') . '</h3>' : '')
         . '<div><input type="text" name="name" value="' . $tools->checkout($row['name']) . '" /></div>'
-        . ($type == 'dir' ? '<h3>' . _t('Section description') . '</h3>'
+        . ($type == 'dir' ? '<h3>' . __('Section description') . '</h3>'
             . '<div><textarea name="description" rows="4" cols="20">' . $tools->checkout($row['description']) . '</textarea></div>' : '')
         . ($type == 'article'
-            ? '<h3>' . _t('Announce') . '</h3><div><textarea rows="2" cols="20" name="announce">' . $tools->checkout($row['announce'])
+            ? '<h3>' . __('Announce') . '</h3><div><textarea rows="2" cols="20" name="announce">' . $tools->checkout($row['announce'])
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . di(Johncms\System\Legacy\Bbcode::class)->buttons(
+            ? '<h3>' . __('Text') . '</h3><div>' . di(Johncms\System\Legacy\Bbcode::class)->buttons(
                 'form',
                 'text'
             ) . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
             . '</textarea></div>'
             : ($type == 'article' && mb_strlen($row['text']) > 500000
-                ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
+                ? '<div class="alarm">' . __('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
                 : ''))
         . ($type == 'article'
-            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout((string) $obj->getAllStatTags()) . '" /></div>'
+            ? '<h3>' . __('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout((string) $obj->getAllStatTags()) . '" /></div>'
             : '');
     if ($adm) {
         if ($sqlsel->rowCount() > 1) {
-            echo '<h3>' . _t('Move to Section') . '</h3>'
+            echo '<h3>' . __('Move to Section') . '</h3>'
                 . '<div><select name="move">'
                 . ($type == 'dir'
                     ? '<option ' . ($type == 'dir' && $row['parent'] == 0
                         ? 'selected="selected"'
                         : '')
-                    . ' value="0">' . _t('The ROOT') . '</option>'
+                    . ' value="0">' . __('The ROOT') . '</option>'
                     : '');
             while ($res = $sqlsel->fetch()) {
                 if ($row['name'] != $res['name']) {
@@ -168,24 +168,24 @@ if (isset($_POST['submit'])) {
             echo '</select></div>';
         }
         echo (($type == 'dir' && $empty)
-                ? '<h3>' . _t('Section type') . '</h3><div><input type="radio" name="dir" value="1" '
+                ? '<h3>' . __('Section type') . '</h3><div><input type="radio" name="dir" value="1" '
                 . ($row['dir'] == 1
                     ? 'checked="checked"'
-                    : '') . ' />' . _t('Sections') . '</div>'
-                . '<div><input type="radio" name="dir" value="0" ' . ($row['dir'] == 0 ? 'checked="checked"' : '') . ' />' . _t('Articles') . '</div>' : '')
+                    : '') . ' />' . __('Sections') . '</div>'
+                . '<div><input type="radio" name="dir" value="0" ' . ($row['dir'] == 0 ? 'checked="checked"' : '') . ' />' . __('Articles') . '</div>' : '')
             . ($type == 'dir' && $row['dir'] == 0
-                ? '<div>' . _t('Allow users to add their Articles?') . '</div><div><input type="radio" name="user_add" value="1" '
-                . ($row['user_add'] == 1 ? 'checked="checked"' : '') . ' /> ' . _t('Yes') . '</div><div><input type="radio" name="user_add" value="0" '
-                . ($row['user_add'] == 0 ? 'checked="checked"' : '') . ' /> ' . _t('No') . '</div>' : '')
+                ? '<div>' . __('Allow users to add their Articles?') . '</div><div><input type="radio" name="user_add" value="1" '
+                . ($row['user_add'] == 1 ? 'checked="checked"' : '') . ' /> ' . __('Yes') . '</div><div><input type="radio" name="user_add" value="0" '
+                . ($row['user_add'] == 0 ? 'checked="checked"' : '') . ' /> ' . __('No') . '</div>' : '')
             . ($type == 'article' ? '<div class="' . ($row['premod'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="premod" value="1" ' . ($row['premod'] > 0
-                    ? 'checked="checked"' : '') . '/> ' . _t('Verified') . '</div>'
+                    ? 'checked="checked"' : '') . '/> ' . __('Verified') . '</div>'
                 . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
-                . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . _t('Commenting on the Article') . '</div>'
+                . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . __('Commenting on the Article') . '</div>'
                 . '<div class="rmenu">'
-                . '<h3>' . _t('Number of readings')
+                . '<h3>' . __('Number of readings')
                 . '</h3><div><input type="text" name="count_views" value="' . (int) ($row['count_views']) . '" /></div></div>' . PHP_EOL : '');
     }
-    echo '<div class="bmenu"><input type="submit" name="submit" value="' . _t('Save') . '" />'
+    echo '<div class="bmenu"><input type="submit" name="submit" value="' . __('Save') . '" />'
         . '</div></div></form>' . PHP_EOL
-        . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . _t('Back') . '</a></p>' . PHP_EOL;
+        . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . __('Back') . '</a></p>' . PHP_EOL;
 }

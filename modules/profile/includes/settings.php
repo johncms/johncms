@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Settings');
+$title = __('Settings');
 
 // Массив для основных данных, которые попадут в шаблон
 $data = [];
@@ -20,8 +20,8 @@ $data = [];
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $user->config;
 
-$nav_chain->add(_t('My Account'), '/profile/?act=office');
-$nav_chain->add(_t('Settings'), '?act=settings');
+$nav_chain->add(__('My Account'), '/profile/?act=office');
+$nav_chain->add(__('Settings'), '?act=settings');
 // Проверяем права доступа
 if ($foundUser->id !== $user->id) {
     echo $view->render(
@@ -29,7 +29,7 @@ if ($foundUser->id !== $user->id) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Access forbidden'),
+            'message' => __('Access forbidden'),
         ]
     );
     exit;
@@ -38,17 +38,17 @@ if ($foundUser->id !== $user->id) {
 $data['buttons'] = [
     [
         'url'    => '?act=settings',
-        'name'   => _t('General setting'),
+        'name'   => __('General setting'),
         'active' => ! $mod,
     ],
     [
         'url'    => '?act=settings&amp;mod=forum',
-        'name'   => _t('Forum'),
+        'name'   => __('Forum'),
         'active' => $mod === 'forum',
     ],
     [
         'url'    => '?act=settings&amp;mod=mail',
-        'name'   => _t('Mail'),
+        'name'   => __('Mail'),
         'active' => $mod === 'mail',
     ],
 ];
@@ -56,7 +56,7 @@ $data['buttons'] = [
 // Пользовательские настройки
 switch ($mod) {
     case 'mail':
-        $title = _t('Mail');
+        $title = __('Mail');
         $nav_chain->add($title);
         $set_mail_user = !empty($user->set_mail) ? unserialize($user->set_mail, ['allowed_classes' => false]) : ['access' => 0];
 
@@ -68,7 +68,7 @@ switch ($mod) {
                     $user->id,
                 ]
             );
-            $data['success_message'] = _t('Settings saved successfully');
+            $data['success_message'] = __('Settings saved successfully');
         }
         $data['form_action'] = '?act=settings&amp;mod=mail';
         $data['set_mail_user'] = $set_mail_user;
@@ -85,7 +85,7 @@ switch ($mod) {
 
     case 'forum':
         // Настройки Форума
-        $title = _t('Forum');
+        $title = __('Forum');
         $nav_chain->add($title);
         $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 
@@ -105,7 +105,7 @@ switch ($mod) {
                     $user->id,
                 ]
             );
-            $data['success_message'] = _t('Settings saved successfully');
+            $data['success_message'] = __('Settings saved successfully');
         }
 
         if (isset($_GET['reset']) || empty($set_forum)) {
@@ -121,7 +121,7 @@ switch ($mod) {
                     $user->id,
                 ]
             );
-            $data['success_message'] = _t('Default settings are set');
+            $data['success_message'] = __('Default settings are set');
         }
 
         $data['form_action'] = '?act=settings&amp;mod=forum';
@@ -138,7 +138,7 @@ switch ($mod) {
         break;
 
     default:
-        $title = _t('General setting');
+        $title = __('General setting');
         $nav_chain->add($title);
         if ($request->getMethod() === 'POST') {
             $set_user = (array) $userConfig;
@@ -193,12 +193,12 @@ switch ($mod) {
 
         // Форма ввода пользовательских настроек
         if (isset($_SESSION['set_ok'])) {
-            $data['success_message'] = _t('Settings saved successfully');
+            $data['success_message'] = __('Settings saved successfully');
             unset($_SESSION['set_ok']);
         }
 
         if (isset($_SESSION['reset_ok'])) {
-            $data['success_message'] = _t('Default settings are set');
+            $data['success_message'] = __('Default settings are set');
             unset($_SESSION['reset_ok']);
         }
 

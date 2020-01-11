@@ -48,9 +48,9 @@ if (! $config['active'] && ! $user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('Online'),
+            'title'   => __('Online'),
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;

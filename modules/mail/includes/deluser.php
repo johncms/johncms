@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Delete');
+$title = __('Delete');
 $nav_chain->add($title);
 
 if ($id) {
@@ -40,17 +40,17 @@ if ($id) {
             [
                 'title'         => $title,
                 'type'          => 'alert-success',
-                'message'       => _t('Contact deleted'),
+                'message'       => __('Contact deleted'),
                 'back_url'      => './',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
     } else {
         $data = [
             'form_action'     => '?act=deluser&amp;id=' . $id,
-            'message'         => _t('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
+            'message'         => __('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
             'back_url'        => (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './'),
-            'submit_btn_name' => _t('Delete'),
+            'submit_btn_name' => __('Delete'),
         ];
         echo $view->render(
             'mail::confirm',
@@ -67,7 +67,7 @@ if ($id) {
         [
             'title'    => $title,
             'type'     => 'alert-danger',
-            'message'  => _t('Contact for removal isn\'t chosen'),
+            'message'  => __('Contact for removal isn\'t chosen'),
             'back_url' => '../personal/',
         ]
     );

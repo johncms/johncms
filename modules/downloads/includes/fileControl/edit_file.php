@@ -31,11 +31,11 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Edit File'),
+            'title'         => __('Edit File'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -105,11 +105,11 @@ if ($request->getMethod() === 'POST') {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Edit File'),
+                'title'         => __('Edit File'),
                 'type'          => 'alert-danger',
-                'message'       => _t('The required fields are not filled'),
+                'message'       => __('The required fields are not filled'),
                 'back_url'      => '?act=edit_file&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
     }
@@ -122,8 +122,8 @@ if ($request->getMethod() === 'POST') {
     echo $view->render(
         'downloads::edit_file_form',
         [
-            'title'      => _t('Edit File'),
-            'page_title' => _t('Edit File'),
+            'title'      => __('Edit File'),
+            'page_title' => __('Edit File'),
             'id'         => $id,
             'urls'       => $urls,
             'file_data'  => $file_data,

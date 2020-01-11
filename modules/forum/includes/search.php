@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$nav_chain->add(_t('Forum search'));
+$nav_chain->add(__('Forum search'));
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)
@@ -44,8 +44,8 @@ switch ($mod) {
                 echo $view->render(
                     'forum::clear_search_history',
                     [
-                        'title'      => _t('Forum search'),
-                        'page_title' => _t('Forum search'),
+                        'title'      => __('Forum search'),
+                        'page_title' => __('Forum search'),
                         'back_url'   => '/forum/?act=search',
                     ]
                 );
@@ -176,11 +176,11 @@ switch ($mod) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Forum search'),
+                    'title'         => __('Forum search'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('Invalid length'),
+                    'message'       => __('Invalid length'),
                     'back_url'      => '/forum/?act=search',
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
             exit;
@@ -231,8 +231,8 @@ switch ($mod) {
         echo $view->render(
             'forum::forum_search',
             [
-                'title'             => _t('Forum search'),
-                'page_title'        => _t('Forum search'),
+                'title'             => __('Forum search'),
+                'page_title'        => __('Forum search'),
                 'pagination'        => $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess),
                 'query'             => $tools->checkout($search, 0, 0),
                 'search_t'          => $search_t,

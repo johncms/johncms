@@ -7,8 +7,8 @@
 $this->layout(
     'system::layout/default',
     [
-        'title'       => _t('Notifications'),
-        'page_title'  => _t('Notifications'),
+        'title'       => __('Notifications'),
+        'page_title'  => __('Notifications'),
         'breadcrumbs' => $breadcrumbs,
     ]
 );
@@ -16,7 +16,7 @@ $this->layout(
 
 <?php if (empty($notifications)): ?>
     <div class="alert alert-success shadow border-radius-12">
-        <?= _t('All notifications have already been read') ?>
+        <?= __('All notifications have already been read') ?>
     </div>
 <?php else: ?>
     <div class="row">

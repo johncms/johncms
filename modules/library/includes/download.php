@@ -48,12 +48,12 @@ switch ($type) {
             . '<title-info>' . PHP_EOL
             . '<genre>sf_history</genre>' . PHP_EOL
             . '<author>' . PHP_EOL
-            . '<first-name>' . _t('Author name') . '</first-name>' . PHP_EOL
-            . '<last-name>' . _t('Author last name') . '</last-name>' . PHP_EOL
+            . '<first-name>' . __('Author name') . '</first-name>' . PHP_EOL
+            . '<last-name>' . __('Author last name') . '</last-name>' . PHP_EOL
             . '</author>' . PHP_EOL
-            . '<book-title>' . _t('Name of the book') . '</book-title>' . PHP_EOL
+            . '<book-title>' . __('Name of the book') . '</book-title>' . PHP_EOL
             . '<annotation></annotation>' . PHP_EOL
-            . '<date>' . _t('Date') . '</date>' . PHP_EOL;
+            . '<date>' . __('Date') . '</date>' . PHP_EOL;
 
         if ($image_lib) {
             $out .= '<coverpage><image l:href="#cover.png"/></coverpage>' . PHP_EOL;

@@ -39,7 +39,7 @@ if ($user->rights >= 7) {
     // Пользователи на регистрации
     if (! empty($all_counters['reg_total'])) {
         $notifications[] = [
-            'name'    => _t('Users on registration'),
+            'name'    => __('Users on registration'),
             'url'     => '/admin/reg/',
             'counter' => $all_counters['reg_total'],
             'type'    => 'info',
@@ -49,7 +49,7 @@ if ($user->rights >= 7) {
     // Статьи на модерации
     if (! empty($all_counters['library_mod'])) {
         $notifications[] = [
-            'name'    => _t('Articles on moderation'),
+            'name'    => __('Articles on moderation'),
             'url'     => '/library/?act=premod',
             'counter' => $all_counters['library_mod'],
             'type'    => 'info',
@@ -59,7 +59,7 @@ if ($user->rights >= 7) {
     // Загрузки на модерации
     if (! empty($all_counters['downloads_mod'])) {
         $notifications[] = [
-            'name'    => _t('Downloads on moderation'),
+            'name'    => __('Downloads on moderation'),
             'url'     => '/downloads/?act=mod_files',
             'counter' => ! empty($all_counters['downloads_mod']),
             'type'    => 'info',
@@ -135,7 +135,7 @@ $breadcrumbs = [
     ],
     [
         'url'    => '/notifications/',
-        'name'   => _t('Notifications'),
+        'name'   => __('Notifications'),
         'active' => true,
     ],
 ];

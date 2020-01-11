@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
         echo $view->render('system::app/old_content', [
             'title'   => $textl,
-            'content' => $tools->displayError(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+            'content' => $tools->displayError(__('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
         ]);
         exit;
     }
@@ -34,22 +34,22 @@ if (isset($_POST['submit'])) {
     $stmt->execute([$id, $name, $desc, $type, $lastinsert]);
 
     if ($stmt->rowCount()) {
-        echo '<div>' . _t('Section created') . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
+        echo '<div>' . __('Section created') . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . __('To Section') . '</a></div>';
     }
 } else {
-    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Create Section') . '</div>'
+    echo '<div class="phdr"><strong><a href="?">' . __('Library') . '</a></strong> | ' . __('Create Section') . '</div>'
         . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
-        . '<h3>' . _t('Title') . ':</h3>'
+        . '<h3>' . __('Title') . ':</h3>'
         . '<div><input type="text" name="name" /></div>'
-        . '<h3>' . _t('Section description') . ':</h3>'
+        . '<h3>' . __('Section description') . ':</h3>'
         . '<div><textarea name="description" rows="4" cols="20"></textarea></div>'
-        . '<h3>' . _t('Section type') . '</h3>'
+        . '<h3>' . __('Section type') . '</h3>'
         . '<div><select name="type">'
-        . '<option value="1">' . _t('Sections') . '</option>'
-        . '<option value="0">' . _t('Articles') . '</option>'
+        . '<option value="1">' . __('Sections') . '</option>'
+        . '<option value="0">' . __('Articles') . '</option>'
         . '</select></div>'
-        . '<div><input type="submit" name="submit" value="' . _t('Save') . '"/></div>'
+        . '<div><input type="submit" name="submit" value="' . __('Save') . '"/></div>'
         . '</div></form>'
-        . '<p><a href ="?">' . _t('Back') . '</a></p>';
+        . '<p><a href ="?">' . __('Back') . '</a></p>';
 }

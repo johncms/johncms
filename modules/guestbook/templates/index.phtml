@@ -11,7 +11,7 @@
         'system::app/alert',
         [
             'alert_type' => 'alert-danger',
-            'alert'      => _t('The guestbook is closed'),
+            'alert'      => __('The guestbook is closed'),
         ]
     ) ?>
 <?php endif; ?>
@@ -22,7 +22,7 @@
                 <input type="hidden" name="token" value="<?= $data['token'] ?>"/>
                 <?php if (! $user->isValid()): ?>
                     <div class="form-group">
-                        <label for="name"><?= _t('Name') ?></label>
+                        <label for="name"><?= __('Name') ?></label>
                         <input type="text"
                                class="form-control"
                                maxlength="25"
@@ -30,12 +30,12 @@
                                id="name"
                                required
                                value=""
-                               placeholder="<?= _t('Name') ?>"
+                               placeholder="<?= __('Name') ?>"
                         >
                     </div>
                 <?php endif; ?>
                 <div class="form-group">
-                    <label for="msg"><?= _t('Message') ?></label>
+                    <label for="msg"><?= __('Message') ?></label>
                     <div>
                         <?= $data['bbcode'] ?>
                     </div>
@@ -44,9 +44,9 @@
                 </div>
 
                 <?php if (! $user->isValid()): ?>
-                    <img alt="<?= _t('Verification code') ?>" src="<?= $data['captcha'] ?>">
+                    <img alt="<?= __('Verification code') ?>" src="<?= $data['captcha'] ?>">
                     <div class="form-group">
-                        <label for="code"><?= _t('Symbols on the picture') ?></label>
+                        <label for="code"><?= __('Symbols on the picture') ?></label>
                         <input type="text"
                                class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
                                maxlength="6"
@@ -54,18 +54,18 @@
                                id="code"
                                autocomplete="off"
                                required
-                               placeholder="<?= _t('Symbols on the picture') ?>"
+                               placeholder="<?= __('Symbols on the picture') ?>"
                         >
                         <?php if (isset($error['captcha'])): ?>
                             <div class="invalid-feedback"><?= $error['captcha'] ?></div>
                         <?php endif ?>
                         <div class="text-muted small">
-                            <?= _t('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
+                            <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
                         </div>
                     </div>
                 <?php endif; ?>
 
-                <input type="submit" class="btn btn-primary" name="submit" value="<?= _t('Send') ?>"/>
+                <input type="submit" class="btn btn-primary" name="submit" value="<?= __('Send') ?>"/>
             </form>
         </div>
     </div>
@@ -75,14 +75,14 @@
         'system::app/alert',
         [
             'alert_type' => 'alert-danger',
-            'alert'      => _t('For registered users only'),
+            'alert'      => __('For registered users only'),
         ]
     ) ?>
 <?php endif; ?>
 <div class="mt-4"></div>
 <!-- Отображаем сообщения -->
 <?php if (empty($data['items'])): ?>
-    <div class="alert alert-info"><?= _t('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
+    <div class="alert alert-info"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
         <div class="shadow post-item mb-2">
@@ -91,13 +91,13 @@
                     <?php if (! empty($item['user_id'])): ?>
                         <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
                     <?php else: ?>
-                        <a class="user-login mr-2"><?= (_t('Guest') . ': ' . $item['name']) ?></a>
+                        <a class="user-login mr-2"><?= (__('Guest') . ': ' . $item['name']) ?></a>
                     <?php endif; ?>
                     <span class="post-date"><?= $item['created'] ?></span>
                 </div>
                 <div class="post-actions">
                     <?php if ($user->rights >= 6): ?>
-                        <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>" class="btn btn-sm btn-secondary"><?= _t('Reply') ?></a>
+                        <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>" class="btn btn-sm btn-secondary"><?= __('Reply') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -132,12 +132,12 @@
                     <div class="text-nowrap post-actions">
                         <span class="text-muted pr-2 flex-grow-1">
                             <?php if (! empty($item['edit_count'])): ?>
-                                <?= _t('Edited:') ?> <?= $item['edit_who'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                                <?= __('Edited:') ?> <?= $item['edit_who'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
                             <?php endif; ?>
                         </span>
                         <?php if ($user->rights >= $item['rights']): ?>
-                            <a href="/guestbook/edit?id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit') ?></a>
-                            <a href="/guestbook/delpost?id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= _t('Delete') ?></a>
+                            <a href="/guestbook/edit?id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm mr-1"><?= __('Edit') ?></a>
+                            <a href="/guestbook/delpost?id=<?= $item['message_id'] ?>" class="btn btn-light btn-sm"><?= __('Delete') ?></a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
 <?php if ($data['access_to_buttons']): ?>
     <div class="d-flex mt-4">
         <?php if ($user->rights >= 7): ?>
-            <a href="/guestbook/clean" class="btn btn-danger"><?= _t('Clear') ?></a>
+            <a href="/guestbook/clean" class="btn btn-danger"><?= __('Clear') ?></a>
         <?php endif; ?>
     </div>
 <?php endif ?>

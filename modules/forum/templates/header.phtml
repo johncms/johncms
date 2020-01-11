@@ -17,9 +17,9 @@
 
 ?>
 <?php if (! $config['mod_forum']): ?>
-    <div class="alert alert-danger"><?= _t('Forum is closed') ?></div>
+    <div class="alert alert-danger"><?= __('Forum is closed') ?></div>
 <?php elseif ($config['mod_forum'] == 3): ?>
-    <div class="alert alert-danger"><?= _t('Read only') ?></div>
+    <div class="alert alert-danger"><?= __('Read only') ?></div>
 <?php endif; ?>
 
 <div class="border-top border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
@@ -28,7 +28,7 @@
             <?php if (! empty($unread_count)): ?>
                 <div class="d-flex align-items-center pr-2">
                     <a href="?act=new" class="pr-2">
-                        <span class="d-none d-sm-inline"><?= _t('Unread') ?></span>
+                        <span class="d-none d-sm-inline"><?= __('Unread') ?></span>
                         <span class="icon_with_badge mr-sm-3">
                         <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/></svg>
                         <span class="badge badge-pill badge-danger"><?= $unread_count ?></span>
@@ -38,7 +38,7 @@
             <?php endif; ?>
             <div class="pr-3">
                 <a href="?act=new&amp;do=period">
-                    <span class="d-none d-sm-inline"><?= _t('Show for Period') ?></span>
+                    <span class="d-none d-sm-inline"><?= __('Show for Period') ?></span>
                     <svg class="icon d-sm-none">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#calendar"/>
                     </svg>
@@ -47,7 +47,7 @@
         <?php else: ?>
             <div class="pr-3">
                 <a href="?act=new">
-                    <span class="d-none d-sm-inline"><?= _t('Last activity') ?></span>
+                    <span class="d-none d-sm-inline"><?= __('Last activity') ?></span>
                     <svg class="icon d-sm-none">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#calendar"/>
                     </svg>
@@ -66,7 +66,7 @@
     </div>
     <form class="form-inline search-in-nav mb-0" action="?act=search" method="post">
         <div class="input-with-inner-btn">
-            <input class="form-control pr-5 border-radius-12" name="search" type="search" minlength="4" placeholder="<?= _t('Search') ?>">
+            <input class="form-control pr-5 border-radius-12" name="search" type="search" minlength="4" placeholder="<?= __('Search') ?>">
             <button class="btn icon-button" type="submit" name="submit" value="1">
                 <svg class="icon">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>

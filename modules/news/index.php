@@ -40,7 +40,7 @@ $view->addFolder('news', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationDomain('news', __DIR__ . '/locale');
 
 // Add a section to the navigation chain
-$nav_chain->add(_t('News'), '/news/');
+$nav_chain->add(__('News'), '/news/');
 
 $id = $route['id'] ?? 0;
 $act = $route['action'] ?? 'index';

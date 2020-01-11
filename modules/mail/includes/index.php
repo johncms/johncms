@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Contacts');
+$title = __('Contacts');
 
 $nav_chain->add($title);
 
@@ -25,7 +25,7 @@ if ($id) {
             [
                 'title'   => $title,
                 'type'    => 'alert-danger',
-                'message' => _t('User does not exists'),
+                'message' => __('User does not exists'),
             ]
         );
         exit;
@@ -39,7 +39,7 @@ if ($id) {
             [
                 'title'   => $title,
                 'type'    => 'alert-danger',
-                'message' => _t('You cannot add yourself as a contact'),
+                'message' => __('You cannot add yourself as a contact'),
             ]
         );
         exit;
@@ -61,17 +61,17 @@ if ($id) {
             [
                 'title'         => $title,
                 'type'          => 'alert-success',
-                'message'       => _t('User has been added to your contact list'),
+                'message'       => __('User has been added to your contact list'),
                 'back_url'      => './',
-                'back_url_name' => _t('Continue'),
+                'back_url_name' => __('Continue'),
             ]
         );
     } else {
         $data = [
             'form_action'     => '?id=' . $id . '&amp;add',
-            'message'         => _t('You really want to add contact?'),
+            'message'         => __('You really want to add contact?'),
             'back_url'        => '/profile/?user=' . $id,
-            'submit_btn_name' => _t('Add'),
+            'submit_btn_name' => __('Add'),
         ];
         echo $view->render(
             'mail::confirm',
@@ -86,12 +86,12 @@ if ($id) {
     $data = [];
     $data['filters'] = [
         'all'      => [
-            'name'   => _t('My Contacts'),
+            'name'   => __('My Contacts'),
             'url'    => '/mail/',
             'active' => true,
         ],
         'positive' => [
-            'name'   => _t('Blocklist'),
+            'name'   => __('Blocklist'),
             'url'    => '?act=ignor',
             'active' => false,
         ],
@@ -127,15 +127,15 @@ if ($id) {
             $row['buttons'] = [
                 [
                     'url'  => '?act=write&amp;id=' . $row['id'],
-                    'name' => _t('Correspondence'),
+                    'name' => __('Correspondence'),
                 ],
                 [
                     'url'  => '?act=deluser&amp;id=' . $row['id'],
-                    'name' => _t('Delete'),
+                    'name' => __('Delete'),
                 ],
                 [
                     'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
-                    'name' => _t('Block User'),
+                    'name' => __('Block User'),
                 ],
             ];
 

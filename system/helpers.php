@@ -29,26 +29,6 @@ function pathToUrl(string $path): string
 }
 
 /**
- * Translate a message
- *
- * @param string $message
- * @param null|string $textDomain
- * @return string
- */
-function _t(string $message, ?string $textDomain = null): string
-{
-    static $translator;
-
-    if (null === $translator) {
-        $translator = di(Translator::class);
-    }
-
-    return null === $textDomain
-        ? $translator->gettext($message)
-        : $translator->dgettext($textDomain, $message);
-}
-
-/**
  * Отображение ошибки 404
  *
  * @param string $template

@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = htmlspecialchars($foundUser->name) . ': ' . _t('Change Password');
-$nav_chain->add(_t('Change Password'));
+$title = htmlspecialchars($foundUser->name) . ': ' . __('Change Password');
+$nav_chain->add(__('Change Password'));
 
 // Проверяем права доступа
 if ($foundUser->id !== $user->id && ($user->rights < 7 || $foundUser->rights > $user->rights)) {
@@ -22,7 +22,7 @@ if ($foundUser->id !== $user->id && ($user->rights < 7 || $foundUser->rights > $
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Access forbidden'),
+            'message' => __('Access forbidden'),
         ]
     );
     exit;
@@ -40,23 +40,23 @@ if ($mod === 'change') {
 
     if ($foundUser->id !== $user->id) {
         if (! $newpass || ! $newconf) {
-            $error[] = _t('It is necessary to fill in all fields');
+            $error[] = __('It is necessary to fill in all fields');
         }
     } elseif (! $oldpass || ! $newpass || ! $newconf) {
-        $error[] = _t('It is necessary to fill in all fields');
+        $error[] = __('It is necessary to fill in all fields');
     }
 
 
     if (! $error && $foundUser->id === $user->id && md5(md5($oldpass)) !== $foundUser->password) {
-        $error[] = _t('Old password entered incorrectly');
+        $error[] = __('Old password entered incorrectly');
     }
 
     if ($newpass !== $newconf) {
-        $error[] = _t('The password confirmation you entered is wrong');
+        $error[] = __('The password confirmation you entered is wrong');
     }
 
     if (! $error && (strlen($newpass) < 3)) {
-        $error[] = _t('The password must contain at least 3 characters');
+        $error[] = __('The password must contain at least 3 characters');
     }
 
     if (! $error) {
@@ -78,9 +78,9 @@ if ($mod === 'change') {
             [
                 'title'         => $title,
                 'type'          => 'alert-success',
-                'message'       => _t('Password successfully changed'),
+                'message'       => __('Password successfully changed'),
                 'back_url'      => ($user->id === $foundUser->id ? '/login' : '?user=' . $foundUser->id),
-                'back_url_name' => _t('Continue'),
+                'back_url_name' => __('Continue'),
             ]
         );
     } else {
@@ -91,7 +91,7 @@ if ($mod === 'change') {
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=password&amp;user=' . $foundUser->id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
     }

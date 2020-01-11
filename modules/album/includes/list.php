@@ -72,11 +72,11 @@ $data['user']['count_albums'] = $total;
 $data['user']['count'] = $data['total_photos'];
 
 if ($user->id === $data['user']['id']) {
-    $title = _t('Your albums');
+    $title = __('Your albums');
     $nav_chain->add($title);
 } else {
-    $title = _t('User albums:') . ' ' . $data['user']['name'];
-    $nav_chain->add(_t('User albums'));
+    $title = __('User albums:') . ' ' . $data['user']['name'];
+    $nav_chain->add(__('User albums'));
 }
 
 echo $view->render(

@@ -45,11 +45,11 @@ if (! $id) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Download topic'),
+            'title'         => __('Download topic'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Forum'),
+            'back_url_name' => __('Forum'),
         ]
     );
     exit;
@@ -62,11 +62,11 @@ if (! $req->rowCount()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Download topic'),
+            'title'         => __('Download topic'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Forum'),
+            'back_url_name' => __('Forum'),
         ]
     );
     exit;
@@ -83,8 +83,8 @@ if (isset($_POST['submit'])) {
             $text = $type1['name'] . "\r\n\r\n";
 
             while ($arr = $tema->fetch()) {
-                $txt_tmp = str_replace('[c]', _t('Quote') . ':{', $arr['text']);
-                $txt_tmp = str_replace('[/c]', '}-' . _t('Answer') . ':', $txt_tmp);
+                $txt_tmp = str_replace('[c]', __('Quote') . ':{', $arr['text']);
+                $txt_tmp = str_replace('[/c]', '}-' . __('Answer') . ':', $txt_tmp);
                 $txt_tmp = str_replace('&quot;', '"', $txt_tmp);
                 $txt_tmp = str_replace('[l]', '', $txt_tmp);
                 $txt_tmp = str_replace('[l/]', '-', $txt_tmp);
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
         case 2:
             // Сохраняем тему в формате HTML
             $text = "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-<title>" . _t('Forum') . "</title>
+<title>" . __('Forum') . "</title>
 <style type='text/css'>
 body { color: #000000; background-color: #FFFFFF }
 div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
@@ -143,7 +143,7 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $text = "${text} ${stroka}";
                 ++$i;
             }
-            $text = $text . '<p>' . _t('This theme was downloaded from the forum site') . ': <b>' . $config['copyright'] . '</b></p></body></html>';
+            $text = $text . '<p>' . __('This theme was downloaded from the forum site') . ': <b>' . $config['copyright'] . '</b></p></body></html>';
             $num = time() . $id;
             $fp = fopen(UPLOAD_PATH . 'forum/topics/' . $num . '.htm', 'a+');
             flock($fp, LOCK_EX);
@@ -161,8 +161,8 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
 echo $view->render(
     'forum::download_topic',
     [
-        'title'            => _t('Download topic'),
-        'page_title'       => _t('Download topic'),
+        'title'            => __('Download topic'),
+        'page_title'       => __('Download topic'),
         'id'               => $id,
         'back_url'         => '/forum/?type=topic&id=' . $id,
         'link_to_download' => $link_to_download ?? null,

@@ -25,11 +25,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Delete Poll'),
+                'title'         => __('Delete Poll'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -42,11 +42,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Delete Poll'),
+                'title'         => __('Delete Poll'),
                 'type'          => 'alert-success',
-                'message'       => _t('Poll deleted'),
+                'message'       => __('Poll deleted'),
                 'back_url'      => '/forum/?type=topic&id=' . $id,
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -55,8 +55,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'forum::delete_poll',
         [
-            'title'      => _t('Delete Poll'),
-            'page_title' => _t('Delete Poll'),
+            'title'      => __('Delete Poll'),
+            'page_title' => __('Delete Poll'),
             'id'         => $id,
             'back_url'   => '/forum/?type=topic&id=' . $id,
         ]
@@ -66,11 +66,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

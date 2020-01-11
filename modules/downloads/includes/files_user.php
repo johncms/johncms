@@ -22,7 +22,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var ServerRequestInterface $request
  */
 
-$title = _t('User Files');
+$title = __('User Files');
 
 $request = di(ServerRequestInterface::class);
 $get = $request->getQueryParams();
@@ -35,11 +35,11 @@ if (! $show_user = $req->fetch()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Downloads'),
+            'title'         => __('Downloads'),
             'type'          => 'alert-danger',
-            'message'       => _t('User does not exists'),
+            'message'       => __('User does not exists'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;

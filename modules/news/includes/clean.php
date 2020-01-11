@@ -21,7 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 // News cleaning
 if ($user->rights >= 7) {
     // Add an item to the navigation chain
-    $nav_chain->add(_t('Clear news'), '');
+    $nav_chain->add(__('Clear news'), '');
     if (! empty($_POST)) {
         $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
@@ -30,25 +30,25 @@ if ($user->rights >= 7) {
                 // We clean the news, older than 1 week
                 $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 604800));
                 $db->query('OPTIMIZE TABLE `news`');
-                $message = _t('Delete all news older than 1 week');
+                $message = __('Delete all news older than 1 week');
                 break;
 
             case '2':
                 // Perform a full cleanup
                 $db->query('TRUNCATE TABLE `news`');
-                $message = _t('Delete all news');
+                $message = __('Delete all news');
                 break;
             default:
                 // Clean messages older than 1 month
                 $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 2592000));
                 $db->query('OPTIMIZE TABLE `news`;');
-                $message = _t('Delete all news older than 1 month');
+                $message = __('Delete all news older than 1 month');
         }
 
         echo $view->render(
             'system::pages/result',
             [
-                'title'    => _t('Clear news'),
+                'title'    => __('Clear news'),
                 'message'  => $message,
                 'type'     => 'alert-success',
                 'back_url' => '/news/',

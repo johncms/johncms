@@ -29,7 +29,7 @@ $this->layout(
 
 <?php if (! $config['mod_down']): ?>
     <div class="alert alert-danger border-0 shadow">
-        <?= _t('Downloads are closed') ?>
+        <?= __('Downloads are closed') ?>
     </div>
 <?php endif; ?>
 
@@ -37,12 +37,12 @@ $this->layout(
     <div class="mb-3">
         <?php if (! empty($urls['new'])): ?>
             <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1">
-                <?= _t('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
+                <?= __('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
             </a>
         <?php endif; ?>
-        <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1"><?= _t('Search') ?></a>
-        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1"><?= _t('Top Files') ?></a>
-        <a href="?act=top_users" class="btn btn-outline-primary btn-sm"><?= _t('Top Users') ?></a>
+        <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1"><?= __('Search') ?></a>
+        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1"><?= __('Top Files') ?></a>
+        <a href="?act=top_users" class="btn btn-outline-primary btn-sm"><?= __('Top Users') ?></a>
     </div>
 <?php endif; ?>
 
@@ -56,11 +56,11 @@ $this->layout(
             <?php if ($category['has_edit']): ?>
                 <div class="actions">
                     <?php if ($total_cat > 1): ?>
-                        <a href="<?= $category['up_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Up') ?></a>
-                        <a href="<?= $category['down_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Down') ?></a>
+                        <a href="<?= $category['up_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Up') ?></a>
+                        <a href="<?= $category['down_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Down') ?></a>
                     <?php endif; ?>
-                    <a href="<?= $category['edit_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Edit') ?></a>
-                    <a href="<?= $category['delete_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Delete') ?></a>
+                    <a href="<?= $category['edit_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Edit') ?></a>
+                    <a href="<?= $category['delete_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Delete') ?></a>
                 </div>
             <?php endif; ?>
         </div>
@@ -70,7 +70,7 @@ $this->layout(
                     <div><?= $category['desc'] ?></div>
                 <?php endif; ?>
                 <?php if (! empty($category['text'])): ?>
-                    <div><?= _t('Allowed extensions') ?>: <?= $category['text'] ?></div>
+                    <div><?= __('Allowed extensions') ?>: <?= $category['text'] ?></div>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -78,22 +78,22 @@ $this->layout(
 <?php endforeach; ?>
 
 <?php if ($total_cat > 0 && $total_files > 0): ?>
-    <h4 class="mt-3"><?= _t('List of files') ?></h4>
+    <h4 class="mt-3"><?= __('List of files') ?></h4>
 <?php endif; ?>
 
 <?php if (! empty($urls['sort_action'])): ?>
     <form class="form-inline mb-2" method="post" action="<?= $urls['sort_action'] ?>">
-        <label class="my-1 mr-2" for="sort_down"><?= _t('Sorting') ?></label>
+        <label class="my-1 mr-2" for="sort_down"><?= __('Sorting') ?></label>
         <select class="custom-select my-1 mr-sm-2" name="sort_down" id="sort_down">
-            <option value="0" <?= ! $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= _t('by time') ?></option>
-            <option value="1" <?= $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= _t('by name') ?></option>
+            <option value="0" <?= ! $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= __('by time') ?></option>
+            <option value="1" <?= $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= __('by name') ?></option>
         </select>
         <label for="sort_down2" class="mr-2 d-none d-sm-inline-block">&mdash;</label>
         <select class="custom-select my-1 mr-sm-2" name="sort_down2" id="sort_down2">
-            <option value="0" <?= ! $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= _t('descending') ?></option>
-            <option value="1" <?= $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= _t('ascending') ?></option>
+            <option value="0" <?= ! $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= __('descending') ?></option>
+            <option value="1" <?= $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= __('ascending') ?></option>
         </select>
-        <button type="submit" class="btn btn-primary my-1"><?= _t('Sort') ?></button>
+        <button type="submit" class="btn btn-primary my-1"><?= __('Sort') ?></button>
     </form>
 <?php endif; ?>
 
@@ -103,7 +103,7 @@ $this->layout(
 
 <?php if ($total_files): ?>
     <div>
-        <div><?= _t('Total') ?>: <?= $total_files ?></div>
+        <div><?= __('Total') ?>: <?= $total_files ?></div>
         <!-- Page switching -->
         <?php if ($total_files > $user->config->kmess): ?>
             <div class="mt-1"><?= $pagination ?></div>
@@ -114,7 +114,7 @@ $this->layout(
 <?php if (empty($total_cat) && empty($total_files)): ?>
     <div class="row">
         <div class="col-md-5">
-            <div class="alert alert-info shadow border-0"><?= _t('List is empty') ?></div>
+            <div class="alert alert-info shadow border-0"><?= __('List is empty') ?></div>
         </div>
     </div>
 <?php endif; ?>
@@ -125,42 +125,42 @@ $this->layout(
             <?php if (! empty($id)): ?>
                 <div class="dropdown mr-2">
                     <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?= _t('Add file') ?>
+                        <?= __('Add file') ?>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="?act=files_upload&amp;id=<?= $id ?>"><?= _t('Upload File') ?></a>
-                        <a class="dropdown-item" href="?act=import&amp;id=<?= $id ?>"><?= _t('Import File') ?></a>
+                        <a class="dropdown-item" href="?act=files_upload&amp;id=<?= $id ?>"><?= __('Upload File') ?></a>
+                        <a class="dropdown-item" href="?act=import&amp;id=<?= $id ?>"><?= __('Import File') ?></a>
                     </div>
                 </div>
             <?php endif; ?>
             <div class="dropdown">
                 <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?= _t('Section actions') ?>
+                    <?= __('Section actions') ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="?act=folder_add&amp;id=<?= $id ?? '' ?>"><?= _t('Create Folder') ?></a>
-                    <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?? '' ?>"><?= _t('Update Files') ?></a>
+                    <a class="dropdown-item" href="?act=folder_add&amp;id=<?= $id ?? '' ?>"><?= __('Create Folder') ?></a>
+                    <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?? '' ?>"><?= __('Update Files') ?></a>
                     <?php if (! empty($id)): ?>
-                        <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= _t('Change Folder') ?></a>
-                        <a class="dropdown-item" href="?act=folder_delete&amp;id=<?= $id ?>"><?= _t('Delete Folder') ?></a>
-                        <a class="dropdown-item" href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a>
-                        <a class="dropdown-item" href="?act=recount&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a>
+                        <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= __('Change Folder') ?></a>
+                        <a class="dropdown-item" href="?act=folder_delete&amp;id=<?= $id ?>"><?= __('Delete Folder') ?></a>
+                        <a class="dropdown-item" href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
+                        <a class="dropdown-item" href="?act=recount&amp;id=<?= $id ?>"><?= __('Update counters') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     <?php elseif ($can_upload): ?>
-        <div><a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= _t('Upload File') ?></a></div>
+        <div><a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Upload File') ?></a></div>
     <?php endif; ?>
 
     <div class="mt-2">
         <?php if ($id): ?>
-            <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+            <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
         <?php else: ?>
             <?php if ($user->rights >= 7 || (isset($config['mod_down_comm']) && $config['mod_down_comm'])): ?>
-                <a href="?act=review_comments"><?= _t('Review comments') ?></a><br>
+                <a href="?act=review_comments"><?= __('Review comments') ?></a><br>
             <?php endif; ?>
-            <a href="?act=bookmark"><?= _t('Favorites') ?></a>
+            <a href="?act=bookmark"><?= __('Favorites') ?></a>
         <?php endif; ?>
     </div>
 </div>

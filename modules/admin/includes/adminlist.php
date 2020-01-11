@@ -23,11 +23,11 @@ $adm = 0;
 $smd = 0;
 $mod = 0;
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Administration') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Administration') . '</div>';
 $req = $db->query("SELECT * FROM `users` WHERE `rights` = '9'");
 
 if ($req->rowCount()) {
-    echo '<div class="bmenu">' . _t('Supervisors') . '</div>';
+    echo '<div class="bmenu">' . __('Supervisors') . '</div>';
     while ($res = $req->fetch()) {
         echo ($sw % 2) ? '<div class="list2">' : '<div class="list1">';
         echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
@@ -39,7 +39,7 @@ if ($req->rowCount()) {
 $req = $db->query("SELECT * FROM `users` WHERE `rights` = '7' ORDER BY `name` ASC");
 
 if ($req->rowCount()) {
-    echo '<div class="bmenu">' . _t('Administrators') . '</div>';
+    echo '<div class="bmenu">' . __('Administrators') . '</div>';
 
     while ($res = $req->fetch()) {
         echo $adm % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -52,7 +52,7 @@ if ($req->rowCount()) {
 $req = $db->query("SELECT * FROM `users` WHERE `rights` = '6' ORDER BY `name` ASC");
 
 if ($req->rowCount()) {
-    echo '<div class="bmenu">' . _t('Super Moderators') . '</div>';
+    echo '<div class="bmenu">' . __('Super Moderators') . '</div>';
 
     while ($res = $req->fetch()) {
         echo $smd % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -65,7 +65,7 @@ if ($req->rowCount()) {
 $req = $db->query("SELECT * FROM `users` WHERE `rights` BETWEEN '1' AND '5' ORDER BY `name` ASC");
 
 if ($req->rowCount()) {
-    echo '<div class="bmenu">' . _t('Moderators') . '</div>';
+    echo '<div class="bmenu">' . __('Moderators') . '</div>';
 
     while ($res = $req->fetch()) {
         echo $mod % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -75,13 +75,13 @@ if ($req->rowCount()) {
     }
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . ($sw + $adm + $smd + $mod) . '</div>' .
-    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+echo '<div class="phdr">' . __('Total') . ': ' . ($sw + $adm + $smd + $mod) . '</div>' .
+    '<p><a href="./">' . __('Admin Panel') . '</a></p>';
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title'   => _t('Admin Panel'),
+        'title'   => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

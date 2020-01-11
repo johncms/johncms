@@ -29,13 +29,13 @@ $this->layout(
     <div class="col-md-6">
         <div class="alert alert-danger">
             <div class="pb-2">
-                <?= _t('Do you really want to delete?') ?>
+                <?= __('Do you really want to delete?') ?>
             </div>
             <div>
                 <form action="<?= $action_url ?>" method="post">
                     <input type="hidden" name="delete_token" value="<?= $delete_token ?>">
-                    <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm"><?= _t('Delete') ?></button>
-                    <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= _t('Cancel') ?></a>
+                    <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+                    <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
                 </form>
             </div>
         </div>

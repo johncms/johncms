@@ -25,7 +25,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $config = di('config')['johncms'];
 
 $data = [];
-$title = _t('Upload image');
+$title = __('Upload image');
 // Выгрузка фотографии
 if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7) {
     $nav_chain->add($title);
@@ -37,7 +37,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
             [
                 'title'    => $title,
                 'type'     => 'alert-danger',
-                'message'  => _t('Wrong data'),
+                'message'  => __('Wrong data'),
                 'back_url' => '/album/',
             ]
         );
@@ -53,7 +53,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
         $file = $files['imagefile'];
 
         if ($file->getSize() > 1024 * $config['flsz']) {
-            $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+            $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
         }
 
         $dir = UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/';
@@ -128,9 +128,9 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
                     [
                         'title'         => $title,
                         'type'          => 'alert-success',
-                        'message'       => _t('Image uploaded'),
+                        'message'       => __('Image uploaded'),
                         'back_url'      => './show?al=' . $al . '&amp;user=' . $foundUser['id'],
-                        'back_url_name' => _t('Continue'),
+                        'back_url_name' => __('Continue'),
                     ]
                 );
                 exit;
@@ -157,7 +157,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
         [
             'title'    => $title,
             'type'     => 'alert-danger',
-            'message'  => _t('Wrong data'),
+            'message'  => __('Wrong data'),
             'back_url' => '/album/',
         ]
     );

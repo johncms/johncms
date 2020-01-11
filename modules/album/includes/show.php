@@ -31,7 +31,7 @@ if (! $al) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Wrong data'),
+            'message' => __('Wrong data'),
         ]
     );
     exit;
@@ -45,7 +45,7 @@ if (! $req->rowCount()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Wrong data'),
+            'message' => __('Wrong data'),
         ]
     );
     exit;
@@ -58,7 +58,7 @@ $data['has_add_photo'] = (($foundUser['id'] === $user->id && empty($user->ban)) 
 $nav_chain->add($tools->checkout($album['name']), './show?al=' . $al . '&amp;user=' . $foundUser['id']);
 
 if ($show) {
-    $title = _t('View photo');
+    $title = __('View photo');
     $nav_chain->add($title);
 }
 
@@ -78,9 +78,9 @@ if (
         [
             'title'         => $title,
             'type'          => 'alert-danger',
-            'message'       => _t('Access denied'),
+            'message'       => __('Access denied'),
             'back_url'      => './list?user=' . $foundUser['id'],
-            'back_url_name' => _t('Album List'),
+            'back_url_name' => __('Album List'),
         ]
     );
     exit;
@@ -97,7 +97,7 @@ if (
         if ($album['password'] === trim($password)) {
             $_SESSION['ap'] = $album['password'];
         } else {
-            $data['error_message'] = _t('Incorrect Password');
+            $data['error_message'] = __('Incorrect Password');
         }
     }
 
@@ -147,7 +147,7 @@ if ($total) {
                     UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/' . $res['img_name'],
                     UPLOAD_PATH . 'users/photo/' . $user->id . '.jpg'
                 );
-                $data['success_message'] = _t('Photo added to the profile');
+                $data['success_message'] = __('Photo added to the profile');
             }
 
             // Счетчик просмотров

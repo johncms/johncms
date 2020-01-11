@@ -19,12 +19,12 @@ $env = di(Johncms\System\Http\Environment::class);
 $data = [];
 $data['filters'] = [
     'users'   => [
-        'name'   => _t('Users'),
+        'name'   => __('Users'),
         'url'    => '/online/',
         'active' => true,
     ],
     'history' => [
-        'name'   => _t('History'),
+        'name'   => __('History'),
         'url'    => '/online/history/',
         'active' => false,
     ],
@@ -32,17 +32,17 @@ $data['filters'] = [
 
 if ($user->rights) {
     $data['filters']['guest'] = [
-        'name'   => _t('Guests'),
+        'name'   => __('Guests'),
         'url'    => '/online/guest/',
         'active' => false,
     ];
     $data['filters']['ip'] = [
-        'name'   => _t('IP Activity'),
+        'name'   => __('IP Activity'),
         'url'    => '/online/ip/',
         'active' => false,
     ];
 }
-$title = _t('Who is online?');
+$title = __('Who is online?');
 
 $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 

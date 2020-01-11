@@ -54,15 +54,15 @@ $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 $adm = ($user->rights > 4) ? true : false;
 $i = 0;
 
-$textl = _t('Library');
+$textl = __('Library');
 
 $error = '';
 
 // Ограничиваем доступ к Библиотеке
 if (! $config['mod_lib'] && $user->rights < 7) {
-    $error = _t('Library is closed');
+    $error = __('Library is closed');
 } elseif ($config['mod_lib'] == 1 && ! $user->isValid()) {
-    $error = _t('Access forbidden');
+    $error = __('Access forbidden');
 }
 
 if ($error) {
@@ -126,7 +126,7 @@ if ($id > 0) {
 <?php
 
 if (! $config['mod_lib']) {
-    echo $tools->displayError(_t('Library is closed'));
+    echo $tools->displayError(__('Library is closed'));
 }
 
 $array_includes = [
@@ -151,8 +151,8 @@ if (in_array($act, $array_includes)) {
     require_once 'includes/' . $act . '.php';
 } else {
     if (! $id) {
-        echo '<div class="phdr"><strong>' . _t('Library') . '</strong></div>';
-        echo '<div class="topmenu"><a href="?act=search">' . _t('Search') . '</a> | <a href="?act=tagcloud">' . _t('Tag Cloud') . '</a></div>';
+        echo '<div class="phdr"><strong>' . __('Library') . '</strong></div>';
+        echo '<div class="topmenu"><a href="?act=search">' . __('Search') . '</a> | <a href="?act=tagcloud">' . __('Tag Cloud') . '</a></div>';
         echo '<div class="gmenu"><p>';
 
         if ($adm) {
@@ -160,18 +160,18 @@ if (in_array($act, $array_includes)) {
             $res = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0')->fetchColumn();
 
             if ($res > 0) {
-                echo '<div>' . _t('On moderation') . ': <a href="?act=premod">' . $res . '</a></div>';
+                echo '<div>' . __('On moderation') . ': <a href="?act=premod">' . $res . '</a></div>';
             }
         }
 
         $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 
         if ($res) {
-            echo '<img src="' . $assets->url('images/old/add.gif') . '" alt="" class="icon"><a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
+            echo '<img src="' . $assets->url('images/old/add.gif') . '" alt="" class="icon"><a href="?act=new">' . __('New Articles') . '</a> (' . $res . ')<br>';
         }
 
-        echo '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=top">' . _t('Rating articles') . '</a><br>' .
-            '<img src="' . $assets->url('images/old/talk.gif') . '" alt="" class="icon"><a href="?act=lastcom">' . _t('Latest comments') . '</a>' .
+        echo '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=top">' . __('Rating articles') . '</a><br>' .
+            '<img src="' . $assets->url('images/old/talk.gif') . '" alt="" class="icon"><a href="?act=lastcom">' . __('Latest comments') . '</a>' .
             '</p></div>';
 
         $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0')->fetchColumn();
@@ -192,22 +192,22 @@ if (in_array($act, $array_includes)) {
 
                 if ($adm) {
                     echo '<div class="sub">'
-                        . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . _t('Up') . '</a> | ' : _t('Up') . ' | ')
-                        . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . _t('Down') . '</a>' : _t('Down'))
-                        . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Edit') . '</a>'
-                        . ' | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
+                        . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . __('Up') . '</a> | ' : __('Up') . ' | ')
+                        . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . __('Down') . '</a>' : __('Down'))
+                        . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . __('Edit') . '</a>'
+                        . ' | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . __('Delete') . '</a></div>';
                 }
 
                 echo '</div>';
             }
         } else {
-            echo '<div class="menu">' . _t('The list is empty') . '</div>';
+            echo '<div class="menu">' . __('The list is empty') . '</div>';
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+        echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
 
         if ($adm) {
-            echo '<p><a href="?act=mkdir&amp;id=0">' . _t('Create Section') . '</a></p>';
+            echo '<p><a href="?act=mkdir&amp;id=0">' . __('Create Section') . '</a></p>';
         }
     } else {
         $dir_nav = new Tree($id);
@@ -250,33 +250,33 @@ if (in_array($act, $array_includes)) {
                                     'SELECT COUNT(*) FROM `' . ($row['dir'] ? 'library_cats' : 'library_texts') . '` WHERE '
                                     . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])
                                 )->fetchColumn() . ' '
-                                . ($row['dir'] ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')'
+                                . ($row['dir'] ? ' ' . __('Sections') : ' ' . __('Articles')) . ')'
                                 . '<div class="sub"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
 
                             if ($adm) {
                                 echo '<div class="sub">'
-                                    . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . _t('Up')
-                                        . '</a> | ' : '' . _t('Up') . ' | ')
+                                    . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . __('Up')
+                                        . '</a> | ' : '' . __('Up') . ' | ')
                                     . ($y != $total
-                                        ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . _t('Down') . '</a>'
-                                        : _t('Down'))
-                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Edit') . '</a>'
-                                    . ' | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
+                                        ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . __('Down') . '</a>'
+                                        : __('Down'))
+                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . __('Edit') . '</a>'
+                                    . ' | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . __('Delete') . '</a></div>';
                             }
 
                             echo '</div>';
                         }
                     } else {
-                        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+                        echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
                     }
 
-                    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+                    echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
                     echo $nav;
 
                     if ($adm) {
-                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
-                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a><br>'
-                            . '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Create') . '</a></p>';
+                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . __('Edit') . '</a><br>'
+                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . __('Delete') . '</a><br>'
+                            . '<a href="?act=mkdir&amp;id=' . $id . '">' . __('Create') . '</a></p>';
                     }
                 } else {
                     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id)->fetchColumn();
@@ -310,32 +310,32 @@ if (in_array($act, $array_includes)) {
                             echo '<table class="desc">'
                                 // Тэги
                                 . ($obj->getAllStatTags()
-                                    ? '<tr><td class="caption">' . _t('The Tags') . ':</td>'
+                                    ? '<tr><td class="caption">' . __('The Tags') . ':</td>'
                                     . '<td>' . $obj->getAllStatTags(1) . '</td></tr>'
                                     : '')
                                 // Кто добавил?
                                 . '<tr>'
-                                . '<td class="caption">' . _t('Who added') . ':</td>'
+                                . '<td class="caption">' . __('Who added') . ':</td>'
                                 . '<td>' . $uploader . ' (' . $tools->displayDate($row['time']) . ')</td>'
                                 . '</tr>'
                                 // Рейтинг
                                 . '<tr>'
-                                . '<td class="caption">' . _t('Rating') . ':</td>'
+                                . '<td class="caption">' . __('Rating') . ':</td>'
                                 . '<td>' . $rate->viewRate() . '</td>'
                                 . '</tr>';
                             echo '</table></div>';
                         }
                     } else {
-                        echo '<div class="menu">' . _t('The list is empty') . '</div>';
+                        echo '<div class="menu">' . __('The list is empty') . '</div>';
                     }
 
-                    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+                    echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
                     echo $nav;
 
                     if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() > 0)) && isset($id) && $user->isValid()) {
-                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . _t('Write Article') . '</a>'
-                            . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
-                                . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a>') : '')
+                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . __('Write Article') . '</a>'
+                            . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . __('Edit') . '</a><br>'
+                                . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . __('Delete') . '</a>') : '')
                             . '</p>';
                     }
                 }
@@ -365,7 +365,7 @@ if (in_array($act, $array_includes)) {
 
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'] . ' LIMIT 1')->fetch();
-                    echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a>'
+                    echo '<div class="phdr"><a href="?"><strong>' . __('Library') . '</strong></a>'
                         . ' | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a>'
                         . ($page > 1 ? ' | ' . $tools->checkout($row['name']) : '') . '</div>';
 
@@ -388,32 +388,32 @@ if (in_array($act, $array_includes)) {
                         echo '<table class="desc">'
                             // Тэги
                             . ($obj->getAllStatTags()
-                                ? '<tr><td class="caption">' . _t('The Tags') . ':</td>'
+                                ? '<tr><td class="caption">' . __('The Tags') . ':</td>'
                                 . '<td>' . $obj->getAllStatTags(1) . '</td></tr>'
                                 : '')
                             // Кто добавил?
                             . '<tr>'
-                            . '<td class="caption">' . _t('Who added') . ':</td>'
+                            . '<td class="caption">' . __('Who added') . ':</td>'
                             . '<td>' . $uploader . ' (' . $tools->displayDate($row['time']) . ')</td>'
                             . '</tr>'
                             // Рейтинг
                             . '<tr>'
-                            . '<td class="caption">' . _t('Rating') . ':</td>'
+                            . '<td class="caption">' . __('Rating') . ':</td>'
                             . '<td>' . $rate->viewRate(1) . '</td>'
                             . '</tr>'
                             // Прочтений
                             . '<tr>'
-                            . '<td class="caption">' . _t('Number of readings') . ':</td>'
+                            . '<td class="caption">' . __('Number of readings') . ':</td>'
                             . '<td>' . $row['count_views'] . '</td>'
                             . '</tr>'
                             // Комментарии
                             . '<tr>';
                         if ($row['comments']) {
-                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a>:</td>'
+                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . __('Comments') . '</a>:</td>'
                                 . '<td>' . $row['comm_count'] . '</td>';
                         } else {
-                            echo '<td class="caption">' . _t('Comments') . ':</td>'
-                                . '<td>' . _t('Comments are closed') . '</td>';
+                            echo '<td class="caption">' . __('Comments') . ':</td>'
+                                . '<td>' . __('Comments are closed') . '</td>';
                         }
                         echo '</tr></table>';
 
@@ -440,14 +440,14 @@ if (in_array($act, $array_includes)) {
                         '<div style="clear: both"></div>' .
                         '</div>';
 
-                    echo '<div class="phdr">' . _t('Download file') . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a>'
+                    echo '<div class="phdr">' . __('Download file') . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a>'
                         . ' | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
 
                     echo $nav . ($user->isValid() && $page == 1 ? $rate->printVote() : '');
 
                     if ($adm || $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $user->id && $user->isValid()) {
-                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
-                            . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Delete') . '</a></p>';
+                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . __('Edit') . '</a><br>'
+                            . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . __('Delete') . '</a></p>';
                     }
                 } else {
                     Utils::redir404();

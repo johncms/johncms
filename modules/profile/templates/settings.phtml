@@ -48,9 +48,9 @@ $userConfig = $user->config;
             <form action="<?= $data['form_action'] ?>" method="post">
                 <div class="card-body">
 
-                    <h3><?= _t('Time settings') ?></h3>
+                    <h3><?= __('Time settings') ?></h3>
                     <div class="form-group">
-                        <label for="timeshift"><?= _t('Shift of time') ?> (+-12)</label>
+                        <label for="timeshift"><?= __('Shift of time') ?> (+-12)</label>
                         <input type="text"
                                class="form-control"
                                name="timeshift"
@@ -58,66 +58,66 @@ $userConfig = $user->config;
                                size="2"
                                maxlength="3"
                                value="<?= $userConfig->timeshift ?>"
-                               placeholder="<?= _t('Shift of time') ?>"
+                               placeholder="<?= __('Shift of time') ?>"
                         >
                         <div class="small text-muted">
-                            <?= _t('System time') ?>: <?= $data['system_time'] ?>
+                            <?= __('System time') ?>: <?= $data['system_time'] ?>
                         </div>
                     </div>
 
-                    <h3><?= _t('System Functions') ?></h3>
+                    <h3><?= __('System Functions') ?></h3>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="directUrl" value="1" id="directUrl" <?= $userConfig->directUrl ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="directUrl"><?= _t('Direct URL') ?></label>
+                        <label class="custom-control-label" for="directUrl"><?= __('Direct URL') ?></label>
                     </div>
                     <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox" class="custom-control-input" name="youtube" value="1" id="youtube" <?= $userConfig->youtube ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="youtube"><?= _t('Youtube Player') ?></label>
+                        <label class="custom-control-label" for="youtube"><?= __('Youtube Player') ?></label>
                     </div>
 
-                    <h3><?= _t('Text entering') ?></h3>
+                    <h3><?= __('Text entering') ?></h3>
                     <div class="form-group">
-                        <label for="fieldHeight"><?= _t('Height of field') ?> (1-9)</label>
+                        <label for="fieldHeight"><?= __('Height of field') ?> (1-9)</label>
                         <input type="text"
                                class="form-control"
                                name="fieldHeight"
                                id="fieldHeight"
                                maxlength="1"
                                value="<?= $userConfig->fieldHeight ?>"
-                               placeholder="<?= _t('Height of field') ?>"
+                               placeholder="<?= __('Height of field') ?>"
                         >
                     </div>
 
-                    <h3><?= _t('Appearance') ?></h3>
+                    <h3><?= __('Appearance') ?></h3>
                     <div class="form-group">
-                        <label for="kmess"><?= _t('Size of Lists') ?> (5-99)</label>
+                        <label for="kmess"><?= __('Size of Lists') ?> (5-99)</label>
                         <input type="text"
                                class="form-control"
                                name="kmess"
                                id="kmess"
                                maxlength="2"
                                value="<?= $userConfig->kmess ?>"
-                               placeholder="<?= _t('Size of Lists') ?>"
+                               placeholder="<?= __('Size of Lists') ?>"
                         >
                     </div>
 
                     <?php if (! empty($data['lng_list'])): ?>
-                        <h3><?= _t('Select Language') ?></h3>
+                        <h3><?= __('Select Language') ?></h3>
                         <div class="form-group">
-                            <label for="iso"><?= _t('Select Language') ?></label>
+                            <label for="iso"><?= __('Select Language') ?></label>
                             <select class="form-control" id="iso" name="iso">
                                 <?php foreach ($data['lng_list'] as $key => $lang): ?>
                                     <option value="<?= $key ?>"
                                             <?= ($key === $data['user_lng'] || ($key === $config['lng'] && empty($data['user_lng']))) ? 'selected' : '' ?>
-                                    ><?= $lang ?><?= ($key === $config['lng'] ? ' (' . _t('Site Default') . ')' : '') ?></option>
+                                    ><?= $lang ?><?= ($key === $config['lng'] ? ' (' . __('Site Default') . ')' : '') ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     <?php endif; ?>
 
-                    <input type="submit" name="submit" value="<?= _t('Save') ?>" class="btn btn-primary"/>
-                    <a href="?act=office" class="btn btn-secondary"><?= _t('Cancel') ?></a>
-                    <a href="?act=settings&amp;reset" class="btn btn-danger float-right"><?= _t('Reset Settings') ?></a>
+                    <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
+                    <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    <a href="?act=settings&amp;reset" class="btn btn-danger float-right"><?= __('Reset Settings') ?></a>
                 </div>
             </form>
         </div>

@@ -32,7 +32,7 @@ $this->layout(
         'unread_count' => $unread_count,
         'files_count'  => $files_count,
         'files_url'    => '/forum/?act=files&c=' . $id,
-        'files_name'   => _t('Section Files'),
+        'files_name'   => __('Section Files'),
     ]
 ) ?>
 
@@ -41,7 +41,7 @@ $this->layout(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
-            'alert'      => _t('There are no sections in this category'),
+            'alert'      => __('There are no sections in this category'),
         ]
     ) ?>
 <?php endif; ?>
@@ -60,13 +60,13 @@ $this->layout(
     </div>
 <?php endforeach; ?>
 
-<div class="mb-n3 pt-1"><?= _t('Total') ?>: <?= $total ?></div>
+<div class="mb-n3 pt-1"><?= __('Total') ?>: <?= $total ?></div>
 
 <?= $this->fetch(
     'forum::footer',
     [
         'online'   => $online,
         'who_url'  => '/forum/?act=who',
-        'who_name' => _t('Who in Forum'),
+        'who_name' => __('Who in Forum'),
     ]
 ) ?>

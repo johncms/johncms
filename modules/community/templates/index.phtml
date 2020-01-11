@@ -27,32 +27,32 @@ $counters = $data['counters'] ?? [];
 <div class="row">
     <div class="col-md-6">
         <form action="./search/" method="post" class="mb-3">
-            <label for="search"><?= _t('Look for the User') ?></label>
+            <label for="search"><?= __('Look for the User') ?></label>
             <div class="input-group">
-                <input type="text" name="search" id="search" class="form-control" placeholder="<?= _t('Nickname') ?>">
+                <input type="text" name="search" id="search" class="form-control" placeholder="<?= __('Nickname') ?>">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit"><?= _t('Search') ?></button>
+                    <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
                 </div>
             </div>
-            <div class="text-muted mb-2 small"><?= _t('The search is performed by Nickname and are case-insensitive.') ?></div>
+            <div class="text-muted mb-2 small"><?= __('The search is performed by Nickname and are case-insensitive.') ?></div>
         </form>
         <div class="list-group">
             <a href="./users/" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('Users') ?>
+                <?= __('Users') ?>
                 <span class="badge badge-light badge-pill"><?= $counters['usersCount'] ?></span>
             </a>
             <a href="./administration/" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('Administration') ?>
+                <?= __('Administration') ?>
                 <span class="badge badge-light badge-pill"><?= $counters['adminCount'] ?></span>
             </a>
             <?php if (! empty($counters['birthDays'])): ?>
                 <a href="./birthdays/" class="list-group-item d-flex justify-content-between align-items-center">
-                    <?= _t('Birthdays') ?>
+                    <?= __('Birthdays') ?>
                     <span class="badge badge-light badge-pill"><?= $counters['birthDays'] ?></span>
                 </a>
             <?php endif ?>
             <a href="./top/" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('Top Activity') ?>
+                <?= __('Top Activity') ?>
             </a>
         </div>
     </div>

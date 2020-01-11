@@ -31,11 +31,11 @@ if (
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '?type=topics&amp;id=' . $id,
-            'back_url_name' => _t('Go to Section'),
+            'back_url_name' => __('Go to Section'),
         ]
     );
     exit;
@@ -90,11 +90,11 @@ if ($flood) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('New Topic'),
+            'title'         => __('New Topic'),
             'type'          => 'alert-danger',
-            'message'       => sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+            'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
             'back_url'      => '?type=topics&amp;id=' . $id . '&amp;start=' . $start,
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -106,11 +106,11 @@ if (! $req_r->rowCount()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('New Topic'),
+            'title'         => __('New Topic'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -136,19 +136,19 @@ if (
     $error = [];
 
     if (empty($th)) {
-        $error[] = _t('You have not entered topic name');
+        $error[] = __('You have not entered topic name');
     }
 
     if (mb_strlen($th) < 2) {
-        $error[] = _t('Topic name too short');
+        $error[] = __('Topic name too short');
     }
 
     if (empty($msg)) {
-        $error[] = _t('You have not entered the message');
+        $error[] = __('You have not entered the message');
     }
 
     if (mb_strlen($msg) < 4) {
-        $error[] = _t('Text is too short');
+        $error[] = __('Text is too short');
     }
 
     if (! $error) {
@@ -166,11 +166,11 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         $row = $sth->fetch();
         // Прверяем, есть ли уже такая тема в текущем разделе?
         if ($row['topic']) {
-            $error[] = _t('Topic with same name already exists in this section');
+            $error[] = __('Topic with same name already exists in this section');
         }
         // Проверяем, не повторяется ли сообщение?
         if ($row['msg']) {
-            $error[] = _t('Message already exists');
+            $error[] = __('Message already exists');
         }
     }
 
@@ -271,11 +271,11 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('New Topic'),
+                'title'         => __('New Topic'),
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '/forum/?act=nt&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
     }
@@ -287,7 +287,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
 
     $nav_chain->add($res_c['name'], '/forum/?' . ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_c['id']);
     $nav_chain->add($res_r['name'], '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id']);
-    $nav_chain->add(_t('New Topic'));
+    $nav_chain->add(__('New Topic'));
 
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
@@ -295,8 +295,8 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
     echo $view->render(
         'forum::new_topic',
         [
-            'title'             => _t('New Topic'),
-            'page_title'        => _t('New Topic'),
+            'title'             => __('New Topic'),
+            'page_title'        => __('New Topic'),
             'settings_forum'    => $set_forum,
             'id'                => $id,
             'token'             => $token,

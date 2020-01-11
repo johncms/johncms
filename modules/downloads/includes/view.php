@@ -30,11 +30,11 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('File not found'),
+            'title'         => __('File not found'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $url,
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -47,11 +47,11 @@ if ($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('The file is on moderation'),
+            'title'         => __('The file is on moderation'),
             'type'          => 'alert-danger',
-            'message'       => _t('The file is on moderation'),
+            'message'       => __('The file is on moderation'),
             'back_url'      => $url,
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -95,19 +95,19 @@ switch ($extension) {
 
         $file_properties = [
             [
-                'name'  => _t('Channels'),
+                'name'  => __('Channels'),
                 'value' => $getid['audio']['channels'] . ' (' . $getid['audio']['channelmode'] . ')',
             ],
             [
-                'name'  => _t('Sample rate'),
+                'name'  => __('Sample rate'),
                 'value' => ceil($getid['audio']['sample_rate'] / 1000) . ' KHz',
             ],
             [
-                'name'  => _t('Bitrate'),
+                'name'  => __('Bitrate'),
                 'value' => ceil($getid['audio']['bitrate'] / 1000) . ' Kbit/s',
             ],
             [
-                'name'  => _t('Duration'),
+                'name'  => __('Duration'),
                 'value' => $getid['playtime_string'],
             ],
         ];
@@ -115,31 +115,31 @@ switch ($extension) {
         if ($mp3info) {
             if (isset($tagsArray['artist'][0])) {
                 $file_properties[] = [
-                    'name'  => _t('Artist'),
+                    'name'  => __('Artist'),
                     'value' => Download::mp3tagsOut($tagsArray['artist'][0]),
                 ];
             }
             if (isset($tagsArray['title'][0])) {
                 $file_properties[] = [
-                    'name'  => _t('Title'),
+                    'name'  => __('Title'),
                     'value' => Download::mp3tagsOut($tagsArray['title'][0]),
                 ];
             }
             if (isset($tagsArray['album'][0])) {
                 $file_properties[] = [
-                    'name'  => _t('Album'),
+                    'name'  => __('Album'),
                     'value' => Download::mp3tagsOut($tagsArray['album'][0]),
                 ];
             }
             if (isset($tagsArray['genre'][0])) {
                 $file_properties[] = [
-                    'name'  => _t('Genre'),
+                    'name'  => __('Genre'),
                     'value' => Download::mp3tagsOut($tagsArray['genre'][0]),
                 ];
             }
             if (isset($tagsArray['year'][0])) {
                 $file_properties[] = [
-                    'name'  => _t('Year'),
+                    'name'  => __('Year'),
                     'value' => Download::mp3tagsOut($tagsArray['year'][0]),
                 ];
             }
@@ -158,31 +158,31 @@ switch ($extension) {
         if (! empty($getid['video'])) {
             if (isset($getid['video']['fourcc_lookup'])) {
                 $file_properties[] = [
-                    'name'  => _t('Codec'),
+                    'name'  => __('Codec'),
                     'value' => $getid['video']['fourcc_lookup'],
                 ];
             }
             if (isset($getid['video']['frame_rate'])) {
                 $file_properties[] = [
-                    'name'  => _t('Frame rate'),
+                    'name'  => __('Frame rate'),
                     'value' => $getid['video']['frame_rate'] . ' FPS',
                 ];
             }
             if (isset($getid['video']['bitrate'])) {
                 $file_properties[] = [
-                    'name'  => _t('Bitrate'),
+                    'name'  => __('Bitrate'),
                     'value' => ceil($getid['video']['bitrate'] / 1000) . ' Kbit/s',
                 ];
             }
             if (isset($getid['playtime_string'])) {
                 $file_properties[] = [
-                    'name'  => _t('Duration'),
+                    'name'  => __('Duration'),
                     'value' => $getid['playtime_string'],
                 ];
             }
             if (isset($getid['video']['resolution_x'])) {
                 $file_properties[] = [
-                    'name'  => _t('Resolution'),
+                    'name'  => __('Resolution'),
                     'value' => $getid['video']['resolution_x'] . 'x' . $getid['video']['resolution_y'] . 'px',
                 ];
             }

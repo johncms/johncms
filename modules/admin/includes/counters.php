@@ -20,7 +20,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  */
 
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 switch ($mod) {
@@ -39,32 +39,32 @@ switch ($mod) {
                 }
 
                 $res = $req->fetch();
-                echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
+                echo '<div class="phdr"><a href="?act=counters"><b>' . __('Counters') . '</b></a> | ' . __('Viewing') . '</div>';
                 echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
-                echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
-                echo '<p><h3>' . _t('Option 2') . '</h3>' . $res['link2'] . '</p>';
-                echo '<p><h3>' . _t('Display mode') . '</h3>';
+                echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . __('Option 1') . '</h3>' . $res['link1'] . '</p>';
+                echo '<p><h3>' . __('Option 2') . '</h3>' . $res['link2'] . '</p>';
+                echo '<p><h3>' . __('Display mode') . '</h3>';
 
                 switch ($res['mode']) {
                     case 2:
-                        echo _t('On all pages showing option 1');
+                        echo __('On all pages showing option 1');
                         break;
 
                     case 3:
-                        echo _t('On all pages showing option 2');
+                        echo __('On all pages showing option 2');
                         break;
 
                     default:
-                        echo _t('On the main showing option 1, on the other pages option 2');
+                        echo __('On the main showing option 1, on the other pages option 2');
                 }
 
                 echo '</p></div>';
                 echo '<div class="phdr">'
-                    . ($res['switch'] == 1 ? '<a href="?act=counters&amp;mod=view&amp;go=off&amp;id=' . $id . '">' . _t('Disable') . '</a>'
-                        : '<a href="?act=counters&amp;mod=view&amp;go=on&amp;id=' . $id . '">' . _t('Enable') . '</a>')
-                    . ' | <a href="?act=counters&amp;mod=edit&amp;id=' . $id . '">' . _t('Edit') . '</a> | <a href="?act=counters&amp;mod=del&amp;id=' . $id . '">' . _t('Delete') . '</a></div>';
+                    . ($res['switch'] == 1 ? '<a href="?act=counters&amp;mod=view&amp;go=off&amp;id=' . $id . '">' . __('Disable') . '</a>'
+                        : '<a href="?act=counters&amp;mod=view&amp;go=on&amp;id=' . $id . '">' . __('Enable') . '</a>')
+                    . ' | <a href="?act=counters&amp;mod=edit&amp;id=' . $id . '">' . __('Edit') . '</a> | <a href="?act=counters&amp;mod=del&amp;id=' . $id . '">' . __('Delete') . '</a></div>';
             } else {
-                echo $tools->displayError(_t('Wrong data'));
+                echo $tools->displayError(__('Wrong data'));
             }
         }
         break;
@@ -117,7 +117,7 @@ switch ($mod) {
     case 'del':
         // Удаление счетчика
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
+            echo $tools->displayError(__('Wrong data'), '<a href="?act=counters">' . __('Back') . '</a>');
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
@@ -127,17 +127,17 @@ switch ($mod) {
         if ($req->rowCount()) {
             if (isset($_POST['submit'])) {
                 $db->exec('DELETE FROM `cms_counters` WHERE `id` = ' . $id);
-                echo '<p>' . _t('Counter deleted') . '<br><a href="?act=counters">' . _t('Continue') . '</a></p>';
+                echo '<p>' . __('Counter deleted') . '<br><a href="?act=counters">' . __('Continue') . '</a></p>';
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
             echo '<form action="?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
-            echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Delete') . '</div>';
+            echo '<div class="phdr"><a href="?act=counters"><b>' . __('Counters') . '</b></a> | ' . __('Delete') . '</div>';
             $res = $req->fetch();
-            echo '<div class="rmenu"><p><h3>' . $res['name'] . '</h3>' . _t('Do you really want to delete?') . '</p><p><input type="submit" value="' . _t('Delete') . '" name="submit" /></p></div>';
-            echo '<div class="phdr"><a href="?act=counters">' . _t('Cancel') . '</a></div></form>';
+            echo '<div class="rmenu"><p><h3>' . $res['name'] . '</h3>' . __('Do you really want to delete?') . '</p><p><input type="submit" value="' . __('Delete') . '" name="submit" /></p></div>';
+            echo '<div class="phdr"><a href="?act=counters">' . __('Cancel') . '</a></div></form>';
         } else {
-            echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
+            echo $tools->displayError(__('Wrong data'), '<a href="?act=counters">' . __('Back') . '</a>');
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
@@ -154,18 +154,18 @@ switch ($mod) {
 
             if (empty($name) || empty($link1)) {
                 echo $tools->displayError(
-                    _t('The required fields are not filled'),
-                    '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>'
+                    __('The required fields are not filled'),
+                    '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . __('Back') . '</a>'
                 );
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
-            echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Preview') . '</div>' .
-                '<div class="menu"><p><h3>' . _t('Title') . '</h3><b>' . htmlspecialchars($name) . '</b></p>' .
-                '<p><h3>' . _t('Option 1') . '</h3>' . $link1 . '</p>' .
-                '<p><h3>' . _t('Option 2') . '</h3>' . $link2 . '</p></div>' .
-                '<div class="rmenu">' . _t('If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors.') . '</div>' .
+            echo '<div class="phdr"><a href="?act=counters"><b>' . __('Counters') . '</b></a> | ' . __('Preview') . '</div>' .
+                '<div class="menu"><p><h3>' . __('Title') . '</h3><b>' . htmlspecialchars($name) . '</b></p>' .
+                '<p><h3>' . __('Option 1') . '</h3>' . $link1 . '</p>' .
+                '<p><h3>' . __('Option 2') . '</h3>' . $link2 . '</p></div>' .
+                '<div class="rmenu">' . __('If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors.') . '</div>' .
                 '<form action="?act=counters&amp;mod=add" method="post">' .
                 '<input type="hidden" value="' . $name . '" name="name" />' .
                 '<input type="hidden" value="' . htmlspecialchars($link1) . '" name="link1" />' .
@@ -176,7 +176,7 @@ switch ($mod) {
                 echo '<input type="hidden" value="' . $id . '" name="id" />';
             }
 
-            echo '<div class="bmenu"><input type="submit" value="' . _t('Save') . '" name="submit" /></div>';
+            echo '<div class="bmenu"><input type="submit" value="' . __('Save') . '" name="submit" /></div>';
             echo '</form>';
         } else {
             $name = '';
@@ -196,28 +196,28 @@ switch ($mod) {
                     $mode = $res['mode'];
                     $switch = 1;
                 } else {
-                    echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
+                    echo $tools->displayError(__('Wrong data'), '<a href="?act=counters">' . __('Back') . '</a>');
                     echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                     exit;
                 }
             }
 
             echo '<form action="?act=counters&amp;mod=edit" method="post">' .
-                '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Add') . '</div>' .
-                '<div class="menu"><p><h3>' . _t('Title') . '</h3><input type="text" name="name" value="' . $name . '" /></p>' .
-                '<p><h3>' . _t('Option 1') . '</h3><textarea rows="3" name="link1">' . $link1 . '</textarea><br><small>' . _t('Code for main page') . '</small></p>' .
-                '<p><h3>' . _t('Option 2') . '</h3><textarea rows="3" name="link2">' . $link2 . '</textarea><br><small>' . _t('Code for other pages') . '</small></p>' .
-                '<p><h3>' . _t('Display mode') . '</h3>' . '<input type="radio" value="1" ' . ($mode == 0 || $mode == 1 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Default') . '<br>' .
-                '<small>' . _t('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') . '</small></p><p>' .
-                '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 1') . '<br>' .
-                '<input type="radio" value="3" ' . ($mode == 3 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 2') . '</p></div>' .
-                '<div class="rmenu"><small>' . _t('WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') . '</small></div>'; // phpcs:ignore
+                '<div class="phdr"><a href="?act=counters"><b>' . __('Counters') . '</b></a> | ' . __('Add') . '</div>' .
+                '<div class="menu"><p><h3>' . __('Title') . '</h3><input type="text" name="name" value="' . $name . '" /></p>' .
+                '<p><h3>' . __('Option 1') . '</h3><textarea rows="3" name="link1">' . $link1 . '</textarea><br><small>' . __('Code for main page') . '</small></p>' .
+                '<p><h3>' . __('Option 2') . '</h3><textarea rows="3" name="link2">' . $link2 . '</textarea><br><small>' . __('Code for other pages') . '</small></p>' .
+                '<p><h3>' . __('Display mode') . '</h3>' . '<input type="radio" value="1" ' . ($mode == 0 || $mode == 1 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . __('Default') . '<br>' .
+                '<small>' . __('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') . '</small></p><p>' .
+                '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . __('Option 1') . '<br>' .
+                '<input type="radio" value="3" ' . ($mode == 3 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . __('Option 2') . '</p></div>' .
+                '<div class="rmenu"><small>' . __('WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') . '</small></div>'; // phpcs:ignore
 
             if ($id) {
                 echo '<input type="hidden" value="' . $id . '" name="id" />';
             }
 
-            echo '<div class="bmenu"><input type="submit" value="' . _t('Viewing') . '" name="submit" /></div>';
+            echo '<div class="bmenu"><input type="submit" value="' . __('Viewing') . '" name="submit" /></div>';
             echo '</form>';
         }
         break;
@@ -231,8 +231,8 @@ switch ($mod) {
 
         if (empty($name) || empty($link1)) {
             echo $tools->displayError(
-                _t('The required fields are not filled'),
-                '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>'
+                __('The required fields are not filled'),
+                '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . __('Back') . '</a>'
             );
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
@@ -243,7 +243,7 @@ switch ($mod) {
             $req = $db->query('SELECT * FROM `cms_counters` WHERE `id` = ' . $id);
 
             if (! $req->rowCount()) {
-                echo $tools->displayError(_t('Wrong data'));
+                echo $tools->displayError(__('Wrong data'));
                 echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
@@ -298,12 +298,12 @@ switch ($mod) {
             );
         }
 
-        echo '<div class="gmenu"><p>' . ($id ? _t('Counter successfully changed') : _t('Counter successfully added')) . '</p></div>';
+        echo '<div class="gmenu"><p>' . ($id ? __('Counter successfully changed') : __('Counter successfully added')) . '</p></div>';
         break;
 
     default:
         // Вывод списка счетчиков
-        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Counters') . '</div>';
+        echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Counters') . '</div>';
         $req = $db->query('SELECT * FROM `cms_counters` ORDER BY `sort` ASC');
 
         if ($req->rowCount()) {
@@ -313,23 +313,23 @@ switch ($mod) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<img src="../images/' . ($res['switch'] == 1 ? 'green' : 'red') . '.gif" width="16" height="16" class="left"/>&#160;';
                 echo '<a href="?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a><br>';
-                echo '<div class="sub"><a href="?act=counters&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a> | ';
-                echo '<a href="?act=counters&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a> | ';
-                echo '<a href="?act=counters&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ';
-                echo '<a href="?act=counters&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a></div></div>';
+                echo '<div class="sub"><a href="?act=counters&amp;mod=up&amp;id=' . $res['id'] . '">' . __('Up') . '</a> | ';
+                echo '<a href="?act=counters&amp;mod=down&amp;id=' . $res['id'] . '">' . __('Down') . '</a> | ';
+                echo '<a href="?act=counters&amp;mod=edit&amp;id=' . $res['id'] . '">' . __('Edit') . '</a> | ';
+                echo '<a href="?act=counters&amp;mod=del&amp;id=' . $res['id'] . '">' . __('Delete') . '</a></div></div>';
                 ++$i;
             }
         }
 
-        echo '<div class="phdr"><a href="?act=counters&amp;mod=edit">' . _t('Add') . '</a></div>';
+        echo '<div class="phdr"><a href="?act=counters&amp;mod=edit">' . __('Add') . '</a></div>';
 }
 
-echo '<p>' . ($mod ? '<a href="?act=counters">' . _t('Counters') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';
+echo '<p>' . ($mod ? '<a href="?act=counters">' . __('Counters') . '</a><br>' : '') . '<a href="./">' . __('Admin Panel') . '</a></p>';
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title' => _t('Admin Panel'),
+        'title' => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

@@ -253,7 +253,7 @@ class Hashtags
     {
         $obj = new self();
         $tags = $this->db->query('SELECT `id` FROM `library_tags` LIMIT 1')->rowCount();
-        $res = ($tags > 0 ? $obj->cloud($obj->tagRang($sort)) : '<p>' . _t('The list is empty') . '</p>');
+        $res = ($tags > 0 ? $obj->cloud($obj->tagRang($sort)) : '<p>' . __('The list is empty') . '</p>');
         file_put_contents(CACHE_PATH . $sort . 'libcloud.dat', $res);
 
         return $this->getCache($sort);

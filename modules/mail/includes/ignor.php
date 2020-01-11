@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Blacklist');
+$title = __('Blacklist');
 $nav_chain->add($title);
 
 if (isset($_GET['del'])) {
@@ -26,7 +26,7 @@ if (isset($_GET['del'])) {
                 [
                     'title'   => $title,
                     'type'    => 'alert-danger',
-                    'message' => _t('User does not exists'),
+                    'message' => __('User does not exists'),
                 ]
             );
             exit;
@@ -37,10 +37,10 @@ if (isset($_GET['del'])) {
             $q = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $user->id . "' AND `from_id`='" . $id . "' AND `ban`='1'");
 
             if (! $q->rowCount()) {
-                $message = _t('User not blocked');
+                $message = __('User not blocked');
             } else {
                 $db->exec("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='" . $user->id . "' AND `from_id`='${id}' AND `ban`='1'");
-                $message = _t('User is unblocked');
+                $message = __('User is unblocked');
             }
             echo $view->render(
                 'system::pages/result',
@@ -49,15 +49,15 @@ if (isset($_GET['del'])) {
                     'type'          => 'alert-success',
                     'message'       => $message,
                     'back_url'      => './',
-                    'back_url_name' => _t('Continue'),
+                    'back_url_name' => __('Continue'),
                 ]
             );
         } else {
             $data = [
                 'form_action'     => '?act=ignor&amp;id=' . $id . '&amp;del',
-                'message'         => _t('You really want to unblock contact?'),
+                'message'         => __('You really want to unblock contact?'),
                 'back_url'        => '/profile/?user=' . $id,
-                'submit_btn_name' => _t('Unblock'),
+                'submit_btn_name' => __('Unblock'),
             ];
             echo $view->render(
                 'mail::confirm',
@@ -74,7 +74,7 @@ if (isset($_GET['del'])) {
             [
                 'title'   => $title,
                 'type'    => 'alert-danger',
-                'message' => _t('Contact isn\'t chosen'),
+                'message' => __('Contact isn\'t chosen'),
             ]
         );
     }
@@ -88,7 +88,7 @@ if (isset($_GET['del'])) {
                 [
                     'title'   => $title,
                     'type'    => 'alert-danger',
-                    'message' => _t('User does not exists'),
+                    'message' => __('User does not exists'),
                 ]
             );
             exit;
@@ -104,9 +104,9 @@ if (isset($_GET['del'])) {
                     [
                         'title'         => $title,
                         'type'          => 'alert-danger',
-                        'message'       => _t('This user can not be blocked'),
+                        'message'       => __('This user can not be blocked'),
                         'back_url'      => './',
-                        'back_url_name' => _t('Continue'),
+                        'back_url_name' => __('Continue'),
                     ]
                 );
             } else {
@@ -133,18 +133,18 @@ if (isset($_GET['del'])) {
                     [
                         'title'         => $title,
                         'type'          => 'alert-success',
-                        'message'       => _t('User is blocked'),
+                        'message'       => __('User is blocked'),
                         'back_url'      => './',
-                        'back_url_name' => _t('Continue'),
+                        'back_url_name' => __('Continue'),
                     ]
                 );
             }
         } else {
             $data = [
                 'form_action'     => '?act=ignor&amp;id=' . $id . '&amp;add',
-                'message'         => _t('You really want to block contact?'),
+                'message'         => __('You really want to block contact?'),
                 'back_url'        => (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './'),
-                'submit_btn_name' => _t('Block'),
+                'submit_btn_name' => __('Block'),
             ];
             echo $view->render(
                 'mail::confirm',
@@ -161,9 +161,9 @@ if (isset($_GET['del'])) {
             [
                 'title'         => $title,
                 'type'          => 'alert-danger',
-                'message'       => _t('Contact isn\'t chosen'),
+                'message'       => __('Contact isn\'t chosen'),
                 'back_url'      => './',
-                'back_url_name' => _t('Continue'),
+                'back_url_name' => __('Continue'),
             ]
         );
     }
@@ -171,12 +171,12 @@ if (isset($_GET['del'])) {
     $data = [];
     $data['filters'] = [
         'all'      => [
-            'name'   => _t('My Contacts'),
+            'name'   => __('My Contacts'),
             'url'    => '/mail/',
             'active' => false,
         ],
         'positive' => [
-            'name'   => _t('Blocklist'),
+            'name'   => __('Blocklist'),
             'url'    => '?act=ignor',
             'active' => true,
         ],
@@ -213,15 +213,15 @@ if (isset($_GET['del'])) {
             $row['buttons'] = [
                 [
                     'url'  => '?act=write&amp;id=' . $row['id'],
-                    'name' => _t('Correspondence'),
+                    'name' => __('Correspondence'),
                 ],
                 [
                     'url'  => '?act=deluser&amp;id=' . $row['id'],
-                    'name' => _t('Delete'),
+                    'name' => __('Delete'),
                 ],
                 [
                     'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;del',
-                    'name' => _t('Unblock'),
+                    'name' => __('Unblock'),
                 ],
             ];
 

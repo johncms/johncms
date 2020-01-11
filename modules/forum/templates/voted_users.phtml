@@ -41,7 +41,7 @@ $this->layout(
 
 <?php if (! empty($total)): ?>
     <div class="mb-n2 pt-1">
-        <div><?= _t('Total') ?>: <?= $total ?></div>
+        <div><?= __('Total') ?>: <?= $total ?></div>
         <!-- Page switching -->
         <?php if ($total > $user->config->kmess): ?>
             <div class="mt-1"><?= $pagination ?></div>
@@ -51,6 +51,6 @@ $this->layout(
 
 <?php if (! empty($id)): ?>
     <div class="mt-3">
-        <a href="/forum/?type=topic&id=<?= $id ?>"><?= _t('Go to Topic') ?></a>
+        <a href="/forum/?type=topic&id=<?= $id ?>"><?= __('Go to Topic') ?></a>
     </div>
 <?php endif; ?>

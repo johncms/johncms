@@ -74,10 +74,10 @@ function formatsize($size)
     return $size;
 }
 
-$title = _t('Mail');
+$title = __('Mail');
 
 // Добавляем раздел в навигационную цепочку
-$nav_chain->add(_t('My Account'), '/profile/?act=office');
+$nav_chain->add(__('My Account'), '/profile/?act=office');
 
 // Массив подключаемых функций
 $mods = [

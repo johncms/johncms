@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 
-$title = _t('List of users');
+$title = __('List of users');
 $nav_chain->add($title);
 
 // Список посетителей. у которых есть фотографии
@@ -38,17 +38,17 @@ switch ($mod) {
 $data = [];
 $data['filters'] = [
     'all'   => [
-        'name'   => _t('All'),
+        'name'   => __('All'),
         'url'    => './users',
         'active' => ! $mod,
     ],
     'boys'  => [
-        'name'   => _t('Guys'),
+        'name'   => __('Guys'),
         'url'    => './users?mod=boys',
         'active' => $mod === 'boys',
     ],
     'girls' => [
-        'name'   => _t('Girls'),
+        'name'   => __('Girls'),
         'url'    => './users?mod=girls',
         'active' => $mod === 'girls',
     ],

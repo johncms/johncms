@@ -19,7 +19,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Database cleanup') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Database cleanup') . '</div>';
 
 switch ($mod) {
     case 1:
@@ -66,7 +66,7 @@ switch ($mod) {
             );
         }
 
-        echo '<div class="rmenu"><p>' . _t('Inactive profiles deleted') . '</p><p><a href="./">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="rmenu"><p>' . __('Inactive profiles deleted') . '</p><p><a href="./">' . __('Continue') . '</a></p></div>';
         break;
 
     default:
@@ -80,17 +80,17 @@ switch ($mod) {
         )->fetchColumn();
         echo '<div class="menu">' .
             '<form action="?act=usr_clean&amp;mod=1" method="post">' .
-            '<p><h3>' . _t('Inactive profiles') . '</h3>'
-            . _t('This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.') . '</p>' .
-            '<p>' . _t('Total') . ': <b>' . $total . '</b></p>' .
-            '<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p></form></div>' .
-            '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
+            '<p><h3>' . __('Inactive profiles') . '</h3>'
+            . __('This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.') . '</p>' .
+            '<p>' . __('Total') . ': <b>' . $total . '</b></p>' .
+            '<p><input type="submit" name="submit" value="' . __('Delete') . '"/></p></form></div>' .
+            '<div class="phdr"><a href="./">' . __('Back') . '</a></div>';
 }
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title'   => _t('Admin Panel'),
+        'title'   => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

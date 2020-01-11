@@ -29,12 +29,12 @@ if ($user->isValid()) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Forum'),
-                'page_title'    => _t('Forum'),
+                'title'         => __('Forum'),
+                'page_title'    => __('Forum'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -47,12 +47,12 @@ if ($user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Forum'),
-            'page_title'    => _t('Forum'),
+            'title'         => __('Forum'),
+            'page_title'    => __('Forum'),
             'type'          => 'alert-success',
-            'message'       => _t('Vote accepted'),
+            'message'       => __('Vote accepted'),
             'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 } else {
@@ -60,11 +60,11 @@ if ($user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

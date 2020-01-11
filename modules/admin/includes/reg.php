@@ -19,31 +19,31 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\System\Users\User $user
  */
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Registration confirmation') . '</div>';
 
 switch ($mod) {
     case 'approve':
         // Подтверждаем регистрацию выбранного пользователя
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'));
+            echo $tools->displayError(__('Wrong data'));
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($user->name) . ' WHERE `id` = ' . $id);
-        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . __('Registration is confirmed') . '<br><a href="?act=reg">' . __('Continue') . '</a></p></div>';
         break;
 
     case 'massapprove':
         // Подтверждение всех регистраций
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($user->name) . ' WHERE `preg` = 0');
-        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . __('Registration is confirmed') . '<br><a href="?act=reg">' . __('Continue') . '</a></p></div>';
         break;
 
     case 'del':
         // Удаляем регистрацию выбранного пользователя
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'));
+            echo $tools->displayError(__('Wrong data'));
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
@@ -55,13 +55,13 @@ switch ($mod) {
             $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '${id}' LIMIT 1");
         }
 
-        echo '<div class="menu"><p>' . _t('User deleted') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . __('User deleted') . '<br><a href="?act=reg">' . __('Continue') . '</a></p></div>';
         break;
 
     case 'massdel':
         $db->exec("DELETE FROM `users` WHERE `preg` = '0'");
         $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
-        echo '<div class="menu"><p>' . _t('All unconfirmed registrations were removed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . __('All unconfirmed registrations were removed') . '<br><a href="?act=reg">' . __('Continue') . '</a></p></div>';
         break;
 
     case 'delip':
@@ -77,10 +77,10 @@ switch ($mod) {
 
             $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
             $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
-            echo '<div class="menu"><p>' . _t('All unconfirmed registrations with selected IP were deleted') . '<br>' .
-                '<a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+            echo '<div class="menu"><p>' . __('All unconfirmed registrations with selected IP were deleted') . '<br>' .
+                '<a href="?act=reg">' . __('Continue') . '</a></p></div>';
         } else {
-            echo $tools->displayError(_t('Wrong data'));
+            echo $tools->displayError(__('Wrong data'));
             echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
@@ -100,9 +100,9 @@ switch ($mod) {
 
             while ($res = $req->fetch()) {
                 $link = [
-                    '<a href="?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . _t('Approve') . '</a>',
-                    '<a href="?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
-                    '<a href="?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . _t('Remove IP') . '</a>',
+                    '<a href="?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . __('Approve') . '</a>',
+                    '<a href="?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . __('Delete') . '</a>',
+                    '<a href="?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . __('Remove IP') . '</a>',
                 ];
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo $tools->displayUser(
@@ -116,32 +116,32 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+            echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+        echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
 
         if ($total > $user->config->kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $user->config->kmess) . '</div>' .
                 '<p><form action="?act=reg" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
+                '<input type="submit" value="' . __('To Page') . ' &gt;&gt;"/>' .
                 '</form></p>';
         }
 
         echo '<p>';
 
         if ($total) {
-            echo '<a href="?act=reg&amp;mod=massapprove">' . _t('Confirm all') . '</a><br><a href="?act=reg&amp;mod=massdel">' . _t('Delete all') . '</a><br>';
+            echo '<a href="?act=reg&amp;mod=massapprove">' . __('Confirm all') . '</a><br><a href="?act=reg&amp;mod=massdel">' . __('Delete all') . '</a><br>';
         }
 
-        echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
+        echo '<a href="./">' . __('Admin Panel') . '</a></p>';
 }
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title'   => _t('Admin Panel'),
+        'title'   => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

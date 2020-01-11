@@ -52,7 +52,7 @@ $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';
 $mod = $route['mod'] ?? '';
 
-$title = _t('Community');
+$title = __('Community');
 
 $nav_chain->add($title, '/community/');
 
@@ -63,7 +63,7 @@ if (! $config['active'] && ! $user->isValid()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;

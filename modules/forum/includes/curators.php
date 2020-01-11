@@ -25,12 +25,12 @@ if ($user->rights >= 7) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Curators'),
-                'page_title'    => _t('Curators'),
+                'title'         => __('Curators'),
+                'page_title'    => __('Curators'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Topic has been deleted or does not exists'),
+                'message'       => __('Topic has been deleted or does not exists'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -71,8 +71,8 @@ GROUP BY `fm`.`user_id`, `fm`.`user_name` ORDER BY `fm`.`user_name`");
     echo $view->render(
         'forum::curators',
         [
-            'title'         => _t('Curators'),
-            'page_title'    => _t('Curators'),
+            'title'         => __('Curators'),
+            'page_title'    => __('Curators'),
             'id'            => $id,
             'start'         => $start,
             'back_url'      => '?type=topic&id=' . $id . '&amp;start=' . $start,
@@ -87,11 +87,11 @@ GROUP BY `fm`.`user_id`, `fm`.`user_name` ORDER BY `fm`.`user_name`");
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

@@ -22,22 +22,22 @@ $config = di('config')['johncms'];
 
 // Проверяем права доступа
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 if ($user->rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
         $db->query('TRUNCATE TABLE `karma_users`');
         $db->exec('UPDATE `users` SET `karma_plus` = 0, `karma_minus` = 0');
-        echo '<div class="gmenu">' . _t('Karma is cleared') . '</div>';
+        echo '<div class="gmenu">' . __('Karma is cleared') . '</div>';
     } else {
-        echo '<div class="rmenu"><p>' . _t('You really want to clear the Karma?') . '<br>' .
-            '<a href="?act=karma&amp;do=clean&amp;yes">' . _t('Clear') . '</a> | ' .
-            '<a href="?act=karma">' . _t('Cancel') . '</a></p></div>';
+        echo '<div class="rmenu"><p>' . __('You really want to clear the Karma?') . '<br>' .
+            '<a href="?act=karma&amp;do=clean&amp;yes">' . __('Clear') . '</a> | ' .
+            '<a href="?act=karma">' . __('Cancel') . '</a></p></div>';
     }
 }
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Karma') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Karma') . '</div>';
 $settings = $config['karma'];
 
 if (isset($_POST['submit'])) {
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
         exit;
     }
 
-    echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
+    echo '<div class="rmenu">' . __('Settings are saved successfully') . '</div>';
 
     if (function_exists('opcache_reset')) {
         opcache_reset();
@@ -66,21 +66,21 @@ if (isset($_POST['submit'])) {
 
 $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;
 echo '<form action="?act=karma" method="post"><div class="menu">' .
-    '<p><h3>' . _t('Voices per day') . '</h3>' .
+    '<p><h3>' . __('Voices per day') . '</h3>' .
     '<input type="text" name="karma_points" value="' . $settings['karma_points'] . '"/></p>' .
-    '<p><h3>' . _t('Restriction for vote') . '</h3>' .
-    '<input type="text" name="forum" value="' . $settings['forum'] . '" size="4"/>&#160;' . _t('Forum posts') . '<br>' .
-    '<input type="text" name="karma_time" value="' . $settings['karma_time'] . '" size="4"/>&#160;' . _t('Stay on site') . '<br>' .
-    '&#160;<input name="time" type="radio" value="1"' . ($settings['time'] ? ' checked="checked"' : '') . '/>&#160;' . _t('Hours') . '<br>' .
-    '&#160;<input name="time" type="radio" value="0"' . (! $settings['time'] ? ' checked="checked"' : '') . '/>&#160;' . _t('Days') . '</p>' .
-    '<p><h3>' . _t('General Settings') . '</h3>' .
-    '<input type="checkbox" name="on"' . ($settings['on'] ? ' checked="checked"' : '') . '/> ' . _t('Switch module ON') . '<br>' .
-    '<input type="checkbox" name="adm"' . ($settings['adm'] ? ' checked="checked"' : '') . '/> ' . _t('Forbid to vote for the administration') . '</p>' .
-    '<p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
-    '</form><div class="phdr">' . ($user->rights == 9 ? '<a href="?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
-    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+    '<p><h3>' . __('Restriction for vote') . '</h3>' .
+    '<input type="text" name="forum" value="' . $settings['forum'] . '" size="4"/>&#160;' . __('Forum posts') . '<br>' .
+    '<input type="text" name="karma_time" value="' . $settings['karma_time'] . '" size="4"/>&#160;' . __('Stay on site') . '<br>' .
+    '&#160;<input name="time" type="radio" value="1"' . ($settings['time'] ? ' checked="checked"' : '') . '/>&#160;' . __('Hours') . '<br>' .
+    '&#160;<input name="time" type="radio" value="0"' . (! $settings['time'] ? ' checked="checked"' : '') . '/>&#160;' . __('Days') . '</p>' .
+    '<p><h3>' . __('General Settings') . '</h3>' .
+    '<input type="checkbox" name="on"' . ($settings['on'] ? ' checked="checked"' : '') . '/> ' . __('Switch module ON') . '<br>' .
+    '<input type="checkbox" name="adm"' . ($settings['adm'] ? ' checked="checked"' : '') . '/> ' . __('Forbid to vote for the administration') . '</p>' .
+    '<p><input type="submit" value="' . __('Save') . '" name="submit" /></p></div>' .
+    '</form><div class="phdr">' . ($user->rights == 9 ? '<a href="?act=karma&amp;do=clean">' . __('Clear Karma') . '</a>' : '<br>') . '</div>' .
+    '<p><a href="./">' . __('Admin Panel') . '</a></p>';
 
 echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
+    'title'   => __('Admin Panel'),
     'content' => ob_get_clean(),
 ]);

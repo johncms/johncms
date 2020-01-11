@@ -64,7 +64,7 @@ if (isset($_SESSION['ga']) && $user->rights < 1 && ! in_array($user->id, $guestA
 }
 
 // Set page headers
-$textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
+$textl = isset($_SESSION['ga']) ? __('Admin Club') : __('Guestbook');
 
 $nav_chain->add($textl);
 
@@ -74,7 +74,7 @@ if (! $config['mod_guest'] && $user->rights < 7) {
         'guestbook::result',
         [
             'title'    => $textl,
-            'message'  => _t('Guestbook is closed'),
+            'message'  => __('Guestbook is closed'),
             'type'     => 'error',
             'back_url' => '/',
         ]
@@ -109,24 +109,24 @@ switch ($act) {
         $flood = false;
 
         if (! isset($_POST['token']) || ! isset($_SESSION['token']) || $_POST['token'] != $_SESSION['token']) {
-            $error[] = _t('Wrong data');
+            $error[] = __('Wrong data');
         }
 
         if (! $user->isValid() && empty($name)) {
-            $error[] = _t('You have not entered a name');
+            $error[] = __('You have not entered a name');
         }
 
         if (empty($msg)) {
-            $error[] = _t('You have not entered the message');
+            $error[] = __('You have not entered the message');
         }
 
         if (! empty($user->ban['1']) || ! empty($user->ban['13'])) {
-            $error[] = _t('Access forbidden');
+            $error[] = __('Access forbidden');
         }
 
         // CAPTCHA for guests
         if (! $user->isValid() && (empty($code) || mb_strlen($code) < 3 || strtolower($code) != strtolower($_SESSION['code']))) {
-            $error[] = _t('The security code is not correct');
+            $error[] = __('The security code is not correct');
         }
 
         unset($_SESSION['code']);
@@ -145,7 +145,7 @@ switch ($act) {
         }
 
         if ($flood) {
-            $error = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
+            $error = sprintf(__('You cannot add the message so often. Please, wait %d seconds.'), $flood);
         }
 
         if (! $error) {
@@ -195,7 +195,7 @@ switch ($act) {
             echo $view->render(
                 'guestbook::result',
                 [
-                    'title'    => _t('Add message'),
+                    'title'    => __('Add message'),
                     'message'  => $error,
                     'type'     => 'error',
                     'back_url' => '/guestbook/',
@@ -304,25 +304,25 @@ switch ($act) {
                     case '1':
                         // Clean messages older than 1 day
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time` < '" . (time() - 86400) . "'");
-                        $message = _t('All messages older than 1 day were deleted');
+                        $message = __('All messages older than 1 day were deleted');
                         break;
 
                     case '2':
                         // Perform a full cleanup
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}'");
-                        $message = _t('Full clearing is finished');
+                        $message = __('Full clearing is finished');
                         break;
                     default:
                         // Clean messages older than 1 week""
                         $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time`<='" . (time() - 604800) . "';");
-                        $message = _t('All messages older than 1 week were deleted');
+                        $message = __('All messages older than 1 week were deleted');
                 }
 
                 $db->query('OPTIMIZE TABLE `guest`');
                 echo $view->render(
                     'guestbook::result',
                     [
-                        'title'    => _t('Clear guestbook'),
+                        'title'    => __('Clear guestbook'),
                         'message'  => $message,
                         'type'     => 'success',
                         'back_url' => '/guestbook/',

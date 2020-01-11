@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('Karma');
+$title = __('Karma');
 $set_karma = $config['karma'];
 $foundUser = (array) $foundUser;
 $data = [];
-$nav_chain->add(_t('User Profile'), '?user=' . $foundUser['id']);
-$nav_chain->add(_t('Karma'));
+$nav_chain->add(__('User Profile'), '?user=' . $foundUser['id']);
+$nav_chain->add(__('Karma'));
 
 $post = $request->getParsedBody();
 
@@ -38,17 +38,17 @@ if ($set_karma['on']) {
                 $error = [];
 
                 if ($foundUser['rights'] && $set_karma['adm']) {
-                    $error[] = _t('It is forbidden to vote for administration');
+                    $error[] = __('It is forbidden to vote for administration');
                 }
 
                 if ($foundUser['ip'] === di(Johncms\System\Http\Environment::class)->getIp()) {
-                    $error[] = _t('Cheating karma is forbidden');
+                    $error[] = __('Cheating karma is forbidden');
                 }
 
                 if ($user->total_on_site < $set_karma['karma_time'] || $user->postforum < $set_karma['forum']) {
                     $error[] = sprintf(
-                        _t('Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.'),
-                        ($set_karma['time'] ? ($set_karma['karma_time'] / 3600) . _t('hours') : ($set_karma['karma_time'] / 86400) . _t('days')),
+                        __('Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.'),
+                        ($set_karma['time'] ? ($set_karma['karma_time'] / 3600) . __('hours') : ($set_karma['karma_time'] / 86400) . __('days')),
                         $set_karma['forum']
                     );
                 }
@@ -56,13 +56,13 @@ if ($set_karma['on']) {
                 $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `karma_user` = '" . $foundUser['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
                 if ($count) {
-                    $error[] = _t('You can vote for single user just one time for 24 hours');
+                    $error[] = __('You can vote for single user just one time for 24 hours');
                 }
 
                 $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `time` >= '" . $user->karma_time . "'")->fetchColumn();
 
                 if (($set_karma['karma_points'] - $sum) <= 0) {
-                    $error[] = sprintf(_t('You have exceeded the limit of votes. New voices will be added %s'), date('d.m.y в H:i:s', ($user->karma_time + 86400)));
+                    $error[] = sprintf(__('You have exceeded the limit of votes. New voices will be added %s'), date('d.m.y в H:i:s', ($user->karma_time + 86400)));
                 }
 
                 if ($error) {
@@ -73,7 +73,7 @@ if ($set_karma['on']) {
                             'type'          => 'alert-danger',
                             'message'       => $error,
                             'back_url'      => '?user=' . $foundUser['id'],
-                            'back_url_name' => _t('Back'),
+                            'back_url_name' => __('Back'),
                         ]
                     );
                 } elseif (isset($_POST['submit'])) {
@@ -115,9 +115,9 @@ if ($set_karma['on']) {
                         [
                             'title'         => $title,
                             'type'          => 'alert-success',
-                            'message'       => _t('You have successfully voted'),
+                            'message'       => __('You have successfully voted'),
                             'back_url'      => '?user=' . $foundUser['id'],
-                            'back_url_name' => _t('Continue'),
+                            'back_url_name' => __('Continue'),
                         ]
                     );
                 } else {
@@ -126,7 +126,7 @@ if ($set_karma['on']) {
                         $options[] = $i;
                     }
                     $data['options'] = $options;
-                    $data['vote_title'] = _t('Vote for') . ': ' . $tools->checkout($foundUser['name']);
+                    $data['vote_title'] = __('Vote for') . ': ' . $tools->checkout($foundUser['name']);
                     $data['form_action'] = '?act=karma&amp;mod=vote&amp;user=' . $foundUser['id'];
                     $data['back_url'] = '?user=' . $foundUser['id'];
                     echo $view->render(
@@ -144,9 +144,9 @@ if ($set_karma['on']) {
                     [
                         'title'         => $title,
                         'type'          => 'alert-danger',
-                        'message'       => _t('You are not allowed to vote for users'),
+                        'message'       => __('You are not allowed to vote for users'),
                         'back_url'      => '?user=' . $foundUser['id'],
-                        'back_url_name' => _t('Back'),
+                        'back_url_name' => __('Back'),
                     ]
                 );
             }
@@ -180,7 +180,7 @@ if ($set_karma['on']) {
                         $_SESSION['delete_token'] = $delete_token;
                         $data['delete_token'] = $delete_token;
                         $data['form_action'] = '?act=karma&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes';
-                        $data['message'] = _t('Do you really want to delete comment?');
+                        $data['message'] = __('Do you really want to delete comment?');
                         $data['back_url'] = '?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=' . $type;
 
                         echo $view->render(
@@ -213,7 +213,7 @@ if ($set_karma['on']) {
                     $_SESSION['delete_token'] = $delete_token;
                     $data['delete_token'] = $delete_token;
                     $data['form_action'] = '?act=karma&amp;mod=clean&amp;user=' . $foundUser['id'] . '&amp;yes';
-                    $data['message'] = _t('Do you really want to delete all reviews about user?');
+                    $data['message'] = __('Do you really want to delete all reviews about user?');
                     $data['back_url'] = '?act=karma&amp;user=' . $foundUser['id'];
 
                     echo $view->render(
@@ -231,7 +231,7 @@ if ($set_karma['on']) {
 
         case 'new':
             // Список новых отзывов (комментариев)
-            $title = _t('New responses');
+            $title = __('New responses');
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total) {
@@ -266,17 +266,17 @@ if ($set_karma['on']) {
 
             $data['filters'] = [
                 'all'      => [
-                    'name'   => _t('All'),
+                    'name'   => __('All'),
                     'url'    => '?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=2',
                     'active' => $type === 2,
                 ],
                 'positive' => [
-                    'name'   => _t('Positive'),
+                    'name'   => __('Positive'),
                     'url'    => '?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=1',
                     'active' => $type === 1,
                 ],
                 'negative' => [
-                    'name'   => _t('Negative'),
+                    'name'   => __('Negative'),
                     'url'    => '?act=karma&amp;user=' . $foundUser['id'],
                     'active' => ! $type,
                 ],

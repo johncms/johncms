@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$nav_chain->add(_t('Profile') . ': ' . $foundUser->name, '?user=' . $foundUser->id);
-$nav_chain->add(_t('Guestbook'));
+$nav_chain->add(__('Profile') . ': ' . $foundUser->name, '?user=' . $foundUser->id);
+$nav_chain->add(__('Guestbook'));
 
 // Параметры Гостевой
 $arg = [
@@ -25,7 +25,7 @@ $arg = [
     'owner'               => $foundUser->id,      // Владелец объекта
     'owner_delete'        => true,                  // Возможность владельцу удалять комментарий
     'owner_reply'         => true,                  // Возможность владельцу отвечать на комментарий
-    'title'               => _t('Guestbook') . ': ' . $foundUser->name,        // Название раздела
+    'title'               => __('Guestbook') . ': ' . $foundUser->name,        // Название раздела
     'templates_namespace' => 'system',
     'back_url'            => '?user=' . $foundUser->id,
 ];

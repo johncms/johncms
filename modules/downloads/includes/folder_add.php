@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$nav_chain->add(_t('Create Folder'));
+$nav_chain->add(__('Create Folder'));
 
 if (! $id) {
     $load_cat = $files_path;
@@ -29,11 +29,11 @@ if (! $id) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Create Folder'),
+                'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
-                'message'       => _t('The directory does not exist'),
+                'message'       => __('The directory does not exist'),
                 'back_url'      => $urls['downloads'],
-                'back_url_name' => _t('Downloads'),
+                'back_url_name' => __('Downloads'),
             ]
         );
         exit;
@@ -51,17 +51,17 @@ if (isset($_POST['submit'])) {
     $error = [];
 
     if (empty($name)) {
-        $error[] = _t('The required fields are not filled');
+        $error[] = __('The required fields are not filled');
     }
 
     if (preg_match('/[^0-9a-zA-Z]+/', $name)) {
-        $error[] = _t('Invalid characters');
+        $error[] = __('Invalid characters');
     }
 
     if ($user->rights === 9 && $user_down) {
         foreach (explode(',', $format) as $value) {
             if (! in_array(trim($value), $defaultExt, true)) {
-                $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
+                $error[] = __('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
                 break;
             }
         }
@@ -71,11 +71,11 @@ if (isset($_POST['submit'])) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Create Folder'),
+                'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=folder_add&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
         exit;
@@ -120,22 +120,22 @@ if (isset($_POST['submit'])) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Create Folder'),
+                'title'         => __('Create Folder'),
                 'type'          => 'alert-success',
-                'message'       => _t('The Folder is created'),
+                'message'       => __('The Folder is created'),
                 'back_url'      => '?id=' . $cat_id,
-                'back_url_name' => _t('Continue'),
+                'back_url_name' => __('Continue'),
             ]
         );
     } else {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Create Folder'),
+                'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Error creating categories'),
+                'message'       => __('Error creating categories'),
                 'back_url'      => '?act=folder_add&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
     }
@@ -150,8 +150,8 @@ if (isset($_POST['submit'])) {
     echo $view->render(
         'downloads::folder_form',
         [
-            'title'         => _t('Downloads'),
-            'page_title'    => _t('Downloads'),
+            'title'         => __('Downloads'),
+            'page_title'    => __('Downloads'),
             'id'            => $id,
             'urls'          => $urls,
             'folder_params' => $folder_params,

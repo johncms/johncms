@@ -18,12 +18,12 @@ $env = di(Johncms\System\Http\Environment::class);
 $data = [];
 $data['filters'] = [
     'users'   => [
-        'name'   => _t('Users'),
+        'name'   => __('Users'),
         'url'    => '/online/',
         'active' => false,
     ],
     'history' => [
-        'name'   => _t('History'),
+        'name'   => __('History'),
         'url'    => '/online/history/',
         'active' => false,
     ],
@@ -31,12 +31,12 @@ $data['filters'] = [
 
 if ($user->rights) {
     $data['filters']['guest'] = [
-        'name'   => _t('Guests'),
+        'name'   => __('Guests'),
         'url'    => '/online/guest/',
         'active' => true,
     ];
     $data['filters']['ip'] = [
-        'name'   => _t('IP Activity'),
+        'name'   => __('IP Activity'),
         'url'    => '/online/ip/',
         'active' => false,
     ];
@@ -56,7 +56,7 @@ if ($total) {
     while ($res = $req->fetch()) {
         $res['id'] = $res['id'] ?? 0;
         $res['user_profile_link'] = '';
-        $res['name'] = _t('Guest');
+        $res['name'] = __('Guest');
         $res['user_is_online'] = time() <= $res['lastdate'] + 300;
         $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
         $res['ip'] = long2ip($res['ip']);

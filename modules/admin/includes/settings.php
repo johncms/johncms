@@ -19,15 +19,15 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  */
 
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 $config = di('config')['johncms'];
 
 /** @var NavChain $navChain */
 $navChain = di(NavChain::class);
-$navChain->add(_t('Admin Panel'), '../');
-$navChain->add(_t('System Settings'));
+$navChain->add(__('Admin Panel'), '../');
+$navChain->add(__('System Settings'));
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы

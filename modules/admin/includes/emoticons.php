@@ -18,7 +18,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $config = di('config')['johncms'];
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Smilies') . '</div>';
 
 $ext = ['gif', 'jpg', 'jpeg', 'png']; // Список разрешенных расширений
 $smileys = [];
@@ -55,18 +55,18 @@ foreach (glob(ASSETS_PATH . 'emoticons' . DS . 'user' . DS . '*' . DS . '*') as 
 
 // Записываем в файл Кэша
 if (file_put_contents(CACHE_PATH . 'smilies-list.cache', serialize($smileys))) {
-    echo '<div class="gmenu"><p>' . _t('Smilie cache updated successfully') . '</p></div>';
+    echo '<div class="gmenu"><p>' . __('Smilie cache updated successfully') . '</p></div>';
 } else {
-    echo '<div class="rmenu"><p>' . _t('Error updating cache') . '</p></div>';
+    echo '<div class="rmenu"><p>' . __('Error updating cache') . '</p></div>';
 }
 $total = count($smileys['adm']) + count($smileys['usr']);
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>' .
+    '<p><a href="./">' . __('Admin Panel') . '</a></p>';
 
 echo $view->render(
     'system::app/old_content',
     [
-        'title'   => _t('Admin Panel'),
+        'title'   => __('Admin Panel'),
         'content' => ob_get_clean(),
     ]
 );

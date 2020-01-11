@@ -21,14 +21,14 @@
             <?php endif; ?>
 
             <div class="form-group">
-                <label for="message"><?= _t('Message', 'system') ?></label>
+                <label for="message"><?= d__('system', 'Message') ?></label>
                 <div>
                     <?= $bb_codes ?>
                 </div>
                 <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" required class="form-control"><?= $reply ?? '' ?></textarea>
                 <div class="text-muted">Max: <?= $max_length ?></div>
             </div>
-            <input type="submit" class="btn btn-primary" name="submit" value="<?= _t('Send', 'system') ?>"/>
+            <input type="submit" class="btn btn-primary" name="submit" value="<?= d__('system', 'Send') ?>"/>
         </form>
     </div>
 </div>

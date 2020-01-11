@@ -36,10 +36,10 @@ $this->layout(
         </div>
         <div class="post-actions">
             <?php if (! empty($post['reply_url'])): ?>
-                <a href="<?= $post['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Reply') ?></a>
+                <a href="<?= $post['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Reply') ?></a>
             <?php endif; ?>
             <?php if (! empty($post['quote_url'])): ?>
-                <a href="<?= $post['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Quote') ?></a>
+                <a href="<?= $post['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Quote') ?></a>
             <?php endif; ?>
         </div>
     </div>
@@ -56,7 +56,7 @@ $this->layout(
     <?php if (! empty($post['files'])): ?>
         <!-- Files block -->
         <div class="border-top pt-1 pb-1">
-            <div class="font-weight-bold pb-1"><?= _t('Attached files') ?>:</div>
+            <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
             <div class="d-flex flex-wrap">
                 <?php foreach ($post['files'] as $file): ?>
                     <div class="attached-file pr-3 d-flex flex-column justify-content-between">
@@ -96,6 +96,6 @@ $this->layout(
 
 
 <div class="mt-2">
-    <a href="<?= $back_to_topic ?>"><?= _t('Back to topic') ?></a><br>
-    <a href="/forum/"><?= _t('Forum') ?></a>
+    <a href="<?= $back_to_topic ?>"><?= __('Back to topic') ?></a><br>
+    <a href="/forum/"><?= __('Forum') ?></a>
 </div>

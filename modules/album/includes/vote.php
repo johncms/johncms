@@ -32,7 +32,7 @@ if (! $img) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Wrong data'),
+            'message' => __('Wrong data'),
         ]
     );
     exit;
@@ -81,7 +81,7 @@ if ($req->rowCount()) {
             [
                 'title'    => $title,
                 'type'     => 'alert-danger',
-                'message'  => _t('You cannot vote for this photo.'),
+                'message'  => __('You cannot vote for this photo.'),
                 'back_url' => htmlspecialchars($ref),
             ]
         );
@@ -92,7 +92,7 @@ if ($req->rowCount()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Wrong data'),
+            'message' => __('Wrong data'),
         ]
     );
 }

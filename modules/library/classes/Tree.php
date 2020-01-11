@@ -197,7 +197,7 @@ class Tree
             $x++;
         }
 
-        return '<a href="?"><strong>' . _t('Library') . '</strong></a> | ' . implode(' | ', $return);
+        return '<a href="?"><strong>' . __('Library') . '</strong></a> | ' . implode(' | ', $return);
     }
 
     /**

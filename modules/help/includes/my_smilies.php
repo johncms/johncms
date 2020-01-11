@@ -18,8 +18,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Список своих смайлов
-$title = _t('My smilies');
-$nav_chain->add(_t('Smilies'), '?act=smilies');
+$title = __('My smilies');
+$nav_chain->add(__('Smilies'), '?act=smilies');
 $nav_chain->add($title);
 $data = [];
 

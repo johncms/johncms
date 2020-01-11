@@ -30,7 +30,7 @@ $this->layout(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
-            'alert'      => _t('The list is empty'),
+            'alert'      => __('The list is empty'),
         ]
     ) ?>
 <?php endif; ?>
@@ -39,7 +39,7 @@ $this->layout(
     <div class="mb-3">
         <a href="./image_upload?al=<?= $data['album']['id'] ?>&amp;user=<?= $data['album']['user_id'] ?>"
            class="btn btn-primary"
-        ><?= _t('Add image') ?></a>
+        ><?= __('Add image') ?></a>
     </div>
 <?php endif; ?>
 
@@ -55,10 +55,10 @@ $this->layout(
                     <?php if (! empty($photo->user_name || ! empty($photo->album_name))): ?>
                         <div class="small">
                             <span class="text-nowrap pr-2">
-                                <?= _t('User:') ?> <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
+                                <?= __('User:') ?> <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
                             </span>
                             <span class="text-nowrap">
-                                <?= _t('Album:') ?> <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
+                                <?= __('Album:') ?> <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
                             </span>
                         </div>
                     <?php endif; ?>
@@ -122,5 +122,5 @@ $this->layout(
 <?php endif; ?>
 
 <?php if ($data['total'] > 0): ?>
-    <div><?= _t('Total') ?>: <?= $data['total'] ?></div>
+    <div><?= __('Total') ?>: <?= $data['total'] ?></div>
 <?php endif; ?>

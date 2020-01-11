@@ -25,7 +25,7 @@ $this->layout(
 <?php if (! empty($new_count)): ?>
     <div class="border-top border-bottom mb-3">
         <div class="py-3">
-            <a href="#"><?= _t('New Files') ?></a>
+            <a href="#"><?= __('New Files') ?></a>
             <span class="badge badge-pill badge-danger"><?= $new_count ?></span>
         </div>
     </div>
@@ -33,7 +33,7 @@ $this->layout(
 
 <?php if (empty($files)): ?>
     <div class="alert alert-info">
-        <?= _t('The list is empty') ?>
+        <?= __('The list is empty') ?>
     </div>
 <?php endif; ?>
 
@@ -51,10 +51,10 @@ $this->layout(
                 </div>
                 <div class="post-actions">
                     <?php if (! empty($file['post_url'])): ?>
-                        <a href="<?= $file['post_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('To message') ?></a>
+                        <a href="<?= $file['post_url'] ?>" class="btn btn-sm btn-secondary"><?= __('To message') ?></a>
                     <?php endif; ?>
                     <?php if (! empty($file['topic_url'])): ?>
-                        <a href="<?= $file['topic_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('To topic') ?></a>
+                        <a href="<?= $file['topic_url'] ?>" class="btn btn-sm btn-secondary"><?= __('To topic') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -99,7 +99,7 @@ $this->layout(
 </div>
 
 <div class="mb-3">
-    <div><?= _t('Total') ?>: <?= $total ?></div>
+    <div><?= __('Total') ?>: <?= $total ?></div>
     <!-- Page switching -->
     <?php if ($total > $user->config->kmess): ?>
         <div class="mt-1"><?= $pagination ?></div>
@@ -109,6 +109,6 @@ $this->layout(
 <?php if (! empty($back_url)): ?>
     <div class="mb-3">
         <a href="<?= $back_url ?>"><?= $back_url_name ?></a><br>
-        <a href="/forum/"><?= _t('Forum') ?></a>
+        <a href="/forum/"><?= __('Forum') ?></a>
     </div>
 <?php endif; ?>

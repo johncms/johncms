@@ -33,11 +33,11 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('File not found'),
+            'title'         => __('File not found'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
