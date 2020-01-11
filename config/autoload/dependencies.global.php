@@ -10,11 +10,17 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\NavChain;
+use Johncms\System\Legacy\Bbcode;
+use Johncms\System\Legacy\Tools;
+
 return [
     'dependencies' => [
         'factories' => [
-            Johncms\NavChain::class => Johncms\NavChain::class,
-            'counters'                      => Johncms\Counters::class,
+            Bbcode::class   => Bbcode::class,
+            NavChain::class => NavChain::class,
+            Tools::class    => Tools::class,
+            'counters'      => Johncms\Counters::class,
         ],
     ],
 ];

@@ -97,8 +97,15 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     file_put_contents($cacheFile, time());
 }
 
-// Register the module languages domain and folder
-di(Translator::class)->addTranslationDomain('system', __DIR__ . '/locale');
+// Register the system languages domain and folder
+$translator = di(Translator::class);
+$translator->addTranslationDomain('system', __DIR__ . '/locale');
+// Register language helpers
+Gettext\TranslatorFunctions::register($translator);
+
+/** @var Johncms\System\View\Render $render */
+$render = di(Johncms\System\View\Render::class);
+$render->addData(['tools' => di(Johncms\System\Legacy\Tools::class)]);
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;
