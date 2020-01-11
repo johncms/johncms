@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -18,13 +18,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Список своих смайлов
-echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';
+$title = _t('My smilies');
+$nav_chain->add(_t('Smilies'), '?act=smilies');
+$nav_chain->add($title);
+$data = [];
+
 $smileys = ! empty($user->smileys) ? unserialize($user->smileys, ['allowed_classes' => false]) : [];
 $total = count($smileys);
-
-if ($total) {
-    echo '<form action="?act=set_my_sm&amp;start=' . $start . '" method="post">';
-}
 
 if ($total > $user->config->kmess) {
     $smileys = array_chunk($smileys, $user->config->kmess, true);
@@ -45,24 +45,28 @@ if ($total > $user->config->kmess) {
 
 $i = 0;
 
+$items = [];
 foreach ($smileys as $value) {
     $smile = ':' . $value . ':';
-    echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
-        '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' .
-        $tools->smilies($smile, $user->rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . $tools->trans($smile) . '</div>';
-    $i++;
+    $items[] = [
+        'can_del'   => true,
+        'lat_smile' => $value,
+        'smile'     => $tools->trans($smile),
+        'picture'   => $tools->smilies($smile, $user->rights >= 1 ? 1 : 0),
+    ];
 }
 
-if ($total) {
-    echo '<div class="rmenu"><input type="submit" name="delete" value=" ' . _t('Delete') . ' "/></div></form>';
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '<br /><a href="?act=smilies">' . _t('Add Smilies') . '</a></p></div>';
-}
+$data['pagination'] = $tools->displayPagination('?act=my_smilies&amp;', $start, $total, $user->config->kmess);
+$data['form_action'] = '?act=set_my_sm&amp;start=' . $start;
+$data['total'] = $total;
+$data['items'] = $items ?? [];
+$data['back_url'] = '?act=smilies';
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . ' / ' . $user_smileys . '</div>';
-
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=my_smilies&amp;', $start, $total, $user->config->kmess) . '</div>';
-}
-
-echo '<p><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></p>';
+echo $view->render(
+    'help::my_smiles_list',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

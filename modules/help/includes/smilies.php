@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,22 +8,33 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Johncms\System\Users\User $user
  */
 
-// Главное меню каталога смайлов
-echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Smilies') . '</div>';
+$title = _t('Smiles');
+$nav_chain->add($title, '?act=smilies');
 
+$items = [];
 if ($user->isValid()) {
     $mycount = ! empty($user->smileys) ? count(unserialize($user->smileys, ['allowed_classes' => false])) : '0';
-    echo '<div class="topmenu"><a href="?act=my_smilies">' . _t('My smilies') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
+    $items[] = [
+        'url'   => '?act=my_smilies',
+        'name'  => _t('My smilies'),
+        'count' => $mycount . ' / ' . $user_smileys,
+    ];
 }
 
 if ($user->rights >= 1) {
-    echo '<div class="gmenu"><a href="?act=admsmilies">' . _t('For administration') . '</a> (' . (int)count(glob(ASSETS_PATH . 'emoticons/admin/*.gif')) . ')</div>';
+    $items[] = [
+        'url'   => '?act=admsmilies',
+        'name'  => _t('For administration'),
+        'count' => (int) count(glob(ASSETS_PATH . 'emoticons/admin/*.gif')),
+    ];
 }
 
 $dir = glob(ASSETS_PATH . 'emoticons/user/*', GLOB_ONLYDIR);
@@ -44,11 +53,21 @@ asort($smileys_cat);
 $i = 0;
 
 foreach ($smileys_cat as $key => $val) {
-    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-    echo '<a href="?act=usersmilies&amp;cat=' . urlencode($key) . '">' . htmlspecialchars($val) . '</a>' .
-        ' (' . count(glob(ASSETS_PATH . 'emoticons/user/' . $key . '/*.{gif,jpg,png}', GLOB_BRACE)) . ')';
-    echo '</div>';
-    ++$i;
+    $items[] = [
+        'url'   => '?act=usersmilies&amp;cat=' . urlencode($key),
+        'name'  => htmlspecialchars($val),
+        'count' => count(glob(ASSETS_PATH . 'emoticons/user/' . $key . '/*.{gif,jpg,png}', GLOB_BRACE)),
+    ];
 }
 
-echo '<div class="phdr"><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></div>';
+$data['items'] = $items ?? [];
+$data['back_url'] = htmlspecialchars($_SESSION['ref']);
+
+echo $view->render(
+    'help::smiles',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

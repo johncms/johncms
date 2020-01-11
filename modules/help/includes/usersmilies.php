@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Каталог пользовательских Смайлов
 $dir = glob(ASSETS_PATH . 'emoticons/user/*', GLOB_ONLYDIR);
-
+$cat_list = [];
 foreach ($dir as $val) {
     $val = explode('/', $val);
     $cat_list[] = array_pop($val);
@@ -34,53 +34,43 @@ if ($end > $total) {
     $end = $total;
 }
 
-echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' .
-    (array_key_exists($cat, smiliesCat()) ? smiliesCat()[$cat] : ucfirst(htmlspecialchars($cat))) .
-    '</div>';
+$title = (array_key_exists($cat, smiliesCat()) ? smiliesCat()[$cat] : ucfirst(htmlspecialchars($cat)));
+
+$nav_chain->add(_t('Smilies'), '?act=smilies');
+$nav_chain->add($title);
 
 if ($total) {
     if ($user->isValid()) {
         $user_sm = isset($user->smileys) ? unserialize($user->smileys, ['allowed_classes' => false]) : '';
-
         if (! is_array($user_sm)) {
             $user_sm = [];
         }
-
-        echo '<div class="topmenu">' .
-            '<a href="?act=my_smilies">' . _t('My smilies') . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
-            '<form action="?act=set_my_sm&amp;cat=' . $cat . '&amp;start=' . $start . '" method="post">';
+        $data['user_smiles_current'] = count($user_sm);
+        $data['user_smiles_max'] = $user_smileys;
     }
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=usersmilies&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-    }
-
+    $items = [];
     for ($i = $start; $i < $end; $i++) {
         $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', basename($smileys[$i]));
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-
-        if ($user->isValid()) {
-            echo in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;';
-        }
-
-        echo '<img src="../assets/emoticons/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _t('or') . ' :' . $tools->trans($smile) . ':';
-        echo '</div>';
+        $items[] = [
+            'can_add'   => ($user->isValid() && ! in_array($smile, $user_sm)),
+            'lat_smile' => $smile,
+            'smile'     => $tools->trans($smile),
+            'picture'   => '../assets/emoticons/user/' . $cat . '/' . basename($smileys[$i]),
+        ];
     }
-
-    if ($user->isValid()) {
-        echo '<div class="gmenu"><input type="submit" name="add" value=" ' . _t('Add') . ' "/></div></form>';
-    }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+$data['pagination'] = $tools->displayPagination('?act=usersmilies&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $user->config->kmess);
+$data['form_action'] = '?act=set_my_sm&amp;cat=' . $cat . '&amp;start=' . $start;
+$data['total'] = $total;
+$data['items'] = $items ?? [];
+$data['back_url'] = '?act=smilies';
 
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=usersmilies&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-    echo '<p><form action="?act=usersmilies&amp;cat=' . urlencode($cat) . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
-}
-
-echo '<p><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></p>';
+echo $view->render(
+    'help::smiles_list',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
