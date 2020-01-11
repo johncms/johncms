@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,23 +8,39 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
+declare(strict_types=1);
 
-ob_start();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Johncms\System\Http\Environment $env */
 $env = di(Johncms\System\Http\Environment::class);
 
-// Показываем список Online
-$menu[] = '<a href="../">' . _t('Users') . '</a>';
-$menu[] = '<a href="../history/">' . _t('History') . '</a> ';
+$data = [];
+$data['filters'] = [
+    'users'   => [
+        'name'   => _t('Users'),
+        'url'    => '/online/',
+        'active' => false,
+    ],
+    'history' => [
+        'name'   => _t('History'),
+        'url'    => '/online/history/',
+        'active' => false,
+    ],
+];
 
 if ($user->rights) {
-    $menu[] = '<a href="../guest/">' . _t('Guests') . '</a>';
-    $menu[] = '<strong>' . _t('IP Activity') . '</strong>';
+    $data['filters']['guest'] = [
+        'name'   => _t('Guests'),
+        'url'    => '/online/guest/',
+        'active' => false,
+    ];
+    $data['filters']['ip'] = [
+        'name'   => _t('IP Activity'),
+        'url'    => '/online/ip/',
+        'active' => true,
+    ];
 }
-
-echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div><div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 // Список активных IP, со счетчиком обращений
 $ip_array = array_count_values($env->getIpLog());
@@ -50,34 +64,31 @@ foreach ($ip_array as $key => $val) {
     $ip_list[$i] = [$key => $val];
     ++$i;
 }
-
+$items = [];
 if ($total && $user->rights) {
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
-    }
-
     for ($i = $start; $i < $end; $i++) {
         $ipLong = key($ip_list[$i]);
         $ip = long2ip($ipLong);
 
-        if ($ipLong == di(Johncms\System\Http\Environment::class)->getIp()) {
-            echo '<div class="gmenu">';
-        } else {
-            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-        }
-
-        echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config['homeurl'] . '/admin/?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-            '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
-    }
-
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
+        $items[] = [
+            'ip'              => $ip,
+            'search_ip'       => '/admin/?act=search_ip&amp;ip=' . $ip,
+            'whois_ip'        => '/admin/?act=ip_whois&amp;ip=' . $ip,
+            'current_user_ip' => ($ipLong === di(Johncms\System\Http\Environment::class)->getIp()),
+            'count'           => $ip_list[$i][$ipLong],
+        ];
     }
 }
 
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Online'),
-    'content' => ob_get_clean(),
-]);
+$data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
+$data['total'] = $total;
+$data['items'] = $items ?? [];
+
+echo $view->render(
+    'online::ip',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
