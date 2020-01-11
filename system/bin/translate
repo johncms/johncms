@@ -36,4 +36,4 @@ foreach ($search as $dir) {
     }
 }
 
-exit('Arrays of languages has been successfully updated');
+exit('[32mLanguages has been successfully updated[0m');
