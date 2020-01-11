@@ -41,8 +41,8 @@ $nav_chain = di(NavChain::class);
 /** @var Request $request */
 $request = di(Request::class);
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/album.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('album', __DIR__ . '/locale');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();

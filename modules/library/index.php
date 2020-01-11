@@ -38,8 +38,8 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 
-// Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/library.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('library', __DIR__ . '/locale');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader();

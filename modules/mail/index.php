@@ -38,8 +38,8 @@ $nav_chain = di(NavChain::class);
 /** @var Request $request */
 $request = di(Request::class);
 
-// Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/mail.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('mail', __DIR__ . '/locale');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('mail', __DIR__ . '/templates/');

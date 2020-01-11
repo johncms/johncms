@@ -45,8 +45,8 @@ $request = di(Request::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('users', __DIR__ . '/templates/');
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/community.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('community', __DIR__ . '/locale');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';

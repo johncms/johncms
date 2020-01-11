@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 
@@ -18,9 +19,8 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 $config = di('config')['johncms'];
 
-/** @var Johncms\System\i18n\Translator $translator */
-$translator = di(Johncms\System\i18n\Translator::class);
-$translator->addTranslationFilePattern(__DIR__ . '/locale/%s/profile.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 /** @var PDO $db */
 $db = di(PDO::class);

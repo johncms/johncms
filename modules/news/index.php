@@ -36,8 +36,8 @@ $route = di('route');
 // Register Namespace for module templates
 $view->addFolder('news', __DIR__ . '/templates/');
 
-// Register module languages
-$container->get(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/news.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('news', __DIR__ . '/locale');
 
 // Add a section to the navigation chain
 $nav_chain->add(_t('News'), '/news/');

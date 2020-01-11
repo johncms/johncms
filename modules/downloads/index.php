@@ -38,8 +38,8 @@ $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/downloads.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('downloads', __DIR__ . '/locale');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();

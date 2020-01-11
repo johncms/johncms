@@ -38,8 +38,8 @@ $tools = di(Tools::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/forum.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('forum', __DIR__ . '/locale');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('forum', __DIR__ . '/templates/');

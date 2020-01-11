@@ -44,8 +44,8 @@ $nav_chain = di(NavChain::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');
 
-// Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/profile.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);

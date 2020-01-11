@@ -39,8 +39,8 @@ $request = di(Request::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('help', __DIR__ . '/templates/');
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/help.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('help', __DIR__ . '/locale');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);

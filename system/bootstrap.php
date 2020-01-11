@@ -97,8 +97,8 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     file_put_contents($cacheFile, time());
 }
 
-// Register the module languages folder
-$container->get(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/system.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('system', __DIR__ . '/locale');
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;

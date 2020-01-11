@@ -35,8 +35,8 @@ $nav_chain = di(NavChain::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('reg', __DIR__ . '/templates/');
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/registration.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('registration', __DIR__ . '/locale');
 
 $nav_chain->add(_t('Registration'));
 

@@ -28,7 +28,7 @@ $nav_chain->showHomePage(false);
 // Register Namespace for module templates
 $view->addFolder('homepage', __DIR__ . '/templates/');
 
-// Register the module languages folder
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/homepage.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('homepage', __DIR__ . '/locale');
 
 echo $view->render('homepage::index');

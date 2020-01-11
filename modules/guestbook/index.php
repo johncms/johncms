@@ -44,8 +44,8 @@ $route = di('route');
 // Register Namespace for module templates
 $view->addFolder('guestbook', __DIR__ . '/templates/');
 
-// Register the module languages folder
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/guestbook.lng');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('guestbook', __DIR__ . '/locale');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? '';
