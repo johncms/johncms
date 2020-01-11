@@ -51,7 +51,7 @@ $this->layout(
                             <a class="user-login mr-2"><?= $item['name'] ?></a>
                         <?php endif; ?>
                         <span class="text-secondary small">
-                            <?= $item['count_message'] ?> <?= _p('message', 'messages', $item['count_message']) ?>, <?= _t('Last:') ?> <?= $item['display_date'] ?>
+                            <?= $item['count_message'] ?> <?= n__('message', 'messages', $item['count_message']) ?>, <?= _t('Last:') ?> <?= $item['display_date'] ?>
                         </span>
                     </div>
                     <div class="">

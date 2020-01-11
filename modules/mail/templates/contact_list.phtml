@@ -59,9 +59,9 @@ $this->layout(
                         <?php endif; ?>
                     </div>
                     <div class="small">
-                        <?= $item['count_message'] ?> <?= _p('message', 'messages', $item['count_message']) ?>
+                        <?= $item['count_message'] ?> <?= n__('message', 'messages', $item['count_message']) ?>
                         <?php if ($item['new_count_message'] > 0): ?>
-                            , + <?= $item['new_count_message'] ?> <?= _p('unread message', 'unread messages', $item['new_count_message']) ?>
+                            , + <?= $item['new_count_message'] ?> <?= n__('unread message', 'unread messages', $item['new_count_message']) ?>
                         <?php endif; ?>
                     </div>
                 </div>

@@ -90,7 +90,7 @@ $this->layout(
                     <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
                         <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
                         <?php if (! empty($data['user']['karma_new'])): ?>
-                            <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= _p('vote', 'votes', $data['user']['karma_new']) ?></a></div>
+                            <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= n__('vote', 'votes', $data['user']['karma_new']) ?></a></div>
                         <?php endif; ?>
                     </div>
                 </div>

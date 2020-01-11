@@ -153,7 +153,7 @@ class Bbcode
 
         if (! empty($smileys)) {
             $res_sm = '';
-            $bb_smileys = '<small><a href="' . $this->config['homeurl'] . '/help/?act=my_smilies">' . n__('system', 'Edit List') . '</a></small><br />'; // phpcs:ignore
+            $bb_smileys = '<small><a href="' . $this->config['homeurl'] . '/help/?act=my_smilies">' . d__('system', 'Edit List') . '</a></small><br />'; // phpcs:ignore
 
             foreach ($smileys as $value) {
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> '; // phpcs:ignore
@@ -164,7 +164,7 @@ class Bbcode
 
             $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
         } else {
-            $bb_smileys = '<small><a href="' . $this->config['homeurl'] . '/help/?act=smilies">' . n__('system', 'Add Smilies') . '</a></small>'; // phpcs:ignore
+            $bb_smileys = '<small><a href="' . $this->config['homeurl'] . '/help/?act=smilies">' . d__('system', 'Add Smilies') . '</a></small>'; // phpcs:ignore
         }
 
         // Код
@@ -222,21 +222,21 @@ class Bbcode
               }
             }
             </script>
-            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_bold.gif') . '" alt="b" title="' . n__('system', 'Bold') . '" /></a>
-            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_italics.gif') . '" alt="i" title="' . n__('system', 'Italic') . '" /></a>
-            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_underline.gif') . '" alt="u" title="' . n__('system', 'Underline') . '" /></a>
-            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_strike.gif') . '" alt="s" title="' . n__('system', 'Strike') . '" /></a>
-            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_color.gif') . '" title="' . n__('system', 'Text Color') . '" alt="color" /></a>
-            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_color_bg.gif') . '" title="' . n__('system', 'Background Color') . '" alt="bg color" /></a>
-            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_list.gif') . '" alt="li" title="' . n__('system', 'List') . '" /></a>
-            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_sp.gif') . '" alt="spoiler" title="' . n__('system', 'Spoiler') . '" /></a>
-            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_quote.gif') . '" alt="quote" title="' . n__('system', 'Quote') . '" /></a>
-            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_link.gif') . '" alt="url" title="' . n__('system', 'URL') . '" /></a>
-            <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_php.gif') . '" title="' . n__('system', 'Code') . '" alt="Code" /></a>
+            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_bold.gif') . '" alt="b" title="' . d__('system', 'Bold') . '" /></a>
+            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_italics.gif') . '" alt="i" title="' . d__('system', 'Italic') . '" /></a>
+            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_underline.gif') . '" alt="u" title="' . d__('system', 'Underline') . '" /></a>
+            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_strike.gif') . '" alt="s" title="' . d__('system', 'Strike') . '" /></a>
+            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_color.gif') . '" title="' . d__('system', 'Text Color') . '" alt="color" /></a>
+            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_color_bg.gif') . '" title="' . d__('system', 'Background Color') . '" alt="bg color" /></a>
+            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_list.gif') . '" alt="li" title="' . d__('system', 'List') . '" /></a>
+            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_sp.gif') . '" alt="spoiler" title="' . d__('system', 'Spoiler') . '" /></a>
+            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_quote.gif') . '" alt="quote" title="' . d__('system', 'Quote') . '" /></a>
+            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_link.gif') . '" alt="url" title="' . d__('system', 'URL') . '" /></a>
+            <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_php.gif') . '" title="' . d__('system', 'Code') . '" alt="Code" /></a>
             <a href="javascript:tag(\'[youtube]\', \'[/youtube]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_youtube.gif') . '" title="Youtube" alt="bg youtube" /></a>';
         // phpcs:enable
         if ($this->user->isValid()) {
-            $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_smileys.gif') . '" alt="sm" title="' . n__('system', 'Smilies') . '" /></a><br /><div id="sm" style="display:none">' . $bb_smileys . '</div>'; // phpcs:ignore
+            $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_smileys.gif') . '" alt="sm" title="' . d__('system', 'Smilies') . '" /></a><br /><div id="sm" style="display:none">' . $bb_smileys . '</div>'; // phpcs:ignore
         } else {
             $out .= '<br />';
         }
@@ -275,7 +275,7 @@ class Bbcode
                 $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
 
                 if (($out = strtotime($matches[1])) !== false) {
-                    return '<small class="gray">' . n__('system', 'Added') . ': ' . date('d.m.Y / H:i', $out + $shift) . '</small>'; // phpcs:ignore
+                    return '<small class="gray">' . d__('system', 'Added') . ': ' . date('d.m.Y / H:i', $out + $shift) . '</small>'; // phpcs:ignore
                 }
 
                 return $matches[1];

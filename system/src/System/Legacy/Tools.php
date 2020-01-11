@@ -144,10 +144,10 @@ class Tools
 
         if (date('Y', $var) == date('Y', time())) {
             if (date('z', $var + $shift) == date('z', time() + $shift)) {
-                return n__('system', 'Today') . ', ' . date('H:i', $var + $shift);
+                return d__('system', 'Today') . ', ' . date('H:i', $var + $shift);
             }
             if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
-                return n__('system', 'Yesterday') . ', ' . date('H:i', $var + $shift);
+                return d__('system', 'Yesterday') . ', ' . date('H:i', $var + $shift);
             }
         }
 
@@ -163,7 +163,7 @@ class Tools
      */
     public function displayError($error = '', $link = '')
     {
-        return '<div class="rmenu"><p><b>' . n__('system', 'ERROR') . '!</b><br>'
+        return '<div class="rmenu"><p><b>' . d__('system', 'ERROR') . '!</b><br>'
             . (is_array($error) ? implode('<br>', $error) : $error) . '</p>'
             . (! empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
     }
@@ -249,24 +249,24 @@ class Tools
         $part = explode('?', $place);
 
         $placelist = [
-            '/'               => '<a href="#home#/">' . n__('system', 'On the Homepage') . '</a>',
-            '/album'          => '<a href="#home#/album/">' . n__('system', 'Watching the photo album') . '</a>',
-            '/downloads'      => '<a href="#home#/downloads/">' . n__('system', 'Downloads') . '</a>',
-            '/forum'          => '<a href="#home#/forum/">' . n__('system', 'Forum') . '</a>&#160;/&#160;<a href="#home#/forum/?act=who">&gt;&gt;</a>', // phpcs:ignore
-            '/guestbook'      => '<a href="#home#/guestbook/">' . n__('system', 'Guestbook') . '</a>',
-            '/help'           => '<a href="#home#/help/">' . n__('system', 'Reading the FAQ') . '</a>',
-            '/library'        => '<a href="#home#/library/">' . n__('system', 'Library') . '</a>',
-            '/login'          => n__('system', 'Login'),
-            '/mail'           => n__('system', 'Personal correspondence'),
-            '/news'           => '<a href="#home#/news/">' . n__('system', 'Reading the news') . '</a>',
-            '/profile'        => n__('system', 'Profile'),
-            '/redirect'       => n__('system', 'Redirect on external link to another site'),
-            '/registration'   => n__('system', 'Registered on the site'),
-            '/users'          => '<a href="#home#/users/">' . n__('system', 'List of users') . '</a>',
-            '/online'         => '<a href="#home#/users/?act=online">' . n__('system', 'Who is online?') . '</a>',
-            '/online/history' => '<a href="#home#/users/?act=online">' . n__('system', 'Who is online?') . '</a>',
-            '/online/guest'   => '<a href="#home#/users/?act=online">' . n__('system', 'Who is online?') . '</a>',
-            '/online/ip'      => '<a href="#home#/users/?act=online">' . n__('system', 'Who is online?') . '</a>',
+            '/'               => '<a href="#home#/">' . d__('system', 'On the Homepage') . '</a>',
+            '/album'          => '<a href="#home#/album/">' . d__('system', 'Watching the photo album') . '</a>',
+            '/downloads'      => '<a href="#home#/downloads/">' . d__('system', 'Downloads') . '</a>',
+            '/forum'          => '<a href="#home#/forum/">' . d__('system', 'Forum') . '</a>&#160;/&#160;<a href="#home#/forum/?act=who">&gt;&gt;</a>', // phpcs:ignore
+            '/guestbook'      => '<a href="#home#/guestbook/">' . d__('system', 'Guestbook') . '</a>',
+            '/help'           => '<a href="#home#/help/">' . d__('system', 'Reading the FAQ') . '</a>',
+            '/library'        => '<a href="#home#/library/">' . d__('system', 'Library') . '</a>',
+            '/login'          => d__('system', 'Login'),
+            '/mail'           => d__('system', 'Personal correspondence'),
+            '/news'           => '<a href="#home#/news/">' . d__('system', 'Reading the news') . '</a>',
+            '/profile'        => d__('system', 'Profile'),
+            '/redirect'       => d__('system', 'Redirect on external link to another site'),
+            '/registration'   => d__('system', 'Registered on the site'),
+            '/users'          => '<a href="#home#/users/">' . d__('system', 'List of users') . '</a>',
+            '/online'         => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
+            '/online/history' => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
+            '/online/guest'   => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
+            '/online/ip'      => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
         ];
 
         if (array_key_exists($place, $placelist)) {
@@ -276,7 +276,7 @@ class Tools
         }
 
         return '<a href="' . $this->config['homeurl'] . '/">'
-            . ($this->user->rights >= 6 ? '[' . ($place) . ']' : n__('system', 'Somewhere on the site'))
+            . ($this->user->rights >= 6 ? '[' . ($place) . ']' : d__('system', 'Somewhere on the site'))
             . '</a>';
     }
 
@@ -304,7 +304,7 @@ class Tools
         $homeurl = $this->config['homeurl'];
 
         if (! $user['id']) {
-            $out = '<b>' . n__('system', 'Guest') . '</b>';
+            $out = '<b>' . d__('system', 'Guest') . '</b>';
 
             if (! empty($user['name'])) {
                 $out .= ': ' . $user['name'];
@@ -379,15 +379,15 @@ class Tools
             }
 
             if ($lastvisit) {
-                $out .= '<div><span class="gray">' . n__('system', 'Last Visit') . ':</span> ' . $lastvisit . '</div>';
+                $out .= '<div><span class="gray">' . d__('system', 'Last Visit') . ':</span> ' . $lastvisit . '</div>';
             }
 
             $iphist = '';
 
             if ($ipinf) {
-                $out .= '<div><span class="gray">' . n__('system', 'Browser') . ':</span> ' .
+                $out .= '<div><span class="gray">' . d__('system', 'Browser') . ':</span> ' .
                     htmlspecialchars($user['browser']) . '</div>' .
-                    '<div><span class="gray">' . n__('system', 'IP address') . ':</span> ';
+                    '<div><span class="gray">' . d__('system', 'IP address') . ':</span> ';
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip((int) $user['ip']);
 
@@ -412,7 +412,7 @@ class Tools
                     $iptotal = $this->db->query(
                         "SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'"
                     )->fetchColumn();
-                    $out .= '<div><span class="gray">' . n__('system', 'IP History') .
+                    $out .= '<div><span class="gray">' . d__('system', 'IP History') .
                         ':</span> <a href="' . $homeurl . '/profile/?act=ip&amp;user=' . $user['id'] .
                         '">[' . $iptotal . ']</a></div>';
                 }
@@ -593,7 +593,7 @@ class Tools
         $day = intdiv($var, 86400);
 
         return $var >= 86400
-            ? $day . ' ' . _p('Day', 'Days', $day, 'system')
+            ? $day . ' ' . dd__('system', 'Day', 'Days', $day)
             : date('G:i:s', mktime(0, 0, $var));
     }
 

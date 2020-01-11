@@ -33,13 +33,13 @@
                 <?php if (! empty($active_tab)): ?>
                     <div>
                         <?php if ($active_tab === 'guest'): ?>
-                            <?= $item['postguest'] ?> <?= _p('post', 'posts', $item['postguest']) ?>
+                            <?= $item['postguest'] ?> <?= n__('post', 'posts', $item['postguest']) ?>
                         <?php elseif ($active_tab === 'comm'): ?>
-                            <?= $item['komm'] ?> <?= _p('comment', 'comments', $item['komm']) ?>
+                            <?= $item['komm'] ?> <?= n__('comment', 'comments', $item['komm']) ?>
                         <?php elseif ($active_tab === 'karma'): ?>
-                            <?= $item['karma'] ?> <?= _p('point', 'points', $item['karma']) ?>
+                            <?= $item['karma'] ?> <?= n__('point', 'points', $item['karma']) ?>
                         <?php elseif ($active_tab === 'forum'): ?>
-                            <?= $item['postforum'] ?> <?= _p('post', 'posts', $item['postforum']) ?>
+                            <?= $item['postforum'] ?> <?= n__('post', 'posts', $item['postforum']) ?>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
