@@ -16,7 +16,7 @@ use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Library\Tree;
 use Library\Utils;
-use Johncms\System\i18n\Translator;
+use Laminas\I18n\Translator\Translator;
 use Aura\Autoload\Loader;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -38,7 +38,8 @@ $user = di(User::class);
 $view = di(Render::class);
 
 // Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/admin.lng');
+#di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/admin.lng');
+di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Loader();

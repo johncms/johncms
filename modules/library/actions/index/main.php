@@ -24,7 +24,7 @@ if ($total) {
     $i = 0;
 
     echo $view->render(
-        'library::mainlist',
+        'library::main',
         [
             'total'       => $total,
             'admin'       => $adm,

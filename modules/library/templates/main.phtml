@@ -1,4 +1,4 @@
-<div class="phdr"><strong>'<?= _t('Library') ?></strong></div>
+<div class="phdr"><strong><?= _t('Library') ?></strong></div>
 <div class="topmenu"><a href="?act=search"><?= _t('Search') ?></a> | <a href="?act=tagcloud"><?= _t('Tag Cloud') ?></a></div>
 
 <div class="gmenu">
@@ -7,16 +7,17 @@
     <div><?= _t('On moderation') ?>: <a href="?act=premod"><?= $countPremod ?></a></div>
     <?php endif; ?>
     <?php if ($new) : ?>
-        <img src="<?= $assets->url('images/old/add.gif') ?>" alt="" class="icon"><a href="?act=new"><?= _t('New Articles') ?></a> (<?= $new ?>)
+        <img src="#" alt="" class="icon"><a href="?act=new"><?= _t('New Articles') ?></a> (<?= $new ?>)
         <br>
     <?php endif; ?>
-    <img src="<?= $assets->url('images/old/rate.gif') ?>" alt="" class="icon"><a href="?act=top"><?= _t('Rating articles') ?></a>
+    <img src="#" alt="" class="icon"><a href="?act=top"><?= _t('Rating articles') ?></a>
     <br>
-    <img src="<?= $assets->url('images/old/talk.gif') ?>" alt="" class="icon"><a href="?act=lastcom"><?= _t('Latest comments') ?></a>
+    <img src="#" alt="" class="icon"><a href="?act=lastcom"><?= _t('Latest comments') ?></a>
     </p>
 </div>
 <?php if ($total) : ?>
     <!-- Listing Sections -->
+    <?php $i = 0; ?>
     <?php foreach ($list() as $main) : ?>
         <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
             <a href="?do=dir&amp;id=<?= $main['id'] ?>"><?= $main['name'] ?></a> (<?= $main['libCounter'] ?>)
