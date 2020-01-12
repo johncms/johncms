@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 16:58\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: modules/online/includes/guest.php:21
 #: modules/online/includes/history.php:21
@@ -41,7 +41,7 @@ msgstr "Hoạt động IP"
 
 #: modules/online/includes/guest.php:59
 msgid "Guest"
-msgstr "Khách"
+msgstr ""
 
 #: modules/online/includes/index.php:45
 msgid "Who is online?"
@@ -59,7 +59,7 @@ msgstr "Chỉ dành cho thành viên đã đăng ký"
 #: modules/online/templates/ip.phtml:51
 #: modules/online/templates/users.phtml:38
 msgid "List is empty"
-msgstr "Danh sách trống"
+msgstr ""
 
 #: modules/online/templates/ip.phtml:58
 #: modules/online/templates/users.phtml:45
