@@ -152,8 +152,6 @@ if (in_array($act, $array_includes, true)) {
     if (! $id) {
         require_once 'actions/index/main.php';
     } else {
-        $dir_nav = new Tree($id);
-        $dir_nav->processNavPanel();
         if ($do === 'dir') {
             // dir
             $actdir = $db->query(
@@ -162,6 +160,9 @@ if (in_array($act, $array_includes, true)) {
             )->fetch();
 
             $actdir = $actdir['id'] > 0 ? $actdir['dir'] : Utils::redir404();
+
+            $dir_nav = new Tree($id);
+            $dir_nav->processNavPanel();
 
             echo '<div class="phdr">' . $dir_nav->printNavPanel() . '</div>';
 

@@ -26,25 +26,24 @@ class Tree
 {
     /**
      * Массив результата
+     *
      * @var array
      */
     private $result = [];
 
     /**
      * Массив количества удаленных объектов
+     *
      * @var array
      */
     private $cleaned = ['images' => 0, 'comments' => 0, 'tags' => 0];
 
     /**
      * Обязательный аргумент, индификатор текущей вложенности parent
+     *
      * @var int
      */
     private $start_id;
-
-    private $child;
-
-    private $parent;
 
     /** @var PDO $db */
     private $db;
@@ -63,23 +62,24 @@ class Tree
 
     /**
      * Рекурсивно проходит по дереву собирая в массив типы и уникальные иды каталогов
+     *
      * @param int $id
      * @return Tree
      */
     public function getAllChildsId(int $id = 0): self
     {
-        $id = $id === 0 ? $this->start_id : $id;
+        $id = (int) ($id === 0 ? $this->start_id : $id);
         $stmt = $this->db->prepare('SELECT `dir` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
-        $dirtype = $stmt->fetchColumn();
+        $dirtype = (bool) $stmt->fetchColumn();
         $stmt = $this->db->prepare('SELECT `id` FROM ' . ($dirtype ? '`library_cats`' : '`library_texts`') . ' WHERE ' . ($dirtype ? '`parent`' : '`cat_id`') . ' = ?');
         $stmt->execute([$id]);
         $this->result['dirs'][$id] = $id;
         if ($stmt->rowCount()) {
-            while ($this->child = $stmt->fetch()) {
-                $this->result[($dirtype ? 'dirs' : 'texts')][$this->child['id']] = $this->child['id'];
+            while ($child = $stmt->fetch()) {
+                $this->result[($dirtype ? 'dirs' : 'texts')][$child['id']] = $child['id'];
                 if ($dirtype) {
-                    $this->getAllChildsId($this->child['id']);
+                    $this->getAllChildsId($child['id']);
                 }
             }
         }
@@ -89,6 +89,7 @@ class Tree
 
     /**
      * Очистка статей, удаляет комментарии, картинки и теги от статей
+     *
      * @param mixed $data
      * @return array
      */
@@ -117,6 +118,7 @@ class Tree
 
     /**
      * Удаляет ветку , возвращает количество удаленных каталогов, статей, тегов, коментариев и изображений в массиве
+     *
      * @param void
      * @return array
      */
@@ -143,18 +145,19 @@ class Tree
 
     /**
      * Рекурсивно проходит по ветке и собирает дочерние вложения
+     *
      * @param int $parent
      * @return Tree
      */
     public function getChildsDir(int $parent = 0): self
     {
-        $parent = $parent === 0 ? $this->start_id : $parent;
+        $parent = (int) ($parent === 0 ? $this->start_id : $parent);
         $stmt = $this->db->prepare('SELECT `id` FROM `library_cats` WHERE `parent` = ? AND `dir` = 1');
         $stmt->execute([$parent]);
         if ($stmt->rowCount()) {
-            while ($this->child = $stmt->fetch()) {
-                $this->result[] = $this->child['id'];
-                $this->getChildsDir($this->child['id']);
+            while ($child = $stmt->fetch()) {
+                $this->result[] = $child['id'];
+                $this->getChildsDir($child['id']);
             }
         }
 
@@ -163,18 +166,19 @@ class Tree
 
     /**
      * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
+     *
      * @param int $id
      * @return Tree
      */
     public function processNavPanel(int $id = 0): self
     {
-        $id = $id === 0 ? $this->start_id : $id;
+        $id = (int) ($id === 0 ? $this->start_id : $id);
         $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
-        $this->parent = $stmt->fetch();
-        $this->result[] = ['id' => $this->parent['id'], 'name' => $this->parent['name']];
-        if ($this->parent['parent'] !== 0) {
-            $this->processNavPanel($this->parent['parent']);
+        $parent = $stmt->fetch();
+        $this->result[] = ['id' => $parent['id'], 'name' => $parent['name']];
+        if ($parent['parent'] !== 0) {
+            $this->processNavPanel($parent['parent']);
         } else {
             krsort($this->result);
         }
@@ -184,6 +188,7 @@ class Tree
 
     /**
      * Собирает ссылки в верхнюю панель навигации
+     *
      * @param void
      * @return string
      */
@@ -203,6 +208,7 @@ class Tree
 
     /**
      * Получение результата
+     *
      * @return array
      */
     public function result(): array
