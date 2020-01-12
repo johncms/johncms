@@ -1,45 +1,31 @@
 files:
   - source: /modules/admin/locale/admin.pot
     translation: /modules/admin/locale/%two_letters_code%.po
-
   - source: /modules/album/locale/album.pot
     translation: /modules/album/locale/%two_letters_code%.po
-
   - source: /modules/community/locale/community.pot
     translation: /modules/community/locale/%two_letters_code%.po
-
   - source: /modules/downloads/locale/downloads.pot
     translation: /modules/downloads/locale/%two_letters_code%.po
-
   - source: /modules/forum/locale/forum.pot
     translation: /modules/forum/locale/%two_letters_code%.po
-
   - source: /modules/guestbook/locale/guestbook.pot
     translation: /modules/guestbook/locale/%two_letters_code%.po
-
   - source: /modules/help/locale/help.pot
     translation: /modules/help/locale/%two_letters_code%.po
-
   - source: /modules/homepage/locale/homepage.pot
     translation: /modules/homepage/locale/%two_letters_code%.po
-
   - source: /modules/library/locale/library.pot
     translation: /modules/library/locale/%two_letters_code%.po
-
   - source: /modules/mail/locale/mail.pot
     translation: /modules/mail/locale/%two_letters_code%.po
-
   - source: /modules/news/locale/news.pot
     translation: /modules/news/locale/%two_letters_code%.po
-
   - source: /modules/online/locale/online.pot
     translation: /modules/online/locale/%two_letters_code%.po
-
   - source: /modules/profile/locale/profile.pot
     translation: /modules/profile/locale/%two_letters_code%.po
-
   - source: /modules/registration/locale/registration.pot
     translation: /modules/registration/locale/%two_letters_code%.po
-
   - source: /system/locale/system.pot
     translation: /system/locale/%two_letters_code%.po
