@@ -151,7 +151,7 @@ msgid "If you cannot see the image code, enable graphics in your browser and ref
 msgstr ""
 
 #: modules/guestbook/templates/index.phtml:68
-msgid "Send"
+msgid "Write"
 msgstr ""
 
 #: modules/guestbook/templates/index.phtml:78

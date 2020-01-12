@@ -2,98 +2,25 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
-#: modules/admin/includes/adminlist.php:26
-#: modules/admin/includes/adminlist.php:79
-#: modules/admin/includes/adminlist.php:84
-#: modules/admin/includes/ads.php:221
-#: modules/admin/includes/ads.php:320
-#: modules/admin/includes/ads.php:432
-#: modules/admin/includes/ads.php:438
-#: modules/admin/includes/antiflood.php:23
-#: modules/admin/includes/antiflood.php:103
-#: modules/admin/includes/antispy.php:219
-#: modules/admin/includes/antispy.php:228
-#: modules/admin/includes/antispy.php:233
-#: modules/admin/includes/ban_panel.php:62
-#: modules/admin/includes/ban_panel.php:68
-#: modules/admin/includes/ban_panel.php:112
-#: modules/admin/includes/ban_panel.php:118
-#: modules/admin/includes/counters.php:306
-#: modules/admin/includes/counters.php:327
-#: modules/admin/includes/counters.php:332
-#: modules/admin/includes/emoticons.php:21
-#: modules/admin/includes/emoticons.php:64
-#: modules/admin/includes/emoticons.php:69
-#: modules/admin/includes/forum.php:760
-#: modules/admin/includes/forum.php:777
-#: modules/admin/includes/forum.php:782
-#: modules/admin/includes/ip_whois.php:18
-#: modules/admin/includes/ip_whois.php:124
-#: modules/admin/includes/ipban.php:133
-#: modules/admin/includes/ipban.php:189
-#: modules/admin/includes/ipban.php:213
-#: modules/admin/includes/ipban.php:336
-#: modules/admin/includes/ipban.php:365
-#: modules/admin/includes/ipban.php:370
-#: modules/admin/includes/ipban.php:418
-#: modules/admin/includes/ipban.php:424
-#: modules/admin/includes/karma.php:40
-#: modules/admin/includes/karma.php:81
-#: modules/admin/includes/karma.php:84
-#: modules/admin/includes/languages.php:31
-#: modules/admin/includes/news.php:18
-#: modules/admin/includes/news.php:68
-#: modules/admin/includes/news.php:71
-#: modules/admin/includes/settings.php:29
-#: modules/admin/includes/usr_clean.php:22
-#: modules/admin/includes/usr_clean.php:93
-#: modules/admin/includes/usr_del.php:71
-#: modules/admin/includes/usr_del.php:144
-#: modules/admin/index.php:48
-#: modules/admin/templates/access.phtml:2
-#: modules/admin/templates/access.phtml:5
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/languages.phtml:6
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
-msgstr ""
-
-#: modules/admin/includes/adminlist.php:26
+#: modules/admin/includes/adminlist.php:20
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:30
+#: modules/admin/includes/adminlist.php:34
 msgid "Supervisors"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:42
+#: modules/admin/includes/adminlist.php:59
 msgid "Administrators"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:55
+#: modules/admin/includes/adminlist.php:84
 msgid "Super Moderators"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:68
+#: modules/admin/includes/adminlist.php:109
 msgid "Moderators"
-msgstr ""
-
-#: modules/admin/includes/adminlist.php:78
-#: modules/admin/includes/ads.php:415
-#: modules/admin/includes/antispy.php:162
-#: modules/admin/includes/antispy.php:196
-#: modules/admin/includes/ban_panel.php:102
-#: modules/admin/includes/emoticons.php:63
-#: modules/admin/includes/forum.php:626
-#: modules/admin/includes/forum.php:737
-#: modules/admin/includes/ipban.php:132
-#: modules/admin/includes/ipban.php:405
-#: modules/admin/includes/usr_clean.php:85
-#: modules/admin/templates/userlist.phtml:28
-msgid "Total"
 msgstr ""
 
 #: modules/admin/includes/ads.php:25
@@ -156,6 +83,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:305
 #: modules/admin/includes/ipban.php:365
 #: modules/admin/includes/usr_clean.php:87
+#: modules/admin/templates/admin_list.phtml:50
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
@@ -352,6 +280,61 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
+#: modules/admin/includes/ads.php:221
+#: modules/admin/includes/ads.php:320
+#: modules/admin/includes/ads.php:432
+#: modules/admin/includes/ads.php:438
+#: modules/admin/includes/antiflood.php:23
+#: modules/admin/includes/antiflood.php:103
+#: modules/admin/includes/antispy.php:219
+#: modules/admin/includes/antispy.php:228
+#: modules/admin/includes/antispy.php:233
+#: modules/admin/includes/ban_panel.php:62
+#: modules/admin/includes/ban_panel.php:68
+#: modules/admin/includes/ban_panel.php:112
+#: modules/admin/includes/ban_panel.php:118
+#: modules/admin/includes/counters.php:306
+#: modules/admin/includes/counters.php:327
+#: modules/admin/includes/counters.php:332
+#: modules/admin/includes/emoticons.php:21
+#: modules/admin/includes/emoticons.php:64
+#: modules/admin/includes/emoticons.php:69
+#: modules/admin/includes/forum.php:760
+#: modules/admin/includes/forum.php:777
+#: modules/admin/includes/forum.php:782
+#: modules/admin/includes/ip_whois.php:18
+#: modules/admin/includes/ip_whois.php:124
+#: modules/admin/includes/ipban.php:133
+#: modules/admin/includes/ipban.php:189
+#: modules/admin/includes/ipban.php:213
+#: modules/admin/includes/ipban.php:336
+#: modules/admin/includes/ipban.php:365
+#: modules/admin/includes/ipban.php:370
+#: modules/admin/includes/ipban.php:418
+#: modules/admin/includes/ipban.php:424
+#: modules/admin/includes/karma.php:40
+#: modules/admin/includes/karma.php:81
+#: modules/admin/includes/karma.php:84
+#: modules/admin/includes/languages.php:31
+#: modules/admin/includes/news.php:18
+#: modules/admin/includes/news.php:68
+#: modules/admin/includes/news.php:71
+#: modules/admin/includes/settings.php:29
+#: modules/admin/includes/usr_clean.php:22
+#: modules/admin/includes/usr_clean.php:93
+#: modules/admin/includes/usr_del.php:71
+#: modules/admin/includes/usr_del.php:144
+#: modules/admin/index.php:48
+#: modules/admin/templates/access.phtml:2
+#: modules/admin/templates/access.phtml:5
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/languages.phtml:6
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ads.php:281
 #: modules/admin/includes/ads.php:299
@@ -437,8 +420,23 @@ msgstr ""
 #: modules/admin/includes/forum.php:623
 #: modules/admin/includes/forum.php:734
 #: modules/admin/includes/ipban.php:401
+#: modules/admin/templates/admin_list.phtml:32
 #: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
+msgstr ""
+
+#: modules/admin/includes/ads.php:415
+#: modules/admin/includes/antispy.php:162
+#: modules/admin/includes/antispy.php:196
+#: modules/admin/includes/ban_panel.php:102
+#: modules/admin/includes/emoticons.php:63
+#: modules/admin/includes/forum.php:626
+#: modules/admin/includes/forum.php:737
+#: modules/admin/includes/ipban.php:132
+#: modules/admin/includes/ipban.php:405
+#: modules/admin/includes/usr_clean.php:85
+#: modules/admin/templates/userlist.phtml:28
+msgid "Total"
 msgstr ""
 
 #: modules/admin/includes/ads.php:427
@@ -1517,17 +1515,18 @@ msgstr ""
 msgid "Administrators always have access to all closed modules and comments"
 msgstr ""
 
+#: modules/admin/templates/admin_list.phtml:46
+#: modules/admin/templates/reg_list.phtml:56
+#: modules/admin/templates/search_ip.phtml:76
+msgid "Total:"
+msgstr ""
+
 #: modules/admin/templates/languages.phtml:12
 msgid "Descriptions have been updated successfully"
 msgstr ""
 
 #: modules/admin/templates/languages.phtml:29
 msgid "Update List"
-msgstr ""
-
-#: modules/admin/templates/reg_list.phtml:56
-#: modules/admin/templates/search_ip.phtml:76
-msgid "Total:"
 msgstr ""
 
 #: modules/admin/templates/reg_list.phtml:58
