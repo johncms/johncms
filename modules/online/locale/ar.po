@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"X-Domain: online\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /develop/modules/online/locale/online.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"PO-Revision-Date: 2020-01-12 16:59\n"
+
+#: modules/online/includes/guest.php:21
+#: modules/online/includes/history.php:21
+#: modules/online/includes/index.php:22
+#: modules/online/includes/ip.php:21
+msgid "Users"
+msgstr "الاعضاء"
+
+#: modules/online/includes/guest.php:26
+#: modules/online/includes/history.php:26
+#: modules/online/includes/index.php:27
+#: modules/online/includes/ip.php:26
+msgid "History"
+msgstr "السّجل"
+
+#: modules/online/includes/guest.php:34
+#: modules/online/includes/history.php:34
+#: modules/online/includes/index.php:35
+#: modules/online/includes/ip.php:34
+msgid "Guests"
+msgstr "الزوار"
+
+#: modules/online/includes/guest.php:39
+#: modules/online/includes/history.php:39
+#: modules/online/includes/index.php:40
+#: modules/online/includes/ip.php:39
+msgid "IP Activity"
+msgstr "نشاط IP"
+
+#: modules/online/includes/guest.php:59
+msgid "Guest"
+msgstr ""
+
+#: modules/online/includes/index.php:45
+msgid "Who is online?"
+msgstr "المتواجدون الآن؟"
+
+#: modules/online/index.php:55
+#: modules/online/index.php:63
+msgid "Online"
+msgstr "متصل"
+
+#: modules/online/index.php:57
+msgid "For registered users only"
+msgstr "للمستخدمين المسجلين فقط"
+
+#: modules/online/templates/ip.phtml:51
+#: modules/online/templates/users.phtml:38
+msgid "List is empty"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:58
+#: modules/online/templates/users.phtml:45
+msgid "Total"
+msgstr "مجموع"
+

@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"X-Domain: registration\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: lt\n"
+"X-Crowdin-File: /develop/modules/registration/locale/registration.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Lithuanian\n"
+"Language: lt_LT\n"
+"PO-Revision-Date: 2020-01-12 15:58\n"
+
+#: modules/registration/index.php:41
+#: modules/registration/templates/index.phtml:2
+#: modules/registration/templates/index.phtml:3
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:103
+#: modules/registration/templates/registration_closed.phtml:2
+#: modules/registration/templates/registration_closed.phtml:3
+#: modules/registration/templates/registration_result.phtml:2
+#: modules/registration/templates/registration_result.phtml:3
+msgid "Registration"
+msgstr "Registracija"
+
+#: modules/registration/index.php:65
+msgid "You have not entered Nickname"
+msgstr "Jus neįvedėte slapyvardžio"
+
+#: modules/registration/index.php:67
+msgid "Nickname wrong length"
+msgstr "Neteisingas slapyvardžio ilgis"
+
+#: modules/registration/index.php:71
+msgid "Invalid characters"
+msgstr "Klaidingi simboliai"
+
+#: modules/registration/index.php:76
+msgid "You have not entered password"
+msgstr "Jus neįvedėte slaptažodžio"
+
+#: modules/registration/index.php:78
+msgid "Invalid length"
+msgstr "Neleistinas ilgis"
+
+#: modules/registration/index.php:83
+msgid "You have not selected genger"
+msgstr "Jūs neesate pasirinkę jokio turinio"
+
+#: modules/registration/index.php:93
+msgid "The security code is not correct"
+msgstr "Neteisingas apsaugos kodas"
+
+#: modules/registration/index.php:108
+msgid "Selected Nickname is already in use"
+msgstr "Šitas slapyvardis jau naudojamas"
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Jūs galite autorizotis svetainėje tik tada, kada patvirtins jūsų registraciją."
+
+#: modules/registration/templates/index.phtml:17
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Prašome, ne registroti slapyvardžių, kaip 111, shhhh, uuuu, ir kt. Jie bus ištrinti. <br /> Taip pat neregistruokite svetainėję per proxy serverius. Jie iškart bus ištrinti"
+
+#: modules/registration/templates/index.phtml:21
+msgid "Choose Nickname"
+msgstr "Pasirinkite Slapyvardį"
+
+#: modules/registration/templates/index.phtml:30
+msgid "Username"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:36
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, maks. 20 simbolių. < br / > leidžiama rusų ir lotynų abėcėlės, skaičių ir simbolių raštai - = @!? ~ _ ( ) [ ] . * (Išskyrus nulį)"
+
+#: modules/registration/templates/index.phtml:40
+#: modules/registration/templates/index.phtml:49
+msgid "Assign a password"
+msgstr "Priskirti slaptažodį"
+
+#: modules/registration/templates/index.phtml:55
+msgid "Min. 3 characters"
+msgstr "Min. 3 simbolių"
+
+#: modules/registration/templates/index.phtml:59
+msgid "Select Gender"
+msgstr "Pasirinkite lytį"
+
+#: modules/registration/templates/index.phtml:62
+msgid "Man"
+msgstr "Vyras"
+
+#: modules/registration/templates/index.phtml:63
+msgid "Woman"
+msgstr "Moteris"
+
+#: modules/registration/templates/index.phtml:67
+#: modules/registration/templates/index.phtml:74
+msgid "Your name"
+msgstr "Jūsų vardas"
+
+#: modules/registration/templates/index.phtml:78
+msgid "Tell us a little about yourself"
+msgstr "Papasakokite šiek tiek apie save"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Max. 1000 characters"
+msgstr "Maks. 1000 simbolių"
+
+#: modules/registration/templates/index.phtml:83
+#: modules/registration/templates/index.phtml:93
+msgid "Verification code"
+msgstr "Patvirtinimo kodas"
+
+#: modules/registration/templates/index.phtml:85
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:99
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Jeigu jūs nematote vaizdo kodo, įjunkite grafika jūsų naršyklėję ir atnaujinkitę šį puslapį"
+
+#: modules/registration/templates/registration_closed.phtml:9
+msgid "Registration is temporarily closed"
+msgstr "Registracija laikinai uždarytą"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registratiton data"
+msgstr "Jus sėkmingai užregistruotas"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Your ID"
+msgstr "Jūsų ID"
+
+#: modules/registration/templates/registration_result.phtml:12
+msgid "Your Username"
+msgstr "Jūsų vartotojo vardas"
+
+#: modules/registration/templates/registration_result.phtml:13
+msgid "Your Password"
+msgstr "Jūsų slaptažodis"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Prašome palaukti, kol moderatorius patvirtins jūsų registraciją"
+
+#: modules/registration/templates/registration_result.phtml:18
+msgid "Enter"
+msgstr "Įeiti"
+

@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"X-Domain: online\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /develop/modules/online/locale/online.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"PO-Revision-Date: 2020-01-12 16:58\n"
+
+#: modules/online/includes/guest.php:21
+#: modules/online/includes/history.php:21
+#: modules/online/includes/index.php:22
+#: modules/online/includes/ip.php:21
+msgid "Users"
+msgstr "Thành viên"
+
+#: modules/online/includes/guest.php:26
+#: modules/online/includes/history.php:26
+#: modules/online/includes/index.php:27
+#: modules/online/includes/ip.php:26
+msgid "History"
+msgstr "Lịch sử"
+
+#: modules/online/includes/guest.php:34
+#: modules/online/includes/history.php:34
+#: modules/online/includes/index.php:35
+#: modules/online/includes/ip.php:34
+msgid "Guests"
+msgstr "Khách"
+
+#: modules/online/includes/guest.php:39
+#: modules/online/includes/history.php:39
+#: modules/online/includes/index.php:40
+#: modules/online/includes/ip.php:39
+msgid "IP Activity"
+msgstr "Hoạt động IP"
+
+#: modules/online/includes/guest.php:59
+msgid "Guest"
+msgstr "Khách"
+
+#: modules/online/includes/index.php:45
+msgid "Who is online?"
+msgstr "Ai đang trực tuyến?"
+
+#: modules/online/index.php:55
+#: modules/online/index.php:63
+msgid "Online"
+msgstr "Trực tuyến"
+
+#: modules/online/index.php:57
+msgid "For registered users only"
+msgstr "Chỉ dành cho thành viên đã đăng ký"
+
+#: modules/online/templates/ip.phtml:51
+#: modules/online/templates/users.phtml:38
+msgid "List is empty"
+msgstr "Danh sách trống"
+
+#: modules/online/templates/ip.phtml:58
+#: modules/online/templates/users.phtml:45
+msgid "Total"
+msgstr "Tổng số"
+

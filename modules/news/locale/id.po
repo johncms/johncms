@@ -1,0 +1,180 @@
+msgid ""
+msgstr ""
+"X-Domain: news\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /develop/modules/news/locale/news.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2020-01-12 15:59\n"
+
+#: modules/news/includes/add.php:24
+#: modules/news/includes/add.php:133
+#: modules/news/includes/add.php:143
+#: modules/news/templates/add.phtml:2
+#: modules/news/templates/add.phtml:3
+#: modules/news/templates/add.phtml:9
+msgid "Add news"
+msgstr ""
+
+#: modules/news/includes/add.php:33
+#: modules/news/includes/edit.php:44
+msgid "You have not entered news title"
+msgstr "Anda tidak memasukkan judul berita"
+
+#: modules/news/includes/add.php:37
+#: modules/news/includes/edit.php:48
+msgid "You have not entered news text"
+msgstr "Anda tidak memasukkan isi berita"
+
+#: modules/news/includes/add.php:43
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "Anda tidak bisa mengirim pesan terlalu sering, mohon tunggu %d detik."
+
+#: modules/news/includes/add.php:134
+msgid "News added"
+msgstr "Berita ditambahkan"
+
+#: modules/news/includes/clean.php:24
+#: modules/news/includes/clean.php:51
+#: modules/news/templates/clear.phtml:2
+#: modules/news/templates/clear.phtml:3
+#: modules/news/templates/clear.phtml:9
+msgid "Clear news"
+msgstr ""
+
+#: modules/news/includes/clean.php:33
+msgid "Delete all news older than 1 week"
+msgstr "Hapus berita lebih dari 1 minggu"
+
+#: modules/news/includes/clean.php:39
+msgid "Delete all news"
+msgstr "Hapus semua berita"
+
+#: modules/news/includes/clean.php:45
+msgid "Delete all news older than 1 month"
+msgstr "Hapus berita lebih dari 1 bulan"
+
+#: modules/news/includes/del.php:24
+#: modules/news/includes/del.php:31
+#: modules/news/templates/confirm_delete.phtml:2
+#: modules/news/templates/confirm_delete.phtml:3
+msgid "Delete news"
+msgstr ""
+
+#: modules/news/includes/del.php:32
+msgid "News deleted"
+msgstr ""
+
+#: modules/news/includes/edit.php:25
+#: modules/news/includes/edit.php:73
+#: modules/news/includes/edit.php:84
+#: modules/news/templates/edit.phtml:2
+#: modules/news/templates/edit.phtml:3
+#: modules/news/templates/edit.phtml:9
+msgid "Edit news"
+msgstr ""
+
+#: modules/news/includes/edit.php:31
+#: modules/news/index.php:43
+#: modules/news/templates/index.phtml:2
+#: modules/news/templates/index.phtml:3
+msgid "News"
+msgstr "Berita"
+
+#: modules/news/includes/edit.php:33
+msgid "Wrong data"
+msgstr "Data salah"
+
+#: modules/news/includes/edit.php:85
+msgid "News changed"
+msgstr ""
+
+#: modules/news/templates/add.phtml:12
+#: modules/news/templates/add.phtml:20
+#: modules/news/templates/edit.phtml:12
+#: modules/news/templates/edit.phtml:20
+msgid "Title"
+msgstr "Judul"
+
+#: modules/news/templates/add.phtml:24
+#: modules/news/templates/edit.phtml:24
+msgid "Text"
+msgstr "Isi"
+
+#: modules/news/templates/add.phtml:29
+msgid "Discussion"
+msgstr "Diskusi"
+
+#: modules/news/templates/add.phtml:31
+msgid "Do not discuss"
+msgstr "Tidak didiskusikan"
+
+#: modules/news/templates/add.phtml:43
+#: modules/news/templates/edit.phtml:28
+msgid "Save"
+msgstr "Simpan"
+
+#: modules/news/templates/add.phtml:44
+#: modules/news/templates/edit.phtml:29
+msgid "Back to news"
+msgstr "Kembali ke berita"
+
+#: modules/news/templates/clear.phtml:11
+msgid "Clearing parameters"
+msgstr "Pilih metode penghapusan"
+
+#: modules/news/templates/clear.phtml:14
+msgid "Older than 1 month"
+msgstr "Lebih dari 1 bulan"
+
+#: modules/news/templates/clear.phtml:18
+msgid "Older than 1 week"
+msgstr "Lebih dari 1 minggu"
+
+#: modules/news/templates/clear.phtml:22
+msgid "Clear all"
+msgstr "Hapus semua"
+
+#: modules/news/templates/clear.phtml:25
+#: modules/news/templates/index.phtml:8
+msgid "Clear"
+msgstr "Hapus"
+
+#: modules/news/templates/clear.phtml:26
+#: modules/news/templates/confirm_delete.phtml:12
+msgid "Cancel"
+msgstr "Batal"
+
+#: modules/news/templates/confirm_delete.phtml:9
+msgid "Do you really want to delete?"
+msgstr "Apakah Anda ingin menghapus ini?"
+
+#: modules/news/templates/confirm_delete.phtml:11
+#: modules/news/templates/index.phtml:34
+msgid "Delete"
+msgstr "Hapus"
+
+#: modules/news/templates/index.phtml:7
+msgid "Add"
+msgstr "Tambahkan"
+
+#: modules/news/templates/index.phtml:18
+msgid "Author"
+msgstr "Oleh"
+
+#: modules/news/templates/index.phtml:26
+msgid "Discuss in Forum"
+msgstr "Diskusikan di forum"
+
+#: modules/news/templates/index.phtml:33
+msgid "Edit"
+msgstr "Sunting"
+
+#: modules/news/templates/index.phtml:42
+msgid "Total"
+msgstr ""
+

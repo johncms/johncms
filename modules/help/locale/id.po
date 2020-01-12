@@ -1,0 +1,326 @@
+msgid ""
+msgstr ""
+"X-Domain: help\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /develop/modules/help/locale/help.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2020-01-12 16:58\n"
+
+#: modules/help/includes/admsmilies.php:20
+#: modules/help/includes/smilies.php:35
+msgid "For administration"
+msgstr "Untuk admin"
+
+#: modules/help/includes/admsmilies.php:21
+#: modules/help/includes/my_smilies.php:22
+#: modules/help/includes/set_my_sm.php:27
+#: modules/help/includes/usersmilies.php:39
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr "Smile"
+
+#: modules/help/includes/admsmilies.php:32
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/help/includes/avatars.php:20
+#: modules/help/templates/index.phtml:30
+msgid "Avatars"
+msgstr "Avatar"
+
+#: modules/help/includes/avatars.php:37
+msgid "Avatar has been successfully applied"
+msgstr "Avatar berhasil dipasang"
+
+#: modules/help/includes/avatars.php:39
+msgid "Continue"
+msgstr "Lanjutkan"
+
+#: modules/help/includes/avatars.php:48
+msgid "An error occurred"
+msgstr "Terjadi kesalahan"
+
+#: modules/help/includes/avatars.php:50
+#: modules/help/templates/avatar_list.phtml:65
+#: modules/help/templates/avatars.phtml:48
+#: modules/help/templates/bbcode.phtml:89
+#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/index.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:81
+#: modules/help/templates/smiles.phtml:48
+#: modules/help/templates/smiles_list.phtml:88
+msgid "Back"
+msgstr "Kembali"
+
+#: modules/help/includes/avatars.php:55
+msgid "Set to Profile"
+msgstr "Setel dalam profil"
+
+#: modules/help/includes/avatars.php:58
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Apakah Anda yakin mengatur avatar sendiri?"
+
+#: modules/help/includes/avatars.php:61
+msgid "Save"
+msgstr "Simpan"
+
+#: modules/help/includes/forum.php:15
+#: modules/help/templates/index.phtml:28
+msgid "Forum rules"
+msgstr "Ketentuan Forum"
+
+#: modules/help/includes/my_smilies.php:21
+#: modules/help/includes/smilies.php:27
+#: modules/help/templates/smiles_list.phtml:45
+msgid "My smilies"
+msgstr "Smile saya"
+
+#: modules/help/includes/set_my_sm.php:27
+msgid "Wrong data"
+msgstr "Data salah"
+
+#: modules/help/includes/smilies.php:19
+msgid "Smiles"
+msgstr ""
+
+#: modules/help/includes/tags.php:15
+#: modules/help/templates/index.phtml:29
+msgid "bbCode Tags"
+msgstr "tag bbCode"
+
+#: modules/help/index.php:54
+msgid "Information, FAQ"
+msgstr "Informasi, FAQ"
+
+#: modules/help/index.php:64
+msgid "Animals"
+msgstr "Binatang"
+
+#: modules/help/index.php:65
+msgid "Brawl, Weapons"
+msgstr "Perkelahian, Senjata"
+
+#: modules/help/index.php:66
+msgid "Emotions"
+msgstr "Emosi"
+
+#: modules/help/index.php:67
+msgid "Flowers"
+msgstr "Bunga"
+
+#: modules/help/index.php:68
+msgid "Food, Alcohol"
+msgstr "Makanan, Alkohol"
+
+#: modules/help/index.php:69
+msgid "Gestures"
+msgstr "Gerakan"
+
+#: modules/help/index.php:70
+msgid "Holidays"
+msgstr "Liburan"
+
+#: modules/help/index.php:71
+msgid "Love"
+msgstr "Cinta"
+
+#: modules/help/index.php:72
+msgid "Miscellaneous"
+msgstr "Lainnya"
+
+#: modules/help/index.php:73
+msgid "Music, Dancing"
+msgstr "Musik, Tari"
+
+#: modules/help/index.php:74
+msgid "Sports"
+msgstr "Olahraga"
+
+#: modules/help/index.php:75
+msgid "Technology"
+msgstr "Teknologi"
+
+#: modules/help/templates/avatar_list.phtml:33
+#: modules/help/templates/avatars.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:33
+#: modules/help/templates/smiles.phtml:34
+#: modules/help/templates/smiles_list.phtml:33
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: modules/help/templates/avatar_list.phtml:61
+#: modules/help/templates/my_smiles_list.phtml:77
+#: modules/help/templates/smiles_list.phtml:84
+msgid "Total:"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:30
+msgid "PHP code"
+msgstr "Kode PHP"
+
+#: modules/help/templates/bbcode.phtml:33
+msgid "Link name"
+msgstr "Nama tautan"
+
+#: modules/help/templates/bbcode.phtml:34
+msgid "URL Link"
+msgstr "Tautan URL"
+
+#: modules/help/templates/bbcode.phtml:38
+msgid "Bold"
+msgstr "Tebal"
+
+#: modules/help/templates/bbcode.phtml:42
+msgid "Italic"
+msgstr "Miring"
+
+#: modules/help/templates/bbcode.phtml:46
+msgid "Underline"
+msgstr "Bergaris bawah"
+
+#: modules/help/templates/bbcode.phtml:50
+msgid "Strike"
+msgstr "Coret"
+
+#: modules/help/templates/bbcode.phtml:54
+msgid "Red"
+msgstr "Merah"
+
+#: modules/help/templates/bbcode.phtml:58
+msgid "Green"
+msgstr "Hijau"
+
+#: modules/help/templates/bbcode.phtml:62
+msgid "Blue"
+msgstr "Biru"
+
+#: modules/help/templates/bbcode.phtml:66
+msgid "Text Color"
+msgstr "Warna Teks"
+
+#: modules/help/templates/bbcode.phtml:70
+msgid "Background Color"
+msgstr "Warna Latarbelakang"
+
+#: modules/help/templates/bbcode.phtml:74
+msgid "Quote"
+msgstr "Kutipan"
+
+#: modules/help/templates/bbcode.phtml:78
+msgid "Bulleted list"
+msgstr "Daftar berbutir"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Title"
+msgstr "Judul"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Text"
+msgstr "Teks"
+
+#: modules/help/templates/bbcode.phtml:82
+msgid "Spoiler"
+msgstr ""
+
+#: modules/help/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr "Batal"
+
+#: modules/help/templates/forum_rules.phtml:26
+msgid "FORBIDDEN"
+msgstr "DILARANG"
+
+#: modules/help/templates/forum_rules.phtml:28
+msgid "Advertising messages"
+msgstr "Pesan Iklan"
+
+#: modules/help/templates/forum_rules.phtml:29
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "Pesan yang berisi langsung penyebaran kebencian rasial, nasional dan keagamaan"
+
+#: modules/help/templates/forum_rules.phtml:30
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "Segala sesuatu yang kasar, cabul, vulgar, memfitnah, kebencian, mengancam dan berorientasi seksual pesan atau materi lainnya yang melanggar undang-undang yang berlaku"
+
+#: modules/help/templates/forum_rules.phtml:31
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr "Pesan jelas menyinggung seseorang, terutama pengguna forum"
+
+#: modules/help/templates/forum_rules.phtml:32
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr "Sengaja untuk merusak penulisan nama panggilan pengguna lain untuk memberikan pesan naungan ofensif"
+
+#: modules/help/templates/forum_rules.phtml:33
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr "Penerbitan dihapus oleh moderator pesan berulang kali"
+
+#: modules/help/templates/forum_rules.phtml:34
+msgid "Post messages not related to the topic"
+msgstr "Pos pesan tidak terkait dengan topik"
+
+#: modules/help/templates/forum_rules.phtml:35
+msgid "Continuing topics that have been closed by moderator"
+msgstr "Melanjutkan topik telah ditutup oleh Moderator"
+
+#: modules/help/templates/forum_rules.phtml:38
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "SANGAT DILARANG"
+
+#: modules/help/templates/forum_rules.phtml:40
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr "Menulis di topik umum yang tidak puas dengan tindakan yang tidak pantas dari pengguna lain dan membahas tentang moderator bekerja. Menggunakan pesan pribadi untuk tujuan ini"
+
+#: modules/help/templates/forum_rules.phtml:41
+msgid "Register the nicknames having offensive tone for other users"
+msgstr "Daftar julukan yang memiliki nada ofensif untuk pengguna lain"
+
+#: modules/help/templates/forum_rules.phtml:44
+msgid "UNACCEPTABLE"
+msgstr "TIDAK DAPAT DITERIMA"
+
+#: modules/help/templates/forum_rules.phtml:46
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr "Mengutip penuh pesan pengguna sebelumnya dan mengutip pesan yang sudah yang berisi kutipan lain"
+
+#: modules/help/templates/forum_rules.phtml:47
+msgid "Post messages only contains external link"
+msgstr "Pos yang hanya berisi tautan eksternal"
+
+#: modules/help/templates/forum_rules.phtml:48
+msgid "Post messages written in translite"
+msgstr "Mengirim pesan yang diterjemahkan"
+
+#: modules/help/templates/forum_rules.phtml:49
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr "Posting pesan yang memiliki tujuan: terdiri hanya dari Smiley atau posting seperti \"Ok\", \"Apa?\", \"Siapa disana?\", dll."
+
+#: modules/help/templates/forum_rules.phtml:54
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr "Pesan dikirim meskipun peringatan di atas akan diubah atau dihapus."
+
+#: modules/help/templates/forum_rules.phtml:55
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "Ketentuan ini berlaku untuk semua pengguna dan moderator, melanggar ketentuan Anda akan diblokir atau kehilangan akun."
+
+#: modules/help/templates/my_smiles_list.phtml:36
+msgid "Add Smilies"
+msgstr "Tambahkan Smile"
+
+#: modules/help/templates/my_smiles_list.phtml:55
+#: modules/help/templates/smiles_list.phtml:62
+msgid "or"
+msgstr "atau"
+
+#: modules/help/templates/my_smiles_list.phtml:64
+msgid "Delete"
+msgstr "Hapus"
+
+#: modules/help/templates/smiles_list.phtml:71
+msgid "Add"
+msgstr "Tambahkan"
+

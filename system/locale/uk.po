@@ -1,0 +1,163 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"PO-Revision-Date: 2020-01-12 16:00\n"
+
+#: themes/default/templates/system/app/old_notifications.phtml:9
+msgid "Ban"
+msgstr "Бан"
+
+#: themes/default/templates/system/app/old_notifications.phtml:9
+msgid "Details"
+msgstr "Деталі"
+
+#: themes/default/templates/system/app/old_notifications.phtml:16
+msgid "System"
+msgstr "Система"
+
+#: themes/default/templates/system/app/old_notifications.phtml:28
+msgid "Mail"
+msgstr "Пошта"
+
+#: themes/default/templates/system/app/old_notifications.phtml:32
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:55
+msgid "Guestbook"
+msgstr "Гостьова книга"
+
+#: themes/default/templates/system/app/old_notifications.phtml:38
+msgid "Comments"
+msgstr "Коментарі"
+
+#: themes/default/templates/system/app/old_notifications.phtml:42
+msgid "Unread"
+msgstr "Непрочитане"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:26
+msgid "News archive"
+msgstr "Архів новин"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:41
+msgid "Forum"
+msgstr "Форум"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:70
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:86
+msgid "Library"
+msgstr "Бібліотека"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:101
+msgid "Users"
+msgstr "Користувачі"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:115
+msgid "Photo Albums"
+msgstr "Фотоальбоми"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:129
+msgid "Information, FAQ"
+msgstr "Інформація, FAQ"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
+msgid "Admin Panel"
+msgstr "Адмін-панель"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:149
+msgid "Admin Chat"
+msgstr "Адмін Чат"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+#: themes/default/templates/system/layout/old_default.phtml:51
+msgid "Guest"
+msgstr "Гість"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+msgid "Notifications"
+msgstr "Повідомлення"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+#: themes/default/templates/system/layout/old_default.phtml:64
+msgid "Personal"
+msgstr "Особисте"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+msgid "Exit"
+msgstr "Вихід"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:83
+#: themes/default/templates/system/layout/old_default.phtml:69
+msgid "Login"
+msgstr "Увійти"
+
+#: themes/default/templates/system/layout/old_default.phtml:50
+msgid "Hi"
+msgstr "Привіт"
+
+#: themes/default/templates/system/layout/old_default.phtml:57
+msgid "Home"
+msgstr "На головну"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_list.phtml:99
+msgid "Delete"
+msgstr "Видалити"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr "Очистити"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: themes/default/templates/system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr "Повідомлення"
+
+#: themes/default/templates/system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr "Надіслати"
+
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: themes/default/templates/system/pages/comments_list.phtml:50
+msgid "Reply"
+msgstr "Відповісти"
+
+#: themes/default/templates/system/pages/comments_list.phtml:53
+msgid "Quote"
+msgstr "Цитата"
+
+#: themes/default/templates/system/pages/comments_list.phtml:92
+msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:96
+msgid "Edit"
+msgstr "Редагувати"
+
+#: themes/default/templates/system/pages/comments_list.phtml:114
+#: themes/default/templates/system/pages/result.phtml:29
+msgid "Back"
+msgstr "Повернутись"
+

@@ -1,0 +1,364 @@
+msgid ""
+msgstr ""
+"X-Domain: mail\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /develop/modules/mail/locale/mail.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-12 15:58\n"
+
+#: modules/mail/includes/delete.php:15
+msgid "Deleting messages"
+msgstr "Удаление сообщений"
+
+#: modules/mail/includes/delete.php:28
+msgid "Message does not exist"
+msgstr "Такого сообщения не существует"
+
+#: modules/mail/includes/delete.php:45
+#: modules/mail/includes/delete.php:74
+msgid "Message deleted"
+msgstr "Сообщение удалено"
+
+#: modules/mail/includes/delete.php:47
+#: modules/mail/includes/delete.php:76
+#: modules/mail/includes/deluser.php:45
+#: modules/mail/includes/write.php:83
+#: modules/mail/templates/contact_list.phtml:93
+#: modules/mail/templates/conversations.phtml:86
+#: modules/mail/templates/files.phtml:76
+#: modules/mail/templates/messages.phtml:176
+msgid "Back"
+msgstr "Назад"
+
+#: modules/mail/includes/delete.php:83
+msgid "You really want to remove the message?"
+msgstr "Вы действительно хотите удалить сообщение?"
+
+#: modules/mail/includes/delete.php:85
+#: modules/mail/includes/deluser.php:15
+#: modules/mail/includes/deluser.php:53
+#: modules/mail/includes/ignor.php:220
+#: modules/mail/includes/index.php:134
+#: modules/mail/includes/input.php:97
+#: modules/mail/includes/new.php:44
+#: modules/mail/includes/output.php:96
+#: modules/mail/includes/write.php:91
+#: modules/mail/templates/messages.phtml:153
+msgid "Delete"
+msgstr "Удалить"
+
+#: modules/mail/includes/delete.php:102
+msgid "The message for removal isn't chosen"
+msgstr "Не выбрано сообщение для удаления"
+
+#: modules/mail/includes/deluser.php:43
+msgid "Contact deleted"
+msgstr "Контакт удален"
+
+#: modules/mail/includes/deluser.php:51
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr "При удалении контакта, удаляется и вся переписка с ним.<br>Вы действительно хотите удалить?"
+
+#: modules/mail/includes/deluser.php:70
+msgid "Contact for removal isn't chosen"
+msgstr "Не выбран контакт для удаления"
+
+#: modules/mail/includes/files.php:15
+msgid "Files"
+msgstr "Файлы"
+
+#: modules/mail/includes/ignor.php:15
+msgid "Blacklist"
+msgstr "Чёрный список"
+
+#: modules/mail/includes/ignor.php:29
+#: modules/mail/includes/ignor.php:91
+#: modules/mail/includes/index.php:28
+#: modules/mail/includes/write.php:33
+#: modules/mail/includes/write.php:148
+msgid "User does not exists"
+msgstr "Такого пользователя не существует"
+
+#: modules/mail/includes/ignor.php:40
+msgid "User not blocked"
+msgstr "Пользователь не заблокирован"
+
+#: modules/mail/includes/ignor.php:43
+msgid "User is unblocked"
+msgstr "Пользователь разблокирован"
+
+#: modules/mail/includes/ignor.php:52
+#: modules/mail/includes/ignor.php:109
+#: modules/mail/includes/ignor.php:138
+#: modules/mail/includes/ignor.php:166
+#: modules/mail/includes/index.php:66
+#: modules/mail/includes/input.php:73
+#: modules/mail/includes/output.php:72
+msgid "Continue"
+msgstr "Продолжить"
+
+#: modules/mail/includes/ignor.php:58
+msgid "You really want to unblock contact?"
+msgstr "Вы действительно хотите разблокировать контакт?"
+
+#: modules/mail/includes/ignor.php:60
+#: modules/mail/includes/ignor.php:224
+msgid "Unblock"
+msgstr "Разблокировать"
+
+#: modules/mail/includes/ignor.php:77
+#: modules/mail/includes/ignor.php:164
+msgid "Contact isn't chosen"
+msgstr "Не выбран контакт"
+
+#: modules/mail/includes/ignor.php:107
+msgid "This user can not be blocked"
+msgstr "Данного пользователя нельзя заблокировать"
+
+#: modules/mail/includes/ignor.php:136
+msgid "User is blocked"
+msgstr "Пользователь заблокирован"
+
+#: modules/mail/includes/ignor.php:145
+msgid "You really want to block contact?"
+msgstr "Вы действительно хотите заблокировать контакт?"
+
+#: modules/mail/includes/ignor.php:147
+msgid "Block"
+msgstr "Заблокировать"
+
+#: modules/mail/includes/ignor.php:174
+#: modules/mail/includes/index.php:89
+msgid "My Contacts"
+msgstr "Мои контакты"
+
+#: modules/mail/includes/ignor.php:179
+#: modules/mail/includes/index.php:94
+msgid "Blocklist"
+msgstr "Заблокированные"
+
+#: modules/mail/includes/ignor.php:216
+#: modules/mail/includes/index.php:130
+#: modules/mail/includes/input.php:89
+#: modules/mail/includes/new.php:44
+#: modules/mail/includes/output.php:88
+msgid "Correspondence"
+msgstr "Переписка"
+
+#: modules/mail/includes/index.php:15
+msgid "Contacts"
+msgstr "Контакты"
+
+#: modules/mail/includes/index.php:42
+msgid "You cannot add yourself as a contact"
+msgstr "Самого себя нельзя добавить в контакт"
+
+#: modules/mail/includes/index.php:64
+msgid "User has been added to your contact list"
+msgstr "Пользователь добавлен в список контактов"
+
+#: modules/mail/includes/index.php:72
+msgid "You really want to add contact?"
+msgstr "Вы действительно хотите добавить контакт?"
+
+#: modules/mail/includes/index.php:74
+msgid "Add"
+msgstr "Добавить"
+
+#: modules/mail/includes/index.php:138
+#: modules/mail/includes/input.php:93
+#: modules/mail/includes/output.php:92
+msgid "Block User"
+msgstr "Заблокировать пользователя"
+
+#: modules/mail/includes/input.php:15
+msgid "Incoming messages"
+msgstr "Входящие сообщения"
+
+#: modules/mail/includes/load.php:15
+#: modules/mail/includes/new.php:15
+#: modules/mail/includes/write.php:21
+#: modules/mail/index.php:77
+msgid "Mail"
+msgstr "Почта"
+
+#: modules/mail/includes/load.php:24
+#: modules/mail/includes/load.php:36
+msgid "Such file does not exist"
+msgstr "Такого файла не существует"
+
+#: modules/mail/includes/load.php:38
+msgid "No file selected"
+msgstr "Не выбран файл"
+
+#: modules/mail/includes/new.php:16
+msgid "New Messages"
+msgstr "Новые сообщения"
+
+#: modules/mail/includes/new.php:44
+msgid "Block Sender"
+msgstr "Блокировать отправителя"
+
+#: modules/mail/includes/new.php:55
+#: modules/mail/templates/contact_list.phtml:38
+#: modules/mail/templates/conversations.phtml:31
+#: modules/mail/templates/files.phtml:31
+#: modules/mail/templates/messages.phtml:75
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: modules/mail/includes/new.php:58
+msgid "Total"
+msgstr "Всего"
+
+#: modules/mail/includes/new.php:65
+msgid "To Page"
+msgstr "На страницу"
+
+#: modules/mail/includes/new.php:68
+msgid "Personal"
+msgstr "Личное"
+
+#: modules/mail/includes/output.php:15
+msgid "Sent messages"
+msgstr "Отправленные сообщения"
+
+#: modules/mail/includes/write.php:42
+#: modules/mail/templates/messages.phtml:161
+msgid "Clear messages"
+msgstr "Очистить сообщения"
+
+#: modules/mail/includes/write.php:81
+msgid "Messages are deleted"
+msgstr "Сообщения удалены"
+
+#: modules/mail/includes/write.php:89
+msgid "Confirm the deletion of messages"
+msgstr "Подтвердите удаление сообщений"
+
+#: modules/mail/includes/write.php:126
+msgid "Specify the recipient's login"
+msgstr "Укажите логин получателя"
+
+#: modules/mail/includes/write.php:130
+msgid "Message cannot be empty"
+msgstr "Собщение не может быть пустым"
+
+#: modules/mail/includes/write.php:134
+msgid "You cannot send messages to yourself"
+msgstr "Самому себе нельзя отправлять сообщения"
+
+#: modules/mail/includes/write.php:140
+msgid "You cannot add the message so often. Please, wait %d sec."
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
+
+#: modules/mail/includes/write.php:163
+msgid "To this user can write only contacts"
+msgstr "Данному пользователю могут писать только контакты"
+
+#: modules/mail/includes/write.php:169
+msgid "To this user can write only friends"
+msgstr "Данному пользователю могут писать только друзья"
+
+#: modules/mail/includes/write.php:197
+#: modules/mail/includes/write.php:207
+#: modules/mail/includes/write.php:373
+#: modules/mail/includes/write.php:394
+#: modules/mail/includes/write.php:397
+msgid "Error uploading file"
+msgstr "Ошибка выгрузки файла"
+
+#: modules/mail/includes/write.php:282
+msgid "It is forbidden to upload files without a name"
+msgstr "Запрещается выгружать файлы без имени"
+
+#: modules/mail/includes/write.php:286
+msgid "It is forbidden to upload files without extension"
+msgstr "Запрещается выгружать файлы без расширения"
+
+#: modules/mail/includes/write.php:290
+msgid "The size of the file exceeds the maximum allowable upload"
+msgstr "Размер выгружаемого файла превышает максимально допустимый"
+
+#: modules/mail/includes/write.php:294
+msgid "File name contains invalid characters"
+msgstr "В названии файла присутствуют недопустимые символы"
+
+#: modules/mail/includes/write.php:298
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr "Запрещенный тип файла! К отправке разрешены только файлы, имеющие следующее расширение"
+
+#: modules/mail/includes/write.php:314
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr "Пользователь у Вас в игноре. Отправка сообщения не возможна."
+
+#: modules/mail/includes/write.php:326
+msgid "The user added you in the ignore list. Sending the message isn't possible."
+msgstr "Пользователь добаил Вас в игнор. Отправка сообщения не возможна."
+
+#: modules/mail/includes/write.php:413
+msgid "Message already exists"
+msgstr "Такое сообщение уже было"
+
+#: modules/mail/index.php:80
+msgid "My Account"
+msgstr "Личный кабинет"
+
+#: modules/mail/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr "Отмена"
+
+#: modules/mail/templates/contact_list.phtml:62
+#: modules/mail/templates/conversations.phtml:54
+msgid "message"
+msgid_plural "messages"
+msgstr[0] "сообщение"
+msgstr[1] "сообщения"
+msgstr[2] "сообщений"
+msgstr[3] "сообщений"
+
+#: modules/mail/templates/contact_list.phtml:64
+msgid "unread message"
+msgid_plural "unread messages"
+msgstr[0] "непрочитанное сообщение"
+msgstr[1] "непрочитанных сообщения"
+msgstr[2] "непрочитанных сообщений"
+msgstr[3] "непрочитанных сообщений"
+
+#: modules/mail/templates/contact_list.phtml:89
+#: modules/mail/templates/conversations.phtml:82
+#: modules/mail/templates/files.phtml:72
+#: modules/mail/templates/messages.phtml:172
+msgid "Total:"
+msgstr "Всего:"
+
+#: modules/mail/templates/conversations.phtml:54
+msgid "Last:"
+msgstr "Последнее:"
+
+#: modules/mail/templates/messages.phtml:41
+#: modules/mail/templates/messages.phtml:49
+msgid "To Whom"
+msgstr "Кому"
+
+#: modules/mail/templates/messages.phtml:54
+msgid "Message"
+msgstr "Сообщение"
+
+#: modules/mail/templates/messages.phtml:61
+msgid "Choose file"
+msgstr "Выберите файл"
+
+#: modules/mail/templates/messages.phtml:64
+msgid "Send"
+msgstr "Отправить"
+
+#: modules/mail/templates/messages.phtml:105
+msgid "Attached files"
+msgstr "Прикрепленные файлы"
+

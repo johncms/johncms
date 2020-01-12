@@ -1,0 +1,571 @@
+msgid ""
+msgstr ""
+"X-Domain: library\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /develop/modules/library/locale/library.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"PO-Revision-Date: 2020-01-12 15:59\n"
+
+#: modules/library/classes/Hashtags.php:256
+#: modules/library/includes/lastcom.php:37
+#: modules/library/includes/tags.php:58
+#: modules/library/includes/top.php:37
+#: modules/library/index.php:204
+#: modules/library/index.php:270
+#: modules/library/index.php:329
+msgid "The list is empty"
+msgstr "فارغة"
+
+#: modules/library/classes/Rating.php:134
+msgid "Vote"
+msgstr "تصويت"
+
+#: modules/library/classes/Tree.php:200
+#: modules/library/includes/addnew.php:203
+#: modules/library/includes/comments.php:40
+#: modules/library/includes/del.php:22
+#: modules/library/includes/lastcom.php:15
+#: modules/library/includes/mkdir.php:40
+#: modules/library/includes/moder.php:118
+#: modules/library/includes/new.php:18
+#: modules/library/includes/premod.php:17
+#: modules/library/includes/search.php:28
+#: modules/library/includes/search.php:55
+#: modules/library/includes/tagcloud.php:23
+#: modules/library/includes/tags.php:25
+#: modules/library/includes/top.php:24
+#: modules/library/index.php:57
+#: modules/library/index.php:154
+#: modules/library/index.php:368
+msgid "Library"
+msgstr "مَكتبَة"
+
+#: modules/library/includes/addnew.php:34
+msgid "You cannot add the Article so often<br>Please, wait %d sec."
+msgstr "لا يمكنك إضافة هذه المادة في كثير من الأحيان <br>الرجاء الانتظار %d ثانية."
+
+#: modules/library/includes/addnew.php:35
+#: modules/library/includes/addnew.php:224
+#: modules/library/includes/del.php:55
+#: modules/library/includes/del.php:79
+#: modules/library/includes/del.php:98
+#: modules/library/includes/del.php:147
+#: modules/library/includes/del.php:155
+#: modules/library/includes/lastcom.php:40
+#: modules/library/includes/mkdir.php:54
+#: modules/library/includes/moder.php:102
+#: modules/library/includes/moder.php:190
+#: modules/library/includes/top.php:106
+msgid "Back"
+msgstr "الرجوع للخلف"
+
+#: modules/library/includes/addnew.php:51
+#: modules/library/includes/mkdir.php:23
+msgid "You have not entered the name"
+msgstr "لم تقم بإدخال اسم"
+
+#: modules/library/includes/addnew.php:70
+msgid "The file is invalid encoding, preferably UTF-8"
+msgstr "الملف ترميز غير صحيحة، ويفضل UTF-8"
+
+#: modules/library/includes/addnew.php:70
+#: modules/library/includes/addnew.php:83
+#: modules/library/includes/addnew.php:93
+#: modules/library/includes/addnew.php:172
+#: modules/library/includes/mkdir.php:23
+msgid "Repeat"
+msgstr "كرر"
+
+#: modules/library/includes/addnew.php:83
+msgid "Error uploading"
+msgstr "خطأ في تحميل"
+
+#: modules/library/includes/addnew.php:93
+msgid "Invalid file format allowed * .txt"
+msgstr "تنسيق الملف غير صالح سمح * .txt"
+
+#: modules/library/includes/addnew.php:101
+msgid "You have not entered text"
+msgstr "لم تقم بإدخال النص"
+
+#: modules/library/includes/addnew.php:172
+#: modules/library/includes/moder.php:90
+msgid "Photo uploading error"
+msgstr "خطأ في تحميل الصورة"
+
+#: modules/library/includes/addnew.php:187
+msgid "Article added"
+msgstr "المادة المضافة"
+
+#: modules/library/includes/addnew.php:187
+msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
+msgstr "شكرا لك على ما كتبت. بعد التحقق من الادارة، سيتم نشر المادة الخاصة بك في المكتبة."
+
+#: modules/library/includes/addnew.php:189
+msgid "To Article"
+msgstr "للمادة"
+
+#: modules/library/includes/addnew.php:189
+#: modules/library/includes/mkdir.php:37
+msgid "To Section"
+msgstr "إلى قسم"
+
+#: modules/library/includes/addnew.php:203
+#: modules/library/index.php:336
+msgid "Write Article"
+msgstr "كتابة المقالة"
+
+#: modules/library/includes/addnew.php:206
+#: modules/library/includes/mkdir.php:43
+#: modules/library/includes/moder.php:129
+msgid "Title"
+msgstr "عنوان"
+
+#: modules/library/includes/addnew.php:208
+#: modules/library/includes/moder.php:134
+msgid "Announce"
+msgstr "أعلن"
+
+#: modules/library/includes/addnew.php:210
+#: modules/library/includes/moder.php:138
+msgid "Text"
+msgstr "نص"
+
+#: modules/library/includes/addnew.php:215
+#: modules/library/includes/moder.php:183
+msgid "Commenting on the Article"
+msgstr "التعليقات على الأخبار"
+
+#: modules/library/includes/addnew.php:216
+#: modules/library/includes/moder.php:127
+msgid "To upload a photo"
+msgstr "لإضافة صور"
+
+#: modules/library/includes/addnew.php:218
+msgid "Select the text file"
+msgstr "حدد ملف نصي"
+
+#: modules/library/includes/addnew.php:219
+msgid "Text entry field will be ignored"
+msgstr "سيتم تجاهل حقل إدخال النص"
+
+#: modules/library/includes/addnew.php:220
+#: modules/library/includes/comments.php:45
+#: modules/library/includes/moder.php:147
+#: modules/library/includes/new.php:52
+#: modules/library/includes/tags.php:25
+#: modules/library/includes/tags.php:45
+#: modules/library/includes/top.php:77
+msgid "Tags"
+msgstr "وسوم"
+
+#: modules/library/includes/addnew.php:221
+msgid "Specify the Tag to the Article, separated by commas"
+msgstr "تعيين علامة لهذه المادة، مفصولة بفواصل"
+
+#: modules/library/includes/addnew.php:222
+#: modules/library/includes/mkdir.php:52
+#: modules/library/includes/moder.php:188
+msgid "Save"
+msgstr "حفظ"
+
+#: modules/library/includes/comments.php:18
+#: modules/library/includes/comments.php:32
+#: modules/library/index.php:65
+msgid "Access forbidden"
+msgstr "ممنوع الوصول"
+
+#: modules/library/includes/comments.php:46
+#: modules/library/includes/lastcom.php:33
+#: modules/library/includes/new.php:55
+#: modules/library/includes/premod.php:47
+#: modules/library/includes/search.php:97
+#: modules/library/includes/tags.php:42
+#: modules/library/includes/top.php:80
+#: modules/library/index.php:318
+#: modules/library/index.php:396
+msgid "Who added"
+msgstr "الذي أضاف"
+
+#: modules/library/includes/comments.php:49
+#: modules/library/includes/moder.php:185
+#: modules/library/includes/new.php:65
+#: modules/library/includes/search.php:99
+#: modules/library/includes/tags.php:44
+#: modules/library/includes/top.php:90
+#: modules/library/index.php:406
+msgid "Number of readings"
+msgstr "عدد القراءات"
+
+#: modules/library/includes/comments.php:70
+#: modules/library/includes/new.php:71
+#: modules/library/includes/new.php:73
+#: modules/library/includes/tags.php:46
+#: modules/library/includes/top.php:96
+#: modules/library/includes/top.php:98
+#: modules/library/index.php:412
+#: modules/library/index.php:415
+msgid "Comments"
+msgstr "التعليقات"
+
+#: modules/library/includes/comments.php:81
+msgid "Wrong data"
+msgstr "بيانات خاطئة"
+
+#: modules/library/includes/del.php:22
+#: modules/library/includes/del.php:87
+#: modules/library/includes/del.php:118
+#: modules/library/includes/del.php:129
+#: modules/library/includes/del.php:137
+#: modules/library/includes/premod.php:49
+#: modules/library/index.php:198
+#: modules/library/index.php:264
+#: modules/library/index.php:278
+#: modules/library/index.php:338
+#: modules/library/index.php:450
+msgid "Delete"
+msgstr "حذف"
+
+#: modules/library/includes/del.php:34
+msgid "Section does not exist"
+msgstr "المقطع غير موجود"
+
+#: modules/library/includes/del.php:41
+msgid "Are you sure you want to move the contents?"
+msgstr "هل أنت متأكد من أنك تريد نقل المحتويات؟"
+
+#: modules/library/includes/del.php:43
+msgid "Move"
+msgstr "نقل"
+
+#: modules/library/includes/del.php:43
+#: modules/library/includes/del.php:87
+#: modules/library/includes/del.php:118
+#: modules/library/includes/del.php:129
+#: modules/library/includes/del.php:137
+msgid "Cancel"
+msgstr "إلغاء الأمر"
+
+#: modules/library/includes/del.php:55
+msgid "Successful transfer"
+msgstr "نجاح نقل"
+
+#: modules/library/includes/del.php:67
+#: modules/library/includes/moder.php:151
+msgid "Move to Section"
+msgstr "الانتقال إلى مقطع"
+
+#: modules/library/includes/del.php:75
+#: modules/library/includes/premod.php:49
+msgid "Approve"
+msgstr "الموافقة على"
+
+#: modules/library/includes/del.php:79
+msgid "There are no Sections for moving"
+msgstr "هناك لا توجد أقسام للانتقال"
+
+#: modules/library/includes/del.php:85
+msgid "Are you sure you want to delete content?"
+msgstr "هل أنت متأكد من أنك تريد حذف هذا المحتوى؟"
+
+#: modules/library/includes/del.php:92
+msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
+msgstr "حذف بنجاح: <br>الدلائل: المواد (%d) <br>: (%d) <br>العلامات: تعليقات (%d) <br>: الصور (%d) <br>: (%d)"
+
+#: modules/library/includes/del.php:103
+msgid "Section is not empty"
+msgstr "القسم ليس فارغا"
+
+#: modules/library/includes/del.php:104
+msgid "Select action"
+msgstr "حدد الإجراء"
+
+#: modules/library/includes/del.php:106
+msgid "Delete with movement"
+msgstr "حذف مع حركة"
+
+#: modules/library/includes/del.php:107
+msgid "Delete all Sections and Articles"
+msgstr "حذف كافة الأقسام والمواد"
+
+#: modules/library/includes/del.php:108
+msgid "Do"
+msgstr "هل"
+
+#: modules/library/includes/del.php:116
+#: modules/library/includes/del.php:129
+#: modules/library/includes/del.php:135
+msgid "Delete confirmation"
+msgstr "تأكيد حذف"
+
+#: modules/library/includes/del.php:125
+msgid "Articles do not exist"
+msgstr "لا توجد مواد"
+
+#: modules/library/includes/del.php:147
+#: modules/library/includes/del.php:155
+msgid "Deleted"
+msgstr "تم حذف"
+
+#: modules/library/includes/download.php:51
+msgid "Author name"
+msgstr "اسم الكاتب"
+
+#: modules/library/includes/download.php:52
+msgid "Author last name"
+msgstr "اسم المؤلف الأخير"
+
+#: modules/library/includes/download.php:54
+msgid "Name of the book"
+msgstr "اسم الكتاب"
+
+#: modules/library/includes/download.php:56
+msgid "Date"
+msgstr "تاريخ"
+
+#: modules/library/includes/lastcom.php:15
+#: modules/library/index.php:174
+msgid "Latest comments"
+msgstr "أحدث التعليقات"
+
+#: modules/library/includes/mkdir.php:37
+msgid "Section created"
+msgstr "تم إنشاء قسم"
+
+#: modules/library/includes/mkdir.php:40
+#: modules/library/index.php:210
+msgid "Create Section"
+msgstr "إنشاء قسم"
+
+#: modules/library/includes/mkdir.php:45
+#: modules/library/includes/moder.php:131
+msgid "Section description"
+msgstr "وصف القسم"
+
+#: modules/library/includes/mkdir.php:47
+#: modules/library/includes/moder.php:171
+msgid "Section type"
+msgstr "نوع القسم"
+
+#: modules/library/includes/mkdir.php:49
+#: modules/library/includes/moder.php:174
+#: modules/library/index.php:253
+msgid "Sections"
+msgstr "الأقسام"
+
+#: modules/library/includes/mkdir.php:50
+#: modules/library/includes/moder.php:175
+#: modules/library/index.php:253
+msgid "Articles"
+msgstr "مقالات"
+
+#: modules/library/includes/moder.php:102
+msgid "Changed"
+msgstr "تم التغيير"
+
+#: modules/library/includes/moder.php:119
+msgid "Edit Section"
+msgstr "تحرير قسم"
+
+#: modules/library/includes/moder.php:119
+msgid "Edit Article"
+msgstr "تحرير المادة"
+
+#: modules/library/includes/moder.php:144
+msgid "The text of the Article can not be edited, a large amount of data !!!"
+msgstr "لا يمكن تحرير نص المادة، كمية كبيرة من البيانات!!!"
+
+#: modules/library/includes/moder.php:157
+msgid "The ROOT"
+msgstr "الجذر"
+
+#: modules/library/includes/moder.php:177
+msgid "Allow users to add their Articles?"
+msgstr "السماح للمستخدمين بإضافة المواد؟"
+
+#: modules/library/includes/moder.php:178
+msgid "Yes"
+msgstr "نعم"
+
+#: modules/library/includes/moder.php:179
+msgid "No"
+msgstr "لا"
+
+#: modules/library/includes/moder.php:181
+msgid "Verified"
+msgstr "تم التحقق"
+
+#: modules/library/includes/new.php:18
+#: modules/library/index.php:170
+msgid "New Articles"
+msgstr "مقالات جديدة"
+
+#: modules/library/includes/new.php:48
+#: modules/library/includes/top.php:73
+msgid "Section"
+msgstr "قسم"
+
+#: modules/library/includes/new.php:60
+#: modules/library/includes/top.php:85
+#: modules/library/index.php:323
+#: modules/library/index.php:401
+msgid "Rating"
+msgstr "تصنيف"
+
+#: modules/library/includes/new.php:73
+#: modules/library/includes/top.php:98
+#: modules/library/index.php:416
+msgid "Comments are closed"
+msgstr "التعليقات مقفلة"
+
+#: modules/library/includes/new.php:80
+#: modules/library/includes/premod.php:54
+#: modules/library/includes/search.php:107
+#: modules/library/includes/tags.php:51
+#: modules/library/index.php:207
+#: modules/library/index.php:273
+#: modules/library/index.php:332
+msgid "Total"
+msgstr "مجموع"
+
+#: modules/library/includes/new.php:82
+#: modules/library/includes/premod.php:57
+#: modules/library/includes/search.php:125
+#: modules/library/includes/tagcloud.php:26
+#: modules/library/includes/tags.php:56
+msgid "To Library"
+msgstr "إلى المكتبة"
+
+#: modules/library/includes/premod.php:17
+msgid "Moderation Articles"
+msgstr "أدوات الإشراف"
+
+#: modules/library/includes/premod.php:21
+msgid "Article"
+msgstr "مقالة"
+
+#: modules/library/includes/premod.php:21
+msgid "Added to the database"
+msgstr "تم اضافته في قاعدة البيانات"
+
+#: modules/library/includes/premod.php:24
+msgid "All Articles added in database"
+msgstr "جميع المواد المضافة في قاعدة البيانات"
+
+#: modules/library/includes/premod.php:56
+msgid "Approve all"
+msgstr "الموافقة على كل"
+
+#: modules/library/includes/search.php:28
+#: modules/library/includes/search.php:31
+#: modules/library/index.php:155
+msgid "Search"
+msgstr "ابـحث"
+
+#: modules/library/includes/search.php:32
+msgid "Search in titles Articles"
+msgstr "البحث في عناوين المقالات"
+
+#: modules/library/includes/search.php:39
+#: modules/library/includes/search.php:121
+msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
+msgstr "طول الاستعلام: هو مين 4 64 حد<br>البحث عن الأحرف متحسسة لحالة الأحرف <br>يتم فرز النتائج حسب أهميتها"
+
+#: modules/library/includes/search.php:55
+msgid "Search results"
+msgstr "نتائج البحث"
+
+#: modules/library/includes/search.php:104
+msgid "Your search did not match any results"
+msgstr "البحث الخاص بك لا يتطابق مع أي نتائج"
+
+#: modules/library/includes/search.php:113
+msgid "To Page"
+msgstr "على الصفحة"
+
+#: modules/library/includes/search.php:124
+msgid "New Search"
+msgstr "بحث جديد"
+
+#: modules/library/includes/tagcloud.php:19
+msgid "Sorted by alphabetical"
+msgstr "فرز حسب الأبجدية"
+
+#: modules/library/includes/tagcloud.php:20
+msgid "Sorted by relevance"
+msgstr "مرتبة حسب أهميتها"
+
+#: modules/library/includes/tagcloud.php:23
+#: modules/library/index.php:155
+msgid "Tag Cloud"
+msgstr "سحابة الكلمة الدلالية"
+
+#: modules/library/includes/tagcloud.php:24
+#: modules/library/includes/top.php:25
+msgid "Sort"
+msgstr "الترتيب"
+
+#: modules/library/includes/top.php:20
+msgid "Most readings"
+msgstr "معظم القراءات"
+
+#: modules/library/includes/top.php:21
+msgid "By rating"
+msgstr "بحسب التقييم"
+
+#: modules/library/includes/top.php:22
+msgid "By comments"
+msgstr "من خلال التعليقات"
+
+#: modules/library/includes/top.php:24
+#: modules/library/index.php:173
+msgid "Rating articles"
+msgstr "تصنيف المواد"
+
+#: modules/library/index.php:63
+#: modules/library/index.php:129
+msgid "Library is closed"
+msgstr "يتم إغلاق مكتبة"
+
+#: modules/library/index.php:163
+msgid "On moderation"
+msgstr "الإشراف"
+
+#: modules/library/index.php:195
+#: modules/library/index.php:258
+#: modules/library/index.php:259
+msgid "Up"
+msgstr "فوق"
+
+#: modules/library/index.php:196
+#: modules/library/index.php:261
+#: modules/library/index.php:262
+msgid "Down"
+msgstr "تحت"
+
+#: modules/library/index.php:197
+#: modules/library/index.php:263
+#: modules/library/index.php:277
+#: modules/library/index.php:337
+#: modules/library/index.php:449
+msgid "Edit"
+msgstr "تحرير"
+
+#: modules/library/index.php:279
+msgid "Create"
+msgstr "إنشاء"
+
+#: modules/library/index.php:313
+#: modules/library/index.php:391
+msgid "The Tags"
+msgstr "العلامات"
+
+#: modules/library/index.php:443
+msgid "Download file"
+msgstr "تنزيل الملف"
+

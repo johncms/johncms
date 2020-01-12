@@ -1,0 +1,368 @@
+msgid ""
+msgstr ""
+"X-Domain: mail\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /develop/modules/mail/locale/mail.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"PO-Revision-Date: 2020-01-12 15:59\n"
+
+#: modules/mail/includes/delete.php:15
+msgid "Deleting messages"
+msgstr "حذف المراسلات"
+
+#: modules/mail/includes/delete.php:28
+msgid "Message does not exist"
+msgstr "الرساله غير موجوده"
+
+#: modules/mail/includes/delete.php:45
+#: modules/mail/includes/delete.php:74
+msgid "Message deleted"
+msgstr "تم حذف الرساله"
+
+#: modules/mail/includes/delete.php:47
+#: modules/mail/includes/delete.php:76
+#: modules/mail/includes/deluser.php:45
+#: modules/mail/includes/write.php:83
+#: modules/mail/templates/contact_list.phtml:93
+#: modules/mail/templates/conversations.phtml:86
+#: modules/mail/templates/files.phtml:76
+#: modules/mail/templates/messages.phtml:176
+msgid "Back"
+msgstr "رجوع"
+
+#: modules/mail/includes/delete.php:83
+msgid "You really want to remove the message?"
+msgstr "هل ترغب في حذف هذي الرسالة؟"
+
+#: modules/mail/includes/delete.php:85
+#: modules/mail/includes/deluser.php:15
+#: modules/mail/includes/deluser.php:53
+#: modules/mail/includes/ignor.php:220
+#: modules/mail/includes/index.php:134
+#: modules/mail/includes/input.php:97
+#: modules/mail/includes/new.php:44
+#: modules/mail/includes/output.php:96
+#: modules/mail/includes/write.php:91
+#: modules/mail/templates/messages.phtml:153
+msgid "Delete"
+msgstr "حذف"
+
+#: modules/mail/includes/delete.php:102
+msgid "The message for removal isn't chosen"
+msgstr "لم يتم اختيار الرساله لازالتها"
+
+#: modules/mail/includes/deluser.php:43
+msgid "Contact deleted"
+msgstr "تم حذف جهة الاتصال"
+
+#: modules/mail/includes/deluser.php:51
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr "عند قيامك بحذف حذف جهة اتصال وجميع المراسلات معه. <br> هل أنت متأكد من أنك تريد حذف؟"
+
+#: modules/mail/includes/deluser.php:70
+msgid "Contact for removal isn't chosen"
+msgstr "لم تختار جهة الاتصال لازالتها"
+
+#: modules/mail/includes/files.php:15
+msgid "Files"
+msgstr "الملفات"
+
+#: modules/mail/includes/ignor.php:15
+msgid "Blacklist"
+msgstr ""
+
+#: modules/mail/includes/ignor.php:29
+#: modules/mail/includes/ignor.php:91
+#: modules/mail/includes/index.php:28
+#: modules/mail/includes/write.php:33
+#: modules/mail/includes/write.php:148
+msgid "User does not exists"
+msgstr "المستخدم غير موجود"
+
+#: modules/mail/includes/ignor.php:40
+msgid "User not blocked"
+msgstr "تم حظر العضو"
+
+#: modules/mail/includes/ignor.php:43
+msgid "User is unblocked"
+msgstr "تم رفع الحظر عن العضو"
+
+#: modules/mail/includes/ignor.php:52
+#: modules/mail/includes/ignor.php:109
+#: modules/mail/includes/ignor.php:138
+#: modules/mail/includes/ignor.php:166
+#: modules/mail/includes/index.php:66
+#: modules/mail/includes/input.php:73
+#: modules/mail/includes/output.php:72
+msgid "Continue"
+msgstr "متابعة"
+
+#: modules/mail/includes/ignor.php:58
+msgid "You really want to unblock contact?"
+msgstr "هل تريد ازالة الحظر عن العضو"
+
+#: modules/mail/includes/ignor.php:60
+#: modules/mail/includes/ignor.php:224
+msgid "Unblock"
+msgstr "رفع الحظر"
+
+#: modules/mail/includes/ignor.php:77
+#: modules/mail/includes/ignor.php:164
+msgid "Contact isn't chosen"
+msgstr "نأسف لم تختار جهة اتصال"
+
+#: modules/mail/includes/ignor.php:107
+msgid "This user can not be blocked"
+msgstr "لا يمكن حظر هذا العضو"
+
+#: modules/mail/includes/ignor.php:136
+msgid "User is blocked"
+msgstr "تهانينا! تم رفع الحظر"
+
+#: modules/mail/includes/ignor.php:145
+msgid "You really want to block contact?"
+msgstr "هل تريد رفع الحظر عن جهة الاتصال"
+
+#: modules/mail/includes/ignor.php:147
+msgid "Block"
+msgstr "حظر"
+
+#: modules/mail/includes/ignor.php:174
+#: modules/mail/includes/index.php:89
+msgid "My Contacts"
+msgstr "جهات الاتصال الخاصه بي"
+
+#: modules/mail/includes/ignor.php:179
+#: modules/mail/includes/index.php:94
+msgid "Blocklist"
+msgstr "قائمة المحجوبين"
+
+#: modules/mail/includes/ignor.php:216
+#: modules/mail/includes/index.php:130
+#: modules/mail/includes/input.php:89
+#: modules/mail/includes/new.php:44
+#: modules/mail/includes/output.php:88
+msgid "Correspondence"
+msgstr "المراسلات"
+
+#: modules/mail/includes/index.php:15
+msgid "Contacts"
+msgstr "جهات الاتصال"
+
+#: modules/mail/includes/index.php:42
+msgid "You cannot add yourself as a contact"
+msgstr "عفوا! لا تستطيع اضافة نفسك كصديق"
+
+#: modules/mail/includes/index.php:64
+msgid "User has been added to your contact list"
+msgstr "وقد تم إضافة المستخدم إلى قائمة جهات الاتصال الخاصة بك"
+
+#: modules/mail/includes/index.php:72
+msgid "You really want to add contact?"
+msgstr "تريد حقاً لإضافة جهة اتصال؟"
+
+#: modules/mail/includes/index.php:74
+msgid "Add"
+msgstr "اضافة"
+
+#: modules/mail/includes/index.php:138
+#: modules/mail/includes/input.php:93
+#: modules/mail/includes/output.php:92
+msgid "Block User"
+msgstr "حظر مستخدم"
+
+#: modules/mail/includes/input.php:15
+msgid "Incoming messages"
+msgstr "حذف المراسلات"
+
+#: modules/mail/includes/load.php:15
+#: modules/mail/includes/new.php:15
+#: modules/mail/includes/write.php:21
+#: modules/mail/index.php:77
+msgid "Mail"
+msgstr "البريـــد"
+
+#: modules/mail/includes/load.php:24
+#: modules/mail/includes/load.php:36
+msgid "Such file does not exist"
+msgstr "لايوجد ملف"
+
+#: modules/mail/includes/load.php:38
+msgid "No file selected"
+msgstr "لم يتم اختيار ملف"
+
+#: modules/mail/includes/new.php:16
+msgid "New Messages"
+msgstr "رسائل جديدة"
+
+#: modules/mail/includes/new.php:44
+msgid "Block Sender"
+msgstr "حظر المرسل"
+
+#: modules/mail/includes/new.php:55
+#: modules/mail/templates/contact_list.phtml:38
+#: modules/mail/templates/conversations.phtml:31
+#: modules/mail/templates/files.phtml:31
+#: modules/mail/templates/messages.phtml:75
+msgid "The list is empty"
+msgstr "قائمة فارغة"
+
+#: modules/mail/includes/new.php:58
+msgid "Total"
+msgstr "المجموع"
+
+#: modules/mail/includes/new.php:65
+msgid "To Page"
+msgstr "الى صفحة"
+
+#: modules/mail/includes/new.php:68
+msgid "Personal"
+msgstr "الملف الشخصي"
+
+#: modules/mail/includes/output.php:15
+msgid "Sent messages"
+msgstr "رسائل مرسلة"
+
+#: modules/mail/includes/write.php:42
+#: modules/mail/templates/messages.phtml:161
+msgid "Clear messages"
+msgstr "تنظيف الرسائل"
+
+#: modules/mail/includes/write.php:81
+msgid "Messages are deleted"
+msgstr "تم حذف الرساله"
+
+#: modules/mail/includes/write.php:89
+msgid "Confirm the deletion of messages"
+msgstr "تأكيد حذف الرسالة"
+
+#: modules/mail/includes/write.php:126
+msgid "Specify the recipient's login"
+msgstr "تعيين تسجيل الدخول الخاص بالمستلم"
+
+#: modules/mail/includes/write.php:130
+msgid "Message cannot be empty"
+msgstr "الرساله لا يمكن ان تكون فارغة"
+
+#: modules/mail/includes/write.php:134
+msgid "You cannot send messages to yourself"
+msgstr "لا يمكنك ارساله رساله الى نفسك"
+
+#: modules/mail/includes/write.php:140
+msgid "You cannot add the message so often. Please, wait %d sec."
+msgstr "لا يمكنك إضافة الرسالة حتى غالباً. الرجاء الانتظار %d ثانية."
+
+#: modules/mail/includes/write.php:163
+msgid "To this user can write only contacts"
+msgstr "يمكن أن يكتب لهذا المستخدم فقط من جهات الاتصال"
+
+#: modules/mail/includes/write.php:169
+msgid "To this user can write only friends"
+msgstr "يمكن أن يكتب لهذا المستخدم فقط الأصدقاء"
+
+#: modules/mail/includes/write.php:197
+#: modules/mail/includes/write.php:207
+#: modules/mail/includes/write.php:373
+#: modules/mail/includes/write.php:394
+#: modules/mail/includes/write.php:397
+msgid "Error uploading file"
+msgstr "خطأ في رفع الملف"
+
+#: modules/mail/includes/write.php:282
+msgid "It is forbidden to upload files without a name"
+msgstr "لا يمكن رفع ملف بدون اسم"
+
+#: modules/mail/includes/write.php:286
+msgid "It is forbidden to upload files without extension"
+msgstr "يمنع تحميل ملفات بدون ملحق"
+
+#: modules/mail/includes/write.php:290
+msgid "The size of the file exceeds the maximum allowable upload"
+msgstr "يتجاوز حجم الملف الحد الأقصى المسموح به تحميل"
+
+#: modules/mail/includes/write.php:294
+msgid "File name contains invalid characters"
+msgstr "يحتوي اسم الملف على أحرف غير صالحة"
+
+#: modules/mail/includes/write.php:298
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr "حظر نوع الملف! عن طريق تحميل يسمح فقط الملفات ذات الملحق التالي"
+
+#: modules/mail/includes/write.php:314
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr "المستخدم في قائمة التجاهل الخاصة بك. من المستحيل إرسال الرسالة."
+
+#: modules/mail/includes/write.php:326
+msgid "The user added you in the ignore list. Sending the message isn't possible."
+msgstr "لا يمكن ارسال رساله لعضو بقائمة التجاهل"
+
+#: modules/mail/includes/write.php:413
+msgid "Message already exists"
+msgstr "هذا الاسم موجود من قبل"
+
+#: modules/mail/index.php:80
+msgid "My Account"
+msgstr ""
+
+#: modules/mail/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr ""
+
+#: modules/mail/templates/contact_list.phtml:62
+#: modules/mail/templates/conversations.phtml:54
+msgid "message"
+msgid_plural "messages"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: modules/mail/templates/contact_list.phtml:64
+msgid "unread message"
+msgid_plural "unread messages"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: modules/mail/templates/contact_list.phtml:89
+#: modules/mail/templates/conversations.phtml:82
+#: modules/mail/templates/files.phtml:72
+#: modules/mail/templates/messages.phtml:172
+msgid "Total:"
+msgstr ""
+
+#: modules/mail/templates/conversations.phtml:54
+msgid "Last:"
+msgstr ""
+
+#: modules/mail/templates/messages.phtml:41
+#: modules/mail/templates/messages.phtml:49
+msgid "To Whom"
+msgstr "الذين"
+
+#: modules/mail/templates/messages.phtml:54
+msgid "Message"
+msgstr ""
+
+#: modules/mail/templates/messages.phtml:61
+msgid "Choose file"
+msgstr ""
+
+#: modules/mail/templates/messages.phtml:64
+msgid "Send"
+msgstr "إرسال"
+
+#: modules/mail/templates/messages.phtml:105
+msgid "Attached files"
+msgstr ""
+

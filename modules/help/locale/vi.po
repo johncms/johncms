@@ -1,0 +1,326 @@
+msgid ""
+msgstr ""
+"X-Domain: help\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /develop/modules/help/locale/help.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"PO-Revision-Date: 2020-01-12 16:58\n"
+
+#: modules/help/includes/admsmilies.php:20
+#: modules/help/includes/smilies.php:35
+msgid "For administration"
+msgstr "Dành Cho Quản Lý"
+
+#: modules/help/includes/admsmilies.php:21
+#: modules/help/includes/my_smilies.php:22
+#: modules/help/includes/set_my_sm.php:27
+#: modules/help/includes/usersmilies.php:39
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr "Biểu tượng mặt cười"
+
+#: modules/help/includes/admsmilies.php:32
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/help/includes/avatars.php:20
+#: modules/help/templates/index.phtml:30
+msgid "Avatars"
+msgstr "Avatar"
+
+#: modules/help/includes/avatars.php:37
+msgid "Avatar has been successfully applied"
+msgstr "Avatar đã được áp dụng thành công"
+
+#: modules/help/includes/avatars.php:39
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: modules/help/includes/avatars.php:48
+msgid "An error occurred"
+msgstr "Đã xảy ra lỗi"
+
+#: modules/help/includes/avatars.php:50
+#: modules/help/templates/avatar_list.phtml:65
+#: modules/help/templates/avatars.phtml:48
+#: modules/help/templates/bbcode.phtml:89
+#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/index.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:81
+#: modules/help/templates/smiles.phtml:48
+#: modules/help/templates/smiles_list.phtml:88
+msgid "Back"
+msgstr "Quay lại"
+
+#: modules/help/includes/avatars.php:55
+msgid "Set to Profile"
+msgstr "Thiết lập hồ sơ"
+
+#: modules/help/includes/avatars.php:58
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Bạn có chắc chắn muốn đặt mình avatar này?"
+
+#: modules/help/includes/avatars.php:61
+msgid "Save"
+msgstr "Lưu"
+
+#: modules/help/includes/forum.php:15
+#: modules/help/templates/index.phtml:28
+msgid "Forum rules"
+msgstr "Nội quy diễn đàn"
+
+#: modules/help/includes/my_smilies.php:21
+#: modules/help/includes/smilies.php:27
+#: modules/help/templates/smiles_list.phtml:45
+msgid "My smilies"
+msgstr "Biểu tượng mặt cười của tôi"
+
+#: modules/help/includes/set_my_sm.php:27
+msgid "Wrong data"
+msgstr "Lỗi dữ liệu"
+
+#: modules/help/includes/smilies.php:19
+msgid "Smiles"
+msgstr ""
+
+#: modules/help/includes/tags.php:15
+#: modules/help/templates/index.phtml:29
+msgid "bbCode Tags"
+msgstr "Hướng Dẫn Sử Dụng BBcode"
+
+#: modules/help/index.php:54
+msgid "Information, FAQ"
+msgstr "Thông tin, câu hỏi thường gặp"
+
+#: modules/help/index.php:64
+msgid "Animals"
+msgstr "Động vật"
+
+#: modules/help/index.php:65
+msgid "Brawl, Weapons"
+msgstr "Cuộc Ẩu Đả, Vũ Khí"
+
+#: modules/help/index.php:66
+msgid "Emotions"
+msgstr "Cảm xúc"
+
+#: modules/help/index.php:67
+msgid "Flowers"
+msgstr "Hoa"
+
+#: modules/help/index.php:68
+msgid "Food, Alcohol"
+msgstr "Thức Ăn, Rượu"
+
+#: modules/help/index.php:69
+msgid "Gestures"
+msgstr "Cử chỉ"
+
+#: modules/help/index.php:70
+msgid "Holidays"
+msgstr "Ngày nghỉ"
+
+#: modules/help/index.php:71
+msgid "Love"
+msgstr "Tình yêu"
+
+#: modules/help/index.php:72
+msgid "Miscellaneous"
+msgstr "Linh tinh"
+
+#: modules/help/index.php:73
+msgid "Music, Dancing"
+msgstr "Âm nhạc, khiêu vũ"
+
+#: modules/help/index.php:74
+msgid "Sports"
+msgstr "Thể thao"
+
+#: modules/help/index.php:75
+msgid "Technology"
+msgstr "Công nghệ"
+
+#: modules/help/templates/avatar_list.phtml:33
+#: modules/help/templates/avatars.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:33
+#: modules/help/templates/smiles.phtml:34
+#: modules/help/templates/smiles_list.phtml:33
+msgid "The list is empty"
+msgstr "Danh sách này là trống rỗng"
+
+#: modules/help/templates/avatar_list.phtml:61
+#: modules/help/templates/my_smiles_list.phtml:77
+#: modules/help/templates/smiles_list.phtml:84
+msgid "Total:"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:30
+msgid "PHP code"
+msgstr "Mã PHP"
+
+#: modules/help/templates/bbcode.phtml:33
+msgid "Link name"
+msgstr "Tên liên kết"
+
+#: modules/help/templates/bbcode.phtml:34
+msgid "URL Link"
+msgstr "Liên kết URL"
+
+#: modules/help/templates/bbcode.phtml:38
+msgid "Bold"
+msgstr "In đậm"
+
+#: modules/help/templates/bbcode.phtml:42
+msgid "Italic"
+msgstr "In nghiêng"
+
+#: modules/help/templates/bbcode.phtml:46
+msgid "Underline"
+msgstr "Gạch dưới"
+
+#: modules/help/templates/bbcode.phtml:50
+msgid "Strike"
+msgstr "Tấn công"
+
+#: modules/help/templates/bbcode.phtml:54
+msgid "Red"
+msgstr "Màu đỏ"
+
+#: modules/help/templates/bbcode.phtml:58
+msgid "Green"
+msgstr "Xanh lục"
+
+#: modules/help/templates/bbcode.phtml:62
+msgid "Blue"
+msgstr "Màu xanh"
+
+#: modules/help/templates/bbcode.phtml:66
+msgid "Text Color"
+msgstr "Màu chữ"
+
+#: modules/help/templates/bbcode.phtml:70
+msgid "Background Color"
+msgstr "Màu nền"
+
+#: modules/help/templates/bbcode.phtml:74
+msgid "Quote"
+msgstr "Trích dẫn"
+
+#: modules/help/templates/bbcode.phtml:78
+msgid "Bulleted list"
+msgstr "Danh sách dấu đầu dòng"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Text"
+msgstr "Văn bản"
+
+#: modules/help/templates/bbcode.phtml:82
+msgid "Spoiler"
+msgstr ""
+
+#: modules/help/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: modules/help/templates/forum_rules.phtml:26
+msgid "FORBIDDEN"
+msgstr "BỊ CẤM"
+
+#: modules/help/templates/forum_rules.phtml:28
+msgid "Advertising messages"
+msgstr "Thông điệp quảng cáo"
+
+#: modules/help/templates/forum_rules.phtml:29
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "Các tin nhắn chứa trực tiếp tuyên truyền phân biệt chủng tộc, quốc gia và tôn giáo thù oán"
+
+#: modules/help/templates/forum_rules.phtml:30
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "Bất kỳ lăng mạ, khiêu dâm thô tục, vu khống, hận thù, đe dọa và tình dục định hướng thư hoặc bất cứ tài liệu khác mà có thể vi phạm pháp luật"
+
+#: modules/help/templates/forum_rules.phtml:31
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr "Thông điệp rõ ràng là vi phạm một ai đó, đánh người dùng diễn đàn"
+
+#: modules/help/templates/forum_rules.phtml:32
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr "Cố ý để làm biến dạng một viết của nickname của các người sử dụng cho các mục đích của cho các tin nhắn một cuộc tấn công bóng râm"
+
+#: modules/help/templates/forum_rules.phtml:33
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr "Xuất bản đã bị xóa bởi người điều hành thông điệp nhiều lần"
+
+#: modules/help/templates/forum_rules.phtml:34
+msgid "Post messages not related to the topic"
+msgstr "Gửi tin nhắn không liên quan đến các chủ đề"
+
+#: modules/help/templates/forum_rules.phtml:35
+msgid "Continuing topics that have been closed by moderator"
+msgstr "Tiếp tục chủ đề đã được đóng cửa bởi người điều hành"
+
+#: modules/help/templates/forum_rules.phtml:38
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "HOÀN TOÀN BỊ CẤM"
+
+#: modules/help/templates/forum_rules.phtml:40
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr "Viết trong các chủ đề khu vực bất mãn với các hành động không phù hợp của người dùng khác và thảo luận về các điều phối viên làm việc. Sử dụng tin nhắn cá nhân cho mục đích này"
+
+#: modules/help/templates/forum_rules.phtml:41
+msgid "Register the nicknames having offensive tone for other users"
+msgstr "Đăng ký các biệt danh có giai điệu gây khó chịu cho người dùng khác"
+
+#: modules/help/templates/forum_rules.phtml:44
+msgid "UNACCEPTABLE"
+msgstr "KHÔNG THỂ CHẤP NHẬN"
+
+#: modules/help/templates/forum_rules.phtml:46
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr "Trích dẫn đầy đủ thông điệp của người sử dụng trước đây và báo tin nhắn đã có báo giá khác"
+
+#: modules/help/templates/forum_rules.phtml:47
+msgid "Post messages only contains external link"
+msgstr "Gửi tin nhắn chỉ chứa bên ngoài liên kết"
+
+#: modules/help/templates/forum_rules.phtml:48
+msgid "Post messages written in translite"
+msgstr "Đăng bài viết trong translite"
+
+#: modules/help/templates/forum_rules.phtml:49
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr "Gửi tin nhắn purposeless: bao gồm các biểu tượng mặt cười chỉ hoặc bài viết như \"Ok\", \"Cái gì?\", \"Là ai không?\", vv."
+
+#: modules/help/templates/forum_rules.phtml:54
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr "Thông điệp được đăng mặc dù các cảnh báo trên sẽ được thay đổi hoặc xóa bỏ."
+
+#: modules/help/templates/forum_rules.phtml:55
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "Quy tắc này áp dụng cho tất cả các thành viên và người kiểm duyệt, lặp đi lặp lại hành động sẽ làm cho bạn có được ban hay thậm chí mất tài khoản của bạn."
+
+#: modules/help/templates/my_smiles_list.phtml:36
+msgid "Add Smilies"
+msgstr "Thêm biểu tượng mặt cười"
+
+#: modules/help/templates/my_smiles_list.phtml:55
+#: modules/help/templates/smiles_list.phtml:62
+msgid "or"
+msgstr "hoặc"
+
+#: modules/help/templates/my_smiles_list.phtml:64
+msgid "Delete"
+msgstr "Xóa"
+
+#: modules/help/templates/smiles_list.phtml:71
+msgid "Add"
+msgstr "Thêm"
+

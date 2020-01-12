@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"X-Domain: guestbook\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /develop/modules/guestbook/locale/guestbook.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"PO-Revision-Date: 2020-01-12 17:09\n"
+
+#: modules/guestbook/index.php:67
+msgid "Admin Club"
+msgstr "Dành cho BQT"
+
+#: modules/guestbook/index.php:67
+msgid "Guestbook"
+msgstr "Lưu bút Của Bạn"
+
+#: modules/guestbook/index.php:77
+msgid "Guestbook is closed"
+msgstr "Lưu bị đóng cửa"
+
+#: modules/guestbook/index.php:112
+msgid "Wrong data"
+msgstr "Lỗi dữ liệu"
+
+#: modules/guestbook/index.php:116
+msgid "You have not entered a name"
+msgstr "Bạn đã không nhập tên"
+
+#: modules/guestbook/index.php:120
+msgid "You have not entered the message"
+msgstr "Bạn chưa nhập thông điệp"
+
+#: modules/guestbook/index.php:124
+msgid "Access forbidden"
+msgstr "Truy cập bị từ chối"
+
+#: modules/guestbook/index.php:129
+msgid "The security code is not correct"
+msgstr "Mã bảo vệ là không đúng"
+
+#: modules/guestbook/index.php:148
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "Bạn không thể thêm những tin nhắn vì vậy thường. Xin vui lòng, chờ %d giây."
+
+#: modules/guestbook/index.php:198
+msgid "Add message"
+msgstr "Thêm tin nhắn"
+
+#: modules/guestbook/index.php:307
+msgid "All messages older than 1 day were deleted"
+msgstr "Tất cả các tin nhắn cũ hơn 1 ngày đã bị xóa"
+
+#: modules/guestbook/index.php:313
+msgid "Full clearing is finished"
+msgstr "Toàn thanh toán bù trừ xong"
+
+#: modules/guestbook/index.php:318
+msgid "All messages older than 1 week were deleted"
+msgstr "Tất cả các tin nhắn cũ hơn 1 tuần đã bị xóa"
+
+#: modules/guestbook/index.php:325
+#: modules/guestbook/templates/clear.phtml:2
+#: modules/guestbook/templates/clear.phtml:3
+#: modules/guestbook/templates/clear.phtml:9
+msgid "Clear guestbook"
+msgstr "Dọn dẹp lưu bút"
+
+#: modules/guestbook/templates/clear.phtml:11
+msgid "Clearing parameters"
+msgstr "Xóa cài đặt"
+
+#: modules/guestbook/templates/clear.phtml:14
+msgid "Older than 1 week"
+msgstr "Cách đây hơn 1 tuần"
+
+#: modules/guestbook/templates/clear.phtml:18
+msgid "Older than 1 day"
+msgstr "Cũ hơn 1 ngày"
+
+#: modules/guestbook/templates/clear.phtml:22
+msgid "Clear all"
+msgstr "Xoá tất cả các bài viết"
+
+#: modules/guestbook/templates/clear.phtml:25
+#: modules/guestbook/templates/index.phtml:156
+msgid "Clear"
+msgstr "Xoá"
+
+#: modules/guestbook/templates/clear.phtml:26
+#: modules/guestbook/templates/confirm_delete.phtml:11
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: modules/guestbook/templates/confirm_delete.phtml:2
+#: modules/guestbook/templates/confirm_delete.phtml:3
+msgid "Delete message"
+msgstr "Xóa bài viết"
+
+#: modules/guestbook/templates/confirm_delete.phtml:9
+msgid "Do you really want to delete?"
+msgstr "Bạn có thực sự muốn xóa?"
+
+#: modules/guestbook/templates/confirm_delete.phtml:10
+#: modules/guestbook/templates/index.phtml:140
+msgid "Delete"
+msgstr "Xóa"
+
+#: modules/guestbook/templates/edit.phtml:2
+#: modules/guestbook/templates/edit.phtml:3
+#: modules/guestbook/templates/edit.phtml:9
+msgid "Edit message"
+msgstr "Chỉnh sửa tin nhắn"
+
+#: modules/guestbook/templates/edit.phtml:13
+#: modules/guestbook/templates/reply.phtml:13
+msgid "Author"
+msgstr "Tác giả"
+
+#: modules/guestbook/templates/edit.phtml:16
+#: modules/guestbook/templates/index.phtml:38
+msgid "Message"
+msgstr "Mặt cười"
+
+#: modules/guestbook/templates/edit.phtml:22
+#: modules/guestbook/templates/reply.phtml:23
+msgid "Save"
+msgstr "Lưu"
+
+#: modules/guestbook/templates/edit.phtml:23
+#: modules/guestbook/templates/reply.phtml:24
+#: modules/guestbook/templates/result.phtml:15
+msgid "Back"
+msgstr "Quay lại"
+
+#: modules/guestbook/templates/index.phtml:14
+msgid "The guestbook is closed"
+msgstr "Lưu bút sẽ được đóng"
+
+#: modules/guestbook/templates/index.phtml:25
+#: modules/guestbook/templates/index.phtml:33
+msgid "Name"
+msgstr "Họ tên"
+
+#: modules/guestbook/templates/index.phtml:47
+msgid "Verification code"
+msgstr "Mã xác minh"
+
+#: modules/guestbook/templates/index.phtml:49
+#: modules/guestbook/templates/index.phtml:57
+msgid "Symbols on the picture"
+msgstr "Các ký hiệu trên hình ảnh"
+
+#: modules/guestbook/templates/index.phtml:63
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Có thể không nhìn thấy mã hình ảnh, hãy làm mới trang này"
+
+#: modules/guestbook/templates/index.phtml:68
+msgid "Write"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:78
+msgid "For registered users only"
+msgstr "Cho người dùng đăng ký"
+
+#: modules/guestbook/templates/index.phtml:85
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr "Các bút là trống rỗng.<br><strong>Be đầu tiên! :)</strong>"
+
+#: modules/guestbook/templates/index.phtml:94
+msgid "Guest"
+msgstr "Khách"
+
+#: modules/guestbook/templates/index.phtml:100
+#: modules/guestbook/templates/reply.phtml:2
+#: modules/guestbook/templates/reply.phtml:3
+#: modules/guestbook/templates/reply.phtml:9
+#: modules/guestbook/templates/reply.phtml:17
+msgid "Reply"
+msgstr "Trả lời"
+
+#: modules/guestbook/templates/index.phtml:135
+msgid "Edited:"
+msgstr "Chỉnh sửa:"
+
+#: modules/guestbook/templates/index.phtml:139
+msgid "Edit"
+msgstr "Chỉnh sửa"
+

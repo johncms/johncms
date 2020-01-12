@@ -1,0 +1,1149 @@
+msgid ""
+msgstr ""
+"X-Domain: profile\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /develop/modules/profile/locale/profile.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-12 15:58\n"
+
+#: modules/profile/includes/activity.php:18
+#: modules/profile/templates/index.phtml:207
+#: modules/profile/templates/stat.phtml:53
+msgid "Activity"
+msgstr "Активность"
+
+#: modules/profile/includes/activity.php:20
+#: modules/profile/includes/ban.php:188
+#: modules/profile/includes/ban.php:292
+#: modules/profile/includes/edit.php:43
+#: modules/profile/includes/guestbook.php:15
+#: modules/profile/includes/images.php:161
+#: modules/profile/includes/ip.php:27
+#: modules/profile/includes/reset.php:22
+#: modules/profile/templates/office.phtml:32
+msgid "Profile"
+msgstr "Анкета"
+
+#: modules/profile/includes/activity.php:20
+#: modules/profile/includes/edit.php:43
+#: modules/profile/includes/images.php:161
+#: modules/profile/includes/index.php:17
+msgid "My Profile"
+msgstr "Мой профиль"
+
+#: modules/profile/includes/activity.php:26
+msgid "Messages"
+msgstr "Сообщения"
+
+#: modules/profile/includes/activity.php:31
+msgid "Themes"
+msgstr "Темы"
+
+#: modules/profile/includes/activity.php:36
+#: modules/profile/includes/ban.php:146
+#: modules/profile/templates/stat.phtml:57
+msgid "Comments"
+msgstr "Комментарии"
+
+#: modules/profile/includes/ban.php:21
+msgid "You do not have enought rights to ban this user"
+msgstr "У Вас не хватает прав, чтоб банить данного пользователя"
+
+#: modules/profile/includes/ban.php:23
+msgid "Ban the User"
+msgstr "Банить пользователя"
+
+#: modules/profile/includes/ban.php:35
+msgid "Reason not specified"
+msgstr "Причина не указана"
+
+#: modules/profile/includes/ban.php:39
+msgid "There is no required data"
+msgstr "Отсутствуют необходимые данные"
+
+#: modules/profile/includes/ban.php:43
+msgid "You have no rights to ban in this section"
+msgstr "Вы не имеете права банить не в своем разделе"
+
+#: modules/profile/includes/ban.php:47
+msgid "Ban already active"
+msgstr "Такой бан уже есть"
+
+#: modules/profile/includes/ban.php:121
+msgid "System"
+msgstr "Система"
+
+#: modules/profile/includes/ban.php:125
+#: modules/profile/includes/index.php:140
+msgid "Ban"
+msgstr "Бан"
+
+#: modules/profile/includes/ban.php:131
+msgid "User banned"
+msgstr "Пользователь забанен"
+
+#: modules/profile/includes/ban.php:138
+msgid "Ban type"
+msgstr "Тип бана"
+
+#: modules/profile/includes/ban.php:142
+msgid "Full block"
+msgstr "Полная блокировка"
+
+#: modules/profile/includes/ban.php:144
+msgid "Private messages"
+msgstr "Личные сообщения"
+
+#: modules/profile/includes/ban.php:148
+#: modules/profile/includes/guestbook.php:16
+#: modules/profile/includes/guestbook.php:28
+#: modules/profile/templates/index.phtml:237
+#: modules/profile/templates/office.phtml:39
+#: modules/profile/templates/stat.phtml:56
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: modules/profile/includes/ban.php:154
+#: modules/profile/includes/settings.php:46
+#: modules/profile/includes/settings.php:88
+#: modules/profile/templates/stat.phtml:55
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/profile/includes/ban.php:159
+msgid "Library"
+msgstr "Библиотека"
+
+#: modules/profile/includes/ban.php:162
+msgid "Ban time"
+msgstr "Срок бана"
+
+#: modules/profile/includes/ban.php:164
+msgid "Minutes (60 max.)"
+msgstr "Минут (60 макс.)"
+
+#: modules/profile/includes/ban.php:165
+msgid "Hours (24 max.)"
+msgstr "Часов (24 макс.)"
+
+#: modules/profile/includes/ban.php:168
+msgid "Days (30 max.)"
+msgstr "Дней (30 макс.)"
+
+#: modules/profile/includes/ban.php:172
+#: modules/profile/includes/ban.php:345
+msgid "Till cancel"
+msgstr "До отмены"
+
+#: modules/profile/includes/ban.php:175
+msgid "Reason"
+msgstr "Причина"
+
+#: modules/profile/includes/ban.php:180
+msgid "Violation"
+msgstr "Нарушение"
+
+#: modules/profile/includes/ban.php:185
+msgid "Apply Ban"
+msgstr "Применить Бан"
+
+#: modules/profile/includes/ban.php:195
+#: modules/profile/includes/ban.php:225
+#: modules/profile/includes/ban.php:233
+#: modules/profile/includes/ban.php:258
+#: modules/profile/skl.php:127
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: modules/profile/includes/ban.php:204
+msgid "Ban not active"
+msgstr "Бан уже не активен"
+
+#: modules/profile/includes/ban.php:208
+msgid "Ban termination"
+msgstr "Прекращение действия Бана"
+
+#: modules/profile/includes/ban.php:213
+msgid "Ban terminated"
+msgstr "Пользователь разбанен"
+
+#: modules/profile/includes/ban.php:216
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr "Прекращается действие активного бана с сохранением записи в истории нарушений"
+
+#: modules/profile/includes/ban.php:217
+msgid "Terminate Ban"
+msgstr "Отменить бан"
+
+#: modules/profile/includes/ban.php:219
+#: modules/profile/includes/ban.php:255
+#: modules/profile/includes/karma.php:76
+#: modules/profile/includes/karma.php:149
+#: modules/profile/templates/karma.phtml:92
+#: modules/profile/templates/restore_password_result.phtml:16
+#: modules/profile/templates/stat.phtml:61
+msgid "Back"
+msgstr "Назад"
+
+#: modules/profile/includes/ban.php:239
+#: modules/profile/includes/ban.php:359
+msgid "Delete Ban"
+msgstr "Удалить Бан"
+
+#: modules/profile/includes/ban.php:249
+msgid "Ban deleted"
+msgstr "Бан удален"
+
+#: modules/profile/includes/ban.php:249
+#: modules/profile/includes/images.php:68
+#: modules/profile/includes/images.php:137
+#: modules/profile/includes/karma.php:120
+#: modules/profile/includes/password.php:83
+#: modules/profile/templates/restore_password.phtml:43
+msgid "Continue"
+msgstr "Продолжить"
+
+#: modules/profile/includes/ban.php:252
+msgid "Removing ban along with a record in the bans history"
+msgstr "Удаляется бан вместе с записью в истории нарушений"
+
+#: modules/profile/includes/ban.php:253
+#: modules/profile/includes/index.php:134
+#: modules/profile/templates/edit.phtml:112
+#: modules/profile/templates/edit.phtml:132
+#: modules/profile/templates/karma_delete.phtml:35
+msgid "Delete"
+msgstr "Удалить"
+
+#: modules/profile/includes/ban.php:266
+#: modules/profile/includes/ban.php:282
+msgid "Violations history"
+msgstr "История нарушений"
+
+#: modules/profile/includes/ban.php:271
+msgid "Violations history cleared"
+msgstr "История нарушений очищена"
+
+#: modules/profile/includes/ban.php:274
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "Вы действительно хотите очистить всю историю нарушений данного пользователя?"
+
+#: modules/profile/includes/ban.php:275
+msgid "Clear"
+msgstr "Очистить"
+
+#: modules/profile/includes/ban.php:280
+#: modules/profile/includes/ban.php:373
+#: modules/profile/includes/ip.php:52
+msgid "Total"
+msgstr "Всего"
+
+#: modules/profile/includes/ban.php:284
+#: modules/profile/includes/ban.php:297
+msgid "Ban Panel"
+msgstr "Бан панель"
+
+#: modules/profile/includes/ban.php:286
+msgid "Violations history can be cleared by Supervisor only"
+msgstr "Очищать историю нарушений могут только Супервайзоры"
+
+#: modules/profile/includes/ban.php:292
+msgid "Violations History"
+msgstr "История нарушений"
+
+#: modules/profile/includes/ban.php:301
+msgid "Clear history"
+msgstr "Очистить историю"
+
+#: modules/profile/includes/ban.php:311
+msgid "My Violations"
+msgstr "Мои нарушения"
+
+#: modules/profile/includes/ban.php:341
+msgid "Who applied the Ban?"
+msgstr "Кто банил?"
+
+#: modules/profile/includes/ban.php:344
+msgid "Time"
+msgstr "Время"
+
+#: modules/profile/includes/ban.php:348
+msgid "Remains"
+msgstr "Осталось"
+
+#: modules/profile/includes/ban.php:355
+msgid "Cancel Ban"
+msgstr "Отменить Бан"
+
+#: modules/profile/includes/ban.php:370
+#: modules/profile/includes/ip.php:49
+#: modules/profile/templates/activity.phtml:37
+#: modules/profile/templates/karma.phtml:38
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: modules/profile/includes/ban.php:379
+#: modules/profile/includes/ip.php:58
+msgid "To Page"
+msgstr "На страницу"
+
+#: modules/profile/includes/edit.php:16
+#: modules/profile/includes/reset.php:17
+#: modules/profile/templates/office.phtml:83
+msgid "Edit Profile"
+msgstr "Редактировать анкету"
+
+#: modules/profile/includes/edit.php:26
+#: modules/profile/includes/images.php:25
+msgid "You cannot edit profile of higher administration"
+msgstr "Вы не можете редактировать анкету старшего Вас по должности"
+
+#: modules/profile/includes/edit.php:38
+#: modules/profile/includes/ip.php:21
+#: modules/profile/includes/office.php:24
+#: modules/profile/includes/password.php:25
+#: modules/profile/includes/settings.php:32
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+#: modules/profile/includes/edit.php:52
+msgid "Avatar is successfully removed"
+msgstr "Аватар успешно удален"
+
+#: modules/profile/includes/edit.php:59
+msgid "Photo is successfully removed"
+msgstr "Фотография успешно удалена"
+
+#: modules/profile/includes/edit.php:90
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Минимальная длина Ника - 2, максимальная 20 символов"
+
+#: modules/profile/includes/edit.php:96
+msgid "Nick contains invalid characters"
+msgstr "Недопустимые символы в Нике"
+
+#: modules/profile/includes/edit.php:101
+msgid "Invalid format date of birth"
+msgstr "Дата рождения указана неверно"
+
+#: modules/profile/includes/edit.php:106
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "Номер ICQ должен состоять минимум из 5 цифр и максимум из 10"
+
+#: modules/profile/includes/edit.php:171
+msgid "Data saved"
+msgstr "Данные сохранены"
+
+#: modules/profile/includes/images.php:38
+msgid "Upload Avatar"
+msgstr "Загрузить Аватар"
+
+#: modules/profile/includes/images.php:44
+#: modules/profile/includes/images.php:96
+msgid "The weight of the file exceeds"
+msgstr "Размер файла превышает"
+
+#: modules/profile/includes/images.php:66
+msgid "The avatar is successfully uploaded"
+msgstr "Аватар успешно загружен"
+
+#: modules/profile/includes/images.php:83
+#: modules/profile/includes/images.php:152
+#: modules/profile/includes/password.php:94
+msgid "Repeat"
+msgstr "Повторить"
+
+#: modules/profile/includes/images.php:90
+msgid "Upload Photo"
+msgstr "Загрузить фото"
+
+#: modules/profile/includes/images.php:135
+msgid "The photo is successfully uploaded"
+msgstr "Фотография успешно загружена"
+
+#: modules/profile/includes/index.php:17
+#: modules/profile/includes/karma.php:19
+#: modules/profile/index.php:60
+#: modules/profile/index.php:75
+msgid "User Profile"
+msgstr "Анкета пользователя"
+
+#: modules/profile/includes/index.php:22
+#: modules/profile/templates/edit.phtml:261
+msgid "User"
+msgstr "Обычный пользователь"
+
+#: modules/profile/includes/index.php:23
+msgid "Forum moderator"
+msgstr "Модератор Форума"
+
+#: modules/profile/includes/index.php:24
+msgid "Download moderator"
+msgstr "Модератор Загрузок"
+
+#: modules/profile/includes/index.php:25
+msgid "Library moderator"
+msgstr "Модератор Библиотеки"
+
+#: modules/profile/includes/index.php:26
+msgid "Super moderator"
+msgstr "Супермодератор"
+
+#: modules/profile/includes/index.php:27
+#: modules/profile/templates/edit.phtml:283
+msgid "Administrator"
+msgstr "Администратор"
+
+#: modules/profile/includes/index.php:28
+#: modules/profile/templates/edit.phtml:287
+msgid "Supervisor"
+msgstr "Супервайзор"
+
+#: modules/profile/includes/index.php:95
+#: modules/profile/templates/stat.phtml:32
+msgid "Pending confirmation"
+msgstr "Ожидает подтверждения регистрации"
+
+#: modules/profile/includes/index.php:115
+msgid "Add to Contacts"
+msgstr "Добавить в контакты"
+
+#: modules/profile/includes/index.php:120
+msgid "Remove from Contacts"
+msgstr "Удалить из контактов"
+
+#: modules/profile/includes/index.php:128
+msgid "Edit"
+msgstr "Изменить"
+
+#: modules/profile/includes/ip.php:15
+#: modules/profile/includes/ip.php:27
+msgid "IP History"
+msgstr "История IP"
+
+#: modules/profile/includes/ip.php:20
+msgid "Administration"
+msgstr "Администрация"
+
+#: modules/profile/includes/karma.php:15
+#: modules/profile/includes/karma.php:20
+#: modules/profile/templates/index.phtml:86
+msgid "Karma"
+msgstr "Карма"
+
+#: modules/profile/includes/karma.php:41
+msgid "It is forbidden to vote for administration"
+msgstr "За администрацию голосовать запрещено"
+
+#: modules/profile/includes/karma.php:45
+msgid "Cheating karma is forbidden"
+msgstr "Накрутка кармы запрещена"
+
+#: modules/profile/includes/karma.php:50
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "Пользователи могут принять участие в голосовании, если они находились на сайте не менее %s и написали не менее %d постов на форуме."
+
+#: modules/profile/includes/karma.php:51
+msgid "hours"
+msgstr "часов"
+
+#: modules/profile/includes/karma.php:51
+msgid "days"
+msgstr "дней"
+
+#: modules/profile/includes/karma.php:59
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Вы можете голосовать за одного пользователя один раз в течение 24 часов\""
+
+#: modules/profile/includes/karma.php:65
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "Вы превысили лимит голосов. Новые голоса будут добавлены %s"
+
+#: modules/profile/includes/karma.php:118
+msgid "You have successfully voted"
+msgstr "Вы успешно проголосовали"
+
+#: modules/profile/includes/karma.php:129
+msgid "Vote for"
+msgstr "Голосовать за"
+
+#: modules/profile/includes/karma.php:147
+msgid "You are not allowed to vote for users"
+msgstr "Вам запрещено отдавать голоса за пользователей"
+
+#: modules/profile/includes/karma.php:183
+msgid "Do you really want to delete comment?"
+msgstr "Вы действительно хотите удалить отзыв?"
+
+#: modules/profile/includes/karma.php:216
+msgid "Do you really want to delete all reviews about user?"
+msgstr "Вы действительно хотите удалить все отзывы о пользователе?"
+
+#: modules/profile/includes/karma.php:234
+msgid "New responses"
+msgstr "Новые отзывы"
+
+#: modules/profile/includes/karma.php:269
+msgid "All"
+msgstr "Все"
+
+#: modules/profile/includes/karma.php:274
+#: modules/profile/templates/index.phtml:101
+#: modules/profile/templates/karma_vote.phtml:46
+msgid "Positive"
+msgstr "Положительные"
+
+#: modules/profile/includes/karma.php:279
+#: modules/profile/templates/index.phtml:107
+#: modules/profile/templates/karma_vote.phtml:50
+msgid "Negative"
+msgstr "Отрицательные"
+
+#: modules/profile/includes/office.php:15
+#: modules/profile/includes/settings.php:23
+msgid "My Account"
+msgstr "Личный кабинет"
+
+#: modules/profile/includes/password.php:15
+#: modules/profile/includes/password.php:16
+#: modules/profile/templates/edit.phtml:241
+#: modules/profile/templates/office.phtml:84
+msgid "Change Password"
+msgstr "Сменить пароль"
+
+#: modules/profile/includes/password.php:43
+#: modules/profile/includes/password.php:46
+msgid "It is necessary to fill in all fields"
+msgstr "Нужно заполнить все поля формы"
+
+#: modules/profile/includes/password.php:51
+msgid "Old password entered incorrectly"
+msgstr "Старый пароль введен неправильно"
+
+#: modules/profile/includes/password.php:55
+msgid "The password confirmation you entered is wrong"
+msgstr "Подтверждение нового пароля введено неверно"
+
+#: modules/profile/includes/password.php:59
+msgid "The password must contain at least 3 characters"
+msgstr "Пароль должен содержать не менее 3 символов"
+
+#: modules/profile/includes/password.php:81
+msgid "Password successfully changed"
+msgstr "Пароль успешно изменен"
+
+#: modules/profile/includes/reset.php:20
+msgid "For user %s default settings were set."
+msgstr "Для пользователя %s были установлены настройки по умолчанию."
+
+#: modules/profile/includes/settings.php:15
+#: modules/profile/includes/settings.php:24
+#: modules/profile/templates/office.phtml:80
+msgid "Settings"
+msgstr "Настройки"
+
+#: modules/profile/includes/settings.php:41
+#: modules/profile/includes/settings.php:141
+msgid "General setting"
+msgstr "Общие настройки"
+
+#: modules/profile/includes/settings.php:51
+#: modules/profile/includes/settings.php:59
+msgid "Mail"
+msgstr "Почта"
+
+#: modules/profile/includes/settings.php:71
+#: modules/profile/includes/settings.php:108
+#: modules/profile/includes/settings.php:196
+msgid "Settings saved successfully"
+msgstr "Настройки успешно сохранены"
+
+#: modules/profile/includes/settings.php:124
+#: modules/profile/includes/settings.php:201
+msgid "Default settings are set"
+msgstr "Установлены настройки по умолчанию"
+
+#: modules/profile/includes/stat.php:17
+#: modules/profile/includes/stat.php:20
+#: modules/profile/templates/index.phtml:217
+#: modules/profile/templates/stat.phtml:26
+msgid "Statistic"
+msgstr "Статистика"
+
+#: modules/profile/index.php:62
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: modules/profile/index.php:77
+msgid "This User does not exists"
+msgstr "Такого пользователя не существует"
+
+#: modules/profile/skl.php:39
+#: modules/profile/templates/restore_password.phtml:2
+#: modules/profile/templates/restore_password.phtml:3
+#: modules/profile/templates/restore_password.phtml:10
+#: modules/profile/templates/restore_password_result.phtml:2
+#: modules/profile/templates/restore_password_result.phtml:3
+#: modules/profile/templates/restore_password_result.phtml:10
+msgid "Restore password"
+msgstr "Восстановить пароль"
+
+#: modules/profile/skl.php:64
+msgid "The required fields are not filled"
+msgstr "Не заполнены обязательные поля"
+
+#: modules/profile/skl.php:66
+msgid "Incorrect code"
+msgstr "Проверочный код введен неверно"
+
+#: modules/profile/skl.php:79
+msgid "Invalid Email address"
+msgstr "Недопустимый адрес электронной почты"
+
+#: modules/profile/skl.php:83
+msgid "Password can be recovered 1 time per day"
+msgstr "Пароль можно восстанавливать не чаще 1 раза в сутки"
+
+#: modules/profile/skl.php:86
+#: modules/profile/skl.php:145
+msgid "User does not exists"
+msgstr "Такого пользователя не существует"
+
+#: modules/profile/skl.php:93
+msgid "Password recovery"
+msgstr "Восстановление пароля"
+
+#: modules/profile/skl.php:95
+msgid "Hello %s!\n"
+"You start process of password recovery on the site %s\n"
+"In order to recover your password, you must click on the link: %s\n"
+"Link valid for 1 hour\n\n"
+"If you receive this mail by mistake, just ignore this letter"
+msgstr "Здравствуйте, %s!\n"
+"Вы начали процесс восстановления пароля на сайте %s\n"
+"Чтоб восстановить ваш пароль, вы должны перейти по ссылке: %s\n"
+"Ссылка действительна 1 час\n\n"
+"Если вы получили это письмо по ошибке, просто игнорируйте его."
+
+#: modules/profile/skl.php:105
+msgid "Check your e-mail for further information"
+msgstr "Инструкции по восстановлению пароля высланы на указанный Вами адрес E-mail"
+
+#: modules/profile/skl.php:107
+#: modules/profile/skl.php:166
+msgid "Error sending E-mail"
+msgstr "Ошибка отправки E-mail"
+
+#: modules/profile/skl.php:137
+msgid "Password recovery is impossible"
+msgstr "Восстановление пароля невозможно"
+
+#: modules/profile/skl.php:141
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Время, отведенное на восстановления пароля, прошло"
+
+#: modules/profile/skl.php:152
+msgid "Your new password"
+msgstr "Ваш новый пароль"
+
+#: modules/profile/skl.php:154
+msgid "Hello %s\n"
+"You have changed your password on the site %s\n\n"
+"Your new password: %s\n\n"
+"After logging in, you can change your password to new one."
+msgstr "Привет %s\n"
+"Вы изменили пароль на сайте %s\n\n"
+"Ваш новый пароль: %s\n\n"
+"После входа в систему Вы сможете сменить пароль на новый."
+
+#: modules/profile/skl.php:164
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Пароль успешно изменен.<br>Новый пароль выслан на ваш адрес E-mail"
+
+#: modules/profile/templates/activity.phtml:53
+#: modules/profile/templates/karma.phtml:88
+msgid "Total:"
+msgstr "Всего:"
+
+#: modules/profile/templates/edit.phtml:52
+#: modules/profile/templates/restore_password.phtml:12
+#: modules/profile/templates/restore_password.phtml:18
+msgid "Username"
+msgstr "Ваш логин"
+
+#: modules/profile/templates/edit.phtml:58
+#: modules/profile/templates/edit.phtml:65
+#: modules/profile/templates/edit.phtml:87
+msgid "Nickname"
+msgstr "Ник"
+
+#: modules/profile/templates/edit.phtml:69
+msgid "Min.2, Max. 20"
+msgstr "Мин.2, макс. 20"
+
+#: modules/profile/templates/edit.phtml:73
+#: modules/profile/templates/edit.phtml:79
+#: modules/profile/templates/edit.phtml:91
+msgid "Status"
+msgstr "Статус"
+
+#: modules/profile/templates/edit.phtml:82
+msgid "Max. 50"
+msgstr "Макс. 50"
+
+#: modules/profile/templates/edit.phtml:99
+msgid "Avatar"
+msgstr "Аватар"
+
+#: modules/profile/templates/edit.phtml:107
+#: modules/profile/templates/edit.phtml:130
+msgid "Upload"
+msgstr "Загрузить"
+
+#: modules/profile/templates/edit.phtml:109
+msgid "Select in Catalog"
+msgstr "Выбрать в каталоге"
+
+#: modules/profile/templates/edit.phtml:119
+#: modules/profile/templates/edit.phtml:123
+#: modules/profile/templates/index.phtml:125
+msgid "Photo"
+msgstr "Фото"
+
+#: modules/profile/templates/edit.phtml:137
+msgid "Personal info"
+msgstr "Личная информация"
+
+#: modules/profile/templates/edit.phtml:141
+#: modules/profile/templates/edit.phtml:147
+msgid "Your name"
+msgstr "Ваше имя"
+
+#: modules/profile/templates/edit.phtml:152
+msgid "Date of birth (d.m.y)"
+msgstr "Дата рождения (д.м.г)"
+
+#: modules/profile/templates/edit.phtml:155
+msgid "Day"
+msgstr "День"
+
+#: modules/profile/templates/edit.phtml:160
+msgid "Month"
+msgstr "Месяц"
+
+#: modules/profile/templates/edit.phtml:164
+msgid "Year"
+msgstr "Год"
+
+#: modules/profile/templates/edit.phtml:170
+#: modules/profile/templates/edit.phtml:176
+#: modules/profile/templates/index.phtml:151
+msgid "City, Country"
+msgstr "Город, страна"
+
+#: modules/profile/templates/edit.phtml:180
+msgid "About myself"
+msgstr "О себе"
+
+#: modules/profile/templates/edit.phtml:184
+#: modules/profile/templates/office.phtml:67
+#: modules/profile/templates/office.phtml:71
+msgid "Contacts"
+msgstr "Контакты"
+
+#: modules/profile/templates/edit.phtml:186
+#: modules/profile/templates/edit.phtml:192
+#: modules/profile/templates/index.phtml:168
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/edit.phtml:202
+#: modules/profile/templates/index.phtml:174
+msgid "E-mail"
+msgstr "Эл. почта"
+
+#: modules/profile/templates/edit.phtml:207
+msgid "Show in Profile"
+msgstr "Показывать в анкете"
+
+#: modules/profile/templates/edit.phtml:209
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr "Внимание! Правильно указывайте свой адрес электронной почты! Именно на него будет высылаться Ваш пароль"
+
+#: modules/profile/templates/edit.phtml:213
+#: modules/profile/templates/edit.phtml:219
+#: modules/profile/templates/index.phtml:183
+msgid "Skype"
+msgstr "Skype"
+
+#: modules/profile/templates/edit.phtml:224
+#: modules/profile/templates/edit.phtml:230
+#: modules/profile/templates/index.phtml:189
+msgid "Site"
+msgstr "Сайт"
+
+#: modules/profile/templates/edit.phtml:235
+msgid "Administrative Functions"
+msgstr "Административные функции"
+
+#: modules/profile/templates/edit.phtml:238
+msgid "Prohibit Karma"
+msgstr "Запретить карму"
+
+#: modules/profile/templates/edit.phtml:243
+msgid "Reset User options to default"
+msgstr "Сбросить настройки пользователя по умолчанию"
+
+#: modules/profile/templates/edit.phtml:247
+msgid "Select gender"
+msgstr "Укажите пол"
+
+#: modules/profile/templates/edit.phtml:250
+#: modules/profile/templates/index.phtml:141
+msgid "Man"
+msgstr "Мужчина"
+
+#: modules/profile/templates/edit.phtml:254
+#: modules/profile/templates/index.phtml:143
+msgid "Woman"
+msgstr "Женщина"
+
+#: modules/profile/templates/edit.phtml:258
+msgid "Position on the Site"
+msgstr "Должность на Сайте"
+
+#: modules/profile/templates/edit.phtml:265
+msgid "Forum Moderator"
+msgstr "Модератор Форума"
+
+#: modules/profile/templates/edit.phtml:269
+msgid "Download Moderator"
+msgstr "Модератор Загрузок"
+
+#: modules/profile/templates/edit.phtml:273
+msgid "Library Moderator"
+msgstr "Модератор Библиотеки"
+
+#: modules/profile/templates/edit.phtml:277
+msgid "Super Moderator"
+msgstr "Супермодератор"
+
+#: modules/profile/templates/edit.phtml:296
+#: modules/profile/templates/forum_settings.phtml:79
+#: modules/profile/templates/images.phtml:62
+#: modules/profile/templates/mail_settings.phtml:60
+#: modules/profile/templates/password.phtml:66
+#: modules/profile/templates/settings.phtml:118
+msgid "Save"
+msgstr "Сохранить"
+
+#: modules/profile/templates/edit.phtml:297
+#: modules/profile/templates/forum_settings.phtml:80
+#: modules/profile/templates/images.phtml:63
+#: modules/profile/templates/karma_delete.phtml:36
+#: modules/profile/templates/karma_vote.phtml:71
+#: modules/profile/templates/mail_settings.phtml:61
+#: modules/profile/templates/password.phtml:67
+#: modules/profile/templates/settings.phtml:119
+msgid "Cancel"
+msgstr "Отмена"
+
+#: modules/profile/templates/forum_settings.phtml:48
+msgid "Basic settings"
+msgstr "Основные настройки"
+
+#: modules/profile/templates/forum_settings.phtml:52
+msgid "Inverse sorting"
+msgstr "Обратная сортировка"
+
+#: modules/profile/templates/forum_settings.phtml:56
+msgid "Use the form of a quick answer"
+msgstr "Использовать форму быстрого ответа"
+
+#: modules/profile/templates/forum_settings.phtml:60
+msgid "Preview of messages"
+msgstr "Предварительный просмотр сообщений"
+
+#: modules/profile/templates/forum_settings.phtml:63
+msgid "Attach first post"
+msgstr "Прикрепить первый пост"
+
+#: modules/profile/templates/forum_settings.phtml:67
+msgid "Always"
+msgstr "Всегда"
+
+#: modules/profile/templates/forum_settings.phtml:71
+msgid "In unread topics"
+msgstr "В непрочитанных темах"
+
+#: modules/profile/templates/forum_settings.phtml:75
+msgid "Never"
+msgstr "Никогда"
+
+#: modules/profile/templates/forum_settings.phtml:81
+#: modules/profile/templates/settings.phtml:120
+msgid "Reset Settings"
+msgstr "Сбросить настройки"
+
+#: modules/profile/templates/images.phtml:54
+msgid "Choose file"
+msgstr "Выберите файл"
+
+#: modules/profile/templates/images.phtml:57
+msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
+msgstr "Разрешенные форматы изображений: JPG, GIF или PNG. Размер файла не должен превышать %d Кб.<br>The новое изображение заменит старое (если было)."
+
+#: modules/profile/templates/index.phtml:46
+msgid "User Agent"
+msgstr "User Agent"
+
+#: modules/profile/templates/index.phtml:48
+msgid "Ip"
+msgstr "IP"
+
+#: modules/profile/templates/index.phtml:49
+#: modules/profile/templates/index.phtml:52
+msgid "Whois"
+msgstr "Whois"
+
+#: modules/profile/templates/index.phtml:61
+msgid "Write"
+msgstr "Написать"
+
+#: modules/profile/templates/index.phtml:64
+msgid "Block"
+msgstr "Заблокировать"
+
+#: modules/profile/templates/index.phtml:66
+msgid "Unblock"
+msgstr "Разблокировать"
+
+#: modules/profile/templates/index.phtml:70
+msgid "Actions"
+msgstr "Действия"
+
+#: modules/profile/templates/index.phtml:79
+msgid "Edit profile"
+msgstr "Редактировать анкету"
+
+#: modules/profile/templates/index.phtml:93
+msgid "vote"
+msgid_plural "votes"
+msgstr[0] "голос"
+msgstr[1] "голоса"
+msgstr[2] "голосов"
+msgstr[3] "голосов"
+
+#: modules/profile/templates/index.phtml:113
+#: modules/profile/templates/karma_vote.phtml:70
+msgid "Vote"
+msgstr "Голосовать"
+
+#: modules/profile/templates/index.phtml:122
+msgid "Information"
+msgstr "Информация"
+
+#: modules/profile/templates/index.phtml:133
+msgid "Birthday"
+msgstr "День рождения"
+
+#: modules/profile/templates/index.phtml:138
+msgid "Gender"
+msgstr "Пол"
+
+#: modules/profile/templates/index.phtml:145
+msgid "Not specified"
+msgstr "Не указан"
+
+#: modules/profile/templates/index.phtml:177
+msgid "hidden"
+msgstr "скрыт"
+
+#: modules/profile/templates/index.phtml:227
+#: modules/profile/templates/office.phtml:35
+msgid "Photo Album"
+msgstr "Фотоальбом"
+
+#: modules/profile/templates/karma.phtml:77
+msgid "Reset Karma"
+msgstr "Сбросить карму"
+
+#: modules/profile/templates/karma_vote.phtml:43
+msgid "Type of vote"
+msgstr "Тип голоса"
+
+#: modules/profile/templates/karma_vote.phtml:54
+msgid "Votes quantity"
+msgstr "Количество голосов"
+
+#: modules/profile/templates/karma_vote.phtml:63
+msgid "Comment"
+msgstr "Комментарий"
+
+#: modules/profile/templates/karma_vote.phtml:65
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мин. 2, макс. 500 символов"
+
+#: modules/profile/templates/mail_settings.phtml:48
+msgid "Who can write you?"
+msgstr "Кто может писать вам?"
+
+#: modules/profile/templates/mail_settings.phtml:52
+msgid "All can write"
+msgstr "Могут писать все"
+
+#: modules/profile/templates/mail_settings.phtml:56
+msgid "Only my contacts"
+msgstr "Только мои контакты"
+
+#: modules/profile/templates/message_row.phtml:31
+msgid "To message"
+msgstr "К сообщению"
+
+#: modules/profile/templates/office.phtml:29
+msgid "My Pages"
+msgstr "Мои Страницы"
+
+#: modules/profile/templates/office.phtml:33
+msgid "Statistics"
+msgstr "Статистика"
+
+#: modules/profile/templates/office.phtml:44
+msgid "My Mailbox"
+msgstr "Моя почта"
+
+#: modules/profile/templates/office.phtml:48
+msgid "Received"
+msgstr "Входящие"
+
+#: modules/profile/templates/office.phtml:55
+msgid "Sent"
+msgstr "Отправленные"
+
+#: modules/profile/templates/office.phtml:62
+msgid "Files"
+msgstr "Файлы"
+
+#: modules/profile/templates/office.phtml:75
+msgid "Blocked"
+msgstr "Заблокированные"
+
+#: modules/profile/templates/office.phtml:85
+msgid "System Settings"
+msgstr "Системные настройки"
+
+#: modules/profile/templates/password.phtml:34
+#: modules/profile/templates/password.phtml:40
+msgid "Enter old password"
+msgstr "Введите старый пароль"
+
+#: modules/profile/templates/password.phtml:46
+#: modules/profile/templates/password.phtml:52
+msgid "Enter new password"
+msgstr "Введите новый пароль"
+
+#: modules/profile/templates/password.phtml:56
+#: modules/profile/templates/password.phtml:62
+msgid "Repeat password"
+msgstr "Повторите пароль"
+
+#: modules/profile/templates/restore_password.phtml:22
+#: modules/profile/templates/restore_password.phtml:28
+msgid "Your E-mail"
+msgstr "Ваш e-mail"
+
+#: modules/profile/templates/restore_password.phtml:31
+#: modules/profile/templates/restore_password.phtml:40
+msgid "Verification code"
+msgstr "Проверочный код"
+
+#: modules/profile/templates/restore_password.phtml:33
+msgid "Enter verification code"
+msgstr "Введите проверочный код"
+
+#: modules/profile/templates/restore_password.phtml:46
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Пароль будет выслан на E-mail Адрес, указанный в Вашей анкете.<br>ВНИМЕНИЕ! Если в анкете не был указан E-mail адрес, то Вы не сможете восстановить пароль"
+
+#: modules/profile/templates/settings.phtml:51
+msgid "Time settings"
+msgstr "Настройки времени"
+
+#: modules/profile/templates/settings.phtml:53
+#: modules/profile/templates/settings.phtml:61
+msgid "Shift of time"
+msgstr "Сдвиг времени"
+
+#: modules/profile/templates/settings.phtml:64
+msgid "System time"
+msgstr "Системное время"
+
+#: modules/profile/templates/settings.phtml:68
+msgid "System Functions"
+msgstr "Системные функции"
+
+#: modules/profile/templates/settings.phtml:71
+msgid "Direct URL"
+msgstr "Прямые ссылки"
+
+#: modules/profile/templates/settings.phtml:75
+msgid "Youtube Player"
+msgstr "Проигрыватель YouTube"
+
+#: modules/profile/templates/settings.phtml:78
+msgid "Text entering"
+msgstr "Ввод текста"
+
+#: modules/profile/templates/settings.phtml:80
+#: modules/profile/templates/settings.phtml:87
+msgid "Height of field"
+msgstr "Высота поля"
+
+#: modules/profile/templates/settings.phtml:91
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: modules/profile/templates/settings.phtml:93
+#: modules/profile/templates/settings.phtml:100
+msgid "Size of Lists"
+msgstr "Размер списков"
+
+#: modules/profile/templates/settings.phtml:105
+#: modules/profile/templates/settings.phtml:107
+msgid "Select Language"
+msgstr "Выбрать Язык"
+
+#: modules/profile/templates/settings.phtml:112
+msgid "Site Default"
+msgstr "По умолчанию"
+
+#: modules/profile/templates/stat.phtml:34
+msgid "Registration confirmed"
+msgstr "Регистрацию подтвердил"
+
+#: modules/profile/templates/stat.phtml:36
+msgid "Free registration"
+msgstr "Свободная регистрация"
+
+#: modules/profile/templates/stat.phtml:41
+msgid "Registered"
+msgstr "Дата регистрации"
+
+#: modules/profile/templates/stat.phtml:44
+msgid "He stay on the site"
+msgstr "Пробыл на сайте"
+
+#: modules/profile/templates/stat.phtml:44
+msgid "She stay on the site"
+msgstr "Пробыла на сайте"
+
+#: modules/profile/templates/stat.phtml:48
+msgid "Last visit"
+msgstr "Последний визит"
+

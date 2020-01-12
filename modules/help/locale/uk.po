@@ -1,0 +1,326 @@
+msgid ""
+msgstr ""
+"X-Domain: help\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /develop/modules/help/locale/help.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"PO-Revision-Date: 2020-01-12 16:58\n"
+
+#: modules/help/includes/admsmilies.php:20
+#: modules/help/includes/smilies.php:35
+msgid "For administration"
+msgstr "Для адміністрації"
+
+#: modules/help/includes/admsmilies.php:21
+#: modules/help/includes/my_smilies.php:22
+#: modules/help/includes/set_my_sm.php:27
+#: modules/help/includes/usersmilies.php:39
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr "Смайли"
+
+#: modules/help/includes/admsmilies.php:32
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/help/includes/avatars.php:20
+#: modules/help/templates/index.phtml:30
+msgid "Avatars"
+msgstr "Аватари"
+
+#: modules/help/includes/avatars.php:37
+msgid "Avatar has been successfully applied"
+msgstr "Аватар успішно встановлений"
+
+#: modules/help/includes/avatars.php:39
+msgid "Continue"
+msgstr "Продовжити"
+
+#: modules/help/includes/avatars.php:48
+msgid "An error occurred"
+msgstr "Виникла помилка"
+
+#: modules/help/includes/avatars.php:50
+#: modules/help/templates/avatar_list.phtml:65
+#: modules/help/templates/avatars.phtml:48
+#: modules/help/templates/bbcode.phtml:89
+#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/index.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:81
+#: modules/help/templates/smiles.phtml:48
+#: modules/help/templates/smiles_list.phtml:88
+msgid "Back"
+msgstr "Повернутися"
+
+#: modules/help/includes/avatars.php:55
+msgid "Set to Profile"
+msgstr "Встановити до профілю"
+
+#: modules/help/includes/avatars.php:58
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Ви дійсно хочете встановити собі цей аватар?"
+
+#: modules/help/includes/avatars.php:61
+msgid "Save"
+msgstr "Зберегти"
+
+#: modules/help/includes/forum.php:15
+#: modules/help/templates/index.phtml:28
+msgid "Forum rules"
+msgstr "Правила форуму"
+
+#: modules/help/includes/my_smilies.php:21
+#: modules/help/includes/smilies.php:27
+#: modules/help/templates/smiles_list.phtml:45
+msgid "My smilies"
+msgstr "Мої смайли"
+
+#: modules/help/includes/set_my_sm.php:27
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: modules/help/includes/smilies.php:19
+msgid "Smiles"
+msgstr ""
+
+#: modules/help/includes/tags.php:15
+#: modules/help/templates/index.phtml:29
+msgid "bbCode Tags"
+msgstr "Теги bbCode"
+
+#: modules/help/index.php:54
+msgid "Information, FAQ"
+msgstr "Інформація, FAQ"
+
+#: modules/help/index.php:64
+msgid "Animals"
+msgstr "Тварини"
+
+#: modules/help/index.php:65
+msgid "Brawl, Weapons"
+msgstr "Бійки, Зброя"
+
+#: modules/help/index.php:66
+msgid "Emotions"
+msgstr "Емоції"
+
+#: modules/help/index.php:67
+msgid "Flowers"
+msgstr "Квіти"
+
+#: modules/help/index.php:68
+msgid "Food, Alcohol"
+msgstr "Їжа, Алкоголь"
+
+#: modules/help/index.php:69
+msgid "Gestures"
+msgstr "Жести"
+
+#: modules/help/index.php:70
+msgid "Holidays"
+msgstr "Свята"
+
+#: modules/help/index.php:71
+msgid "Love"
+msgstr "Кохання"
+
+#: modules/help/index.php:72
+msgid "Miscellaneous"
+msgstr "Різне"
+
+#: modules/help/index.php:73
+msgid "Music, Dancing"
+msgstr "Музика, Танці"
+
+#: modules/help/index.php:74
+msgid "Sports"
+msgstr "Спорт"
+
+#: modules/help/index.php:75
+msgid "Technology"
+msgstr "Технології"
+
+#: modules/help/templates/avatar_list.phtml:33
+#: modules/help/templates/avatars.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:33
+#: modules/help/templates/smiles.phtml:34
+#: modules/help/templates/smiles_list.phtml:33
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: modules/help/templates/avatar_list.phtml:61
+#: modules/help/templates/my_smiles_list.phtml:77
+#: modules/help/templates/smiles_list.phtml:84
+msgid "Total:"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:30
+msgid "PHP code"
+msgstr "PHP код"
+
+#: modules/help/templates/bbcode.phtml:33
+msgid "Link name"
+msgstr "Ім'я посилання"
+
+#: modules/help/templates/bbcode.phtml:34
+msgid "URL Link"
+msgstr "URL посилання"
+
+#: modules/help/templates/bbcode.phtml:38
+msgid "Bold"
+msgstr "Жирний"
+
+#: modules/help/templates/bbcode.phtml:42
+msgid "Italic"
+msgstr "Курсив"
+
+#: modules/help/templates/bbcode.phtml:46
+msgid "Underline"
+msgstr "Підкреслення"
+
+#: modules/help/templates/bbcode.phtml:50
+msgid "Strike"
+msgstr "Закреслений"
+
+#: modules/help/templates/bbcode.phtml:54
+msgid "Red"
+msgstr "Червоний"
+
+#: modules/help/templates/bbcode.phtml:58
+msgid "Green"
+msgstr "Зелений"
+
+#: modules/help/templates/bbcode.phtml:62
+msgid "Blue"
+msgstr "Синій"
+
+#: modules/help/templates/bbcode.phtml:66
+msgid "Text Color"
+msgstr "Колір тексту"
+
+#: modules/help/templates/bbcode.phtml:70
+msgid "Background Color"
+msgstr "Колір фону"
+
+#: modules/help/templates/bbcode.phtml:74
+msgid "Quote"
+msgstr "Цитата"
+
+#: modules/help/templates/bbcode.phtml:78
+msgid "Bulleted list"
+msgstr "Маркірований список"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Title"
+msgstr "Назва"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Text"
+msgstr "Текст"
+
+#: modules/help/templates/bbcode.phtml:82
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: modules/help/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: modules/help/templates/forum_rules.phtml:26
+msgid "FORBIDDEN"
+msgstr "ЗАБОРОНЕНО"
+
+#: modules/help/templates/forum_rules.phtml:28
+msgid "Advertising messages"
+msgstr "Рекламні повідомлення"
+
+#: modules/help/templates/forum_rules.phtml:29
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "Повідомлення, що містять пряму пропаганду расової, національної та релігійної ворожнечі"
+
+#: modules/help/templates/forum_rules.phtml:30
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "Будь-які образливі, непристойні, вульгарні, наклепницькі, ненависні, загрозливі і сексуально-орієнтовані повідомлення або будь-який інший матеріал, який може порушити будь-які відповідні закони"
+
+#: modules/help/templates/forum_rules.phtml:31
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr "Повідомлення, явно ображаючі когось, особливо користувачів форуму"
+
+#: modules/help/templates/forum_rules.phtml:32
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr "Навмисно спотворювати написання ників інших користувачів з метою додання повідомленню образливого відтінку"
+
+#: modules/help/templates/forum_rules.phtml:33
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr "Повторна публікація видалених модератором повідомлень"
+
+#: modules/help/templates/forum_rules.phtml:34
+msgid "Post messages not related to the topic"
+msgstr "Відправляти повідомлення, які не відносяться до теми"
+
+#: modules/help/templates/forum_rules.phtml:35
+msgid "Continuing topics that have been closed by moderator"
+msgstr "Продовження тем, які були закриті модератором"
+
+#: modules/help/templates/forum_rules.phtml:38
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "КАТЕГОРИЧНО ЗАБОРОНЕНО"
+
+#: modules/help/templates/forum_rules.phtml:40
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr "Писати в публічних темах невдоволення неадекватними діями інших користувачів і обговорювати роботу модераторів. Використовуйте особисті повідомлення для цього"
+
+#: modules/help/templates/forum_rules.phtml:41
+msgid "Register the nicknames having offensive tone for other users"
+msgstr "Реєстрація ніків, які мають образливий тон для інших користувачів"
+
+#: modules/help/templates/forum_rules.phtml:44
+msgid "UNACCEPTABLE"
+msgstr "НЕПРИПУСТИМО"
+
+#: modules/help/templates/forum_rules.phtml:46
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr "Цитувати повні повідомлення попереднього користувача та цитувати повідомлення, які вже містять інші цитати"
+
+#: modules/help/templates/forum_rules.phtml:47
+msgid "Post messages only contains external link"
+msgstr "Публікувати повідомлення, які містять лише зовнішнє посилання"
+
+#: modules/help/templates/forum_rules.phtml:48
+msgid "Post messages written in translite"
+msgstr "Відправляти повідомлення, написані транслітом"
+
+#: modules/help/templates/forum_rules.phtml:49
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr "Публікація безглуздих повідомлень, які складаються лише зі смайлів або повідомлень типу \"Ок\", \"Що?\", \"Хто тут?\", і т. д."
+
+#: modules/help/templates/forum_rules.phtml:54
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr "Повідомлення, опубліковані незважаючи на попередження вище будуть змінені або видалені."
+
+#: modules/help/templates/forum_rules.phtml:55
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "Це правило поширюється на всіх учасників та модераторів, повторні дії призведуть до отримання бану або навіть втрати аккаунту."
+
+#: modules/help/templates/my_smiles_list.phtml:36
+msgid "Add Smilies"
+msgstr "Додати смайли"
+
+#: modules/help/templates/my_smiles_list.phtml:55
+#: modules/help/templates/smiles_list.phtml:62
+msgid "or"
+msgstr "або"
+
+#: modules/help/templates/my_smiles_list.phtml:64
+msgid "Delete"
+msgstr "Видалити"
+
+#: modules/help/templates/smiles_list.phtml:71
+msgid "Add"
+msgstr "Додати"
+

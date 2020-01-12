@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"X-Domain: online\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: lt\n"
+"X-Crowdin-File: /develop/modules/online/locale/online.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Lithuanian\n"
+"Language: lt_LT\n"
+"PO-Revision-Date: 2020-01-12 16:59\n"
+
+#: modules/online/includes/guest.php:21
+#: modules/online/includes/history.php:21
+#: modules/online/includes/index.php:22
+#: modules/online/includes/ip.php:21
+msgid "Users"
+msgstr "Vartotojai"
+
+#: modules/online/includes/guest.php:26
+#: modules/online/includes/history.php:26
+#: modules/online/includes/index.php:27
+#: modules/online/includes/ip.php:26
+msgid "History"
+msgstr "Istorija"
+
+#: modules/online/includes/guest.php:34
+#: modules/online/includes/history.php:34
+#: modules/online/includes/index.php:35
+#: modules/online/includes/ip.php:34
+msgid "Guests"
+msgstr "Svečiai"
+
+#: modules/online/includes/guest.php:39
+#: modules/online/includes/history.php:39
+#: modules/online/includes/index.php:40
+#: modules/online/includes/ip.php:39
+msgid "IP Activity"
+msgstr "IP Aktyvumas"
+
+#: modules/online/includes/guest.php:59
+msgid "Guest"
+msgstr ""
+
+#: modules/online/includes/index.php:45
+msgid "Who is online?"
+msgstr "Kas Prisijungę?"
+
+#: modules/online/index.php:55
+#: modules/online/index.php:63
+msgid "Online"
+msgstr "Prisijungę"
+
+#: modules/online/index.php:57
+msgid "For registered users only"
+msgstr "Tik registruotiems Vartotojams"
+
+#: modules/online/templates/ip.phtml:51
+#: modules/online/templates/users.phtml:38
+msgid "List is empty"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:58
+#: modules/online/templates/users.phtml:45
+msgid "Total"
+msgstr "Viso"
+

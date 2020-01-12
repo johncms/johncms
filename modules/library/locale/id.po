@@ -1,0 +1,571 @@
+msgid ""
+msgstr ""
+"X-Domain: library\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /develop/modules/library/locale/library.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2020-01-12 15:59\n"
+
+#: modules/library/classes/Hashtags.php:256
+#: modules/library/includes/lastcom.php:37
+#: modules/library/includes/tags.php:58
+#: modules/library/includes/top.php:37
+#: modules/library/index.php:204
+#: modules/library/index.php:270
+#: modules/library/index.php:329
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: modules/library/classes/Rating.php:134
+msgid "Vote"
+msgstr "Beri Nilai"
+
+#: modules/library/classes/Tree.php:200
+#: modules/library/includes/addnew.php:203
+#: modules/library/includes/comments.php:40
+#: modules/library/includes/del.php:22
+#: modules/library/includes/lastcom.php:15
+#: modules/library/includes/mkdir.php:40
+#: modules/library/includes/moder.php:118
+#: modules/library/includes/new.php:18
+#: modules/library/includes/premod.php:17
+#: modules/library/includes/search.php:28
+#: modules/library/includes/search.php:55
+#: modules/library/includes/tagcloud.php:23
+#: modules/library/includes/tags.php:25
+#: modules/library/includes/top.php:24
+#: modules/library/index.php:57
+#: modules/library/index.php:154
+#: modules/library/index.php:368
+msgid "Library"
+msgstr "Perpustakaan"
+
+#: modules/library/includes/addnew.php:34
+msgid "You cannot add the Article so often<br>Please, wait %d sec."
+msgstr "Anda tidak bisa menambah artikel terlalu sering <br> Mohon tunggu %d detik."
+
+#: modules/library/includes/addnew.php:35
+#: modules/library/includes/addnew.php:224
+#: modules/library/includes/del.php:55
+#: modules/library/includes/del.php:79
+#: modules/library/includes/del.php:98
+#: modules/library/includes/del.php:147
+#: modules/library/includes/del.php:155
+#: modules/library/includes/lastcom.php:40
+#: modules/library/includes/mkdir.php:54
+#: modules/library/includes/moder.php:102
+#: modules/library/includes/moder.php:190
+#: modules/library/includes/top.php:106
+msgid "Back"
+msgstr "Kembali"
+
+#: modules/library/includes/addnew.php:51
+#: modules/library/includes/mkdir.php:23
+msgid "You have not entered the name"
+msgstr "Anda belum memasukkan nama"
+
+#: modules/library/includes/addnew.php:70
+msgid "The file is invalid encoding, preferably UTF-8"
+msgstr "Encoding berkas tidak valid, sebaiknya UTF-8"
+
+#: modules/library/includes/addnew.php:70
+#: modules/library/includes/addnew.php:83
+#: modules/library/includes/addnew.php:93
+#: modules/library/includes/addnew.php:172
+#: modules/library/includes/mkdir.php:23
+msgid "Repeat"
+msgstr "Ulangi"
+
+#: modules/library/includes/addnew.php:83
+msgid "Error uploading"
+msgstr "Mengunggah gagal"
+
+#: modules/library/includes/addnew.php:93
+msgid "Invalid file format allowed * .txt"
+msgstr "Format berkas tidak valid, diizinkan *.txt"
+
+#: modules/library/includes/addnew.php:101
+msgid "You have not entered text"
+msgstr "Anda belum memasukkan isi"
+
+#: modules/library/includes/addnew.php:172
+#: modules/library/includes/moder.php:90
+msgid "Photo uploading error"
+msgstr "Mengunggah foto gagal"
+
+#: modules/library/includes/addnew.php:187
+msgid "Article added"
+msgstr "Artikel berhasil ditambahkan"
+
+#: modules/library/includes/addnew.php:187
+msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
+msgstr "Terima kasih untuk apa yang Anda tulis. Setelah disetujui pengurus artikel Anda akan tampil di Perpustkaan."
+
+#: modules/library/includes/addnew.php:189
+msgid "To Article"
+msgstr "Artikel"
+
+#: modules/library/includes/addnew.php:189
+#: modules/library/includes/mkdir.php:37
+msgid "To Section"
+msgstr "Pada bagian"
+
+#: modules/library/includes/addnew.php:203
+#: modules/library/index.php:336
+msgid "Write Article"
+msgstr "Tulis Artikel"
+
+#: modules/library/includes/addnew.php:206
+#: modules/library/includes/mkdir.php:43
+#: modules/library/includes/moder.php:129
+msgid "Title"
+msgstr "Judul"
+
+#: modules/library/includes/addnew.php:208
+#: modules/library/includes/moder.php:134
+msgid "Announce"
+msgstr "Mengumumkan"
+
+#: modules/library/includes/addnew.php:210
+#: modules/library/includes/moder.php:138
+msgid "Text"
+msgstr "Isi"
+
+#: modules/library/includes/addnew.php:215
+#: modules/library/includes/moder.php:183
+msgid "Commenting on the Article"
+msgstr "Komentar Artikel"
+
+#: modules/library/includes/addnew.php:216
+#: modules/library/includes/moder.php:127
+msgid "To upload a photo"
+msgstr "Unggah foto"
+
+#: modules/library/includes/addnew.php:218
+msgid "Select the text file"
+msgstr "Pilih berkas teks"
+
+#: modules/library/includes/addnew.php:219
+msgid "Text entry field will be ignored"
+msgstr "Kolom entri teks akan diabaikan"
+
+#: modules/library/includes/addnew.php:220
+#: modules/library/includes/comments.php:45
+#: modules/library/includes/moder.php:147
+#: modules/library/includes/new.php:52
+#: modules/library/includes/tags.php:25
+#: modules/library/includes/tags.php:45
+#: modules/library/includes/top.php:77
+msgid "Tags"
+msgstr "Tag"
+
+#: modules/library/includes/addnew.php:221
+msgid "Specify the Tag to the Article, separated by commas"
+msgstr "Masukkan Tag artikel, pisahkan dengan koma"
+
+#: modules/library/includes/addnew.php:222
+#: modules/library/includes/mkdir.php:52
+#: modules/library/includes/moder.php:188
+msgid "Save"
+msgstr "Simpan"
+
+#: modules/library/includes/comments.php:18
+#: modules/library/includes/comments.php:32
+#: modules/library/index.php:65
+msgid "Access forbidden"
+msgstr "Akses ditolak"
+
+#: modules/library/includes/comments.php:46
+#: modules/library/includes/lastcom.php:33
+#: modules/library/includes/new.php:55
+#: modules/library/includes/premod.php:47
+#: modules/library/includes/search.php:97
+#: modules/library/includes/tags.php:42
+#: modules/library/includes/top.php:80
+#: modules/library/index.php:318
+#: modules/library/index.php:396
+msgid "Who added"
+msgstr "Yang ditambahkan"
+
+#: modules/library/includes/comments.php:49
+#: modules/library/includes/moder.php:185
+#: modules/library/includes/new.php:65
+#: modules/library/includes/search.php:99
+#: modules/library/includes/tags.php:44
+#: modules/library/includes/top.php:90
+#: modules/library/index.php:406
+msgid "Number of readings"
+msgstr "Jumlah dibaca"
+
+#: modules/library/includes/comments.php:70
+#: modules/library/includes/new.php:71
+#: modules/library/includes/new.php:73
+#: modules/library/includes/tags.php:46
+#: modules/library/includes/top.php:96
+#: modules/library/includes/top.php:98
+#: modules/library/index.php:412
+#: modules/library/index.php:415
+msgid "Comments"
+msgstr "Komentar"
+
+#: modules/library/includes/comments.php:81
+msgid "Wrong data"
+msgstr "Data salah"
+
+#: modules/library/includes/del.php:22
+#: modules/library/includes/del.php:87
+#: modules/library/includes/del.php:118
+#: modules/library/includes/del.php:129
+#: modules/library/includes/del.php:137
+#: modules/library/includes/premod.php:49
+#: modules/library/index.php:198
+#: modules/library/index.php:264
+#: modules/library/index.php:278
+#: modules/library/index.php:338
+#: modules/library/index.php:450
+msgid "Delete"
+msgstr "Hapus"
+
+#: modules/library/includes/del.php:34
+msgid "Section does not exist"
+msgstr "Bagian tidak ada"
+
+#: modules/library/includes/del.php:41
+msgid "Are you sure you want to move the contents?"
+msgstr "Apakah Anda yakin memindahkan isi?"
+
+#: modules/library/includes/del.php:43
+msgid "Move"
+msgstr "Pindah"
+
+#: modules/library/includes/del.php:43
+#: modules/library/includes/del.php:87
+#: modules/library/includes/del.php:118
+#: modules/library/includes/del.php:129
+#: modules/library/includes/del.php:137
+msgid "Cancel"
+msgstr "Batal"
+
+#: modules/library/includes/del.php:55
+msgid "Successful transfer"
+msgstr "Berhasil ditransfer"
+
+#: modules/library/includes/del.php:67
+#: modules/library/includes/moder.php:151
+msgid "Move to Section"
+msgstr "Pindah ke Bagian"
+
+#: modules/library/includes/del.php:75
+#: modules/library/includes/premod.php:49
+msgid "Approve"
+msgstr "Terima"
+
+#: modules/library/includes/del.php:79
+msgid "There are no Sections for moving"
+msgstr "Tidak ada Bagian yang akan dipindah"
+
+#: modules/library/includes/del.php:85
+msgid "Are you sure you want to delete content?"
+msgstr "Apalah Anda yakin menghapus isi?"
+
+#: modules/library/includes/del.php:92
+msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
+msgstr "Berhasil dihapus:<br>Folder: (%d)<br>Artikel: (%d)<br>Tags: (%d)<br>Komentar: (%d) <br> Gambar: (%d)"
+
+#: modules/library/includes/del.php:103
+msgid "Section is not empty"
+msgstr "Bagian tidak kosong"
+
+#: modules/library/includes/del.php:104
+msgid "Select action"
+msgstr "Pilih Aksi"
+
+#: modules/library/includes/del.php:106
+msgid "Delete with movement"
+msgstr "Hapus dengan memindah"
+
+#: modules/library/includes/del.php:107
+msgid "Delete all Sections and Articles"
+msgstr "Hapus semua Bagian dsn Artikel"
+
+#: modules/library/includes/del.php:108
+msgid "Do"
+msgstr "Lakukan"
+
+#: modules/library/includes/del.php:116
+#: modules/library/includes/del.php:129
+#: modules/library/includes/del.php:135
+msgid "Delete confirmation"
+msgstr "Konfirmasi menghapus"
+
+#: modules/library/includes/del.php:125
+msgid "Articles do not exist"
+msgstr "Artikel tidak ada"
+
+#: modules/library/includes/del.php:147
+#: modules/library/includes/del.php:155
+msgid "Deleted"
+msgstr "Dihapus"
+
+#: modules/library/includes/download.php:51
+msgid "Author name"
+msgstr "Nama penulis"
+
+#: modules/library/includes/download.php:52
+msgid "Author last name"
+msgstr "Nama belakang penulis"
+
+#: modules/library/includes/download.php:54
+msgid "Name of the book"
+msgstr "Nama buku"
+
+#: modules/library/includes/download.php:56
+msgid "Date"
+msgstr "Tanggal"
+
+#: modules/library/includes/lastcom.php:15
+#: modules/library/index.php:174
+msgid "Latest comments"
+msgstr "Komentar terbaru"
+
+#: modules/library/includes/mkdir.php:37
+msgid "Section created"
+msgstr "Bagian berhasil dibuat"
+
+#: modules/library/includes/mkdir.php:40
+#: modules/library/index.php:210
+msgid "Create Section"
+msgstr "Buat Bagian"
+
+#: modules/library/includes/mkdir.php:45
+#: modules/library/includes/moder.php:131
+msgid "Section description"
+msgstr "Deskripsi Bagian"
+
+#: modules/library/includes/mkdir.php:47
+#: modules/library/includes/moder.php:171
+msgid "Section type"
+msgstr "Tipe Bagian"
+
+#: modules/library/includes/mkdir.php:49
+#: modules/library/includes/moder.php:174
+#: modules/library/index.php:253
+msgid "Sections"
+msgstr "Bagian"
+
+#: modules/library/includes/mkdir.php:50
+#: modules/library/includes/moder.php:175
+#: modules/library/index.php:253
+msgid "Articles"
+msgstr "Artikel"
+
+#: modules/library/includes/moder.php:102
+msgid "Changed"
+msgstr "Disunting"
+
+#: modules/library/includes/moder.php:119
+msgid "Edit Section"
+msgstr "Sunting Bagian"
+
+#: modules/library/includes/moder.php:119
+msgid "Edit Article"
+msgstr "Sunting Artikel"
+
+#: modules/library/includes/moder.php:144
+msgid "The text of the Article can not be edited, a large amount of data !!!"
+msgstr "Isi artikel tidak dapat disunting, data terlalu besar!!!"
+
+#: modules/library/includes/moder.php:157
+msgid "The ROOT"
+msgstr "Utama"
+
+#: modules/library/includes/moder.php:177
+msgid "Allow users to add their Articles?"
+msgstr "Izinkan pengguna menulis artikel?"
+
+#: modules/library/includes/moder.php:178
+msgid "Yes"
+msgstr "Ya"
+
+#: modules/library/includes/moder.php:179
+msgid "No"
+msgstr "Tidak"
+
+#: modules/library/includes/moder.php:181
+msgid "Verified"
+msgstr "Terverifikasi"
+
+#: modules/library/includes/new.php:18
+#: modules/library/index.php:170
+msgid "New Articles"
+msgstr "Tulis Artikel"
+
+#: modules/library/includes/new.php:48
+#: modules/library/includes/top.php:73
+msgid "Section"
+msgstr "Bagian"
+
+#: modules/library/includes/new.php:60
+#: modules/library/includes/top.php:85
+#: modules/library/index.php:323
+#: modules/library/index.php:401
+msgid "Rating"
+msgstr ""
+
+#: modules/library/includes/new.php:73
+#: modules/library/includes/top.php:98
+#: modules/library/index.php:416
+msgid "Comments are closed"
+msgstr "Komentar ditutup"
+
+#: modules/library/includes/new.php:80
+#: modules/library/includes/premod.php:54
+#: modules/library/includes/search.php:107
+#: modules/library/includes/tags.php:51
+#: modules/library/index.php:207
+#: modules/library/index.php:273
+#: modules/library/index.php:332
+msgid "Total"
+msgstr ""
+
+#: modules/library/includes/new.php:82
+#: modules/library/includes/premod.php:57
+#: modules/library/includes/search.php:125
+#: modules/library/includes/tagcloud.php:26
+#: modules/library/includes/tags.php:56
+msgid "To Library"
+msgstr "Perpustakaan"
+
+#: modules/library/includes/premod.php:17
+msgid "Moderation Articles"
+msgstr "Moderasi Artikel"
+
+#: modules/library/includes/premod.php:21
+msgid "Article"
+msgstr "Artikel"
+
+#: modules/library/includes/premod.php:21
+msgid "Added to the database"
+msgstr "Ditambahkan ke basis data"
+
+#: modules/library/includes/premod.php:24
+msgid "All Articles added in database"
+msgstr "Semua artikel ditambahkan ke basis data"
+
+#: modules/library/includes/premod.php:56
+msgid "Approve all"
+msgstr "Terima semua"
+
+#: modules/library/includes/search.php:28
+#: modules/library/includes/search.php:31
+#: modules/library/index.php:155
+msgid "Search"
+msgstr "Cari"
+
+#: modules/library/includes/search.php:32
+msgid "Search in titles Articles"
+msgstr "Cari judul artikel"
+
+#: modules/library/includes/search.php:39
+#: modules/library/includes/search.php:121
+msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
+msgstr "Panjang kueri: min. 4, maks. 64<br>Pencarian menggunakan huruf tidak sensitif<br>Hasil diurutkan berdasarkan relevansi"
+
+#: modules/library/includes/search.php:55
+msgid "Search results"
+msgstr "Hasil pencarian"
+
+#: modules/library/includes/search.php:104
+msgid "Your search did not match any results"
+msgstr "Pencarian Anda tidak ditemukan"
+
+#: modules/library/includes/search.php:113
+msgid "To Page"
+msgstr "Ke halaman"
+
+#: modules/library/includes/search.php:124
+msgid "New Search"
+msgstr "Cari lagi"
+
+#: modules/library/includes/tagcloud.php:19
+msgid "Sorted by alphabetical"
+msgstr "Urutkan berdasar abjad"
+
+#: modules/library/includes/tagcloud.php:20
+msgid "Sorted by relevance"
+msgstr "Urutkan berdasar relevansi"
+
+#: modules/library/includes/tagcloud.php:23
+#: modules/library/index.php:155
+msgid "Tag Cloud"
+msgstr ""
+
+#: modules/library/includes/tagcloud.php:24
+#: modules/library/includes/top.php:25
+msgid "Sort"
+msgstr "Urutan"
+
+#: modules/library/includes/top.php:20
+msgid "Most readings"
+msgstr "Paling banyak dibaca"
+
+#: modules/library/includes/top.php:21
+msgid "By rating"
+msgstr "Berdasar Rating"
+
+#: modules/library/includes/top.php:22
+msgid "By comments"
+msgstr "Berdasar komentar"
+
+#: modules/library/includes/top.php:24
+#: modules/library/index.php:173
+msgid "Rating articles"
+msgstr "Rating Artikel"
+
+#: modules/library/index.php:63
+#: modules/library/index.php:129
+msgid "Library is closed"
+msgstr "Perpustakaan ditutup"
+
+#: modules/library/index.php:163
+msgid "On moderation"
+msgstr "Dimoderasi"
+
+#: modules/library/index.php:195
+#: modules/library/index.php:258
+#: modules/library/index.php:259
+msgid "Up"
+msgstr "Naik"
+
+#: modules/library/index.php:196
+#: modules/library/index.php:261
+#: modules/library/index.php:262
+msgid "Down"
+msgstr "Turun"
+
+#: modules/library/index.php:197
+#: modules/library/index.php:263
+#: modules/library/index.php:277
+#: modules/library/index.php:337
+#: modules/library/index.php:449
+msgid "Edit"
+msgstr "Sunting"
+
+#: modules/library/index.php:279
+msgid "Create"
+msgstr "Buat"
+
+#: modules/library/index.php:313
+#: modules/library/index.php:391
+msgid "The Tags"
+msgstr "Tag"
+
+#: modules/library/index.php:443
+msgid "Download file"
+msgstr "Unduh berkas"
+

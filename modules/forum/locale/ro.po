@@ -1,0 +1,1225 @@
+msgid ""
+msgstr ""
+"X-Domain: forum\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /develop/modules/forum/locale/forum.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"PO-Revision-Date: 2020-01-12 15:59\n"
+
+#: modules/forum/includes/addfile.php:27
+#: modules/forum/includes/addfile.php:29
+#: modules/forum/includes/addvote.php:144
+#: modules/forum/includes/addvote.php:146
+#: modules/forum/includes/curators.php:90
+#: modules/forum/includes/curators.php:92
+#: modules/forum/includes/deltema.php:101
+#: modules/forum/includes/deltema.php:103
+#: modules/forum/includes/delvote.php:69
+#: modules/forum/includes/delvote.php:71
+#: modules/forum/includes/massdel.php:82
+#: modules/forum/includes/massdel.php:84
+#: modules/forum/includes/nt.php:34
+#: modules/forum/includes/nt.php:36
+#: modules/forum/includes/ren.php:106
+#: modules/forum/includes/ren.php:108
+#: modules/forum/includes/say.php:36
+#: modules/forum/includes/vip.php:60
+#: modules/forum/includes/vip.php:62
+#: modules/forum/includes/vote.php:63
+#: modules/forum/includes/vote.php:65
+msgid "Access forbidden"
+msgstr "Acess interzis"
+
+#: modules/forum/includes/addfile.php:31
+#: modules/forum/includes/addfile.php:48
+#: modules/forum/includes/addfile.php:63
+#: modules/forum/includes/addvote.php:34
+#: modules/forum/includes/addvote.php:148
+#: modules/forum/includes/curators.php:33
+#: modules/forum/includes/curators.php:94
+#: modules/forum/includes/deltema.php:30
+#: modules/forum/includes/deltema.php:48
+#: modules/forum/includes/deltema.php:105
+#: modules/forum/includes/delvote.php:32
+#: modules/forum/includes/delvote.php:49
+#: modules/forum/includes/delvote.php:73
+#: modules/forum/includes/editpost.php:29
+#: modules/forum/includes/editpost.php:66
+#: modules/forum/includes/editpost.php:73
+#: modules/forum/includes/editpost.php:93
+#: modules/forum/includes/editpost.php:98
+#: modules/forum/includes/editvote.php:33
+#: modules/forum/includes/files.php:92
+#: modules/forum/includes/filter.php:28
+#: modules/forum/includes/filter.php:55
+#: modules/forum/includes/filter.php:92
+#: modules/forum/includes/loadtem.php:28
+#: modules/forum/includes/loadtem.php:57
+#: modules/forum/includes/massdel.php:43
+#: modules/forum/includes/massdel.php:57
+#: modules/forum/includes/massdel.php:86
+#: modules/forum/includes/nt.php:97
+#: modules/forum/includes/nt.php:113
+#: modules/forum/includes/per.php:30
+#: modules/forum/includes/per.php:45
+#: modules/forum/includes/per.php:61
+#: modules/forum/includes/per.php:76
+#: modules/forum/includes/ren.php:30
+#: modules/forum/includes/ren.php:46
+#: modules/forum/includes/ren.php:110
+#: modules/forum/includes/say.php:38
+#: modules/forum/includes/say.php:101
+#: modules/forum/includes/say.php:118
+#: modules/forum/includes/say.php:148
+#: modules/forum/includes/say.php:167
+#: modules/forum/includes/say.php:329
+#: modules/forum/includes/say.php:345
+#: modules/forum/includes/say.php:361
+#: modules/forum/includes/say.php:375
+#: modules/forum/includes/say.php:445
+#: modules/forum/includes/say.php:465
+#: modules/forum/includes/vip.php:32
+#: modules/forum/includes/vip.php:51
+#: modules/forum/includes/vip.php:64
+#: modules/forum/includes/vote.php:37
+#: modules/forum/includes/vote.php:55
+#: modules/forum/includes/vote.php:67
+#: modules/forum/templates/edit_post.phtml:65
+#: modules/forum/templates/new_topic.phtml:78
+#: modules/forum/templates/reply_message.phtml:104
+msgid "Back"
+msgstr "Înapoi"
+
+#: modules/forum/includes/addfile.php:44
+#: modules/forum/includes/addfile.php:46
+#: modules/forum/includes/addvote.php:32
+#: modules/forum/includes/deltema.php:28
+#: modules/forum/includes/delvote.php:30
+#: modules/forum/includes/editpost.php:27
+#: modules/forum/includes/editvote.php:31
+#: modules/forum/includes/files.php:90
+#: modules/forum/includes/filter.php:26
+#: modules/forum/includes/filter.php:90
+#: modules/forum/includes/loadtem.php:26
+#: modules/forum/includes/loadtem.php:55
+#: modules/forum/includes/nt.php:111
+#: modules/forum/includes/per.php:26
+#: modules/forum/includes/per.php:28
+#: modules/forum/includes/per.php:41
+#: modules/forum/includes/per.php:43
+#: modules/forum/includes/per.php:57
+#: modules/forum/includes/per.php:59
+#: modules/forum/includes/per.php:72
+#: modules/forum/includes/per.php:74
+#: modules/forum/includes/ren.php:28
+#: modules/forum/includes/ren.php:44
+#: modules/forum/includes/show_post.php:28
+#: modules/forum/includes/show_post.php:50
+#: modules/forum/includes/tema.php:50
+#: modules/forum/includes/tema.php:67
+#: modules/forum/includes/users.php:30
+#: modules/forum/includes/vip.php:30
+#: modules/forum/includes/vip.php:49
+#: modules/forum/includes/vote.php:35
+#: modules/forum/index.php:718
+#: modules/forum/index.php:720
+msgid "Wrong data"
+msgstr "Date gresite"
+
+#: modules/forum/includes/addfile.php:59
+#: modules/forum/includes/addfile.php:166
+#: modules/forum/includes/addfile.php:180
+#: modules/forum/includes/addfile.php:181
+msgid "Add file"
+msgstr ""
+
+#: modules/forum/includes/addfile.php:61
+msgid "The time allotted for the file upload has expired"
+msgstr "Timpul alocat încărcării fișierului a expirat"
+
+#: modules/forum/includes/addfile.php:91
+msgid "File size exceed"
+msgstr "Dimensiunea fișierului este depășita"
+
+#: modules/forum/includes/addfile.php:96
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Formatul de fișier interzis. <br> Puteți încărca fișiere cu următoarele extensii"
+
+#: modules/forum/includes/addfile.php:118
+#: modules/forum/includes/addfile.php:167
+#: modules/forum/includes/addfile.php:183
+msgid "Error uploading file"
+msgstr "Eroare la încărcarea fișierului"
+
+#: modules/forum/includes/addfile.php:171
+#: modules/forum/includes/addfile.php:185
+#: modules/forum/includes/addvote.php:98
+#: modules/forum/includes/editpost.php:256
+#: modules/forum/includes/nt.php:278
+#: modules/forum/includes/ren.php:63
+#: modules/forum/includes/ren.php:80
+#: modules/forum/includes/say.php:430
+#: modules/forum/includes/search.php:183
+msgid "Repeat"
+msgstr "Repetă"
+
+#: modules/forum/includes/addfile.php:198
+#: modules/forum/includes/addfile.php:199
+#: modules/forum/includes/addvote.php:130
+#: modules/forum/includes/addvote.php:131
+#: modules/forum/templates/new_topic.phtml:69
+#: modules/forum/templates/reply_message.phtml:95
+#: modules/forum/templates/topic.phtml:129
+#: modules/forum/templates/topic.phtml:371
+msgid "Add File"
+msgstr "Adauga fisier"
+
+#: modules/forum/includes/addvote.php:29
+#: modules/forum/includes/addvote.php:30
+#: modules/forum/includes/addvote.php:81
+#: modules/forum/includes/addvote.php:82
+#: modules/forum/includes/addvote.php:93
+#: modules/forum/includes/addvote.php:94
+#: modules/forum/templates/topic.phtml:324
+msgid "Add Poll"
+msgstr "Adauga scrutin"
+
+#: modules/forum/includes/addvote.php:84
+msgid "Poll added"
+msgstr "Scrutin adaugat"
+
+#: modules/forum/includes/addvote.php:86
+#: modules/forum/includes/editvote.php:106
+msgid "Continue"
+msgstr "Continua"
+
+#: modules/forum/includes/addvote.php:96
+msgid "The required fields are not filled"
+msgstr "Campurile necesare nu au fost completate"
+
+#: modules/forum/includes/addvote.php:122
+#: modules/forum/includes/editvote.php:121
+#: modules/forum/includes/editvote.php:145
+#: modules/forum/includes/tema.php:87
+msgid "Answer"
+msgstr "Raspuns"
+
+#: modules/forum/includes/curators.php:28
+#: modules/forum/includes/curators.php:29
+#: modules/forum/includes/curators.php:74
+#: modules/forum/includes/curators.php:75
+#: modules/forum/includes/deltema.php:43
+#: modules/forum/includes/deltema.php:44
+#: modules/forum/templates/topic.phtml:396
+msgid "Curators"
+msgstr "Custode"
+
+#: modules/forum/includes/curators.php:31
+#: modules/forum/includes/deltema.php:46
+#: modules/forum/includes/say.php:581
+#: modules/forum/index.php:268
+msgid "Topic has been deleted or does not exists"
+msgstr "Topicul a fost sters sau nu exista"
+
+#: modules/forum/includes/deltema.php:26
+#: modules/forum/includes/deltema.php:90
+#: modules/forum/includes/deltema.php:91
+#: modules/forum/templates/topic.phtml:343
+msgid "Delete Topic"
+msgstr "Sterge topic"
+
+#: modules/forum/includes/delvote.php:28
+#: modules/forum/includes/delvote.php:45
+#: modules/forum/includes/delvote.php:58
+#: modules/forum/includes/delvote.php:59
+#: modules/forum/templates/topic.phtml:322
+msgid "Delete Poll"
+msgstr "Sterge scrutin"
+
+#: modules/forum/includes/delvote.php:47
+msgid "Poll deleted"
+msgstr "Scrutin sters"
+
+#: modules/forum/includes/editpost.php:25
+#: modules/forum/includes/editpost.php:157
+#: modules/forum/includes/editpost.php:252
+#: modules/forum/includes/editpost.php:297
+#: modules/forum/includes/editpost.php:298
+msgid "Edit Message"
+msgstr "Editeaza mesaj"
+
+#: modules/forum/includes/editpost.php:66
+msgid "You cannot edit posts of higher administration"
+msgstr "Nu poti edita postarile celor cu functii mai mari"
+
+#: modules/forum/includes/editpost.php:73
+msgid "You are trying to change another's post"
+msgstr "Incerci sa schimbi postarea altui utilizator"
+
+#: modules/forum/includes/editpost.php:93
+msgid "Your message not already latest, you cannot change it"
+msgstr "Este ultimul mesaj adaugat, nu il poti schimba"
+
+#: modules/forum/includes/editpost.php:98
+#: modules/forum/includes/editpost.php:159
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Nu mai poti edita postari dupa 5 minute"
+
+#: modules/forum/includes/editpost.php:104
+msgid "Message does not exists or has been deleted"
+msgstr "Mesajul nu exista sau a fost sters"
+
+#: modules/forum/includes/editpost.php:104
+#: modules/forum/includes/file.php:49
+#: modules/forum/includes/new.php:58
+#: modules/forum/includes/say.php:583
+#: modules/forum/includes/show_post.php:30
+#: modules/forum/includes/show_post.php:52
+#: modules/forum/includes/tema.php:52
+#: modules/forum/includes/tema.php:69
+#: modules/forum/includes/tema.php:111
+#: modules/forum/includes/users.php:32
+#: modules/forum/includes/vip.php:27
+#: modules/forum/includes/vip.php:28
+#: modules/forum/includes/vip.php:46
+#: modules/forum/includes/vip.php:47
+#: modules/forum/includes/vote.php:32
+#: modules/forum/includes/vote.php:33
+#: modules/forum/includes/vote.php:50
+#: modules/forum/includes/vote.php:51
+#: modules/forum/index.php:48
+#: modules/forum/index.php:153
+#: modules/forum/index.php:227
+#: modules/forum/index.php:266
+#: modules/forum/index.php:761
+#: modules/forum/index.php:762
+#: modules/forum/templates/files_list.phtml:112
+#: modules/forum/templates/forum_search.phtml:95
+#: modules/forum/templates/new_topics.phtml:121
+#: modules/forum/templates/show_post.phtml:100
+msgid "Forum"
+msgstr ""
+
+#: modules/forum/includes/editpost.php:135
+#: modules/forum/includes/editpost.php:136
+msgid "Delete file"
+msgstr "Sterge fisier"
+
+#: modules/forum/includes/editpost.php:234
+#: modules/forum/includes/editpost.php:235
+msgid "Delete Message"
+msgstr "Sterge mesaj"
+
+#: modules/forum/includes/editpost.php:254
+#: modules/forum/includes/nt.php:147
+#: modules/forum/includes/say.php:428
+msgid "You have not entered the message"
+msgstr "Nu ai introdus nici in mesaj"
+
+#: modules/forum/includes/editpost.php:317
+msgid "Error"
+msgstr ""
+
+#: modules/forum/includes/editvote.php:28
+#: modules/forum/includes/editvote.php:29
+#: modules/forum/includes/editvote.php:101
+#: modules/forum/includes/editvote.php:102
+#: modules/forum/includes/editvote.php:154
+#: modules/forum/includes/editvote.php:155
+#: modules/forum/templates/topic.phtml:321
+msgid "Edit Poll"
+msgstr "Editeaza scrutin"
+
+#: modules/forum/includes/editvote.php:61
+#: modules/forum/includes/editvote.php:62
+msgid "Delete Answer"
+msgstr ""
+
+#: modules/forum/includes/editvote.php:104
+msgid "Poll changed"
+msgstr "Scrutin modificat"
+
+#: modules/forum/includes/file.php:45
+msgid "Download file"
+msgstr ""
+
+#: modules/forum/includes/file.php:47
+msgid "File does not exist"
+msgstr "Fisierul nu exista"
+
+#: modules/forum/includes/files.php:22
+msgid "Windows applications"
+msgstr "Aplicatii windows"
+
+#: modules/forum/includes/files.php:23
+msgid "Java applications"
+msgstr "Aplicatii Java"
+
+#: modules/forum/includes/files.php:24
+msgid "SIS"
+msgstr ""
+
+#: modules/forum/includes/files.php:25
+msgid "txt"
+msgstr ""
+
+#: modules/forum/includes/files.php:26
+msgid "Pictures"
+msgstr "Poze"
+
+#: modules/forum/includes/files.php:27
+msgid "Archive"
+msgstr "Arhiva"
+
+#: modules/forum/includes/files.php:28
+msgid "Videos"
+msgstr "Videoclipuri"
+
+#: modules/forum/includes/files.php:29
+msgid "MP3"
+msgstr ""
+
+#: modules/forum/includes/files.php:30
+msgid "Other"
+msgstr "Altele"
+
+#: modules/forum/includes/files.php:44
+#: modules/forum/templates/topics.phtml:37
+msgid "Category Files"
+msgstr "Fisiere din categorie"
+
+#: modules/forum/includes/files.php:51
+msgid "Section files"
+msgstr "Fisiere din sectiune"
+
+#: modules/forum/includes/files.php:58
+#: modules/forum/templates/topic.phtml:39
+msgid "Topic Files"
+msgstr "Fisiere din topic"
+
+#: modules/forum/includes/files.php:65
+msgid "Forum Files"
+msgstr "Fisiere din forum"
+
+#: modules/forum/includes/files.php:106
+#: modules/forum/templates/files_list.phtml:28
+#: modules/forum/templates/files_sections.phtml:28
+msgid "New Files"
+msgstr "Fisiere noi"
+
+#: modules/forum/includes/files.php:137
+#: modules/forum/includes/who.php:56
+#: modules/forum/includes/who.php:232
+msgid "Guest"
+msgstr ""
+
+#: modules/forum/includes/files.php:174
+msgid "List of sections"
+msgstr "Lista de sectiuni"
+
+#: modules/forum/includes/filter.php:23
+#: modules/forum/includes/filter.php:24
+#: modules/forum/includes/filter.php:50
+#: modules/forum/includes/filter.php:51
+#: modules/forum/includes/filter.php:87
+#: modules/forum/includes/filter.php:88
+#: modules/forum/includes/filter.php:102
+#: modules/forum/includes/filter.php:103
+#: modules/forum/templates/topic.phtml:404
+msgid "Filter by author"
+msgstr "Filtreaza dupa autor"
+
+#: modules/forum/includes/filter.php:53
+msgid "You have not selected any author"
+msgstr "Nu ai selectat nici in autor"
+
+#: modules/forum/includes/loadtem.php:23
+#: modules/forum/includes/loadtem.php:24
+#: modules/forum/includes/loadtem.php:52
+#: modules/forum/includes/loadtem.php:53
+#: modules/forum/includes/tema.php:48
+#: modules/forum/includes/tema.php:65
+#: modules/forum/includes/tema.php:164
+#: modules/forum/includes/tema.php:165
+#: modules/forum/includes/users.php:28
+msgid "Download topic"
+msgstr ""
+
+#: modules/forum/includes/massdel.php:38
+#: modules/forum/includes/massdel.php:39
+#: modules/forum/includes/massdel.php:52
+#: modules/forum/includes/massdel.php:53
+#: modules/forum/includes/massdel.php:72
+#: modules/forum/includes/massdel.php:73
+msgid "Delete posts"
+msgstr ""
+
+#: modules/forum/includes/massdel.php:41
+msgid "Marked posts are deleted"
+msgstr "Postarile marcate sunt sterse"
+
+#: modules/forum/includes/massdel.php:55
+msgid "You did not choose something to delete"
+msgstr "Nu ai selectat nimic de sters"
+
+#: modules/forum/includes/new.php:54
+#: modules/forum/includes/new.php:190
+#: modules/forum/includes/new.php:191
+#: modules/forum/templates/header.phtml:31
+msgid "Unread"
+msgstr "Necitit"
+
+#: modules/forum/includes/new.php:56
+msgid "All topics marked as read"
+msgstr "Toate topicurile marcate ca citite"
+
+#: modules/forum/includes/new.php:124
+#: modules/forum/includes/new.php:125
+msgid "All for period %d hours"
+msgstr "Toate din perioada de %d ore"
+
+#: modules/forum/includes/new.php:126
+msgid "There is nothing new in this forum for selected period"
+msgstr "Nu exista nimic nou in forum pentru perioada selectata"
+
+#: modules/forum/includes/new.php:192
+#: modules/forum/includes/new.php:258
+#: modules/forum/includes/who.php:89
+#: modules/forum/includes/who.php:270
+#: modules/forum/templates/curators.phtml:39
+#: modules/forum/templates/files_list.phtml:36
+#: modules/forum/templates/filter_by_author.phtml:38
+msgid "The list is empty"
+msgstr "Lista este goală"
+
+#: modules/forum/includes/new.php:256
+#: modules/forum/includes/new.php:257
+msgid "Last 10"
+msgstr "Ultimile 10"
+
+#: modules/forum/includes/nt.php:38
+#: modules/forum/index.php:466
+msgid "Go to Section"
+msgstr "Dute la sectiune"
+
+#: modules/forum/includes/nt.php:93
+#: modules/forum/includes/nt.php:109
+#: modules/forum/includes/nt.php:274
+#: modules/forum/includes/nt.php:290
+#: modules/forum/includes/nt.php:298
+#: modules/forum/includes/nt.php:299
+#: modules/forum/templates/topics.phtml:53
+msgid "New Topic"
+msgstr "Topic nou"
+
+#: modules/forum/includes/nt.php:95
+#: modules/forum/includes/say.php:99
+#: modules/forum/includes/say.php:343
+msgid "You cannot add the message so often<br>Please, wait %d sec."
+msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde"
+
+#: modules/forum/includes/nt.php:139
+#: modules/forum/includes/ren.php:61
+msgid "You have not entered topic name"
+msgstr "Nu ati introdus numele topicului"
+
+#: modules/forum/includes/nt.php:143
+msgid "Topic name too short"
+msgstr "Numele topicului este prea scurt"
+
+#: modules/forum/includes/nt.php:151
+#: modules/forum/includes/say.php:146
+#: modules/forum/includes/say.php:443
+msgid "Text is too short"
+msgstr "Textul este prea scurt"
+
+#: modules/forum/includes/nt.php:169
+#: modules/forum/includes/ren.php:78
+msgid "Topic with same name already exists in this section"
+msgstr "Topicul ce acest nume exista deja in aceasta sectiune"
+
+#: modules/forum/includes/nt.php:173
+#: modules/forum/includes/say.php:165
+#: modules/forum/includes/say.php:463
+msgid "Message already exists"
+msgstr "Mesajul deja exista"
+
+#: modules/forum/includes/per.php:117
+#: modules/forum/includes/per.php:118
+msgid "Move topic"
+msgstr ""
+
+#: modules/forum/includes/ren.php:26
+#: modules/forum/includes/ren.php:42
+#: modules/forum/includes/ren.php:59
+#: modules/forum/includes/ren.php:76
+#: modules/forum/includes/ren.php:94
+#: modules/forum/includes/ren.php:95
+msgid "Rename topic"
+msgstr ""
+
+#: modules/forum/includes/say.php:34
+#: modules/forum/includes/say.php:97
+#: modules/forum/includes/say.php:114
+#: modules/forum/includes/say.php:144
+#: modules/forum/includes/say.php:163
+#: modules/forum/includes/say.php:299
+#: modules/forum/includes/say.php:300
+#: modules/forum/includes/say.php:325
+#: modules/forum/includes/say.php:341
+#: modules/forum/includes/say.php:357
+#: modules/forum/includes/say.php:371
+#: modules/forum/includes/say.php:426
+#: modules/forum/includes/say.php:441
+#: modules/forum/includes/say.php:461
+#: modules/forum/includes/say.php:579
+msgid "New message"
+msgstr ""
+
+#: modules/forum/includes/say.php:116
+#: modules/forum/includes/say.php:359
+msgid "You cannot write in a closed topic"
+msgstr "Nu poti scrie intr-un topic inchis"
+
+#: modules/forum/includes/say.php:327
+msgid "Message not found"
+msgstr ""
+
+#: modules/forum/includes/say.php:373
+msgid "You can not reply to your own message"
+msgstr "Nu puteti raspunde la propriul mesaj"
+
+#: modules/forum/includes/say.php:398
+#: modules/forum/templates/reply_message.phtml:79
+msgid "I am glad to answer you"
+msgstr "Sunt bucuros sa iti raspund"
+
+#: modules/forum/includes/say.php:402
+#: modules/forum/templates/reply_message.phtml:83
+msgid "respond to Your message"
+msgstr "raspuns la mesajul tau"
+
+#: modules/forum/includes/say.php:553
+#: modules/forum/includes/say.php:554
+msgid "Reply to message"
+msgstr ""
+
+#: modules/forum/includes/search.php:22
+#: modules/forum/includes/search.php:47
+#: modules/forum/includes/search.php:48
+#: modules/forum/includes/search.php:179
+#: modules/forum/includes/search.php:234
+#: modules/forum/includes/search.php:235
+#: modules/forum/includes/who.php:169
+msgid "Forum search"
+msgstr "Cautare in forum"
+
+#: modules/forum/includes/search.php:181
+msgid "Invalid length"
+msgstr "Lungime invalida"
+
+#: modules/forum/includes/show_post.php:26
+#: modules/forum/includes/show_post.php:48
+#: modules/forum/includes/show_post.php:120
+#: modules/forum/includes/show_post.php:121
+msgid "Show post"
+msgstr ""
+
+#: modules/forum/includes/tema.php:86
+#: modules/forum/templates/reply_message.phtml:67
+#: modules/forum/templates/show_post.phtml:42
+#: modules/forum/templates/topic.phtml:208
+msgid "Quote"
+msgstr "Citeaza"
+
+#: modules/forum/includes/tema.php:146
+msgid "This theme was downloaded from the forum site"
+msgstr "Aceasta tema a fost descarcata de pe forumul site-ului"
+
+#: modules/forum/includes/users.php:72
+#: modules/forum/includes/users.php:73
+msgid "Who voted in the poll"
+msgstr "Cine a votat in scrutin"
+
+#: modules/forum/includes/users.php:74
+msgid "No one has voted in this poll yet"
+msgstr "Nimeni nu a votat aici inca"
+
+#: modules/forum/includes/vote.php:53
+msgid "Vote accepted"
+msgstr "Vot acceptat"
+
+#: modules/forum/includes/who.php:87
+#: modules/forum/includes/who.php:88
+#: modules/forum/templates/who.phtml:32
+msgid "Who in Topic"
+msgstr "Cine este in topic"
+
+#: modules/forum/includes/who.php:153
+#: modules/forum/includes/who.php:178
+#: modules/forum/includes/who.php:188
+#: modules/forum/includes/who.php:213
+#: modules/forum/includes/who.php:223
+#: modules/forum/includes/who.php:228
+msgid "In the forum Main"
+msgstr "In forumul principal"
+
+#: modules/forum/includes/who.php:157
+msgid "Here, in the List"
+msgstr "Aici, in lista"
+
+#: modules/forum/includes/who.php:161
+msgid "Looking forum files"
+msgstr "Cauta fisiere in forum"
+
+#: modules/forum/includes/who.php:165
+msgid "In the unreads"
+msgstr "In cele necitite"
+
+#: modules/forum/includes/who.php:176
+msgid "In the Category"
+msgstr "In categorie"
+
+#: modules/forum/includes/who.php:186
+msgid "In the Section"
+msgstr "In sectiune"
+
+#: modules/forum/includes/who.php:208
+msgid "Answers in the Topic"
+msgstr "Raspunde in topic"
+
+#: modules/forum/includes/who.php:210
+msgid "Writes in the Topic"
+msgstr "Scrie in topic"
+
+#: modules/forum/includes/who.php:210
+#: modules/forum/includes/who.php:221
+msgid "In the Topic"
+msgstr "In topic"
+
+#: modules/forum/includes/who.php:268
+#: modules/forum/includes/who.php:269
+#: modules/forum/templates/index.phtml:73
+#: modules/forum/templates/section.phtml:70
+#: modules/forum/templates/topics.phtml:117
+msgid "Who in Forum"
+msgstr "Cine este in forum"
+
+#: modules/forum/index.php:144
+#: modules/forum/templates/header.phtml:20
+msgid "Forum is closed"
+msgstr "Forumul este inchis"
+
+#: modules/forum/index.php:146
+msgid "For registered users only"
+msgstr "Doar pentru utilizatori inregistrati"
+
+#: modules/forum/index.php:462
+#: modules/forum/index.php:464
+msgid "Topic deleted"
+msgstr "Topic sters"
+
+#: modules/forum/index.php:722
+msgid "Go to Forum"
+msgstr ""
+
+#: modules/forum/templates/add_file.phtml:29
+msgid "File attached"
+msgstr "Fisier atasat"
+
+#: modules/forum/templates/add_file.phtml:32
+msgid "Add more"
+msgstr ""
+
+#: modules/forum/templates/add_file.phtml:33
+#: modules/forum/templates/add_file.phtml:50
+#: modules/forum/templates/add_poll.phtml:59
+#: modules/forum/templates/curators.phtml:56
+#: modules/forum/templates/download_topic.phtml:37
+#: modules/forum/templates/download_topic.phtml:52
+#: modules/forum/templates/edit_poll.phtml:67
+#: modules/forum/templates/filter_by_author.phtml:63
+#: modules/forum/templates/move_topic.phtml:49
+#: modules/forum/templates/rename_topic.phtml:38
+#: modules/forum/templates/show_post.phtml:99
+msgid "Back to topic"
+msgstr "Înapoi la topic"
+
+#: modules/forum/templates/add_file.phtml:42
+msgid "Choose file"
+msgstr ""
+
+#: modules/forum/templates/add_file.phtml:46
+msgid "Max. Size"
+msgstr "Marime maxima"
+
+#: modules/forum/templates/add_file.phtml:49
+msgid "Upload"
+msgstr "Incarca"
+
+#: modules/forum/templates/add_poll.phtml:33
+#: modules/forum/templates/add_poll.phtml:34
+#: modules/forum/templates/edit_poll.phtml:34
+#: modules/forum/templates/edit_poll.phtml:35
+msgid "Poll"
+msgstr ""
+
+#: modules/forum/templates/add_poll.phtml:36
+#: modules/forum/templates/edit_poll.phtml:37
+msgid "Maximum length: 150 characters"
+msgstr ""
+
+#: modules/forum/templates/add_poll.phtml:39
+#: modules/forum/templates/edit_poll.phtml:40
+msgid "Answers"
+msgstr ""
+
+#: modules/forum/templates/add_poll.phtml:45
+#: modules/forum/templates/edit_poll.phtml:53
+msgid "Maximum length: 50 characters"
+msgstr ""
+
+#: modules/forum/templates/add_poll.phtml:51
+#: modules/forum/templates/edit_poll.phtml:59
+msgid "Add Answer"
+msgstr "Adauga raspuns"
+
+#: modules/forum/templates/add_poll.phtml:54
+#: modules/forum/templates/edit_poll.phtml:62
+msgid "Delete last"
+msgstr "Sterge ultimul"
+
+#: modules/forum/templates/add_poll.phtml:58
+#: modules/forum/templates/edit_poll.phtml:66
+#: modules/forum/templates/edit_post.phtml:59
+#: modules/forum/templates/new_topic.phtml:72
+#: modules/forum/templates/rename_topic.phtml:37
+#: modules/forum/templates/reply_message.phtml:98
+msgid "Save"
+msgstr "Salveaza"
+
+#: modules/forum/templates/clear_search_history.phtml:31
+msgid "Do you really want to clear the search history?"
+msgstr "Esti sigur ca vrei sa stergi istoricul cautarii?"
+
+#: modules/forum/templates/clear_search_history.phtml:34
+msgid "Clear"
+msgstr "Sterge"
+
+#: modules/forum/templates/clear_search_history.phtml:35
+#: modules/forum/templates/delete_answer.phtml:35
+#: modules/forum/templates/delete_file.phtml:36
+#: modules/forum/templates/delete_poll.phtml:34
+#: modules/forum/templates/delete_post.phtml:43
+#: modules/forum/templates/delete_topic.phtml:49
+#: modules/forum/templates/mass_delete.phtml:35
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: modules/forum/templates/curators.phtml:34
+#: modules/forum/templates/filter_by_author.phtml:33
+msgid "Changes saved"
+msgstr ""
+
+#: modules/forum/templates/curators.phtml:54
+msgid "Assign"
+msgstr "Atribuie"
+
+#: modules/forum/templates/delete_answer.phtml:31
+msgid "Do you really want to delete the answer?"
+msgstr "Esti sigur ca vrei sa stergi raspunsul?"
+
+#: modules/forum/templates/delete_answer.phtml:34
+#: modules/forum/templates/delete_file.phtml:35
+#: modules/forum/templates/delete_poll.phtml:33
+#: modules/forum/templates/delete_post.phtml:39
+#: modules/forum/templates/delete_topic.phtml:42
+#: modules/forum/templates/mass_delete.phtml:34
+#: modules/forum/templates/topic.phtml:258
+#: modules/forum/templates/topic.phtml:299
+msgid "Delete"
+msgstr "Șterge"
+
+#: modules/forum/templates/delete_file.phtml:31
+#: modules/forum/templates/delete_post.phtml:36
+#: modules/forum/templates/delete_topic.phtml:32
+#: modules/forum/templates/mass_delete.phtml:31
+msgid "Do you really want to delete?"
+msgstr "Esti sigur ca vrei sa stergi?"
+
+#: modules/forum/templates/delete_file.phtml:40
+#: modules/forum/templates/delete_post.phtml:46
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "Dupa stergere, se va inlatura in punct din contorul postarilor din forum"
+
+#: modules/forum/templates/delete_poll.phtml:30
+msgid "Do you really want to delete a poll?"
+msgstr "Esti sigur ca vrei sa stergi scrutin?"
+
+#: modules/forum/templates/delete_post.phtml:32
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "ATENTIE!<br>Acesta este ultima postare din topic. Prin stergerea postarii va fi sters si topicul (sau va fi ascuns)"
+
+#: modules/forum/templates/delete_post.phtml:41
+#: modules/forum/templates/delete_topic.phtml:37
+msgid "Hide"
+msgstr "Ascunde"
+
+#: modules/forum/templates/delete_topic.phtml:48
+msgid "Perform"
+msgstr "Efectueaza"
+
+#: modules/forum/templates/download_topic.phtml:32
+msgid "Link active 5 minutes"
+msgstr "Link active timp de 5 minute"
+
+#: modules/forum/templates/download_topic.phtml:36
+#: modules/forum/templates/download_topic.phtml:51
+msgid "Download"
+msgstr "Descarca"
+
+#: modules/forum/templates/download_topic.phtml:44
+msgid "Select format"
+msgstr "Selecteaza format"
+
+#: modules/forum/templates/edit_post.phtml:54
+#: modules/forum/templates/new_topic.phtml:63
+#: modules/forum/templates/reply_message.phtml:89
+#: modules/forum/templates/topic.phtml:123
+#: modules/forum/templates/topic.phtml:365
+msgid "Message"
+msgstr "Mesaj"
+
+#: modules/forum/templates/edit_post.phtml:61
+#: modules/forum/templates/new_topic.phtml:74
+#: modules/forum/templates/reply_message.phtml:100
+#: modules/forum/templates/topic.phtml:134
+#: modules/forum/templates/topic.phtml:376
+msgid "Preview"
+msgstr "Previzualizare"
+
+#: modules/forum/templates/edit_post.phtml:65
+#: modules/forum/templates/new_topic.phtml:85
+#: modules/forum/templates/reply_message.phtml:104
+msgid "Smilies"
+msgstr "Emoticoane"
+
+#: modules/forum/templates/files_list.phtml:54
+msgid "To message"
+msgstr ""
+
+#: modules/forum/templates/files_list.phtml:57
+msgid "To topic"
+msgstr ""
+
+#: modules/forum/templates/files_list.phtml:102
+#: modules/forum/templates/forum_search.phtml:80
+#: modules/forum/templates/new_topics.phtml:107
+#: modules/forum/templates/section.phtml:63
+#: modules/forum/templates/topic.phtml:388
+#: modules/forum/templates/topics.phtml:105
+#: modules/forum/templates/voted_users.phtml:44
+#: modules/forum/templates/who.phtml:52
+msgid "Total"
+msgstr ""
+
+#: modules/forum/templates/filter_by_author.phtml:41
+msgid "Filter will be display posts from selected authors only"
+msgstr "Filtrul va afisa postari doar dupa autorul selectat"
+
+#: modules/forum/templates/filter_by_author.phtml:61
+msgid "Filter"
+msgstr "Filtreaza"
+
+#: modules/forum/templates/footer.phtml:29
+msgid "Forum rules"
+msgstr "Reguli in forum"
+
+#: modules/forum/templates/forum_search.phtml:33
+#: modules/forum/templates/forum_search.phtml:34
+msgid "Search query"
+msgstr ""
+
+#: modules/forum/templates/forum_search.phtml:36
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
+msgstr "Lungimea cautarii: 4 min., 64max.<br>Rezultatele sunt sortate dupa relevanta"
+
+#: modules/forum/templates/forum_search.phtml:41
+msgid "Search in the topic names"
+msgstr "Cauta in numele topicului"
+
+#: modules/forum/templates/forum_search.phtml:44
+#: modules/forum/templates/header.phtml:69
+msgid "Search"
+msgstr "Cauta"
+
+#: modules/forum/templates/forum_search.phtml:51
+msgid "Your search did not match any results"
+msgstr "Cautarea ta nu corescunde cu nici in rezultat"
+
+#: modules/forum/templates/forum_search.phtml:63
+#: modules/forum/templates/voted_users.phtml:54
+#: modules/forum/templates/who.phtml:62
+msgid "Go to Topic"
+msgstr "Dute la topic"
+
+#: modules/forum/templates/forum_search.phtml:65
+msgid "Go to Message"
+msgstr "Dute la mesaj"
+
+#: modules/forum/templates/forum_search.phtml:75
+#: modules/forum/templates/new_topics.phtml:96
+#: modules/forum/templates/topics.phtml:99
+msgid "Author"
+msgstr ""
+
+#: modules/forum/templates/forum_search.phtml:88
+msgid "Search History"
+msgstr "Istoricul cautarilor"
+
+#: modules/forum/templates/forum_search.phtml:91
+msgid "Clear history"
+msgstr ""
+
+#: modules/forum/templates/header.phtml:22
+msgid "Read only"
+msgstr "Doar de citit"
+
+#: modules/forum/templates/header.phtml:41
+msgid "Show for Period"
+msgstr ""
+
+#: modules/forum/templates/header.phtml:50
+msgid "Last activity"
+msgstr ""
+
+#: modules/forum/templates/index.phtml:35
+msgid "Files"
+msgstr "Fisiere"
+
+#: modules/forum/templates/move_topic.phtml:30
+msgid "Category"
+msgstr "Categoria"
+
+#: modules/forum/templates/move_topic.phtml:35
+msgid "New section"
+msgstr ""
+
+#: modules/forum/templates/move_topic.phtml:44
+msgid "Category is empty"
+msgstr ""
+
+#: modules/forum/templates/move_topic.phtml:48
+msgid "Move"
+msgstr "Muta"
+
+#: modules/forum/templates/move_topic.phtml:53
+msgid "Other categories"
+msgstr "Alte categorii"
+
+#: modules/forum/templates/new_topic.phtml:58
+msgid "Title"
+msgstr ""
+
+#: modules/forum/templates/new_topic.phtml:60
+msgid "Maximum length: 100 characters"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:36
+msgid "Period"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:38
+msgid "Show period"
+msgstr "Arata perioada"
+
+#: modules/forum/templates/new_topics.phtml:62
+#: modules/forum/templates/topics.phtml:65
+msgid "Pinned topic"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:69
+#: modules/forum/templates/topics.phtml:72
+msgid "Topic has poll"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:76
+#: modules/forum/templates/topics.phtml:79
+msgid "Closed topic"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:83
+#: modules/forum/templates/topics.phtml:86
+msgid "Deleted topic"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:97
+#: modules/forum/templates/topics.phtml:100
+msgid "Last post"
+msgstr ""
+
+#: modules/forum/templates/new_topics.phtml:117
+msgid "Mark as read"
+msgstr "Marcheaza ca citit"
+
+#: modules/forum/templates/rename_topic.phtml:32
+#: modules/forum/templates/rename_topic.phtml:33
+msgid "Topic name"
+msgstr "Numele topicului"
+
+#: modules/forum/templates/reply_message.phtml:60
+msgid "Topic"
+msgstr ""
+
+#: modules/forum/templates/reply_message.phtml:69
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Sunt premise doar 200 de caractere, celelalte texte vor fi sterse."
+
+#: modules/forum/templates/reply_message.phtml:72
+msgid "Appeal"
+msgstr "Recurs"
+
+#: modules/forum/templates/section.phtml:35
+msgid "Section Files"
+msgstr "Fisiere din sectiune"
+
+#: modules/forum/templates/section.phtml:44
+msgid "There are no sections in this category"
+msgstr "Nu exista sectiuni in aceasta categorie"
+
+#: modules/forum/templates/show_post.phtml:39
+#: modules/forum/templates/topic.phtml:205
+msgid "Reply"
+msgstr ""
+
+#: modules/forum/templates/show_post.phtml:59
+#: modules/forum/templates/topic.phtml:226
+msgid "Attached files"
+msgstr ""
+
+#: modules/forum/templates/topic.phtml:45
+msgid "Filter by author is activated"
+msgstr "Filtreaza dupa autor este activat"
+
+#: modules/forum/templates/topic.phtml:47
+#: modules/forum/templates/topic.phtml:402
+msgid "Cancel Filter"
+msgstr "Anuleaza filtru"
+
+#: modules/forum/templates/topic.phtml:53
+msgid "Topic closed"
+msgstr "Topic inchis"
+
+#: modules/forum/templates/topic.phtml:59
+msgid "Topic deleted by"
+msgstr "Topic sters de"
+
+#: modules/forum/templates/topic.phtml:63
+msgid "Undelete topic"
+msgstr "Topic nesters"
+
+#: modules/forum/templates/topic.phtml:79
+#: modules/forum/templates/topic.phtml:109
+msgid "Vote"
+msgstr "Voteaza"
+
+#: modules/forum/templates/topic.phtml:80
+msgid "Results"
+msgstr "Rezultate"
+
+#: modules/forum/templates/topic.phtml:100
+msgid "Total votes"
+msgstr "Voturi in total"
+
+#: modules/forum/templates/topic.phtml:132
+#: modules/forum/templates/topic.phtml:138
+#: modules/forum/templates/topic.phtml:374
+#: modules/forum/templates/topic.phtml:380
+msgid "Write"
+msgstr "Scrie"
+
+#: modules/forum/templates/topic.phtml:287
+msgid "Edited:"
+msgstr ""
+
+#: modules/forum/templates/topic.phtml:291
+msgid "Post deleted:"
+msgstr ""
+
+#: modules/forum/templates/topic.phtml:293
+msgid "Post restored by:"
+msgstr ""
+
+#: modules/forum/templates/topic.phtml:298
+msgid "Edit"
+msgstr "Editeaza"
+
+#: modules/forum/templates/topic.phtml:301
+msgid "Restore"
+msgstr "Restabilire"
+
+#: modules/forum/templates/topic.phtml:313
+msgid "Delete selected"
+msgstr ""
+
+#: modules/forum/templates/topic.phtml:317
+msgid "Actions with topic"
+msgstr ""
+
+#: modules/forum/templates/topic.phtml:328
+msgid "Curators of the Topic"
+msgstr "Custodele acestui topic"
+
+#: modules/forum/templates/topic.phtml:331
+msgid "Rename Topic"
+msgstr "Redenumeste topic"
+
+#: modules/forum/templates/topic.phtml:334
+msgid "Open Topic"
+msgstr "Deschide topic"
+
+#: modules/forum/templates/topic.phtml:336
+msgid "Close Topic"
+msgstr "Inchide topic"
+
+#: modules/forum/templates/topic.phtml:340
+msgid "Restore Topic"
+msgstr "Restabileste topic"
+
+#: modules/forum/templates/topic.phtml:346
+msgid "Unfix Topic"
+msgstr "Repara topic"
+
+#: modules/forum/templates/topic.phtml:348
+msgid "Pin Topic"
+msgstr "Prinde topic"
+
+#: modules/forum/templates/topic.phtml:351
+msgid "Move Topic"
+msgstr "Muta topic"
+
+#: modules/forum/templates/topic.phtml:408
+msgid "Download Topic"
+msgstr "Descarca topic"
+
+#: modules/forum/templates/topic.phtml:418
+msgid "Who is here"
+msgstr "Cine este aici"
+
+#: modules/forum/templates/topics.phtml:46
+msgid "No topics in this section"
+msgstr "Nu exista nici in topic in aceasta sectiune"
+
+#: modules/forum/templates/who.phtml:38
+msgid "Users"
+msgstr "Utilizatori"
+
+#: modules/forum/templates/who.phtml:39
+msgid "Guests"
+msgstr "Oaspeti"
+

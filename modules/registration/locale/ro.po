@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"X-Domain: registration\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /develop/modules/registration/locale/registration.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"PO-Revision-Date: 2020-01-12 15:59\n"
+
+#: modules/registration/index.php:41
+#: modules/registration/templates/index.phtml:2
+#: modules/registration/templates/index.phtml:3
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:103
+#: modules/registration/templates/registration_closed.phtml:2
+#: modules/registration/templates/registration_closed.phtml:3
+#: modules/registration/templates/registration_result.phtml:2
+#: modules/registration/templates/registration_result.phtml:3
+msgid "Registration"
+msgstr "Inregistrare"
+
+#: modules/registration/index.php:65
+msgid "You have not entered Nickname"
+msgstr "Nu ai introdus nici un nume"
+
+#: modules/registration/index.php:67
+msgid "Nickname wrong length"
+msgstr "Lungime invalida"
+
+#: modules/registration/index.php:71
+msgid "Invalid characters"
+msgstr "Caractere invalide"
+
+#: modules/registration/index.php:76
+msgid "You have not entered password"
+msgstr "Nu ai introdus nici o parola"
+
+#: modules/registration/index.php:78
+msgid "Invalid length"
+msgstr "Lungime invalida"
+
+#: modules/registration/index.php:83
+msgid "You have not selected genger"
+msgstr "Nu ai selectat nici un sex"
+
+#: modules/registration/index.php:93
+msgid "The security code is not correct"
+msgstr "Codul de Securitate este incorect"
+
+#: modules/registration/index.php:108
+msgid "Selected Nickname is already in use"
+msgstr "Numele ales exista deja"
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Te poti loga pe site dupa ce iti confirmi inregistrarea"
+
+#: modules/registration/templates/index.phtml:17
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Nu folosi nume precum 111, shhhh, uuuu etc. Contul va fi sters. <br/>De asemenea,orice cont inregistrat cu servere proxy vor fi sterse."
+
+#: modules/registration/templates/index.phtml:21
+msgid "Choose Nickname"
+msgstr "Alege un nume de utilizator"
+
+#: modules/registration/templates/index.phtml:30
+msgid "Username"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:36
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Max. 20 de caractere.<br>Sunt premise doar litere din alfabetul roman, numere si simbolurile - = @ ! ? ~ _ ( ) [ ] . * (Fara 0 (zero) )"
+
+#: modules/registration/templates/index.phtml:40
+#: modules/registration/templates/index.phtml:49
+msgid "Assign a password"
+msgstr "Alege o parola"
+
+#: modules/registration/templates/index.phtml:55
+msgid "Min. 3 characters"
+msgstr "Min. 3 caractere"
+
+#: modules/registration/templates/index.phtml:59
+msgid "Select Gender"
+msgstr "Alege SEX"
+
+#: modules/registration/templates/index.phtml:62
+msgid "Man"
+msgstr "Barbat"
+
+#: modules/registration/templates/index.phtml:63
+msgid "Woman"
+msgstr "Femeie"
+
+#: modules/registration/templates/index.phtml:67
+#: modules/registration/templates/index.phtml:74
+msgid "Your name"
+msgstr "Numele tau"
+
+#: modules/registration/templates/index.phtml:78
+msgid "Tell us a little about yourself"
+msgstr "Spune ceva despre tine"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Max. 1000 characters"
+msgstr "Max. 1000 de caractere"
+
+#: modules/registration/templates/index.phtml:83
+#: modules/registration/templates/index.phtml:93
+msgid "Verification code"
+msgstr "Codul de verificare"
+
+#: modules/registration/templates/index.phtml:85
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:99
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Daca nu poti vedea codul din imagine, activeaza grafica in browser si reincarca pagina"
+
+#: modules/registration/templates/registration_closed.phtml:9
+msgid "Registration is temporarily closed"
+msgstr "Inregistrarile sunt inchise"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registratiton data"
+msgstr "Datele tale de inregistrare"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Your ID"
+msgstr "ID-ul tau"
+
+#: modules/registration/templates/registration_result.phtml:12
+msgid "Your Username"
+msgstr "Numele de utilizator"
+
+#: modules/registration/templates/registration_result.phtml:13
+msgid "Your Password"
+msgstr "Parola"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Te rugam sa astept pana cand un moderator va valida contul"
+
+#: modules/registration/templates/registration_result.phtml:18
+msgid "Enter"
+msgstr "Intra"
+

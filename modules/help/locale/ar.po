@@ -1,0 +1,326 @@
+msgid ""
+msgstr ""
+"X-Domain: help\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /develop/modules/help/locale/help.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"PO-Revision-Date: 2020-01-12 16:59\n"
+
+#: modules/help/includes/admsmilies.php:20
+#: modules/help/includes/smilies.php:35
+msgid "For administration"
+msgstr "الإدارة"
+
+#: modules/help/includes/admsmilies.php:21
+#: modules/help/includes/my_smilies.php:22
+#: modules/help/includes/set_my_sm.php:27
+#: modules/help/includes/usersmilies.php:39
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr "الابتسامات"
+
+#: modules/help/includes/admsmilies.php:32
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/help/includes/avatars.php:20
+#: modules/help/templates/index.phtml:30
+msgid "Avatars"
+msgstr "الصورة الشخصية"
+
+#: modules/help/includes/avatars.php:37
+msgid "Avatar has been successfully applied"
+msgstr "تم بنجاح إزالة الحظر"
+
+#: modules/help/includes/avatars.php:39
+msgid "Continue"
+msgstr "الاستمرار"
+
+#: modules/help/includes/avatars.php:48
+msgid "An error occurred"
+msgstr "حدث خطأ"
+
+#: modules/help/includes/avatars.php:50
+#: modules/help/templates/avatar_list.phtml:65
+#: modules/help/templates/avatars.phtml:48
+#: modules/help/templates/bbcode.phtml:89
+#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/index.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:81
+#: modules/help/templates/smiles.phtml:48
+#: modules/help/templates/smiles_list.phtml:88
+msgid "Back"
+msgstr "الرجوع"
+
+#: modules/help/includes/avatars.php:55
+msgid "Set to Profile"
+msgstr "تعيين ملف تعريف"
+
+#: modules/help/includes/avatars.php:58
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "هل ترغب فعلا في استعمال الصّورة الرمزيّة الافتراضية؟"
+
+#: modules/help/includes/avatars.php:61
+msgid "Save"
+msgstr "حفظ"
+
+#: modules/help/includes/forum.php:15
+#: modules/help/templates/index.phtml:28
+msgid "Forum rules"
+msgstr "قواعد المنتدى"
+
+#: modules/help/includes/my_smilies.php:21
+#: modules/help/includes/smilies.php:27
+#: modules/help/templates/smiles_list.phtml:45
+msgid "My smilies"
+msgstr "ابتساماتي"
+
+#: modules/help/includes/set_my_sm.php:27
+msgid "Wrong data"
+msgstr "بيانات خاطئة"
+
+#: modules/help/includes/smilies.php:19
+msgid "Smiles"
+msgstr ""
+
+#: modules/help/includes/tags.php:15
+#: modules/help/templates/index.phtml:29
+msgid "bbCode Tags"
+msgstr "علامات الـ bbCode"
+
+#: modules/help/index.php:54
+msgid "Information, FAQ"
+msgstr "معلومات، أسئلة وأجوبة"
+
+#: modules/help/index.php:64
+msgid "Animals"
+msgstr "الحيوانات"
+
+#: modules/help/index.php:65
+msgid "Brawl, Weapons"
+msgstr "شجار، الأسلحة"
+
+#: modules/help/index.php:66
+msgid "Emotions"
+msgstr "العواطف"
+
+#: modules/help/index.php:67
+msgid "Flowers"
+msgstr "زهور"
+
+#: modules/help/index.php:68
+msgid "Food, Alcohol"
+msgstr "الغذاء والكحول (لا ينصح به)"
+
+#: modules/help/index.php:69
+msgid "Gestures"
+msgstr "الحركات"
+
+#: modules/help/index.php:70
+msgid "Holidays"
+msgstr "الاجازات"
+
+#: modules/help/index.php:71
+msgid "Love"
+msgstr "الحب"
+
+#: modules/help/index.php:72
+msgid "Miscellaneous"
+msgstr "منوعات"
+
+#: modules/help/index.php:73
+msgid "Music, Dancing"
+msgstr "الموسيقى والرقص"
+
+#: modules/help/index.php:74
+msgid "Sports"
+msgstr "الرياضة"
+
+#: modules/help/index.php:75
+msgid "Technology"
+msgstr "تكنولوجيا"
+
+#: modules/help/templates/avatar_list.phtml:33
+#: modules/help/templates/avatars.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:33
+#: modules/help/templates/smiles.phtml:34
+#: modules/help/templates/smiles_list.phtml:33
+msgid "The list is empty"
+msgstr "القائمة فارغة"
+
+#: modules/help/templates/avatar_list.phtml:61
+#: modules/help/templates/my_smiles_list.phtml:77
+#: modules/help/templates/smiles_list.phtml:84
+msgid "Total:"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:30
+msgid "PHP code"
+msgstr "كود PHP"
+
+#: modules/help/templates/bbcode.phtml:33
+msgid "Link name"
+msgstr "اسم الرابط"
+
+#: modules/help/templates/bbcode.phtml:34
+msgid "URL Link"
+msgstr "رابط URL"
+
+#: modules/help/templates/bbcode.phtml:38
+msgid "Bold"
+msgstr "عريض"
+
+#: modules/help/templates/bbcode.phtml:42
+msgid "Italic"
+msgstr "مائل"
+
+#: modules/help/templates/bbcode.phtml:46
+msgid "Underline"
+msgstr "تسطير"
+
+#: modules/help/templates/bbcode.phtml:50
+msgid "Strike"
+msgstr "الإضراب"
+
+#: modules/help/templates/bbcode.phtml:54
+msgid "Red"
+msgstr "احمر"
+
+#: modules/help/templates/bbcode.phtml:58
+msgid "Green"
+msgstr "أخضر"
+
+#: modules/help/templates/bbcode.phtml:62
+msgid "Blue"
+msgstr "أزرق"
+
+#: modules/help/templates/bbcode.phtml:66
+msgid "Text Color"
+msgstr "لون الخط"
+
+#: modules/help/templates/bbcode.phtml:70
+msgid "Background Color"
+msgstr "لون الخلفية"
+
+#: modules/help/templates/bbcode.phtml:74
+msgid "Quote"
+msgstr "اقتباس"
+
+#: modules/help/templates/bbcode.phtml:78
+msgid "Bulleted list"
+msgstr "قائمة ذات تعداد نقطي"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Title"
+msgstr "العنوان"
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Text"
+msgstr "تحرير"
+
+#: modules/help/templates/bbcode.phtml:82
+msgid "Spoiler"
+msgstr "تالف"
+
+#: modules/help/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr "إلغاء الأمر"
+
+#: modules/help/templates/forum_rules.phtml:26
+msgid "FORBIDDEN"
+msgstr "ممنوع"
+
+#: modules/help/templates/forum_rules.phtml:28
+msgid "Advertising messages"
+msgstr "حذف المراسلات"
+
+#: modules/help/templates/forum_rules.phtml:29
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "الرسائل التي تحتوي على الانتشار المباشر من العنصرية والقومية والدينية العداء"
+
+#: modules/help/templates/forum_rules.phtml:30
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "أي الرسائل المسيئة فاحشة والمبتذلة، افتراء، والبغيضة، وتهديد وتوجها جنسياً أو غيرها من المواد التي قد تنتهك أي من القوانين المعمول بها"
+
+#: modules/help/templates/forum_rules.phtml:31
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr "الرسائل الواضح الإساءة إلى شخص ما ، espcially المنتدى المستخدمين"
+
+#: modules/help/templates/forum_rules.phtml:32
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr "عمدا تشويه كتابة الأسماء المستعارة للمستخدمين الآخرين قصد إعطاء رسالة ظل الهجومية"
+
+#: modules/help/templates/forum_rules.phtml:33
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr "حذف من قبل مشرف رسائل مرارا وتكرارا النشر"
+
+#: modules/help/templates/forum_rules.phtml:34
+msgid "Post messages not related to the topic"
+msgstr "نشر الرسائل التي لا تتصل بالموضوع"
+
+#: modules/help/templates/forum_rules.phtml:35
+msgid "Continuing topics that have been closed by moderator"
+msgstr "استمرار المواضيع التي تم إغلاقها بواسطة مدير"
+
+#: modules/help/templates/forum_rules.phtml:38
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "ممنوع تماما"
+
+#: modules/help/templates/forum_rules.phtml:40
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr "الكتابة في المواضيع العامة عدم الرضا غير لائقة من المستخدمين الآخرين ومناقشة حول المشرفين العامل. استخدام الرسائل الخاصة لهذا الغرض"
+
+#: modules/help/templates/forum_rules.phtml:41
+msgid "Register the nicknames having offensive tone for other users"
+msgstr "تسجيل الأسماء المستعارة الغير لائقة لهجة هجومية للمستخدمين الآخرين"
+
+#: modules/help/templates/forum_rules.phtml:44
+msgid "UNACCEPTABLE"
+msgstr "غير مقبول"
+
+#: modules/help/templates/forum_rules.phtml:46
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr "واقتبس الرسائل الكاملة للمستخدم السابقة واقتبس رسائل الفعل تحتوي على عروض الأسعار الأخرى"
+
+#: modules/help/templates/forum_rules.phtml:47
+msgid "Post messages only contains external link"
+msgstr "رسائل البريد فقط يحتوي على ارتباط خارجي"
+
+#: modules/help/templates/forum_rules.phtml:48
+msgid "Post messages written in translite"
+msgstr "آخر رسائل مكتوبة في translite"
+
+#: modules/help/templates/forum_rules.phtml:49
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr "نشر الرسائل بلا هدف: تتكون من الابتسامات فقط أو الوظائف مثل \"موافق\"، \"ماذا؟\"، \"من هناك؟\"، إلخ."
+
+#: modules/help/templates/forum_rules.phtml:54
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr "اي رسالة نشرت على الرغم من التحذيرات أعلاه سيتم تعديلها أو حذفها."
+
+#: modules/help/templates/forum_rules.phtml:55
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "تنطبق هذه القاعدة على جميع الأعضاء و المشرفين الإجراءات المتكررة سوف تجعلك تحصل على الحظر أو حتى تفقد حسابك."
+
+#: modules/help/templates/my_smiles_list.phtml:36
+msgid "Add Smilies"
+msgstr "إضافة الابتسامات"
+
+#: modules/help/templates/my_smiles_list.phtml:55
+#: modules/help/templates/smiles_list.phtml:62
+msgid "or"
+msgstr "او"
+
+#: modules/help/templates/my_smiles_list.phtml:64
+msgid "Delete"
+msgstr "حذف"
+
+#: modules/help/templates/smiles_list.phtml:71
+msgid "Add"
+msgstr "اضف"
+
