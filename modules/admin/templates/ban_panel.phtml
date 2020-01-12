@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['ban_panel' => true]]));
+?>
+
+<?php if (! empty($data['filters'])): ?>
+    <div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
+        <div class="input-group-prepend">
+            <div class="input-group-text"><?= __('Sort') ?></div>
+        </div>
+        <?php foreach ($data['filters'] as $filter): ?>
+            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php foreach ($data['items'] as $item): ?>
+    <?= $this->fetch('admin::user_row', ['item' => $item]) ?>
+<?php endforeach; ?>
+
+<div class="mt-4">
+    <?php if ($data['total'] > $user->config->kmess): ?>
+        <div>
+            <?= $data['pagination'] ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($data['total'] > 0): ?>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+        <?php if ($user->rights === 9): ?>
+            <div class="mt-2 mb-3">
+                <a href="?mod=amnesty" class="btn btn-primary"><?= __('Amnesty') ?></a>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+<div>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+</div>

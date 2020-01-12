@@ -13,7 +13,7 @@
  */
 ?>
 
-<div class="user-row card shadow border-0 mb-2">
+<div class="user-row card shadow border-0 mb-2 <?= (isset($item['active']) && $item['active'] ? 'bg-yellow-light' : '') ?>">
     <div class="card-body">
         <div class="d-flex align-items-start">
             <div class="user-avatar mr-2 mr-md-4">
