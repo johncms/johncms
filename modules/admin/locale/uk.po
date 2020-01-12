@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2020-01-12 15:07\n"
+"PO-Revision-Date: 2020-01-12 15:18\n"
 
 #: modules/admin/includes/adminlist.php:26
 #: modules/admin/includes/adminlist.php:79
@@ -74,28 +74,28 @@ msgstr ""
 #: modules/admin/templates/smilies.phtml:8
 #: modules/admin/templates/userlist.phtml:3
 msgid "Admin Panel"
-msgstr ""
+msgstr "Панель адміністратора"
 
 #: modules/admin/includes/adminlist.php:26
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
-msgstr ""
+msgstr "Адміністрація"
 
 #: modules/admin/includes/adminlist.php:30
 msgid "Supervisors"
-msgstr ""
+msgstr "Супервайзори"
 
 #: modules/admin/includes/adminlist.php:42
 msgid "Administrators"
-msgstr ""
+msgstr "Адміністратори"
 
 #: modules/admin/includes/adminlist.php:55
 msgid "Super Moderators"
-msgstr ""
+msgstr "Супермодератори"
 
 #: modules/admin/includes/adminlist.php:68
 msgid "Moderators"
-msgstr ""
+msgstr "Модератори"
 
 #: modules/admin/includes/adminlist.php:78
 #: modules/admin/includes/ads.php:415
@@ -112,7 +112,7 @@ msgstr ""
 #: modules/admin/includes/usr_clean.php:85
 #: modules/admin/templates/userlist.phtml:28
 msgid "Total"
-msgstr ""
+msgstr "Разом"
 
 #: modules/admin/includes/ads.php:25
 #: modules/admin/includes/ads.php:220
@@ -121,16 +121,16 @@ msgstr ""
 #: modules/admin/includes/ads.php:320
 #: modules/admin/templates/sidebar-admin-menu.phtml:161
 msgid "Advertisement"
-msgstr ""
+msgstr "Реклама"
 
 #: modules/admin/includes/ads.php:25
 msgid "Edit link"
-msgstr ""
+msgstr "Редагувати посилання"
 
 #: modules/admin/includes/ads.php:25
 #: modules/admin/includes/ads.php:430
 msgid "Add link"
-msgstr ""
+msgstr "Додати посилання"
 
 #: modules/admin/includes/ads.php:34
 #: modules/admin/includes/counters.php:67
@@ -151,7 +151,7 @@ msgstr ""
 #: modules/admin/includes/reg.php:83
 #: modules/admin/includes/usr_del.php:45
 msgid "Wrong data"
-msgstr ""
+msgstr "Невірні дані"
 
 #: modules/admin/includes/ads.php:34
 #: modules/admin/includes/ads.php:85
@@ -175,33 +175,33 @@ msgstr ""
 #: modules/admin/includes/ip_whois.php:121
 #: modules/admin/includes/usr_clean.php:87
 msgid "Back"
-msgstr ""
+msgstr "Повернутися"
 
 #: modules/admin/includes/ads.php:60
 #: modules/admin/includes/counters.php:157
 #: modules/admin/includes/counters.php:234
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Не заповнені обов'язкові поля"
 
 #: modules/admin/includes/ads.php:71
 msgid "This place is occupied"
-msgstr ""
+msgstr "Дане місце зайняте"
 
 #: modules/admin/includes/ads.php:77
 msgid "Invalid characters"
-msgstr ""
+msgstr "Неприпустимі символи"
 
 #: modules/admin/includes/ads.php:80
 msgid "Color is specified incorrectly"
-msgstr ""
+msgstr "Колір зазначено не вірно"
 
 #: modules/admin/includes/ads.php:176
 msgid "Link successfully changed"
-msgstr ""
+msgstr "Посилання успішно змінене"
 
 #: modules/admin/includes/ads.php:176
 msgid "Link successfully added"
-msgstr ""
+msgstr "Посилання успішно додане"
 
 #: modules/admin/includes/ads.php:177
 #: modules/admin/includes/antispy.php:207
@@ -214,20 +214,20 @@ msgstr ""
 #: modules/admin/includes/reg.php:81
 #: modules/admin/includes/usr_clean.php:69
 msgid "Continue"
-msgstr ""
+msgstr "Продовжити"
 
 #: modules/admin/includes/ads.php:181
 msgid "Link"
-msgstr ""
+msgstr "Посилання"
 
 #: modules/admin/includes/ads.php:183
 #: modules/admin/includes/ads.php:408
 msgid "Direct Link"
-msgstr ""
+msgstr "Пряме посилання"
 
 #: modules/admin/includes/ads.php:184
 msgid "Click statistics won't be counted, If the direct link is turned on"
-msgstr ""
+msgstr "Якщо включене \"Пряме посилання\", то статистика переходів не ведеться"
 
 #: modules/admin/includes/ads.php:185
 #: modules/admin/includes/counters.php:165
@@ -238,118 +238,118 @@ msgstr ""
 #: modules/admin/includes/forum.php:417
 #: modules/admin/includes/news.php:54
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: modules/admin/includes/ads.php:191
 msgid "To change the name when updating pages, you must wtite names trought the symbol |"
-msgstr ""
+msgstr "Для зміни назви при оновленні сторінки перерахуйте їх через знак |"
 
 #: modules/admin/includes/ads.php:192
 msgid "Color"
-msgstr ""
+msgstr "Колір"
 
 #: modules/admin/includes/ads.php:194
 msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
-msgstr ""
+msgstr "У форматі FFFFFF, якщо не хочете виділяти посилання кольором, то просто не заповнюйте це поле"
 
 #: modules/admin/includes/ads.php:195
 msgid "Hits"
-msgstr ""
+msgstr "Переходи"
 
 #: modules/admin/includes/ads.php:197
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Кількість переходів за посиланням, після досягнення якого посилання буде видалено зі сторінкі<br>0 - Необмежено"
 
 #: modules/admin/includes/ads.php:198
 #: modules/admin/includes/karma.php:75
 msgid "Days"
-msgstr ""
+msgstr "Дні"
 
 #: modules/admin/includes/ads.php:200
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Кількість днів показу посилання<br>0 - Необмежено"
 
 #: modules/admin/includes/ads.php:202
 #: modules/admin/includes/ads.php:373
 #: modules/admin/includes/ads.php:379
 msgid "Show"
-msgstr ""
+msgstr "Показати"
 
 #: modules/admin/includes/ads.php:203
 #: modules/admin/includes/ads.php:327
 msgid "Everyone"
-msgstr ""
+msgstr "Усі"
 
 #: modules/admin/includes/ads.php:204
 #: modules/admin/includes/ads.php:328
 msgid "Guests"
-msgstr ""
+msgstr "Гості"
 
 #: modules/admin/includes/ads.php:205
 #: modules/admin/includes/ads.php:329
 #: modules/admin/templates/sidebar-admin-menu.phtml:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:70
 msgid "Users"
-msgstr ""
+msgstr "Користувачі"
 
 #: modules/admin/includes/ads.php:206
 msgid "Location"
-msgstr ""
+msgstr "Розташування"
 
 #: modules/admin/includes/ads.php:207
 #: modules/admin/includes/ads.php:333
 msgid "Above logo"
-msgstr ""
+msgstr "Над логотипом"
 
 #: modules/admin/includes/ads.php:208
 #: modules/admin/includes/ads.php:334
 msgid "Under menu"
-msgstr ""
+msgstr "Під меню"
 
 #: modules/admin/includes/ads.php:209
 #: modules/admin/includes/ads.php:335
 msgid "Over the counter"
-msgstr ""
+msgstr "Над лічильником"
 
 #: modules/admin/includes/ads.php:210
 #: modules/admin/includes/ads.php:336
 msgid "Under counter"
-msgstr ""
+msgstr "Під лічильником"
 
 #: modules/admin/includes/ads.php:211
 msgid "Layout"
-msgstr ""
+msgstr "Стиль"
 
 #: modules/admin/includes/ads.php:212
 #: modules/admin/includes/ads.php:322
 msgid "All pages"
-msgstr ""
+msgstr "Усі сторінки"
 
 #: modules/admin/includes/ads.php:213
 #: modules/admin/includes/ads.php:323
 msgid "Only on Homepage"
-msgstr ""
+msgstr "Тільки на головній сторінці"
 
 #: modules/admin/includes/ads.php:214
 #: modules/admin/includes/ads.php:324
 msgid "On all, except Homepage"
-msgstr ""
+msgstr "На всіх, крім головної сторінки"
 
 #: modules/admin/includes/ads.php:215
 msgid "Styling links"
-msgstr ""
+msgstr "Стиль посилань"
 
 #: modules/admin/includes/ads.php:216
 msgid "Bold"
-msgstr ""
+msgstr "Жирний"
 
 #: modules/admin/includes/ads.php:217
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #: modules/admin/includes/ads.php:218
 msgid "Underline"
-msgstr ""
+msgstr "Підкреслений"
 
 #: modules/admin/includes/ads.php:219
 #: modules/admin/includes/ads.php:371
@@ -358,7 +358,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:483
 #: modules/admin/includes/forum.php:508
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
 #: modules/admin/includes/ads.php:219
 #: modules/admin/includes/counters.php:206
@@ -366,7 +366,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:331
 #: modules/admin/includes/forum.php:517
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ads.php:281
@@ -385,11 +385,11 @@ msgstr ""
 #: modules/admin/includes/usr_clean.php:86
 #: modules/admin/includes/usr_del.php:132
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: modules/admin/includes/ads.php:280
 msgid "Are you sure want to delete link?"
-msgstr ""
+msgstr "Ви впевнені, що хочете видалити посилання?"
 
 #: modules/admin/includes/ads.php:284
 #: modules/admin/includes/ads.php:301
@@ -401,51 +401,51 @@ msgstr ""
 #: modules/admin/includes/karma.php:36
 #: modules/admin/includes/usr_del.php:139
 msgid "Cancel"
-msgstr ""
+msgstr "Скасувати"
 
 #: modules/admin/includes/ads.php:296
 #: modules/admin/includes/ads.php:431
 msgid "Delete inactive links"
-msgstr ""
+msgstr "Видалити неактивні посилання"
 
 #: modules/admin/includes/ads.php:298
 msgid "Are you sure you want to delete all inactive links?"
-msgstr ""
+msgstr "Ви впевнені, що хочете видалити усі неактивні посилання?"
 
 #: modules/admin/includes/ads.php:369
 #: modules/admin/includes/counters.php:316
 msgid "Up"
-msgstr ""
+msgstr "Вгору"
 
 #: modules/admin/includes/ads.php:370
 #: modules/admin/includes/counters.php:317
 msgid "Down"
-msgstr ""
+msgstr "Вниз"
 
 #: modules/admin/includes/ads.php:373
 msgid "Hide"
-msgstr ""
+msgstr "Приховати"
 
 #: modules/admin/includes/ads.php:377
 msgid "Start date"
-msgstr ""
+msgstr "Дата початку"
 
 #: modules/admin/includes/ads.php:378
 msgid "Disposition"
-msgstr ""
+msgstr "Диспозиція"
 
 #: modules/admin/includes/ads.php:385
 #: modules/admin/includes/ads.php:388
 msgid "hits"
-msgstr ""
+msgstr "хіти"
 
 #: modules/admin/includes/ads.php:402
 msgid "Agreement"
-msgstr ""
+msgstr "Угода"
 
 #: modules/admin/includes/ads.php:405
 msgid "Remains"
-msgstr ""
+msgstr "Залишилося"
 
 #: modules/admin/includes/ads.php:412
 #: modules/admin/includes/ban_panel.php:99
@@ -455,7 +455,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:401
 #: modules/admin/includes/reg.php:119
 msgid "The list is empty"
-msgstr ""
+msgstr "Список порожній"
 
 #: modules/admin/includes/ads.php:427
 #: modules/admin/includes/ban_panel.php:106
@@ -465,11 +465,11 @@ msgstr ""
 #: modules/admin/includes/reg.php:128
 #: modules/admin/includes/search_ip.php:141
 msgid "To Page"
-msgstr ""
+msgstr "На сторінку"
 
 #: modules/admin/includes/antiflood.php:23
 msgid "Antiflood Settings"
-msgstr ""
+msgstr "Налаштування антифлуду"
 
 #: modules/admin/includes/antiflood.php:74
 #: modules/admin/includes/karma.php:60
@@ -477,55 +477,55 @@ msgstr ""
 #: modules/admin/templates/access.phtml:10
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
-msgstr ""
+msgstr "Налаштування успішно збережено"
 
 #: modules/admin/includes/antiflood.php:83
 msgid "Operation mode"
-msgstr ""
+msgstr "Режим роботи"
 
 #: modules/admin/includes/antiflood.php:84
 #: modules/admin/includes/antiflood.php:86
 #: modules/admin/includes/antiflood.php:93
 msgid "Day"
-msgstr ""
+msgstr "День"
 
 #: modules/admin/includes/antiflood.php:85
 #: modules/admin/includes/antiflood.php:86
 #: modules/admin/includes/antiflood.php:94
 msgid "Night"
-msgstr ""
+msgstr "Ніч"
 
 #: modules/admin/includes/antiflood.php:87
 msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
+msgstr "Автоматичний перехід з денного на нічний режим, згідно заданому в налаштуваннях часу"
 
 #: modules/admin/includes/antiflood.php:89
 msgid "Adaptive"
-msgstr ""
+msgstr "Адаптивний"
 
 #: modules/admin/includes/antiflood.php:90
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
+msgstr "Якщо хтось з Адміністрації онлайн (на сайті), система працює в &quot;денному&quot; режимі, в іншому випадку переходить у &quot;нічний&quot;"
 
 #: modules/admin/includes/antiflood.php:92
 msgid "Time limit"
-msgstr ""
+msgstr "Ліміт часу"
 
 #: modules/admin/includes/antiflood.php:95
 msgid "Min. 4, max. 300 seconds"
-msgstr ""
+msgstr "Мін. 4, макс. 300 секунд"
 
 #: modules/admin/includes/antiflood.php:96
 msgid "Day mode"
-msgstr ""
+msgstr "Денний режим"
 
 #: modules/admin/includes/antiflood.php:97
 msgid "Beginning of day"
-msgstr ""
+msgstr "Початок дня"
 
 #: modules/admin/includes/antiflood.php:98
 msgid "End of day"
-msgstr ""
+msgstr "Кінець дня"
 
 #: modules/admin/includes/antiflood.php:99
 #: modules/admin/includes/counters.php:179
@@ -536,7 +536,7 @@ msgstr ""
 #: modules/admin/templates/languages.phtml:28
 #: modules/admin/templates/settings.phtml:73
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: modules/admin/includes/antispy.php:24
 #: modules/admin/includes/counters.php:23
@@ -552,7 +552,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:90
 #: modules/admin/templates/access.phtml:127
 msgid "Access denied"
-msgstr ""
+msgstr "У доступі відмовлено"
 
 #: modules/admin/includes/antispy.php:153
 #: modules/admin/includes/antispy.php:173
@@ -560,132 +560,132 @@ msgstr ""
 #: modules/admin/includes/antispy.php:219
 #: modules/admin/templates/sidebar-admin-menu.phtml:247
 msgid "Anti-Spyware"
-msgstr ""
+msgstr "Антишпигун"
 
 #: modules/admin/includes/antispy.php:153
 msgid "Distributive scan"
-msgstr ""
+msgstr "Сканування дістрибутиву"
 
 #: modules/admin/includes/antispy.php:156
 msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
-msgstr ""
+msgstr "Дистрибутив містить сторонні файли<br>Увага! Якщо файли, перераховані нижче, не відносяться до додаткових модулів і Ви не впевнені в їх безпеці, видаліть їх. Вони можуть бути небезпечні для Вашого сайту."
 
 #: modules/admin/includes/antispy.php:164
 msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
-msgstr ""
+msgstr "<h3>Чудово!</h3>Список файлів відповідає дистрибутиву"
 
 #: modules/admin/includes/antispy.php:167
 msgid "Rescan"
-msgstr ""
+msgstr "Пересканувати"
 
 #: modules/admin/includes/antispy.php:173
 #: modules/admin/includes/antispy.php:221
 msgid "Snapshot scan"
-msgstr ""
+msgstr "Сканування по знімку"
 
 #: modules/admin/includes/antispy.php:180
 msgid "Snapshot is not created"
-msgstr ""
+msgstr "Знімок не створений"
 
 #: modules/admin/includes/antispy.php:181
 #: modules/admin/includes/antispy.php:202
 #: modules/admin/includes/antispy.php:211
 #: modules/admin/includes/antispy.php:223
 msgid "Create snapshot"
-msgstr ""
+msgstr "Створення знімка"
 
 #: modules/admin/includes/antispy.php:185
 msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
+msgstr "Невідповідність знімку<br>Увага! Вам необхідно звернути увагу на всі файли з даного списку. Вони були додані або модифіковані після створення образу."
 
 #: modules/admin/includes/antispy.php:193
 msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
+msgstr "Чудово!<br>Всі файли відповідають зробленому образу."
 
 #: modules/admin/includes/antispy.php:206
 msgid "Snapshot successfully created"
-msgstr ""
+msgstr "Знімок успішно створений"
 
 #: modules/admin/includes/antispy.php:210
 msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
+msgstr "УВАГА!!!<br>Перед продовженням, переконайтеся, що всі файли, які були виявлені в режимі сканування дистрибутиву надійні і не містять несанкціонованих модифікацій."
 
 #: modules/admin/includes/antispy.php:213
 msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
+msgstr "Дана процедура створює список всіх скриптових файлів Вашого сайту, обчислює їх контрольні суми і заносить в базу для подальшого порівняння."
 
 #: modules/admin/includes/antispy.php:220
 msgid "Scan mode"
-msgstr ""
+msgstr "Режим сканування"
 
 #: modules/admin/includes/antispy.php:222
 msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
+msgstr "Порівняння списку і контрольних сум файлів із заздалегідь зробленим образом. Дозволяє виявити незнайомі файли і несанкціоновані зміни."
 
 #: modules/admin/includes/antispy.php:224
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
+msgstr "Робиться &quot;знімок&quot; всіх скриптових файлів сайту, обчислюються їх контрольні суми і запам'ятовуються в базі."
 
 #: modules/admin/includes/antispy.php:228
 msgid "Scanner menu"
-msgstr ""
+msgstr "Меню сканеру"
 
 #: modules/admin/includes/ban_panel.php:27
 msgid "Amnesty is available for supervisors only"
-msgstr ""
+msgstr "Амністія доступна тільки для Супервізорів"
 
 #: modules/admin/includes/ban_panel.php:29
 #: modules/admin/includes/ban_panel.php:62
 #: modules/admin/includes/ban_panel.php:68
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
-msgstr ""
+msgstr "Бан панель"
 
 #: modules/admin/includes/ban_panel.php:29
 #: modules/admin/includes/ban_panel.php:46
 #: modules/admin/includes/ban_panel.php:57
 #: modules/admin/includes/ban_panel.php:110
 msgid "Amnesty"
-msgstr ""
+msgstr "Амністія"
 
 #: modules/admin/includes/ban_panel.php:37
 msgid "Amnesty has been successful"
-msgstr ""
+msgstr "Амністія була застосована успішно"
 
 #: modules/admin/includes/ban_panel.php:51
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
-msgstr ""
+msgstr "Розбанені всі користувачі, які мали активні бани (окрім банів &quot;До відміни&quot;)"
 
 #: modules/admin/includes/ban_panel.php:55
 msgid "Unban all"
-msgstr ""
+msgstr "Розбанити всіх"
 
 #: modules/admin/includes/ban_panel.php:56
 msgid "Clear Ban database"
-msgstr ""
+msgstr "Очистити базу даних банів"
 
 #: modules/admin/includes/ban_panel.php:59
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
-msgstr ""
+msgstr "&quot;Розбанити всіх&quot; - припиняє дію всіх активних банів<br>&quot;Очистити базу&quot; - припиняє дію всіх банів і очищає всю історію порушень"
 
 #: modules/admin/includes/ban_panel.php:69
 #: modules/admin/templates/userlist.phtml:10
 msgid "Sort"
-msgstr ""
+msgstr "Сортувати"
 
 #: modules/admin/includes/ban_panel.php:72
 #: modules/admin/includes/ban_panel.php:74
 msgid "Term"
-msgstr ""
+msgstr "Термін"
 
 #: modules/admin/includes/ban_panel.php:72
 #: modules/admin/includes/ban_panel.php:74
 msgid "Violations"
-msgstr ""
+msgstr "Порушення"
 
 #: modules/admin/includes/ban_panel.php:93
 msgid "Violations history"
-msgstr ""
+msgstr "Історія порушень"
 
 #: modules/admin/includes/counters.php:42
 #: modules/admin/includes/counters.php:135
@@ -695,110 +695,110 @@ msgstr ""
 #: modules/admin/includes/counters.php:327
 #: modules/admin/templates/sidebar-admin-menu.phtml:170
 msgid "Counters"
-msgstr ""
+msgstr "Лічильники"
 
 #: modules/admin/includes/counters.php:42
 #: modules/admin/includes/counters.php:220
 msgid "Viewing"
-msgstr ""
+msgstr "Перегляд"
 
 #: modules/admin/includes/counters.php:44
 #: modules/admin/includes/counters.php:166
 #: modules/admin/includes/counters.php:208
 #: modules/admin/includes/counters.php:212
 msgid "Option 1"
-msgstr ""
+msgstr "Варіант 1"
 
 #: modules/admin/includes/counters.php:45
 #: modules/admin/includes/counters.php:167
 #: modules/admin/includes/counters.php:209
 #: modules/admin/includes/counters.php:213
 msgid "Option 2"
-msgstr ""
+msgstr "Варіант 2"
 
 #: modules/admin/includes/counters.php:46
 #: modules/admin/includes/counters.php:210
 msgid "Display mode"
-msgstr ""
+msgstr "Режим відображення"
 
 #: modules/admin/includes/counters.php:50
 msgid "On all pages showing option 1"
-msgstr ""
+msgstr "На всіх сторінках показувати варіант 1"
 
 #: modules/admin/includes/counters.php:54
 msgid "On all pages showing option 2"
-msgstr ""
+msgstr "На всіх сторінках показувати варіант 2"
 
 #: modules/admin/includes/counters.php:58
 msgid "On the main showing option 1, on the other pages option 2"
-msgstr ""
+msgstr "На головній показувати варіант 1, на інших - варіант 2"
 
 #: modules/admin/includes/counters.php:63
 msgid "Disable"
-msgstr ""
+msgstr "Вимкнути"
 
 #: modules/admin/includes/counters.php:64
 msgid "Enable"
-msgstr ""
+msgstr "Увімкнути"
 
 #: modules/admin/includes/counters.php:130
 msgid "Counter deleted"
-msgstr ""
+msgstr "Лічильник видалено"
 
 #: modules/admin/includes/counters.php:137
 #: modules/admin/includes/forum.php:212
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Ви дійсно бажаєте видалити?"
 
 #: modules/admin/includes/counters.php:164
 msgid "Preview"
-msgstr ""
+msgstr "Прев'ю"
 
 #: modules/admin/includes/counters.php:168
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
+msgstr "Якщо лічильники відображаються правильно і без помилок, натисніть кнопку &quot;Запам'ятати&quot;.<br>Якщо ні, поверніться та виправте помилки."
 
 #: modules/admin/includes/counters.php:208
 msgid "Code for main page"
-msgstr ""
+msgstr "Код для головної сторінки"
 
 #: modules/admin/includes/counters.php:209
 msgid "Code for other pages"
-msgstr ""
+msgstr "Код для інших сторінок"
 
 #: modules/admin/includes/counters.php:210
 #: modules/admin/includes/ipban.php:169
 msgid "Default"
-msgstr ""
+msgstr "За умовчанням"
 
 #: modules/admin/includes/counters.php:211
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
+msgstr "На головній показувати варіант 1, на інших сторінках - варіант 2.<br>Якщо &quot;параметри&quot; не заповнені, лічильник буде встановлено тільки на головній."
 
 #: modules/admin/includes/counters.php:214
 msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
+msgstr "УВАГА!<br>Переконайтеся, що ви правильно ввели код. Він повинен відповідати стандарту XML <br> Якщо при натисканні кнопки &quot;Переглянути&quot; сталися XHTML помилки, натисніть кнопку &quot;Назад&quot;у браузері, поверніться до цієї форми та виправте помилки."
 
 #: modules/admin/includes/counters.php:301
 msgid "Counter successfully changed"
-msgstr ""
+msgstr "Лічильник успішно змінено"
 
 #: modules/admin/includes/counters.php:301
 msgid "Counter successfully added"
-msgstr ""
+msgstr "Лічильник успішно додано"
 
 #: modules/admin/includes/emoticons.php:21
 #: modules/admin/includes/news.php:58
 msgid "Smilies"
-msgstr ""
+msgstr "Смайли"
 
 #: modules/admin/includes/emoticons.php:58
 msgid "Smilie cache updated successfully"
-msgstr ""
+msgstr "Кеш смайлів успішно оновлено"
 
 #: modules/admin/includes/emoticons.php:60
 msgid "Error updating cache"
-msgstr ""
+msgstr "Помилка оновлення кешу"
 
 #: modules/admin/includes/forum.php:39
 #: modules/admin/includes/forum.php:121
@@ -811,167 +811,167 @@ msgstr ""
 #: modules/admin/includes/forum.php:640
 #: modules/admin/includes/forum.php:760
 msgid "Forum Management"
-msgstr ""
+msgstr "Управління форумом"
 
 #: modules/admin/includes/forum.php:48
 msgid "Delete section"
-msgstr ""
+msgstr "Видалити розділ"
 
 #: modules/admin/includes/forum.php:48
 msgid "Delete category"
-msgstr ""
+msgstr "Видалити категорію"
 
 #: modules/admin/includes/forum.php:90
 #: modules/admin/includes/forum.php:210
 msgid "Category deleted"
-msgstr ""
+msgstr "Категорію видалено"
 
 #: modules/admin/includes/forum.php:90
 #: modules/admin/includes/forum.php:141
 msgid "All content has been moved to"
-msgstr ""
+msgstr "Весь контент був перенесений у"
 
 #: modules/admin/includes/forum.php:90
 msgid "selected category"
-msgstr ""
+msgstr "обрана категорія"
 
 #: modules/admin/includes/forum.php:93
 msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
+msgstr "<h3>УВАГА!</h3>Є підрозділи. Їх необхідно перемістити в іншу категорію."
 
 #: modules/admin/includes/forum.php:94
 msgid "Select category"
-msgstr ""
+msgstr "Вибрати категорію"
 
 #: modules/admin/includes/forum.php:101
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr ""
+msgstr "Всі розділи, теми і файли будуть переміщені у вибрану категорію. Стара категорія буде видалена."
 
 #: modules/admin/includes/forum.php:102
 #: modules/admin/includes/forum.php:195
 msgid "Move"
-msgstr ""
+msgstr "Перемістити"
 
 #: modules/admin/includes/forum.php:106
 #: modules/admin/includes/forum.php:199
 msgid "Complete removal"
-msgstr ""
+msgstr "Повне видалення"
 
 #: modules/admin/includes/forum.php:106
 msgid "If you want to destroy all the information, first remove"
-msgstr ""
+msgstr "Якщо Ви хочете знищити всю інформацію, спочатку видаліть"
 
 #: modules/admin/includes/forum.php:107
 msgid "subsections"
-msgstr ""
+msgstr "підрозділи"
 
 #: modules/admin/includes/forum.php:141
 #: modules/admin/includes/forum.php:210
 msgid "Section deleted"
-msgstr ""
+msgstr "Розділ видалено"
 
 #: modules/admin/includes/forum.php:141
 msgid "selected section"
-msgstr ""
+msgstr "обраний розділ"
 
 #: modules/admin/includes/forum.php:145
 #: modules/admin/includes/forum.php:542
 #: modules/admin/includes/forum.php:656
 msgid "Access forbidden"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: modules/admin/includes/forum.php:175
 msgid "Section with all contents are removed"
-msgstr ""
+msgstr "Розділ з усім контентом видалено"
 
 #: modules/admin/includes/forum.php:176
 #: modules/admin/includes/forum.php:308
 msgid "Go to category"
-msgstr ""
+msgstr "Перейти в категорію"
 
 #: modules/admin/includes/forum.php:179
 msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
+msgstr "<h3>УВАГА!</h3>У розділі є теми. Їх необхідно перемістити в інший розділ."
 
 #: modules/admin/includes/forum.php:179
 msgid "Select section"
-msgstr ""
+msgstr "Виберіть розділ"
 
 #: modules/admin/includes/forum.php:188
 msgid "Other category"
-msgstr ""
+msgstr "Інша категорія"
 
 #: modules/admin/includes/forum.php:195
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
+msgstr "Всі теми і файли будуть переміщені у вибраний розділ. Старий розділ буде видалено."
 
 #: modules/admin/includes/forum.php:199
 msgid "WARNING! All the information will be deleted"
-msgstr ""
+msgstr "УВАГА! Вся інформація буде видалена"
 
 #: modules/admin/includes/forum.php:255
 #: modules/admin/includes/forum.php:363
 msgid "You have not entered Title"
-msgstr ""
+msgstr "Ви не ввели назву"
 
 #: modules/admin/includes/forum.php:259
 #: modules/admin/includes/forum.php:367
 msgid "Invalid length"
-msgstr ""
+msgstr "Невірна довжина"
 
 #: modules/admin/includes/forum.php:263
 #: modules/admin/includes/forum.php:371
 msgid "Description should be at least 2 characters in length"
-msgstr ""
+msgstr "Опис має бути не менше 2 символів"
 
 #: modules/admin/includes/forum.php:305
 msgid "Add Section"
-msgstr ""
+msgstr "Додати розділ"
 
 #: modules/admin/includes/forum.php:305
 msgid "Add Category"
-msgstr ""
+msgstr "Додати категорію"
 
 #: modules/admin/includes/forum.php:315
 #: modules/admin/includes/forum.php:421
 msgid "Min. 2, Max. 30 characters"
-msgstr ""
+msgstr "Мін. 2, макс. 30 символів"
 
 #: modules/admin/includes/forum.php:316
 #: modules/admin/includes/forum.php:422
 #: modules/admin/templates/settings.phtml:61
 msgid "Description"
-msgstr ""
+msgstr "Опис"
 
 #: modules/admin/includes/forum.php:318
 #: modules/admin/includes/forum.php:428
 msgid "Optional field"
-msgstr ""
+msgstr "Необов'язкове поле"
 
 #: modules/admin/includes/forum.php:318
 #: modules/admin/includes/forum.php:428
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "Мін. 2, макс. 500 символів"
 
 #: modules/admin/includes/forum.php:321
 #: modules/admin/includes/forum.php:431
 msgid "Common access"
-msgstr ""
+msgstr "Загальний доступ"
 
 #: modules/admin/includes/forum.php:322
 #: modules/admin/includes/forum.php:432
 msgid "Only for reading"
-msgstr ""
+msgstr "Тільки для читання"
 
 #: modules/admin/includes/forum.php:323
 #: modules/admin/includes/forum.php:433
 msgid "Allow authors to edit the 1st post"
-msgstr ""
+msgstr "Дозволити авторам редагувати 1-й пост"
 
 #: modules/admin/includes/forum.php:324
 #: modules/admin/includes/forum.php:434
 msgid "Assign the newly created authors as curators"
-msgstr ""
+msgstr "Призначати кураторами нових авторів"
 
 #: modules/admin/includes/forum.php:327
 #: modules/admin/includes/forum.php:446
@@ -990,7 +990,7 @@ msgstr ""
 
 #: modules/admin/includes/forum.php:414
 msgid "Edit Section"
-msgstr ""
+msgstr "Редагувати розділ"
 
 #: modules/admin/includes/forum.php:419
 msgid "Order"
@@ -998,104 +998,104 @@ msgstr ""
 
 #: modules/admin/includes/forum.php:435
 msgid "Category"
-msgstr ""
+msgstr "Категорія"
 
 #: modules/admin/includes/forum.php:461
 #: modules/admin/includes/forum.php:770
 msgid "Forum structure"
-msgstr ""
+msgstr "Структура форуму"
 
 #: modules/admin/includes/forum.php:467
 msgid "List of sections"
-msgstr ""
+msgstr "Список розділів"
 
 #: modules/admin/includes/forum.php:493
 #: modules/admin/includes/forum.php:519
 msgid "List of categories"
-msgstr ""
+msgstr "Список категорій"
 
 #: modules/admin/includes/forum.php:524
 #: modules/admin/includes/forum.php:772
 msgid "Hidden topics"
-msgstr ""
+msgstr "Приховані теми"
 
 #: modules/admin/includes/forum.php:531
 #: modules/admin/includes/forum.php:651
 msgid "Filter by author"
-msgstr ""
+msgstr "Фільтр по автору"
 
 #: modules/admin/includes/forum.php:537
 msgid "Filter by section"
-msgstr ""
+msgstr "Фільтр по розділу"
 
 #: modules/admin/includes/forum.php:600
 #: modules/admin/includes/forum.php:714
 msgid "Filter"
-msgstr ""
+msgstr "Фільтр"
 
 #: modules/admin/includes/forum.php:601
 msgid "by section"
-msgstr ""
+msgstr "по розділу"
 
 #: modules/admin/includes/forum.php:602
 #: modules/admin/includes/forum.php:716
 msgid "by author"
-msgstr ""
+msgstr "по авторові"
 
 #: modules/admin/includes/forum.php:619
 #: modules/admin/includes/forum.php:731
 #: modules/admin/includes/reg.php:135
 msgid "Delete all"
-msgstr ""
+msgstr "Видалити усе"
 
 #: modules/admin/includes/forum.php:640
 #: modules/admin/includes/forum.php:771
 msgid "Hidden posts"
-msgstr ""
+msgstr "Приховані повідомлення"
 
 #: modules/admin/includes/forum.php:647
 msgid "Filter by topic"
-msgstr ""
+msgstr "Фільтр по темі"
 
 #: modules/admin/includes/forum.php:715
 msgid "by topic"
-msgstr ""
+msgstr "по темі"
 
 #: modules/admin/includes/forum.php:761
 msgid "Statistic"
-msgstr ""
+msgstr "Статистика"
 
 #: modules/admin/includes/forum.php:762
 msgid "Categories"
-msgstr ""
+msgstr "Категорії"
 
 #: modules/admin/includes/forum.php:763
 msgid "Sections"
-msgstr ""
+msgstr "Розділи"
 
 #: modules/admin/includes/forum.php:764
 msgid "Topics"
-msgstr ""
+msgstr "Теми"
 
 #: modules/admin/includes/forum.php:765
 msgid "Messages"
-msgstr ""
+msgstr "Повідомлення"
 
 #: modules/admin/includes/forum.php:766
 msgid "Files"
-msgstr ""
+msgstr "Файли"
 
 #: modules/admin/includes/forum.php:767
 msgid "Votes"
-msgstr ""
+msgstr "Голоси"
 
 #: modules/admin/includes/forum.php:769
 msgid "Settings"
-msgstr ""
+msgstr "Налаштування"
 
 #: modules/admin/includes/forum.php:774
 msgid "Go to Forum"
-msgstr ""
+msgstr "Перейти до форуму"
 
 #: modules/admin/includes/ipban.php:29
 #: modules/admin/includes/ipban.php:274
@@ -1103,13 +1103,13 @@ msgstr ""
 #: modules/admin/includes/ipban.php:370
 #: modules/admin/templates/sidebar-admin-menu.phtml:255
 msgid "Ban by IP"
-msgstr ""
+msgstr "Бан по IP"
 
 #: modules/admin/includes/ipban.php:29
 #: modules/admin/includes/ipban.php:186
 #: modules/admin/includes/ipban.php:210
 msgid "Add Ban"
-msgstr ""
+msgstr "Додати бан"
 
 #: modules/admin/includes/ipban.php:40
 #: modules/admin/includes/ipban.php:84
@@ -1120,21 +1120,21 @@ msgstr ""
 #: modules/admin/includes/search_ip.php:72
 #: modules/admin/includes/search_ip.php:81
 msgid "Invalid IP"
-msgstr ""
+msgstr "Невірний IP"
 
 #: modules/admin/includes/ipban.php:59
 #: modules/admin/includes/search_ip.php:48
 msgid "First IP is entered incorrectly"
-msgstr ""
+msgstr "Перший IP був введений неправильно"
 
 #: modules/admin/includes/ipban.php:67
 #: modules/admin/includes/search_ip.php:56
 msgid "Second IP is entered incorrectly"
-msgstr ""
+msgstr "Другий IP був введений неправильно"
 
 #: modules/admin/includes/ipban.php:108
 msgid "Address you entered conflicts with other who in the database"
-msgstr ""
+msgstr "Введена Вами адреса суперечить з іншими, що знаходяться в базі"
 
 #: modules/admin/includes/ipban.php:118
 #: modules/admin/includes/ipban.php:169
@@ -1142,7 +1142,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:316
 #: modules/admin/includes/ipban.php:387
 msgid "Redirect"
-msgstr ""
+msgstr "Редирект"
 
 #: modules/admin/includes/ipban.php:122
 #: modules/admin/includes/ipban.php:173
@@ -1151,7 +1151,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:391
 #: modules/admin/templates/access.phtml:115
 msgid "Registration"
-msgstr ""
+msgstr "Реєстрація"
 
 #: modules/admin/includes/ipban.php:126
 #: modules/admin/includes/ipban.php:177
@@ -1159,102 +1159,102 @@ msgstr ""
 #: modules/admin/includes/ipban.php:324
 #: modules/admin/includes/ipban.php:395
 msgid "Block"
-msgstr ""
+msgstr "Заблокувати"
 
 #: modules/admin/includes/ipban.php:145
 msgid "Ban impossible. Your own IP address in the range"
-msgstr ""
+msgstr "Бан неможливий. Ваша власна адреса IP потрапляє в діапазон"
 
 #: modules/admin/includes/ipban.php:154
 msgid "Ban range address"
-msgstr ""
+msgstr "Банити діапазон адрес"
 
 #: modules/admin/includes/ipban.php:158
 msgid "Ban on the subnet mask"
-msgstr ""
+msgstr "Банити по масці підмережі"
 
 #: modules/admin/includes/ipban.php:162
 msgid "Ban IP address"
-msgstr ""
+msgstr "Банити IP адрес"
 
 #: modules/admin/includes/ipban.php:165
 #: modules/admin/includes/ipban.php:201
 #: modules/admin/includes/ipban.php:312
 msgid "Ban type"
-msgstr ""
+msgstr "Тип бану"
 
 #: modules/admin/includes/ipban.php:169
 #: modules/admin/includes/ipban.php:205
 msgid "Redirect URL"
-msgstr ""
+msgstr "URL редіректу"
 
 #: modules/admin/includes/ipban.php:180
 #: modules/admin/includes/ipban.php:208
 #: modules/admin/includes/ipban.php:331
 msgid "Reason"
-msgstr ""
+msgstr "Причина"
 
 #: modules/admin/includes/ipban.php:180
 #: modules/admin/includes/ipban.php:331
 msgid "Not specified"
-msgstr ""
+msgstr "Не вказано"
 
 #: modules/admin/includes/ipban.php:187
 msgid "Please, check up correctness of the input data"
-msgstr ""
+msgstr "Будь ласка, перевірте правильність введених даних"
 
 #: modules/admin/includes/ipban.php:199
 #: modules/admin/includes/ipban.php:360
 msgid "IP address"
-msgstr ""
+msgstr "IP-адреса"
 
 #: modules/admin/includes/ipban.php:207
 msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
+msgstr "Якщо заборона на переадресацію, то вкажіть URL-адресу"
 
 #: modules/admin/includes/ipban.php:211
 msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
+msgstr "Приклади запитів:<br><span class='red'>10.5.7.1</span> - Банити одну адресу<br><span class='red'>10.5.7.1-10.5.7.100</span> - Банити діапазон адрес.<br><span class='red'>10.5.*.*</span> - Банити по масці. Буде забанена вся підмережа, починаючи з адреси 0 і закінчуючи 255"
 
 #: modules/admin/includes/ipban.php:266
 msgid "Are you sure you wan to unban all IP?"
-msgstr ""
+msgstr "Ви впевнені, що хочете розбанити всі IP?"
 
 #: modules/admin/includes/ipban.php:267
 msgid "Perform"
-msgstr ""
+msgstr "Виконати"
 
 #: modules/admin/includes/ipban.php:274
 msgid "Ban details"
-msgstr ""
+msgstr "Деталі бану"
 
 #: modules/admin/includes/ipban.php:304
 msgid "This address not in the database"
-msgstr ""
+msgstr "Такої адреси в базі немає"
 
 #: modules/admin/includes/ipban.php:332
 msgid "Who applied the ban?"
-msgstr ""
+msgstr "Хто наклав бан?"
 
 #: modules/admin/includes/ipban.php:333
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: modules/admin/includes/ipban.php:334
 msgid "Time"
-msgstr ""
+msgstr "Час"
 
 #: modules/admin/includes/ipban.php:335
 msgid "Delete Ban"
-msgstr ""
+msgstr "Видалити бан"
 
 #: modules/admin/includes/ipban.php:346
 msgid "Ban has been successfully removed"
-msgstr ""
+msgstr "Бан успішно видалений"
 
 #: modules/admin/includes/ipban.php:349
 msgid "re you sure to remove ban?"
-msgstr ""
+msgstr "Ви впевнені, що хочете скасувати бан?"
 
 #: modules/admin/includes/ipban.php:358
 #: modules/admin/includes/ipban.php:362
@@ -1262,251 +1262,251 @@ msgstr ""
 #: modules/admin/includes/search_ip.php:38
 #: modules/admin/templates/sidebar-admin-menu.phtml:51
 msgid "Search"
-msgstr ""
+msgstr "Пошук"
 
 #: modules/admin/includes/ipban.php:363
 msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
+msgstr "Введіть одну адресу, маска і діапазон не дозволяються"
 
 #: modules/admin/includes/ipban.php:404
 msgid "Ban"
-msgstr ""
+msgstr "Бан"
 
 #: modules/admin/includes/ipban.php:415
 msgid "Unban all IP"
-msgstr ""
+msgstr "Розбанити всі IP"
 
 #: modules/admin/includes/karma.php:32
 msgid "Karma is cleared"
-msgstr ""
+msgstr "Карму очищено"
 
 #: modules/admin/includes/karma.php:34
 msgid "You really want to clear the Karma?"
-msgstr ""
+msgstr "Ви дійсно хочете очистити карму?"
 
 #: modules/admin/includes/karma.php:35
 msgid "Clear"
-msgstr ""
+msgstr "Очистити"
 
 #: modules/admin/includes/karma.php:40
 #: modules/admin/templates/sidebar-admin-menu.phtml:114
 msgid "Karma"
-msgstr ""
+msgstr "Карма"
 
 #: modules/admin/includes/karma.php:69
 msgid "Voices per day"
-msgstr ""
+msgstr "Голосів на добу"
 
 #: modules/admin/includes/karma.php:71
 msgid "Restriction for vote"
-msgstr ""
+msgstr "Обмеження для голосування"
 
 #: modules/admin/includes/karma.php:72
 msgid "Forum posts"
-msgstr ""
+msgstr "Пости на форумі"
 
 #: modules/admin/includes/karma.php:73
 msgid "Stay on site"
-msgstr ""
+msgstr "Провів на сайті"
 
 #: modules/admin/includes/karma.php:74
 msgid "Hours"
-msgstr ""
+msgstr "Годин"
 
 #: modules/admin/includes/karma.php:76
 msgid "General Settings"
-msgstr ""
+msgstr "Загальні налаштування"
 
 #: modules/admin/includes/karma.php:77
 msgid "Switch module ON"
-msgstr ""
+msgstr "Увімкнути модуль"
 
 #: modules/admin/includes/karma.php:78
 msgid "Forbid to vote for the administration"
-msgstr ""
+msgstr "Заборонити голосувати за адміністрацію"
 
 #: modules/admin/includes/karma.php:80
 msgid "Clear Karma"
-msgstr ""
+msgstr "Очистити карму"
 
 #: modules/admin/includes/languages.php:32
 #: modules/admin/templates/languages.phtml:17
 msgid "Default language"
-msgstr ""
+msgstr "Мова за замовчуванням"
 
 #: modules/admin/includes/news.php:18
 msgid "News on the mainpage"
-msgstr ""
+msgstr "Новини на головній"
 
 #: modules/admin/includes/news.php:52
 msgid "Appearance"
-msgstr ""
+msgstr "Відображення"
 
 #: modules/admin/includes/news.php:53
 msgid "Title + Text"
-msgstr ""
+msgstr "Назва + текст"
 
 #: modules/admin/includes/news.php:55
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: modules/admin/includes/news.php:56
 msgid "Not to show"
-msgstr ""
+msgstr "Не показувати"
 
 #: modules/admin/includes/news.php:57
 msgid "Line breaks"
-msgstr ""
+msgstr "Розриви рядків"
 
 #: modules/admin/includes/news.php:59
 msgid "bbCode Tags"
-msgstr ""
+msgstr "Теги bbCode"
 
 #: modules/admin/includes/news.php:60
 #: modules/admin/includes/usr_del.php:123
 #: modules/admin/templates/access.phtml:72
 #: modules/admin/templates/access.phtml:95
 msgid "Comments"
-msgstr ""
+msgstr "Коментарі"
 
 #: modules/admin/includes/news.php:61
 msgid "Text size"
-msgstr ""
+msgstr "Розмір тексту"
 
 #: modules/admin/includes/news.php:63
 msgid "Quantity of news"
-msgstr ""
+msgstr "Кількість новин"
 
 #: modules/admin/includes/news.php:64
 msgid "How many days to show?"
-msgstr ""
+msgstr "Скільки днів показувати?"
 
 #: modules/admin/includes/news.php:66
 msgid "Reset Settings"
-msgstr ""
+msgstr "Скинути налаштування"
 
 #: modules/admin/includes/reg.php:22
 msgid "Registration confirmation"
-msgstr ""
+msgstr "Підтвердження реєстрації"
 
 #: modules/admin/includes/reg.php:34
 #: modules/admin/includes/reg.php:40
 msgid "Registration is confirmed"
-msgstr ""
+msgstr "Реєстрація підтверджена"
 
 #: modules/admin/includes/reg.php:58
 #: modules/admin/includes/usr_del.php:115
 msgid "User deleted"
-msgstr ""
+msgstr "Користувач видалений"
 
 #: modules/admin/includes/reg.php:64
 msgid "All unconfirmed registrations were removed"
-msgstr ""
+msgstr "Всі непідтверджені реєстрації видалені"
 
 #: modules/admin/includes/reg.php:80
 msgid "All unconfirmed registrations with selected IP were deleted"
-msgstr ""
+msgstr "Всі непідтверджені реєстрації з обраного IP були видалені"
 
 #: modules/admin/includes/reg.php:103
 msgid "Approve"
-msgstr ""
+msgstr "Підтвердити"
 
 #: modules/admin/includes/reg.php:105
 msgid "Remove IP"
-msgstr ""
+msgstr "Видалити IP"
 
 #: modules/admin/includes/reg.php:135
 msgid "Confirm all"
-msgstr ""
+msgstr "Підтвердити всі"
 
 #: modules/admin/includes/search_ip.php:30
 msgid "Actual IP"
-msgstr ""
+msgstr "Фактичний IP"
 
 #: modules/admin/includes/search_ip.php:31
 msgid "IP history"
-msgstr ""
+msgstr "Історія IP"
 
 #: modules/admin/includes/search_ip.php:34
 msgid "Search IP"
-msgstr ""
+msgstr "Пошук IP"
 
 #: modules/admin/includes/search_ip.php:94
 msgid "Search results"
-msgstr ""
+msgstr "Результати пошуку"
 
 #: modules/admin/includes/search_ip.php:132
 msgid "At your request, nothing found"
-msgstr ""
+msgstr "За вашим запитом нічого не знайдено"
 
 #: modules/admin/includes/search_ip.php:144
 msgid "New Search"
-msgstr ""
+msgstr "Новий пошук"
 
 #: modules/admin/includes/search_ip.php:152
 msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
+msgstr "<b>Приклади запитів:</b><br><span class=\"red\">10.5.7.1</span> - Пошук однієї адреси<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Пошук по діапазону адрес (знак маски * використовувати не можна)<br><span class=\"red\">10.5.*.*</span> - Пошук по масці. Буде знайдена вся підмережа, починаючи з адреси 0 і закінчуючи 255"
 
 #: modules/admin/includes/settings.php:30
 #: modules/admin/templates/sidebar-admin-menu.phtml:201
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
-msgstr ""
+msgstr "Системні налаштування"
 
 #: modules/admin/includes/userlist.php:25
 msgid "List of Users"
-msgstr ""
+msgstr "Список користувачів"
 
 #: modules/admin/includes/usr_clean.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:98
 msgid "Database cleanup"
-msgstr ""
+msgstr "Очищення бази даних"
 
 #: modules/admin/includes/usr_clean.php:69
 msgid "Inactive profiles deleted"
-msgstr ""
+msgstr "Неактивні профилі видалено"
 
 #: modules/admin/includes/usr_clean.php:83
 msgid "Inactive profiles"
-msgstr ""
+msgstr "Неактивні профілі"
 
 #: modules/admin/includes/usr_clean.php:84
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr ""
+msgstr "Ця категорія містить профілі, зареєстровані понад 6 місяців тому, з датою останнього відвідування більш ніж 5 місяців тому і з нульовою активністю.<br>Ви спокійно можете їх видаляти."
 
 #: modules/admin/includes/usr_del.php:39
 msgid "You cannot delete higher administration"
-msgstr ""
+msgstr "Ви на можете видаляти вищу за Вас адміністрацію"
 
 #: modules/admin/includes/usr_del.php:42
 msgid "User does not exists"
-msgstr ""
+msgstr "Користувача не існує"
 
 #: modules/admin/includes/usr_del.php:71
 msgid "Delete user"
-msgstr ""
+msgstr "Видалити користувача"
 
 #: modules/admin/includes/usr_del.php:120
 msgid "Cleaning activities"
-msgstr ""
+msgstr "Очищення активності"
 
 #: modules/admin/includes/usr_del.php:127
 #: modules/admin/templates/access.phtml:15
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: modules/admin/includes/usr_del.php:128
 msgid "All threads and posts created by the user go in the hidden state"
-msgstr ""
+msgstr "Всі теми і пости, створені користувачем, перейдуть у прихований стан"
 
 #: modules/admin/includes/usr_del.php:131
 msgid "Are you sure that you want to delete this user?"
-msgstr ""
+msgstr "Ви дійсно хочете видалити цього користувача?"
 
 #: modules/admin/templates/access.phtml:5
 msgid "Permissions"
-msgstr ""
+msgstr "Права доступу"
 
 #: modules/admin/templates/access.phtml:19
 #: modules/admin/templates/access.phtml:41
@@ -1515,7 +1515,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:105
 #: modules/admin/templates/access.phtml:119
 msgid "Access is allowed"
-msgstr ""
+msgstr "Доступ дозволено"
 
 #: modules/admin/templates/access.phtml:23
 #: modules/admin/templates/access.phtml:45
@@ -1523,123 +1523,123 @@ msgstr ""
 #: modules/admin/templates/access.phtml:86
 #: modules/admin/templates/access.phtml:109
 msgid "Only for authorized"
-msgstr ""
+msgstr "Тільки для авторизованих"
 
 #: modules/admin/templates/access.phtml:27
 msgid "Read only"
-msgstr ""
+msgstr "Лише для читання"
 
 #: modules/admin/templates/access.phtml:37
 msgid "Guestbook"
-msgstr ""
+msgstr "Гостьова книга"
 
 #: modules/admin/templates/access.phtml:55
 msgid "Library"
-msgstr ""
+msgstr "Бібліотека"
 
 #: modules/admin/templates/access.phtml:78
 msgid "Downloads"
-msgstr ""
+msgstr "Завантаження"
 
 #: modules/admin/templates/access.phtml:101
 msgid "Community"
-msgstr ""
+msgstr "Спільнота"
 
 #: modules/admin/templates/access.phtml:123
 msgid "With moderation"
-msgstr ""
+msgstr "З модерацією"
 
 #: modules/admin/templates/access.phtml:133
 msgid "Administrators always have access to all closed modules and comments"
-msgstr ""
+msgstr "Адміністратори завжди мають доступ до всіх закритих модулів та коментарів"
 
 #: modules/admin/templates/languages.phtml:12
 msgid "Descriptions have been updated successfully"
-msgstr ""
+msgstr "Описи було успішно оновлено"
 
 #: modules/admin/templates/languages.phtml:29
 msgid "Update List"
-msgstr ""
+msgstr "Оновити список"
 
 #: modules/admin/templates/settings.phtml:21
 msgid "Common Settings"
-msgstr ""
+msgstr "Загальні налаштування"
 
 #: modules/admin/templates/settings.phtml:23
 msgid "Web site address without the slash at the end"
-msgstr ""
+msgstr "Адреса веб-сайту без слешу в кінці"
 
 #: modules/admin/templates/settings.phtml:27
 msgid "Site copyright"
-msgstr ""
+msgstr "Копірайт сайту"
 
 #: modules/admin/templates/settings.phtml:31
 msgid "Site Email"
-msgstr ""
+msgstr "E-mail сайту"
 
 #: modules/admin/templates/settings.phtml:35
 msgid "Max. file size"
-msgstr ""
+msgstr "Макс. розмір файлу"
 
 #: modules/admin/templates/settings.phtml:40
 msgid "Gzip compression"
-msgstr ""
+msgstr "Gzip стиснення"
 
 #: modules/admin/templates/settings.phtml:44
 msgid "Time shift"
-msgstr ""
+msgstr "Зсув часу"
 
 #: modules/admin/templates/settings.phtml:50
 msgid "System Time"
-msgstr ""
+msgstr "Системний час"
 
 #: modules/admin/templates/settings.phtml:55
 msgid "META tags"
-msgstr ""
+msgstr "META теги"
 
 #: modules/admin/templates/settings.phtml:57
 msgid "Keywords"
-msgstr ""
+msgstr "Ключові слова"
 
 #: modules/admin/templates/settings.phtml:66
 msgid "Themes"
-msgstr ""
+msgstr "Теми"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:60
 msgid "On registration"
-msgstr ""
+msgstr "На реєстрації"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:106
 msgid "Antiflood"
-msgstr ""
+msgstr "Антифлуд"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:128
 msgid "Modules"
-msgstr ""
+msgstr "Модулі"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:153
 msgid "News"
-msgstr ""
+msgstr "Новини"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:184
 msgid "System"
-msgstr ""
+msgstr "Система"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:209
 msgid "Update Smilies"
-msgstr ""
+msgstr "Оновлення смайли"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:217
 msgid "Language Settings"
-msgstr ""
+msgstr "Налаштування мови"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:230
 msgid "Security"
-msgstr ""
+msgstr "Безпека"
 
 #: modules/admin/templates/userlist.phtml:13
 msgid "Nickname"
-msgstr ""
+msgstr "Нікнейм"
 
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
