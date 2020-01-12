@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 17:09\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: modules/guestbook/index.php:67
 msgid "Admin Club"
@@ -49,7 +49,7 @@ msgstr "Bạn không thể thêm những tin nhắn vì vậy thường. Xin vui
 
 #: modules/guestbook/index.php:198
 msgid "Add message"
-msgstr "Thêm tin nhắn"
+msgstr ""
 
 #: modules/guestbook/index.php:307
 msgid "All messages older than 1 day were deleted"
@@ -68,7 +68,7 @@ msgstr "Tất cả các tin nhắn cũ hơn 1 tuần đã bị xóa"
 #: modules/guestbook/templates/clear.phtml:3
 #: modules/guestbook/templates/clear.phtml:9
 msgid "Clear guestbook"
-msgstr "Dọn dẹp lưu bút"
+msgstr ""
 
 #: modules/guestbook/templates/clear.phtml:11
 msgid "Clearing parameters"
@@ -114,7 +114,7 @@ msgstr "Xóa"
 #: modules/guestbook/templates/edit.phtml:3
 #: modules/guestbook/templates/edit.phtml:9
 msgid "Edit message"
-msgstr "Chỉnh sửa tin nhắn"
+msgstr ""
 
 #: modules/guestbook/templates/edit.phtml:13
 #: modules/guestbook/templates/reply.phtml:13
@@ -148,7 +148,7 @@ msgstr "Họ tên"
 
 #: modules/guestbook/templates/index.phtml:47
 msgid "Verification code"
-msgstr "Mã xác minh"
+msgstr ""
 
 #: modules/guestbook/templates/index.phtml:49
 #: modules/guestbook/templates/index.phtml:57
@@ -157,7 +157,7 @@ msgstr "Các ký hiệu trên hình ảnh"
 
 #: modules/guestbook/templates/index.phtml:63
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr "Có thể không nhìn thấy mã hình ảnh, hãy làm mới trang này"
+msgstr ""
 
 #: modules/guestbook/templates/index.phtml:68
 msgid "Write"
@@ -173,7 +173,7 @@ msgstr "Các bút là trống rỗng.<br><strong>Be đầu tiên! :)</strong>"
 
 #: modules/guestbook/templates/index.phtml:94
 msgid "Guest"
-msgstr "Khách"
+msgstr ""
 
 #: modules/guestbook/templates/index.phtml:100
 #: modules/guestbook/templates/reply.phtml:2
@@ -185,7 +185,7 @@ msgstr "Trả lời"
 
 #: modules/guestbook/templates/index.phtml:135
 msgid "Edited:"
-msgstr "Chỉnh sửa:"
+msgstr ""
 
 #: modules/guestbook/templates/index.phtml:139
 msgid "Edit"
