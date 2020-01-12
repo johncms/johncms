@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
-"PO-Revision-Date: 2020-01-12 15:07\n"
+"PO-Revision-Date: 2020-01-12 15:18\n"
 
 #: modules/admin/includes/adminlist.php:26
 #: modules/admin/includes/adminlist.php:79
@@ -74,28 +74,28 @@ msgstr ""
 #: modules/admin/templates/smilies.phtml:8
 #: modules/admin/templates/userlist.phtml:3
 msgid "Admin Panel"
-msgstr ""
+msgstr "Panel Pengurus"
 
 #: modules/admin/includes/adminlist.php:26
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
-msgstr ""
+msgstr "Pengurus"
 
 #: modules/admin/includes/adminlist.php:30
 msgid "Supervisors"
-msgstr ""
+msgstr "Supervisor"
 
 #: modules/admin/includes/adminlist.php:42
 msgid "Administrators"
-msgstr ""
+msgstr "Administrator"
 
 #: modules/admin/includes/adminlist.php:55
 msgid "Super Moderators"
-msgstr ""
+msgstr "Super moderator"
 
 #: modules/admin/includes/adminlist.php:68
 msgid "Moderators"
-msgstr ""
+msgstr "Moderator"
 
 #: modules/admin/includes/adminlist.php:78
 #: modules/admin/includes/ads.php:415
@@ -121,16 +121,16 @@ msgstr ""
 #: modules/admin/includes/ads.php:320
 #: modules/admin/templates/sidebar-admin-menu.phtml:161
 msgid "Advertisement"
-msgstr ""
+msgstr "Iklan"
 
 #: modules/admin/includes/ads.php:25
 msgid "Edit link"
-msgstr ""
+msgstr "Sunting tautan"
 
 #: modules/admin/includes/ads.php:25
 #: modules/admin/includes/ads.php:430
 msgid "Add link"
-msgstr ""
+msgstr "Tambahkan tautan"
 
 #: modules/admin/includes/ads.php:34
 #: modules/admin/includes/counters.php:67
@@ -151,7 +151,7 @@ msgstr ""
 #: modules/admin/includes/reg.php:83
 #: modules/admin/includes/usr_del.php:45
 msgid "Wrong data"
-msgstr ""
+msgstr "Data salah"
 
 #: modules/admin/includes/ads.php:34
 #: modules/admin/includes/ads.php:85
@@ -175,33 +175,33 @@ msgstr ""
 #: modules/admin/includes/ip_whois.php:121
 #: modules/admin/includes/usr_clean.php:87
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: modules/admin/includes/ads.php:60
 #: modules/admin/includes/counters.php:157
 #: modules/admin/includes/counters.php:234
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Kolom yang diperlukan kosong"
 
 #: modules/admin/includes/ads.php:71
 msgid "This place is occupied"
-msgstr ""
+msgstr "Tempat ini sudah penuh"
 
 #: modules/admin/includes/ads.php:77
 msgid "Invalid characters"
-msgstr ""
+msgstr "Karakter tidak valid"
 
 #: modules/admin/includes/ads.php:80
 msgid "Color is specified incorrectly"
-msgstr ""
+msgstr "Warna yang ditentukan salah"
 
 #: modules/admin/includes/ads.php:176
 msgid "Link successfully changed"
-msgstr ""
+msgstr "Tautan berhasil disunting"
 
 #: modules/admin/includes/ads.php:176
 msgid "Link successfully added"
-msgstr ""
+msgstr "Tautan berhasil ditambahkan"
 
 #: modules/admin/includes/ads.php:177
 #: modules/admin/includes/antispy.php:207
@@ -214,20 +214,20 @@ msgstr ""
 #: modules/admin/includes/reg.php:81
 #: modules/admin/includes/usr_clean.php:69
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #: modules/admin/includes/ads.php:181
 msgid "Link"
-msgstr ""
+msgstr "Tautan"
 
 #: modules/admin/includes/ads.php:183
 #: modules/admin/includes/ads.php:408
 msgid "Direct Link"
-msgstr ""
+msgstr "Tautan Langsung"
 
 #: modules/admin/includes/ads.php:184
 msgid "Click statistics won't be counted, If the direct link is turned on"
-msgstr ""
+msgstr "Statistik klik tidak dihitung, jika Anda mengaktifkan Tautan Langsung"
 
 #: modules/admin/includes/ads.php:185
 #: modules/admin/includes/counters.php:165
@@ -238,19 +238,19 @@ msgstr ""
 #: modules/admin/includes/forum.php:417
 #: modules/admin/includes/news.php:54
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: modules/admin/includes/ads.php:191
 msgid "To change the name when updating pages, you must wtite names trought the symbol |"
-msgstr ""
+msgstr "Untuk mengubah nama saat memperbarui halaman, Anda harus menyertakan simbol |"
 
 #: modules/admin/includes/ads.php:192
 msgid "Color"
-msgstr ""
+msgstr "Warna"
 
 #: modules/admin/includes/ads.php:194
 msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
-msgstr ""
+msgstr "Dalam format FFFFFF, jika Anda tidak ingin menggunakan tautan berwarna, kosongkan kolom ini"
 
 #: modules/admin/includes/ads.php:195
 msgid "Hits"
@@ -258,98 +258,98 @@ msgstr ""
 
 #: modules/admin/includes/ads.php:197
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Jumlah hits untuk tautan yang sudah tercapai akan otomatis dihapus dari halaman.<br> 0 - Tak terbatas"
 
 #: modules/admin/includes/ads.php:198
 #: modules/admin/includes/karma.php:75
 msgid "Days"
-msgstr ""
+msgstr "Hari"
 
 #: modules/admin/includes/ads.php:200
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Jumlah hari untuk tautan yang sudah tercapai akan otomatis dihapus dari halaman.<br> 0 - Tak terbatas"
 
 #: modules/admin/includes/ads.php:202
 #: modules/admin/includes/ads.php:373
 #: modules/admin/includes/ads.php:379
 msgid "Show"
-msgstr ""
+msgstr "Tampilkan"
 
 #: modules/admin/includes/ads.php:203
 #: modules/admin/includes/ads.php:327
 msgid "Everyone"
-msgstr ""
+msgstr "Publik"
 
 #: modules/admin/includes/ads.php:204
 #: modules/admin/includes/ads.php:328
 msgid "Guests"
-msgstr ""
+msgstr "Tamu"
 
 #: modules/admin/includes/ads.php:205
 #: modules/admin/includes/ads.php:329
 #: modules/admin/templates/sidebar-admin-menu.phtml:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:70
 msgid "Users"
-msgstr ""
+msgstr "Pengguna"
 
 #: modules/admin/includes/ads.php:206
 msgid "Location"
-msgstr ""
+msgstr "Lokasi"
 
 #: modules/admin/includes/ads.php:207
 #: modules/admin/includes/ads.php:333
 msgid "Above logo"
-msgstr ""
+msgstr "Di atas Logo"
 
 #: modules/admin/includes/ads.php:208
 #: modules/admin/includes/ads.php:334
 msgid "Under menu"
-msgstr ""
+msgstr "Di bawah menu"
 
 #: modules/admin/includes/ads.php:209
 #: modules/admin/includes/ads.php:335
 msgid "Over the counter"
-msgstr ""
+msgstr "Di atas Counter"
 
 #: modules/admin/includes/ads.php:210
 #: modules/admin/includes/ads.php:336
 msgid "Under counter"
-msgstr ""
+msgstr "Di bawah Counter"
 
 #: modules/admin/includes/ads.php:211
 msgid "Layout"
-msgstr ""
+msgstr "Tata letak"
 
 #: modules/admin/includes/ads.php:212
 #: modules/admin/includes/ads.php:322
 msgid "All pages"
-msgstr ""
+msgstr "Semua halaman"
 
 #: modules/admin/includes/ads.php:213
 #: modules/admin/includes/ads.php:323
 msgid "Only on Homepage"
-msgstr ""
+msgstr "Hanya di Beranda"
 
 #: modules/admin/includes/ads.php:214
 #: modules/admin/includes/ads.php:324
 msgid "On all, except Homepage"
-msgstr ""
+msgstr "Semua halaman, kecuali Beranda"
 
 #: modules/admin/includes/ads.php:215
 msgid "Styling links"
-msgstr ""
+msgstr "Gaya tautan"
 
 #: modules/admin/includes/ads.php:216
 msgid "Bold"
-msgstr ""
+msgstr "Tebal"
 
 #: modules/admin/includes/ads.php:217
 msgid "Italic"
-msgstr ""
+msgstr "Miring"
 
 #: modules/admin/includes/ads.php:218
 msgid "Underline"
-msgstr ""
+msgstr "Garis bawah"
 
 #: modules/admin/includes/ads.php:219
 #: modules/admin/includes/ads.php:371
@@ -358,7 +358,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:483
 #: modules/admin/includes/forum.php:508
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: modules/admin/includes/ads.php:219
 #: modules/admin/includes/counters.php:206
@@ -366,7 +366,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:331
 #: modules/admin/includes/forum.php:517
 msgid "Add"
-msgstr ""
+msgstr "Tambahkan"
 
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ads.php:281
@@ -385,11 +385,11 @@ msgstr ""
 #: modules/admin/includes/usr_clean.php:86
 #: modules/admin/includes/usr_del.php:132
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/admin/includes/ads.php:280
 msgid "Are you sure want to delete link?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus tautan?"
 
 #: modules/admin/includes/ads.php:284
 #: modules/admin/includes/ads.php:301
@@ -401,38 +401,38 @@ msgstr ""
 #: modules/admin/includes/karma.php:36
 #: modules/admin/includes/usr_del.php:139
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: modules/admin/includes/ads.php:296
 #: modules/admin/includes/ads.php:431
 msgid "Delete inactive links"
-msgstr ""
+msgstr "Hapus tautan tidak aktif"
 
 #: modules/admin/includes/ads.php:298
 msgid "Are you sure you want to delete all inactive links?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus semua tautan tidak aktif?"
 
 #: modules/admin/includes/ads.php:369
 #: modules/admin/includes/counters.php:316
 msgid "Up"
-msgstr ""
+msgstr "Naik"
 
 #: modules/admin/includes/ads.php:370
 #: modules/admin/includes/counters.php:317
 msgid "Down"
-msgstr ""
+msgstr "Turun"
 
 #: modules/admin/includes/ads.php:373
 msgid "Hide"
-msgstr ""
+msgstr "Sembunyikan"
 
 #: modules/admin/includes/ads.php:377
 msgid "Start date"
-msgstr ""
+msgstr "Mulai dari tanggal"
 
 #: modules/admin/includes/ads.php:378
 msgid "Disposition"
-msgstr ""
+msgstr "Disposisi"
 
 #: modules/admin/includes/ads.php:385
 #: modules/admin/includes/ads.php:388
@@ -441,11 +441,11 @@ msgstr ""
 
 #: modules/admin/includes/ads.php:402
 msgid "Agreement"
-msgstr ""
+msgstr "Persetujuan"
 
 #: modules/admin/includes/ads.php:405
 msgid "Remains"
-msgstr ""
+msgstr "Tetap"
 
 #: modules/admin/includes/ads.php:412
 #: modules/admin/includes/ban_panel.php:99
@@ -455,7 +455,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:401
 #: modules/admin/includes/reg.php:119
 msgid "The list is empty"
-msgstr ""
+msgstr "Daftar ini kosong"
 
 #: modules/admin/includes/ads.php:427
 #: modules/admin/includes/ban_panel.php:106
@@ -465,11 +465,11 @@ msgstr ""
 #: modules/admin/includes/reg.php:128
 #: modules/admin/includes/search_ip.php:141
 msgid "To Page"
-msgstr ""
+msgstr "Ke halaman"
 
 #: modules/admin/includes/antiflood.php:23
 msgid "Antiflood Settings"
-msgstr ""
+msgstr "Pengaturan Antiflood"
 
 #: modules/admin/includes/antiflood.php:74
 #: modules/admin/includes/karma.php:60
@@ -477,55 +477,55 @@ msgstr ""
 #: modules/admin/templates/access.phtml:10
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
-msgstr ""
+msgstr "Pengaturan berhasil disimpan"
 
 #: modules/admin/includes/antiflood.php:83
 msgid "Operation mode"
-msgstr ""
+msgstr "Mode Operasi"
 
 #: modules/admin/includes/antiflood.php:84
 #: modules/admin/includes/antiflood.php:86
 #: modules/admin/includes/antiflood.php:93
 msgid "Day"
-msgstr ""
+msgstr "Siang"
 
 #: modules/admin/includes/antiflood.php:85
 #: modules/admin/includes/antiflood.php:86
 #: modules/admin/includes/antiflood.php:94
 msgid "Night"
-msgstr ""
+msgstr "Malam"
 
 #: modules/admin/includes/antiflood.php:87
 msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
+msgstr "Otomatis berubah dari Siang ke Malam, sesui dengan waktu yang ditentukan"
 
 #: modules/admin/includes/antiflood.php:89
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptif"
 
 #: modules/admin/includes/antiflood.php:90
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
+msgstr "Jika salah satu pengurus aktif (di situs), sistem bekerja. &quot;Siang&quot;. Jika admin tidak aktif berubah ke &quot;Malam&quot;"
 
 #: modules/admin/includes/antiflood.php:92
 msgid "Time limit"
-msgstr ""
+msgstr "Batas waktu"
 
 #: modules/admin/includes/antiflood.php:95
 msgid "Min. 4, max. 300 seconds"
-msgstr ""
+msgstr "Min. 4, maks. 30 detik"
 
 #: modules/admin/includes/antiflood.php:96
 msgid "Day mode"
-msgstr ""
+msgstr "Mode Siang"
 
 #: modules/admin/includes/antiflood.php:97
 msgid "Beginning of day"
-msgstr ""
+msgstr "Awal hari"
 
 #: modules/admin/includes/antiflood.php:98
 msgid "End of day"
-msgstr ""
+msgstr "Akhir hari"
 
 #: modules/admin/includes/antiflood.php:99
 #: modules/admin/includes/counters.php:179
@@ -536,7 +536,7 @@ msgstr ""
 #: modules/admin/templates/languages.phtml:28
 #: modules/admin/templates/settings.phtml:73
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: modules/admin/includes/antispy.php:24
 #: modules/admin/includes/counters.php:23
@@ -552,7 +552,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:90
 #: modules/admin/templates/access.phtml:127
 msgid "Access denied"
-msgstr ""
+msgstr "Akses ditolak"
 
 #: modules/admin/includes/antispy.php:153
 #: modules/admin/includes/antispy.php:173
@@ -564,128 +564,128 @@ msgstr ""
 
 #: modules/admin/includes/antispy.php:153
 msgid "Distributive scan"
-msgstr ""
+msgstr "Pemindai Distributif"
 
 #: modules/admin/includes/antispy.php:156
 msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
-msgstr ""
+msgstr "Distributif file yang saling melengkapi <br> Peringatan! Jika file tercantum di bawah ini tidak berhubungan dengan modul tambahan Anda dan Anda tidak yakin keselamatan mereka, maka menghapusnya. Mereka dapat membahayakan situs Anda."
 
 #: modules/admin/includes/antispy.php:164
 msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
-msgstr ""
+msgstr "<h3>SANGAT BAGUS</h3>Daftar file sesuai dengan yang di distribusikan"
 
 #: modules/admin/includes/antispy.php:167
 msgid "Rescan"
-msgstr ""
+msgstr "Pindai ulang"
 
 #: modules/admin/includes/antispy.php:173
 #: modules/admin/includes/antispy.php:221
 msgid "Snapshot scan"
-msgstr ""
+msgstr "Foto pindaian"
 
 #: modules/admin/includes/antispy.php:180
 msgid "Snapshot is not created"
-msgstr ""
+msgstr "Foto tidak dibuat"
 
 #: modules/admin/includes/antispy.php:181
 #: modules/admin/includes/antispy.php:202
 #: modules/admin/includes/antispy.php:211
 #: modules/admin/includes/antispy.php:223
 msgid "Create snapshot"
-msgstr ""
+msgstr "Buat foto"
 
 #: modules/admin/includes/antispy.php:185
 msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
+msgstr "Snapshot Inconsistency<br>Peringatan! Kamu harus memperhatikan semua file dari daftar. Mereka telah ditambahkan atau dimodifikasi sejak gambar yang dibuat."
 
 #: modules/admin/includes/antispy.php:193
 msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
+msgstr "Sangat bagus<br>Semua file sesuai dengan gambar yang sebelumnya dibuat."
 
 #: modules/admin/includes/antispy.php:206
 msgid "Snapshot successfully created"
-msgstr ""
+msgstr "Foto berhasil dibuat"
 
 #: modules/admin/includes/antispy.php:210
 msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
+msgstr "PERINGATAN! <br>Sebelum melanjutkan pastikan bahwa semua file yang telah diidentifikasi dalam pemindaian distribusi mode handal dan tidak berisi modifikasi yang tidak sah."
 
 #: modules/admin/includes/antispy.php:213
 msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
+msgstr "Prosedur ini menciptakan daftar semua file script ke situs Anda, menghitung checksum dan menulis ke database, untuk kemudian dibandingkan."
 
 #: modules/admin/includes/antispy.php:220
 msgid "Scan mode"
-msgstr ""
+msgstr "Mode Pindai"
 
 #: modules/admin/includes/antispy.php:222
 msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
+msgstr "Bandingkan daftar file dan checksum dengan pra-cara membuat. Mengijinkan anda mengidentifikasi file yang tidak diketahui, dan perubahan yang tidak sah."
 
 #: modules/admin/includes/antispy.php:224
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
+msgstr "Mengambil snapshot dari semua file script dari situs menghitung checksum mereka dan disimpan dalam database."
 
 #: modules/admin/includes/antispy.php:228
 msgid "Scanner menu"
-msgstr ""
+msgstr "Menu Scanner"
 
 #: modules/admin/includes/ban_panel.php:27
 msgid "Amnesty is available for supervisors only"
-msgstr ""
+msgstr "Pengampunan ini tersedia hanya untuk supervisor"
 
 #: modules/admin/includes/ban_panel.php:29
 #: modules/admin/includes/ban_panel.php:62
 #: modules/admin/includes/ban_panel.php:68
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
-msgstr ""
+msgstr "Panel Blokir"
 
 #: modules/admin/includes/ban_panel.php:29
 #: modules/admin/includes/ban_panel.php:46
 #: modules/admin/includes/ban_panel.php:57
 #: modules/admin/includes/ban_panel.php:110
 msgid "Amnesty"
-msgstr ""
+msgstr "Pengampunan"
 
 #: modules/admin/includes/ban_panel.php:37
 msgid "Amnesty has been successful"
-msgstr ""
+msgstr "Pengampunan berhasil"
 
 #: modules/admin/includes/ban_panel.php:51
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
-msgstr ""
+msgstr "Semua pengguna terblokir akan dibatalkan. (Kecuali untuk &quot;sampai batal &quot;)"
 
 #: modules/admin/includes/ban_panel.php:55
 msgid "Unban all"
-msgstr ""
+msgstr "Batal blokir semua"
 
 #: modules/admin/includes/ban_panel.php:56
 msgid "Clear Ban database"
-msgstr ""
+msgstr "Hapus basis data pemblokiran"
 
 #: modules/admin/includes/ban_panel.php:59
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
-msgstr ""
+msgstr "&quot;Unban semua&quot; - berakhir semua Ban aktif<br>&quot;Hapus database&quot; - berakhir semua larangan dan membersihkan sejarah pelanggaran"
 
 #: modules/admin/includes/ban_panel.php:69
 #: modules/admin/templates/userlist.phtml:10
 msgid "Sort"
-msgstr ""
+msgstr "Urutan"
 
 #: modules/admin/includes/ban_panel.php:72
 #: modules/admin/includes/ban_panel.php:74
 msgid "Term"
-msgstr ""
+msgstr "Istilah"
 
 #: modules/admin/includes/ban_panel.php:72
 #: modules/admin/includes/ban_panel.php:74
 msgid "Violations"
-msgstr ""
+msgstr "Pelanggaran"
 
 #: modules/admin/includes/ban_panel.php:93
 msgid "Violations history"
-msgstr ""
+msgstr "Riwayat Pelanggaran"
 
 #: modules/admin/includes/counters.php:42
 #: modules/admin/includes/counters.php:135
@@ -695,76 +695,76 @@ msgstr ""
 #: modules/admin/includes/counters.php:327
 #: modules/admin/templates/sidebar-admin-menu.phtml:170
 msgid "Counters"
-msgstr ""
+msgstr "Penghitung"
 
 #: modules/admin/includes/counters.php:42
 #: modules/admin/includes/counters.php:220
 msgid "Viewing"
-msgstr ""
+msgstr "Tinjauan"
 
 #: modules/admin/includes/counters.php:44
 #: modules/admin/includes/counters.php:166
 #: modules/admin/includes/counters.php:208
 #: modules/admin/includes/counters.php:212
 msgid "Option 1"
-msgstr ""
+msgstr "Opsi-1"
 
 #: modules/admin/includes/counters.php:45
 #: modules/admin/includes/counters.php:167
 #: modules/admin/includes/counters.php:209
 #: modules/admin/includes/counters.php:213
 msgid "Option 2"
-msgstr ""
+msgstr "Opsi-2"
 
 #: modules/admin/includes/counters.php:46
 #: modules/admin/includes/counters.php:210
 msgid "Display mode"
-msgstr ""
+msgstr "Mode Tampilan"
 
 #: modules/admin/includes/counters.php:50
 msgid "On all pages showing option 1"
-msgstr ""
+msgstr "Opsi-1 akan tampil di semua halaman"
 
 #: modules/admin/includes/counters.php:54
 msgid "On all pages showing option 2"
-msgstr ""
+msgstr "Opsi-2 akan tampil di semua halaman"
 
 #: modules/admin/includes/counters.php:58
 msgid "On the main showing option 1, on the other pages option 2"
-msgstr ""
+msgstr "Opsi-1 tampil di Beranda, Opsi-2 tampil di halaman lain"
 
 #: modules/admin/includes/counters.php:63
 msgid "Disable"
-msgstr ""
+msgstr "Nonaktifkan"
 
 #: modules/admin/includes/counters.php:64
 msgid "Enable"
-msgstr ""
+msgstr "Aktifkan"
 
 #: modules/admin/includes/counters.php:130
 msgid "Counter deleted"
-msgstr ""
+msgstr "Penghitung dihapus"
 
 #: modules/admin/includes/counters.php:137
 #: modules/admin/includes/forum.php:212
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus ini?"
 
 #: modules/admin/includes/counters.php:164
 msgid "Preview"
-msgstr ""
+msgstr "Tinjauan"
 
 #: modules/admin/includes/counters.php:168
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
+msgstr "Jika kode counter yang akan ditampilkan sudah benar dan tanpa kesalahan, klik &quot;Simpan&quot;.<br>Jika tidak, klik tombol kembali di browser dan memperbaiki kesalahan."
 
 #: modules/admin/includes/counters.php:208
 msgid "Code for main page"
-msgstr ""
+msgstr "Kode untuk Beranda"
 
 #: modules/admin/includes/counters.php:209
 msgid "Code for other pages"
-msgstr ""
+msgstr "Kode untuk halaman lain"
 
 #: modules/admin/includes/counters.php:210
 #: modules/admin/includes/ipban.php:169
@@ -773,32 +773,32 @@ msgstr ""
 
 #: modules/admin/includes/counters.php:211
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
+msgstr "Pada Opsi-1 menampilkan dihalaman utama,pada halaman lain Opsi-2.<br> Jika &quot;Option 2 &quot;tidak diisi, maka counter hanya akan muncul pada halaman utama."
 
 #: modules/admin/includes/counters.php:214
 msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
+msgstr "PEMBERITAHUAN!<br>Pastikan Anda telah memasukkan kode dengan benar. Hal ini harus memenuhi standar XML <br> Jika Anda klik &quot;Lihat&quot; kesalahan terjadi XHTML, kemudian klik tombol &quot;kembali&quot; pada browser, kembali ke formulir ini dan memperbaiki kesalahan."
 
 #: modules/admin/includes/counters.php:301
 msgid "Counter successfully changed"
-msgstr ""
+msgstr "Penghitung berhasil diubah"
 
 #: modules/admin/includes/counters.php:301
 msgid "Counter successfully added"
-msgstr ""
+msgstr "Penghitung berhasil ditambahkan"
 
 #: modules/admin/includes/emoticons.php:21
 #: modules/admin/includes/news.php:58
 msgid "Smilies"
-msgstr ""
+msgstr "Smile"
 
 #: modules/admin/includes/emoticons.php:58
 msgid "Smilie cache updated successfully"
-msgstr ""
+msgstr "Cache smile berhasil diperbaharui"
 
 #: modules/admin/includes/emoticons.php:60
 msgid "Error updating cache"
-msgstr ""
+msgstr "Kesalahan dalam memperbaharui cache smile"
 
 #: modules/admin/includes/forum.php:39
 #: modules/admin/includes/forum.php:121
@@ -811,167 +811,167 @@ msgstr ""
 #: modules/admin/includes/forum.php:640
 #: modules/admin/includes/forum.php:760
 msgid "Forum Management"
-msgstr ""
+msgstr "Pengelola Forum"
 
 #: modules/admin/includes/forum.php:48
 msgid "Delete section"
-msgstr ""
+msgstr "Hapus bagian"
 
 #: modules/admin/includes/forum.php:48
 msgid "Delete category"
-msgstr ""
+msgstr "Hapus kategori"
 
 #: modules/admin/includes/forum.php:90
 #: modules/admin/includes/forum.php:210
 msgid "Category deleted"
-msgstr ""
+msgstr "Kategori dihapus"
 
 #: modules/admin/includes/forum.php:90
 #: modules/admin/includes/forum.php:141
 msgid "All content has been moved to"
-msgstr ""
+msgstr "Semua konten telah dipindahkan ke"
 
 #: modules/admin/includes/forum.php:90
 msgid "selected category"
-msgstr ""
+msgstr "kategori terpilih"
 
 #: modules/admin/includes/forum.php:93
 msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
+msgstr "<h3>PERHATIAN!</h3>Ada subbagian. Pindahkan ke kategori yang lain."
 
 #: modules/admin/includes/forum.php:94
 msgid "Select category"
-msgstr ""
+msgstr "Pilih kategori"
 
 #: modules/admin/includes/forum.php:101
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr ""
+msgstr "Semua kategori, topik, dan berkas akan dipindahkan ke kategori yang dipilih. Kategori Lama akan dihapus."
 
 #: modules/admin/includes/forum.php:102
 #: modules/admin/includes/forum.php:195
 msgid "Move"
-msgstr ""
+msgstr "Pindah"
 
 #: modules/admin/includes/forum.php:106
 #: modules/admin/includes/forum.php:199
 msgid "Complete removal"
-msgstr ""
+msgstr "Penghapusan lengkap"
 
 #: modules/admin/includes/forum.php:106
 msgid "If you want to destroy all the information, first remove"
-msgstr ""
+msgstr "Jika kamu ingin menghancurkan semua infomasi, hapus terlebih dahulu"
 
 #: modules/admin/includes/forum.php:107
 msgid "subsections"
-msgstr ""
+msgstr "subbagian"
 
 #: modules/admin/includes/forum.php:141
 #: modules/admin/includes/forum.php:210
 msgid "Section deleted"
-msgstr ""
+msgstr "Bagian dihapus"
 
 #: modules/admin/includes/forum.php:141
 msgid "selected section"
-msgstr ""
+msgstr "bagian dipilih"
 
 #: modules/admin/includes/forum.php:145
 #: modules/admin/includes/forum.php:542
 #: modules/admin/includes/forum.php:656
 msgid "Access forbidden"
-msgstr ""
+msgstr "Akses ditolak"
 
 #: modules/admin/includes/forum.php:175
 msgid "Section with all contents are removed"
-msgstr ""
+msgstr "Bagian dengan semua isi dihapus"
 
 #: modules/admin/includes/forum.php:176
 #: modules/admin/includes/forum.php:308
 msgid "Go to category"
-msgstr ""
+msgstr "Ke kategori"
 
 #: modules/admin/includes/forum.php:179
 msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
+msgstr "<h3>PERINGATAN!</h3>Terdapat topik yang sama di kategori ini. Kamu harus pindahkan ke kategori yang lain."
 
 #: modules/admin/includes/forum.php:179
 msgid "Select section"
-msgstr ""
+msgstr "Pilih bagian"
 
 #: modules/admin/includes/forum.php:188
 msgid "Other category"
-msgstr ""
+msgstr "Kategori lain"
 
 #: modules/admin/includes/forum.php:195
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
+msgstr "Semua Topik dan file akan dipindahkan ke Katogori yang dipilih. Kategori yang lama akan di hapus."
 
 #: modules/admin/includes/forum.php:199
 msgid "WARNING! All the information will be deleted"
-msgstr ""
+msgstr "PERHATIAN! Semua Infomasi akan dihapus"
 
 #: modules/admin/includes/forum.php:255
 #: modules/admin/includes/forum.php:363
 msgid "You have not entered Title"
-msgstr ""
+msgstr "Anda belum memasukkan judul"
 
 #: modules/admin/includes/forum.php:259
 #: modules/admin/includes/forum.php:367
 msgid "Invalid length"
-msgstr ""
+msgstr "Panjang tidak valid"
 
 #: modules/admin/includes/forum.php:263
 #: modules/admin/includes/forum.php:371
 msgid "Description should be at least 2 characters in length"
-msgstr ""
+msgstr "Panjang deskripsi harus minimal 2 karakter"
 
 #: modules/admin/includes/forum.php:305
 msgid "Add Section"
-msgstr ""
+msgstr "Tambahkan Kategori"
 
 #: modules/admin/includes/forum.php:305
 msgid "Add Category"
-msgstr ""
+msgstr "Tambahkan Kategori"
 
 #: modules/admin/includes/forum.php:315
 #: modules/admin/includes/forum.php:421
 msgid "Min. 2, Max. 30 characters"
-msgstr ""
+msgstr "Min. 2, Maks. 30 karakter"
 
 #: modules/admin/includes/forum.php:316
 #: modules/admin/includes/forum.php:422
 #: modules/admin/templates/settings.phtml:61
 msgid "Description"
-msgstr ""
+msgstr "Deskripsi"
 
 #: modules/admin/includes/forum.php:318
 #: modules/admin/includes/forum.php:428
 msgid "Optional field"
-msgstr ""
+msgstr "Kolom tidak wajib"
 
 #: modules/admin/includes/forum.php:318
 #: modules/admin/includes/forum.php:428
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "Min. 2, maks. 500 karakter"
 
 #: modules/admin/includes/forum.php:321
 #: modules/admin/includes/forum.php:431
 msgid "Common access"
-msgstr ""
+msgstr "Akses umum"
 
 #: modules/admin/includes/forum.php:322
 #: modules/admin/includes/forum.php:432
 msgid "Only for reading"
-msgstr ""
+msgstr "Hanya untuk dibaca"
 
 #: modules/admin/includes/forum.php:323
 #: modules/admin/includes/forum.php:433
 msgid "Allow authors to edit the 1st post"
-msgstr ""
+msgstr "Izinkan penulis menyunting pos pertama"
 
 #: modules/admin/includes/forum.php:324
 #: modules/admin/includes/forum.php:434
 msgid "Assign the newly created authors as curators"
-msgstr ""
+msgstr "Menetapkan penulis baru sebagai curators"
 
 #: modules/admin/includes/forum.php:327
 #: modules/admin/includes/forum.php:446
@@ -990,7 +990,7 @@ msgstr ""
 
 #: modules/admin/includes/forum.php:414
 msgid "Edit Section"
-msgstr ""
+msgstr "Sunting Bagian"
 
 #: modules/admin/includes/forum.php:419
 msgid "Order"
@@ -998,104 +998,104 @@ msgstr ""
 
 #: modules/admin/includes/forum.php:435
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: modules/admin/includes/forum.php:461
 #: modules/admin/includes/forum.php:770
 msgid "Forum structure"
-msgstr ""
+msgstr "Struktur Forum"
 
 #: modules/admin/includes/forum.php:467
 msgid "List of sections"
-msgstr ""
+msgstr "Daftar Bagian"
 
 #: modules/admin/includes/forum.php:493
 #: modules/admin/includes/forum.php:519
 msgid "List of categories"
-msgstr ""
+msgstr "Daftar kategori"
 
 #: modules/admin/includes/forum.php:524
 #: modules/admin/includes/forum.php:772
 msgid "Hidden topics"
-msgstr ""
+msgstr "Topik tersembunyi"
 
 #: modules/admin/includes/forum.php:531
 #: modules/admin/includes/forum.php:651
 msgid "Filter by author"
-msgstr ""
+msgstr "Saring berdasarkan penulis"
 
 #: modules/admin/includes/forum.php:537
 msgid "Filter by section"
-msgstr ""
+msgstr "Saring berdasarkan bagian"
 
 #: modules/admin/includes/forum.php:600
 #: modules/admin/includes/forum.php:714
 msgid "Filter"
-msgstr ""
+msgstr "Saring"
 
 #: modules/admin/includes/forum.php:601
 msgid "by section"
-msgstr ""
+msgstr "berdasarkan bagian"
 
 #: modules/admin/includes/forum.php:602
 #: modules/admin/includes/forum.php:716
 msgid "by author"
-msgstr ""
+msgstr "berdasarkan penulis"
 
 #: modules/admin/includes/forum.php:619
 #: modules/admin/includes/forum.php:731
 #: modules/admin/includes/reg.php:135
 msgid "Delete all"
-msgstr ""
+msgstr "Hapus semua"
 
 #: modules/admin/includes/forum.php:640
 #: modules/admin/includes/forum.php:771
 msgid "Hidden posts"
-msgstr ""
+msgstr "Pos tersembunyi"
 
 #: modules/admin/includes/forum.php:647
 msgid "Filter by topic"
-msgstr ""
+msgstr "Saring berdasarkan topik"
 
 #: modules/admin/includes/forum.php:715
 msgid "by topic"
-msgstr ""
+msgstr "berdasarkan topik"
 
 #: modules/admin/includes/forum.php:761
 msgid "Statistic"
-msgstr ""
+msgstr "Statistik"
 
 #: modules/admin/includes/forum.php:762
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
 #: modules/admin/includes/forum.php:763
 msgid "Sections"
-msgstr ""
+msgstr "Bagian"
 
 #: modules/admin/includes/forum.php:764
 msgid "Topics"
-msgstr ""
+msgstr "Topik"
 
 #: modules/admin/includes/forum.php:765
 msgid "Messages"
-msgstr ""
+msgstr "Pesan"
 
 #: modules/admin/includes/forum.php:766
 msgid "Files"
-msgstr ""
+msgstr "Berkas"
 
 #: modules/admin/includes/forum.php:767
 msgid "Votes"
-msgstr ""
+msgstr "Penilaian"
 
 #: modules/admin/includes/forum.php:769
 msgid "Settings"
-msgstr ""
+msgstr "Pengaturan"
 
 #: modules/admin/includes/forum.php:774
 msgid "Go to Forum"
-msgstr ""
+msgstr "Ke Forum"
 
 #: modules/admin/includes/ipban.php:29
 #: modules/admin/includes/ipban.php:274
@@ -1103,13 +1103,13 @@ msgstr ""
 #: modules/admin/includes/ipban.php:370
 #: modules/admin/templates/sidebar-admin-menu.phtml:255
 msgid "Ban by IP"
-msgstr ""
+msgstr "Blokir IP"
 
 #: modules/admin/includes/ipban.php:29
 #: modules/admin/includes/ipban.php:186
 #: modules/admin/includes/ipban.php:210
 msgid "Add Ban"
-msgstr ""
+msgstr "Tambahkan blokir"
 
 #: modules/admin/includes/ipban.php:40
 #: modules/admin/includes/ipban.php:84
@@ -1120,21 +1120,21 @@ msgstr ""
 #: modules/admin/includes/search_ip.php:72
 #: modules/admin/includes/search_ip.php:81
 msgid "Invalid IP"
-msgstr ""
+msgstr "IP tidak valid"
 
 #: modules/admin/includes/ipban.php:59
 #: modules/admin/includes/search_ip.php:48
 msgid "First IP is entered incorrectly"
-msgstr ""
+msgstr "IP pertama yang dimasukkan salah"
 
 #: modules/admin/includes/ipban.php:67
 #: modules/admin/includes/search_ip.php:56
 msgid "Second IP is entered incorrectly"
-msgstr ""
+msgstr "IP kedua yang dimasukkan salah"
 
 #: modules/admin/includes/ipban.php:108
 msgid "Address you entered conflicts with other who in the database"
-msgstr ""
+msgstr "Alamat yang Anda masukkan konflik dengan yang lain di dalam basis data"
 
 #: modules/admin/includes/ipban.php:118
 #: modules/admin/includes/ipban.php:169
@@ -1142,7 +1142,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:316
 #: modules/admin/includes/ipban.php:387
 msgid "Redirect"
-msgstr ""
+msgstr "Mengarahkan"
 
 #: modules/admin/includes/ipban.php:122
 #: modules/admin/includes/ipban.php:173
@@ -1151,7 +1151,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:391
 #: modules/admin/templates/access.phtml:115
 msgid "Registration"
-msgstr ""
+msgstr "Registrasi"
 
 #: modules/admin/includes/ipban.php:126
 #: modules/admin/includes/ipban.php:177
@@ -1159,11 +1159,11 @@ msgstr ""
 #: modules/admin/includes/ipban.php:324
 #: modules/admin/includes/ipban.php:395
 msgid "Block"
-msgstr ""
+msgstr "Blokir"
 
 #: modules/admin/includes/ipban.php:145
 msgid "Ban impossible. Your own IP address in the range"
-msgstr ""
+msgstr "Blokir tidak berhasil. IP Anda masuk dalam jangkauan"
 
 #: modules/admin/includes/ipban.php:154
 msgid "Ban range address"
@@ -1175,86 +1175,86 @@ msgstr ""
 
 #: modules/admin/includes/ipban.php:162
 msgid "Ban IP address"
-msgstr ""
+msgstr "Ban alamat IP"
 
 #: modules/admin/includes/ipban.php:165
 #: modules/admin/includes/ipban.php:201
 #: modules/admin/includes/ipban.php:312
 msgid "Ban type"
-msgstr ""
+msgstr "Jenis Ban"
 
 #: modules/admin/includes/ipban.php:169
 #: modules/admin/includes/ipban.php:205
 msgid "Redirect URL"
-msgstr ""
+msgstr "Mengarahkan ulang URL"
 
 #: modules/admin/includes/ipban.php:180
 #: modules/admin/includes/ipban.php:208
 #: modules/admin/includes/ipban.php:331
 msgid "Reason"
-msgstr ""
+msgstr "Alasan"
 
 #: modules/admin/includes/ipban.php:180
 #: modules/admin/includes/ipban.php:331
 msgid "Not specified"
-msgstr ""
+msgstr "Tidak ditentukan"
 
 #: modules/admin/includes/ipban.php:187
 msgid "Please, check up correctness of the input data"
-msgstr ""
+msgstr "Silakan periksa ulang yang anda masukan"
 
 #: modules/admin/includes/ipban.php:199
 #: modules/admin/includes/ipban.php:360
 msgid "IP address"
-msgstr ""
+msgstr "Alamat IP"
 
 #: modules/admin/includes/ipban.php:207
 msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
+msgstr "Jika Ban mengarakan, kemudian menentukan URL"
 
 #: modules/admin/includes/ipban.php:211
 msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
+msgstr "Contoh:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. Akan dilarang dari seluruh subnet, dimulai dengan alamat 0 dan diakhiri dengan 255"
 
 #: modules/admin/includes/ipban.php:266
 msgid "Are you sure you wan to unban all IP?"
-msgstr ""
+msgstr "Apakah anda yakin anda ingin membatalkan ban semua IP?"
 
 #: modules/admin/includes/ipban.php:267
 msgid "Perform"
-msgstr ""
+msgstr "Tampilkan"
 
 #: modules/admin/includes/ipban.php:274
 msgid "Ban details"
-msgstr ""
+msgstr "Rincian ban"
 
 #: modules/admin/includes/ipban.php:304
 msgid "This address not in the database"
-msgstr ""
+msgstr "Alamat ini tidak ada dalam database"
 
 #: modules/admin/includes/ipban.php:332
 msgid "Who applied the ban?"
-msgstr ""
+msgstr "Siapa yang menerapkan ban?"
 
 #: modules/admin/includes/ipban.php:333
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: modules/admin/includes/ipban.php:334
 msgid "Time"
-msgstr ""
+msgstr "Waktu"
 
 #: modules/admin/includes/ipban.php:335
 msgid "Delete Ban"
-msgstr ""
+msgstr "Hapus Blokir"
 
 #: modules/admin/includes/ipban.php:346
 msgid "Ban has been successfully removed"
-msgstr ""
+msgstr "Ban berhasil dihapus"
 
 #: modules/admin/includes/ipban.php:349
 msgid "re you sure to remove ban?"
-msgstr ""
+msgstr "Apakah anda yakin untuk menghapus Ban?"
 
 #: modules/admin/includes/ipban.php:358
 #: modules/admin/includes/ipban.php:362
@@ -1262,31 +1262,31 @@ msgstr ""
 #: modules/admin/includes/search_ip.php:38
 #: modules/admin/templates/sidebar-admin-menu.phtml:51
 msgid "Search"
-msgstr ""
+msgstr "Cari"
 
 #: modules/admin/includes/ipban.php:363
 msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
+msgstr "Masukkan alamat tunggal, masker dan rentang tidak diperbolehkan"
 
 #: modules/admin/includes/ipban.php:404
 msgid "Ban"
-msgstr ""
+msgstr "Blokir"
 
 #: modules/admin/includes/ipban.php:415
 msgid "Unban all IP"
-msgstr ""
+msgstr "Unban semua IP"
 
 #: modules/admin/includes/karma.php:32
 msgid "Karma is cleared"
-msgstr ""
+msgstr "Karma dibersihkan"
 
 #: modules/admin/includes/karma.php:34
 msgid "You really want to clear the Karma?"
-msgstr ""
+msgstr "Anda benar-benar ingin menghapus Karma?"
 
 #: modules/admin/includes/karma.php:35
 msgid "Clear"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/admin/includes/karma.php:40
 #: modules/admin/templates/sidebar-admin-menu.phtml:114
@@ -1295,200 +1295,200 @@ msgstr ""
 
 #: modules/admin/includes/karma.php:69
 msgid "Voices per day"
-msgstr ""
+msgstr "Suara perhari"
 
 #: modules/admin/includes/karma.php:71
 msgid "Restriction for vote"
-msgstr ""
+msgstr "Pembatasan suara"
 
 #: modules/admin/includes/karma.php:72
 msgid "Forum posts"
-msgstr ""
+msgstr "Posting di forum"
 
 #: modules/admin/includes/karma.php:73
 msgid "Stay on site"
-msgstr ""
+msgstr "Tinggal di situs"
 
 #: modules/admin/includes/karma.php:74
 msgid "Hours"
-msgstr ""
+msgstr "Jam"
 
 #: modules/admin/includes/karma.php:76
 msgid "General Settings"
-msgstr ""
+msgstr "Setelan Umum"
 
 #: modules/admin/includes/karma.php:77
 msgid "Switch module ON"
-msgstr ""
+msgstr "Beralih modul ON"
 
 #: modules/admin/includes/karma.php:78
 msgid "Forbid to vote for the administration"
-msgstr ""
+msgstr "Melarang suara untuk administrasi"
 
 #: modules/admin/includes/karma.php:80
 msgid "Clear Karma"
-msgstr ""
+msgstr "Menghapus Karma"
 
 #: modules/admin/includes/languages.php:32
 #: modules/admin/templates/languages.phtml:17
 msgid "Default language"
-msgstr ""
+msgstr "Bahasa bawaan"
 
 #: modules/admin/includes/news.php:18
 msgid "News on the mainpage"
-msgstr ""
+msgstr "Berita di mainpage"
 
 #: modules/admin/includes/news.php:52
 msgid "Appearance"
-msgstr ""
+msgstr "Tampilan"
 
 #: modules/admin/includes/news.php:53
 msgid "Title + Text"
-msgstr ""
+msgstr "Judul + Teks"
 
 #: modules/admin/includes/news.php:55
 msgid "Text"
-msgstr ""
+msgstr "Teks"
 
 #: modules/admin/includes/news.php:56
 msgid "Not to show"
-msgstr ""
+msgstr "Bukan untuk menunjukkan"
 
 #: modules/admin/includes/news.php:57
 msgid "Line breaks"
-msgstr ""
+msgstr "Jeda baris"
 
 #: modules/admin/includes/news.php:59
 msgid "bbCode Tags"
-msgstr ""
+msgstr "Tag bbCode"
 
 #: modules/admin/includes/news.php:60
 #: modules/admin/includes/usr_del.php:123
 #: modules/admin/templates/access.phtml:72
 #: modules/admin/templates/access.phtml:95
 msgid "Comments"
-msgstr ""
+msgstr "Komentar"
 
 #: modules/admin/includes/news.php:61
 msgid "Text size"
-msgstr ""
+msgstr "Ukuran Teks"
 
 #: modules/admin/includes/news.php:63
 msgid "Quantity of news"
-msgstr ""
+msgstr "Kuantitas berita"
 
 #: modules/admin/includes/news.php:64
 msgid "How many days to show?"
-msgstr ""
+msgstr "Berapa hari untuk menampilkan?"
 
 #: modules/admin/includes/news.php:66
 msgid "Reset Settings"
-msgstr ""
+msgstr "Atur Ulang Pengaturan"
 
 #: modules/admin/includes/reg.php:22
 msgid "Registration confirmation"
-msgstr ""
+msgstr "Konfirmasi Pendaftaran"
 
 #: modules/admin/includes/reg.php:34
 #: modules/admin/includes/reg.php:40
 msgid "Registration is confirmed"
-msgstr ""
+msgstr "Pendaftaran dikonfirmasi"
 
 #: modules/admin/includes/reg.php:58
 #: modules/admin/includes/usr_del.php:115
 msgid "User deleted"
-msgstr ""
+msgstr "Pengguna sudah dihapus"
 
 #: modules/admin/includes/reg.php:64
 msgid "All unconfirmed registrations were removed"
-msgstr ""
+msgstr "Semua pendaftaran dalam konfirmasi dihapus"
 
 #: modules/admin/includes/reg.php:80
 msgid "All unconfirmed registrations with selected IP were deleted"
-msgstr ""
+msgstr "Hapus semua pendaftaran yang belum dikonfirmasi dengan alamat IP"
 
 #: modules/admin/includes/reg.php:103
 msgid "Approve"
-msgstr ""
+msgstr "Terima"
 
 #: modules/admin/includes/reg.php:105
 msgid "Remove IP"
-msgstr ""
+msgstr "Hapus IP"
 
 #: modules/admin/includes/reg.php:135
 msgid "Confirm all"
-msgstr ""
+msgstr "Konfirmasi semua"
 
 #: modules/admin/includes/search_ip.php:30
 msgid "Actual IP"
-msgstr ""
+msgstr "IP sebenarnya"
 
 #: modules/admin/includes/search_ip.php:31
 msgid "IP history"
-msgstr ""
+msgstr "Riwayat IP"
 
 #: modules/admin/includes/search_ip.php:34
 msgid "Search IP"
-msgstr ""
+msgstr "Pencarian IP"
 
 #: modules/admin/includes/search_ip.php:94
 msgid "Search results"
-msgstr ""
+msgstr "Hasil pencarian"
 
 #: modules/admin/includes/search_ip.php:132
 msgid "At your request, nothing found"
-msgstr ""
+msgstr "Berdasarkan permintaan Anda, tidak ditemukan"
 
 #: modules/admin/includes/search_ip.php:144
 msgid "New Search"
-msgstr ""
+msgstr "Pencarian baru"
 
 #: modules/admin/includes/search_ip.php:152
 msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
+msgstr "<b>Contoh query:</b><br><span class=\"red\">10.5.7.1</span> - Cari untuk single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - cari range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Cari mask. Akan menemukan semua alamat subnet dimulai dengan 0 dan diakhiri dengan 255"
 
 #: modules/admin/includes/settings.php:30
 #: modules/admin/templates/sidebar-admin-menu.phtml:201
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
-msgstr ""
+msgstr "Pengaturan Sistem"
 
 #: modules/admin/includes/userlist.php:25
 msgid "List of Users"
-msgstr ""
+msgstr "Daftar Pengguna"
 
 #: modules/admin/includes/usr_clean.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:98
 msgid "Database cleanup"
-msgstr ""
+msgstr "Pembersihan basis data"
 
 #: modules/admin/includes/usr_clean.php:69
 msgid "Inactive profiles deleted"
-msgstr ""
+msgstr "Profil nonaktif dihapus"
 
 #: modules/admin/includes/usr_clean.php:83
 msgid "Inactive profiles"
-msgstr ""
+msgstr "Profil nonaktif"
 
 #: modules/admin/includes/usr_clean.php:84
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr ""
+msgstr "Kategori ini meliputi profil, tercatat lebih dari 6 bulan yang lalu, dengan tanggal kunjungan terakhir selama lebih dari 5 bulan yang lalu dan dengan nol aktivitas.<br>Situs dapat dengan aman menghapus mereka."
 
 #: modules/admin/includes/usr_del.php:39
 msgid "You cannot delete higher administration"
-msgstr ""
+msgstr "Anda tidak dapat menghapus administrasi yang lebih tinggi"
 
 #: modules/admin/includes/usr_del.php:42
 msgid "User does not exists"
-msgstr ""
+msgstr "Pengguna tidak ada"
 
 #: modules/admin/includes/usr_del.php:71
 msgid "Delete user"
-msgstr ""
+msgstr "Hapus pengguna"
 
 #: modules/admin/includes/usr_del.php:120
 msgid "Cleaning activities"
-msgstr ""
+msgstr "Aktivitas pembersihan"
 
 #: modules/admin/includes/usr_del.php:127
 #: modules/admin/templates/access.phtml:15
@@ -1498,15 +1498,15 @@ msgstr ""
 
 #: modules/admin/includes/usr_del.php:128
 msgid "All threads and posts created by the user go in the hidden state"
-msgstr ""
+msgstr "Semua thread dan posting yang dibuat oleh pengguna pergi dalam keadaan tersembunyi"
 
 #: modules/admin/includes/usr_del.php:131
 msgid "Are you sure that you want to delete this user?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus pengguna ini?"
 
 #: modules/admin/templates/access.phtml:5
 msgid "Permissions"
-msgstr ""
+msgstr "Perizinan"
 
 #: modules/admin/templates/access.phtml:19
 #: modules/admin/templates/access.phtml:41
@@ -1515,7 +1515,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:105
 #: modules/admin/templates/access.phtml:119
 msgid "Access is allowed"
-msgstr ""
+msgstr "Akses diizinkan"
 
 #: modules/admin/templates/access.phtml:23
 #: modules/admin/templates/access.phtml:45
@@ -1523,91 +1523,91 @@ msgstr ""
 #: modules/admin/templates/access.phtml:86
 #: modules/admin/templates/access.phtml:109
 msgid "Only for authorized"
-msgstr ""
+msgstr "Hanya untuk yang diizinkan"
 
 #: modules/admin/templates/access.phtml:27
 msgid "Read only"
-msgstr ""
+msgstr "Hanya Baca"
 
 #: modules/admin/templates/access.phtml:37
 msgid "Guestbook"
-msgstr ""
+msgstr "Buku Tamu"
 
 #: modules/admin/templates/access.phtml:55
 msgid "Library"
-msgstr ""
+msgstr "Perpustakaan"
 
 #: modules/admin/templates/access.phtml:78
 msgid "Downloads"
-msgstr ""
+msgstr "Unduhan"
 
 #: modules/admin/templates/access.phtml:101
 msgid "Community"
-msgstr ""
+msgstr "Komunitas"
 
 #: modules/admin/templates/access.phtml:123
 msgid "With moderation"
-msgstr ""
+msgstr "Dengan moderasi"
 
 #: modules/admin/templates/access.phtml:133
 msgid "Administrators always have access to all closed modules and comments"
-msgstr ""
+msgstr "Pengurus memiliki akses ke semua modul yang ditutup dan komentar"
 
 #: modules/admin/templates/languages.phtml:12
 msgid "Descriptions have been updated successfully"
-msgstr ""
+msgstr "Deskripsi telah berhasil diperbarui"
 
 #: modules/admin/templates/languages.phtml:29
 msgid "Update List"
-msgstr ""
+msgstr "Perbarui daftar"
 
 #: modules/admin/templates/settings.phtml:21
 msgid "Common Settings"
-msgstr ""
+msgstr "Pengaturan umum"
 
 #: modules/admin/templates/settings.phtml:23
 msgid "Web site address without the slash at the end"
-msgstr ""
+msgstr "Alamat situs web tanpa garis miring di akhir"
 
 #: modules/admin/templates/settings.phtml:27
 msgid "Site copyright"
-msgstr ""
+msgstr "Copyright situs"
 
 #: modules/admin/templates/settings.phtml:31
 msgid "Site Email"
-msgstr ""
+msgstr "E-mail situs"
 
 #: modules/admin/templates/settings.phtml:35
 msgid "Max. file size"
-msgstr ""
+msgstr "Max. Ukuran file"
 
 #: modules/admin/templates/settings.phtml:40
 msgid "Gzip compression"
-msgstr ""
+msgstr "Gzip kompresi"
 
 #: modules/admin/templates/settings.phtml:44
 msgid "Time shift"
-msgstr ""
+msgstr "Pergeseran waktu"
 
 #: modules/admin/templates/settings.phtml:50
 msgid "System Time"
-msgstr ""
+msgstr "Sistem waktu"
 
 #: modules/admin/templates/settings.phtml:55
 msgid "META tags"
-msgstr ""
+msgstr "META tag"
 
 #: modules/admin/templates/settings.phtml:57
 msgid "Keywords"
-msgstr ""
+msgstr "Kata kunci"
 
 #: modules/admin/templates/settings.phtml:66
 msgid "Themes"
-msgstr ""
+msgstr "Tema"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:60
 msgid "On registration"
-msgstr ""
+msgstr "Pada pendaftaran"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:106
 msgid "Antiflood"
@@ -1615,31 +1615,31 @@ msgstr ""
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:128
 msgid "Modules"
-msgstr ""
+msgstr "Modul"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:153
 msgid "News"
-msgstr ""
+msgstr "Berita"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:184
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:209
 msgid "Update Smilies"
-msgstr ""
+msgstr "Perbarui Smile"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:217
 msgid "Language Settings"
-msgstr ""
+msgstr "Pengaturan bahasa"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:230
 msgid "Security"
-msgstr ""
+msgstr "Keamanan"
 
 #: modules/admin/templates/userlist.phtml:13
 msgid "Nickname"
-msgstr ""
+msgstr "Nama pengguna"
 
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
