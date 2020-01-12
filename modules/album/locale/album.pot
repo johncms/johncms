@@ -409,10 +409,6 @@ msgstr ""
 msgid "Add to Profile"
 msgstr ""
 
-#: modules/album/templates/users.phtml:53
-msgid "Total:"
-msgstr ""
-
 #: modules/album/templates/user_row.phtml:34
 msgid "album"
 msgid_plural "albums"
@@ -422,3 +418,7 @@ msgstr[0] ""
 msgid "photo"
 msgid_plural "photos"
 msgstr[0] ""
+
+#: modules/album/templates/users.phtml:53
+msgid "Total:"
+msgstr ""

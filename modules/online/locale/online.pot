@@ -38,11 +38,12 @@ msgstr ""
 msgid "Who is online?"
 msgstr ""
 
-#: modules/online/index.php:51
+#: modules/online/index.php:55
+#: modules/online/index.php:63
 msgid "Online"
 msgstr ""
 
-#: modules/online/index.php:53
+#: modules/online/index.php:57
 msgid "For registered users only"
 msgstr ""
 

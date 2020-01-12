@@ -27,6 +27,8 @@ msgstr ""
 #: modules/admin/includes/forum.php:760
 #: modules/admin/includes/forum.php:777
 #: modules/admin/includes/forum.php:782
+#: modules/admin/includes/ip_whois.php:18
+#: modules/admin/includes/ip_whois.php:124
 #: modules/admin/includes/ipban.php:133
 #: modules/admin/includes/ipban.php:189
 #: modules/admin/includes/ipban.php:213
@@ -35,8 +37,6 @@ msgstr ""
 #: modules/admin/includes/ipban.php:370
 #: modules/admin/includes/ipban.php:418
 #: modules/admin/includes/ipban.php:424
-#: modules/admin/includes/ip_whois.php:18
-#: modules/admin/includes/ip_whois.php:124
 #: modules/admin/includes/karma.php:40
 #: modules/admin/includes/karma.php:81
 #: modules/admin/includes/karma.php:84
@@ -44,19 +44,12 @@ msgstr ""
 #: modules/admin/includes/news.php:18
 #: modules/admin/includes/news.php:68
 #: modules/admin/includes/news.php:71
-#: modules/admin/includes/reg.php:22
-#: modules/admin/includes/reg.php:138
-#: modules/admin/includes/reg.php:144
-#: modules/admin/includes/search_ip.php:34
-#: modules/admin/includes/search_ip.php:144
-#: modules/admin/includes/search_ip.php:153
-#: modules/admin/includes/search_ip.php:159
 #: modules/admin/includes/settings.php:29
-#: modules/admin/includes/userlist.php:24
 #: modules/admin/includes/usr_clean.php:22
 #: modules/admin/includes/usr_clean.php:93
 #: modules/admin/includes/usr_del.php:71
 #: modules/admin/includes/usr_del.php:144
+#: modules/admin/index.php:48
 #: modules/admin/templates/access.phtml:2
 #: modules/admin/templates/access.phtml:5
 #: modules/admin/templates/index.phtml:1
@@ -98,8 +91,6 @@ msgstr ""
 #: modules/admin/includes/forum.php:737
 #: modules/admin/includes/ipban.php:132
 #: modules/admin/includes/ipban.php:405
-#: modules/admin/includes/reg.php:122
-#: modules/admin/includes/search_ip.php:135
 #: modules/admin/includes/usr_clean.php:85
 #: modules/admin/templates/userlist.phtml:28
 msgid "Total"
@@ -137,9 +128,9 @@ msgstr ""
 #: modules/admin/includes/forum.php:236
 #: modules/admin/includes/forum.php:340
 #: modules/admin/includes/ip_whois.php:117
-#: modules/admin/includes/reg.php:28
-#: modules/admin/includes/reg.php:46
-#: modules/admin/includes/reg.php:83
+#: modules/admin/includes/reg.php:35
+#: modules/admin/includes/reg.php:77
+#: modules/admin/includes/reg.php:144
 #: modules/admin/includes/usr_del.php:45
 msgid "Wrong data"
 msgstr ""
@@ -155,6 +146,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:218
 #: modules/admin/includes/forum.php:333
 #: modules/admin/includes/forum.php:452
+#: modules/admin/includes/ip_whois.php:121
 #: modules/admin/includes/ipban.php:41
 #: modules/admin/includes/ipban.php:133
 #: modules/admin/includes/ipban.php:193
@@ -163,8 +155,9 @@ msgstr ""
 #: modules/admin/includes/ipban.php:297
 #: modules/admin/includes/ipban.php:305
 #: modules/admin/includes/ipban.php:365
-#: modules/admin/includes/ip_whois.php:121
 #: modules/admin/includes/usr_clean.php:87
+#: modules/admin/templates/reg_list.phtml:64
+#: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
 msgstr ""
 
@@ -198,11 +191,11 @@ msgstr ""
 #: modules/admin/includes/antispy.php:207
 #: modules/admin/includes/counters.php:130
 #: modules/admin/includes/ipban.php:347
-#: modules/admin/includes/reg.php:34
-#: modules/admin/includes/reg.php:40
-#: modules/admin/includes/reg.php:58
+#: modules/admin/includes/reg.php:49
 #: modules/admin/includes/reg.php:64
-#: modules/admin/includes/reg.php:81
+#: modules/admin/includes/reg.php:95
+#: modules/admin/includes/reg.php:110
+#: modules/admin/includes/reg.php:135
 #: modules/admin/includes/usr_clean.php:69
 msgid "Continue"
 msgstr ""
@@ -372,7 +365,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:484
 #: modules/admin/includes/forum.php:509
 #: modules/admin/includes/ipban.php:350
-#: modules/admin/includes/reg.php:104
+#: modules/admin/includes/reg.php:166
 #: modules/admin/includes/usr_clean.php:86
 #: modules/admin/includes/usr_del.php:132
 msgid "Delete"
@@ -444,7 +437,7 @@ msgstr ""
 #: modules/admin/includes/forum.php:623
 #: modules/admin/includes/forum.php:734
 #: modules/admin/includes/ipban.php:401
-#: modules/admin/includes/reg.php:119
+#: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
 msgstr ""
 
@@ -453,8 +446,6 @@ msgstr ""
 #: modules/admin/includes/forum.php:632
 #: modules/admin/includes/forum.php:743
 #: modules/admin/includes/ipban.php:409
-#: modules/admin/includes/reg.php:128
-#: modules/admin/includes/search_ip.php:141
 msgid "To Page"
 msgstr ""
 
@@ -536,7 +527,7 @@ msgstr ""
 #: modules/admin/includes/languages.php:24
 #: modules/admin/includes/settings.php:22
 #: modules/admin/includes/usr_del.php:23
-#: modules/admin/index.php:47
+#: modules/admin/index.php:52
 #: modules/admin/templates/access.phtml:31
 #: modules/admin/templates/access.phtml:49
 #: modules/admin/templates/access.phtml:67
@@ -1035,7 +1026,7 @@ msgstr ""
 
 #: modules/admin/includes/forum.php:619
 #: modules/admin/includes/forum.php:731
-#: modules/admin/includes/reg.php:135
+#: modules/admin/templates/reg_list.phtml:59
 msgid "Delete all"
 msgstr ""
 
@@ -1108,18 +1099,18 @@ msgstr ""
 #: modules/admin/includes/ipban.php:227
 #: modules/admin/includes/ipban.php:286
 #: modules/admin/includes/ipban.php:296
-#: modules/admin/includes/search_ip.php:72
-#: modules/admin/includes/search_ip.php:81
+#: modules/admin/includes/search_ip.php:79
+#: modules/admin/includes/search_ip.php:86
 msgid "Invalid IP"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:59
-#: modules/admin/includes/search_ip.php:48
+#: modules/admin/includes/search_ip.php:54
 msgid "First IP is entered incorrectly"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:67
-#: modules/admin/includes/search_ip.php:56
+#: modules/admin/includes/search_ip.php:62
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
@@ -1250,7 +1241,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:358
 #: modules/admin/includes/ipban.php:362
 #: modules/admin/includes/ipban.php:415
-#: modules/admin/includes/search_ip.php:38
+#: modules/admin/templates/search_ip.phtml:41
 #: modules/admin/templates/sidebar-admin-menu.phtml:51
 msgid "Search"
 msgstr ""
@@ -1376,66 +1367,48 @@ msgstr ""
 msgid "Reset Settings"
 msgstr ""
 
-#: modules/admin/includes/reg.php:22
+#: modules/admin/includes/reg.php:21
 msgid "Registration confirmation"
 msgstr ""
 
-#: modules/admin/includes/reg.php:34
-#: modules/admin/includes/reg.php:40
+#: modules/admin/includes/reg.php:47
+#: modules/admin/includes/reg.php:62
 msgid "Registration is confirmed"
 msgstr ""
 
-#: modules/admin/includes/reg.php:58
+#: modules/admin/includes/reg.php:93
 #: modules/admin/includes/usr_del.php:115
 msgid "User deleted"
 msgstr ""
 
-#: modules/admin/includes/reg.php:64
+#: modules/admin/includes/reg.php:108
 msgid "All unconfirmed registrations were removed"
 msgstr ""
 
-#: modules/admin/includes/reg.php:80
+#: modules/admin/includes/reg.php:133
 msgid "All unconfirmed registrations with selected IP were deleted"
 msgstr ""
 
-#: modules/admin/includes/reg.php:103
+#: modules/admin/includes/reg.php:162
 msgid "Approve"
 msgstr ""
 
-#: modules/admin/includes/reg.php:105
+#: modules/admin/includes/reg.php:170
 msgid "Remove IP"
 msgstr ""
 
-#: modules/admin/includes/reg.php:135
-msgid "Confirm all"
-msgstr ""
-
-#: modules/admin/includes/search_ip.php:30
-msgid "Actual IP"
-msgstr ""
-
-#: modules/admin/includes/search_ip.php:31
-msgid "IP history"
-msgstr ""
-
-#: modules/admin/includes/search_ip.php:34
+#: modules/admin/includes/search_ip.php:29
+#: modules/admin/templates/search_ip.phtml:37
+#: modules/admin/templates/search_ip.phtml:39
 msgid "Search IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:94
-msgid "Search results"
+#: modules/admin/includes/search_ip.php:35
+msgid "Actual IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:132
-msgid "At your request, nothing found"
-msgstr ""
-
-#: modules/admin/includes/search_ip.php:144
-msgid "New Search"
-msgstr ""
-
-#: modules/admin/includes/search_ip.php:152
-msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+#: modules/admin/includes/search_ip.php:40
+msgid "IP history"
 msgstr ""
 
 #: modules/admin/includes/settings.php:30
@@ -1444,7 +1417,7 @@ msgstr ""
 msgid "System Settings"
 msgstr ""
 
-#: modules/admin/includes/userlist.php:25
+#: modules/admin/includes/userlist.php:24
 msgid "List of Users"
 msgstr ""
 
@@ -1552,6 +1525,39 @@ msgstr ""
 msgid "Update List"
 msgstr ""
 
+#: modules/admin/templates/reg_list.phtml:56
+#: modules/admin/templates/search_ip.phtml:76
+msgid "Total:"
+msgstr ""
+
+#: modules/admin/templates/reg_list.phtml:58
+msgid "Confirm all"
+msgstr ""
+
+#: modules/admin/templates/search_ip.phtml:45
+msgid "Sample queries:"
+msgstr ""
+
+#: modules/admin/templates/search_ip.phtml:46
+msgid "Search for a single address"
+msgstr ""
+
+#: modules/admin/templates/search_ip.phtml:47
+msgid "Search a range address (forbidden to use mask symbol *)"
+msgstr ""
+
+#: modules/admin/templates/search_ip.phtml:48
+msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+msgstr ""
+
+#: modules/admin/templates/search_ip.phtml:60
+msgid "At your request, nothing found"
+msgstr ""
+
+#: modules/admin/templates/search_ip.phtml:64
+msgid "Search results"
+msgstr ""
+
 #: modules/admin/templates/settings.phtml:21
 msgid "Common Settings"
 msgstr ""
@@ -1635,19 +1641,3 @@ msgstr ""
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
 msgstr ""
-
-#: modules/admin/templates/user_row.phtml:36
-#: modules/admin/templates/user_row.phtml:42
-msgid "post"
-msgid_plural "posts"
-msgstr[0] ""
-
-#: modules/admin/templates/user_row.phtml:38
-msgid "comment"
-msgid_plural "comments"
-msgstr[0] ""
-
-#: modules/admin/templates/user_row.phtml:40
-msgid "point"
-msgid_plural "points"
-msgstr[0] ""

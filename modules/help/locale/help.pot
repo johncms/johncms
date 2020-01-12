@@ -37,8 +37,8 @@ msgid "An error occurred"
 msgstr ""
 
 #: modules/help/includes/avatars.php:50
-#: modules/help/templates/avatars.phtml:48
 #: modules/help/templates/avatar_list.phtml:65
+#: modules/help/templates/avatars.phtml:48
 #: modules/help/templates/bbcode.phtml:89
 #: modules/help/templates/forum_rules.phtml:59
 #: modules/help/templates/index.phtml:34
@@ -136,8 +136,8 @@ msgstr ""
 msgid "Technology"
 msgstr ""
 
-#: modules/help/templates/avatars.phtml:34
 #: modules/help/templates/avatar_list.phtml:33
+#: modules/help/templates/avatars.phtml:34
 #: modules/help/templates/my_smiles_list.phtml:33
 #: modules/help/templates/smiles.phtml:34
 #: modules/help/templates/smiles_list.phtml:33

@@ -526,8 +526,8 @@ msgstr ""
 #: modules/downloads/templates/delete_additional.phtml:37
 #: modules/downloads/templates/delete_file.phtml:37
 #: modules/downloads/templates/edit_screen.phtml:45
-#: modules/downloads/templates/files_more.phtml:44
 #: modules/downloads/templates/file_row.phtml:32
+#: modules/downloads/templates/files_more.phtml:44
 #: modules/downloads/templates/folder_delete.phtml:35
 #: modules/downloads/templates/index.phtml:63
 msgid "Delete"
@@ -544,9 +544,9 @@ msgstr ""
 #: modules/downloads/templates/edit_additional_form.phtml:41
 #: modules/downloads/templates/edit_file_form.phtml:87
 #: modules/downloads/templates/edit_screen.phtml:67
-#: modules/downloads/templates/files_more.phtml:86
 #: modules/downloads/templates/file_upload.phtml:84
 #: modules/downloads/templates/file_upload_result.phtml:57
+#: modules/downloads/templates/files_more.phtml:86
 #: modules/downloads/templates/folder_delete.phtml:36
 #: modules/downloads/templates/folder_form.phtml:65
 #: modules/downloads/templates/import.phtml:79
@@ -559,10 +559,10 @@ msgstr ""
 #: modules/downloads/templates/edit_additional_form.phtml:35
 #: modules/downloads/templates/edit_file_form.phtml:40
 #: modules/downloads/templates/edit_file_form.phtml:41
-#: modules/downloads/templates/files_more.phtml:75
-#: modules/downloads/templates/files_more.phtml:76
 #: modules/downloads/templates/file_upload.phtml:60
 #: modules/downloads/templates/file_upload.phtml:61
+#: modules/downloads/templates/files_more.phtml:75
+#: modules/downloads/templates/files_more.phtml:76
 #: modules/downloads/templates/import.phtml:55
 #: modules/downloads/templates/import.phtml:56
 msgid "Link to download file"
@@ -571,8 +571,8 @@ msgstr ""
 #: modules/downloads/templates/edit_additional_form.phtml:40
 #: modules/downloads/templates/edit_file_form.phtml:86
 #: modules/downloads/templates/edit_screen.phtml:66
-#: modules/downloads/templates/files_more.phtml:85
 #: modules/downloads/templates/file_upload.phtml:83
+#: modules/downloads/templates/files_more.phtml:85
 #: modules/downloads/templates/folder_form.phtml:64
 #: modules/downloads/templates/import.phtml:78
 msgid "Save"
@@ -603,15 +603,72 @@ msgid "Add screenshot"
 msgstr ""
 
 #: modules/downloads/templates/edit_screen.phtml:58
-#: modules/downloads/templates/files_more.phtml:56
 #: modules/downloads/templates/file_upload.phtml:37
+#: modules/downloads/templates/files_more.phtml:56
 msgid "Choose file"
 msgstr ""
 
 #: modules/downloads/templates/edit_screen.phtml:61
-#: modules/downloads/templates/files_more.phtml:59
 #: modules/downloads/templates/file_upload.phtml:40
+#: modules/downloads/templates/files_more.phtml:59
 msgid "Max. Size"
+msgstr ""
+
+#: modules/downloads/templates/file_import_result.phtml:47
+msgid "Import more"
+msgstr ""
+
+#: modules/downloads/templates/file_row.phtml:31
+msgid "Accept"
+msgstr ""
+
+#: modules/downloads/templates/file_upload.phtml:46
+#: modules/downloads/templates/file_upload.phtml:47
+#: modules/downloads/templates/files_more.phtml:68
+#: modules/downloads/templates/files_more.phtml:69
+#: modules/downloads/templates/import.phtml:41
+#: modules/downloads/templates/import.phtml:42
+msgid "Save as"
+msgstr ""
+
+#: modules/downloads/templates/file_upload.phtml:49
+#: modules/downloads/templates/files_more.phtml:71
+#: modules/downloads/templates/import.phtml:44
+msgid "max. 100 characters"
+msgstr ""
+
+#: modules/downloads/templates/file_upload.phtml:53
+#: modules/downloads/templates/file_upload.phtml:54
+#: modules/downloads/templates/import.phtml:48
+#: modules/downloads/templates/import.phtml:49
+msgid "File Name"
+msgstr ""
+
+#: modules/downloads/templates/file_upload.phtml:56
+#: modules/downloads/templates/import.phtml:51
+msgid "max. 200 characters"
+msgstr ""
+
+#: modules/downloads/templates/file_upload.phtml:68
+#: modules/downloads/templates/import.phtml:63
+msgid "Choose screenshot"
+msgstr ""
+
+#: modules/downloads/templates/file_upload.phtml:79
+#: modules/downloads/templates/files_more.phtml:81
+#: modules/downloads/templates/folder_form.phtml:57
+#: modules/downloads/templates/folder_form.phtml:58
+#: modules/downloads/templates/import.phtml:74
+#: modules/downloads/templates/index.phtml:73
+msgid "Allowed extensions"
+msgstr ""
+
+#: modules/downloads/templates/file_upload_result.phtml:47
+msgid "If you pass moderation, it will be added to the Downloads"
+msgstr ""
+
+#: modules/downloads/templates/file_upload_result.phtml:56
+msgid "Upload more"
 msgstr ""
 
 #: modules/downloads/templates/files_moderation.phtml:41
@@ -637,65 +694,8 @@ msgstr ""
 msgid "Link to file"
 msgstr ""
 
-#: modules/downloads/templates/files_more.phtml:68
-#: modules/downloads/templates/files_more.phtml:69
-#: modules/downloads/templates/file_upload.phtml:46
-#: modules/downloads/templates/file_upload.phtml:47
-#: modules/downloads/templates/import.phtml:41
-#: modules/downloads/templates/import.phtml:42
-msgid "Save as"
-msgstr ""
-
-#: modules/downloads/templates/files_more.phtml:71
-#: modules/downloads/templates/file_upload.phtml:49
-#: modules/downloads/templates/import.phtml:44
-msgid "max. 100 characters"
-msgstr ""
-
 #: modules/downloads/templates/files_more.phtml:77
 msgid "Download the additional file"
-msgstr ""
-
-#: modules/downloads/templates/files_more.phtml:81
-#: modules/downloads/templates/file_upload.phtml:79
-#: modules/downloads/templates/folder_form.phtml:57
-#: modules/downloads/templates/folder_form.phtml:58
-#: modules/downloads/templates/import.phtml:74
-#: modules/downloads/templates/index.phtml:73
-msgid "Allowed extensions"
-msgstr ""
-
-#: modules/downloads/templates/file_import_result.phtml:47
-msgid "Import more"
-msgstr ""
-
-#: modules/downloads/templates/file_row.phtml:31
-msgid "Accept"
-msgstr ""
-
-#: modules/downloads/templates/file_upload.phtml:53
-#: modules/downloads/templates/file_upload.phtml:54
-#: modules/downloads/templates/import.phtml:48
-#: modules/downloads/templates/import.phtml:49
-msgid "File Name"
-msgstr ""
-
-#: modules/downloads/templates/file_upload.phtml:56
-#: modules/downloads/templates/import.phtml:51
-msgid "max. 200 characters"
-msgstr ""
-
-#: modules/downloads/templates/file_upload.phtml:68
-#: modules/downloads/templates/import.phtml:63
-msgid "Choose screenshot"
-msgstr ""
-
-#: modules/downloads/templates/file_upload_result.phtml:47
-msgid "If you pass moderation, it will be added to the Downloads"
-msgstr ""
-
-#: modules/downloads/templates/file_upload_result.phtml:56
-msgid "Upload more"
 msgstr ""
 
 #: modules/downloads/templates/folder_form.phtml:36

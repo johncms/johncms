@@ -153,6 +153,7 @@ foreach ($domainSearch as $domain => $attributes) {
         $phpScanner->setDefaultDomain($domain);
         $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
         $files = recursiveScan($dir, '/^.+\.(?:phtml|php)$/i');
+        sort($files, SORT_STRING);
 
         foreach ($files as $file) {
             $phpScanner->scanFile(str_replace('\\', '/', $file));
