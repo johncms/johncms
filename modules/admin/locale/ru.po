@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2020-01-12 17:09\n"
+"PO-Revision-Date: 2020-01-12 19:48\n"
 
 #: modules/admin/includes/adminlist.php:20
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
@@ -1528,7 +1528,7 @@ msgstr "У Администратора всегда остается досту
 #: modules/admin/templates/reg_list.phtml:56
 #: modules/admin/templates/search_ip.phtml:76
 msgid "Total:"
-msgstr ""
+msgstr "Всего:"
 
 #: modules/admin/templates/languages.phtml:12
 msgid "Descriptions have been updated successfully"
@@ -1544,19 +1544,19 @@ msgstr "Подтвердить всех"
 
 #: modules/admin/templates/search_ip.phtml:45
 msgid "Sample queries:"
-msgstr ""
+msgstr "Примеры запросов:"
 
 #: modules/admin/templates/search_ip.phtml:46
 msgid "Search for a single address"
-msgstr ""
+msgstr "Искать один адрес"
 
 #: modules/admin/templates/search_ip.phtml:47
 msgid "Search a range address (forbidden to use mask symbol *)"
-msgstr ""
+msgstr "Поиск в диапазоне адресов (запрещено использовать символ маски *)"
 
 #: modules/admin/templates/search_ip.phtml:48
 msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
+msgstr "Поиск по маске. Будут найдены все адреса подсети, начиная с 0 и заканчивая 255"
 
 #: modules/admin/templates/search_ip.phtml:60
 msgid "At your request, nothing found"
