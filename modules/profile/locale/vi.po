@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 15:59\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: modules/profile/includes/activity.php:18
 #: modules/profile/templates/index.phtml:207
@@ -346,7 +346,7 @@ msgstr "Tải lên hình đại diện"
 #: modules/profile/includes/images.php:44
 #: modules/profile/includes/images.php:96
 msgid "The weight of the file exceeds"
-msgstr "Dung lượng của tập tin vượt quá quy định"
+msgstr ""
 
 #: modules/profile/includes/images.php:66
 msgid "The avatar is successfully uploaded"
@@ -380,19 +380,19 @@ msgstr "Thành viên"
 
 #: modules/profile/includes/index.php:23
 msgid "Forum moderator"
-msgstr "Người Điều Hành"
+msgstr ""
 
 #: modules/profile/includes/index.php:24
 msgid "Download moderator"
-msgstr "Moder download"
+msgstr ""
 
 #: modules/profile/includes/index.php:25
 msgid "Library moderator"
-msgstr "Moder library"
+msgstr ""
 
 #: modules/profile/includes/index.php:26
 msgid "Super moderator"
-msgstr "SuperMod"
+msgstr ""
 
 #: modules/profile/includes/index.php:27
 #: modules/profile/templates/edit.phtml:283
@@ -428,7 +428,7 @@ msgstr "Lịch sử của IP"
 
 #: modules/profile/includes/ip.php:20
 msgid "Administration"
-msgstr "Quản trị"
+msgstr ""
 
 #: modules/profile/includes/karma.php:15
 #: modules/profile/includes/karma.php:20
@@ -458,7 +458,7 @@ msgstr "ngày"
 
 #: modules/profile/includes/karma.php:59
 msgid "You can vote for single user just one time for 24 hours"
-msgstr "Bạn có thể bình chọn cho một người duy nhất mỗi 24 giờ"
+msgstr ""
 
 #: modules/profile/includes/karma.php:65
 msgid "You have exceeded the limit of votes. New voices will be added %s"
@@ -591,7 +591,7 @@ msgstr "Người dùng này không tồn tại"
 #: modules/profile/templates/restore_password_result.phtml:3
 #: modules/profile/templates/restore_password_result.phtml:10
 msgid "Restore password"
-msgstr "Khôi phục mật khẩu"
+msgstr ""
 
 #: modules/profile/skl.php:64
 msgid "The required fields are not filled"
@@ -664,7 +664,7 @@ msgstr "Mật khẩu thay đổi thành công.<br>New mật khẩu gửi đến 
 #: modules/profile/templates/activity.phtml:53
 #: modules/profile/templates/karma.phtml:88
 msgid "Total:"
-msgstr "Tổng cộng:"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:52
 #: modules/profile/templates/restore_password.phtml:12
@@ -726,15 +726,15 @@ msgstr "Ngày sinh (ngày.tháng.năm)"
 
 #: modules/profile/templates/edit.phtml:155
 msgid "Day"
-msgstr "Ngày"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:160
 msgid "Month"
-msgstr "Tháng"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:164
 msgid "Year"
-msgstr "Năm"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:170
 #: modules/profile/templates/edit.phtml:176
@@ -762,7 +762,7 @@ msgstr "Điện thọai"
 #: modules/profile/templates/edit.phtml:202
 #: modules/profile/templates/index.phtml:174
 msgid "E-mail"
-msgstr "E-mail"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:207
 msgid "Show in Profile"
@@ -776,7 +776,7 @@ msgstr "Cảnh báo! Viết e-mail của bạn một cách chính xác. Mật kh
 #: modules/profile/templates/edit.phtml:219
 #: modules/profile/templates/index.phtml:183
 msgid "Skype"
-msgstr "Skype"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:224
 #: modules/profile/templates/edit.phtml:230
@@ -828,7 +828,7 @@ msgstr "Moder library"
 
 #: modules/profile/templates/edit.phtml:277
 msgid "Super Moderator"
-msgstr "SuperMod"
+msgstr ""
 
 #: modules/profile/templates/edit.phtml:296
 #: modules/profile/templates/forum_settings.phtml:79
@@ -889,7 +889,7 @@ msgstr "Phục hồi cài đặt"
 
 #: modules/profile/templates/images.phtml:54
 msgid "Choose file"
-msgstr "Chọn tập tin"
+msgstr ""
 
 #: modules/profile/templates/images.phtml:57
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
@@ -897,16 +897,16 @@ msgstr "Cho phép dạng hình ảnh: thử hình ảnh. Kích thước không n
 
 #: modules/profile/templates/index.phtml:46
 msgid "User Agent"
-msgstr "User Agent"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:48
 msgid "Ip"
-msgstr "Ip"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:49
 #: modules/profile/templates/index.phtml:52
 msgid "Whois"
-msgstr "Whois"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:61
 msgid "Write"
@@ -914,24 +914,24 @@ msgstr "Gửi tin nhắn"
 
 #: modules/profile/templates/index.phtml:64
 msgid "Block"
-msgstr "Chặn"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:66
 msgid "Unblock"
-msgstr "Bỏ chặn"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:70
 msgid "Actions"
-msgstr "Các hành động"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:79
 msgid "Edit profile"
-msgstr "Chỉnh sửa hồ sơ"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:93
 msgid "vote"
 msgid_plural "votes"
-msgstr[0] "bình chọn"
+msgstr[0] ""
 
 #: modules/profile/templates/index.phtml:113
 #: modules/profile/templates/karma_vote.phtml:70
@@ -948,11 +948,11 @@ msgstr "Sinh Nhật"
 
 #: modules/profile/templates/index.phtml:138
 msgid "Gender"
-msgstr "Giới tính"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:145
 msgid "Not specified"
-msgstr "Chưa xác định"
+msgstr ""
 
 #: modules/profile/templates/index.phtml:177
 msgid "hidden"
@@ -1058,7 +1058,7 @@ msgstr "Mã xác minh"
 
 #: modules/profile/templates/restore_password.phtml:33
 msgid "Enter verification code"
-msgstr "Nhập mã xác minh"
+msgstr ""
 
 #: modules/profile/templates/restore_password.phtml:46
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
