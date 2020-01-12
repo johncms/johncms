@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['search_ip' => true]]));
+?>
+<?php if (! empty($data['filters'])): ?>
+    <div class="btn-group mb-3" role="group">
+        <?php foreach ($data['filters'] as $filter): ?>
+            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="/admin/search_ip/" method="post" class="mb-3">
+            <label for="search"><?= __('Search IP') ?></label>
+            <div class="input-group">
+                <input type="text" name="search" id="search" class="form-control" placeholder="<?= __('Search IP') ?>" value="<?= $data['search_query'] ?>">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
+                </div>
+            </div>
+            <div class="text-muted mb-2 small">
+                <b><?= __('Sample queries:') ?></b><br>
+                <div><span class="font-weight-bold">10.5.7.1</span> &mdash; <?= __('Search for a single address') ?></div>
+                <div><span class="font-weight-bold">10.5.7.1-10.5.7.100</span> &mdash; <?= __('Search a range address (forbidden to use mask symbol *)') ?></div>
+                <div><span class="font-weight-bold">10.5.*.*</span> &mdash; <?= __('Search mask. Will be found all subnet addresses starting with 0 and ending with 255') ?></div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php if (empty($data['items']) && ! empty($data['search_query'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('At your request, nothing found'),
+        ]
+    ) ?>
+<?php elseif (! empty($data['items'])): ?>
+    <h2><?= __('Search results') ?></h2>
+    <?php foreach ($data['items'] as $item): ?>
+        <?= $this->fetch('admin::user_row', ['item' => $item]) ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+<div class="mt-4">
+    <?php if ($data['total'] > $user->config->kmess): ?>
+        <div>
+            <?= $data['pagination'] ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($data['total'] > 0): ?>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php endif; ?>
+</div>
+<div>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+</div>
