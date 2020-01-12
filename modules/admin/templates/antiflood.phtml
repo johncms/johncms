@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['antiflood' => true]]));
+?>
+
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+        <?php if (! empty($data['success_message'])): ?>
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['success_message'],
+                ]
+            ) ?>
+        <?php endif; ?>
+        <div class="card shadow border-0">
+            <form action="<?= $data['form_action'] ?>" method="post">
+                <div class="card-body">
+
+                    <h3><?= __('Operation mode') ?></h3>
+
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="mode" value="3" id="mode3" <?= $data['set_af']['mode'] === 3 ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="mode3"><?= __('Day') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="mode" value="4" id="mode4" <?= $data['set_af']['mode'] === 4 ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="mode4"><?= __('Night') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="mode" value="2" id="mode2" <?= $data['set_af']['mode'] === 2 ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="mode2"><?= __('Day / Night') ?></label>
+                        <div class="text-muted small"><?= __('Automatic change from day to night mode, according to specified time set') ?></div>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="mode" value="1" id="mode1" <?= $data['set_af']['mode'] === 1 ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="mode1"><?= __('Adaptive') ?></label>
+                        <div class="text-muted small"><?= __('If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;') ?></div>
+                    </div>
+
+                    <h3 class="mt-3"><?= __('Time limit') ?></h3>
+                    <div class="form-group">
+                        <label for="day"><?= __('Day') ?></label>
+                        <input type="text" name="day" class="form-control" id="day" value="<?= $data['set_af']['day'] ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="night"><?= __('Night') ?></label>
+                        <input type="text" name="night" class="form-control" id="night" value="<?= $data['set_af']['night'] ?>">
+                    </div>
+                    <h3 class="mt-3"><?= __('Day mode') ?></h3>
+                    <div class="form-group">
+                        <label for="dayfrom"><?= __('Beginning of day') ?></label>
+                        <input type="text" name="dayfrom" class="form-control" id="dayfrom" value="<?= $data['set_af']['dayfrom'] ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="dayto"><?= __('End of day') ?></label>
+                        <input type="text" name="dayto" class="form-control" id="dayto" value="<?= $data['set_af']['dayto'] ?>">
+                    </div>
+
+                    <div class="mt-3">
+                        <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
+                        <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                        <a href="?act=settings&amp;mod=forum&amp;reset" class="btn btn-danger float-right"><?= __('Reset Settings') ?></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
