@@ -30,17 +30,11 @@
                         <a class="user-login mr-2"><?= $item['name'] ?></a>
                     <?php endif; ?>
                 </div>
-                <?php if (! empty($active_tab)): ?>
-                    <div>
-                        <?php if ($active_tab === 'guest'): ?>
-                            <?= $item['postguest'] ?> <?= n__('post', 'posts', $item['postguest']) ?>
-                        <?php elseif ($active_tab === 'comm'): ?>
-                            <?= $item['komm'] ?> <?= n__('comment', 'comments', $item['komm']) ?>
-                        <?php elseif ($active_tab === 'karma'): ?>
-                            <?= $item['karma'] ?> <?= n__('point', 'points', $item['karma']) ?>
-                        <?php elseif ($active_tab === 'forum'): ?>
-                            <?= $item['postforum'] ?> <?= n__('post', 'posts', $item['postforum']) ?>
-                        <?php endif; ?>
+                <?php if (! empty($item['buttons'])): ?>
+                    <div class="mt-3">
+                        <?php foreach ($item['buttons'] as $button): ?>
+                            <a href="<?= $button['url'] ?>" class="btn btn-outline-primary btn-sm"><?= $button['name'] ?></a>
+                        <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
             </div>

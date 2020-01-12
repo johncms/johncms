@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 use Johncms\NavChain;
 
@@ -21,7 +21,6 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var NavChain $navChain */
 $navChain = di(NavChain::class);
-$navChain->add(__('Admin Panel'), '../');
 $navChain->add(__('List of Users'));
 
 $sort = isset($_GET['sort']) ? trim($_GET['sort']) : '';
