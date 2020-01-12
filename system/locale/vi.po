@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 15:59\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: themes/default/templates/system/app/old_notifications.phtml:9
 msgid "Ban"
@@ -150,7 +150,7 @@ msgstr "Trích dẫn"
 
 #: themes/default/templates/system/pages/comments_list.phtml:92
 msgid "Edited"
-msgstr "Chỉnh sửa"
+msgstr ""
 
 #: themes/default/templates/system/pages/comments_list.phtml:96
 msgid "Edit"
