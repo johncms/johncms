@@ -45,7 +45,7 @@ switch ($mod) {
                 'title'         => $title,
                 'type'          => 'alert-success',
                 'message'       => __('Registration is confirmed'),
-                'back_url'      => '?act=reg',
+                'back_url'      => '/admin/reg/',
                 'back_url_name' => __('Continue'),
             ]
         );
@@ -60,7 +60,7 @@ switch ($mod) {
                 'title'         => $title,
                 'type'          => 'alert-success',
                 'message'       => __('Registration is confirmed'),
-                'back_url'      => '?act=reg',
+                'back_url'      => '/admin/reg/',
                 'back_url_name' => __('Continue'),
             ]
         );
@@ -91,7 +91,7 @@ switch ($mod) {
                 'title'         => $title,
                 'type'          => 'alert-success',
                 'message'       => __('User deleted'),
-                'back_url'      => '?act=reg',
+                'back_url'      => '/admin/reg/',
                 'back_url_name' => __('Continue'),
             ]
         );
@@ -106,7 +106,7 @@ switch ($mod) {
                 'title'         => $title,
                 'type'          => 'alert-success',
                 'message'       => __('All unconfirmed registrations were removed'),
-                'back_url'      => '?act=reg',
+                'back_url'      => '/admin/reg/',
                 'back_url_name' => __('Continue'),
             ]
         );
@@ -131,7 +131,7 @@ switch ($mod) {
                     'title'         => $title,
                     'type'          => 'alert-success',
                     'message'       => __('All unconfirmed registrations with selected IP were deleted'),
-                    'back_url'      => '?act=reg',
+                    'back_url'      => '/admin/reg/',
                     'back_url_name' => __('Continue'),
                 ]
             );
@@ -158,15 +158,15 @@ switch ($mod) {
             while ($res = $req->fetch()) {
                 $res['buttons'] = [
                     [
-                        'url'  => '?act=reg&amp;mod=approve&amp;id=' . $res['id'],
+                        'url'  => '?mod=approve&amp;id=' . $res['id'],
                         'name' => __('Approve'),
                     ],
                     [
-                        'url'  => '?act=reg&amp;mod=del&amp;id=' . $res['id'],
+                        'url'  => '?mod=del&amp;id=' . $res['id'],
                         'name' => __('Delete'),
                     ],
                     [
-                        'url'  => '?act=reg&amp;mod=delip&amp;id=' . $res['id'],
+                        'url'  => '?mod=delip&amp;id=' . $res['id'],
                         'name' => __('Remove IP'),
                     ],
                 ];
@@ -176,10 +176,10 @@ switch ($mod) {
                     $res['user_profile_link'] = '/profile/?user=' . $res['id'];
                 }
                 $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-                $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+                $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
                 $res['ip'] = long2ip($res['ip']);
                 $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
-                $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . $res['ip_via_proxy'];
+                $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
                 $items[] = $res;
             }
         }
@@ -187,7 +187,7 @@ switch ($mod) {
         $data['back_url'] = '/admin/';
 
         $data['total'] = $total;
-        $data['pagination'] = $tools->displayPagination('?act=reg&amp;', $start, $total, $user->config->kmess);
+        $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
         $data['items'] = $items ?? [];
 
         echo $view->render(
