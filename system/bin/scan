@@ -14,103 +14,103 @@ use Gettext\Generator\PoGenerator;
 use Gettext\Translations;
 
 $domainSearch = [
-        'admin' => [
-                'target' => 'modules/admin/locale',
-                'scan'   => [
-                        'modules/admin',
-                ]
-        ],
-
-        'album' => [
-                'target' => 'modules/album/locale',
-                'scan'   => [
-                        'modules/album',
-                ]
-        ],
-
-        'community' => [
-                'target' => 'modules/community/locale',
-                'scan'   => [
-                        'modules/community',
-                ]
-        ],
-
-        'downloads' => [
-                'target' => 'modules/downloads/locale',
-                'scan'   => [
-                        'modules/downloads',
-                ]
-        ],
-
-        'forum' => [
-                'target' => 'modules/forum/locale',
-                'scan'   => [
-                        'modules/forum',
-                ]
-        ],
-
-        'guestbook' => [
-                'target' => 'modules/guestbook/locale',
-                'scan'   => [
-                        'modules/guestbook',
-                ]
-        ],
-
-        'help' => [
-                'target' => 'modules/help/locale',
-                'scan'   => [
-                        'modules/help',
-                ]
-        ],
-
-        'homepage' => [
-                'target' => 'modules/homepage/locale',
-                'scan'   => [
-                        'modules/homepage',
-                ]
-        ],
-
-        'library' => [
-                'target' => 'modules/library/locale',
-                'scan'   => [
-                        'modules/library',
-                ]
-        ],
-
-        'mail' => [
-                'target' => 'modules/mail/locale',
-                'scan'   => [
-                        'modules/mail',
-                ]
-        ],
-
-        'news' => [
-                'target' => 'modules/news/locale',
-                'scan'   => [
-                        'modules/news',
-                ]
-        ],
-
-        'online' => [
-                'target' => 'modules/online/locale',
-                'scan'   => [
-                        'modules/online',
-                ]
-        ],
-
-        'profile' => [
-                'target' => 'modules/profile/locale',
-                'scan'   => [
-                        'modules/profile',
-                ]
-        ],
-
-        'registration' => [
-                'target' => 'modules/registration/locale',
-                'scan'   => [
-                        'modules/registration',
-                ]
-        ],
+//        'admin' => [
+//                'target' => 'modules/admin/locale',
+//                'scan'   => [
+//                        'modules/admin',
+//                ]
+//        ],
+//
+//        'album' => [
+//                'target' => 'modules/album/locale',
+//                'scan'   => [
+//                        'modules/album',
+//                ]
+//        ],
+//
+//        'community' => [
+//                'target' => 'modules/community/locale',
+//                'scan'   => [
+//                        'modules/community',
+//                ]
+//        ],
+//
+//        'downloads' => [
+//                'target' => 'modules/downloads/locale',
+//                'scan'   => [
+//                        'modules/downloads',
+//                ]
+//        ],
+//
+//        'forum' => [
+//                'target' => 'modules/forum/locale',
+//                'scan'   => [
+//                        'modules/forum',
+//                ]
+//        ],
+//
+//        'guestbook' => [
+//                'target' => 'modules/guestbook/locale',
+//                'scan'   => [
+//                        'modules/guestbook',
+//                ]
+//        ],
+//
+//        'help' => [
+//                'target' => 'modules/help/locale',
+//                'scan'   => [
+//                        'modules/help',
+//                ]
+//        ],
+//
+//        'homepage' => [
+//                'target' => 'modules/homepage/locale',
+//                'scan'   => [
+//                        'modules/homepage',
+//                ]
+//        ],
+//
+//        'library' => [
+//                'target' => 'modules/library/locale',
+//                'scan'   => [
+//                        'modules/library',
+//                ]
+//        ],
+//
+//        'mail' => [
+//                'target' => 'modules/mail/locale',
+//                'scan'   => [
+//                        'modules/mail',
+//                ]
+//        ],
+//
+//        'news' => [
+//                'target' => 'modules/news/locale',
+//                'scan'   => [
+//                        'modules/news',
+//                ]
+//        ],
+//
+//        'online' => [
+//                'target' => 'modules/online/locale',
+//                'scan'   => [
+//                        'modules/online',
+//                ]
+//        ],
+//
+//        'profile' => [
+//                'target' => 'modules/profile/locale',
+//                'scan'   => [
+//                        'modules/profile',
+//                ]
+//        ],
+//
+//        'registration' => [
+//                'target' => 'modules/registration/locale',
+//                'scan'   => [
+//                        'modules/registration',
+//                ]
+//        ],
 
         'system' => [
                 'target' => 'system/locale',
@@ -120,6 +120,7 @@ $domainSearch = [
                         'modules/notifications',
                         'modules/redirect',
                         'system/src',
+                        'themes/default/templates',
                 ],
         ],
 ];
@@ -142,7 +143,7 @@ foreach ($domainSearch as $domain => $attributes) {
     foreach ($attributes['scan'] as $dir) {
         $phpScanner = new PhpScanner(Translations::create($domain));
         $phpScanner->setDefaultDomain($domain);
-        $phpScanner->setFunctions(['_t' => 'gettext', '_p' => 'ngettext']);
+        $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
         $files = recursiveScan($dir, '/^.+\.(?:phtml|php)$/i');
 
         foreach ($files as $file) {

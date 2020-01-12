@@ -1,6 +1,6 @@
 <?php $this->layout('system::layout/default', [
-    'title'      => d__('system', 'Login'),
-    'page_title' => d__('system', 'Login'),
+    'title'      => __('Login'),
+    'page_title' => __('Login'),
 ]) ?>
 <div class="row">
     <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-5">
@@ -9,14 +9,14 @@
                 <div class="card-body">
                     <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
                     <div class="form-group">
-                        <label for="code"><?= d__('system', 'Enter verification code') ?></label>
+                        <label for="code"><?= __('Enter verification code') ?></label>
                         <input type="text"
                                class="form-control"
                                maxlength="5"
                                name="code"
                                id="code"
                                required
-                               placeholder="<?= d__('system', 'Verification code') ?>"
+                               placeholder="<?= __('Verification code') ?>"
                         >
                     </div>
                     <?php if ($id): ?>
@@ -25,7 +25,7 @@
                     <input type="hidden" name="n" value="<?= $user_login ?>"/>
                     <input type="hidden" name="p" value="<?= $user_pass ?>"/>
                     <input type="hidden" name="mem" value="<?= $remember ?>"/>
-                    <input type="submit" name="login" value="<?= d__('system', 'Continue') ?>" class="btn btn-primary"/>
+                    <input type="submit" name="login" value="<?= __('Continue') ?>" class="btn btn-primary"/>
                 </div>
             </form>
         </div>

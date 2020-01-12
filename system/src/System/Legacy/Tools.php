@@ -593,7 +593,7 @@ class Tools
         $day = intdiv($var, 86400);
 
         return $var >= 86400
-            ? $day . ' ' . dd__('system', 'Day', 'Days', $day)
+            ? $day . ' ' . dn__('system', 'Day', 'Days', $day)
             : date('G:i:s', mktime(0, 0, $var));
     }
 
