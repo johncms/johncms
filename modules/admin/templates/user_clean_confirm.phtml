@@ -21,6 +21,7 @@ $this->layout(
         'page_title' => $page_title,
     ]
 );
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['usr_clean' => true]]));
 ?>
 
 <div class="row">

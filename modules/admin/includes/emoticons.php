@@ -76,15 +76,13 @@ if (file_put_contents(CACHE_PATH . 'smilies-list.cache', serialize($smileys))) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'     => $title,
-            'type'      => 'alert-danger',
-            'message'   => $message,
-            'back_url'  => '/admin/',
-            'admin'     => true,
-            'menu_item' => 'emoticons',
+            'title'       => $title,
+            'type'        => 'alert-danger',
+            'message'     => $message,
+            'back_url'    => '/admin/',
+            'admin'       => true,
+            'menu_item'   => 'emoticons',
+            'parent_menu' => 'sys_menu',
         ]
     );
 }
-
-
-

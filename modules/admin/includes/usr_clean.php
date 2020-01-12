@@ -73,6 +73,9 @@ switch ($mod) {
                 'message'       => __('Inactive profiles deleted'),
                 'back_url'      => '/admin/usr_clean/',
                 'back_url_name' => __('Continue'),
+                'admin'         => true,
+                'menu_item'     => 'usr_clean',
+                'parent_menu'   => 'usr_menu',
             ]
         );
         break;
