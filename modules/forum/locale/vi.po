@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 16:00\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: modules/forum/includes/addfile.php:27
 #: modules/forum/includes/addfile.php:29
@@ -136,7 +136,7 @@ msgstr "Lỗi dữ liệu"
 #: modules/forum/includes/addfile.php:180
 #: modules/forum/includes/addfile.php:181
 msgid "Add file"
-msgstr "Thêm tập tin"
+msgstr ""
 
 #: modules/forum/includes/addfile.php:61
 msgid "The time allotted for the file upload has expired"
@@ -323,7 +323,7 @@ msgstr "Bạn chưa nhập thông điệp"
 
 #: modules/forum/includes/editpost.php:317
 msgid "Error"
-msgstr "Lỗi"
+msgstr ""
 
 #: modules/forum/includes/editvote.php:28
 #: modules/forum/includes/editvote.php:29
@@ -338,7 +338,7 @@ msgstr "Sửa Thăm dò"
 #: modules/forum/includes/editvote.php:61
 #: modules/forum/includes/editvote.php:62
 msgid "Delete Answer"
-msgstr "Xóa câu trả lời"
+msgstr ""
 
 #: modules/forum/includes/editvote.php:104
 msgid "Poll changed"
@@ -346,7 +346,7 @@ msgstr "Thay đổi bỏ phiếu"
 
 #: modules/forum/includes/file.php:45
 msgid "Download file"
-msgstr "Tải tập tin"
+msgstr ""
 
 #: modules/forum/includes/file.php:47
 msgid "File does not exist"
@@ -362,11 +362,11 @@ msgstr "Ứng dụng Java"
 
 #: modules/forum/includes/files.php:24
 msgid "SIS"
-msgstr "SIS"
+msgstr ""
 
 #: modules/forum/includes/files.php:25
 msgid "txt"
-msgstr "txt"
+msgstr ""
 
 #: modules/forum/includes/files.php:26
 msgid "Pictures"
@@ -382,7 +382,7 @@ msgstr "Video"
 
 #: modules/forum/includes/files.php:29
 msgid "MP3"
-msgstr "MP3"
+msgstr ""
 
 #: modules/forum/includes/files.php:30
 msgid "Other"
@@ -416,7 +416,7 @@ msgstr "Các Tập Tin Mới"
 #: modules/forum/includes/who.php:56
 #: modules/forum/includes/who.php:232
 msgid "Guest"
-msgstr "Khách"
+msgstr ""
 
 #: modules/forum/includes/files.php:174
 msgid "List of sections"
@@ -457,7 +457,7 @@ msgstr ""
 #: modules/forum/includes/massdel.php:72
 #: modules/forum/includes/massdel.php:73
 msgid "Delete posts"
-msgstr "Xóa bài viết"
+msgstr ""
 
 #: modules/forum/includes/massdel.php:41
 msgid "Marked posts are deleted"
@@ -552,7 +552,7 @@ msgstr "Bài viết đã tồn tại"
 #: modules/forum/includes/per.php:117
 #: modules/forum/includes/per.php:118
 msgid "Move topic"
-msgstr "Di chuyển chủ đề"
+msgstr ""
 
 #: modules/forum/includes/ren.php:26
 #: modules/forum/includes/ren.php:42
@@ -561,7 +561,7 @@ msgstr "Di chuyển chủ đề"
 #: modules/forum/includes/ren.php:94
 #: modules/forum/includes/ren.php:95
 msgid "Rename topic"
-msgstr "Đổi tên chủ đề"
+msgstr ""
 
 #: modules/forum/includes/say.php:34
 #: modules/forum/includes/say.php:97
@@ -579,7 +579,7 @@ msgstr "Đổi tên chủ đề"
 #: modules/forum/includes/say.php:461
 #: modules/forum/includes/say.php:579
 msgid "New message"
-msgstr "Tin nhắn mới"
+msgstr ""
 
 #: modules/forum/includes/say.php:116
 #: modules/forum/includes/say.php:359
@@ -588,7 +588,7 @@ msgstr "Bạn không thể gửi bài viết trong một chủ đề đã đóng
 
 #: modules/forum/includes/say.php:327
 msgid "Message not found"
-msgstr "Không tìm thấy tin nhắn"
+msgstr ""
 
 #: modules/forum/includes/say.php:373
 msgid "You can not reply to your own message"
