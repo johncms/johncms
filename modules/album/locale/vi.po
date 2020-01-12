@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 16:59\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: modules/album/includes/comments.php:36
 #: modules/album/index.php:92
@@ -49,7 +49,7 @@ msgstr "Lỗi dữ liệu"
 
 #: modules/album/includes/delete.php:29
 msgid "Delete album:"
-msgstr "Xóa album:"
+msgstr ""
 
 #: modules/album/includes/delete.php:56
 msgid "Album deleted"
@@ -150,7 +150,7 @@ msgstr "Tải Ảnh lên"
 
 #: modules/album/includes/image_upload.php:56
 msgid "The weight of the file exceeds"
-msgstr "Dung lượng của tập tin vượt quá quy định"
+msgstr ""
 
 #: modules/album/includes/image_upload.php:131
 msgid "Image uploaded"
@@ -158,23 +158,23 @@ msgstr "Ảnh tải lên"
 
 #: modules/album/includes/list.php:75
 msgid "Your albums"
-msgstr "Album của bạn"
+msgstr ""
 
 #: modules/album/includes/list.php:78
 msgid "User albums:"
-msgstr "Danh sách album của người dùng:"
+msgstr ""
 
 #: modules/album/includes/list.php:79
 msgid "User albums"
-msgstr "Danh sách album của người dùng"
+msgstr ""
 
 #: modules/album/includes/show.php:61
 msgid "View photo"
-msgstr "Xem ảnh"
+msgstr ""
 
 #: modules/album/includes/show.php:81
 msgid "Access denied"
-msgstr "Truy cập bị từ chối"
+msgstr ""
 
 #: modules/album/includes/show.php:83
 #: modules/album/templates/show_one.phtml:158
@@ -228,7 +228,7 @@ msgstr "Ảnh mới"
 
 #: modules/album/includes/users.php:22
 msgid "List of users"
-msgstr "Danh sách người dùng"
+msgstr ""
 
 #: modules/album/includes/users.php:41
 msgid "All"
@@ -246,7 +246,7 @@ msgstr "Người phụ nữ"
 
 #: modules/album/includes/vote.php:84
 msgid "You cannot vote for this photo."
-msgstr "Bạn không thể bỏ phiếu cho ảnh này."
+msgstr ""
 
 #: modules/album/index.php:54
 #: modules/album/templates/index.phtml:38
@@ -259,7 +259,7 @@ msgstr "Cho người dùng đăng ký"
 
 #: modules/album/templates/add_photo.phtml:44
 msgid "Choose file"
-msgstr "Chọn tập tin"
+msgstr ""
 
 #: modules/album/templates/add_photo.phtml:47
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
@@ -308,7 +308,7 @@ msgstr "Bạn phải nhập một mật khẩu để xem album này"
 
 #: modules/album/templates/enter_password.phtml:48
 msgid "Enter"
-msgstr "Nhập"
+msgstr ""
 
 #: modules/album/templates/image_delete.phtml:35
 #: modules/album/templates/list.phtml:47
@@ -369,12 +369,12 @@ msgstr "Thêm một hình ảnh"
 #: modules/album/templates/show.phtml:58
 #: modules/album/templates/top.phtml:49
 msgid "User:"
-msgstr "Thành viên:"
+msgstr ""
 
 #: modules/album/templates/show.phtml:61
 #: modules/album/templates/top.phtml:52
 msgid "Album:"
-msgstr "Album:"
+msgstr ""
 
 #: modules/album/templates/show.phtml:125
 #: modules/album/templates/show_one.phtml:153
@@ -384,7 +384,7 @@ msgstr "Tổng số"
 
 #: modules/album/templates/show_one.phtml:51
 msgid "Photo"
-msgstr "Ảnh"
+msgstr ""
 
 #: modules/album/templates/show_one.phtml:63
 msgid "Views"
@@ -400,11 +400,11 @@ msgstr "Ngày"
 
 #: modules/album/templates/show_one.phtml:67
 msgid "User"
-msgstr "Thành viên"
+msgstr ""
 
 #: modules/album/templates/show_one.phtml:70
 msgid "Album"
-msgstr "Album"
+msgstr ""
 
 #: modules/album/templates/show_one.phtml:111
 msgid "Download"
@@ -412,7 +412,7 @@ msgstr "Tải"
 
 #: modules/album/templates/show_one.phtml:127
 msgid "Actions"
-msgstr "Các hành động"
+msgstr ""
 
 #: modules/album/templates/show_one.phtml:133
 msgid "Add to Profile"
@@ -421,14 +421,14 @@ msgstr "Thêm vào hồ sơ cá nhân"
 #: modules/album/templates/user_row.phtml:34
 msgid "album"
 msgid_plural "albums"
-msgstr[0] "album"
+msgstr[0] ""
 
 #: modules/album/templates/user_row.phtml:35
 msgid "photo"
 msgid_plural "photos"
-msgstr[0] "ảnh"
+msgstr[0] ""
 
 #: modules/album/templates/users.phtml:53
 msgid "Total:"
-msgstr "Tổng cộng:"
+msgstr ""
 
