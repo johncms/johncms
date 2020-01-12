@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2020-01-12 15:59\n"
+"PO-Revision-Date: 2020-01-12 20:43\n"
 
 #: modules/registration/index.php:41
 #: modules/registration/templates/index.phtml:2
@@ -69,7 +69,7 @@ msgstr "Chọn Nickname"
 
 #: modules/registration/templates/index.phtml:30
 msgid "Username"
-msgstr "Tên tài khoản"
+msgstr ""
 
 #: modules/registration/templates/index.phtml:36
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
@@ -116,7 +116,7 @@ msgstr "Mã xác minh"
 
 #: modules/registration/templates/index.phtml:85
 msgid "Enter verification code"
-msgstr "Nhập mã xác minh"
+msgstr ""
 
 #: modules/registration/templates/index.phtml:99
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
