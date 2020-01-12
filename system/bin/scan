@@ -1,6 +1,14 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 chdir(dirname(__DIR__, 2));
 
 if (is_file($a = 'system/vendor/autoload.php') === true) {
@@ -14,103 +22,103 @@ use Gettext\Generator\PoGenerator;
 use Gettext\Translations;
 
 $domainSearch = [
-//        'admin' => [
-//                'target' => 'modules/admin/locale',
-//                'scan'   => [
-//                        'modules/admin',
-//                ]
-//        ],
-//
-//        'album' => [
-//                'target' => 'modules/album/locale',
-//                'scan'   => [
-//                        'modules/album',
-//                ]
-//        ],
-//
-//        'community' => [
-//                'target' => 'modules/community/locale',
-//                'scan'   => [
-//                        'modules/community',
-//                ]
-//        ],
-//
-//        'downloads' => [
-//                'target' => 'modules/downloads/locale',
-//                'scan'   => [
-//                        'modules/downloads',
-//                ]
-//        ],
-//
-//        'forum' => [
-//                'target' => 'modules/forum/locale',
-//                'scan'   => [
-//                        'modules/forum',
-//                ]
-//        ],
-//
-//        'guestbook' => [
-//                'target' => 'modules/guestbook/locale',
-//                'scan'   => [
-//                        'modules/guestbook',
-//                ]
-//        ],
-//
-//        'help' => [
-//                'target' => 'modules/help/locale',
-//                'scan'   => [
-//                        'modules/help',
-//                ]
-//        ],
-//
-//        'homepage' => [
-//                'target' => 'modules/homepage/locale',
-//                'scan'   => [
-//                        'modules/homepage',
-//                ]
-//        ],
-//
-//        'library' => [
-//                'target' => 'modules/library/locale',
-//                'scan'   => [
-//                        'modules/library',
-//                ]
-//        ],
-//
-//        'mail' => [
-//                'target' => 'modules/mail/locale',
-//                'scan'   => [
-//                        'modules/mail',
-//                ]
-//        ],
-//
-//        'news' => [
-//                'target' => 'modules/news/locale',
-//                'scan'   => [
-//                        'modules/news',
-//                ]
-//        ],
-//
-//        'online' => [
-//                'target' => 'modules/online/locale',
-//                'scan'   => [
-//                        'modules/online',
-//                ]
-//        ],
-//
-//        'profile' => [
-//                'target' => 'modules/profile/locale',
-//                'scan'   => [
-//                        'modules/profile',
-//                ]
-//        ],
-//
-//        'registration' => [
-//                'target' => 'modules/registration/locale',
-//                'scan'   => [
-//                        'modules/registration',
-//                ]
-//        ],
+        'admin' => [
+                'target' => 'modules/admin/locale',
+                'scan'   => [
+                        'modules/admin',
+                ]
+        ],
+
+        'album' => [
+                'target' => 'modules/album/locale',
+                'scan'   => [
+                        'modules/album',
+                ]
+        ],
+
+        'community' => [
+                'target' => 'modules/community/locale',
+                'scan'   => [
+                        'modules/community',
+                ]
+        ],
+
+        'downloads' => [
+                'target' => 'modules/downloads/locale',
+                'scan'   => [
+                        'modules/downloads',
+                ]
+        ],
+
+        'forum' => [
+                'target' => 'modules/forum/locale',
+                'scan'   => [
+                        'modules/forum',
+                ]
+        ],
+
+        'guestbook' => [
+                'target' => 'modules/guestbook/locale',
+                'scan'   => [
+                        'modules/guestbook',
+                ]
+        ],
+
+        'help' => [
+                'target' => 'modules/help/locale',
+                'scan'   => [
+                        'modules/help',
+                ]
+        ],
+
+        'homepage' => [
+                'target' => 'modules/homepage/locale',
+                'scan'   => [
+                        'modules/homepage',
+                ]
+        ],
+
+        'library' => [
+                'target' => 'modules/library/locale',
+                'scan'   => [
+                        'modules/library',
+                ]
+        ],
+
+        'mail' => [
+                'target' => 'modules/mail/locale',
+                'scan'   => [
+                        'modules/mail',
+                ]
+        ],
+
+        'news' => [
+                'target' => 'modules/news/locale',
+                'scan'   => [
+                        'modules/news',
+                ]
+        ],
+
+        'online' => [
+                'target' => 'modules/online/locale',
+                'scan'   => [
+                        'modules/online',
+                ]
+        ],
+
+        'profile' => [
+                'target' => 'modules/profile/locale',
+                'scan'   => [
+                        'modules/profile',
+                ]
+        ],
+
+        'registration' => [
+                'target' => 'modules/registration/locale',
+                'scan'   => [
+                        'modules/registration',
+                ]
+        ],
 
         'system' => [
                 'target' => 'system/locale',
