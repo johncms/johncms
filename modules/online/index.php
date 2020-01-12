@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
@@ -34,8 +35,11 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 
+/** @var NavChain $nav_chain */
+$nav_chain = di(NavChain::class);
+
 // Регистрируем Namespace для шаблонов модуля
-$view->addFolder('users', __DIR__ . '/templates/');
+$view->addFolder('online', __DIR__ . '/templates/');
 
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('online', __DIR__ . '/locale');
@@ -55,6 +59,9 @@ if (! $config['active'] && ! $user->isValid()) {
     );
     exit;
 }
+
+$title = __('Online');
+$nav_chain->add($title, '');
 
 // Переключаем режимы работы
 $actions = [
