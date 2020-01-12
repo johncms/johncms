@@ -78,11 +78,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                         <label for="dayto"><?= __('End of day') ?></label>
                         <input type="text" name="dayto" class="form-control" id="dayto" value="<?= $data['set_af']['dayto'] ?>">
                     </div>
-
                     <div class="mt-3">
                         <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
-                        <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
-                        <a href="?act=settings&amp;mod=forum&amp;reset" class="btn btn-danger float-right"><?= __('Reset Settings') ?></a>
+                        <a href="/admin/" class="btn btn-secondary"><?= __('Cancel') ?></a>
                     </div>
                 </div>
             </form>
