@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,16 +8,18 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$title = __('Database cleanup');
+$nav_chain->add($title);
 
-echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Database cleanup') . '</div>';
 
 switch ($mod) {
     case 1:
@@ -65,8 +65,16 @@ switch ($mod) {
             '
             );
         }
-
-        echo '<div class="rmenu"><p>' . __('Inactive profiles deleted') . '</p><p><a href="./">' . __('Continue') . '</a></p></div>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => __('Inactive profiles deleted'),
+                'back_url'      => '/admin/usr_clean/',
+                'back_url_name' => __('Continue'),
+            ]
+        );
         break;
 
     default:
@@ -78,19 +86,19 @@ switch ($mod) {
             AND `postguest` < '10'
             AND `komm` < '10'"
         )->fetchColumn();
-        echo '<div class="menu">' .
-            '<form action="?act=usr_clean&amp;mod=1" method="post">' .
-            '<p><h3>' . __('Inactive profiles') . '</h3>'
-            . __('This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.') . '</p>' .
-            '<p>' . __('Total') . ': <b>' . $total . '</b></p>' .
-            '<p><input type="submit" name="submit" value="' . __('Delete') . '"/></p></form></div>' .
-            '<div class="phdr"><a href="./">' . __('Back') . '</a></div>';
-}
 
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => __('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);
+        $data = [
+            'form_action' => '?mod=1',
+            'total'       => $total,
+            'back_url'    => '/admin/',
+        ];
+
+        echo $view->render(
+            'admin::user_clean_confirm',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
+}
