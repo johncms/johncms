@@ -26,7 +26,7 @@ $generator = new ArrayGenerator();
 $search = ['', '../modules/*/'];
 
 foreach ($search as $dir) {
-    $files = glob($dir . 'locale/*/*.po');
+    $files = glob($dir . 'locale/*.po');
 
     foreach ($files as $file) {
         $file = pathinfo($file);
@@ -34,6 +34,7 @@ foreach ($search as $dir) {
         /** @var Gettext\Translations $translations */
         $translations = $loader->loadFile($file . '.po');
         $generator->generateFile($translations, $file . '.lng');
+        unlink($file . '.po');
     }
 }
 
