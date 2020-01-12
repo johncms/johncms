@@ -64,7 +64,6 @@ msgstr ""
 
 #: modules/admin/includes/ads.php:34
 #: modules/admin/includes/ads.php:85
-#: modules/admin/includes/antiflood.php:100
 #: modules/admin/includes/counters.php:120
 #: modules/admin/includes/counters.php:140
 #: modules/admin/includes/counters.php:158
@@ -82,8 +81,8 @@ msgstr ""
 #: modules/admin/includes/ipban.php:297
 #: modules/admin/includes/ipban.php:305
 #: modules/admin/includes/ipban.php:365
-#: modules/admin/includes/usr_clean.php:87
 #: modules/admin/templates/admin_list.phtml:50
+#: modules/admin/templates/ban_panel.phtml:68
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
@@ -124,7 +123,7 @@ msgstr ""
 #: modules/admin/includes/reg.php:95
 #: modules/admin/includes/reg.php:110
 #: modules/admin/includes/reg.php:135
-#: modules/admin/includes/usr_clean.php:69
+#: modules/admin/includes/usr_clean.php:75
 msgid "Continue"
 msgstr ""
 
@@ -173,7 +172,7 @@ msgid "Number of hits for link existence which will be automatically removed fro
 msgstr ""
 
 #: modules/admin/includes/ads.php:198
-#: modules/admin/includes/karma.php:75
+#: modules/admin/templates/karma.phtml:64
 msgid "Days"
 msgstr ""
 
@@ -284,21 +283,12 @@ msgstr ""
 #: modules/admin/includes/ads.php:320
 #: modules/admin/includes/ads.php:432
 #: modules/admin/includes/ads.php:438
-#: modules/admin/includes/antiflood.php:23
-#: modules/admin/includes/antiflood.php:103
 #: modules/admin/includes/antispy.php:219
 #: modules/admin/includes/antispy.php:228
 #: modules/admin/includes/antispy.php:233
-#: modules/admin/includes/ban_panel.php:62
-#: modules/admin/includes/ban_panel.php:68
-#: modules/admin/includes/ban_panel.php:112
-#: modules/admin/includes/ban_panel.php:118
 #: modules/admin/includes/counters.php:306
 #: modules/admin/includes/counters.php:327
 #: modules/admin/includes/counters.php:332
-#: modules/admin/includes/emoticons.php:21
-#: modules/admin/includes/emoticons.php:64
-#: modules/admin/includes/emoticons.php:69
 #: modules/admin/includes/forum.php:760
 #: modules/admin/includes/forum.php:777
 #: modules/admin/includes/forum.php:782
@@ -312,16 +302,11 @@ msgstr ""
 #: modules/admin/includes/ipban.php:370
 #: modules/admin/includes/ipban.php:418
 #: modules/admin/includes/ipban.php:424
-#: modules/admin/includes/karma.php:40
-#: modules/admin/includes/karma.php:81
-#: modules/admin/includes/karma.php:84
 #: modules/admin/includes/languages.php:31
 #: modules/admin/includes/news.php:18
 #: modules/admin/includes/news.php:68
 #: modules/admin/includes/news.php:71
 #: modules/admin/includes/settings.php:29
-#: modules/admin/includes/usr_clean.php:22
-#: modules/admin/includes/usr_clean.php:93
 #: modules/admin/includes/usr_del.php:71
 #: modules/admin/includes/usr_del.php:144
 #: modules/admin/index.php:48
@@ -349,8 +334,8 @@ msgstr ""
 #: modules/admin/includes/forum.php:509
 #: modules/admin/includes/ipban.php:350
 #: modules/admin/includes/reg.php:166
-#: modules/admin/includes/usr_clean.php:86
 #: modules/admin/includes/usr_del.php:132
+#: modules/admin/templates/user_clean_confirm.phtml:38
 msgid "Delete"
 msgstr ""
 
@@ -365,8 +350,12 @@ msgstr ""
 #: modules/admin/includes/ipban.php:213
 #: modules/admin/includes/ipban.php:268
 #: modules/admin/includes/ipban.php:351
-#: modules/admin/includes/karma.php:36
 #: modules/admin/includes/usr_del.php:139
+#: modules/admin/templates/amnesty.phtml:45
+#: modules/admin/templates/antiflood.phtml:83
+#: modules/admin/templates/karma.phtml:82
+#: modules/admin/templates/karma_clean_confirm.phtml:35
+#: modules/admin/templates/user_clean_confirm.phtml:39
 msgid "Cancel"
 msgstr ""
 
@@ -415,12 +404,12 @@ msgid "Remains"
 msgstr ""
 
 #: modules/admin/includes/ads.php:412
-#: modules/admin/includes/ban_panel.php:99
 #: modules/admin/includes/forum.php:489
 #: modules/admin/includes/forum.php:623
 #: modules/admin/includes/forum.php:734
 #: modules/admin/includes/ipban.php:401
 #: modules/admin/templates/admin_list.phtml:32
+#: modules/admin/templates/ban_panel.phtml:42
 #: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
 msgstr ""
@@ -428,100 +417,43 @@ msgstr ""
 #: modules/admin/includes/ads.php:415
 #: modules/admin/includes/antispy.php:162
 #: modules/admin/includes/antispy.php:196
-#: modules/admin/includes/ban_panel.php:102
-#: modules/admin/includes/emoticons.php:63
+#: modules/admin/includes/emoticons.php:61
 #: modules/admin/includes/forum.php:626
 #: modules/admin/includes/forum.php:737
 #: modules/admin/includes/ipban.php:132
 #: modules/admin/includes/ipban.php:405
-#: modules/admin/includes/usr_clean.php:85
+#: modules/admin/templates/user_clean_confirm.phtml:33
 #: modules/admin/templates/userlist.phtml:28
 msgid "Total"
 msgstr ""
 
 #: modules/admin/includes/ads.php:427
-#: modules/admin/includes/ban_panel.php:106
 #: modules/admin/includes/forum.php:632
 #: modules/admin/includes/forum.php:743
 #: modules/admin/includes/ipban.php:409
 msgid "To Page"
 msgstr ""
 
-#: modules/admin/includes/antiflood.php:23
+#: modules/admin/includes/antiflood.php:22
 msgid "Antiflood Settings"
 msgstr ""
 
-#: modules/admin/includes/antiflood.php:74
-#: modules/admin/includes/karma.php:60
+#: modules/admin/includes/antiflood.php:76
+msgid "ERROR: Can not write system.local.php"
+msgstr ""
+
+#: modules/admin/includes/antiflood.php:82
+#: modules/admin/includes/karma.php:79
 #: modules/admin/includes/news.php:43
 #: modules/admin/templates/access.phtml:10
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
 msgstr ""
 
-#: modules/admin/includes/antiflood.php:83
-msgid "Operation mode"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:84
-#: modules/admin/includes/antiflood.php:86
-#: modules/admin/includes/antiflood.php:93
-msgid "Day"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:85
-#: modules/admin/includes/antiflood.php:86
-#: modules/admin/includes/antiflood.php:94
-msgid "Night"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:87
-msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:89
-msgid "Adaptive"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:90
-msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:92
-msgid "Time limit"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:95
-msgid "Min. 4, max. 300 seconds"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:96
-msgid "Day mode"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:97
-msgid "Beginning of day"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:98
-msgid "End of day"
-msgstr ""
-
-#: modules/admin/includes/antiflood.php:99
-#: modules/admin/includes/counters.php:179
-#: modules/admin/includes/forum.php:450
-#: modules/admin/includes/karma.php:79
-#: modules/admin/includes/news.php:65
-#: modules/admin/templates/access.phtml:135
-#: modules/admin/templates/languages.phtml:28
-#: modules/admin/templates/settings.phtml:73
-msgid "Save"
-msgstr ""
-
 #: modules/admin/includes/antispy.php:24
 #: modules/admin/includes/counters.php:23
 #: modules/admin/includes/ipban.php:23
-#: modules/admin/includes/karma.php:25
+#: modules/admin/includes/karma.php:33
 #: modules/admin/includes/languages.php:24
 #: modules/admin/includes/settings.php:22
 #: modules/admin/includes/usr_del.php:23
@@ -610,60 +542,38 @@ msgstr ""
 msgid "Scanner menu"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:27
-msgid "Amnesty is available for supervisors only"
-msgstr ""
-
-#: modules/admin/includes/ban_panel.php:29
-#: modules/admin/includes/ban_panel.php:62
-#: modules/admin/includes/ban_panel.php:68
+#: modules/admin/includes/ban_panel.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:29
-#: modules/admin/includes/ban_panel.php:46
-#: modules/admin/includes/ban_panel.php:57
-#: modules/admin/includes/ban_panel.php:110
+#: modules/admin/includes/ban_panel.php:34
+msgid "Amnesty is available for supervisors only"
+msgstr ""
+
+#: modules/admin/includes/ban_panel.php:39
+#: modules/admin/includes/ban_panel.php:64
+#: modules/admin/templates/ban_panel.phtml:62
 msgid "Amnesty"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:37
+#: modules/admin/includes/ban_panel.php:52
 msgid "Amnesty has been successful"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:51
+#: modules/admin/includes/ban_panel.php:73
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:55
-msgid "Unban all"
-msgstr ""
-
-#: modules/admin/includes/ban_panel.php:56
-msgid "Clear Ban database"
-msgstr ""
-
-#: modules/admin/includes/ban_panel.php:59
-msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
-msgstr ""
-
-#: modules/admin/includes/ban_panel.php:69
-#: modules/admin/templates/userlist.phtml:10
-msgid "Sort"
-msgstr ""
-
-#: modules/admin/includes/ban_panel.php:72
-#: modules/admin/includes/ban_panel.php:74
+#: modules/admin/includes/ban_panel.php:95
 msgid "Term"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:72
-#: modules/admin/includes/ban_panel.php:74
+#: modules/admin/includes/ban_panel.php:100
 msgid "Violations"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:93
+#: modules/admin/includes/ban_panel.php:123
 msgid "Violations history"
 msgstr ""
 
@@ -738,6 +648,18 @@ msgstr ""
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
 msgstr ""
 
+#: modules/admin/includes/counters.php:179
+#: modules/admin/includes/forum.php:450
+#: modules/admin/includes/news.php:65
+#: modules/admin/templates/access.phtml:135
+#: modules/admin/templates/amnesty.phtml:44
+#: modules/admin/templates/antiflood.phtml:82
+#: modules/admin/templates/karma.phtml:81
+#: modules/admin/templates/languages.phtml:28
+#: modules/admin/templates/settings.phtml:73
+msgid "Save"
+msgstr ""
+
 #: modules/admin/includes/counters.php:208
 msgid "Code for main page"
 msgstr ""
@@ -772,11 +694,11 @@ msgstr ""
 msgid "Smilies"
 msgstr ""
 
-#: modules/admin/includes/emoticons.php:58
+#: modules/admin/includes/emoticons.php:61
 msgid "Smilie cache updated successfully"
 msgstr ""
 
-#: modules/admin/includes/emoticons.php:60
+#: modules/admin/includes/emoticons.php:75
 msgid "Error updating cache"
 msgstr ""
 
@@ -1256,57 +1178,17 @@ msgstr ""
 msgid "Unban all IP"
 msgstr ""
 
-#: modules/admin/includes/karma.php:32
-msgid "Karma is cleared"
-msgstr ""
-
-#: modules/admin/includes/karma.php:34
-msgid "You really want to clear the Karma?"
-msgstr ""
-
-#: modules/admin/includes/karma.php:35
-msgid "Clear"
-msgstr ""
-
-#: modules/admin/includes/karma.php:40
+#: modules/admin/includes/karma.php:23
 #: modules/admin/templates/sidebar-admin-menu.phtml:114
 msgid "Karma"
 msgstr ""
 
-#: modules/admin/includes/karma.php:69
-msgid "Voices per day"
+#: modules/admin/includes/karma.php:43
+msgid "Karma is cleared"
 msgstr ""
 
-#: modules/admin/includes/karma.php:71
-msgid "Restriction for vote"
-msgstr ""
-
-#: modules/admin/includes/karma.php:72
-msgid "Forum posts"
-msgstr ""
-
-#: modules/admin/includes/karma.php:73
-msgid "Stay on site"
-msgstr ""
-
-#: modules/admin/includes/karma.php:74
-msgid "Hours"
-msgstr ""
-
-#: modules/admin/includes/karma.php:76
-msgid "General Settings"
-msgstr ""
-
-#: modules/admin/includes/karma.php:77
-msgid "Switch module ON"
-msgstr ""
-
-#: modules/admin/includes/karma.php:78
-msgid "Forbid to vote for the administration"
-msgstr ""
-
-#: modules/admin/includes/karma.php:80
-msgid "Clear Karma"
+#: modules/admin/includes/karma.php:45
+msgid "You really want to clear the Karma?"
 msgstr ""
 
 #: modules/admin/includes/languages.php:32
@@ -1419,21 +1301,13 @@ msgstr ""
 msgid "List of Users"
 msgstr ""
 
-#: modules/admin/includes/usr_clean.php:22
+#: modules/admin/includes/usr_clean.php:20
 #: modules/admin/templates/sidebar-admin-menu.phtml:98
 msgid "Database cleanup"
 msgstr ""
 
-#: modules/admin/includes/usr_clean.php:69
+#: modules/admin/includes/usr_clean.php:73
 msgid "Inactive profiles deleted"
-msgstr ""
-
-#: modules/admin/includes/usr_clean.php:83
-msgid "Inactive profiles"
-msgstr ""
-
-#: modules/admin/includes/usr_clean.php:84
-msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
 msgstr ""
 
 #: modules/admin/includes/usr_del.php:39
@@ -1516,9 +1390,113 @@ msgid "Administrators always have access to all closed modules and comments"
 msgstr ""
 
 #: modules/admin/templates/admin_list.phtml:46
+#: modules/admin/templates/ban_panel.phtml:59
 #: modules/admin/templates/reg_list.phtml:56
 #: modules/admin/templates/search_ip.phtml:76
 msgid "Total:"
+msgstr ""
+
+#: modules/admin/templates/amnesty.phtml:32
+msgid "Unban all"
+msgstr ""
+
+#: modules/admin/templates/amnesty.phtml:36
+msgid "Clear Ban database"
+msgstr ""
+
+#: modules/admin/templates/amnesty.phtml:40
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:42
+msgid "Operation mode"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:46
+#: modules/admin/templates/antiflood.phtml:65
+msgid "Day"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:50
+#: modules/admin/templates/antiflood.phtml:69
+msgid "Night"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:54
+msgid "Day / Night"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:55
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:59
+msgid "Adaptive"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:60
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:63
+msgid "Time limit"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:72
+msgid "Day mode"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:74
+msgid "Beginning of day"
+msgstr ""
+
+#: modules/admin/templates/antiflood.phtml:78
+msgid "End of day"
+msgstr ""
+
+#: modules/admin/templates/ban_panel.phtml:30
+#: modules/admin/templates/userlist.phtml:10
+msgid "Sort"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:43
+msgid "Voices per day"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:47
+msgid "Restriction for vote"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:50
+msgid "Forum posts"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:55
+msgid "Stay on site"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:60
+msgid "Hours"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:67
+msgid "General Settings"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:71
+msgid "Switch module ON"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:76
+msgid "Forbid to vote for the administration"
+msgstr ""
+
+#: modules/admin/templates/karma.phtml:84
+msgid "Clear Karma"
+msgstr ""
+
+#: modules/admin/templates/karma_clean_confirm.phtml:34
+msgid "Clear"
 msgstr ""
 
 #: modules/admin/templates/languages.phtml:12
@@ -1631,6 +1609,10 @@ msgstr ""
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:230
 msgid "Security"
+msgstr ""
+
+#: modules/admin/templates/user_clean_confirm.phtml:31
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
 msgstr ""
 
 #: modules/admin/templates/userlist.phtml:13

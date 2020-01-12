@@ -148,6 +148,6 @@ msgid "Edit"
 msgstr ""
 
 #: themes/default/templates/system/pages/comments_list.phtml:114
-#: themes/default/templates/system/pages/result.phtml:29
+#: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
