@@ -4,58 +4,40 @@ msgstr ""
 
 #: modules/online/includes/guest.php:21
 #: modules/online/includes/history.php:21
-#: modules/online/includes/index.php:21
+#: modules/online/includes/index.php:22
 #: modules/online/includes/ip.php:21
 msgid "Users"
 msgstr ""
 
-#: modules/online/includes/guest.php:22
-#: modules/online/includes/history.php:22
-#: modules/online/includes/index.php:22
-#: modules/online/includes/ip.php:22
+#: modules/online/includes/guest.php:26
+#: modules/online/includes/history.php:26
+#: modules/online/includes/index.php:27
+#: modules/online/includes/ip.php:26
 msgid "History"
 msgstr ""
 
-#: modules/online/includes/guest.php:25
-#: modules/online/includes/history.php:25
-#: modules/online/includes/index.php:25
-#: modules/online/includes/ip.php:25
+#: modules/online/includes/guest.php:34
+#: modules/online/includes/history.php:34
+#: modules/online/includes/index.php:35
+#: modules/online/includes/ip.php:34
 msgid "Guests"
 msgstr ""
 
-#: modules/online/includes/guest.php:26
-#: modules/online/includes/history.php:26
-#: modules/online/includes/index.php:26
-#: modules/online/includes/ip.php:26
+#: modules/online/includes/guest.php:39
+#: modules/online/includes/history.php:39
+#: modules/online/includes/index.php:40
+#: modules/online/includes/ip.php:39
 msgid "IP Activity"
 msgstr ""
 
-#: modules/online/includes/guest.php:29
-#: modules/online/includes/history.php:29
-#: modules/online/includes/index.php:29
-#: modules/online/includes/ip.php:29
+#: modules/online/includes/guest.php:59
+msgid "Guest"
+msgstr ""
+
+#: modules/online/includes/index.php:45
 msgid "Who is online?"
 msgstr ""
 
-#: modules/online/includes/guest.php:65
-#: modules/online/includes/history.php:64
-#: modules/online/includes/index.php:64
-#: modules/online/templates/users.phtml:12
-msgid "The list is empty"
-msgstr ""
-
-#: modules/online/includes/guest.php:68
-#: modules/online/includes/history.php:67
-#: modules/online/includes/index.php:67
-#: modules/online/includes/ip.php:73
-#: modules/online/templates/users.phtml:15
-msgid "Total"
-msgstr ""
-
-#: modules/online/includes/guest.php:75
-#: modules/online/includes/history.php:74
-#: modules/online/includes/index.php:74
-#: modules/online/includes/ip.php:81
 #: modules/online/index.php:51
 msgid "Online"
 msgstr ""
@@ -64,14 +46,12 @@ msgstr ""
 msgid "For registered users only"
 msgstr ""
 
-#: modules/online/templates/users.phtml:2
-msgid "Community"
+#: modules/online/templates/ip.phtml:51
+#: modules/online/templates/users.phtml:38
+msgid "List is empty"
 msgstr ""
 
-#: modules/online/templates/users.phtml:22
-msgid "User Search"
-msgstr ""
-
-#: modules/online/templates/users.phtml:23
-msgid "Back"
+#: modules/online/templates/ip.phtml:58
+#: modules/online/templates/users.phtml:45
+msgid "Total"
 msgstr ""
