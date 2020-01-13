@@ -38,7 +38,7 @@
       'Verification code' => 'Проверочный код',
       'Symbols on the picture' => 'Код с картинки',
       'If you cannot see the image code, enable graphics in your browser and refresh this page' => 'Если Вы не видите рисунок с кодом, включите поддержку графики в настройках браузера и обновите страницу',
-      'Send' => 'Отправить',
+      'Write' => 'Написать',
       'For registered users only' => 'Только для зарегистрированных посетителей',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'В Гостевой сообщений нет<br><strong>Будь первым! :)</strong>',
       'Guest' => 'Гость',

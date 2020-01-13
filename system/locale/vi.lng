@@ -38,6 +38,7 @@
       'The list is empty' => 'Danh sách này trống',
       'Reply' => 'Phản hồi',
       'Quote' => 'Trích dẫn',
+      'Edited' => 'Chỉnh sửa',
       'Edit' => 'Chỉnh sửa',
       'Back' => 'Quay lại',
     ),

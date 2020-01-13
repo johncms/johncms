@@ -32,7 +32,6 @@
       'The guestbook is closed' => 'Guestbook este închis',
       'Name' => 'Nume',
       'Symbols on the picture' => 'Simbolurile din imagine',
-      'Send' => 'Trimite',
       'For registered users only' => 'Doar pentru utilizatori inregistrati',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'Nici un mesaj .<br><strong>
 Fii primul care scrie! :)</strong>',

@@ -33,7 +33,6 @@
       'The guestbook is closed' => 'Buku tamu ditutup',
       'Name' => 'Nama',
       'Symbols on the picture' => 'Kode verifikasi',
-      'Send' => 'Kirim',
       'For registered users only' => 'Hanya untuk pengguna terdaftar',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'Buku tamu kosong<br><strong>Jadilah orang pertama :)</strong>',
       'Reply' => 'Balas',

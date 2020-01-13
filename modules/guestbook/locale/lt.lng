@@ -33,7 +33,6 @@
       'The guestbook is closed' => 'Svečių knygą uždarytą',
       'Name' => 'Vardas',
       'Symbols on the picture' => 'Simboliai ant nuotraukos',
-      'Send' => 'Siųsti',
       'For registered users only' => 'Tik registruotiems Vartotojams',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'Svečių knyga tusčia.<br><strong>Buk pirmas</strong>',
       'Reply' => 'Atsakyti',

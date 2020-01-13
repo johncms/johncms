@@ -33,7 +33,6 @@
       'The guestbook is closed' => 'Księga gości jest zamknięta',
       'Name' => 'Imię',
       'Symbols on the picture' => 'Symbole na zdjęcie',
-      'Send' => 'Wysłać',
       'For registered users only' => 'Tylko dla zarejestrowanych',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'Księga gości jest pusta.<br><b>Bądź pierwszy i dodaj wpis! :)</b>',
       'Reply' => 'Odpowiedź',

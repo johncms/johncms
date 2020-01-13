@@ -33,7 +33,6 @@
       'The guestbook is closed' => 'سجل الزوار مغلق',
       'Name' => 'الاسم',
       'Symbols on the picture' => 'الرموز في الصورة',
-      'Send' => 'إرسال',
       'For registered users only' => 'للمستخدمين المسجلين فقط',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'سجل الزوار فارغ. <br><strong>أن تكون الأول!:)</strong>',
       'Reply' => 'رد ',

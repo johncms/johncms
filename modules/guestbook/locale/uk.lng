@@ -33,7 +33,6 @@
       'The guestbook is closed' => 'Гостьова закрита',
       'Name' => 'Ім\'я',
       'Symbols on the picture' => 'Символи з картинки',
-      'Send' => 'Відправити',
       'For registered users only' => 'Тільки для зареєстрованих користувачів',
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'Гостьова книга порожня.<br><strong>Бедь першим! :)</strong>',
       'Reply' => 'Відповісти',
