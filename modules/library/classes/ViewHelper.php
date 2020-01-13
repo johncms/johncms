@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 
 class ViewHelper
@@ -30,6 +31,23 @@ class ViewHelper
                 'sectionItemId' => $sectionItemId,
                 'positionId'    => $positionId,
                 'total'         => $total,
+            ]
+        );
+    }
+
+    public static function printNavPanel(array $data): string
+    {
+        $tools = di(Tools::class);
+
+        $result = [];
+        foreach ($data as $key => $value) {
+            $result[$key] = ['id' => $value['id'], 'name' => $tools->checkout($value['name'])];
+        }
+
+        return self::setUp()->render(
+            'libraryHelpers::printNavPanel',
+            [
+                'data' => $result,
             ]
         );
     }

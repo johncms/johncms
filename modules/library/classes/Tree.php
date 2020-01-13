@@ -194,16 +194,7 @@ class Tree
      */
     public function printNavPanel(): string
     {
-        $array = $this->result();
-        $cnt = count($array);
-        $return = [];
-        $x = 1;
-        foreach ($array as $cat) {
-            $return[] = $x === $cnt ? '<strong>' . $this->tools->checkout($cat['name']) . '</strong>' : '<a href="?do=dir&amp;id=' . $cat['id'] . '">' . $this->tools->checkout($cat['name']) . '</a>';
-            $x++;
-        }
-
-        return '<a href="?"><strong>' . _t('Library') . '</strong></a> | ' . implode(' | ', $return);
+        return ViewHelper::printNavPanel($this->result());
     }
 
     /**

@@ -110,32 +110,7 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
 
                 if ($screen->getClientFilename()) {
                     try {
-                        Image::configure(['driver' => 'imagick']);
-                        $img = Image::make($screen->getStream());
-                        // original
-                        $img->save(UPLOAD_PATH . 'library/images/orig/' . $cid . '.png', 100, 'png');
-                        // big
-                        $img->resize(
-                            $bigSize,
-                            null,
-                            static function ($constraint) {
-                                /** @var $constraint Intervention\Image\Constraint */
-                                $constraint->aspectRatio();
-                                $constraint->upsize();
-                            }
-                        );
-                        $img->save(UPLOAD_PATH . 'library/images/big/' . $cid . '.png', 100, 'png');
-                        // small
-                        $img->resize(
-                            $smallSize,
-                            null,
-                            static function ($constraint) {
-                                /** @var $constraint Intervention\Image\Constraint */
-                                $constraint->aspectRatio();
-                                $constraint->upsize();
-                            }
-                        );
-                        $img->save(UPLOAD_PATH . 'library/images/small/' . $cid . '.png', 100, 'png');
+                        Utils::imageUpload($cid, $screen);
                     } catch (Exception $exception) {
                         $err[] = _t('Photo uploading error');
                     }
