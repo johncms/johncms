@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
@@ -19,14 +18,29 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\System\Users\User $user
  */
 
+$title = __('Ban by IP');
+$nav_chain->add($title, '/admin/ipban/');
+$data = [];
+
 if ($user->rights < 9) {
-    exit(__('Access denied'));
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'       => $title,
+            'type'        => 'alert-danger',
+            'message'     => __('Access denied'),
+            'admin'       => true,
+            'menu_item'   => 'ipban',
+            'parent_menu' => 'sec_menu',
+        ]
+    );
+    exit();
 }
 
 switch ($mod) {
     case 'new':
         // Баним IP адрес
-        echo '<div class="phdr"><a href="?act=ipban"><b>' . __('Ban by IP') . '</b></a> | ' . __('Add Ban') . '</div>';
+        $title = __('Add Ban');
 
         if (isset($_POST['submit'])) {
             $error = '';
@@ -36,11 +50,19 @@ switch ($mod) {
             $reason = isset($_POST['reason']) ? htmlentities(trim($_POST['reason']), ENT_QUOTES, 'UTF-8') : '';
 
             if (empty($get_ip)) {
-                echo $tools->displayError(
-                    __('Invalid IP'),
-                    '<a href="?act=ipban&amp;mod=new">' . __('Back') . '</a>'
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-danger',
+                        'message'       => __('Invalid IP'),
+                        'admin'         => true,
+                        'menu_item'     => 'ipban',
+                        'parent_menu'   => 'sec_menu',
+                        'back_url'      => '/admin/ipban/?mod=new',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
-                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
@@ -105,33 +127,41 @@ switch ($mod) {
                 $total = $req->rowCount();
 
                 if ($total) {
-                    echo $tools->displayError(__('Address you entered conflicts with other who in the database'));
-                    $i = 0;
-
+                    $data['message'] = __('Address you entered conflicts with other who in the database');
                     while ($res = $req->fetch()) {
-                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                         $get_ip = $res['ip1'] == $res['ip2'] ? long2ip($res['ip1']) : long2ip($res['ip1']) . ' - ' . long2ip($res['ip2']);
-                        echo '<a href="?act=ipban&amp;mod=detail&amp;id=' . $res['id'] . '">' . $get_ip . '</a> ';
+                        $res['detail_url'] = '?mod=detail&amp;id=' . $res['id'];
+                        $res['ips'] = $get_ip;
 
                         switch ($res['ban_type']) {
                             case 2:
-                                echo __('Redirect');
+                                $res['reason'] = __('Redirect');
                                 break;
 
                             case 3:
-                                echo __('Registration');
+                                $res['reason'] = __('Registration');
                                 break;
 
                             default:
-                                echo '<b>' . __('Block') . '</b>';
+                                $res['reason'] = __('Block');
                         }
-                        echo '</div>';
-                        ++$i;
+
+                        $items[] = $res;
                     }
 
-                    echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
-                    echo '<p><a href="?act=ipban&amp;mod=new">' . __('Back') . '</a><br><a href="./">' . __('Admin Panel') . '</a></p>';
-                    echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+                    $data['items'] = $items ?? [];
+                    $data['total'] = $total;
+                    $data['no_buttons'] = true;
+                    $data['back_url'] = '/admin/ipban/?mod=new';
+
+                    echo $view->render(
+                        'admin::ipban',
+                        [
+                            'title'      => $title,
+                            'page_title' => $title,
+                            'data'       => $data,
+                        ]
+                    );
                     exit;
                 }
             }
@@ -147,70 +177,80 @@ switch ($mod) {
 
             if (! $error) {
                 // Окно подтверждения
-                echo '<form action="?act=ipban&amp;mod=insert" method="post">';
-
+                $ban_info = [];
                 switch ($mode) {
                     case 1:
-                        echo '<div class="menu"><p><h3>' . __('Ban range address') . '</h3>&nbsp;' . long2ip($ip1) . ' - ' . long2ip($ip2) . '</p>';
+                        $ban_info['mode_name'] = __('Ban range address');
+                        $ban_info['mode_value'] = long2ip($ip1) . ' - ' . long2ip($ip2);
                         break;
 
                     case 2:
-                        echo '<div class="menu"><p><h3>' . __('Ban on the subnet mask') . '</h3>' . long2ip($ip1) . ' - ' . long2ip($ip2) . '</p>';
+                        $ban_info['mode_name'] = __('Ban on the subnet mask');
+                        $ban_info['mode_value'] = long2ip($ip1) . ' - ' . long2ip($ip2);
                         break;
 
                     default:
-                        echo '<div class="menu"><p><h3>' . __('Ban IP address') . '</h3>&nbsp;' . long2ip($ip1) . '</p>';
+                        $ban_info['mode_name'] = __('Ban IP address');
+                        $ban_info['mode_value'] = long2ip($ip1);
                 }
-
-                echo '<p><h3>' . __('Ban type') . ':</h3>&nbsp;';
 
                 switch ($ban_term) {
                     case 2:
-                        echo __('Redirect') . '</p><p><h3>' . __('Redirect URL') . ':</h3>&nbsp;' . (empty($ban_url) ? __('Default') : $ban_url);
+                        $ban_info['ban_type'] = __('Redirect');
+                        $ban_info['ban_url'] = (empty($ban_url) ? __('Default') : $ban_url);
                         break;
 
                     case 3:
-                        echo __('Registration');
+                        $ban_info['ban_type'] = __('Registration');
                         break;
 
                     default:
-                        echo __('Block');
+                        $ban_info['ban_type'] = __('Block');
                 }
 
-                echo '</p><p><h3>' . __('Reason') . ':</h3>&nbsp;' . (empty($reason) ? __('Not specified') : $reason) . '</p>' .
-                    '<input type="hidden" value="' . $ip1 . '" name="ip1" />' .
-                    '<input type="hidden" value="' . $ip2 . '" name="ip2" />' .
-                    '<input type="hidden" value="' . $ban_term . '" name="term" />' .
-                    '<input type="hidden" value="' . $ban_url . '" name="url" />' .
-                    '<input type="hidden" value="' . $reason . '" name="reason" />' .
-                    '<p><input type="submit" name="submit" value=" ' . __('Add Ban') . ' "/></p>' .
-                    '</div><div class="phdr"><small>' . __('Please, check up correctness of the input data') . '</small></div>' .
-                    '</form>' .
-                    '<p><a href="?act=ipban">' . __('Cancel') . '</a><br><a href="./">' . __('Admin Panel') . '</a></p>';
+                $ban_info['ip1'] = $ip1;
+                $ban_info['ip2'] = $ip2;
+                $ban_info['ban_term'] = $ban_term;
+                $ban_info['ban_url'] = $ban_url;
+                $ban_info['reason'] = $reason;
+                $ban_info['reason_display'] = (empty($reason) ? __('Not specified') : $reason);
+                $data['ban_info'] = $ban_info;
+
+                $data['form_action'] = '?act=ipban&amp;mod=insert';
+                echo $view->render(
+                    'admin::ipban_add_confirm',
+                    [
+                        'title'      => $title,
+                        'page_title' => $title,
+                        'data'       => $data,
+                    ]
+                );
             } else {
-                echo $tools->displayError(
-                    $error,
-                    '<a href="?act=ipban&amp;mod=new">' . __('Back') . '</a>'
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-danger',
+                        'message'       => $error,
+                        'admin'         => true,
+                        'menu_item'     => 'ipban',
+                        'parent_menu'   => 'sec_menu',
+                        'back_url'      => '/admin/ipban/?mod=new',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
         } else {
             // Форма ввода IP адреса для Бана
-            echo '<form action="?act=ipban&amp;mod=new" method="post">' .
-                '<div class="menu"><p><h3>' . __('IP address') . '</h3>' .
-                '&nbsp;<input type="text" name="ip"/></p>' .
-                '<p><h3>' . __('Ban type') . '</h3>' .
-                '<input name="term" type="radio" value="1" checked="checked" />' . __('Block') . '<br>' .
-                '<input name="term" type="radio" value="3" />' . __('Registration') . '<br>' .
-                '<input name="term" type="radio" value="2" />' . __('Redirect') . '<br></p>' .
-                '<p><h3>' . __('Redirect URL') . '</h3>' .
-                '&nbsp;<input type="text" name="url"/><br>' .
-                '<small>&nbsp;' . __('If the ban on Redirect, then specify the URL') . '</small></p>' .
-                '<p><h3>' . __('Reason') . '</h3>' .
-                '&nbsp;<textarea rows="' . $user->config->fieldHeight . '" name="reason"></textarea></small></p>' .
-                '<p><input type="submit" name="submit" value=" ' . __('Add Ban') . ' "/></p></div>' .
-                '<div class="phdr"><small>' . __('Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') . '</small></div>' . // phpcs:ignore
-                '</form>' .
-                '<p><a href="?act=ipban">' . __('Cancel') . '</a><br><a href="./">' . __('Admin Panel') . '</a></p>';
+            $data['form_action'] = '?act=ipban&amp;mod=new';
+            echo $view->render(
+                'admin::ipban_add',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
         break;
 
@@ -223,11 +263,19 @@ switch ($mod) {
         $reason = isset($_POST['reason']) ? htmlspecialchars(trim($_POST['reason'])) : '';
 
         if (! $ip1 || ! $ip2) {
-            echo $tools->displayError(
-                __('Invalid IP'),
-                '<a href="?act=ipban&amp;mod=new">' . __('Back') . '</a>'
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-danger',
+                    'message'       => __('Invalid IP'),
+                    'admin'         => true,
+                    'menu_item'     => 'ipban',
+                    'parent_menu'   => 'sec_menu',
+                    'back_url'      => '/admin/ipban/?mod=new',
+                    'back_url_name' => __('Back'),
+                ]
             );
-            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
@@ -263,15 +311,25 @@ switch ($mod) {
             $db->query('TRUNCATE TABLE `cms_ban_ip`');
             header('Location: ?act=ipban');
         } else {
-            echo '<div class="rmenu"><p>' . __('Are you sure you wan to unban all IP?') . '</p>' .
-                '<p><a href="?act=ipban&amp;mod=clear&amp;yes=yes">' . __('Perform') . '</a> | ' .
-                '<a href="?act=ipban">' . __('Cancel') . '</a></p></div>';
+            $data['message'] = __('Are you sure you wan to unban all IP?');
+            $data['confirm_url'] = '?act=ipban&amp;mod=clear&amp;yes=yes';
+            $data['confirm_url_name'] = __('Perform');
+            $data['back_url'] = '/admin/ipban/';
+            $data['back_url_name'] = __('Cancel');
+            echo $view->render(
+                'admin::ipban_confirm',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
         break;
 
     case 'detail':
         // Вывод подробностей заблокированного адреса
-        echo '<div class="phdr"><a href="?act=ipban"><b>' . __('Ban by IP') . '</b></a> | ' . __('Ban details') . '</div>';
+        $title = __('Ban details');
 
         if ($id) {
             // Поиск адреса по ссылке (ID)
@@ -282,59 +340,91 @@ switch ($mod) {
             $get_ip = ip2long($_POST['ip']);
 
             if (! $get_ip) {
-                echo $tools->displayError(
-                    __('Invalid IP'),
-                    '<a href="?act=ipban&amp;mod=new">' . __('Back') . '</a>'
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-danger',
+                        'message'       => __('Invalid IP'),
+                        'admin'         => true,
+                        'menu_item'     => 'ipban',
+                        'parent_menu'   => 'sec_menu',
+                        'back_url'      => '/admin/ipban/?mod=new',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
-                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
             $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '${get_ip}' BETWEEN `ip1` AND `ip2` LIMIT 1");
         } else {
-            echo $tools->displayError(
-                __('Invalid IP'),
-                '<a href="?act=ipban&amp;mod=new">' . __('Back') . '</a>'
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-danger',
+                    'message'       => __('Invalid IP'),
+                    'admin'         => true,
+                    'menu_item'     => 'ipban',
+                    'parent_menu'   => 'sec_menu',
+                    'back_url'      => '/admin/ipban/?mod=new',
+                    'back_url_name' => __('Back'),
+                ]
             );
-            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
         if (! $req->rowCount()) {
-            echo '<div class="menu"><p>' . __('This address not in the database') . '</p></div>';
-            echo '<div class="phdr"><a href="?act=ipban">' . __('Back') . '</a></div>';
-            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-info',
+                    'message'       => __('This address not in the database'),
+                    'admin'         => true,
+                    'menu_item'     => 'ipban',
+                    'parent_menu'   => 'sec_menu',
+                    'back_url'      => '/admin/ipban/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
             exit;
         }
         $res = $req->fetch();
         $get_ip = $res['ip1'] == $res['ip2'] ? '<b>' . long2ip($res['ip1']) . '</b>' : '[<b>' . long2ip($res['ip1']) . '</b>] - [<b>' . long2ip($res['ip2']) . '</b>]';
-        echo '<div class="rmenu"><p>' . $get_ip . '</p></div>';
-        echo '<div class="menu"><p><h3>' . __('Ban type') . '</h3>&nbsp;';
-
+        $res['ips'] = $get_ip;
         switch ($res['ban_type']) {
             case 2:
-                echo __('Redirect');
+                $res['ban_type'] = __('Redirect');
                 break;
 
             case 3:
-                echo __('Registration');
+                $res['ban_type'] = __('Registration');
                 break;
 
             default:
-                echo __('Block');
+                $res['ban_type'] = __('Block');
         }
 
-        if ($res['ban_type'] == 2) {
-            echo '<br>&nbsp;' . $res['link'];
+        if ($res['ban_type'] === 2) {
+            $res['link'] = htmlspecialchars($res['link']);
         }
 
-        echo '</p><p><h3>' . __('Reason') . '</h3>&nbsp;' . (empty($res['reason']) ? __('Not specified') : $res['reason']) . '</p></div>';
-        echo '<div class="menu">' . __('Who applied the ban?') . ': <b>' . $res['who'] . '</b><br>';
-        echo __('Date') . ': <b>' . date('d.m.Y', $res['date']) . '</b><br>';
-        echo __('Time') . ': <b>' . date('H:i:s', $res['date']) . '</b></div>';
-        echo '<div class="phdr"><a href="?act=ipban&amp;mod=del&amp;id=' . $res['id'] . '">' . __('Delete Ban') . '</a></div>';
-        echo '<p><a href="?act=ipban">В список</a><br><a href="./">' . __('Admin Panel') . '</a></p>';
-
+        $res['reason'] = (empty($res['reason']) ? __('Not specified') : htmlspecialchars($res['reason']));
+        $res['display_date'] = date('d.m.Y', $res['date']);
+        $res['display_time'] = date('H:i:s', $res['date']);
+        $data['ban_info'] = $res;
+        $data['delete_url'] = '?act=ipban&amp;mod=del&amp;id=' . $res['id'];
+        $data['back_url'] = '/admin/ipban/';
+        $data['back_url_name'] = __('Back');
+        echo $view->render(
+            'admin::ipban_detail',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
         break;
 
     case 'del':
@@ -343,31 +433,51 @@ switch ($mod) {
             if (isset($_GET['yes'])) {
                 $db->exec("DELETE FROM `cms_ban_ip` WHERE `id`='${id}'");
                 $db->query('OPTIMIZE TABLE `cms_ban_ip`');
-                echo '<p>' . __('Ban has been successfully removed') . '</p>';
-                echo '<p><a href="?act=ipban">' . __('Continue') . '</a></p>';
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-success',
+                        'message'       => __('Ban has been successfully removed'),
+                        'admin'         => true,
+                        'menu_item'     => 'ipban',
+                        'parent_menu'   => 'sec_menu',
+                        'back_url'      => '/admin/ipban/',
+                        'back_url_name' => __('Continue'),
+                    ]
+                );
             } else {
-                echo '<p>' . __('re you sure to remove ban?') . '</p>' .
-                    '<p><a href="?act=ipban&amp;mod=del&amp;id=' . $id . '&amp;yes=yes">' . __('Delete') . '</a> | ' .
-                    '<a href="?act=ipban&amp;mod=detail&amp;id=' . $id . '">' . __('Cancel') . '</a></p>';
+                $data['message'] = __('Are you sure you want to remove the ban?');
+                $data['confirm_url'] = '?act=ipban&amp;mod=del&amp;id=' . $id . '&amp;yes=yes';
+                $data['confirm_url_name'] = __('Delete');
+                $data['back_url'] = '?act=ipban&amp;mod=detail&amp;id=' . $id;
+                $data['back_url_name'] = __('Cancel');
+                echo $view->render(
+                    'admin::ipban_confirm',
+                    [
+                        'title'      => $title,
+                        'page_title' => $title,
+                        'data'       => $data,
+                    ]
+                );
             }
         }
         break;
 
     case 'search':
         // Форма поиска забаненного IP
-        echo '<div class="phdr"><a href="?act=ipban"><b>' . __('Ban by IP') . '</b></a> | ' . __('Search') . '</div>' .
-            '<form action="?act=ipban&amp;mod=detail" method="post"><div class="menu"><p>' .
-            '<h3>' . __('IP address') . ':</h3>' .
-            '<input type="text" name="ip"/>' .
-            '</p><p><input type="submit" name="submit" value="' . __('Search') . '"/>' .
-            '</p></div><div class="phdr"><small>' . __('Enter a single address, mask and range are not allowed') . '</small></div>' .
-            '</form>' .
-            '<p><a href="?act=ipban">' . __('Back') . '</a><br><a href="./">' . __('Admin Panel') . '</a></p>';
+        $title = __('Search');
+        echo $view->render(
+            'admin::ipban_search',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+            ]
+        );
         break;
 
     default:
         // Вывод общего списка забаненных IP
-        echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Ban by IP') . '</div>';
         $total = $db->query('SELECT COUNT(*) FROM `cms_ban_ip`')->fetchColumn();
 
         if ($total) {
@@ -375,53 +485,42 @@ switch ($mod) {
             $start = isset($_REQUEST['page']) ? $page * $user->config->kmess - $user->config->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
             $req = $db->query('SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT ' . $start . ',' . $user->config->kmess);
-            $i = 0;
-
+            $items = [];
             while ($res = $req->fetch()) {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $get_ip = $res['ip1'] == $res['ip2'] ? long2ip($res['ip1']) : long2ip($res['ip1']) . ' - ' . long2ip($res['ip2']);
-                echo '<a href="?act=ipban&amp;mod=detail&amp;id=' . $res['id'] . '">' . $get_ip . '</a> ';
+                $res['detail_url'] = '?mod=detail&amp;id=' . $res['id'];
+                $res['ips'] = $get_ip;
 
                 switch ($res['ban_type']) {
                     case 2:
-                        echo __('Redirect');
+                        $res['reason'] = __('Redirect');
                         break;
 
                     case 3:
-                        echo __('Registration');
+                        $res['reason'] = __('Registration');
                         break;
 
                     default:
-                        echo '<b>' . __('Block') . '</b>';
+                        $res['reason'] = __('Block');
                 }
-                echo '</div>';
-                ++$i;
+
+                $items[] = $res;
             }
-        } else {
-            echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
         }
 
-        echo '<div class="rmenu"><form action="?act=ipban&amp;mod=new" method="post"><input type="submit" name="" value="' . __('Ban') . '" /></form></div>';
-        echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
-
+        $data['items'] = $items ?? [];
+        $data['total'] = $total;
+        $data['back_url'] = '/admin/ipban/';
         if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ipban&amp;', $start, $total, $user->config->kmess) . '</div>';
-            echo '<p><form action="?act=ipban" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . __('To Page') . ' &gt;&gt;"/></form></p>';
+            $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
         }
 
-        echo '<p>';
-
-        if ($total > 0) {
-            echo '<a href="?act=ipban&amp;mod=search">' . __('Search') . '</a><br><a href="?act=ipban&amp;mod=clear">' . __('Unban all IP') . '</a><br>';
-        }
-
-        echo '<a href="./">' . __('Admin Panel') . '</a></p>';
+        echo $view->render(
+            'admin::ipban',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
 }
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => __('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);
