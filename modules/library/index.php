@@ -146,37 +146,7 @@ $array_includes = [
 
 $i = 0;
 
-if (in_array($act, $array_includes, true)) {
-    require_once 'includes/' . $act . '.php';
-} elseif (! $id) {
-    require_once 'actions/index/main.php';
-} elseif ($do === 'dir') {
-    // dir
-    $actdir = $db->query(
-        'SELECT `id`, `dir` FROM `library_cats` WHERE '
-        . ($id !== null ? '`id` = ' . $id : 1) . ' LIMIT 1'
-    )->fetch();
-
-    $actdir = $actdir['id'] > 0 ? $actdir['dir'] : Utils::redir404();
-
-    $dir_nav = new Tree($id);
-    $dir_nav->processNavPanel();
-
-    echo '<div class="phdr">' . $dir_nav->printNavPanel() . '</div>';
-
-    if ($actdir) {
-        require_once 'actions/index/sectionslist.php';
-    } else {
-        require_once 'actions/index/booklist.php';
-    }
-} else {
-    require_once 'actions/index/book.php';
+if (!in_array($act, $array_includes, true)) {
+    $act = 'index';
 }
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => $textl,
-        'content' => ob_get_clean(),
-    ]
-);
+require_once 'includes/' . $act . '.php';
