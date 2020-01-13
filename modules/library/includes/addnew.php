@@ -30,7 +30,6 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
     Utils::redir404();
 } else {
     $err = [];
-
     $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 100) : '';
     $announce = isset($_POST['announce']) ? mb_substr(trim($_POST['announce']), 0, 500) : '';
     $text = isset($_POST['text']) ? trim($_POST['text']) : '';
@@ -46,7 +45,6 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
         if (empty($name)) {
             $err[] = _t('You have not entered the name');
         }
-
         if (! empty($_FILES['textfile']['name'])) {
             $ext = explode('.', $_FILES['textfile']['name']);
             if (mb_strtolower(end($ext)) === 'txt') {
@@ -60,7 +58,6 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
                     } else {
                         $err[] = _t('The file is invalid encoding, preferably UTF-8');
                     }
-
                     $text = trim($txt);
                     unlink(UPLOAD_PATH . 'library/tmp' . DS . $newname);
                 } else {
@@ -115,7 +112,6 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
                     try {
                         Image::configure(['driver' => 'imagick']);
                         $img = Image::make($screen->getStream());
-
                         // original
                         $img->save(UPLOAD_PATH . 'library/images/orig/' . $cid . '.png', 100, 'png');
                         // big
@@ -147,27 +143,24 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
 
                 if (! empty($_POST['tags'])) {
                     $tags = (array) array_map('trim', explode(',', $_POST['tags']));
-
                     if (count($tags)) {
                         $obj = new Hashtags($cid);
                         $obj->addTags($tags);
                         $obj->delCache();
                     }
                 }
-
                 $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
             }
         }
     }
-
     if (count($err)) {
         $error = '';
         foreach ($err as $e) {
             $error .= $tools->displayError($e);
         }
-        #$error .= '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
     }
 }
+
 echo $view->render(
     'library::addnew',
     [
@@ -179,5 +172,6 @@ echo $view->render(
         'announce' => $announce,
         'text'     => $text,
         'tag'      => $tag,
+        'bbcode'   => di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text')
     ]
 );

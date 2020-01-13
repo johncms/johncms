@@ -36,11 +36,3 @@ if (! $id) {
 } else {
     require_once 'index/book.php';
 }
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => $textl,
-        'content' => ob_get_clean(),
-    ]
-);

@@ -150,3 +150,11 @@ if (!in_array($act, $array_includes, true)) {
     $act = 'index';
 }
 require_once 'includes/' . $act . '.php';
+
+echo $view->render(
+    'system::app/old_content',
+    [
+        'title'   => $textl,
+        'content' => ob_get_clean(),
+    ]
+);
