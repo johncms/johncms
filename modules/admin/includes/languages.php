@@ -16,6 +16,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
  * @var PDO $db
+ * @var NavChain $nav_chain
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  */
@@ -25,14 +26,7 @@ if ($user->rights < 9) {
 }
 
 $config = di('config')['johncms'];
-
-/** @var NavChain $navChain */
-$navChain = di(NavChain::class);
-$navChain->add(__('Admin Panel'), '../');
-$navChain->add(__('Default language'));
-
-// Выводим список доступных языков
-//echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Default language') . '</div>';
+$nav_chain->add(__('Default language'));
 
 if (isset($_POST['lng']) || isset($_POST['update'])) {
     if (isset($_POST['lng'])) {
