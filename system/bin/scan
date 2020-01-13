@@ -141,7 +141,7 @@ function recursiveScan($folder, $pattern)
     $fileList = [];
 
     foreach ($files as $file) {
-        $fileList = array_merge($fileList, $file);
+        $fileList[] = str_replace('\\', '/', $file[0]);
     }
 
     return $fileList;
@@ -153,12 +153,6 @@ foreach ($domainSearch as $domain => $attributes) {
         $phpScanner->setDefaultDomain($domain);
         $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
         $files = recursiveScan($dir, '/^.+\.(?:phtml|php)$/i');
-        array_walk(
-                $files,
-                function (&$item, $key) {
-                    $item = str_replace('\\', '/', $item);
-                }
-        );
         sort($files, SORT_STRING);
 
         foreach ($files as $file) {
