@@ -83,12 +83,10 @@ if ($search && ! $error) {
             $name = $tools->checkout($res['name']);
             $text = $tools->checkout(mb_substr($res['text'], ($pos - 100), 400), 1);
 
-            if ($search_t) {
-                foreach ($array as $val) {
+            foreach ($array as $val) {
+                if ($search_t) {
                     $name = ReplaceKeywords($val, $name);
-                }
-            } else {
-                foreach ($array as $val) {
+                } else {
                     $text = ReplaceKeywords($val, $text);
                 }
             }

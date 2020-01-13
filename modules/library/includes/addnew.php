@@ -101,9 +101,6 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
             if ($db->prepare($sql)->execute($insert)) {
                 $cid = (int) $db->lastInsertId();
 
-                $smallSize = 32;
-                $bigSize = 240;
-
                 $files = $request->getUploadedFiles();
                 /** @var GuzzleHttp\Psr7\UploadedFile $screen */
                 $screen = $files['image'] ?? false;

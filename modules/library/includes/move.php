@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Library\Utils;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if ($adm) {
@@ -26,8 +28,8 @@ if ($adm) {
         }
     }
 
-    $type = isset($_GET['moveset']) && in_array($_GET['moveset'], ['up', 'down']) ? $_GET['moveset'] : redir404();
-    $posid = isset($_GET['posid']) && $_GET['posid'] > 0 ? (int) ($_GET['posid']) : redir404();
+    $type = isset($_GET['moveset']) && in_array($_GET['moveset'], ['up', 'down']) ? $_GET['moveset'] : Utils::redir404();
+    $posid = isset($_GET['posid']) && $_GET['posid'] > 0 ? (int) ($_GET['posid']) : Utils::redir404();
 
     [$num1, $pos1] = explode('|', $arrsort[$posid]);
     [$num2, $pos2] = explode('|', $arrsort[($type === 'up' ? $posid - 1 : $posid + 1)]);

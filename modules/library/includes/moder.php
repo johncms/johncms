@@ -15,6 +15,16 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 use Library\Hashtags;
 use Library\Tree;
 use Library\Utils;
+use Psr\Http\Message\ServerRequestInterface;
+
+$request = di(ServerRequestInterface::class);
+
+/**
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\View\Render $view
+ * @var  ServerRequestInterface $request
+ */
 
 $obj = new Hashtags($id);
 if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
@@ -67,48 +77,16 @@ if (isset($_POST['submit'])) {
                 }
             }
 
-            $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image'] : '';
+            $files = $request->getUploadedFiles();
+            /** @var GuzzleHttp\Psr7\UploadedFile $screen */
+            $screen = $files['image'] ?? false;
 
-            $handle = new \Verot\Upload\Upload($image);
-            if ($handle->uploaded) {
-                // Обрабатываем фото
-                $handle->file_new_name_body = $id;
-                $handle->allowed = [
-                    'image/jpeg',
-                    'image/gif',
-                    'image/png',
-                ];
-                $handle->file_max_size = 1024 * $config['flsz'];
-                $handle->file_overwrite = true;
-                $handle->image_x = $handle->image_src_x;
-                $handle->image_y = $handle->image_src_y;
-                $handle->image_convert = 'png';
-                $handle->process(UPLOAD_PATH . 'library/images/orig/');
-                $err_image = $handle->error;
-                $handle->file_new_name_body = $id;
-                $handle->file_overwrite = true;
-                if ($handle->image_src_y > 240) {
-                    $handle->image_resize = true;
-                    $handle->image_x = 240;
-                    $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
-                } else {
-                    $handle->image_x = $handle->image_src_x;
-                    $handle->image_y = $handle->image_src_y;
+            if ($screen->getClientFilename()) {
+                try {
+                    Utils::imageUpload($id, $screen);
+                } catch (Exception $exception) {
+                    $error = _t('Photo uploading error');
                 }
-                $handle->image_convert = 'png';
-                $handle->process(UPLOAD_PATH . 'library/images/big/');
-                $err_image = $handle->error;
-                $handle->file_new_name_body = $id;
-                $handle->file_overwrite = true;
-                $handle->image_resize = true;
-                $handle->image_x = 32;
-                $handle->image_y = 32;
-                $handle->image_convert = 'png';
-                $handle->process(UPLOAD_PATH . 'library/images/small/');
-                if ($err_image) {
-                    echo $tools->displayError(_t('Photo uploading error'));
-                }
-                $handle->clean();
             }
 
             $fields = [
