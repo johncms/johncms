@@ -20,6 +20,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Http\Request $request
  */
 
+$title = ($id ? __('Add Section') : __('Add Category'));
+$nav_chain->add($title);
+
 // Добавление категории
 if ($id) {
     // Проверяем наличие категории
@@ -29,11 +32,19 @@ if ($id) {
         $res = $req->fetch();
         $cat_name = $res['name'];
     } else {
-        echo $tools->displayError(
-            __('Wrong data'),
-            '<a href="?act=forum">' . __('Forum Management') . '</a>'
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => __('Invalid ID'),
+                'admin'         => true,
+                'menu_item'     => 'forum',
+                'parent_menu'   => 'module_menu',
+                'back_url'      => '/admin/forum/',
+                'back_url_name' => __('Back'),
+            ]
         );
-        echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
         exit;
     }
 }
@@ -92,40 +103,35 @@ if (isset($_POST['submit'])) {
             ]
         );
 
-        header('Location: ?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
+        header('Location: ?mod=cat' . ($id ? '&id=' . $id : ''));
     } else {
         // Выводим сообщение об ошибках
-        echo $tools->displayError($error);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => $error,
+                'admin'         => true,
+                'menu_item'     => 'forum',
+                'parent_menu'   => 'module_menu',
+                'back_url'      => '?mod=add' . ($id ? '&amp;id=' . $id : ''),
+                'back_url_name' => __('Back'),
+            ]
+        );
     }
 } else {
     // Форма ввода
-    echo '<div class="phdr"><b>' . ($id ? __('Add Section') : __('Add Category')) . '</b></div>';
-
-    if ($id) {
-        echo '<div class="bmenu"><b>' . __('Go to category') . ':</b> ' . $cat_name . '</div>';
-    }
-
-    echo '<form action="?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
-        '<div class="gmenu">' .
-        '<p><h3>' . __('Title') . '</h3>' .
-        '<input type="text" name="name" />' .
-        '<br><small>' . __('Min. 2, Max. 30 characters') . '</small></p>' .
-        '<p><h3>' . __('Description') . '</h3>' .
-        '<textarea name="desc" rows="' . $user->config->fieldHeight . '"></textarea>' .
-        '<br><small>' . __('Optional field') . '<br>' . __('Min. 2, Max. 500 characters') . '</small></p>';
-
-    if ($id) {
-        echo '<p><input type="radio" name="allow" value="0" checked="checked"/>&#160;' . __('Common access') . '<br>' .
-            '<input type="radio" name="allow" value="4"/>&#160;' . __('Only for reading') . '<br>' .
-            '<input type="radio" name="allow" value="2"/>&#160;' . __('Allow authors to edit the 1st post') . '<br>' .
-            '<input type="radio" name="allow" value="1"/>&#160;' . __('Assign the newly created authors as curators') . '</p>';
-    }
-
-    echo '<h3 style="margin-top: 5px;">' . __('Section type') . '</h3>
-                 <p><input type="radio" name="section_type" value="0" checked="checked"/>&#160;' . __('For subsections') . '<br>' .
-        '<input type="radio" name="section_type" value="1"/>&#160;' . __('For topics') . '</p>';
-
-    echo '<p><input type="submit" value="' . __('Add') . '" name="submit" />' .
-        '</p></div></form>' .
-        '<div class="phdr"><a href="?act=forum&amp;mod=cat' . ($id ? '&amp;id=' . $id : '') . '">' . __('Back') . '</a></div>';
+    $data['id'] = $id;
+    $data['parent_section_name'] = $cat_name ?? '';
+    $data['form_action'] = '?mod=add' . ($id ? '&amp;id=' . $id : '');
+    $data['back_url'] = '?mod=cat' . ($id ? '&amp;id=' . $id : '');
+    echo $view->render(
+        'admin::forum/add',
+        [
+            'title'      => $title,
+            'page_title' => $title,
+            'data'       => $data,
+        ]
+    );
 }
