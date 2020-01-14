@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['usr_clean' => true]]));
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= __('<h3>WARNING!</h3>There are subsections. Move them to another category.') ?>
+            </div>
+        </div>
+        <div>
+            <form action="<?= $data['form_action'] ?>" method="post">
+                <div class="form-group">
+                    <label for="category" class="h3 mt-3"><?= __('Category') ?></label>
+                    <select name="category" id="category" class="form-control">
+                        <?php foreach ($data['categories'] as $category): ?>
+                            <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $category['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div class="text-muted">
+                        <?= __('All categories, topics, and files will be moved into selected category. Old category will be removed.') ?>
+                    </div>
+                </div>
+                <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Move') ?></button>
+                <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
+            </form>
+        </div>
+        <?php if ($user->rights === 9): ?>
+            <div class="alert alert-info mt-3">
+                <h3><?= __('Complete removal') ?></h3>
+                <div>
+                    <?= __('If you want to destroy all the information, first remove') ?>
+                    <a href="?mod=cat&amp;id=<?= $data['id'] ?>"><?= __('subsections') ?></a>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
