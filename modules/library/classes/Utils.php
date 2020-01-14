@@ -137,4 +137,13 @@ class Utils
 
         return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $text);
     }
+
+    public static function unlinkImages(int $id): void
+    {
+        if (file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) {
+            @unlink(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
+            @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
+            @unlink(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
+        }
+    }
 }

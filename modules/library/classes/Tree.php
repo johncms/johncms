@@ -103,6 +103,7 @@ class Tree
             $obj = new Hashtags($data);
             $this->cleaned['tags'] += $obj->delTags();
 
+            // Utils::unlinkImages($data); ???
             if (file_exists(UPLOAD_PATH . 'library/images/small/' . $data . '.png')) {
                 unlink(UPLOAD_PATH . 'library/images/big/' . $data . '.png');
                 unlink(UPLOAD_PATH . 'library/images/orig/' . $data . '.png');

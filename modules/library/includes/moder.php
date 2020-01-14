@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
             echo '<h3>' . _t('Move to Section') . '</h3>'
                 . '<div><select name="move">'
                 . ($type === 'dir'
-                    ? '<option ' . ($type == 'dir' && $row['parent'] === 0
+                    ? '<option ' . ($type === 'dir' && $row['parent'] === 0
                         ? 'selected="selected"'
                         : '')
                     . ' value="0">' . _t('The ROOT') . '</option>'

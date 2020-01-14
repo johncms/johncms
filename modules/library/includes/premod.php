@@ -33,7 +33,7 @@ $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->conf
 $start = $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
 
 if ($total) {
-    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod` = 0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $user->config->kmess);
+    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod` = 0 ORDER BY `time` DESC LIMIT ' . $start . ', ' . $user->config->kmess);
     $i = 0;
 
     while ($row = $stmt->fetch()) {

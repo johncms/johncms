@@ -53,25 +53,21 @@ if ($search && ! $error) {
         );
 
         $list = [];
-
         while ($res = $req->fetch()) {
             foreach ($array as $srch) {
                 if (($pos = mb_stripos($res['text'], str_replace('*', '', $srch))) !== false) {
                     break;
                 }
             }
-
             if (! isset($pos) || $pos < 100) {
                 $pos = 100;
             }
-
             $res['name'] = $tools->checkout($res['name']);
             $res['text'] = $tools->checkout(mb_substr($res['text'], ($pos - 100), 400), 1);
             $res['time'] = $tools->displayDate($res['time']);
             $res['author'] = $res['uploader_id']
                 ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
                 : $tools->checkout($res['uploader']);
-
             foreach ($array as $val) {
                 if ($search_t) {
                     $res['name'] = Utils::replaceKeywords($val, $res['name']);
@@ -79,7 +75,6 @@ if ($search && ! $error) {
                     $res['text'] = Utils::replaceKeywords($val, $res['text']);
                 }
             }
-
             $list[] = $res;
         }
     }
