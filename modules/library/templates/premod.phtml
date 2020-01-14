@@ -1,0 +1,29 @@
+<div class="phdr"><strong><a href="?"><?= _t('Library') ?></a></strong> | <?= _t('Moderation Articles') ?></div>
+<?php if (isset($_GET['all'])) : ?>
+    <div><?= _t('All Articles added in database') ?></div>
+<?php endif; ?>
+<?php if ($id && isset($_GET['yes'])) : ?>
+    <div class="rmenu"><?= _t('Article') ?><strong><?= $article ?></strong><?= _t('Added to the database') ?></div>
+<?php endif; ?>
+<?php if ($total) : ?>
+    <?php $i = 0; ?>
+    <?php foreach ($list() as $premod) : ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <?php if ($premod['cover']) : ?>
+                <div class="avatar"><img src="../upload/library/images/small/<?= $premod['id'] ?>.png" alt="screen"/></div>
+            <?php endif; ?>
+            <div class="righttable"><a href="?id=<?= $premod['id'] ?>"><?= $premod['name'] ?></a></div>
+            <div class="sub"><?= _t('Who added') ?>: <?= $premod['who'] ?></div>
+            <div><?= $premod['navPanel'] ?></div>
+            <a href="?act=premod&amp;yes&amp;id=<?= $premod['id'] ?>"><?= _t('Approve') ?></a> | <a href="?act=del&amp;type=article&amp;id=<?= $premod['id'] ?>"><?= _t('Delete') ?></a>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+<?php if ($total > $user->config->kmess): ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?php if ($total) : ?>
+    <div><a href="?act=premod&amp;all"><?= _t('Approve all') ?></a></div>
+<?php endif ?>
+<p><a href="?"><?= _t('To Library') ?></a></p>

@@ -26,9 +26,7 @@ $request = di(ServerRequestInterface::class);
  * @var  ServerRequestInterface $request
  */
 
-if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` = ' . $id)->rowCount()) && isset($id) && $user->isValid())) {
-    Utils::redir404();
-} else {
+if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` = ' . $id)->rowCount()))) {
     $err = [];
     $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 100) : '';
     $announce = isset($_POST['announce']) ? mb_substr(trim($_POST['announce']), 0, 500) : '';
@@ -131,6 +129,8 @@ if (! $adm || ! (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` =
             $error .= $tools->displayError($e);
         }
     }
+} else {
+    Utils::redir404();
 }
 
 echo $view->render(
@@ -144,6 +144,6 @@ echo $view->render(
         'announce' => $announce,
         'text'     => $text,
         'tag'      => $tag,
-        'bbcode'   => di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text')
+        'bbcode'   => di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text'),
     ]
 );

@@ -9,6 +9,9 @@ use Library\ViewHelper;
   * @var Johncms\System\View\Render $view
  */
 
+$premod = false;
+$countPremod = false;
+
 if ($adm) {
     $countPremod = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
     $premod = $countPremod > 0;

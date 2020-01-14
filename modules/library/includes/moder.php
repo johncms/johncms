@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
             break;
     }
 
-    $db->prepare($sql)->execute($placeholders);
+    $db->prepare($sql)->execute($placeholders); // посмотреть косяк
 
     echo '<div>' . _t('Changed') . '</div><div><a href="?do=' . ($type === 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
 } else {

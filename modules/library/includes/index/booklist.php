@@ -4,8 +4,7 @@ use Library\Hashtags;
 use Library\Rating;
 
 $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1 AND `cat_id` = ' . $id)->fetchColumn();
-$page = $page >= (int) ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
-$start = $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
+$start = (int) $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
 
 $req = $db->query(
     'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce`
