@@ -7,6 +7,7 @@
 
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
+$analytics = $counters->counters();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -86,8 +87,18 @@ $notifications = $counters->notifications();
                     </svg>
                 </a>
             </div>
-            <div class="flex-shrink-1">
-                &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+            <div class="flex-shrink-1 d-flex">
+                <?php if (! empty($analytics)): ?>
+                    <!-- Counters -->
+                    <div class="mr-2 d-flex">
+                        <?php foreach ($analytics as $counter): ?>
+                            <div><?= $counter ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <div>
+                    &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+                </div>
             </div>
         </div>
     </div>

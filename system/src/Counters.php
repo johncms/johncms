@@ -14,12 +14,13 @@ namespace Johncms;
 
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
+use PDO;
 use Psr\Container\ContainerInterface;
 
 class Counters
 {
     /**
-     * @var \PDO
+     * @var PDO
      */
     private $db;
 
@@ -37,7 +38,7 @@ class Counters
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->db = $container->get(\PDO::class);
+        $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
         $this->tools = $container->get(Tools::class);
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
@@ -543,7 +544,7 @@ class Counters
      *
      * @return array
      */
-    public function notifications()
+    public function notifications(): array
     {
         $notifications = [];
         if ($this->systemUser->rights >= 7) {
@@ -576,5 +577,29 @@ class Counters
         $notifications['all'] = array_sum($notifications);
 
         return $notifications;
+    }
+
+    /**
+     * Метод получает массив счетчиков различных систем аналитики
+     *
+     * @return array
+     */
+    public function counters(): array
+    {
+        $counters = [];
+        $req = $this->db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort`');
+
+        if ($req->rowCount()) {
+            while ($res = $req->fetch()) {
+                $link1 = ($res['mode'] === 1 || $res['mode'] === 2) ? $res['link1'] : $res['link2'];
+                $link2 = $res['mode'] === 2 ? $res['link1'] : $res['link2'];
+                $count = defined('_IS_HOMEPAGE') ? $link1 : $link2;
+                if (! empty($count)) {
+                    $counters[] = $count;
+                }
+            }
+        }
+
+        return $counters;
     }
 }
