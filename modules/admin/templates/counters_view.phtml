@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+?>
+
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <h3 class="mb-0"><?= __('Title') ?></h3>
+                <div><?= $data['name'] ?></div>
+                <div>
+                    <?= __('Status:') ?>
+                    <?php if ($data['enabled']): ?>
+                        <span class="badge badge-success badge-pill"><?= __('Enabled') ?></span>
+                    <?php else: ?>
+                        <span class="badge badge-danger badge-pill"><?= __('Disabled') ?></span>
+                    <?php endif; ?>
+                </div>
+
+                <h3 class="mb-0 mt-2"><?= __('Option 1') ?></h3>
+                <div><?= $data['counter_1'] ?></div>
+
+                <h3 class="mb-0 mt-2"><?= __('Option 2') ?></h3>
+                <div class="mb-2"><?= $data['counter_2'] ?></div>
+
+                <h3 class="mb-0 mt-2"><?= __('Display mode:') ?></h3>
+                <div>
+                    <?= $data['mode_name'] ?>
+                </div>
+
+                <div class="mt-3">
+                    <?php if ($data['enabled']): ?>
+                        <a href="?mod=view&amp;go=off&amp;id=<?= $data['id'] ?>" class="btn btn-danger"><?= __('Disable') ?></a>
+                    <?php else: ?>
+                        <a href="?mod=view&amp;go=on&amp;id=<?= $data['id'] ?>" class="btn btn-danger"><?= __('Enable') ?></a>
+                    <?php endif; ?>
+                    <a href="?act=counters&amp;mod=edit&amp;id=<?= $data['id'] ?>" class="btn btn-primary"><?= __('Edit') ?></a>
+                    <a href="?act=counters&amp;mod=del&amp;id=<?= $data['id'] ?>" class="btn btn-primary"><?= __('Delete') ?></a>
+                    <a href="/admin/counters/" class="btn btn-secondary"><?= __('Back') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
