@@ -8,9 +8,7 @@ jobs:
     strategy:
       matrix:
         php:
-          - '7.2.x'
           - '7.3.x'
-          - '7.4.x'
 
     steps:
       - uses: actions/checkout@v1
