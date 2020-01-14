@@ -5,7 +5,7 @@
     <?php foreach ($list() as $top) : ?>
         <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
             <?php if ($top['cover']) : ?>
-                <div class="avatar"><img src="<?= UPLOAD_PATH ?>library/images/small/<?= $top['id'] ?>.png" alt="screen"/></div>
+                <div class="avatar"><img src="../upload/library/images/small/<?= $top['id'] ?>.png" alt="screen"/></div>
             <?php endif; ?>
             <div class="righttable"><h4><a href="?id=<?= $top['id'] ?>"><?= $top['name'] ?></a></h4>
                 <div><small><?= $top['announce'] ?></small></div>
