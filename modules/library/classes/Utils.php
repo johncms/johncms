@@ -85,9 +85,9 @@ class Utils
     {
         $db = di(PDO::class);
         return $db->query(
-            'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
+                'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
                 . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id)
-        )->fetchColumn()
+            )->fetchColumn()
             . ' ' . ($dir ? ' ' . _t('Sections') : ' ' . _t('Articles'));
     }
 
@@ -96,31 +96,45 @@ class Utils
         $smallSize = 32;
         $bigSize = 240;
 
-            Image::configure(['driver' => 'imagick']);
-            $img = Image::make($image->getStream());
-            // original
-            $img->save(UPLOAD_PATH . 'library/images/orig/' . $id . '.png', 100, 'png');
-            // big
-            $img->resize(
-                $bigSize,
-                null,
-                static function ($constraint) {
-                    /** @var $constraint Intervention\Image\Constraint */
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                }
-            );
-            $img->save(UPLOAD_PATH . 'library/images/big/' . $id . '.png', 100, 'png');
-            // small
-            $img->resize(
-                $smallSize,
-                null,
-                static function ($constraint) {
-                    /** @var $constraint Intervention\Image\Constraint */
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                }
-            );
-            $img->save(UPLOAD_PATH . 'library/images/small/' . $id . '.png', 100, 'png');
+        Image::configure(['driver' => 'imagick']);
+        $img = Image::make($image->getStream());
+        // original
+        $img->save(UPLOAD_PATH . 'library/images/orig/' . $id . '.png', 100, 'png');
+        // big
+        $img->resize(
+            $bigSize,
+            null,
+            static function ($constraint) {
+                /** @var $constraint Intervention\Image\Constraint */
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            }
+        );
+        $img->save(UPLOAD_PATH . 'library/images/big/' . $id . '.png', 100, 'png');
+        // small
+        $img->resize(
+            $smallSize,
+            null,
+            static function ($constraint) {
+                /** @var $constraint Intervention\Image\Constraint */
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            }
+        );
+        $img->save(UPLOAD_PATH . 'library/images/small/' . $id . '.png', 100, 'png');
+    }
+
+    /**
+     * Функция подсветки результатов запроса
+     *
+     * @param string $search
+     * @param string $text
+     * @return string
+     */
+    public static function replaceKeywords(string $search, string $text): string
+    {
+        $search = str_replace('*', '', $search);
+
+        return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $text);
     }
 }
