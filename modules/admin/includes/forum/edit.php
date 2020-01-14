@@ -20,10 +20,24 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Http\Request $request
  */
 
+$title = __('Edit Section');
+$nav_chain->add($title);
+
 // Редактирование выбранной категории, или раздела
 if (! $id) {
-    echo $tools->displayError(__('Wrong data'), '<a href="?act=forum">' . __('Forum Management') . '</a>');
-    echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => $title,
+            'type'          => 'alert-danger',
+            'message'       => __('Invalid ID'),
+            'admin'         => true,
+            'menu_item'     => 'forum',
+            'parent_menu'   => 'module_menu',
+            'back_url'      => '/admin/forum/',
+            'back_url_name' => __('Back'),
+        ]
+    );
     exit;
 }
 
@@ -92,49 +106,58 @@ if ($req->rowCount()) {
             header('Location: ?act=forum&mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
         } else {
             // Выводим сообщение об ошибках
-            echo $tools->displayError($error);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-danger',
+                    'message'       => $error,
+                    'admin'         => true,
+                    'menu_item'     => 'forum',
+                    'parent_menu'   => 'module_menu',
+                    'back_url'      => '?mod=edit' . ($id ? '&amp;id=' . $id : ''),
+                    'back_url_name' => __('Back'),
+                ]
+            );
         }
     } else {
         // Форма ввода
-        echo '<div class="phdr"><b>' . __('Edit Section') . '</b></div>' .
-            '<form action="?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
-            '<div class="gmenu">' .
-            '<p><h3>' . __('Title') . '</h3>' .
-            '<input type="text" name="name" value="' . $res['name'] . '"/>' .
-            '<p><h3>' . __('Order') . '</h3>' .
-            '<input type="text" name="sort" value="' . $res['sort'] . '"/><br>' .
-            '<br><small>' . __('Min. 2, Max. 30 characters') . '</small></p>' .
-            '<p><h3>' . __('Description') . '</h3>' .
-            '<textarea name="desc" rows="' . $user->config->fieldHeight . '">' . str_replace(
-                '<br>',
-                "\r\n",
-                $res['description']
-            ) . '</textarea>' .
-            '<br><small>' . __('Optional field') . '<br>' . __('Min. 2, Max. 500 characters') . '</small></p>';
-
-        $allow = ! empty($res['access']) ? (int) ($res['access']) : 0;
-        echo '<p><input type="radio" name="allow" value="0" ' . (! $allow ? 'checked="checked"' : '') . '/>&#160;' . __('Common access') . '<br>' .
-            '<input type="radio" name="allow" value="4" ' . ($allow == 4 ? 'checked="checked"' : '') . '/>&#160;' . __('Only for reading') . '<br>' .
-            '<input type="radio" name="allow" value="2" ' . ($allow == 2 ? 'checked="checked"' : '') . '/>&#160;' . __('Allow authors to edit the 1st post') . '<br>' .
-            '<input type="radio" name="allow" value="1" ' . ($allow == 1 ? 'checked="checked"' : '') . '/>&#160;' . __('Assign the newly created authors as curators') . '</p>';
-        echo '<p><h3>' . __('Category') . '</h3><select name="category" size="1">';
-
-        echo '<option value="0" ' . (empty($res['parent']) ? ' selected="selected"' : '') . '>-</option>';
-        $req_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '" . $res['is'] . "' ORDER BY `sort` ASC");
-
+        $categories = [
+            [
+                'id'       => 0,
+                'name'     => ' - ',
+                'selected' => empty($res['parent']),
+            ],
+        ];
+        $req_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '" . $res['id'] . "' ORDER BY `sort` ASC");
         while ($res_c = $req_c->fetch()) {
-            echo '<option value="' . $res_c['id'] . '"' . ($res_c['id'] == $res['parent'] ? ' selected="selected"' : '') . '>' . $res_c['name'] . '</option>';
+            $categories[] = [
+                'id'       => $res_c['id'],
+                'name'     => $res_c['name'],
+                'selected' => $res_c['id'] === $res['parent'],
+            ];
         }
-        echo '</select></p>';
+        $data['categories'] = $categories;
+        $res['name'] = htmlspecialchars($res['name']);
+        $res['sort'] = (int) $res['sort'];
+        $res['description'] = htmlspecialchars($res['description']);
+        $res['access'] = ! empty($res['access']) ? (int) ($res['access']) : 0;
+        $res['section_type'] = ! empty($res['section_type']) ? (int) ($res['section_type']) : 0;
 
-        $section_type = ! empty($res['section_type']) ? (int) ($res['section_type']) : 0;
-        echo '<h3 style="margin-top: 5px;">' . __('Section type') . '</h3>
-                    <p><input type="radio" name="section_type" value="0" ' . (! $section_type ? 'checked="checked"' : '') . '/>&#160;' . __('For subsections') . '<br>' .
-            '<input type="radio" name="section_type" value="1" ' . ($section_type == 1 ? 'checked="checked"' : '') . '/>&#160;' . __('For topics') . '</p>';
+        $data['item'] = $res;
 
-        echo '<p><input type="submit" value="' . __('Save') . '" name="submit" />' .
-            '</p></div></form>' .
-            '<div class="phdr"><a href="?act=forum&amp;mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '">' . __('Back') . '</a></div>';
+        $data['id'] = $id;
+        $data['parent_section_name'] = $cat_name ?? '';
+        $data['form_action'] = '?mod=edit&amp;id=' . $id;
+        $data['back_url'] = '?mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '');
+        echo $view->render(
+            'admin::forum/edit',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
     }
 } else {
     header('Location: ?act=forum&mod=cat');
