@@ -10,18 +10,13 @@ jobs:
         php:
           - '7.2.x'
           - '7.3.x'
+          - '7.4.x'
 
     steps:
       - uses: actions/checkout@v1
 
-      - name: Fetch repositories
-        run: sudo apt-get update
-
-      - name: Install PHP extensions
-        run: DEBIAN_FRONTEND=noninteractive sudo apt-get -y install php-mbstring php7.2-intl php7.3-intl
-
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction
+        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction --ignore-platform-reqs
 
       - name: Check coding style
         run: composer cs-check
