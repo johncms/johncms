@@ -1,6 +1,5 @@
 <div class="phdr"><strong><?= _t('Library') ?></strong></div>
 <div class="topmenu"><a href="?act=search"><?= _t('Search') ?></a> | <a href="?act=tagcloud"><?= _t('Tag Cloud') ?></a></div>
-
 <div class="gmenu">
     <p>
         <?php if ($admin && $premod) : ?>
@@ -33,7 +32,6 @@
     <div class="menu"><?= _t('The list is empty') ?></div>
 <?php endif; ?>
 <div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
-
 <?php if ($admin) : ?>
     <p><a href="?act=mkdir&amp;id=0"><?= _t('Create Section') ?></a></p>
 <?php endif; ?>

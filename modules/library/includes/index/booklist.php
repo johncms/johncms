@@ -26,7 +26,6 @@ echo $view->render(
         'id'         => $id,
         'list'       =>
             static function () use ($req, $tools, $config) {
-                // $user, $config
                 while ($res = $req->fetch()) {
                     $res['cover'] = file_exists(UPLOAD_PATH . 'library/images/small/' . $res['id'] . '.png');
 

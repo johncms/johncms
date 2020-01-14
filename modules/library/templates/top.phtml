@@ -1,0 +1,51 @@
+<div class="phdr"><strong><a href="?"><?= _t('Library') ?></a></strong> | <?= _t('Rating articles') ?></div>
+<div class="topmenu"><?= _t('Sort') ?>: <?= $menu ?></div>
+<?php if ($total) : ?>
+    <?php $i = 0; ?>
+    <?php foreach ($list() as $top) : ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <?php if ($top['cover']) : ?>
+                <div class="avatar"><img src="<?= UPLOAD_PATH ?>library/images/small/<?= $top['id'] ?>.png" alt="screen"/></div>
+            <?php endif; ?>
+            <div class="righttable"><h4><a href="?id=<?= $top['id'] ?>"><?= $top['name'] ?></a></h4>
+                <div><small><?= $top['announce'] ?></small></div>
+            </div>
+            <table class="desc">
+                <tr>
+                    <td class="caption"><?= _t('Section') ?>:</td>
+                    <td><a href="?do=dir&amp;id=<?= $top['cat_id'] ?>"><?= $top['cat_name'] ?></a></td>
+                </tr>
+                <?php if ($top['tags']) : ?>
+                    <tr>
+                        <td class="caption"><?= _t('The Tags') ?>:</td>
+                        <td><?= ($top['tags']) ?></td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <td class="caption"><?= _t('Who added') ?>:</td>
+                    <td><?= $top['who'] ?></td>
+                </tr>
+                <tr>
+                    <td class="caption"><?= _t('Rating') ?>:</td>
+                    <td><?= $top['ratingView'] ?></td>
+                </tr>
+                <tr>
+                    <td class="caption"><?= _t('Number of readings') ?>:</td>
+                    <td><?= $top['count_views'] ?></td>
+                </tr>
+                <tr>
+                    <?php if ($top['comments']) : ?>
+                        <td class="caption"><a href="?act=comments&amp;id=<?= $top['id'] ?>"><?= _t('Comments') ?></a>:</td>
+                        <td><?= $top['comm_count'] ?></td>
+                    <?php else : ?>
+                        <td class="caption"><?= _t('Comments') ?>:</td>
+                        <td><?= _t('Comments are closed') ?></td>
+                    <?php endif; ?>
+                </tr>
+            </table>
+        </div>
+    <?php endforeach; ?>
+<?php else : ?>
+    <div class="menu"><p><?= _t('The list is empty') ?></p></div>
+<?php endif; ?>
+<div class="phdr"><a href="?"><?= _t('Back') ?></a></div>

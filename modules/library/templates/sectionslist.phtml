@@ -3,7 +3,6 @@
     <?php if ($total > $user->config->kmess): ?>
         <div><?= $pagination ?></div>
     <?php endif ?>
-
     <!-- Listing Sections -->
     <?php $i = 0; ?>
     <?php foreach ($list() as $section): ?>
@@ -19,12 +18,10 @@
     <div class="menu"><p><?= _t('The list is empty') ?></p></div>
 <?php endif ?>
 <div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
-
 <!-- Page switching -->
 <?php if ($total > $user->config->kmess): ?>
     <div><?= $pagination ?></div>
 <?php endif ?>
-
 <?php if ($admin && $total) : ?>
     <p>
         <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>"><?= _t('Edit') ?></a><br>

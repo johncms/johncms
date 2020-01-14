@@ -26,86 +26,64 @@ $menu[] = $sort === 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<
 $menu[] = $sort === 'rating' ? '<strong>' . _t('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . _t('By rating') . '</a> ';
 $menu[] = $sort === 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . _t('By comments') . '</a>';
 
-echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Rating articles') . '</div>' .
-    '<div class="topmenu">' . _t('Sort') . ': ' . implode(' | ', $menu) . '</div>';
+$menu = implode(' | ', $menu);
+
+$field = $sort === 'comm' ? '`comm_count`' : '`count_views`';
 
 if ($sort === 'read' || $sort === 'comm') {
-    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
+    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . $field . ' > 0 ORDER BY ' . $field . ' DESC LIMIT 20')->fetchColumn();
 } else {
     $total = $db->query('SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20')->fetchColumn(0);
 }
 
-$page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
-$start = $page === 1 ? 0 : ($page - 1) * $user->config->kmess;
-
-if (! $total) {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
-} else {
+if ($total) {
     if ($sort === 'read' || $sort === 'comm') {
-        $stmt = $db->query(
+        $req = $db->query(
             'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce` FROM `library_texts`
-            WHERE ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' > 0
-            ORDER BY ' . ($sort === 'comm' ? '`comm_count`' : '`count_views`') . ' DESC
-            LIMIT ' . $start . ', ' . $user->config->kmess
+            WHERE ' . $field . ' > 0
+            ORDER BY ' . $field . ' DESC
+            LIMIT 20'
         );
     } else {
-        $stmt = $db->query(
+        $req = $db->query(
             'SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating`
             JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id`
             GROUP BY `cms_library_rating`.`st_id`
             ORDER BY `avg` DESC, `cnt` DESC
-            LIMIT ' . $start . ',' . $user->config->kmess
+            LIMIT 20'
         );
-    }
-
-    $i = 0;
-
-    while ($row = $stmt->fetch()) {
-        echo '<div class="list' . ((++$i % 2) ? 2 : 1) . '">'
-            . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
-                ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
-                : '')
-            . '<div class="righttable"><h4><a href="?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
-            . '<div><small>' . $tools->checkout($row['announce'], 0, 2) . '</small></div></div>';
-
-        // Описание к статье
-        $obj = new Hashtags($row['id']);
-        $rate = new Rating($row['id']);
-        $uploader = $row['uploader_id'] ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' : $tools->checkout($row['uploader']);
-        echo '<table class="desc">'
-            // Раздел
-            . '<tr>'
-            . '<td class="caption">' . _t('Section') . ':</td>'
-            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . $tools->checkout($db->query('SELECT `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'])->fetchColumn()) . '</a></td>'
-            . '</tr>'
-            // Тэги
-            . ($obj->getAllStatTags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->getAllStatTags(1) . '</td></tr>' : '')
-            // Кто добавил?
-            . '<tr>'
-            . '<td class="caption">' . _t('Who added') . ':</td>'
-            . '<td>' . $uploader . ' (' . $tools->displayDate($row['time']) . ')</td>'
-            . '</tr>'
-            // Рейтинг
-            . '<tr>'
-            . '<td class="caption">' . _t('Rating') . ':</td>'
-            . '<td>' . $rate->viewRate(1) . '</td>'
-            . '</tr>'
-            // Прочтений
-            . '<tr>'
-            . '<td class="caption">' . _t('Number of readings') . ':</td>'
-            . '<td>' . $row['count_views'] . '</td>'
-            . '</tr>'
-            // Комментарии
-            . '<tr>';
-        if ($row['comments']) {
-            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a>:</td><td>' . $row['comm_count'] . '</td>';
-        } else {
-            echo '<td class="caption">' . _t('Comments') . ':</td><td>' . _t('Comments are closed') . '</td>';
-        }
-        echo '</tr></table>';
-
-        echo '</div>';
     }
 }
 
-echo '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>';
+echo $view->render(
+    'library::top',
+    [
+        'total' => $total,
+        'menu'  => $menu,
+        'list'  =>
+            static function () use ($req, $tools, $db) {
+                while ($res = $req->fetch()) {
+                    $res['cover'] = file_exists(UPLOAD_PATH . 'library/images/small/' . $res['id'] . '.png');
+
+                    $obj = new Hashtags($res['id']);
+                    $res['tags'] = $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null;
+
+                    $rate = new Rating($res['id']);
+                    $res['ratingView'] = $rate->viewRate(1);
+
+                    $uploader = $res['uploader_id']
+                        ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
+                        : $tools->checkout($res['uploader']);
+
+                    $res['who'] = $uploader . ' (' . $tools->displayDate($res['time']) . ')';
+
+                    $res['cat_name'] = $tools->checkout($db->query('SELECT `name` FROM `library_cats` WHERE `id` = ' . $res['cat_id'])->fetchColumn());
+
+                    $res['name'] = $tools->checkout($res['name']);
+                    $res['announce'] = $tools->checkout($res['announce'], 0, 0);
+
+                    yield $res;
+                }
+            },
+    ]
+);
