@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\NavChain;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
@@ -33,6 +34,7 @@ $user = di(User::class);
 $view = di(Render::class);
 $route = di('route');
 $nav_chain = di(NavChain::class);
+$request = di(Request::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
