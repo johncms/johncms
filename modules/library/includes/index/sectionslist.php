@@ -45,5 +45,3 @@ echo $view->render(
             },
     ]
 );
-
-
