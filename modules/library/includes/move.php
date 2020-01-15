@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 if ($adm) {
     /** @var PDO $db */
     $db = di(PDO::class);
-    $stmt = $db->query('SELECT `id`, `pos` FROM `library_cats` WHERE ' . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC');
+    $stmt = $db->query('SELECT `id`, `pos` FROM `library_cats` WHERE ' . ($do === 'dir' ? '`parent` = ' . $id : '`parent` = 0') . ' ORDER BY `pos` ASC');
     $y = 0;
     $arrsort = [];
 
@@ -34,8 +34,8 @@ if ($adm) {
     [$num1, $pos1] = explode('|', $arrsort[$posid]);
     [$num2, $pos2] = explode('|', $arrsort[($type === 'up' ? $posid - 1 : $posid + 1)]);
 
-    $db->exec('UPDATE `library_cats` SET `pos`=' . $pos2 . ' WHERE `id`=' . $num1);
-    $db->exec('UPDATE `library_cats` SET `pos`=' . $pos1 . ' WHERE `id`=' . $num2);
+    $db->exec('UPDATE `library_cats` SET `pos` = ' . $pos2 . ' WHERE `id` = ' . $num1);
+    $db->exec('UPDATE `library_cats` SET `pos` = ' . $pos1 . ' WHERE `id` = ' . $num2);
 
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;

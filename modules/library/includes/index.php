@@ -26,7 +26,7 @@ if (! $id) {
     $dir_nav = new Tree($id);
     $dir_nav->processNavPanel();
 
-    echo '<div class="phdr">' . $dir_nav->printNavPanel() . '</div>';
+    echo $dir_nav->printNavPanel();
 
     if ($actdir) {
         require_once 'index/sectionslist.php';

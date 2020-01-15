@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Library;
 
-use Exception;
 use PDO;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -85,9 +84,9 @@ class Utils
     {
         $db = di(PDO::class);
         return $db->query(
-                'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
+            'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
                 . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id)
-            )->fetchColumn()
+        )->fetchColumn()
             . ' ' . ($dir ? ' ' . _t('Sections') : ' ' . _t('Articles'));
     }
 

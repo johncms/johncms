@@ -26,12 +26,14 @@ class Links
 {
     /**
      * query string для ссылок
+     *
      * @var string
      */
     private $link_url;
 
     /**
      * Массив
+     *
      * @var array
      */
     private $in;
@@ -58,7 +60,8 @@ class Links
 
     /**
      * Метод для подготовки ссылок
-     * @param $tpl Имя метода для подготовки ссылок
+     *
+     * @param $tpl
      * @return $this|bool
      */
     public function proccess($tpl)
@@ -74,6 +77,7 @@ class Links
 
     /**
      * Метод для обычных ссылок
+     *
      * @param string $n
      * @return string
      */
@@ -84,6 +88,7 @@ class Links
 
     /**
      * Метод для ссылок облака
+     *
      * @param array $n
      * @return string
      */
@@ -94,10 +99,11 @@ class Links
 
     /**
      * Добавление разделителя ссылкам
-     * @param string $sepatator разделитель
-     * @return $this|bool
+     *
+     * @param string $sepatator
+     * @return self|bool
      */
-    public function linkSeparator(string $sepatator = ' | ')
+    public function linkSeparator(string $sepatator = ' | '): self
     {
         if ($this->in) {
             $this->res = implode($sepatator, $this->res ?? $this->in);
@@ -110,6 +116,7 @@ class Links
 
     /**
      * Получение результата
+     *
      * @return string
      */
     public function result(): string
@@ -119,6 +126,7 @@ class Links
 
     /**
      * Получение массива
+     *
      * @return array
      */
     public function getIn(): array

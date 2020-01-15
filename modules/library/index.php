@@ -96,32 +96,6 @@ if ($id > 0) {
         $textl .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
 }
-?>
-
-    <!-- Думаю это уже не нужно будет -->
-    <!-- style table image -->
-    <style type="text/css">
-        .avatar {
-            display: table-cell;
-            vertical-align: top;
-        }
-
-        .avatar img {
-            height: 32px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            width: 32px;
-        }
-
-        .righttable {
-            display: table-cell;
-            vertical-align: top;
-            width: 100%;
-        }
-    </style>
-    <!-- end style -->
-
-<?php
 
 if (! $config['mod_lib']) {
     echo $tools->displayError(_t('Library is closed'));

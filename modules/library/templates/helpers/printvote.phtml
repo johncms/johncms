@@ -1,0 +1,8 @@
+<form action="?id=<?= $id ?>&amp;vote" method="post">
+    <div class="gmenu" style="padding: 8px">
+        <?php for ($r = 0; $r < 6; $r++) : ?>
+            &nbsp;<input type="radio" <?= ($r === $userVote ? 'checked="checked" ' : '') ?>name="vote" value="<?= $r ?>" /><?= $r ?>
+        <?php endfor; ?>
+        <br><input type="submit" name="rating_submit" value="<?= _t('Vote') ?>"/>
+    </div>
+</form>

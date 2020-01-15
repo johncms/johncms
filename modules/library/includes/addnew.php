@@ -13,7 +13,6 @@ declare(strict_types=1);
 use Library\Hashtags;
 use Library\Utils;
 use Psr\Http\Message\ServerRequestInterface;
-use Intervention\Image\ImageManagerStatic as Image;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

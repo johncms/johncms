@@ -18,7 +18,7 @@ $article = false;
 
 if ($id && isset($_GET['yes'])) {
     $sql = 'UPDATE `library_texts` SET `premod` = 1 WHERE `id` = ' . $id;
-    $article = $tools->checkout($db->query('SELECT `name` FROM `library_texts` WHERE `id`=' . $id)->fetchColumn());
+    $article = $tools->checkout($db->query('SELECT `name` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn());
 }
 
 if (isset($_GET['all'])) {

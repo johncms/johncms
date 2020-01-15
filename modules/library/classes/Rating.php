@@ -19,6 +19,7 @@ use PDO;
 /**
  * Звездный рейтинг статей
  * Class Rating
+ *
  * @package Library
  * @author  Koenig(Compolomus)
  */
@@ -36,12 +37,14 @@ class Rating
 
     /**
      * обязательный аргумент, индификатор статьи
+     *
      * @var int
      */
     private $lib_id;
 
     /**
      * Rating constructor.
+     *
      * @param int $id
      */
     public function __construct(int $id)
@@ -65,6 +68,7 @@ class Rating
 
     /**
      * Добавление|обновление рейтинговой звезды
+     *
      * @param $point (0 - 5)
      * return redirect на страницу для голосования
      */
@@ -88,6 +92,7 @@ class Rating
 
     /**
      * Получение средней оценки (количество закрашенных звезд)
+     *
      * @return int
      */
     private function getRate(): int
@@ -100,6 +105,7 @@ class Rating
 
     /**
      * Вывод закрашенных звезд по рейтингу
+     *
      * @param int $anchor
      * @return string
      */
@@ -107,15 +113,14 @@ class Rating
     {
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
+        $url = $this->asset->url('images/old/star.' . (str_replace('.', '-', (string) $this->getRate())) . '.gif');
 
-        return ($anchor ? '<a href="#rating">' : '') .
-            '<img src="' . $this->asset->url('images/old/star.' . (str_replace('.', '-', (string) $this->getRate())) . '.gif') . '" alt="">' .
-            ($anchor ? '</a>' : '') .
-            ' (' . $stmt->fetchColumn() . ')';
+        return '<img src="' . $url . '" alt="">' . ' (' . $stmt->fetchColumn() . ')';
     }
 
     /**
      * Вывод формы для голосования
+     *
      * @return string
      */
     public function printVote(): string
@@ -125,16 +130,6 @@ class Rating
         $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
         $userVote = $stmt->execute([$user->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
 
-        $return = PHP_EOL;
-
-        $return .= '<form action="?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
-        $return .= '<a id="rating"></a>';
-        for ($r = 0; $r < 6; $r++) {
-            $return .= ' <input type="radio" ' . ($r === $userVote ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
-        }
-        $return .= '<br><input type="submit" name="rating_submit" value="' . _t('Vote') . '" />' . PHP_EOL;
-        $return .= '</div></form>' . PHP_EOL;
-
-        return $return;
+        return ViewHelper::printVote($this->lib_id, $userVote);
     }
 }
