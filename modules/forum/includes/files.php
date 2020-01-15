@@ -40,21 +40,21 @@ $do = isset($_GET['do']) && (int) ($_GET['do']) > 0 && (int) ($_GET['do']) < 10 
 if ($c) {
     $id = $c;
     $lnk = '&amp;c=' . $c;
-    $sql = " AND `cat` = '" . $c . "'";
+    $sql = " AND `files`.`cat` = '" . $c . "'";
     $caption = __('Category Files');
     $input = '<input type="hidden" name="c" value="' . $c . '"/>';
     $type = '';
 } elseif ($s) {
     $id = $s;
     $lnk = '&amp;s=' . $s;
-    $sql = " AND `subcat` = '" . $s . "'";
+    $sql = " AND `files`.`subcat` = '" . $s . "'";
     $caption = __('Section files');
     $input = '<input type="hidden" name="s" value="' . $s . '"/>';
     $type = 'type=topics';
 } elseif ($t) {
     $id = $t;
     $lnk = '&amp;t=' . $t;
-    $sql = " AND `topic` = '" . $t . "'";
+    $sql = " AND `files`.`topic` = '" . $t . "'";
     $caption = __('Topic Files');
     $input = '<input type="hidden" name="t" value="' . $t . '"/>';
     $type = 'type=topic';
@@ -100,7 +100,7 @@ $nav_chain->add($caption);
 
 if ($do || isset($_GET['new'])) {
     // Выводим список файлов нужного раздела
-    $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE ' . (isset($_GET['new']) ? " `time` > '${new}'" : " `filetype` = '${do}'") . $sql)->fetchColumn();
+    $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE ' . (isset($_GET['new']) ? " `time` > '${new}'" : " `filetype` = '${do}'") . $sql)->fetchColumn();
 
     if (isset($_GET['new'])) {
         $caption = __('New Files');
@@ -108,38 +108,42 @@ if ($do || isset($_GET['new'])) {
     $files = [];
 
     if ($total) {
-        $req = $db->query(
-            'SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
-            FROM `cms_forum_files`
-            LEFT JOIN `forum_messages` ON `cms_forum_files`.`post` = `forum_messages`.`id`
-            LEFT JOIN `forum_topic` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
-            WHERE ' . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
-            "ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess
-        );
+        $req = $db->query('SELECT `files`.*,
+    `mess`.`user_id`,
+    `mess`.`text`,
+    `topicname`.`name` AS `topicname`,
+    u.`name`,
+    u.`sex`,
+    u.`rights`,
+    u.`lastdate`,
+    u.`status`,
+    u.`datereg`,
+    u.`ip`,
+    u.`browser`, (
+    SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = `files`.`topic` AND `id` ' . ($set_forum['upfp'] ? '>=' : '<=') . ' `files`.`post` ) AS `page`
+FROM `cms_forum_files` files
+JOIN `forum_messages` mess ON `files`.`post` = `mess`.`id`
+JOIN `forum_topic` AS `topicname` ON `files`.`topic` = `topicname`.`id`
+JOIN `users` u ON u.`id` = `mess`.`user_id`
+WHERE ' . (isset($_GET['new']) ? " `files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($user->rights >= 7 ? '' : " AND `del` <> '1'") . $sql . "
+ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 
         while ($res = $req->fetch()) {
-            $res_u = $db->query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'")->fetch();
             $text = mb_substr($res['text'], 0, 500);
             $text = $tools->checkout($text, 1, 0);
-            $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
+            $text = preg_replace('/\[\/?(\w+).*?\]/is', '', $text);
             $res['post_text'] = $text;
 
-            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $user->config->kmess);
+            $page = ceil($res['page'] / $user->config->kmess);
 
             $res['post_time'] = $tools->displayDate($res['time']);
             $res['user_profile_link'] = '';
-            if ($user->isValid() && $user->id != $res['user_id'] && ! empty($res_u)) {
+            if ($user->isValid() && $user->id != $res['user_id']) {
                 $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
             }
 
-            $res['user_is_online'] = false;
-            $res['user_rights_name'] = '';
-            $res['user_name'] = __('Guest');
-            if (! empty($res_u)) {
-                $res['user_is_online'] = time() <= $res_u['lastdate'] + 300;
-                $res['user_rights_name'] = $user_rights_names[$res_u['rights']] ?? '';
-                $res['user_name'] = $res_u['name'];
-            }
+            $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+            $res['user_name'] = $res['name'];
 
             $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['post'];
             $res['topic_url'] = '/forum/?type=topic&id=' . $res['topic'] . '&amp;page=' . $page;
@@ -181,12 +185,12 @@ if ($do || isset($_GET['new'])) {
 }
 
 // Выводим список разделов, в которых есть файлы
-$countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '${new}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+$countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE `time` > '${new}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
 $link = [];
 $total = 0;
 $sections = [];
 foreach ($types as $key => $type) {
-    $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '${key}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+    $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE `filetype` = '${key}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     if ($count > 0) {
         $sections[] = [
             'url'   => '/forum/?act=files&amp;do=' . $key . $lnk,
