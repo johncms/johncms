@@ -100,7 +100,7 @@ class Rating
         $stmt = $this->db->prepare('SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
 
-        return (int) floor($stmt->fetchColumn() * 2) / 2;
+        return (int) (floor($stmt->fetchColumn() * 2) / 2);
     }
 
     /**

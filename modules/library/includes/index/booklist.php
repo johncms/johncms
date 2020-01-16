@@ -18,6 +18,8 @@ $moderMenu = (isset($id) && $user->isValid()) && ($adm || ($db->query('SELECT `u
 echo $view->render(
     'library::booklist',
     [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
         'pagination' => $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
         'total'      => $total,
         'admin'      => $adm,
@@ -38,7 +40,7 @@ echo $view->render(
                         ? '<a href="' . $config['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
                         : $tools->checkout($res['uploader']);
 
-                    $res['who'] = $uploader . ' (' . $tools->displayDate($res['time']) . ')';
+                    $res['who'] = $uploader . '&nbsp;(' . $tools->displayDate($res['time']) . ')';
 
                     $res['name'] = $tools->checkout($res['name']);
                     $res['announce'] = $tools->checkout($res['announce'], 0, 0);
