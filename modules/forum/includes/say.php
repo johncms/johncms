@@ -390,7 +390,9 @@ switch ($post_type) {
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date('d.m.Y H:i', $type1['date']);
-            $msg = '[c][url=' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . ']#[/url] ' . $type1['user_name'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
+            $msg = '[c][url=' . $config['homeurl'] . '/forum/?act=show_post&id=' .
+                $type1['id'] . ']#[/url] [url=' . $config['homeurl'] . '/profile/?user_id=' . $type1['id'] . ']' . $type1['user_name'] . '[/url]'
+                . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
