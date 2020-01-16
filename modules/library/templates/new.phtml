@@ -1,0 +1,52 @@
+<div class="phdr"><strong><a href="?"><?= _t('Library') ?></a></strong> | <?= _t('New Articles') ?></div>
+<?php if ($total > $user->config->kmess) : ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?php if ($total) : ?>
+    <?php foreach ($list() as $newlist): ?>
+        <?php $i = 0; ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <?php if ($newlist['cover']) : ?>
+                <div class="avatar"><img src="../upload/library/images/small/<?= $newlist['id'] ?>.png" alt="screen"/></div>
+            <?php endif; ?>
+            <table class="desc">
+                <tr>
+                    <td class="caption"><?= _t('Section') ?>:</td>
+                    <td><a href="?do=dir&amp;id=<?= $newlist['cat_id'] ?>"><?= $newlist['catalog_name'] ?></a></td>
+                </tr>
+                <?php if ($newlist['tags']) : ?>
+                    <tr>
+                        <td class="caption"><?= _t('The Tags') ?>:</td>
+                        <td><?= $newlist['tags'] ?></td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <td class="caption"><?= _t('Who added') ?>:</td>
+                    <td><?= $newlist['who'] ?></td>
+                </tr>
+                <tr>
+                    <td class="caption"><?= _t('Rating') ?>:</td>
+                    <td><?= $newlist['ratingView'] ?></td>
+                </tr>
+                <tr>
+                    <td class="caption"><?= _t('Number of readings') ?>:</td>
+                    <td><?= $newlist['count_views'] ?></td>
+                </tr>
+                <tr>
+                    <?php if ($newlist['comments']) : ?>
+                        <td class="caption"><a href="?act=comments&amp;id=<?= $newlist['id'] ?>"><?= _t('Comments') ?></a>:</td>
+                        <td><?= $newlist['comm_count'] ?></td>
+                    <?php else : ?>
+                        <td class="caption"><?= _t('Comments') ?>:</td>
+                        <td><?= _t('Comments are closed') ?></td>
+                    <?php endif; ?>
+                </tr>
+            </table>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+<?php if ($total > $user->config->kmess) : ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<p><a href="?"><?= _t('To Library') ?></a></p>
