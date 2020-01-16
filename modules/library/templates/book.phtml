@@ -1,70 +1,85 @@
-<div class="phdr"><a href="?"><strong><?= __('Library') ?></strong></a>
-    | <a href="?do=dir&amp;id=<?= $catalog['id'] ?>"><?= $catalog['name'] ?></a>
-    <?php if ($page > 1) : ?>
-        | <?= $res['name'] ?>
-    <?php endif; ?>
-</div>
-<!-- Page switching -->
-<?php if ($count_pages > 1): ?>
-    <div><?= $pagination ?></div>
-<?php endif ?>
-<?php if ($page === 1) : ?>
-    <div class="list2">
-        <h2><?= $res['name'] ?></h2>
-        <table class="desc">
-            <?php if ($tags) : ?>
-            <tr>
-                <td class="caption"><?= __('The Tags') ?>:</td>
-                <td><?= $tags ?></td>
-            </tr>
-                <?php endif; ?>
-            <tr>
-                <td class="caption"><?= __('Who added') ?>:</td>
-                <td><?= $who ?></td>
-            </tr>
-            <tr>
-                <td class="caption"><?= __('Rating') ?>:</td>
-                <td><?= $ratingView ?></td>
-            </tr>
-            <tr>
-                <td class="caption"><?= __('Number of readings') ?>:</td>
-                <td><?= $res['count_views'] ?></td>
-            </tr>
-            <tr>
-                <?php if ($res['comments']) : ?>
-                    <td class="caption"><a href="?act=comments&amp;id=<?= $res['id'] ?>"><?= __('Comments') ?></a>:</td>
-                    <td><?= $res['comm_count'] ?></td>
-                <?php else : ?>
-                    <td class="caption"><?= __('Comments') ?>:</td>
-                    <td><?= __('Comments are closed') ?></td>
-                <?php endif; ?>
-            </tr>
-        </table>
-    </div>
-    <?php if ($cover) : ?>
-        <a href="../upload/library/images/orig/<?= $res['id'] ?>.png">
-            <img style="width: 50%; max-width: 240px; height: auto; float: left; clear: both; margin: 10px"
-                 src="../upload/library/images/big/<?= $res['id'] ?>.png" alt="screen"/>
-        </a>
-    <?php endif; ?>
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+<?php if ($page === 1 && $cover) : ?>
+    <a href="../upload/library/images/orig/<?= $res['id'] ?>.png" class="float-lg-left pr-3">
+        <img src="../upload/library/images/big/<?= $res['id'] ?>.png" alt="screen" class="img-thumbnail">
+    </a>
 <?php endif; ?>
-<div class="list2" style="padding: 8px">
+<div class="pb-3 pt-2">
     <?= $res['text'] ?>
     <div style="clear: both"></div>
 </div>
-<div class="phdr"><?= __('Download file') ?>
-    <a href="?act=download&amp;type=txt&amp;id=<?= $res['id'] ?>">txt</a>
-    | <a href="?act=download&amp;type=fb2&amp;id=<?= $res['id'] ?>">fb2</a>
-</div>
 <!-- Page switching -->
 <?php if ($count_pages > 1): ?>
     <div><?= $pagination ?></div>
 <?php endif ?>
-<?= $ratingVote ?>
+
+<div class="pt-3 border-top">
+    <span class="mr-2">
+        <?= __('Download file') ?>
+    </span>
+    <a href="?act=download&amp;type=txt&amp;id=<?= $res['id'] ?>" class="btn btn-outline-secondary btn-sm">txt</a>
+    <a href="?act=download&amp;type=fb2&amp;id=<?= $res['id'] ?>" class="btn btn-outline-secondary btn-sm">fb2</a>
+</div>
+<?php if ($page === 1) : ?>
+    <div class="border-top border-bottom mt-3 mb-1 pb-2 pt-2 text-muted">
+        <?php if ($tags) : ?>
+            <div>
+                <?= __('The Tags:') ?>
+                <span><?= $tags ?></span>
+            </div>
+        <?php endif; ?>
+        <div>
+            <?= __('Who added:') ?>
+            <span><?= $who ?></span>
+        </div>
+        <div>
+            <?= __('Rating:') ?>
+            <span><?= $ratingView ?></span>
+        </div>
+        <div>
+            <?= __('Number of readings:') ?>
+            <span><?= $res['count_views'] ?></span>
+        </div>
+        <?php if ($res['comments']) : ?>
+            <div>
+                <a href="?act=comments&amp;id=<?= $res['id'] ?>"><?= __('Comments:') ?></a> (<?= $res['comm_count'] ?>)
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+<div class="border-bottom mb-3">
+    <div class="row">
+        <div class="col-md-3 mb-3 mt-2">
+            <?= $ratingVote ?>
+        </div>
+    </div>
+</div>
 <?php if ($moderMenu) : ?>
-    <p>
-        <a href="?act=moder&amp;type=article&amp;id=<?= $res['id'] ?>"><?= __('Edit') ?></a>
-        <br>
-        <a href="?act=del&amp;type=article&amp;id=<?= $res['id'] ?>"><?= __('Delete') ?></a>
-    </p>
+    <div class="mt-2">
+        <a href="?act=edit&amp;type=article&amp;id=<?= $res['id'] ?>" class="btn btn-primary"><?= __('Edit') ?></a>
+        <a href="?act=del&amp;type=article&amp;id=<?= $res['id'] ?>" class="btn btn-danger"><?= __('Delete') ?></a>
+    </div>
 <?php endif; ?>

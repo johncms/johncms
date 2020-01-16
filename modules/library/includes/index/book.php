@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 use Library\Hashtags;
 use Library\Rating;
+use Library\Tree;
 use Library\Utils;
 
 $res = $db->query('SELECT * FROM `library_texts` WHERE `id` = ' . $id)->fetch();
@@ -71,12 +80,20 @@ if (! $res['premod']) {
     );
     $res['text'] = $tools->smilies($text, $user->rights ? 1 : 0);
     $res['name'] = $tools->checkout($res['name']);
+
+    $dir_nav = new Tree($res['cat_id']);
+    $dir_nav->processNavPanel();
+    $dir_nav->printNavPanel();
+
     $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id` = ' . $res['cat_id'] . ' LIMIT 1')->fetch();
     $catalog['name'] = $tools->checkout($catalog['name']);
+    $nav_chain->add($page_title);
 
     echo $view->render(
         'library::book',
         [
+            'title'       => $title,
+            'page_title'  => $page_title ?? $title,
             'pagination'  => $tools->displayPagination('?id=' . $id . '&amp;', $page === 1 ? 0 : ($page - 1) * 1, $count_pages, 1),
             'catalog'     => $catalog,
             'moderMenu'   => $moderMenu,
