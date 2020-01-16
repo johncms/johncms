@@ -39,8 +39,7 @@
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
         "johncms/system": "^1.0",
-        "mobicms/captcha": "^2.0",
-        "verot/class.upload.php": "^2.0"
+        "mobicms/captcha": "^2.0"
     },
     "require-dev": {
         "gettext/gettext": "^5.2",
