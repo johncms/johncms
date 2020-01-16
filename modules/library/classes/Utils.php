@@ -87,7 +87,7 @@ class Utils
             'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
                 . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id)
         )->fetchColumn()
-            . ' ' . ($dir ? ' ' . _t('Sections') : ' ' . _t('Articles'));
+            . ' ' . ($dir ? ' ' . __('Sections') : ' ' . __('Articles'));
     }
 
     public static function imageUpload(int $id, $image): void

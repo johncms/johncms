@@ -15,17 +15,17 @@
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <div class="menu"><p><?= _t('The list is empty') ?></p></div>
+    <div class="menu"><p><?= __('The list is empty') ?></p></div>
 <?php endif ?>
-<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+<div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
 <!-- Page switching -->
 <?php if ($total > $user->config->kmess): ?>
     <div><?= $pagination ?></div>
 <?php endif ?>
 <?php if ($admin) : ?>
     <p>
-        <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>"><?= _t('Edit') ?></a><br>
-        <a href="?act=del&amp;type=dir&amp;id=<?= $id ?>"><?= _t('Delete') ?></a><br>
-        <a href="?act=mkdir&amp;id=<?= $id ?>"><?= _t('Create') ?></a>
+        <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>"><?= __('Edit') ?></a><br>
+        <a href="?act=del&amp;type=dir&amp;id=<?= $id ?>"><?= __('Delete') ?></a><br>
+        <a href="?act=mkdir&amp;id=<?= $id ?>"><?= __('Create') ?></a>
     </p>
 <?php endif; ?>

@@ -22,9 +22,9 @@ $sort = isset($_GET['sort']) && $_GET['sort'] === 'rating'
         : 'read'
     );
 
-$menu[] = $sort === 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . _t('Most readings') . '</a> ';
-$menu[] = $sort === 'rating' ? '<strong>' . _t('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . _t('By rating') . '</a> ';
-$menu[] = $sort === 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . _t('By comments') . '</a>';
+$menu[] = $sort === 'read' ? '<strong>' . __('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . __('Most readings') . '</a> ';
+$menu[] = $sort === 'rating' ? '<strong>' . __('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . __('By rating') . '</a> ';
+$menu[] = $sort === 'comm' ? '<strong>' . __('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . __('By comments') . '</a>';
 
 $menu = implode(' | ', $menu);
 

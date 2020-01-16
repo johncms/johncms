@@ -19,7 +19,7 @@ if (! $adm) {
 $created = false;
 if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
-        $error = $tools->displayError(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        $error = $tools->displayError(__('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . __('Repeat') . '</a>');
     } else {
         $lastinsert = $db->query('SELECT MAX(`id`) FROM `library_cats`')->fetchColumn();
         ++$lastinsert;

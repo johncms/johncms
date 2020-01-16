@@ -54,7 +54,7 @@ $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $adm = ($user->rights > 4);
 
-$textl = _t('Library');
+$textl = __('Library');
 
 $error = '';
 

@@ -3,39 +3,39 @@
 <?php endif; ?>
 
 <?php if (isset($_POST['submit']) && ! $error) : ?>
-    <div><?= _t('Article added') ?></div>
+    <div><?= __('Article added') ?></div>
     <?php if ($md) : ?>
-        <div><a href="?id=<?= $cid ?>"><?= _t('To Article') ?></a></div>
+        <div><a href="?id=<?= $cid ?>"><?= __('To Article') ?></a></div>
     <?php else : ?>
-        <div><?= _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') ?></div>
-        <div><a href="?do=dir&amp;id=<?= $id ?>"><?= _t('To Section') ?></a></div>
+        <div><?= __('Thank you for what we have written. After checking moderated, your Article will be published in the library.') ?></div>
+        <div><a href="?do=dir&amp;id=<?= $id ?>"><?= __('To Section') ?></a></div>
     <?php endif; ?>
 <?php else : ?>
-    <div class="phdr"><strong><a href="?"><?= _t('Library') ?></a></strong> | <?= _t('Write Article') ?></div>
+    <div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= __('Write Article') ?></div>
     <form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=<?= $id ?>" method="post">
         <div class="menu">
             <p>
-            <h3><?= _t('Title') ?> (max. 100):</h3>
+            <h3><?= __('Title') ?> (max. 100):</h3>
             <input type="text" name="name" value="<?= $name ?>"/></p>
             <p>
-            <h3><?= _t('Announce') ?> (max. 500):</h3>
+            <h3><?= __('Announce') ?> (max. 500):</h3>
             <textarea name="announce" rows="2" cols="20"><?= $announce ?></textarea></p>
             <p>
-            <h3> <?= _t('Text') ?>:</h3>
+            <h3> <?= __('Text') ?>:</h3>
             <?= $bbcode ?>
             <textarea name="text" rows=" <?= $user->config->fieldHeight ?>" cols="20"><?= $text ?></textarea></p>
-            <p><input type="checkbox" name="comments" value="1" checked="checked"/><?= _t('Commenting on the Article') ?></p>
+            <p><input type="checkbox" name="comments" value="1" checked="checked"/><?= __('Commenting on the Article') ?></p>
             <p>
-            <h3><?= _t('To upload a photo') ?></h3>
+            <h3><?= __('To upload a photo') ?></h3>
             <input type="file" name="image" accept="image/*"/></p>
             <p>
-            <h3><?= _t('Select the text file') ?></h3>
-            <input type="file" name="textfile" accept="text/plain"/><br><small><?= _t('Text entry field will be ignored') ?></small></p>
+            <h3><?= __('Select the text file') ?></h3>
+            <input type="file" name="textfile" accept="text/plain"/><br><small><?= __('Text entry field will be ignored') ?></small></p>
             <p>
-            <h3><?= _t('Tags') ?></h3>
-            <input name="tags" type="text" value="<?= $tag ?>"/><br><small><?= _t('Specify the Tag to the Article, separated by commas') ?></small></p>
-            <p><input type="submit" name="submit" value="<?= _t('Save') ?>"/></p>
+            <h3><?= __('Tags') ?></h3>
+            <input name="tags" type="text" value="<?= $tag ?>"/><br><small><?= __('Specify the Tag to the Article, separated by commas') ?></small></p>
+            <p><input type="submit" name="submit" value="<?= __('Save') ?>"/></p>
         </div>
     </form>
-    <div class="phdr"><a href="?do=dir&amp;id=<?= $id ?>"><?= _t('Back') ?></a></div>
+    <div class="phdr"><a href="?do=dir&amp;id=<?= $id ?>"><?= __('Back') ?></a></div>
 <?php endif; ?>

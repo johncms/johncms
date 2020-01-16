@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
             try {
                 Utils::imageUpload($id, $screen);
             } catch (Exception $exception) {
-                $error = _t('Photo uploading error');
+                $error = __('Photo uploading error');
             }
         }
 
@@ -143,7 +143,7 @@ if (isset($_POST['submit'])) {
                 ? '<option ' . ($type === 'dir' && $row['parent'] === 0
                     ? 'selected="selected"'
                     : '')
-                . ' value="0">' . _t('The ROOT') . '</option>'
+                . ' value="0">' . __('The ROOT') . '</option>'
                 : '');
             while ($res = $sqlsel->fetch()) {
                 if ($row['name'] !== $res['name']) {

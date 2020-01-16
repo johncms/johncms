@@ -37,10 +37,10 @@ if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` 
     $flood = $tools->antiflood();
 
     if ($flood) {
-        $err[] = sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood);
+        $err[] = sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood);
     } elseif (isset($_POST['submit'])) {
         if (empty($name)) {
-            $err[] = _t('You have not entered the name');
+            $err[] = __('You have not entered the name');
         }
         if (! empty($_FILES['textfile']['name'])) {
             $ext = explode('.', $_FILES['textfile']['name']);
@@ -53,18 +53,18 @@ if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` 
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        $err[] = _t('The file is invalid encoding, preferably UTF-8');
+                        $err[] = __('The file is invalid encoding, preferably UTF-8');
                     }
                     $text = trim($txt);
                     unlink(UPLOAD_PATH . 'library/tmp' . DS . $newname);
                 } else {
-                    $err[] = _t('Error uploading');
+                    $err[] = __('Error uploading');
                 }
             } else {
-                $err[] = _t('Invalid file format allowed * .txt');
+                $err[] = __('Invalid file format allowed * .txt');
             }
         } elseif (empty($text)) {
-            $err[] = _t('You have not entered text');
+            $err[] = __('You have not entered text');
         }
 
         $md = $adm ? 1 : 0;
@@ -106,7 +106,7 @@ if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` 
                     try {
                         Utils::imageUpload($cid, $screen);
                     } catch (Exception $exception) {
-                        $err[] = _t('Photo uploading error');
+                        $err[] = __('Photo uploading error');
                     }
                 }
 

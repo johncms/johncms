@@ -46,7 +46,7 @@ $change = ($type === 'dir'
 switch ($type) {
     case 'dir':
         if ($db->query('SELECT COUNT(*) FROM `library_cats` WHERE `id` = ' . $id)->fetchColumn() === 0) {
-            $error = $tools->displayError(_t('Section does not exist'));
+            $error = $tools->displayError(__('Section does not exist'));
         } elseif (! $change) {
             $dirchange = true;
             $mode = $_POST['mode'] ?? ($do ?? false);
@@ -82,7 +82,7 @@ switch ($type) {
                 case 'delall':
                     if (isset($_GET['deldeny'])) {
                         $childs = new Tree($id);
-                        $args = array_merge([_t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)')], array_values($childs->getAllChildsId()->cleanDir()));
+                        $args = array_merge([__('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)')], array_values($childs->getAllChildsId()->cleanDir()));
                         $deldeny = sprintf(...$args);
                         // TODO: Запилить удаление рэйтинга
                     }
@@ -95,7 +95,7 @@ switch ($type) {
 
     case 'article':
         if ($db->query('SELECT COUNT(*) FROM `library_texts` WHERE `id` = ' . $id)->rowCount() === 0) {
-            $error = $tools->displayError(_t('Articles do not exist'));
+            $error = $tools->displayError(__('Articles do not exist'));
         } else {
             $sql = 'DELETE FROM `library_texts` WHERE `id` = ' . $id;
             if (isset($_GET['yes'])) {

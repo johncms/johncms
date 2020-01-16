@@ -1,17 +1,17 @@
-<div class="phdr"><strong><?= _t('Library') ?></strong></div>
-<div class="topmenu"><a href="?act=search"><?= _t('Search') ?></a> | <a href="?act=tagcloud"><?= _t('Tag Cloud') ?></a></div>
+<div class="phdr"><strong><?= __('Library') ?></strong></div>
+<div class="topmenu"><a href="?act=search"><?= __('Search') ?></a> | <a href="?act=tagcloud"><?= __('Tag Cloud') ?></a></div>
 <div class="gmenu">
     <p>
         <?php if ($admin && $premod) : ?>
-    <div><?= _t('On moderation') ?>: <a href="?act=premod"><?= $countPremod ?></a></div>
+    <div><?= __('On moderation') ?>: <a href="?act=premod"><?= $countPremod ?></a></div>
     <?php endif; ?>
     <?php if ($new) : ?>
-        <img src="#" alt="" class="icon"><a href="?act=new"><?= _t('New Articles') ?></a> (<?= $new ?>)
+        <img src="#" alt="" class="icon"><a href="?act=new"><?= __('New Articles') ?></a> (<?= $new ?>)
         <br>
     <?php endif; ?>
-    <img src="#" alt="" class="icon"><a href="?act=top"><?= _t('Rating articles') ?></a>
+    <img src="#" alt="" class="icon"><a href="?act=top"><?= __('Rating articles') ?></a>
     <br>
-    <img src="#" alt="" class="icon"><a href="?act=lastcom"><?= _t('Latest comments') ?></a>
+    <img src="#" alt="" class="icon"><a href="?act=lastcom"><?= __('Latest comments') ?></a>
     </p>
 </div>
 <?php if ($total) : ?>
@@ -29,9 +29,9 @@
         </div>
     <?php endforeach; ?>
 <?php else : ?>
-    <div class="menu"><?= _t('The list is empty') ?></div>
+    <div class="menu"><?= __('The list is empty') ?></div>
 <?php endif; ?>
-<div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+<div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
 <?php if ($admin) : ?>
-    <p><a href="?act=mkdir&amp;id=0"><?= _t('Create Section') ?></a></p>
+    <p><a href="?act=mkdir&amp;id=0"><?= __('Create Section') ?></a></p>
 <?php endif; ?>

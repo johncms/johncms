@@ -1,4 +1,4 @@
-<div class="phdr"><strong><a href="?"><?= _t('Library') ?></a></strong> | <?= _t('Latest comments') ?></div>
+<div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= __('Latest comments') ?></div>
 <?php if ($total) : ?>
     <?php $i = 0; ?>
     <?php foreach ($list() as $comment): ?>
@@ -9,10 +9,10 @@
             <div class="righttable"><a href="?act=comments&amp;id=<?= $comment['id'] ?>"><?= $comment['name'] ?></a>
                 <div><?= $comment['text'] ?></div>
             </div>
-            <div class="sub"><?= _t('Who added') ?>: <?= $comment['who'] ?></div>
+            <div class="sub"><?= __('Who added') ?>: <?= $comment['who'] ?></div>
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <div class="menu"><p><?= _t('The list is empty') ?></p></div>
+    <div class="menu"><p><?= __('The list is empty') ?></p></div>
 <?php endif; ?>
-<div class="phdr"><a href="?"><?= _t('Back') ?></a></div>
+<div class="phdr"><a href="?"><?= __('Back') ?></a></div>

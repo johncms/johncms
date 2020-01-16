@@ -1,5 +1,5 @@
 <?php if ($total) : ?>
-    <div class="phdr"><a href="?"><strong><?= _t('Library') ?></strong></a> | <?= _t('Tags') ?></div>
+    <div class="phdr"><a href="?"><strong><?= __('Library') ?></strong></a> | <?= __('Tags') ?></div>
     <?php if ($total > $user->config->kmess): ?>
         <div><?= $pagination ?></div>
     <?php endif ?>
@@ -10,19 +10,19 @@
                 <a href="?id=<?= $tags['id'] ?>"><?= $tags['name'] ?></a>
                 <div><?= $tags['text'] ?></div>
             </div>
-            <div class="sub"><?= _t('Who added') ?>: <?= $tags['who'] ?></div>
-            <div><span class="gray"><?= _t('Number of readings') ?>:</span><?= $tags['count_views'] ?></div>
+            <div class="sub"><?= __('Who added') ?>: <?= $tags['who'] ?></div>
+            <div><span class="gray"><?= __('Number of readings') ?>:</span><?= $tags['count_views'] ?></div>
             <div><?= $tags['tags'] ?></div>
             <?php if ($tags['comments']) : ?>
-                <div><a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= _t('Comments') ?></a> (<?= $tags['comm_count'] ?>)</div>
+                <div><a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= __('Comments') ?></a> (<?= $tags['comm_count'] ?>)</div>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
-    <div class="phdr"><?= _t('Total') ?>: <?= $total ?></div>
+    <div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
     <?php if ($total > $user->config->kmess): ?>
         <div><?= $pagination ?></div>
     <?php endif ?>
-    <p><a href="?"><?= _t('To Library') ?></a></p>
+    <p><a href="?"><?= __('To Library') ?></a></p>
 <?php else: ?>
-    <div class="menu"><p><?= _t('The list is empty') ?></p></div>
+    <div class="menu"><p><?= __('The list is empty') ?></p></div>
 <?php endif; ?>
