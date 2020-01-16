@@ -1,0 +1,38 @@
+<?php return array (
+  'domain' => 'news',
+  'plural-forms' => 'nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'You have not entered news title' => 'قم بادخال عنوان الخبر',
+      'You have not entered news text' => 'قم بادخال نص الخبر',
+      'You cannot add the message so often. Please, wait %d seconds.' => 'لا يمكنك الاضافة فضلا انتظر %d ثانيه لتستطيع اضافة خبر جديد.',
+      'News added' => 'تم اضافة الخبر',
+      'Delete all news older than 1 week' => 'حذف جميع الأخبار التي مضى عليها أكثر من أسبوع واحد',
+      'Delete all news' => 'حذف كل الاخبار',
+      'Delete all news older than 1 month' => 'حذف جميع الأخبار التي مضى عليها أكثر من شهر',
+      'News' => 'اخبار الموقع',
+      'Wrong data' => 'بيانات خاطئة',
+      'Title' => 'عنوان',
+      'Text' => 'النص',
+      'Discussion' => 'مناقشة',
+      'Do not discuss' => 'لا تناقشني',
+      'Save' => 'حفظ',
+      'Back to news' => 'رجوع',
+      'Clearing parameters' => 'مسح المعلمات',
+      'Older than 1 month' => 'اقدم من شهر',
+      'Older than 1 week' => 'اقدم من اسبوع',
+      'Clear all' => 'تنظيف الكل',
+      'Clear' => 'تنظيف',
+      'Cancel' => 'الغاء',
+      'Do you really want to delete?' => 'هل تريد الحذف؟',
+      'Delete' => 'حذف',
+      'Add' => 'اضافة',
+      'Author' => 'الكاتب',
+      'Discuss in Forum' => 'النقاش بالمنتديات',
+      'Edit' => 'تحرير',
+      'Total' => 'مجموع',
+    ),
+  ),
+);

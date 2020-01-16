@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,14 +8,17 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
+define('_IS_HOMEPAGE', 1); // Пометка главной страницы
 
 /**
- * @var Render                   $view
+ * @var Render $view
  * @var NavChain $nav_chain
  */
 
@@ -28,7 +29,7 @@ $nav_chain->showHomePage(false);
 // Register Namespace for module templates
 $view->addFolder('homepage', __DIR__ . '/templates/');
 
-// Register the module languages folder
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('homepage', __DIR__ . '/locale');
 
 echo $view->render('homepage::index');

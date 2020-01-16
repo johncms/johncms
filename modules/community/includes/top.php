@@ -16,17 +16,17 @@ $url = '/community/top/';
 
 $tabs = [
     'forum' => [
-        'name'   => _t('Forum'),
+        'name'   => __('Forum'),
         'url'    => $url,
         'active' => false,
     ],
     'guest' => [
-        'name'   => _t('Guestbook'),
+        'name'   => __('Guestbook'),
         'url'    => $url . 'guest/',
         'active' => false,
     ],
     'comm'  => [
-        'name'   => _t('Comments'),
+        'name'   => __('Comments'),
         'url'    => $url . 'comm/',
         'active' => false,
     ],
@@ -34,7 +34,7 @@ $tabs = [
 
 if ($config['karma']) {
     $tabs['karma'] = [
-        'name'   => _t('Karma'),
+        'name'   => __('Karma'),
         'url'    => $url . 'karma/',
         'active' => false,
     ];
@@ -45,14 +45,14 @@ switch ($mod) {
     case 'guest':
         // Топ Гостевой
         $req = $db->query('SELECT * FROM `users` WHERE `postguest` > 0 ORDER BY `postguest` DESC LIMIT 9');
-        $title = _t('Most active in Guestbook');
+        $title = __('Most active in Guestbook');
         $active = 'guest';
         break;
 
     case 'comm':
         // Топ комментариев
         $req = $db->query('SELECT * FROM `users` WHERE `komm` > 0 ORDER BY `komm` DESC LIMIT 9');
-        $title = _t('Most commentators');
+        $title = __('Most commentators');
         $active = 'comm';
         break;
 
@@ -60,7 +60,7 @@ switch ($mod) {
         // Топ Кармы
         if ($config['karma']) {
             $req = $db->query('SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9');
-            $title = _t('Best Karma');
+            $title = __('Best Karma');
             $active = 'karma';
         }
         break;
@@ -68,7 +68,7 @@ switch ($mod) {
     default:
         // Топ Форума
         $req = $db->query('SELECT * FROM `users` WHERE `postforum` > 0 ORDER BY `postforum` DESC LIMIT 9');
-        $title = _t('Most active in Forum');
+        $title = __('Most active in Forum');
         $active = 'forum';
 }
 

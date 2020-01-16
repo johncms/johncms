@@ -39,8 +39,8 @@ if ($user->rights >= 7) {
     // Пользователи на регистрации
     if (! empty($all_counters['reg_total'])) {
         $notifications[] = [
-            'name'    => _t('Users on registration'),
-            'url'     => '/admin/?act=reg',
+            'name'    => __('Users on registration'),
+            'url'     => '/admin/reg/',
             'counter' => $all_counters['reg_total'],
             'type'    => 'info',
         ];
@@ -49,7 +49,7 @@ if ($user->rights >= 7) {
     // Статьи на модерации
     if (! empty($all_counters['library_mod'])) {
         $notifications[] = [
-            'name'    => _t('Articles on moderation'),
+            'name'    => __('Articles on moderation'),
             'url'     => '/library/?act=premod',
             'counter' => $all_counters['library_mod'],
             'type'    => 'info',
@@ -59,8 +59,8 @@ if ($user->rights >= 7) {
     // Загрузки на модерации
     if (! empty($all_counters['downloads_mod'])) {
         $notifications[] = [
-            'name'    => _t('Downloads on moderation'),
-            'url'     => 'downloads/?act=mod_files',
+            'name'    => __('Downloads on moderation'),
+            'url'     => '/downloads/?act=mod_files',
             'counter' => ! empty($all_counters['downloads_mod']),
             'type'    => 'info',
         ];
@@ -70,7 +70,7 @@ if ($user->rights >= 7) {
 // Сообщение о бане
 if (! empty($all_counters['ban'])) {
     $notifications[] = [
-        'name'    => _t('Ban', 'system'),
+        'name'    => __('Ban'),
         'url'     => '/profile/?act=ban',
         'counter' => 0,
         'type'    => 'warning',
@@ -81,7 +81,7 @@ if (! empty($all_counters['ban'])) {
 $list = [];
 if (! empty($all_counters['new_sys_mail'])) {
     $notifications[] = [
-        'name'    => _t('System messages', 'system'),
+        'name'    => __('System messages'),
         'url'     => '/mail/?act=systems',
         'counter' => $all_counters['new_sys_mail'],
         'type'    => 'info',
@@ -91,7 +91,7 @@ if (! empty($all_counters['new_sys_mail'])) {
 // Личные сообщения
 if (! empty($all_counters['new_mail'])) {
     $notifications[] = [
-        'name'    => _t('Mail', 'system'),
+        'name'    => __('Mail'),
         'url'     => '/mail/?act=new',
         'counter' => $all_counters['new_mail'],
         'type'    => 'info',
@@ -101,7 +101,7 @@ if (! empty($all_counters['new_mail'])) {
 // Комментарии в личной гостевой
 if (! empty($all_counters['guestbook_comment'])) {
     $notifications[] = [
-        'name'    => _t('Guestbook', 'system'),
+        'name'    => __('Guestbook'),
         'url'     => '/profile/?act=guestbook&amp;user=' . $user->id,
         'counter' => $all_counters['guestbook_comment'],
         'type'    => 'info',
@@ -111,21 +111,31 @@ if (! empty($all_counters['guestbook_comment'])) {
 // Комментарии в альбомах
 if (! empty($all_counters['new_album_comm'])) {
     $notifications[] = [
-        'name'    => _t('Comments', 'system'),
+        'name'    => __('Comments'),
         'url'     => '/album/?act=top&amp;mod=my_new_comm',
         'counter' => $all_counters['new_album_comm'],
         'type'    => 'info',
     ];
 }
+
+if ($user->comm_count > $user->comm_old) {
+    $notifications[] = [
+        'name'    => __('Guestbook'),
+        'url'     => '/profile/?act=guestbook&amp;user=' . $user->id,
+        'counter' => $user->comm_count - $user->comm_old,
+        'type'    => 'info',
+    ];
+}
+
 $breadcrumbs = [
     [
         'url'    => '/',
-        'name'   => _t('Home', 'system'),
+        'name'   => __('Home'),
         'active' => false,
     ],
     [
         'url'    => '/notifications/',
-        'name'   => _t('Notifications'),
+        'name'   => __('Notifications'),
         'active' => true,
     ],
 ];

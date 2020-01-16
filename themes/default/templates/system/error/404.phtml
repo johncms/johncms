@@ -1,6 +1,38 @@
-<?php $this->layout('system::layout/old_default', ['title' => '404 Not Found', 'homeButton' => true]) ?>
+<?php
 
-<div class="rmenu padding">
-    <h2><?= $this->e($title) ?></h2>
-    <p><?= $this->e($message) ?></p>
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+use Johncms\NavChain;
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $message
+ * @var string $title
+ */
+
+$nav_chain = di(NavChain::class);
+$nav_chain->showHomePage(false);
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+<div class="">
+    <div class="text-center">
+        <img src="<?= $this->asset('icons/404-error.svg') ?>" style="max-width: 450px;" alt="">
+    </div>
+    <div class="text-center">
+        <div class="font-weight-bold" style="font-size: 5rem"><?= $this->e($title) ?></div>
+        <p class="h2"><?= $this->e($message) ?></p>
+    </div>
 </div>

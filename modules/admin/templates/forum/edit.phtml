@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+?>
+
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+        <?php if (! empty($data['success_message'])): ?>
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['success_message'],
+                ]
+            ) ?>
+        <?php endif; ?>
+        <div class="card shadow border-0">
+            <form action="<?= $data['form_action'] ?>" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name"><?= __('Title') ?></label>
+                        <input type="text" name="name" class="form-control" id="name" value="<?= $data['item']['name'] ?>" placeholder="<?= __('Title') ?>" required>
+                        <div class="text-muted small"><?= __('Min. 2, Max. 30 characters') ?></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort"><?= __('Order') ?></label>
+                        <input type="text" name="sort" class="form-control" id="sort" value="<?= $data['item']['sort'] ?>" placeholder="<?= __('Order') ?>" required>
+                        <div class="text-muted small"><?= __('Only numbers') ?></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="desc"><?= __('Description') ?></label>
+                        <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="desc" id="desc"><?= $data['item']['description'] ?></textarea>
+                        <div class="small text-muted"><?= __('Optional field') ?><br><?= __('Min. 2, Max. 500 characters') ?></div>
+                    </div>
+
+                    <h3><?= __('Common access') ?></h3>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="allow0" name="allow" value="0" class="custom-control-input" <?= $data['item']['access'] === 0 ? ' checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="allow0"><?= __('Common access') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="allow1" name="allow" value="1" class="custom-control-input" <?= $data['item']['access'] === 1 ? ' checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="allow1"><?= __('Assign the newly created authors as curators') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="allow2" name="allow" value="2" class="custom-control-input" <?= $data['item']['access'] === 2 ? ' checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="allow2"><?= __('Allow authors to edit the 1st post') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="allow4" name="allow" value="4" class="custom-control-input" <?= $data['item']['access'] === 4 ? ' checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="allow4"><?= __('Only for reading') ?></label>
+                    </div>
+
+                    <h3 class="mt-3"><?= __('Section type') ?></h3>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="section_type1" name="section_type" value="0" class="custom-control-input" <?= $data['item']['section_type'] === 0 ? ' checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="section_type1"><?= __('For subsections') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="section_type2" name="section_type" value="1" class="custom-control-input" <?= $data['item']['section_type'] === 1 ? ' checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="section_type2"><?= __('For topics') ?></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="h3 mt-3"><?= __('Category') ?></label>
+                        <select name="category" id="category" class="form-control">
+                            <?php foreach ($data['categories'] as $category): ?>
+                                <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $category['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mt-3">
+                        <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary">
+                        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

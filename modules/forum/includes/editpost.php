@@ -22,11 +22,11 @@ if (! $user->isValid() || ! $id) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Edit Message'),
+            'title'         => __('Edit Message'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -63,14 +63,14 @@ if ($req->rowCount()) {
                 $res_u = $req_u->fetch();
 
                 if ($res_u['rights'] > $user->rights) {
-                    $error = _t('You cannot edit posts of higher administration') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
+                    $error = __('You cannot edit posts of higher administration') . '<br /><a href="' . $link . '">' . __('Back') . '</a>';
                 }
             }
         }
     } else {
         // Проверка для обычных юзеров
         if ($res['user_id'] != $user->id) {
-            $error = _t('You are trying to change another\'s post') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
+            $error = __('You are trying to change another\'s post') . '<br /><a href="' . $link . '">' . __('Back') . '</a>';
         }
 
         if (! $error) {
@@ -90,18 +90,18 @@ if ($req->rowCount()) {
                 $res_m = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != 1 OR deleted IS NULL) ORDER BY `id` DESC LIMIT 1")->fetch();
 
                 if ($res_m['user_id'] != $user->id) {
-                    $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
+                    $error = __('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . __('Back') . '</a>';
                 } elseif (
                     $res['date'] < time() - 300
                     && $res_m['user_id'] != $user->id && $res_m['date'] + 3600 > strtotime('+ 1 hour')
                 ) {
-                    $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
+                    $error = __('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . __('Back') . '</a>';
                 }
             }
         }
     }
 } else {
-    $error = _t('Message does not exists or has been deleted') . '<br><a href="./">' . _t('Forum') . '</a>';
+    $error = __('Message does not exists or has been deleted') . '<br><a href="./">' . __('Forum') . '</a>';
 }
 
 $fid = isset($_GET['fid']) && $_GET['fid'] > 0 ? abs((int) ($_GET['fid'])) : false;
@@ -132,8 +132,8 @@ if (! $error) {
             echo $view->render(
                 'forum::delete_file',
                 [
-                    'title'      => _t('Delete file'),
-                    'page_title' => _t('Delete file'),
+                    'title'      => __('Delete file'),
+                    'page_title' => __('Delete file'),
                     'id'         => $id,
                     'fid'        => $fid,
                     'back_url'   => $link,
@@ -154,9 +154,9 @@ if (! $error) {
                     echo $view->render(
                         'system::pages/result',
                         [
-                            'title'    => _t('Edit Message'),
+                            'title'    => __('Edit Message'),
                             'type'     => 'alert-danger',
-                            'message'  => _t('You cannot edit your posts after 5 minutes'),
+                            'message'  => __('You cannot edit your posts after 5 minutes'),
                             'back_url' => $link,
                         ]
                     );
@@ -231,8 +231,8 @@ if (! $error) {
             echo $view->render(
                 'forum::delete_post',
                 [
-                    'title'      => _t('Delete Message'),
-                    'page_title' => _t('Delete Message'),
+                    'title'      => __('Delete Message'),
+                    'page_title' => __('Delete Message'),
                     'id'         => $id,
                     'posts'      => $posts,
                     'back_url'   => $link,
@@ -249,11 +249,11 @@ if (! $error) {
                     echo $view->render(
                         'system::pages/result',
                         [
-                            'title'         => _t('Edit Message'),
+                            'title'         => __('Edit Message'),
                             'type'          => 'alert-danger',
-                            'message'       => _t('You have not entered the message'),
+                            'message'       => __('You have not entered the message'),
                             'back_url'      => '/forum/?act=editpost&amp;id=' . $id,
-                            'back_url_name' => _t('Repeat'),
+                            'back_url_name' => __('Repeat'),
                         ]
                     );
                     exit;
@@ -294,8 +294,8 @@ if (! $error) {
             echo $view->render(
                 'forum::edit_post',
                 [
-                    'title'             => _t('Edit Message'),
-                    'page_title'        => _t('Edit Message'),
+                    'title'             => __('Edit Message'),
+                    'page_title'        => __('Edit Message'),
                     'id'                => $id,
                     'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('edit_post', 'msg'),
                     'msg'               => $message,
@@ -314,7 +314,7 @@ if (! $error) {
 echo $view->render(
     'system::pages/result',
     [
-        'title'   => _t('Error'),
+        'title'   => __('Error'),
         'type'    => 'alert-danger',
         'message' => $error,
     ]

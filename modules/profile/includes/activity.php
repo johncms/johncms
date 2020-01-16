@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,96 +8,94 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-// История активности
-$textl = htmlspecialchars($foundUser['name']) . ': ' . _t('Activity');
+$foundUser = (array) $foundUser;
 
-echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Activity') . '</div>';
-$menu = [
-    (! $mod ? '<b>' . _t('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $foundUser['id'] . '">' . _t('Messages') . '</a>'),
-    ($mod == 'topic' ? '<b>' . _t('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'] . '">' . _t('Themes') . '</a>'),
-    ($mod == 'comments' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'] . '">' . _t('Comments') . '</a>'),
+// История активности
+$title = __('Activity') . ' - ' . htmlspecialchars($foundUser['name']);
+
+$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add($title);
+
+$data = [];
+$data['filters'] = [
+    'messages' => [
+        'name'   => __('Messages'),
+        'url'    => '?act=activity&amp;user=' . $foundUser['id'],
+        'active' => ! $mod,
+    ],
+    'topic'    => [
+        'name'   => __('Themes'),
+        'url'    => '?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'],
+        'active' => $mod === 'topic',
+    ],
+    'comments' => [
+        'name'   => __('Comments'),
+        'url'    => '?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'],
+        'active' => $mod === 'comments',
+    ],
 ];
-echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
-    '<div class="user"><p>' . $tools->displayUser($foundUser, ['iphide' => 1]) . '</p></div>';
+
+$activity = [];
 
 switch ($mod) {
     case 'comments':
         // Список сообщений в Гостевой
         $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
-        echo '<div class="phdr"><b>' . _t('Comments') . '</b></div>';
-
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-        }
-
         $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess);
-
+        $data['item_type'] = 'comment';
         if ($req->rowCount()) {
-            $i = 0;
             while ($res = $req->fetch()) {
-                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
-                    '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
-                    '</div></div>';
-                ++$i;
+                $res['text'] = $tools->checkout($res['text'], 1, 1);
+                $res['display_date'] = $tools->displayDate($res['time']);
+                $activity[] = $res;
             }
-        } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
         break;
 
     case 'topic':
         // Список тем Форума
+        $data['item_type'] = 'topic';
         $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
-        echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Themes') . '</div>';
-
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-        }
-
         $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess);
 
         if ($req->rowCount()) {
-            $i = 0;
-
             while ($res = $req->fetch()) {
+                // Надо будет переделать это, но потом.
                 $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . ' ORDER BY `id` ASC LIMIT 1')->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
-                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
-                    '<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
-                    '<div class="sub">' .
-                    '<a href="' . $config->homeurl . '/forum/?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
-                    '<a href="' . $config->homeurl . '/forum/?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate($res['last_post_date']) . ')</span>' .
-                    '</div></div>';
-                ++$i;
+
+                $row = [
+                    'topic_url'     => '/forum/?type=topic&id=' . $res['id'],
+                    'topic_name'    => $res['name'],
+                    'topic_id'      => $res['id'],
+                    'text'          => $text,
+                    'display_date'  => $tools->displayDate($res['last_post_date']),
+                    'category_name' => $category['name'],
+                    'category_url'  => '/forum/?id=' . $category['id'],
+                    'section_name'  => $section['name'],
+                    'section_url'   => '/forum/?type=topics&id=' . $section['id'],
+                ];
+                $activity[] = $row;
             }
-        } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
         break;
 
     default:
         // Список постов Форума
+        $data['item_type'] = 'message';
         $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
-        echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Messages') . '</div>';
-
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</div>';
-        }
-
         $req = $db->query(
             "SELECT * FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess
         );
 
         if ($req->rowCount()) {
-            $i = 0;
-
             while ($res = $req->fetch()) {
                 $topic = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $topic['section_id'] . "'")->fetch();
@@ -108,27 +104,32 @@ switch ($mod) {
                 $text = $tools->checkout($text, 2, 1);
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
-                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
-                    '<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
-                    '<div class="sub">' .
-                    '<a href="' . $config->homeurl . '/forum/?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
-                    '<a href="' . $config->homeurl . '/forum/?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate($res['date']) . ')</span>' .
-                    '</div></div>';
-                ++$i;
+                $row = [
+                    'topic_url'     => '/forum/?type=topic&id=' . $topic['id'],
+                    'topic_name'    => $topic['name'],
+                    'topic_id'      => $topic['id'],
+                    'text'          => $text,
+                    'message_url'   => '/forum/?act=show_post&amp;id=' . $res['id'],
+                    'display_date'  => $tools->displayDate($res['date']),
+                    'category_name' => $category['name'],
+                    'category_url'  => '/forum/?id=' . $category['id'],
+                    'section_name'  => $section['name'],
+                    'section_url'   => '/forum/?type=topics&id=' . $section['id'],
+                ];
+                $activity[] = $row;
             }
-        } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+$data['total'] = $total;
+$data['pagination'] = $tools->displayPagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess);
+$data['activity'] = $activity ?? [];
 
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
-        '<p><form action="?act=activity&amp;user=' . $foundUser['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-        '</form></p>';
-}
+echo $view->render(
+    'profile::activity',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

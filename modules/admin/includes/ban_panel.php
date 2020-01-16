@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
@@ -20,13 +19,24 @@ ob_start(); // Перехват вывода скриптов без шабло�
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$title = __('Ban Panel');
+$nav_chain->add($title);
+
 
 switch ($mod) {
     case 'amnesty':
         if ($user->rights < 9) {
-            echo $tools->displayError(_t('Amnesty is available for supervisors only'));
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'    => $title,
+                    'type'     => 'alert-danger',
+                    'message'  => __('Amnesty is available for supervisors only'),
+                    'back_url' => '/admin/ban_panel/',
+                ]
+            );
         } else {
-            echo '<div class="phdr"><a href="?act=ban_panel"><b>' . _t('Ban Panel') . '</b></a> | ' . _t('Amnesty') . '</div>';
+            $title = __('Amnesty');
 
             if (isset($_POST['submit'])) {
                 $term = isset($_POST['term']) && $_POST['term'] == 1 ? 1 : 0;
@@ -34,7 +44,15 @@ switch ($mod) {
                 if ($term) {
                     // Очищаем таблицу Банов
                     $db->query('TRUNCATE TABLE `cms_ban_users`');
-                    echo '<div class="gmenu"><p>' . _t('Amnesty has been successful') . '</p></div>';
+                    echo $view->render(
+                        'system::pages/result',
+                        [
+                            'title'    => $title,
+                            'type'     => 'alert-success',
+                            'message'  => __('Amnesty has been successful'),
+                            'back_url' => '/admin/ban_panel/',
+                        ]
+                    );
                 } else {
                     // Разбаниваем активные Баны
                     $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'");
@@ -43,36 +61,46 @@ switch ($mod) {
                         $ban_left = $res['ban_time'] - time();
 
                         if ($ban_left < 2592000) {
-                            $amnesty_msg = _t('Amnesty');
+                            $amnesty_msg = __('Amnesty');
                             $db->exec("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--${amnesty_msg}--' WHERE `id` = '" . $res['id'] . "'");
                         }
                     }
-
-                    echo '<div class="gmenu"><p>' . _t('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)') . '</p></div>';
+                    echo $view->render(
+                        'system::pages/result',
+                        [
+                            'title'    => $title,
+                            'type'     => 'alert-success',
+                            'message'  => __('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)'),
+                            'back_url' => '/admin/ban_panel/',
+                        ]
+                    );
                 }
             } else {
-                echo '<form action="?act=ban_panel&amp;mod=amnesty" method="post"><div class="menu"><p>' .
-                    '<input type="radio" name="term" value="0" checked="checked" />&#160;' . _t('Unban all') . '<br>' .
-                    '<input type="radio" name="term" value="1" />&#160;' . _t('Clear Ban database') .
-                    '</p><p><input type="submit" name="submit" value="' . _t('Amnesty') . '" />' .
-                    '</p></div></form>' .
-                    '<div class="phdr"><small>' . _t('&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history') . '</small></div>';
+                echo $view->render(
+                    'admin::amnesty',
+                    [
+                        'title'      => $title,
+                        'page_title' => $title,
+                    ]
+                );
             }
-
-            echo '<p><a href="?act=ban_panel">' . _t('Ban Panel') . '</a><br><a href="./">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
     default:
         // БАН-панель, список нарушителей
-        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Ban Panel') . '</div>';
-        echo '<div class="topmenu"><span class="gray">' . _t('Sort') . ':</span> ';
-
-        if (isset($_GET['count'])) {
-            echo '<a href="?act=ban_panel">' . _t('Term') . '</a> | ' . _t('Violations') . '</div>';
-        } else {
-            echo _t('Term') . ' | <a href="?act=ban_panel&amp;count">' . _t('Violations') . '</a></div>';
-        }
+        $data['filters'] = [
+            [
+                'url'    => '?',
+                'name'   => __('Term'),
+                'active' => ! isset($_GET['count']),
+            ],
+            [
+                'url'    => '?count',
+                'name'   => __('Violations'),
+                'active' => isset($_GET['count']),
+            ],
+        ];
 
         $sort = isset($_GET['count']) ? 'bancount' : 'bantime';
         $total = $db->query('SELECT `user_id` FROM `cms_ban_users` GROUP BY `user_id`')->rowCount();
@@ -87,35 +115,43 @@ switch ($mod) {
         );
 
         if ($req->rowCount()) {
+            $items = [];
             while ($res = $req->fetch()) {
-                echo '<div class="' . ($res['bantime'] > time() ? 'r' : '') . 'menu">';
-                $arg = [
-                    'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>', // phpcs:ignore
+                $res['buttons'] = [
+                    [
+                        'url'  => '../profile/?act=ban&amp;user=' . $res['id'],
+                        'name' => __('Violations history') . ' (' . $res['bancount'] . ')',
+                    ],
                 ];
-                echo $tools->displayUser($res, $arg);
-                echo '</div>';
-            }
-        } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
-        }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+                $res['active'] = $res['bantime'] > time();
+                $res['user_profile_link'] = '';
+                if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
+                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+                }
+                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+                $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
+                $res['ip'] = long2ip($res['ip']);
+                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+                $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
+                $items[] = $res;
+            }
+        }
 
         if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ban_panel&amp;', $start, $total, $user->config->kmess) . '</div>';
-            echo '<p><form action="?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
+            $data['pagination'] = $tools->displayPagination('?act=ban_panel&amp;', $start, $total, $user->config->kmess);
         }
 
-        echo '<p>' . ($user->rights == 9 && $total
-                ? '<a href="?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br>'
-                : '')
-            . '<a href="./">' . _t('Admin Panel') . '</a></p>';
-}
+        $data['total'] = $total;
+        $data['items'] = $items ?? [];
+        $data['back_url'] = '/admin/';
 
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title' => _t('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);
+        echo $view->render(
+            'admin::ban_panel',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
+}

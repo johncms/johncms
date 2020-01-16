@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,113 +8,166 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Verot\Upload\Upload;
+declare(strict_types=1);
+
+use Intervention\Image\ImageManager;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Edit Profile');
+$foundUser = (array) $foundUser;
 
-if (($user->id != $foundUser['id'] && $user->rights < 7) || $foundUser['rights'] > $user->rights) {
-    // Если не хватает прав, выводим ошибку
-    echo $tools->displayError(_t('You cannot edit profile of higher administration'));
-    require 'system/end.php';
+if (($user->id !== $foundUser['id'] && $user->rights < 7) || $foundUser['rights'] > $user->rights) {
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => __('You cannot edit profile of higher administration'),
+        ]
+    );
     exit;
 }
 
-switch ($mod) {
-    case 'avatar':
-        // Выгружаем аватар
-        echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Avatar') . '</div>';
-        if (isset($_POST['submit'])) {
-            $handle = new Upload($_FILES['imagefile']);
-            if ($handle->uploaded) {
-                // Обрабатываем фото
-                $handle->file_new_name_body = $foundUser['id'];
-                //$handle->mime_check = false;
-                $handle->allowed = [
-                    'image/jpeg',
-                    'image/gif',
-                    'image/png',
-                ];
-                $handle->file_max_size = 1024 * $config['flsz'];
-                $handle->file_overwrite = true;
-                $handle->image_resize = true;
-                $handle->image_x = 32;
-                $handle->image_y = 32;
-                $handle->image_convert = 'png';
-                $handle->process('../files/users/avatar/');
-                if ($handle->processed) {
-                    echo '<div class="gmenu"><p>' . _t('The avatar is successfully uploaded') . '<br />' .
-                        '<a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
-                } else {
-                    echo $tools->displayError($handle->error);
-                }
-                $handle->clean();
-            }
-        } else {
-            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'] . '">'
-                . '<div class="menu"><p>' . _t('Select Image') . ':<br />'
-                . '<input type="file" name="imagefile" value="" />'
-                . '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" /></p>'
-                . '<p><input type="submit" name="submit" value="' . _t('Upload') . '" />'
-                . '</p></div></form>'
-                . '<div class="phdr"><small>'
-                . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $config['flsz'])
-                . '</small></div>';
-        }
-        break;
+$image_manager = new ImageManager(['driver' => 'imagick']);
 
-    case 'up_photo':
-        echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Photo') . '</div>';
-        if (isset($_POST['submit'])) {
-            $handle = new Upload($_FILES['imagefile']);
-            if ($handle->uploaded) {
-                // Обрабатываем фото
-                $handle->file_new_name_body = $foundUser['id'];
-                //$handle->mime_check = false;
-                $handle->allowed = [
-                    'image/jpeg',
-                    'image/gif',
-                    'image/png',
-                ];
-                $handle->file_max_size = 1024 * $config['flsz'];
-                $handle->file_overwrite = true;
-                $handle->image_resize = true;
-                $handle->image_x = 320;
-                $handle->image_y = 240;
-                $handle->image_ratio_no_zoom_in = true;
-                //$handle->image_ratio_y = true;
-                $handle->image_convert = 'jpg';
-                $handle->process('../files/users/photo/');
-                if ($handle->processed) {
-                    // Обрабатываем превьюшку
-                    $handle->file_new_name_body = $foundUser['id'] . '_small';
-                    $handle->file_overwrite = true;
-                    $handle->image_resize = true;
-                    $handle->image_x = 100;
-                    $handle->image_ratio_y = true;
-                    $handle->image_convert = 'jpg';
-                    $handle->process('../files/users/photo/');
-                    if ($handle->processed) {
-                        echo '<div class="gmenu"><p>' . _t('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
-                    } else {
-                        echo $tools->displayError($handle->error);
-                    }
-                } else {
-                    echo $tools->displayError($handle->error);
-                }
-                $handle->clean();
-            }
-        } else {
-            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'] . '"><div class="menu"><p>' . _t('Select image') . ':<br />' .
-                '<input type="file" name="imagefile" value="" />' .
-                '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" /></p>' .
-                '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
-                '</div></form>' .
-                '<div class="phdr"><small>' . sprintf(
-                    _t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'),
-                    $config['flsz']
-                ) . '</small></div>';
+$data = [];
+$error = [];
+
+if ($mod === 'avatar') {
+    // Выгружаем аватар
+    $title = __('Upload Avatar');
+    if ($request->getMethod() === 'POST') {
+        $files = $request->getUploadedFiles();
+        /** @var GuzzleHttp\Psr7\UploadedFile $file */
+        $file = $files['imagefile'];
+        if ($file->getSize() > 1024 * $config['flsz']) {
+            $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
         }
-        break;
+
+        if (empty($error)) {
+            try {
+                $avatar = UPLOAD_PATH . 'users/avatar/' . $foundUser['id'] . '.png';
+                $img = $image_manager->make($file->getStream());
+                $img->resize(
+                    150,
+                    150,
+                    static function ($constraint) {
+                        /** @var $constraint Intervention\Image\Constraint */
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    }
+                );
+                $img->save($avatar, 100, 'png');
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-success',
+                        'message'       => __('The avatar is successfully uploaded'),
+                        'back_url'      => '?act=edit&amp;user=' . $foundUser['id'],
+                        'back_url_name' => __('Continue'),
+                    ]
+                );
+                exit;
+            } catch (Exception $exception) {
+                $error[] = $exception->getMessage();
+            }
+        }
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => $error,
+                'back_url'      => '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'],
+                'back_url_name' => __('Repeat'),
+            ]
+        );
+        exit;
+    }
+    $data['form_action'] = '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'];
+} else {
+    $title = __('Upload Photo');
+    if ($request->getMethod() === 'POST') {
+        $files = $request->getUploadedFiles();
+        /** @var GuzzleHttp\Psr7\UploadedFile $file */
+        $file = $files['imagefile'];
+        if ($file->getSize() > 1024 * $config['flsz']) {
+            $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+        }
+
+        if (empty($error)) {
+            try {
+                $photo = UPLOAD_PATH . 'users/photo/' . $foundUser['id'] . '.jpg';
+                $small_photo = UPLOAD_PATH . 'users/photo/' . $foundUser['id'] . '_small.jpg';
+                $img = $image_manager->make($file->getStream());
+                $img->resize(
+                    1024,
+                    960,
+                    static function ($constraint) {
+                        /** @var $constraint Intervention\Image\Constraint */
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    }
+                );
+                $img->save($photo, 100, 'jpg');
+
+                $width = 400;
+                $height = 300;
+                // Создаем превью
+                $resized = $image_manager->make($file->getStream())
+                    ->resize(
+                        $width,
+                        $height,
+                        static function ($constraint) {
+                            /** @var $constraint Intervention\Image\Constraint */
+                            $constraint->aspectRatio();
+                            $constraint->upsize();
+                        }
+                    )
+                    ->save($small_photo, 100, 'jpg');
+
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-success',
+                        'message'       => __('The photo is successfully uploaded'),
+                        'back_url'      => '?act=edit&amp;user=' . $foundUser['id'],
+                        'back_url_name' => __('Continue'),
+                    ]
+                );
+                exit;
+            } catch (Exception $exception) {
+                $error[] = $exception->getMessage();
+            }
+        }
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => $error,
+                'back_url'      => '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'],
+                'back_url_name' => __('Repeat'),
+            ]
+        );
+        exit;
+    }
+
+    $data['form_action'] = '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'];
 }
+
+$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add($title);
+
+$data['back_url'] = '?user=' . $foundUser['id'];
+
+echo $view->render(
+    'profile::images',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);

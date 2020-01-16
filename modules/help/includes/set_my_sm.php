@@ -24,7 +24,7 @@ $delete = isset($_POST['delete']);
 $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
 if (($adm && ! $user->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_POST['delete_sm']) || ($add && ! $_POST['add_sm'])) {
-    echo $tools->displayError(_t('Wrong data'), '<a href="?act=smileys">' . _t('Smilies') . '</a>');
+    echo $tools->displayError(__('Wrong data'), '<a href="?act=smileys">' . __('Smilies') . '</a>');
     require 'system/end.php';
     exit;
 }

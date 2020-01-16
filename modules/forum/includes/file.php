@@ -42,11 +42,11 @@ if ($id) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Download file'),
+                'title'         => __('Download file'),
                 'type'          => 'alert-danger',
-                'message'       => _t('File does not exist'),
+                'message'       => __('File does not exist'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Forum'),
+                'back_url_name' => __('Forum'),
             ]
         );
     }

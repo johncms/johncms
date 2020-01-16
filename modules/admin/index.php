@@ -10,10 +10,12 @@
 
 declare(strict_types=1);
 
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
@@ -23,6 +25,7 @@ define('_IN_JOHNADM', 1);
  * @var PDO $db
  * @var Tools $tools
  * @var User $user
+ * @var NavChain $nav_chain
  */
 
 $db = di(PDO::class);
@@ -30,21 +33,25 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 $route = di('route');
+$nav_chain = di(NavChain::class);
+$request = di(Request::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('admin', __DIR__ . '/locale');
 
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
 $act = $route['action'] ?? 'index';
 $mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
 $do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
 
+$nav_chain->add(__('Admin Panel'), '/admin/');
+
 // Проверяем права доступа
 if ($user->rights < 7) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 $actions = [

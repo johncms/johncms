@@ -16,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -44,8 +44,8 @@ $nav_chain = di(NavChain::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');
 
-// Регистрируем языки модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);
@@ -57,9 +57,9 @@ if (! $user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('User Profile'),
+            'title'   => __('User Profile'),
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;
@@ -72,9 +72,9 @@ if (! $foundUser->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('User Profile'),
+            'title'   => __('User Profile'),
             'type'    => 'alert-danger',
-            'message' => _t('This User does not exists'),
+            'message' => __('This User does not exists'),
         ]
     );
     exit;
@@ -125,7 +125,6 @@ $mods = [
     'ban',
     'edit',
     'images',
-    'info',
     'ip',
     'guestbook',
     'karma',

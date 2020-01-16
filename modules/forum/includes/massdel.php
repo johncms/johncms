@@ -35,12 +35,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Delete posts'),
-                'page_title'    => _t('Delete posts'),
+                'title'         => __('Delete posts'),
+                'page_title'    => __('Delete posts'),
                 'type'          => 'alert-success',
-                'message'       => _t('Marked posts are deleted'),
+                'message'       => __('Marked posts are deleted'),
                 'back_url'      => $prd,
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -49,12 +49,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Delete posts'),
-                'page_title'    => _t('Delete posts'),
+                'title'         => __('Delete posts'),
+                'page_title'    => __('Delete posts'),
                 'type'          => 'alert-danger',
-                'message'       => _t('You did not choose something to delete'),
+                'message'       => __('You did not choose something to delete'),
                 'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -69,8 +69,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'forum::mass_delete',
         [
-            'title'      => _t('Delete posts'),
-            'page_title' => _t('Delete posts'),
+            'title'      => __('Delete posts'),
+            'page_title' => __('Delete posts'),
             'back_url'   => htmlspecialchars(getenv('HTTP_REFERER')),
         ]
     );
@@ -79,11 +79,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

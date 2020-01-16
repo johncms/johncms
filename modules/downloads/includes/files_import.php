@@ -33,11 +33,11 @@ if (! $req->rowCount() || ! is_dir($res['dir'])) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Error'),
+            'title'         => __('Error'),
             'type'          => 'alert-danger',
-            'message'       => _t('The directory does not exist'),
+            'message'       => __('The directory does not exist'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -52,7 +52,7 @@ if ($request->getMethod() === 'POST') {
 
     if ($url) {
         if (mb_strpos($url, 'http://') !== 0) {
-            $error[] = _t('Invalid Link');
+            $error[] = __('Invalid Link');
         } else {
             $url = str_replace('http://', '', $url);
         }
@@ -76,33 +76,33 @@ if ($request->getMethod() === 'POST') {
         }
 
         if (empty($name_link)) {
-            $error[] = _t('The required fields are not filled');
+            $error[] = __('The required fields are not filled');
         }
 
         if (! in_array($ext[(count($ext) - 1)], $al_ext, true)) {
-            $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
+            $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
         }
 
         if (strlen($fname) > 100) {
-            $error[] = _t('The file name length must not exceed 100 characters');
+            $error[] = __('The file name length must not exceed 100 characters');
         }
 
         if (preg_match("/[^\da-zA-Z_\-.]+/", $fname)) {
-            $error[] = _t('The file name contains invalid characters');
+            $error[] = __('The file name contains invalid characters');
         }
     } elseif (! $url) {
-        $error[] = _t('Invalid Link');
+        $error[] = __('Invalid Link');
     }
 
     if ($error) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('File import'),
+                'title'         => __('File import'),
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=import&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
     } else {
@@ -185,8 +185,8 @@ if ($request->getMethod() === 'POST') {
             echo $view->render(
                 'downloads::file_import_result',
                 [
-                    'title'                 => _t('File import'),
-                    'page_title'            => _t('File import'),
+                    'title'                 => __('File import'),
+                    'page_title'            => __('File import'),
                     'id'                    => $id,
                     'urls'                  => $urls,
                     'moderation'            => $moderation ?? null,
@@ -198,11 +198,11 @@ if ($request->getMethod() === 'POST') {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('File import'),
+                    'title'         => __('File import'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('File not attached'),
+                    'message'       => __('File not attached'),
                     'back_url'      => '?act=import&amp;id=' . $id,
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
         }
@@ -211,8 +211,8 @@ if ($request->getMethod() === 'POST') {
     echo $view->render(
         'downloads::import',
         [
-            'title'      => _t('File import'),
-            'page_title' => _t('File import'),
+            'title'      => __('File import'),
+            'page_title' => __('File import'),
             'id'         => $id,
             'urls'       => $urls,
             'action_url' => '?act=import&amp;id=' . $id,

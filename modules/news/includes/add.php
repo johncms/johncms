@@ -21,7 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Add news
-$nav_chain->add(_t('Add news'), '');
+$nav_chain->add(__('Add news'), '');
 
 if ($user->rights >= 6) {
     if (! empty($_POST)) {
@@ -30,17 +30,17 @@ if ($user->rights >= 6) {
         $text = isset($_POST['text']) ? trim($_POST['text']) : false;
 
         if (! $name) {
-            $error[] = _t('You have not entered news title');
+            $error[] = __('You have not entered news title');
         }
 
         if (! $text) {
-            $error[] = _t('You have not entered news text');
+            $error[] = __('You have not entered news text');
         }
 
         $flood = $tools->antiflood();
 
         if ($flood) {
-            $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
+            $error[] = sprintf(__('You cannot add the message so often. Please, wait %d seconds.'), $flood);
         }
 
         if (! $error) {
@@ -130,8 +130,8 @@ if ($user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'    => _t('Add news'),
-                    'message'  => _t('News added'),
+                    'title'    => __('Add news'),
+                    'message'  => __('News added'),
                     'type'     => 'alert-success',
                     'back_url' => '/news/',
                 ]
@@ -140,7 +140,7 @@ if ($user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'    => _t('Add news'),
+                    'title'    => __('Add news'),
                     'message'  => $error,
                     'type'     => 'alert-danger',
                     'back_url' => '/news/add/',

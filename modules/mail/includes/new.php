@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Mail');
-echo '<div class="phdr"><b>' . _t('New Messages') . '</b></div>';
+$textl = __('Mail');
+echo '<div class="phdr"><b>' . __('New Messages') . '</b></div>';
 $total = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_mail` WHERE `from_id` = ' . $user->id . ' AND `delete` != ' . $user->id . ' AND `read` = 0')->fetchColumn();
 
 if ($total == 1) {
@@ -41,7 +41,7 @@ if ($total) {
 
     for ($i = 0; ($row = $query->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-        $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block Sender') . '</a>'; // phpcs:ignore
+        $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . __('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . __('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . __('Block Sender') . '</a>'; // phpcs:ignore
         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount(); // phpcs:ignore
         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `delete`!='" . $user->id . "' AND `spam`='0'")->rowCount();
         $arg = [
@@ -52,17 +52,17 @@ if ($total) {
         echo '</div>';
     }
 } else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+    echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $new_mail . '</div>';
+echo '<div class="phdr">' . __('Total') . ': ' . $new_mail . '</div>';
 
 if ($total > $user->config->kmess) {
     echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>';
     echo '<p><form method="get">
 		<input type="hidden" name="act" value="new"/>
 		<input type="text" name="page" size="2"/>
-		<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
+		<input type="submit" value="' . __('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . __('Personal') . '</a></p>';

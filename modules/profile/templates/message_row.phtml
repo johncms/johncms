@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $item
+ */
+
+?>
+
+<div class="shadow post-item post-item mb-2">
+    <div class="post-header d-flex justify-content-between border-bottom pb-1">
+        <div class="d-flex align-items-end">
+            <a href="<?= $item['topic_url'] ?>" class="user-login mr-2"><?= $item['topic_name'] ?></a>
+            <span class="post-date"><?= $item['display_date'] ?></span>
+        </div>
+        <div class="post-actions"></div>
+    </div>
+    <div class="pt-2">
+        <div class="border-bottom pb-2 mb-2">
+            <div>
+                <?= $item['text'] ?>...
+            </div>
+            <div>
+                <a href="<?= $item['message_url'] ?>"><?= __('To message') ?> &gt;&gt;</a>
+            </div>
+        </div>
+        <div>
+            <a href="<?= $item['category_url'] ?>"><?= $item['category_name'] ?></a> /
+            <a href="<?= $item['section_url'] ?>"><?= $item['section_name'] ?></a>
+        </div>
+    </div>
+</div>

@@ -31,11 +31,11 @@ if (
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('New message'),
+            'title'         => __('New message'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -94,11 +94,11 @@ switch ($post_type) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('New message'),
+                    'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                    'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $id . '&amp;start=' . $start,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -111,11 +111,11 @@ switch ($post_type) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('New message'),
+                    'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('You cannot write in a closed topic'),
+                    'message'       => __('You cannot write in a closed topic'),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -141,11 +141,11 @@ switch ($post_type) {
                 echo $view->render(
                     'system::pages/result',
                     [
-                        'title'         => _t('New message'),
+                        'title'         => __('New message'),
                         'type'          => 'alert-danger',
-                        'message'       => _t('Text is too short'),
+                        'message'       => __('Text is too short'),
                         'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                        'back_url_name' => _t('Back'),
+                        'back_url_name' => __('Back'),
                     ]
                 );
                 exit;
@@ -160,11 +160,11 @@ switch ($post_type) {
                     echo $view->render(
                         'system::pages/result',
                         [
-                            'title'         => _t('New message'),
+                            'title'         => __('New message'),
                             'type'          => 'alert-danger',
-                            'message'       => _t('Message already exists'),
+                            'message'       => __('Message already exists'),
                             'back_url'      => '/forum/?type=topic&amp;id=' . $id . '&amp;start=' . $start,
-                            'back_url_name' => _t('Back'),
+                            'back_url_name' => __('Back'),
                         ]
                     );
                     exit;
@@ -296,8 +296,8 @@ switch ($post_type) {
         echo $view->render(
             'forum::reply_message',
             [
-                'title'             => _t('New message'),
-                'page_title'        => _t('New message'),
+                'title'             => __('New message'),
+                'page_title'        => __('New message'),
                 'id'                => $id,
                 'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
                 'token'             => $token,
@@ -322,11 +322,11 @@ switch ($post_type) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('New message'),
+                    'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('Message not found'),
+                    'message'       => __('Message not found'),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $th1['id'],
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -338,11 +338,11 @@ switch ($post_type) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('New message'),
+                    'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                    'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $th . '&amp;start=' . $start,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -354,11 +354,11 @@ switch ($post_type) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('New message'),
+                    'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('You cannot write in a closed topic'),
+                    'message'       => __('You cannot write in a closed topic'),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $th1['id'],
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -368,11 +368,11 @@ switch ($post_type) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('New message'),
+                    'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('You can not reply to your own message'),
+                    'message'       => __('You can not reply to your own message'),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $th1['id'],
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -395,11 +395,11 @@ switch ($post_type) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
                 case 2:
-                    $repl = $type1['user_name'] . ', ' . _t('I am glad to answer you') . ', ';
+                    $repl = $type1['user_name'] . ', ' . __('I am glad to answer you') . ', ';
                     break;
 
                 case 3:
-                    $repl = $type1['user_name'] . ', ' . _t('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
+                    $repl = $type1['user_name'] . ', ' . __('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
                     break;
 
                 default:
@@ -423,11 +423,11 @@ switch ($post_type) {
                 echo $view->render(
                     'system::pages/result',
                     [
-                        'title'         => _t('New message'),
+                        'title'         => __('New message'),
                         'type'          => 'alert-danger',
-                        'message'       => _t('You have not entered the message'),
+                        'message'       => __('You have not entered the message'),
                         'back_url'      => '/forum/?type=reply&amp;act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : ''),
-                        'back_url_name' => _t('Repeat'),
+                        'back_url_name' => __('Repeat'),
                     ]
                 );
                 exit;
@@ -438,11 +438,11 @@ switch ($post_type) {
                 echo $view->render(
                     'system::pages/result',
                     [
-                        'title'         => _t('New message'),
+                        'title'         => __('New message'),
                         'type'          => 'alert-danger',
-                        'message'       => _t('Text is too short'),
+                        'message'       => __('Text is too short'),
                         'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                        'back_url_name' => _t('Back'),
+                        'back_url_name' => __('Back'),
                     ]
                 );
                 exit;
@@ -458,11 +458,11 @@ switch ($post_type) {
                     echo $view->render(
                         'system::pages/result',
                         [
-                            'title'         => _t('New message'),
+                            'title'         => __('New message'),
                             'type'          => 'alert-danger',
-                            'message'       => _t('Message already exists'),
+                            'message'       => __('Message already exists'),
                             'back_url'      => '/forum/?type=topic&amp;id=' . $th . '&amp;start=' . $start,
-                            'back_url_name' => _t('Back'),
+                            'back_url_name' => __('Back'),
                         ]
                     );
                     exit;
@@ -550,8 +550,8 @@ switch ($post_type) {
         echo $view->render(
             'forum::reply_message',
             [
-                'title'             => _t('Reply to message'),
-                'page_title'        => _t('Reply to message'),
+                'title'             => __('Reply to message'),
+                'page_title'        => __('Reply to message'),
                 'id'                => $id,
                 'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
                 'token'             => $token,
@@ -576,11 +576,11 @@ switch ($post_type) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('New message'),
+                'title'         => __('New message'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Topic has been deleted or does not exists'),
+                'message'       => __('Topic has been deleted or does not exists'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Forum'),
+                'back_url_name' => __('Forum'),
             ]
         );
 }

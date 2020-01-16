@@ -27,44 +27,44 @@ $this->layout(
 
 <?php if (! $config['mod_down']): ?>
     <div class="alert alert-danger border-0 shadow">
-        <?= _t('Downloads are closed') ?>
+        <?= __('Downloads are closed') ?>
     </div>
 <?php endif; ?>
 <?php if ($select_mode): ?>
     <div>
         <?php if ($id): ?>
             <div>
-                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2"><?= _t('Current folder') ?></a>
+                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder') ?></a>
             </div>
             <div>
-                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>" class="btn btn-outline-primary btn-sm mb-2"><?= _t('Current folder and all subfolders') ?></a>
+                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder and all subfolders') ?></a>
             </div>
         <?php endif; ?>
         <div>
-            <a href="?act=scan_dir&amp;yes" class="btn btn-outline-primary btn-sm mb-2"><?= _t('Entire Downloads') ?></a>
+            <a href="?act=scan_dir&amp;yes" class="btn btn-outline-primary btn-sm mb-2"><?= __('Entire Downloads') ?></a>
         </div>
     </div>
 <?php else: ?>
     <div class="row">
         <div class="col-md-5">
             <div class="alert alert-info">
-                <b><?= _t('Added') ?>:</b><br>
-                <?= _t('Categories') ?>: <?= $updated_info['categories'] ?><br>
-                <?= _t('Files') ?>: <?= $updated_info['files'] ?><br>
-                <?= _t('Additional Files') ?>: <?= $updated_info['additional_files'] ?>
+                <b><?= __('Added') ?>:</b><br>
+                <?= __('Categories') ?>: <?= $updated_info['categories'] ?><br>
+                <?= __('Files') ?>: <?= $updated_info['files'] ?><br>
+                <?= __('Additional Files') ?>: <?= $updated_info['additional_files'] ?>
             </div>
         </div>
     </div>
     <div>
         <div>
-            <a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Remove missing files') ?></a>
+            <a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
         </div>
         <div>
-            <a href="?act=recount&amp;do=clean&amp;id=<?= $id ?>"><?= _t('Update counters') ?></a>
+            <a href="?act=recount&amp;do=clean&amp;id=<?= $id ?>"><?= __('Update counters') ?></a>
         </div>
-        <a href="?act=scan_dir&amp;yes"><?= _t('Entire Downloads') ?></a>
+        <a href="?act=scan_dir&amp;yes"><?= __('Entire Downloads') ?></a>
         <div class="mt-2">
-            <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+            <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
         </div>
     </div>
 <?php endif; ?>

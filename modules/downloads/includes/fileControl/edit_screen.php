@@ -35,11 +35,11 @@ if (! $req_down->rowCount()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Upload screenshot'),
+            'title'         => __('Upload screenshot'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -103,22 +103,22 @@ if ($request->getMethod() === 'POST') {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Upload screenshot'),
+                'title'         => __('Upload screenshot'),
                 'type'          => 'alert-success',
-                'message'       => _t('Screenshot is attached'),
+                'message'       => __('Screenshot is attached'),
                 'back_url'      => '?act=edit_screen&amp;id=' . $id,
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
     } else {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Upload screenshot'),
+                'title'         => __('Upload screenshot'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Screenshot not attached') . ' ' . ($screen_attached_error ?? ''),
+                'message'       => __('Screenshot not attached') . ' ' . ($screen_attached_error ?? ''),
                 'back_url'      => '?act=edit_screen&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
     }

@@ -29,21 +29,21 @@ $this->layout(
         <div class="alert alert-danger">
             <?php if ($posts == 1): ?>
                 <div class="font-weight-bold">
-                    <?= _t('WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too') ?>
+                    <?= __('WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too') ?>
                 </div>
             <?php endif; ?>
             <div class="pb-2">
-                <?= _t('Do you really want to delete?') ?>
+                <?= __('Do you really want to delete?') ?>
             </div>
             <div>
-                <a href="/forum/?act=editpost&amp;do=delete&amp;id=<?= $id ?>" class="mr-2 btn btn-danger btn-sm"><?= _t('Delete') ?></a>
+                <a href="/forum/?act=editpost&amp;do=delete&amp;id=<?= $id ?>" class="mr-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
                 <?php if ($user->rights == 9): ?>
-                    <a href="/forum/?act=editpost&amp;do=delete&amp;hide&amp;id=<?= $id ?>" class="mr-2 btn btn-primary btn-sm"><?= _t('Hide') ?></a>
+                    <a href="/forum/?act=editpost&amp;do=delete&amp;hide&amp;id=<?= $id ?>" class="mr-2 btn btn-primary btn-sm"><?= __('Hide') ?></a>
                 <?php endif; ?>
-                <a href="<?= $back_url ?>"><?= _t('Cancel') ?></a>
+                <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
             </div>
             <div class="mt-2 text-muted small">
-                <?= _t('After deleting, one point will be subtracted from the counter of forum posts') ?>
+                <?= __('After deleting, one point will be subtracted from the counter of forum posts') ?>
             </div>
         </div>
     </div>

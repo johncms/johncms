@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,18 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  */
+
+$title = __('Avatars');
+$nav_chain->add($title, '?act=avatars');
+$data = [];
 
 // Каталог пользовательских Аватаров
 if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
@@ -25,74 +29,110 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
         if (isset($_POST['submit'])) {
             // Устанавливаем пользовательский Аватар
             if (@copy(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png', UPLOAD_PATH . 'users/avatar/' . $user->id . '.png')) {
-                echo '<div class="gmenu"><p>' . _t('Avatar has been successfully applied') . '<br />' .
-                    '<a href="../profile/?act=edit">' . _t('Continue') . '</a></p></div>';
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-success',
+                        'message'       => __('Avatar has been successfully applied'),
+                        'back_url'      => '../profile/?act=edit',
+                        'back_url_name' => __('Continue'),
+                    ]
+                );
             } else {
-                echo $tools->displayError(_t('An error occurred'), '<a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a>');
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-danger',
+                        'message'       => __('An error occurred'),
+                        'back_url'      => './',
+                        'back_url_name' => __('Back'),
+                    ]
+                );
             }
         } else {
-            echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . _t('Set to Profile') . '</div>' .
-                '<div class="rmenu"><p>' . _t('Are you sure you want to set yourself this avatar?') . '</p>' .
-                '<p><img src="../assets/avatars/' . $id . '/' . $avatar . '.png" alt="" /></p>' .
-                '<p><form action="?act=avatars&amp;id=' . $id . '&amp;avatar=' . $avatar . '" method="post"><input type="submit" name="submit" value="' . _t('Save') . '"/></form></p>' .
-                '</div>' .
-                '<div class="phdr"><a href="?act=avatars&amp;id=' . $id . '">' . _t('Cancel') . '</a></div>';
+            $title = __('Set to Profile');
+            $data = [
+                'form_action'     => '?act=avatars&amp;id=' . $id . '&amp;avatar=' . $avatar,
+                'message'         => __('Are you sure you want to set yourself this avatar?'),
+                'img'             => '../assets/avatars/' . $id . '/' . $avatar . '.png',
+                'back_url'        => '?act=avatars&amp;id=' . $id,
+                'submit_btn_name' => __('Save'),
+            ];
+            echo $view->render(
+                'help::confirm',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
     } else {
         // Показываем список Аватаров
-        echo '<div class="phdr">' .
-            '<a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . htmlentities(file_get_contents(ASSETS_PATH . 'avatars/' . $id . '/name.txt'), ENT_QUOTES, 'utf-8') .
-            '</div>';
+        $title = htmlentities(file_get_contents(ASSETS_PATH . 'avatars/' . $id . '/name.txt'), ENT_QUOTES, 'utf-8');
+        $nav_chain->add($title);
+
+        // Количество аватаров на страницу
+        $per_page = 50;
+
         $array = glob(ASSETS_PATH . 'avatars/' . $id . '/*.png');
         $total = count($array);
-        $end = $start + $user->config->kmess;
+        $end = $start + $per_page;
 
         if ($end > $total) {
             $end = $total;
         }
 
         if ($total > 0) {
+            $items = [];
             for ($i = $start; $i < $end; $i++) {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<img src="../assets/avatars/' . $id . '/' . basename($array[$i]) . '" alt="" />';
-
-                if ($user->isValid()) {
-                    echo ' - <a href="?act=avatars&amp;id=' . $id . '&amp;avatar=' . basename($array[$i]) . '">' . _t('Select') . '</a>';
-                }
-
-                echo '</div>';
+                $items[] = [
+                    'picture' => '../assets/avatars/' . $id . '/' . basename($array[$i]),
+                    'set_url' => $user->isValid() ? '?act=avatars&amp;id=' . $id . '&amp;avatar=' . basename($array[$i]) : '',
+                ];
             }
-        } else {
-            echo '<div class="menu">' . _t('The list is empty') . '</div>';
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+        $data['pagination'] = $tools->displayPagination('?act=avatars&amp;id=' . $id . '&amp;', $start, $total, $per_page);
+        $data['total'] = $total;
+        $data['per_page'] = $per_page;
+        $data['items'] = $items ?? [];
+        $data['back_url'] = '?act=avatars';
 
-        if ($total > $user->config->kmess) {
-            echo '<p>' . $tools->displayPagination('?act=avatars&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
-                '<p><form action="?act=avatars&amp;id=' . $id . '" method="post">' .
-                '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-                '</form></p>';
-        }
-
-        echo '<p><a href="?act=avatars">' . _t('Back') . '</a><br />';
+        echo $view->render(
+            'help::avatar_list',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
     }
 } else {
     // Показываем каталоги с Аватарами
-    echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Avatars') . '</div>';
     $dir = glob(ASSETS_PATH . 'avatars/*', GLOB_ONLYDIR);
-    $total = 0;
     $total_dir = count($dir);
-
+    $items = [];
     for ($i = 0; $i < $total_dir; $i++) {
         $count = (int) count(glob($dir[$i] . '/*.png'));
-        $total = $total + $count;
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo '<a href="?act=avatars&amp;id=' . basename($dir[$i]) . '">' . htmlentities(file_get_contents($dir[$i] . '/name.txt'), ENT_QUOTES, 'utf-8') .
-            '</a> (' . $count . ')</div>';
+        $items[] = [
+            'url'   => '?act=avatars&amp;id=' . basename($dir[$i]),
+            'name'  => htmlentities(file_get_contents($dir[$i] . '/name.txt'), ENT_QUOTES, 'utf-8'),
+            'count' => $count,
+        ];
     }
 
-    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-        '<p><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></p>';
+    $data['items'] = $items ?? [];
+    $data['back_url'] = htmlspecialchars($_SESSION['ref']);
+
+    echo $view->render(
+        'help::avatars',
+        [
+            'title'      => $title,
+            'page_title' => $title,
+            'data'       => $data,
+        ]
+    );
 }

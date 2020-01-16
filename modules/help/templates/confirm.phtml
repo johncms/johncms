@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= $data['message'] ?>
+            </div>
+            <div>
+                <form action="<?= $data['form_action'] ?>" method="post">
+                    <?php if (! empty($data['img'])): ?>
+                        <div class="mb-3">
+                            <img src="<?= $data['img'] ?>" alt="." class="img-thumbnail">
+                        </div>
+                    <?php endif; ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-danger btn-sm"><?= $data['submit_btn_name'] ?></button>
+                    <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

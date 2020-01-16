@@ -16,23 +16,17 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
  * @var PDO $db
+ * @var NavChain $nav_chain
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  */
 
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    exit(__('Access denied'));
 }
 
 $config = di('config')['johncms'];
-
-/** @var NavChain $navChain */
-$navChain = di(NavChain::class);
-$navChain->add(_t('Admin Panel'), '../');
-$navChain->add(_t('Default language'));
-
-// Выводим список доступных языков
-//echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
+$nav_chain->add(__('Default language'));
 
 if (isset($_POST['lng']) || isset($_POST['update'])) {
     if (isset($_POST['lng'])) {
@@ -47,8 +41,8 @@ if (isset($_POST['lng']) || isset($_POST['update'])) {
         // Обновляем список имеющихся языков
         $lng_list = [];
 
-        foreach (glob(ROOT_PATH . 'system/locale/*/lng.ini') as $val) {
-            $iso = basename(dirname($val));
+        foreach (glob(ROOT_PATH . 'system/locale/*.ini') as $val) {
+            $iso = pathinfo($val, PATHINFO_FILENAME);
             $desc = parse_ini_file($val);
             $lng_list[$iso] = isset($desc['name']) && ! empty($desc['name']) ? $desc['name'] : $iso;
         }

@@ -31,11 +31,11 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('File not found'),
+            'title'         => __('File not found'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -59,11 +59,11 @@ if ($user->rights > 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Move File'),
+                    'title'         => __('Move File'),
                     'type'          => 'alert-info',
-                    'message'       => _t('This is the current directory'),
+                    'message'       => __('This is the current directory'),
                     'back_url'      => '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -116,11 +116,11 @@ if ($user->rights > 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Move File'),
+                    'title'         => __('Move File'),
                     'type'          => 'alert-success',
-                    'message'       => _t('The file has been moved'),
+                    'message'       => __('The file has been moved'),
                     'back_url'      => '?act=recount',
-                    'back_url_name' => _t('Update counters'),
+                    'back_url_name' => __('Update counters'),
                 ]
             );
         } else {
@@ -156,13 +156,13 @@ if ($user->rights > 6) {
         echo $view->render(
             'downloads::move_file',
             [
-                'title'         => _t('Move File'),
-                'page_title'    => _t('Move File'),
+                'title'         => __('Move File'),
+                'page_title'    => __('Move File'),
                 'type'          => 'alert-success',
                 'urls'          => $urls,
                 'sections'      => $sections,
                 'back_url'      => '?act=view&amp;id=' . $id,
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
     }

@@ -28,16 +28,16 @@ $this->layout(
     <div class="col-md-6">
         <div class="alert alert-danger">
             <div class="pb-2">
-                <?= _t('Do you really want to delete?') ?>
+                <?= __('Do you really want to delete?') ?>
             </div>
             <div>
                 <form action="/forum/?act=editpost&amp;do=deletefile&amp;fid=<?= $fid ?>&amp;id=<?= $id ?>" method="post">
-                    <button type="submit" name="delfile" value="1" class="btn btn-danger btn-sm"><?= _t('Delete') ?></button>
-                    <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= _t('Cancel') ?></a>
+                    <button type="submit" name="delfile" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+                    <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
                 </form>
             </div>
             <div class="mt-2 text-muted small">
-                <?= _t('After deleting, one point will be subtracted from the counter of forum posts') ?>
+                <?= __('After deleting, one point will be subtracted from the counter of forum posts') ?>
             </div>
         </div>
     </div>

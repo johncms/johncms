@@ -28,7 +28,7 @@ $this->layout(
 
 <?php if (! empty($data['create_url'])): ?>
     <div class="mb-3">
-        <a href="<?= $data['create_url'] ?>" class="btn btn-primary"><?= _t('Create Album') ?></a>
+        <a href="<?= $data['create_url'] ?>" class="btn btn-primary"><?= __('Create Album') ?></a>
     </div>
 <?php endif; ?>
 
@@ -41,10 +41,10 @@ $this->layout(
             </div>
             <?php if (! empty($album['has_edit'])): ?>
                 <div>
-                    <a href="<?= $album['up_url'] ?>" class="btn btn-secondary btn-sm"><?= _t('Up') ?></a>
-                    <a href="<?= $album['down_url'] ?>" class="btn btn-secondary btn-sm"><?= _t('Down') ?></a>
-                    <a href="<?= $album['edit_url'] ?>" class="btn btn-secondary btn-sm"><?= _t('Edit') ?></a>
-                    <a href="<?= $album['delete_url'] ?>" class="btn btn-secondary btn-sm"><?= _t('Delete') ?></a>
+                    <a href="<?= $album['up_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Up') ?></a>
+                    <a href="<?= $album['down_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Down') ?></a>
+                    <a href="<?= $album['edit_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Edit') ?></a>
+                    <a href="<?= $album['delete_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Delete') ?></a>
                 </div>
             <?php endif; ?>
         </div>

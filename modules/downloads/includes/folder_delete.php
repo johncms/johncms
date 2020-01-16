@@ -18,7 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Удаление каталога
-$nav_chain->add(_t('Delete Folder'));
+$nav_chain->add(__('Delete Folder'));
 $del_cat = $db->query('SELECT COUNT(*) FROM `download__category` WHERE `refid` = ' . $id)->fetchColumn();
 $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
 
@@ -26,11 +26,11 @@ if ($del_cat || ! $req->rowCount()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Delete Folder'),
+            'title'         => __('Delete Folder'),
             'type'          => 'alert-danger',
-            'message'       => $del_cat ? _t('Before removing, delete subdirectories') : _t('The directory does not exist'),
+            'message'       => $del_cat ? __('Before removing, delete subdirectories') : __('The directory does not exist'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -73,8 +73,8 @@ if (isset($_POST['delete'])) {
     echo $view->render(
         'downloads::folder_delete',
         [
-            'title'      => _t('Delete Folder'),
-            'page_title' => _t('Delete Folder'),
+            'title'      => __('Delete Folder'),
+            'page_title' => __('Delete Folder'),
             'id'         => $id,
             'urls'       => $urls,
             'action_url' => '?act=folder_delete&amp;id=' . $id,

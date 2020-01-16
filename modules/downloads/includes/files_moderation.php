@@ -20,7 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$title = _t('Files on moderation');
+$title = __('Files on moderation');
 
 if ($id) {
     $db->exec("UPDATE `download__files` SET `type` = 2 WHERE `id` = '" . $id . "' LIMIT 1");
@@ -29,9 +29,9 @@ if ($id) {
         [
             'title'         => $title,
             'type'          => 'alert-success',
-            'message'       => _t('File accepted'),
+            'message'       => __('File accepted'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
 } elseif (isset($_POST['all_mod'])) {
@@ -41,9 +41,9 @@ if ($id) {
         [
             'title'         => $title,
             'type'          => 'alert-success',
-            'message'       => _t('All files accepted'),
+            'message'       => __('All files accepted'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
 }

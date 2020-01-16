@@ -30,7 +30,7 @@ $this->layout(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
-            'alert'      => _t('The list is empty'),
+            'alert'      => __('The list is empty'),
         ]
     ) ?>
 <?php endif; ?>
@@ -46,10 +46,10 @@ $this->layout(
                     <div class="small">
                         <div>
                             <span class="text-nowrap pr-2">
-                                <?= _t('User:') ?> <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
+                                <?= __('User:') ?> <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
                             </span>
                             <span class="text-nowrap">
-                                <?= _t('Album:') ?> <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
+                                <?= __('Album:') ?> <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
                             </span>
                         </div>
                     </div>
@@ -113,5 +113,5 @@ $this->layout(
 <?php endif; ?>
 
 <?php if ($data['total'] > 0): ?>
-    <div><?= _t('Total') ?>: <?= $data['total'] ?></div>
+    <div><?= __('Total') ?>: <?= $data['total'] ?></div>
 <?php endif; ?>

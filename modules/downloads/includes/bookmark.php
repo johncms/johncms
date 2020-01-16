@@ -26,15 +26,15 @@ if (! $user->isValid()) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('Downloads'),
+            'title'   => __('Downloads'),
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;
 }
 
-$nav_chain->add(_t('Favorites'));
+$nav_chain->add(__('Favorites'));
 $total = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = ' . $user->id)->fetchColumn();
 
 // Список закладок
@@ -53,8 +53,8 @@ if ($total) {
 echo $view->render(
     'downloads::bookmarks',
     [
-        'title'       => _t('Favorites'),
-        'page_title'  => _t('Favorites'),
+        'title'       => __('Favorites'),
+        'page_title'  => __('Favorites'),
         'pagination'  => $tools->displayPagination('?act=bookmark&amp;', $start, $total, $user->config->kmess),
         'files'       => $files ?? [],
         'total_files' => $total,

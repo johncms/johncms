@@ -34,29 +34,40 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
-        "ext-iconv": "*",
         "ext-simplexml": "*",
         "aura/autoload": "^2.0",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
-        "johncms/system": "dev-develop",
+        "johncms/system": "^1.0",
         "mobicms/captcha": "^2.0",
         "verot/class.upload.php": "^2.0"
     },
     "require-dev": {
+        "gettext/gettext": "^5.2",
+        "gettext/php-scanner": "^1.1",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
+        "files": [
+            "config/constants.php",
+            "system/helpers.php"
+        ],
         "psr-4": {
             "Johncms\\": "system/src/"
         }
     },
+    "bin": [
+        "system/bin/scan",
+        "system/bin/translate"
+    ],
     "scripts": {
         "check": [
             "@cs-check"
         ],
         "cs-check": "phpcs",
-        "cs-fix": "phpcbf"
+        "cs-fix": "phpcbf",
+        "translate": "translate",
+        "translate-scan": "scan"
     }
 }

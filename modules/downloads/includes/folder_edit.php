@@ -25,11 +25,11 @@ if (! $req->rowCount() || ! is_dir($res['dir'])) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Edit Folder'),
+            'title'         => __('Edit Folder'),
             'type'          => 'alert-danger',
-            'message'       => _t('The directory does not exist'),
+            'message'       => __('The directory does not exist'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
     $rus_name = isset($_POST['rus_name']) ? trim($_POST['rus_name']) : '';
 
     if (empty($rus_name)) {
-        $error[] = _t('The required fields are not filled');
+        $error[] = __('The required fields are not filled');
     }
 
     $error_format = false;
@@ -83,18 +83,18 @@ if (isset($_POST['submit'])) {
     }
 
     if ($error_format) {
-        $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
+        $error[] = __('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
     }
 
     if ($error) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Create Folder'),
+                'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=folder_edit&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
         exit;
@@ -135,8 +135,8 @@ if (isset($_POST['submit'])) {
     echo $view->render(
         'downloads::folder_form',
         [
-            'title'         => _t('Downloads'),
-            'page_title'    => _t('Downloads'),
+            'title'         => __('Downloads'),
+            'page_title'    => __('Downloads'),
             'id'            => $id,
             'urls'          => $urls,
             'folder_params' => $folder_params,

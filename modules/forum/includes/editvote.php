@@ -25,12 +25,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Edit Poll'),
-                'page_title'    => _t('Edit Poll'),
+                'title'         => __('Edit Poll'),
+                'page_title'    => __('Edit Poll'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -58,8 +58,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 echo $view->render(
                     'forum::delete_answer',
                     [
-                        'title'      => _t('Delete Answer'),
-                        'page_title' => _t('Delete Answer'),
+                        'title'      => __('Delete Answer'),
+                        'page_title' => __('Delete Answer'),
                         'id'         => $id,
                         'delete_url' => '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes',
                         'back_url'   => '?act=editvote&id=' . $id,
@@ -98,12 +98,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Edit Poll'),
-                    'page_title'    => _t('Edit Poll'),
+                    'title'         => __('Edit Poll'),
+                    'page_title'    => __('Edit Poll'),
                     'type'          => 'alert-success',
-                    'message'       => _t('Poll changed'),
+                    'message'       => __('Poll changed'),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                    'back_url_name' => _t('Continue'),
+                    'back_url_name' => __('Continue'),
                 ]
             );
             exit;
@@ -118,7 +118,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
         while ($vote = $vote_result->fetch()) {
             $votes[] = [
                 'input_name'  => $vote['id'] . 'vote',
-                'input_label' => _t('Answer') . ' ' . ($i + 1),
+                'input_label' => __('Answer') . ' ' . ($i + 1),
                 'input_value' => htmlentities($vote['name'], ENT_QUOTES, 'UTF-8'),
                 'delete_url'  => $countvote > 2 ? '?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote' : '',
             ];
@@ -142,7 +142,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
             for ($vote = $i; $vote < $count_vote; $vote++) {
                 $votes[] = [
                     'input_name'  => $vote,
-                    'input_label' => _t('Answer') . ' ' . ($vote + 1),
+                    'input_label' => __('Answer') . ' ' . ($vote + 1),
                     'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
                 ];
             }
@@ -151,8 +151,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'forum::edit_poll',
             [
-                'title'      => _t('Edit Poll'),
-                'page_title' => _t('Edit Poll'),
+                'title'      => __('Edit Poll'),
+                'page_title' => __('Edit Poll'),
                 'id'         => $id,
                 'back_url'   => '?type=topic&id=' . $id,
                 'saved_vote' => $countvote,

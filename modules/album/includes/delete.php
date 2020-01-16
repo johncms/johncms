@@ -26,7 +26,7 @@ if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
     if ($req_a->rowCount()) {
         $res_a = $req_a->fetch();
-        $title = _t('Delete album:') . ' ' . $tools->checkout($res_a['name']);
+        $title = __('Delete album:') . ' ' . $tools->checkout($res_a['name']);
         if (
             isset($post['delete_token'], $_SESSION['delete_token']) &&
             $_SESSION['delete_token'] === $post['delete_token'] &&
@@ -53,7 +53,7 @@ if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 [
                     'title'    => $title,
                     'type'     => 'alert-success',
-                    'message'  => _t('Album deleted'),
+                    'message'  => __('Album deleted'),
                     'back_url' => './list?user=' . $foundUser['id'],
                 ]
             );
@@ -63,7 +63,7 @@ if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             $data['delete_token'] = $delete_token;
             $data['action_url'] = './delete?al=' . $al . '&amp;user=' . $foundUser['id'];
             $data['back_url'] = './list?user=' . $foundUser['id'];
-            $data['message'] = _t('Are you sure you want to delete this album? If it contains photos, they also will be deleted.');
+            $data['message'] = __('Are you sure you want to delete this album? If it contains photos, they also will be deleted.');
             echo $view->render(
                 'album::image_delete',
                 [
@@ -80,7 +80,7 @@ if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             [
                 'title'   => $title,
                 'type'    => 'alert-danger',
-                'message' => _t('Wrong data'),
+                'message' => __('Wrong data'),
             ]
         );
     }

@@ -15,6 +15,10 @@ $this->layout(
         'page_title' => $page_title ?? $title,
     ]
 );
+
+if (isset($admin)) {
+    $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', [$parent_menu ?? 'usr_menu' => [$menu_item ?? '' => true]]));
+}
 ?>
 <div class="row">
     <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
@@ -26,7 +30,7 @@ $this->layout(
             ]
         ) ?>
         <?php if (! empty($back_url)): ?>
-            <a href="<?= $back_url ?>" class="btn btn-primary"><?= $back_url_name ?? _t('Back', 'system') ?></a>
+            <a href="<?= $back_url ?>" class="btn btn-primary"><?= $back_url_name ?? d__('system', 'Back') ?></a>
         <?php endif; ?>
     </div>
 </div>

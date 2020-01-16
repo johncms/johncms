@@ -14,20 +14,19 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $user_data = (array) $foundUser;
 
-$title = $user_data['id'] !== $user->id ? _t('User Profile') : _t('My Profile');
+$title = $user_data['id'] !== $user->id ? __('User Profile') : __('My Profile');
 
 $nav_chain->add($title, '?user=' . $user_data['id']);
 
 $user_rights_names = [
-    0 => _t('User'),
-    3 => _t('Forum moderator'),
-    4 => _t('Download moderator'),
-    5 => _t('Library moderator'),
-    6 => _t('Super moderator'),
-    7 => _t('Administrator'),
-    9 => _t('Supervisor'),
+    0 => __('User'),
+    3 => __('Forum moderator'),
+    4 => __('Download moderator'),
+    5 => __('Library moderator'),
+    6 => __('Super moderator'),
+    7 => __('Administrator'),
+    9 => __('Supervisor'),
 ];
-
 
 // Подготовка дополнительных данных пользователя
 $user_data['total_on_site'] = $tools->timecount((int) $user_data['total_on_site']);
@@ -49,6 +48,11 @@ $user_data['www'] = $tools->checkout($user_data['www'], 0, 1);
 $ip_total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
 $user_data['ip_history_count'] = $ip_total;
 $user_data['ip_history_url'] = '/profile/?act=ip&amp;user=' . $user_data['id'];
+
+if (file_exists(UPLOAD_PATH . 'users/photo/' . $user_data['id'] . '_small.jpg')) {
+    $user_data['photo'] = '/upload/users/photo/' . $user_data['id'] . '.jpg';
+    $user_data['photo_preview'] = '/upload/users/photo/' . $user_data['id'] . '_small.jpg';
+}
 
 if ($config['karma']['on']) {
     $user_data['karma_points'] = $user_data['karma_plus'] - $user_data['karma_minus'];
@@ -72,7 +76,8 @@ if ($config['karma']['on']) {
     } else {
         $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
         if ($total_karma > 0) {
-            $user_data['karma_view_url'] = '?act=karma&amp;mod=new';
+            $user_data['karma_new_url'] = '?act=karma&amp;mod=new';
+            $user_data['karma_new'] = $total_karma;
         }
     }
 }
@@ -87,7 +92,7 @@ $data = [
 // Различные оповещения
 $notifications = [];
 if ($user->rights >= 7 && ! $user_data['preg'] && empty($user_data['regadm'])) {
-    $notifications[] = _t('Pending confirmation');
+    $notifications[] = __('Pending confirmation');
 }
 $data['notifications'] = $notifications;
 
@@ -102,22 +107,37 @@ $data['counters'] = [
 
 // Админские кнопки
 $buttons = [];
+
+if (is_contact($user_data['id']) !== 2) {
+    if (! is_contact($foundUser->id)) {
+        $buttons[] = [
+            'url'  => '../mail/?id=' . $user_data['id'],
+            'name' => __('Add to Contacts'),
+        ];
+    } else {
+        $buttons[] = [
+            'url'  => '../mail/?act=deluser&amp;id=' . $user_data['id'],
+            'name' => __('Remove from Contacts'),
+        ];
+    }
+}
+
 if ($user_data['id'] === $user->id || $user->rights === 9 || ($user->rights === 7 && $user->rights > $user_data['rights'])) {
     $buttons[] = [
         'url'  => '?act=edit&amp;user=' . $user_data['id'],
-        'name' => _t('Edit'),
+        'name' => __('Edit'),
     ];
 }
 if ($user_data['id'] !== $user->id && $user->rights >= 7 && $user->rights > $user_data['rights']) {
     $buttons[] = [
         'url'  => '/admin/?act=usr_del&amp;id=' . $user_data['id'],
-        'name' => _t('Delete'),
+        'name' => __('Delete'),
     ];
 }
 if ($user_data['id'] !== $user->id && $user->rights > $user_data['rights']) {
     $buttons[] = [
         'url'  => '?act=ban&amp;mod=do&amp;user=' . $user_data['id'],
-        'name' => _t('Ban'),
+        'name' => __('Ban'),
     ];
 }
 $data['buttons'] = $buttons;

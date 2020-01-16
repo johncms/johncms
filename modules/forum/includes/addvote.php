@@ -26,12 +26,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Add Poll'),
-                'page_title'    => _t('Add Poll'),
+                'title'         => __('Add Poll'),
+                'page_title'    => __('Add Poll'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -78,24 +78,24 @@ if ($user->rights == 3 || $user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Add Poll'),
-                    'page_title'    => _t('Add Poll'),
+                    'title'         => __('Add Poll'),
+                    'page_title'    => __('Add Poll'),
                     'type'          => 'alert-success',
-                    'message'       => _t('Poll added'),
+                    'message'       => __('Poll added'),
                     'back_url'      => '/forum/?type=topic&amp;id=' . $id,
-                    'back_url_name' => _t('Continue'),
+                    'back_url_name' => __('Continue'),
                 ]
             );
         } else {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Add Poll'),
-                    'page_title'    => _t('Add Poll'),
+                    'title'         => __('Add Poll'),
+                    'page_title'    => __('Add Poll'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('The required fields are not filled'),
+                    'message'       => __('The required fields are not filled'),
                     'back_url'      => '/forum/?act=addvote&amp;id=' . $id,
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
         }
@@ -119,7 +119,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
     for ($vote = 0; $vote < $count_vote; $vote++) {
         $votes[] = [
             'input_name'  => $vote,
-            'input_label' => _t('Answer') . ' ' . ($vote + 1),
+            'input_label' => __('Answer') . ' ' . ($vote + 1),
             'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
         ];
     }
@@ -127,8 +127,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'forum::add_poll',
         [
-            'title'      => _t('Add File'),
-            'page_title' => _t('Add File'),
+            'title'      => __('Add File'),
+            'page_title' => __('Add File'),
             'id'         => $id,
             'back_url'   => '?type=topic&id=' . $id,
             'count_vote' => $count_vote,
@@ -141,11 +141,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Access forbidden'),
+            'title'         => __('Access forbidden'),
             'type'          => 'alert-danger',
-            'message'       => _t('Access forbidden'),
+            'message'       => __('Access forbidden'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
 }

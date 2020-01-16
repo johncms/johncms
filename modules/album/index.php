@@ -16,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -41,8 +41,8 @@ $nav_chain = di(NavChain::class);
 /** @var Request $request */
 $request = di(Request::class);
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('album', __DIR__ . '/locale');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();
@@ -51,7 +51,7 @@ $loader->addPrefix('Albums', __DIR__ . '/lib');
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('album', __DIR__ . '/templates/');
 
-$title = _t('Albums');
+$title = __('Albums');
 
 // Добавляем раздел в навигационную цепочку
 $nav_chain->add($title, '/album/');
@@ -73,7 +73,7 @@ if (! $user->isValid()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;
@@ -89,7 +89,7 @@ if (! $foundUser = $req->fetch()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('User does not exists'),
+            'message' => __('User does not exists'),
         ]
     );
     exit;

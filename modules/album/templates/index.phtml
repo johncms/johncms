@@ -27,40 +27,40 @@ $this->layout(
     <div class="col-md-6">
         <div class="list-group">
             <a href="./top" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('New Photos') ?>
+                <?= __('New Photos') ?>
                 <span class="badge badge-light badge-pill"><?= $data['new'] ?></span>
             </a>
             <a href="./top?mod=last_comm" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('New Comments') ?>
+                <?= __('New Comments') ?>
             </a>
         </div>
 
-        <h3 class="mt-3"><?= _t('Albums') ?></h3>
+        <h3 class="mt-3"><?= __('Albums') ?></h3>
 
         <div class="list-group">
             <a href="./users?mod=boys" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('Guys') ?>
+                <?= __('Guys') ?>
                 <span class="badge badge-light badge-pill"><?= $data['men'] ?></span>
             </a>
             <a href="./users?mod=girls" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= _t('Girls') ?>
+                <?= __('Girls') ?>
                 <span class="badge badge-light badge-pill"><?= $data['women'] ?></span>
             </a>
             <?php if ($user->isValid()): ?>
                 <a href="./list" class="list-group-item d-flex justify-content-between align-items-center">
-                    <?= _t('My Album') ?>
+                    <?= __('My Album') ?>
                 </a>
             <?php endif; ?>
         </div>
 
-        <h3 class="mt-3"><?= _t('Rating') ?></h3>
+        <h3 class="mt-3"><?= __('Rating') ?></h3>
 
         <div class="list-group">
-            <a href="./top?mod=votes" class="list-group-item"><?= _t('Top Votes') ?></a>
-            <a href="./top?mod=downloads" class="list-group-item"><?= _t('Top Downloads') ?></a>
-            <a href="./top?mod=views" class="list-group-item"><?= _t('Top Views') ?></a>
-            <a href="./top?mod=comments" class="list-group-item"><?= _t('Top Comments') ?></a>
-            <a href="./top?mod=trash" class="list-group-item"><?= _t('Top Worst') ?></a>
+            <a href="./top?mod=votes" class="list-group-item"><?= __('Top Votes') ?></a>
+            <a href="./top?mod=downloads" class="list-group-item"><?= __('Top Downloads') ?></a>
+            <a href="./top?mod=views" class="list-group-item"><?= __('Top Views') ?></a>
+            <a href="./top?mod=comments" class="list-group-item"><?= __('Top Comments') ?></a>
+            <a href="./top?mod=trash" class="list-group-item"><?= __('Top Worst') ?></a>
         </div>
     </div>
 </div>

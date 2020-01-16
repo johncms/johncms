@@ -2,7 +2,12 @@
 /**
  * @var string $locale
  * @var Johncms\System\Users\User $user
+ * @var Johncms\Counters $counters
  */
+
+$counters = $container->get('counters');
+$notifications = $counters->notifications();
+$analytics = $counters->counters();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -32,7 +37,7 @@
             </a>
         </div>
         <div class="sidebar__wrapper d-flex flex-column">
-            <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu')) ?>
+            <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu', ['notifications' => $notifications])) ?>
             <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-main-menu')) ?>
         </div>
     </div>
@@ -82,8 +87,18 @@
                     </svg>
                 </a>
             </div>
-            <div class="flex-shrink-1">
-                &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+            <div class="flex-shrink-1 d-flex">
+                <?php if (! empty($analytics)): ?>
+                    <!-- Counters -->
+                    <div class="mr-2 d-flex">
+                        <?php foreach ($analytics as $counter): ?>
+                            <div><?= $counter ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <div>
+                    &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+                </div>
             </div>
         </div>
     </div>

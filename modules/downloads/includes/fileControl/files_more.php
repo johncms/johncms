@@ -36,11 +36,11 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('File not found'),
+            'title'         => __('File not found'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -53,7 +53,7 @@ $del = isset($get['del']) ? (int) $get['del'] : false;
 $edit = isset($get['edit']) ? (int) $get['edit'] : false;
 $base_file_name = htmlspecialchars($res_down['rus_name']);
 $nav_chain->add($base_file_name, '?act=view&id=' . $id);
-$nav_chain->add(_t('Additional files'));
+$nav_chain->add(__('Additional files'));
 if ($edit) {
     // Изменяем файл
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
@@ -82,7 +82,7 @@ if ($edit) {
         echo $view->render(
             'downloads::edit_additional_form',
             [
-                'title'      => _t('Edit File'),
+                'title'      => __('Edit File'),
                 'page_title' => htmlspecialchars($res_down['rus_name']),
                 'id'         => $id,
                 'urls'       => $urls,
@@ -112,7 +112,7 @@ if ($edit) {
         echo $view->render(
             'downloads::delete_additional',
             [
-                'title'        => _t('Edit File'),
+                'title'        => __('Edit File'),
                 'page_title'   => htmlspecialchars($res_down['rus_name']),
                 'id'           => $id,
                 'urls'         => $urls,
@@ -135,7 +135,7 @@ if ($edit) {
 
     if ($link_file) {
         if (mb_strpos($link_file, 'http://') !== 0) {
-            $error[] = _t('Invalid Link');
+            $error[] = __('Invalid Link');
         } else {
             $link_file = str_replace('http://', '', $link_file);
 
@@ -144,7 +144,7 @@ if ($edit) {
                 $fname = basename($link_file);
                 $fsize = 0;
             } else {
-                $error[] = _t('Invalid Link');
+                $error[] = __('Invalid Link');
             }
         }
 
@@ -152,11 +152,11 @@ if ($edit) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Error'),
+                    'title'         => __('Error'),
                     'type'          => 'alert-danger',
                     'message'       => $error,
                     'back_url'      => '?act=files_more&amp;id=' . $id,
-                    'back_url_name' => _t('Repeat'),
+                    'back_url_name' => __('Repeat'),
                 ]
             );
             exit;
@@ -181,15 +181,15 @@ if ($edit) {
         $fname = $file_name->getCleanName();
 
         if (empty($name_link)) {
-            $error[] = _t('The required fields are not filled');
+            $error[] = __('The required fields are not filled');
         }
 
         if ($fsize > 1024 * $config['flsz'] && ! $link_file) {
-            $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
+            $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
         }
 
         if (! in_array($ext, $defaultExt, true)) {
-            $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $defaultExt);
+            $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $defaultExt);
         }
 
         if (empty($error)) {
@@ -230,30 +230,30 @@ if ($edit) {
                 echo $view->render(
                     'system::pages/result',
                     [
-                        'title'         => _t('File attached'),
+                        'title'         => __('File attached'),
                         'type'          => 'alert-success',
-                        'message'       => _t('File attached'),
+                        'message'       => __('File attached'),
                         'back_url'      => '?id=' . $id . '&amp;act=view',
-                        'back_url_name' => _t('Back'),
+                        'back_url_name' => __('Back'),
                     ]
                 );
                 exit;
             }
-            $error[] = _t('File not attached');
+            $error[] = __('File not attached');
         }
     } else {
-        $error[] = _t('File not attached');
+        $error[] = __('File not attached');
     }
 
     if (! empty($error)) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Error'),
+                'title'         => __('Error'),
                 'type'          => 'alert-danger',
                 'message'       => $error,
                 'back_url'      => '?act=files_more&amp;id=' . $id,
-                'back_url_name' => _t('Repeat'),
+                'back_url_name' => __('Repeat'),
             ]
         );
         exit;

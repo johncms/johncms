@@ -30,7 +30,7 @@ $form_data = $data['form_data'] ?? [];
             <div class="card-body">
                 <form name="file_edit_form" action="<?= $data['action_url'] ?>" method="post">
                     <div class="form-group">
-                        <label for="al"><?= _t('Select Album') ?></label>
+                        <label for="al"><?= __('Select Album') ?></label>
                         <select name="al" id="al" class="form-control">
                             <?php foreach ($data['albums'] as $album): ?>
                                 <option value="<?= $album['id'] ?>"><?= $album['name'] ?></option>
@@ -39,8 +39,8 @@ $form_data = $data['form_data'] ?? [];
                     </div>
 
                     <div class="mt-3">
-                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Move') ?></button>
-                        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= _t('Cancel') ?></a>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Move') ?></button>
+                        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
                     </div>
                 </form>
             </div>

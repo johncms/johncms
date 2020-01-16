@@ -10,10 +10,6 @@
 
 declare(strict_types=1);
 
-/** @var Laminas\I18n\Translator\Translator $translator */
-$translator = di(Laminas\I18n\Translator\Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
 /** @var Johncms\System\Legacy\Tools $tools */
 $tools = di(Johncms\System\Legacy\Tools::class);
 
@@ -23,7 +19,7 @@ $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
 $data = [];
-$title = _t('User Search');
+$title = __('User Search');
 
 $nav_chain->add($title);
 
@@ -32,11 +28,11 @@ $data['search_query'] = $tools->checkout($search);
 // Проверям на ошибки
 $error = [];
 if (! empty($search) && (mb_strlen($search) < 2 || mb_strlen($search) > 20)) {
-    $error[] = _t('Nickname') . ': ' . _t('Invalid length');
+    $error[] = __('Nickname') . ': ' . __('Invalid length');
 }
 
 if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $tools->rusLat($search))) {
-    $error[] = _t('Nickname') . ': ' . _t('Invalid characters');
+    $error[] = __('Nickname') . ': ' . __('Invalid characters');
 }
 
 if ($search && ! $error) {

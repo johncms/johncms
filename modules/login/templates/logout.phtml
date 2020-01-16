@@ -1,13 +1,13 @@
 <?php $this->layout('system::layout/default', [
-    'title'      => _t('Logout', 'system'),
-    'page_title' => _t('Logout', 'system'),
+    'title'      => __('Logout'),
+    'page_title' => __('Logout'),
 ]) ?>
 <div class="card shadow border-0 border-radius-12">
     <div class="card-body">
-        <p class="h3 pb-2"><?= _t('Are you sure you want to leave the site?', 'system') ?></p>
+        <p class="h3 pb-2"><?= __('Are you sure you want to leave the site?') ?></p>
         <form method="post">
-            <input type="submit" name="logout" value="<?= _t('Logout', 'system') ?>" class="btn btn-danger"/>
-            <a class="btn btn-link" href="<?= $referer ?>"><?= _t('Cancel', 'system') ?></a>
+            <input type="submit" name="logout" value="<?= __('Logout') ?>" class="btn btn-danger"/>
+            <a class="btn btn-link" href="<?= $referer ?>"><?= __('Cancel') ?></a>
         </form>
     </div>
 </div>

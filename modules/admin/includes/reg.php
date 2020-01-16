@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
@@ -19,49 +18,98 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\System\Users\User $user
  */
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
+$title = __('Registration confirmation');
+$nav_chain->add($title);
+
+$data = [];
 
 switch ($mod) {
     case 'approve':
         // Подтверждаем регистрацию выбранного пользователя
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'));
-            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => __('Wrong data'),
+                ]
+            );
             exit;
         }
 
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($user->name) . ' WHERE `id` = ' . $id);
-        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => __('Registration is confirmed'),
+                'back_url'      => '/admin/reg/',
+                'back_url_name' => __('Continue'),
+            ]
+        );
         break;
 
     case 'massapprove':
         // Подтверждение всех регистраций
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($user->name) . ' WHERE `preg` = 0');
-        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => __('Registration is confirmed'),
+                'back_url'      => '/admin/reg/',
+                'back_url_name' => __('Continue'),
+            ]
+        );
         break;
 
     case 'del':
         // Удаляем регистрацию выбранного пользователя
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'));
-            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => __('Wrong data'),
+                ]
+            );
             exit;
         }
 
         $req = $db->query("SELECT `id` FROM `users` WHERE `id` = '${id}' AND `preg` = '0'");
-
         if ($req->rowCount()) {
             $db->exec("DELETE FROM `users` WHERE `id` = '${id}'");
             $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '${id}' LIMIT 1");
         }
-
-        echo '<div class="menu"><p>' . _t('User deleted') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => __('User deleted'),
+                'back_url'      => '/admin/reg/',
+                'back_url_name' => __('Continue'),
+            ]
+        );
         break;
 
     case 'massdel':
         $db->exec("DELETE FROM `users` WHERE `preg` = '0'");
         $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
-        echo '<div class="menu"><p>' . _t('All unconfirmed registrations were removed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => __('All unconfirmed registrations were removed'),
+                'back_url'      => '/admin/reg/',
+                'back_url_name' => __('Continue'),
+            ]
+        );
         break;
 
     case 'delip':
@@ -77,11 +125,25 @@ switch ($mod) {
 
             $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
             $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
-            echo '<div class="menu"><p>' . _t('All unconfirmed registrations with selected IP were deleted') . '<br>' .
-                '<a href="?act=reg">' . _t('Continue') . '</a></p></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => __('All unconfirmed registrations with selected IP were deleted'),
+                    'back_url'      => '/admin/reg/',
+                    'back_url_name' => __('Continue'),
+                ]
+            );
         } else {
-            echo $tools->displayError(_t('Wrong data'));
-            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => __('Wrong data'),
+                ]
+            );
             exit;
         }
         break;
@@ -90,58 +152,50 @@ switch ($mod) {
         // Выводим список пользователей, ожидающих подтверждения регистрации
         $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'")->fetchColumn();
 
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $user->config->kmess) . '</div>';
-        }
-
         if ($total) {
             $req = $db->query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT " . $start . ',' . $user->config->kmess);
-            $i = 0;
-
+            $items = [];
             while ($res = $req->fetch()) {
-                $link = [
-                    '<a href="?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . _t('Approve') . '</a>',
-                    '<a href="?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
-                    '<a href="?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . _t('Remove IP') . '</a>',
-                ];
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo $tools->displayUser(
-                    $res,
+                $res['buttons'] = [
                     [
-                        'header' => '<b>ID:' . $res['id'] . '</b>',
-                        'sub'    => implode(' | ', $link),
-                    ]
-                );
-                echo '</div>';
-                ++$i;
+                        'url'  => '?mod=approve&amp;id=' . $res['id'],
+                        'name' => __('Approve'),
+                    ],
+                    [
+                        'url'  => '?mod=del&amp;id=' . $res['id'],
+                        'name' => __('Delete'),
+                    ],
+                    [
+                        'url'  => '?mod=delip&amp;id=' . $res['id'],
+                        'name' => __('Remove IP'),
+                    ],
+                ];
+
+                $res['user_profile_link'] = '';
+                if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
+                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+                }
+                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+                $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
+                $res['ip'] = long2ip($res['ip']);
+                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+                $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
+                $items[] = $res;
             }
-        } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+        $data['back_url'] = '/admin/';
 
-        if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $user->config->kmess) . '</div>' .
-                '<p><form action="?act=reg" method="post">' .
-                '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-                '</form></p>';
-        }
+        $data['total'] = $total;
+        $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
+        $data['items'] = $items ?? [];
 
-        echo '<p>';
-
-        if ($total) {
-            echo '<a href="?act=reg&amp;mod=massapprove">' . _t('Confirm all') . '</a><br><a href="?act=reg&amp;mod=massdel">' . _t('Delete all') . '</a><br>';
-        }
-
-        echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
+        echo $view->render(
+            'admin::reg_list',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
 }
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => _t('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);

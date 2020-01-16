@@ -28,12 +28,6 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "grunt": "^1.0.4",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-compress": "^1.4.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-dev-update": "^2.1.0",
-    "grunt-exec": "^3.0.0",
     "laravel-mix": "^5.0.0",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.23.7",

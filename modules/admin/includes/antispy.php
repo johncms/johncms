@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 const ROOT_DIR = ROOT_PATH;
 
@@ -19,9 +18,23 @@ const ROOT_DIR = ROOT_PATH;
  * @var Johncms\System\Users\User $user
  */
 
+$title = __('Anti-Spyware');
+$nav_chain->add($title, '/admin/antispy/');
+
 // Проверяем права доступа
 if ($user->rights < 9) {
-    exit(_t('Access denied'));
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'       => $title,
+            'type'        => 'alert-danger',
+            'message'     => __('Access denied'),
+            'admin'       => true,
+            'menu_item'   => 'antispy',
+            'parent_menu' => 'sec_menu',
+        ]
+    );
+    exit();
 }
 
 class scaner // phpcs:ignore
@@ -124,17 +137,19 @@ class scaner // phpcs:ignore
                                 'file_path' => $folder . '/' . $file,
                                 'file_crc'  => $file_crc,
                             ];
-                        } else {
-                            if ($this->snap) {
-                                if ($this->track_files[$folder . '/' . $file] != $file_crc && ! in_array($folder . '/' . $file, $this->cache_files)) {
-                                    $this->bad_files[] = [
-                                        'file_path' => $folder . '/' . $file,
-                                        'file_name' => $file,
-                                        'file_date' => $file_date,
-                                        'type'      => 1,
-                                        'file_size' => $file_size,
-                                    ];
-                                }
+                        } elseif ($this->snap) {
+                            if (
+                                array_key_exists($folder . '/' . $file, $this->track_files) &&
+                                $this->track_files[$folder . '/' . $file] !== $file_crc &&
+                                ! in_array($folder . '/' . $file, $this->cache_files)
+                            ) {
+                                $this->bad_files[] = [
+                                    'file_path' => $folder . '/' . $file,
+                                    'file_name' => $file,
+                                    'file_date' => $file_date,
+                                    'type'      => 1,
+                                    'file_size' => $file_size,
+                                ];
                             }
                         }
                     }
@@ -147,90 +162,93 @@ class scaner // phpcs:ignore
 $scaner = new scaner();
 
 switch ($mod) {
-    case 'scan':
-        // Сканируем на соответствие дистрибутиву
-        $scaner->scan();
-        echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Distributive scan') . '</div>';
-
-        if (count($scaner->bad_files)) {
-            echo '<div class="rmenu"><small>' . _t('Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.') . '</small></div>'; // phpcs:ignore
-            echo '<div class="menu">';
-
-            foreach ($scaner->bad_files as $idx => $data) {
-                echo $data['file_path'] . '<br>';
-            }
-            echo '</div><div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
-        } else {
-            echo '<div class="gmenu">' . _t('<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive') . '</div>';
-        }
-
-        echo '<p><a href="?act=antispy&amp;mod=scan">' . _t('Rescan') . '</a></p>';
-        break;
-
     case 'snapscan':
         // Сканируем на соответствие ранее созданному снимку
         $scaner->snapscan();
-        echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Snapshot scan') . '</div>';
-
+        $title = __('Snapshot scan');
         if (count($scaner->track_files) == 0) {
-            /** @var Johncms\System\Legacy\Tools $tools */
-            $tools = di(Johncms\System\Legacy\Tools::class);
-
-            echo $tools->displayError(
-                _t('Snapshot is not created'),
-                '<a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>'
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-danger',
+                    'message'       => __('Snapshot is not created'),
+                    'admin'         => true,
+                    'menu_item'     => 'antispy',
+                    'parent_menu'   => 'sec_menu',
+                    'back_url'      => '?act=antispy&amp;mod=snap',
+                    'back_url_name' => __('Create snapshot'),
+                ]
+            );
+        } elseif (count($scaner->bad_files)) {
+            $data['total'] = count($scaner->bad_files);
+            $data['bad_files'] = $scaner->bad_files;
+            $data['back_url'] = '/admin/antispy/';
+            echo $view->render(
+                'admin::antispy_scan_result',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
             );
         } else {
-            if (count($scaner->bad_files)) {
-                echo '<div class="rmenu">' . _t('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';
-                echo '<div class="menu">';
-
-                foreach ($scaner->bad_files as $idx => $data) {
-                    echo $data['file_path'] . '<br>';
-                }
-                echo '</div>';
-            } else {
-                echo '<div class="gmenu">' . _t('Excellent!<br>All files are consistent with previously made image.') . '</div>';
-            }
-
-            echo '<div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => __('Excellent!<br>All files are consistent with previously made image.'),
+                    'admin'         => true,
+                    'menu_item'     => 'antispy',
+                    'parent_menu'   => 'sec_menu',
+                    'back_url'      => '/admin/antispy/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
         }
         break;
 
     case 'snap':
         // Создаем снимок файлов
-        echo '<div class="phdr"><a href="?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Create snapshot') . '</div>';
+        $title = __('Create snapshot');
 
         if (isset($_POST['submit'])) {
             $scaner->snap();
-            echo '<div class="gmenu"><p>' . _t('Snapshot successfully created') . '</p></div>' .
-                '<div class="phdr"><a href="?act=antispy">' . _t('Continue') . '</a></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => __('Snapshot successfully created'),
+                    'admin'         => true,
+                    'menu_item'     => 'antispy',
+                    'parent_menu'   => 'sec_menu',
+                    'back_url'      => '/admin/antispy/',
+                    'back_url_name' => __('Continue'),
+                ]
+            );
         } else {
-            echo '<form action="?act=antispy&amp;mod=snap" method="post">' .
-                '<div class="menu"><p>' . _t('WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.') . '</p>' .
-                '<p><input type="submit" name="submit" value="' . _t('Create snapshot') . '" /></p>' .
-                '</div></form>' .
-                '<div class="phdr"><small>' . _t('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') . '</small></div>';
+            $data['form_action'] = '?mod=snap';
+            $data['back_url'] = '/admin/antispy/';
+            echo $view->render(
+                'admin::antispy_create_confirm',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
         break;
 
     default:
         // Главное меню Сканера
-        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Anti-Spyware') . '</div>'
-            . '<div class="menu"><p><h3>' . _t('Scan mode') . '</h3><ul>'
-            . '<li><a href="?act=antispy&amp;mod=snapscan">' . _t('Snapshot scan') . '</a><br>'
-            . '<small>' . _t('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') . '</small></li>'
-            . '<li><a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a><br>'
-            . '<small>' . _t('Takes a snapshot of all script files from the site calculates their checksums and stored in the database.') . '</small></li>'
-            . '</ul></p></div><div class="phdr">&#160;</div>';
+        echo $view->render(
+            'admin::antispy',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+            ]
+        );
 }
-
-echo '<p>' . ($mod ? '<a href="?act=antispy">' . _t('Scanner menu') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title' => _t('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);

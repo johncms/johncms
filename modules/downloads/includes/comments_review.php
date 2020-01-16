@@ -25,17 +25,17 @@ if (! $config['mod_down_comm'] && $user->rights < 7) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Comments are disabled'),
+            'title'         => __('Comments are disabled'),
             'type'          => 'alert-danger',
-            'message'       => _t('Comments are disabled'),
+            'message'       => __('Comments are disabled'),
             'back_url'      => $urls['downloads'],
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
 }
 
-$title = _t('Review comments');
+$title = __('Review comments');
 
 $data = [];
 

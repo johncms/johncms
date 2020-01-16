@@ -48,16 +48,16 @@ if ($systemUser->rights < 9) {
     exit;
 }
 
-$textl = _t('Site update');
+$textl = __('Site update');
 require '../system/head.php';
-echo '<div class="phdr"><b>' . _t('Site update') . '</b></div>';
+echo '<div class="phdr"><b>' . __('Site update') . '</b></div>';
 
 switch ($step) {
     // Создаем новые таблицы форума
     case 'create_tables':
         ?>
         <div class="rmenu">
-            <?= _t('Create new tables'); ?>
+            <?= __('Create new tables'); ?>
         </div>
         <?php
 
@@ -164,12 +164,12 @@ switch ($step) {
         ?>
         <div class="gmenu">
             <div style="margin-bottom: 5px;">
-                <?= _t('Completed') ?>
+                <?= __('Completed') ?>
             </div>
             <div>
                 <form action="" method="get">
                     <input type="hidden" name="step" value="forum_structure">
-                    <button type="submit"><?= _t('Next step') ?></button>
+                    <button type="submit"><?= __('Next step') ?></button>
                 </form>
             </div>
         </div>
@@ -181,7 +181,7 @@ switch ($step) {
     case 'forum_structure':
         ?>
         <div class="rmenu">
-            <?= _t('Convert the forum structure'); ?>
+            <?= __('Convert the forum structure'); ?>
         </div>
         <?php
 
@@ -219,12 +219,12 @@ switch ($step) {
         ?>
         <div class="gmenu">
             <div style="margin-bottom: 5px;">
-                <?= _t('Completed') ?>
+                <?= __('Completed') ?>
             </div>
             <div>
                 <form action="" method="get">
                     <input type="hidden" name="step" value="forum_topics">
-                    <button type="submit"><?= _t('Next step') ?></button>
+                    <button type="submit"><?= __('Next step') ?></button>
                 </form>
             </div>
         </div>
@@ -236,7 +236,7 @@ switch ($step) {
     case 'forum_topics':
         ?>
         <div class="rmenu">
-            <?= _t('Convert forum topics'); ?>
+            <?= __('Convert forum topics'); ?>
         </div>
         <?php
 
@@ -272,7 +272,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['convert_topics'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Converted:') ?> <?= $_SESSION['convert_topics'] ?></div>
+            <div class="gmenu"><?= __('Converted:') ?> <?= $_SESSION['convert_topics'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -289,12 +289,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="forum_messages">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -307,7 +307,7 @@ switch ($step) {
     case 'forum_messages':
         ?>
         <div class="rmenu">
-            <?= _t('Convert forum messages'); ?>
+            <?= __('Convert forum messages'); ?>
         </div>
         <?php
 
@@ -364,7 +364,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['convert_messages'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Converted:') ?> <?= $_SESSION['convert_messages'] ?></div>
+            <div class="gmenu"><?= __('Converted:') ?> <?= $_SESSION['convert_messages'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -381,12 +381,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="forum_topics_recount">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -400,7 +400,7 @@ switch ($step) {
     case 'forum_topics_recount':
         ?>
         <div class="rmenu">
-            <?= _t('Recount messages in topics'); ?>
+            <?= __('Recount messages in topics'); ?>
         </div>
         <?php
 
@@ -417,7 +417,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['recount_topic'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['recount_topic'] ?></div>
+            <div class="gmenu"><?= __('Completed:') ?> <?= $_SESSION['recount_topic'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -434,12 +434,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="forum_files">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -452,7 +452,7 @@ switch ($step) {
     case 'forum_files':
         ?>
         <div class="rmenu">
-            <?= _t('Update forum files table'); ?>
+            <?= __('Update forum files table'); ?>
         </div>
         <?php
 
@@ -482,7 +482,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['forum_files_convert'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_files_convert'] ?></div>
+            <div class="gmenu"><?= __('Completed:') ?> <?= $_SESSION['forum_files_convert'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -499,12 +499,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="forum_votes">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -517,7 +517,7 @@ switch ($step) {
     case 'forum_votes':
         ?>
         <div class="rmenu">
-            <?= _t('Update forum votes table'); ?>
+            <?= __('Update forum votes table'); ?>
         </div>
         <?php
 
@@ -540,7 +540,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['forum_votes_convert'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_votes_convert'] ?></div>
+            <div class="gmenu"><?= __('Completed:') ?> <?= $_SESSION['forum_votes_convert'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -557,12 +557,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="forum_vote_users">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -575,7 +575,7 @@ switch ($step) {
     case 'forum_vote_users':
         ?>
         <div class="rmenu">
-            <?= _t('Update forum vote users table'); ?>
+            <?= __('Update forum vote users table'); ?>
         </div>
         <?php
 
@@ -598,7 +598,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['forum_vote_users_convert'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_vote_users_convert'] ?></div>
+            <div class="gmenu"><?= __('Completed:') ?> <?= $_SESSION['forum_vote_users_convert'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -615,12 +615,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="forum_redirects">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -633,7 +633,7 @@ switch ($step) {
     case 'forum_redirects':
         ?>
         <div class="rmenu">
-            <?= _t('Setting redirects'); ?>
+            <?= __('Setting redirects'); ?>
         </div>
         <?php
 
@@ -682,7 +682,7 @@ switch ($step) {
 
         if ($counter >= $for_step) {
             $_SESSION['forum_redirects'] = $start + $for_step; ?>
-            <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_redirects'] ?></div>
+            <div class="gmenu"><?= __('Completed:') ?> <?= $_SESSION['forum_redirects'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     setTimeout(function () {
@@ -699,12 +699,12 @@ switch ($step) {
             ?>
             <div class="gmenu">
                 <div style="margin-bottom: 5px;">
-                    <?= _t('Completed') ?>
+                    <?= __('Completed') ?>
                 </div>
                 <div>
                     <form action="" method="get">
                         <input type="hidden" name="step" value="clean_tables">
-                        <button type="submit"><?= _t('Next step') ?></button>
+                        <button type="submit"><?= __('Next step') ?></button>
                     </form>
                 </div>
             </div>
@@ -718,7 +718,7 @@ switch ($step) {
     case 'clean_tables':
         ?>
         <div class="rmenu">
-            <?= _t('Delete old tables'); ?>
+            <?= __('Delete old tables'); ?>
         </div>
         <?php
 
@@ -726,11 +726,11 @@ switch ($step) {
         ?>
         <div class="gmenu">
             <div style="margin-bottom: 5px;">
-                <?= _t('Update is finished') ?>
+                <?= __('Update is finished') ?>
             </div>
             <div>
                 <form action="/" method="get">
-                    <button type="submit"><?= _t('Home page') ?></button>
+                    <button type="submit"><?= __('Home page') ?></button>
                 </form>
             </div>
         </div>
@@ -742,12 +742,12 @@ switch ($step) {
         ?>
         <div class="rmenu">
             <div style="margin-bottom: 5px;">
-                <?= _t('This wizard will convert tables to a new structure') ?><br>
-                <b><?= _t('Be sure to back up before starting.') ?></b>
+                <?= __('This wizard will convert tables to a new structure') ?><br>
+                <b><?= __('Be sure to back up before starting.') ?></b>
             </div>
             <form action="" method="get">
                 <input type="hidden" name="step" value="create_tables">
-                <button type="submit"><?= _t('Start') ?></button>
+                <button type="submit"><?= __('Start') ?></button>
             </form>
         </div>
     <?php

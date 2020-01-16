@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+?>
+
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+        <?php if (! empty($data['success_message'])): ?>
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['success_message'],
+                ]
+            ) ?>
+        <?php endif; ?>
+        <div class="card shadow border-0">
+            <form action="<?= $data['form_action'] ?>" method="post">
+                <div class="card-body">
+                    <h3 class="mb-0"><?= __('Title') ?></h3>
+                    <div><?= $data['name'] ?></div>
+
+                    <h3 class="mb-0 mt-2"><?= __('Option 1') ?></h3>
+                    <div><?= $data['counter_1'] ?></div>
+
+                    <h3 class="mb-0 mt-2"><?= __('Option 2') ?></h3>
+                    <div class="mb-2"><?= $data['counter_2'] ?></div>
+
+                    <input type="hidden" value="<?= $data['name'] ?>" name="name">
+                    <input type="hidden" value="<?= $data['counter_1_safe'] ?>" name="link1">
+                    <input type="hidden" value="<?= $data['counter_2_safe'] ?>" name="link2">
+                    <input type="hidden" value="<?= $data['mode'] ?>" name="mode">
+                    <?php if (! empty($data['id'])): ?>
+                        <input type="hidden" value="<?= $data['id'] ?>" name="id">
+                    <?php endif; ?>
+
+                    <div class="alert alert-info">
+                        <?= __('If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors.') ?>
+                    </div>
+
+                    <div class="mt-3">
+                        <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-danger"/>
+                        <a href="/admin/counters/" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

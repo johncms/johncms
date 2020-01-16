@@ -15,14 +15,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
 $req = $db->query("SELECT * FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1' LIMIT ${start}, " . $user->config->kmess);
 
-$nav_chain->add(_t('Birthdays'));
+$nav_chain->add(__('Birthdays'));
 
 echo $view->render(
     'users::users',
     [
         'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
-        'title'      => _t('Birthdays'),
-        'page_title' => _t('Birthdays'),
+        'title'      => __('Birthdays'),
+        'page_title' => __('Birthdays'),
         'total'      => $total,
         'list'       =>
             static function () use ($req, $user) {

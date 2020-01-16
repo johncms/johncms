@@ -33,19 +33,19 @@ $this->layout(
         <div class="card shadow border-0">
             <div class="card-body">
                 <div class="alert alert-success">
-                    <div><?= _t('File attached') ?></div>
+                    <div><?= __('File attached') ?></div>
                     <?php if ($screen_attached === true): ?>
-                        <div><?= _t('Screenshot is attached') ?></div>
+                        <div><?= __('Screenshot is attached') ?></div>
                     <?php elseif ($screen_attached === false): ?>
-                        <div><?= _t('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
+                        <div><?= __('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
                     <?php endif; ?>
                 </div>
                 <div class="mb-3">
-                    <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= _t('Continue') ?></a>
+                    <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Continue') ?></a>
                 </div>
                 <div>
-                    <a href="?act=import&amp;id=<?= $id ?>" class="btn btn-primary"><?= _t('Import more') ?></a>
-                    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= _t('Back') ?></a>
+                    <a href="?act=import&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Import more') ?></a>
+                    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Back') ?></a>
                 </div>
             </div>
         </div>

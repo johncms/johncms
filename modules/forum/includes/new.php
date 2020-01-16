@@ -51,11 +51,11 @@ if ($user->isValid()) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Unread'),
+                    'title'         => __('Unread'),
                     'type'          => 'alert-success',
-                    'message'       => _t('All topics marked as read'),
+                    'message'       => __('All topics marked as read'),
                     'back_url'      => '/forum/',
-                    'back_url_name' => _t('Forum'),
+                    'back_url_name' => __('Forum'),
                 ]
             );
             break;
@@ -121,9 +121,9 @@ WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `las
                 'forum::new_topics',
                 [
                     'pagination'    => $tools->displayPagination('/forum/?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess),
-                    'title'         => sprintf(_t('All for period %d hours'), $vr),
-                    'page_title'    => sprintf(_t('All for period %d hours'), $vr),
-                    'empty_message' => _t('There is nothing new in this forum for selected period'),
+                    'title'         => sprintf(__('All for period %d hours'), $vr),
+                    'page_title'    => sprintf(__('All for period %d hours'), $vr),
+                    'empty_message' => __('There is nothing new in this forum for selected period'),
                     'topics'        => $topics ?? [],
                     'total'         => $count,
                     'show_period'   => true,
@@ -187,9 +187,9 @@ WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `las
                 'forum::new_topics',
                 [
                     'pagination'    => $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess),
-                    'title'         => _t('Unread'),
-                    'page_title'    => _t('Unread'),
-                    'empty_message' => _t('The list is empty'),
+                    'title'         => __('Unread'),
+                    'page_title'    => __('Unread'),
+                    'empty_message' => __('The list is empty'),
                     'topics'        => $topics ?? [],
                     'total'         => $total,
                     'show_period'   => false,
@@ -253,9 +253,9 @@ WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `las
         'forum::new_topics',
         [
             'pagination'    => '',
-            'title'         => _t('Last 10'),
-            'page_title'    => _t('Last 10'),
-            'empty_message' => _t('The list is empty'),
+            'title'         => __('Last 10'),
+            'page_title'    => __('Last 10'),
+            'empty_message' => __('The list is empty'),
             'topics'        => $topics ?? [],
             'total'         => $total,
             'show_period'   => false,

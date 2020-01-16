@@ -20,12 +20,12 @@ if (! $id) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Filter by author'),
-            'page_title'    => _t('Filter by author'),
+            'title'         => __('Filter by author'),
+            'page_title'    => __('Filter by author'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -47,12 +47,12 @@ switch ($do) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Filter by author'),
-                    'page_title'    => _t('Filter by author'),
+                    'title'         => __('Filter by author'),
+                    'page_title'    => __('Filter by author'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('You have not selected any author'),
+                    'message'       => __('You have not selected any author'),
                     'back_url'      => '?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -84,12 +84,12 @@ switch ($do) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Filter by author'),
-                    'page_title'    => _t('Filter by author'),
+                    'title'         => __('Filter by author'),
+                    'page_title'    => __('Filter by author'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('Wrong data'),
+                    'message'       => __('Wrong data'),
                     'back_url'      => '?type=topic&id=' . $id . '&amp;start=' . $start,
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -99,8 +99,8 @@ switch ($do) {
 echo $view->render(
     'forum::filter_by_author',
     [
-        'title'      => _t('Filter by author'),
-        'page_title' => _t('Filter by author'),
+        'title'      => __('Filter by author'),
+        'page_title' => __('Filter by author'),
         'id'         => $id,
         'start'      => $start,
         'back_url'   => '?type=topic&id=' . $id . '&amp;start=' . $start,

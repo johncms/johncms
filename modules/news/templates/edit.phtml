@@ -1,15 +1,15 @@
 <?php $this->layout('system::layout/default', [
-    'title'      => _t('Edit news'),
-    'page_title' => _t('Edit news'),
+    'title'      => __('Edit news'),
+    'page_title' => __('Edit news'),
 ]) ?>
 <div class="row">
     <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
         <div class="card shadow border-0 border-radius-12">
             <div class="card-body">
-                <h4 class="card-title"><?= _t('Edit news') ?></h4>
+                <h4 class="card-title"><?= __('Edit news') ?></h4>
                 <form action="/news/edit/<?= $id ?>" method="post">
                     <div class="form-group">
-                        <label for="title"><?= _t('Title') ?></label>
+                        <label for="title"><?= __('Title') ?></label>
                         <input type="text"
                                class="form-control"
                                maxlength="255"
@@ -17,16 +17,16 @@
                                id="title"
                                required
                                value="<?= $name ?>"
-                               placeholder="<?= _t('Title') ?>"
+                               placeholder="<?= __('Title') ?>"
                         >
                     </div>
                     <div class="form-group">
-                        <label for="text"><?= _t('Text') ?></label>
+                        <label for="text"><?= __('Text') ?></label>
                         <textarea id="text" class="form-control" name="text" rows="<?= $user->config->fieldHeight ?>"><?= $text ?></textarea>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary mr-2"><?= _t('Save') ?></button>
-                        <a href="/news/" class="btn btn-outline-primary"><?= _t('Back to news') ?></a>
+                        <button type="submit" class="btn btn-primary mr-2"><?= __('Save') ?></button>
+                        <a href="/news/" class="btn btn-outline-primary"><?= __('Back to news') ?></a>
                     </div>
                 </form>
             </div>

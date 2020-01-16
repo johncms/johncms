@@ -69,7 +69,7 @@ class NewsWidget
                     if (mb_strlen($text) > $this->settings['size']) {
                         $text = mb_substr($text, 0, $this->settings['size']);
                         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
-                        $moreLink = ' &gt;&gt; <a href="news/index.php">' . _t('show more', 'system') . '...</a>';
+                        $moreLink = ' &gt;&gt; <a href="news/index.php">' . d__('system', 'show more') . '...</a>';
                     }
 
                     $text = $this->tools->checkout(
@@ -107,7 +107,7 @@ class NewsWidget
                         }
                         if ($komm >= 0) {
                             $news .= '<br /><a href="../forum/?type=topic&id=' . $res['kom'] . '">' .
-                                _t('Discuss', 'system') . '</a> (' . $komm . ')';
+                                d__('system', 'Discuss') . '</a> (' . $komm . ')';
                         }
                     }
                     $news .= '</div>';

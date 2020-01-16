@@ -23,11 +23,11 @@ if (empty($_GET['id'])) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Show post'),
+            'title'         => __('Show post'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Forum'),
+            'back_url_name' => __('Forum'),
         ]
     );
     exit;
@@ -45,11 +45,11 @@ if (! $res) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Show post'),
+            'title'         => __('Show post'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Forum'),
+            'back_url_name' => __('Forum'),
         ]
     );
     exit;
@@ -117,8 +117,8 @@ $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` 
 echo $view->render(
     'forum::show_post',
     [
-        'title'         => _t('Show post'),
-        'page_title'    => _t('Show post'),
+        'title'         => __('Show post'),
+        'page_title'    => __('Show post'),
         'post'          => $post,
         'topic'         => $them,
         'back_to_topic' => '/forum/?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,

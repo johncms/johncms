@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$title = _t('My Account');
+$title = __('My Account');
 $nav_chain->add($title);
 // Проверяем права доступа
 if ($foundUser->id !== $user->id) {
@@ -21,7 +21,7 @@ if ($foundUser->id !== $user->id) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('Access forbidden'),
+            'message' => __('Access forbidden'),
         ]
     );
     exit;
@@ -63,12 +63,8 @@ $count_output_new = $db->query(
 WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`delete`!='" . $user->id . "' AND `cms_mail`.`read`='0' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'"
 )->fetchColumn();
 
-//Системные сообщения
-$count_systems_new = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `delete`!='" . $user->id . "' AND `sys`='1' AND `read`='0'")->fetchColumn();
-
 //Контакты
 $count_contacts = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user->id . "' AND `ban`!='1'")->fetchColumn();
-$count_systems = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `delete`!='" . $user->id . "' AND `sys`='1'")->fetchColumn();
 
 //Файлы
 $count_file = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `delete`!='" . $user->id . "' AND `file_name`!='';")->fetchColumn();
@@ -78,16 +74,14 @@ $count_ignor = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='"
 
 $data = [
     'counters' => [
-        'total_photo'         => $total_photo,
-        'inbox'               => $count_input,
-        'new_messages'        => $new_mail,
-        'outbox'              => $count_output,
-        'unread_sent'         => $count_output_new,
-        'system_messages'     => $count_systems,
-        'new_system_messages' => $count_systems_new,
-        'files'               => $count_file,
-        'contacts'            => $count_contacts,
-        'blocked_contacts'    => $count_ignor,
+        'total_photo'      => $total_photo,
+        'inbox'            => $count_input,
+        'new_messages'     => $new_mail,
+        'outbox'           => $count_output,
+        'unread_sent'      => $count_output_new,
+        'files'            => $count_file,
+        'contacts'         => $count_contacts,
+        'blocked_contacts' => $count_ignor,
     ],
 ];
 

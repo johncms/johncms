@@ -13,6 +13,8 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Для работы с пользовательскими аватарами используется хелпер шаблонов `avatar()`
 - Для подсветки синтаксиса кода в сообщениях используется JS библиотека [Prism](https://prismjs.com)
 - Модули используют шаблоны
+- Для перевода используется [gettext/translator](https://github.com/php-gettext/Translator)
+- С помощью CLI скриптов радикально упрощена процедура подготовки переводов.
 
 #### Changed
 - Полный рефакторинг кода системы
@@ -27,6 +29,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Nothing
 
 #### Removed
+- Удалены старые функции перевода `_t()` `_p()`
 - Из сканера безопасности удалена функция "Сканирование по дистрибутиву"
 - Удален старый метод для вывода картинок `Tools::image()`
 - Удалена библиотека geshi/geshi

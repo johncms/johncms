@@ -28,14 +28,14 @@ $this->layout(
 
 <?php if (! $config['mod_down']): ?>
     <div class="alert alert-danger border-0 shadow">
-        <?= _t('Downloads are closed') ?>
+        <?= __('Downloads are closed') ?>
     </div>
 <?php endif; ?>
 
 <?php if (empty($files)): ?>
     <div class="row">
         <div class="col-md-6">
-            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+            <div class="alert alert-info"><?= __('List is empty') ?></div>
         </div>
     </div>
 <?php endif; ?>
@@ -46,7 +46,7 @@ $this->layout(
 
 <?php if ($total_files): ?>
     <div>
-        <div><?= _t('Total') ?>: <?= $total_files ?></div>
+        <div><?= __('Total') ?>: <?= $total_files ?></div>
         <!-- Page switching -->
         <?php if ($total_files > $user->config->kmess): ?>
             <div class="mt-1"><?= $pagination ?></div>
@@ -55,5 +55,5 @@ $this->layout(
 <?php endif; ?>
 
 <div class="mt-2">
-    <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+    <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
 </div>

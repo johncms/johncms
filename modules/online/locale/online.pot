@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"X-Domain: online\n"
+
+#: modules/online/includes/guest.php:21
+#: modules/online/includes/history.php:21
+#: modules/online/includes/index.php:22
+#: modules/online/includes/ip.php:21
+msgid "Users"
+msgstr ""
+
+#: modules/online/includes/guest.php:26
+#: modules/online/includes/history.php:26
+#: modules/online/includes/index.php:27
+#: modules/online/includes/ip.php:26
+msgid "History"
+msgstr ""
+
+#: modules/online/includes/guest.php:34
+#: modules/online/includes/history.php:34
+#: modules/online/includes/index.php:35
+#: modules/online/includes/ip.php:34
+msgid "Guests"
+msgstr ""
+
+#: modules/online/includes/guest.php:39
+#: modules/online/includes/history.php:39
+#: modules/online/includes/index.php:40
+#: modules/online/includes/ip.php:39
+msgid "IP Activity"
+msgstr ""
+
+#: modules/online/includes/guest.php:59
+msgid "Guest"
+msgstr ""
+
+#: modules/online/includes/index.php:45
+msgid "Who is online?"
+msgstr ""
+
+#: modules/online/index.php:55
+#: modules/online/index.php:63
+msgid "Online"
+msgstr ""
+
+#: modules/online/index.php:57
+msgid "For registered users only"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:51
+#: modules/online/templates/users.phtml:38
+msgid "List is empty"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:58
+#: modules/online/templates/users.phtml:45
+msgid "Total"
+msgstr ""

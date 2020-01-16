@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,38 +8,57 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Settings');
+$title = __('Settings');
+
+// Массив для основных данных, которые попадут в шаблон
+$data = [];
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $user->config;
 
+$nav_chain->add(__('My Account'), '/profile/?act=office');
+$nav_chain->add(__('Settings'), '?act=settings');
 // Проверяем права доступа
-if ($foundUser->id != $user->id) {
+if ($foundUser->id !== $user->id) {
     echo $view->render(
-        'system::app/old_content',
+        'system::pages/result',
         [
-            'title'   => $textl,
-            'content' => $tools->displayError(_t('Access forbidden')),
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => __('Access forbidden'),
         ]
     );
     exit;
 }
 
-$menu = [
-    (! $mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
-    ($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
-    ($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
+$data['buttons'] = [
+    [
+        'url'    => '?act=settings',
+        'name'   => __('General setting'),
+        'active' => ! $mod,
+    ],
+    [
+        'url'    => '?act=settings&amp;mod=forum',
+        'name'   => __('Forum'),
+        'active' => $mod === 'forum',
+    ],
+    [
+        'url'    => '?act=settings&amp;mod=mail',
+        'name'   => __('Mail'),
+        'active' => $mod === 'mail',
+    ],
 ];
 
 // Пользовательские настройки
 switch ($mod) {
     case 'mail':
-        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
-            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-
-        $set_mail_user = unserialize($user->set_mail, ['allowed_classes' => false]);
+        $title = __('Mail');
+        $nav_chain->add($title);
+        $set_mail_user = !empty($user->set_mail) ? unserialize($user->set_mail, ['allowed_classes' => false]) : ['access' => 0];
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
@@ -51,22 +68,25 @@ switch ($mod) {
                     $user->id,
                 ]
             );
+            $data['success_message'] = __('Settings saved successfully');
         }
+        $data['form_action'] = '?act=settings&amp;mod=mail';
+        $data['set_mail_user'] = $set_mail_user;
 
-        echo '<form method="post" action="?act=settings&amp;mod=mail">' .
-            '<div class="menu">' .
-            '<strong>' . _t('Who can write you?') . '</strong><br />' .
-            '<input type="radio" value="0" name="access" ' . (! $set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
-            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my contacts') .
-            '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
-            '<div class="phdr">&#160;</div>';
+        echo $view->render(
+            'profile::mail_settings',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
         break;
 
     case 'forum':
         // Настройки Форума
-        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
-            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-        $set_forum = [];
+        $title = __('Forum');
+        $nav_chain->add($title);
         $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 
         if (isset($_POST['submit'])) {
@@ -85,8 +105,7 @@ switch ($mod) {
                     $user->id,
                 ]
             );
-
-            echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
+            $data['success_message'] = __('Settings saved successfully');
         }
 
         if (isset($_GET['reset']) || empty($set_forum)) {
@@ -102,28 +121,26 @@ switch ($mod) {
                     $user->id,
                 ]
             );
-
-            echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
+            $data['success_message'] = __('Default settings are set');
         }
 
-        echo '<form action="?act=settings&amp;mod=forum" method="post">' .
-            '<div class="menu"><p><h3>' . _t('Basic settings') . '</h3>' .
-            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Inverse sorting') . '<br>' .
-            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Use the form of a quick answer') . '<br>' .
-            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Preview of messages') . '<br>' .
-            '</p><p><h3>' . _t('Attach first post') . '</h3>' .
-            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Always') . '<br />' .
-            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('In unread topics') . '<br />' .
-            '<input type="radio" value="0" name="postclip" ' . (! $set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Never') .
-            '</p><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
-            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _t('Reset settings') . '</a></div>';
+        $data['form_action'] = '?act=settings&amp;mod=forum';
+        $data['set_forum'] = $set_forum;
+
+        echo $view->render(
+            'profile::forum_settings',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
         break;
 
     default:
-        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('General setting') . '</div>' .
-            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-
-        if (isset($_POST['submit'])) {
+        $title = __('General setting');
+        $nav_chain->add($title);
+        if ($request->getMethod() === 'POST') {
             $set_user = (array) $userConfig;
 
             // Записываем новые настройки, заданные пользователем
@@ -151,13 +168,6 @@ switch ($mod) {
                 $set_user['fieldHeight'] = 9;
             }
 
-            // Устанавливаем скин
-            foreach (glob('../theme/*/*.css') as $val) {
-                $theme_list[] = array_pop(explode('/', dirname($val)));
-            }
-
-            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? htmlspecialchars(trim($_POST['skin'])) : $config['skindef'];
-
             // Устанавливаем язык
             $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;
 
@@ -171,7 +181,9 @@ switch ($mod) {
             $_SESSION['set_ok'] = 1;
             header('Location: ?act=settings');
             exit;
-        } elseif (isset($_GET['reset'])) {
+        }
+
+        if (isset($_GET['reset'])) {
             // Задаем настройки по-умолчанию
             $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = " . $user->id);
             $_SESSION['reset_ok'] = 1;
@@ -181,54 +193,30 @@ switch ($mod) {
 
         // Форма ввода пользовательских настроек
         if (isset($_SESSION['set_ok'])) {
-            echo '<div class="rmenu">' . _t('Settings saved successfully') . '</div>';
+            $data['success_message'] = __('Settings saved successfully');
             unset($_SESSION['set_ok']);
         }
 
         if (isset($_SESSION['reset_ok'])) {
-            echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
+            $data['success_message'] = __('Default settings are set');
             unset($_SESSION['reset_ok']);
         }
 
-        echo '<form action="?act=settings" method="post" >' .
-            '<div class="menu"><p><h3>' . _t('Time settings') . '</h3>' .
-            '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $userConfig->timeshift . '"/> ' . _t('Shift of time') . ' (+-12)<br />' .
-            '<span style="font-weight:bold; background-color:#CCC">' . date('H:i', time() + ($config['timeshift'] + $userConfig->timeshift) * 3600) . '</span> ' . _t('System time') .
-            '</p><p><h3>' . _t('System Functions') . '</h3>' .
-            '<input name="directUrl" type="checkbox" value="1" ' . ($userConfig->directUrl ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
-            '<input name="youtube" type="checkbox" value="1" ' . ($userConfig->youtube ? 'checked="checked"' : '') . ' />&#160;' . _t('Youtube Player') . '<br />' .
-            '</p><p><h3>' . _t('Text entering') . '</h3>' .
-            '<input type="text" name="fieldHeight" size="2" maxlength="1" value="' . $userConfig->fieldHeight . '"/> ' . _t('Height of field') . ' (1-9)<br />';
-
-        echo '</p><p><h3>' . _t('Appearance') . '</h3>';
-        // Выбор темы оформления
-        echo '<select name="skin">';
-
-        foreach (glob('../theme/*/*.css') as $val) {
-            $dir = explode('/', dirname($val));
-            $theme = array_pop($dir);
-            echo '<option' . ($userConfig->skin == $theme ? ' selected="selected">' : '>') . $theme . '</option>';
-        }
-
-        echo '</select> ' . _t('Theme') . '</p>';
-        echo '<p><input type="text" name="kmess" size="2" maxlength="2" value="' . $userConfig->kmess . '"/> ' . _t('Size of Lists') . ' (5-99)' .
-            '</p>';
+        $data['form_action'] = '?act=settings';
+        $data['system_time'] = date('H:i', time() + ($config['timeshift'] + $userConfig->timeshift) * 3600);
 
         // Выбор языка
         if (count($config['lng_list']) > 1) {
-            echo '<p><h3>' . _t('Select Language') . '</h3>';
-            $user_lng = $userConfig->lng ?? $config['lng'];
-
-            foreach ($config['lng_list'] as $key => $val) {
-                echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
-                    $tools->getFlag($key) . $val .
-                    ($key == $config['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
-                    '</div>';
-            }
-
-            echo '</p>';
+            $data['user_lng'] = $userConfig->lng ?? $config['lng'];
+            $data['lng_list'] = $config['lng_list'];
         }
 
-        echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
-            '<div class="phdr"><a href="?act=settings&amp;reset">' . _t('Reset Settings') . '</a></div>';
+        echo $view->render(
+            'profile::settings',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
 }

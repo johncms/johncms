@@ -16,7 +16,7 @@ use Johncms\Counters;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -38,14 +38,14 @@ $tools = di(Tools::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('forum', __DIR__ . '/locale');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('forum', __DIR__ . '/templates/');
 
 // Добавляем раздел в навигационную цепочку
-$nav_chain->add(_t('Forum'), '/forum/');
+$nav_chain->add(__('Forum'), '/forum/');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -141,16 +141,16 @@ $user_rights_names = [
 $error = '';
 
 if (! $config['mod_forum'] && $user->rights < 7) {
-    $error = _t('Forum is closed');
+    $error = __('Forum is closed');
 } elseif ($config['mod_forum'] == 1 && ! $user->isValid()) {
-    $error = _t('For registered users only');
+    $error = __('For registered users only');
 }
 
 if ($error) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('Forum'),
+            'title'   => __('Forum'),
             'type'    => 'alert-danger',
             'message' => $error,
         ]
@@ -224,7 +224,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         );
         $hdr = mb_substr($hdr, 0, 30);
         $hdr = $tools->checkout($hdr, 2, 2);
-        $textl = empty($hdr) ? _t('Forum') : $hdr;
+        $textl = empty($hdr) ? __('Forum') : $hdr;
     }
 
     // Редирект на новые адреса страниц
@@ -263,9 +263,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'    => _t('Forum'),
+                    'title'    => __('Forum'),
                     'type'     => 'alert-danger',
-                    'message'  => _t('Topic has been deleted or does not exists'),
+                    'message'  => __('Topic has been deleted or does not exists'),
                     'back_url' => '/forum/',
                 ]
             );
@@ -459,11 +459,11 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                     echo $view->render(
                         'system::pages/result',
                         [
-                            'title'         => _t('Topic deleted'),
+                            'title'         => __('Topic deleted'),
                             'type'          => 'alert-danger',
-                            'message'       => _t('Topic deleted'),
+                            'message'       => __('Topic deleted'),
                             'back_url'      => '?type=topics&amp;id=' . $type1['section_id'],
-                            'back_url_name' => _t('Go to Section'),
+                            'back_url_name' => __('Go to Section'),
                         ]
                     );
                     exit;
@@ -715,11 +715,11 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 echo $view->render(
                     'system::pages/result',
                     [
-                        'title'         => _t('Wrong data'),
+                        'title'         => __('Wrong data'),
                         'type'          => 'alert-danger',
-                        'message'       => _t('Wrong data'),
+                        'message'       => __('Wrong data'),
                         'back_url'      => '/forum/',
-                        'back_url_name' => _t('Go to Forum'),
+                        'back_url_name' => __('Go to Forum'),
                     ]
                 );
                 break;
@@ -758,8 +758,8 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
         echo $view->render(
             'forum::index',
             [
-                'title'        => _t('Forum'),
-                'page_title'   => _t('Forum'),
+                'title'        => __('Forum'),
+                'page_title'   => __('Forum'),
                 'sections'     => $sections,
                 'online'       => $online,
                 'files_count'  => $tools->formatNumber($count),

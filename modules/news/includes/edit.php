@@ -22,15 +22,15 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 // Editing news
 if ($user->rights >= 6) {
     // Add an item to the navigation chain
-    $nav_chain->add(_t('Edit news'), '');
+    $nav_chain->add(__('Edit news'), '');
 
     if (! $id) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'    => _t('News'),
+                'title'    => __('News'),
                 'type'     => 'alert-danger',
-                'message'  => _t('Wrong data'),
+                'message'  => __('Wrong data'),
                 'back_url' => '/news/',
             ]
         );
@@ -41,11 +41,11 @@ if ($user->rights >= 6) {
         $error = [];
 
         if (empty($_POST['name'])) {
-            $error[] = _t('You have not entered news title');
+            $error[] = __('You have not entered news title');
         }
 
         if (empty($_POST['text'])) {
-            $error[] = _t('You have not entered news text');
+            $error[] = __('You have not entered news text');
         }
 
         $name = htmlspecialchars(trim($_POST['name']));
@@ -70,7 +70,7 @@ if ($user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'    => _t('Edit news'),
+                    'title'    => __('Edit news'),
                     'message'  => $error,
                     'type'     => 'alert-danger',
                     'back_url' => '/news/edit/' . $id,
@@ -81,8 +81,8 @@ if ($user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'    => _t('Edit news'),
-                'message'  => _t('News changed'),
+                'title'    => __('Edit news'),
+                'message'  => __('News changed'),
                 'type'     => 'alert-success',
                 'back_url' => '/news/',
             ]

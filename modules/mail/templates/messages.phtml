@@ -1,0 +1,177 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (! empty($data['errors'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => $data['errors'],
+        ]
+    ) ?>
+<?php endif; ?>
+<?php if (! empty($data['form_action'])): ?>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form name="form" action="<?= $data['form_action'] ?>" method="post" enctype="multipart/form-data">
+                <?php if (! $user->isValid()): ?>
+                    <div class="form-group">
+                        <label for="nick"><?= __('To Whom') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="25"
+                               name="nick"
+                               id="nick"
+                               required
+                               value="<?= $data['nick'] ?>"
+                               placeholder="<?= __('To Whom') ?>"
+                        >
+                    </div>
+                <?php endif; ?>
+                <div class="form-group">
+                    <label for="text"><?= __('Message') ?></label>
+                    <div><?= $data['bbcode'] ?></div>
+                    <textarea rows="<?= $user->config->fieldHeight ?>" name="text" id="text" required class="form-control"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
+                        <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary" name="submit" value="<?= __('Send') ?>"/>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php foreach ($data['items'] as $item): ?>
+
+    <div class="shadow post-item mb-2 <?= ! $item['read'] ? ' bg-yellow-light' : '' ?>">
+        <div class="post-header d-flex justify-content-between border-bottom pb-1">
+            <div class="d-flex align-items-end">
+                <?php if (! empty($item['user_id'])): ?>
+                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                <?php else: ?>
+                    <a class="user-login mr-2"><?= $item['name'] ?></a>
+                <?php endif; ?>
+                <span class="post-date"><?= $item['display_date'] ?></span>
+            </div>
+        </div>
+        <div class="post-body d-flex align-items-start pt-3 pb-3">
+            <div class="user-avatar mr-2 mr-md-4">
+                <div class="avatar-image rounded-circle overflow-hidden">
+                    <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                </div>
+                <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+            </div>
+            <div class="overflow-auto flex-grow-1"><?= $item['text'] ?></div>
+        </div>
+        <?php if (! empty($item['files'])): ?>
+            <!-- Files block -->
+            <div class="border-top pt-1 pb-1">
+                <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
+                <div class="d-flex flex-wrap">
+                    <?php foreach ($item['files'] as $file): ?>
+                        <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                            <div class="h-100 d-flex justify-content-center align-items-center">
+                                <a href="<?= $file['file_url'] ?>">
+                                    <svg class="icon attachment-icon">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#file"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="pt-1">
+                                <div class="text-muted small d-flex flex-wrap justify-content-center">
+                                    <div class="text-nowrap pr-1">
+                                        <svg class="icon downloads-icon">
+                                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+                                        </svg>
+                                        <?= $file['dlcount'] ?>
+                                    </div>
+                                    <div>(<?= $file['file_size'] ?>)</div>
+                                </div>
+                                <div class="file-name">
+                                    <a href="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>"><?= $file['filename'] ?></a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="post-footer d-flex justify-content-between border-top pt-2">
+            <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                <?php if ($user->rights): ?>
+                    <div class="user-ip mr-2">
+                        <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                        <?php if (! empty($item['ip_via_proxy'])): ?>
+                            / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="useragent">
+                        <span>User-Agent:</span>
+                        <span><?= $item['browser'] ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="text-nowrap post-actions">
+                <span class="text-muted pr-2 flex-grow-1"></span>
+                <?php if (! empty($item['delete_url'])): ?>
+                    <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= __('Delete') ?></a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+<?php if ($data['total'] > 0): ?>
+    <div class="mt-3">
+        <a href="<?= $data['clear_url'] ?>" class="btn btn-danger btn-sm"><?= __('Clear messages') ?></a>
+    </div>
+<?php endif; ?>
+<div class="mt-3">
+    <?php if ($data['total'] > $user->config->kmess): ?>
+        <div>
+            <?= $data['pagination'] ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($data['total'] > 0): ?>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php endif; ?>
+</div>
+<div>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+</div>

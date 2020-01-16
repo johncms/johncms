@@ -34,19 +34,19 @@ if ($req->rowCount()) {
         if ($req_a->rowCount()) {
             $res_a = $req_a->fetch();
             if ($res_a['access'] == 1 || ($res_a['access'] == 2 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']))) {
-                $error[] = _t('Access forbidden');
+                $error[] = __('Access forbidden');
             }
         } else {
-            $error[] = _t('Wrong data');
+            $error[] = __('Wrong data');
         }
     }
 
     // Проверка наличия файла
     if (! $error && ! file_exists(UPLOAD_PATH . 'users/album/' . $res['user_id'] . '/' . $res['img_name'])) {
-        $error[] = _t('File does not exist');
+        $error[] = __('File does not exist');
     }
 } else {
-    $error[] = _t('Wrong data');
+    $error[] = __('Wrong data');
 }
 if (! $error) {
     // Счетчик скачиваний
@@ -58,5 +58,5 @@ if (! $error) {
     // Отдаем файл
     header('location: ' . $config['homeurl'] . '/upload/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
-    echo $tools->displayError($error, '<a href="./">' . _t('Back') . '</a>');
+    echo $tools->displayError($error, '<a href="./">' . __('Back') . '</a>');
 }

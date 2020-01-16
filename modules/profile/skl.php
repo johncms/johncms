@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 
@@ -18,9 +19,8 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 $config = di('config')['johncms'];
 
-/** @var Laminas\I18n\Translator\Translator $translator */
-$translator = di(Laminas\I18n\Translator\Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 /** @var PDO $db */
 $db = di(PDO::class);
@@ -36,7 +36,7 @@ $nav_chain = di(NavChain::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('profile', __DIR__ . '/templates/');
 
-$nav_chain->add(_t('Restore password', 'system'));
+$nav_chain->add(__('Restore password'));
 
 function passgen($length)
 {
@@ -61,9 +61,9 @@ switch ($act) {
         $type = 'error';
 
         if (! $nick || ! $email || ! $code) {
-            $error = _t('The required fields are not filled');
+            $error = __('The required fields are not filled');
         } elseif (! isset($_SESSION['code']) || mb_strlen($code) < 4 || $code != $_SESSION['code']) {
-            $error = _t('Incorrect code');
+            $error = __('Incorrect code');
         }
 
         unset($_SESSION['code']);
@@ -76,23 +76,23 @@ switch ($act) {
                 $res = $req->fetch();
 
                 if (empty($res['mail']) || $res['mail'] != $email) {
-                    $error = _t('Invalid Email address');
+                    $error = __('Invalid Email address');
                 }
 
                 if ($res['rest_time'] > time() - 86400) {
-                    $error = _t('Password can be recovered 1 time per day');
+                    $error = __('Password can be recovered 1 time per day');
                 }
             } else {
-                $error = _t('User does not exists');
+                $error = __('User does not exists');
             }
         }
 
         if (! $error) {
             // Высылаем инструкции на E-mail
             $link = $config['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
-            $subject = _t('Password recovery');
+            $subject = __('Password recovery');
             $mail = sprintf(
-                _t("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"), // phpcs:ignore
+                __("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"), // phpcs:ignore
                 $res['name'],
                 $config['homeurl'],
                 $link
@@ -102,9 +102,9 @@ switch ($act) {
             if (mail($res['mail'], $subject, $mail, $adds)) {
                 $db->exec('UPDATE `users` SET `rest_code` = ' . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
                 $type = 'success';
-                $message = _t('Check your e-mail for further information');
+                $message = __('Check your e-mail for further information');
             } else {
-                $message = _t('Error sending E-mail');
+                $message = __('Error sending E-mail');
             }
         } else {
             // Выводим сообщение об ошибке
@@ -124,7 +124,7 @@ switch ($act) {
         $type = 'error';
 
         if (! $id || ! $code) {
-            $error = _t('Wrong data');
+            $error = __('Wrong data');
         }
 
         if (! empty($id)) {
@@ -134,24 +134,24 @@ switch ($act) {
                 $res = $req->fetch();
 
                 if (empty($res['rest_code']) || empty($res['rest_time'])) {
-                    $error = _t('Password recovery is impossible');
+                    $error = __('Password recovery is impossible');
                 }
 
                 if (! $error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
-                    $error = _t('Time allotted for the password recovery has been exceeded');
+                    $error = __('Time allotted for the password recovery has been exceeded');
                     $db->exec("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = " . $id);
                 }
             } else {
-                $error = _t('User does not exists');
+                $error = __('User does not exists');
             }
         }
 
         if (! $error) {
             // Высылаем пароль на E-mail
             $pass = passgen(4);
-            $subject = _t('Your new password');
+            $subject = __('Your new password');
             $mail = sprintf(
-                _t("Hello %s\nYou have changed your password on the site %s\n\nYour new password: %s\n\nAfter logging in, you can change your password to new one."),
+                __("Hello %s\nYou have changed your password on the site %s\n\nYour new password: %s\n\nAfter logging in, you can change your password to new one."),
                 $res['name'],
                 $config['homeurl'],
                 $pass
@@ -161,9 +161,9 @@ switch ($act) {
             if (mail($res['mail'], $subject, $mail, $adds)) {
                 $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . ' WHERE `id` = ' . $id);
                 $type = 'success';
-                $message = _t('Password successfully changed.<br>New password sent to your E-mail address.');
+                $message = __('Password successfully changed.<br>New password sent to your E-mail address.');
             } else {
-                $message = _t('Error sending E-mail');
+                $message = __('Error sending E-mail');
             }
         } else {
             // Выводим сообщение об ошибке

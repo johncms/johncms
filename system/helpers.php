@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Johncms\System\Container\Factory;
+use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
-use Laminas\I18n\Translator\Translator;
 
 function di(string $service)
 {
@@ -26,46 +26,6 @@ function pathToUrl(string $path): string
         explode(DIRECTORY_SEPARATOR, realpath(ROOT_PATH))
     );
     return '/' . implode('/', $diff);
-}
-
-/**
- * Translate a message
- *
- * @param string $message
- * @param string $textDomain
- * @return string
- */
-function _t(string $message, string $textDomain = 'default'): string
-{
-    /** @var Translator $translator */
-    static $translator;
-
-    if (null === $translator) {
-        $translator = di(Translator::class);
-    }
-
-    return $translator->translate($message, $textDomain);
-}
-
-/**
- * Translate a plural message
- *
- * @param string $singular
- * @param string $plural
- * @param int $number
- * @param string $textDomain
- * @return string
- */
-function _p(string $singular, string $plural, int $number, string $textDomain = 'default'): string
-{
-    /** @var Translator $translator */
-    static $translator;
-
-    if (null === $translator) {
-        $translator = di(Translator::class);
-    }
-
-    return $translator->translatePlural($singular, $plural, $number, $textDomain);
 }
 
 /**
@@ -87,15 +47,15 @@ function pageNotFound(
     }
 
     exit(
-        $engine->render(
-            $template,
-            [
+    $engine->render(
+        $template,
+        [
             'title'   => $title,
             'message' => ! empty($message)
                 ? $message
-                : _t('You are looking for something that doesn\'t exist or may have moved'),
-            ]
-        )
+                : __('You are looking for something that doesn\'t exist or may have moved'),
+        ]
+    )
     );
 }
 

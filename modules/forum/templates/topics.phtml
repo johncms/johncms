@@ -34,7 +34,7 @@ $this->layout(
         'unread_count' => $unread_count,
         'files_count'  => $files_count,
         'files_url'    => '/forum/?act=files&s=' . $id,
-        'files_name'   => _t('Category Files'),
+        'files_name'   => __('Category Files'),
     ]
 ) ?>
 
@@ -43,14 +43,14 @@ $this->layout(
         'system::app/alert',
         [
             'alert_type' => 'alert-info',
-            'alert'      => _t('No topics in this section'),
+            'alert'      => __('No topics in this section'),
         ]
     ) ?>
 <?php endif; ?>
 <?php if ($create_access): ?>
     <div class="mb-3">
         <form action="?act=nt&amp;id=<?= $id ?>" method="post">
-            <button type="submit" class="btn btn-primary"><?= _t('New Topic') ?></button>
+            <button type="submit" class="btn btn-primary"><?= __('New Topic') ?></button>
         </form>
     </div>
 <?php endif; ?>
@@ -62,28 +62,28 @@ $this->layout(
                 <?php if ($topic['has_icons']): ?>
                     <div class="topic-icons mr-1 d-flex align-items-center">
                         <?php if ($topic['pinned']): ?>
-                            <div class="mr-1" title="<?= _t('Pinned topic') ?>">
+                            <div class="mr-1" title="<?= __('Pinned topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pin"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
                         <?php if ($topic['has_poll']): ?>
-                            <div class="mr-1" title="<?= _t('Topic has poll') ?>">
+                            <div class="mr-1" title="<?= __('Topic has poll') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bar-chart"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
                         <?php if ($topic['closed']): ?>
-                            <div class="mr-1" title="<?= _t('Closed topic') ?>">
+                            <div class="mr-1" title="<?= __('Closed topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#lock"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
                         <?php if ($topic['deleted']): ?>
-                            <div class="mr-1" title="<?= _t('Deleted topic') ?>">
+                            <div class="mr-1" title="<?= __('Deleted topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#x"/>
                                 </svg>
@@ -96,13 +96,13 @@ $this->layout(
             </div>
         </div>
         <div class="small pt-2 text-muted">
-            <?= _t('Author') ?>: <?= $topic['user_name'] ?>,
-            <?= _t('Last post') ?>: <?= $topic['show_last_post_date'] ?>, <?= $topic['show_last_author'] ?>
+            <?= __('Author') ?>: <?= $topic['user_name'] ?>,
+            <?= __('Last post') ?>: <?= $topic['show_last_post_date'] ?>, <?= $topic['show_last_author'] ?>
         </div>
     </div>
 <?php endforeach; ?>
 <div class="mb-n2 pt-1">
-    <div><?= _t('Total') ?>: <?= $total ?></div>
+    <div><?= __('Total') ?>: <?= $total ?></div>
     <!-- Page switching -->
     <?php if ($total > $user->config->kmess): ?>
         <div class="mt-1"><?= $pagination ?></div>
@@ -114,7 +114,7 @@ $this->layout(
     [
         'online'   => $online,
         'who_url'  => '/forum/?act=who',
-        'who_name' => _t('Who in Forum'),
+        'who_name' => __('Who in Forum'),
     ]
 ) ?>
 

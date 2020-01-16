@@ -25,7 +25,7 @@ $data = [];
 // Создать / изменить альбом
 if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7) {
     if ($al) {
-        $title = _t('Edit Album');
+        $title = __('Edit Album');
         $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
 
         if ($req->rowCount()) {
@@ -40,13 +40,13 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
                 [
                     'title'   => $title,
                     'type'    => 'alert-danger',
-                    'message' => _t('Wrong data'),
+                    'message' => __('Wrong data'),
                 ]
             );
             exit;
         }
     } else {
-        $title = _t('Create Album');
+        $title = __('Create Album');
         $name = '';
         $description = '';
         $password = '';
@@ -67,24 +67,24 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
         // Проверяем на ошибки
         $length_name = mb_strlen($name);
         if ($length_name < 2 || $length_name > 150) {
-            $error[] = _t('Title') . ': ' . _t('Invalid length');
+            $error[] = __('Title') . ': ' . __('Invalid length');
         }
 
         $description = mb_substr($description, 0, 500);
 
         if ($access === 2 && empty($password)) {
-            $error[] = _t('You have not entered password');
+            $error[] = __('You have not entered password');
         } elseif (($access === 2 && mb_strlen($password) < 3) || mb_strlen($password) > 15) {
-            $error[] = _t('Password') . ': ' . _t('Invalid length');
+            $error[] = __('Password') . ': ' . __('Invalid length');
         }
 
         if ($access < 1 || $access > 4) {
-            $error[] = _t('Wrong data');
+            $error[] = __('Wrong data');
         }
 
         // Проверяем, есть ли уже альбом с таким же именем?
         if (! $al && $db->query('SELECT * FROM `cms_album_cat` WHERE `name` = ' . $db->quote($name) . " AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1")->rowCount()) {
-            $error[] = _t('The album already exists');
+            $error[] = __('The album already exists');
         }
 
         if (! $error) {
@@ -149,7 +149,7 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
                 [
                     'title'    => $title,
                     'type'     => 'alert-success',
-                    'message'  => ($al ? _t('Album successfully changed') : _t('Album successfully created')),
+                    'message'  => ($al ? __('Album successfully changed') : __('Album successfully created')),
                     'back_url' => './list?user=' . $foundUser['id'],
                 ]
             );

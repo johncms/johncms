@@ -24,11 +24,11 @@ if (! $config['mod_down_comm'] && $user->rights < 7) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Comments'),
+            'title'         => __('Comments'),
             'type'          => 'alert-danger',
-            'message'       => _t('Comments are disabled'),
+            'message'       => __('Comments are disabled'),
             'back_url'      => $url,
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -42,11 +42,11 @@ if (($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) || ! $
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('File not found'),
+            'title'         => __('File not found'),
             'type'          => 'alert-danger',
-            'message'       => _t('File not found'),
+            'message'       => __('File not found'),
             'back_url'      => $url,
-            'back_url_name' => _t('Downloads'),
+            'back_url_name' => __('Downloads'),
         ]
     );
     exit;
@@ -54,10 +54,10 @@ if (($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) || ! $
 
 Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]);
 $nav_chain->add(htmlspecialchars($res_down['rus_name']), '/downloads/?act=view&id=' . $res_down['id']);
-$nav_chain->add(_t('Comments'), '/downloads/?act=comments&id=' . $res_down['id']);
+$nav_chain->add(__('Comments'), '/downloads/?act=comments&id=' . $res_down['id']);
 
 $title_pages = htmlspecialchars(mb_substr($res_down['rus_name'], 0, 30));
-$title = (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages) . ' - ' . _t('Comments');
+$title = (mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_pages) . ' - ' . __('Comments');
 
 // Параметры комментариев
 $arg = [
@@ -82,7 +82,7 @@ $arg = [
     // Возможность владельцу редактировать комментарий
     'owner_edit'          => false,
     // Название раздела
-    'title'               => _t('Comments'),
+    'title'               => __('Comments'),
     // Namespace для шаблонов. Заменить для кастомных шаблонов
     'templates_namespace' => 'system',
     // Ссылка на страницу назад

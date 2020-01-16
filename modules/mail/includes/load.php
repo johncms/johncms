@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Mail');
+$textl = __('Mail');
 
 if ($id) {
     $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '${id}' AND `file_name` != '' AND `delete`!='" . $user->id . "' LIMIT 1");
@@ -21,7 +21,7 @@ if ($id) {
         //Выводим ошибку
         echo $view->render('system::app/old_content', [
             'title'   => $textl,
-            'content' => $tools->displayError(_t('Such file does not exist')),
+            'content' => $tools->displayError(__('Such file does not exist')),
         ]);
         exit;
     }
@@ -33,7 +33,7 @@ if ($id) {
         header('Location: ../upload/mail/' . $res['file_name']);
         exit;
     }
-    echo $tools->displayError(_t('Such file does not exist'));
+    echo $tools->displayError(__('Such file does not exist'));
 } else {
-    echo $tools->displayError(_t('No file selected'));
+    echo $tools->displayError(__('No file selected'));
 }

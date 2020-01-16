@@ -15,7 +15,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
 
 $config = di('config')['johncms'];
 
-echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('News on the mainpage') . '</div>';
 
 // Получаем сохраненные настройки
 $settings = $config['news'];
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
         exit;
     }
 
-    echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
+    echo '<div class="gmenu"><p>' . __('Settings are saved successfully') . '</p></div>';
 
     if (function_exists('opcache_reset')) {
         opcache_reset();
@@ -49,25 +49,25 @@ if (isset($_POST['submit'])) {
 
 // Форма ввода настроек
 echo '<form action="?act=news" method="post"><div class="menu"><p>' .
-    '<h3>' . _t('Appearance') . '</h3>' .
-    '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title + Text') . '<br>' .
-    '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title') . '<br>' .
-    '<input type="radio" value="3" name="view" ' . ($settings['view'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Text') . '<br>' .
-    '<input type="radio" value="0" name="view" ' . (! $settings['view'] ? 'checked="checked"' : '') . '/>&#160;<span class="red">' . _t('Not to show') . '</span></p>' .
-    '<p><input name="breaks" type="checkbox" value="1" ' . ($settings['breaks'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Line breaks') . '<br>' .
-    '<input name="smileys" type="checkbox" value="1" ' . ($settings['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Smilies') . '<br>' .
-    '<input name="tags" type="checkbox" value="1" ' . ($settings['tags'] ? 'checked="checked"' : '') . ' />&#160;' . _t('bbCode Tags') . '<br>' .
-    '<input name="kom" type="checkbox" value="1" ' . ($settings['kom'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Comments') . '</p>' .
-    '<p><h3>' . _t('Text size') . '</h3>&#160;' .
+    '<h3>' . __('Appearance') . '</h3>' .
+    '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . __('Title + Text') . '<br>' .
+    '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . __('Title') . '<br>' .
+    '<input type="radio" value="3" name="view" ' . ($settings['view'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . __('Text') . '<br>' .
+    '<input type="radio" value="0" name="view" ' . (! $settings['view'] ? 'checked="checked"' : '') . '/>&#160;<span class="red">' . __('Not to show') . '</span></p>' .
+    '<p><input name="breaks" type="checkbox" value="1" ' . ($settings['breaks'] ? 'checked="checked"' : '') . ' />&#160;' . __('Line breaks') . '<br>' .
+    '<input name="smileys" type="checkbox" value="1" ' . ($settings['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . __('Smilies') . '<br>' .
+    '<input name="tags" type="checkbox" value="1" ' . ($settings['tags'] ? 'checked="checked"' : '') . ' />&#160;' . __('bbCode Tags') . '<br>' .
+    '<input name="kom" type="checkbox" value="1" ' . ($settings['kom'] ? 'checked="checked"' : '') . ' />&#160;' . __('Comments') . '</p>' .
+    '<p><h3>' . __('Text size') . '</h3>&#160;' .
     '<input type="text" size="3" maxlength="3" name="size" value="' . $settings['size'] . '" />&#160;(50 - 500)</p>' .
-    '<p><h3>' . _t('Quantity of news') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="quantity" value="' . $settings['quantity'] . '" />&#160;(1 - 15)</p>' .
-    '<p><h3>' . _t('How many days to show?') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="days" value="' . $settings['days'] . '" />&#160;(1 - 30)</p>' .
-    '<br><p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
-    '<div class="phdr"><a href="?act=news&amp;reset">' . _t('Reset Settings') . '</a>' .
+    '<p><h3>' . __('Quantity of news') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="quantity" value="' . $settings['quantity'] . '" />&#160;(1 - 15)</p>' .
+    '<p><h3>' . __('How many days to show?') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="days" value="' . $settings['days'] . '" />&#160;(1 - 30)</p>' .
+    '<br><p><input type="submit" value="' . __('Save') . '" name="submit" /></p></div>' .
+    '<div class="phdr"><a href="?act=news&amp;reset">' . __('Reset Settings') . '</a>' .
     '</div></form>' .
-    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+    '<p><a href="./">' . __('Admin Panel') . '</a></p>';
 
 echo $view->render('system::app/old_content', [
-    'title'   => _t('Admin Panel'),
+    'title'   => __('Admin Panel'),
     'content' => ob_get_clean(),
 ]);

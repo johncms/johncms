@@ -20,12 +20,12 @@ if (empty($_GET['n'])) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Download topic'),
-            'page_title'    => _t('Download topic'),
+            'title'         => __('Download topic'),
+            'page_title'    => __('Download topic'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;
@@ -49,12 +49,12 @@ if (! in_array($n, $b)) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Download topic'),
-            'page_title'    => _t('Download topic'),
+            'title'         => __('Download topic'),
+            'page_title'    => __('Download topic'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Back'),
+            'back_url_name' => __('Back'),
         ]
     );
     exit;

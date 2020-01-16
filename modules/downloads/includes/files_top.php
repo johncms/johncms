@@ -22,11 +22,11 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Топ файлов
 if ($id === 2) {
-    $title = _t('Most Commented');
+    $title = __('Most Commented');
 } elseif ($id === 1) {
-    $title = _t('Most Downloaded');
+    $title = __('Most Downloaded');
 } else {
-    $title = _t('Popular Files');
+    $title = __('Popular Files');
 }
 
 $nav_chain->add($title);
@@ -34,20 +34,20 @@ $nav_chain->add($title);
 $buttons = [];
 if ($config['mod_down_comm'] || $user->rights >= 7) {
     $buttons['comments'] = [
-        'name'   => _t('Most Commented'),
+        'name'   => __('Most Commented'),
         'url'    => '?act=top_files&amp;id=2',
         'active' => false,
     ];
 }
 
 $buttons['pop'] = [
-    'name'   => _t('Popular Files'),
+    'name'   => __('Popular Files'),
     'url'    => '?act=top_files&amp;id=0',
     'active' => false,
 ];
 
 $buttons['most_downloaded'] = [
-    'name'   => _t('Most Downloaded'),
+    'name'   => __('Most Downloaded'),
     'url'    => '?act=top_files&amp;id=1',
     'active' => false,
 ];

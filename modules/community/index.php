@@ -16,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -45,14 +45,14 @@ $request = di(Request::class);
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('users', __DIR__ . '/templates/');
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('community', __DIR__ . '/locale');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = $route['action'] ?? 'index';
 $mod = $route['mod'] ?? '';
 
-$title = _t('Community');
+$title = __('Community');
 
 $nav_chain->add($title, '/community/');
 
@@ -63,7 +63,7 @@ if (! $config['active'] && ! $user->isValid()) {
         [
             'title'   => $title,
             'type'    => 'alert-danger',
-            'message' => _t('For registered users only'),
+            'message' => __('For registered users only'),
         ]
     );
     exit;

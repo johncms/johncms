@@ -30,15 +30,15 @@ $this->layout(
 <div class="row">
     <div class="col-md-6">
         <?php if ($saved): ?>
-            <div class="alert alert-success"><?= _t('Changes saved') ?></div>
+            <div class="alert alert-success"><?= __('Changes saved') ?></div>
         <?php endif; ?>
         <form action="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;do=set" method="post">
             <?php if (empty($list)): ?>
                 <div class="alert alert-info">
-                    <?= _t('The list is empty') ?>
+                    <?= __('The list is empty') ?>
                 </div>
             <?php else: ?>
-                <div class="alert alert-warning mb-3 shadow"><?= _t('Filter will be display posts from selected authors only') ?></div>
+                <div class="alert alert-warning mb-3 shadow"><?= __('Filter will be display posts from selected authors only') ?></div>
                 <div class="card shadow mb-3">
                     <div class="card-body">
                         <div class="list-group list-group-flush">
@@ -58,9 +58,9 @@ $this->layout(
             <?php endif; ?>
             <div>
                 <?php if (! empty($list)): ?>
-                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= _t('Filter') ?></button>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Filter') ?></button>
                 <?php endif; ?>
-                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= _t('Back to topic') ?></a>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
             </div>
         </form>
     </div>

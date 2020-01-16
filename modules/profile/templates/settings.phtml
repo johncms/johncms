@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+
+$userConfig = $user->config;
+
+?>
+
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+
+        <div class="buttons mb-3">
+            <?php foreach ($data['buttons'] as $button): ?>
+                <a href="<?= $button['url'] ?>" class="btn btn-outline-primary <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
+            <?php endforeach; ?>
+        </div>
+
+        <?php if (! empty($data['success_message'])): ?>
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['success_message'],
+                ]
+            ) ?>
+        <?php endif; ?>
+        <div class="card shadow border-0">
+            <form action="<?= $data['form_action'] ?>" method="post">
+                <div class="card-body">
+
+                    <h3><?= __('Time settings') ?></h3>
+                    <div class="form-group">
+                        <label for="timeshift"><?= __('Shift of time') ?> (+-12)</label>
+                        <input type="text"
+                               class="form-control"
+                               name="timeshift"
+                               id="timeshift"
+                               size="2"
+                               maxlength="3"
+                               value="<?= $userConfig->timeshift ?>"
+                               placeholder="<?= __('Shift of time') ?>"
+                        >
+                        <div class="small text-muted">
+                            <?= __('System time') ?>: <?= $data['system_time'] ?>
+                        </div>
+                    </div>
+
+                    <h3><?= __('System Functions') ?></h3>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="directUrl" value="1" id="directUrl" <?= $userConfig->directUrl ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="directUrl"><?= __('Direct URL') ?></label>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" name="youtube" value="1" id="youtube" <?= $userConfig->youtube ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="youtube"><?= __('Youtube Player') ?></label>
+                    </div>
+
+                    <h3><?= __('Text entering') ?></h3>
+                    <div class="form-group">
+                        <label for="fieldHeight"><?= __('Height of field') ?> (1-9)</label>
+                        <input type="text"
+                               class="form-control"
+                               name="fieldHeight"
+                               id="fieldHeight"
+                               maxlength="1"
+                               value="<?= $userConfig->fieldHeight ?>"
+                               placeholder="<?= __('Height of field') ?>"
+                        >
+                    </div>
+
+                    <h3><?= __('Appearance') ?></h3>
+                    <div class="form-group">
+                        <label for="kmess"><?= __('Size of Lists') ?> (5-99)</label>
+                        <input type="text"
+                               class="form-control"
+                               name="kmess"
+                               id="kmess"
+                               maxlength="2"
+                               value="<?= $userConfig->kmess ?>"
+                               placeholder="<?= __('Size of Lists') ?>"
+                        >
+                    </div>
+
+                    <?php if (! empty($data['lng_list'])): ?>
+                        <h3><?= __('Select Language') ?></h3>
+                        <div class="form-group">
+                            <label for="iso"><?= __('Select Language') ?></label>
+                            <select class="form-control" id="iso" name="iso">
+                                <?php foreach ($data['lng_list'] as $key => $lang): ?>
+                                    <option value="<?= $key ?>"
+                                            <?= ($key === $data['user_lng'] || ($key === $config['lng'] && empty($data['user_lng']))) ? 'selected' : '' ?>
+                                    ><?= $lang ?><?= ($key === $config['lng'] ? ' (' . __('Site Default') . ')' : '') ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+
+                    <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
+                    <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    <a href="?act=settings&amp;reset" class="btn btn-danger float-right"><?= __('Reset Settings') ?></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

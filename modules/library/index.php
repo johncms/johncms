@@ -110,8 +110,6 @@ $array_includes = [
     'lastcom',
 ];
 
-$i = 0;
-
 if (! in_array($act, $array_includes, true)) {
     $act = 'index';
 }

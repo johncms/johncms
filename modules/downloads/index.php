@@ -15,7 +15,7 @@ use Johncms\System\Users\User;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -38,8 +38,8 @@ $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
-// Регистрируем папку с языками модуля
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('downloads', __DIR__ . '/locale');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();
@@ -49,7 +49,7 @@ $loader->addPrefix('Downloads', __DIR__ . '/classes');
 $view->addFolder('downloads', __DIR__ . '/templates/');
 
 // Добавляем раздел в навигационную цепочку
-$nav_chain->add(_t('Downloads'), '/downloads/');
+$nav_chain->add(__('Downloads'), '/downloads/');
 
 $url = '/downloads/';
 $urls = [
@@ -76,16 +76,16 @@ if ($set_down['video_screen'] && ! extension_loaded('ffmpeg')) {
 $error = '';
 
 if (! $config['mod_down'] && $user->rights < 7) {
-    $error = _t('Downloads are closed');
+    $error = __('Downloads are closed');
 } elseif ($config['mod_down'] === 1 && ! $user->id) {
-    $error = _t('For registered users only');
+    $error = __('For registered users only');
 }
 
 if ($error) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'   => _t('Downloads'),
+            'title'   => __('Downloads'),
             'type'    => 'alert-danger',
             'message' => $error,
         ]
@@ -170,7 +170,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 } else {
     // Получаем список файлов и папок
     $notice = false;
-    $title = _t('Downloads');
+    $title = __('Downloads');
     $counters = [];
 
     if ($id) {
@@ -182,11 +182,11 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Wrong data', 'system'),
+                    'title'         => __('Wrong data'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('The directory does not exist'),
+                    'message'       => __('The directory does not exist'),
                     'back_url'      => $url,
-                    'back_url_name' => _t('Downloads'),
+                    'back_url_name' => __('Downloads'),
                 ]
             );
             exit;

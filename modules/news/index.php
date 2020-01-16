@@ -14,7 +14,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -36,11 +36,11 @@ $route = di('route');
 // Register Namespace for module templates
 $view->addFolder('news', __DIR__ . '/templates/');
 
-// Register module languages
-$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('news', __DIR__ . '/locale');
 
 // Add a section to the navigation chain
-$nav_chain->add(_t('News'), '/news/');
+$nav_chain->add(__('News'), '/news/');
 
 $id = $route['id'] ?? 0;
 $act = $route['action'] ?? 'index';

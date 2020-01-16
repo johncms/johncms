@@ -6,14 +6,14 @@ $db = $container->get(PDO::class);
 if ($user->id) {
     // Выводим сообщение о Бане
     if (!empty($user->ban)) {
-        echo '<div class="alarm">' . _t('Ban', 'system') . '&#160;<a href="' . $config['homeurl'] . '/profile/?act=ban">' . _t('Details', 'system') . '</a></div>';
+        echo '<div class="alarm">' . d__('system', 'Ban') . '&#160;<a href="' . $config['homeurl'] . '/profile/?act=ban">' . d__('system', 'Details') . '</a></div>';
     }
 
     $list = [];
     $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $user->id . "'")->fetchColumn();
 
     if ($new_sys_mail) {
-        $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
+        $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=systems">' . d__('system', 'System') . '</a> (+' . $new_sys_mail . ')';
     }
 
     $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -25,20 +25,20 @@ if ($user->id) {
                             AND `cms_contact`.`ban`!='1'")->fetchColumn();
 
     if ($new_mail) {
-        $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
+        $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=new">' . d__('system', 'Mail') . '</a> (+' . $new_mail . ')';
     }
 
     if ($user->comm_count > $user->comm_old) {
-        $list[] = '<a href="' . $config['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user->id . '">' . _t('Guestbook', 'system') . '</a> (' . ($user->comm_count - $user->comm_old) . ')';
+        $list[] = '<a href="' . $config['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user->id . '">' . d__('system', 'Guestbook') . '</a> (' . ($user->comm_count - $user->comm_old) . ')';
     }
 
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . $user->id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
-        $list[] = '<a href="' . $config['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
+        $list[] = '<a href="' . $config['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . d__('system', 'Comments') . '</a>';
     }
 
     if (!empty($list)) {
-        echo '<div class="rmenu">' . _t('Unread', 'system') . ': ' . implode(', ', $list) . '</div>';
+        echo '<div class="rmenu">' . d__('system', 'Unread') . ': ' . implode(', ', $list) . '</div>';
     }
 }

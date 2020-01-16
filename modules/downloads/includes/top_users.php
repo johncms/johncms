@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  */
 
-$title = _t('Top Users');
+$title = __('Top Users');
 $nav_chain->add($title);
 $total = $db->query('SELECT COUNT(DISTINCT user_id) FROM `download__files` WHERE `user_id` > 0 AND `type`<>3')->fetchColumn();
 
@@ -37,7 +37,7 @@ JOIN users u ON u.id = d.user_id
 WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess);
     while ($res_down = $req_down->fetch()) {
         $res_down['files_link'] = '<a href="?act=user_files&amp;id=' .
-        $res_down['id'] . '">' . _t('User Files') . ': ' . $res_down['cnt'] . '</a>';
+        $res_down['id'] . '">' . __('User Files') . ': ' . $res_down['cnt'] . '</a>';
 
         $res_down['user_profile_link'] = '';
         if (! empty($res_down['id']) && $user->isValid() && $user->id !== $res_down['id']) {

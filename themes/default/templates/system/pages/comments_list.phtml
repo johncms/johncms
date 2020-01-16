@@ -36,7 +36,7 @@ $this->layout(
 
 <!-- Отображаем комментарии -->
 <?php if (empty($data['items'])): ?>
-    <div class="alert alert-info"><?= _t('The list is empty') ?></div>
+    <div class="alert alert-info"><?= d__('system', 'The list is empty') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
         <div class="shadow post-item mb-2">
@@ -47,10 +47,10 @@ $this->layout(
                 </div>
                 <div class="post-actions">
                     <?php if (! empty($item['reply_url'])): ?>
-                        <a href="<?= $item['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Reply', 'system') ?></a>
+                        <a href="<?= $item['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= d__('system', 'Reply') ?></a>
                     <?php endif; ?>
                     <?php if (! empty($item['quote_url'])): ?>
-                        <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= _t('Quote', 'system') ?></a>
+                        <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= d__('system', 'Quote') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -89,14 +89,14 @@ $this->layout(
                     <div class="text-nowrap post-actions">
                         <span class="text-muted pr-2 flex-grow-1">
                             <?php if (! empty($item['edit_count'])): ?>
-                                <?= _t('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                                <?= d__('system', 'Edited') ?>: <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
                             <?php endif; ?>
                         </span>
                         <?php if (! empty($item['edit_url'])): ?>
-                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= _t('Edit', 'system') ?></a>
+                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= d__('system', 'Edit') ?></a>
                         <?php endif; ?>
                         <?php if (! empty($item['delete_url'])): ?>
-                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= _t('Delete', 'system') ?></a>
+                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= d__('system', 'Delete') ?></a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -111,6 +111,6 @@ $this->layout(
 
 <?php if (! empty($back_url)): ?>
     <div class="mt-4">
-        <a href="<?= $back_url ?>"><?= _t('Back', 'system') ?></a>
+        <a href="<?= $back_url ?>"><?= d__('system', 'Back') ?></a>
     </div>
 <?php endif; ?>

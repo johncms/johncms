@@ -27,7 +27,7 @@ $this->layout(
 
 <?php if (! $config['mod_down']): ?>
     <div class="alert alert-danger border-0 shadow">
-        <?= _t('Downloads are closed') ?>
+        <?= __('Downloads are closed') ?>
     </div>
 <?php endif; ?>
 
@@ -40,7 +40,7 @@ $this->layout(
 <?php if (empty($files)): ?>
     <div class="row">
         <div class="col-md-6">
-            <div class="alert alert-info"><?= _t('List is empty') ?></div>
+            <div class="alert alert-info"><?= __('List is empty') ?></div>
         </div>
     </div>
 <?php endif; ?>
@@ -50,5 +50,5 @@ $this->layout(
 <?php endforeach; ?>
 
 <div class="mt-3">
-    <a href="<?= $urls['downloads'] ?>"><?= _t('Downloads') ?></a>
+    <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
 </div>

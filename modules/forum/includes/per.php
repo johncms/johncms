@@ -23,11 +23,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Wrong data'),
+                'title'         => __('Wrong data'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -38,11 +38,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'system::pages/result',
             [
-                'title'         => _t('Wrong data'),
+                'title'         => __('Wrong data'),
                 'type'          => 'alert-danger',
-                'message'       => _t('Wrong data'),
+                'message'       => __('Wrong data'),
                 'back_url'      => '/forum/',
-                'back_url_name' => _t('Back'),
+                'back_url_name' => __('Back'),
             ]
         );
         exit;
@@ -54,11 +54,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Wrong data'),
+                    'title'         => __('Wrong data'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('Wrong data'),
+                    'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -69,11 +69,11 @@ if ($user->rights == 3 || $user->rights >= 6) {
             echo $view->render(
                 'system::pages/result',
                 [
-                    'title'         => _t('Wrong data'),
+                    'title'         => __('Wrong data'),
                     'type'          => 'alert-danger',
-                    'message'       => _t('Wrong data'),
+                    'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
-                    'back_url_name' => _t('Back'),
+                    'back_url_name' => __('Back'),
                 ]
             );
             exit;
@@ -114,8 +114,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
         echo $view->render(
             'forum::move_topic',
             [
-                'title'            => _t('Move topic'),
-                'page_title'       => _t('Move topic'),
+                'title'            => __('Move topic'),
+                'page_title'       => __('Move topic'),
                 'id'               => $id,
                 'current_section'  => $fr1,
                 'current_sections' => $current_sections,

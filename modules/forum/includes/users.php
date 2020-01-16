@@ -25,11 +25,11 @@ if ($topic_vote == 0 || $user->rights < 7) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => _t('Download topic'),
+            'title'         => __('Download topic'),
             'type'          => 'alert-danger',
-            'message'       => _t('Wrong data'),
+            'message'       => __('Wrong data'),
             'back_url'      => '/forum/',
-            'back_url_name' => _t('Forum'),
+            'back_url_name' => __('Forum'),
         ]
     );
     exit;
@@ -69,9 +69,9 @@ while ($res = $req->fetch()) {
 echo $view->render(
     'forum::voted_users',
     [
-        'title'         => _t('Who voted in the poll'),
-        'page_title'    => _t('Who voted in the poll'),
-        'empty_message' => _t('No one has voted in this poll yet'),
+        'title'         => __('Who voted in the poll'),
+        'page_title'    => __('Who voted in the poll'),
+        'empty_message' => __('No one has voted in this poll yet'),
         'poll_name'     => htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8'),
         'items'         => $items ?? [],
         'pagination'    => $tools->displayPagination('?act=users&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),

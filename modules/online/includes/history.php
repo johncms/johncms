@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,23 +8,39 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
+declare(strict_types=1);
 
-ob_start();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Johncms\System\Http\Environment $env */
 $env = di(Johncms\System\Http\Environment::class);
 
-// Показываем список Online
-$menu[] = '<a href="../">' . _t('Users') . '</a>';
-$menu[] = '<strong>' . _t('History') . '</strong>';
+$data = [];
+$data['filters'] = [
+    'users'   => [
+        'name'   => __('Users'),
+        'url'    => '/online/',
+        'active' => false,
+    ],
+    'history' => [
+        'name'   => __('History'),
+        'url'    => '/online/history/',
+        'active' => true,
+    ],
+];
 
 if ($user->rights) {
-    $menu[] = '<a href="../guest/">' . _t('Guests') . '</a>';
-    $menu[] = '<a href="../ip/">' . _t('IP Activity') . '</a>';
+    $data['filters']['guest'] = [
+        'name'   => __('Guests'),
+        'url'    => '/online/guest/',
+        'active' => false,
+    ];
+    $data['filters']['ip'] = [
+        'name'   => __('IP Activity'),
+        'url'    => '/online/ip/',
+        'active' => false,
+    ];
 }
-
-echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div><div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 172800 . ' AND `lastdate` < ' . (time() - 310)))->fetchColumn();
 
@@ -35,42 +49,37 @@ if ($start >= $total) {
     $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
 }
 
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
-}
-
 if ($total) {
     $req = $db->query('SELECT * FROM `users` WHERE `lastdate` > ' . (time() - 172800) . ' AND `lastdate` < ' . (time() - 310) . " ORDER BY `sestime` DESC LIMIT ${start}, " . $user->config->kmess);
     $i = 0;
 
     while ($res = $req->fetch()) {
         $res['id'] = $res['id'] ?? 0;
-
-        if ($res['id'] == $user->id) {
-            echo '<div class="gmenu">';
-        } else {
-            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
+        $res['user_profile_link'] = '';
+        if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
+            $res['user_profile_link'] = '/profile/?user=' . $res['id'];
         }
+        $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+        $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+        $res['ip'] = long2ip($res['ip']);
+        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+        $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . $res['ip_via_proxy'];
+        $res['place'] = $tools->displayPlace($res['place']);
+        $res['display_date'] = $tools->displayDate($res['sestime']);
 
-        $arg['stshide'] = 1;
-        $arg['header'] = ' <span class="gray">(';
-        $arg['header'] .= $tools->displayDate($res['sestime']);
-        $arg['header'] .= ')</span><br /><img src="' . $assets->url('images/old/info.png') . '" alt="" class="icon">' . $tools->displayPlace($res['place'], (int) $res['id']);
-        echo $tools->displayUser($res, $arg);
-        echo '</div>';
-        ++$i;
+        $items[] = $res;
     }
-} else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+$data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
+$data['total'] = $total;
+$data['items'] = $items ?? [];
 
-if ($total > $user->config->kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
-}
-
-echo $view->render('system::app/old_content', [
-    'title'   => _t('Online'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'online::users',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
