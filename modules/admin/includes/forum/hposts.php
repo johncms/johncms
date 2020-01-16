@@ -20,26 +20,40 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Http\Request $request
  */
 
+$title = __('Hidden posts');
+$nav_chain->add($title);
 
 // Управление скрытыми постави форума
-echo '<div class="phdr"><a href="?act=forum"><b>' . __('Forum Management') . '</b></a> | ' . __('Hidden posts') . '</div>';
 $sort = '';
 $link = '';
+$data = [];
 
+$data['reset_filter'] = '?mod=hposts';
 if (isset($_GET['tsort'])) {
     $sort = " AND `forum_messages`.`topic_id` = '" . abs((int) ($_GET['tsort'])) . "'";
     $link = '&amp;tsort=' . abs((int) ($_GET['tsort']));
-    echo '<div class="bmenu">' . __('Filter by topic') . ' <a href="?act=forum&amp;mod=hposts">[x]</a></div>';
+    $data['filtered_by'] = __('by topic');
 } elseif (isset($_GET['usort'])) {
     $sort = " AND `forum_messages`.`user_id` = '" . abs((int) ($_GET['usort'])) . "'";
     $link = '&amp;usort=' . abs((int) ($_GET['usort']));
-    echo '<div class="bmenu">' . __('Filter by author') . ' <a href="?act=forum&amp;mod=hposts">[x]</a></div>';
+    $data['filtered_by'] = __('by author');
 }
 
 if (isset($_POST['delpost'])) {
     if ($user->rights != 9) {
-        echo $tools->displayError(__('Access forbidden'));
-        echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => __('Access forbidden'),
+                'admin'         => true,
+                'menu_item'     => 'forum',
+                'parent_menu'   => 'module_menu',
+                'back_url'      => '/admin/forum/',
+                'back_url_name' => __('Back'),
+            ]
+        );
         exit;
     }
 
@@ -51,7 +65,7 @@ if (isset($_POST['delpost'])) {
         if ($req_f->rowCount()) {
             while ($res_f = $req_f->fetch()) {
                 // Удаляем файлы
-                unlink('../files/forum/attach/' . $res_f['filename']);
+                unlink(UPLOAD_PATH . 'forum/attach/' . $res_f['filename']);
             }
             $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
         }
@@ -60,14 +74,9 @@ if (isset($_POST['delpost'])) {
     // Удаляем посты
     $db->exec("DELETE FROM `forum_messages` WHERE `deleted` = '1' ${sort}");
 
-    header('Location: ?act=forum&mod=hposts');
+    header('Location: ?mod=hposts');
 } else {
     $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = '1' ${sort}")->fetchColumn();
-
-    if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;', $start, $total, $user->config->kmess) . '</div>';
-    }
-
     $req = $db->query(
         "SELECT `forum_messages`.*,
             `forum_messages`.`id` AS `fid`,
@@ -84,48 +93,62 @@ if (isset($_POST['delpost'])) {
     );
 
     if ($req->rowCount()) {
-        $i = 0;
-
+        $items = [];
         while ($res = $req->fetch()) {
-            $posttime = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
-            $page = ceil(
-                $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn() / $user->config->kmess
-            );
+            $res['display_date'] = $tools->displayDate($res['date']);
+            $count_mess = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn();
+            $page = ceil($count_mess / $user->config->kmess);
+
             $text = mb_substr($res['text'], 0, 500);
             $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
+            $res['formatted_text'] = $text;
+
             $theme = $db->query("SELECT `id`, `name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
-            $text = '<b>' . $theme['name'] . '</b> <a href="../forum/?type=topic&id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br>' . $text;
-            $subtext = '<span class="gray">' . __('Filter') . ':</span> ';
-            $subtext .= '<a href="?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . __('by topic') . '</a> | ';
-            $subtext .= '<a href="?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . __('by author') . '</a>';
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            echo $tools->displayUser(
-                $res,
+            $res['topic_name'] = $theme['name'];
+            $res['topic_url'] = '/forum/?type=topic&id=' . $theme['id'] . '&amp;page=' . $page;
+            $res['buttons'] = [
                 [
-                    'header' => $posttime,
-                    'body'   => $text,
-                    'sub'    => $subtext,
-                ]
-            );
-            echo '</div>';
-            ++$i;
-        }
+                    'url'  => '?mod=hposts&amp;tsort=' . $theme['id'],
+                    'name' => __('by topic'),
+                ],
+                [
+                    'url'  => '?mod=hposts&amp;usort=' . $res['user_id'],
+                    'name' => __('by author'),
+                ],
+            ];
 
-        if ($user->rights == 9) {
-            echo '<form action="?act=forum&amp;mod=hposts' . $link . '" method="POST"><div class="rmenu"><input type="submit" name="delpost" value="' . __('Delete all') . '" /></div></form>';
+            $res['user_profile_link'] = '';
+            if (! empty($res['id']) && $user->id !== $res['id']) {
+                $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+            }
+            $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+            $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
+            $res['ip'] = long2ip($res['ip']);
+            $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+            $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
+
+            $items[] = $res;
         }
-    } else {
-        echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
     }
 
-    echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
+    if ($user->rights === 9 && $total > 0) {
+        $data['del_all_url'] = '?mod=hposts' . $link;
+    }
 
+    $data['items'] = $items ?? [];
+    $data['total'] = $total;
+    $data['back_url'] = '/admin/forum/';
     if ($total > $user->config->kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;', $start, $total, $user->config->kmess) . '</div>' .
-            '<p><form action="?act=forum&amp;mod=hposts" method="post">' .
-            '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . __('To Page') . ' &gt;&gt;"/>' .
-            '</form></p>';
+        $data['pagination'] = $tools->displayPagination('?mod=hposts&amp;', $start, $total, $user->config->kmess);
     }
+
+    echo $view->render(
+        'admin::forum/hidden_posts',
+        [
+            'title'      => $title,
+            'page_title' => $title,
+            'data'       => $data,
+        ]
+    );
 }
