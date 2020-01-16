@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,16 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 $config = di('config')['johncms'];
 
-echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('News on the mainpage') . '</div>';
+$data = [];
+
+$title = __('News on the mainpage');
+$nav_chain->add($title);
 
 // Получаем сохраненные настройки
 $settings = $config['news'];
@@ -36,38 +38,37 @@ if (isset($_POST['submit'])) {
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
     if (! file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
-        echo 'ERROR: Can not write system.local.php</body></html>';
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => __('ERROR: Can not write system.local.php'),
+                'admin'         => true,
+                'menu_item'     => 'news',
+                'parent_menu'   => 'module_menu',
+                'back_url'      => '/admin/news/',
+                'back_url_name' => __('Back'),
+            ]
+        );
         exit;
     }
 
-    echo '<div class="gmenu"><p>' . __('Settings are saved successfully') . '</p></div>';
+    $data['success_message'] = __('Settings are saved successfully');
 
     if (function_exists('opcache_reset')) {
         opcache_reset();
     }
 }
 
-// Форма ввода настроек
-echo '<form action="?act=news" method="post"><div class="menu"><p>' .
-    '<h3>' . __('Appearance') . '</h3>' .
-    '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . __('Title + Text') . '<br>' .
-    '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . __('Title') . '<br>' .
-    '<input type="radio" value="3" name="view" ' . ($settings['view'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . __('Text') . '<br>' .
-    '<input type="radio" value="0" name="view" ' . (! $settings['view'] ? 'checked="checked"' : '') . '/>&#160;<span class="red">' . __('Not to show') . '</span></p>' .
-    '<p><input name="breaks" type="checkbox" value="1" ' . ($settings['breaks'] ? 'checked="checked"' : '') . ' />&#160;' . __('Line breaks') . '<br>' .
-    '<input name="smileys" type="checkbox" value="1" ' . ($settings['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . __('Smilies') . '<br>' .
-    '<input name="tags" type="checkbox" value="1" ' . ($settings['tags'] ? 'checked="checked"' : '') . ' />&#160;' . __('bbCode Tags') . '<br>' .
-    '<input name="kom" type="checkbox" value="1" ' . ($settings['kom'] ? 'checked="checked"' : '') . ' />&#160;' . __('Comments') . '</p>' .
-    '<p><h3>' . __('Text size') . '</h3>&#160;' .
-    '<input type="text" size="3" maxlength="3" name="size" value="' . $settings['size'] . '" />&#160;(50 - 500)</p>' .
-    '<p><h3>' . __('Quantity of news') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="quantity" value="' . $settings['quantity'] . '" />&#160;(1 - 15)</p>' .
-    '<p><h3>' . __('How many days to show?') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="days" value="' . $settings['days'] . '" />&#160;(1 - 30)</p>' .
-    '<br><p><input type="submit" value="' . __('Save') . '" name="submit" /></p></div>' .
-    '<div class="phdr"><a href="?act=news&amp;reset">' . __('Reset Settings') . '</a>' .
-    '</div></form>' .
-    '<p><a href="./">' . __('Admin Panel') . '</a></p>';
+$data['form_action'] = '/admin/news/';
+$data['settings'] = $settings;
 
-echo $view->render('system::app/old_content', [
-    'title'   => __('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render(
+    'admin::news',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
