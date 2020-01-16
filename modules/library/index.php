@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
@@ -18,7 +19,6 @@ use Johncms\System\i18n\Translator;
 use Aura\Autoload\Loader;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var Assets $assets
@@ -26,6 +26,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Tools $tools
  * @var User $user
  * @var Render $view
+ * @var NavChain $nav_chain
  */
 
 $assets = di(Assets::class);
@@ -34,6 +35,7 @@ $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
+$nav_chain = di(NavChain::class);
 
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('library', __DIR__ . '/locale');
@@ -54,23 +56,24 @@ $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $adm = ($user->rights > 4);
 
-$textl = __('Library');
+$title = __('Library');
+$nav_chain->add($title, '/library/');
 
 $error = '';
-
 // Ограничиваем доступ к Библиотеке
 if (! $config['mod_lib'] && $user->rights < 7) {
-    $error = _t('Library is closed');
+    $error = __('Library is closed');
 } elseif ($config['mod_lib'] === 1 && ! $user->isValid()) {
-    $error = _t('Access forbidden');
+    $error = __('Access forbidden');
 }
 
 if ($error) {
     echo $view->render(
-        'system::app/old_content',
+        'system::pages/result',
         [
-            'title'   => $textl,
-            'content' => $tools->displayError($error),
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => $error,
         ]
     );
     exit;
@@ -89,7 +92,7 @@ if ($id > 0) {
 
     $hdr = htmlentities($hdrres, ENT_QUOTES, 'UTF-8');
     if ($hdr) {
-        $textl .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
+        $title .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
 }
 

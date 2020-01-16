@@ -78,16 +78,15 @@ class Utils
      *
      * @param int $id
      * @param int $dir
-     * @return string
+     * @return int
      */
-    public static function libCounter(int $id, int $dir): string
+    public static function libCounter(int $id, int $dir): int
     {
         $db = di(PDO::class);
         return $db->query(
             'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
-                . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id)
-        )->fetchColumn()
-            . ' ' . ($dir ? ' ' . __('Sections') : ' ' . __('Articles'));
+            . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id)
+        )->fetchColumn();
     }
 
     public static function imageUpload(int $id, $image): void

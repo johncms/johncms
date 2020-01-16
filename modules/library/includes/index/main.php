@@ -28,6 +28,8 @@ $i = 0;
 echo $view->render(
     'library::main',
     [
+        'title'       => $title,
+        'page_title'  => $title,
         'total'       => $total,
         'admin'       => $adm,
         'id'          => $id,
