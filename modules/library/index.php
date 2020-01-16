@@ -14,9 +14,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
-use Library\Tree;
-use Library\Utils;
-use Laminas\I18n\Translator\Translator;
+use Johncms\System\i18n\Translator;
 use Aura\Autoload\Loader;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -37,9 +35,8 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 
-// Регистрируем языки модуля
-#di(Translator::class)->addTranslationFilePattern(__DIR__ . '/locale/%s/admin.lng');
-di(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('library', __DIR__ . '/locale');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Loader();
@@ -56,7 +53,6 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $adm = ($user->rights > 4);
-$i = 0;
 
 $textl = _t('Library');
 
@@ -84,7 +80,7 @@ if ($error) {
 $tab = $do === 'dir' ? 'library_cats' : 'library_texts';
 
 if ($id > 0) {
-    $hdrsql = $db->query('SELECT `name` FROM `' . $tab . '` WHERE `id`=' . $id . ' LIMIT 1');
+    $hdrsql = $db->query('SELECT `name` FROM `' . $tab . '` WHERE `id` = ' . $id . ' LIMIT 1');
 
     $hdrres = '';
     if ($hdrsql->rowCount()) {
@@ -95,10 +91,6 @@ if ($id > 0) {
     if ($hdr) {
         $textl .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
-}
-
-if (! $config['mod_lib']) {
-    echo $tools->displayError(_t('Library is closed'));
 }
 
 $array_includes = [
@@ -120,15 +112,7 @@ $array_includes = [
 
 $i = 0;
 
-if (!in_array($act, $array_includes, true)) {
+if (! in_array($act, $array_includes, true)) {
     $act = 'index';
 }
 require_once 'includes/' . $act . '.php';
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => $textl,
-        'content' => ob_get_clean(),
-    ]
-);
