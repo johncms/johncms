@@ -1,52 +1,58 @@
-<div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= __('New Articles') ?></div>
-<?php if ($total > $user->config->kmess) : ?>
-    <div><?= $pagination ?></div>
-<?php endif ?>
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
 <?php if ($total) : ?>
     <?php foreach ($list() as $newlist): ?>
-        <?php $i = 0; ?>
-        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
-            <?php if ($newlist['cover']) : ?>
-                <div class="avatar"><img src="../upload/library/images/small/<?= $newlist['id'] ?>.png" alt="screen"/></div>
-            <?php endif; ?>
-            <table class="desc">
-                <tr>
-                    <td class="caption"><?= __('Section') ?>:</td>
-                    <td><a href="?do=dir&amp;id=<?= $newlist['cat_id'] ?>"><?= $newlist['catalog_name'] ?></a></td>
-                </tr>
-                <?php if ($newlist['tags']) : ?>
-                    <tr>
-                        <td class="caption"><?= __('The Tags') ?>:</td>
-                        <td><?= $newlist['tags'] ?></td>
-                    </tr>
-                <?php endif; ?>
-                <tr>
-                    <td class="caption"><?= __('Who added') ?>:</td>
-                    <td><?= $newlist['who'] ?></td>
-                </tr>
-                <tr>
-                    <td class="caption"><?= __('Rating') ?>:</td>
-                    <td><?= $newlist['ratingView'] ?></td>
-                </tr>
-                <tr>
-                    <td class="caption"><?= __('Number of readings') ?>:</td>
-                    <td><?= $newlist['count_views'] ?></td>
-                </tr>
-                <tr>
-                    <?php if ($newlist['comments']) : ?>
-                        <td class="caption"><a href="?act=comments&amp;id=<?= $newlist['id'] ?>"><?= __('Comments') ?></a>:</td>
-                        <td><?= $newlist['comm_count'] ?></td>
-                    <?php else : ?>
-                        <td class="caption"><?= __('Comments') ?>:</td>
-                        <td><?= __('Comments are closed') ?></td>
-                    <?php endif; ?>
-                </tr>
-            </table>
+        <div class="card mb-3 shadow border-0">
+            <div class="card-body">
+                <a href="?id=<?= $newlist['id'] ?>" class="card-title h3"><?= $newlist['name'] ?></a>
+                <p class="card-text"><?= $newlist['announce'] ?></p>
+                <div class="text-muted small d-flex align-items-center flex-wrap">
+                    <div class="mr-2">
+                        <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $newlist['cat_id'] ?>"><?= $newlist['catalog_name'] ?></a>
+                    </div>
+                    <div class="mr-2">
+                        <span><?= __('Author:') ?></span><?= $newlist['who'] ?>
+                    </div>
+                    <div class="d-flex align-items-center mr-1">
+                        <span class="pr-1"><?= __('Rating:') ?></span><?= $newlist['ratingView'] ?>
+                    </div>
+                    <div>
+                        <?php if ($newlist['comments']) : ?>
+                            <a href="?act=comments&amp;id=<?= $newlist['id'] ?>"><?= __('Comments:') ?></a>
+                            (<?= $newlist['comm_count'] ?>)
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
-<div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
+<div><?= __('Total') ?>: <?= $total ?></div>
 <?php if ($total > $user->config->kmess) : ?>
     <div><?= $pagination ?></div>
 <?php endif ?>
-<p><a href="?"><?= __('To Library') ?></a></p>
+<div class="mt-2">
+    <a href="?"><?= __('To Library') ?></a>
+</div>

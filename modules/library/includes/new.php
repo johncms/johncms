@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -24,9 +24,14 @@ $req = $db->query(
     LIMIT " . $start . ', ' . $user->config->kmess
 );
 
+$title = __('New Articles');
+$nav_chain->add($title);
+
 echo $view->render(
     'library::new',
     [
+        'title'      => $title,
+        'page_title' => $title,
         'pagination' => $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess),
         'total'      => $total,
         'list'       =>
