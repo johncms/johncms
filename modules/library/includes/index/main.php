@@ -6,7 +6,7 @@ use Library\ViewHelper;
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
-  * @var Johncms\System\View\Render $view
+ * @var Johncms\System\View\Render $view
  */
 
 $premod = false;
@@ -21,32 +21,30 @@ $new = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time
 
 $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent` = 0')->fetchColumn();
 
-if ($total) {
-    $req = $db->query('SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent` = 0 ORDER BY `pos` ASC');
+$req = $db->query('SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent` = 0 ORDER BY `pos` ASC');
 
-    $i = 0;
+$i = 0;
 
-    echo $view->render(
-        'library::main',
-        [
-            'total'       => $total,
-            'admin'       => $adm,
-            'id'          => $id,
-            'premod'      => $premod,
-            'countPremod' => $countPremod,
-            'new'         => $new,
-            'list'        =>
-                static function () use ($req, $tools, $id, $i, $total) {
-                    while ($res = $req->fetch()) {
-                        $i++;
-                        $res['name'] = $tools->checkout($res['name']);
-                        $res['libCounter'] = Utils::libCounter($res['id'], $res['dir']);
-                        $res['description'] = ! empty($res['description']) ? $tools->checkout($res['description']) : null;
-                        $res['sectionListAdminPanel'] = ViewHelper::sectionsListAdminPanel($id, $res['id'], $i, $total);
+echo $view->render(
+    'library::main',
+    [
+        'total'       => $total,
+        'admin'       => $adm,
+        'id'          => $id,
+        'premod'      => $premod,
+        'countPremod' => $countPremod,
+        'new'         => $new,
+        'list'        =>
+            static function () use ($req, $tools, $id, $i, $total) {
+                while ($res = $req->fetch()) {
+                    $i++;
+                    $res['name'] = $tools->checkout($res['name']);
+                    $res['libCounter'] = Utils::libCounter($res['id'], $res['dir']);
+                    $res['description'] = ! empty($res['description']) ? $tools->checkout($res['description']) : null;
+                    $res['sectionListAdminPanel'] = ViewHelper::sectionsListAdminPanel($id, $res['id'], $i, $total);
 
-                        yield $res;
-                    }
-                },
-        ]
-    );
-}
+                    yield $res;
+                }
+            },
+    ]
+);

@@ -52,7 +52,7 @@ class ViewHelper
         );
     }
 
-    public static function printVote(int $id, int $userVote): string
+    public static function printVote(int $id, $userVote): string
     {
         return self::setUp()->render(
             'libraryHelpers::printvote',

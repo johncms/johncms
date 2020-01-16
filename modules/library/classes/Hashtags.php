@@ -212,10 +212,10 @@ class Hashtags
      */
     public function cloud($array): string
     {
-        if (count($array)) {
+        if (@count($array)) {
             $obj = new Links($array);
 
-            return $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();
+            return  $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();
         }
 
         return $this->getCache();
