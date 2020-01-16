@@ -1,0 +1,24 @@
+<?php if ($error) : ?>
+    <?= $error ?>
+<?php endif; ?>
+<?php if ($created) : ?>
+    <div><?= __('Section created') ?></div>
+    <div><a href="?do=dir&amp;id=<?= $id ?>"><?= __('To Section') ?></a></div>
+<?php else : ?>
+    <div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= __('Create Section') ?></div>
+    <form action="?act=mkdir&amp;id=<?= $id ?>" method="post">
+        <div class="menu">
+            <h3><?= __('Title') ?>:</h3>
+            <div><input type="text" name="name"/></div>
+            <h3><?= __('Section description') ?>:</h3>
+            <div><textarea name="description" rows="4" cols="20"></textarea></div>
+            <h3><?= __('Section type') ?></h3>
+            <div><select name="type">
+                    <option value="1"><?= __('Sections') ?></option>
+                    <option value="0"><?= __('Articles') ?></option>
+                </select></div>
+            <div><input type="submit" name="submit" value="<?= __('Save') ?>"/></div>
+        </div>
+    </form>
+    <p><a href="?"><?= __('Back') ?></a></p>
+<?php endif; ?>

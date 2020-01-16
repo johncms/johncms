@@ -1,0 +1,31 @@
+<?php if ($total) : ?>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+    <!-- Listing Sections -->
+    <?php $i = 0; ?>
+    <?php foreach ($list() as $section): ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <a href="?do=dir&amp;id=<?= $section['id'] ?>"><?= $section['name'] ?></a> (<?= $section['libCounter'] ?>)
+            <div class="sub"><span class="gray"><?= $section['description'] ?></span></div>
+            <?php if ($admin) : ?>
+                <?= $section['sectionListAdminPanel'] ?>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="menu"><p><?= __('The list is empty') ?></p></div>
+<?php endif ?>
+<div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
+<!-- Page switching -->
+<?php if ($total > $user->config->kmess): ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?php if ($admin) : ?>
+    <p>
+        <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>"><?= __('Edit') ?></a><br>
+        <a href="?act=del&amp;type=dir&amp;id=<?= $id ?>"><?= __('Delete') ?></a><br>
+        <a href="?act=mkdir&amp;id=<?= $id ?>"><?= __('Create') ?></a>
+    </p>
+<?php endif; ?>

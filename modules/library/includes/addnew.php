@@ -11,217 +11,138 @@
 declare(strict_types=1);
 
 use Library\Hashtags;
-use Verot\Upload\Upload;
+use Library\Utils;
+use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+$request = di(ServerRequestInterface::class);
 
 /**
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  * @var Johncms\System\View\Render $view
+ * @var  ServerRequestInterface $request
  */
 
-if ($adm || (($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount()) && isset($id) && $user->isValid())) {
-    // Проверка на флуд
-    $flood = $tools->antiflood();
-
-    if ($flood) {
-        echo $view->render(
-            'system::app/old_content',
-            [
-                'title'   => $textl,
-                'content' => $tools->displayError(
-                    sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
-                    '<br><a href="?do=dir&amp;id=' . $id . '">' . __('Back') . '</a>'
-                ),
-            ]
-        );
-        exit;
-    }
-
+if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` = ' . $id)->rowCount()))) {
+    $err = [];
     $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 100) : '';
     $announce = isset($_POST['announce']) ? mb_substr(trim($_POST['announce']), 0, 500) : '';
     $text = isset($_POST['text']) ? trim($_POST['text']) : '';
     $tag = isset($_POST['tags']) ? trim($_POST['tags']) : '';
+    $md = false;
+    $cid = false;
 
-    if (isset($_POST['submit'])) {
-        $err = [];
+    $flood = $tools->antiflood();
 
-        if (empty($_POST['name'])) {
+    if ($flood) {
+        $err[] = sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood);
+    } elseif (isset($_POST['submit'])) {
+        if (empty($name)) {
             $err[] = __('You have not entered the name');
         }
-
         if (! empty($_FILES['textfile']['name'])) {
             $ext = explode('.', $_FILES['textfile']['name']);
-            if (mb_strtolower(end($ext)) == 'txt') {
+            if (mb_strtolower(end($ext)) === 'txt') {
                 $newname = $_FILES['textfile']['name'];
                 if (move_uploaded_file($_FILES['textfile']['tmp_name'], UPLOAD_PATH . 'library/tmp/' . $newname)) {
                     $txt = file_get_contents(UPLOAD_PATH . 'library/tmp/' . $newname);
-                    if (mb_check_encoding($txt, 'UTF-8')) {
-                    } elseif (mb_check_encoding($txt, 'windows-1251')) {
+                    if (mb_check_encoding($txt, 'windows-1251')) {
                         $txt = iconv('windows-1251', 'UTF-8', $txt);
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo $view->render(
-                            'system::app/old_content',
-                            [
-                                'title'   => $textl,
-                                'content' => $tools->displayError(__('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
-                            ]
-                        );
-                        exit;
+                        $err[] = __('The file is invalid encoding, preferably UTF-8');
                     }
-
                     $text = trim($txt);
                     unlink(UPLOAD_PATH . 'library/tmp' . DS . $newname);
                 } else {
-                    echo $view->render(
-                        'system::app/old_content',
-                        [
-                            'title'   => $textl,
-                            'content' => $tools->displayError(__('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
-                        ]
-                    );
-                    exit;
+                    $err[] = __('Error uploading');
                 }
             } else {
-                echo $view->render(
-                    'system::app/old_content',
-                    [
-                        'title'   => $textl,
-                        'content' => $tools->displayError(__('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>'),
-                    ]
-                );
-                exit;
+                $err[] = __('Invalid file format allowed * .txt');
             }
-        } elseif (! empty($_POST['text'])) {
-            $text = trim($_POST['text']);
-        } else {
+        } elseif (empty($text)) {
             $err[] = __('You have not entered text');
-        }
-
-        if (empty($announce)) {
-            $announce = mb_substr($text, 0, 500);
         }
 
         $md = $adm ? 1 : 0;
 
-        if (count($err)) {
-            foreach ($err as $e) {
-                echo $tools->displayError($e);
-            }
-        } else {
-            $sql = "
-              INSERT INTO `library_texts`
-              SET
-                `cat_id` = ${id},
-                `name` = " . $db->quote($name) . ',
-                `announce` = ' . $db->quote($announce) . ',
-                `text` = ' . $db->quote($text) . ",
-                `uploader` = '" . $user->name . "',
-                `uploader_id` = " . $user->id . ",
-                `premod` = ${md},
-                `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ',
-                `time` = ' . time() . '
-            ';
+        if (! count($err)) {
+            $insert = [
+                $id,
+                $name,
+                $announce,
+                $text,
+                $user->name,
+                $user->id,
+                $md,
+                (isset($_POST['comments']) ? 1 : 0),
+                time(),
+            ];
+            $sql = '
+                  INSERT INTO `library_texts`
+                  SET
+                    `cat_id` = ?,
+                    `name` = ?,
+                    `announce` = ?,
+                    `text` = ?,
+                    `uploader` = ?,
+                    `uploader_id` = ?,
+                    `premod` = ?,
+                    `comments` = ?,
+                    `time` = ?
+                ';
 
-            if ($db->query($sql)) {
-                $cid = $db->lastInsertId();
+            if ($db->prepare($sql)->execute($insert)) {
+                $cid = (int) $db->lastInsertId();
 
-                $handle = new Upload($_FILES['image']);
-                if ($handle->uploaded) {
-                    // Обрабатываем фото
-                    $handle->file_new_name_body = $cid;
-                    $handle->allowed = [
-                        'image/jpeg',
-                        'image/gif',
-                        'image/png',
-                    ];
-                    $handle->file_max_size = 1024 * $config['flsz'];
-                    $handle->file_overwrite = true;
-                    $handle->image_x = $handle->image_src_x;
-                    $handle->image_y = $handle->image_src_y;
-                    $handle->image_convert = 'png';
-                    $handle->process(UPLOAD_PATH . 'library/images/orig/');
-                    $err_image = $handle->error;
-                    $handle->file_new_name_body = $cid;
-                    $handle->file_overwrite = true;
+                $files = $request->getUploadedFiles();
+                /** @var GuzzleHttp\Psr7\UploadedFile $screen */
+                $screen = $files['image'] ?? false;
 
-                    if ($handle->image_src_y > 240) {
-                        $handle->image_resize = true;
-                        $handle->image_x = 240;
-                        $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
-                    } else {
-                        $handle->image_x = $handle->image_src_x;
-                        $handle->image_y = $handle->image_src_y;
+                if ($screen->getClientFilename()) {
+                    try {
+                        Utils::imageUpload($cid, $screen);
+                    } catch (Exception $exception) {
+                        $err[] = __('Photo uploading error');
                     }
-
-                    $handle->image_convert = 'png';
-                    $handle->process(UPLOAD_PATH . 'library/images/big/');
-                    $err_image = $handle->error;
-                    $handle->file_new_name_body = $cid;
-                    $handle->file_overwrite = true;
-                    $handle->image_resize = true;
-                    $handle->image_x = 32;
-                    $handle->image_y = 32;
-                    $handle->image_convert = 'png';
-                    $handle->process(UPLOAD_PATH . 'library/images/small/');
-
-                    if ($err_image) {
-                        echo $tools->displayError(__('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . __('Repeat') . '</a>');
-                    }
-                    $handle->clean();
                 }
 
                 if (! empty($_POST['tags'])) {
                     $tags = (array) array_map('trim', explode(',', $_POST['tags']));
-
                     if (count($tags)) {
                         $obj = new Hashtags($cid);
                         $obj->addTags($tags);
                         $obj->delCache();
                     }
                 }
-
-                echo '<div>' . __('Article added') . '</div>' . ($md == 0 ? '<div>' . __('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
                 $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user->id);
-                echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . __('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . __('To Section') . '</a></div>';
-                echo $view->render(
-                    'system::app/old_content',
-                    [
-                        'title'   => $textl,
-                        'content' => ob_get_clean(),
-                    ]
-                );
-                exit;
             }
-            echo $db->errorInfo();
-//                exit;
         }
     }
-    echo '<div class="phdr"><strong><a href="?">' . __('Library') . '</a></strong> | ' . __('Write Article') . '</div>'
-        . '<form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=' . $id . '" method="post">'
-        . '<div class="menu">'
-        . '<p><h3>' . __('Title') . ' (max. 100):</h3>'
-        . '<input type="text" name="name" value="' . $name . '" /></p>'
-        . '<p><h3>' . __('Announce') . ' (max. 500):</h3>'
-        . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
-        . '<p><h3>' . __('Text') . ':</h3>'
-        . di(Johncms\System\Legacy\Bbcode::class)->buttons(
-            'form',
-            'text'
-        ) . '<textarea name="text" rows="' . $user->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
-        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . __('Commenting on the Article') . '</p>'
-        . '<p><h3>' . __('To upload a photo') . '</h3>'
-        . '<input type="file" name="image" accept="image/*" /></p>'
-        . '<p><h3>' . __('Select the text file') . '</h3>'
-        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . __('Text entry field will be ignored') . '</small></p>'
-        . '<p><h3>' . __('Tags') . '</h3>'
-        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . __('Specify the Tag to the Article, separated by commas') . '</small></p>'
-        . '<p><input type="submit" name="submit" value="' . __('Save') . '" /></p>'
-        . '</div></form>'
-        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . __('Back') . '</a></div>';
+    if (count($err)) {
+        $error = '';
+        foreach ($err as $e) {
+            $error .= $tools->displayError($e);
+        }
+    }
 } else {
-    header('location: ?');
+    Utils::redir404();
 }
+
+echo $view->render(
+    'library::addnew',
+    [
+        'error'    => $error,
+        'md'       => $md,
+        'cid'      => $cid,
+        'id'       => $id,
+        'name'     => $name,
+        'announce' => $announce,
+        'text'     => $text,
+        'tag'      => $tag,
+        'bbcode'   => di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text'),
+    ]
+);

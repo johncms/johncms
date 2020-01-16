@@ -1,0 +1,28 @@
+<?php if ($total) : ?>
+    <div class="phdr"><a href="?"><strong><?= __('Library') ?></strong></a> | <?= __('Tags') ?></div>
+    <?php if ($total > $user->config->kmess): ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+    <?php $i = 0; ?>
+    <?php foreach ($list as $tags) : ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <div class="righttable">
+                <a href="?id=<?= $tags['id'] ?>"><?= $tags['name'] ?></a>
+                <div><?= $tags['text'] ?></div>
+            </div>
+            <div class="sub"><?= __('Who added') ?>: <?= $tags['who'] ?></div>
+            <div><span class="gray"><?= __('Number of readings') ?>:</span><?= $tags['count_views'] ?></div>
+            <div><?= $tags['tags'] ?></div>
+            <?php if ($tags['comments']) : ?>
+                <div><a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= __('Comments') ?></a> (<?= $tags['comm_count'] ?>)</div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+    <div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
+    <?php if ($total > $user->config->kmess): ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+    <p><a href="?"><?= __('To Library') ?></a></p>
+<?php else: ?>
+    <div class="menu"><p><?= __('The list is empty') ?></p></div>
+<?php endif; ?>

@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Library;
 
+use PDO;
+
 /**
  * Класс хештегов
  * Class Hashtags
@@ -26,10 +28,10 @@ class Hashtags
      *
      * @var bool|int
      */
-    private $lib_id = false;
+    private $lib_id;
 
     /**
-     * @var \PDO $db
+     * @var PDO $db
      */
     private $db;
 
@@ -38,10 +40,10 @@ class Hashtags
      *
      * @param int $id
      */
-    public function __construct($id = 0)
+    public function __construct(int $id = 0)
     {
         $this->lib_id = $id;
-        $this->db = di(\PDO::class);
+        $this->db = di(PDO::class);
     }
 
     /**
@@ -50,12 +52,12 @@ class Hashtags
      * @param $tag
      * @return array|null
      */
-    public function getAllTagStats($tag)
+    public function getAllTagStats($tag): ?array
     {
         $stmt = $this->db->prepare('SELECT `library_texts`.`id`, `library_tags`.`lib_text_id` FROM `library_tags` JOIN `library_texts` ON `library_texts`.`id` = `library_tags`.`lib_text_id` WHERE `tag_name` = ?');
         $stmt->execute([$tag]);
         if ($stmt->rowCount()) {
-            $res = $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+            $res = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         } else {
             return null;
         }
@@ -67,16 +69,16 @@ class Hashtags
      * Получение всех тегов статьи
      *
      * @param int $tpl
-     * @return object|null
+     * @return mixed
      */
-    public function getAllStatTags($tpl = 0)
+    public function getAllStatTags(int $tpl = 0)
     {
         $stmt = $this->db->prepare('SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);
         if ($stmt->rowCount()) {
-            $res = $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+            $res = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
             $obj = new Links($res);
-            if ($tpl == 1) {
+            if ($tpl === 1) {
                 return $obj->proccess('tplTag')->linkSeparator()->result();
             }
 
@@ -92,7 +94,7 @@ class Hashtags
      * @param $tags
      * @return int|null
      */
-    public function addTags($tags)
+    public function addTags($tags): ?int
     {
         if (empty($tags)) {
             return null;
@@ -112,7 +114,7 @@ class Hashtags
      *
      * @return int
      */
-    public function delTags()
+    public function delTags(): int
     {
         $stmt = $this->db->prepare('DELETE FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);
@@ -126,12 +128,12 @@ class Hashtags
      * @param string $tag
      * @return bool
      */
-    public function issetTag($tag)
+    public function issetTag(string $tag): bool
     {
         $stmt = $this->db->prepare('SELECT * FROM `library_tags` WHERE `lib_text_id` = ? AND `tag_name` = ?');
         $stmt->execute([$this->lib_id, $tag]);
 
-        return $stmt->rowCount() > 0 ? true : false;
+        return $stmt->rowCount() > 0;
     }
 
     /**
@@ -140,7 +142,7 @@ class Hashtags
      * @param string $tag
      * @return string
      */
-    public function validTag($tag)
+    public function validTag(string $tag): string
     {
         return preg_replace(['/[^[:alnum:]]/ui', '/\s\s+/'], ' ', preg_quote(mb_strtolower($tag)));
     }
@@ -176,7 +178,7 @@ class Hashtags
      * @param string $sort
      * @return array|bool
      */
-    public function tagRang($sort = 'cmpalpha')
+    public function tagRang(string $sort = 'cmpalpha')
     {
         $array = $this->arrayCloudTags();
         if ($array) {
@@ -208,12 +210,12 @@ class Hashtags
      * @param $array
      * @return string
      */
-    public function cloud($array)
+    public function cloud($array): string
     {
-        if (count($array)) {
+        if (@count($array)) {
             $obj = new Links($array);
 
-            return $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();
+            return  $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();
         }
 
         return $this->getCache();
@@ -222,7 +224,7 @@ class Hashtags
     /**
      * Удаление кэша
      */
-    public function delCache()
+    public function delCache(): void
     {
         file_exists(CACHE_PATH . 'cmpranglibcloud.dat') ? unlink(CACHE_PATH . 'cmpranglibcloud.dat') : false;
         file_exists(CACHE_PATH . 'cmpalphalibcloud.dat') ? unlink(CACHE_PATH . 'cmpalphalibcloud.dat') : false;
@@ -234,7 +236,7 @@ class Hashtags
      * @param string $sort
      * @return string
      */
-    public function getCache($sort = 'cmpalpha')
+    public function getCache(string $sort = 'cmpalpha'): string
     {
         if (file_exists(CACHE_PATH . $sort . 'libcloud.dat')) {
             return file_get_contents(CACHE_PATH . $sort . 'libcloud.dat');
@@ -249,7 +251,7 @@ class Hashtags
      * @param string $sort
      * @return string
      */
-    public function setCache($sort = 'cmpalpha')
+    public function setCache(string $sort = 'cmpalpha'): string
     {
         $obj = new self();
         $tags = $this->db->query('SELECT `id` FROM `library_tags` LIMIT 1')->rowCount();

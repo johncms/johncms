@@ -1,0 +1,79 @@
+<?php if (isset($_POST['submit'])) : ?>
+    <div><?= __('Changed') ?></div>
+<?php else: ?>
+    <div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= ($type === 'dir' ? __('Edit Section') : __('Edit Article')) ?></div>
+    <form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=<?= $type ?>&amp;id=<?= $id ?>" method="post">
+        <div class="menu">
+            <?php if ($type === 'article' && $res['cover']) : ?>
+                <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
+                <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
+                <h3><?= __('To upload a photo') ?></h3>
+                <div><input name="image" type="file"/></div>
+            <?php endif; ?>
+            <h3><?= __('Title') ?></h3>
+            <div><input type="text" name="name" value="<?= $res['name'] ?>"/></div>
+            <?php if ($type === 'dir') : ?>
+                <h3><?= __('Section description') ?></h3>
+                <div><textarea name="description" rows="4" cols="20"><?= $res['description'] ?></textarea></div>
+            <?php else: ?>
+                <h3><?= __('Announce') ?></h3>
+                <div><textarea rows="2" cols="20" name="announce"><?= $res['announce'] ?></textarea></div>
+            <?php endif; ?>
+            <?php if ($type === 'article') : ?>
+            <?php if (mb_strlen($res['text']) < 500000) : ?>
+                <h3><?= __('Text') ?></h3>
+                <div><?= $bbcode ?><textarea rows="5" cols="20" name="text"><?= $res['text'] ?></textarea></div>
+            <?php else: ?>
+            <div class="alarm"><?= __('The text of the Article can not be edited, a large amount of data !!!') ?></div>
+            <input type="hidden" name="text" value="do_not_change"/></div>
+        <?php endif; ?>
+        <h3><?= __('Tags') ?></h3>
+        <div><input name="tags" type="text" value="<?= $res['tags'] ?>"/></div>
+        <?php endif; ?>
+        <?php if ($adm) : ?>
+            <?php if ($select) : ?>
+                <h3><?= __('Move to Section') ?></h3>
+                <div>
+                    <select name="move">
+                        <?php foreach ($select as $option) : ?>
+                            <?= $option ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+        <?php if ($empty) : ?>
+                <h3><?= __('Section type') ?></h3>
+                <div>
+                    <input type="radio" name="dir" value="1" <?= ($res['dir'] === 1 ? 'checked="checked"'  : '') ?> /><?= __('Sections') ?>
+                </div>
+                <div>
+                    <input type="radio" name="dir" value="0" <?= ($res['dir'] === 0 ? 'checked="checked"' : '') ?> /><?= __('Articles') ?>
+                </div>'
+        <?php endif; ?>
+        <?php if ($type === 'dir' && $res['dir'] === 0) :?>
+                <div><?= __('Allow users to add their Articles?') ?></div>
+                <div>
+                    <input type="radio" name="user_add" value="1" <?= ($res['user_add'] === 1 ? 'checked="checked"' : '') ?> /> <?= __('Yes') ?>
+                </div>
+                <div>
+                    <input type="radio" name="user_add" value="0" <?= ($res['user_add'] === 0 ? 'checked="checked"' : '') ?> /> <?= __('No') ?>
+                </div>
+        <?php endif; ?>
+            <?php if ($type === 'article') : ?>
+                <div class="<?= ($res['premod'] > 0 ? 'green' : 'red') ?>">
+                    <input type="checkbox" name="premod" value="1" <?= ($res['premod'] > 0 ? 'checked="checked"' : '') ?> /> <?= __('Verified') ?>
+                </div>'
+                <div class="<?= ($res['comments'] > 0 ? 'green' : 'red') ?>">
+                    <input type="checkbox" name="comments" value="1" <?= ($res['comments'] > 0 ? 'checked="checked"' : '') ?> /> <?= __('Commenting on the Article') ?>
+                </div>
+                <h3><?= __('Number of readings') ?></h3>
+                <div>
+                    <input type="text" name="count_views" value="<?= $res['count_views'] ?>" />
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        <div class="bmenu"><input type="submit" name="submit" value="<?= __('Save') ?>"/></div>
+        </div>
+    </form>
+<?php endif; ?>
+<div><a href="?do=<?= ($type === 'dir' ? 'dir' : 'text') ?>&amp;id=<?= $id ?>"><?= __('Back') ?></a></div>

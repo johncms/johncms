@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -10,104 +8,117 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 use Library\Hashtags;
 use Library\Tree;
 use Library\Utils;
+use Psr\Http\Message\ServerRequestInterface;
 
-$obj = new Hashtags($id);
+$request = di(ServerRequestInterface::class);
+
+/**
+ * @var PDO $db
+ * @var Johncms\System\Users\User $user
+ * @var Johncms\System\View\Render $view
+ * @var  ServerRequestInterface $request
+ */
+
 if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
     $type = $_GET['type'];
 } else {
     Utils::redir404();
 }
 
-$author = ($type == 'article' && $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $user->id && $user->isValid()) ? 1 : 0;
+$row = false;
+$select = false;
+$empty = false;
+$bbcode = false;
 
-if (! $adm || (! $author && $type == 'article')) {
+$author = (
+    ($user->isValid() && $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() === $user->id) && $type === 'article')
+    ? 1
+    : 0;
+
+if (! $adm || (! $author && $type === 'article')) {
     Utils::redir404();
 }
 
 if (isset($_POST['submit'])) {
-    switch ($type) {
-        case 'dir':
-            $sql = 'UPDATE `library_cats` SET `name`=' . $db->quote($_POST['name']) . ', `description`=' .
-                $db->quote($_POST['description']) . ' ' . (isset($_POST['move']) && $db->query('SELECT count(*) FROM `library_cats`')->fetchColumn() > 1 ? ', `parent`=' .
-                    (int) ($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . (int) ($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' .
-                    (int) ($_POST['user_add']) : '') . ' WHERE `id`=' . $id;
-            break;
-
-        case 'article':
+    $placeholders = [];
+    if ($type === 'dir') {
+        $fields = [
+            'name'        => $_POST['name'],
+            'description' => $_POST['description'],
+            'parent'      => (isset($_POST['move']) && $db->query('SELECT COUNT(*) FROM `library_cats`')->fetchColumn() > 1 ? $_POST['move'] : null),
+            'dir'         => ($_POST['dir'] ?? null),
+            'user_add'    => ($_POST['user_add'] ?? null),
+        ];
+    } else {
+        if (isset($_POST['tags'])) {
+            $obj = new Hashtags($id);
             $obj->delTags();
-            if (isset($_POST['tags'])) {
-                $obj->delCache();
-                $tags = array_map('trim', explode(',', $_POST['tags']));
-                if (count($tags)) {
-                    $obj->addTags($tags);
-                }
+            $obj->delCache();
+            $tags = array_map('trim', explode(',', $_POST['tags']));
+            if (count($tags)) {
+                $obj->addTags($tags);
             }
+        }
 
-            $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image'] : '';
+        $files = $request->getUploadedFiles();
+        /** @var GuzzleHttp\Psr7\UploadedFile $screen */
+        $screen = $files['image'] ?? false;
 
-            $handle = new \Verot\Upload\Upload($image);
-            if ($handle->uploaded) {
-                // Обрабатываем фото
-                $handle->file_new_name_body = $id;
-                $handle->allowed = [
-                    'image/jpeg',
-                    'image/gif',
-                    'image/png',
-                ];
-                $handle->file_max_size = 1024 * $config['flsz'];
-                $handle->file_overwrite = true;
-                $handle->image_x = $handle->image_src_x;
-                $handle->image_y = $handle->image_src_y;
-                $handle->image_convert = 'png';
-                $handle->process(UPLOAD_PATH . 'library/images/orig/');
-                $err_image = $handle->error;
-                $handle->file_new_name_body = $id;
-                $handle->file_overwrite = true;
-                if ($handle->image_src_y > 240) {
-                    $handle->image_resize = true;
-                    $handle->image_x = 240;
-                    $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
-                } else {
-                    $handle->image_x = $handle->image_src_x;
-                    $handle->image_y = $handle->image_src_y;
-                }
-                $handle->image_convert = 'png';
-                $handle->process(UPLOAD_PATH . 'library/images/big/');
-                $err_image = $handle->error;
-                $handle->file_new_name_body = $id;
-                $handle->file_overwrite = true;
-                $handle->image_resize = true;
-                $handle->image_x = 32;
-                $handle->image_y = 32;
-                $handle->image_convert = 'png';
-                $handle->process(UPLOAD_PATH . 'library/images/small/');
-                if ($err_image) {
-                    echo $tools->displayError(__('Photo uploading error'));
-                }
-                $handle->clean();
+        if ($screen->getClientFilename()) {
+            try {
+                Utils::imageUpload($id, $screen);
+            } catch (Exception $exception) {
+                $error = __('Photo uploading error');
             }
-            $sql = 'UPDATE `library_texts` SET `name`=' . $db->quote($_POST['name']) . ', ' .
-                ($_POST['text'] != 'do_not_change' ? ' `text`=' . $db->quote($_POST['text']) . ', ' : '') . ' ' . (isset($_POST['move']) ? '`cat_id`=' .
-                    (int) ($_POST['move']) . ', ' : '') . ' `announce`=' . $db->quote(mb_substr(trim($_POST['announce']), 0, 500)) . ' ' .
-                ($adm ? ', `count_views`=' . (int) ($_POST['count_views']) . ', `premod`=' . (int) ($_POST['premod']) . ', `comments`=' .
-                    (isset($_POST['comments']) ? (int) ($_POST['comments']) : 0) : '') . ' WHERE `id`=' . $id;
-            break;
+        }
+
+        $fields = [
+            'name'     => $_POST['name'],
+            'text'     => ($_POST['text'] !== 'do_not_change' ? $_POST['text'] : null),
+            'cat_id'   => $_POST['move'] ?? null,
+            'announce' => $_POST['announce'] ? mb_substr(trim($_POST['announce']), 0, 500) : null,
+        ];
+
+        if ($adm) {
+            $fields_adm = [
+                'count_views' => $_POST['count_views'],
+                'premod'      => $_POST['premod'],
+                'comments'    => $_POST['comments'] ?? 0,
+            ];
+            $fields += $fields_adm;
+        }
     }
-    $db->exec($sql);
-    echo '<div>' . __('Changed') . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . __('Back') . '</a></div>' . PHP_EOL;
+
+    $sql = 'UPDATE ' . ($type === 'dir' ? '`library_cats`' : '`library_texts`') . ' SET ';
+
+    foreach ($fields as $field => $value) {
+        if (null !== $value) {
+            $sql .= '`' . $field . '` = ?, ';
+            $placeholders[] = $value;
+        }
+    }
+
+    $sql = rtrim($sql, ' ,') . ' WHERE `id` = ' . $id;
+
+    $db->prepare($sql)->execute($placeholders);
 } else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->getChildsDir()->result();
+
     $sqlsel = $db->query(
-        'SELECT ' . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ', `name` FROM `library_cats` '
-        . 'WHERE `dir`=' . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && count($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : '')
+        'SELECT ' . ($type === 'dir' ? '`id`, `parent`' : '`id`') . ', `name` FROM `library_cats` '
+        . 'WHERE `dir` = ' . ($type === 'dir' ? 1 : 0) . ' ' . ($type === 'dir' && count($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : '')
     );
-    $row = $db->query('SELECT * FROM `' . ($type == 'article' ? 'library_texts' : 'library_cats') . '` WHERE `id`=' . $id)->fetch();
+
+    $row = $db->query('SELECT * FROM `' . ($type === 'article' ? 'library_texts' : 'library_cats') . '` WHERE `id` = ' . $id)->fetch();
+
     $empty = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=' . $id)->fetchColumn() > 0
     || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0 ? 0 : 1;
 
@@ -115,77 +126,47 @@ if (isset($_POST['submit'])) {
         Utils::redir404();
     }
 
-    echo '<div class="phdr"><strong><a href="?">' . __('Library') . '</a></strong> | '
-        . ($type == 'dir' ? __('Edit Section') : __('Edit Article'))
-        . '</div>'
-        . '<form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=' . $type . '&amp;id=' . $id . '" method="post">'
-        . '<div class="menu">'
-        . ($type == 'article' ? (file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png')
-                ? '<div><img src="../upload/library/images/big/' . $id . '.png" alt="screen" />' . '</div>'
-                . '<div class="alarm"><a href="?act=del&amp;type=image&amp;id=' . $id . '">Удалить обложку</a></div>'
-                : '')
-            . '<h3>' . __('To upload a photo') . '</h3>'
-            . '<div><input name="image" type="file" /></div>'
-            . '<h3>' . __('Title') . '</h3>' : '')
-        . '<div><input type="text" name="name" value="' . $tools->checkout($row['name']) . '" /></div>'
-        . ($type == 'dir' ? '<h3>' . __('Section description') . '</h3>'
-            . '<div><textarea name="description" rows="4" cols="20">' . $tools->checkout($row['description']) . '</textarea></div>' : '')
-        . ($type == 'article'
-            ? '<h3>' . __('Announce') . '</h3><div><textarea rows="2" cols="20" name="announce">' . $tools->checkout($row['announce'])
-            . '</textarea></div>'
-            : '')
-        . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . __('Text') . '</h3><div>' . di(Johncms\System\Legacy\Bbcode::class)->buttons(
-                'form',
-                'text'
-            ) . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
-            . '</textarea></div>'
-            : ($type == 'article' && mb_strlen($row['text']) > 500000
-                ? '<div class="alarm">' . __('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
-                : ''))
-        . ($type == 'article'
-            ? '<h3>' . __('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout((string) $obj->getAllStatTags()) . '" /></div>'
-            : '');
+    $empty = ($type === 'dir' && $empty);
+    $row['cover'] = file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
+    $row['name'] = $tools->checkout($row['name']);
+    $row['description'] = isset($row['description']) ? $tools->checkout($row['description']) : null;
+    $row['announce'] = isset($row['announce']) ? $tools->checkout($row['announce']) : null;
+    $bbcode = di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text');
+    $row['text'] = isset($row['text']) ? $tools->checkout($row['text']) : null;
+    $obj = new Hashtags($id);
+    $row['tags'] = $type === 'article' && $obj->getAllStatTags() ? $tools->checkout($obj->getAllStatTags()) : null;
+
     if ($adm) {
         if ($sqlsel->rowCount() > 1) {
-            echo '<h3>' . __('Move to Section') . '</h3>'
-                . '<div><select name="move">'
-                . ($type == 'dir'
-                    ? '<option ' . ($type == 'dir' && $row['parent'] == 0
-                        ? 'selected="selected"'
-                        : '')
-                    . ' value="0">' . __('The ROOT') . '</option>'
-                    : '');
+            $select = [];
+            $select[] = ($type === 'dir'
+                ? '<option ' . ($type === 'dir' && $row['parent'] === 0
+                    ? 'selected="selected"'
+                    : '')
+                . ' value="0">' . __('The ROOT') . '</option>'
+                : '');
             while ($res = $sqlsel->fetch()) {
-                if ($row['name'] != $res['name']) {
-                    echo '<option '
-                        . (($type == 'dir' && $row['parent'] == $res['id']) || ($type == 'article' && $row['cat_id'] == $res['id'])
+                if ($row['name'] !== $res['name']) {
+                    $select[] = '<option '
+                        . (($type === 'dir' && $row['parent'] === $res['id']) || ($type === 'article' && $row['cat_id'] === $res['id'])
                             ? 'selected="selected" '
                             : '')
                         . 'value="' . $res['id'] . '">' . $tools->checkout($res['name']) . '</option>';
                 }
             }
-            echo '</select></div>';
         }
-        echo (($type == 'dir' && $empty)
-                ? '<h3>' . __('Section type') . '</h3><div><input type="radio" name="dir" value="1" '
-                . ($row['dir'] == 1
-                    ? 'checked="checked"'
-                    : '') . ' />' . __('Sections') . '</div>'
-                . '<div><input type="radio" name="dir" value="0" ' . ($row['dir'] == 0 ? 'checked="checked"' : '') . ' />' . __('Articles') . '</div>' : '')
-            . ($type == 'dir' && $row['dir'] == 0
-                ? '<div>' . __('Allow users to add their Articles?') . '</div><div><input type="radio" name="user_add" value="1" '
-                . ($row['user_add'] == 1 ? 'checked="checked"' : '') . ' /> ' . __('Yes') . '</div><div><input type="radio" name="user_add" value="0" '
-                . ($row['user_add'] == 0 ? 'checked="checked"' : '') . ' /> ' . __('No') . '</div>' : '')
-            . ($type == 'article' ? '<div class="' . ($row['premod'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="premod" value="1" ' . ($row['premod'] > 0
-                    ? 'checked="checked"' : '') . '/> ' . __('Verified') . '</div>'
-                . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
-                . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . __('Commenting on the Article') . '</div>'
-                . '<div class="rmenu">'
-                . '<h3>' . __('Number of readings')
-                . '</h3><div><input type="text" name="count_views" value="' . (int) ($row['count_views']) . '" /></div></div>' . PHP_EOL : '');
     }
-    echo '<div class="bmenu"><input type="submit" name="submit" value="' . __('Save') . '" />'
-        . '</div></div></form>' . PHP_EOL
-        . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . __('Back') . '</a></p>' . PHP_EOL;
 }
+
+echo $view->render(
+    'library::moder',
+    [
+        'res'    => $row,
+        'empty'  => $empty,
+        'type'   => $type,
+        'id'     => $id,
+        'adm'    => $adm,
+        'select' => $select,
+        'bbcode' => $bbcode,
+    ]
+);

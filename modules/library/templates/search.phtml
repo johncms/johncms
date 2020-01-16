@@ -1,0 +1,46 @@
+<div class="phdr"><a href="?"><strong><?= __('Library') ?></strong></a> |
+    <?php if ($total) : ?>
+        <?= __('Search results') ?>
+    <?php else : ?>
+        <?= __('Search') ?>
+    <?php endif; ?>
+</div>
+<div class="gmenu">
+    <form action="?act=search" method="post">
+        <div>
+            <input type="text" value="<?= $search ?>" name="search" />
+            <input type="submit" value="<?= __('Search') ?>" name="submit" /><br>
+            <input name="t" type="checkbox" value="1" <?= $search_t ?>/>&nbsp;<?= __('Search in titles Articles') ?></div>
+    </form>
+</div>
+<?php if ($total) : ?>
+    <?php if ($total > $user->config->kmess) : ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+    <?php $i = 0; ?>
+    <?php foreach ($list as $search) : ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <strong><a href="?id=<?= $search['id'] ?>"><?= $search['name'] ?></a></strong>
+            <br>
+            <?= $search['text'] ?>
+            <div class="sub">
+                <span class="gray"><?= __('Who added') ?>: </span><?= $search['author'] ?>
+                <span class="gray">(<?= $search['time'] ?>)</span><br>
+                <span class="gray"><?= __('Number of readings') ?>: </span><?= $search['count_views'] ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <div class="phdr"><?= __('Total') ?>: <?= $total ?></div>
+    <?php if ($total > $user->config->kmess) : ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="rmenu"><p><?= __('Your search did not match any results') ?></p></div>
+    <div class="phdr"><small><?= __('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance') ?></small></div>
+<?php endif; ?>
+<p>
+    <?php if ($search) : ?>
+        <a href="?act=search"><?= __('New Search') ?></a><br>
+    <?php endif; ?>
+    <a href="?"><?= __('To Library') ?></a>
+</p>

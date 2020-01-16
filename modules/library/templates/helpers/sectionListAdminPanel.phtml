@@ -1,0 +1,13 @@
+<div class="sub">
+    <?php if ($positionId !== 1) : ?>
+        <a href="?do=dir&amp;id=<?= $sectionId ?>&amp;act=move&amp;moveset=up&amp;posid=<?= $positionId ?>"><?= __('Up') ?></a> |
+    <?php else : ?>
+        <?= __('Up') ?> |
+    <?php endif; ?>
+    <?php if ($positionId !== $total) : ?>
+        <a href="?do=dir&amp;id=<?= $sectionId ?>&amp;act=move&amp;moveset=down&amp;posid=<?= $positionId ?>"><?= __('Down') ?></a>
+    <?php else : ?>
+        <?= __('Down') ?>
+    <?php endif; ?>
+    | <a href="?act=moder&amp;type=dir&amp;id=<?= $sectionItemId ?>"><?= __('Edit') ?></a> | <a href="?act=del&amp;type=dir&amp;id=<?= $sectionItemId ?>"><?= __('Delete') ?></a>
+</div>

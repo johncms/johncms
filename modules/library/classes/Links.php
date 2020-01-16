@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Library;
 
 use Johncms\System\Legacy\Tools;
+use PDO;
 
 /**
  * Класс помошник формирования ссылок для тегов
@@ -25,12 +26,14 @@ class Links
 {
     /**
      * query string для ссылок
+     *
      * @var string
      */
     private $link_url;
 
     /**
      * Массив
+     *
      * @var array
      */
     private $in;
@@ -38,12 +41,12 @@ class Links
     private $res;
 
     /**
-     * @var \PDO $db
+     * @var PDO $db
      */
     private $db;
 
     /**
-     * @var \Johncms\System\Legacy\Tools
+     * @var Tools
      */
     private $tools;
 
@@ -51,13 +54,14 @@ class Links
     {
         $this->link_url = $link_url;
         $this->in = $in;
-        $this->db = di(\PDO::class);
+        $this->db = di(PDO::class);
         $this->tools = di(Tools::class);
     }
 
     /**
      * Метод для подготовки ссылок
-     * @param $tpl Имя метода для подготовки ссылок
+     *
+     * @param $tpl
      * @return $this|bool
      */
     public function proccess($tpl)
@@ -73,33 +77,36 @@ class Links
 
     /**
      * Метод для обычных ссылок
+     *
      * @param string $n
      * @return string
      */
-    private function tplTag($n)
+    private function tplTag(string $n): string
     {
         return '<a href="' . $this->link_url . $n . '">' . $this->tools->checkout($n) . '</a>';
     }
 
     /**
      * Метод для ссылок облака
-     * @param string $n
+     *
+     * @param array $n
      * @return string
      */
-    private function tplCloud($n)
+    private function tplCloud(array $n): string
     {
-        return '<a href="' . $this->link_url . $this->tools->checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . $this->tools->checkout($n['name']) . '</span></a>';
+        return '<a href="' . $this->link_url . $this->tools->checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . ' em;">' . $this->tools->checkout($n['name']) . '</span></a>';
     }
 
     /**
      * Добавление разделителя ссылкам
-     * @param string $sepatator разделитель
-     * @return $this|bool
+     *
+     * @param string $sepatator
+     * @return self|bool
      */
-    public function linkSeparator($sepatator = ' | ')
+    public function linkSeparator(string $sepatator = ' | '): self
     {
         if ($this->in) {
-            $this->res = implode($sepatator, $this->res ? $this->res : $this->in);
+            $this->res = implode($sepatator, $this->res ?? $this->in);
 
             return $this;
         }
@@ -109,18 +116,20 @@ class Links
 
     /**
      * Получение результата
+     *
      * @return string
      */
-    public function result()
+    public function result(): string
     {
         return $this->res;
     }
 
     /**
      * Получение массива
+     *
      * @return array
      */
-    public function getIn()
+    public function getIn(): array
     {
         return $this->in;
     }

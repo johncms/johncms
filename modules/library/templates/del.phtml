@@ -1,0 +1,127 @@
+<div class="phdr">
+    <strong><a href="?"><?= __('Library') ?></a></strong> | <?= __('Delete') ?>
+</div>
+<?php if ($error) : ?>
+    <?= $error ?>
+<?php endif; ?>
+<?php if ($dirchange) : ?>
+    <?php if ($mode === 'moveaction') : ?>
+        <?php if ($moving) : ?>
+            <div class="gmenu"><?= __('Successful transfer') ?></div>
+            <div>
+                <a href="?do=dir&amp;id=<?= $move ?>"><?= __('Back') ?></a>
+            </div>
+        <?php else : ?>
+            <div class="alarm">
+                <div><?= __('Are you sure you want to move the contents?') ?></div>
+                <div>
+                    <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;movedeny&amp;do=moveaction&amp;move=<?= ($_POST['move']) ?>"><?= __('Move') ?></a> |
+                    <a href="?"><?= __('Cancel') ?></a>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($mode === 'delmove') : ?>
+        <?php if ($delmove) : ?>
+            <div class="menu">
+                <h3><?= __('Move to Section') ?></h3>
+                <form action="?act=del&amp;type=dir&amp;id=<?= $id ?>" method="post">
+                    <div>
+                        <select name="move">
+                            <?php foreach ($delmove as $itemId => $itemName) : ?>
+                                <option value="<?= $itemId ?>"><?= $itemName ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="hidden" name="mode" value="moveaction"/>
+                    </div>
+                    <div class="bmenu">
+                        <input type="submit" name="submit" value="<?= __('Approve') ?>"/>
+                    </div>
+                </form>
+            </div>
+        <?php else : ?>
+            <div class="rmenu"><?= __('There are no Sections for moving') ?></div>
+            <div class="bmenu">
+                <a href="?"><?= __('Back') ?></a>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($mode === 'delall') : ?>
+        <?php if ($deldeny) : ?>
+            <div class="gmenu"><?= $deldeny ?></div>
+            <div><a href="?"><?= __('Back') ?></a></div>
+        <?php else : ?>
+            <div class="alarm">
+                <div><?= __('Are you sure you want to delete content?') ?></div>
+                <div>
+                    <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;deldeny&amp;do=delall"><?= __('Delete') ?></a> |
+                    <a href="?"><?= __('Cancel') ?></a>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if (! $mode) : ?>
+        <div class="alarm"><?= __('Section is not empty') ?></div>
+        <div class="menu">
+            <h3><?= __('Select action') ?></h3>
+            <form action="?act=del&amp;type=dir&amp;id=<?= $id ?>" method="post">
+                <div>
+                    <input type="radio" name="mode" value="delmove" checked="checked"/> <?= __('Delete with movement') ?>
+                </div>
+                <div>
+                    <input type="radio" name="mode" value="delall"/> <span style="color: red;"> <?= __('Delete all Sections and Articles') ?></span>
+                </div>
+                <div class="bmenu">
+                    <input type="submit" name="submit" value="<?= __('Do') ?>"/>
+                </div>
+            </form>
+        </div>
+    <?php endif; ?>
+<?php else : ?>
+    <?php if (! isset($_GET['yes'])) : ?>
+        <div class="alarm">
+            <div><?= __('Delete confirmation') ?></div>
+            <div>
+                <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;yes"><?= __('Delete') ?></a> |
+                <a href="?do=dir&amp;id=<?= $id ?>"><?= __('Cancel') ?></a>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($type === 'article') : ?>
+    <?php if (! $article) : ?>
+        <div class="rmenu">
+            <p><?= __('Delete confirmation') ?>
+                <br>
+                <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;yes"><?= __('Delete') ?></a> |
+                <a href="?id=<?= $id ?>"><?= __('Cancel') ?></a>
+            </p>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($type === 'image') : ?>
+    <?php if (! $image) : ?>
+        <div class="alarm">
+            <div><?= __('Delete confirmation') ?></div>
+            <div>
+                <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;yes"><?= __('Delete') ?></a> |
+                <a href="?act=moder&amp;type=article&amp;id=<?= $id ?>"><?= __('Cancel') ?></a>
+            </div>
+        </div>
+    <?php else : ?>
+        <div class="gmenu"><?= __('Deleted') ?></div>
+        <div>
+            <a href="?act=moder&amp;type=article&amp;id=<?= $id ?>"><?= __('Back') ?></a>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+<?php if ($deny) : ?>
+    <div class="gmenu"><?= __('Deleted') ?></div>
+    <p>
+        <a href="?"><?= __('Back') ?></a>
+    </p>
+<?php endif; ?>

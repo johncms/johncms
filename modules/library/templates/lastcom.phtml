@@ -1,0 +1,18 @@
+<div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= __('Latest comments') ?></div>
+<?php if ($total) : ?>
+    <?php $i = 0; ?>
+    <?php foreach ($list() as $comment): ?>
+        <div class="list<?= ((++$i % 2) ? 2 : 1) ?>">
+            <?php if ($comment['image']) : ?>
+                <div class="avatar"><img src="../upload/library/images/small/<?= $comment['id'] ?>.png" alt="screen"/></div>
+            <?php endif; ?>
+            <div class="righttable"><a href="?act=comments&amp;id=<?= $comment['id'] ?>"><?= $comment['name'] ?></a>
+                <div><?= $comment['text'] ?></div>
+            </div>
+            <div class="sub"><?= __('Who added') ?>: <?= $comment['who'] ?></div>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="menu"><p><?= __('The list is empty') ?></p></div>
+<?php endif; ?>
+<div class="phdr"><a href="?"><?= __('Back') ?></a></div>
