@@ -1,17 +1,17 @@
 <?php
 
-$this->layout('system::layout/default', ['title' => __('Admin Panel')]);
+$this->layout('system::layout/default', ['title' => __('Admin Panel'), 'page_title' => __('List of Users')]);
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['userlist' => true]]));
 ?>
 <!-- List of Users -->
 <?php if ($total): ?>
-    <div class="btn-group btn-group-sm input-group-sm mb-3" role="group" aria-label="Basic example">
+    <div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
         <div class="input-group-prepend">
             <div class="input-group-text"><?= __('Sort') ?></div>
         </div>
-        <a href="?sort=id" class="btn btn-secondary pl-3 pr-3<?= ($sort == 'id' ? ' active' : '') ?>">ID</a>
-        <a href="?sort=nick" class="btn btn-secondary<?= ($sort == 'nick' ? ' active' : '') ?>"><?= __('Nickname') ?></a>
-        <a href="?sort=ip" class="btn btn-secondary pl-3 pr-3<?= ($sort == 'ip' ? ' active' : '') ?>">IP</a>
+        <a href="?sort=id" class="btn btn-outline-secondary pl-3 pr-3<?= ($sort == 'id' ? ' active' : '') ?>">ID</a>
+        <a href="?sort=nick" class="btn btn-outline-secondary<?= ($sort == 'nick' ? ' active' : '') ?>"><?= __('Nickname') ?></a>
+        <a href="?sort=ip" class="btn btn-outline-secondary pl-3 pr-3<?= ($sort == 'ip' ? ' active' : '') ?>">IP</a>
     </div>
     <?php foreach ($list() as $usr): ?>
         <?= $this->fetch('admin::user_row', ['item' => $usr]) ?>
