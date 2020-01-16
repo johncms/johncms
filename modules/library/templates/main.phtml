@@ -18,12 +18,12 @@ $this->layout(
     'system::layout/default',
     [
         'title'      => $title,
-        'page_title' => $title,
+        'page_title' => $page_title ?? $title,
     ]
 );
 ?>
 
-<?php if (! $config['mod_down']): ?>
+<?php if (! $config['mod_lib']): ?>
     <div class="alert alert-danger border-0 shadow">
         <?= __('Library is closed') ?>
     </div>

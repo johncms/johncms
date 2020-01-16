@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Library\Tree;
+use Library\Utils;
 
 if (! $id) {
     require_once 'index/main.php';
@@ -21,12 +22,15 @@ if (! $id) {
         . ($id !== null ? '`id` = ' . $id : 1) . ' LIMIT 1'
     )->fetch();
 
-    $actdir = $actdir['id'] > 0 ? $actdir['dir'] : Utils::redir404();
+    if ($actdir['id'] > 0) {
+        $actdir = $actdir['dir'];
+    } else {
+        Utils::redir404();
+    }
 
     $dir_nav = new Tree($id);
     $dir_nav->processNavPanel();
-
-    echo $dir_nav->printNavPanel();
+    $dir_nav->printNavPanel();
 
     if ($actdir) {
         require_once 'index/sectionslist.php';

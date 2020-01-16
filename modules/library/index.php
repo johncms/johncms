@@ -92,6 +92,7 @@ if ($id > 0) {
 
     $hdr = htmlentities($hdrres, ENT_QUOTES, 'UTF-8');
     if ($hdr) {
+        $page_title = $hdr;
         $title .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
 }

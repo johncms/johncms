@@ -191,11 +191,11 @@ class Tree
      * Собирает ссылки в верхнюю панель навигации
      *
      * @param void
-     * @return string
+     * @return void
      */
-    public function printNavPanel(): string
+    public function printNavPanel(): void
     {
-        return ViewHelper::printNavPanel($this->result());
+        ViewHelper::printNavPanel($this->result());
     }
 
     /**

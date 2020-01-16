@@ -27,6 +27,8 @@ $i = 0;
 echo $view->render(
     'library::sectionslist',
     [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
         'pagination' => $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
         'total'      => $total,
         'admin'      => $adm,

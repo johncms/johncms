@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 
@@ -35,21 +36,13 @@ class ViewHelper
         );
     }
 
-    public static function printNavPanel(array $data): string
+    public static function printNavPanel(array $data): void
     {
         $tools = di(Tools::class);
-
-        $result = [];
+        $nav_chain = di(NavChain::class);
         foreach ($data as $key => $value) {
-            $result[$key] = ['id' => $value['id'], 'name' => $tools->checkout($value['name'])];
+            $nav_chain->add($tools->checkout($value['name']), '/library/?do=dir&id=' . $value['id']);
         }
-
-        return self::setUp()->render(
-            'libraryHelpers::printNavPanel',
-            [
-                'data' => $result,
-            ]
-        );
     }
 
     public static function printVote(int $id, $userVote): string
