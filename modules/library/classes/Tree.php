@@ -140,6 +140,10 @@ class Tree
         $stmt = $this->db->prepare('DELETE FROM `library_texts` WHERE `id` IN(' . $place_holders_texts . ')');
         $stmt->execute(array_values($texts));
         $texts = $stmt->rowCount();
+        if ($texts) {
+            $this->db->exec('DELETE FROM `cms_library_rating` WHERE `st_id` NOT IN (SELECT `id` FROM `library_texts`)');
+            $this->db->exec('DELETE FROM `cms_library_comments` WHERE `sub_id` NOT IN (SELECT `id` FROM `library_texts`)');
+        }
 
         return array_merge(['dirs' => $dirs, 'texts' => $texts], $trash);
     }
