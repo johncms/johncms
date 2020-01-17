@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -20,6 +20,8 @@ $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : fal
 $search = $search_post ?? $search_get;
 $search = $search ? $tools->checkout($search) : false;
 $search_t = isset($_REQUEST['t']) ? 'checked="checked"' : '';
+$title = __('Search');
+$nav_chain->add($title);
 
 $total = false;
 $list = false;
@@ -83,6 +85,8 @@ if ($search && ! $error) {
 echo $view->render(
     'library::search',
     [
+        'title'      => $title,
+        'page_title' => $title,
         'pagination' => $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode((string) $search) . '&amp;', $start, $total, $user->config->kmess),
         'total'      => $total,
         'search_t'   => $search_t,
