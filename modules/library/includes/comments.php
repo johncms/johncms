@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,13 +10,20 @@
 
 declare(strict_types=1);
 
+use Library\Tree;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if (! $user->isValid()) {
-    echo $view->render('system::app/old_content', [
-        'title'   => $textl,
-        'content' => $tools->displayError(__('Access forbidden')),
-    ]);
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => __('Access forbidden'),
+        ]
+    );
     exit;
 }
 
@@ -27,50 +34,43 @@ if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
 
     if (! $res_obj) {
-        echo $view->render('system::app/old_content', [
-            'title'   => $textl,
-            'content' => $tools->displayError(__('Access forbidden')),
-        ]);
+        http_response_code(403);
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'   => $title,
+                'type'    => 'alert-danger',
+                'message' => __('Access forbidden'),
+            ]
+        );
         exit;
     }
 
-    $obj = new Library\Hashtags($id);
-    $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id`=' . $res_obj['cat_id'] . ' LIMIT 1')->fetch();
-    $context_top =
-        '<div class="phdr"><a href="?"><strong>' . __('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a></div>' .
-        '<div class="menu">' .
-        '<p><b><a href="?id=' . $id . '">' . $tools->checkout($res_obj['name']) . '</a></b></p>' .
-        '<small>' . $tools->smilies($tools->checkout($res_obj['announce'], 1, 1)) . '</small>' .
-        '<div class="sub">' .
-        ($obj->getAllStatTags() ? '<span class="gray">' . __('Tags') . ':</span> [ ' . $obj->getAllStatTags(1) . ' ]<br>' : '') .
-        '<span class="gray">' . __('Who added') . ':</span> <a href="' . $config['homeurl'] .
-        '/profile/?user=' . $res_obj['uploader_id'] . '">' . $tools->checkout($res_obj['uploader']) .
-        '</a> (' . $tools->displayDate($res_obj['time']) . ')<br>' .
-        '<span class="gray">' . __('Number of readings') . ':</span> ' . $res_obj['count_views'] .
-        '</div></div>';
+    $dir_nav = new Tree($res_obj['cat_id']);
+    $dir_nav->processNavPanel();
+    $dir_nav->printNavPanel();
+    $nav_chain->add($tools->checkout($res_obj['name']));
+
     $arg = [
         'comments_table' => 'cms_library_comments',
         // Таблица с комментариями
-        'object_table' => 'library_texts',
+        'object_table'   => 'library_texts',
         // Таблица комментируемых объектов
-        'script' => '?act=comments',
+        'script'         => '?act=comments',
         // Имя скрипта (с параметрами вызова)
-        'sub_id_name' => 'id',
+        'sub_id_name'    => 'id',
         // Имя идентификатора комментируемого объекта
-        'sub_id' => $id,
+        'sub_id'         => $id,
         // Идентификатор комментируемого объекта
-        'owner' => $res_obj['uploader_id'],
+        'owner'          => $res_obj['uploader_id'],
         // Владелец объекта (ID того юзера, который может управлять каментами, если разрешено ниже)
-        'owner_delete' => true,
+        'owner_delete'   => true,
         // Возможность владельцу удалять комментарий
-        'owner_reply' => true,
+        'owner_reply'    => true,
         // Возможность владельцу отвечать на комментарий
-        'owner_edit' => false,
+        'owner_edit'     => false,
         // Возможность владельцу редактировать комментарий
-        'title' => __('Comments'),
-        // Название раздела
-        'context_top' => $context_top,
-        // Выводится вверху списка
+        'title'          => __('Comments'),
     ];
     $comm = new Johncms\Comments($arg);
 
