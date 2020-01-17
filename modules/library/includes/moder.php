@@ -12,19 +12,20 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+use Johncms\System\Http\Request;
 use Library\Hashtags;
 use Library\Tree;
 use Library\Utils;
 use Psr\Http\Message\ServerRequestInterface;
 
-$request = di(ServerRequestInterface::class);
-
 /**
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  * @var Johncms\System\View\Render $view
- * @var  ServerRequestInterface $request
+ * @var Request $request
  */
+
+$request = di(Request::class);
 
 if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
     $type = $_GET['type'];
@@ -71,7 +72,7 @@ if (isset($_POST['submit'])) {
         /** @var GuzzleHttp\Psr7\UploadedFile $screen */
         $screen = $files['image'] ?? false;
 
-        if ($screen->getClientFilename()) {
+        if ($screen && $screen->getClientFilename()) {
             try {
                 Utils::imageUpload($id, $screen);
             } catch (Exception $exception) {
@@ -88,9 +89,9 @@ if (isset($_POST['submit'])) {
 
         if ($adm) {
             $fields_adm = [
-                'count_views' => $_POST['count_views'],
-                'premod'      => $_POST['premod'],
-                'comments'    => $_POST['comments'] ?? 0,
+                'count_views' => $request->getPost('count_views', 0, FILTER_VALIDATE_INT),
+                'premod'      => $request->getPost('premod', 0, FILTER_VALIDATE_INT),
+                'comments'    => $request->getPost('comments', '', FILTER_SANITIZE_STRING),
             ];
             $fields += $fields_adm;
         }

@@ -38,10 +38,14 @@ $this->layout(
                 <form action="?act=moder&amp;type=<?= $type ?>&amp;id=<?= $id ?>" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <?php if ($type === 'article' && $res['cover']) : ?>
-                            <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
-                            <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
-                            <h3><?= __('To upload a photo') ?></h3>
-                            <div><input name="image" type="file"/></div>
+                            <div class="mb-3">
+                                <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
+                                <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
+                                <div class="custom-file mt-2">
+                                    <input type="file" class="custom-file-input" id="image" name="image" aria-describedby="file_label">
+                                    <label class="custom-file-label" for="image"><?= __('To upload a photo') ?></label>
+                                </div>
+                            </div>
                         <?php endif; ?>
                         <div class="form-group">
                             <label for="name"><?= __('Title') ?></label>
@@ -115,7 +119,7 @@ $this->layout(
 
                         <?php if ($adm) : ?>
                             <?php if ($type === 'article') : ?>
-                                <div class="custom-control custom-checkbox">
+                                <div class="custom-control custom-checkbox mt-3">
                                     <input type="checkbox" class="custom-control-input" name="premod" value="1" id="premod" <?= ($res['premod'] > 0 ? 'checked="checked"' : '') ?>>
                                     <label class="custom-control-label" for="premod"><?= __('Verified') ?></label>
                                 </div>
@@ -123,7 +127,7 @@ $this->layout(
                                     <input type="checkbox" class="custom-control-input" name="comments" value="1" id="comments" <?= ($res['comments'] > 0 ? 'checked="checked"' : '') ?>>
                                     <label class="custom-control-label" for="comments"><?= __('Commenting on the Article') ?></label>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mt-3">
                                     <label for="count_views"><?= __('Number of readings') ?></label>
                                     <input type="text" name="count_views" id="count_views" class="form-control" value="<?= $res['count_views'] ?>"/>
                                 </div>
