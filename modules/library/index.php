@@ -52,7 +52,7 @@ $loader->addPrefix('Library', __DIR__ . '/classes');
 $view->addFolder('library', __DIR__ . '/templates/');
 $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 
-$id = (int) $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
 $mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;

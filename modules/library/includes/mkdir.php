@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -16,10 +16,22 @@ if (! $adm) {
     Library\Utils::redir404();
 }
 
+$title = __('Create Section');
+$nav_chain->add($title);
+
 $created = false;
 if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
-        $error = $tools->displayError(__('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . __('Repeat') . '</a>');
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => $title,
+                'type'          => 'alert-danger',
+                'message'       => __('You have not entered the name'),
+                'back_url'      => '?act=mkdir&amp;id=' . $id,
+                'back_url_name' => __('Repeat'),
+            ]
+        );
     } else {
         $lastinsert = $db->query('SELECT MAX(`id`) FROM `library_cats`')->fetchColumn();
         ++$lastinsert;
@@ -38,8 +50,10 @@ if (isset($_POST['submit'])) {
 echo $view->render(
     'library::mkdir',
     [
-        'error'   => $error,
-        'id'      => $id,
-        'created' => $created,
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+        'error'      => $error,
+        'id'         => $id,
+        'created'    => $created,
     ]
 );
