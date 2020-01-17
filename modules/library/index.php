@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\NavChain;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
@@ -27,6 +28,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var User $user
  * @var Render $view
  * @var NavChain $nav_chain
+ * @var Request $request
  */
 
 $assets = di(Assets::class);
@@ -36,6 +38,7 @@ $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
+$request = di(Request::class);
 
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('library', __DIR__ . '/locale');
@@ -49,9 +52,9 @@ $loader->addPrefix('Library', __DIR__ . '/classes');
 $view->addFolder('library', __DIR__ . '/templates/');
 $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 
-$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
+$act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $adm = ($user->rights > 4);

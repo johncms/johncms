@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -15,18 +15,29 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 use Library\Hashtags;
 use Library\Rating;
 
-$sort = isset($_GET['sort']) && $_GET['sort'] === 'rating'
-    ? 'rating'
-    : (isset($_GET['sort']) && $_GET['sort'] === 'comm'
-        ? 'comm'
-        : 'read'
-    );
+$sort = $request->getQuery('sort', 'read', FILTER_SANITIZE_STRING);
 
-$menu[] = $sort === 'read' ? '<strong>' . __('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . __('Most readings') . '</a> ';
-$menu[] = $sort === 'rating' ? '<strong>' . __('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . __('By rating') . '</a> ';
-$menu[] = $sort === 'comm' ? '<strong>' . __('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . __('By comments') . '</a>';
+$title = __('Rating articles');
+$nav_chain->add($title);
 
-$menu = implode(' | ', $menu);
+$data = [];
+$data['filters'] = [
+    'all'   => [
+        'name'   => __('Most readings'),
+        'url'    => '?act=top&amp;sort=read',
+        'active' => $sort === 'read',
+    ],
+    'boys'  => [
+        'name'   => __('By rating'),
+        'url'    => '?act=top&amp;sort=rating',
+        'active' => $sort === 'rating',
+    ],
+    'girls' => [
+        'name'   => __('By comments'),
+        'url'    => '?act=top&amp;sort=comm',
+        'active' => $sort === 'comm',
+    ],
+];
 
 $field = $sort === 'comm' ? '`comm_count`' : '`count_views`';
 
@@ -58,9 +69,11 @@ if ($total) {
 echo $view->render(
     'library::top',
     [
-        'total' => $total,
-        'menu'  => $menu,
-        'list'  =>
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+        'data'       => $data,
+        'total'      => $total,
+        'list'       =>
             static function () use ($req, $tools, $db) {
                 while ($res = $req->fetch()) {
                     $res['cover'] = file_exists(UPLOAD_PATH . 'library/images/small/' . $res['id'] . '.png');
