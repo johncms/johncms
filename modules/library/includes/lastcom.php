@@ -15,17 +15,21 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $title = __('Latest comments');
 $nav_chain->add($title);
 
-// TODO: Исправить запрос на выборку комментариев. Сейчас выбирается не последний.
-$req = $db->query(
-    '
-              SELECT `cms_library_comments`.`user_id`, `cms_library_comments`.`text`, `library_texts`.`name`, `library_texts`.`comm_count`, `library_texts`.`id`, `cms_library_comments`.`time`
-                FROM `cms_library_comments`
-              JOIN `library_texts` ON `cms_library_comments`.`sub_id` = `library_texts`.`id`
-                GROUP BY `library_texts`.`id`
-                ORDER BY `cms_library_comments`.`time` DESC
-                LIMIT 20
-                '
-);
+$req = $db->query('SELECT
+    `comm`.`user_id`,
+    `comm`.`text`,
+    `txt`.`name`,
+    `txt`.`comm_count`,
+    `txt`.`id`,
+    `comm`.`time`,
+    u.`name` AS user_name
+FROM `cms_library_comments` comm
+JOIN `library_texts` txt ON `comm`.`sub_id` = `txt`.`id`
+JOIN `users` u ON u.`id` = `comm`.`user_id`
+JOIN (
+SELECT `sub_id`, max(`time`) as `mtime` FROM `cms_library_comments` GROUP BY `sub_id`) as comm2
+ON comm.`sub_id`= comm2.`sub_id` AND comm.`time` = comm2.`mtime`
+ORDER BY `comm`.`time` DESC LIMIT 20');
 
 $total = $req->rowCount();
 
@@ -41,7 +45,7 @@ echo $view->render(
                     $res['text'] = $tools->checkout(substr($res['text'], 0, 500), 0, 2);
                     $res['image'] = file_exists(UPLOAD_PATH . 'library/images/small/' . $res['id'] . '.png');
                     $res['name'] = $tools->checkout($res['name']);
-                    $res['who'] = $tools->checkout($db->query('SELECT `name` FROM `users` WHERE `id` = ' . $res['user_id'])->fetchColumn()) . ' (' . $tools->displayDate($res['time']) . ')';
+                    $res['who'] = $tools->checkout($res['user_name']) . ' (' . $tools->displayDate($res['time']) . ')';
 
                     yield $res;
                 }
