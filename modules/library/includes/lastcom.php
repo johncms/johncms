@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+$title = __('Latest comments');
+$nav_chain->add($title);
+
+// TODO: Исправить запрос на выборку комментариев. Сейчас выбирается не последний.
 $req = $db->query(
     '
               SELECT `cms_library_comments`.`user_id`, `cms_library_comments`.`text`, `library_texts`.`name`, `library_texts`.`comm_count`, `library_texts`.`id`, `cms_library_comments`.`time`
@@ -28,8 +32,10 @@ $total = $req->rowCount();
 echo $view->render(
     'library::lastcom',
     [
-        'total' => $total,
-        'list'  =>
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+        'total'      => $total,
+        'list'       =>
             static function () use ($req, $tools, $db) {
                 while ($res = $req->fetch()) {
                     $res['text'] = $tools->checkout(substr($res['text'], 0, 500), 0, 2);
