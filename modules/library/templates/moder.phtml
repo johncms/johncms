@@ -1,79 +1,142 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
 <?php if (isset($_POST['submit'])) : ?>
-    <div><?= __('Changed') ?></div>
-<?php else: ?>
-    <div class="phdr"><strong><a href="?"><?= __('Library') ?></a></strong> | <?= ($type === 'dir' ? __('Edit Section') : __('Edit Article')) ?></div>
-    <form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=<?= $type ?>&amp;id=<?= $id ?>" method="post">
-        <div class="menu">
-            <?php if ($type === 'article' && $res['cover']) : ?>
-                <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
-                <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
-                <h3><?= __('To upload a photo') ?></h3>
-                <div><input name="image" type="file"/></div>
-            <?php endif; ?>
-            <h3><?= __('Title') ?></h3>
-            <div><input type="text" name="name" value="<?= $res['name'] ?>"/></div>
-            <?php if ($type === 'dir') : ?>
-                <h3><?= __('Section description') ?></h3>
-                <div><textarea name="description" rows="4" cols="20"><?= $res['description'] ?></textarea></div>
-            <?php else: ?>
-                <h3><?= __('Announce') ?></h3>
-                <div><textarea rows="2" cols="20" name="announce"><?= $res['announce'] ?></textarea></div>
-            <?php endif; ?>
-            <?php if ($type === 'article') : ?>
-            <?php if (mb_strlen($res['text']) < 500000) : ?>
-                <h3><?= __('Text') ?></h3>
-                <div><?= $bbcode ?><textarea rows="5" cols="20" name="text"><?= $res['text'] ?></textarea></div>
-            <?php else: ?>
-            <div class="alarm"><?= __('The text of the Article can not be edited, a large amount of data !!!') ?></div>
-            <input type="hidden" name="text" value="do_not_change"/></div>
-        <?php endif; ?>
-        <h3><?= __('Tags') ?></h3>
-        <div><input name="tags" type="text" value="<?= $res['tags'] ?>"/></div>
-        <?php endif; ?>
-        <?php if ($adm) : ?>
-            <?php if ($select) : ?>
-                <h3><?= __('Move to Section') ?></h3>
-                <div>
-                    <select name="move">
-                        <?php foreach ($select as $option) : ?>
-                            <?= $option ?>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endif; ?>
-        <?php if ($empty) : ?>
-                <h3><?= __('Section type') ?></h3>
-                <div>
-                    <input type="radio" name="dir" value="1" <?= ($res['dir'] === 1 ? 'checked="checked"'  : '') ?> /><?= __('Sections') ?>
-                </div>
-                <div>
-                    <input type="radio" name="dir" value="0" <?= ($res['dir'] === 0 ? 'checked="checked"' : '') ?> /><?= __('Articles') ?>
-                </div>'
-        <?php endif; ?>
-        <?php if ($type === 'dir' && $res['dir'] === 0) :?>
-                <div><?= __('Allow users to add their Articles?') ?></div>
-                <div>
-                    <input type="radio" name="user_add" value="1" <?= ($res['user_add'] === 1 ? 'checked="checked"' : '') ?> /> <?= __('Yes') ?>
-                </div>
-                <div>
-                    <input type="radio" name="user_add" value="0" <?= ($res['user_add'] === 0 ? 'checked="checked"' : '') ?> /> <?= __('No') ?>
-                </div>
-        <?php endif; ?>
-            <?php if ($type === 'article') : ?>
-                <div class="<?= ($res['premod'] > 0 ? 'green' : 'red') ?>">
-                    <input type="checkbox" name="premod" value="1" <?= ($res['premod'] > 0 ? 'checked="checked"' : '') ?> /> <?= __('Verified') ?>
-                </div>'
-                <div class="<?= ($res['comments'] > 0 ? 'green' : 'red') ?>">
-                    <input type="checkbox" name="comments" value="1" <?= ($res['comments'] > 0 ? 'checked="checked"' : '') ?> /> <?= __('Commenting on the Article') ?>
-                </div>
-                <h3><?= __('Number of readings') ?></h3>
-                <div>
-                    <input type="text" name="count_views" value="<?= $res['count_views'] ?>" />
-                </div>
-            <?php endif; ?>
-        <?php endif; ?>
-        <div class="bmenu"><input type="submit" name="submit" value="<?= __('Save') ?>"/></div>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-success',
+            'alert'      => __('Changed'),
+        ]
+    ) ?>
+<?php else : ?>
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+            <div class="card shadow border-0">
+                <form action="?act=moder&amp;type=<?= $type ?>&amp;id=<?= $id ?>" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <?php if ($type === 'article' && $res['cover']) : ?>
+                            <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
+                            <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
+                            <h3><?= __('To upload a photo') ?></h3>
+                            <div><input name="image" type="file"/></div>
+                        <?php endif; ?>
+                        <div class="form-group">
+                            <label for="name"><?= __('Title') ?></label>
+                            <input type="text" name="name" class="form-control" id="name" value="<?= $res['name'] ?>" placeholder="<?= __('Title') ?>" required>
+                        </div>
+
+                        <?php if ($type === 'dir') : ?>
+                            <div class="form-group">
+                                <label for="description"><?= __('Section description') ?></label>
+                                <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="description" id="description"><?= $res['description'] ?></textarea>
+                            </div>
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label for="announce"><?= __('Announce') ?></label>
+                                <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="announce" id="announce"><?= $res['announce'] ?></textarea>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($type === 'article') : ?>
+                            <?php if (mb_strlen($res['text']) < 500000) : ?>
+                                <div class="form-group">
+                                    <label for="text"><?= __('Text') ?></label>
+                                    <div><?= $bbcode ?></div>
+                                    <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="text" id="text"><?= $res['text'] ?></textarea>
+                                </div>
+                            <?php else: ?>
+                                <div class="alert alert-info"><?= __('The text of the Article can not be edited, a large amount of data !!!') ?></div>
+                                <input type="hidden" name="text" value="do_not_change">
+                            <?php endif; ?>
+                            <div class="form-group">
+                                <label for="tags"><?= __('Tags') ?></label>
+                                <input name="tags" class="form-control" type="text" id="tags" value="<?= $res['tags'] ?>">
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($adm) : ?>
+                            <?php if ($empty) : ?>
+                                <h3 class="mt-3"><?= __('Section type') ?></h3>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="section_type1" name="dir" value="0" class="custom-control-input" <?= ($res['dir'] === 0 ? 'checked="checked"' : '') ?>>
+                                    <label class="custom-control-label" for="section_type1"><?= __('Articles') ?></label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="section_type2" name="dir" value="1" class="custom-control-input" <?= ($res['dir'] === 1 ? 'checked="checked"' : '') ?>>
+                                    <label class="custom-control-label" for="section_type2"><?= __('Sections') ?></label>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if ($type === 'dir' && $res['dir'] === 0) : ?>
+                                <h3 class="mt-3"><?= __('Allow users to add their Articles?') ?></h3>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="user_add1" name="user_add" value="1" class="custom-control-input" <?= ($res['user_add'] === 1 ? 'checked="checked"' : '') ?>>
+                                    <label class="custom-control-label" for="user_add1"><?= __('Yes') ?></label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="user_add2" name="user_add" value="0" class="custom-control-input" <?= ($res['user_add'] === 0 ? 'checked="checked"' : '') ?>>
+                                    <label class="custom-control-label" for="user_add2"><?= __('No') ?></label>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($select) : ?>
+                                <div class="mt-2">
+                                    <label for="move"><?= __('Move to Section') ?></label>
+                                    <select name="move" class="form-control" id="move">
+                                        <?php foreach ($select as $option) : ?>
+                                            <?= $option ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <?php if ($adm) : ?>
+                            <?php if ($type === 'article') : ?>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="premod" value="1" id="premod" <?= ($res['premod'] > 0 ? 'checked="checked"' : '') ?>>
+                                    <label class="custom-control-label" for="premod"><?= __('Verified') ?></label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="comments" value="1" id="comments" <?= ($res['comments'] > 0 ? 'checked="checked"' : '') ?>>
+                                    <label class="custom-control-label" for="comments"><?= __('Commenting on the Article') ?></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="count_views"><?= __('Number of readings') ?></label>
+                                    <input type="text" name="count_views" id="count_views" class="form-control" value="<?= $res['count_views'] ?>"/>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <div class="mt-3">
+                            <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary">
+                            <a href="?do=<?= ($type === 'dir' ? 'dir' : 'text') ?>&amp;id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
 <?php endif; ?>
-<div><a href="?do=<?= ($type === 'dir' ? 'dir' : 'text') ?>&amp;id=<?= $id ?>"><?= __('Back') ?></a></div>
+<div class="mt-2"><a href="?do=<?= ($type === 'dir' ? 'dir' : 'text') ?>&amp;id=<?= $id ?>"><?= __('Back') ?></a></div>

@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -157,16 +157,20 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+$title = ($type === 'dir' ? __('Edit Section') : __('Edit Article'));
+$nav_chain->add($title);
 
 echo $view->render(
     'library::moder',
     [
-        'res'    => $row,
-        'empty'  => $empty,
-        'type'   => $type,
-        'id'     => $id,
-        'adm'    => $adm,
-        'select' => $select,
-        'bbcode' => $bbcode,
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+        'res'        => $row,
+        'empty'      => $empty,
+        'type'       => $type,
+        'id'         => $id,
+        'adm'        => $adm,
+        'select'     => $select,
+        'bbcode'     => $bbcode,
     ]
 );
