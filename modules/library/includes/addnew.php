@@ -25,6 +25,9 @@ $request = di(ServerRequestInterface::class);
  * @var  ServerRequestInterface $request
  */
 
+$title = __('Write Article');
+$nav_chain->add($title);
+
 if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id` = ' . $id)->rowCount()))) {
     $err = [];
     $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 100) : '';
@@ -135,14 +138,16 @@ if ($adm || ((isset($id) && $user->isValid()) && ($db->query('SELECT `user_add` 
 echo $view->render(
     'library::addnew',
     [
-        'error'    => $error,
-        'md'       => $md,
-        'cid'      => $cid,
-        'id'       => $id,
-        'name'     => $name,
-        'announce' => $announce,
-        'text'     => $text,
-        'tag'      => $tag,
-        'bbcode'   => di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text'),
+        'title'      => $title,
+        'page_title' => $title,
+        'error'      => $error,
+        'md'         => $md,
+        'cid'        => $cid,
+        'id'         => $id,
+        'name'       => $name,
+        'announce'   => $announce,
+        'text'       => $text,
+        'tag'        => $tag,
+        'bbcode'     => di(Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text'),
     ]
 );
