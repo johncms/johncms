@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
@@ -19,10 +18,15 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Johncms\System\Users\User $user
  */
 
+$title = __('Advertisement');
+$nav_chain->add($title, '/admin/ads/');
+$data = [];
+
 switch ($mod) {
     case 'edit':
         // Добавляем / редактируем ссылку
-        echo '<div class="phdr"><a href="?act=ads"><b>' . __('Advertisement') . '</b></a> | ' . ($id ? __('Edit link') : __('Add link')) . '</div>';
+        $title = ($id ? __('Edit link') : __('Add link'));
+        $nav_chain->add($title);
 
         if ($id) {
             // Если ссылка редактироется, запрашиваем ее данные в базе
@@ -31,8 +35,15 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
             } else {
-                echo $tools->displayError(__('Wrong data'), '<a href="?act=ads">' . __('Back') . '</a>');
-                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'    => $title,
+                        'type'     => 'alert-danger',
+                        'message'  => __('Wrong data'),
+                        'back_url' => '/admin/ads/',
+                    ]
+                );
                 exit;
             }
         } else {
@@ -46,7 +57,7 @@ switch ($mod) {
             $italic = isset($_POST['italic']) ? 1 : 0;
             $underline = isset($_POST['underline']) ? 1 : 0;
             $show = isset($_POST['show']) ? 1 : 0;
-            $view = isset($_POST['view']) ? abs((int) ($_POST['view'])) : 0;
+            $view_type = isset($_POST['view']) ? abs((int) ($_POST['view'])) : 0;
             $day = isset($_POST['day']) ? abs((int) ($_POST['day'])) : 0;
             $count = isset($_POST['count']) ? abs((int) ($_POST['count'])) : 0;
             $day = isset($_POST['day']) ? abs((int) ($_POST['day'])) : 0;
@@ -82,8 +93,15 @@ switch ($mod) {
             }
 
             if ($error) {
-                echo $tools->displayError($error, '<a href="?act=ads&amp;from=addlink">' . __('Back') . '</a>');
-                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'    => $title,
+                        'type'     => 'alert-danger',
+                        'message'  => $error,
+                        'back_url' => '/admin/ads/?from=addlink',
+                    ]
+                );
                 exit;
             }
 
@@ -109,7 +127,7 @@ switch ($mod) {
                 )->execute(
                     [
                         $type,
-                        $view,
+                        $view_type,
                         $link,
                         $name,
                         $color,
@@ -156,7 +174,7 @@ switch ($mod) {
                 )->execute(
                     [
                         $type,
-                        $view,
+                        $view_type,
                         $mesto,
                         $link,
                         $name,
@@ -173,52 +191,38 @@ switch ($mod) {
                 );
             }
 
-            echo '<div class="menu"><p>' . ($id ? __('Link successfully changed') : __('Link successfully added')) . '<br>' .
-                '<a href="?act=ads&amp;sort=' . $type . '">' . __('Continue') . '</a></p></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => ($id ? __('Link successfully changed') : __('Link successfully added')),
+                    'back_url'      => '/admin/ads/?sort=' . $type,
+                    'back_url_name' => __('Continue'),
+                ]
+            );
         } else {
-            // Форма добавления / изменения ссылки
-            echo '<form action="?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
-                '<div class="menu"><p><h3>' . __('Link') . '</h3>' .
-                '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
-                '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . __('Direct Link') . '<br>' .
-                '<small>' . __('Click statistics won\'t be counted, If the direct link is turned on') . '</small></p>' .
-                '<p><h3>' . __('Title') . '</h3>' .
-                '<input type="text" name="name" value="' . htmlentities(
-                    (string) $res['name'],
-                    ENT_QUOTES,
-                    'UTF-8'
-                ) . '"/><br>' .
-                '<small>' . __('To change the name when updating pages, you must wtite names trought the symbol |') . '</small></p>' .
-                '<p><h3>' . __('Color') . '</h3>' .
-                '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br>' .
-                '<small>' . __('In the format FFFFFF, if you do not want to use link color, simply do not fill this field') . '</small></p>' .
-                '<p><h3>' . __('Hits') . '</h3>' .
-                '<input type="text" name="count" size="6" value="' . $res['count_link'] . '"/><br>' .
-                '<small>' . __('Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
-                '<p><h3>' . __('Days') . '</h3>' .
-                '<input type="text" name="day" size="6" value="' . $res['day'] . '"/><br>' .
-                '<small>' . __('Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
-                '</div><div class="gmenu">' .
-                '<p><h3>' . __('Show') . '</h3>' .
-                '<input type="radio" name="view" value="0" ' . (! $res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . __('Everyone') . '<br>' .
-                '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . __('Guests') . '<br>' .
-                '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . __('Users') . '</p>' .
-                '<p><h3>' . __('Location') . '</h3>' .
-                '<input type="radio" name="type" value="0" ' . (! $res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . __('Above logo') . '<br>' .
-                '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . __('Under menu') . '<br>' .
-                '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . __('Over the counter') . '<br>' .
-                '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . __('Under counter') . '</p>' .
-                '<p><h3>' . __('Layout') . '</h3>' .
-                '<input type="radio" name="layout" value="0" ' . (! $res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . __('All pages') . '<br>' .
-                '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . __('Only on Homepage') . '<br>' .
-                '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . __('On all, except Homepage') . '</p>' .
-                '<p><h3>' . __('Styling links') . '</h3>' .
-                '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . __('Bold') . '</b><br>' .
-                '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . __('Italic') . '</i><br>' .
-                '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . __('Underline') . '</u></p></div>' .
-                '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? __('Edit') : __('Add')) . '" /></div></form>' .
-                '<p><a href="?act=ads">' . __('Advertisement') . '</a><br>' .
-                '<a href="./">' . __('Admin Panel') . '</a></p>';
+            $data['fields'] = [
+                'link'       => ! empty($res['link']) ? htmlentities($res['link']) : '',
+                'name'       => ! empty($res['name']) ? htmlentities($res['link']) : '',
+                'color'      => $res['color'] ?? '',
+                'count_link' => $res['count_link'] ?? '',
+                'day'        => $res['day'] ?? '',
+                'view'       => $res['view'] ?? '',
+                'type'       => $res['type'] ?? '',
+                'layout'     => $res['layout'] ?? '',
+            ];
+            $data['fields'] = array_merge($data['fields'], $res);
+
+            $data['form_action'] = '?mod=edit' . ($id ? '&amp;id=' . $id : '');
+            echo $view->render(
+                'admin::ads_add',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
         break;
 
@@ -271,17 +275,29 @@ switch ($mod) {
     case 'del':
         // Удаляем ссылку
         if ($id) {
+            $title = __('Delete');
+            $nav_chain->add($title);
             if (isset($_POST['submit'])) {
                 $db->exec("DELETE FROM `cms_ads` WHERE `id` = '${id}'");
                 header('Location: ' . $_POST['ref']);
             } else {
-                echo '<div class="phdr"><a href="?act=ads"><b>' . __('Advertisement') . '</b></a> | ' . __('Delete') . '</div>' .
-                    '<div class="rmenu"><form action="?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
-                    '<p>' . __('Are you sure want to delete link?') . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . __('Delete') . '" /></p>' .
-                    '<input type="hidden" name="ref" value="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" />' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . __('Cancel') . '</a></div>';
+                $data['hidden_fields'] = [
+                    [
+                        'name'  => 'ref',
+                        'value' => htmlspecialchars($_SERVER['HTTP_REFERER']),
+                    ],
+                ];
+                $data['message'] = __('Are you sure want to delete link?');
+                $data['form_action'] = '??act=ads&amp;mod=clear';
+                $data['back_url'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
+                echo $view->render(
+                    'admin::ads_confirm',
+                    [
+                        'title'      => $title,
+                        'page_title' => $title,
+                        'data'       => $data,
+                    ]
+                );
             }
         }
         break;
@@ -293,12 +309,17 @@ switch ($mod) {
             $db->query('OPTIMIZE TABLE `cms_ads`');
             header('location: ?act=ads');
         } else {
-            echo '<div class="phdr"><a href="?act=ads"><b>' . __('Advertisement') . '</b></a> | ' . __('Delete inactive links') . '</div>' .
-                '<div class="menu"><form method="post" action="?act=ads&amp;mod=clear">' .
-                '<p>' . __('Are you sure you want to delete all inactive links?') . '</p>' .
-                '<p><input type="submit" name="submit" value="' . __('Delete') . '" />' .
-                '</p></form></div>' .
-                '<div class="phdr"><a href="?act=ads">' . __('Cancel') . '</a></div>';
+            $data['message'] = __('Are you sure you want to delete all inactive links?');
+            $data['form_action'] = '??act=ads&amp;mod=clear';
+            $data['back_url'] = '/admin/ads/';
+            echo $view->render(
+                'admin::ads_confirm',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
         }
         break;
 
@@ -317,7 +338,30 @@ switch ($mod) {
 
     default:
         // Главное меню модуля управления рекламой
-        echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Advertisement') . '</div>';
+        $type = $request->getQuery('type', 0, FILTER_VALIDATE_INT);
+        $data['filters'] = [
+            [
+                'url'    => '?act=ads',
+                'name'   => __('Above logo'),
+                'active' => ! $type,
+            ],
+            [
+                'url'    => '?act=ads&amp;type=1',
+                'name'   => __('Under menu'),
+                'active' => $type === 1,
+            ],
+            [
+                'url'    => '?act=ads&amp;type=2',
+                'name'   => __('Over the counter'),
+                'active' => $type === 2,
+            ],
+            [
+                'url'    => '?act=ads&amp;type=3',
+                'name'   => __('Under counter'),
+                'active' => $type === 3,
+            ],
+        ];
+
         $array_placing = [
             __('All pages'),
             __('Only on Homepage'),
@@ -328,55 +372,21 @@ switch ($mod) {
             __('Guests'),
             __('Users'),
         ];
-        $type = isset($_GET['type']) ? (int) ($_GET['type']) : 0;
-        $array_menu = [
-            (! $type ? __('Above logo') : '<a href="?act=ads">' . __('Above logo') . '</a>'),
-            ($type == 1 ? __('Under menu') : '<a href="?act=ads&amp;type=1">' . __('Under menu') . '</a>'),
-            ($type == 2 ? __('Over the counter') : '<a href="?act=ads&amp;type=2">' . __('Over the counter') . '</a>'),
-            ($type == 3 ? __('Under counter') : '<a href="?act=ads&amp;type=3">' . __('Under counter') . '</a>'),
-        ];
-        echo '<div class="topmenu">' . implode(' | ', $array_menu) . '</div>';
 
         $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '${type}'")->fetchColumn();
 
         if ($total) {
             $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '${type}' ORDER BY `mesto` ASC LIMIT " . $start . ',' . $user->config->kmess);
-            $i = 0;
-
+            $items = [];
             while ($res = $req->fetch()) {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $name = str_replace('|', '; ', $res['name']);
                 $name = htmlentities($name, ENT_QUOTES, 'UTF-8');
+                $res['name'] = $name;
+                $res['link'] = htmlspecialchars($res['link']);
+                $res['display_time'] = $tools->displayDate($res['time']);
+                $res['place'] = $array_placing[$res['layout']];
+                $res['show_for'] = $array_show[$res['view']];
 
-                // Если был задан цвет, то применяем
-                if (! empty($res['color'])) {
-                    $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
-                }
-
-                // Если было задано начертание шрифта, то применяем
-                $font = $res['bold'] ? 'font-weight: bold;' : false;
-                $font .= $res['italic'] ? ' font-style:italic;' : false;
-                $font .= $res['underline'] ? ' text-decoration:underline;' : false;
-
-                if ($font) {
-                    $name = '<span style="' . $font . '">' . $name . '</span>';
-                }
-
-                // Выводим рекламмную ссылку с атрибутами
-                echo '<p><img src="../images/' . ($res['to'] ? 'red' : 'green') . '.gif" width="16" height="16" class="left"/>&#160;' .
-                    '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br>' . $name . '</p>';
-                $menu = [
-                    '<a href="?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . __('Up') . '</a>',
-                    '<a href="?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . __('Down') . '</a>',
-                    '<a href="?act=ads&amp;mod=edit&amp;id=' . $res['id'] . '">' . __('Edit') . '</a>',
-                    '<a href="?act=ads&amp;mod=del&amp;id=' . $res['id'] . '">' . __('Delete') . '</a>',
-                    '<a href="?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? __('Show') : __('Hide')) . '</a>',
-                ];
-                echo '<div class="sub">' .
-                    '<div>' . implode(' | ', $menu) . '</div>' .
-                    '<p><span class="gray">' . __('Start date') . ':</span> ' . $tools->displayDate($res['time']) . '<br>' .
-                    '<span class="gray">' . __('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br>' .
-                    '<span class="gray">' . __('Show') . ':</span>&nbsp;' . $array_show[$res['view']];
                 // Вычисляем условия договора на рекламу
                 $agreement = [];
                 $remains = [];
@@ -397,45 +407,41 @@ switch ($mod) {
                     }
                 }
 
-                // Если был договор, то выводим описание
-                if ($agreement) {
-                    echo '<br><span class="gray">' . __('Agreement') . ':</span>&nbsp;' . implode(', ', $agreement);
+                $res['agreement'] = ! empty($agreement) ? implode(', ', $agreement) : '';
+                $res['remains'] = ! empty($remains) ? implode(', ', $remains) : '';
 
-                    if ($remains) {
-                        echo '<br><span class="gray">' . __('Remains') . ':</span> ' . implode(', ', $remains);
-                    }
+                $styles = '';
+                if (! empty($res['color'])) {
+                    $styles .= __('Color:') . ' ' . $res['color'];
                 }
-                echo($res['show'] ? '<br><span class="red"><b>' . __('Direct Link') . '</b></span>' : '') . '</p></div></div>';
-                ++$i;
+                if (! empty($res['bold'])) {
+                    $styles .= ' ' . __('Bold');
+                }
+                if (! empty($res['italic'])) {
+                    $styles .= ' ' . __('Italic');
+                }
+                if (! empty($res['underline'])) {
+                    $styles .= ' ' . __('Underline');
+                }
+                $res['styles'] = '';
+                $items[] = $res;
             }
-        } else {
-            echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
         }
-
-        echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
 
         if ($total > $user->config->kmess) {
-            echo '<div class="topmenu">' .
-                $tools->displayPagination(
-                    '?act=ads&amp;type=' . $type . '&amp;',
-                    $start,
-                    $total,
-                    $user->config->kmess
-                ) .
-                '</div><p><form action="?act=ads&amp;type=' . $type . '" method="post">' .
-                '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . __('To Page') . ' &gt;&gt;"/></form></p>';
+            $data['pagination'] = $tools->displayPagination('?act=ads&amp;type=' . $type . '&amp;', $start, $total, $user->config->kmess);
         }
 
-        echo '<p><a href="?act=ads&amp;mod=edit">' . __('Add link') . '</a><br>' .
-            '<a href="?act=ads&amp;mod=clear">' . __('Delete inactive links') . '</a><br>' .
-            '<a href="./">' . __('Admin Panel') . '</a></p>';
-}
+        $data['back_url'] = '/admin/';
+        $data['total'] = $total ?? 0;
+        $data['items'] = $items ?? [];
 
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => __('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);
+        echo $view->render(
+            'admin::ads_index',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => $data,
+            ]
+        );
+}
