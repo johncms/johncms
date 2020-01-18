@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -35,6 +35,9 @@ $image = false;
 $deny = false;
 $mode = false;
 $move = false;
+
+$title = __('Delete');
+$nav_chain->add($title);
 
 $change = ($type === 'dir'
     ? $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent` = ' . $id)->fetchColumn() > 0
@@ -95,7 +98,14 @@ switch ($type) {
 
     case 'article':
         if ($db->query('SELECT COUNT(*) FROM `library_texts` WHERE `id` = ' . $id)->rowCount() === 0) {
-            $error = $tools->displayError(__('Articles do not exist'));
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => __('Articles do not exist'),
+                ]
+            );
         } else {
             $sql = 'DELETE FROM `library_texts` WHERE `id` = ' . $id;
             if (isset($_GET['yes'])) {
@@ -119,17 +129,19 @@ if (isset($_GET['yes']) && $db->exec($sql)) {
 echo $view->render(
     'library::del',
     [
-        'id'        => $id,
-        'type'      => $type,
-        'error'     => $error,
-        'mode'      => $mode,
-        'moving'    => $moving,
-        'move'      => $move,
-        'delmove'   => $delmove,
-        'deldeny'   => $deldeny,
-        '$article'  => $article,
-        'image'     => $image,
-        'deny'      => $deny,
-        'dirchange' => $dirchange,
+        'title'      => $title,
+        'page_title' => $title,
+        'id'         => $id,
+        'type'       => $type,
+        'error'      => $error,
+        'mode'       => $mode,
+        'moving'     => $moving,
+        'move'       => $move,
+        'delmove'    => $delmove,
+        'deldeny'    => $deldeny,
+        'article'    => $article,
+        'image'      => $image,
+        'deny'       => $deny,
+        'dirchange'  => $dirchange,
     ]
 );
