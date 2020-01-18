@@ -24,105 +24,105 @@ use Gettext\Translations;
 $domainSearch = [
         'admin' => [
                 'target' => 'modules/admin/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/admin',
                 ]
         ],
 
         'album' => [
                 'target' => 'modules/album/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/album',
                 ]
         ],
 
         'community' => [
                 'target' => 'modules/community/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/community',
                 ]
         ],
 
         'downloads' => [
                 'target' => 'modules/downloads/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/downloads',
                 ]
         ],
 
         'forum' => [
                 'target' => 'modules/forum/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/forum',
                 ]
         ],
 
         'guestbook' => [
                 'target' => 'modules/guestbook/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/guestbook',
                 ]
         ],
 
         'help' => [
                 'target' => 'modules/help/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/help',
                 ]
         ],
 
         'homepage' => [
                 'target' => 'modules/homepage/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/homepage',
                 ]
         ],
 
         'library' => [
                 'target' => 'modules/library/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/library',
                 ]
         ],
 
         'mail' => [
                 'target' => 'modules/mail/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/mail',
                 ]
         ],
 
         'news' => [
                 'target' => 'modules/news/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/news',
                 ]
         ],
 
         'online' => [
                 'target' => 'modules/online/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/online',
                 ]
         ],
 
         'profile' => [
                 'target' => 'modules/profile/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/profile',
                 ]
         ],
 
         'registration' => [
                 'target' => 'modules/registration/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/registration',
                 ]
         ],
 
         'system' => [
                 'target' => 'system/locale',
-                'scan'   => [
+                'scan' => [
                         'modules/language',
                         'modules/login',
                         'modules/notifications',
@@ -164,4 +164,4 @@ foreach ($domainSearch as $domain => $attributes) {
     }
 }
 
-exit('[32mLanguage templates has been created successfully[0m');
+exit('[32mLanguage templates has been created successfully[0m' . "\n");

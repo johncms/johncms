@@ -38,4 +38,4 @@ foreach ($search as $dir) {
     }
 }
 
-exit('[32mLanguages has been successfully updated[0m');
+exit('[32mLanguages has been successfully updated[0m' . "\n");
