@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -15,6 +15,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 use Library\Hashtags;
 
 $obj = new Hashtags(0);
+
+$title = __('Tags');
+$nav_chain->add($title);
 
 if (isset($_GET['tag'])) {
     $tag = urldecode($_GET['tag']);
@@ -51,9 +54,21 @@ if (isset($_GET['tag'])) {
         echo $view->render(
             'library::tags',
             [
+                'title'      => $title,
+                'page_title' => $title,
                 'total'      => $total,
                 'pagination' => $pagination,
                 'list'       => $list,
+            ]
+        );
+    } else {
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'    => $title,
+                'type'     => 'alert-info',
+                'message'  => __('The list is empty'),
+                'back_url' => '/library/',
             ]
         );
     }
