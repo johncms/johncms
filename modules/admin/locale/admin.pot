@@ -42,18 +42,15 @@ msgid "Add link"
 msgstr ""
 
 #: modules/admin/includes/ads.php:34
-#: modules/admin/includes/counters.php:67
-#: modules/admin/includes/counters.php:120
-#: modules/admin/includes/counters.php:140
-#: modules/admin/includes/counters.php:199
-#: modules/admin/includes/counters.php:246
-#: modules/admin/includes/forum.php:39
-#: modules/admin/includes/forum.php:64
-#: modules/admin/includes/forum.php:72
-#: modules/admin/includes/forum.php:120
-#: modules/admin/includes/forum.php:131
-#: modules/admin/includes/forum.php:236
-#: modules/admin/includes/forum.php:340
+#: modules/admin/includes/counters.php:91
+#: modules/admin/includes/counters.php:155
+#: modules/admin/includes/counters.php:204
+#: modules/admin/includes/counters.php:279
+#: modules/admin/includes/counters.php:340
+#: modules/admin/includes/forum/del.php:65
+#: modules/admin/includes/forum/del.php:84
+#: modules/admin/includes/forum/del.php:155
+#: modules/admin/includes/forum/del.php:174
 #: modules/admin/includes/ip_whois.php:117
 #: modules/admin/includes/reg.php:35
 #: modules/admin/includes/reg.php:77
@@ -64,33 +61,49 @@ msgstr ""
 
 #: modules/admin/includes/ads.php:34
 #: modules/admin/includes/ads.php:85
-#: modules/admin/includes/counters.php:120
-#: modules/admin/includes/counters.php:140
-#: modules/admin/includes/counters.php:158
-#: modules/admin/includes/counters.php:199
-#: modules/admin/includes/counters.php:235
-#: modules/admin/includes/forum.php:218
-#: modules/admin/includes/forum.php:333
-#: modules/admin/includes/forum.php:452
+#: modules/admin/includes/antispy.php:206
+#: modules/admin/includes/forum/add.php:45
+#: modules/admin/includes/forum/add.php:119
+#: modules/admin/includes/forum/del.php:35
+#: modules/admin/includes/forum/del.php:70
+#: modules/admin/includes/forum/del.php:89
+#: modules/admin/includes/forum/del.php:118
+#: modules/admin/includes/forum/del.php:160
+#: modules/admin/includes/forum/del.php:179
+#: modules/admin/includes/forum/del.php:198
+#: modules/admin/includes/forum/del.php:213
+#: modules/admin/includes/forum/edit.php:38
+#: modules/admin/includes/forum/edit.php:119
+#: modules/admin/includes/forum/hposts.php:54
+#: modules/admin/includes/forum/htopics.php:55
 #: modules/admin/includes/ip_whois.php:121
-#: modules/admin/includes/ipban.php:41
-#: modules/admin/includes/ipban.php:133
-#: modules/admin/includes/ipban.php:193
-#: modules/admin/includes/ipban.php:228
-#: modules/admin/includes/ipban.php:287
-#: modules/admin/includes/ipban.php:297
-#: modules/admin/includes/ipban.php:305
-#: modules/admin/includes/ipban.php:365
+#: modules/admin/includes/ipban.php:63
+#: modules/admin/includes/ipban.php:239
+#: modules/admin/includes/ipban.php:276
+#: modules/admin/includes/ipban.php:353
+#: modules/admin/includes/ipban.php:371
+#: modules/admin/includes/ipban.php:388
+#: modules/admin/includes/ipban.php:419
+#: modules/admin/includes/news.php:51
 #: modules/admin/templates/admin_list.phtml:50
+#: modules/admin/templates/antispy_scan_result.phtml:46
 #: modules/admin/templates/ban_panel.phtml:68
+#: modules/admin/templates/counters.phtml:78
+#: modules/admin/templates/counters_view.phtml:61
+#: modules/admin/templates/forum/hidden_posts.phtml:130
+#: modules/admin/templates/forum/hidden_topics.phtml:126
+#: modules/admin/templates/forum/index.phtml:46
+#: modules/admin/templates/forum/structure.phtml:70
+#: modules/admin/templates/ipban.phtml:87
+#: modules/admin/templates/ipban_detail.phtml:59
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
 msgstr ""
 
 #: modules/admin/includes/ads.php:60
-#: modules/admin/includes/counters.php:157
-#: modules/admin/includes/counters.php:234
+#: modules/admin/includes/counters.php:230
+#: modules/admin/includes/counters.php:320
 msgid "The required fields are not filled"
 msgstr ""
 
@@ -115,9 +128,9 @@ msgid "Link successfully added"
 msgstr ""
 
 #: modules/admin/includes/ads.php:177
-#: modules/admin/includes/antispy.php:207
-#: modules/admin/includes/counters.php:130
-#: modules/admin/includes/ipban.php:347
+#: modules/admin/includes/antispy.php:228
+#: modules/admin/includes/counters.php:180
+#: modules/admin/includes/ipban.php:446
 #: modules/admin/includes/reg.php:49
 #: modules/admin/includes/reg.php:64
 #: modules/admin/includes/reg.php:95
@@ -141,13 +154,15 @@ msgid "Click statistics won't be counted, If the direct link is turned on"
 msgstr ""
 
 #: modules/admin/includes/ads.php:185
-#: modules/admin/includes/counters.php:165
-#: modules/admin/includes/counters.php:207
-#: modules/admin/includes/forum.php:259
-#: modules/admin/includes/forum.php:313
-#: modules/admin/includes/forum.php:367
-#: modules/admin/includes/forum.php:417
-#: modules/admin/includes/news.php:54
+#: modules/admin/includes/forum/add.php:67
+#: modules/admin/includes/forum/edit.php:66
+#: modules/admin/templates/counters_add_confirm.phtml:41
+#: modules/admin/templates/counters_view.phtml:31
+#: modules/admin/templates/forum/add.phtml:46
+#: modules/admin/templates/forum/add.phtml:47
+#: modules/admin/templates/forum/edit.phtml:42
+#: modules/admin/templates/forum/edit.phtml:43
+#: modules/admin/templates/news.phtml:48
 msgid "Title"
 msgstr ""
 
@@ -264,18 +279,17 @@ msgstr ""
 
 #: modules/admin/includes/ads.php:219
 #: modules/admin/includes/ads.php:371
-#: modules/admin/includes/counters.php:65
-#: modules/admin/includes/counters.php:318
-#: modules/admin/includes/forum.php:483
-#: modules/admin/includes/forum.php:508
+#: modules/admin/templates/counters.phtml:63
+#: modules/admin/templates/counters_view.phtml:59
+#: modules/admin/templates/forum/structure.phtml:56
 msgid "Edit"
 msgstr ""
 
 #: modules/admin/includes/ads.php:219
-#: modules/admin/includes/counters.php:206
-#: modules/admin/includes/counters.php:324
-#: modules/admin/includes/forum.php:331
-#: modules/admin/includes/forum.php:517
+#: modules/admin/templates/counters.phtml:75
+#: modules/admin/templates/forum/add.phtml:88
+#: modules/admin/templates/forum/structure.phtml:66
+#: modules/admin/templates/ipban.phtml:78
 msgid "Add"
 msgstr ""
 
@@ -283,33 +297,11 @@ msgstr ""
 #: modules/admin/includes/ads.php:320
 #: modules/admin/includes/ads.php:432
 #: modules/admin/includes/ads.php:438
-#: modules/admin/includes/antispy.php:219
-#: modules/admin/includes/antispy.php:228
-#: modules/admin/includes/antispy.php:233
-#: modules/admin/includes/counters.php:306
-#: modules/admin/includes/counters.php:327
-#: modules/admin/includes/counters.php:332
-#: modules/admin/includes/forum.php:760
-#: modules/admin/includes/forum.php:777
-#: modules/admin/includes/forum.php:782
 #: modules/admin/includes/ip_whois.php:18
 #: modules/admin/includes/ip_whois.php:124
-#: modules/admin/includes/ipban.php:133
-#: modules/admin/includes/ipban.php:189
-#: modules/admin/includes/ipban.php:213
-#: modules/admin/includes/ipban.php:336
-#: modules/admin/includes/ipban.php:365
-#: modules/admin/includes/ipban.php:370
-#: modules/admin/includes/ipban.php:418
-#: modules/admin/includes/ipban.php:424
-#: modules/admin/includes/languages.php:31
-#: modules/admin/includes/news.php:18
-#: modules/admin/includes/news.php:68
-#: modules/admin/includes/news.php:71
-#: modules/admin/includes/settings.php:29
 #: modules/admin/includes/usr_del.php:71
 #: modules/admin/includes/usr_del.php:144
-#: modules/admin/index.php:48
+#: modules/admin/index.php:50
 #: modules/admin/templates/access.phtml:2
 #: modules/admin/templates/access.phtml:5
 #: modules/admin/templates/index.phtml:1
@@ -324,17 +316,15 @@ msgstr ""
 #: modules/admin/includes/ads.php:281
 #: modules/admin/includes/ads.php:299
 #: modules/admin/includes/ads.php:372
-#: modules/admin/includes/counters.php:65
-#: modules/admin/includes/counters.php:135
-#: modules/admin/includes/counters.php:137
-#: modules/admin/includes/counters.php:319
-#: modules/admin/includes/forum.php:200
-#: modules/admin/includes/forum.php:214
-#: modules/admin/includes/forum.php:484
-#: modules/admin/includes/forum.php:509
-#: modules/admin/includes/ipban.php:350
+#: modules/admin/includes/ipban.php:452
 #: modules/admin/includes/reg.php:166
 #: modules/admin/includes/usr_del.php:132
+#: modules/admin/templates/counters.phtml:64
+#: modules/admin/templates/counters_confirm.phtml:35
+#: modules/admin/templates/counters_view.phtml:60
+#: modules/admin/templates/forum/del_confirm.phtml:35
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:60
+#: modules/admin/templates/forum/structure.phtml:57
 #: modules/admin/templates/user_clean_confirm.phtml:38
 msgid "Delete"
 msgstr ""
@@ -345,16 +335,28 @@ msgstr ""
 
 #: modules/admin/includes/ads.php:284
 #: modules/admin/includes/ads.php:301
-#: modules/admin/includes/counters.php:138
-#: modules/admin/includes/ipban.php:189
-#: modules/admin/includes/ipban.php:213
-#: modules/admin/includes/ipban.php:268
-#: modules/admin/includes/ipban.php:351
+#: modules/admin/includes/ipban.php:318
+#: modules/admin/includes/ipban.php:454
 #: modules/admin/includes/usr_del.php:139
 #: modules/admin/templates/amnesty.phtml:45
 #: modules/admin/templates/antiflood.phtml:83
+#: modules/admin/templates/antispy_create_confirm.phtml:40
+#: modules/admin/templates/counters_add_confirm.phtml:64
+#: modules/admin/templates/counters_confirm.phtml:36
+#: modules/admin/templates/counters_form.phtml:86
+#: modules/admin/templates/forum/add.phtml:89
+#: modules/admin/templates/forum/del_confirm.phtml:36
+#: modules/admin/templates/forum/del_confirm_move.phtml:48
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:62
+#: modules/admin/templates/forum/edit.phtml:98
+#: modules/admin/templates/forum/hidden_posts.phtml:30
+#: modules/admin/templates/forum/hidden_topics.phtml:30
+#: modules/admin/templates/ipban_add.phtml:80
+#: modules/admin/templates/ipban_add_confirm.phtml:66
+#: modules/admin/templates/ipban_search.phtml:40
 #: modules/admin/templates/karma.phtml:82
 #: modules/admin/templates/karma_clean_confirm.phtml:35
+#: modules/admin/templates/news.phtml:93
 #: modules/admin/templates/user_clean_confirm.phtml:39
 msgid "Cancel"
 msgstr ""
@@ -369,12 +371,12 @@ msgid "Are you sure you want to delete all inactive links?"
 msgstr ""
 
 #: modules/admin/includes/ads.php:369
-#: modules/admin/includes/counters.php:316
+#: modules/admin/templates/counters.phtml:61
 msgid "Up"
 msgstr ""
 
 #: modules/admin/includes/ads.php:370
-#: modules/admin/includes/counters.php:317
+#: modules/admin/templates/counters.phtml:62
 msgid "Down"
 msgstr ""
 
@@ -404,33 +406,27 @@ msgid "Remains"
 msgstr ""
 
 #: modules/admin/includes/ads.php:412
-#: modules/admin/includes/forum.php:489
-#: modules/admin/includes/forum.php:623
-#: modules/admin/includes/forum.php:734
-#: modules/admin/includes/ipban.php:401
 #: modules/admin/templates/admin_list.phtml:32
 #: modules/admin/templates/ban_panel.phtml:42
+#: modules/admin/templates/counters.phtml:43
+#: modules/admin/templates/forum/hidden_posts.phtml:107
+#: modules/admin/templates/forum/hidden_topics.phtml:103
+#: modules/admin/templates/forum/structure.phtml:33
+#: modules/admin/templates/ipban.phtml:50
 #: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
 msgstr ""
 
 #: modules/admin/includes/ads.php:415
-#: modules/admin/includes/antispy.php:162
-#: modules/admin/includes/antispy.php:196
 #: modules/admin/includes/emoticons.php:61
-#: modules/admin/includes/forum.php:626
-#: modules/admin/includes/forum.php:737
-#: modules/admin/includes/ipban.php:132
-#: modules/admin/includes/ipban.php:405
+#: modules/admin/templates/forum/hidden_posts.phtml:122
+#: modules/admin/templates/forum/hidden_topics.phtml:118
 #: modules/admin/templates/user_clean_confirm.phtml:33
 #: modules/admin/templates/userlist.phtml:28
 msgid "Total"
 msgstr ""
 
 #: modules/admin/includes/ads.php:427
-#: modules/admin/includes/forum.php:632
-#: modules/admin/includes/forum.php:743
-#: modules/admin/includes/ipban.php:409
 msgid "To Page"
 msgstr ""
 
@@ -439,25 +435,32 @@ msgid "Antiflood Settings"
 msgstr ""
 
 #: modules/admin/includes/antiflood.php:76
+#: modules/admin/includes/news.php:46
 msgid "ERROR: Can not write system.local.php"
 msgstr ""
 
 #: modules/admin/includes/antiflood.php:82
 #: modules/admin/includes/karma.php:79
-#: modules/admin/includes/news.php:43
+#: modules/admin/includes/news.php:57
 #: modules/admin/templates/access.phtml:10
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
 msgstr ""
 
-#: modules/admin/includes/antispy.php:24
-#: modules/admin/includes/counters.php:23
-#: modules/admin/includes/ipban.php:23
+#: modules/admin/includes/antispy.php:21
+#: modules/admin/templates/sidebar-admin-menu.phtml:247
+msgid "Anti-Spyware"
+msgstr ""
+
+#: modules/admin/includes/antispy.php:31
+#: modules/admin/includes/counters.php:31
+#: modules/admin/includes/forum/del.php:208
+#: modules/admin/includes/ipban.php:31
 #: modules/admin/includes/karma.php:33
-#: modules/admin/includes/languages.php:24
-#: modules/admin/includes/settings.php:22
+#: modules/admin/includes/languages.php:25
+#: modules/admin/includes/settings.php:23
 #: modules/admin/includes/usr_del.php:23
-#: modules/admin/index.php:52
+#: modules/admin/index.php:54
 #: modules/admin/templates/access.phtml:31
 #: modules/admin/templates/access.phtml:49
 #: modules/admin/templates/access.phtml:67
@@ -466,80 +469,28 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: modules/admin/includes/antispy.php:153
-#: modules/admin/includes/antispy.php:173
-#: modules/admin/includes/antispy.php:202
-#: modules/admin/includes/antispy.php:219
-#: modules/admin/templates/sidebar-admin-menu.phtml:247
-msgid "Anti-Spyware"
-msgstr ""
-
-#: modules/admin/includes/antispy.php:153
-msgid "Distributive scan"
-msgstr ""
-
-#: modules/admin/includes/antispy.php:156
-msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
-msgstr ""
-
-#: modules/admin/includes/antispy.php:164
-msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
-msgstr ""
-
-#: modules/admin/includes/antispy.php:167
-msgid "Rescan"
-msgstr ""
-
-#: modules/admin/includes/antispy.php:173
-#: modules/admin/includes/antispy.php:221
+#: modules/admin/includes/antispy.php:168
+#: modules/admin/templates/antispy.phtml:32
 msgid "Snapshot scan"
 msgstr ""
 
-#: modules/admin/includes/antispy.php:180
+#: modules/admin/includes/antispy.php:175
 msgid "Snapshot is not created"
 msgstr ""
 
-#: modules/admin/includes/antispy.php:181
-#: modules/admin/includes/antispy.php:202
-#: modules/admin/includes/antispy.php:211
-#: modules/admin/includes/antispy.php:223
+#: modules/admin/includes/antispy.php:180
+#: modules/admin/includes/antispy.php:214
+#: modules/admin/templates/antispy.phtml:38
+#: modules/admin/templates/antispy_create_confirm.phtml:39
 msgid "Create snapshot"
 msgstr ""
 
-#: modules/admin/includes/antispy.php:185
-msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
-
-#: modules/admin/includes/antispy.php:193
+#: modules/admin/includes/antispy.php:201
 msgid "Excellent!<br>All files are consistent with previously made image."
 msgstr ""
 
-#: modules/admin/includes/antispy.php:206
+#: modules/admin/includes/antispy.php:223
 msgid "Snapshot successfully created"
-msgstr ""
-
-#: modules/admin/includes/antispy.php:210
-msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
-
-#: modules/admin/includes/antispy.php:213
-msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
-
-#: modules/admin/includes/antispy.php:220
-msgid "Scan mode"
-msgstr ""
-
-#: modules/admin/includes/antispy.php:222
-msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
-
-#: modules/admin/includes/antispy.php:224
-msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
-
-#: modules/admin/includes/antispy.php:228
-msgid "Scanner menu"
 msgstr ""
 
 #: modules/admin/includes/ban_panel.php:22
@@ -577,120 +528,50 @@ msgstr ""
 msgid "Violations history"
 msgstr ""
 
-#: modules/admin/includes/counters.php:42
-#: modules/admin/includes/counters.php:135
-#: modules/admin/includes/counters.php:164
-#: modules/admin/includes/counters.php:206
-#: modules/admin/includes/counters.php:306
-#: modules/admin/includes/counters.php:327
+#: modules/admin/includes/counters.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:170
 msgid "Counters"
 msgstr ""
 
-#: modules/admin/includes/counters.php:42
-#: modules/admin/includes/counters.php:220
+#: modules/admin/includes/counters.php:45
+#: modules/admin/templates/counters_form.phtml:85
 msgid "Viewing"
 msgstr ""
 
-#: modules/admin/includes/counters.php:44
-#: modules/admin/includes/counters.php:166
-#: modules/admin/includes/counters.php:208
-#: modules/admin/includes/counters.php:212
-msgid "Option 1"
-msgstr ""
-
-#: modules/admin/includes/counters.php:45
-#: modules/admin/includes/counters.php:167
-#: modules/admin/includes/counters.php:209
-#: modules/admin/includes/counters.php:213
-msgid "Option 2"
-msgstr ""
-
-#: modules/admin/includes/counters.php:46
-#: modules/admin/includes/counters.php:210
-msgid "Display mode"
-msgstr ""
-
-#: modules/admin/includes/counters.php:50
+#: modules/admin/includes/counters.php:59
 msgid "On all pages showing option 1"
 msgstr ""
 
-#: modules/admin/includes/counters.php:54
+#: modules/admin/includes/counters.php:63
 msgid "On all pages showing option 2"
 msgstr ""
 
-#: modules/admin/includes/counters.php:58
+#: modules/admin/includes/counters.php:67
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
-#: modules/admin/includes/counters.php:63
-msgid "Disable"
-msgstr ""
-
-#: modules/admin/includes/counters.php:64
-msgid "Enable"
-msgstr ""
-
-#: modules/admin/includes/counters.php:130
+#: modules/admin/includes/counters.php:175
 msgid "Counter deleted"
 msgstr ""
 
-#: modules/admin/includes/counters.php:137
-#: modules/admin/includes/forum.php:212
+#: modules/admin/includes/counters.php:186
+msgid "Delete:"
+msgstr ""
+
+#: modules/admin/includes/counters.php:187
+#: modules/admin/includes/forum/del.php:302
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/admin/includes/counters.php:164
-msgid "Preview"
-msgstr ""
-
-#: modules/admin/includes/counters.php:168
-msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
-
-#: modules/admin/includes/counters.php:179
-#: modules/admin/includes/forum.php:450
-#: modules/admin/includes/news.php:65
-#: modules/admin/templates/access.phtml:135
-#: modules/admin/templates/amnesty.phtml:44
-#: modules/admin/templates/antiflood.phtml:82
-#: modules/admin/templates/karma.phtml:81
-#: modules/admin/templates/languages.phtml:28
-#: modules/admin/templates/settings.phtml:73
-msgid "Save"
-msgstr ""
-
-#: modules/admin/includes/counters.php:208
-msgid "Code for main page"
-msgstr ""
-
-#: modules/admin/includes/counters.php:209
-msgid "Code for other pages"
-msgstr ""
-
-#: modules/admin/includes/counters.php:210
-#: modules/admin/includes/ipban.php:169
-msgid "Default"
-msgstr ""
-
-#: modules/admin/includes/counters.php:211
-msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
-
-#: modules/admin/includes/counters.php:214
-msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
-
-#: modules/admin/includes/counters.php:301
+#: modules/admin/includes/counters.php:404
 msgid "Counter successfully changed"
 msgstr ""
 
-#: modules/admin/includes/counters.php:301
+#: modules/admin/includes/counters.php:404
 msgid "Counter successfully added"
 msgstr ""
 
 #: modules/admin/includes/emoticons.php:21
-#: modules/admin/includes/news.php:58
 msgid "Smilies"
 msgstr ""
 
@@ -702,480 +583,244 @@ msgstr ""
 msgid "Error updating cache"
 msgstr ""
 
-#: modules/admin/includes/forum.php:39
-#: modules/admin/includes/forum.php:121
-#: modules/admin/includes/forum.php:132
-#: modules/admin/includes/forum.php:237
-#: modules/admin/includes/forum.php:340
-#: modules/admin/includes/forum.php:461
-#: modules/admin/includes/forum.php:519
-#: modules/admin/includes/forum.php:524
-#: modules/admin/includes/forum.php:640
-#: modules/admin/includes/forum.php:760
+#: modules/admin/includes/forum.php:23
 msgid "Forum Management"
 msgstr ""
 
-#: modules/admin/includes/forum.php:48
-msgid "Delete section"
-msgstr ""
-
-#: modules/admin/includes/forum.php:48
-msgid "Delete category"
-msgstr ""
-
-#: modules/admin/includes/forum.php:90
-#: modules/admin/includes/forum.php:210
-msgid "Category deleted"
-msgstr ""
-
-#: modules/admin/includes/forum.php:90
-#: modules/admin/includes/forum.php:141
-msgid "All content has been moved to"
-msgstr ""
-
-#: modules/admin/includes/forum.php:90
-msgid "selected category"
-msgstr ""
-
-#: modules/admin/includes/forum.php:93
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
-
-#: modules/admin/includes/forum.php:94
-msgid "Select category"
-msgstr ""
-
-#: modules/admin/includes/forum.php:101
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr ""
-
-#: modules/admin/includes/forum.php:102
-#: modules/admin/includes/forum.php:195
-msgid "Move"
-msgstr ""
-
-#: modules/admin/includes/forum.php:106
-#: modules/admin/includes/forum.php:199
-msgid "Complete removal"
-msgstr ""
-
-#: modules/admin/includes/forum.php:106
-msgid "If you want to destroy all the information, first remove"
-msgstr ""
-
-#: modules/admin/includes/forum.php:107
-msgid "subsections"
-msgstr ""
-
-#: modules/admin/includes/forum.php:141
-#: modules/admin/includes/forum.php:210
-msgid "Section deleted"
-msgstr ""
-
-#: modules/admin/includes/forum.php:141
-msgid "selected section"
-msgstr ""
-
-#: modules/admin/includes/forum.php:145
-#: modules/admin/includes/forum.php:542
-#: modules/admin/includes/forum.php:656
-msgid "Access forbidden"
-msgstr ""
-
-#: modules/admin/includes/forum.php:175
-msgid "Section with all contents are removed"
-msgstr ""
-
-#: modules/admin/includes/forum.php:176
-#: modules/admin/includes/forum.php:308
-msgid "Go to category"
-msgstr ""
-
-#: modules/admin/includes/forum.php:179
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
-
-#: modules/admin/includes/forum.php:179
-msgid "Select section"
-msgstr ""
-
-#: modules/admin/includes/forum.php:188
-msgid "Other category"
-msgstr ""
-
-#: modules/admin/includes/forum.php:195
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
-
-#: modules/admin/includes/forum.php:199
-msgid "WARNING! All the information will be deleted"
-msgstr ""
-
-#: modules/admin/includes/forum.php:255
-#: modules/admin/includes/forum.php:363
-msgid "You have not entered Title"
-msgstr ""
-
-#: modules/admin/includes/forum.php:259
-#: modules/admin/includes/forum.php:367
-msgid "Invalid length"
-msgstr ""
-
-#: modules/admin/includes/forum.php:263
-#: modules/admin/includes/forum.php:371
-msgid "Description should be at least 2 characters in length"
-msgstr ""
-
-#: modules/admin/includes/forum.php:305
+#: modules/admin/includes/forum/add.php:23
 msgid "Add Section"
 msgstr ""
 
-#: modules/admin/includes/forum.php:305
+#: modules/admin/includes/forum/add.php:23
 msgid "Add Category"
 msgstr ""
 
-#: modules/admin/includes/forum.php:315
-#: modules/admin/includes/forum.php:421
-msgid "Min. 2, Max. 30 characters"
+#: modules/admin/includes/forum/add.php:40
+#: modules/admin/includes/forum/del.php:30
+#: modules/admin/includes/forum/edit.php:33
+msgid "Invalid ID"
 msgstr ""
 
-#: modules/admin/includes/forum.php:316
-#: modules/admin/includes/forum.php:422
-#: modules/admin/templates/settings.phtml:61
-msgid "Description"
+#: modules/admin/includes/forum/add.php:63
+#: modules/admin/includes/forum/edit.php:62
+msgid "You have not entered Title"
 msgstr ""
 
-#: modules/admin/includes/forum.php:318
-#: modules/admin/includes/forum.php:428
-msgid "Optional field"
+#: modules/admin/includes/forum/add.php:67
+#: modules/admin/includes/forum/edit.php:66
+msgid "Invalid length"
 msgstr ""
 
-#: modules/admin/includes/forum.php:318
-#: modules/admin/includes/forum.php:428
-msgid "Min. 2, Max. 500 characters"
+#: modules/admin/includes/forum/add.php:71
+#: modules/admin/includes/forum/edit.php:70
+msgid "Description should be at least 2 characters in length"
 msgstr ""
 
-#: modules/admin/includes/forum.php:321
-#: modules/admin/includes/forum.php:431
-msgid "Common access"
-msgstr ""
-
-#: modules/admin/includes/forum.php:322
-#: modules/admin/includes/forum.php:432
-msgid "Only for reading"
-msgstr ""
-
-#: modules/admin/includes/forum.php:323
-#: modules/admin/includes/forum.php:433
-msgid "Allow authors to edit the 1st post"
-msgstr ""
-
-#: modules/admin/includes/forum.php:324
-#: modules/admin/includes/forum.php:434
-msgid "Assign the newly created authors as curators"
-msgstr ""
-
-#: modules/admin/includes/forum.php:327
-#: modules/admin/includes/forum.php:446
-msgid "Section type"
-msgstr ""
-
-#: modules/admin/includes/forum.php:328
-#: modules/admin/includes/forum.php:447
-msgid "For subsections"
-msgstr ""
-
-#: modules/admin/includes/forum.php:329
-#: modules/admin/includes/forum.php:448
-msgid "For topics"
-msgstr ""
-
-#: modules/admin/includes/forum.php:414
-msgid "Edit Section"
-msgstr ""
-
-#: modules/admin/includes/forum.php:419
-msgid "Order"
-msgstr ""
-
-#: modules/admin/includes/forum.php:435
-msgid "Category"
-msgstr ""
-
-#: modules/admin/includes/forum.php:461
-#: modules/admin/includes/forum.php:770
+#: modules/admin/includes/forum/cat.php:22
+#: modules/admin/templates/forum/index.phtml:39
 msgid "Forum structure"
 msgstr ""
 
-#: modules/admin/includes/forum.php:467
+#: modules/admin/includes/forum/cat.php:31
 msgid "List of sections"
 msgstr ""
 
-#: modules/admin/includes/forum.php:493
-#: modules/admin/includes/forum.php:519
+#: modules/admin/includes/forum/cat.php:47
 msgid "List of categories"
 msgstr ""
 
-#: modules/admin/includes/forum.php:524
-#: modules/admin/includes/forum.php:772
-msgid "Hidden topics"
+#: modules/admin/includes/forum/del.php:45
+msgid "Delete section"
 msgstr ""
 
-#: modules/admin/includes/forum.php:531
-#: modules/admin/includes/forum.php:651
-msgid "Filter by author"
+#: modules/admin/includes/forum/del.php:45
+msgid "Delete category"
 msgstr ""
 
-#: modules/admin/includes/forum.php:537
-msgid "Filter by section"
+#: modules/admin/includes/forum/del.php:111
+#: modules/admin/includes/forum/del.php:293
+msgid "Category deleted"
 msgstr ""
 
-#: modules/admin/includes/forum.php:600
-#: modules/admin/includes/forum.php:714
-msgid "Filter"
+#: modules/admin/includes/forum/del.php:113
+#: modules/admin/includes/forum/del.php:193
+msgid "All content has been moved to"
 msgstr ""
 
-#: modules/admin/includes/forum.php:601
-msgid "by section"
+#: modules/admin/includes/forum/del.php:113
+msgid "selected category"
 msgstr ""
 
-#: modules/admin/includes/forum.php:602
-#: modules/admin/includes/forum.php:716
-msgid "by author"
+#: modules/admin/includes/forum/del.php:191
+#: modules/admin/includes/forum/del.php:293
+msgid "Section deleted"
 msgstr ""
 
-#: modules/admin/includes/forum.php:619
-#: modules/admin/includes/forum.php:731
-#: modules/admin/templates/reg_list.phtml:59
-msgid "Delete all"
+#: modules/admin/includes/forum/del.php:193
+msgid "selected section"
 msgstr ""
 
-#: modules/admin/includes/forum.php:640
-#: modules/admin/includes/forum.php:771
+#: modules/admin/includes/forum/del.php:249
+msgid "Section with all contents are removed"
+msgstr ""
+
+#: modules/admin/includes/forum/del.php:254
+#: modules/admin/includes/forum/del.php:298
+msgid "Go to category"
+msgstr ""
+
+#: modules/admin/includes/forum/edit.php:23
+msgid "Edit Section"
+msgstr ""
+
+#: modules/admin/includes/forum/hposts.php:23
+#: modules/admin/templates/forum/index.phtml:40
 msgid "Hidden posts"
 msgstr ""
 
-#: modules/admin/includes/forum.php:647
-msgid "Filter by topic"
-msgstr ""
-
-#: modules/admin/includes/forum.php:715
+#: modules/admin/includes/forum/hposts.php:35
+#: modules/admin/includes/forum/hposts.php:113
 msgid "by topic"
 msgstr ""
 
-#: modules/admin/includes/forum.php:761
-msgid "Statistic"
+#: modules/admin/includes/forum/hposts.php:39
+#: modules/admin/includes/forum/hposts.php:117
+#: modules/admin/includes/forum/htopics.php:34
+#: modules/admin/includes/forum/htopics.php:108
+msgid "by author"
 msgstr ""
 
-#: modules/admin/includes/forum.php:762
-msgid "Categories"
+#: modules/admin/includes/forum/hposts.php:49
+#: modules/admin/includes/forum/htopics.php:50
+msgid "Access forbidden"
 msgstr ""
 
-#: modules/admin/includes/forum.php:763
-msgid "Sections"
+#: modules/admin/includes/forum/htopics.php:23
+#: modules/admin/templates/forum/index.phtml:41
+msgid "Hidden topics"
 msgstr ""
 
-#: modules/admin/includes/forum.php:764
-msgid "Topics"
+#: modules/admin/includes/forum/htopics.php:40
+#: modules/admin/includes/forum/htopics.php:112
+msgid "by section"
 msgstr ""
 
-#: modules/admin/includes/forum.php:765
-msgid "Messages"
-msgstr ""
-
-#: modules/admin/includes/forum.php:766
-msgid "Files"
-msgstr ""
-
-#: modules/admin/includes/forum.php:767
-msgid "Votes"
-msgstr ""
-
-#: modules/admin/includes/forum.php:769
-msgid "Settings"
-msgstr ""
-
-#: modules/admin/includes/forum.php:774
-msgid "Go to Forum"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:29
-#: modules/admin/includes/ipban.php:274
-#: modules/admin/includes/ipban.php:358
-#: modules/admin/includes/ipban.php:370
+#: modules/admin/includes/ipban.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:255
 msgid "Ban by IP"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:29
-#: modules/admin/includes/ipban.php:186
-#: modules/admin/includes/ipban.php:210
+#: modules/admin/includes/ipban.php:43
+#: modules/admin/templates/ipban_add_confirm.phtml:65
 msgid "Add Ban"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:40
-#: modules/admin/includes/ipban.php:84
-#: modules/admin/includes/ipban.php:95
-#: modules/admin/includes/ipban.php:227
-#: modules/admin/includes/ipban.php:286
-#: modules/admin/includes/ipban.php:296
+#: modules/admin/includes/ipban.php:58
+#: modules/admin/includes/ipban.php:106
+#: modules/admin/includes/ipban.php:117
+#: modules/admin/includes/ipban.php:271
+#: modules/admin/includes/ipban.php:348
+#: modules/admin/includes/ipban.php:366
 #: modules/admin/includes/search_ip.php:79
 #: modules/admin/includes/search_ip.php:86
 msgid "Invalid IP"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:59
+#: modules/admin/includes/ipban.php:81
 #: modules/admin/includes/search_ip.php:54
 msgid "First IP is entered incorrectly"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:67
+#: modules/admin/includes/ipban.php:89
 #: modules/admin/includes/search_ip.php:62
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:108
+#: modules/admin/includes/ipban.php:130
 msgid "Address you entered conflicts with other who in the database"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:118
-#: modules/admin/includes/ipban.php:169
-#: modules/admin/includes/ipban.php:204
-#: modules/admin/includes/ipban.php:316
-#: modules/admin/includes/ipban.php:387
+#: modules/admin/includes/ipban.php:138
+#: modules/admin/includes/ipban.php:199
+#: modules/admin/includes/ipban.php:398
+#: modules/admin/includes/ipban.php:496
+#: modules/admin/templates/ipban_add.phtml:57
 msgid "Redirect"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:122
-#: modules/admin/includes/ipban.php:173
-#: modules/admin/includes/ipban.php:203
-#: modules/admin/includes/ipban.php:320
-#: modules/admin/includes/ipban.php:391
+#: modules/admin/includes/ipban.php:142
+#: modules/admin/includes/ipban.php:204
+#: modules/admin/includes/ipban.php:402
+#: modules/admin/includes/ipban.php:500
 #: modules/admin/templates/access.phtml:115
+#: modules/admin/templates/ipban_add.phtml:53
 msgid "Registration"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:126
-#: modules/admin/includes/ipban.php:177
-#: modules/admin/includes/ipban.php:202
-#: modules/admin/includes/ipban.php:324
-#: modules/admin/includes/ipban.php:395
+#: modules/admin/includes/ipban.php:146
+#: modules/admin/includes/ipban.php:208
+#: modules/admin/includes/ipban.php:406
+#: modules/admin/includes/ipban.php:504
+#: modules/admin/templates/ipban_add.phtml:49
 msgid "Block"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:145
+#: modules/admin/includes/ipban.php:175
 msgid "Ban impossible. Your own IP address in the range"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:154
+#: modules/admin/includes/ipban.php:183
 msgid "Ban range address"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:158
+#: modules/admin/includes/ipban.php:188
 msgid "Ban on the subnet mask"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:162
+#: modules/admin/includes/ipban.php:193
 msgid "Ban IP address"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:165
-#: modules/admin/includes/ipban.php:201
-#: modules/admin/includes/ipban.php:312
-msgid "Ban type"
+#: modules/admin/includes/ipban.php:200
+#: modules/admin/templates/counters_form.phtml:63
+msgid "Default"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:169
-#: modules/admin/includes/ipban.php:205
-msgid "Redirect URL"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:180
-#: modules/admin/includes/ipban.php:208
-#: modules/admin/includes/ipban.php:331
-msgid "Reason"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:180
-#: modules/admin/includes/ipban.php:331
+#: modules/admin/includes/ipban.php:216
+#: modules/admin/includes/ipban.php:413
 msgid "Not specified"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:187
-msgid "Please, check up correctness of the input data"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:199
-#: modules/admin/includes/ipban.php:360
-msgid "IP address"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:207
-msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:211
-msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:266
+#: modules/admin/includes/ipban.php:314
 msgid "Are you sure you wan to unban all IP?"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:267
+#: modules/admin/includes/ipban.php:316
 msgid "Perform"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:274
+#: modules/admin/includes/ipban.php:332
 msgid "Ban details"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:304
+#: modules/admin/includes/ipban.php:383
 msgid "This address not in the database"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:332
-msgid "Who applied the ban?"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:333
-msgid "Date"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:334
-msgid "Time"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:335
-msgid "Delete Ban"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:346
+#: modules/admin/includes/ipban.php:441
 msgid "Ban has been successfully removed"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:349
-msgid "re you sure to remove ban?"
+#: modules/admin/includes/ipban.php:450
+msgid "Are you sure you want to remove the ban?"
 msgstr ""
 
-#: modules/admin/includes/ipban.php:358
-#: modules/admin/includes/ipban.php:362
-#: modules/admin/includes/ipban.php:415
+#: modules/admin/includes/ipban.php:469
+#: modules/admin/templates/ipban.phtml:80
+#: modules/admin/templates/ipban_search.phtml:39
 #: modules/admin/templates/search_ip.phtml:41
 #: modules/admin/templates/sidebar-admin-menu.phtml:51
 msgid "Search"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:363
-msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:404
-msgid "Ban"
-msgstr ""
-
-#: modules/admin/includes/ipban.php:415
-msgid "Unban all IP"
 msgstr ""
 
 #: modules/admin/includes/karma.php:23
@@ -1191,60 +836,13 @@ msgstr ""
 msgid "You really want to clear the Karma?"
 msgstr ""
 
-#: modules/admin/includes/languages.php:32
+#: modules/admin/includes/languages.php:29
 #: modules/admin/templates/languages.phtml:17
 msgid "Default language"
 msgstr ""
 
-#: modules/admin/includes/news.php:18
+#: modules/admin/includes/news.php:19
 msgid "News on the mainpage"
-msgstr ""
-
-#: modules/admin/includes/news.php:52
-msgid "Appearance"
-msgstr ""
-
-#: modules/admin/includes/news.php:53
-msgid "Title + Text"
-msgstr ""
-
-#: modules/admin/includes/news.php:55
-msgid "Text"
-msgstr ""
-
-#: modules/admin/includes/news.php:56
-msgid "Not to show"
-msgstr ""
-
-#: modules/admin/includes/news.php:57
-msgid "Line breaks"
-msgstr ""
-
-#: modules/admin/includes/news.php:59
-msgid "bbCode Tags"
-msgstr ""
-
-#: modules/admin/includes/news.php:60
-#: modules/admin/includes/usr_del.php:123
-#: modules/admin/templates/access.phtml:72
-#: modules/admin/templates/access.phtml:95
-msgid "Comments"
-msgstr ""
-
-#: modules/admin/includes/news.php:61
-msgid "Text size"
-msgstr ""
-
-#: modules/admin/includes/news.php:63
-msgid "Quantity of news"
-msgstr ""
-
-#: modules/admin/includes/news.php:64
-msgid "How many days to show?"
-msgstr ""
-
-#: modules/admin/includes/news.php:66
-msgid "Reset Settings"
 msgstr ""
 
 #: modules/admin/includes/reg.php:21
@@ -1291,13 +889,15 @@ msgstr ""
 msgid "IP history"
 msgstr ""
 
-#: modules/admin/includes/settings.php:30
+#: modules/admin/includes/settings.php:27
+#: modules/admin/templates/settings.phtml:8
 #: modules/admin/templates/sidebar-admin-menu.phtml:201
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
 msgstr ""
 
 #: modules/admin/includes/userlist.php:24
+#: modules/admin/templates/userlist.phtml:3
 msgid "List of Users"
 msgstr ""
 
@@ -1324,6 +924,13 @@ msgstr ""
 
 #: modules/admin/includes/usr_del.php:120
 msgid "Cleaning activities"
+msgstr ""
+
+#: modules/admin/includes/usr_del.php:123
+#: modules/admin/templates/access.phtml:72
+#: modules/admin/templates/access.phtml:95
+#: modules/admin/templates/news.phtml:73
+msgid "Comments"
 msgstr ""
 
 #: modules/admin/includes/usr_del.php:127
@@ -1389,8 +996,23 @@ msgstr ""
 msgid "Administrators always have access to all closed modules and comments"
 msgstr ""
 
+#: modules/admin/templates/access.phtml:135
+#: modules/admin/templates/amnesty.phtml:44
+#: modules/admin/templates/antiflood.phtml:82
+#: modules/admin/templates/counters_add_confirm.phtml:63
+#: modules/admin/templates/forum/edit.phtml:97
+#: modules/admin/templates/ipban_add.phtml:79
+#: modules/admin/templates/karma.phtml:81
+#: modules/admin/templates/languages.phtml:28
+#: modules/admin/templates/news.phtml:92
+#: modules/admin/templates/settings.phtml:73
+msgid "Save"
+msgstr ""
+
 #: modules/admin/templates/admin_list.phtml:46
 #: modules/admin/templates/ban_panel.phtml:59
+#: modules/admin/templates/counters.phtml:73
+#: modules/admin/templates/ipban.phtml:72
 #: modules/admin/templates/reg_list.phtml:56
 #: modules/admin/templates/search_ip.phtml:76
 msgid "Total:"
@@ -1454,9 +1076,415 @@ msgstr ""
 msgid "End of day"
 msgstr ""
 
+#: modules/admin/templates/antispy.phtml:28
+msgid "Scan mode"
+msgstr ""
+
+#: modules/admin/templates/antispy.phtml:34
+msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
+msgstr ""
+
+#: modules/admin/templates/antispy.phtml:40
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
+msgstr ""
+
+#: modules/admin/templates/antispy_create_confirm.phtml:31
+msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
+msgstr ""
+
+#: modules/admin/templates/antispy_create_confirm.phtml:35
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
+msgstr ""
+
+#: modules/admin/templates/antispy_scan_result.phtml:31
+msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
+msgstr ""
+
+#: modules/admin/templates/antispy_scan_result.phtml:38
+msgid "List of files"
+msgstr ""
+
 #: modules/admin/templates/ban_panel.phtml:30
 #: modules/admin/templates/userlist.phtml:10
 msgid "Sort"
+msgstr ""
+
+#: modules/admin/templates/counters.phtml:54
+msgid "On"
+msgstr ""
+
+#: modules/admin/templates/counters.phtml:56
+msgid "Off"
+msgstr ""
+
+#: modules/admin/templates/counters_add_confirm.phtml:44
+#: modules/admin/templates/counters_form.phtml:49
+#: modules/admin/templates/counters_form.phtml:71
+#: modules/admin/templates/counters_view.phtml:42
+msgid "Option 1"
+msgstr ""
+
+#: modules/admin/templates/counters_add_confirm.phtml:47
+#: modules/admin/templates/counters_form.phtml:54
+#: modules/admin/templates/counters_form.phtml:75
+#: modules/admin/templates/counters_view.phtml:45
+msgid "Option 2"
+msgstr ""
+
+#: modules/admin/templates/counters_add_confirm.phtml:59
+msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:45
+#: modules/admin/templates/counters_form.phtml:46
+msgid "Name"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:51
+msgid "Code for main page"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:56
+msgid "Code for other pages"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:59
+msgid "Display mode"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:66
+msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:79
+msgid "WARNING!"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:80
+msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:81
+msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:34
+msgid "Status:"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:36
+msgid "Enabled"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:38
+msgid "Disabled"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:48
+msgid "Display mode:"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:55
+msgid "Disable"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:57
+msgid "Enable"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:42
+msgid "Parent section:"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:48
+#: modules/admin/templates/forum/edit.phtml:44
+msgid "Min. 2, Max. 30 characters"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:52
+#: modules/admin/templates/forum/edit.phtml:54
+#: modules/admin/templates/settings.phtml:61
+msgid "Description"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:54
+#: modules/admin/templates/forum/edit.phtml:56
+msgid "Optional field"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:54
+#: modules/admin/templates/forum/edit.phtml:56
+msgid "Min. 2, Max. 500 characters"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:58
+#: modules/admin/templates/forum/add.phtml:61
+#: modules/admin/templates/forum/edit.phtml:59
+#: modules/admin/templates/forum/edit.phtml:62
+msgid "Common access"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:65
+#: modules/admin/templates/forum/edit.phtml:66
+msgid "Assign the newly created authors as curators"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:69
+#: modules/admin/templates/forum/edit.phtml:70
+msgid "Allow authors to edit the 1st post"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:73
+#: modules/admin/templates/forum/edit.phtml:74
+msgid "Only for reading"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:77
+#: modules/admin/templates/forum/edit.phtml:77
+msgid "Section type"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:80
+#: modules/admin/templates/forum/edit.phtml:80
+msgid "For subsections"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:84
+#: modules/admin/templates/forum/edit.phtml:84
+msgid "For topics"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:31
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:37
+#: modules/admin/templates/forum/edit.phtml:88
+msgid "Category"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:44
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:47
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:53
+msgid "Move"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:53
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:57
+msgid "Complete removal"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:55
+msgid "If you want to destroy all the information, first remove"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move.phtml:56
+msgid "subsections"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:31
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:36
+msgid "Select section"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:43
+msgid "Other category"
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:50
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr ""
+
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:58
+msgid "WARNING! All the information will be deleted"
+msgstr ""
+
+#: modules/admin/templates/forum/edit.phtml:48
+#: modules/admin/templates/forum/edit.phtml:49
+msgid "Order"
+msgstr ""
+
+#: modules/admin/templates/forum/edit.phtml:50
+msgid "Only numbers"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:29
+#: modules/admin/templates/forum/hidden_topics.phtml:29
+msgid "Filtered:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:48
+msgid "Go to page"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:61
+#: modules/admin/templates/forum/hidden_topics.phtml:57
+msgid "Topic:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:85
+msgid "Edited:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:89
+msgid "Post deleted:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:91
+msgid "Post restored by:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:95
+#: modules/admin/templates/forum/hidden_topics.phtml:91
+msgid "Filter:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_posts.phtml:115
+#: modules/admin/templates/forum/hidden_topics.phtml:111
+#: modules/admin/templates/reg_list.phtml:59
+msgid "Delete all"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_topics.phtml:61
+msgid "Path:"
+msgstr ""
+
+#: modules/admin/templates/forum/hidden_topics.phtml:87
+msgid "Topic deleted:"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:28
+msgid "Statistic"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:30
+msgid "Categories"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:31
+msgid "Sections"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:32
+msgid "Topics"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:33
+msgid "Messages"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:34
+msgid "Files"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:35
+msgid "Votes"
+msgstr ""
+
+#: modules/admin/templates/forum/index.phtml:37
+msgid "Settings"
+msgstr ""
+
+#: modules/admin/templates/forum/structure.phtml:49
+msgid "View"
+msgstr ""
+
+#: modules/admin/templates/ipban.phtml:42
+#: modules/admin/templates/ipban_add.phtml:42
+#: modules/admin/templates/ipban_add.phtml:43
+#: modules/admin/templates/ipban_search.phtml:32
+#: modules/admin/templates/ipban_search.phtml:33
+msgid "IP address"
+msgstr ""
+
+#: modules/admin/templates/ipban.phtml:43
+#: modules/admin/templates/ipban_add.phtml:67
+#: modules/admin/templates/ipban_add_confirm.phtml:51
+msgid "Reason"
+msgstr ""
+
+#: modules/admin/templates/ipban.phtml:81
+msgid "Unban all IP"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:46
+#: modules/admin/templates/ipban_add_confirm.phtml:44
+msgid "Ban type"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:61
+#: modules/admin/templates/ipban_add.phtml:62
+msgid "Redirect URL"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:63
+msgid "If the ban on Redirect, then specify the URL"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:72
+msgid "Example:"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:73
+msgid "Ban one address"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:74
+msgid "Ban range of address"
+msgstr ""
+
+#: modules/admin/templates/ipban_add.phtml:75
+msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr ""
+
+#: modules/admin/templates/ipban_add_confirm.phtml:41
+msgid "Ban mode"
+msgstr ""
+
+#: modules/admin/templates/ipban_add_confirm.phtml:48
+msgid "Redirect URL:"
+msgstr ""
+
+#: modules/admin/templates/ipban_add_confirm.phtml:61
+msgid "Please, check up correctness of the input data"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:33
+msgid "Ban type:"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:37
+msgid "Redirect to:"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:41
+msgid "Reason:"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:44
+msgid "Banned by:"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:47
+msgid "Date:"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:50
+msgid "Time:"
+msgstr ""
+
+#: modules/admin/templates/ipban_detail.phtml:53
+msgid "Delete Ban"
+msgstr ""
+
+#: modules/admin/templates/ipban_search.phtml:36
+msgid "Enter a single address, mask and range are not allowed"
 msgstr ""
 
 #: modules/admin/templates/karma.phtml:43
@@ -1505,6 +1533,58 @@ msgstr ""
 
 #: modules/admin/templates/languages.phtml:29
 msgid "Update List"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:41
+msgid "Appearance"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:44
+msgid "Title + Text"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:52
+msgid "Text"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:56
+msgid "Not to show"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:61
+msgid "Line breaks"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:65
+msgid "Smiles"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:69
+msgid "bbCode Tags"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:77
+msgid "Text size"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:79
+#: modules/admin/templates/news.phtml:84
+#: modules/admin/templates/news.phtml:89
+msgid "min:"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:79
+#: modules/admin/templates/news.phtml:84
+#: modules/admin/templates/news.phtml:89
+msgid "max:"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:82
+msgid "Quantity of news"
+msgstr ""
+
+#: modules/admin/templates/news.phtml:87
+msgid "How many days to show?"
 msgstr ""
 
 #: modules/admin/templates/reg_list.phtml:58

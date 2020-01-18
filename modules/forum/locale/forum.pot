@@ -72,8 +72,8 @@ msgstr ""
 #: modules/forum/includes/say.php:345
 #: modules/forum/includes/say.php:361
 #: modules/forum/includes/say.php:375
-#: modules/forum/includes/say.php:445
-#: modules/forum/includes/say.php:465
+#: modules/forum/includes/say.php:447
+#: modules/forum/includes/say.php:467
 #: modules/forum/includes/vip.php:32
 #: modules/forum/includes/vip.php:51
 #: modules/forum/includes/vip.php:64
@@ -154,7 +154,7 @@ msgstr ""
 #: modules/forum/includes/nt.php:278
 #: modules/forum/includes/ren.php:63
 #: modules/forum/includes/ren.php:80
-#: modules/forum/includes/say.php:430
+#: modules/forum/includes/say.php:432
 #: modules/forum/includes/search.php:183
 msgid "Repeat"
 msgstr ""
@@ -212,7 +212,7 @@ msgstr ""
 
 #: modules/forum/includes/curators.php:31
 #: modules/forum/includes/deltema.php:46
-#: modules/forum/includes/say.php:581
+#: modules/forum/includes/say.php:583
 #: modules/forum/index.php:268
 msgid "Topic has been deleted or does not exists"
 msgstr ""
@@ -268,7 +268,7 @@ msgstr ""
 #: modules/forum/includes/editpost.php:104
 #: modules/forum/includes/file.php:49
 #: modules/forum/includes/new.php:58
-#: modules/forum/includes/say.php:583
+#: modules/forum/includes/say.php:585
 #: modules/forum/includes/show_post.php:30
 #: modules/forum/includes/show_post.php:52
 #: modules/forum/includes/tema.php:52
@@ -308,7 +308,7 @@ msgstr ""
 
 #: modules/forum/includes/editpost.php:254
 #: modules/forum/includes/nt.php:147
-#: modules/forum/includes/say.php:428
+#: modules/forum/includes/say.php:430
 msgid "You have not entered the message"
 msgstr ""
 
@@ -403,13 +403,7 @@ msgstr ""
 msgid "New Files"
 msgstr ""
 
-#: modules/forum/includes/files.php:137
-#: modules/forum/includes/who.php:56
-#: modules/forum/includes/who.php:232
-msgid "Guest"
-msgstr ""
-
-#: modules/forum/includes/files.php:174
+#: modules/forum/includes/files.php:178
 msgid "List of sections"
 msgstr ""
 
@@ -525,7 +519,7 @@ msgstr ""
 
 #: modules/forum/includes/nt.php:151
 #: modules/forum/includes/say.php:146
-#: modules/forum/includes/say.php:443
+#: modules/forum/includes/say.php:445
 msgid "Text is too short"
 msgstr ""
 
@@ -536,7 +530,7 @@ msgstr ""
 
 #: modules/forum/includes/nt.php:173
 #: modules/forum/includes/say.php:165
-#: modules/forum/includes/say.php:463
+#: modules/forum/includes/say.php:465
 msgid "Message already exists"
 msgstr ""
 
@@ -565,10 +559,10 @@ msgstr ""
 #: modules/forum/includes/say.php:341
 #: modules/forum/includes/say.php:357
 #: modules/forum/includes/say.php:371
-#: modules/forum/includes/say.php:426
-#: modules/forum/includes/say.php:441
-#: modules/forum/includes/say.php:461
-#: modules/forum/includes/say.php:579
+#: modules/forum/includes/say.php:428
+#: modules/forum/includes/say.php:443
+#: modules/forum/includes/say.php:463
+#: modules/forum/includes/say.php:581
 msgid "New message"
 msgstr ""
 
@@ -585,18 +579,18 @@ msgstr ""
 msgid "You can not reply to your own message"
 msgstr ""
 
-#: modules/forum/includes/say.php:398
+#: modules/forum/includes/say.php:400
 #: modules/forum/templates/reply_message.phtml:79
 msgid "I am glad to answer you"
 msgstr ""
 
-#: modules/forum/includes/say.php:402
+#: modules/forum/includes/say.php:404
 #: modules/forum/templates/reply_message.phtml:83
 msgid "respond to Your message"
 msgstr ""
 
-#: modules/forum/includes/say.php:553
-#: modules/forum/includes/say.php:554
+#: modules/forum/includes/say.php:555
+#: modules/forum/includes/say.php:556
 msgid "Reply to message"
 msgstr ""
 
@@ -643,6 +637,11 @@ msgstr ""
 
 #: modules/forum/includes/vote.php:53
 msgid "Vote accepted"
+msgstr ""
+
+#: modules/forum/includes/who.php:56
+#: modules/forum/includes/who.php:232
+msgid "Guest"
 msgstr ""
 
 #: modules/forum/includes/who.php:87
