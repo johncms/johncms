@@ -2,49 +2,45 @@ msgid ""
 msgstr ""
 "X-Domain: notifications\n"
 
-#: modules/notifications/index.php:42
-msgid "Users on registration"
-msgstr ""
-
-#: modules/notifications/index.php:52
-msgid "Articles on moderation"
-msgstr ""
-
-#: modules/notifications/index.php:62
-msgid "Downloads on moderation"
-msgstr ""
-
-#: modules/notifications/index.php:73
-msgid "Ban"
-msgstr ""
-
-#: modules/notifications/index.php:84
-msgid "System messages"
-msgstr ""
-
-#: modules/notifications/index.php:94
-msgid "Mail"
-msgstr ""
-
-#: modules/notifications/index.php:104
-#: modules/notifications/index.php:123
-msgid "Guestbook"
-msgstr ""
-
-#: modules/notifications/index.php:114
-msgid "Comments"
-msgstr ""
-
-#: modules/notifications/index.php:133
-msgid "Home"
-msgstr ""
-
-#: modules/notifications/index.php:138
+#: modules/notifications/index.php:36
 #: modules/notifications/templates/index.phtml:10
 #: modules/notifications/templates/index.phtml:11
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:19
+#: modules/notifications/index.php:46
+msgid "Users on registration"
+msgstr ""
+
+#: modules/notifications/index.php:56
+msgid "Articles on moderation"
+msgstr ""
+
+#: modules/notifications/index.php:66
+msgid "Downloads on moderation"
+msgstr ""
+
+#: modules/notifications/index.php:77
+msgid "Ban"
+msgstr ""
+
+#: modules/notifications/index.php:88
+msgid "System messages"
+msgstr ""
+
+#: modules/notifications/index.php:98
+msgid "Mail"
+msgstr ""
+
+#: modules/notifications/index.php:108
+#: modules/notifications/index.php:127
+msgid "Guestbook"
+msgstr ""
+
+#: modules/notifications/index.php:118
+msgid "Comments"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:18
 msgid "All notifications have already been read"
 msgstr ""

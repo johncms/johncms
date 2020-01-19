@@ -89,6 +89,6 @@ if ($news_config['view'] > 0) {
     }
 }
 
-$data['news'] = $items;
+$data['news'] = $items ?? [];
 
 echo $view->render('homepage::index', ['data' => $data]);

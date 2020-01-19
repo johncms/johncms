@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\NavChain;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 
@@ -20,16 +21,19 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\Counters $counters
  * @var Render $view
  * @var User $user
+ * @var NavChain $nav_chain
  */
 
 $db = di(PDO::class);
 $counters = di('counters');
 $view = di(Render::class);
 $user = di(User::class);
+$nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');
 
+$nav_chain->add(__('Notifications'));
 $notifications = [];
 
 $all_counters = $counters->notifications();
@@ -127,22 +131,9 @@ if ($user->comm_count > $user->comm_old) {
     ];
 }
 
-$breadcrumbs = [
-    [
-        'url'    => '/',
-        'name'   => __('Home'),
-        'active' => false,
-    ],
-    [
-        'url'    => '/notifications/',
-        'name'   => __('Notifications'),
-        'active' => true,
-    ],
-];
 echo $view->render(
     'notifications::index',
     [
         'notifications' => $notifications,
-        'breadcrumbs'   => $breadcrumbs,
     ]
 );
