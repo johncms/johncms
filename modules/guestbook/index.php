@@ -454,6 +454,7 @@ switch ($act) {
                 }
 
                 $item['message_id'] = $res['gid'];
+                $item['user_is_online'] = time() <= $res['lastdate'] + 300;
                 $items[] = $item;
             }
 

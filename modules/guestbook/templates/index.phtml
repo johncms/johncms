@@ -106,7 +106,7 @@
                     <div class="avatar-image rounded-circle overflow-hidden">
                         <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
                     </div>
-                    <div class="user-status online shadow"></div>
+                    <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
                 </div>
                 <div class="overflow-auto flex-grow-1"><?= $item['post_text'] ?></div>
             </div>
