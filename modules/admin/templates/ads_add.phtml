@@ -82,20 +82,20 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                     </div>
                     <h3 class="mt-3"><?= __('Place') ?></h3>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="type1" name="type" value="0" class="custom-control-input" <?= empty($data['fields']['type']) ? 'checked="checked"' : '' ?>>
-                        <label class="custom-control-label" for="type1"><?= __('Above logo') ?></label>
+                        <input type="radio" id="type1" name="type" value="0" class="custom-control-input" <?= $data['fields']['type'] === 0 ? 'checked="checked"' : '' ?>>
+                        <label class="custom-control-label" for="type1"><?= __('Before the menu') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="type2" name="type" value="1" class="custom-control-input" <?= $data['fields']['type'] === 1 ? 'checked="checked"' : '' ?>>
-                        <label class="custom-control-label" for="type2"><?= __('Under menu') ?></label>
+                        <label class="custom-control-label" for="type2"><?= __('After the menu') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="type3" name="type" value="2" class="custom-control-input" <?= $data['fields']['type'] === 2 ? 'checked="checked"' : '' ?>>
-                        <label class="custom-control-label" for="type3"><?= __('Over the counter') ?></label>
+                        <label class="custom-control-label" for="type3"><?= __('At the top of the page') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="type4" name="type" value="3" class="custom-control-input" <?= $data['fields']['type'] === 3 ? 'checked="checked"' : '' ?>>
-                        <label class="custom-control-label" for="type4"><?= __('Under counter') ?></label>
+                        <label class="custom-control-label" for="type4"><?= __('At the bottom of the page') ?></label>
                     </div>
                     <h3 class="mt-3"><?= __('Layout') ?></h3>
                     <div class="custom-control custom-radio">

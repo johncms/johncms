@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,6 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
+use Johncms\Ads;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
@@ -19,6 +20,7 @@ return [
         'factories' => [
             Bbcode::class   => Bbcode::class,
             NavChain::class => NavChain::class,
+            Ads::class      => Ads::class,
             Tools::class    => Tools::class,
             'counters'      => Johncms\Counters::class,
         ],

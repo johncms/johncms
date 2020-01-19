@@ -3,11 +3,14 @@
  * @var string $locale
  * @var Johncms\System\Users\User $user
  * @var Johncms\Counters $counters
+ * @var Johncms\Ads $ads
  */
 
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
 $analytics = $counters->counters();
+$ads = di(Johncms\Ads::class);
+$ads_array = $ads->getAds();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -72,7 +75,21 @@ $analytics = $counters->counters();
                 <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
             <?php endif ?>
             <?= $this->fetch('system::app/breadcrumbs') ?>
+            <?php if (! empty($ads_array['content_header'])): ?>
+                <div class="pb-3">
+                    <?php foreach ($ads_array['content_header'] as $item): ?>
+                        <div><?= $item ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
             <?= $this->section('content') ?>
+            <?php if (! empty($ads_array['content_footer'])): ?>
+                <div class="pb-3 pt-2">
+                    <?php foreach ($ads_array['content_footer'] as $item): ?>
+                        <div><?= $item ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="d-flex justify-content-between align-items-center border-top p-4 page-footer">
             <div class="pl-1">

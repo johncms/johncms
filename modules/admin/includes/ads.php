@@ -342,22 +342,22 @@ switch ($mod) {
         $data['filters'] = [
             [
                 'url'    => '?act=ads',
-                'name'   => __('Above logo'),
+                'name'   => __('Before the menu'),
                 'active' => ! $type,
             ],
             [
                 'url'    => '?act=ads&amp;type=1',
-                'name'   => __('Under menu'),
+                'name'   => __('After the menu'),
                 'active' => $type === 1,
             ],
             [
                 'url'    => '?act=ads&amp;type=2',
-                'name'   => __('Over the counter'),
+                'name'   => __('At the top of the page'),
                 'active' => $type === 2,
             ],
             [
                 'url'    => '?act=ads&amp;type=3',
-                'name'   => __('Under counter'),
+                'name'   => __('At the bottom of the page'),
                 'active' => $type === 3,
             ],
         ];
