@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"X-Domain: registration\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /develop/modules/registration/locale/registration.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/registration/index.php:41
+#: modules/registration/templates/index.phtml:2
+#: modules/registration/templates/index.phtml:3
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:103
+#: modules/registration/templates/registration_closed.phtml:2
+#: modules/registration/templates/registration_closed.phtml:3
+#: modules/registration/templates/registration_result.phtml:2
+#: modules/registration/templates/registration_result.phtml:3
+msgid "Registration"
+msgstr "تسجيل اشتراك جديد"
+
+#: modules/registration/index.php:65
+msgid "You have not entered Nickname"
+msgstr "لم تقم بادخال العضوية"
+
+#: modules/registration/index.php:67
+msgid "Nickname wrong length"
+msgstr "الاسم طويل جدا"
+
+#: modules/registration/index.php:71
+msgid "Invalid characters"
+msgstr "احرف غير صالحه"
+
+#: modules/registration/index.php:76
+msgid "You have not entered password"
+msgstr "لم تقم بادخال كلمة المرور"
+
+#: modules/registration/index.php:78
+msgid "Invalid length"
+msgstr "طويل جدا"
+
+#: modules/registration/index.php:83
+msgid "You have not selected genger"
+msgstr "لم تقم بتحديد محتوى"
+
+#: modules/registration/index.php:93
+msgid "The security code is not correct"
+msgstr "رمز الامان غير صحيح"
+
+#: modules/registration/index.php:108
+msgid "Selected Nickname is already in use"
+msgstr "الاسم مسجل من قبل"
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "ويمكن الحصول على إذن على الموقع بعد تأكيد التسجيل الخاص بك."
+
+#: modules/registration/templates/index.phtml:17
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "من فضلك، لم تقم بتسجيل أسماء مثل 111، shhhh، أووو، إلخ. أنها ستحذف. < br/> ستحذف أيضا كافة التشكيلات الجانبية المسجلة عبر ملقمات الوكيل"
+
+#: modules/registration/templates/index.phtml:21
+msgid "Choose Nickname"
+msgstr "اختر اسمگ المستعار"
+
+#: modules/registration/templates/index.phtml:30
+msgid "Username"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:36
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "دقيقة. 2, Max. 20 حرفا.<br />Allowed الحروف الروسية واللاتينية الحروف الهجائية والأرقام والرموز - = @ ! ? ~ _ ( ) [ ] . * (ما عدا الصفر)"
+
+#: modules/registration/templates/index.phtml:40
+#: modules/registration/templates/index.phtml:49
+msgid "Assign a password"
+msgstr "تعيين كلمة المرور"
+
+#: modules/registration/templates/index.phtml:55
+msgid "Min. 3 characters"
+msgstr "أحرف كحد أدنى 3"
+
+#: modules/registration/templates/index.phtml:59
+msgid "Select Gender"
+msgstr "اختر الجنس"
+
+#: modules/registration/templates/index.phtml:62
+msgid "Man"
+msgstr "رجل"
+
+#: modules/registration/templates/index.phtml:63
+msgid "Woman"
+msgstr "امرأة"
+
+#: modules/registration/templates/index.phtml:67
+#: modules/registration/templates/index.phtml:74
+msgid "Your name"
+msgstr "اسمُك"
+
+#: modules/registration/templates/index.phtml:78
+msgid "Tell us a little about yourself"
+msgstr "أخبرنا قليلاً عن نفسك"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Max. 1000 characters"
+msgstr "كحد. 1000 حرف"
+
+#: modules/registration/templates/index.phtml:83
+#: modules/registration/templates/index.phtml:93
+msgid "Verification code"
+msgstr "رمز التحقق"
+
+#: modules/registration/templates/index.phtml:85
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:99
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "إذا كنت لا ترى رمز الصورة، يرجى تمكين الرسومات في المستعرض الخاص بك ثم قم بتحديث هذه الصفحة"
+
+#: modules/registration/templates/registration_closed.phtml:9
+msgid "Registration is temporarily closed"
+msgstr "التسجيل مغلق مؤقتا"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registratiton data"
+msgstr "بيانات التسجيل الخاصه بك"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Your ID"
+msgstr "المعرف"
+
+#: modules/registration/templates/registration_result.phtml:12
+msgid "Your Username"
+msgstr "اسم العضوية"
+
+#: modules/registration/templates/registration_result.phtml:13
+msgid "Your Password"
+msgstr "كلمة المرور الخاصه بك"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Please, wait until a moderator approves your registration"
+msgstr "من فضلگ انتظر حتى يقوم المشرف بتفعيل عضويتگ"
+
+#: modules/registration/templates/registration_result.phtml:18
+msgid "Enter"
+msgstr "ادخل"
+
