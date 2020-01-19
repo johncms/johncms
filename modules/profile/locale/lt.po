@@ -1,0 +1,1149 @@
+msgid ""
+msgstr ""
+"X-Domain: profile\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: lt\n"
+"X-Crowdin-File: /develop/modules/profile/locale/profile.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Lithuanian\n"
+"Language: lt_LT\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/profile/includes/activity.php:18
+#: modules/profile/templates/index.phtml:207
+#: modules/profile/templates/stat.phtml:53
+msgid "Activity"
+msgstr "Aktyvumas"
+
+#: modules/profile/includes/activity.php:20
+#: modules/profile/includes/ban.php:188
+#: modules/profile/includes/ban.php:292
+#: modules/profile/includes/edit.php:43
+#: modules/profile/includes/guestbook.php:15
+#: modules/profile/includes/images.php:161
+#: modules/profile/includes/ip.php:27
+#: modules/profile/includes/reset.php:22
+#: modules/profile/templates/office.phtml:32
+msgid "Profile"
+msgstr "Profilis"
+
+#: modules/profile/includes/activity.php:20
+#: modules/profile/includes/edit.php:43
+#: modules/profile/includes/images.php:161
+#: modules/profile/includes/index.php:17
+msgid "My Profile"
+msgstr "Mano profilis"
+
+#: modules/profile/includes/activity.php:26
+msgid "Messages"
+msgstr "Žinutės"
+
+#: modules/profile/includes/activity.php:31
+msgid "Themes"
+msgstr "Temos"
+
+#: modules/profile/includes/activity.php:36
+#: modules/profile/includes/ban.php:146
+#: modules/profile/templates/stat.phtml:57
+msgid "Comments"
+msgstr "Komentarai"
+
+#: modules/profile/includes/ban.php:21
+msgid "You do not have enought rights to ban this user"
+msgstr "Jūs neturitw teisės blokuoti šį vartotoją"
+
+#: modules/profile/includes/ban.php:23
+msgid "Ban the User"
+msgstr "Blokuoti vartotoją"
+
+#: modules/profile/includes/ban.php:35
+msgid "Reason not specified"
+msgstr "Priežastis nenurodyta"
+
+#: modules/profile/includes/ban.php:39
+msgid "There is no required data"
+msgstr "Nėra reikiamų duomenų"
+
+#: modules/profile/includes/ban.php:43
+msgid "You have no rights to ban in this section"
+msgstr "Jūs neturite teisės uždrausti šiame skyriuje"
+
+#: modules/profile/includes/ban.php:47
+msgid "Ban already active"
+msgstr "Jau užblokuotas"
+
+#: modules/profile/includes/ban.php:121
+msgid "System"
+msgstr "Sistema"
+
+#: modules/profile/includes/ban.php:125
+#: modules/profile/includes/index.php:140
+msgid "Ban"
+msgstr "Blokuoti"
+
+#: modules/profile/includes/ban.php:131
+msgid "User banned"
+msgstr "Vartotojas užblokuotas"
+
+#: modules/profile/includes/ban.php:138
+msgid "Ban type"
+msgstr "Blokavimo tipas"
+
+#: modules/profile/includes/ban.php:142
+msgid "Full block"
+msgstr "Pilnas blokiravimas"
+
+#: modules/profile/includes/ban.php:144
+msgid "Private messages"
+msgstr "Asmeninės žinutės"
+
+#: modules/profile/includes/ban.php:148
+#: modules/profile/includes/guestbook.php:16
+#: modules/profile/includes/guestbook.php:28
+#: modules/profile/templates/index.phtml:237
+#: modules/profile/templates/office.phtml:39
+#: modules/profile/templates/stat.phtml:56
+msgid "Guestbook"
+msgstr "Svečių Knyga"
+
+#: modules/profile/includes/ban.php:154
+#: modules/profile/includes/settings.php:46
+#: modules/profile/includes/settings.php:88
+#: modules/profile/templates/stat.phtml:55
+msgid "Forum"
+msgstr "Forumas"
+
+#: modules/profile/includes/ban.php:159
+msgid "Library"
+msgstr "Biblioteka"
+
+#: modules/profile/includes/ban.php:162
+msgid "Ban time"
+msgstr "Bloko trukmė"
+
+#: modules/profile/includes/ban.php:164
+msgid "Minutes (60 max.)"
+msgstr "Min. (60 maks.)"
+
+#: modules/profile/includes/ban.php:165
+msgid "Hours (24 max.)"
+msgstr "Valandos (24 maks.)"
+
+#: modules/profile/includes/ban.php:168
+msgid "Days (30 max.)"
+msgstr "Dienų (30 max.)"
+
+#: modules/profile/includes/ban.php:172
+#: modules/profile/includes/ban.php:345
+msgid "Till cancel"
+msgstr "Iki atšaukimo"
+
+#: modules/profile/includes/ban.php:175
+msgid "Reason"
+msgstr "Priežastis"
+
+#: modules/profile/includes/ban.php:180
+msgid "Violation"
+msgstr "Pažeidimas"
+
+#: modules/profile/includes/ban.php:185
+msgid "Apply Ban"
+msgstr "Taikyti blokavimą"
+
+#: modules/profile/includes/ban.php:195
+#: modules/profile/includes/ban.php:225
+#: modules/profile/includes/ban.php:233
+#: modules/profile/includes/ban.php:258
+#: modules/profile/skl.php:127
+msgid "Wrong data"
+msgstr "Klaidingi duomenys"
+
+#: modules/profile/includes/ban.php:204
+msgid "Ban not active"
+msgstr "Blokas neaktyvus"
+
+#: modules/profile/includes/ban.php:208
+msgid "Ban termination"
+msgstr "Blokavimo termino ejimas į pabaigą"
+
+#: modules/profile/includes/ban.php:213
+msgid "Ban terminated"
+msgstr "Vartotojas atblokotas"
+
+#: modules/profile/includes/ban.php:216
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr "Blokavimo laikas eina į pabaigą. Informacija bus išsaugota blokavimo istorijoje"
+
+#: modules/profile/includes/ban.php:217
+msgid "Terminate Ban"
+msgstr "Atšaukti bloka"
+
+#: modules/profile/includes/ban.php:219
+#: modules/profile/includes/ban.php:255
+#: modules/profile/includes/karma.php:76
+#: modules/profile/includes/karma.php:149
+#: modules/profile/templates/karma.phtml:92
+#: modules/profile/templates/restore_password_result.phtml:16
+#: modules/profile/templates/stat.phtml:61
+msgid "Back"
+msgstr "Atgal"
+
+#: modules/profile/includes/ban.php:239
+#: modules/profile/includes/ban.php:359
+msgid "Delete Ban"
+msgstr "Ištrinti bloką"
+
+#: modules/profile/includes/ban.php:249
+msgid "Ban deleted"
+msgstr "Blokas ištrintas"
+
+#: modules/profile/includes/ban.php:249
+#: modules/profile/includes/images.php:68
+#: modules/profile/includes/images.php:137
+#: modules/profile/includes/karma.php:120
+#: modules/profile/includes/password.php:83
+#: modules/profile/templates/restore_password.phtml:43
+msgid "Continue"
+msgstr "Tęsti"
+
+#: modules/profile/includes/ban.php:252
+msgid "Removing ban along with a record in the bans history"
+msgstr "Blokavimas ištrinamas kartu su užrašu blokavimo istorijoje"
+
+#: modules/profile/includes/ban.php:253
+#: modules/profile/includes/index.php:134
+#: modules/profile/templates/edit.phtml:112
+#: modules/profile/templates/edit.phtml:132
+#: modules/profile/templates/karma_delete.phtml:35
+msgid "Delete"
+msgstr "Ištrinti"
+
+#: modules/profile/includes/ban.php:266
+#: modules/profile/includes/ban.php:282
+msgid "Violations history"
+msgstr "Pažeidimų istoriją"
+
+#: modules/profile/includes/ban.php:271
+msgid "Violations history cleared"
+msgstr "Pažeidimų istorija išvalytą"
+
+#: modules/profile/includes/ban.php:274
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "Ar tikrai norite išvalyti visą vartotojo blokavimo istoriją?"
+
+#: modules/profile/includes/ban.php:275
+msgid "Clear"
+msgstr "Išvalyti"
+
+#: modules/profile/includes/ban.php:280
+#: modules/profile/includes/ban.php:373
+#: modules/profile/includes/ip.php:52
+msgid "Total"
+msgstr "Viso"
+
+#: modules/profile/includes/ban.php:284
+#: modules/profile/includes/ban.php:297
+msgid "Ban Panel"
+msgstr "Blokavimo panele"
+
+#: modules/profile/includes/ban.php:286
+msgid "Violations history can be cleared by Supervisor only"
+msgstr "Pažeidimų istorija gali pašalinti tik Administracija"
+
+#: modules/profile/includes/ban.php:292
+msgid "Violations History"
+msgstr "Pažeidimų istoriją"
+
+#: modules/profile/includes/ban.php:301
+msgid "Clear history"
+msgstr "Išvalyti istoriją"
+
+#: modules/profile/includes/ban.php:311
+msgid "My Violations"
+msgstr "Mano blokai"
+
+#: modules/profile/includes/ban.php:341
+msgid "Who applied the Ban?"
+msgstr "Kas taikė baną?"
+
+#: modules/profile/includes/ban.php:344
+msgid "Time"
+msgstr "Laikas"
+
+#: modules/profile/includes/ban.php:348
+msgid "Remains"
+msgstr "Lieka"
+
+#: modules/profile/includes/ban.php:355
+msgid "Cancel Ban"
+msgstr "Atšaukti bloka"
+
+#: modules/profile/includes/ban.php:370
+#: modules/profile/includes/ip.php:49
+#: modules/profile/templates/activity.phtml:37
+#: modules/profile/templates/karma.phtml:38
+msgid "The list is empty"
+msgstr "Sąrašas tuščias"
+
+#: modules/profile/includes/ban.php:379
+#: modules/profile/includes/ip.php:58
+msgid "To Page"
+msgstr "Į puslapį"
+
+#: modules/profile/includes/edit.php:16
+#: modules/profile/includes/reset.php:17
+#: modules/profile/templates/office.phtml:83
+msgid "Edit Profile"
+msgstr "Redaguoti profilį"
+
+#: modules/profile/includes/edit.php:26
+#: modules/profile/includes/images.php:25
+msgid "You cannot edit profile of higher administration"
+msgstr "Jus negalite redaguoti vyresniojo už jus administratoriaus profilį"
+
+#: modules/profile/includes/edit.php:38
+#: modules/profile/includes/ip.php:21
+#: modules/profile/includes/office.php:24
+#: modules/profile/includes/password.php:25
+#: modules/profile/includes/settings.php:32
+msgid "Access forbidden"
+msgstr "Prieiga uždrausta"
+
+#: modules/profile/includes/edit.php:52
+msgid "Avatar is successfully removed"
+msgstr "Paveikslėlis sėkmingai pakeistas"
+
+#: modules/profile/includes/edit.php:59
+msgid "Photo is successfully removed"
+msgstr "Fotorgrafija sėkmingai pašalintą"
+
+#: modules/profile/includes/edit.php:90
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Min. Niko ilgis 2, maks. 20 simbolių"
+
+#: modules/profile/includes/edit.php:96
+msgid "Nick contains invalid characters"
+msgstr "Nike yra netinkamų simbolių"
+
+#: modules/profile/includes/edit.php:101
+msgid "Invalid format date of birth"
+msgstr "Neteisinga gimimo data"
+
+#: modules/profile/includes/edit.php:106
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "ICQ numeris turi buti ne mažiau negu 5 skaičiu ir maks. 10"
+
+#: modules/profile/includes/edit.php:171
+msgid "Data saved"
+msgstr "Duomenys išsaugoti"
+
+#: modules/profile/includes/images.php:38
+msgid "Upload Avatar"
+msgstr "Įkelti avatarą"
+
+#: modules/profile/includes/images.php:44
+#: modules/profile/includes/images.php:96
+msgid "The weight of the file exceeds"
+msgstr ""
+
+#: modules/profile/includes/images.php:66
+msgid "The avatar is successfully uploaded"
+msgstr "Avataras sėkmingai įkeltas"
+
+#: modules/profile/includes/images.php:83
+#: modules/profile/includes/images.php:152
+#: modules/profile/includes/password.php:94
+msgid "Repeat"
+msgstr "Pakartoti"
+
+#: modules/profile/includes/images.php:90
+msgid "Upload Photo"
+msgstr "Įkelti Nuotrauką"
+
+#: modules/profile/includes/images.php:135
+msgid "The photo is successfully uploaded"
+msgstr "Nuotrauka sėkmingai įkeltą"
+
+#: modules/profile/includes/index.php:17
+#: modules/profile/includes/karma.php:19
+#: modules/profile/index.php:60
+#: modules/profile/index.php:75
+msgid "User Profile"
+msgstr "Vartotojo profilis"
+
+#: modules/profile/includes/index.php:22
+#: modules/profile/templates/edit.phtml:261
+msgid "User"
+msgstr "Vartotojas"
+
+#: modules/profile/includes/index.php:23
+msgid "Forum moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:24
+msgid "Download moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:25
+msgid "Library moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:26
+msgid "Super moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:27
+#: modules/profile/templates/edit.phtml:283
+msgid "Administrator"
+msgstr "Administratorius"
+
+#: modules/profile/includes/index.php:28
+#: modules/profile/templates/edit.phtml:287
+msgid "Supervisor"
+msgstr "SuperVaizorius"
+
+#: modules/profile/includes/index.php:95
+#: modules/profile/templates/stat.phtml:32
+msgid "Pending confirmation"
+msgstr "Laukiantis patvirtinimo"
+
+#: modules/profile/includes/index.php:115
+msgid "Add to Contacts"
+msgstr "Pridėti į kontaktus"
+
+#: modules/profile/includes/index.php:120
+msgid "Remove from Contacts"
+msgstr "Pašalinti iš kontaktų"
+
+#: modules/profile/includes/index.php:128
+msgid "Edit"
+msgstr "Redaguoti"
+
+#: modules/profile/includes/ip.php:15
+#: modules/profile/includes/ip.php:27
+msgid "IP History"
+msgstr "IP Istorija"
+
+#: modules/profile/includes/ip.php:20
+msgid "Administration"
+msgstr ""
+
+#: modules/profile/includes/karma.php:15
+#: modules/profile/includes/karma.php:20
+#: modules/profile/templates/index.phtml:86
+msgid "Karma"
+msgstr ""
+
+#: modules/profile/includes/karma.php:41
+msgid "It is forbidden to vote for administration"
+msgstr "Už administracija draudžiama balsuoti"
+
+#: modules/profile/includes/karma.php:45
+msgid "Cheating karma is forbidden"
+msgstr "Prisukti karma draudžiama"
+
+#: modules/profile/includes/karma.php:50
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "Vartotojai gali dalyvauti balsavyme, jeigu buvo svetainei ne mažiau negu %s ir parašė ne mažiau negu %d pranešimų forumę."
+
+#: modules/profile/includes/karma.php:51
+msgid "hours"
+msgstr "valandų"
+
+#: modules/profile/includes/karma.php:51
+msgid "days"
+msgstr "dienų"
+
+#: modules/profile/includes/karma.php:59
+msgid "You can vote for single user just one time for 24 hours"
+msgstr ""
+
+#: modules/profile/includes/karma.php:65
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "Jus viršijote balsavimo limitą. Naujų balsu bus papildyti %s"
+
+#: modules/profile/includes/karma.php:118
+msgid "You have successfully voted"
+msgstr "Jus sėkmingai prabalsavot"
+
+#: modules/profile/includes/karma.php:129
+msgid "Vote for"
+msgstr "Balsuoti už"
+
+#: modules/profile/includes/karma.php:147
+msgid "You are not allowed to vote for users"
+msgstr "Jus negalite balsuoti už vartotojus"
+
+#: modules/profile/includes/karma.php:183
+msgid "Do you really want to delete comment?"
+msgstr "Ar jus tikrai norite ištrinti šį įrašą?"
+
+#: modules/profile/includes/karma.php:216
+msgid "Do you really want to delete all reviews about user?"
+msgstr "Ar jus tikrai norite ištrinti visu pranešimus apie vartotoją?"
+
+#: modules/profile/includes/karma.php:234
+msgid "New responses"
+msgstr "Nauji pranešimai"
+
+#: modules/profile/includes/karma.php:269
+msgid "All"
+msgstr "Visi"
+
+#: modules/profile/includes/karma.php:274
+#: modules/profile/templates/index.phtml:101
+#: modules/profile/templates/karma_vote.phtml:46
+msgid "Positive"
+msgstr "Teigiami"
+
+#: modules/profile/includes/karma.php:279
+#: modules/profile/templates/index.phtml:107
+#: modules/profile/templates/karma_vote.phtml:50
+msgid "Negative"
+msgstr "Neigiami"
+
+#: modules/profile/includes/office.php:15
+#: modules/profile/includes/settings.php:23
+msgid "My Account"
+msgstr "Mano paskyra"
+
+#: modules/profile/includes/password.php:15
+#: modules/profile/includes/password.php:16
+#: modules/profile/templates/edit.phtml:241
+#: modules/profile/templates/office.phtml:84
+msgid "Change Password"
+msgstr "Keisti slaptažodį"
+
+#: modules/profile/includes/password.php:43
+#: modules/profile/includes/password.php:46
+msgid "It is necessary to fill in all fields"
+msgstr "Butina užpildyti visus laukus"
+
+#: modules/profile/includes/password.php:51
+msgid "Old password entered incorrectly"
+msgstr "Senas slaptažodis įvestas neteisingai"
+
+#: modules/profile/includes/password.php:55
+msgid "The password confirmation you entered is wrong"
+msgstr "Naujo slaptažodžio patvirtinimas įvestas neteisingai"
+
+#: modules/profile/includes/password.php:59
+msgid "The password must contain at least 3 characters"
+msgstr "Slaptažodis negali sudaryti mažiau, negu 3 simboliai"
+
+#: modules/profile/includes/password.php:81
+msgid "Password successfully changed"
+msgstr "Slaptažodis sėkmingai pakeistas"
+
+#: modules/profile/includes/reset.php:20
+msgid "For user %s default settings were set."
+msgstr "Vartotojo %s pradiniai nustatymai nustatyti."
+
+#: modules/profile/includes/settings.php:15
+#: modules/profile/includes/settings.php:24
+#: modules/profile/templates/office.phtml:80
+msgid "Settings"
+msgstr "Nustatymai"
+
+#: modules/profile/includes/settings.php:41
+#: modules/profile/includes/settings.php:141
+msgid "General setting"
+msgstr "Bendrieji nustatymai"
+
+#: modules/profile/includes/settings.php:51
+#: modules/profile/includes/settings.php:59
+msgid "Mail"
+msgstr "Paštas"
+
+#: modules/profile/includes/settings.php:71
+#: modules/profile/includes/settings.php:108
+#: modules/profile/includes/settings.php:196
+msgid "Settings saved successfully"
+msgstr "Nustatymai išsaugoti sėkmingai"
+
+#: modules/profile/includes/settings.php:124
+#: modules/profile/includes/settings.php:201
+msgid "Default settings are set"
+msgstr "Pradiniai nustatymai nustatyti"
+
+#: modules/profile/includes/stat.php:17
+#: modules/profile/includes/stat.php:20
+#: modules/profile/templates/index.phtml:217
+#: modules/profile/templates/stat.phtml:26
+msgid "Statistic"
+msgstr "Statistika"
+
+#: modules/profile/index.php:62
+msgid "For registered users only"
+msgstr "Tik registruotiems Vartotojams"
+
+#: modules/profile/index.php:77
+msgid "This User does not exists"
+msgstr "Tokio vartotojo nėra"
+
+#: modules/profile/skl.php:39
+#: modules/profile/templates/restore_password.phtml:2
+#: modules/profile/templates/restore_password.phtml:3
+#: modules/profile/templates/restore_password.phtml:10
+#: modules/profile/templates/restore_password_result.phtml:2
+#: modules/profile/templates/restore_password_result.phtml:3
+#: modules/profile/templates/restore_password_result.phtml:10
+msgid "Restore password"
+msgstr ""
+
+#: modules/profile/skl.php:64
+msgid "The required fields are not filled"
+msgstr "Privalomi laukai neužpildyti"
+
+#: modules/profile/skl.php:66
+msgid "Incorrect code"
+msgstr "Neteisingas kodas"
+
+#: modules/profile/skl.php:79
+msgid "Invalid Email address"
+msgstr "Neteisingas el. pašto adresas"
+
+#: modules/profile/skl.php:83
+msgid "Password can be recovered 1 time per day"
+msgstr "Slaptažodi galima atstatyti vieną kartą per dieną"
+
+#: modules/profile/skl.php:86
+#: modules/profile/skl.php:145
+msgid "User does not exists"
+msgstr "Tokio vartotojo nėra"
+
+#: modules/profile/skl.php:93
+msgid "Password recovery"
+msgstr "Slaptažodžio atkūrimas"
+
+#: modules/profile/skl.php:95
+msgid "Hello %s!\n"
+"You start process of password recovery on the site %s\n"
+"In order to recover your password, you must click on the link: %s\n"
+"Link valid for 1 hour\n\n"
+"If you receive this mail by mistake, just ignore this letter"
+msgstr "Sveiki %s!\n"
+" Jus pradėjote atstatynėti savo slaptažodi svetainei %s\n"
+" Kad atstatyti slaptažodi, jus turite pereit pagal šia nuoroda: %s\n"
+" Nuoroda veikia 1 val.\n\n"
+"Jeigu jus gavote ši laiška klaidingai, tiesiog proignorokite jį"
+
+#: modules/profile/skl.php:105
+msgid "Check your e-mail for further information"
+msgstr "Instrukcijos del slaptažodžio atstatymo išsiusti į jūsų el. paštą"
+
+#: modules/profile/skl.php:107
+#: modules/profile/skl.php:166
+msgid "Error sending E-mail"
+msgstr "Klaida siunčiant el. laišką"
+
+#: modules/profile/skl.php:137
+msgid "Password recovery is impossible"
+msgstr "Slaptažodžio atkūrimas neįmanomas"
+
+#: modules/profile/skl.php:141
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Laikas, per kuri galėjote atstatyti slaptažodį praejo"
+
+#: modules/profile/skl.php:152
+msgid "Your new password"
+msgstr "Jūsų naujas slaptažodis"
+
+#: modules/profile/skl.php:154
+msgid "Hello %s\n"
+"You have changed your password on the site %s\n\n"
+"Your new password: %s\n\n"
+"After logging in, you can change your password to new one."
+msgstr "Sveiki %s\n"
+" Jus sėkmingai pakeitėte slaptažodį svetainei %s\n\n"
+"Jūsų naujas slaptažodis:%s\n\n"
+" Po prisijungimo jus galite pakeisti slaptažodį į naują."
+
+#: modules/profile/skl.php:164
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Slaptažodis pakeistas sėkmingai.<br>Naujas slaptažodis išsiųstas į jūsų E-pašto dežute."
+
+#: modules/profile/templates/activity.phtml:53
+#: modules/profile/templates/karma.phtml:88
+msgid "Total:"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:52
+#: modules/profile/templates/restore_password.phtml:12
+#: modules/profile/templates/restore_password.phtml:18
+msgid "Username"
+msgstr "Vartotojo vardas"
+
+#: modules/profile/templates/edit.phtml:58
+#: modules/profile/templates/edit.phtml:65
+#: modules/profile/templates/edit.phtml:87
+msgid "Nickname"
+msgstr "Slapyvardis"
+
+#: modules/profile/templates/edit.phtml:69
+msgid "Min.2, Max. 20"
+msgstr "Min.2, Maks. 20"
+
+#: modules/profile/templates/edit.phtml:73
+#: modules/profile/templates/edit.phtml:79
+#: modules/profile/templates/edit.phtml:91
+msgid "Status"
+msgstr "Būsena"
+
+#: modules/profile/templates/edit.phtml:82
+msgid "Max. 50"
+msgstr "Maks. 50"
+
+#: modules/profile/templates/edit.phtml:99
+msgid "Avatar"
+msgstr "Avataras"
+
+#: modules/profile/templates/edit.phtml:107
+#: modules/profile/templates/edit.phtml:130
+msgid "Upload"
+msgstr "Įkelti"
+
+#: modules/profile/templates/edit.phtml:109
+msgid "Select in Catalog"
+msgstr "Pasirinkite katalogą"
+
+#: modules/profile/templates/edit.phtml:119
+#: modules/profile/templates/edit.phtml:123
+#: modules/profile/templates/index.phtml:125
+msgid "Photo"
+msgstr "Fotografija"
+
+#: modules/profile/templates/edit.phtml:137
+msgid "Personal info"
+msgstr "Asmeninė informacija"
+
+#: modules/profile/templates/edit.phtml:141
+#: modules/profile/templates/edit.phtml:147
+msgid "Your name"
+msgstr "Jūsų vardas"
+
+#: modules/profile/templates/edit.phtml:152
+msgid "Date of birth (d.m.y)"
+msgstr "Gimimo data (d.m.y)"
+
+#: modules/profile/templates/edit.phtml:155
+msgid "Day"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:160
+msgid "Month"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:164
+msgid "Year"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:170
+#: modules/profile/templates/edit.phtml:176
+#: modules/profile/templates/index.phtml:151
+msgid "City, Country"
+msgstr "Miestas, Šalis"
+
+#: modules/profile/templates/edit.phtml:180
+msgid "About myself"
+msgstr "Apie Mane"
+
+#: modules/profile/templates/edit.phtml:184
+#: modules/profile/templates/office.phtml:67
+#: modules/profile/templates/office.phtml:71
+msgid "Contacts"
+msgstr "Kontaktai"
+
+#: modules/profile/templates/edit.phtml:186
+#: modules/profile/templates/edit.phtml:192
+#: modules/profile/templates/index.phtml:168
+msgid "Phone number"
+msgstr "Telefono numeris"
+
+#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/edit.phtml:202
+#: modules/profile/templates/index.phtml:174
+msgid "E-mail"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:207
+msgid "Show in Profile"
+msgstr "Rodyti profilį"
+
+#: modules/profile/templates/edit.phtml:209
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr "Dėmėsio! Teisingai irašykite savo elektroninį adresą! Butent į jį bus siunčiamas jūsų slaptažodis."
+
+#: modules/profile/templates/edit.phtml:213
+#: modules/profile/templates/edit.phtml:219
+#: modules/profile/templates/index.phtml:183
+msgid "Skype"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:224
+#: modules/profile/templates/edit.phtml:230
+#: modules/profile/templates/index.phtml:189
+msgid "Site"
+msgstr "Svetainė"
+
+#: modules/profile/templates/edit.phtml:235
+msgid "Administrative Functions"
+msgstr "Administravimo funkcijos"
+
+#: modules/profile/templates/edit.phtml:238
+msgid "Prohibit Karma"
+msgstr "Uždrausti karma"
+
+#: modules/profile/templates/edit.phtml:243
+msgid "Reset User options to default"
+msgstr "Atstatyti vartotojo nustatymus i pradinį"
+
+#: modules/profile/templates/edit.phtml:247
+msgid "Select gender"
+msgstr "Pasirinkite lytį"
+
+#: modules/profile/templates/edit.phtml:250
+#: modules/profile/templates/index.phtml:141
+msgid "Man"
+msgstr "Vyras"
+
+#: modules/profile/templates/edit.phtml:254
+#: modules/profile/templates/index.phtml:143
+msgid "Woman"
+msgstr "Moteris"
+
+#: modules/profile/templates/edit.phtml:258
+msgid "Position on the Site"
+msgstr "Svetainės administracija"
+
+#: modules/profile/templates/edit.phtml:265
+msgid "Forum Moderator"
+msgstr "Forumo Moderatorius"
+
+#: modules/profile/templates/edit.phtml:269
+msgid "Download Moderator"
+msgstr "Siuntinių moderatorius"
+
+#: modules/profile/templates/edit.phtml:273
+msgid "Library Moderator"
+msgstr "Bibliotekos moderatorius"
+
+#: modules/profile/templates/edit.phtml:277
+msgid "Super Moderator"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:296
+#: modules/profile/templates/forum_settings.phtml:79
+#: modules/profile/templates/images.phtml:62
+#: modules/profile/templates/mail_settings.phtml:60
+#: modules/profile/templates/password.phtml:66
+#: modules/profile/templates/settings.phtml:118
+msgid "Save"
+msgstr "Išsaugoti"
+
+#: modules/profile/templates/edit.phtml:297
+#: modules/profile/templates/forum_settings.phtml:80
+#: modules/profile/templates/images.phtml:63
+#: modules/profile/templates/karma_delete.phtml:36
+#: modules/profile/templates/karma_vote.phtml:71
+#: modules/profile/templates/mail_settings.phtml:61
+#: modules/profile/templates/password.phtml:67
+#: modules/profile/templates/settings.phtml:119
+msgid "Cancel"
+msgstr "Atšaukti"
+
+#: modules/profile/templates/forum_settings.phtml:48
+msgid "Basic settings"
+msgstr "Pagrindiniai nustatymai"
+
+#: modules/profile/templates/forum_settings.phtml:52
+msgid "Inverse sorting"
+msgstr "Atvirkštinis rūšiavimas"
+
+#: modules/profile/templates/forum_settings.phtml:56
+msgid "Use the form of a quick answer"
+msgstr "Naudokite greito atsakymo forma"
+
+#: modules/profile/templates/forum_settings.phtml:60
+msgid "Preview of messages"
+msgstr "Pranešimo peržiūra"
+
+#: modules/profile/templates/forum_settings.phtml:63
+msgid "Attach first post"
+msgstr "Pridėti pirmą pranešimą"
+
+#: modules/profile/templates/forum_settings.phtml:67
+msgid "Always"
+msgstr "Visada"
+
+#: modules/profile/templates/forum_settings.phtml:71
+msgid "In unread topics"
+msgstr "Neskaitytos temos"
+
+#: modules/profile/templates/forum_settings.phtml:75
+msgid "Never"
+msgstr "Niekada"
+
+#: modules/profile/templates/forum_settings.phtml:81
+#: modules/profile/templates/settings.phtml:120
+msgid "Reset Settings"
+msgstr "Atstatyti nustatymus"
+
+#: modules/profile/templates/images.phtml:54
+msgid "Choose file"
+msgstr ""
+
+#: modules/profile/templates/images.phtml:57
+msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
+msgstr "Leidžiami vaizdo formatai: JPG, PNG, GIF. Failo dydis neturėtų viršyti %d kb.<br>Naujas vaizdas pakeis seną (jei buvo)."
+
+#: modules/profile/templates/index.phtml:46
+msgid "User Agent"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:48
+msgid "Ip"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:49
+#: modules/profile/templates/index.phtml:52
+msgid "Whois"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:61
+msgid "Write"
+msgstr "Rašyti"
+
+#: modules/profile/templates/index.phtml:64
+msgid "Block"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:66
+msgid "Unblock"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:70
+msgid "Actions"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:79
+msgid "Edit profile"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:93
+msgid "vote"
+msgid_plural "votes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: modules/profile/templates/index.phtml:113
+#: modules/profile/templates/karma_vote.phtml:70
+msgid "Vote"
+msgstr "Balsuoti"
+
+#: modules/profile/templates/index.phtml:122
+msgid "Information"
+msgstr "Informacija"
+
+#: modules/profile/templates/index.phtml:133
+msgid "Birthday"
+msgstr "Gimtadienis"
+
+#: modules/profile/templates/index.phtml:138
+msgid "Gender"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:145
+msgid "Not specified"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:177
+msgid "hidden"
+msgstr "paslėptas"
+
+#: modules/profile/templates/index.phtml:227
+#: modules/profile/templates/office.phtml:35
+msgid "Photo Album"
+msgstr "Nuotraukų Albumas"
+
+#: modules/profile/templates/karma.phtml:77
+msgid "Reset Karma"
+msgstr "Atstatyti karma"
+
+#: modules/profile/templates/karma_vote.phtml:43
+msgid "Type of vote"
+msgstr "Balsavimo rušis"
+
+#: modules/profile/templates/karma_vote.phtml:54
+msgid "Votes quantity"
+msgstr "Balsų kiekis"
+
+#: modules/profile/templates/karma_vote.phtml:63
+msgid "Comment"
+msgstr "Komentaras"
+
+#: modules/profile/templates/karma_vote.phtml:65
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Maks. 500 simbolių"
+
+#: modules/profile/templates/mail_settings.phtml:48
+msgid "Who can write you?"
+msgstr "Kas gali jums rašyti?"
+
+#: modules/profile/templates/mail_settings.phtml:52
+msgid "All can write"
+msgstr "Visi gali rašyti,"
+
+#: modules/profile/templates/mail_settings.phtml:56
+msgid "Only my contacts"
+msgstr "Tik mano kontaktai"
+
+#: modules/profile/templates/message_row.phtml:31
+msgid "To message"
+msgstr ""
+
+#: modules/profile/templates/office.phtml:29
+msgid "My Pages"
+msgstr "Mano puslapiai"
+
+#: modules/profile/templates/office.phtml:33
+msgid "Statistics"
+msgstr "Statistika"
+
+#: modules/profile/templates/office.phtml:44
+msgid "My Mailbox"
+msgstr "Mano paštas"
+
+#: modules/profile/templates/office.phtml:48
+msgid "Received"
+msgstr "Gauta"
+
+#: modules/profile/templates/office.phtml:55
+msgid "Sent"
+msgstr "Išsiusti"
+
+#: modules/profile/templates/office.phtml:62
+msgid "Files"
+msgstr "Failai"
+
+#: modules/profile/templates/office.phtml:75
+msgid "Blocked"
+msgstr "Užblokuota"
+
+#: modules/profile/templates/office.phtml:85
+msgid "System Settings"
+msgstr "Sistemos nustatymai"
+
+#: modules/profile/templates/password.phtml:34
+#: modules/profile/templates/password.phtml:40
+msgid "Enter old password"
+msgstr "Įveskite seną slaptažodį"
+
+#: modules/profile/templates/password.phtml:46
+#: modules/profile/templates/password.phtml:52
+msgid "Enter new password"
+msgstr "Įveskite naują slaptažodį"
+
+#: modules/profile/templates/password.phtml:56
+#: modules/profile/templates/password.phtml:62
+msgid "Repeat password"
+msgstr "Pakartokite slaptažodį"
+
+#: modules/profile/templates/restore_password.phtml:22
+#: modules/profile/templates/restore_password.phtml:28
+msgid "Your E-mail"
+msgstr "Jūsų el. pašto adresas"
+
+#: modules/profile/templates/restore_password.phtml:31
+#: modules/profile/templates/restore_password.phtml:40
+msgid "Verification code"
+msgstr "Patvirtinimo kodas"
+
+#: modules/profile/templates/restore_password.phtml:33
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/profile/templates/restore_password.phtml:46
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Slaptažodis bus išsiustas i el. pašto dežute, kurį jus ivedėte jūsų anketoje.<br>Dėmėsio! Jeigu jūsų anketoje įrašytas neteisingas el. paštas, tai jus negalėsite atstatyti savo slaptažodį."
+
+#: modules/profile/templates/settings.phtml:51
+msgid "Time settings"
+msgstr "Laiko nustatymai"
+
+#: modules/profile/templates/settings.phtml:53
+#: modules/profile/templates/settings.phtml:61
+msgid "Shift of time"
+msgstr "Laiko juosta"
+
+#: modules/profile/templates/settings.phtml:64
+msgid "System time"
+msgstr "Sistemos laikas"
+
+#: modules/profile/templates/settings.phtml:68
+msgid "System Functions"
+msgstr "Sistemos Funkcijos"
+
+#: modules/profile/templates/settings.phtml:71
+msgid "Direct URL"
+msgstr "Tiesioginiai URL"
+
+#: modules/profile/templates/settings.phtml:75
+msgid "Youtube Player"
+msgstr ""
+
+#: modules/profile/templates/settings.phtml:78
+msgid "Text entering"
+msgstr "Teksto įvedimas"
+
+#: modules/profile/templates/settings.phtml:80
+#: modules/profile/templates/settings.phtml:87
+msgid "Height of field"
+msgstr "Formos aukštis"
+
+#: modules/profile/templates/settings.phtml:91
+msgid "Appearance"
+msgstr "Apipavidalinimas"
+
+#: modules/profile/templates/settings.phtml:93
+#: modules/profile/templates/settings.phtml:100
+msgid "Size of Lists"
+msgstr "Sarašo dydis"
+
+#: modules/profile/templates/settings.phtml:105
+#: modules/profile/templates/settings.phtml:107
+msgid "Select Language"
+msgstr "Pasirinkite kalbą"
+
+#: modules/profile/templates/settings.phtml:112
+msgid "Site Default"
+msgstr "Pradiniai nustatymai"
+
+#: modules/profile/templates/stat.phtml:34
+msgid "Registration confirmed"
+msgstr "Registracija patvirtintą"
+
+#: modules/profile/templates/stat.phtml:36
+msgid "Free registration"
+msgstr "Nemokama registracija"
+
+#: modules/profile/templates/stat.phtml:41
+msgid "Registered"
+msgstr "Registracijos data"
+
+#: modules/profile/templates/stat.phtml:44
+msgid "He stay on the site"
+msgstr "Prabuvo svetainei"
+
+#: modules/profile/templates/stat.phtml:44
+msgid "She stay on the site"
+msgstr "Prabuvo svetainei"
+
+#: modules/profile/templates/stat.phtml:48
+msgid "Last visit"
+msgstr "Paskutinis apsilankymas"
+
