@@ -1,0 +1,1146 @@
+msgid ""
+msgstr ""
+"X-Domain: profile\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /develop/modules/profile/locale/profile.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/profile/includes/activity.php:18
+#: modules/profile/templates/index.phtml:207
+#: modules/profile/templates/stat.phtml:53
+msgid "Activity"
+msgstr "Aktivitas"
+
+#: modules/profile/includes/activity.php:20
+#: modules/profile/includes/ban.php:188
+#: modules/profile/includes/ban.php:292
+#: modules/profile/includes/edit.php:43
+#: modules/profile/includes/guestbook.php:15
+#: modules/profile/includes/images.php:161
+#: modules/profile/includes/ip.php:27
+#: modules/profile/includes/reset.php:22
+#: modules/profile/templates/office.phtml:32
+msgid "Profile"
+msgstr "Profil"
+
+#: modules/profile/includes/activity.php:20
+#: modules/profile/includes/edit.php:43
+#: modules/profile/includes/images.php:161
+#: modules/profile/includes/index.php:17
+msgid "My Profile"
+msgstr "Profil Saya"
+
+#: modules/profile/includes/activity.php:26
+msgid "Messages"
+msgstr "Pesan"
+
+#: modules/profile/includes/activity.php:31
+msgid "Themes"
+msgstr "Tema"
+
+#: modules/profile/includes/activity.php:36
+#: modules/profile/includes/ban.php:146
+#: modules/profile/templates/stat.phtml:57
+msgid "Comments"
+msgstr "Komentar"
+
+#: modules/profile/includes/ban.php:21
+msgid "You do not have enought rights to ban this user"
+msgstr "Anda tidak memiliki hak untuk memblokir pengguna ini"
+
+#: modules/profile/includes/ban.php:23
+msgid "Ban the User"
+msgstr "Blokir Pengguna"
+
+#: modules/profile/includes/ban.php:35
+msgid "Reason not specified"
+msgstr "Tidak ada alasan"
+
+#: modules/profile/includes/ban.php:39
+msgid "There is no required data"
+msgstr "Data yang diperlukan tidak ada"
+
+#: modules/profile/includes/ban.php:43
+msgid "You have no rights to ban in this section"
+msgstr "Anda tidak memiliki hak untuk memblokir bagian ini"
+
+#: modules/profile/includes/ban.php:47
+msgid "Ban already active"
+msgstr "Blokir telah aktif"
+
+#: modules/profile/includes/ban.php:121
+msgid "System"
+msgstr "Sistem"
+
+#: modules/profile/includes/ban.php:125
+#: modules/profile/includes/index.php:140
+msgid "Ban"
+msgstr "Blokir"
+
+#: modules/profile/includes/ban.php:131
+msgid "User banned"
+msgstr "Pengguna diblokir"
+
+#: modules/profile/includes/ban.php:138
+msgid "Ban type"
+msgstr "Tipe Blokir"
+
+#: modules/profile/includes/ban.php:142
+msgid "Full block"
+msgstr "Blokir penuh"
+
+#: modules/profile/includes/ban.php:144
+msgid "Private messages"
+msgstr "Pesan Pribadi"
+
+#: modules/profile/includes/ban.php:148
+#: modules/profile/includes/guestbook.php:16
+#: modules/profile/includes/guestbook.php:28
+#: modules/profile/templates/index.phtml:237
+#: modules/profile/templates/office.phtml:39
+#: modules/profile/templates/stat.phtml:56
+msgid "Guestbook"
+msgstr "Buku Tamu"
+
+#: modules/profile/includes/ban.php:154
+#: modules/profile/includes/settings.php:46
+#: modules/profile/includes/settings.php:88
+#: modules/profile/templates/stat.phtml:55
+msgid "Forum"
+msgstr ""
+
+#: modules/profile/includes/ban.php:159
+msgid "Library"
+msgstr "Perpustakaan"
+
+#: modules/profile/includes/ban.php:162
+msgid "Ban time"
+msgstr "Lama Blokir"
+
+#: modules/profile/includes/ban.php:164
+msgid "Minutes (60 max.)"
+msgstr "Menit (maks. 60)"
+
+#: modules/profile/includes/ban.php:165
+msgid "Hours (24 max.)"
+msgstr "Jam (maks. 24)"
+
+#: modules/profile/includes/ban.php:168
+msgid "Days (30 max.)"
+msgstr "Hari (Maks. 30)"
+
+#: modules/profile/includes/ban.php:172
+#: modules/profile/includes/ban.php:345
+msgid "Till cancel"
+msgstr "Sampai membatalkan"
+
+#: modules/profile/includes/ban.php:175
+msgid "Reason"
+msgstr "Alasan"
+
+#: modules/profile/includes/ban.php:180
+msgid "Violation"
+msgstr "Pelanggaran"
+
+#: modules/profile/includes/ban.php:185
+msgid "Apply Ban"
+msgstr "Blokir"
+
+#: modules/profile/includes/ban.php:195
+#: modules/profile/includes/ban.php:225
+#: modules/profile/includes/ban.php:233
+#: modules/profile/includes/ban.php:258
+#: modules/profile/skl.php:127
+msgid "Wrong data"
+msgstr "Data salah"
+
+#: modules/profile/includes/ban.php:204
+msgid "Ban not active"
+msgstr "Blokir tidak aktif"
+
+#: modules/profile/includes/ban.php:208
+msgid "Ban termination"
+msgstr "Penghentian blokir"
+
+#: modules/profile/includes/ban.php:213
+msgid "Ban terminated"
+msgstr "Blokir dihentikan"
+
+#: modules/profile/includes/ban.php:216
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr "Blokir akan aktif sampai berakhir dan akan dimasukkan ke riwayat pelanggaran"
+
+#: modules/profile/includes/ban.php:217
+msgid "Terminate Ban"
+msgstr "Hentikan blokir"
+
+#: modules/profile/includes/ban.php:219
+#: modules/profile/includes/ban.php:255
+#: modules/profile/includes/karma.php:76
+#: modules/profile/includes/karma.php:149
+#: modules/profile/templates/karma.phtml:92
+#: modules/profile/templates/restore_password_result.phtml:16
+#: modules/profile/templates/stat.phtml:61
+msgid "Back"
+msgstr "Kembali"
+
+#: modules/profile/includes/ban.php:239
+#: modules/profile/includes/ban.php:359
+msgid "Delete Ban"
+msgstr "Hapus Blokir"
+
+#: modules/profile/includes/ban.php:249
+msgid "Ban deleted"
+msgstr "Blokir dihapus"
+
+#: modules/profile/includes/ban.php:249
+#: modules/profile/includes/images.php:68
+#: modules/profile/includes/images.php:137
+#: modules/profile/includes/karma.php:120
+#: modules/profile/includes/password.php:83
+#: modules/profile/templates/restore_password.phtml:43
+msgid "Continue"
+msgstr "Lanjutkan"
+
+#: modules/profile/includes/ban.php:252
+msgid "Removing ban along with a record in the bans history"
+msgstr "Hapus blokir dengan riwayat pemblokiran"
+
+#: modules/profile/includes/ban.php:253
+#: modules/profile/includes/index.php:134
+#: modules/profile/templates/edit.phtml:112
+#: modules/profile/templates/edit.phtml:132
+#: modules/profile/templates/karma_delete.phtml:35
+msgid "Delete"
+msgstr "Hapus"
+
+#: modules/profile/includes/ban.php:266
+#: modules/profile/includes/ban.php:282
+msgid "Violations history"
+msgstr "Riwayat Pelanggaran"
+
+#: modules/profile/includes/ban.php:271
+msgid "Violations history cleared"
+msgstr "Riwayat pelanggaran dihapus"
+
+#: modules/profile/includes/ban.php:274
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "Apakah Anda yakin ingin menghapus semua riwayat pelanggaran pengguna?"
+
+#: modules/profile/includes/ban.php:275
+msgid "Clear"
+msgstr "Hapus"
+
+#: modules/profile/includes/ban.php:280
+#: modules/profile/includes/ban.php:373
+#: modules/profile/includes/ip.php:52
+msgid "Total"
+msgstr ""
+
+#: modules/profile/includes/ban.php:284
+#: modules/profile/includes/ban.php:297
+msgid "Ban Panel"
+msgstr "Panel Blokir"
+
+#: modules/profile/includes/ban.php:286
+msgid "Violations history can be cleared by Supervisor only"
+msgstr "Riwayat pelanggaran hanya bisa dihapus oleh Supervisor"
+
+#: modules/profile/includes/ban.php:292
+msgid "Violations History"
+msgstr "Riwayat pelanggaran"
+
+#: modules/profile/includes/ban.php:301
+msgid "Clear history"
+msgstr "Hapus riwayat"
+
+#: modules/profile/includes/ban.php:311
+msgid "My Violations"
+msgstr "Pelanggaran saya"
+
+#: modules/profile/includes/ban.php:341
+msgid "Who applied the Ban?"
+msgstr "Siapa yang memblokir?"
+
+#: modules/profile/includes/ban.php:344
+msgid "Time"
+msgstr "Lama"
+
+#: modules/profile/includes/ban.php:348
+msgid "Remains"
+msgstr "Tetap"
+
+#: modules/profile/includes/ban.php:355
+msgid "Cancel Ban"
+msgstr "Batalkan blokir"
+
+#: modules/profile/includes/ban.php:370
+#: modules/profile/includes/ip.php:49
+#: modules/profile/templates/activity.phtml:37
+#: modules/profile/templates/karma.phtml:38
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: modules/profile/includes/ban.php:379
+#: modules/profile/includes/ip.php:58
+msgid "To Page"
+msgstr "Ke halaman"
+
+#: modules/profile/includes/edit.php:16
+#: modules/profile/includes/reset.php:17
+#: modules/profile/templates/office.phtml:83
+msgid "Edit Profile"
+msgstr "Sunting Profil"
+
+#: modules/profile/includes/edit.php:26
+#: modules/profile/includes/images.php:25
+msgid "You cannot edit profile of higher administration"
+msgstr "Anda tidak dapat menyunting profil Pengurus yang lebih tinggi"
+
+#: modules/profile/includes/edit.php:38
+#: modules/profile/includes/ip.php:21
+#: modules/profile/includes/office.php:24
+#: modules/profile/includes/password.php:25
+#: modules/profile/includes/settings.php:32
+msgid "Access forbidden"
+msgstr "Akses ditolak"
+
+#: modules/profile/includes/edit.php:52
+msgid "Avatar is successfully removed"
+msgstr "Avatar berhasil dihapus"
+
+#: modules/profile/includes/edit.php:59
+msgid "Photo is successfully removed"
+msgstr "Foto berhasil dihapus"
+
+#: modules/profile/includes/edit.php:90
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Panjang nama pengguna min. 2 maks. 20 karakter"
+
+#: modules/profile/includes/edit.php:96
+msgid "Nick contains invalid characters"
+msgstr "Nama pengguna berisi karakter tidak valid"
+
+#: modules/profile/includes/edit.php:101
+msgid "Invalid format date of birth"
+msgstr "Format tanggal tidak valid"
+
+#: modules/profile/includes/edit.php:106
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "Nomor ICQ harus min. 5 dan maks. 10 digit"
+
+#: modules/profile/includes/edit.php:171
+msgid "Data saved"
+msgstr "Data disimpan"
+
+#: modules/profile/includes/images.php:38
+msgid "Upload Avatar"
+msgstr "Unggah Avatar"
+
+#: modules/profile/includes/images.php:44
+#: modules/profile/includes/images.php:96
+msgid "The weight of the file exceeds"
+msgstr ""
+
+#: modules/profile/includes/images.php:66
+msgid "The avatar is successfully uploaded"
+msgstr "Avatar berhasil diunggah"
+
+#: modules/profile/includes/images.php:83
+#: modules/profile/includes/images.php:152
+#: modules/profile/includes/password.php:94
+msgid "Repeat"
+msgstr "Ulangi"
+
+#: modules/profile/includes/images.php:90
+msgid "Upload Photo"
+msgstr "Unggah Foto"
+
+#: modules/profile/includes/images.php:135
+msgid "The photo is successfully uploaded"
+msgstr "Foto berhasil diunggah"
+
+#: modules/profile/includes/index.php:17
+#: modules/profile/includes/karma.php:19
+#: modules/profile/index.php:60
+#: modules/profile/index.php:75
+msgid "User Profile"
+msgstr "Profil pengguna"
+
+#: modules/profile/includes/index.php:22
+#: modules/profile/templates/edit.phtml:261
+msgid "User"
+msgstr "Pengguna"
+
+#: modules/profile/includes/index.php:23
+msgid "Forum moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:24
+msgid "Download moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:25
+msgid "Library moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:26
+msgid "Super moderator"
+msgstr ""
+
+#: modules/profile/includes/index.php:27
+#: modules/profile/templates/edit.phtml:283
+msgid "Administrator"
+msgstr "Pengurus"
+
+#: modules/profile/includes/index.php:28
+#: modules/profile/templates/edit.phtml:287
+msgid "Supervisor"
+msgstr ""
+
+#: modules/profile/includes/index.php:95
+#: modules/profile/templates/stat.phtml:32
+msgid "Pending confirmation"
+msgstr "Konfirmasi tertunda"
+
+#: modules/profile/includes/index.php:115
+msgid "Add to Contacts"
+msgstr "Tambahkan kontak"
+
+#: modules/profile/includes/index.php:120
+msgid "Remove from Contacts"
+msgstr "Hapus kontak"
+
+#: modules/profile/includes/index.php:128
+msgid "Edit"
+msgstr "Sunting"
+
+#: modules/profile/includes/ip.php:15
+#: modules/profile/includes/ip.php:27
+msgid "IP History"
+msgstr "Riwayat IP"
+
+#: modules/profile/includes/ip.php:20
+msgid "Administration"
+msgstr ""
+
+#: modules/profile/includes/karma.php:15
+#: modules/profile/includes/karma.php:20
+#: modules/profile/templates/index.phtml:86
+msgid "Karma"
+msgstr ""
+
+#: modules/profile/includes/karma.php:41
+msgid "It is forbidden to vote for administration"
+msgstr "Pengurus tidak dizinkan untuk memberi voting"
+
+#: modules/profile/includes/karma.php:45
+msgid "Cheating karma is forbidden"
+msgstr "Kecurangan karma tidak diizinkan"
+
+#: modules/profile/includes/karma.php:50
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "Pengguna dapat memberi voting, jika aktif di situs selama %s dan memiliki skor %d pos forum."
+
+#: modules/profile/includes/karma.php:51
+msgid "hours"
+msgstr "jam"
+
+#: modules/profile/includes/karma.php:51
+msgid "days"
+msgstr "hari"
+
+#: modules/profile/includes/karma.php:59
+msgid "You can vote for single user just one time for 24 hours"
+msgstr ""
+
+#: modules/profile/includes/karma.php:65
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "Anda telah melebihi batas memberi voting. Voting baru akan ditambahkan dalam %s"
+
+#: modules/profile/includes/karma.php:118
+msgid "You have successfully voted"
+msgstr "Anda berhasil memberi voting"
+
+#: modules/profile/includes/karma.php:129
+msgid "Vote for"
+msgstr "Beri voting untuk"
+
+#: modules/profile/includes/karma.php:147
+msgid "You are not allowed to vote for users"
+msgstr "Anda tidak diizinkan memberi voting pengguna ini"
+
+#: modules/profile/includes/karma.php:183
+msgid "Do you really want to delete comment?"
+msgstr "Apakah Anda yakin ingin menghapus komentar ini?"
+
+#: modules/profile/includes/karma.php:216
+msgid "Do you really want to delete all reviews about user?"
+msgstr "Apakah Anda yakin ingin menghapus semua ulasan pengguna?"
+
+#: modules/profile/includes/karma.php:234
+msgid "New responses"
+msgstr "Tanggapan baru"
+
+#: modules/profile/includes/karma.php:269
+msgid "All"
+msgstr "Semua"
+
+#: modules/profile/includes/karma.php:274
+#: modules/profile/templates/index.phtml:101
+#: modules/profile/templates/karma_vote.phtml:46
+msgid "Positive"
+msgstr "Positif"
+
+#: modules/profile/includes/karma.php:279
+#: modules/profile/templates/index.phtml:107
+#: modules/profile/templates/karma_vote.phtml:50
+msgid "Negative"
+msgstr "Negatif"
+
+#: modules/profile/includes/office.php:15
+#: modules/profile/includes/settings.php:23
+msgid "My Account"
+msgstr "Akun Saya"
+
+#: modules/profile/includes/password.php:15
+#: modules/profile/includes/password.php:16
+#: modules/profile/templates/edit.phtml:241
+#: modules/profile/templates/office.phtml:84
+msgid "Change Password"
+msgstr "Ganti kata sandi"
+
+#: modules/profile/includes/password.php:43
+#: modules/profile/includes/password.php:46
+msgid "It is necessary to fill in all fields"
+msgstr "Anda harus mengisi semua kolom"
+
+#: modules/profile/includes/password.php:51
+msgid "Old password entered incorrectly"
+msgstr "Kata sandi lama salah"
+
+#: modules/profile/includes/password.php:55
+msgid "The password confirmation you entered is wrong"
+msgstr "Konfirmasi kata sandi salah"
+
+#: modules/profile/includes/password.php:59
+msgid "The password must contain at least 3 characters"
+msgstr "Kata sandi harus berisi minimal 3 karakter"
+
+#: modules/profile/includes/password.php:81
+msgid "Password successfully changed"
+msgstr "Kata sandi berhasil diganti"
+
+#: modules/profile/includes/reset.php:20
+msgid "For user %s default settings were set."
+msgstr "Untuk pengguna %s pengaturan berhasil diatur ulang."
+
+#: modules/profile/includes/settings.php:15
+#: modules/profile/includes/settings.php:24
+#: modules/profile/templates/office.phtml:80
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: modules/profile/includes/settings.php:41
+#: modules/profile/includes/settings.php:141
+msgid "General setting"
+msgstr "Pengaturan Umum"
+
+#: modules/profile/includes/settings.php:51
+#: modules/profile/includes/settings.php:59
+msgid "Mail"
+msgstr "Pesan"
+
+#: modules/profile/includes/settings.php:71
+#: modules/profile/includes/settings.php:108
+#: modules/profile/includes/settings.php:196
+msgid "Settings saved successfully"
+msgstr "Pengaturan berhasil disimpan"
+
+#: modules/profile/includes/settings.php:124
+#: modules/profile/includes/settings.php:201
+msgid "Default settings are set"
+msgstr "Pengaturan berhasil disetel ulang"
+
+#: modules/profile/includes/stat.php:17
+#: modules/profile/includes/stat.php:20
+#: modules/profile/templates/index.phtml:217
+#: modules/profile/templates/stat.phtml:26
+msgid "Statistic"
+msgstr "Statistik"
+
+#: modules/profile/index.php:62
+msgid "For registered users only"
+msgstr "Hanya untuk pengguna terdaftar"
+
+#: modules/profile/index.php:77
+msgid "This User does not exists"
+msgstr "Pengguna ini tidak ada"
+
+#: modules/profile/skl.php:39
+#: modules/profile/templates/restore_password.phtml:2
+#: modules/profile/templates/restore_password.phtml:3
+#: modules/profile/templates/restore_password.phtml:10
+#: modules/profile/templates/restore_password_result.phtml:2
+#: modules/profile/templates/restore_password_result.phtml:3
+#: modules/profile/templates/restore_password_result.phtml:10
+msgid "Restore password"
+msgstr ""
+
+#: modules/profile/skl.php:64
+msgid "The required fields are not filled"
+msgstr "Kolom yang diperlukan kosong"
+
+#: modules/profile/skl.php:66
+msgid "Incorrect code"
+msgstr "Kode verifikasi salah"
+
+#: modules/profile/skl.php:79
+msgid "Invalid Email address"
+msgstr "Alamat email tidak valid"
+
+#: modules/profile/skl.php:83
+msgid "Password can be recovered 1 time per day"
+msgstr "Kata sandi hanya dapat dipulihkan satu kali dalam sehari"
+
+#: modules/profile/skl.php:86
+#: modules/profile/skl.php:145
+msgid "User does not exists"
+msgstr "Pengguna tidak ada"
+
+#: modules/profile/skl.php:93
+msgid "Password recovery"
+msgstr "Lupa kata sandi"
+
+#: modules/profile/skl.php:95
+msgid "Hello %s!\n"
+"You start process of password recovery on the site %s\n"
+"In order to recover your password, you must click on the link: %s\n"
+"Link valid for 1 hour\n\n"
+"If you receive this mail by mistake, just ignore this letter"
+msgstr "Halo %s\n"
+"Untuk dapat memulihkan kata sandi Anda di %s\n"
+"Anda harus mengklik tautan berikut: %s\n"
+"Tautan hanya berlaku 1 jam\n\n"
+"Jika Anda mendapatkan email dari kesalahan, abaikan email ini"
+
+#: modules/profile/skl.php:105
+msgid "Check your e-mail for further information"
+msgstr "Cek email untuk informasi lebih lanjut"
+
+#: modules/profile/skl.php:107
+#: modules/profile/skl.php:166
+msgid "Error sending E-mail"
+msgstr "Gagal mengirim email"
+
+#: modules/profile/skl.php:137
+msgid "Password recovery is impossible"
+msgstr "Pemulihan kata sandi tidak dapat dilakukan"
+
+#: modules/profile/skl.php:141
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Waktu untuk konfirmasi pemulihan kata sandi telah habis"
+
+#: modules/profile/skl.php:152
+msgid "Your new password"
+msgstr "Kata sandi baru"
+
+#: modules/profile/skl.php:154
+msgid "Hello %s\n"
+"You have changed your password on the site %s\n\n"
+"Your new password: %s\n\n"
+"After logging in, you can change your password to new one."
+msgstr "Halo %s\n"
+"Anda telah mengu mebah kata sandi Anda di %s\n\n"
+"Kata sandi baru Anda: %s\n\n"
+"Setelah masuk Anda dapat mengubah kata sandi baru lagi."
+
+#: modules/profile/skl.php:164
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Kata sandi berhasil diganti<br>Kata sandi berhasil dikirim ke alamat email Anda."
+
+#: modules/profile/templates/activity.phtml:53
+#: modules/profile/templates/karma.phtml:88
+msgid "Total:"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:52
+#: modules/profile/templates/restore_password.phtml:12
+#: modules/profile/templates/restore_password.phtml:18
+msgid "Username"
+msgstr "Nama pengguna"
+
+#: modules/profile/templates/edit.phtml:58
+#: modules/profile/templates/edit.phtml:65
+#: modules/profile/templates/edit.phtml:87
+msgid "Nickname"
+msgstr "Nama pengguna"
+
+#: modules/profile/templates/edit.phtml:69
+msgid "Min.2, Max. 20"
+msgstr "Min. 2, maks. 20"
+
+#: modules/profile/templates/edit.phtml:73
+#: modules/profile/templates/edit.phtml:79
+#: modules/profile/templates/edit.phtml:91
+msgid "Status"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:82
+msgid "Max. 50"
+msgstr "Maks. 50"
+
+#: modules/profile/templates/edit.phtml:99
+msgid "Avatar"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:107
+#: modules/profile/templates/edit.phtml:130
+msgid "Upload"
+msgstr "Unggah"
+
+#: modules/profile/templates/edit.phtml:109
+msgid "Select in Catalog"
+msgstr "Pilih di katalog"
+
+#: modules/profile/templates/edit.phtml:119
+#: modules/profile/templates/edit.phtml:123
+#: modules/profile/templates/index.phtml:125
+msgid "Photo"
+msgstr "Foto"
+
+#: modules/profile/templates/edit.phtml:137
+msgid "Personal info"
+msgstr "Data pribadi"
+
+#: modules/profile/templates/edit.phtml:141
+#: modules/profile/templates/edit.phtml:147
+msgid "Your name"
+msgstr "Nama Anda"
+
+#: modules/profile/templates/edit.phtml:152
+msgid "Date of birth (d.m.y)"
+msgstr "Tanggal lahir (h.b.t)"
+
+#: modules/profile/templates/edit.phtml:155
+msgid "Day"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:160
+msgid "Month"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:164
+msgid "Year"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:170
+#: modules/profile/templates/edit.phtml:176
+#: modules/profile/templates/index.phtml:151
+msgid "City, Country"
+msgstr "Kota, Negara"
+
+#: modules/profile/templates/edit.phtml:180
+msgid "About myself"
+msgstr "Tentang saya"
+
+#: modules/profile/templates/edit.phtml:184
+#: modules/profile/templates/office.phtml:67
+#: modules/profile/templates/office.phtml:71
+msgid "Contacts"
+msgstr "Kontak"
+
+#: modules/profile/templates/edit.phtml:186
+#: modules/profile/templates/edit.phtml:192
+#: modules/profile/templates/index.phtml:168
+msgid "Phone number"
+msgstr "Nomor telepon"
+
+#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/edit.phtml:202
+#: modules/profile/templates/index.phtml:174
+msgid "E-mail"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:207
+msgid "Show in Profile"
+msgstr "Tampilkan di Profil"
+
+#: modules/profile/templates/edit.phtml:209
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr "Peringatan! Harap mengisi alamat Email Anda, hal ini berguna jika Anda lupa kata sandi."
+
+#: modules/profile/templates/edit.phtml:213
+#: modules/profile/templates/edit.phtml:219
+#: modules/profile/templates/index.phtml:183
+msgid "Skype"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:224
+#: modules/profile/templates/edit.phtml:230
+#: modules/profile/templates/index.phtml:189
+msgid "Site"
+msgstr "Situs"
+
+#: modules/profile/templates/edit.phtml:235
+msgid "Administrative Functions"
+msgstr "Fungsi Pengurus"
+
+#: modules/profile/templates/edit.phtml:238
+msgid "Prohibit Karma"
+msgstr "Tidak berlakukan karma"
+
+#: modules/profile/templates/edit.phtml:243
+msgid "Reset User options to default"
+msgstr "Atur ulang opsi pengguna"
+
+#: modules/profile/templates/edit.phtml:247
+msgid "Select gender"
+msgstr "Pilih jenis kelamin"
+
+#: modules/profile/templates/edit.phtml:250
+#: modules/profile/templates/index.phtml:141
+msgid "Man"
+msgstr "Pria"
+
+#: modules/profile/templates/edit.phtml:254
+#: modules/profile/templates/index.phtml:143
+msgid "Woman"
+msgstr "Wanita"
+
+#: modules/profile/templates/edit.phtml:258
+msgid "Position on the Site"
+msgstr "Posisi di Situs"
+
+#: modules/profile/templates/edit.phtml:265
+msgid "Forum Moderator"
+msgstr "Moderator Forum"
+
+#: modules/profile/templates/edit.phtml:269
+msgid "Download Moderator"
+msgstr "Moderator Unduhan"
+
+#: modules/profile/templates/edit.phtml:273
+msgid "Library Moderator"
+msgstr "Moderator Perpustakaan"
+
+#: modules/profile/templates/edit.phtml:277
+msgid "Super Moderator"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:296
+#: modules/profile/templates/forum_settings.phtml:79
+#: modules/profile/templates/images.phtml:62
+#: modules/profile/templates/mail_settings.phtml:60
+#: modules/profile/templates/password.phtml:66
+#: modules/profile/templates/settings.phtml:118
+msgid "Save"
+msgstr "Simpan"
+
+#: modules/profile/templates/edit.phtml:297
+#: modules/profile/templates/forum_settings.phtml:80
+#: modules/profile/templates/images.phtml:63
+#: modules/profile/templates/karma_delete.phtml:36
+#: modules/profile/templates/karma_vote.phtml:71
+#: modules/profile/templates/mail_settings.phtml:61
+#: modules/profile/templates/password.phtml:67
+#: modules/profile/templates/settings.phtml:119
+msgid "Cancel"
+msgstr "Batal"
+
+#: modules/profile/templates/forum_settings.phtml:48
+msgid "Basic settings"
+msgstr "Pengaturan dasar"
+
+#: modules/profile/templates/forum_settings.phtml:52
+msgid "Inverse sorting"
+msgstr "Penyortiran invers"
+
+#: modules/profile/templates/forum_settings.phtml:56
+msgid "Use the form of a quick answer"
+msgstr "Menggunakan form untuk jawaban cepat"
+
+#: modules/profile/templates/forum_settings.phtml:60
+msgid "Preview of messages"
+msgstr "Pertinjau pesan"
+
+#: modules/profile/templates/forum_settings.phtml:63
+msgid "Attach first post"
+msgstr "Melampirkan posting pertama"
+
+#: modules/profile/templates/forum_settings.phtml:67
+msgid "Always"
+msgstr "Selalu"
+
+#: modules/profile/templates/forum_settings.phtml:71
+msgid "In unread topics"
+msgstr "Dalam topik-topik yang belum dibaca"
+
+#: modules/profile/templates/forum_settings.phtml:75
+msgid "Never"
+msgstr "Tidak pernah"
+
+#: modules/profile/templates/forum_settings.phtml:81
+#: modules/profile/templates/settings.phtml:120
+msgid "Reset Settings"
+msgstr "Atur ulang pengaturan"
+
+#: modules/profile/templates/images.phtml:54
+msgid "Choose file"
+msgstr ""
+
+#: modules/profile/templates/images.phtml:57
+msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
+msgstr "Dizikan format gambar: JPG, PNG, GIF. Maksimal ukuran berkas %d kb.<br> Gambar baru akan menggantikan yang lama (jika ada)."
+
+#: modules/profile/templates/index.phtml:46
+msgid "User Agent"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:48
+msgid "Ip"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:49
+#: modules/profile/templates/index.phtml:52
+msgid "Whois"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:61
+msgid "Write"
+msgstr "Tulis"
+
+#: modules/profile/templates/index.phtml:64
+msgid "Block"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:66
+msgid "Unblock"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:70
+msgid "Actions"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:79
+msgid "Edit profile"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:93
+msgid "vote"
+msgid_plural "votes"
+msgstr[0] ""
+
+#: modules/profile/templates/index.phtml:113
+#: modules/profile/templates/karma_vote.phtml:70
+msgid "Vote"
+msgstr "Voting"
+
+#: modules/profile/templates/index.phtml:122
+msgid "Information"
+msgstr "Informasi"
+
+#: modules/profile/templates/index.phtml:133
+msgid "Birthday"
+msgstr "Ulang Tahun"
+
+#: modules/profile/templates/index.phtml:138
+msgid "Gender"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:145
+msgid "Not specified"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:177
+msgid "hidden"
+msgstr "tersembunyi"
+
+#: modules/profile/templates/index.phtml:227
+#: modules/profile/templates/office.phtml:35
+msgid "Photo Album"
+msgstr "Album Foto"
+
+#: modules/profile/templates/karma.phtml:77
+msgid "Reset Karma"
+msgstr "Atur ulang karma"
+
+#: modules/profile/templates/karma_vote.phtml:43
+msgid "Type of vote"
+msgstr "Jenis voting"
+
+#: modules/profile/templates/karma_vote.phtml:54
+msgid "Votes quantity"
+msgstr "Jumlah voting"
+
+#: modules/profile/templates/karma_vote.phtml:63
+msgid "Comment"
+msgstr "Komentar"
+
+#: modules/profile/templates/karma_vote.phtml:65
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, maks. 500 karakter"
+
+#: modules/profile/templates/mail_settings.phtml:48
+msgid "Who can write you?"
+msgstr "Siapa yang bisa mengirimi anda pesan?"
+
+#: modules/profile/templates/mail_settings.phtml:52
+msgid "All can write"
+msgstr "Semua dapat menulis"
+
+#: modules/profile/templates/mail_settings.phtml:56
+msgid "Only my contacts"
+msgstr "Hanya kontak saya"
+
+#: modules/profile/templates/message_row.phtml:31
+msgid "To message"
+msgstr ""
+
+#: modules/profile/templates/office.phtml:29
+msgid "My Pages"
+msgstr "Halaman Saya"
+
+#: modules/profile/templates/office.phtml:33
+msgid "Statistics"
+msgstr "Statistik"
+
+#: modules/profile/templates/office.phtml:44
+msgid "My Mailbox"
+msgstr "Pesan Saya"
+
+#: modules/profile/templates/office.phtml:48
+msgid "Received"
+msgstr "Diterima"
+
+#: modules/profile/templates/office.phtml:55
+msgid "Sent"
+msgstr "Terkirim"
+
+#: modules/profile/templates/office.phtml:62
+msgid "Files"
+msgstr "Berkas"
+
+#: modules/profile/templates/office.phtml:75
+msgid "Blocked"
+msgstr "Diblokir"
+
+#: modules/profile/templates/office.phtml:85
+msgid "System Settings"
+msgstr "Pengaturan Sistem"
+
+#: modules/profile/templates/password.phtml:34
+#: modules/profile/templates/password.phtml:40
+msgid "Enter old password"
+msgstr "Kata sandi lama"
+
+#: modules/profile/templates/password.phtml:46
+#: modules/profile/templates/password.phtml:52
+msgid "Enter new password"
+msgstr "Kata sandi baru"
+
+#: modules/profile/templates/password.phtml:56
+#: modules/profile/templates/password.phtml:62
+msgid "Repeat password"
+msgstr "Konfirmasi kata sandi"
+
+#: modules/profile/templates/restore_password.phtml:22
+#: modules/profile/templates/restore_password.phtml:28
+msgid "Your E-mail"
+msgstr "Email Anda"
+
+#: modules/profile/templates/restore_password.phtml:31
+#: modules/profile/templates/restore_password.phtml:40
+msgid "Verification code"
+msgstr "Kode verifikasi"
+
+#: modules/profile/templates/restore_password.phtml:33
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/profile/templates/restore_password.phtml:46
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Kata sandi akan dikirim ke alamat Email yang telah Anda cantumkan di profl<br />Peringatan! Jika Anda belum mencantumkan alamat email di profil, Anda tidak bisa memulihkan kata sandi."
+
+#: modules/profile/templates/settings.phtml:51
+msgid "Time settings"
+msgstr "Pengaturan waktu"
+
+#: modules/profile/templates/settings.phtml:53
+#: modules/profile/templates/settings.phtml:61
+msgid "Shift of time"
+msgstr "Pergeseran waktu"
+
+#: modules/profile/templates/settings.phtml:64
+msgid "System time"
+msgstr "Waktu sistem"
+
+#: modules/profile/templates/settings.phtml:68
+msgid "System Functions"
+msgstr "Fungsi sistem"
+
+#: modules/profile/templates/settings.phtml:71
+msgid "Direct URL"
+msgstr "URL langsung"
+
+#: modules/profile/templates/settings.phtml:75
+msgid "Youtube Player"
+msgstr "Pemutar YouTube"
+
+#: modules/profile/templates/settings.phtml:78
+msgid "Text entering"
+msgstr "Menulis teks"
+
+#: modules/profile/templates/settings.phtml:80
+#: modules/profile/templates/settings.phtml:87
+msgid "Height of field"
+msgstr "Tinggi kolom"
+
+#: modules/profile/templates/settings.phtml:91
+msgid "Appearance"
+msgstr "Tampilan"
+
+#: modules/profile/templates/settings.phtml:93
+#: modules/profile/templates/settings.phtml:100
+msgid "Size of Lists"
+msgstr "Ukuran daftar"
+
+#: modules/profile/templates/settings.phtml:105
+#: modules/profile/templates/settings.phtml:107
+msgid "Select Language"
+msgstr "Pilih bahasa"
+
+#: modules/profile/templates/settings.phtml:112
+msgid "Site Default"
+msgstr "Situs default"
+
+#: modules/profile/templates/stat.phtml:34
+msgid "Registration confirmed"
+msgstr "Registrasi dikonfirmasi"
+
+#: modules/profile/templates/stat.phtml:36
+msgid "Free registration"
+msgstr "Pendaftaran tanpa konfirmasi"
+
+#: modules/profile/templates/stat.phtml:41
+msgid "Registered"
+msgstr "Terdaftar"
+
+#: modules/profile/templates/stat.phtml:44
+msgid "He stay on the site"
+msgstr "Tinggal di situs"
+
+#: modules/profile/templates/stat.phtml:44
+msgid "She stay on the site"
+msgstr "Tinggal di situs"
+
+#: modules/profile/templates/stat.phtml:48
+msgid "Last visit"
+msgstr "Kunjungan terakhir"
+
