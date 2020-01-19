@@ -120,6 +120,13 @@ $domainSearch = [
                 ]
         ],
 
+        'notifications' => [
+                'target' => 'modules/notifications/locale',
+                'scan' => [
+                        'modules/notifications',
+                ]
+        ],
+
         'system' => [
                 'target' => 'system/locale',
                 'scan' => [

@@ -666,7 +666,7 @@ msgstr ""
 #: modules/admin/templates/ipban_search.phtml:40
 #: modules/admin/templates/karma.phtml:82
 #: modules/admin/templates/karma_clean_confirm.phtml:35
-#: modules/admin/templates/news.phtml:93
+#: modules/admin/templates/news.phtml:89
 #: modules/admin/templates/user_clean_confirm.phtml:39
 msgid "Cancel"
 msgstr ""
@@ -801,7 +801,7 @@ msgstr ""
 #: modules/admin/includes/usr_del.php:123
 #: modules/admin/templates/access.phtml:72
 #: modules/admin/templates/access.phtml:95
-#: modules/admin/templates/news.phtml:73
+#: modules/admin/templates/news.phtml:69
 msgid "Comments"
 msgstr ""
 
@@ -877,7 +877,7 @@ msgstr ""
 #: modules/admin/templates/ipban_add.phtml:79
 #: modules/admin/templates/karma.phtml:81
 #: modules/admin/templates/languages.phtml:28
-#: modules/admin/templates/news.phtml:92
+#: modules/admin/templates/news.phtml:88
 #: modules/admin/templates/settings.phtml:73
 msgid "Save"
 msgstr ""
@@ -1552,46 +1552,42 @@ msgid "Title + Text"
 msgstr ""
 
 #: modules/admin/templates/news.phtml:52
-msgid "Text"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:56
 msgid "Not to show"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:61
+#: modules/admin/templates/news.phtml:57
 msgid "Line breaks"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:65
+#: modules/admin/templates/news.phtml:61
 msgid "Smiles"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:69
+#: modules/admin/templates/news.phtml:65
 msgid "bbCode Tags"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:77
+#: modules/admin/templates/news.phtml:73
 msgid "Text size"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:79
-#: modules/admin/templates/news.phtml:84
-#: modules/admin/templates/news.phtml:89
+#: modules/admin/templates/news.phtml:75
+#: modules/admin/templates/news.phtml:80
+#: modules/admin/templates/news.phtml:85
 msgid "min:"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:79
-#: modules/admin/templates/news.phtml:84
-#: modules/admin/templates/news.phtml:89
+#: modules/admin/templates/news.phtml:75
+#: modules/admin/templates/news.phtml:80
+#: modules/admin/templates/news.phtml:85
 msgid "max:"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:82
+#: modules/admin/templates/news.phtml:78
 msgid "Quantity of news"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:87
+#: modules/admin/templates/news.phtml:83
 msgid "How many days to show?"
 msgstr ""
 

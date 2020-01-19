@@ -2,41 +2,16 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
-#: themes/default/templates/system/app/old_notifications.phtml:9
-msgid "Ban"
-msgstr ""
-
-#: themes/default/templates/system/app/old_notifications.phtml:9
-msgid "Details"
-msgstr ""
-
-#: themes/default/templates/system/app/old_notifications.phtml:16
-msgid "System"
-msgstr ""
-
-#: themes/default/templates/system/app/old_notifications.phtml:28
-msgid "Mail"
-msgstr ""
-
-#: themes/default/templates/system/app/old_notifications.phtml:32
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
-msgid "Guestbook"
-msgstr ""
-
-#: themes/default/templates/system/app/old_notifications.phtml:38
-msgid "Comments"
-msgstr ""
-
-#: themes/default/templates/system/app/old_notifications.phtml:42
-msgid "Unread"
-msgstr ""
-
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:37
 msgid "News archive"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:52
 msgid "Forum"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
+msgid "Guestbook"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:81
@@ -68,7 +43,6 @@ msgid "Admin Chat"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
-#: themes/default/templates/system/layout/old_default.phtml:51
 msgid "Guest"
 msgstr ""
 
@@ -77,7 +51,6 @@ msgid "Notifications"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
-#: themes/default/templates/system/layout/old_default.phtml:64
 msgid "Personal"
 msgstr ""
 
@@ -90,16 +63,7 @@ msgid "Registration"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:83
-#: themes/default/templates/system/layout/old_default.phtml:69
 msgid "Login"
-msgstr ""
-
-#: themes/default/templates/system/layout/old_default.phtml:50
-msgid "Hi"
-msgstr ""
-
-#: themes/default/templates/system/layout/old_default.phtml:57
-msgid "Home"
 msgstr ""
 
 #: themes/default/templates/system/pages/comments_delete.phtml:23

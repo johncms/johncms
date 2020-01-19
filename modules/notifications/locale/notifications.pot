@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"X-Domain: notifications\n"
+
+#: modules/notifications/index.php:42
+msgid "Users on registration"
+msgstr ""
+
+#: modules/notifications/index.php:52
+msgid "Articles on moderation"
+msgstr ""
+
+#: modules/notifications/index.php:62
+msgid "Downloads on moderation"
+msgstr ""
+
+#: modules/notifications/index.php:73
+msgid "Ban"
+msgstr ""
+
+#: modules/notifications/index.php:84
+msgid "System messages"
+msgstr ""
+
+#: modules/notifications/index.php:94
+msgid "Mail"
+msgstr ""
+
+#: modules/notifications/index.php:104
+#: modules/notifications/index.php:123
+msgid "Guestbook"
+msgstr ""
+
+#: modules/notifications/index.php:114
+msgid "Comments"
+msgstr ""
+
+#: modules/notifications/index.php:133
+msgid "Home"
+msgstr ""
+
+#: modules/notifications/index.php:138
+#: modules/notifications/templates/index.phtml:10
+#: modules/notifications/templates/index.phtml:11
+msgid "Notifications"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:19
+msgid "All notifications have already been read"
+msgstr ""
