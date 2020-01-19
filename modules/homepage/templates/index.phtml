@@ -1,14 +1,12 @@
 <?php
 /**
- * @var Johncms\Counters   $counters
- * @var Johncms\NewsWidget $news
- * @var int                        $rights
+ * @var Johncms\Counters $counters
+ * @var int $rights
+ * @var $data
  */
 
-$this->layout('system::layout/default', ['title' => __('Welcome')])
+$this->layout('system::layout/default', ['title' => __('Welcome')]);
 ?>
-
-
 <div class="jumbotron shadow pt-4 pb-5 bg-white mt-3">
     <h1 class="display-4 font-weight-bold">JohnCMS 9.0.0</h1>
     <p class="lead">
@@ -29,8 +27,26 @@ $this->layout('system::layout/default', ['title' => __('Welcome')])
     </a>
 </div>
 
+<?php if (! empty($data['news'])): ?>
+    <div>
+        <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
+        <div class="row">
+            <?php foreach ($data['news'] as $item): ?>
+                <div class="col-12 col-md-4 mb-3">
+                    <a class="h4 font-weight-bold" href="/news/"><?= $item['title'] ?></a>
+                    <?php if (! empty($item['text'])): ?>
+                        <div class="small"><?= $item['text'] ?></div>
+                    <?php endif; ?>
+                    <?php if (! empty($item['comments_url'])): ?>
+                        <div class="small"><a href="<?= $item['comments_url'] ?>"><?= __('Discuss') ?></a> (<?= $item['comments'] ?>)</div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
 
-<h1 class="font-weight-bold mt-4 mb-4"><?= __('Features') ?></h1>
+<h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Features') ?></h2>
 
 <dl class="ml-4">
     <dt class="h3 font-weight-bold">
@@ -70,7 +86,9 @@ $this->layout('system::layout/default', ['title' => __('Welcome')])
         <?= __('Multilingual') ?>
     </dt>
     <dd class="mb-3">
-        <?= __('Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.') ?>
+        <?= __(
+            'Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.'
+        ) ?>
     </dd>
 
     <dt class="h3 font-weight-bold">
@@ -84,7 +102,7 @@ $this->layout('system::layout/default', ['title' => __('Welcome')])
     </dd>
 </dl>
 
-<h1 class="font-weight-bold mt-4 mb-4"><?= __('Free License') ?></h1>
+<h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Free License') ?></h2>
 
 <dl class="ml-4">
     <dt class="h3 font-weight-bold">

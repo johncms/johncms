@@ -48,10 +48,6 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                         <label class="custom-control-label" for="view2"><?= __('Title') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" name="view" value="3" id="view3" <?= $data['settings']['view'] === 3 ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="view3"><?= __('Text') ?></label>
-                    </div>
-                    <div class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input" name="view" value="0" id="view" <?= ! $data['settings']['view'] ? 'checked' : '' ?>>
                         <label class="custom-control-label" for="view"><?= __('Not to show') ?></label>
                     </div>
