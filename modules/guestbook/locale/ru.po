@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"X-Domain: guestbook\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /develop/modules/guestbook/locale/guestbook.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-19 17:09\n"
+
+#: modules/guestbook/index.php:67
+msgid "Admin Club"
+msgstr "Админ клуб"
+
+#: modules/guestbook/index.php:67
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: modules/guestbook/index.php:77
+msgid "Guestbook is closed"
+msgstr "Гостевая закрыта"
+
+#: modules/guestbook/index.php:112
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: modules/guestbook/index.php:116
+msgid "You have not entered a name"
+msgstr "Вы не ввели имя"
+
+#: modules/guestbook/index.php:120
+msgid "You have not entered the message"
+msgstr "Вы не ввели сообщение"
+
+#: modules/guestbook/index.php:124
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+#: modules/guestbook/index.php:129
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+#: modules/guestbook/index.php:148
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
+
+#: modules/guestbook/index.php:198
+msgid "Add message"
+msgstr "Добавить сообщение"
+
+#: modules/guestbook/index.php:307
+msgid "All messages older than 1 day were deleted"
+msgstr "Удалены все сообщения, старше 1 дня"
+
+#: modules/guestbook/index.php:313
+msgid "Full clearing is finished"
+msgstr "Проведена полная очистка"
+
+#: modules/guestbook/index.php:318
+msgid "All messages older than 1 week were deleted"
+msgstr "Удалены все сообщения, старше 1 недели"
+
+#: modules/guestbook/index.php:325
+#: modules/guestbook/templates/clear.phtml:2
+#: modules/guestbook/templates/clear.phtml:3
+#: modules/guestbook/templates/clear.phtml:9
+msgid "Clear guestbook"
+msgstr "Очистить гостевую"
+
+#: modules/guestbook/templates/clear.phtml:11
+msgid "Clearing parameters"
+msgstr "Параметры очистки"
+
+#: modules/guestbook/templates/clear.phtml:14
+msgid "Older than 1 week"
+msgstr "Старше 1 недели"
+
+#: modules/guestbook/templates/clear.phtml:18
+msgid "Older than 1 day"
+msgstr "Старше 1 дня"
+
+#: modules/guestbook/templates/clear.phtml:22
+msgid "Clear all"
+msgstr "Очищаем все"
+
+#: modules/guestbook/templates/clear.phtml:25
+#: modules/guestbook/templates/index.phtml:156
+msgid "Clear"
+msgstr "Очистить"
+
+#: modules/guestbook/templates/clear.phtml:26
+#: modules/guestbook/templates/confirm_delete.phtml:11
+msgid "Cancel"
+msgstr "Отмена"
+
+#: modules/guestbook/templates/confirm_delete.phtml:2
+#: modules/guestbook/templates/confirm_delete.phtml:3
+msgid "Delete message"
+msgstr "Удалить сообщение"
+
+#: modules/guestbook/templates/confirm_delete.phtml:9
+msgid "Do you really want to delete?"
+msgstr "Действительно хотите удалить?"
+
+#: modules/guestbook/templates/confirm_delete.phtml:10
+#: modules/guestbook/templates/index.phtml:140
+msgid "Delete"
+msgstr "Удалить"
+
+#: modules/guestbook/templates/edit.phtml:2
+#: modules/guestbook/templates/edit.phtml:3
+#: modules/guestbook/templates/edit.phtml:9
+msgid "Edit message"
+msgstr "Изменить сообщение"
+
+#: modules/guestbook/templates/edit.phtml:13
+#: modules/guestbook/templates/reply.phtml:13
+msgid "Author"
+msgstr "Автор"
+
+#: modules/guestbook/templates/edit.phtml:16
+#: modules/guestbook/templates/index.phtml:38
+msgid "Message"
+msgstr "Сообщение"
+
+#: modules/guestbook/templates/edit.phtml:22
+#: modules/guestbook/templates/reply.phtml:23
+msgid "Save"
+msgstr "Сохранить"
+
+#: modules/guestbook/templates/edit.phtml:23
+#: modules/guestbook/templates/reply.phtml:24
+#: modules/guestbook/templates/result.phtml:15
+msgid "Back"
+msgstr "Назад"
+
+#: modules/guestbook/templates/index.phtml:14
+msgid "The guestbook is closed"
+msgstr "Гостевая закрыта"
+
+#: modules/guestbook/templates/index.phtml:25
+#: modules/guestbook/templates/index.phtml:33
+msgid "Name"
+msgstr "Имя"
+
+#: modules/guestbook/templates/index.phtml:47
+msgid "Verification code"
+msgstr "Проверочный код"
+
+#: modules/guestbook/templates/index.phtml:49
+#: modules/guestbook/templates/index.phtml:57
+msgid "Symbols on the picture"
+msgstr "Код с картинки"
+
+#: modules/guestbook/templates/index.phtml:63
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Если Вы не видите рисунок с кодом, включите поддержку графики в настройках браузера и обновите страницу"
+
+#: modules/guestbook/templates/index.phtml:68
+msgid "Write"
+msgstr "Написать"
+
+#: modules/guestbook/templates/index.phtml:78
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: modules/guestbook/templates/index.phtml:85
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr "В Гостевой сообщений нет<br><strong>Будь первым! :)</strong>"
+
+#: modules/guestbook/templates/index.phtml:94
+msgid "Guest"
+msgstr "Гость"
+
+#: modules/guestbook/templates/index.phtml:100
+#: modules/guestbook/templates/reply.phtml:2
+#: modules/guestbook/templates/reply.phtml:3
+#: modules/guestbook/templates/reply.phtml:9
+#: modules/guestbook/templates/reply.phtml:17
+msgid "Reply"
+msgstr "Ответить"
+
+#: modules/guestbook/templates/index.phtml:135
+msgid "Edited:"
+msgstr "Изменено:"
+
+#: modules/guestbook/templates/index.phtml:139
+msgid "Edit"
+msgstr "Изменить"
+
