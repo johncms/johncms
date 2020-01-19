@@ -117,8 +117,8 @@ msgstr ""
 #: modules/forum/includes/vip.php:30
 #: modules/forum/includes/vip.php:49
 #: modules/forum/includes/vote.php:35
-#: modules/forum/index.php:718
 #: modules/forum/index.php:720
+#: modules/forum/index.php:722
 msgid "Wrong data"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgstr ""
 #: modules/forum/includes/curators.php:31
 #: modules/forum/includes/deltema.php:46
 #: modules/forum/includes/say.php:583
-#: modules/forum/index.php:268
+#: modules/forum/index.php:270
 msgid "Topic has been deleted or does not exists"
 msgstr ""
 
@@ -284,11 +284,11 @@ msgstr ""
 #: modules/forum/includes/vote.php:50
 #: modules/forum/includes/vote.php:51
 #: modules/forum/index.php:48
-#: modules/forum/index.php:153
-#: modules/forum/index.php:227
-#: modules/forum/index.php:266
-#: modules/forum/index.php:761
-#: modules/forum/index.php:762
+#: modules/forum/index.php:155
+#: modules/forum/index.php:229
+#: modules/forum/index.php:268
+#: modules/forum/index.php:763
+#: modules/forum/index.php:764
 #: modules/forum/templates/files_list.phtml:112
 #: modules/forum/templates/forum_search.phtml:95
 #: modules/forum/templates/new_topics.phtml:121
@@ -488,7 +488,7 @@ msgid "Last 10"
 msgstr ""
 
 #: modules/forum/includes/nt.php:38
-#: modules/forum/index.php:466
+#: modules/forum/index.php:468
 msgid "Go to Section"
 msgstr ""
 
@@ -700,21 +700,21 @@ msgstr ""
 msgid "Who in Forum"
 msgstr ""
 
-#: modules/forum/index.php:144
+#: modules/forum/index.php:146
 #: modules/forum/templates/header.phtml:20
 msgid "Forum is closed"
 msgstr ""
 
-#: modules/forum/index.php:146
+#: modules/forum/index.php:148
 msgid "For registered users only"
 msgstr ""
 
-#: modules/forum/index.php:462
 #: modules/forum/index.php:464
+#: modules/forum/index.php:466
 msgid "Topic deleted"
 msgstr ""
 
-#: modules/forum/index.php:722
+#: modules/forum/index.php:724
 msgid "Go to Forum"
 msgstr ""
 
