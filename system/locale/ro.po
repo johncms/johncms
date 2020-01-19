@@ -1,0 +1,127 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"PO-Revision-Date: 2020-01-19 17:07\n"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
+msgid "News archive"
+msgstr "Arhiva Stiri"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:52
+msgid "Forum"
+msgstr "Forum"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
+msgid "Guestbook"
+msgstr "Guestbook"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
+msgid "Downloads"
+msgstr "Descarcari"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:97
+msgid "Library"
+msgstr "Librarie"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:112
+msgid "Users"
+msgstr "Utilizatori"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:126
+msgid "Photo Albums"
+msgstr "Albume Foto"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
+msgid "Information, FAQ"
+msgstr "Informatii, Reguli"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:151
+msgid "Admin Panel"
+msgstr "Panou Admin"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:160
+msgid "Admin Chat"
+msgstr "Admin Chat"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+msgid "Guest"
+msgstr "Oaspete"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+msgid "Notifications"
+msgstr "Notificări"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+msgid "Personal"
+msgstr "Personal"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+msgid "Exit"
+msgstr "Ieșire"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Registration"
+msgstr "Inregistrare"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:83
+msgid "Login"
+msgstr "Logare"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr "Sigur vrei sa stergi?"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_list.phtml:99
+msgid "Delete"
+msgstr "Sterge"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr "Sterge"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: themes/default/templates/system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr "Mesaj"
+
+#: themes/default/templates/system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr "Trimite"
+
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: themes/default/templates/system/pages/comments_list.phtml:50
+msgid "Reply"
+msgstr "Raspunde"
+
+#: themes/default/templates/system/pages/comments_list.phtml:53
+msgid "Quote"
+msgstr "Citat"
+
+#: themes/default/templates/system/pages/comments_list.phtml:92
+msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:96
+msgid "Edit"
+msgstr "Editeaza"
+
+#: themes/default/templates/system/pages/comments_list.phtml:114
+#: themes/default/templates/system/pages/result.phtml:33
+msgid "Back"
+msgstr "Inapoi"
+
