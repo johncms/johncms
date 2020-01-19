@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\NavChain;
+use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 
@@ -32,6 +33,9 @@ $nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');
+
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('notifications', __DIR__ . '/locale');
 
 $nav_chain->add(__('Notifications'));
 $notifications = [];
