@@ -24,112 +24,112 @@ use Gettext\Translations;
 $domainSearch = [
         'admin' => [
                 'target' => 'modules/admin/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/admin',
                 ]
         ],
 
         'album' => [
                 'target' => 'modules/album/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/album',
                 ]
         ],
 
         'community' => [
                 'target' => 'modules/community/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/community',
                 ]
         ],
 
         'downloads' => [
                 'target' => 'modules/downloads/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/downloads',
                 ]
         ],
 
         'forum' => [
                 'target' => 'modules/forum/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/forum',
                 ]
         ],
 
         'guestbook' => [
                 'target' => 'modules/guestbook/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/guestbook',
                 ]
         ],
 
         'help' => [
                 'target' => 'modules/help/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/help',
                 ]
         ],
 
         'homepage' => [
                 'target' => 'modules/homepage/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/homepage',
                 ]
         ],
 
         'library' => [
                 'target' => 'modules/library/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/library',
                 ]
         ],
 
         'mail' => [
                 'target' => 'modules/mail/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/mail',
                 ]
         ],
 
         'news' => [
                 'target' => 'modules/news/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/news',
                 ]
         ],
 
         'online' => [
                 'target' => 'modules/online/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/online',
                 ]
         ],
 
         'profile' => [
                 'target' => 'modules/profile/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/profile',
                 ]
         ],
 
         'registration' => [
                 'target' => 'modules/registration/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/registration',
                 ]
         ],
 
         'notifications' => [
                 'target' => 'modules/notifications/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/notifications',
                 ]
         ],
 
         'system' => [
                 'target' => 'system/locale',
-                'scan' => [
+                'scan'   => [
                         'modules/language',
                         'modules/login',
                         'modules/notifications',
@@ -155,20 +155,22 @@ function recursiveScan($folder, $pattern)
 }
 
 foreach ($domainSearch as $domain => $attributes) {
+    $list = [];
     foreach ($attributes['scan'] as $dir) {
-        $phpScanner = new PhpScanner(Translations::create($domain));
-        $phpScanner->setDefaultDomain($domain);
-        $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
-        $files = recursiveScan($dir, '/^.+\.(?:phtml|php)$/i');
-        sort($files, SORT_STRING);
-
-        foreach ($files as $file) {
-            $phpScanner->scanFile($file);
-        }
-
-        $generator = new PoGenerator();
-        $generator->generateFile($phpScanner->getTranslations()[$domain], $attributes['target'] . '/' . $domain . '.pot');
+        $list = array_merge($list, recursiveScan($dir, '/^.+\.(?:phtml|php)$/i'));
     }
+
+    $phpScanner = new PhpScanner(Translations::create($domain));
+    $phpScanner->setDefaultDomain($domain);
+    $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
+
+    sort($list, SORT_STRING);
+    foreach ($list as $file) {
+        $phpScanner->scanFile($file);
+    }
+
+    $generator = new PoGenerator();
+    $generator->generateFile($phpScanner->getTranslations()[$domain], $attributes['target'] . '/' . $domain . '.pot');
 }
 
 exit('[32mLanguage templates has been created successfully[0m' . "\n");
