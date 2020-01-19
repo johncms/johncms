@@ -1,0 +1,30 @@
+<?php return array (
+  'domain' => 'admin',
+  'plural-forms' => 'nplurals=2; plural=(n != 1);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Advertisement' => 'Жарнама',
+      'Edit link' => 'Сілтемені өзгерту',
+      'Add link' => 'Сілтеме қосу',
+      'Wrong data' => 'Мәліметтер дұрыс емес',
+      'The required fields are not filled' => 'Міндетті жолдар толтырылмаған',
+      'This place is occupied' => 'Бұл орын бос емес',
+      'Invalid characters' => 'Жазуға болмайтын таңбалар',
+      'Color is specified incorrectly' => 'Түсі қате көрсетілген',
+      'Link successfully changed' => 'Сілтеме сәтті өзгертілді',
+      'Link successfully added' => 'Сілтеме сәтті қосылды',
+      'Continue' => 'Жалғастыру',
+      'Back' => 'Артқа',
+      'Title' => 'Тақырып',
+      'Link' => 'Сілтеме',
+      'Direct Link' => 'Тікелей Сілтеме',
+      'Click statistics won\'t be counted, If the direct link is turned on' => 'Егерде тіке сілтеме қосылган жағдайда статистика есепке алынбайды',
+      'To change the name when updating pages, you must wtite names trought the symbol |' => 'Атауын өзгерту үшін парақша жаңарғаннан кейін атауларды | осындай таңбамен жазып шығың',
+      'Color' => 'Түс',
+      'In the format FFFFFF, if you do not want to use link color, simply do not fill this field' => 'Егерде түспен белгілегіңіз келсе түстің атауын FFFFFF жазын немесе жәй бос қалдыраберін',
+      'Hits' => 'Сілтемемен өткендер',
+    ),
+  ),
+);

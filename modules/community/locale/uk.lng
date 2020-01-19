@@ -27,6 +27,8 @@
       'The search is performed by Nickname and are case-insensitive.' => 'Пошук здійснюється по ніку і не залежить від регістру.',
       'Users' => 'Користувачі',
       'Top Activity' => 'Топ активності',
+      'Username' => 'Ім\'я користувача',
+      'List is empty' => 'Список порожній',
       'Total' => 'Разом',
       'Back' => 'Повернутися',
     ),

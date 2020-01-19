@@ -1,0 +1,20 @@
+<?php return array (
+  'domain' => 'profile',
+  'plural-forms' => 'nplurals=2; plural=(n != 1);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Activity' => 'Белсенділік',
+      'Profile' => 'Профиль',
+      'My Profile' => 'Менің профилім',
+      'Messages' => 'Хабарлама',
+      'Themes' => 'Тақырыптар',
+      'Comments' => 'Пікірлер',
+      'You do not have enought rights to ban this user' => 'Сізде жеткілікті құқықтары жоқ',
+      'Ban the User' => 'Қолданушыға бан беру',
+      'Reason not specified' => 'Себебі көрсетілмеген',
+      'There is no required data' => 'Қажетті деректер жоқ',
+    ),
+  ),
+);

@@ -7,6 +7,7 @@
     array (
       'For administration' => 'Для адміністрації',
       'Smilies' => 'Смайли',
+      'Access forbidden' => 'Доступ заборонено',
       'Avatars' => 'Аватари',
       'Avatar has been successfully applied' => 'Аватар успішно встановлений',
       'Continue' => 'Продовжити',
@@ -18,6 +19,7 @@
       'Forum rules' => 'Правила форуму',
       'My smilies' => 'Мої смайли',
       'Wrong data' => 'Невірні дані',
+      'Smiles' => 'Смайлики',
       'bbCode Tags' => 'Теги bbCode',
       'Information, FAQ' => 'Інформація, FAQ',
       'Animals' => 'Тварини',
@@ -33,6 +35,7 @@
       'Sports' => 'Спорт',
       'Technology' => 'Технології',
       'The list is empty' => 'Список порожній',
+      'Total:' => 'Всього:',
       'PHP code' => 'PHP код',
       'Link name' => 'Ім\'я посилання',
       'URL Link' => 'URL посилання',

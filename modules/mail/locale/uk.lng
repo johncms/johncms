@@ -16,6 +16,7 @@
       'When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?' => 'Коли ви видаляєте контакт, видаляється вся переписка з ним.<br>Ви впевнені, що хочете видалити?',
       'Contact for removal isn\'t chosen' => 'Не обрано контакту для видалення',
       'Files' => 'Файли',
+      'Blacklist' => 'Чорний список',
       'User does not exists' => 'Користувача не існує',
       'User not blocked' => 'Користувача не заблоковано',
       'User is unblocked' => 'Користувача розблоковано',
@@ -65,8 +66,29 @@
       'The user at your ignore list. Sending the message is impossible.' => 'Користувач у вас в ігнорі. Відправка повідомлення неможлива.',
       'The user added you in the ignore list. Sending the message isn\'t possible.' => 'Користувач додав вас до ігнору. Відправка повідомлення неможлива.',
       'Message already exists' => 'Повідомлення вже існує',
+      'My Account' => 'Мій аккаунт',
+      'Cancel' => 'Скасувати',
+      'message' => 
+      array (
+        0 => 'повідомлення',
+        1 => 'повідомлення',
+        2 => 'повідомлення',
+        3 => 'повідомлення',
+      ),
+      'unread message' => 
+      array (
+        0 => 'непрочитане повідомлення',
+        1 => 'непрочитані повідомлення',
+        2 => 'непрочитані повідомлення',
+        3 => 'непрочитані повідомлення',
+      ),
+      'Total:' => 'Всього:',
+      'Last:' => 'Останнє:',
       'To Whom' => 'Кому',
+      'Message' => 'Повідомлення',
+      'Choose file' => 'Виберіть файл',
       'Send' => 'Відправити',
+      'Attached files' => 'Прикріплені файли',
     ),
   ),
 );

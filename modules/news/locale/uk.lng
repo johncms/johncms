@@ -5,15 +5,21 @@
   array (
     '' => 
     array (
+      'Add news' => 'Додати новину',
       'You have not entered news title' => 'Ви не ввели Заголовок новини',
       'You have not entered news text' => 'Ви не ввели текст статті',
       'You cannot add the message so often. Please, wait %d seconds.' => 'Ви не можете додавати так часто повідомлення. Будь ласка, зачекайте %d секунд.',
       'News added' => 'Новину додано',
+      'Clear news' => 'Очистити новини',
       'Delete all news older than 1 week' => 'Видалити всі новини старіші за 1 тиждень',
       'Delete all news' => 'Видалити усі новини',
       'Delete all news older than 1 month' => 'Видалити всі новини старіші за 1 місяць',
+      'Delete news' => 'Видалити новину',
+      'News deleted' => 'Новини видалені',
+      'Edit news' => 'Редагувати новини',
       'News' => 'Новини',
       'Wrong data' => 'Невірні дані',
+      'News changed' => 'Новину змінено',
       'Title' => 'Назва',
       'Text' => 'Текст',
       'Discussion' => 'Обговорення',

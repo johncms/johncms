@@ -27,8 +27,13 @@
       'The search is performed by Nickname and are case-insensitive.' => 'Tìm kiếm được thực hiện bằng biệt hiệu và được quản.',
       'Users' => 'Thành viên',
       'Top Activity' => 'Hoạt động nhiều nhất',
+      'Username' => 'Tên tài khoản',
+      'List is empty' => 'Danh sách trống',
       'Total' => 'Tổng số',
       'Back' => 'Trở lại',
+      'post' => 'bài viết',
+      'comment' => 'bình luận',
+      'point' => 'điểm',
     ),
   ),
 );
