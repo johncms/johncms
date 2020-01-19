@@ -1,0 +1,162 @@
+msgid ""
+msgstr ""
+"X-Domain: community\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /develop/modules/community/locale/community.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/community/includes/administration.php:25
+#: modules/community/includes/administration.php:31
+#: modules/community/includes/administration.php:32
+#: modules/community/templates/index.phtml:45
+msgid "Administration"
+msgstr "Администрация"
+
+#: modules/community/includes/birthdays.php:18
+#: modules/community/includes/birthdays.php:24
+#: modules/community/includes/birthdays.php:25
+#: modules/community/templates/index.phtml:50
+msgid "Birthdays"
+msgstr "Именинники"
+
+#: modules/community/includes/search.php:22
+#: modules/community/templates/search.phtml:67
+#: modules/community/templates/users.phtml:50
+msgid "User Search"
+msgstr "Поиск пользователя"
+
+#: modules/community/includes/search.php:31
+#: modules/community/includes/search.php:35
+#: modules/community/templates/index.phtml:32
+msgid "Nickname"
+msgstr "Ник"
+
+#: modules/community/includes/search.php:31
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+#: modules/community/includes/search.php:35
+msgid "Invalid characters"
+msgstr "Недопустимые символы"
+
+#: modules/community/includes/top.php:19
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/community/includes/top.php:24
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: modules/community/includes/top.php:29
+msgid "Comments"
+msgstr "Комментарии"
+
+#: modules/community/includes/top.php:37
+msgid "Karma"
+msgstr "Карма"
+
+#: modules/community/includes/top.php:48
+msgid "Most active in Guestbook"
+msgstr "Самые активные в Гостевой"
+
+#: modules/community/includes/top.php:55
+msgid "Most commentators"
+msgstr "Больше всего комментировали"
+
+#: modules/community/includes/top.php:63
+msgid "Best Karma"
+msgstr "Лучшая Карма"
+
+#: modules/community/includes/top.php:71
+msgid "Most active in Forum"
+msgstr "Самые активные на Форуме"
+
+#: modules/community/includes/users.php:25
+#: modules/community/includes/users.php:31
+#: modules/community/includes/users.php:32
+msgid "List of users"
+msgstr "Список пользователей"
+
+#: modules/community/index.php:55
+msgid "Community"
+msgstr "Сообщество"
+
+#: modules/community/index.php:66
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: modules/community/templates/index.phtml:30
+#: modules/community/templates/search.phtml:29
+msgid "Look for the User"
+msgstr "Искать пользователя"
+
+#: modules/community/templates/index.phtml:34
+#: modules/community/templates/search.phtml:33
+msgid "Search"
+msgstr "Поиск"
+
+#: modules/community/templates/index.phtml:37
+#: modules/community/templates/search.phtml:36
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr "Поиск осуществляется по нику и не зависят от регистра."
+
+#: modules/community/templates/index.phtml:41
+msgid "Users"
+msgstr "Пользователи"
+
+#: modules/community/templates/index.phtml:55
+msgid "Top Activity"
+msgstr "Топ активности"
+
+#: modules/community/templates/search.phtml:31
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: modules/community/templates/search.phtml:50
+#: modules/community/templates/top.phtml:40
+#: modules/community/templates/users.phtml:33
+msgid "List is empty"
+msgstr "Список пуст"
+
+#: modules/community/templates/search.phtml:57
+#: modules/community/templates/users.phtml:40
+msgid "Total"
+msgstr "Всего"
+
+#: modules/community/templates/search.phtml:70
+#: modules/community/templates/top.phtml:47
+#: modules/community/templates/users.phtml:53
+msgid "Back"
+msgstr "Назад"
+
+#: modules/community/templates/user_row.phtml:36
+#: modules/community/templates/user_row.phtml:42
+msgid "post"
+msgid_plural "posts"
+msgstr[0] "пост"
+msgstr[1] "поста"
+msgstr[2] "постов"
+msgstr[3] "постов"
+
+#: modules/community/templates/user_row.phtml:38
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] "комментарий"
+msgstr[1] "комментария"
+msgstr[2] "комментариев"
+msgstr[3] "комментариев"
+
+#: modules/community/templates/user_row.phtml:40
+msgid "point"
+msgid_plural "points"
+msgstr[0] "балл"
+msgstr[1] "балла"
+msgstr[2] "баллов"
+msgstr[3] "баллов"
+
