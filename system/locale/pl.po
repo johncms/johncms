@@ -1,0 +1,127 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: pl\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Polish\n"
+"Language: pl_PL\n"
+"PO-Revision-Date: 2020-01-19 17:07\n"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
+msgid "News archive"
+msgstr "Archiwum aktualności"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:52
+msgid "Forum"
+msgstr "Forum"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
+msgid "Guestbook"
+msgstr "Księga gości"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
+msgid "Downloads"
+msgstr "Pliki do pobrania"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:97
+msgid "Library"
+msgstr "Biblioteka"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:112
+msgid "Users"
+msgstr "Użytkownicy"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:126
+msgid "Photo Albums"
+msgstr "Albumy zdjęć"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
+msgid "Information, FAQ"
+msgstr "Informacje, pytania i odpowiedzi"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:151
+msgid "Admin Panel"
+msgstr "Panel Administratora"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:160
+msgid "Admin Chat"
+msgstr "Czat administracyjny"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+msgid "Guest"
+msgstr "Gość"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+msgid "Personal"
+msgstr "Panel"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+msgid "Exit"
+msgstr "Wyjście"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Registration"
+msgstr "Rejestracja"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:83
+msgid "Login"
+msgstr "Login"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr "Czy na pewno chcesz usunąć?"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_list.phtml:99
+msgid "Delete"
+msgstr "Usuń"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr "Wyczyść"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: themes/default/templates/system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr "Wiadomość"
+
+#: themes/default/templates/system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr "Wyślij"
+
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Lista jest pusta"
+
+#: themes/default/templates/system/pages/comments_list.phtml:50
+msgid "Reply"
+msgstr "Odpowiedź"
+
+#: themes/default/templates/system/pages/comments_list.phtml:53
+msgid "Quote"
+msgstr "Cytat"
+
+#: themes/default/templates/system/pages/comments_list.phtml:92
+msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:96
+msgid "Edit"
+msgstr "Edytuj"
+
+#: themes/default/templates/system/pages/comments_list.phtml:114
+#: themes/default/templates/system/pages/result.phtml:33
+msgid "Back"
+msgstr "Powrót"
+
