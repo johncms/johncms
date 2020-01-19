@@ -57,16 +57,18 @@ if (isset($_SESSION['ref'])) {
 }
 
 // Настройки форума
-$set_forum = [
+$set_forum_default = [
     'farea'    => 0,
     'upfp'     => 0,
     'preview'  => 1,
     'postclip' => 1,
     'postcut'  => 2,
 ];
+$set_forum = [];
 if ($user->isValid() && ! empty($user->set_forum)) {
     $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 }
+$set_forum = array_merge($set_forum_default, (array) $set_forum);
 
 // Список расширений файлов, разрешенных к выгрузке
 
