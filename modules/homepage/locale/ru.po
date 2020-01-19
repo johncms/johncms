@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"X-Domain: homepage\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /develop/modules/homepage/locale/homepage.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/homepage/templates/index.phtml:8
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+#: modules/homepage/templates/index.phtml:13
+msgid "Free, Open Source content management system"
+msgstr "Бесплатная система управления контентом с открытым исходным кодом"
+
+#: modules/homepage/templates/index.phtml:20
+msgid "Download"
+msgstr "Скачать"
+
+#: modules/homepage/templates/index.phtml:22
+msgid "Documentation"
+msgstr "Документация"
+
+#: modules/homepage/templates/index.phtml:32
+msgid "News"
+msgstr "Новости"
+
+#: modules/homepage/templates/index.phtml:41
+msgid "Discuss"
+msgstr "Обсудить"
+
+#: modules/homepage/templates/index.phtml:49
+msgid "Features"
+msgstr "Возможности"
+
+#: modules/homepage/templates/index.phtml:56
+msgid "Responsive Layout"
+msgstr "Адаптивная разметка"
+
+#: modules/homepage/templates/index.phtml:59
+msgid "Your site will appear equally well on both computers and mobile devices."
+msgstr "Ваш сайт будет одинаково хорошо отображаться как на компьютерах, так и на мобильных устройствах."
+
+#: modules/homepage/templates/index.phtml:66
+msgid "Template System"
+msgstr "Система шаблонов"
+
+#: modules/homepage/templates/index.phtml:69
+msgid "Using templates, you can completely change the style of your site so that it becomes unique and not like the others."
+msgstr "Используя шаблоны, вы можете полностью изменить стиль вашего сайта так, чтобы он стал уникальным и не похожим на другие."
+
+#: modules/homepage/templates/index.phtml:76
+msgid "High Performance"
+msgstr "Высокая производительность"
+
+#: modules/homepage/templates/index.phtml:79
+msgid "When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible."
+msgstr "При разработке JohnCMS мы уделяем особое внимание производительности системы.<br>Ваш сайт не будет требовать мощного сервера на столько долго, на сколько это возможно."
+
+#: modules/homepage/templates/index.phtml:86
+msgid "Multilingual"
+msgstr "Мультиязычность"
+
+#: modules/homepage/templates/index.phtml:89
+msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
+msgstr "Охватывайте максимальную аудиторию благодаря мультиязычности. В систему уже встроено несколько языков.<br>А если нужного языка нет, Вы сможете легко его добавить, благодаря продвинутым инструментам для перевода, которые поддерживают работу с JohnCMS."
+
+#: modules/homepage/templates/index.phtml:98
+msgid "Modularity"
+msgstr "Модульность"
+
+#: modules/homepage/templates/index.phtml:101
+msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
+msgstr "В систему встроены основные наиболее популярные модули.<br>Благодаря модульной системе Вы сможете устанавливать уже готовые дополнительные модули, создавать самостоятельно или же заказывать разработку новых модулей у других разработчиков."
+
+#: modules/homepage/templates/index.phtml:105
+msgid "Free License"
+msgstr "Свободная лицензия"
+
+#: modules/homepage/templates/index.phtml:115
+msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
+msgstr "Лицензия GNU GPL-3 дает вам право распространять и модифицировать JohnCMS."
+
