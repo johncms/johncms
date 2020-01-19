@@ -1,0 +1,1224 @@
+msgid ""
+msgstr ""
+"X-Domain: forum\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /develop/modules/forum/locale/forum.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-19 17:09\n"
+
+#: modules/forum/includes/addfile.php:27
+#: modules/forum/includes/addfile.php:29
+#: modules/forum/includes/addvote.php:144
+#: modules/forum/includes/addvote.php:146
+#: modules/forum/includes/curators.php:90
+#: modules/forum/includes/curators.php:92
+#: modules/forum/includes/deltema.php:101
+#: modules/forum/includes/deltema.php:103
+#: modules/forum/includes/delvote.php:69
+#: modules/forum/includes/delvote.php:71
+#: modules/forum/includes/massdel.php:82
+#: modules/forum/includes/massdel.php:84
+#: modules/forum/includes/nt.php:34
+#: modules/forum/includes/nt.php:36
+#: modules/forum/includes/ren.php:106
+#: modules/forum/includes/ren.php:108
+#: modules/forum/includes/say.php:36
+#: modules/forum/includes/vip.php:60
+#: modules/forum/includes/vip.php:62
+#: modules/forum/includes/vote.php:63
+#: modules/forum/includes/vote.php:65
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+#: modules/forum/includes/addfile.php:31
+#: modules/forum/includes/addfile.php:48
+#: modules/forum/includes/addfile.php:63
+#: modules/forum/includes/addvote.php:34
+#: modules/forum/includes/addvote.php:148
+#: modules/forum/includes/curators.php:33
+#: modules/forum/includes/curators.php:94
+#: modules/forum/includes/deltema.php:30
+#: modules/forum/includes/deltema.php:48
+#: modules/forum/includes/deltema.php:105
+#: modules/forum/includes/delvote.php:32
+#: modules/forum/includes/delvote.php:49
+#: modules/forum/includes/delvote.php:73
+#: modules/forum/includes/editpost.php:29
+#: modules/forum/includes/editpost.php:66
+#: modules/forum/includes/editpost.php:73
+#: modules/forum/includes/editpost.php:93
+#: modules/forum/includes/editpost.php:98
+#: modules/forum/includes/editvote.php:33
+#: modules/forum/includes/files.php:92
+#: modules/forum/includes/filter.php:28
+#: modules/forum/includes/filter.php:55
+#: modules/forum/includes/filter.php:92
+#: modules/forum/includes/loadtem.php:28
+#: modules/forum/includes/loadtem.php:57
+#: modules/forum/includes/massdel.php:43
+#: modules/forum/includes/massdel.php:57
+#: modules/forum/includes/massdel.php:86
+#: modules/forum/includes/nt.php:97
+#: modules/forum/includes/nt.php:113
+#: modules/forum/includes/per.php:30
+#: modules/forum/includes/per.php:45
+#: modules/forum/includes/per.php:61
+#: modules/forum/includes/per.php:76
+#: modules/forum/includes/ren.php:30
+#: modules/forum/includes/ren.php:46
+#: modules/forum/includes/ren.php:110
+#: modules/forum/includes/say.php:38
+#: modules/forum/includes/say.php:101
+#: modules/forum/includes/say.php:118
+#: modules/forum/includes/say.php:148
+#: modules/forum/includes/say.php:167
+#: modules/forum/includes/say.php:329
+#: modules/forum/includes/say.php:345
+#: modules/forum/includes/say.php:361
+#: modules/forum/includes/say.php:375
+#: modules/forum/includes/say.php:447
+#: modules/forum/includes/say.php:467
+#: modules/forum/includes/vip.php:32
+#: modules/forum/includes/vip.php:51
+#: modules/forum/includes/vip.php:64
+#: modules/forum/includes/vote.php:37
+#: modules/forum/includes/vote.php:55
+#: modules/forum/includes/vote.php:67
+#: modules/forum/templates/edit_post.phtml:65
+#: modules/forum/templates/new_topic.phtml:78
+#: modules/forum/templates/reply_message.phtml:104
+msgid "Back"
+msgstr "Назад"
+
+#: modules/forum/includes/addfile.php:44
+#: modules/forum/includes/addfile.php:46
+#: modules/forum/includes/addvote.php:32
+#: modules/forum/includes/deltema.php:28
+#: modules/forum/includes/delvote.php:30
+#: modules/forum/includes/editpost.php:27
+#: modules/forum/includes/editvote.php:31
+#: modules/forum/includes/files.php:90
+#: modules/forum/includes/filter.php:26
+#: modules/forum/includes/filter.php:90
+#: modules/forum/includes/loadtem.php:26
+#: modules/forum/includes/loadtem.php:55
+#: modules/forum/includes/nt.php:111
+#: modules/forum/includes/per.php:26
+#: modules/forum/includes/per.php:28
+#: modules/forum/includes/per.php:41
+#: modules/forum/includes/per.php:43
+#: modules/forum/includes/per.php:57
+#: modules/forum/includes/per.php:59
+#: modules/forum/includes/per.php:72
+#: modules/forum/includes/per.php:74
+#: modules/forum/includes/ren.php:28
+#: modules/forum/includes/ren.php:44
+#: modules/forum/includes/show_post.php:28
+#: modules/forum/includes/show_post.php:50
+#: modules/forum/includes/tema.php:50
+#: modules/forum/includes/tema.php:67
+#: modules/forum/includes/users.php:30
+#: modules/forum/includes/vip.php:30
+#: modules/forum/includes/vip.php:49
+#: modules/forum/includes/vote.php:35
+#: modules/forum/index.php:718
+#: modules/forum/index.php:720
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: modules/forum/includes/addfile.php:59
+#: modules/forum/includes/addfile.php:166
+#: modules/forum/includes/addfile.php:180
+#: modules/forum/includes/addfile.php:181
+msgid "Add file"
+msgstr "Добавить файл"
+
+#: modules/forum/includes/addfile.php:61
+msgid "The time allotted for the file upload has expired"
+msgstr "Время отведенное для выгрузки файла истекло"
+
+#: modules/forum/includes/addfile.php:91
+msgid "File size exceed"
+msgstr "Вес файла превышает"
+
+#: modules/forum/includes/addfile.php:96
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Запрещенный тип файла!<br>К отправке разрешены только файлы, имеющие следующее расширения"
+
+#: modules/forum/includes/addfile.php:118
+#: modules/forum/includes/addfile.php:167
+#: modules/forum/includes/addfile.php:183
+msgid "Error uploading file"
+msgstr "Ошибка выгрузки файла"
+
+#: modules/forum/includes/addfile.php:171
+#: modules/forum/includes/addfile.php:185
+#: modules/forum/includes/addvote.php:98
+#: modules/forum/includes/editpost.php:256
+#: modules/forum/includes/nt.php:278
+#: modules/forum/includes/ren.php:63
+#: modules/forum/includes/ren.php:80
+#: modules/forum/includes/say.php:432
+#: modules/forum/includes/search.php:183
+msgid "Repeat"
+msgstr "Повторить"
+
+#: modules/forum/includes/addfile.php:198
+#: modules/forum/includes/addfile.php:199
+#: modules/forum/includes/addvote.php:130
+#: modules/forum/includes/addvote.php:131
+#: modules/forum/templates/new_topic.phtml:69
+#: modules/forum/templates/reply_message.phtml:95
+#: modules/forum/templates/topic.phtml:129
+#: modules/forum/templates/topic.phtml:371
+msgid "Add File"
+msgstr "Добавить файл"
+
+#: modules/forum/includes/addvote.php:29
+#: modules/forum/includes/addvote.php:30
+#: modules/forum/includes/addvote.php:81
+#: modules/forum/includes/addvote.php:82
+#: modules/forum/includes/addvote.php:93
+#: modules/forum/includes/addvote.php:94
+#: modules/forum/templates/topic.phtml:324
+msgid "Add Poll"
+msgstr "Добавить опрос"
+
+#: modules/forum/includes/addvote.php:84
+msgid "Poll added"
+msgstr "Опрос добавлен"
+
+#: modules/forum/includes/addvote.php:86
+#: modules/forum/includes/editvote.php:106
+msgid "Continue"
+msgstr "Продолжить"
+
+#: modules/forum/includes/addvote.php:96
+msgid "The required fields are not filled"
+msgstr "Не заполнены обязательные поля"
+
+#: modules/forum/includes/addvote.php:122
+#: modules/forum/includes/editvote.php:121
+#: modules/forum/includes/editvote.php:145
+#: modules/forum/includes/tema.php:87
+msgid "Answer"
+msgstr "Ответ"
+
+#: modules/forum/includes/curators.php:28
+#: modules/forum/includes/curators.php:29
+#: modules/forum/includes/curators.php:74
+#: modules/forum/includes/curators.php:75
+#: modules/forum/includes/deltema.php:43
+#: modules/forum/includes/deltema.php:44
+#: modules/forum/templates/topic.phtml:396
+msgid "Curators"
+msgstr "Кураторы"
+
+#: modules/forum/includes/curators.php:31
+#: modules/forum/includes/deltema.php:46
+#: modules/forum/includes/say.php:583
+#: modules/forum/index.php:268
+msgid "Topic has been deleted or does not exists"
+msgstr "Тема удалена, или не существует"
+
+#: modules/forum/includes/deltema.php:26
+#: modules/forum/includes/deltema.php:90
+#: modules/forum/includes/deltema.php:91
+#: modules/forum/templates/topic.phtml:343
+msgid "Delete Topic"
+msgstr "Удалить тему"
+
+#: modules/forum/includes/delvote.php:28
+#: modules/forum/includes/delvote.php:45
+#: modules/forum/includes/delvote.php:58
+#: modules/forum/includes/delvote.php:59
+#: modules/forum/templates/topic.phtml:322
+msgid "Delete Poll"
+msgstr "Удалить опрос"
+
+#: modules/forum/includes/delvote.php:47
+msgid "Poll deleted"
+msgstr "Опрос удален"
+
+#: modules/forum/includes/editpost.php:25
+#: modules/forum/includes/editpost.php:157
+#: modules/forum/includes/editpost.php:252
+#: modules/forum/includes/editpost.php:297
+#: modules/forum/includes/editpost.php:298
+msgid "Edit Message"
+msgstr "Изменить сообщение"
+
+#: modules/forum/includes/editpost.php:66
+msgid "You cannot edit posts of higher administration"
+msgstr "Вы не можете редактировать сообщение старшего Вас по должности"
+
+#: modules/forum/includes/editpost.php:73
+msgid "You are trying to change another's post"
+msgstr "Вы пытаетесь изменить чужой пост"
+
+#: modules/forum/includes/editpost.php:93
+msgid "Your message not already latest, you cannot change it"
+msgstr "Ваш пост уже не последний и Вы не можете его менять"
+
+#: modules/forum/includes/editpost.php:98
+#: modules/forum/includes/editpost.php:159
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "С момента создания поста прошло более 5 минут и Вы не можете его редактировать"
+
+#: modules/forum/includes/editpost.php:104
+msgid "Message does not exists or has been deleted"
+msgstr "Пост не существует, или был удален"
+
+#: modules/forum/includes/editpost.php:104
+#: modules/forum/includes/file.php:49
+#: modules/forum/includes/new.php:58
+#: modules/forum/includes/say.php:585
+#: modules/forum/includes/show_post.php:30
+#: modules/forum/includes/show_post.php:52
+#: modules/forum/includes/tema.php:52
+#: modules/forum/includes/tema.php:69
+#: modules/forum/includes/tema.php:111
+#: modules/forum/includes/users.php:32
+#: modules/forum/includes/vip.php:27
+#: modules/forum/includes/vip.php:28
+#: modules/forum/includes/vip.php:46
+#: modules/forum/includes/vip.php:47
+#: modules/forum/includes/vote.php:32
+#: modules/forum/includes/vote.php:33
+#: modules/forum/includes/vote.php:50
+#: modules/forum/includes/vote.php:51
+#: modules/forum/index.php:48
+#: modules/forum/index.php:153
+#: modules/forum/index.php:227
+#: modules/forum/index.php:266
+#: modules/forum/index.php:761
+#: modules/forum/index.php:762
+#: modules/forum/templates/files_list.phtml:112
+#: modules/forum/templates/forum_search.phtml:95
+#: modules/forum/templates/new_topics.phtml:121
+#: modules/forum/templates/show_post.phtml:100
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/forum/includes/editpost.php:135
+#: modules/forum/includes/editpost.php:136
+msgid "Delete file"
+msgstr "Удалить файл"
+
+#: modules/forum/includes/editpost.php:234
+#: modules/forum/includes/editpost.php:235
+msgid "Delete Message"
+msgstr "Удалить сообщение"
+
+#: modules/forum/includes/editpost.php:254
+#: modules/forum/includes/nt.php:147
+#: modules/forum/includes/say.php:430
+msgid "You have not entered the message"
+msgstr "Вы не ввели сообщение"
+
+#: modules/forum/includes/editpost.php:317
+msgid "Error"
+msgstr "Ошибка"
+
+#: modules/forum/includes/editvote.php:28
+#: modules/forum/includes/editvote.php:29
+#: modules/forum/includes/editvote.php:101
+#: modules/forum/includes/editvote.php:102
+#: modules/forum/includes/editvote.php:154
+#: modules/forum/includes/editvote.php:155
+#: modules/forum/templates/topic.phtml:321
+msgid "Edit Poll"
+msgstr "Изменить опрос"
+
+#: modules/forum/includes/editvote.php:61
+#: modules/forum/includes/editvote.php:62
+msgid "Delete Answer"
+msgstr "Удалить ответ"
+
+#: modules/forum/includes/editvote.php:104
+msgid "Poll changed"
+msgstr "Опрос изменен"
+
+#: modules/forum/includes/file.php:45
+msgid "Download file"
+msgstr "Скачать файл"
+
+#: modules/forum/includes/file.php:47
+msgid "File does not exist"
+msgstr "Файла не существует"
+
+#: modules/forum/includes/files.php:22
+msgid "Windows applications"
+msgstr "Приложения Windows"
+
+#: modules/forum/includes/files.php:23
+msgid "Java applications"
+msgstr "Приложения Java"
+
+#: modules/forum/includes/files.php:24
+msgid "SIS"
+msgstr "Приложения SIS"
+
+#: modules/forum/includes/files.php:25
+msgid "txt"
+msgstr "Текстовые файлы"
+
+#: modules/forum/includes/files.php:26
+msgid "Pictures"
+msgstr "Картинки"
+
+#: modules/forum/includes/files.php:27
+msgid "Archive"
+msgstr "Архивы"
+
+#: modules/forum/includes/files.php:28
+msgid "Videos"
+msgstr "Видео"
+
+#: modules/forum/includes/files.php:29
+msgid "MP3"
+msgstr "МР3"
+
+#: modules/forum/includes/files.php:30
+msgid "Other"
+msgstr "Другое"
+
+#: modules/forum/includes/files.php:44
+#: modules/forum/templates/topics.phtml:37
+msgid "Category Files"
+msgstr "Файлы категории"
+
+#: modules/forum/includes/files.php:51
+msgid "Section files"
+msgstr "Файлы раздела"
+
+#: modules/forum/includes/files.php:58
+#: modules/forum/templates/topic.phtml:39
+msgid "Topic Files"
+msgstr "Файлы топика"
+
+#: modules/forum/includes/files.php:65
+msgid "Forum Files"
+msgstr "Файлы Форума"
+
+#: modules/forum/includes/files.php:106
+#: modules/forum/templates/files_list.phtml:28
+#: modules/forum/templates/files_sections.phtml:28
+msgid "New Files"
+msgstr "Новые файлы"
+
+#: modules/forum/includes/files.php:178
+msgid "List of sections"
+msgstr "Список разделов"
+
+#: modules/forum/includes/filter.php:23
+#: modules/forum/includes/filter.php:24
+#: modules/forum/includes/filter.php:50
+#: modules/forum/includes/filter.php:51
+#: modules/forum/includes/filter.php:87
+#: modules/forum/includes/filter.php:88
+#: modules/forum/includes/filter.php:102
+#: modules/forum/includes/filter.php:103
+#: modules/forum/templates/topic.phtml:404
+msgid "Filter by author"
+msgstr "Фильтр по автору"
+
+#: modules/forum/includes/filter.php:53
+msgid "You have not selected any author"
+msgstr "Вы не выбрали ни одного автора"
+
+#: modules/forum/includes/loadtem.php:23
+#: modules/forum/includes/loadtem.php:24
+#: modules/forum/includes/loadtem.php:52
+#: modules/forum/includes/loadtem.php:53
+#: modules/forum/includes/tema.php:48
+#: modules/forum/includes/tema.php:65
+#: modules/forum/includes/tema.php:164
+#: modules/forum/includes/tema.php:165
+#: modules/forum/includes/users.php:28
+msgid "Download topic"
+msgstr "Скачать тему"
+
+#: modules/forum/includes/massdel.php:38
+#: modules/forum/includes/massdel.php:39
+#: modules/forum/includes/massdel.php:52
+#: modules/forum/includes/massdel.php:53
+#: modules/forum/includes/massdel.php:72
+#: modules/forum/includes/massdel.php:73
+msgid "Delete posts"
+msgstr "Удалить посты"
+
+#: modules/forum/includes/massdel.php:41
+msgid "Marked posts are deleted"
+msgstr "Отмеченные посты удалены"
+
+#: modules/forum/includes/massdel.php:55
+msgid "You did not choose something to delete"
+msgstr "Вы ничего не выбрали для удаления"
+
+#: modules/forum/includes/new.php:54
+#: modules/forum/includes/new.php:190
+#: modules/forum/includes/new.php:191
+#: modules/forum/templates/header.phtml:31
+msgid "Unread"
+msgstr "Непрочитанные"
+
+#: modules/forum/includes/new.php:56
+msgid "All topics marked as read"
+msgstr "Все темы отмечены как прочитанные"
+
+#: modules/forum/includes/new.php:124
+#: modules/forum/includes/new.php:125
+msgid "All for period %d hours"
+msgstr "Всего за период %d часов"
+
+#: modules/forum/includes/new.php:126
+msgid "There is nothing new in this forum for selected period"
+msgstr "За выбранный период нового на форуме нет"
+
+#: modules/forum/includes/new.php:192
+#: modules/forum/includes/new.php:258
+#: modules/forum/includes/who.php:89
+#: modules/forum/includes/who.php:270
+#: modules/forum/templates/curators.phtml:39
+#: modules/forum/templates/files_list.phtml:36
+#: modules/forum/templates/filter_by_author.phtml:38
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: modules/forum/includes/new.php:256
+#: modules/forum/includes/new.php:257
+msgid "Last 10"
+msgstr "Последние 10 тем"
+
+#: modules/forum/includes/nt.php:38
+#: modules/forum/index.php:466
+msgid "Go to Section"
+msgstr "В раздел"
+
+#: modules/forum/includes/nt.php:93
+#: modules/forum/includes/nt.php:109
+#: modules/forum/includes/nt.php:274
+#: modules/forum/includes/nt.php:290
+#: modules/forum/includes/nt.php:298
+#: modules/forum/includes/nt.php:299
+#: modules/forum/templates/topics.phtml:53
+msgid "New Topic"
+msgstr "Новая тема"
+
+#: modules/forum/includes/nt.php:95
+#: modules/forum/includes/say.php:99
+#: modules/forum/includes/say.php:343
+msgid "You cannot add the message so often<br>Please, wait %d sec."
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
+
+#: modules/forum/includes/nt.php:139
+#: modules/forum/includes/ren.php:61
+msgid "You have not entered topic name"
+msgstr "Вы не ввели название темы"
+
+#: modules/forum/includes/nt.php:143
+msgid "Topic name too short"
+msgstr "Название темы слишком короткое"
+
+#: modules/forum/includes/nt.php:151
+#: modules/forum/includes/say.php:146
+#: modules/forum/includes/say.php:445
+msgid "Text is too short"
+msgstr "Слишком короткий текст"
+
+#: modules/forum/includes/nt.php:169
+#: modules/forum/includes/ren.php:78
+msgid "Topic with same name already exists in this section"
+msgstr "Тема с таким названием уже есть в этом разделе"
+
+#: modules/forum/includes/nt.php:173
+#: modules/forum/includes/say.php:165
+#: modules/forum/includes/say.php:465
+msgid "Message already exists"
+msgstr "Такое сообщение уже было"
+
+#: modules/forum/includes/per.php:117
+#: modules/forum/includes/per.php:118
+msgid "Move topic"
+msgstr "Переместить тему"
+
+#: modules/forum/includes/ren.php:26
+#: modules/forum/includes/ren.php:42
+#: modules/forum/includes/ren.php:59
+#: modules/forum/includes/ren.php:76
+#: modules/forum/includes/ren.php:94
+#: modules/forum/includes/ren.php:95
+msgid "Rename topic"
+msgstr "Переименовать тему"
+
+#: modules/forum/includes/say.php:34
+#: modules/forum/includes/say.php:97
+#: modules/forum/includes/say.php:114
+#: modules/forum/includes/say.php:144
+#: modules/forum/includes/say.php:163
+#: modules/forum/includes/say.php:299
+#: modules/forum/includes/say.php:300
+#: modules/forum/includes/say.php:325
+#: modules/forum/includes/say.php:341
+#: modules/forum/includes/say.php:357
+#: modules/forum/includes/say.php:371
+#: modules/forum/includes/say.php:428
+#: modules/forum/includes/say.php:443
+#: modules/forum/includes/say.php:463
+#: modules/forum/includes/say.php:581
+msgid "New message"
+msgstr "Новое сообщение"
+
+#: modules/forum/includes/say.php:116
+#: modules/forum/includes/say.php:359
+msgid "You cannot write in a closed topic"
+msgstr "Вы не можете писать в закрытую тему"
+
+#: modules/forum/includes/say.php:327
+msgid "Message not found"
+msgstr "Сообщение не найдено"
+
+#: modules/forum/includes/say.php:373
+msgid "You can not reply to your own message"
+msgstr "Вы не можете отвечать на собственное сообщение"
+
+#: modules/forum/includes/say.php:400
+#: modules/forum/templates/reply_message.phtml:79
+msgid "I am glad to answer you"
+msgstr "с удовольствием тебе отвечу"
+
+#: modules/forum/includes/say.php:404
+#: modules/forum/templates/reply_message.phtml:83
+msgid "respond to Your message"
+msgstr "ответ на Ваше сообщение"
+
+#: modules/forum/includes/say.php:555
+#: modules/forum/includes/say.php:556
+msgid "Reply to message"
+msgstr "Ответить на сообщение"
+
+#: modules/forum/includes/search.php:22
+#: modules/forum/includes/search.php:47
+#: modules/forum/includes/search.php:48
+#: modules/forum/includes/search.php:179
+#: modules/forum/includes/search.php:234
+#: modules/forum/includes/search.php:235
+#: modules/forum/includes/who.php:169
+msgid "Forum search"
+msgstr "Поиск форума"
+
+#: modules/forum/includes/search.php:181
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+#: modules/forum/includes/show_post.php:26
+#: modules/forum/includes/show_post.php:48
+#: modules/forum/includes/show_post.php:120
+#: modules/forum/includes/show_post.php:121
+msgid "Show post"
+msgstr "Просмотр поста"
+
+#: modules/forum/includes/tema.php:86
+#: modules/forum/templates/reply_message.phtml:67
+#: modules/forum/templates/show_post.phtml:42
+#: modules/forum/templates/topic.phtml:208
+msgid "Quote"
+msgstr "Цитата"
+
+#: modules/forum/includes/tema.php:146
+msgid "This theme was downloaded from the forum site"
+msgstr "Данная тема была скачана с форума сайта"
+
+#: modules/forum/includes/users.php:72
+#: modules/forum/includes/users.php:73
+msgid "Who voted in the poll"
+msgstr "Пользователи, принявшие участие в опросе"
+
+#: modules/forum/includes/users.php:74
+msgid "No one has voted in this poll yet"
+msgstr "В этом опросе пока никто не участвовал"
+
+#: modules/forum/includes/vote.php:53
+msgid "Vote accepted"
+msgstr "Ваш голос принят"
+
+#: modules/forum/includes/who.php:56
+#: modules/forum/includes/who.php:232
+msgid "Guest"
+msgstr "Гости"
+
+#: modules/forum/includes/who.php:87
+#: modules/forum/includes/who.php:88
+#: modules/forum/templates/who.phtml:32
+msgid "Who in Topic"
+msgstr "Кто в теме"
+
+#: modules/forum/includes/who.php:153
+#: modules/forum/includes/who.php:178
+#: modules/forum/includes/who.php:188
+#: modules/forum/includes/who.php:213
+#: modules/forum/includes/who.php:223
+#: modules/forum/includes/who.php:228
+msgid "In the forum Main"
+msgstr "На главной форума"
+
+#: modules/forum/includes/who.php:157
+msgid "Here, in the List"
+msgstr "Тут, в списке"
+
+#: modules/forum/includes/who.php:161
+msgid "Looking forum files"
+msgstr "Смотрит файлы форума"
+
+#: modules/forum/includes/who.php:165
+msgid "In the unreads"
+msgstr "Смотрит непрочитанное"
+
+#: modules/forum/includes/who.php:176
+msgid "In the Category"
+msgstr "В категории"
+
+#: modules/forum/includes/who.php:186
+msgid "In the Section"
+msgstr "В разделе"
+
+#: modules/forum/includes/who.php:208
+msgid "Answers in the Topic"
+msgstr "Отвечает в теме"
+
+#: modules/forum/includes/who.php:210
+msgid "Writes in the Topic"
+msgstr "Пишет в тему"
+
+#: modules/forum/includes/who.php:210
+#: modules/forum/includes/who.php:221
+msgid "In the Topic"
+msgstr "В теме"
+
+#: modules/forum/includes/who.php:268
+#: modules/forum/includes/who.php:269
+#: modules/forum/templates/index.phtml:73
+#: modules/forum/templates/section.phtml:70
+#: modules/forum/templates/topics.phtml:117
+msgid "Who in Forum"
+msgstr "Кто в форуме"
+
+#: modules/forum/index.php:144
+#: modules/forum/templates/header.phtml:20
+msgid "Forum is closed"
+msgstr "Форум закрыт"
+
+#: modules/forum/index.php:146
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: modules/forum/index.php:462
+#: modules/forum/index.php:464
+msgid "Topic deleted"
+msgstr "Тема удалена"
+
+#: modules/forum/index.php:722
+msgid "Go to Forum"
+msgstr "Перейти на форум"
+
+#: modules/forum/templates/add_file.phtml:29
+msgid "File attached"
+msgstr "Файл прикреплен"
+
+#: modules/forum/templates/add_file.phtml:32
+msgid "Add more"
+msgstr "Добавить ещё"
+
+#: modules/forum/templates/add_file.phtml:33
+#: modules/forum/templates/add_file.phtml:50
+#: modules/forum/templates/add_poll.phtml:59
+#: modules/forum/templates/curators.phtml:56
+#: modules/forum/templates/download_topic.phtml:37
+#: modules/forum/templates/download_topic.phtml:52
+#: modules/forum/templates/edit_poll.phtml:67
+#: modules/forum/templates/filter_by_author.phtml:63
+#: modules/forum/templates/move_topic.phtml:49
+#: modules/forum/templates/rename_topic.phtml:38
+#: modules/forum/templates/show_post.phtml:99
+msgid "Back to topic"
+msgstr "Вернуться в тему"
+
+#: modules/forum/templates/add_file.phtml:42
+msgid "Choose file"
+msgstr "Выберите файл"
+
+#: modules/forum/templates/add_file.phtml:46
+msgid "Max. Size"
+msgstr "Макс. размер"
+
+#: modules/forum/templates/add_file.phtml:49
+msgid "Upload"
+msgstr "Выгрузить"
+
+#: modules/forum/templates/add_poll.phtml:33
+#: modules/forum/templates/add_poll.phtml:34
+#: modules/forum/templates/edit_poll.phtml:34
+#: modules/forum/templates/edit_poll.phtml:35
+msgid "Poll"
+msgstr "Опрос"
+
+#: modules/forum/templates/add_poll.phtml:36
+#: modules/forum/templates/edit_poll.phtml:37
+msgid "Maximum length: 150 characters"
+msgstr "Максимальная длина: 150 символов"
+
+#: modules/forum/templates/add_poll.phtml:39
+#: modules/forum/templates/edit_poll.phtml:40
+msgid "Answers"
+msgstr "Ответы"
+
+#: modules/forum/templates/add_poll.phtml:45
+#: modules/forum/templates/edit_poll.phtml:53
+msgid "Maximum length: 50 characters"
+msgstr "Максимальная длина: 50 символов"
+
+#: modules/forum/templates/add_poll.phtml:51
+#: modules/forum/templates/edit_poll.phtml:59
+msgid "Add Answer"
+msgstr "Добавить ответ"
+
+#: modules/forum/templates/add_poll.phtml:54
+#: modules/forum/templates/edit_poll.phtml:62
+msgid "Delete last"
+msgstr "Удалить последнее"
+
+#: modules/forum/templates/add_poll.phtml:58
+#: modules/forum/templates/edit_poll.phtml:66
+#: modules/forum/templates/edit_post.phtml:59
+#: modules/forum/templates/new_topic.phtml:72
+#: modules/forum/templates/rename_topic.phtml:37
+#: modules/forum/templates/reply_message.phtml:98
+msgid "Save"
+msgstr "Сохранить"
+
+#: modules/forum/templates/clear_search_history.phtml:31
+msgid "Do you really want to clear the search history?"
+msgstr "Вы действительно хотите очистить историю поиска?"
+
+#: modules/forum/templates/clear_search_history.phtml:34
+msgid "Clear"
+msgstr "Очистить"
+
+#: modules/forum/templates/clear_search_history.phtml:35
+#: modules/forum/templates/delete_answer.phtml:35
+#: modules/forum/templates/delete_file.phtml:36
+#: modules/forum/templates/delete_poll.phtml:34
+#: modules/forum/templates/delete_post.phtml:43
+#: modules/forum/templates/delete_topic.phtml:49
+#: modules/forum/templates/mass_delete.phtml:35
+msgid "Cancel"
+msgstr "Отмена"
+
+#: modules/forum/templates/curators.phtml:34
+#: modules/forum/templates/filter_by_author.phtml:33
+msgid "Changes saved"
+msgstr "Изменения сохранены"
+
+#: modules/forum/templates/curators.phtml:54
+msgid "Assign"
+msgstr "Назначить"
+
+#: modules/forum/templates/delete_answer.phtml:31
+msgid "Do you really want to delete the answer?"
+msgstr "Вы действительно хотите удалить вариант ответа?"
+
+#: modules/forum/templates/delete_answer.phtml:34
+#: modules/forum/templates/delete_file.phtml:35
+#: modules/forum/templates/delete_poll.phtml:33
+#: modules/forum/templates/delete_post.phtml:39
+#: modules/forum/templates/delete_topic.phtml:42
+#: modules/forum/templates/mass_delete.phtml:34
+#: modules/forum/templates/topic.phtml:258
+#: modules/forum/templates/topic.phtml:299
+msgid "Delete"
+msgstr "Удалить"
+
+#: modules/forum/templates/delete_file.phtml:31
+#: modules/forum/templates/delete_post.phtml:36
+#: modules/forum/templates/delete_topic.phtml:32
+#: modules/forum/templates/mass_delete.phtml:31
+msgid "Do you really want to delete?"
+msgstr "Действительно хотите удалить?"
+
+#: modules/forum/templates/delete_file.phtml:40
+#: modules/forum/templates/delete_post.phtml:46
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "В случае удаления, из счетчика постов форума будет вычтен один балл"
+
+#: modules/forum/templates/delete_poll.phtml:30
+msgid "Do you really want to delete a poll?"
+msgstr "Вы действительно хотите удалить опрос?"
+
+#: modules/forum/templates/delete_post.phtml:32
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "ВНИМАНИЕ!<br>Это последний пост темы. Вместе с ним будет удалена (или скрыта) и сама тема"
+
+#: modules/forum/templates/delete_post.phtml:41
+#: modules/forum/templates/delete_topic.phtml:37
+msgid "Hide"
+msgstr "Скрыть"
+
+#: modules/forum/templates/delete_topic.phtml:48
+msgid "Perform"
+msgstr "Выполнить"
+
+#: modules/forum/templates/download_topic.phtml:32
+msgid "Link active 5 minutes"
+msgstr "Ссылка активна 5 минут"
+
+#: modules/forum/templates/download_topic.phtml:36
+#: modules/forum/templates/download_topic.phtml:51
+msgid "Download"
+msgstr "Скачать"
+
+#: modules/forum/templates/download_topic.phtml:44
+msgid "Select format"
+msgstr "Выберите формат"
+
+#: modules/forum/templates/edit_post.phtml:54
+#: modules/forum/templates/new_topic.phtml:63
+#: modules/forum/templates/reply_message.phtml:89
+#: modules/forum/templates/topic.phtml:123
+#: modules/forum/templates/topic.phtml:365
+msgid "Message"
+msgstr "Сообщение"
+
+#: modules/forum/templates/edit_post.phtml:61
+#: modules/forum/templates/new_topic.phtml:74
+#: modules/forum/templates/reply_message.phtml:100
+#: modules/forum/templates/topic.phtml:134
+#: modules/forum/templates/topic.phtml:376
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: modules/forum/templates/edit_post.phtml:65
+#: modules/forum/templates/new_topic.phtml:85
+#: modules/forum/templates/reply_message.phtml:104
+msgid "Smilies"
+msgstr "Смайлы"
+
+#: modules/forum/templates/files_list.phtml:54
+msgid "To message"
+msgstr "К сообщению"
+
+#: modules/forum/templates/files_list.phtml:57
+msgid "To topic"
+msgstr "В тему"
+
+#: modules/forum/templates/files_list.phtml:102
+#: modules/forum/templates/forum_search.phtml:80
+#: modules/forum/templates/new_topics.phtml:107
+#: modules/forum/templates/section.phtml:63
+#: modules/forum/templates/topic.phtml:388
+#: modules/forum/templates/topics.phtml:105
+#: modules/forum/templates/voted_users.phtml:44
+#: modules/forum/templates/who.phtml:52
+msgid "Total"
+msgstr "Всего"
+
+#: modules/forum/templates/filter_by_author.phtml:41
+msgid "Filter will be display posts from selected authors only"
+msgstr "Фильтрация позволит отображать посты только от выбранных авторов"
+
+#: modules/forum/templates/filter_by_author.phtml:61
+msgid "Filter"
+msgstr "Фильтровать"
+
+#: modules/forum/templates/footer.phtml:29
+msgid "Forum rules"
+msgstr "Правила форума"
+
+#: modules/forum/templates/forum_search.phtml:33
+#: modules/forum/templates/forum_search.phtml:34
+msgid "Search query"
+msgstr "Поисковый запрос"
+
+#: modules/forum/templates/forum_search.phtml:36
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
+msgstr "Длина запроса: 4 мин., 64 макс.<br>Поиск нечувствителен к регистру букв<br>Результаты выводятся с сортировкой по релевантности."
+
+#: modules/forum/templates/forum_search.phtml:41
+msgid "Search in the topic names"
+msgstr "Искать в названиях тем"
+
+#: modules/forum/templates/forum_search.phtml:44
+#: modules/forum/templates/header.phtml:69
+msgid "Search"
+msgstr "Поиск"
+
+#: modules/forum/templates/forum_search.phtml:51
+msgid "Your search did not match any results"
+msgstr "По Вашему запросу ничего не найдено"
+
+#: modules/forum/templates/forum_search.phtml:63
+#: modules/forum/templates/voted_users.phtml:54
+#: modules/forum/templates/who.phtml:62
+msgid "Go to Topic"
+msgstr "В тему"
+
+#: modules/forum/templates/forum_search.phtml:65
+msgid "Go to Message"
+msgstr "Перейти к сообщению"
+
+#: modules/forum/templates/forum_search.phtml:75
+#: modules/forum/templates/new_topics.phtml:96
+#: modules/forum/templates/topics.phtml:99
+msgid "Author"
+msgstr "Автор"
+
+#: modules/forum/templates/forum_search.phtml:88
+msgid "Search History"
+msgstr "История поисковых запросов"
+
+#: modules/forum/templates/forum_search.phtml:91
+msgid "Clear history"
+msgstr "Очистить историю"
+
+#: modules/forum/templates/header.phtml:22
+msgid "Read only"
+msgstr "Только для чтения"
+
+#: modules/forum/templates/header.phtml:41
+msgid "Show for Period"
+msgstr "Показать за период"
+
+#: modules/forum/templates/header.phtml:50
+msgid "Last activity"
+msgstr "Последняя активность"
+
+#: modules/forum/templates/index.phtml:35
+msgid "Files"
+msgstr "Файлы"
+
+#: modules/forum/templates/move_topic.phtml:30
+msgid "Category"
+msgstr "Категория"
+
+#: modules/forum/templates/move_topic.phtml:35
+msgid "New section"
+msgstr "Новый раздел"
+
+#: modules/forum/templates/move_topic.phtml:44
+msgid "Category is empty"
+msgstr "Категория пуста"
+
+#: modules/forum/templates/move_topic.phtml:48
+msgid "Move"
+msgstr "Переместить"
+
+#: modules/forum/templates/move_topic.phtml:53
+msgid "Other categories"
+msgstr "Другие категории"
+
+#: modules/forum/templates/new_topic.phtml:58
+msgid "Title"
+msgstr "Название"
+
+#: modules/forum/templates/new_topic.phtml:60
+msgid "Maximum length: 100 characters"
+msgstr "Максимальная длина: 100 символов"
+
+#: modules/forum/templates/new_topics.phtml:36
+msgid "Period"
+msgstr "Период"
+
+#: modules/forum/templates/new_topics.phtml:38
+msgid "Show period"
+msgstr "Показать за период"
+
+#: modules/forum/templates/new_topics.phtml:62
+#: modules/forum/templates/topics.phtml:65
+msgid "Pinned topic"
+msgstr "Тема закреплена"
+
+#: modules/forum/templates/new_topics.phtml:69
+#: modules/forum/templates/topics.phtml:72
+msgid "Topic has poll"
+msgstr "В теме есть опрос"
+
+#: modules/forum/templates/new_topics.phtml:76
+#: modules/forum/templates/topics.phtml:79
+msgid "Closed topic"
+msgstr "Тема закрыта"
+
+#: modules/forum/templates/new_topics.phtml:83
+#: modules/forum/templates/topics.phtml:86
+msgid "Deleted topic"
+msgstr "Тема удалена"
+
+#: modules/forum/templates/new_topics.phtml:97
+#: modules/forum/templates/topics.phtml:100
+msgid "Last post"
+msgstr "Последний пост"
+
+#: modules/forum/templates/new_topics.phtml:117
+msgid "Mark as read"
+msgstr "Отметить как прочитанное"
+
+#: modules/forum/templates/rename_topic.phtml:32
+#: modules/forum/templates/rename_topic.phtml:33
+msgid "Topic name"
+msgstr "Название темы"
+
+#: modules/forum/templates/reply_message.phtml:60
+msgid "Topic"
+msgstr "Тема"
+
+#: modules/forum/templates/reply_message.phtml:69
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Допустимо макс. 200 символов, весь лишний текст обрезается."
+
+#: modules/forum/templates/reply_message.phtml:72
+msgid "Appeal"
+msgstr "Обращение"
+
+#: modules/forum/templates/section.phtml:35
+msgid "Section Files"
+msgstr "Файлы раздела"
+
+#: modules/forum/templates/section.phtml:44
+msgid "There are no sections in this category"
+msgstr "В данной категории разделов нет"
+
+#: modules/forum/templates/show_post.phtml:39
+#: modules/forum/templates/topic.phtml:205
+msgid "Reply"
+msgstr "Ответ"
+
+#: modules/forum/templates/show_post.phtml:59
+#: modules/forum/templates/topic.phtml:226
+msgid "Attached files"
+msgstr "Прикрепленные файлы"
+
+#: modules/forum/templates/topic.phtml:45
+msgid "Filter by author is activated"
+msgstr "Активирован фильтр по автору"
+
+#: modules/forum/templates/topic.phtml:47
+#: modules/forum/templates/topic.phtml:402
+msgid "Cancel Filter"
+msgstr "Отменить фильтрацию"
+
+#: modules/forum/templates/topic.phtml:53
+msgid "Topic closed"
+msgstr "Тема закрыта"
+
+#: modules/forum/templates/topic.phtml:59
+msgid "Topic deleted by"
+msgstr "Тему удалил"
+
+#: modules/forum/templates/topic.phtml:63
+msgid "Undelete topic"
+msgstr "Отменил удаление темы"
+
+#: modules/forum/templates/topic.phtml:79
+#: modules/forum/templates/topic.phtml:109
+msgid "Vote"
+msgstr "Голосовать"
+
+#: modules/forum/templates/topic.phtml:80
+msgid "Results"
+msgstr "Результаты"
+
+#: modules/forum/templates/topic.phtml:100
+msgid "Total votes"
+msgstr "Всего голосов"
+
+#: modules/forum/templates/topic.phtml:132
+#: modules/forum/templates/topic.phtml:138
+#: modules/forum/templates/topic.phtml:374
+#: modules/forum/templates/topic.phtml:380
+msgid "Write"
+msgstr "Написать"
+
+#: modules/forum/templates/topic.phtml:287
+msgid "Edited:"
+msgstr "Изм.:"
+
+#: modules/forum/templates/topic.phtml:291
+msgid "Post deleted:"
+msgstr "Пост удалил:"
+
+#: modules/forum/templates/topic.phtml:293
+msgid "Post restored by:"
+msgstr "Пост восстановил:"
+
+#: modules/forum/templates/topic.phtml:298
+msgid "Edit"
+msgstr "Изменить"
+
+#: modules/forum/templates/topic.phtml:301
+msgid "Restore"
+msgstr "Восстановить"
+
+#: modules/forum/templates/topic.phtml:313
+msgid "Delete selected"
+msgstr "Удалить выбранное"
+
+#: modules/forum/templates/topic.phtml:317
+msgid "Actions with topic"
+msgstr "Действия с темой"
+
+#: modules/forum/templates/topic.phtml:328
+msgid "Curators of the Topic"
+msgstr "Кураторы темы"
+
+#: modules/forum/templates/topic.phtml:331
+msgid "Rename Topic"
+msgstr "Переименовать тему"
+
+#: modules/forum/templates/topic.phtml:334
+msgid "Open Topic"
+msgstr "Открыть тему"
+
+#: modules/forum/templates/topic.phtml:336
+msgid "Close Topic"
+msgstr "Закрыть тему"
+
+#: modules/forum/templates/topic.phtml:340
+msgid "Restore Topic"
+msgstr "Восстановить тему"
+
+#: modules/forum/templates/topic.phtml:346
+msgid "Unfix Topic"
+msgstr "Открепить тему"
+
+#: modules/forum/templates/topic.phtml:348
+msgid "Pin Topic"
+msgstr "Закрепить тему"
+
+#: modules/forum/templates/topic.phtml:351
+msgid "Move Topic"
+msgstr "Переместить тему"
+
+#: modules/forum/templates/topic.phtml:408
+msgid "Download Topic"
+msgstr "Скачать тему"
+
+#: modules/forum/templates/topic.phtml:418
+msgid "Who is here"
+msgstr "Кто здесь"
+
+#: modules/forum/templates/topics.phtml:46
+msgid "No topics in this section"
+msgstr "В данном разделе нет ни одной темы"
+
+#: modules/forum/templates/who.phtml:38
+msgid "Users"
+msgstr "Пользователи"
+
+#: modules/forum/templates/who.phtml:39
+msgid "Guests"
+msgstr "Гости"
+
