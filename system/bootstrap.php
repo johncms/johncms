@@ -89,17 +89,13 @@ if ($req->rowCount()) {
     }
 }
 
-// Автоочистка системы
-$cacheFile = CACHE_PATH . 'system-cleanup.cache';
-
-if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
-    new Johncms\System\Utility\Cleanup($db);
-    file_put_contents($cacheFile, time());
-}
+// System cleanup
+new Johncms\System\Utility\Cleanup($db);
 
 // Register the system languages domain and folder
 $translator = di(Translator::class);
 $translator->addTranslationDomain('system', __DIR__ . '/locale');
+$translator->defaultDomain('system');
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
 
