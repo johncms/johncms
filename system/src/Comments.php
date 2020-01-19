@@ -442,7 +442,7 @@ class Comments
 
                         $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip((int) $res['ip']);
                         $res['ip'] = long2ip((int) $res['ip']);
-                        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+                        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip((int) $res['ip_via_proxy']) : 0;
                         $res['search_ip_via_proxy_url'] = ! empty($res['ip_via_proxy']) ? '/admin/?act=search_ip&amp;ip=' . long2ip((int) $res['ip_via_proxy']) : '';
 
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;
