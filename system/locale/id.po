@@ -1,0 +1,127 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2020-01-19 17:07\n"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
+msgid "News archive"
+msgstr "Arsip berita"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:52
+msgid "Forum"
+msgstr "Forum"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
+msgid "Guestbook"
+msgstr "Buku Tamu"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
+msgid "Downloads"
+msgstr "Unduhan"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:97
+msgid "Library"
+msgstr "Perpustakaan"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:112
+msgid "Users"
+msgstr "Pengguna"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:126
+msgid "Photo Albums"
+msgstr "Album Foto"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
+msgid "Information, FAQ"
+msgstr "Informasi, FAQ"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:151
+msgid "Admin Panel"
+msgstr "Panel admin"
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:160
+msgid "Admin Chat"
+msgstr "Admin obrolan"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+msgid "Guest"
+msgstr "Pengunjung"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+msgid "Notifications"
+msgstr "Pemberitahuan"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+msgid "Personal"
+msgstr "Pribadi"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+msgid "Exit"
+msgstr "Keluar"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Registration"
+msgstr "Pendaftaran"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:83
+msgid "Login"
+msgstr "Masuk"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr "Apakah Anda yakin ingin menghapus?"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_list.phtml:99
+msgid "Delete"
+msgstr "Hapus"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr "Hapus"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr "Batal"
+
+#: themes/default/templates/system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr "Pesan"
+
+#: themes/default/templates/system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr "Kirim"
+
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: themes/default/templates/system/pages/comments_list.phtml:50
+msgid "Reply"
+msgstr "Balas"
+
+#: themes/default/templates/system/pages/comments_list.phtml:53
+msgid "Quote"
+msgstr "Kutipan"
+
+#: themes/default/templates/system/pages/comments_list.phtml:92
+msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:96
+msgid "Edit"
+msgstr "Sunting"
+
+#: themes/default/templates/system/pages/comments_list.phtml:114
+#: themes/default/templates/system/pages/result.phtml:33
+msgid "Back"
+msgstr "Kembali"
+
