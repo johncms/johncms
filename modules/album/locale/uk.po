@@ -1,0 +1,440 @@
+msgid ""
+msgstr ""
+"X-Domain: album\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /develop/modules/album/locale/album.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/album/includes/comments.php:36
+#: modules/album/index.php:92
+msgid "User does not exists"
+msgstr "Такого користувача не існує"
+
+#: modules/album/includes/comments.php:56
+#: modules/album/includes/image_download.php:37
+msgid "Access forbidden"
+msgstr "Доступ заборонено"
+
+#: modules/album/includes/comments.php:74
+#: modules/album/templates/show_one.phtml:119
+msgid "Comments"
+msgstr "Коментарі"
+
+#: modules/album/includes/comments.php:98
+#: modules/album/includes/delete.php:83
+#: modules/album/includes/edit.php:43
+#: modules/album/includes/edit.php:82
+#: modules/album/includes/image_delete.php:70
+#: modules/album/includes/image_delete.php:82
+#: modules/album/includes/image_download.php:40
+#: modules/album/includes/image_download.php:49
+#: modules/album/includes/image_edit.php:36
+#: modules/album/includes/image_move.php:35
+#: modules/album/includes/image_move.php:71
+#: modules/album/includes/image_upload.php:40
+#: modules/album/includes/image_upload.php:160
+#: modules/album/includes/show.php:34
+#: modules/album/includes/show.php:48
+#: modules/album/includes/top.php:37
+#: modules/album/includes/vote.php:35
+#: modules/album/includes/vote.php:95
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: modules/album/includes/delete.php:29
+msgid "Delete album:"
+msgstr "Видалити альбом:"
+
+#: modules/album/includes/delete.php:56
+msgid "Album deleted"
+msgstr "Альбом видалено"
+
+#: modules/album/includes/delete.php:66
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Ви впевнені, що хочете видалити цей альбом? Якщо він містить фотографії, вони також будуть видалені."
+
+#: modules/album/includes/edit.php:28
+msgid "Edit Album"
+msgstr "Редагувати альбом"
+
+#: modules/album/includes/edit.php:49
+#: modules/album/templates/list.phtml:31
+msgid "Create Album"
+msgstr "Створити альбом"
+
+#: modules/album/includes/edit.php:70
+#: modules/album/templates/album_form.phtml:42
+msgid "Title"
+msgstr "Назва"
+
+#: modules/album/includes/edit.php:70
+#: modules/album/includes/edit.php:78
+msgid "Invalid length"
+msgstr "Невірна довжина"
+
+#: modules/album/includes/edit.php:76
+msgid "You have not entered password"
+msgstr "Ви не ввели пароль"
+
+#: modules/album/includes/edit.php:78
+#: modules/album/templates/album_form.phtml:50
+#: modules/album/templates/enter_password.phtml:42
+msgid "Password"
+msgstr "Пароль"
+
+#: modules/album/includes/edit.php:87
+msgid "The album already exists"
+msgstr "Такий альбом вже є"
+
+#: modules/album/includes/edit.php:152
+msgid "Album successfully changed"
+msgstr "Альбом успішно змінено"
+
+#: modules/album/includes/edit.php:152
+msgid "Album successfully created"
+msgstr "Альбом успішно створено"
+
+#: modules/album/includes/image_delete.php:25
+msgid "Delete image"
+msgstr "Видалити зображення"
+
+#: modules/album/includes/image_delete.php:53
+msgid "Are you sure you want to delete this image?"
+msgstr "Ви дійсно хочете видалити це зображення?"
+
+#: modules/album/includes/image_download.php:46
+msgid "File does not exist"
+msgstr "Файл не існує"
+
+#: modules/album/includes/image_download.php:61
+#: modules/album/templates/show_one.phtml:157
+msgid "Back"
+msgstr "Назад"
+
+#: modules/album/includes/image_edit.php:23
+msgid "Edit image"
+msgstr "Редагування зображення"
+
+#: modules/album/includes/image_edit.php:55
+msgid "Image successfully changed"
+msgstr "Зображення успішно змінено"
+
+#: modules/album/includes/image_edit.php:57
+#: modules/album/includes/image_move.php:62
+#: modules/album/includes/image_move.php:104
+#: modules/album/includes/image_upload.php:133
+msgid "Continue"
+msgstr "Продовжити"
+
+#: modules/album/includes/image_move.php:23
+msgid "Move image"
+msgstr "Перемістити зображення"
+
+#: modules/album/includes/image_move.php:60
+msgid "Image successfully moved to the selected album"
+msgstr "Зображення успішно перенесено в обраний альбом"
+
+#: modules/album/includes/image_move.php:102
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Ви повинні створити принаймні один додатковий альбом для того, щоб перемістити зображення"
+
+#: modules/album/includes/image_upload.php:28
+msgid "Upload image"
+msgstr "Завантажити зображення"
+
+#: modules/album/includes/image_upload.php:56
+msgid "The weight of the file exceeds"
+msgstr "Розмір файлу перевищує"
+
+#: modules/album/includes/image_upload.php:131
+msgid "Image uploaded"
+msgstr "Зображення завантажено"
+
+#: modules/album/includes/list.php:75
+msgid "Your albums"
+msgstr "Ваші альбоми"
+
+#: modules/album/includes/list.php:78
+msgid "User albums:"
+msgstr "Альбоми користувачів:"
+
+#: modules/album/includes/list.php:79
+msgid "User albums"
+msgstr "Альбоми користувачів"
+
+#: modules/album/includes/show.php:61
+msgid "View photo"
+msgstr "Переглянути фото"
+
+#: modules/album/includes/show.php:81
+msgid "Access denied"
+msgstr "Доступ заборонено"
+
+#: modules/album/includes/show.php:83
+#: modules/album/templates/show_one.phtml:158
+msgid "Album List"
+msgstr "Список альбомів"
+
+#: modules/album/includes/show.php:100
+msgid "Incorrect Password"
+msgstr "Невірний пароль"
+
+#: modules/album/includes/show.php:150
+msgid "Photo added to the profile"
+msgstr "Фото додано до профілю"
+
+#: modules/album/includes/top.php:43
+msgid "Unread Comments"
+msgstr "Непрочитані коментарі"
+
+#: modules/album/includes/top.php:54
+msgid "Recent comments"
+msgstr "Останні коментарі"
+
+#: modules/album/includes/top.php:64
+#: modules/album/templates/index.phtml:61
+msgid "Top Views"
+msgstr "ТОП переглядів"
+
+#: modules/album/includes/top.php:74
+#: modules/album/templates/index.phtml:60
+msgid "Top Downloads"
+msgstr "ТОП завантажень"
+
+#: modules/album/includes/top.php:84
+#: modules/album/templates/index.phtml:62
+msgid "Top Comments"
+msgstr "ТОП коментарів"
+
+#: modules/album/includes/top.php:94
+#: modules/album/templates/index.phtml:59
+msgid "Top Votes"
+msgstr "ТОП голосів"
+
+#: modules/album/includes/top.php:104
+#: modules/album/templates/index.phtml:63
+msgid "Top Worst"
+msgstr "ТОП найгірших"
+
+#: modules/album/includes/top.php:114
+msgid "New photos"
+msgstr "Нові фото"
+
+#: modules/album/includes/users.php:22
+msgid "List of users"
+msgstr "Список користувачів"
+
+#: modules/album/includes/users.php:41
+msgid "All"
+msgstr "Всі"
+
+#: modules/album/includes/users.php:46
+#: modules/album/templates/index.phtml:42
+msgid "Guys"
+msgstr "Хлопці"
+
+#: modules/album/includes/users.php:51
+#: modules/album/templates/index.phtml:46
+msgid "Girls"
+msgstr "Дівчата"
+
+#: modules/album/includes/vote.php:84
+msgid "You cannot vote for this photo."
+msgstr "Ви не можете голосувати за це фото."
+
+#: modules/album/index.php:54
+#: modules/album/templates/index.phtml:38
+msgid "Albums"
+msgstr "Альбоми"
+
+#: modules/album/index.php:76
+msgid "For registered users only"
+msgstr "Тільки для зареєстрованих користувачів"
+
+#: modules/album/templates/add_photo.phtml:44
+msgid "Choose file"
+msgstr "Виберіть файл"
+
+#: modules/album/templates/add_photo.phtml:47
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
+msgstr "Для додавання дозволені зображення JPG, JPEG, PNG, GIF<br>Розмір файлу не повинен перевищувати %d kb."
+
+#: modules/album/templates/add_photo.phtml:51
+#: modules/album/templates/album_form.phtml:46
+#: modules/album/templates/edit_photo.phtml:47
+msgid "Description"
+msgstr "Опис"
+
+#: modules/album/templates/add_photo.phtml:55
+#: modules/album/templates/album_form.phtml:70
+#: modules/album/templates/edit_photo.phtml:51
+msgid "Save"
+msgstr "Зберегти"
+
+#: modules/album/templates/add_photo.phtml:56
+#: modules/album/templates/album_form.phtml:71
+#: modules/album/templates/edit_photo.phtml:52
+#: modules/album/templates/enter_password.phtml:49
+#: modules/album/templates/image_delete.phtml:36
+#: modules/album/templates/move_photo.phtml:43
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: modules/album/templates/album_form.phtml:54
+msgid "Access"
+msgstr "Доступ"
+
+#: modules/album/templates/album_form.phtml:58
+msgid "Everyone"
+msgstr "Усі"
+
+#: modules/album/templates/album_form.phtml:62
+msgid "With Password"
+msgstr "По паролю"
+
+#: modules/album/templates/album_form.phtml:66
+msgid "Only for me"
+msgstr "Тільки для мене"
+
+#: modules/album/templates/enter_password.phtml:40
+msgid "You must type a password to view this album"
+msgstr "Для доступу до цього альбому необхідно ввести пароль"
+
+#: modules/album/templates/enter_password.phtml:48
+msgid "Enter"
+msgstr "Вхід"
+
+#: modules/album/templates/image_delete.phtml:35
+#: modules/album/templates/list.phtml:47
+#: modules/album/templates/show_one.phtml:138
+msgid "Delete"
+msgstr "Видалити"
+
+#: modules/album/templates/index.phtml:30
+msgid "New Photos"
+msgstr "Нові фото"
+
+#: modules/album/templates/index.phtml:34
+msgid "New Comments"
+msgstr "Нові коментарі"
+
+#: modules/album/templates/index.phtml:51
+msgid "My Album"
+msgstr "Мій альбом"
+
+#: modules/album/templates/index.phtml:56
+#: modules/album/templates/show_one.phtml:73
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: modules/album/templates/list.phtml:44
+msgid "Up"
+msgstr "Вгору"
+
+#: modules/album/templates/list.phtml:45
+msgid "Down"
+msgstr "Вниз"
+
+#: modules/album/templates/list.phtml:46
+#: modules/album/templates/show_one.phtml:136
+msgid "Edit"
+msgstr "Редагувати"
+
+#: modules/album/templates/move_photo.phtml:33
+msgid "Select Album"
+msgstr "Виберіть альбом"
+
+#: modules/album/templates/move_photo.phtml:42
+#: modules/album/templates/show_one.phtml:137
+msgid "Move"
+msgstr "Перемістити"
+
+#: modules/album/templates/show.phtml:33
+#: modules/album/templates/show_one.phtml:35
+#: modules/album/templates/top.phtml:33
+#: modules/album/templates/users.phtml:37
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: modules/album/templates/show.phtml:42
+msgid "Add image"
+msgstr "Додати зображення"
+
+#: modules/album/templates/show.phtml:58
+#: modules/album/templates/top.phtml:49
+msgid "User:"
+msgstr "Користувач:"
+
+#: modules/album/templates/show.phtml:61
+#: modules/album/templates/top.phtml:52
+msgid "Album:"
+msgstr "Альбом:"
+
+#: modules/album/templates/show.phtml:125
+#: modules/album/templates/show_one.phtml:153
+#: modules/album/templates/top.phtml:116
+msgid "Total"
+msgstr "Всього"
+
+#: modules/album/templates/show_one.phtml:51
+msgid "Photo"
+msgstr "Фото"
+
+#: modules/album/templates/show_one.phtml:63
+msgid "Views"
+msgstr "Переглядів"
+
+#: modules/album/templates/show_one.phtml:64
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: modules/album/templates/show_one.phtml:65
+msgid "Date"
+msgstr "Дата"
+
+#: modules/album/templates/show_one.phtml:67
+msgid "User"
+msgstr "Користувач"
+
+#: modules/album/templates/show_one.phtml:70
+msgid "Album"
+msgstr "Альбом"
+
+#: modules/album/templates/show_one.phtml:111
+msgid "Download"
+msgstr "Завантажити"
+
+#: modules/album/templates/show_one.phtml:127
+msgid "Actions"
+msgstr "Дії"
+
+#: modules/album/templates/show_one.phtml:133
+msgid "Add to Profile"
+msgstr "Додати до профілю"
+
+#: modules/album/templates/user_row.phtml:34
+msgid "album"
+msgid_plural "albums"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: modules/album/templates/user_row.phtml:35
+msgid "photo"
+msgid_plural "photos"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: modules/album/templates/users.phtml:53
+msgid "Total:"
+msgstr "Всього:"
+
