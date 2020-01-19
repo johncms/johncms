@@ -448,7 +448,7 @@ class Comments
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;
                         $res['editor_name'] = $attributes['edit_name'] ?? '';
                         $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->tools->displayDate($attributes['edit_time']) : '';
-
+                        $res['user_is_online'] = time() <= $res['lastdate'] + 300;
                         $res['reply_text'] = '';
                         if (! empty($res['reply'])) {
                             $reply = $this->tools->checkout($res['reply'], 1, 1);
