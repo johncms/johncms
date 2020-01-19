@@ -1,0 +1,1224 @@
+msgid ""
+msgstr ""
+"X-Domain: forum\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /develop/modules/forum/locale/forum.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"PO-Revision-Date: 2020-01-19 17:09\n"
+
+#: modules/forum/includes/addfile.php:27
+#: modules/forum/includes/addfile.php:29
+#: modules/forum/includes/addvote.php:144
+#: modules/forum/includes/addvote.php:146
+#: modules/forum/includes/curators.php:90
+#: modules/forum/includes/curators.php:92
+#: modules/forum/includes/deltema.php:101
+#: modules/forum/includes/deltema.php:103
+#: modules/forum/includes/delvote.php:69
+#: modules/forum/includes/delvote.php:71
+#: modules/forum/includes/massdel.php:82
+#: modules/forum/includes/massdel.php:84
+#: modules/forum/includes/nt.php:34
+#: modules/forum/includes/nt.php:36
+#: modules/forum/includes/ren.php:106
+#: modules/forum/includes/ren.php:108
+#: modules/forum/includes/say.php:36
+#: modules/forum/includes/vip.php:60
+#: modules/forum/includes/vip.php:62
+#: modules/forum/includes/vote.php:63
+#: modules/forum/includes/vote.php:65
+msgid "Access forbidden"
+msgstr "Доступ заборонено"
+
+#: modules/forum/includes/addfile.php:31
+#: modules/forum/includes/addfile.php:48
+#: modules/forum/includes/addfile.php:63
+#: modules/forum/includes/addvote.php:34
+#: modules/forum/includes/addvote.php:148
+#: modules/forum/includes/curators.php:33
+#: modules/forum/includes/curators.php:94
+#: modules/forum/includes/deltema.php:30
+#: modules/forum/includes/deltema.php:48
+#: modules/forum/includes/deltema.php:105
+#: modules/forum/includes/delvote.php:32
+#: modules/forum/includes/delvote.php:49
+#: modules/forum/includes/delvote.php:73
+#: modules/forum/includes/editpost.php:29
+#: modules/forum/includes/editpost.php:66
+#: modules/forum/includes/editpost.php:73
+#: modules/forum/includes/editpost.php:93
+#: modules/forum/includes/editpost.php:98
+#: modules/forum/includes/editvote.php:33
+#: modules/forum/includes/files.php:92
+#: modules/forum/includes/filter.php:28
+#: modules/forum/includes/filter.php:55
+#: modules/forum/includes/filter.php:92
+#: modules/forum/includes/loadtem.php:28
+#: modules/forum/includes/loadtem.php:57
+#: modules/forum/includes/massdel.php:43
+#: modules/forum/includes/massdel.php:57
+#: modules/forum/includes/massdel.php:86
+#: modules/forum/includes/nt.php:97
+#: modules/forum/includes/nt.php:113
+#: modules/forum/includes/per.php:30
+#: modules/forum/includes/per.php:45
+#: modules/forum/includes/per.php:61
+#: modules/forum/includes/per.php:76
+#: modules/forum/includes/ren.php:30
+#: modules/forum/includes/ren.php:46
+#: modules/forum/includes/ren.php:110
+#: modules/forum/includes/say.php:38
+#: modules/forum/includes/say.php:101
+#: modules/forum/includes/say.php:118
+#: modules/forum/includes/say.php:148
+#: modules/forum/includes/say.php:167
+#: modules/forum/includes/say.php:329
+#: modules/forum/includes/say.php:345
+#: modules/forum/includes/say.php:361
+#: modules/forum/includes/say.php:375
+#: modules/forum/includes/say.php:447
+#: modules/forum/includes/say.php:467
+#: modules/forum/includes/vip.php:32
+#: modules/forum/includes/vip.php:51
+#: modules/forum/includes/vip.php:64
+#: modules/forum/includes/vote.php:37
+#: modules/forum/includes/vote.php:55
+#: modules/forum/includes/vote.php:67
+#: modules/forum/templates/edit_post.phtml:65
+#: modules/forum/templates/new_topic.phtml:78
+#: modules/forum/templates/reply_message.phtml:104
+msgid "Back"
+msgstr "Повернутися"
+
+#: modules/forum/includes/addfile.php:44
+#: modules/forum/includes/addfile.php:46
+#: modules/forum/includes/addvote.php:32
+#: modules/forum/includes/deltema.php:28
+#: modules/forum/includes/delvote.php:30
+#: modules/forum/includes/editpost.php:27
+#: modules/forum/includes/editvote.php:31
+#: modules/forum/includes/files.php:90
+#: modules/forum/includes/filter.php:26
+#: modules/forum/includes/filter.php:90
+#: modules/forum/includes/loadtem.php:26
+#: modules/forum/includes/loadtem.php:55
+#: modules/forum/includes/nt.php:111
+#: modules/forum/includes/per.php:26
+#: modules/forum/includes/per.php:28
+#: modules/forum/includes/per.php:41
+#: modules/forum/includes/per.php:43
+#: modules/forum/includes/per.php:57
+#: modules/forum/includes/per.php:59
+#: modules/forum/includes/per.php:72
+#: modules/forum/includes/per.php:74
+#: modules/forum/includes/ren.php:28
+#: modules/forum/includes/ren.php:44
+#: modules/forum/includes/show_post.php:28
+#: modules/forum/includes/show_post.php:50
+#: modules/forum/includes/tema.php:50
+#: modules/forum/includes/tema.php:67
+#: modules/forum/includes/users.php:30
+#: modules/forum/includes/vip.php:30
+#: modules/forum/includes/vip.php:49
+#: modules/forum/includes/vote.php:35
+#: modules/forum/index.php:718
+#: modules/forum/index.php:720
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: modules/forum/includes/addfile.php:59
+#: modules/forum/includes/addfile.php:166
+#: modules/forum/includes/addfile.php:180
+#: modules/forum/includes/addfile.php:181
+msgid "Add file"
+msgstr "Додати файл"
+
+#: modules/forum/includes/addfile.php:61
+msgid "The time allotted for the file upload has expired"
+msgstr "Час відведений для вивантаження файлу минув"
+
+#: modules/forum/includes/addfile.php:91
+msgid "File size exceed"
+msgstr "Вага файлу перевищує"
+
+#: modules/forum/includes/addfile.php:96
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Заборонений тип файлу!<br>Дозволені типи"
+
+#: modules/forum/includes/addfile.php:118
+#: modules/forum/includes/addfile.php:167
+#: modules/forum/includes/addfile.php:183
+msgid "Error uploading file"
+msgstr "Помилка додавання файлу"
+
+#: modules/forum/includes/addfile.php:171
+#: modules/forum/includes/addfile.php:185
+#: modules/forum/includes/addvote.php:98
+#: modules/forum/includes/editpost.php:256
+#: modules/forum/includes/nt.php:278
+#: modules/forum/includes/ren.php:63
+#: modules/forum/includes/ren.php:80
+#: modules/forum/includes/say.php:432
+#: modules/forum/includes/search.php:183
+msgid "Repeat"
+msgstr "Повторити"
+
+#: modules/forum/includes/addfile.php:198
+#: modules/forum/includes/addfile.php:199
+#: modules/forum/includes/addvote.php:130
+#: modules/forum/includes/addvote.php:131
+#: modules/forum/templates/new_topic.phtml:69
+#: modules/forum/templates/reply_message.phtml:95
+#: modules/forum/templates/topic.phtml:129
+#: modules/forum/templates/topic.phtml:371
+msgid "Add File"
+msgstr "Додати файл"
+
+#: modules/forum/includes/addvote.php:29
+#: modules/forum/includes/addvote.php:30
+#: modules/forum/includes/addvote.php:81
+#: modules/forum/includes/addvote.php:82
+#: modules/forum/includes/addvote.php:93
+#: modules/forum/includes/addvote.php:94
+#: modules/forum/templates/topic.phtml:324
+msgid "Add Poll"
+msgstr "Додати опитування"
+
+#: modules/forum/includes/addvote.php:84
+msgid "Poll added"
+msgstr "Опитування додано"
+
+#: modules/forum/includes/addvote.php:86
+#: modules/forum/includes/editvote.php:106
+msgid "Continue"
+msgstr "Продовжити"
+
+#: modules/forum/includes/addvote.php:96
+msgid "The required fields are not filled"
+msgstr "Обов'язкові поля не заповнені"
+
+#: modules/forum/includes/addvote.php:122
+#: modules/forum/includes/editvote.php:121
+#: modules/forum/includes/editvote.php:145
+#: modules/forum/includes/tema.php:87
+msgid "Answer"
+msgstr "Відповідь"
+
+#: modules/forum/includes/curators.php:28
+#: modules/forum/includes/curators.php:29
+#: modules/forum/includes/curators.php:74
+#: modules/forum/includes/curators.php:75
+#: modules/forum/includes/deltema.php:43
+#: modules/forum/includes/deltema.php:44
+#: modules/forum/templates/topic.phtml:396
+msgid "Curators"
+msgstr "Куратори"
+
+#: modules/forum/includes/curators.php:31
+#: modules/forum/includes/deltema.php:46
+#: modules/forum/includes/say.php:583
+#: modules/forum/index.php:268
+msgid "Topic has been deleted or does not exists"
+msgstr "Тема була видалена або не існує"
+
+#: modules/forum/includes/deltema.php:26
+#: modules/forum/includes/deltema.php:90
+#: modules/forum/includes/deltema.php:91
+#: modules/forum/templates/topic.phtml:343
+msgid "Delete Topic"
+msgstr "Видалити тему"
+
+#: modules/forum/includes/delvote.php:28
+#: modules/forum/includes/delvote.php:45
+#: modules/forum/includes/delvote.php:58
+#: modules/forum/includes/delvote.php:59
+#: modules/forum/templates/topic.phtml:322
+msgid "Delete Poll"
+msgstr "Видалити опитування"
+
+#: modules/forum/includes/delvote.php:47
+msgid "Poll deleted"
+msgstr "Опитування видалено"
+
+#: modules/forum/includes/editpost.php:25
+#: modules/forum/includes/editpost.php:157
+#: modules/forum/includes/editpost.php:252
+#: modules/forum/includes/editpost.php:297
+#: modules/forum/includes/editpost.php:298
+msgid "Edit Message"
+msgstr "Редагувати повідомлення"
+
+#: modules/forum/includes/editpost.php:66
+msgid "You cannot edit posts of higher administration"
+msgstr "Ви не можете редагувати пости вищої за вас адміністрації"
+
+#: modules/forum/includes/editpost.php:73
+msgid "You are trying to change another's post"
+msgstr "Ви намагаєтеся змінити чужий пост"
+
+#: modules/forum/includes/editpost.php:93
+msgid "Your message not already latest, you cannot change it"
+msgstr "Ваше повідомлення вже не останнє, Ви не можете змінити його"
+
+#: modules/forum/includes/editpost.php:98
+#: modules/forum/includes/editpost.php:159
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "З моменту створення повідомлення пройшло більше 5 хвилин і Ви не можете його редагувати"
+
+#: modules/forum/includes/editpost.php:104
+msgid "Message does not exists or has been deleted"
+msgstr "Пост не існує, або був видалений"
+
+#: modules/forum/includes/editpost.php:104
+#: modules/forum/includes/file.php:49
+#: modules/forum/includes/new.php:58
+#: modules/forum/includes/say.php:585
+#: modules/forum/includes/show_post.php:30
+#: modules/forum/includes/show_post.php:52
+#: modules/forum/includes/tema.php:52
+#: modules/forum/includes/tema.php:69
+#: modules/forum/includes/tema.php:111
+#: modules/forum/includes/users.php:32
+#: modules/forum/includes/vip.php:27
+#: modules/forum/includes/vip.php:28
+#: modules/forum/includes/vip.php:46
+#: modules/forum/includes/vip.php:47
+#: modules/forum/includes/vote.php:32
+#: modules/forum/includes/vote.php:33
+#: modules/forum/includes/vote.php:50
+#: modules/forum/includes/vote.php:51
+#: modules/forum/index.php:48
+#: modules/forum/index.php:153
+#: modules/forum/index.php:227
+#: modules/forum/index.php:266
+#: modules/forum/index.php:761
+#: modules/forum/index.php:762
+#: modules/forum/templates/files_list.phtml:112
+#: modules/forum/templates/forum_search.phtml:95
+#: modules/forum/templates/new_topics.phtml:121
+#: modules/forum/templates/show_post.phtml:100
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/forum/includes/editpost.php:135
+#: modules/forum/includes/editpost.php:136
+msgid "Delete file"
+msgstr "Видалити файл"
+
+#: modules/forum/includes/editpost.php:234
+#: modules/forum/includes/editpost.php:235
+msgid "Delete Message"
+msgstr "Видалити повідомлення"
+
+#: modules/forum/includes/editpost.php:254
+#: modules/forum/includes/nt.php:147
+#: modules/forum/includes/say.php:430
+msgid "You have not entered the message"
+msgstr "Ви не ввели повідомлення"
+
+#: modules/forum/includes/editpost.php:317
+msgid "Error"
+msgstr "Помилка"
+
+#: modules/forum/includes/editvote.php:28
+#: modules/forum/includes/editvote.php:29
+#: modules/forum/includes/editvote.php:101
+#: modules/forum/includes/editvote.php:102
+#: modules/forum/includes/editvote.php:154
+#: modules/forum/includes/editvote.php:155
+#: modules/forum/templates/topic.phtml:321
+msgid "Edit Poll"
+msgstr "Редагувати опитування"
+
+#: modules/forum/includes/editvote.php:61
+#: modules/forum/includes/editvote.php:62
+msgid "Delete Answer"
+msgstr "Видалити відповідь"
+
+#: modules/forum/includes/editvote.php:104
+msgid "Poll changed"
+msgstr "Опитування змінено"
+
+#: modules/forum/includes/file.php:45
+msgid "Download file"
+msgstr "Завантаження файлу"
+
+#: modules/forum/includes/file.php:47
+msgid "File does not exist"
+msgstr "Файл не існує"
+
+#: modules/forum/includes/files.php:22
+msgid "Windows applications"
+msgstr "Додатки Windows"
+
+#: modules/forum/includes/files.php:23
+msgid "Java applications"
+msgstr "Java-додатки"
+
+#: modules/forum/includes/files.php:24
+msgid "SIS"
+msgstr "SIS"
+
+#: modules/forum/includes/files.php:25
+msgid "txt"
+msgstr "txt"
+
+#: modules/forum/includes/files.php:26
+msgid "Pictures"
+msgstr "Зображення"
+
+#: modules/forum/includes/files.php:27
+msgid "Archive"
+msgstr "Архів"
+
+#: modules/forum/includes/files.php:28
+msgid "Videos"
+msgstr "Відео"
+
+#: modules/forum/includes/files.php:29
+msgid "MP3"
+msgstr "MP3"
+
+#: modules/forum/includes/files.php:30
+msgid "Other"
+msgstr "Інше"
+
+#: modules/forum/includes/files.php:44
+#: modules/forum/templates/topics.phtml:37
+msgid "Category Files"
+msgstr "Файли категорії"
+
+#: modules/forum/includes/files.php:51
+msgid "Section files"
+msgstr "Файли розділу"
+
+#: modules/forum/includes/files.php:58
+#: modules/forum/templates/topic.phtml:39
+msgid "Topic Files"
+msgstr "Файли теми"
+
+#: modules/forum/includes/files.php:65
+msgid "Forum Files"
+msgstr "Файли форуму"
+
+#: modules/forum/includes/files.php:106
+#: modules/forum/templates/files_list.phtml:28
+#: modules/forum/templates/files_sections.phtml:28
+msgid "New Files"
+msgstr "Нові файли"
+
+#: modules/forum/includes/files.php:178
+msgid "List of sections"
+msgstr "Список розділів"
+
+#: modules/forum/includes/filter.php:23
+#: modules/forum/includes/filter.php:24
+#: modules/forum/includes/filter.php:50
+#: modules/forum/includes/filter.php:51
+#: modules/forum/includes/filter.php:87
+#: modules/forum/includes/filter.php:88
+#: modules/forum/includes/filter.php:102
+#: modules/forum/includes/filter.php:103
+#: modules/forum/templates/topic.phtml:404
+msgid "Filter by author"
+msgstr "Фільтр по автору"
+
+#: modules/forum/includes/filter.php:53
+msgid "You have not selected any author"
+msgstr "Ви не вибрали жодного автора"
+
+#: modules/forum/includes/loadtem.php:23
+#: modules/forum/includes/loadtem.php:24
+#: modules/forum/includes/loadtem.php:52
+#: modules/forum/includes/loadtem.php:53
+#: modules/forum/includes/tema.php:48
+#: modules/forum/includes/tema.php:65
+#: modules/forum/includes/tema.php:164
+#: modules/forum/includes/tema.php:165
+#: modules/forum/includes/users.php:28
+msgid "Download topic"
+msgstr "Завантажити тему"
+
+#: modules/forum/includes/massdel.php:38
+#: modules/forum/includes/massdel.php:39
+#: modules/forum/includes/massdel.php:52
+#: modules/forum/includes/massdel.php:53
+#: modules/forum/includes/massdel.php:72
+#: modules/forum/includes/massdel.php:73
+msgid "Delete posts"
+msgstr "Видалити останній"
+
+#: modules/forum/includes/massdel.php:41
+msgid "Marked posts are deleted"
+msgstr "Відмічені пости видалені"
+
+#: modules/forum/includes/massdel.php:55
+msgid "You did not choose something to delete"
+msgstr "Ви нічого не вибрали для видалення"
+
+#: modules/forum/includes/new.php:54
+#: modules/forum/includes/new.php:190
+#: modules/forum/includes/new.php:191
+#: modules/forum/templates/header.phtml:31
+msgid "Unread"
+msgstr "Непрочитане"
+
+#: modules/forum/includes/new.php:56
+msgid "All topics marked as read"
+msgstr "Всі теми відмічені як прочитані"
+
+#: modules/forum/includes/new.php:124
+#: modules/forum/includes/new.php:125
+msgid "All for period %d hours"
+msgstr "Всього за період %d годин"
+
+#: modules/forum/includes/new.php:126
+msgid "There is nothing new in this forum for selected period"
+msgstr "За вибраний період нового на форумі немає"
+
+#: modules/forum/includes/new.php:192
+#: modules/forum/includes/new.php:258
+#: modules/forum/includes/who.php:89
+#: modules/forum/includes/who.php:270
+#: modules/forum/templates/curators.phtml:39
+#: modules/forum/templates/files_list.phtml:36
+#: modules/forum/templates/filter_by_author.phtml:38
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: modules/forum/includes/new.php:256
+#: modules/forum/includes/new.php:257
+msgid "Last 10"
+msgstr "Останні 10"
+
+#: modules/forum/includes/nt.php:38
+#: modules/forum/index.php:466
+msgid "Go to Section"
+msgstr "Перейти в розділ"
+
+#: modules/forum/includes/nt.php:93
+#: modules/forum/includes/nt.php:109
+#: modules/forum/includes/nt.php:274
+#: modules/forum/includes/nt.php:290
+#: modules/forum/includes/nt.php:298
+#: modules/forum/includes/nt.php:299
+#: modules/forum/templates/topics.phtml:53
+msgid "New Topic"
+msgstr "Нова тема"
+
+#: modules/forum/includes/nt.php:95
+#: modules/forum/includes/say.php:99
+#: modules/forum/includes/say.php:343
+msgid "You cannot add the message so often<br>Please, wait %d sec."
+msgstr "Ви не можете додавати повідомлення так часто<br>Будь ласка, зачекайте %d секунд."
+
+#: modules/forum/includes/nt.php:139
+#: modules/forum/includes/ren.php:61
+msgid "You have not entered topic name"
+msgstr "Ви не ввели назву теми"
+
+#: modules/forum/includes/nt.php:143
+msgid "Topic name too short"
+msgstr "Назва теми дуже коротка"
+
+#: modules/forum/includes/nt.php:151
+#: modules/forum/includes/say.php:146
+#: modules/forum/includes/say.php:445
+msgid "Text is too short"
+msgstr "Занадто короткий текст"
+
+#: modules/forum/includes/nt.php:169
+#: modules/forum/includes/ren.php:78
+msgid "Topic with same name already exists in this section"
+msgstr "Тема з такою назвою вже є в цьому розділі"
+
+#: modules/forum/includes/nt.php:173
+#: modules/forum/includes/say.php:165
+#: modules/forum/includes/say.php:465
+msgid "Message already exists"
+msgstr "Повідомлення вже існує"
+
+#: modules/forum/includes/per.php:117
+#: modules/forum/includes/per.php:118
+msgid "Move topic"
+msgstr "Перемістити тему"
+
+#: modules/forum/includes/ren.php:26
+#: modules/forum/includes/ren.php:42
+#: modules/forum/includes/ren.php:59
+#: modules/forum/includes/ren.php:76
+#: modules/forum/includes/ren.php:94
+#: modules/forum/includes/ren.php:95
+msgid "Rename topic"
+msgstr "Перейменувати тему"
+
+#: modules/forum/includes/say.php:34
+#: modules/forum/includes/say.php:97
+#: modules/forum/includes/say.php:114
+#: modules/forum/includes/say.php:144
+#: modules/forum/includes/say.php:163
+#: modules/forum/includes/say.php:299
+#: modules/forum/includes/say.php:300
+#: modules/forum/includes/say.php:325
+#: modules/forum/includes/say.php:341
+#: modules/forum/includes/say.php:357
+#: modules/forum/includes/say.php:371
+#: modules/forum/includes/say.php:428
+#: modules/forum/includes/say.php:443
+#: modules/forum/includes/say.php:463
+#: modules/forum/includes/say.php:581
+msgid "New message"
+msgstr "Нове повідомлення"
+
+#: modules/forum/includes/say.php:116
+#: modules/forum/includes/say.php:359
+msgid "You cannot write in a closed topic"
+msgstr "Ви не можете писати в закритій темі"
+
+#: modules/forum/includes/say.php:327
+msgid "Message not found"
+msgstr "Повідомлення не знайдено"
+
+#: modules/forum/includes/say.php:373
+msgid "You can not reply to your own message"
+msgstr "Ви не можете відповідати на власне повідомлення"
+
+#: modules/forum/includes/say.php:400
+#: modules/forum/templates/reply_message.phtml:79
+msgid "I am glad to answer you"
+msgstr "Із задоволенням тобі відповім"
+
+#: modules/forum/includes/say.php:404
+#: modules/forum/templates/reply_message.phtml:83
+msgid "respond to Your message"
+msgstr "відповісти на Ваше повідомлення"
+
+#: modules/forum/includes/say.php:555
+#: modules/forum/includes/say.php:556
+msgid "Reply to message"
+msgstr "Відповідь на повідомлення"
+
+#: modules/forum/includes/search.php:22
+#: modules/forum/includes/search.php:47
+#: modules/forum/includes/search.php:48
+#: modules/forum/includes/search.php:179
+#: modules/forum/includes/search.php:234
+#: modules/forum/includes/search.php:235
+#: modules/forum/includes/who.php:169
+msgid "Forum search"
+msgstr "Пошук по форуму"
+
+#: modules/forum/includes/search.php:181
+msgid "Invalid length"
+msgstr "Невірна довжина"
+
+#: modules/forum/includes/show_post.php:26
+#: modules/forum/includes/show_post.php:48
+#: modules/forum/includes/show_post.php:120
+#: modules/forum/includes/show_post.php:121
+msgid "Show post"
+msgstr "Показати повідомлення"
+
+#: modules/forum/includes/tema.php:86
+#: modules/forum/templates/reply_message.phtml:67
+#: modules/forum/templates/show_post.phtml:42
+#: modules/forum/templates/topic.phtml:208
+msgid "Quote"
+msgstr "Цитата"
+
+#: modules/forum/includes/tema.php:146
+msgid "This theme was downloaded from the forum site"
+msgstr "Дана тема завантажена з форуму сайту"
+
+#: modules/forum/includes/users.php:72
+#: modules/forum/includes/users.php:73
+msgid "Who voted in the poll"
+msgstr "Користувачі, що взяли участь в опитуванні"
+
+#: modules/forum/includes/users.php:74
+msgid "No one has voted in this poll yet"
+msgstr "У цьому опитуванні ще ніхто не брав участь"
+
+#: modules/forum/includes/vote.php:53
+msgid "Vote accepted"
+msgstr "Ваш голос прийнятий"
+
+#: modules/forum/includes/who.php:56
+#: modules/forum/includes/who.php:232
+msgid "Guest"
+msgstr "Гість"
+
+#: modules/forum/includes/who.php:87
+#: modules/forum/includes/who.php:88
+#: modules/forum/templates/who.phtml:32
+msgid "Who in Topic"
+msgstr "Хто у темі"
+
+#: modules/forum/includes/who.php:153
+#: modules/forum/includes/who.php:178
+#: modules/forum/includes/who.php:188
+#: modules/forum/includes/who.php:213
+#: modules/forum/includes/who.php:223
+#: modules/forum/includes/who.php:228
+msgid "In the forum Main"
+msgstr "На головній форуму"
+
+#: modules/forum/includes/who.php:157
+msgid "Here, in the List"
+msgstr "Тут, у списку"
+
+#: modules/forum/includes/who.php:161
+msgid "Looking forum files"
+msgstr "Перегляд файлів форуму"
+
+#: modules/forum/includes/who.php:165
+msgid "In the unreads"
+msgstr "У непрочитаних"
+
+#: modules/forum/includes/who.php:176
+msgid "In the Category"
+msgstr "У категорії"
+
+#: modules/forum/includes/who.php:186
+msgid "In the Section"
+msgstr "У розділі"
+
+#: modules/forum/includes/who.php:208
+msgid "Answers in the Topic"
+msgstr "Відповідає в темі"
+
+#: modules/forum/includes/who.php:210
+msgid "Writes in the Topic"
+msgstr "Пише в тему"
+
+#: modules/forum/includes/who.php:210
+#: modules/forum/includes/who.php:221
+msgid "In the Topic"
+msgstr "У темі"
+
+#: modules/forum/includes/who.php:268
+#: modules/forum/includes/who.php:269
+#: modules/forum/templates/index.phtml:73
+#: modules/forum/templates/section.phtml:70
+#: modules/forum/templates/topics.phtml:117
+msgid "Who in Forum"
+msgstr "Хто на форумі"
+
+#: modules/forum/index.php:144
+#: modules/forum/templates/header.phtml:20
+msgid "Forum is closed"
+msgstr "Форум закритий"
+
+#: modules/forum/index.php:146
+msgid "For registered users only"
+msgstr "Тільки для зареєстрованих користувачів"
+
+#: modules/forum/index.php:462
+#: modules/forum/index.php:464
+msgid "Topic deleted"
+msgstr "Тема видалена"
+
+#: modules/forum/index.php:722
+msgid "Go to Forum"
+msgstr "Перейти до форуму"
+
+#: modules/forum/templates/add_file.phtml:29
+msgid "File attached"
+msgstr "Файл прикріплено"
+
+#: modules/forum/templates/add_file.phtml:32
+msgid "Add more"
+msgstr "Додати ще"
+
+#: modules/forum/templates/add_file.phtml:33
+#: modules/forum/templates/add_file.phtml:50
+#: modules/forum/templates/add_poll.phtml:59
+#: modules/forum/templates/curators.phtml:56
+#: modules/forum/templates/download_topic.phtml:37
+#: modules/forum/templates/download_topic.phtml:52
+#: modules/forum/templates/edit_poll.phtml:67
+#: modules/forum/templates/filter_by_author.phtml:63
+#: modules/forum/templates/move_topic.phtml:49
+#: modules/forum/templates/rename_topic.phtml:38
+#: modules/forum/templates/show_post.phtml:99
+msgid "Back to topic"
+msgstr "Повернутися до теми"
+
+#: modules/forum/templates/add_file.phtml:42
+msgid "Choose file"
+msgstr "Виберіть файл"
+
+#: modules/forum/templates/add_file.phtml:46
+msgid "Max. Size"
+msgstr "Макс. розмір"
+
+#: modules/forum/templates/add_file.phtml:49
+msgid "Upload"
+msgstr "Завантаження"
+
+#: modules/forum/templates/add_poll.phtml:33
+#: modules/forum/templates/add_poll.phtml:34
+#: modules/forum/templates/edit_poll.phtml:34
+#: modules/forum/templates/edit_poll.phtml:35
+msgid "Poll"
+msgstr "Опитування"
+
+#: modules/forum/templates/add_poll.phtml:36
+#: modules/forum/templates/edit_poll.phtml:37
+msgid "Maximum length: 150 characters"
+msgstr "Максимальна довжина: 150 символів"
+
+#: modules/forum/templates/add_poll.phtml:39
+#: modules/forum/templates/edit_poll.phtml:40
+msgid "Answers"
+msgstr "Відповідь"
+
+#: modules/forum/templates/add_poll.phtml:45
+#: modules/forum/templates/edit_poll.phtml:53
+msgid "Maximum length: 50 characters"
+msgstr "Максимальна довжина: 50 символів"
+
+#: modules/forum/templates/add_poll.phtml:51
+#: modules/forum/templates/edit_poll.phtml:59
+msgid "Add Answer"
+msgstr "Додати відповідь"
+
+#: modules/forum/templates/add_poll.phtml:54
+#: modules/forum/templates/edit_poll.phtml:62
+msgid "Delete last"
+msgstr "Видалити останній"
+
+#: modules/forum/templates/add_poll.phtml:58
+#: modules/forum/templates/edit_poll.phtml:66
+#: modules/forum/templates/edit_post.phtml:59
+#: modules/forum/templates/new_topic.phtml:72
+#: modules/forum/templates/rename_topic.phtml:37
+#: modules/forum/templates/reply_message.phtml:98
+msgid "Save"
+msgstr "Зберегти"
+
+#: modules/forum/templates/clear_search_history.phtml:31
+msgid "Do you really want to clear the search history?"
+msgstr "Ви дійсно хочете очистити історію пошуку?"
+
+#: modules/forum/templates/clear_search_history.phtml:34
+msgid "Clear"
+msgstr "Очистити"
+
+#: modules/forum/templates/clear_search_history.phtml:35
+#: modules/forum/templates/delete_answer.phtml:35
+#: modules/forum/templates/delete_file.phtml:36
+#: modules/forum/templates/delete_poll.phtml:34
+#: modules/forum/templates/delete_post.phtml:43
+#: modules/forum/templates/delete_topic.phtml:49
+#: modules/forum/templates/mass_delete.phtml:35
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: modules/forum/templates/curators.phtml:34
+#: modules/forum/templates/filter_by_author.phtml:33
+msgid "Changes saved"
+msgstr "Зміни збережено"
+
+#: modules/forum/templates/curators.phtml:54
+msgid "Assign"
+msgstr "Призначити"
+
+#: modules/forum/templates/delete_answer.phtml:31
+msgid "Do you really want to delete the answer?"
+msgstr "Ви дійсно бажаєте видалити цю відповідь?"
+
+#: modules/forum/templates/delete_answer.phtml:34
+#: modules/forum/templates/delete_file.phtml:35
+#: modules/forum/templates/delete_poll.phtml:33
+#: modules/forum/templates/delete_post.phtml:39
+#: modules/forum/templates/delete_topic.phtml:42
+#: modules/forum/templates/mass_delete.phtml:34
+#: modules/forum/templates/topic.phtml:258
+#: modules/forum/templates/topic.phtml:299
+msgid "Delete"
+msgstr "Видалити"
+
+#: modules/forum/templates/delete_file.phtml:31
+#: modules/forum/templates/delete_post.phtml:36
+#: modules/forum/templates/delete_topic.phtml:32
+#: modules/forum/templates/mass_delete.phtml:31
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: modules/forum/templates/delete_file.phtml:40
+#: modules/forum/templates/delete_post.phtml:46
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "У разі видалення, з лічильника постів форуму зніметься один бал"
+
+#: modules/forum/templates/delete_poll.phtml:30
+msgid "Do you really want to delete a poll?"
+msgstr "Ви дійсно хочете видалити опитування?"
+
+#: modules/forum/templates/delete_post.phtml:32
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "УВАГА!<br>Це останній пост теми. Разом з ним буде видалена (або прихована) і сама тема"
+
+#: modules/forum/templates/delete_post.phtml:41
+#: modules/forum/templates/delete_topic.phtml:37
+msgid "Hide"
+msgstr "Приховати"
+
+#: modules/forum/templates/delete_topic.phtml:48
+msgid "Perform"
+msgstr "Виконати"
+
+#: modules/forum/templates/download_topic.phtml:32
+msgid "Link active 5 minutes"
+msgstr "Посилання активне 5 хвилин"
+
+#: modules/forum/templates/download_topic.phtml:36
+#: modules/forum/templates/download_topic.phtml:51
+msgid "Download"
+msgstr "Завантажити"
+
+#: modules/forum/templates/download_topic.phtml:44
+msgid "Select format"
+msgstr "Виберіть формат"
+
+#: modules/forum/templates/edit_post.phtml:54
+#: modules/forum/templates/new_topic.phtml:63
+#: modules/forum/templates/reply_message.phtml:89
+#: modules/forum/templates/topic.phtml:123
+#: modules/forum/templates/topic.phtml:365
+msgid "Message"
+msgstr "Повідомлення"
+
+#: modules/forum/templates/edit_post.phtml:61
+#: modules/forum/templates/new_topic.phtml:74
+#: modules/forum/templates/reply_message.phtml:100
+#: modules/forum/templates/topic.phtml:134
+#: modules/forum/templates/topic.phtml:376
+msgid "Preview"
+msgstr "Прев'ю"
+
+#: modules/forum/templates/edit_post.phtml:65
+#: modules/forum/templates/new_topic.phtml:85
+#: modules/forum/templates/reply_message.phtml:104
+msgid "Smilies"
+msgstr "Смайли"
+
+#: modules/forum/templates/files_list.phtml:54
+msgid "To message"
+msgstr "До повідомлення"
+
+#: modules/forum/templates/files_list.phtml:57
+msgid "To topic"
+msgstr "До теми"
+
+#: modules/forum/templates/files_list.phtml:102
+#: modules/forum/templates/forum_search.phtml:80
+#: modules/forum/templates/new_topics.phtml:107
+#: modules/forum/templates/section.phtml:63
+#: modules/forum/templates/topic.phtml:388
+#: modules/forum/templates/topics.phtml:105
+#: modules/forum/templates/voted_users.phtml:44
+#: modules/forum/templates/who.phtml:52
+msgid "Total"
+msgstr "Всього"
+
+#: modules/forum/templates/filter_by_author.phtml:41
+msgid "Filter will be display posts from selected authors only"
+msgstr "Фільтрація дозволить відображати пости тільки обраних авторів"
+
+#: modules/forum/templates/filter_by_author.phtml:61
+msgid "Filter"
+msgstr "Фільтр"
+
+#: modules/forum/templates/footer.phtml:29
+msgid "Forum rules"
+msgstr "Правила форуму"
+
+#: modules/forum/templates/forum_search.phtml:33
+#: modules/forum/templates/forum_search.phtml:34
+msgid "Search query"
+msgstr "Пошуковий запит"
+
+#: modules/forum/templates/forum_search.phtml:36
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
+msgstr "Довжина запиту: мін. 4, макс. 64.<br>Пошук нечутливий до регістру букв<br>Результати виводяться з сортуванням по релевантності."
+
+#: modules/forum/templates/forum_search.phtml:41
+msgid "Search in the topic names"
+msgstr "Шукати в назвах тем"
+
+#: modules/forum/templates/forum_search.phtml:44
+#: modules/forum/templates/header.phtml:69
+msgid "Search"
+msgstr "Пошук"
+
+#: modules/forum/templates/forum_search.phtml:51
+msgid "Your search did not match any results"
+msgstr "За вашим запитом нічого не знайдено"
+
+#: modules/forum/templates/forum_search.phtml:63
+#: modules/forum/templates/voted_users.phtml:54
+#: modules/forum/templates/who.phtml:62
+msgid "Go to Topic"
+msgstr "Перейти в тему"
+
+#: modules/forum/templates/forum_search.phtml:65
+msgid "Go to Message"
+msgstr "Перейти до повідомлення"
+
+#: modules/forum/templates/forum_search.phtml:75
+#: modules/forum/templates/new_topics.phtml:96
+#: modules/forum/templates/topics.phtml:99
+msgid "Author"
+msgstr "Автор"
+
+#: modules/forum/templates/forum_search.phtml:88
+msgid "Search History"
+msgstr "Історія пошуку"
+
+#: modules/forum/templates/forum_search.phtml:91
+msgid "Clear history"
+msgstr "Очистити історію"
+
+#: modules/forum/templates/header.phtml:22
+msgid "Read only"
+msgstr "Лише для читання"
+
+#: modules/forum/templates/header.phtml:41
+msgid "Show for Period"
+msgstr "Показати за період"
+
+#: modules/forum/templates/header.phtml:50
+msgid "Last activity"
+msgstr "Остання активність"
+
+#: modules/forum/templates/index.phtml:35
+msgid "Files"
+msgstr "Файли"
+
+#: modules/forum/templates/move_topic.phtml:30
+msgid "Category"
+msgstr "Категорія"
+
+#: modules/forum/templates/move_topic.phtml:35
+msgid "New section"
+msgstr "Новий розділ"
+
+#: modules/forum/templates/move_topic.phtml:44
+msgid "Category is empty"
+msgstr "Категорія порожня"
+
+#: modules/forum/templates/move_topic.phtml:48
+msgid "Move"
+msgstr "Перемістити"
+
+#: modules/forum/templates/move_topic.phtml:53
+msgid "Other categories"
+msgstr "Інші категорії"
+
+#: modules/forum/templates/new_topic.phtml:58
+msgid "Title"
+msgstr "Назва"
+
+#: modules/forum/templates/new_topic.phtml:60
+msgid "Maximum length: 100 characters"
+msgstr "Максимальна довжина: 100 символів"
+
+#: modules/forum/templates/new_topics.phtml:36
+msgid "Period"
+msgstr "Період"
+
+#: modules/forum/templates/new_topics.phtml:38
+msgid "Show period"
+msgstr "Показати період"
+
+#: modules/forum/templates/new_topics.phtml:62
+#: modules/forum/templates/topics.phtml:65
+msgid "Pinned topic"
+msgstr "Закріплена тема"
+
+#: modules/forum/templates/new_topics.phtml:69
+#: modules/forum/templates/topics.phtml:72
+msgid "Topic has poll"
+msgstr "Тема має опитування"
+
+#: modules/forum/templates/new_topics.phtml:76
+#: modules/forum/templates/topics.phtml:79
+msgid "Closed topic"
+msgstr "Закрита тема"
+
+#: modules/forum/templates/new_topics.phtml:83
+#: modules/forum/templates/topics.phtml:86
+msgid "Deleted topic"
+msgstr "Видалена тема"
+
+#: modules/forum/templates/new_topics.phtml:97
+#: modules/forum/templates/topics.phtml:100
+msgid "Last post"
+msgstr "Останнє повідомлення"
+
+#: modules/forum/templates/new_topics.phtml:117
+msgid "Mark as read"
+msgstr "Позначити як прочитане"
+
+#: modules/forum/templates/rename_topic.phtml:32
+#: modules/forum/templates/rename_topic.phtml:33
+msgid "Topic name"
+msgstr "Назва теми"
+
+#: modules/forum/templates/reply_message.phtml:60
+msgid "Topic"
+msgstr "Тема"
+
+#: modules/forum/templates/reply_message.phtml:69
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Допустимо макс. 200 символів, весь зайвий текст обрізається."
+
+#: modules/forum/templates/reply_message.phtml:72
+msgid "Appeal"
+msgstr "Звернення"
+
+#: modules/forum/templates/section.phtml:35
+msgid "Section Files"
+msgstr "Файли розділу"
+
+#: modules/forum/templates/section.phtml:44
+msgid "There are no sections in this category"
+msgstr "У даній категорії немає розділів"
+
+#: modules/forum/templates/show_post.phtml:39
+#: modules/forum/templates/topic.phtml:205
+msgid "Reply"
+msgstr "Відповідь"
+
+#: modules/forum/templates/show_post.phtml:59
+#: modules/forum/templates/topic.phtml:226
+msgid "Attached files"
+msgstr "Прикріплені файли"
+
+#: modules/forum/templates/topic.phtml:45
+msgid "Filter by author is activated"
+msgstr "Фільтр по автору активовано"
+
+#: modules/forum/templates/topic.phtml:47
+#: modules/forum/templates/topic.phtml:402
+msgid "Cancel Filter"
+msgstr "Відмінити фільтрацію"
+
+#: modules/forum/templates/topic.phtml:53
+msgid "Topic closed"
+msgstr "Тема закрита"
+
+#: modules/forum/templates/topic.phtml:59
+msgid "Topic deleted by"
+msgstr "Тему видалив"
+
+#: modules/forum/templates/topic.phtml:63
+msgid "Undelete topic"
+msgstr "Скасувати видалення теми"
+
+#: modules/forum/templates/topic.phtml:79
+#: modules/forum/templates/topic.phtml:109
+msgid "Vote"
+msgstr "Голосувати"
+
+#: modules/forum/templates/topic.phtml:80
+msgid "Results"
+msgstr "Результати"
+
+#: modules/forum/templates/topic.phtml:100
+msgid "Total votes"
+msgstr "Всього голосів"
+
+#: modules/forum/templates/topic.phtml:132
+#: modules/forum/templates/topic.phtml:138
+#: modules/forum/templates/topic.phtml:374
+#: modules/forum/templates/topic.phtml:380
+msgid "Write"
+msgstr "Написати"
+
+#: modules/forum/templates/topic.phtml:287
+msgid "Edited:"
+msgstr "Відредаговано:"
+
+#: modules/forum/templates/topic.phtml:291
+msgid "Post deleted:"
+msgstr "Повідомлень видалено:"
+
+#: modules/forum/templates/topic.phtml:293
+msgid "Post restored by:"
+msgstr "Пост відновлено:"
+
+#: modules/forum/templates/topic.phtml:298
+msgid "Edit"
+msgstr "Редагувати"
+
+#: modules/forum/templates/topic.phtml:301
+msgid "Restore"
+msgstr "Відновити"
+
+#: modules/forum/templates/topic.phtml:313
+msgid "Delete selected"
+msgstr "Видалити вибране"
+
+#: modules/forum/templates/topic.phtml:317
+msgid "Actions with topic"
+msgstr "Дії з темою"
+
+#: modules/forum/templates/topic.phtml:328
+msgid "Curators of the Topic"
+msgstr "Куратори теми"
+
+#: modules/forum/templates/topic.phtml:331
+msgid "Rename Topic"
+msgstr "Перейменувати тему"
+
+#: modules/forum/templates/topic.phtml:334
+msgid "Open Topic"
+msgstr "Відкрити тему"
+
+#: modules/forum/templates/topic.phtml:336
+msgid "Close Topic"
+msgstr "Закрити тему"
+
+#: modules/forum/templates/topic.phtml:340
+msgid "Restore Topic"
+msgstr "Відновити тему"
+
+#: modules/forum/templates/topic.phtml:346
+msgid "Unfix Topic"
+msgstr "Відкріпити тему"
+
+#: modules/forum/templates/topic.phtml:348
+msgid "Pin Topic"
+msgstr "Закріпити тему"
+
+#: modules/forum/templates/topic.phtml:351
+msgid "Move Topic"
+msgstr "Перемістити тему"
+
+#: modules/forum/templates/topic.phtml:408
+msgid "Download Topic"
+msgstr "Завантажити тему"
+
+#: modules/forum/templates/topic.phtml:418
+msgid "Who is here"
+msgstr "Хто тут"
+
+#: modules/forum/templates/topics.phtml:46
+msgid "No topics in this section"
+msgstr "У даному розділі немає жодної теми"
+
+#: modules/forum/templates/who.phtml:38
+msgid "Users"
+msgstr "Користувачі"
+
+#: modules/forum/templates/who.phtml:39
+msgid "Guests"
+msgstr "Гості"
+
