@@ -1,0 +1,159 @@
+msgid ""
+msgstr ""
+"X-Domain: community\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /develop/modules/community/locale/community.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/community/includes/administration.php:25
+#: modules/community/includes/administration.php:31
+#: modules/community/includes/administration.php:32
+#: modules/community/templates/index.phtml:45
+msgid "Administration"
+msgstr "Administratie"
+
+#: modules/community/includes/birthdays.php:18
+#: modules/community/includes/birthdays.php:24
+#: modules/community/includes/birthdays.php:25
+#: modules/community/templates/index.phtml:50
+msgid "Birthdays"
+msgstr "Aniversari"
+
+#: modules/community/includes/search.php:22
+#: modules/community/templates/search.phtml:67
+#: modules/community/templates/users.phtml:50
+msgid "User Search"
+msgstr "Cauta utilizatori"
+
+#: modules/community/includes/search.php:31
+#: modules/community/includes/search.php:35
+#: modules/community/templates/index.phtml:32
+msgid "Nickname"
+msgstr ""
+
+#: modules/community/includes/search.php:31
+msgid "Invalid length"
+msgstr "Lungime invalida"
+
+#: modules/community/includes/search.php:35
+msgid "Invalid characters"
+msgstr "Caractere invalide"
+
+#: modules/community/includes/top.php:19
+msgid "Forum"
+msgstr ""
+
+#: modules/community/includes/top.php:24
+msgid "Guestbook"
+msgstr ""
+
+#: modules/community/includes/top.php:29
+msgid "Comments"
+msgstr "Comentarii"
+
+#: modules/community/includes/top.php:37
+msgid "Karma"
+msgstr ""
+
+#: modules/community/includes/top.php:48
+msgid "Most active in Guestbook"
+msgstr "Cei mai activi in Guestbook"
+
+#: modules/community/includes/top.php:55
+msgid "Most commentators"
+msgstr "Cei mai multi comentatori"
+
+#: modules/community/includes/top.php:63
+msgid "Best Karma"
+msgstr "Cea mai buna Karma"
+
+#: modules/community/includes/top.php:71
+msgid "Most active in Forum"
+msgstr "Cei mai activi in Forum"
+
+#: modules/community/includes/users.php:25
+#: modules/community/includes/users.php:31
+#: modules/community/includes/users.php:32
+msgid "List of users"
+msgstr "Lista de utilizatori"
+
+#: modules/community/index.php:55
+msgid "Community"
+msgstr "Comunitate"
+
+#: modules/community/index.php:66
+msgid "For registered users only"
+msgstr "Doar pentru utilizatori inregistrati"
+
+#: modules/community/templates/index.phtml:30
+#: modules/community/templates/search.phtml:29
+msgid "Look for the User"
+msgstr "Cauta utilizatorul"
+
+#: modules/community/templates/index.phtml:34
+#: modules/community/templates/search.phtml:33
+msgid "Search"
+msgstr "Cauta"
+
+#: modules/community/templates/index.phtml:37
+#: modules/community/templates/search.phtml:36
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr "Cautarea se face dupa Nickname.Ai grija la majuscule."
+
+#: modules/community/templates/index.phtml:41
+msgid "Users"
+msgstr "Utilizatori"
+
+#: modules/community/templates/index.phtml:55
+msgid "Top Activity"
+msgstr "Activitati de top"
+
+#: modules/community/templates/search.phtml:31
+msgid "Username"
+msgstr ""
+
+#: modules/community/templates/search.phtml:50
+#: modules/community/templates/top.phtml:40
+#: modules/community/templates/users.phtml:33
+msgid "List is empty"
+msgstr ""
+
+#: modules/community/templates/search.phtml:57
+#: modules/community/templates/users.phtml:40
+msgid "Total"
+msgstr ""
+
+#: modules/community/templates/search.phtml:70
+#: modules/community/templates/top.phtml:47
+#: modules/community/templates/users.phtml:53
+msgid "Back"
+msgstr "Inapoi"
+
+#: modules/community/templates/user_row.phtml:36
+#: modules/community/templates/user_row.phtml:42
+msgid "post"
+msgid_plural "posts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: modules/community/templates/user_row.phtml:38
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: modules/community/templates/user_row.phtml:40
+msgid "point"
+msgid_plural "points"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
