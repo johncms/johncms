@@ -1,0 +1,440 @@
+msgid ""
+msgstr ""
+"X-Domain: album\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: pl\n"
+"X-Crowdin-File: /develop/modules/album/locale/album.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Polish\n"
+"Language: pl_PL\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/album/includes/comments.php:36
+#: modules/album/index.php:92
+msgid "User does not exists"
+msgstr "Użytkownik nie istnieje"
+
+#: modules/album/includes/comments.php:56
+#: modules/album/includes/image_download.php:37
+msgid "Access forbidden"
+msgstr "Dostęp zabroniony"
+
+#: modules/album/includes/comments.php:74
+#: modules/album/templates/show_one.phtml:119
+msgid "Comments"
+msgstr "Komentarze"
+
+#: modules/album/includes/comments.php:98
+#: modules/album/includes/delete.php:83
+#: modules/album/includes/edit.php:43
+#: modules/album/includes/edit.php:82
+#: modules/album/includes/image_delete.php:70
+#: modules/album/includes/image_delete.php:82
+#: modules/album/includes/image_download.php:40
+#: modules/album/includes/image_download.php:49
+#: modules/album/includes/image_edit.php:36
+#: modules/album/includes/image_move.php:35
+#: modules/album/includes/image_move.php:71
+#: modules/album/includes/image_upload.php:40
+#: modules/album/includes/image_upload.php:160
+#: modules/album/includes/show.php:34
+#: modules/album/includes/show.php:48
+#: modules/album/includes/top.php:37
+#: modules/album/includes/vote.php:35
+#: modules/album/includes/vote.php:95
+msgid "Wrong data"
+msgstr "Nieprawidłowe dane"
+
+#: modules/album/includes/delete.php:29
+msgid "Delete album:"
+msgstr ""
+
+#: modules/album/includes/delete.php:56
+msgid "Album deleted"
+msgstr "Album usunięty"
+
+#: modules/album/includes/delete.php:66
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Na pewno chcesz usunąć ten album? Jeśli zawiera zdjęcia, one także zostaną usunięte."
+
+#: modules/album/includes/edit.php:28
+msgid "Edit Album"
+msgstr "Edutuj album"
+
+#: modules/album/includes/edit.php:49
+#: modules/album/templates/list.phtml:31
+msgid "Create Album"
+msgstr "Utwórz album"
+
+#: modules/album/includes/edit.php:70
+#: modules/album/templates/album_form.phtml:42
+msgid "Title"
+msgstr "Tytuł"
+
+#: modules/album/includes/edit.php:70
+#: modules/album/includes/edit.php:78
+msgid "Invalid length"
+msgstr "Nieprawidłowa długość"
+
+#: modules/album/includes/edit.php:76
+msgid "You have not entered password"
+msgstr "Nie wpisałeś hasła"
+
+#: modules/album/includes/edit.php:78
+#: modules/album/templates/album_form.phtml:50
+#: modules/album/templates/enter_password.phtml:42
+msgid "Password"
+msgstr "Hasło"
+
+#: modules/album/includes/edit.php:87
+msgid "The album already exists"
+msgstr "Album już istnieje"
+
+#: modules/album/includes/edit.php:152
+msgid "Album successfully changed"
+msgstr "Album został pomyślnie zmieniony"
+
+#: modules/album/includes/edit.php:152
+msgid "Album successfully created"
+msgstr "Album utworzony pomyślnie"
+
+#: modules/album/includes/image_delete.php:25
+msgid "Delete image"
+msgstr "Usuń obraz"
+
+#: modules/album/includes/image_delete.php:53
+msgid "Are you sure you want to delete this image?"
+msgstr "Na pewno chcesz usunąć ten obraz?"
+
+#: modules/album/includes/image_download.php:46
+msgid "File does not exist"
+msgstr "Plik nie istnieje"
+
+#: modules/album/includes/image_download.php:61
+#: modules/album/templates/show_one.phtml:157
+msgid "Back"
+msgstr "Powrót"
+
+#: modules/album/includes/image_edit.php:23
+msgid "Edit image"
+msgstr "Edytuj obraz"
+
+#: modules/album/includes/image_edit.php:55
+msgid "Image successfully changed"
+msgstr "Obraz pomyślnie zmieniony"
+
+#: modules/album/includes/image_edit.php:57
+#: modules/album/includes/image_move.php:62
+#: modules/album/includes/image_move.php:104
+#: modules/album/includes/image_upload.php:133
+msgid "Continue"
+msgstr "Kontynuuj"
+
+#: modules/album/includes/image_move.php:23
+msgid "Move image"
+msgstr "Przenieś zdjęcie"
+
+#: modules/album/includes/image_move.php:60
+msgid "Image successfully moved to the selected album"
+msgstr "Obraz z powodzeniem został przeniesiony do wybranego albumu"
+
+#: modules/album/includes/image_move.php:102
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Należy utworzyć co najmniej jeden dodatkowy album, aby przenieść obraz"
+
+#: modules/album/includes/image_upload.php:28
+msgid "Upload image"
+msgstr "Prześlij obraz"
+
+#: modules/album/includes/image_upload.php:56
+msgid "The weight of the file exceeds"
+msgstr ""
+
+#: modules/album/includes/image_upload.php:131
+msgid "Image uploaded"
+msgstr "Przesłany obraz"
+
+#: modules/album/includes/list.php:75
+msgid "Your albums"
+msgstr ""
+
+#: modules/album/includes/list.php:78
+msgid "User albums:"
+msgstr ""
+
+#: modules/album/includes/list.php:79
+msgid "User albums"
+msgstr ""
+
+#: modules/album/includes/show.php:61
+msgid "View photo"
+msgstr ""
+
+#: modules/album/includes/show.php:81
+msgid "Access denied"
+msgstr ""
+
+#: modules/album/includes/show.php:83
+#: modules/album/templates/show_one.phtml:158
+msgid "Album List"
+msgstr "Lista albumów"
+
+#: modules/album/includes/show.php:100
+msgid "Incorrect Password"
+msgstr "Nieprawidłowe hasło"
+
+#: modules/album/includes/show.php:150
+msgid "Photo added to the profile"
+msgstr "Zdjęcie dodane do profilu"
+
+#: modules/album/includes/top.php:43
+msgid "Unread Comments"
+msgstr "Nieprzeczytane komentarze"
+
+#: modules/album/includes/top.php:54
+msgid "Recent comments"
+msgstr "Ostatnio dodane komentarze"
+
+#: modules/album/includes/top.php:64
+#: modules/album/templates/index.phtml:61
+msgid "Top Views"
+msgstr "Najczęściej wyświetlane "
+
+#: modules/album/includes/top.php:74
+#: modules/album/templates/index.phtml:60
+msgid "Top Downloads"
+msgstr "Najczęściej pobierane"
+
+#: modules/album/includes/top.php:84
+#: modules/album/templates/index.phtml:62
+msgid "Top Comments"
+msgstr "Najczęściej komentowane"
+
+#: modules/album/includes/top.php:94
+#: modules/album/templates/index.phtml:59
+msgid "Top Votes"
+msgstr "Najczęściej głosowane"
+
+#: modules/album/includes/top.php:104
+#: modules/album/templates/index.phtml:63
+msgid "Top Worst"
+msgstr "Top najgorsze"
+
+#: modules/album/includes/top.php:114
+msgid "New photos"
+msgstr "Nowe zdjęcia"
+
+#: modules/album/includes/users.php:22
+msgid "List of users"
+msgstr ""
+
+#: modules/album/includes/users.php:41
+msgid "All"
+msgstr "Wszystko"
+
+#: modules/album/includes/users.php:46
+#: modules/album/templates/index.phtml:42
+msgid "Guys"
+msgstr "Faceci"
+
+#: modules/album/includes/users.php:51
+#: modules/album/templates/index.phtml:46
+msgid "Girls"
+msgstr "Dziewczyny"
+
+#: modules/album/includes/vote.php:84
+msgid "You cannot vote for this photo."
+msgstr ""
+
+#: modules/album/index.php:54
+#: modules/album/templates/index.phtml:38
+msgid "Albums"
+msgstr "Albumy"
+
+#: modules/album/index.php:76
+msgid "For registered users only"
+msgstr "Tylko dla zarejestrowanych"
+
+#: modules/album/templates/add_photo.phtml:44
+msgid "Choose file"
+msgstr ""
+
+#: modules/album/templates/add_photo.phtml:47
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
+msgstr "Dozwolony format obrazu JPG, JPEG, PNG, GIF<br>Rozmiar pliku nie powinien przekraczać."
+
+#: modules/album/templates/add_photo.phtml:51
+#: modules/album/templates/album_form.phtml:46
+#: modules/album/templates/edit_photo.phtml:47
+msgid "Description"
+msgstr "Opis"
+
+#: modules/album/templates/add_photo.phtml:55
+#: modules/album/templates/album_form.phtml:70
+#: modules/album/templates/edit_photo.phtml:51
+msgid "Save"
+msgstr "Zapisz"
+
+#: modules/album/templates/add_photo.phtml:56
+#: modules/album/templates/album_form.phtml:71
+#: modules/album/templates/edit_photo.phtml:52
+#: modules/album/templates/enter_password.phtml:49
+#: modules/album/templates/image_delete.phtml:36
+#: modules/album/templates/move_photo.phtml:43
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: modules/album/templates/album_form.phtml:54
+msgid "Access"
+msgstr "Dostęp"
+
+#: modules/album/templates/album_form.phtml:58
+msgid "Everyone"
+msgstr "Wszyscy"
+
+#: modules/album/templates/album_form.phtml:62
+msgid "With Password"
+msgstr "Z hasłem"
+
+#: modules/album/templates/album_form.phtml:66
+msgid "Only for me"
+msgstr "Tylko dla mnie"
+
+#: modules/album/templates/enter_password.phtml:40
+msgid "You must type a password to view this album"
+msgstr "Należy wpisać hasło, aby zobaczyć album"
+
+#: modules/album/templates/enter_password.phtml:48
+msgid "Enter"
+msgstr ""
+
+#: modules/album/templates/image_delete.phtml:35
+#: modules/album/templates/list.phtml:47
+#: modules/album/templates/show_one.phtml:138
+msgid "Delete"
+msgstr "Usuń"
+
+#: modules/album/templates/index.phtml:30
+msgid "New Photos"
+msgstr "Nowe zdjęcia"
+
+#: modules/album/templates/index.phtml:34
+msgid "New Comments"
+msgstr "Nowe komentarze"
+
+#: modules/album/templates/index.phtml:51
+msgid "My Album"
+msgstr "Mój album"
+
+#: modules/album/templates/index.phtml:56
+#: modules/album/templates/show_one.phtml:73
+msgid "Rating"
+msgstr "Ocena"
+
+#: modules/album/templates/list.phtml:44
+msgid "Up"
+msgstr "W górę"
+
+#: modules/album/templates/list.phtml:45
+msgid "Down"
+msgstr "W dół"
+
+#: modules/album/templates/list.phtml:46
+#: modules/album/templates/show_one.phtml:136
+msgid "Edit"
+msgstr "Edytuj"
+
+#: modules/album/templates/move_photo.phtml:33
+msgid "Select Album"
+msgstr "Wybierz album"
+
+#: modules/album/templates/move_photo.phtml:42
+#: modules/album/templates/show_one.phtml:137
+msgid "Move"
+msgstr "Przenieś"
+
+#: modules/album/templates/show.phtml:33
+#: modules/album/templates/show_one.phtml:35
+#: modules/album/templates/top.phtml:33
+#: modules/album/templates/users.phtml:37
+msgid "The list is empty"
+msgstr "Lista jest pusta"
+
+#: modules/album/templates/show.phtml:42
+msgid "Add image"
+msgstr "Dodaj obraz"
+
+#: modules/album/templates/show.phtml:58
+#: modules/album/templates/top.phtml:49
+msgid "User:"
+msgstr ""
+
+#: modules/album/templates/show.phtml:61
+#: modules/album/templates/top.phtml:52
+msgid "Album:"
+msgstr ""
+
+#: modules/album/templates/show.phtml:125
+#: modules/album/templates/show_one.phtml:153
+#: modules/album/templates/top.phtml:116
+msgid "Total"
+msgstr "Wszystkich"
+
+#: modules/album/templates/show_one.phtml:51
+msgid "Photo"
+msgstr ""
+
+#: modules/album/templates/show_one.phtml:63
+msgid "Views"
+msgstr "Oglądano"
+
+#: modules/album/templates/show_one.phtml:64
+msgid "Downloads"
+msgstr "Pobrań"
+
+#: modules/album/templates/show_one.phtml:65
+msgid "Date"
+msgstr "Data"
+
+#: modules/album/templates/show_one.phtml:67
+msgid "User"
+msgstr ""
+
+#: modules/album/templates/show_one.phtml:70
+msgid "Album"
+msgstr ""
+
+#: modules/album/templates/show_one.phtml:111
+msgid "Download"
+msgstr "Pobierz"
+
+#: modules/album/templates/show_one.phtml:127
+msgid "Actions"
+msgstr ""
+
+#: modules/album/templates/show_one.phtml:133
+msgid "Add to Profile"
+msgstr "Dodaj do profilu"
+
+#: modules/album/templates/user_row.phtml:34
+msgid "album"
+msgid_plural "albums"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: modules/album/templates/user_row.phtml:35
+msgid "photo"
+msgid_plural "photos"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: modules/album/templates/users.phtml:53
+msgid "Total:"
+msgstr ""
+
