@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\NavChain;
 use Johncms\System\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -17,9 +18,12 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /** @var Render $view */
 
 $view = di(Render::class);
+$nav_chain = di(NavChain::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('redirect', __DIR__ . '/templates/');
+$title = __('Redirect to an external link');
+$nav_chain->add($title);
 
 $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
@@ -28,10 +32,15 @@ if ($url) {
     if (isset($_POST['submit'])) {
         header('Location: ' . $url);
     } else {
-        echo $view->render('redirect::index', [
-            'redirect_url' => rawurlencode($url),
-            'referer'      => (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : '/'),
-            'url'          => $url,
-        ]);
+        echo $view->render(
+            'redirect::index',
+            [
+                'title'        => $title,
+                'page_title'   => $title,
+                'redirect_url' => rawurlencode($url),
+                'referer'      => (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : '/'),
+                'url'          => $url,
+            ]
+        );
     }
 }
