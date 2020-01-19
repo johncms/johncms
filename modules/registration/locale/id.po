@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"X-Domain: registration\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /develop/modules/registration/locale/registration.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2020-01-19 17:08\n"
+
+#: modules/registration/index.php:41
+#: modules/registration/templates/index.phtml:2
+#: modules/registration/templates/index.phtml:3
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:103
+#: modules/registration/templates/registration_closed.phtml:2
+#: modules/registration/templates/registration_closed.phtml:3
+#: modules/registration/templates/registration_result.phtml:2
+#: modules/registration/templates/registration_result.phtml:3
+msgid "Registration"
+msgstr "Pendaftaran"
+
+#: modules/registration/index.php:65
+msgid "You have not entered Nickname"
+msgstr "Anda belum memasukkan nama pengguna"
+
+#: modules/registration/index.php:67
+msgid "Nickname wrong length"
+msgstr "Nama pengguna terlalu panjang"
+
+#: modules/registration/index.php:71
+msgid "Invalid characters"
+msgstr "Karakter salah"
+
+#: modules/registration/index.php:76
+msgid "You have not entered password"
+msgstr "Anda belum memasukkan kata sandi"
+
+#: modules/registration/index.php:78
+msgid "Invalid length"
+msgstr "Panjang tidak valid"
+
+#: modules/registration/index.php:83
+msgid "You have not selected genger"
+msgstr "Anda belum memilih jenis kelamin"
+
+#: modules/registration/index.php:93
+msgid "The security code is not correct"
+msgstr "Kode verifikasi salah"
+
+#: modules/registration/index.php:108
+msgid "Selected Nickname is already in use"
+msgstr "Nama pengguna sudah digunakan"
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Anda bisa masuk setelah Pendaftaran Anda dikonfirmasi."
+
+#: modules/registration/templates/index.phtml:17
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Mohon, tidak menggunakan nama seperti 111, shhhh, uuuu, dll dan mendaftar dengan server proxy atau akun akan dihapus"
+
+#: modules/registration/templates/index.phtml:21
+msgid "Choose Nickname"
+msgstr "Nama pengguna"
+
+#: modules/registration/templates/index.phtml:30
+msgid "Username"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:36
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Maks. 20 karakter <br />Hanya gunakan huruf alfabet, angka dan simbol - = @ ! ? ~ _ ( ) [ ] . * (Kecuali angka Nol)"
+
+#: modules/registration/templates/index.phtml:40
+#: modules/registration/templates/index.phtml:49
+msgid "Assign a password"
+msgstr "Tetapkan kata sandi"
+
+#: modules/registration/templates/index.phtml:55
+msgid "Min. 3 characters"
+msgstr "Min. 3 karakter"
+
+#: modules/registration/templates/index.phtml:59
+msgid "Select Gender"
+msgstr "Pilih Jenis Kelamin"
+
+#: modules/registration/templates/index.phtml:62
+msgid "Man"
+msgstr "Pria"
+
+#: modules/registration/templates/index.phtml:63
+msgid "Woman"
+msgstr "Wanita"
+
+#: modules/registration/templates/index.phtml:67
+#: modules/registration/templates/index.phtml:74
+msgid "Your name"
+msgstr "Nama Anda"
+
+#: modules/registration/templates/index.phtml:78
+msgid "Tell us a little about yourself"
+msgstr "Ceritakan sedikit tentang diri Anda"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Max. 1000 characters"
+msgstr "Maks. 1000 karakter"
+
+#: modules/registration/templates/index.phtml:83
+#: modules/registration/templates/index.phtml:93
+msgid "Verification code"
+msgstr "Kode verifikasi"
+
+#: modules/registration/templates/index.phtml:85
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:99
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Jika gambar verifikasi tidak tampil, aktifkan fitur gambar di browser dan muat ulang halaman ini"
+
+#: modules/registration/templates/registration_closed.phtml:9
+msgid "Registration is temporarily closed"
+msgstr "Registrasi ditutup sementara"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registratiton data"
+msgstr "Data pendaftaran Anda"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Your ID"
+msgstr "ID Anda"
+
+#: modules/registration/templates/registration_result.phtml:12
+msgid "Your Username"
+msgstr "Nama Pengguna"
+
+#: modules/registration/templates/registration_result.phtml:13
+msgid "Your Password"
+msgstr "Kata Sandi"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Mohon tunggu hingga Moderator menerima Pendaftaran Anda"
+
+#: modules/registration/templates/registration_result.phtml:18
+msgid "Enter"
+msgstr "Masuk"
+
