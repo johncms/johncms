@@ -27,5 +27,7 @@ files:
     translation: /modules/profile/locale/%two_letters_code%.po
   - source: /modules/registration/locale/registration.pot
     translation: /modules/registration/locale/%two_letters_code%.po
+  - source: /modules/notifications/locale/notifications.pot
+    translation: /modules/notifications/locale/%two_letters_code%.po
   - source: /system/locale/system.pot
     translation: /system/locale/%two_letters_code%.po
