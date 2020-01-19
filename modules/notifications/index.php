@@ -85,6 +85,16 @@ if (! empty($all_counters['ban'])) {
     ];
 }
 
+// Новые сообщения на форуме
+if ($all_counters['forum_new'] > 0) {
+    $notifications[] = [
+        'name'    => __('New forum posts'),
+        'url'     => '/forum/?act=new',
+        'counter' => $all_counters['forum_new'],
+        'type'    => 'warning',
+    ];
+}
+
 // Системные сообщения
 $list = [];
 if (! empty($all_counters['new_sys_mail'])) {

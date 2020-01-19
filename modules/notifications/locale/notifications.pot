@@ -2,42 +2,46 @@ msgid ""
 msgstr ""
 "X-Domain: notifications\n"
 
-#: modules/notifications/index.php:36
+#: modules/notifications/index.php:40
 #: modules/notifications/templates/index.phtml:10
 #: modules/notifications/templates/index.phtml:11
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/index.php:46
+#: modules/notifications/index.php:50
 msgid "Users on registration"
 msgstr ""
 
-#: modules/notifications/index.php:56
+#: modules/notifications/index.php:60
 msgid "Articles on moderation"
 msgstr ""
 
-#: modules/notifications/index.php:66
+#: modules/notifications/index.php:70
 msgid "Downloads on moderation"
 msgstr ""
 
-#: modules/notifications/index.php:77
+#: modules/notifications/index.php:81
 msgid "Ban"
 msgstr ""
 
-#: modules/notifications/index.php:88
+#: modules/notifications/index.php:91
+msgid "New forum posts"
+msgstr ""
+
+#: modules/notifications/index.php:102
 msgid "System messages"
 msgstr ""
 
-#: modules/notifications/index.php:98
+#: modules/notifications/index.php:112
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/index.php:108
-#: modules/notifications/index.php:127
+#: modules/notifications/index.php:122
+#: modules/notifications/index.php:141
 msgid "Guestbook"
 msgstr ""
 
-#: modules/notifications/index.php:118
+#: modules/notifications/index.php:132
 msgid "Comments"
 msgstr ""
 

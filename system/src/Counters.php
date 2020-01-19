@@ -574,6 +574,9 @@ class Counters
 
         $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->systemUser->id . '\' AND `unread_comments` = 1')->fetchColumn();
 
+        $forum_counters = $this->forumCounters();
+        $notifications['forum_new'] = $forum_counters['new_messages'];
+
         $notifications['all'] = array_sum($notifications);
 
         return $notifications;
