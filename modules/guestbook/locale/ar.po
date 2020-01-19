@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"X-Domain: guestbook\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /develop/modules/guestbook/locale/guestbook.pot\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"PO-Revision-Date: 2020-01-19 17:09\n"
+
+#: modules/guestbook/index.php:67
+msgid "Admin Club"
+msgstr "نادي المشرفين"
+
+#: modules/guestbook/index.php:67
+msgid "Guestbook"
+msgstr "سجل الزوار"
+
+#: modules/guestbook/index.php:77
+msgid "Guestbook is closed"
+msgstr "سجل الزوار مغلق"
+
+#: modules/guestbook/index.php:112
+msgid "Wrong data"
+msgstr "بيانات خاطئة"
+
+#: modules/guestbook/index.php:116
+msgid "You have not entered a name"
+msgstr "لم تقم بإدخال اسم"
+
+#: modules/guestbook/index.php:120
+msgid "You have not entered the message"
+msgstr "لم تقم بإدخال الرسالة"
+
+#: modules/guestbook/index.php:124
+msgid "Access forbidden"
+msgstr "ممنوع الوصول"
+
+#: modules/guestbook/index.php:129
+msgid "The security code is not correct"
+msgstr "رمز الأمان غير صحيح"
+
+#: modules/guestbook/index.php:148
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "لا يمكنك إضافة الرسالة حتى غالباً. الرجاء الانتظار %d ثانية."
+
+#: modules/guestbook/index.php:198
+msgid "Add message"
+msgstr ""
+
+#: modules/guestbook/index.php:307
+msgid "All messages older than 1 day were deleted"
+msgstr "تم حذف جميع الرسائل الأقدم من يوم 1"
+
+#: modules/guestbook/index.php:313
+msgid "Full clearing is finished"
+msgstr "الانتهاء من تطهير كامل"
+
+#: modules/guestbook/index.php:318
+msgid "All messages older than 1 week were deleted"
+msgstr "جميع رسائل أقدم من 1 أسبوع تم حذفها"
+
+#: modules/guestbook/index.php:325
+#: modules/guestbook/templates/clear.phtml:2
+#: modules/guestbook/templates/clear.phtml:3
+#: modules/guestbook/templates/clear.phtml:9
+msgid "Clear guestbook"
+msgstr ""
+
+#: modules/guestbook/templates/clear.phtml:11
+msgid "Clearing parameters"
+msgstr "مسح المعلمات"
+
+#: modules/guestbook/templates/clear.phtml:14
+msgid "Older than 1 week"
+msgstr "اقدم من اسبوع"
+
+#: modules/guestbook/templates/clear.phtml:18
+msgid "Older than 1 day"
+msgstr "اقدم من اسبوع"
+
+#: modules/guestbook/templates/clear.phtml:22
+msgid "Clear all"
+msgstr "تنظيف الكل"
+
+#: modules/guestbook/templates/clear.phtml:25
+#: modules/guestbook/templates/index.phtml:156
+msgid "Clear"
+msgstr "مسح"
+
+#: modules/guestbook/templates/clear.phtml:26
+#: modules/guestbook/templates/confirm_delete.phtml:11
+msgid "Cancel"
+msgstr "إلغاء الأمر"
+
+#: modules/guestbook/templates/confirm_delete.phtml:2
+#: modules/guestbook/templates/confirm_delete.phtml:3
+msgid "Delete message"
+msgstr "حذف الرسالة"
+
+#: modules/guestbook/templates/confirm_delete.phtml:9
+msgid "Do you really want to delete?"
+msgstr "هل ترغب بالحذف ؟"
+
+#: modules/guestbook/templates/confirm_delete.phtml:10
+#: modules/guestbook/templates/index.phtml:140
+msgid "Delete"
+msgstr "حذف"
+
+#: modules/guestbook/templates/edit.phtml:2
+#: modules/guestbook/templates/edit.phtml:3
+#: modules/guestbook/templates/edit.phtml:9
+msgid "Edit message"
+msgstr ""
+
+#: modules/guestbook/templates/edit.phtml:13
+#: modules/guestbook/templates/reply.phtml:13
+msgid "Author"
+msgstr "الكاتب"
+
+#: modules/guestbook/templates/edit.phtml:16
+#: modules/guestbook/templates/index.phtml:38
+msgid "Message"
+msgstr "الرسالة"
+
+#: modules/guestbook/templates/edit.phtml:22
+#: modules/guestbook/templates/reply.phtml:23
+msgid "Save"
+msgstr "حفظ"
+
+#: modules/guestbook/templates/edit.phtml:23
+#: modules/guestbook/templates/reply.phtml:24
+#: modules/guestbook/templates/result.phtml:15
+msgid "Back"
+msgstr "الرجوع"
+
+#: modules/guestbook/templates/index.phtml:14
+msgid "The guestbook is closed"
+msgstr "سجل الزوار مغلق"
+
+#: modules/guestbook/templates/index.phtml:25
+#: modules/guestbook/templates/index.phtml:33
+msgid "Name"
+msgstr "الاسم"
+
+#: modules/guestbook/templates/index.phtml:47
+msgid "Verification code"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:49
+#: modules/guestbook/templates/index.phtml:57
+msgid "Symbols on the picture"
+msgstr "الرموز في الصورة"
+
+#: modules/guestbook/templates/index.phtml:63
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:68
+msgid "Write"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:78
+msgid "For registered users only"
+msgstr "للمستخدمين المسجلين فقط"
+
+#: modules/guestbook/templates/index.phtml:85
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr "سجل الزوار فارغ. <br><strong>أن تكون الأول!:)</strong>"
+
+#: modules/guestbook/templates/index.phtml:94
+msgid "Guest"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:100
+#: modules/guestbook/templates/reply.phtml:2
+#: modules/guestbook/templates/reply.phtml:3
+#: modules/guestbook/templates/reply.phtml:9
+#: modules/guestbook/templates/reply.phtml:17
+msgid "Reply"
+msgstr "رد "
+
+#: modules/guestbook/templates/index.phtml:135
+msgid "Edited:"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:139
+msgid "Edit"
+msgstr "تحرير"
+
