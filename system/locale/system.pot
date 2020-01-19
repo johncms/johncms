@@ -19,7 +19,7 @@ msgid "Mail"
 msgstr ""
 
 #: themes/default/templates/system/app/old_notifications.phtml:32
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:55
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
 msgid "Guestbook"
 msgstr ""
 
@@ -31,39 +31,39 @@ msgstr ""
 msgid "Unread"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:26
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
 msgid "News archive"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:41
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:52
 msgid "Forum"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:70
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
 msgid "Downloads"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:86
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:97
 msgid "Library"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:101
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:112
 msgid "Users"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:115
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:126
 msgid "Photo Albums"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:129
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
 msgid "Information, FAQ"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:151
 msgid "Admin Panel"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:149
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:160
 msgid "Admin Chat"
 msgstr ""
 

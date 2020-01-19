@@ -23,25 +23,21 @@ msgstr ""
 msgid "Moderators"
 msgstr ""
 
-#: modules/admin/includes/ads.php:25
-#: modules/admin/includes/ads.php:220
-#: modules/admin/includes/ads.php:278
-#: modules/admin/includes/ads.php:296
-#: modules/admin/includes/ads.php:320
+#: modules/admin/includes/ads.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:161
 msgid "Advertisement"
 msgstr ""
 
-#: modules/admin/includes/ads.php:25
+#: modules/admin/includes/ads.php:28
 msgid "Edit link"
 msgstr ""
 
-#: modules/admin/includes/ads.php:25
-#: modules/admin/includes/ads.php:430
+#: modules/admin/includes/ads.php:28
+#: modules/admin/templates/ads_index.phtml:87
 msgid "Add link"
 msgstr ""
 
-#: modules/admin/includes/ads.php:34
+#: modules/admin/includes/ads.php:43
 #: modules/admin/includes/counters.php:91
 #: modules/admin/includes/counters.php:155
 #: modules/admin/includes/counters.php:204
@@ -59,75 +55,33 @@ msgstr ""
 msgid "Wrong data"
 msgstr ""
 
-#: modules/admin/includes/ads.php:34
-#: modules/admin/includes/ads.php:85
-#: modules/admin/includes/antispy.php:206
-#: modules/admin/includes/forum/add.php:45
-#: modules/admin/includes/forum/add.php:119
-#: modules/admin/includes/forum/del.php:35
-#: modules/admin/includes/forum/del.php:70
-#: modules/admin/includes/forum/del.php:89
-#: modules/admin/includes/forum/del.php:118
-#: modules/admin/includes/forum/del.php:160
-#: modules/admin/includes/forum/del.php:179
-#: modules/admin/includes/forum/del.php:198
-#: modules/admin/includes/forum/del.php:213
-#: modules/admin/includes/forum/edit.php:38
-#: modules/admin/includes/forum/edit.php:119
-#: modules/admin/includes/forum/hposts.php:54
-#: modules/admin/includes/forum/htopics.php:55
-#: modules/admin/includes/ip_whois.php:121
-#: modules/admin/includes/ipban.php:63
-#: modules/admin/includes/ipban.php:239
-#: modules/admin/includes/ipban.php:276
-#: modules/admin/includes/ipban.php:353
-#: modules/admin/includes/ipban.php:371
-#: modules/admin/includes/ipban.php:388
-#: modules/admin/includes/ipban.php:419
-#: modules/admin/includes/news.php:51
-#: modules/admin/templates/admin_list.phtml:50
-#: modules/admin/templates/antispy_scan_result.phtml:46
-#: modules/admin/templates/ban_panel.phtml:68
-#: modules/admin/templates/counters.phtml:78
-#: modules/admin/templates/counters_view.phtml:61
-#: modules/admin/templates/forum/hidden_posts.phtml:130
-#: modules/admin/templates/forum/hidden_topics.phtml:126
-#: modules/admin/templates/forum/index.phtml:46
-#: modules/admin/templates/forum/structure.phtml:70
-#: modules/admin/templates/ipban.phtml:87
-#: modules/admin/templates/ipban_detail.phtml:59
-#: modules/admin/templates/reg_list.phtml:64
-#: modules/admin/templates/search_ip.phtml:80
-msgid "Back"
-msgstr ""
-
-#: modules/admin/includes/ads.php:60
+#: modules/admin/includes/ads.php:71
 #: modules/admin/includes/counters.php:230
 #: modules/admin/includes/counters.php:320
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/admin/includes/ads.php:71
+#: modules/admin/includes/ads.php:82
 msgid "This place is occupied"
 msgstr ""
 
-#: modules/admin/includes/ads.php:77
+#: modules/admin/includes/ads.php:88
 msgid "Invalid characters"
 msgstr ""
 
-#: modules/admin/includes/ads.php:80
+#: modules/admin/includes/ads.php:91
 msgid "Color is specified incorrectly"
 msgstr ""
 
-#: modules/admin/includes/ads.php:176
+#: modules/admin/includes/ads.php:199
 msgid "Link successfully changed"
 msgstr ""
 
-#: modules/admin/includes/ads.php:176
+#: modules/admin/includes/ads.php:199
 msgid "Link successfully added"
 msgstr ""
 
-#: modules/admin/includes/ads.php:177
+#: modules/admin/includes/ads.php:201
 #: modules/admin/includes/antispy.php:228
 #: modules/admin/includes/counters.php:180
 #: modules/admin/includes/ipban.php:446
@@ -140,185 +94,12 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: modules/admin/includes/ads.php:181
-msgid "Link"
-msgstr ""
-
-#: modules/admin/includes/ads.php:183
-#: modules/admin/includes/ads.php:408
-msgid "Direct Link"
-msgstr ""
-
-#: modules/admin/includes/ads.php:184
-msgid "Click statistics won't be counted, If the direct link is turned on"
-msgstr ""
-
-#: modules/admin/includes/ads.php:185
-#: modules/admin/includes/forum/add.php:67
-#: modules/admin/includes/forum/edit.php:66
-#: modules/admin/templates/counters_add_confirm.phtml:41
-#: modules/admin/templates/counters_view.phtml:31
-#: modules/admin/templates/forum/add.phtml:46
-#: modules/admin/templates/forum/add.phtml:47
-#: modules/admin/templates/forum/edit.phtml:42
-#: modules/admin/templates/forum/edit.phtml:43
-#: modules/admin/templates/news.phtml:48
-msgid "Title"
-msgstr ""
-
-#: modules/admin/includes/ads.php:191
-msgid "To change the name when updating pages, you must wtite names trought the symbol |"
-msgstr ""
-
-#: modules/admin/includes/ads.php:192
-msgid "Color"
-msgstr ""
-
-#: modules/admin/includes/ads.php:194
-msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
-msgstr ""
-
-#: modules/admin/includes/ads.php:195
-msgid "Hits"
-msgstr ""
-
-#: modules/admin/includes/ads.php:197
-msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
-
-#: modules/admin/includes/ads.php:198
-#: modules/admin/templates/karma.phtml:64
-msgid "Days"
-msgstr ""
-
-#: modules/admin/includes/ads.php:200
-msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
-
-#: modules/admin/includes/ads.php:202
-#: modules/admin/includes/ads.php:373
-#: modules/admin/includes/ads.php:379
-msgid "Show"
-msgstr ""
-
-#: modules/admin/includes/ads.php:203
-#: modules/admin/includes/ads.php:327
-msgid "Everyone"
-msgstr ""
-
-#: modules/admin/includes/ads.php:204
-#: modules/admin/includes/ads.php:328
-msgid "Guests"
-msgstr ""
-
-#: modules/admin/includes/ads.php:205
-#: modules/admin/includes/ads.php:329
-#: modules/admin/templates/sidebar-admin-menu.phtml:31
-#: modules/admin/templates/sidebar-admin-menu.phtml:70
-msgid "Users"
-msgstr ""
-
-#: modules/admin/includes/ads.php:206
-msgid "Location"
-msgstr ""
-
-#: modules/admin/includes/ads.php:207
-#: modules/admin/includes/ads.php:333
-msgid "Above logo"
-msgstr ""
-
-#: modules/admin/includes/ads.php:208
-#: modules/admin/includes/ads.php:334
-msgid "Under menu"
-msgstr ""
-
-#: modules/admin/includes/ads.php:209
-#: modules/admin/includes/ads.php:335
-msgid "Over the counter"
-msgstr ""
-
-#: modules/admin/includes/ads.php:210
-#: modules/admin/includes/ads.php:336
-msgid "Under counter"
-msgstr ""
-
-#: modules/admin/includes/ads.php:211
-msgid "Layout"
-msgstr ""
-
-#: modules/admin/includes/ads.php:212
-#: modules/admin/includes/ads.php:322
-msgid "All pages"
-msgstr ""
-
-#: modules/admin/includes/ads.php:213
-#: modules/admin/includes/ads.php:323
-msgid "Only on Homepage"
-msgstr ""
-
-#: modules/admin/includes/ads.php:214
-#: modules/admin/includes/ads.php:324
-msgid "On all, except Homepage"
-msgstr ""
-
-#: modules/admin/includes/ads.php:215
-msgid "Styling links"
-msgstr ""
-
-#: modules/admin/includes/ads.php:216
-msgid "Bold"
-msgstr ""
-
-#: modules/admin/includes/ads.php:217
-msgid "Italic"
-msgstr ""
-
-#: modules/admin/includes/ads.php:218
-msgid "Underline"
-msgstr ""
-
-#: modules/admin/includes/ads.php:219
-#: modules/admin/includes/ads.php:371
-#: modules/admin/templates/counters.phtml:63
-#: modules/admin/templates/counters_view.phtml:59
-#: modules/admin/templates/forum/structure.phtml:56
-msgid "Edit"
-msgstr ""
-
-#: modules/admin/includes/ads.php:219
-#: modules/admin/templates/counters.phtml:75
-#: modules/admin/templates/forum/add.phtml:88
-#: modules/admin/templates/forum/structure.phtml:66
-#: modules/admin/templates/ipban.phtml:78
-msgid "Add"
-msgstr ""
-
-#: modules/admin/includes/ads.php:221
-#: modules/admin/includes/ads.php:320
-#: modules/admin/includes/ads.php:432
-#: modules/admin/includes/ads.php:438
-#: modules/admin/includes/ip_whois.php:18
-#: modules/admin/includes/ip_whois.php:124
-#: modules/admin/includes/usr_del.php:71
-#: modules/admin/includes/usr_del.php:144
-#: modules/admin/index.php:50
-#: modules/admin/templates/access.phtml:2
-#: modules/admin/templates/access.phtml:5
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/languages.phtml:6
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
-msgstr ""
-
 #: modules/admin/includes/ads.php:278
-#: modules/admin/includes/ads.php:281
-#: modules/admin/includes/ads.php:299
-#: modules/admin/includes/ads.php:372
 #: modules/admin/includes/ipban.php:452
 #: modules/admin/includes/reg.php:166
 #: modules/admin/includes/usr_del.php:132
+#: modules/admin/templates/ads_confirm.phtml:40
+#: modules/admin/templates/ads_index.phtml:60
 #: modules/admin/templates/counters.phtml:64
 #: modules/admin/templates/counters_confirm.phtml:35
 #: modules/admin/templates/counters_view.phtml:60
@@ -329,105 +110,88 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/admin/includes/ads.php:280
+#: modules/admin/includes/ads.php:290
 msgid "Are you sure want to delete link?"
 msgstr ""
 
-#: modules/admin/includes/ads.php:284
-#: modules/admin/includes/ads.php:301
-#: modules/admin/includes/ipban.php:318
-#: modules/admin/includes/ipban.php:454
-#: modules/admin/includes/usr_del.php:139
-#: modules/admin/templates/amnesty.phtml:45
-#: modules/admin/templates/antiflood.phtml:83
-#: modules/admin/templates/antispy_create_confirm.phtml:40
-#: modules/admin/templates/counters_add_confirm.phtml:64
-#: modules/admin/templates/counters_confirm.phtml:36
-#: modules/admin/templates/counters_form.phtml:86
-#: modules/admin/templates/forum/add.phtml:89
-#: modules/admin/templates/forum/del_confirm.phtml:36
-#: modules/admin/templates/forum/del_confirm_move.phtml:48
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:62
-#: modules/admin/templates/forum/edit.phtml:98
-#: modules/admin/templates/forum/hidden_posts.phtml:30
-#: modules/admin/templates/forum/hidden_topics.phtml:30
-#: modules/admin/templates/ipban_add.phtml:80
-#: modules/admin/templates/ipban_add_confirm.phtml:66
-#: modules/admin/templates/ipban_search.phtml:40
-#: modules/admin/templates/karma.phtml:82
-#: modules/admin/templates/karma_clean_confirm.phtml:35
-#: modules/admin/templates/news.phtml:93
-#: modules/admin/templates/user_clean_confirm.phtml:39
-msgid "Cancel"
-msgstr ""
-
-#: modules/admin/includes/ads.php:296
-#: modules/admin/includes/ads.php:431
-msgid "Delete inactive links"
-msgstr ""
-
-#: modules/admin/includes/ads.php:298
+#: modules/admin/includes/ads.php:312
 msgid "Are you sure you want to delete all inactive links?"
 msgstr ""
 
-#: modules/admin/includes/ads.php:369
-#: modules/admin/templates/counters.phtml:61
-msgid "Up"
+#: modules/admin/includes/ads.php:345
+#: modules/admin/templates/ads_add.phtml:86
+msgid "Before the menu"
 msgstr ""
 
-#: modules/admin/includes/ads.php:370
-#: modules/admin/templates/counters.phtml:62
-msgid "Down"
+#: modules/admin/includes/ads.php:350
+#: modules/admin/templates/ads_add.phtml:90
+msgid "After the menu"
+msgstr ""
+
+#: modules/admin/includes/ads.php:355
+#: modules/admin/templates/ads_add.phtml:94
+msgid "At the top of the page"
+msgstr ""
+
+#: modules/admin/includes/ads.php:360
+#: modules/admin/templates/ads_add.phtml:98
+msgid "At the bottom of the page"
+msgstr ""
+
+#: modules/admin/includes/ads.php:366
+#: modules/admin/templates/ads_add.phtml:103
+msgid "All pages"
+msgstr ""
+
+#: modules/admin/includes/ads.php:367
+#: modules/admin/templates/ads_add.phtml:107
+msgid "Only on Homepage"
+msgstr ""
+
+#: modules/admin/includes/ads.php:368
+#: modules/admin/templates/ads_add.phtml:111
+msgid "On all, except Homepage"
+msgstr ""
+
+#: modules/admin/includes/ads.php:371
+#: modules/admin/templates/ads_add.phtml:73
+msgid "Everyone"
+msgstr ""
+
+#: modules/admin/includes/ads.php:372
+#: modules/admin/templates/ads_add.phtml:77
+msgid "Guests"
 msgstr ""
 
 #: modules/admin/includes/ads.php:373
-msgid "Hide"
+#: modules/admin/templates/ads_add.phtml:81
+#: modules/admin/templates/sidebar-admin-menu.phtml:31
+#: modules/admin/templates/sidebar-admin-menu.phtml:70
+msgid "Users"
 msgstr ""
 
-#: modules/admin/includes/ads.php:377
-msgid "Start date"
-msgstr ""
-
-#: modules/admin/includes/ads.php:378
-msgid "Disposition"
-msgstr ""
-
-#: modules/admin/includes/ads.php:385
-#: modules/admin/includes/ads.php:388
+#: modules/admin/includes/ads.php:395
+#: modules/admin/includes/ads.php:398
 msgid "hits"
 msgstr ""
 
-#: modules/admin/includes/ads.php:402
-msgid "Agreement"
-msgstr ""
-
-#: modules/admin/includes/ads.php:405
-msgid "Remains"
-msgstr ""
-
-#: modules/admin/includes/ads.php:412
-#: modules/admin/templates/admin_list.phtml:32
-#: modules/admin/templates/ban_panel.phtml:42
-#: modules/admin/templates/counters.phtml:43
-#: modules/admin/templates/forum/hidden_posts.phtml:107
-#: modules/admin/templates/forum/hidden_topics.phtml:103
-#: modules/admin/templates/forum/structure.phtml:33
-#: modules/admin/templates/ipban.phtml:50
-#: modules/admin/templates/reg_list.phtml:39
-msgid "The list is empty"
-msgstr ""
-
 #: modules/admin/includes/ads.php:415
-#: modules/admin/includes/emoticons.php:61
-#: modules/admin/templates/forum/hidden_posts.phtml:122
-#: modules/admin/templates/forum/hidden_topics.phtml:118
-#: modules/admin/templates/user_clean_confirm.phtml:33
-#: modules/admin/templates/userlist.phtml:28
-msgid "Total"
+msgid "Color:"
 msgstr ""
 
-#: modules/admin/includes/ads.php:427
-msgid "To Page"
+#: modules/admin/includes/ads.php:418
+#: modules/admin/templates/ads_add.phtml:116
+msgid "Bold"
+msgstr ""
+
+#: modules/admin/includes/ads.php:421
+#: modules/admin/templates/ads_add.phtml:120
+msgid "Italic"
+msgstr ""
+
+#: modules/admin/includes/ads.php:424
+#: modules/admin/templates/ads_add.phtml:124
+msgid "Underline"
 msgstr ""
 
 #: modules/admin/includes/antiflood.php:22
@@ -487,6 +251,47 @@ msgstr ""
 
 #: modules/admin/includes/antispy.php:201
 msgid "Excellent!<br>All files are consistent with previously made image."
+msgstr ""
+
+#: modules/admin/includes/antispy.php:206
+#: modules/admin/includes/forum/add.php:45
+#: modules/admin/includes/forum/add.php:119
+#: modules/admin/includes/forum/del.php:35
+#: modules/admin/includes/forum/del.php:70
+#: modules/admin/includes/forum/del.php:89
+#: modules/admin/includes/forum/del.php:118
+#: modules/admin/includes/forum/del.php:160
+#: modules/admin/includes/forum/del.php:179
+#: modules/admin/includes/forum/del.php:198
+#: modules/admin/includes/forum/del.php:213
+#: modules/admin/includes/forum/edit.php:38
+#: modules/admin/includes/forum/edit.php:119
+#: modules/admin/includes/forum/hposts.php:54
+#: modules/admin/includes/forum/htopics.php:55
+#: modules/admin/includes/ip_whois.php:121
+#: modules/admin/includes/ipban.php:63
+#: modules/admin/includes/ipban.php:239
+#: modules/admin/includes/ipban.php:276
+#: modules/admin/includes/ipban.php:353
+#: modules/admin/includes/ipban.php:371
+#: modules/admin/includes/ipban.php:388
+#: modules/admin/includes/ipban.php:419
+#: modules/admin/includes/news.php:51
+#: modules/admin/templates/admin_list.phtml:50
+#: modules/admin/templates/ads_index.phtml:91
+#: modules/admin/templates/antispy_scan_result.phtml:46
+#: modules/admin/templates/ban_panel.phtml:68
+#: modules/admin/templates/counters.phtml:78
+#: modules/admin/templates/counters_view.phtml:61
+#: modules/admin/templates/forum/hidden_posts.phtml:130
+#: modules/admin/templates/forum/hidden_topics.phtml:126
+#: modules/admin/templates/forum/index.phtml:46
+#: modules/admin/templates/forum/structure.phtml:70
+#: modules/admin/templates/ipban.phtml:87
+#: modules/admin/templates/ipban_detail.phtml:59
+#: modules/admin/templates/reg_list.phtml:64
+#: modules/admin/templates/search_ip.phtml:80
+msgid "Back"
 msgstr ""
 
 #: modules/admin/includes/antispy.php:223
@@ -579,6 +384,14 @@ msgstr ""
 msgid "Smilie cache updated successfully"
 msgstr ""
 
+#: modules/admin/includes/emoticons.php:61
+#: modules/admin/templates/forum/hidden_posts.phtml:122
+#: modules/admin/templates/forum/hidden_topics.phtml:118
+#: modules/admin/templates/user_clean_confirm.phtml:33
+#: modules/admin/templates/userlist.phtml:28
+msgid "Total"
+msgstr ""
+
 #: modules/admin/includes/emoticons.php:75
 msgid "Error updating cache"
 msgstr ""
@@ -604,6 +417,20 @@ msgstr ""
 #: modules/admin/includes/forum/add.php:63
 #: modules/admin/includes/forum/edit.php:62
 msgid "You have not entered Title"
+msgstr ""
+
+#: modules/admin/includes/forum/add.php:67
+#: modules/admin/includes/forum/edit.php:66
+#: modules/admin/templates/ads_add.phtml:51
+#: modules/admin/templates/ads_add.phtml:52
+#: modules/admin/templates/counters_add_confirm.phtml:41
+#: modules/admin/templates/counters_view.phtml:31
+#: modules/admin/templates/forum/add.phtml:46
+#: modules/admin/templates/forum/add.phtml:47
+#: modules/admin/templates/forum/edit.phtml:42
+#: modules/admin/templates/forum/edit.phtml:43
+#: modules/admin/templates/news.phtml:48
+msgid "Title"
 msgstr ""
 
 #: modules/admin/includes/forum/add.php:67
@@ -705,6 +532,21 @@ msgstr ""
 msgid "by section"
 msgstr ""
 
+#: modules/admin/includes/ip_whois.php:18
+#: modules/admin/includes/ip_whois.php:124
+#: modules/admin/includes/usr_del.php:71
+#: modules/admin/includes/usr_del.php:144
+#: modules/admin/index.php:50
+#: modules/admin/templates/access.phtml:2
+#: modules/admin/templates/access.phtml:5
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/languages.phtml:6
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
 #: modules/admin/includes/ipban.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:255
 msgid "Ban by IP"
@@ -744,6 +586,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:199
 #: modules/admin/includes/ipban.php:398
 #: modules/admin/includes/ipban.php:496
+#: modules/admin/templates/ads_index.phtml:53
 #: modules/admin/templates/ipban_add.phtml:57
 msgid "Redirect"
 msgstr ""
@@ -782,6 +625,7 @@ msgid "Ban IP address"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:200
+#: modules/admin/templates/ads_index.phtml:54
 #: modules/admin/templates/counters_form.phtml:63
 msgid "Default"
 msgstr ""
@@ -797,6 +641,34 @@ msgstr ""
 
 #: modules/admin/includes/ipban.php:316
 msgid "Perform"
+msgstr ""
+
+#: modules/admin/includes/ipban.php:318
+#: modules/admin/includes/ipban.php:454
+#: modules/admin/includes/usr_del.php:139
+#: modules/admin/templates/ads_add.phtml:128
+#: modules/admin/templates/ads_confirm.phtml:41
+#: modules/admin/templates/amnesty.phtml:45
+#: modules/admin/templates/antiflood.phtml:83
+#: modules/admin/templates/antispy_create_confirm.phtml:40
+#: modules/admin/templates/counters_add_confirm.phtml:64
+#: modules/admin/templates/counters_confirm.phtml:36
+#: modules/admin/templates/counters_form.phtml:86
+#: modules/admin/templates/forum/add.phtml:89
+#: modules/admin/templates/forum/del_confirm.phtml:36
+#: modules/admin/templates/forum/del_confirm_move.phtml:48
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:62
+#: modules/admin/templates/forum/edit.phtml:98
+#: modules/admin/templates/forum/hidden_posts.phtml:30
+#: modules/admin/templates/forum/hidden_topics.phtml:30
+#: modules/admin/templates/ipban_add.phtml:80
+#: modules/admin/templates/ipban_add_confirm.phtml:66
+#: modules/admin/templates/ipban_search.phtml:40
+#: modules/admin/templates/karma.phtml:82
+#: modules/admin/templates/karma_clean_confirm.phtml:35
+#: modules/admin/templates/news.phtml:93
+#: modules/admin/templates/user_clean_confirm.phtml:39
+msgid "Cancel"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:332
@@ -997,6 +869,7 @@ msgid "Administrators always have access to all closed modules and comments"
 msgstr ""
 
 #: modules/admin/templates/access.phtml:135
+#: modules/admin/templates/ads_add.phtml:127
 #: modules/admin/templates/amnesty.phtml:44
 #: modules/admin/templates/antiflood.phtml:82
 #: modules/admin/templates/counters_add_confirm.phtml:63
@@ -1009,13 +882,149 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: modules/admin/templates/admin_list.phtml:32
+#: modules/admin/templates/ads_index.phtml:71
+#: modules/admin/templates/ban_panel.phtml:42
+#: modules/admin/templates/counters.phtml:43
+#: modules/admin/templates/forum/hidden_posts.phtml:107
+#: modules/admin/templates/forum/hidden_topics.phtml:103
+#: modules/admin/templates/forum/structure.phtml:33
+#: modules/admin/templates/ipban.phtml:50
+#: modules/admin/templates/reg_list.phtml:39
+msgid "The list is empty"
+msgstr ""
+
 #: modules/admin/templates/admin_list.phtml:46
+#: modules/admin/templates/ads_index.phtml:82
 #: modules/admin/templates/ban_panel.phtml:59
 #: modules/admin/templates/counters.phtml:73
 #: modules/admin/templates/ipban.phtml:72
 #: modules/admin/templates/reg_list.phtml:56
 #: modules/admin/templates/search_ip.phtml:76
 msgid "Total:"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:42
+#: modules/admin/templates/ads_add.phtml:43
+msgid "Link"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:47
+#: modules/admin/templates/ads_index.phtml:53
+msgid "Direct Link"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:48
+msgid "Click statistics won't be counted, If the direct link is turned on"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:53
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:56
+#: modules/admin/templates/ads_add.phtml:57
+msgid "Color"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:58
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:61
+#: modules/admin/templates/ads_add.phtml:62
+msgid "Hits"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:63
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:66
+#: modules/admin/templates/ads_add.phtml:67
+#: modules/admin/templates/karma.phtml:64
+msgid "Days"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:68
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:70
+#: modules/admin/templates/ads_index.phtml:50
+#: modules/admin/templates/ads_index.phtml:61
+msgid "Show"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:83
+msgid "Place"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:100
+msgid "Layout"
+msgstr ""
+
+#: modules/admin/templates/ads_add.phtml:113
+msgid "Styling links"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:41
+#: modules/admin/templates/counters.phtml:54
+msgid "On"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:43
+#: modules/admin/templates/counters.phtml:56
+msgid "Off"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:48
+msgid "Start date"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:49
+msgid "Disposition"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:51
+msgid "Agreement"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:52
+msgid "Remains"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:53
+msgid "Link type"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:54
+msgid "Style settings"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:57
+#: modules/admin/templates/counters.phtml:61
+msgid "Up"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:58
+#: modules/admin/templates/counters.phtml:62
+msgid "Down"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:59
+#: modules/admin/templates/counters.phtml:63
+#: modules/admin/templates/counters_view.phtml:59
+#: modules/admin/templates/forum/structure.phtml:56
+msgid "Edit"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:61
+msgid "Hide"
+msgstr ""
+
+#: modules/admin/templates/ads_index.phtml:88
+msgid "Delete inactive links"
 msgstr ""
 
 #: modules/admin/templates/amnesty.phtml:32
@@ -1109,12 +1118,11 @@ msgstr ""
 msgid "Sort"
 msgstr ""
 
-#: modules/admin/templates/counters.phtml:54
-msgid "On"
-msgstr ""
-
-#: modules/admin/templates/counters.phtml:56
-msgid "Off"
+#: modules/admin/templates/counters.phtml:75
+#: modules/admin/templates/forum/add.phtml:88
+#: modules/admin/templates/forum/structure.phtml:66
+#: modules/admin/templates/ipban.phtml:78
+msgid "Add"
 msgstr ""
 
 #: modules/admin/templates/counters_add_confirm.phtml:44
