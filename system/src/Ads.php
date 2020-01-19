@@ -132,5 +132,4 @@ class Ads
                 ($item['view'] === 2 && $this->user->isValid())
             );
     }
-
 }

@@ -21,7 +21,7 @@ $this->layout(
         'page_title' => $title,
     ]
 );
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['karma' => true]]));
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['news' => true]]));
 ?>
 
 <div class="row">
