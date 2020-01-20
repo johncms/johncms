@@ -141,7 +141,9 @@ $this->layout(
         </div>
     </div>
 <?php endif; ?>
-
+<?php if ($total > $user->config->kmess): ?>
+    <div class="mt-1"><?= $pagination ?></div>
+<?php endif ?>
 <?php if (! empty($first_post)): ?>
     <div class="shadow post-item post-item mb-2" id="first_post_block">
         <div class="section-header post-header collapsed" data-toggle="collapse" data-target="#first_post" aria-expanded="false" aria-controls="first_post">
