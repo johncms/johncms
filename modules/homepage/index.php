@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Counters;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
@@ -90,5 +91,17 @@ if ($news_config['view'] > 0) {
 }
 
 $data['news'] = $items ?? [];
+
+// TODO: Если приживется, объединить со счетчиками в меню для избежания лишних запросов
+/** @var Counters $counters */
+$counters = di('counters');
+$count['forum'] = $counters->forumCounters();
+$count['guestbook'] = $counters->guestbookCounters();
+$count['downloads'] = $counters->downloadsCounters();
+$count['library'] = $counters->libraryCounters();
+$count['users'] = $counters->usersCounters();
+$count['news'] = $counters->news();
+
+$data['counters'] = $count;
 
 echo $view->render('homepage::index', ['data' => $data]);
