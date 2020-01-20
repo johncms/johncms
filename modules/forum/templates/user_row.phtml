@@ -19,7 +19,7 @@
         <div class="d-flex align-items-start">
             <div class="user-avatar mr-2 mr-md-4">
                 <div class="avatar-image rounded-circle overflow-hidden">
-                    <img src="<?= $this->avatar($item['id']) ?>" class="img-fluid" alt=".">
+                    <img src="<?= $this->avatar($item['id'] ?? 0) ?>" class="img-fluid" alt=".">
                 </div>
                 <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
             </div>
