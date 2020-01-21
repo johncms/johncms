@@ -393,15 +393,15 @@ class Tools
 
                 if ($this->user->rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
                     $out .= '<b class="red"><a href="' . $homeurl .
-                        '/admin/?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
+                        '/admin/search_ip/?ip=' . $ip . $hist . '">' . $ip . '</a></b>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                     $out .= ' / ';
-                    $out .= '<a href="' . $homeurl . '/admin/?act=search_ip&amp;ip=' .
+                    $out .= '<a href="' . $homeurl . '/admin/search_ip/?ip=' .
                         long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/?act=ip_whois&amp;ip=' .
                         long2ip($user['ip_via_proxy']) . '">?</a>]';
                 } elseif ($this->user->rights) {
-                    $out .= '<a href="' . $homeurl . '/admin/?act=search_ip&amp;ip=' . $ip . $hist . '">' .
+                    $out .= '<a href="' . $homeurl . '/admin/search_ip/?ip=' . $ip . $hist . '">' .
                         $ip . '</a>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                 } else {
