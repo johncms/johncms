@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
-ob_start(); // Перехват вывода скриптов без шаблона
-
-$ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
-echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | IP WHOIS</div>';
+$ip = $request->getQuery('ip', '', FILTER_VALIDATE_IP);
+$nav_chain->add('IP Whois');
 
 /**
  * @param $whoisserver
@@ -114,13 +112,7 @@ if ($ip) {
     $ipwhois = trim($tools->checkout($res, 1, 1));
     $ipwhois = strtr($ipwhois, $array);
 } else {
-    $ipwhois = __('Wrong data');
+    $ipwhois = '';
 }
 
-echo '<div class="menu"><small>' . $ipwhois . '</small></div>' .
-    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . __('Back') . '</a></div>';
-
-echo $view->render('system::app/old_content', [
-    'title'   => __('Admin Panel'),
-    'content' => ob_get_clean(),
-]);
+echo $view->render('admin::ip_whois', ['ipwhois' => $ipwhois, 'ip' => $ip]);

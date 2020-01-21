@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @var bool $confirmation
+ * @var array $sysconf
+ * @var array $themelist
+ */
+$this->layout('system::layout/default', ['title' => __('Admin Panel'), 'page_title' => 'IP WHOIS']);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ip_whois' => true]]));
+?>
+
+<form method="get">
+    <div class="input-group mb-3" style="max-width: 20rem">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"><?= __('IP Address') ?></span>
+        </div>
+        <input type="text" name="ip" class="form-control" value="<?= $this->e($ip) ?>">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Button</button>
+        </div>
+    </div>
+</form>
+
+<?php if ($ipwhois): ?>
+    <div class="card">
+        <div class="card-header"><?= __('Search results') ?></div>
+        <div class="card-body">
+            <p class="card-text"><?= $ipwhois ?></p>
+        </div>
+    </div>
+<?php endif ?>

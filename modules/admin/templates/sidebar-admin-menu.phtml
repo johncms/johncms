@@ -255,6 +255,14 @@ $news_counters = $counters->news();
                     <span class="flex-grow-1"><?= __('Ban by IP') ?></span>
                 </a>
             </li>
+            <li class="<?= isset($sec_menu['ip_whois']) ? 'active' : '' ?>">
+                <a href="<?= $config['homeurl'] ?>/admin/ip_whois/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
+                    </svg>
+                    <span class="flex-grow-1">IP Whois</span>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="border-bottom"></div>
