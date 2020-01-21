@@ -64,7 +64,7 @@ if ($req_obj->rowCount()) {
     $arg = [
         'comments_table' => 'cms_album_comments', // Таблица с комментариями
         'object_table'   => 'cms_album_files',    // Таблица комментируемых объектов
-        'script'         => './comments',      // Имя скрипта (с параметрами вызова)
+        'script'         => './comments?',      // Имя скрипта (с параметрами вызова)
         'sub_id_name'    => 'img',                // Имя идентификатора комментируемого объекта
         'sub_id'         => $img,                 // Идентификатор комментируемого объекта
         'owner'          => $owner['id'],         // Владелец объекта
