@@ -103,23 +103,31 @@ switch ($mod) {
         ];
 
         $sort = isset($_GET['count']) ? 'bancount' : 'bantime';
-        $total = $db->query('SELECT `user_id` FROM `cms_ban_users` GROUP BY `user_id`')->rowCount();
+        $total = $db->query('SELECT COUNT(DISTINCT (`user_id`)) FROM `cms_ban_users`')->fetchColumn();
 
-        $req = $db->query(
-            "
-          SELECT COUNT(`cms_ban_users`.`user_id`) AS `bancount`, MAX(`cms_ban_users`.`ban_time`) AS `bantime`, `cms_ban_users`.`id` AS `ban_id`, `users`.*
-          FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
-          GROUP BY `user_id`
-          ORDER BY `${sort}` DESC
-          LIMIT " . $start . ',' . $user->config->kmess
-        );
+        $req = $db->query('SELECT
+    `ban`.`id` AS `ban_id`,
+    `ban`.`ban_time` AS `bantime`,
+    `u`.`id`,
+    `u`.`name`,
+    `u`.`lastdate`,
+    `u`.`ip`,
+    `u`.`ip_via_proxy`,
+    `u`.`browser`, (
+    SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = `u`.`id`) AS `bancount`
+FROM `cms_ban_users` ban
+LEFT JOIN `users` u ON `ban`.`user_id` = `u`.`id`
+JOIN (
+SELECT `user_id`, MAX(`ban_time`) `mtime` FROM `cms_ban_users` GROUP BY `user_id`) AS tmp
+ON `tmp`.`user_id` = `ban`.`user_id` AND `tmp`.`mtime` = `ban`.`ban_time`
+ORDER BY `' . $sort . '` DESC LIMIT ' . $start . ',' . $user->config->kmess);
 
         if ($req->rowCount()) {
             $items = [];
             while ($res = $req->fetch()) {
                 $res['buttons'] = [
                     [
-                        'url'  => '../profile/?act=ban&amp;user=' . $res['id'],
+                        'url'  => '/profile/?act=ban&amp;mod=ban&amp;user=' . $res['id'],
                         'name' => __('Violations history') . ' (' . $res['bancount'] . ')',
                     ],
                 ];
