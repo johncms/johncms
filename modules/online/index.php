@@ -66,10 +66,13 @@ $nav_chain->add($title, '');
 // Переключаем режимы работы
 $actions = [
     'index',
-    'guest',
     'history',
-    'ip',
 ];
+
+if ($user->rights) {
+    $actions[] = 'guest';
+    $actions[] = 'ip';
+}
 
 if (($key = array_search($act, $actions)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';
