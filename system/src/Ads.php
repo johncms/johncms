@@ -78,7 +78,7 @@ class Ads
             }
 
             $place = $this->getPlace($res);
-            $ads[$place][] = '<a href="' . ($res['show'] ? $this->tools->checkout($res['link']) : '/go.php?id=' . $res['id']) . '">' . $name . '</a><br>';
+            $ads[$place][] = '<a href="' . ($res['show'] ? $this->tools->checkout($res['link']) : '/redirect/?id=' . $res['id']) . '">' . $name . '</a><br>';
 
             if (
                 ($res['count_link'] !== 0 && $res['count'] >= $res['count_link']) ||
