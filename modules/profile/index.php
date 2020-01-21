@@ -68,7 +68,7 @@ if (! $user->isValid()) {
 /** @var User $foundUser Получаем данные пользователя */
 $foundUser = $tools->getUser((int) $user_id);
 
-if (! $foundUser->isValid()) {
+if (empty($foundUser->id) || ($foundUser->preg !== 1 && $user->rights < 7)) {
     echo $view->render(
         'system::pages/result',
         [
