@@ -27,15 +27,15 @@
 .post-header {
     .user-login {
         color: #7d4e3c;
-        font-size: 1.1rem;
-        font-weight: 300;
+        font-size: 1rem;
+        font-weight: 600;
     }
 
     .post-date {
         font-size: 0.75rem;
-        color: #252422;
-        font-weight: 300;
-        line-height: 2;
+        color: #868686;
+        font-weight: 400;
+        line-height: 1.9;
     }
 }
 
@@ -88,7 +88,8 @@
     font-size: .75rem;
 
     .btn-sm {
-        padding: 0.1rem 0.3rem;
+        padding: 0 .3rem;
+        border-radius: 10px;
     }
 }
 
