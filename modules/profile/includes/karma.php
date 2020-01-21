@@ -45,10 +45,10 @@ if ($set_karma['on']) {
                     $error[] = __('Cheating karma is forbidden');
                 }
 
-                if ($user->total_on_site < $set_karma['karma_time'] || $user->postforum < $set_karma['forum']) {
+                if ($user->datereg > (time() - 604800) || $user->postforum < $set_karma['forum']) {
                     $error[] = sprintf(
                         __('Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.'),
-                        ($set_karma['time'] ? ($set_karma['karma_time'] / 3600) . __('hours') : ($set_karma['karma_time'] / 86400) . __('days')),
+                        '7 ' . __('days'),
                         $set_karma['forum']
                     );
                 }

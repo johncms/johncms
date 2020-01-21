@@ -51,19 +51,6 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                         <input type="text" name="forum" class="form-control" id="forum" value="<?= $data['settings']['forum'] ?>">
                     </div>
 
-                    <div class="form-group">
-                        <label for="karma_time"><?= __('Stay on site') ?></label>
-                        <input type="text" name="karma_time" class="form-control" id="karma_time" value="<?= $data['settings']['karma_time'] ?>">
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" name="time" value="1" id="time1" <?= $data['settings']['time'] ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="time1"><?= __('Hours') ?></label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" name="time" value="0" id="time0" <?= ! $data['settings']['time'] ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="time0"><?= __('Days') ?></label>
-                    </div>
-
                     <h3><?= __('General Settings') ?></h3>
 
                     <div class="custom-control custom-checkbox">

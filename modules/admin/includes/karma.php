@@ -61,12 +61,9 @@ $settings = $config['karma'];
 
 if (isset($_POST['submit'])) {
     $settings['karma_points'] = isset($_POST['karma_points']) ? abs((int) ($_POST['karma_points'])) : 0;
-    $settings['karma_time'] = isset($_POST['karma_time']) ? abs((int) ($_POST['karma_time'])) : 0;
     $settings['forum'] = isset($_POST['forum']) ? abs((int) ($_POST['forum'])) : 0;
-    $settings['time'] = isset($_POST['time']) ? abs((int) ($_POST['time'])) : 0;
     $settings['on'] = isset($_POST['on']) ? 1 : 0;
     $settings['adm'] = isset($_POST['adm']) ? 1 : 0;
-    $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] * 3600 : $settings['karma_time'] * 86400;
 
     $config['karma'] = $settings;
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
@@ -82,7 +79,6 @@ if (isset($_POST['submit'])) {
     }
 }
 
-$settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;
 $data['form_action'] = '/admin/karma/';
 $data['settings'] = $settings;
 
