@@ -41,7 +41,7 @@ if ($total) {
 
     while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        $link = $user->rights ? '<a href="' . $config['homeurl'] . '/admin/?act=search_ip&amp;mod=history&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a>' : long2ip($res['ip']);
+        $link = $user->rights ? '<a href="' . $config['homeurl'] . '/admin/search_ip/?mod=history&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a>' : long2ip($res['ip']);
         echo $link . ' <span class="gray">(' . date('d.m.Y / H:i', $res['time']) . ')</span></div>';
         ++$i;
     }

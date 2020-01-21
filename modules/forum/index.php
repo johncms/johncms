@@ -649,9 +649,9 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         }
                     }
 
-                    $res['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip']);
+                    $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
                     $res['ip'] = long2ip($res['ip']);
-                    $res['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']);
+                    $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip_via_proxy']);
                     $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
 
                     if ($res['has_edit']) {

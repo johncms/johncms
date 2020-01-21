@@ -37,10 +37,10 @@ $user_data['birthday_date'] = (empty($user_data['dayb']) ? '' : sprintf('%02d', 
 $user_data['place'] = $user_data['id'] !== $user->id ? $tools->displayPlace($user_data['place']) : '';
 $user_data['rights_name'] = $user_rights_names[$user_data['rights']] ?? '';
 $user_data['ip'] = long2ip($user_data['ip']);
-$user_data['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . $user_data['ip'];
+$user_data['search_ip_url'] = '/admin/search_ip/?ip=' . $user_data['ip'];
 $user_data['whois_ip_url'] = '/admin/?act=ip_whois&amp;ip=' . $user_data['ip'];
 $user_data['ip_via_proxy'] = ! empty($user_data['ip_via_proxy']) ? long2ip($user_data['ip_via_proxy']) : '';
-$user_data['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . $user_data['ip_via_proxy'];
+$user_data['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $user_data['ip_via_proxy'];
 $user_data['whois_ip_via_proxy_url'] = '/admin/?act=ip_whois&amp;ip=' . $user_data['ip_via_proxy'];
 $user_data['about'] = $tools->smilies($tools->checkout($user_data['about'], 1, 1));
 $user_data['www'] = $tools->checkout($user_data['www'], 0, 1);

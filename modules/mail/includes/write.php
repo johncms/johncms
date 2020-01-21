@@ -491,9 +491,9 @@ if ($id) {
                 ];
             }
 
-            $row['search_ip_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($row['ip']);
+            $row['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($row['ip']);
             $row['ip'] = long2ip($row['ip']);
-            $row['search_ip_via_proxy_url'] = '/admin/?act=search_ip&amp;ip=' . long2ip($row['ip_via_proxy']);
+            $row['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($row['ip_via_proxy']);
             $row['ip_via_proxy'] = ! empty($row['ip_via_proxy']) ? long2ip($row['ip_via_proxy']) : 0;
             $row['browser'] = htmlspecialchars($row['browser']);
             $row['delete_url'] = '?act=delete&amp;id=' . $row['mid'];
