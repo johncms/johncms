@@ -30,7 +30,7 @@ $this->layout(
         <?php if ($user->rights >= 7): ?>
             <?php if (! $data['user']['preg'] && empty($data['user']['regadm'])): ?>
                 <?= __('Pending confirmation') ?>
-            <?php elseif (! $data['user']['preg'] && ! empty($data['user']['regadm'])): ?>
+            <?php elseif (! empty($data['user']['preg']) && ! empty($data['user']['regadm'])): ?>
                 <?= __('Registration confirmed') ?>: <?= $data['user']['regadm'] ?>
             <?php else: ?>
                 <?= __('Free registration') ?>
