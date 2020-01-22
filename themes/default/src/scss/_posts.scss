@@ -221,6 +221,10 @@
         position: absolute;
         left: -85px;
         border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         @media (max-width: 768px) {
             width: 48px;

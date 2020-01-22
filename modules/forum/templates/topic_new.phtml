@@ -191,10 +191,14 @@ $this->layout(
                 <div class="post-user">
                     <?php if (! empty($item['user_profile_link'])): ?>
                         <a href="<?= $item['user_profile_link'] ?>">
-                            <img src="<?= $this->avatar($item['user_id']) ?>" alt="." class="avatar">
+                            <div class="avatar">
+                                <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                            </div>
                         </a>
                     <?php else: ?>
-                        <img src="<?= $this->avatar($item['user_id']) ?>" alt="." class="avatar">
+                        <div class="avatar">
+                            <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                        </div>
                     <?php endif; ?>
                     <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
                 </div>
