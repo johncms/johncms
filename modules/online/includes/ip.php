@@ -73,7 +73,7 @@ if ($total && $user->rights) {
         $items[] = [
             'ip'              => $ip,
             'search_ip'       => '/admin/search_ip/?ip=' . $ip,
-            'whois_ip'        => '/admin/?act=ip_whois&amp;ip=' . $ip,
+            'whois_ip'        => '/admin/ip_whois/?ip=' . $ip,
             'current_user_ip' => ($ipLong === di(Johncms\System\Http\Environment::class)->getIp()),
             'count'           => $ip_list[$i][$ipLong],
         ];
