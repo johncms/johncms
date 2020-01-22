@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,8 +8,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var PDO $db
@@ -23,12 +22,15 @@ if ($user->rights < 9) {
     exit(__('Access denied'));
 }
 
+$title = __('Delete user');
+$nav_chain->add($title);
+
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $foundUser = false;
 $error = false;
 
-if ($id && $id != $user->id) {
+if ($id && $id !== $user->id) {
     // Получаем данные юзера
     $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
@@ -68,12 +70,6 @@ if (! $error) {
     // Считаем посты на Форуме
     $forump_count = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
 
-    echo '<div class="phdr"><a href="./"><b>' . __('Admin Panel') . '</b></a> | ' . __('Delete user') . '</div>';
-
-    // Выводим краткие данные
-    echo '<div class="user"><p>' .
-        $tools->displayUser($foundUser, ['lastvisit' => 1, 'iphist' => 1]) . '</p></div>';
-
     switch ($mod) {
         case 'del':
             // Удаляем личные данные
@@ -112,36 +108,41 @@ if (! $error) {
             '
             );
 
-            echo '<div class="rmenu"><p><h3>' . __('User deleted') . '</h3></p></div>';
+            echo $view->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-success',
+                    'message' => __('User deleted'),
+                ]
+            );
             break;
 
         default:
-            // Форма параметров удаления
-            echo '<form action="?act=usr_del&amp;mod=del&amp;id=' . $foundUser['id'] . '" method="post"><div class="menu"><p><h3>' . __('Cleaning activities') . '</h3>';
-
-            if ($comm_count) {
-                echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . __('Comments') . ' <span class="red">(' . $comm_count . ')</span></div>';
-            }
-
-            if ($forumt_count || $forump_count) {
-                echo '<div><input type="checkbox" value="1" name="forum" checked="checked" />&#160;' . __('Forum') . ' <span class="red">(' . $forumt_count . '&nbsp;/&nbsp;' . $forump_count . ')</span></div>';
-                echo '<small><span class="gray">' . __('All threads and posts created by the user go in the hidden state') . '</span></small>';
-            }
-
-            echo '</p></div><div class="rmenu"><p>' . __('Are you sure that you want to delete this user?');
-            echo '</p><p><input type="submit" value="' . __('Delete') . '" name="submit" />';
-            echo '</p></div></form>';
+            $data['activity'] = [
+                'comm_count'   => $comm_count ?? 0,
+                'forumt_count' => $forumt_count ?? 0,
+                'forump_count' => $forump_count ?? 0,
+            ];
+            $data['user'] = $foundUser;
+            $data['form_action'] = '/admin/usr_del/?mod=del&amp;id=' . $foundUser['id'];
+            $data['back_url'] = '/profile/?user=' . $foundUser['id'];
+            echo $view->render(
+                'admin::usr_del',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => $data,
+                ]
+            );
     }
 } else {
-    echo $tools->displayError($error);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => $error,
+        ]
+    );
 }
-
-echo '<p><a href="./">' . __('Cancel') . '</a></p>';
-
-echo $view->render(
-    'system::app/old_content',
-    [
-        'title'   => __('Admin Panel'),
-        'content' => ob_get_clean(),
-    ]
-);

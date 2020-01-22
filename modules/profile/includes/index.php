@@ -130,7 +130,7 @@ if ($user_data['id'] === $user->id || $user->rights === 9 || ($user->rights === 
 }
 if ($user_data['id'] !== $user->id && $user->rights >= 7 && $user->rights > $user_data['rights']) {
     $buttons[] = [
-        'url'  => '/admin/?act=usr_del&amp;id=' . $user_data['id'],
+        'url'  => '/admin/usr_del/?id=' . $user_data['id'],
         'name' => __('Delete'),
     ];
 }
