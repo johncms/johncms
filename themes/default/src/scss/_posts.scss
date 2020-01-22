@@ -12,17 +12,6 @@
     }
 }
 
-.deleted-post {
-    background: #fbdfd4;
-
-    .section-header, .border-bottom {
-        border-bottom: 1px solid #f9b2b2 !important;
-    }
-
-    .border-top {
-        border-top: 1px solid #f9b2b2 !important;
-    }
-}
 
 .post-header {
     .user-login {
@@ -180,4 +169,103 @@
 .post-quote {
     font-size: 0.7rem;
     margin-bottom: 0.25rem;
+}
+
+
+/**  Стили для редизайна постов  **/
+
+.new_post-item {
+    min-height: 100px;
+    padding: 10px 10px 10px 105px;
+    border-radius: .25rem;
+    background: #ffffff;
+
+    @media (max-width: 768px) {
+        padding-left: 10px;
+    }
+
+    .post-footer {
+        @media (max-width: 600px) {
+            flex-wrap: nowrap;
+        }
+    }
+
+    .post-footer {
+        // margin-bottom: 20px;
+    }
+}
+
+.new_post-header {
+
+}
+
+.post-meta {
+    font-size: 0.75rem;
+    color: #868686;
+    font-weight: 400;
+    line-height: 1.9;
+}
+
+.post-user {
+    position: relative;
+
+    .user-name {
+        color: #483027;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .avatar {
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        left: -85px;
+        border-radius: 50%;
+
+        @media (max-width: 768px) {
+            width: 48px;
+            height: 48px;
+            position: relative;
+            left: 0;
+            margin-right: 10px;
+        }
+    }
+
+    .user-status {
+        position: absolute;
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        bottom: 0;
+        left: -40px;
+        top: 50px;
+
+        @media (max-width: 768px) {
+            height: 11px;
+            width: 11px;
+            left: 37px;
+            top: 35px;
+        }
+
+        &.online {
+            background: #4dec6b;
+        }
+
+        &.offline {
+            background: #cd2828;
+        }
+    }
+}
+
+
+.deleted-post {
+    background: #fbdfd4;
+
+    .section-header, .border-bottom {
+        border-bottom: 1px solid #f9b2b2 !important;
+    }
+
+    .border-top {
+        border-top: 1px solid #f9b2b2 !important;
+    }
 }

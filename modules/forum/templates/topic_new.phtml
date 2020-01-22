@@ -1,0 +1,587 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $sections
+ * @var $online
+ * @var $files_count
+ * @var $unread_count
+ * @var $pagination
+ * @var $settings_forum
+ * @var $topic
+ * @var $write_access
+ * @var $filter_by_author
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<?= $this->fetch(
+    'forum::header',
+    [
+        'unread_count' => $unread_count,
+        'files_count'  => $files_count,
+        'files_url'    => '/forum/?act=files&t=' . $id,
+        'files_name'   => __('Topic Files'),
+    ]
+) ?>
+<?php if ($filter_by_author): ?>
+    <div class="alert alert-warning">
+        <div>
+            <?= __('Filter by author is activated') ?>
+        </div>
+        <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= __('Cancel Filter') ?></a>
+    </div>
+<?php endif; ?>
+
+<?php if ($topic['closed']): ?>
+    <div class="alert alert-danger">
+        <?= __('Topic closed') ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($topic['deleted']): ?>
+    <div class="alert alert-danger">
+        <?= __('Topic deleted by') ?> <b><?= $topic['deleted_by'] ?></b>
+    </div>
+<?php elseif (! empty($topic['deleted_by']) && $user->rights >= 7): ?>
+    <div class="alert alert-success">
+        <?= __('Undelete topic') ?> <b><?= $topic['deleted_by'] ?></b>
+    </div>
+<?php endif; ?>
+
+<?php if (! empty($poll_data)): ?>
+    <!-- Poll block -->
+    <div class="h3"><?= $poll_data['poll']['name'] ?></div>
+    <?php if ($poll_data['show_form']): ?>
+        <form action="/forum/?act=vote&amp;id=<?= $id ?>" method="post" class="mb-3">
+            <?php foreach ($poll_data['results'] as $item): ?>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="vote_<?= $item['id'] ?>" name="vote" value="<?= $item['id'] ?>" required class="custom-control-input">
+                    <label class="custom-control-label" for="vote_<?= $item['id'] ?>"><?= $item['name'] ?></label>
+                </div>
+            <?php endforeach; ?>
+            <div class="mt-2">
+                <button type="submit" name="submit" value="1" class="btn btn-success btn-sm"><?= __('Vote') ?></button>
+                <a class="btn btn-outline-secondary btn-sm" href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;vote_result<?= $poll_data['clip'] ?>"><?= __('Results') ?></a>
+            </div>
+        </form>
+    <?php else: ?>
+        <div class="row">
+            <div class="col-sm-6">
+                <?php foreach ($poll_data['results'] as $item): ?>
+                    <div>
+                        <?= $item['name'] ?> (<?= $item['count'] ?>)
+                    </div>
+                    <div class="progress mb-2 border">
+                        <div class="progress-bar <?= $item['color_class'] ?? 'text-dark' ?>" style="width: <?= $item['vote_percent'] ?>%">
+                            <span class="p-2"><?= $item['vote_percent'] ?>%</span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div>
+                <?= __('Total votes') ?>:
+                <?php if ($user->rights > 6): ?>
+                    <a href="?act=users&amp;id=<?= $id ?>"><?= $poll_data['poll']['count'] ?></a>
+                <?php else: ?>
+                    <?= $poll_data['poll']['count'] ?>
+                <?php endif; ?>
+            </div>
+            <?php if ($user->isValid() && $poll_data['poll']['vote_user'] == 0): ?>
+                <div>
+                    <a href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start . $poll_data['clip'] ?>"><?= __('Vote') ?></a>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($write_access && $settings_forum['upfp']): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
+                <?php if (! empty($settings_forum['farea'])): ?>
+                    <input type="hidden" name="token" value="<?= $token ?>"/>
+                    <div class="form-group">
+                        <label for="msg"><?= __('Message') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                        <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+                        <?php if (! empty($settings_forum['preview'])): ?>
+                            <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+                <?php endif; ?>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($total > $user->config->kmess): ?>
+    <div class="mt-1"><?= $pagination ?></div>
+<?php endif ?>
+<?php if (! empty($first_post)): ?>
+    <div class="shadow post-item post-item mb-2" id="first_post_block">
+        <div class="section-header post-header collapsed" data-toggle="collapse" data-target="#first_post" aria-expanded="false" aria-controls="first_post">
+            <div class="d-flex align-items-center">
+                <?php if (! empty($first_post['user_profile_link'])): ?>
+                    <a href="<?= $first_post['user_profile_link'] ?>" class="user-login mr-2"><?= $first_post['user_name'] ?></a>
+                <?php else: ?>
+                    <a class="user-login mr-2"><?= $first_post['user_name'] ?></a>
+                <?php endif; ?>
+                <span class="post-date"><?= $first_post['post_time'] ?></span>
+            </div>
+            <?php if (! empty($first_post['post_preview'])): ?>
+                <div class="toggle d-flex align-items-center pr-2">
+                    <svg class="icon icon-chevron-bottom text-dark-brown">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+                    </svg>
+                </div>
+            <?php endif; ?>
+        </div>
+        <?php if (! empty($first_post['post_preview'])): ?>
+            <div class="collapse" id="first_post">
+                <div class="pt-2">
+                    <?= $first_post['post_text'] ?>
+                </div>
+            </div>
+            <div class="post-preview pt-2">
+                <?= $first_post['post_preview'] ?>
+            </div>
+        <?php else: ?>
+            <div class="pt-2">
+                <?= $first_post['post_text'] ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="border-bottom mt-4 mb-3"></div>
+<?php endif; ?>
+
+<?php if ($user->rights == 3 || $user->rights >= 6): ?>
+<form action="?act=massdel" method="post">
+    <?php endif; ?>
+
+    <?php foreach ($messages as $item): ?>
+        <div class="new_post-item border-bottom shadow mb-2 <?= $item['deleted'] ? ' deleted-post' : '' ?>">
+            <div class="new_post-header d-flex justify-content-between">
+                <div class="post-user">
+                    <?php if (! empty($item['user_profile_link'])): ?>
+                        <a href="<?= $item['user_profile_link'] ?>">
+                            <img src="<?= $this->avatar($item['user_id']) ?>" alt="." class="avatar">
+                        </a>
+                    <?php else: ?>
+                        <img src="<?= $this->avatar($item['user_id']) ?>" alt="." class="avatar">
+                    <?php endif; ?>
+                    <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
+                </div>
+                <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                    <div class="w-100">
+                        <?php if (! empty($item['user_profile_link'])): ?>
+                            <a href="<?= $item['user_profile_link'] ?>">
+                                <div class="user-name d-inline mr-2"><?= $item['user_name'] ?></div>
+                            </a>
+                        <?php else: ?>
+                            <div class="user-name d-inline mr-2"><?= $item['user_name'] ?></div>
+                        <?php endif; ?>
+                        <a href="<?= $item['post_url'] ?>"
+                           class="post-meta d-inline mr-2"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           title="<?= __('Link to post') ?>">
+                            <?= $item['post_time'] ?>
+                        </a>
+                        <?php if (! empty($item['edit_count'])): ?>
+                            <div class="post-meta d-inline mr-2"
+                                 data-toggle="tooltip"
+                                 data-placement="top"
+                                 data-html="true"
+                                 title="<?= __('Edited:') ?> <?= $item['editor_name'] ?> <br> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]">
+                                <?= __('Edited') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($item['has_edit']): ?>
+                            <?php if (! empty($item['deleted'])): ?>
+                                <div class="post-meta d-inline mr-2"
+                                     data-toggle="tooltip"
+                                     data-placement="top"
+                                     title="<?= __('Post deleted:') ?> <?= $item['deleted_by'] ?>">
+                                    <?= __('Deleted') ?>
+                                </div>
+                            <?php elseif (! empty($item['deleted_by'])): ?>
+                                <div class="post-meta d-inline mr-2"
+                                     data-toggle="tooltip"
+                                     data-placement="top"
+                                     title="<?= __('Post restored by:') ?> <?= $item['deleted_by'] ?>">
+                                    <?= __('Restored') ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                    <?php if (! empty($item['status'])): ?>
+                        <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                            <span class="font-weight-bold"><?= $item['status'] ?></span>
+                        </div>
+                    <?php endif ?>
+                </div>
+
+                <?php if ($user->rights == 3 || $user->rights >= 6): ?>
+                    <div class="custom-control custom-checkbox d-inline float-right">
+                        <input type="checkbox" class="custom-control-input" name="delch[]" value="<?= $item['id'] ?>" id="check_<?= $item['id'] ?>">
+                        <label class="custom-control-label" for="check_<?= $item['id'] ?>"></label>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="post-body mt-2 border-top pt-2 pb-2">
+                <?= $item['post_text'] ?>
+            </div>
+            <?php if (! empty($item['files'])): ?>
+                <!-- Files block -->
+                <div class="mt-3 pb-1">
+                    <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
+                    <div class="d-flex flex-wrap">
+                        <?php foreach ($item['files'] as $file): ?>
+                            <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                                <div class="h-100 d-flex justify-content-center align-items-center">
+                                    <?php if (! empty($file['file_preview'])): ?>
+                                        <a href="<?= $file['file_url'] ?>" class="image-preview" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
+                                            <img src="<?= $file['file_preview'] ?>" class="img-thumbnail thumb-limit-height" alt="<?= $file['filename'] ?>">
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="<?= $file['file_url'] ?>">
+                                            <svg class="icon attachment-icon">
+                                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#file"/>
+                                            </svg>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="pt-1">
+                                    <div class="text-muted small d-flex flex-wrap justify-content-center">
+                                        <div class="text-nowrap pr-1">
+                                            <svg class="icon downloads-icon">
+                                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+                                            </svg>
+                                            <?= $file['dlcount'] ?>
+                                        </div>
+                                        <div>(<?= $file['file_size'] ?>&nbsp;kb)</div>
+                                    </div>
+                                    <div class="file-name">
+                                        <a href="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>"><?= $file['filename'] ?></a>
+                                    </div>
+                                    <?php if ($item['has_edit']): ?>
+                                        <div class="delete-link">
+                                            <a href="<?= $file['delete_url'] ?>"><?= __('Delete') ?></a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="post-footer d-flex justify-content-between mt-2">
+                <div class="overflow-hidden">
+                    <?php if ($user->rights): ?>
+                        <div class="post-meta d-flex">
+                            <div class="user-ip mr-2">
+                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                                <?php if (! empty($item['ip_via_proxy'])): ?>
+                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="useragent">
+                                <span><?= $item['user_agent'] ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="d-flex">
+                    <?php if (! empty($item['reply_url'])): ?>
+                        <div class="ml-3">
+                            <a href="<?= $item['reply_url'] ?>"><?= __('Reply') ?></a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (! empty($item['quote_url'])): ?>
+                        <div class="ml-3">
+                            <a href="<?= $item['quote_url'] ?>"><?= __('Quote') ?></a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($item['has_edit']): ?>
+                        <div class="dropdown ml-3">
+                            <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon text-primary">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?1#more_horizontal"/>
+                                </svg>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="<?= $item['edit_url'] ?>" class="ml-2"><?= __('Edit') ?></a>
+                                <a class="dropdown-item" href="<?= $item['delete_url'] ?>" class="ml-2"><?= __('Delete') ?></a>
+                                <?php if (! empty($item['restore_url'])): ?>
+                                    <a class="dropdown-item" href="<?= $item['restore_url'] ?>" class="ml-2"><?= __('Restore') ?></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <?php /*
+        <div class="shadow post-item mb-2<?= $item['deleted'] ? ' deleted-post' : '' ?>">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    <?php if ($user->rights == 3 || $user->rights >= 6): ?>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="delch[]" value="<?= $item['id'] ?>" id="check_<?= $item['id'] ?>">
+                            <label class="custom-control-label" for="check_<?= $item['id'] ?>"></label>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (! empty($item['user_profile_link'])): ?>
+                        <a href="<?= $item['user_profile_link'] ?>" class="user-login mr-2"><?= $item['user_name'] ?></a>
+                    <?php else: ?>
+                        <a class="user-login mr-2"><?= $item['user_name'] ?></a>
+                    <?php endif; ?>
+                    <span class="post-date"><?= $item['post_time'] ?></span>
+                </div>
+                <div class="post-actions">
+                    <?php if (! empty($item['reply_url'])): ?>
+                        <a href="<?= $item['reply_url'] ?>" class="btn btn-sm btn-dark-brown"><?= __('Reply') ?></a>
+                    <?php endif; ?>
+                    <?php if (! empty($item['quote_url'])): ?>
+                        <a href="<?= $item['quote_url'] ?>" class="btn btn-sm btn-dark-brown"><?= __('Quote') ?></a>
+                    <?php endif; ?>
+                    <a href="<?= $item['post_url'] ?>" class="btn btn-dark-brown btn-sm">#</a>
+                </div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar mr-2 mr-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                    </div>
+                    <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+                </div>
+                <div class="overflow-auto flex-grow-1"><?= $item['post_text'] ?></div>
+            </div>
+
+            <?php if (! empty($item['files'])): ?>
+                <!-- Files block -->
+                <div class="border-top pt-1 pb-1">
+                    <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
+                    <div class="d-flex flex-wrap">
+                        <?php foreach ($item['files'] as $file): ?>
+                            <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                                <div class="h-100 d-flex justify-content-center align-items-center">
+                                    <?php if (! empty($file['file_preview'])): ?>
+                                        <a href="<?= $file['file_url'] ?>" class="image-preview" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
+                                            <img src="<?= $file['file_preview'] ?>" class="img-thumbnail thumb-limit-height" alt="<?= $file['filename'] ?>">
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="<?= $file['file_url'] ?>">
+                                            <svg class="icon attachment-icon">
+                                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#file"/>
+                                            </svg>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="pt-1">
+                                    <div class="text-muted small d-flex flex-wrap justify-content-center">
+                                        <div class="text-nowrap pr-1">
+                                            <svg class="icon downloads-icon">
+                                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+                                            </svg>
+                                            <?= $file['dlcount'] ?>
+                                        </div>
+                                        <div>(<?= $file['file_size'] ?>&nbsp;kb)</div>
+                                    </div>
+                                    <div class="file-name">
+                                        <a href="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>"><?= $file['filename'] ?></a>
+                                    </div>
+                                    <?php if ($item['has_edit']): ?>
+                                        <div class="delete-link">
+                                            <a href="<?= $file['delete_url'] ?>"><?= __('Delete') ?></a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($item['has_edit'] || ! empty($item['edit_count'])): ?>
+                <div class="post-footer d-flex justify-content-between border-top pt-2">
+                    <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                        <?php if ($user->rights): ?>
+                            <div class="user-ip mr-2">
+                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                                <?php if (! empty($item['ip_via_proxy'])): ?>
+                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="useragent">
+                                <span>User-Agent:</span>
+                                <span><?= $item['user_agent'] ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text-nowrap post-actions">
+                        <span class="text-muted pr-2 flex-grow-1">
+                            <?php if (! empty($item['edit_count'])): ?>
+                                <?= __('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                            <?php endif; ?>
+                            <?php if ($item['has_edit']): ?>
+                                <?php if (! empty($item['deleted'])): ?>
+                                    <?= __('Post deleted:') ?> <?= $item['deleted_by'] ?>
+                                <?php elseif (! empty($item['deleted_by'])): ?>
+                                    <?= __('Post restored by:') ?> <?= $item['deleted_by'] ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </span>
+                        <?php if ($item['has_edit']): ?>
+                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= __('Edit') ?></a>
+                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= __('Delete') ?></a>
+                            <?php if (! empty($item['restore_url'])): ?>
+                                <a href="<?= $item['restore_url'] ?>" class="btn btn-light btn-sm"><?= __('Restore') ?></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+        </div>
+        */ ?>
+    <?php endforeach; ?>
+
+    <?php if ($user->rights == 3 || $user->rights >= 6): ?>
+    <div class="d-flex align-items-center mt-3 mb-3">
+        <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm mr-1"><?= __('Delete selected') ?></button>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?= __('Actions with topic') ?>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="actions">
+                <?php if ($topic_vote): ?>
+                    <a class="dropdown-item" href="/forum/?act=editvote&amp;id=<?= $id ?>"><?= __('Edit Poll') ?></a>
+                    <a class="dropdown-item" href="/forum/?act=delvote&amp;id=<?= $id ?>"><?= __('Delete Poll') ?></a>
+                <?php else: ?>
+                    <a class="dropdown-item" href="/forum/?act=addvote&amp;id=<?= $id ?>"><?= __('Add Poll') ?></a>
+                <?php endif; ?>
+
+                <?php if ($user->rights >= 7): ?>
+                    <a class="dropdown-item" href="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Curators of the Topic') ?></a>
+                <?php endif; ?>
+
+                <a class="dropdown-item" href="/forum/?act=ren&amp;id=<?= $id ?>"><?= __('Rename Topic') ?></a>
+
+                <?php if ($topic['closed'] == 1): ?>
+                    <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>"><?= __('Open Topic') ?></a>
+                <?php else: ?>
+                    <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>&amp;closed"><?= __('Close Topic') ?></a>
+                <?php endif; ?>
+
+                <?php if ($topic['deleted'] == 1): ?>
+                    <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= __('Restore Topic') ?></a>
+                <?php endif; ?>
+
+                <a class="dropdown-item" href="/forum/?act=deltema&amp;id=<?= $id ?>"><?= __('Delete Topic') ?></a>
+
+                <?php if ($topic['pinned'] == 1): ?>
+                    <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>"><?= __('Unfix Topic') ?></a>
+                <?php else: ?>
+                    <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>&amp;vip"><?= __('Pin Topic') ?></a>
+                <?php endif; ?>
+
+                <a class="dropdown-item" href="/forum/?act=per&amp;id=<?= $id ?>"><?= __('Move Topic') ?></a>
+            </div>
+        </div>
+    </div>
+</form>
+<?php endif; ?>
+
+<?php if ($write_access && ! $settings_forum['upfp']): ?>
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1">
+                <?php if (! empty($settings_forum['farea'])): ?>
+                    <input type="hidden" name="token" value="<?= $token ?>"/>
+                    <div class="form-group">
+                        <label for="msg"><?= __('Message') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                        <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+                        <?php if (! empty($settings_forum['preview'])): ?>
+                            <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+                <?php endif; ?>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div>
+    <div><?= __('Total') ?>: <?= $total ?></div>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div class="mt-1"><?= $pagination ?></div>
+    <?php endif ?>
+</div>
+<?php if (! empty($curators_array)): ?>
+    <div class="alert alert-secondary">
+        <?= __('Curators') ?>: <?= implode(', ', $curators_array) ?>
+    </div>
+<?php endif; ?>
+<div>
+    <div>
+        <?php if ($filter_by_author): ?>
+            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= __('Cancel Filter') ?></a>
+        <?php else: ?>
+            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Filter by author') ?></a>
+        <?php endif; ?>
+    </div>
+    <div>
+        <a href="?act=tema&amp;id=<?= $id ?>"><?= __('Download Topic') ?></a>
+    </div>
+</div>
+
+
+<?= $this->fetch(
+    'forum::footer',
+    [
+        'online'   => $online,
+        'who_url'  => '/forum/?act=who&id=' . $id,
+        'who_name' => __('Who is here'),
+    ]
+) ?>

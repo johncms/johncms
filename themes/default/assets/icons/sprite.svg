@@ -239,4 +239,11 @@
         <circle cx="12" cy="12" r="3"></circle>
     </symbol>
 
+    <symbol id="more_horizontal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal">
+        <circle cx="11" cy="12" r="1"></circle>
+        <circle cx="17" cy="12" r="1"></circle>
+        <circle cx="5" cy="12" r="1"></circle>
+    </symbol>
+
+
 </svg>
