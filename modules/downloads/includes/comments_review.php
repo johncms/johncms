@@ -76,10 +76,10 @@ if ($total) {
 
         $res['post_text'] = $text;
 
-        $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
-        $res['ip'] = long2ip($res['ip']);
-        $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip_via_proxy']);
-        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+        $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip']);
+        $res['ip'] = long2ip((int) $res['ip']);
+        $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip_via_proxy']);
+        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip((int) $res['ip_via_proxy']) : 0;
 
         $res['edit_count'] = $attributes['edit_count'] ?? 0;
         $res['editor_name'] = $attributes['edit_name'] ?? '';
