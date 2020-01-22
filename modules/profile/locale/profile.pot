@@ -9,8 +9,6 @@ msgid "Activity"
 msgstr ""
 
 #: modules/profile/includes/activity.php:20
-#: modules/profile/includes/ban.php:188
-#: modules/profile/includes/ban.php:292
 #: modules/profile/includes/edit.php:43
 #: modules/profile/includes/guestbook.php:15
 #: modules/profile/includes/images.php:161
@@ -36,174 +34,89 @@ msgid "Themes"
 msgstr ""
 
 #: modules/profile/includes/activity.php:36
-#: modules/profile/includes/ban.php:146
+#: modules/profile/templates/ban.phtml:49
 #: modules/profile/templates/stat.phtml:57
 msgid "Comments"
 msgstr ""
 
-#: modules/profile/includes/ban.php:21
-msgid "You do not have enought rights to ban this user"
-msgstr ""
-
-#: modules/profile/includes/ban.php:23
+#: modules/profile/includes/ban.php:16
 msgid "Ban the User"
 msgstr ""
 
-#: modules/profile/includes/ban.php:35
+#: modules/profile/includes/ban.php:32
+msgid "You do not have enought rights to ban this user"
+msgstr ""
+
+#: modules/profile/includes/ban.php:46
 msgid "Reason not specified"
 msgstr ""
 
-#: modules/profile/includes/ban.php:39
+#: modules/profile/includes/ban.php:50
 msgid "There is no required data"
 msgstr ""
 
-#: modules/profile/includes/ban.php:43
+#: modules/profile/includes/ban.php:60
 msgid "You have no rights to ban in this section"
 msgstr ""
 
-#: modules/profile/includes/ban.php:47
+#: modules/profile/includes/ban.php:64
 msgid "Ban already active"
 msgstr ""
 
-#: modules/profile/includes/ban.php:121
+#: modules/profile/includes/ban.php:145
 msgid "System"
 msgstr ""
 
-#: modules/profile/includes/ban.php:125
+#: modules/profile/includes/ban.php:149
 #: modules/profile/includes/index.php:140
 msgid "Ban"
 msgstr ""
 
-#: modules/profile/includes/ban.php:131
+#: modules/profile/includes/ban.php:160
 msgid "User banned"
 msgstr ""
 
-#: modules/profile/includes/ban.php:138
-msgid "Ban type"
-msgstr ""
-
-#: modules/profile/includes/ban.php:142
-msgid "Full block"
-msgstr ""
-
-#: modules/profile/includes/ban.php:144
-msgid "Private messages"
-msgstr ""
-
-#: modules/profile/includes/ban.php:148
-#: modules/profile/includes/guestbook.php:16
-#: modules/profile/includes/guestbook.php:28
-#: modules/profile/templates/index.phtml:237
-#: modules/profile/templates/office.phtml:39
-#: modules/profile/templates/stat.phtml:56
-msgid "Guestbook"
-msgstr ""
-
-#: modules/profile/includes/ban.php:154
-#: modules/profile/includes/settings.php:46
-#: modules/profile/includes/settings.php:88
-#: modules/profile/templates/stat.phtml:55
-msgid "Forum"
-msgstr ""
-
-#: modules/profile/includes/ban.php:159
-msgid "Library"
-msgstr ""
-
-#: modules/profile/includes/ban.php:162
-msgid "Ban time"
-msgstr ""
-
-#: modules/profile/includes/ban.php:164
-msgid "Minutes (60 max.)"
-msgstr ""
-
-#: modules/profile/includes/ban.php:165
-msgid "Hours (24 max.)"
-msgstr ""
-
-#: modules/profile/includes/ban.php:168
-msgid "Days (30 max.)"
-msgstr ""
-
-#: modules/profile/includes/ban.php:172
-#: modules/profile/includes/ban.php:345
-msgid "Till cancel"
-msgstr ""
-
-#: modules/profile/includes/ban.php:175
-msgid "Reason"
-msgstr ""
-
-#: modules/profile/includes/ban.php:180
-msgid "Violation"
-msgstr ""
-
-#: modules/profile/includes/ban.php:185
-msgid "Apply Ban"
-msgstr ""
-
-#: modules/profile/includes/ban.php:195
-#: modules/profile/includes/ban.php:225
-#: modules/profile/includes/ban.php:233
-#: modules/profile/includes/ban.php:258
-#: modules/profile/skl.php:127
-msgid "Wrong data"
-msgstr ""
-
-#: modules/profile/includes/ban.php:204
-msgid "Ban not active"
-msgstr ""
-
-#: modules/profile/includes/ban.php:208
+#: modules/profile/includes/ban.php:194
 msgid "Ban termination"
 msgstr ""
 
-#: modules/profile/includes/ban.php:213
+#: modules/profile/includes/ban.php:202
+#: modules/profile/includes/ban.php:260
+#: modules/profile/includes/ban.php:279
+#: modules/profile/includes/ban.php:326
+#: modules/profile/skl.php:132
+msgid "Wrong data"
+msgstr ""
+
+#: modules/profile/includes/ban.php:214
+msgid "Ban not active"
+msgstr ""
+
+#: modules/profile/includes/ban.php:225
 msgid "Ban terminated"
 msgstr ""
 
-#: modules/profile/includes/ban.php:216
+#: modules/profile/includes/ban.php:230
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr ""
 
-#: modules/profile/includes/ban.php:217
+#: modules/profile/includes/ban.php:231
 msgid "Terminate Ban"
 msgstr ""
 
-#: modules/profile/includes/ban.php:219
-#: modules/profile/includes/ban.php:255
-#: modules/profile/includes/karma.php:76
-#: modules/profile/includes/karma.php:149
-#: modules/profile/templates/karma.phtml:92
-#: modules/profile/templates/restore_password_result.phtml:16
-#: modules/profile/templates/stat.phtml:61
-msgid "Back"
+#: modules/profile/includes/ban.php:270
+msgid "Delete ban"
 msgstr ""
 
-#: modules/profile/includes/ban.php:239
-#: modules/profile/includes/ban.php:359
-msgid "Delete Ban"
-msgstr ""
-
-#: modules/profile/includes/ban.php:249
+#: modules/profile/includes/ban.php:302
 msgid "Ban deleted"
 msgstr ""
 
-#: modules/profile/includes/ban.php:249
-#: modules/profile/includes/images.php:68
-#: modules/profile/includes/images.php:137
-#: modules/profile/includes/karma.php:120
-#: modules/profile/includes/password.php:83
-#: modules/profile/templates/restore_password.phtml:43
-msgid "Continue"
-msgstr ""
-
-#: modules/profile/includes/ban.php:252
+#: modules/profile/includes/ban.php:307
 msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
-#: modules/profile/includes/ban.php:253
+#: modules/profile/includes/ban.php:308
 #: modules/profile/includes/index.php:134
 #: modules/profile/templates/edit.phtml:112
 #: modules/profile/templates/edit.phtml:132
@@ -211,76 +124,41 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/profile/includes/ban.php:266
-#: modules/profile/includes/ban.php:282
+#: modules/profile/includes/ban.php:336
 msgid "Violations history"
 msgstr ""
 
-#: modules/profile/includes/ban.php:271
+#: modules/profile/includes/ban.php:346
 msgid "Violations history cleared"
 msgstr ""
 
-#: modules/profile/includes/ban.php:274
+#: modules/profile/includes/ban.php:351
 msgid "Are you sure want to clean entire history of user violations?"
 msgstr ""
 
-#: modules/profile/includes/ban.php:275
+#: modules/profile/includes/ban.php:352
 msgid "Clear"
 msgstr ""
 
-#: modules/profile/includes/ban.php:280
-#: modules/profile/includes/ban.php:373
-#: modules/profile/includes/ip.php:52
-msgid "Total"
-msgstr ""
-
-#: modules/profile/includes/ban.php:284
-#: modules/profile/includes/ban.php:297
-msgid "Ban Panel"
-msgstr ""
-
-#: modules/profile/includes/ban.php:286
+#: modules/profile/includes/ban.php:370
 msgid "Violations history can be cleared by Supervisor only"
 msgstr ""
 
-#: modules/profile/includes/ban.php:292
+#: modules/profile/includes/ban.php:379
 msgid "Violations History"
 msgstr ""
 
-#: modules/profile/includes/ban.php:301
-msgid "Clear history"
+#: modules/profile/includes/ban.php:406
+#: modules/profile/templates/ban.phtml:91
+msgid "Till cancel"
 msgstr ""
 
-#: modules/profile/includes/ban.php:311
-msgid "My Violations"
-msgstr ""
-
-#: modules/profile/includes/ban.php:341
-msgid "Who applied the Ban?"
-msgstr ""
-
-#: modules/profile/includes/ban.php:344
-msgid "Time"
-msgstr ""
-
-#: modules/profile/includes/ban.php:348
-msgid "Remains"
-msgstr ""
-
-#: modules/profile/includes/ban.php:355
+#: modules/profile/includes/ban.php:417
 msgid "Cancel Ban"
 msgstr ""
 
-#: modules/profile/includes/ban.php:370
-#: modules/profile/includes/ip.php:49
-#: modules/profile/templates/activity.phtml:37
-#: modules/profile/templates/karma.phtml:38
-msgid "The list is empty"
-msgstr ""
-
-#: modules/profile/includes/ban.php:379
-#: modules/profile/includes/ip.php:58
-msgid "To Page"
+#: modules/profile/includes/ban.php:423
+msgid "Delete Ban"
 msgstr ""
 
 #: modules/profile/includes/edit.php:16
@@ -330,6 +208,15 @@ msgstr ""
 msgid "Data saved"
 msgstr ""
 
+#: modules/profile/includes/guestbook.php:16
+#: modules/profile/includes/guestbook.php:28
+#: modules/profile/templates/ban.phtml:53
+#: modules/profile/templates/index.phtml:237
+#: modules/profile/templates/office.phtml:39
+#: modules/profile/templates/stat.phtml:56
+msgid "Guestbook"
+msgstr ""
+
 #: modules/profile/includes/images.php:38
 msgid "Upload Avatar"
 msgstr ""
@@ -341,6 +228,14 @@ msgstr ""
 
 #: modules/profile/includes/images.php:66
 msgid "The avatar is successfully uploaded"
+msgstr ""
+
+#: modules/profile/includes/images.php:68
+#: modules/profile/includes/images.php:137
+#: modules/profile/includes/karma.php:120
+#: modules/profile/includes/password.php:83
+#: modules/profile/templates/restore_password.phtml:43
+msgid "Continue"
 msgstr ""
 
 #: modules/profile/includes/images.php:83
@@ -421,6 +316,21 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
+#: modules/profile/includes/ip.php:49
+#: modules/profile/templates/activity.phtml:37
+#: modules/profile/templates/karma.phtml:38
+msgid "The list is empty"
+msgstr ""
+
+#: modules/profile/includes/ip.php:52
+#: modules/profile/templates/ban_history.phtml:80
+msgid "Total"
+msgstr ""
+
+#: modules/profile/includes/ip.php:58
+msgid "To Page"
+msgstr ""
+
 #: modules/profile/includes/karma.php:15
 #: modules/profile/includes/karma.php:20
 #: modules/profile/templates/index.phtml:86
@@ -440,10 +350,6 @@ msgid "Users can take part in voting if they have stayed on a site not less %s a
 msgstr ""
 
 #: modules/profile/includes/karma.php:51
-msgid "hours"
-msgstr ""
-
-#: modules/profile/includes/karma.php:51
 msgid "days"
 msgstr ""
 
@@ -453,6 +359,15 @@ msgstr ""
 
 #: modules/profile/includes/karma.php:65
 msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr ""
+
+#: modules/profile/includes/karma.php:76
+#: modules/profile/includes/karma.php:149
+#: modules/profile/templates/ban_history.phtml:96
+#: modules/profile/templates/karma.phtml:92
+#: modules/profile/templates/restore_password_result.phtml:16
+#: modules/profile/templates/stat.phtml:61
+msgid "Back"
 msgstr ""
 
 #: modules/profile/includes/karma.php:118
@@ -539,8 +454,15 @@ msgid "Settings"
 msgstr ""
 
 #: modules/profile/includes/settings.php:41
-#: modules/profile/includes/settings.php:141
+#: modules/profile/includes/settings.php:142
 msgid "General setting"
+msgstr ""
+
+#: modules/profile/includes/settings.php:46
+#: modules/profile/includes/settings.php:88
+#: modules/profile/templates/ban.phtml:59
+#: modules/profile/templates/stat.phtml:55
+msgid "Forum"
 msgstr ""
 
 #: modules/profile/includes/settings.php:51
@@ -549,13 +471,13 @@ msgid "Mail"
 msgstr ""
 
 #: modules/profile/includes/settings.php:71
-#: modules/profile/includes/settings.php:108
-#: modules/profile/includes/settings.php:196
+#: modules/profile/includes/settings.php:115
+#: modules/profile/includes/settings.php:197
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/profile/includes/settings.php:124
-#: modules/profile/includes/settings.php:201
+#: modules/profile/includes/settings.php:125
+#: modules/profile/includes/settings.php:202
 msgid "Default settings are set"
 msgstr ""
 
@@ -584,32 +506,32 @@ msgstr ""
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/skl.php:64
+#: modules/profile/skl.php:67
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/profile/skl.php:66
+#: modules/profile/skl.php:69
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/skl.php:79
+#: modules/profile/skl.php:83
 msgid "Invalid Email address"
 msgstr ""
 
-#: modules/profile/skl.php:83
+#: modules/profile/skl.php:87
 msgid "Password can be recovered 1 time per day"
 msgstr ""
 
-#: modules/profile/skl.php:86
-#: modules/profile/skl.php:145
+#: modules/profile/skl.php:90
+#: modules/profile/skl.php:151
 msgid "User does not exists"
 msgstr ""
 
-#: modules/profile/skl.php:93
+#: modules/profile/skl.php:97
 msgid "Password recovery"
 msgstr ""
 
-#: modules/profile/skl.php:95
+#: modules/profile/skl.php:99
 msgid ""
 "Hello %s!\n"
 "You start process of password recovery on the site %s\n"
@@ -619,28 +541,28 @@ msgid ""
 "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
-#: modules/profile/skl.php:105
+#: modules/profile/skl.php:110
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/skl.php:107
-#: modules/profile/skl.php:166
+#: modules/profile/skl.php:112
+#: modules/profile/skl.php:173
 msgid "Error sending E-mail"
 msgstr ""
 
-#: modules/profile/skl.php:137
+#: modules/profile/skl.php:142
 msgid "Password recovery is impossible"
 msgstr ""
 
-#: modules/profile/skl.php:141
+#: modules/profile/skl.php:146
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/skl.php:152
+#: modules/profile/skl.php:158
 msgid "Your new password"
 msgstr ""
 
-#: modules/profile/skl.php:154
+#: modules/profile/skl.php:160
 msgid ""
 "Hello %s\n"
 "You have changed your password on the site %s\n"
@@ -650,13 +572,102 @@ msgid ""
 "After logging in, you can change your password to new one."
 msgstr ""
 
-#: modules/profile/skl.php:164
+#: modules/profile/skl.php:171
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
 #: modules/profile/templates/activity.phtml:53
 #: modules/profile/templates/karma.phtml:88
 msgid "Total:"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:35
+msgid "Ban:"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:37
+msgid "Ban type"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:41
+msgid "Full block"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:45
+msgid "Private messages"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:65
+msgid "Library"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:69
+msgid "Ban time"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:71
+msgid "Time"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:76
+msgid "Minutes (60 max.)"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:80
+msgid "Hours (24 max.)"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:85
+msgid "Days (30 max.)"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:96
+msgid "Reason"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:102
+msgid "Apply Ban"
+msgstr ""
+
+#: modules/profile/templates/ban.phtml:103
+#: modules/profile/templates/ban_cancel.phtml:36
+#: modules/profile/templates/edit.phtml:297
+#: modules/profile/templates/forum_settings.phtml:80
+#: modules/profile/templates/images.phtml:63
+#: modules/profile/templates/karma_delete.phtml:36
+#: modules/profile/templates/karma_vote.phtml:71
+#: modules/profile/templates/mail_settings.phtml:61
+#: modules/profile/templates/password.phtml:67
+#: modules/profile/templates/settings.phtml:119
+msgid "Cancel"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:25
+msgid "User:"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:37
+msgid "Active"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:46
+msgid "Blocked by:"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:50
+msgid "Time:"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:54
+msgid "Remains:"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:73
+msgid "List is empty"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:90
+msgid "Clear history"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:52
@@ -830,17 +841,6 @@ msgstr ""
 #: modules/profile/templates/password.phtml:66
 #: modules/profile/templates/settings.phtml:118
 msgid "Save"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:297
-#: modules/profile/templates/forum_settings.phtml:80
-#: modules/profile/templates/images.phtml:63
-#: modules/profile/templates/karma_delete.phtml:36
-#: modules/profile/templates/karma_vote.phtml:71
-#: modules/profile/templates/mail_settings.phtml:61
-#: modules/profile/templates/password.phtml:67
-#: modules/profile/templates/settings.phtml:119
-msgid "Cancel"
 msgstr ""
 
 #: modules/profile/templates/forum_settings.phtml:48

@@ -18,62 +18,63 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:32
+#: modules/homepage/templates/index.phtml:43
+#: modules/homepage/templates/index.phtml:127
 msgid "News"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:41
+#: modules/homepage/templates/index.phtml:136
 msgid "Discuss"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:49
+#: modules/homepage/templates/index.phtml:145
 msgid "Features"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:56
+#: modules/homepage/templates/index.phtml:151
 msgid "Responsive Layout"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:59
+#: modules/homepage/templates/index.phtml:154
 msgid "Your site will appear equally well on both computers and mobile devices."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:66
+#: modules/homepage/templates/index.phtml:161
 msgid "Template System"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:69
+#: modules/homepage/templates/index.phtml:164
 msgid "Using templates, you can completely change the style of your site so that it becomes unique and not like the others."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:76
+#: modules/homepage/templates/index.phtml:171
 msgid "High Performance"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:79
+#: modules/homepage/templates/index.phtml:174
 msgid "When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:86
+#: modules/homepage/templates/index.phtml:181
 msgid "Multilingual"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:89
+#: modules/homepage/templates/index.phtml:184
 msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:98
+#: modules/homepage/templates/index.phtml:193
 msgid "Modularity"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:101
+#: modules/homepage/templates/index.phtml:196
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:105
+#: modules/homepage/templates/index.phtml:200
 msgid "Free License"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:115
+#: modules/homepage/templates/index.phtml:210
 msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
 msgstr ""

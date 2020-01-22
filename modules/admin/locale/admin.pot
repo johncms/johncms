@@ -47,11 +47,10 @@ msgstr ""
 #: modules/admin/includes/forum/del.php:84
 #: modules/admin/includes/forum/del.php:155
 #: modules/admin/includes/forum/del.php:174
-#: modules/admin/includes/ip_whois.php:117
 #: modules/admin/includes/reg.php:35
 #: modules/admin/includes/reg.php:77
 #: modules/admin/includes/reg.php:144
-#: modules/admin/includes/usr_del.php:45
+#: modules/admin/includes/usr_del.php:47
 msgid "Wrong data"
 msgstr ""
 
@@ -97,7 +96,6 @@ msgstr ""
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ipban.php:452
 #: modules/admin/includes/reg.php:166
-#: modules/admin/includes/usr_del.php:132
 #: modules/admin/templates/ads_confirm.phtml:40
 #: modules/admin/templates/ads_index.phtml:60
 #: modules/admin/templates/counters.phtml:64
@@ -107,6 +105,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:60
 #: modules/admin/templates/forum/structure.phtml:57
 #: modules/admin/templates/user_clean_confirm.phtml:38
+#: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
 msgstr ""
 
@@ -204,7 +203,7 @@ msgid "ERROR: Can not write system.local.php"
 msgstr ""
 
 #: modules/admin/includes/antiflood.php:82
-#: modules/admin/includes/karma.php:79
+#: modules/admin/includes/karma.php:76
 #: modules/admin/includes/news.php:57
 #: modules/admin/templates/access.phtml:10
 #: modules/admin/templates/settings.phtml:15
@@ -223,7 +222,7 @@ msgstr ""
 #: modules/admin/includes/karma.php:33
 #: modules/admin/includes/languages.php:25
 #: modules/admin/includes/settings.php:23
-#: modules/admin/includes/usr_del.php:23
+#: modules/admin/includes/usr_del.php:22
 #: modules/admin/index.php:54
 #: modules/admin/templates/access.phtml:31
 #: modules/admin/templates/access.phtml:49
@@ -268,7 +267,6 @@ msgstr ""
 #: modules/admin/includes/forum/edit.php:119
 #: modules/admin/includes/forum/hposts.php:54
 #: modules/admin/includes/forum/htopics.php:55
-#: modules/admin/includes/ip_whois.php:121
 #: modules/admin/includes/ipban.php:63
 #: modules/admin/includes/ipban.php:239
 #: modules/admin/includes/ipban.php:276
@@ -329,7 +327,7 @@ msgstr ""
 msgid "Violations"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:123
+#: modules/admin/includes/ban_panel.php:131
 msgid "Violations history"
 msgstr ""
 
@@ -532,21 +530,6 @@ msgstr ""
 msgid "by section"
 msgstr ""
 
-#: modules/admin/includes/ip_whois.php:18
-#: modules/admin/includes/ip_whois.php:124
-#: modules/admin/includes/usr_del.php:71
-#: modules/admin/includes/usr_del.php:144
-#: modules/admin/index.php:50
-#: modules/admin/templates/access.phtml:2
-#: modules/admin/templates/access.phtml:5
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/languages.phtml:6
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
-msgstr ""
-
 #: modules/admin/includes/ipban.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:255
 msgid "Ban by IP"
@@ -645,7 +628,6 @@ msgstr ""
 
 #: modules/admin/includes/ipban.php:318
 #: modules/admin/includes/ipban.php:454
-#: modules/admin/includes/usr_del.php:139
 #: modules/admin/templates/ads_add.phtml:128
 #: modules/admin/templates/ads_confirm.phtml:41
 #: modules/admin/templates/amnesty.phtml:45
@@ -664,10 +646,11 @@ msgstr ""
 #: modules/admin/templates/ipban_add.phtml:80
 #: modules/admin/templates/ipban_add_confirm.phtml:66
 #: modules/admin/templates/ipban_search.phtml:40
-#: modules/admin/templates/karma.phtml:82
+#: modules/admin/templates/karma.phtml:69
 #: modules/admin/templates/karma_clean_confirm.phtml:35
 #: modules/admin/templates/news.phtml:89
 #: modules/admin/templates/user_clean_confirm.phtml:39
+#: modules/admin/templates/usr_del.phtml:58
 msgid "Cancel"
 msgstr ""
 
@@ -727,7 +710,7 @@ msgid "Registration is confirmed"
 msgstr ""
 
 #: modules/admin/includes/reg.php:93
-#: modules/admin/includes/usr_del.php:115
+#: modules/admin/includes/usr_del.php:116
 msgid "User deleted"
 msgstr ""
 
@@ -782,45 +765,38 @@ msgstr ""
 msgid "Inactive profiles deleted"
 msgstr ""
 
-#: modules/admin/includes/usr_del.php:39
-msgid "You cannot delete higher administration"
-msgstr ""
-
-#: modules/admin/includes/usr_del.php:42
-msgid "User does not exists"
-msgstr ""
-
-#: modules/admin/includes/usr_del.php:71
+#: modules/admin/includes/usr_del.php:25
 msgid "Delete user"
 msgstr ""
 
-#: modules/admin/includes/usr_del.php:120
-msgid "Cleaning activities"
+#: modules/admin/includes/usr_del.php:41
+msgid "You cannot delete higher administration"
 msgstr ""
 
-#: modules/admin/includes/usr_del.php:123
-#: modules/admin/templates/access.phtml:72
-#: modules/admin/templates/access.phtml:95
-#: modules/admin/templates/news.phtml:69
-msgid "Comments"
+#: modules/admin/includes/usr_del.php:44
+msgid "User does not exists"
 msgstr ""
 
-#: modules/admin/includes/usr_del.php:127
-#: modules/admin/templates/access.phtml:15
-#: modules/admin/templates/sidebar-admin-menu.phtml:145
-msgid "Forum"
-msgstr ""
-
-#: modules/admin/includes/usr_del.php:128
-msgid "All threads and posts created by the user go in the hidden state"
-msgstr ""
-
-#: modules/admin/includes/usr_del.php:131
-msgid "Are you sure that you want to delete this user?"
+#: modules/admin/index.php:50
+#: modules/admin/templates/access.phtml:2
+#: modules/admin/templates/access.phtml:5
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/ip_whois.phtml:8
+#: modules/admin/templates/languages.phtml:6
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
 msgstr ""
 
 #: modules/admin/templates/access.phtml:5
 msgid "Permissions"
+msgstr ""
+
+#: modules/admin/templates/access.phtml:15
+#: modules/admin/templates/sidebar-admin-menu.phtml:145
+#: modules/admin/templates/usr_del.phtml:51
+msgid "Forum"
 msgstr ""
 
 #: modules/admin/templates/access.phtml:19
@@ -852,6 +828,13 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
+#: modules/admin/templates/access.phtml:72
+#: modules/admin/templates/access.phtml:95
+#: modules/admin/templates/news.phtml:69
+#: modules/admin/templates/usr_del.phtml:44
+msgid "Comments"
+msgstr ""
+
 #: modules/admin/templates/access.phtml:78
 msgid "Downloads"
 msgstr ""
@@ -875,7 +858,7 @@ msgstr ""
 #: modules/admin/templates/counters_add_confirm.phtml:63
 #: modules/admin/templates/forum/edit.phtml:97
 #: modules/admin/templates/ipban_add.phtml:79
-#: modules/admin/templates/karma.phtml:81
+#: modules/admin/templates/karma.phtml:68
 #: modules/admin/templates/languages.phtml:28
 #: modules/admin/templates/news.phtml:88
 #: modules/admin/templates/settings.phtml:73
@@ -942,7 +925,6 @@ msgstr ""
 
 #: modules/admin/templates/ads_add.phtml:66
 #: modules/admin/templates/ads_add.phtml:67
-#: modules/admin/templates/karma.phtml:64
 msgid "Days"
 msgstr ""
 
@@ -1403,6 +1385,15 @@ msgstr ""
 msgid "View"
 msgstr ""
 
+#: modules/admin/templates/ip_whois.phtml:15
+msgid "IP Address"
+msgstr ""
+
+#: modules/admin/templates/ip_whois.phtml:26
+#: modules/admin/templates/search_ip.phtml:64
+msgid "Search results"
+msgstr ""
+
 #: modules/admin/templates/ipban.phtml:42
 #: modules/admin/templates/ipban_add.phtml:42
 #: modules/admin/templates/ipban_add.phtml:43
@@ -1507,27 +1498,19 @@ msgstr ""
 msgid "Forum posts"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:55
-msgid "Stay on site"
-msgstr ""
-
-#: modules/admin/templates/karma.phtml:60
-msgid "Hours"
-msgstr ""
-
-#: modules/admin/templates/karma.phtml:67
+#: modules/admin/templates/karma.phtml:54
 msgid "General Settings"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:71
+#: modules/admin/templates/karma.phtml:58
 msgid "Switch module ON"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:76
+#: modules/admin/templates/karma.phtml:63
 msgid "Forbid to vote for the administration"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:84
+#: modules/admin/templates/karma.phtml:71
 msgid "Clear Karma"
 msgstr ""
 
@@ -1613,10 +1596,6 @@ msgstr ""
 
 #: modules/admin/templates/search_ip.phtml:60
 msgid "At your request, nothing found"
-msgstr ""
-
-#: modules/admin/templates/search_ip.phtml:64
-msgid "Search results"
 msgstr ""
 
 #: modules/admin/templates/settings.phtml:21
@@ -1705,4 +1684,16 @@ msgstr ""
 
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
+msgstr ""
+
+#: modules/admin/templates/usr_del.phtml:31
+msgid "Delete user:"
+msgstr ""
+
+#: modules/admin/templates/usr_del.phtml:32
+msgid "Are you sure that you want to delete this user?"
+msgstr ""
+
+#: modules/admin/templates/usr_del.phtml:54
+msgid "All threads and posts created by the user go in the hidden state"
 msgstr ""

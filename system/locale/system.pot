@@ -30,7 +30,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:4
 #: modules/login/templates/login.phtml:5
 #: modules/login/templates/login.phtml:41
-#: system/src/System/Legacy/Tools.php:259
+#: system/src/System/Legacy/Tools.php:261
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:83
 msgid "Login"
 msgstr ""
@@ -138,8 +138,8 @@ msgstr ""
 
 #: modules/notifications/index.php:122
 #: modules/notifications/index.php:141
-#: system/src/System/Legacy/Tools.php:256
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:66
+#: system/src/System/Legacy/Tools.php:258
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:62
 msgid "Guestbook"
 msgstr ""
 
@@ -151,7 +151,7 @@ msgstr ""
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/redirect/index.php:25
+#: modules/redirect/index.php:30
 msgid "Redirect to an external link"
 msgstr ""
 
@@ -206,8 +206,8 @@ msgstr ""
 #: system/src/Comments.php:245
 #: system/src/Comments.php:286
 #: system/src/Comments.php:318
-#: system/src/System/Legacy/Tools.php:254
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
+#: system/src/System/Legacy/Tools.php:256
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:75
 msgid "Downloads"
 msgstr ""
 
@@ -348,77 +348,86 @@ msgstr ""
 msgid "Watching the photo album"
 msgstr ""
 
+#: system/src/System/Legacy/Tools.php:254
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:100
+msgid "Users"
+msgstr ""
+
 #: system/src/System/Legacy/Tools.php:255
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:52
-msgid "Forum"
+msgid "Users List"
 msgstr ""
 
 #: system/src/System/Legacy/Tools.php:257
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
+msgid "Forum"
+msgstr ""
+
+#: system/src/System/Legacy/Tools.php:259
 msgid "Reading the FAQ"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:258
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:97
+#: system/src/System/Legacy/Tools.php:260
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:88
 msgid "Library"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:260
+#: system/src/System/Legacy/Tools.php:262
 msgid "Personal correspondence"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:261
+#: system/src/System/Legacy/Tools.php:263
 msgid "Reading the news"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:262
+#: system/src/System/Legacy/Tools.php:264
 msgid "Profile"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:263
+#: system/src/System/Legacy/Tools.php:265
 msgid "Redirect on external link to another site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:264
+#: system/src/System/Legacy/Tools.php:266
 msgid "Registered on the site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:265
+#: system/src/System/Legacy/Tools.php:267
 msgid "List of users"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:266
-#: system/src/System/Legacy/Tools.php:267
 #: system/src/System/Legacy/Tools.php:268
 #: system/src/System/Legacy/Tools.php:269
+#: system/src/System/Legacy/Tools.php:270
+#: system/src/System/Legacy/Tools.php:271
 msgid "Who is online?"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:279
+#: system/src/System/Legacy/Tools.php:281
 msgid "Somewhere on the site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:307
+#: system/src/System/Legacy/Tools.php:309
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Guest"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:382
+#: system/src/System/Legacy/Tools.php:384
 msgid "Last Visit"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:388
+#: system/src/System/Legacy/Tools.php:390
 msgid "Browser"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:390
+#: system/src/System/Legacy/Tools.php:392
 msgid "IP address"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:415
+#: system/src/System/Legacy/Tools.php:417
 msgid "IP History"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:596
+#: system/src/System/Legacy/Tools.php:598
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
@@ -427,23 +436,19 @@ msgstr[0] ""
 msgid "News archive"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:112
-msgid "Users"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:126
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:111
 msgid "Photo Albums"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:140
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:122
 msgid "Information, FAQ"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:151
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:133
 msgid "Admin Panel"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:160
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:142
 msgid "Admin Chat"
 msgstr ""
 
