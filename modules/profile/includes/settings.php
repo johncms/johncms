@@ -58,7 +58,7 @@ switch ($mod) {
     case 'mail':
         $title = __('Mail');
         $nav_chain->add($title);
-        $set_mail_user = !empty($user->set_mail) ? unserialize($user->set_mail, ['allowed_classes' => false]) : ['access' => 0];
+        $set_mail_user = ! empty($user->set_mail) ? unserialize($user->set_mail, ['allowed_classes' => false]) : ['access' => 0];
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
@@ -87,7 +87,14 @@ switch ($mod) {
         // Настройки Форума
         $title = __('Forum');
         $nav_chain->add($title);
+        $default_settings = [
+            'farea'    => 0,
+            'upfp'     => 0,
+            'preview'  => 1,
+            'postclip' => 1,
+        ];
         $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
+        $set_forum = array_merge($default_settings, (array) $set_forum);
 
         if (isset($_POST['submit'])) {
             $set_forum['farea'] = isset($_POST['farea']);
@@ -109,15 +116,9 @@ switch ($mod) {
         }
 
         if (isset($_GET['reset']) || empty($set_forum)) {
-            $set_forum = [];
-            $set_forum['farea'] = 0;
-            $set_forum['upfp'] = 0;
-            $set_forum['preview'] = 1;
-            $set_forum['postclip'] = 1;
-
             $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute(
                 [
-                    serialize($set_forum),
+                    serialize($default_settings),
                     $user->id,
                 ]
             );
