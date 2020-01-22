@@ -10,12 +10,10 @@
 
 declare(strict_types=1);
 
+use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
-
-$id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 $config = di('config')['johncms'];
 
@@ -24,6 +22,8 @@ di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 /** @var PDO $db */
 $db = di(PDO::class);
+/** @var Request $request */
+$request = di(Request::class);
 
 /** @var Johncms\System\Legacy\Tools $tools */
 $tools = di(Johncms\System\Legacy\Tools::class);
@@ -49,6 +49,9 @@ function passgen($length)
     return $result;
 }
 
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+$act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
+
 switch ($act) {
     case 'sent':
         // Отправляем E-mail с инструкциями по восстановлению пароля
@@ -62,7 +65,7 @@ switch ($act) {
 
         if (! $nick || ! $email || ! $code) {
             $error = __('The required fields are not filled');
-        } elseif (! isset($_SESSION['code']) || mb_strlen($code) < 4 || $code != $_SESSION['code']) {
+        } elseif (! isset($_SESSION['code']) || mb_strlen($code) < 3 || strtolower($code) != strtolower($_SESSION['code'])) {
             $error = __('Incorrect code');
         }
 
@@ -70,7 +73,8 @@ switch ($act) {
 
         if (! $error) {
             // Проверяем данные по базе
-            $req = $db->query('SELECT * FROM `users` WHERE `name_lat` = ' . $db->quote($nick) . ' LIMIT 1');
+            $req = $db->prepare('SELECT `id`, `name`, `mail`, `rest_time` FROM `users` WHERE `name_lat` = ? LIMIT 1');
+            $req->execute([$nick]);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -100,7 +104,8 @@ switch ($act) {
             $adds = 'From: <' . $config['email'] . ">\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n";
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
-                $db->exec('UPDATE `users` SET `rest_code` = ' . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
+                $req = $db->prepare('UPDATE `users` SET `rest_code` = ?, `rest_time` = ? WHERE `id` = ?');
+                $req->execute([$check_code, time(), $res['id']]);
                 $type = 'success';
                 $message = __('Check your e-mail for further information');
             } else {
@@ -119,16 +124,16 @@ switch ($act) {
 
     case 'set':
         // Устанавливаем новый пароль
-        $code = isset($_GET['code']) ? trim($_GET['code']) : '';
+        $code = trim($request->getQuery('code', '', FILTER_SANITIZE_STRING));
         $error = false;
         $type = 'error';
 
-        if (! $id || ! $code) {
+        if (! $id || mb_strlen($code) !== 32) {
             $error = __('Wrong data');
         }
 
-        if (! empty($id)) {
-            $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
+        if (! $error) {
+            $req = $db->query('SELECT `id`, `name`, `mail`, `rest_code`, `rest_time` FROM `users` WHERE `id` = ' . $id);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -139,7 +144,8 @@ switch ($act) {
 
                 if (! $error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
                     $error = __('Time allotted for the password recovery has been exceeded');
-                    $db->exec("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = " . $id);
+                    $req = $db->prepare('UPDATE `users` SET `rest_code` = "", `rest_time` = "" WHERE `id` = ?');
+                    $req->execute([$res['id']]);
                 }
             } else {
                 $error = __('User does not exists');
@@ -159,7 +165,8 @@ switch ($act) {
             $adds = 'From: <' . $config['email'] . ">\nContent-Type: text/plain; charset=\"utf-8\"\n";
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
-                $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . ' WHERE `id` = ' . $id);
+                $req = $db->prepare('UPDATE `users` SET `rest_code` = "", `password` = ? WHERE `id` = ?');
+                $req->execute([md5(md5($pass)), $res['id']]);
                 $type = 'success';
                 $message = __('Password successfully changed.<br>New password sent to your E-mail address.');
             } else {
