@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<scanRuleset>
+    <description>JohnCMS ruleset for PHP code scanner for gettext</description>
+
+    <!-- System -->
+    <domain>
+        <name>system</name>
+        <target>system/locale</target>
+        <sourceDir>modules/language</sourceDir>
+        <sourceDir>modules/login</sourceDir>
+        <sourceDir>modules/notifications</sourceDir>
+        <sourceDir>modules/redirect</sourceDir>
+        <sourceDir>system/src</sourceDir>
+        <sourceDir>themes/default/templates</sourceDir>
+        <sourceFile>system/helpers.php</sourceFile>
+        <sourceFile>system/bootstrap.php</sourceFile>
+    </domain>
+
+    <!-- Admin module -->
+    <domain>
+        <name>admin</name>
+        <target>modules/admin/locale</target>
+        <sourceDir>modules/admin</sourceDir>
+    </domain>
+
+    <!-- Album module -->
+    <domain>
+        <name>album</name>
+        <target>modules/album/locale</target>
+        <sourceDir>modules/album</sourceDir>
+    </domain>
+
+    <!-- Community module -->
+    <domain>
+        <name>community</name>
+        <target>modules/community/locale</target>
+        <sourceDir>modules/community</sourceDir>
+    </domain>
+
+    <!-- Downloads module -->
+    <domain>
+        <name>downloads</name>
+        <target>modules/downloads/locale</target>
+        <sourceDir>modules/downloads</sourceDir>
+    </domain>
+
+    <!-- Forum module -->
+    <domain>
+        <name>forum</name>
+        <target>modules/forum/locale</target>
+        <sourceDir>modules/forum</sourceDir>
+    </domain>
+
+    <!-- Guestbook module -->
+    <domain>
+        <name>guestbook</name>
+        <target>modules/guestbook/locale</target>
+        <sourceDir>modules/guestbook</sourceDir>
+    </domain>
+
+    <!-- Help module -->
+    <domain>
+        <name>help</name>
+        <target>modules/help/locale</target>
+        <sourceDir>modules/help</sourceDir>
+    </domain>
+
+    <!-- Homepage module -->
+    <domain>
+        <name>homepage</name>
+        <target>modules/homepage/locale</target>
+        <sourceDir>modules/homepage</sourceDir>
+    </domain>
+
+    <!-- Library module -->
+    <domain>
+        <name>library</name>
+        <target>modules/library/locale</target>
+        <sourceDir>modules/library</sourceDir>
+    </domain>
+
+    <!-- Mail module -->
+    <domain>
+        <name>mail</name>
+        <target>modules/mail/locale</target>
+        <sourceDir>modules/mail</sourceDir>
+    </domain>
+
+    <!-- News module -->
+    <domain>
+        <name>news</name>
+        <target>modules/news/locale</target>
+        <sourceDir>modules/news</sourceDir>
+    </domain>
+
+    <!-- Online module -->
+    <domain>
+        <name>online</name>
+        <target>modules/online/locale</target>
+        <sourceDir>modules/online</sourceDir>
+    </domain>
+
+    <!-- Profile module -->
+    <domain>
+        <name>profile</name>
+        <target>modules/profile/locale</target>
+        <sourceDir>modules/profile</sourceDir>
+    </domain>
+
+    <!-- Registration module -->
+    <domain>
+        <name>registration</name>
+        <target>modules/registration/locale</target>
+        <sourceDir>modules/registration</sourceDir>
+    </domain>
+
+    <!-- Notifications module -->
+    <domain>
+        <name>notifications</name>
+        <target>modules/notifications/locale</target>
+        <sourceDir>modules/notifications</sourceDir>
+    </domain>
+</scanRuleset>

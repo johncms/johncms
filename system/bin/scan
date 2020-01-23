@@ -21,127 +21,40 @@ use Gettext\Scanner\PhpScanner;
 use Gettext\Generator\PoGenerator;
 use Gettext\Translations;
 
-$domainSearch = [
-        'admin' => [
-                'target'   => 'modules/admin/locale',
-                'scan_dir' => [
-                        'modules/admin',
-                ]
-        ],
+if (is_file($s = 'translate.xml') === true || is_file($s = 'translate.xml.dist') === true) {
+    $xml = simplexml_load_string(file_get_contents($s));
+}
 
-        'album' => [
-                'target'   => 'modules/album/locale',
-                'scan_dir' => [
-                        'modules/album',
-                ]
-        ],
+if (!isset($xml) || false === $xml) {
+    exit('[91mERROR: Configuration file not found, or contains errors.[0m');
+}
 
-        'community' => [
-                'target'   => 'modules/community/locale',
-                'scan_dir' => [
-                        'modules/community',
-                ]
-        ],
+foreach ($xml->domain as $domain) {
+    $list = [];
+    foreach ($domain->sourceDir as $dirertory) {
+        //$list += recursiveScan((string)$dirertory, '/^.+\.(?:phtml|php)$/i');
+        $list = array_merge($list, recursiveScan((string)$dirertory, '/^.+\.(?:phtml|php)$/i'));
+    }
 
-        'downloads' => [
-                'target'   => 'modules/downloads/locale',
-                'scan_dir' => [
-                        'modules/downloads',
-                ]
-        ],
+    if (isset($domain->sourceFile)) {
+        foreach ($domain->sourceFile as $fileToScan) {
+            $list[] = (string)$fileToScan;
+        }
+    }
 
-        'forum' => [
-                'target'   => 'modules/forum/locale',
-                'scan_dir' => [
-                        'modules/forum',
-                ]
-        ],
+    sort($list, SORT_STRING);
+    $phpScanner = new PhpScanner(Translations::create($domain->name));
+    $phpScanner->setDefaultDomain($domain->name);
+    $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
 
-        'guestbook' => [
-                'target'   => 'modules/guestbook/locale',
-                'scan_dir' => [
-                        'modules/guestbook',
-                ]
-        ],
+    foreach ($list as $file) {
+        $phpScanner->scanFile($file);
+    }
 
-        'help' => [
-                'target'   => 'modules/help/locale',
-                'scan_dir' => [
-                        'modules/help',
-                ]
-        ],
-
-        'homepage' => [
-                'target'   => 'modules/homepage/locale',
-                'scan_dir' => [
-                        'modules/homepage',
-                ]
-        ],
-
-        'library' => [
-                'target'   => 'modules/library/locale',
-                'scan_dir' => [
-                        'modules/library',
-                ]
-        ],
-
-        'mail' => [
-                'target'   => 'modules/mail/locale',
-                'scan_dir' => [
-                        'modules/mail',
-                ]
-        ],
-
-        'news' => [
-                'target'   => 'modules/news/locale',
-                'scan_dir' => [
-                        'modules/news',
-                ]
-        ],
-
-        'online' => [
-                'target'   => 'modules/online/locale',
-                'scan_dir' => [
-                        'modules/online',
-                ]
-        ],
-
-        'profile' => [
-                'target'   => 'modules/profile/locale',
-                'scan_dir' => [
-                        'modules/profile',
-                ]
-        ],
-
-        'registration' => [
-                'target'   => 'modules/registration/locale',
-                'scan_dir' => [
-                        'modules/registration',
-                ]
-        ],
-
-        'notifications' => [
-                'target'   => 'modules/notifications/locale',
-                'scan_dir' => [
-                        'modules/notifications',
-                ]
-        ],
-
-        'system' => [
-                'target'     => 'system/locale',
-                'scan_dir'   => [
-                        'modules/language',
-                        'modules/login',
-                        'modules/notifications',
-                        'modules/redirect',
-                        'system/src',
-                        'themes/default/templates',
-                ],
-                'scan_files' => [
-                        'system/helpers.php',
-                ],
-        ],
-];
+    $name = (string)$domain->name;
+    $generator = new PoGenerator();
+    $generator->generateFile($phpScanner->getTranslations()[$name], $domain->target . '/' . $name . '.pot');
+}
 
 function recursiveScan($folder, $pattern)
 {
@@ -155,31 +68,6 @@ function recursiveScan($folder, $pattern)
     }
 
     return $fileList;
-}
-
-foreach ($domainSearch as $domain => $attributes) {
-    $list = [];
-    foreach ($attributes['scan_dir'] as $dir) {
-        $list = array_merge($list, recursiveScan($dir, '/^.+\.(?:phtml|php)$/i'));
-    }
-
-    if (isset($attributes['scan_files'])) {
-        foreach ($attributes['scan_files'] as $fileToScan) {
-            $list[] = $fileToScan;
-        }
-    }
-
-    $phpScanner = new PhpScanner(Translations::create($domain));
-    $phpScanner->setDefaultDomain($domain);
-    $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
-
-    sort($list, SORT_STRING);
-    foreach ($list as $file) {
-        $phpScanner->scanFile($file);
-    }
-
-    $generator = new PoGenerator();
-    $generator->generateFile($phpScanner->getTranslations()[$domain], $attributes['target'] . '/' . $domain . '.pot');
 }
 
 exit('[32mLanguage templates has been created successfully[0m' . "\n");
