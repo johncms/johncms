@@ -1,0 +1,37 @@
+<?php return array (
+  'domain' => 'system',
+  'plural-forms' => 'nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Personal' => 'Asmeninės',
+      'Login' => 'Prisijungti',
+      'Registration' => 'Registracija',
+      'Cancel' => 'Atšaukti',
+      'Notifications' => 'Pranešimai',
+      'Guestbook' => 'Svečių Knyga',
+      'Back' => 'Atgal',
+      'Reply' => 'Atsakyti',
+      'Downloads' => 'Atsisiuntimai',
+      'Edit' => 'Redaguoti',
+      'Delete' => 'Ištrinti',
+      'Quote' => 'Cituoti',
+      'Users' => 'Vartotojai',
+      'Forum' => 'Forumas',
+      'Library' => 'Biblioteka',
+      'Guest' => 'Svečias',
+      'News archive' => 'Naujienų archyvas',
+      'Photo Albums' => 'Nuotraukų Albumai',
+      'Information, FAQ' => 'Informacija, klausimai ir atsakymai',
+      'Admin Panel' => 'Administravimo panelė',
+      'Admin Chat' => 'Admin pokalbiai',
+      'Exit' => 'Užverti',
+      'Do you really want to delete?' => 'Ar tikrai norite ištrinti?',
+      'Clear' => 'Išvalyti',
+      'Message' => 'Žinutė',
+      'Send' => 'Siųsti',
+      'The list is empty' => 'Sąrašas tuščias',
+    ),
+  ),
+);

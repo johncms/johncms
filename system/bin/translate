@@ -33,7 +33,7 @@ foreach ($search as $dir) {
         $file = $file['dirname'] . '/' . $file['filename'];
         /** @var Gettext\Translations $translations */
         $translations = $loader->loadFile($file . '.po');
-        $generator->generateFile($translations, $file . '.lng');
+        $generator->generateFile($translations, $file . '.lng.php');
         unlink($file . '.po');
     }
 }
