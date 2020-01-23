@@ -38,7 +38,7 @@
         "aura/autoload": "^2.0",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
-        "johncms/system": "^1.0",
+        "johncms/system": "^1.1",
         "mobicms/captcha": "^2.0"
     },
     "require-dev": {
