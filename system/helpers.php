@@ -46,8 +46,7 @@ function pageNotFound(
         header('HTTP/1.0 404 Not Found');
     }
 
-    exit(
-    $engine->render(
+    echo $engine->render(
         $template,
         [
             'title'   => $title,
@@ -55,8 +54,8 @@ function pageNotFound(
                 ? $message
                 : __('You are looking for something that doesn\'t exist or may have moved'),
         ]
-    )
     );
+    exit;
 }
 
 /**
