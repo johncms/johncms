@@ -193,6 +193,10 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: system/helpers.php:55
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr ""
+
 #: system/src/Comments.php:139
 #: system/src/Comments.php:208
 #: system/src/Comments.php:209

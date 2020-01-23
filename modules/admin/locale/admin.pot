@@ -671,6 +671,7 @@ msgid "Are you sure you want to remove the ban?"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:469
+#: modules/admin/templates/ip_whois.phtml:19
 #: modules/admin/templates/ipban.phtml:80
 #: modules/admin/templates/ipban_search.phtml:39
 #: modules/admin/templates/search_ip.phtml:41
