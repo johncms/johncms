@@ -9,6 +9,7 @@
     <file>modules</file>
     <file>system/src</file>
     <exclude-pattern>/modules/downloads/classes/pear.php</exclude-pattern>
+    <exclude-pattern>/modules/*/locale/*.lng.php</exclude-pattern>
 
     <!-- inherit rules from: -->
     <rule ref="PSR12"/>
