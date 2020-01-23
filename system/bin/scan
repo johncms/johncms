@@ -31,8 +31,8 @@ if (!isset($xml) || false === $xml) {
 
 foreach ($xml->domain as $domain) {
     $list = [];
+
     foreach ($domain->sourceDir as $dirertory) {
-        //$list += recursiveScan((string)$dirertory, '/^.+\.(?:phtml|php)$/i');
         $list = array_merge($list, recursiveScan((string)$dirertory, '/^.+\.(?:phtml|php)$/i'));
     }
 
