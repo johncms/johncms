@@ -23,119 +23,122 @@ use Gettext\Translations;
 
 $domainSearch = [
         'admin' => [
-                'target' => 'modules/admin/locale',
-                'scan'   => [
+                'target'   => 'modules/admin/locale',
+                'scan_dir' => [
                         'modules/admin',
                 ]
         ],
 
         'album' => [
-                'target' => 'modules/album/locale',
-                'scan'   => [
+                'target'   => 'modules/album/locale',
+                'scan_dir' => [
                         'modules/album',
                 ]
         ],
 
         'community' => [
-                'target' => 'modules/community/locale',
-                'scan'   => [
+                'target'   => 'modules/community/locale',
+                'scan_dir' => [
                         'modules/community',
                 ]
         ],
 
         'downloads' => [
-                'target' => 'modules/downloads/locale',
-                'scan'   => [
+                'target'   => 'modules/downloads/locale',
+                'scan_dir' => [
                         'modules/downloads',
                 ]
         ],
 
         'forum' => [
-                'target' => 'modules/forum/locale',
-                'scan'   => [
+                'target'   => 'modules/forum/locale',
+                'scan_dir' => [
                         'modules/forum',
                 ]
         ],
 
         'guestbook' => [
-                'target' => 'modules/guestbook/locale',
-                'scan'   => [
+                'target'   => 'modules/guestbook/locale',
+                'scan_dir' => [
                         'modules/guestbook',
                 ]
         ],
 
         'help' => [
-                'target' => 'modules/help/locale',
-                'scan'   => [
+                'target'   => 'modules/help/locale',
+                'scan_dir' => [
                         'modules/help',
                 ]
         ],
 
         'homepage' => [
-                'target' => 'modules/homepage/locale',
-                'scan'   => [
+                'target'   => 'modules/homepage/locale',
+                'scan_dir' => [
                         'modules/homepage',
                 ]
         ],
 
         'library' => [
-                'target' => 'modules/library/locale',
-                'scan'   => [
+                'target'   => 'modules/library/locale',
+                'scan_dir' => [
                         'modules/library',
                 ]
         ],
 
         'mail' => [
-                'target' => 'modules/mail/locale',
-                'scan'   => [
+                'target'   => 'modules/mail/locale',
+                'scan_dir' => [
                         'modules/mail',
                 ]
         ],
 
         'news' => [
-                'target' => 'modules/news/locale',
-                'scan'   => [
+                'target'   => 'modules/news/locale',
+                'scan_dir' => [
                         'modules/news',
                 ]
         ],
 
         'online' => [
-                'target' => 'modules/online/locale',
-                'scan'   => [
+                'target'   => 'modules/online/locale',
+                'scan_dir' => [
                         'modules/online',
                 ]
         ],
 
         'profile' => [
-                'target' => 'modules/profile/locale',
-                'scan'   => [
+                'target'   => 'modules/profile/locale',
+                'scan_dir' => [
                         'modules/profile',
                 ]
         ],
 
         'registration' => [
-                'target' => 'modules/registration/locale',
-                'scan'   => [
+                'target'   => 'modules/registration/locale',
+                'scan_dir' => [
                         'modules/registration',
                 ]
         ],
 
         'notifications' => [
-                'target' => 'modules/notifications/locale',
-                'scan'   => [
+                'target'   => 'modules/notifications/locale',
+                'scan_dir' => [
                         'modules/notifications',
                 ]
         ],
 
         'system' => [
-                'target' => 'system/locale',
-                'scan'   => [
+                'target'     => 'system/locale',
+                'scan_dir'   => [
                         'modules/language',
                         'modules/login',
                         'modules/notifications',
                         'modules/redirect',
                         'system/src',
                         'themes/default/templates',
+                ],
+                'scan_files' => [
+                        'system/helpers.php',
                 ],
         ],
 ];
@@ -156,8 +159,14 @@ function recursiveScan($folder, $pattern)
 
 foreach ($domainSearch as $domain => $attributes) {
     $list = [];
-    foreach ($attributes['scan'] as $dir) {
+    foreach ($attributes['scan_dir'] as $dir) {
         $list = array_merge($list, recursiveScan($dir, '/^.+\.(?:phtml|php)$/i'));
+    }
+
+    if (isset($attributes['scan_files'])) {
+        foreach ($attributes['scan_files'] as $fileToScan) {
+            $list[] = $fileToScan;
+        }
     }
 
     $phpScanner = new PhpScanner(Translations::create($domain));
