@@ -37,3 +37,20 @@
 .overflow-ellipsis {
     text-overflow: ellipsis;
 }
+
+.to-top {
+    position: fixed;
+    bottom: 4rem;
+    left: 17.95rem;
+    transition: all 0.3s;
+    @media (max-width: 991px) {
+        left: 1rem;
+        bottom: 4rem;
+    }
+}
+
+.to-top_hidden {
+    visibility: hidden;
+    opacity: 0;
+    bottom: 0;
+}

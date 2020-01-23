@@ -82,6 +82,14 @@ $ads_array = $ads->getAds();
                 </div>
             <?php endif; ?>
             <?= $this->section('content') ?>
+
+            <div class="to-top to-top_hidden">
+                <button class="btn btn__top">
+                    <svg class="icon-40">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#top"/>
+                    </svg>
+                </button>
+            </div>
             <?php if (! empty($ads_array['content_footer'])): ?>
                 <div class="pb-3 pt-2">
                     <?php foreach ($ads_array['content_footer'] as $item): ?>

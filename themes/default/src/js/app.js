@@ -14,3 +14,4 @@ require('./forum');
 require('./modals');
 require('./slider');
 require('./progress');
+require('./main');
