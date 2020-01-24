@@ -41,10 +41,10 @@
 .to-top {
     position: fixed;
     bottom: 4rem;
-    left: 17.95rem;
+    right: 1.7rem;
     transition: all 0.3s;
     @media (max-width: 991px) {
-        left: 1rem;
+        right: 0.9rem;
         bottom: 4rem;
     }
 }
