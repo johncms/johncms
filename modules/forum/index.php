@@ -133,7 +133,6 @@ $ext_win = [
 $ext_other = ['wmf'];
 
 $user_rights_names = [
-    0 => __('User'),
     3 => __('Forum moderator'),
     4 => __('Download moderator'),
     5 => __('Library moderator'),
