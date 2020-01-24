@@ -133,10 +133,13 @@ $ext_win = [
 $ext_other = ['wmf'];
 
 $user_rights_names = [
-    3 => '(FMod)',
-    6 => '(Smd)',
-    7 => '(Adm)',
-    9 => '(SV!)',
+    0 => __('User'),
+    3 => __('Forum moderator'),
+    4 => __('Download moderator'),
+    5 => __('Library moderator'),
+    6 => __('Super moderator'),
+    7 => __('Administrator'),
+    9 => __('Supervisor'),
 ];
 
 // Ограничиваем доступ к Форуму

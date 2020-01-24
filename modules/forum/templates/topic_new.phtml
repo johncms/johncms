@@ -201,6 +201,17 @@ $this->layout(
                         </div>
                     <?php endif; ?>
                     <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
+                    <?php if (! empty($item['user_rights_name'])): ?>
+                        <div class="post-of-user"
+                             data-toggle="tooltip"
+                             data-placement="top"
+                             data-html="true"
+                             title="<?= $item['user_rights_name'] ?>">
+                            <svg class="icon-post">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
+                            </svg>
+                        </div>
+                    <?php endif ?>
                 </div>
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
@@ -252,7 +263,7 @@ $this->layout(
                     <?php endif ?>
                 </div>
 
-                <?php if ($user->rights == 3 || $user->rights >= 6): ?>
+                <?php if ($user->rights === 3 || $user->rights >= 6): ?>
                     <div class="custom-control custom-checkbox d-inline float-right">
                         <input type="checkbox" class="custom-control-input" name="delch[]" value="<?= $item['id'] ?>" id="check_<?= $item['id'] ?>">
                         <label class="custom-control-label" for="check_<?= $item['id'] ?>"></label>

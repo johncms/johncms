@@ -259,6 +259,31 @@
             background: #cd2828;
         }
     }
+
+    .post-of-user {
+        position: absolute;
+        border-radius: 50%;
+        bottom: 0;
+        left: -40px;
+        top: -4px;
+
+        @media (max-width: 768px) {
+            height: 11px;
+            width: 11px;
+            left: 37px;
+            top: 5px;
+        }
+
+        .icon-post {
+            padding: 2px;
+            width: 17px;
+            height: 17px;
+            color: #ffffff;
+            background: #f74040;
+            border-radius: 50%;
+        }
+
+    }
 }
 
 
