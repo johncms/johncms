@@ -271,7 +271,7 @@
             height: 11px;
             width: 11px;
             left: 37px;
-            top: 5px;
+            top: -4px;
         }
 
         .icon-post {
@@ -281,6 +281,13 @@
             color: #ffffff;
             background: #f74040;
             border-radius: 50%;
+            @media (max-width: 768px) {
+                height: 14px;
+                width: 14px;
+                left: 36px;
+                top: 0;
+            }
+
         }
 
     }
