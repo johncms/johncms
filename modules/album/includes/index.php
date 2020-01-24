@@ -14,24 +14,17 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $data = [];
 
-$data['albums'] = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-$data['men'] = $db->query(
-    "SELECT COUNT(DISTINCT `user_id`)
-      FROM `cms_album_files`
-      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
-      WHERE `users`.`sex` = 'm'
-    "
-)->fetchColumn();
+$data['men'] = $db->query('SELECT COUNT(DISTINCT(`t1`.`user_id`))
+FROM `cms_album_cat` t1
+JOIN `users` u ON `u`.`id` = `t1`.`user_id` WHERE `u`.`sex` = "m" ' . ($user->rights >= 6 ? '' : ' AND (`access` > 1 OR `user_id` = ' . $user->id . ')'))->fetchColumn();
 
-$data['women'] = $db->query(
-    "SELECT COUNT(DISTINCT `user_id`)
-      FROM `cms_album_files`
-      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
-      WHERE `users`.`sex` = 'zh'
-    "
-)->fetchColumn();
+$data['women'] = $db->query('SELECT COUNT(DISTINCT(`t1`.`user_id`))
+FROM `cms_album_cat` t1
+JOIN `users` u ON `u`.`id` = `t1`.`user_id` WHERE `u`.`sex` = "zh" ' . ($user->rights >= 6 ? '' : ' AND (`access` > 1 OR `user_id` = ' . $user->id . ')'))->fetchColumn();
 
-$data['new'] = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
+$data['albums'] = ($data['men'] + $data['women']);
+
+$data['new'] = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' ".($user->rights >= 6 ? '' : ' AND `cms_album_files`.`access` = 4')."")->fetchColumn();
 
 echo $view->render(
     'album::index',
