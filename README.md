@@ -4,8 +4,7 @@
 [![Source Code](http://img.shields.io/badge/source-johncms/johncms-blue.svg)](https://github.com/johncms/johncms)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/johncms/johncms.svg?label=stable)](https://github.com/johncms/johncms/releases)
 
-
-[![GitHub Workflow Status](https://github.com/johncms/johncms/workflows/PHP-CI/badge.svg)](https://github.com/johncms/johncms/actions)
+[![PHP-CI](https://github.com/johncms/johncms/workflows/PHP-CI/badge.svg?branch=develop)](https://github.com/johncms/johncms/actions)
 [![Crowdin](https://badges.crowdin.net/johncms/localized.svg)](https://crowdin.com/project/johncms)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
