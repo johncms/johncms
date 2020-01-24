@@ -18,7 +18,7 @@
 <?php if ($data['access_to_form']): ?>
     <div class="row">
         <div class="col-md-6">
-            <form name="form" action="/guestbook/say" method="post" class="mt-3 ">
+            <form name="form" action="/guestbook/say" method="post">
                 <input type="hidden" name="token" value="<?= $data['token'] ?>"/>
                 <?php if (! $user->isValid()): ?>
                     <div class="form-group">
