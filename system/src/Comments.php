@@ -414,7 +414,10 @@ class Comments
                     while ($res = $req->fetch()) {
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
                         $res['name'] = $attributes['author_name'];
-
+                        $res['user_profile_link'] = '';
+                        if ($this->systemUser->id !== $res['user_id'] && $this->systemUser->isValid()) {
+                            $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
+                        }
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
                         $res['user_agent'] = $attributes['author_browser'];
