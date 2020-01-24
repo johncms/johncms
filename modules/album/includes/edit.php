@@ -26,10 +26,14 @@ $data = [];
 if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7) {
     if ($al) {
         $title = __('Edit Album');
-        $req = $db->prepare('SELECT * FROM `cms_album_cat` WHERE `id` = ? AND `user_id` = ?');
+        $req = $db->prepare('SELECT `name`, `description`, `password`, `access` FROM `cms_album_cat` WHERE `id` = ? AND `user_id` = ?');
         $req->execute([$al, $foundUser['id']]);
         if ($req->rowCount()) {
             $res = $req->fetch();
+            $name = $res['name'];
+            $description = $res['description'];
+            $password = $res['password'];
+            $access = $res['access'];
         } else {
             echo $view->render(
                 'system::pages/result',
@@ -43,10 +47,10 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
         }
     } else {
         $title = __('Create Album');
-        $res['name'] = '';
-        $res['description'] = '';
-        $res['password'] = '';
-        $res['access'] = 4;
+        $name = '';
+        $description = '';
+        $password = '';
+        $access = 4;
     }
 
     $nav_chain->add($title);
@@ -55,32 +59,32 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
 
     if ($request->getMethod() === 'POST') {
         // Принимаем данные
-        $res['name'] = trim($request->getPost('name', '', FILTER_DEFAULT));
-        $res['description'] = trim($request->getPost('description', ''));
-        $res['password'] = trim($request->getPost('password', ''));
-        $res['access'] = $request->getPost('access', null, FILTER_VALIDATE_INT);
+        $name = trim($request->getPost('name', ''));
+        $description = trim($request->getPost('description', ''));
+        $password = trim($request->getPost('password', ''));
+        $access = $request->getPost('access', null, FILTER_VALIDATE_INT);
 
         // Проверяем на ошибки
-        $length_name = mb_strlen($res['name']);
+        $length_name = mb_strlen($name);
         if ($length_name < 2 || $length_name > 150) {
             $error[] = __('Title') . ': ' . __('Invalid length');
         }
 
-        $res['description'] = mb_substr($res['description'], 0, 500);
+        $description = mb_substr($description, 0, 500);
 
-        if ($res['access'] === 2 && empty($res['password'])) {
+        if ($access === 2 && empty($password)) {
             $error[] = __('You have not entered password');
-        } elseif (($res['access'] === 2 && mb_strlen($res['password']) < 3) || mb_strlen($res['password']) > 15) {
+        } elseif (($access === 2 && mb_strlen($password) < 3) || mb_strlen($password) > 15) {
             $error[] = __('Password') . ': ' . __('Invalid length');
         }
 
-        if ($res['access'] < 1 || $res['access'] > 4) {
+        if ($access < 1 || $access > 4) {
             $error[] = __('Wrong data');
         }
 
         // Проверяем, есть ли уже альбом с таким же именем?
         $stmt = $db->prepare('SELECT COUNT(*) FROM `cms_album_cat` WHERE `name` = ? AND `user_id` = ?');
-        $stmt->execute([$res['name'], $foundUser['id']]);
+        $stmt->execute([$name, $foundUser['id']]);
         if (! $al && $stmt->fetchColumn()) {
             $error[] = __('The album already exists');
         }
@@ -89,8 +93,8 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
             if ($al) {
                 // Изменяем данные в базе
                 $db->prepare(
-                            'UPDATE `cms_album_files` SET `access` = ? WHERE `album_id` = ? AND `user_id` = ?'
-                )->execute([$res['access'], $al, $foundUser['id']]);
+                    'UPDATE `cms_album_files` SET `access` = ? WHERE `album_id` = ? AND `user_id` = ?'
+                )->execute([$access, $al, $foundUser['id']]);
                 $db->prepare(
                     '
                   UPDATE `cms_album_cat` SET
@@ -102,10 +106,10 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
                 '
                 )->execute(
                     [
-                        $res['name'],
-                        $res['description'],
-                        $res['password'],
-                        $res['access'],
+                        $name,
+                        $description,
+                        $password,
+                        $access,
                         $al,
                         $foundUser['id'],
                     ]
@@ -134,10 +138,10 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
                 )->execute(
                     [
                         $foundUser['id'],
-                        $res['name'],
-                        $res['description'],
-                        $res['password'],
-                        $res['access'],
+                        $name,
+                        $description,
+                        $password,
+                        $access,
                         $sort,
                     ]
                 );
@@ -163,10 +167,10 @@ if (($foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7)
     $data['action_url'] = './edit?user=' . $foundUser['id'] . '&amp;al=' . $al;
     $data['back_url'] = './list?user=' . $foundUser['id'];
     $data['form_data'] = [
-        'name'        => $tools->checkout($res['name']),
-        'description' => $tools->checkout($res['description']),
-        'password'    => $tools->checkout($res['password']),
-        'access'      => (int) $res['access'],
+        'name'        => $tools->checkout($name),
+        'description' => $tools->checkout($description),
+        'password'    => $tools->checkout($password),
+        'access'      => (int) $access,
     ];
     echo $view->render(
         'album::album_form',

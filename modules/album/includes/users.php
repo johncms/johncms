@@ -21,12 +21,12 @@ $mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 
 $title = __('List of users');
 $nav_chain->add($title);
-    $album_access = 'AND (`access` > 1 OR `t1`.`user_id` = ' . $user->id . ')';
-    $count_access = 'WHERE (`access` > 1 OR `user_id` = ' . $user->id . ')';
-    if ($user->rights >= 6) {
-        $album_access = '';
-        $count_access = '';
-    }
+$album_access = 'AND (`access` > 1 OR `t1`.`user_id` = ' . $user->id . ')';
+$count_access = 'WHERE (`access` > 1 OR `user_id` = ' . $user->id . ')';
+if ($user->rights >= 6) {
+    $album_access = '';
+    $count_access = '';
+}
 // Список посетителей. у которых есть фотографии
 switch ($mod) {
     case 'boys':
