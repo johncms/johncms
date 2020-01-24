@@ -288,7 +288,7 @@ class Photo
      */
     public function getCanVoteAttribute(): bool
     {
-        $can_vote = ($this->user->id !== $this->user_id && empty($this->user->ban) && $this->user->postforum > 10 && $this->user->total_on_site > 1200);
+        $can_vote = ($this->user->id !== $this->user_id && empty($this->user->ban) && $this->user->postforum > 10 && $this->user->datereg > (time() - 604800));
         if ($can_vote) {
             $req = $this->db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $this->user->id . "' AND `file_id` = '" . $this->id . "' LIMIT 1");
             if (! $req->rowCount()) {
