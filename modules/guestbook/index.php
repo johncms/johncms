@@ -68,6 +68,15 @@ $textl = isset($_SESSION['ga']) ? __('Admin Club') : __('Guestbook');
 
 $nav_chain->add($textl);
 
+$user_rights_names = [
+    3 => __('Forum moderator'),
+    4 => __('Download moderator'),
+    5 => __('Library moderator'),
+    6 => __('Super moderator'),
+    7 => __('Administrator'),
+    9 => __('Supervisor'),
+];
+
 // If the guest is closed, display a message and close access (except for Admins)
 if (! $config['mod_guest'] && $user->rights < 7) {
     echo $view->render(
@@ -404,8 +413,18 @@ switch ($act) {
                     $item['user_lastdate'] = $res_g['lastdate'] ?? 0;
                 }
 
-                $item['created'] = $tools->displayDate($res['time']);
+                $item['user_profile_link'] = '';
+                if ($user->id !== $res['user_id'] && $user->isValid()) {
+                    $item['user_profile_link'] = '/profile/?user=' . $res['user_id'];
+                }
+                $item['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip']);
                 $item['ip'] = long2ip((int) $res['ip']);
+                $item['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip((int) $res['ip_via_proxy']) : 0;
+                $item['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip((int) $item['ip_via_proxy']);
+
+                $item['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+
+                $item['created'] = $tools->displayDate($res['time']);
 
                 if ($res['user_id']) {
                     // For registered we show links and smiles
