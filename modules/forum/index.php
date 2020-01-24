@@ -688,7 +688,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 }
 
                 echo $view->render(
-                    'forum::topic_new',
+                    'forum::topic',
                     [
                         'first_post'       => $first_post,
                         'topic'            => $type1,
