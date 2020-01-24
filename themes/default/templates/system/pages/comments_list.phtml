@@ -70,10 +70,10 @@ $this->layout(
                     <div class="w-100">
                         <?php if (! empty($item['user_profile_link'])): ?>
                             <a href="<?= $item['user_profile_link'] ?>">
-                                <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
+                                <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
                             </a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
+                            <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
                         <?php endif; ?>
                         <span class="post-meta d-inline mr-2"><?= $item['created'] ?></span>
                         <?php if (! empty($item['edit_count'])): ?>

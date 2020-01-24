@@ -78,26 +78,53 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($data['items'] as $item): ?>
-
-    <div class="shadow post-item mb-2 <?= ! $item['read'] ? ' bg-yellow-light' : '' ?>">
-        <div class="post-header d-flex justify-content-between border-bottom pb-1">
-            <div class="d-flex align-items-end">
-                <?php if (! empty($item['user_id'])): ?>
-                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+    <div class="new_post-item border-bottom shadow mb-2 <?= ! $item['read'] ? ' bg-yellow-light' : '' ?>">
+        <div class="new_post-header d-flex justify-content-between">
+            <div class="post-user">
+                <?php if (! empty($item['user_profile_link'])): ?>
+                    <a href="<?= $item['user_profile_link'] ?>">
+                        <div class="avatar">
+                            <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                        </div>
+                    </a>
                 <?php else: ?>
-                    <a class="user-login mr-2"><?= $item['name'] ?></a>
+                    <div class="avatar">
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                    </div>
                 <?php endif; ?>
-                <span class="post-date"><?= $item['display_date'] ?></span>
+                <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
+                <?php if (! empty($item['user_rights_name'])): ?>
+                    <div class="post-of-user"
+                         data-toggle="tooltip"
+                         data-placement="top"
+                         data-html="true"
+                         title="<?= $item['user_rights_name'] ?>">
+                        <svg class="icon-post">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
+                        </svg>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                <div class="w-100">
+                    <?php if (! empty($item['user_profile_link'])): ?>
+                        <a href="<?= $item['user_profile_link'] ?>">
+                            <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
+                        </a>
+                    <?php else: ?>
+                        <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
+                    <?php endif; ?>
+                    <span class="post-meta d-inline mr-2"><?= $item['display_date'] ?></span>
+                </div>
+                <?php if (! empty($item['status'])): ?>
+                    <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                        <span class="font-weight-bold"><?= $item['status'] ?></span>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
-        <div class="post-body d-flex align-items-start pt-3 pb-3">
-            <div class="user-avatar mr-2 mr-md-4">
-                <div class="avatar-image rounded-circle overflow-hidden">
-                    <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
-                </div>
-                <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
-            </div>
-            <div class="overflow-auto flex-grow-1"><?= $item['text'] ?></div>
+        <div class="post-body mt-2 border-top pt-2 pb-2">
+            <?= $item['text'] ?>
         </div>
         <?php if (! empty($item['files'])): ?>
             <!-- Files block -->
@@ -132,25 +159,25 @@ $this->layout(
                 </div>
             </div>
         <?php endif; ?>
-        <div class="post-footer d-flex justify-content-between border-top pt-2">
-            <div class="post-user-info d-flex overflow-hidden small align-items-center">
+        <div class="post-footer d-flex justify-content-between mt-2">
+            <div class="overflow-hidden">
                 <?php if ($user->rights): ?>
-                    <div class="user-ip mr-2">
-                        <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
-                        <?php if (! empty($item['ip_via_proxy'])): ?>
-                            / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
-                        <?php endif; ?>
-                    </div>
-                    <div class="useragent">
-                        <span>User-Agent:</span>
-                        <span><?= $item['browser'] ?></span>
+                    <div class="post-meta d-flex">
+                        <div class="user-ip mr-2">
+                            <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                            <?php if (! empty($item['ip_via_proxy'])): ?>
+                                / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                            <?php endif; ?>
+                        </div>
+                        <div class="useragent">
+                            <span><?= $item['browser'] ?></span>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
-            <div class="text-nowrap post-actions">
-                <span class="text-muted pr-2 flex-grow-1"></span>
+            <div class="d-flex">
                 <?php if (! empty($item['delete_url'])): ?>
-                    <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= __('Delete') ?></a>
+                    <a href="<?= $item['delete_url'] ?>"><?= __('Delete') ?></a>
                 <?php endif; ?>
             </div>
         </div>
