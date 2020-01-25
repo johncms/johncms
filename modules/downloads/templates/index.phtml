@@ -53,16 +53,6 @@ $this->layout(
                 <a href="<?= $category['url'] ?>" class="text-dark-brown"><?= $category['rus_name'] ?></a>
                 <span class="badge badge-pill badge-light border ml-3"><?= $category['total'] ?></span>
             </div>
-            <?php if ($category['has_edit']): ?>
-                <div class="actions">
-                    <?php if ($total_cat > 1): ?>
-                        <a href="<?= $category['up_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Up') ?></a>
-                        <a href="<?= $category['down_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Down') ?></a>
-                    <?php endif; ?>
-                    <a href="<?= $category['edit_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Edit') ?></a>
-                    <a href="<?= $category['delete_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Delete') ?></a>
-                </div>
-            <?php endif; ?>
         </div>
         <?php if (! empty($category['desc']) || ! empty($category['field'])): ?>
             <div class="small pt-2 text-muted">
@@ -72,6 +62,16 @@ $this->layout(
                 <?php if (! empty($category['text'])): ?>
                     <div><?= __('Allowed extensions') ?>: <?= $category['text'] ?></div>
                 <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($category['has_edit']): ?>
+            <div class="border-top mt-2 pt-2">
+                <?php if ($total_cat > 1): ?>
+                    <a href="<?= $category['up_url'] ?>" class="mr-2"><?= __('Up') ?></a>
+                    <a href="<?= $category['down_url'] ?>" class="mr-2"><?= __('Down') ?></a>
+                <?php endif; ?>
+                <a href="<?= $category['edit_url'] ?>" class="mr-2"><?= __('Edit') ?></a>
+                <a href="<?= $category['delete_url'] ?>"><?= __('Delete') ?></a>
             </div>
         <?php endif; ?>
     </div>
