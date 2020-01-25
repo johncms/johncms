@@ -42,9 +42,8 @@
 }
 
 .sidebar__wrapper {
-    height: calc(100vh - 30px);
+    height: calc(100% - 70px);
     overflow: auto;
-    padding-bottom: 40px
 }
 
 .nav__vertical {
