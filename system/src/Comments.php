@@ -381,14 +381,6 @@ class Comments
 
             default:
                 $data = [];
-                $user_rights_names = [
-                    3 => __('Forum moderator'),
-                    4 => __('Download moderator'),
-                    5 => __('Library moderator'),
-                    6 => __('Super moderator'),
-                    7 => __('Administrator'),
-                    9 => __('Supervisor'),
-                ];
 
                 if (
                     ! $this->ban &&
@@ -422,7 +414,6 @@ class Comments
                     while ($res = $req->fetch()) {
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
                         $res['name'] = $attributes['author_name'];
-                        $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
                         $res['user_agent'] = $attributes['author_browser'];
