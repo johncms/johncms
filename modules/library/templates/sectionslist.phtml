@@ -32,15 +32,15 @@ $this->layout(
                     <a href="?do=dir&amp;id=<?= $section['id'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
                     <span class="badge badge-pill badge-light border ml-3"><?= $section['libCounter'] ?></span>
                 </div>
-                <?php if ($admin): ?>
-                    <div class="actions">
-                        <?= $section['sectionListAdminPanel'] ?>
-                    </div>
-                <?php endif; ?>
             </div>
             <?php if (! empty($main['description'])): ?>
-                <div class="small pt-2 text-muted">
+                <div class="small pt-2 mt-1 border-top text-muted">
                     <div><?= $main['description'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if ($admin): ?>
+                <div class="border-top mt-2 pt-2">
+                    <?= $section['sectionListAdminPanel'] ?>
                 </div>
             <?php endif; ?>
         </div>

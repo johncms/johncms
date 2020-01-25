@@ -49,15 +49,15 @@ $this->layout(
                     <a href="?do=dir&amp;id=<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
                     <span class="badge badge-pill badge-light border ml-3"><?= $main['libCounter'] ?></span>
                 </div>
-                <?php if ($admin): ?>
-                    <div class="actions">
-                        <?= $main['sectionListAdminPanel'] ?>
-                    </div>
-                <?php endif; ?>
             </div>
             <?php if (! empty($main['description'])): ?>
-                <div class="small pt-2 text-muted">
+                <div class="small pt-2 mt-1 text-muted border-top">
                     <div><?= $main['description'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if ($admin): ?>
+                <div class="border-top mt-2 pt-2">
+                    <?= $main['sectionListAdminPanel'] ?>
                 </div>
             <?php endif; ?>
         </div>
