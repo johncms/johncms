@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\UserProperties;
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
@@ -170,16 +172,10 @@ switch ($mod) {
                         'name' => __('Remove IP'),
                     ],
                 ];
-
-                $res['user_profile_link'] = '';
-                if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
-                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
-                }
-                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-                $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
-                $res['ip'] = long2ip($res['ip']);
-                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
-                $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
+                $res['user_id'] = $res['id'];
+                $user_properties = new UserProperties();
+                $user_data = $user_properties->getFromArray($res);
+                $res = array_merge($res, $user_data);
                 $items[] = $res;
             }
         }

@@ -17,9 +17,9 @@ use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use Johncms\UserProperties;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
  * @var Bbcode $bbcode
@@ -67,15 +67,6 @@ if (isset($_SESSION['ga']) && $user->rights < 1 && ! in_array($user->id, $guestA
 $textl = isset($_SESSION['ga']) ? __('Admin Club') : __('Guestbook');
 
 $nav_chain->add($textl);
-
-$user_rights_names = [
-    3 => __('Forum moderator'),
-    4 => __('Download moderator'),
-    5 => __('Library moderator'),
-    6 => __('Super moderator'),
-    7 => __('Administrator'),
-    9 => __('Supervisor'),
-];
 
 // If the guest is closed, display a message and close access (except for Admins)
 if (! $config['mod_guest'] && $user->rights < 7) {
@@ -413,16 +404,9 @@ switch ($act) {
                     $item['user_lastdate'] = $res_g['lastdate'] ?? 0;
                 }
 
-                $item['user_profile_link'] = '';
-                if ($user->id !== $res['user_id'] && $user->isValid()) {
-                    $item['user_profile_link'] = '/profile/?user=' . $res['user_id'];
-                }
-                $item['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip']);
-                $item['ip'] = long2ip((int) $res['ip']);
-                $item['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip((int) $res['ip_via_proxy']) : 0;
-                $item['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip((int) $item['ip_via_proxy']);
-
-                $item['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+                $user_properties = new UserProperties();
+                $user_data = $user_properties->getFromArray($res);
+                $item = array_merge($item, $user_data);
 
                 $item['created'] = $tools->displayDate($res['time']);
 
@@ -473,7 +457,6 @@ switch ($act) {
                 }
 
                 $item['message_id'] = $res['gid'];
-                $item['user_is_online'] = time() <= $res['lastdate'] + 300;
                 $items[] = $item;
             }
 

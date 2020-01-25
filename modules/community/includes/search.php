@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\UserProperties;
+
 /** @var Johncms\System\Legacy\Tools $tools */
 $tools = di(Johncms\System\Legacy\Tools::class);
 
@@ -54,15 +56,10 @@ if ($search && ! $error) {
         $req = $db->query('SELECT * FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db) . " ORDER BY `name` ASC LIMIT ${start}, " . $user->config->kmess);
         $data['list'] = static function () use ($req, $user) {
             while ($res = $req->fetch()) {
-                $res['user_profile_link'] = '';
-                if (! empty($res['id']) && $user->id !== $res['id'] && $user->isValid()) {
-                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
-                }
-                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-                $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
-                $res['ip'] = long2ip($res['ip']);
-                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
-                $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
+                $res['user_id'] = $res['id'];
+                $user_properties = new UserProperties();
+                $user_data = $user_properties->getFromArray($res);
+                $res = array_merge($res, $user_data);
                 yield $res;
             }
         };

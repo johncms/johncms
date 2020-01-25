@@ -17,6 +17,7 @@ use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use Johncms\UserProperties;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -587,14 +588,6 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 $i = 1;
                 $messages = [];
                 while ($res = $req->fetch()) {
-                    $res['user_profile_link'] = '';
-                    if ($user->isValid() && $user->id != $res['user_id']) {
-                        $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
-                    }
-
-                    $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
-
-                    $res['user_is_online'] = time() <= $res['lastdate'] + 300;
                     $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
 
                     $res['reply_url'] = '';
@@ -651,10 +644,9 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         }
                     }
 
-                    $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
-                    $res['ip'] = long2ip($res['ip']);
-                    $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip_via_proxy']);
-                    $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+                    $user_properties = new UserProperties();
+                    $user_data = $user_properties->getFromArray($res);
+                    $res = array_merge($res, $user_data);
 
                     if ($res['has_edit']) {
                         $res['edit_url'] = '/forum/?act=editpost&amp;id=' . $res['id'];

@@ -422,10 +422,6 @@ class Comments
                     while ($res = $req->fetch()) {
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
                         $res['name'] = $attributes['author_name'];
-                        $res['user_profile_link'] = '';
-                        if ($this->systemUser->id !== $res['user_id'] && $this->systemUser->isValid()) {
-                            $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
-                        }
                         $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
@@ -451,16 +447,14 @@ class Comments
                         $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
 
                         $res['post_text'] = $text;
-
-                        $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip']);
-                        $res['ip'] = long2ip((int) $res['ip']);
-                        $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip((int) $res['ip_via_proxy']) : 0;
-                        $res['search_ip_via_proxy_url'] = ! empty($res['ip_via_proxy']) ? '/admin/search_ip/?ip=' . long2ip((int) $res['ip_via_proxy']) : '';
-
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;
                         $res['editor_name'] = $attributes['edit_name'] ?? '';
                         $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->tools->displayDate($attributes['edit_time']) : '';
-                        $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+
+                        $user_properties = new UserProperties();
+                        $user_data = $user_properties->getFromArray($res);
+                        $res = array_merge($res, $user_data);
+
                         $res['reply_text'] = '';
                         if (! empty($res['reply'])) {
                             $reply = $this->tools->checkout($res['reply'], 1, 1);
