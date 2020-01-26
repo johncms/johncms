@@ -93,6 +93,11 @@ $this->layout(
                 <?php endif; ?>
                 <a href="<?= $topic['url'] ?>" class="text-dark-brown flex-grow-1 flex-md-grow-0"><?= $topic['name'] ?></a>
                 <span class="badge badge-pill badge-light border ml-3"><?= $topic['show_posts_count'] ?></span>
+                <a href="<?= $topic['last_page_url'] ?>" class="ml-auto pl-2" title="<?= __('Last page') ?>">
+                    <svg class="icon icon-chevron-bottom text-dark-brown">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
+                    </svg>
+                </a>
             </div>
         </div>
         <div class="small pt-2 text-muted">

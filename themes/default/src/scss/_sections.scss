@@ -11,6 +11,14 @@
     padding-bottom: 0.5rem;
     line-height: 1.2;
 
+    @media (max-width: 560px) {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 380px) {
+        font-size: 0.9rem;
+    }
+
     .badge {
         font-size: 0.8rem;
         opacity: 0.8;
