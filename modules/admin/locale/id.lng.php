@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Permissions' => 'Perizinan',
       'Administration' => 'Pengurus',
       'Supervisors' => 'Supervisor',
       'Administrators' => 'Administrator',
@@ -129,7 +130,6 @@
       'You cannot delete higher administration' => 'Anda tidak dapat menghapus administrasi yang lebih tinggi',
       'User does not exists' => 'Pengguna tidak ada',
       'Admin Panel' => 'Panel Pengurus',
-      'Permissions' => 'Perizinan',
       'Access is allowed' => 'Akses diizinkan',
       'Only for authorized' => 'Hanya untuk yang diizinkan',
       'Read only' => 'Hanya Baca',

@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Permissions' => 'Uprawnienia dostępu',
       'Administration' => 'Administracja',
       'Supervisors' => 'Szefowie portalu',
       'Administrators' => 'Administratorzy',
@@ -135,7 +136,6 @@
       'You cannot delete higher administration' => 'To może usunąć tylko administrator',
       'User does not exists' => 'Użytkownik nie istnieje',
       'Admin Panel' => 'Panel Admina',
-      'Permissions' => 'Uprawnienia dostępu',
       'Access is allowed' => 'Dostęp jest dozwolony',
       'Only for authorized' => 'Tylko dla zalogowanych',
       'Read only' => 'Tylko do odczytu',

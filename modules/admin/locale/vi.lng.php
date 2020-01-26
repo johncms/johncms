@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Permissions' => 'Quyền truy cập',
       'Administration' => 'Dành cho quản trị',
       'Supervisors' => 'Giám sát',
       'Administrators' => 'Quản trị viên',
@@ -137,7 +138,6 @@
       'You cannot delete higher administration' => 'Bạn không thể xóa bài cũ của bạn',
       'User does not exists' => 'Người dùng không tồn tại',
       'Admin Panel' => 'Quản Trị Viên',
-      'Permissions' => 'Quyền truy cập',
       'Forum' => 'Diễn đàn',
       'Access is allowed' => 'Được Phép Truy Cập',
       'Only for authorized' => 'Chỉ cho phép',

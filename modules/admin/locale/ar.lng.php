@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Permissions' => 'التراخيص',
       'Administration' => 'الإدارة',
       'Supervisors' => 'المشرف',
       'Administrators' => 'مدير النظام',
@@ -136,7 +137,6 @@
       'You cannot delete higher administration' => 'لا يمكنك حذف الإدارة العليا',
       'User does not exists' => 'المستخدم غير موجود',
       'Admin Panel' => 'لوحة الادارة',
-      'Permissions' => 'التراخيص',
       'Forum' => 'منتديات',
       'Access is allowed' => 'ممنوع الوصول',
       'Only for authorized' => 'فقط للاذن',

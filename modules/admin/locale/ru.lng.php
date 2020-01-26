@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Permissions' => 'Права доступа',
       'Administration' => 'Администрация',
       'Supervisors' => 'Супервайзоры',
       'Administrators' => 'Администраторы',
@@ -145,7 +146,6 @@
       'You cannot delete higher administration' => 'Вы не можете удалить старшего Вас по должности',
       'User does not exists' => 'Такого пользователя не существует',
       'Admin Panel' => 'Админ панель',
-      'Permissions' => 'Права доступа',
       'Forum' => 'Форум',
       'Access is allowed' => 'Доступ открыт',
       'Only for authorized' => 'Только для авторизованных',

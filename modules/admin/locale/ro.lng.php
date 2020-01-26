@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Permissions' => 'Permisiuni',
       'Administration' => 'Administrare',
       'Supervisors' => 'Administratori Principali',
       'Administrators' => 'Adnistratori',
@@ -137,7 +138,6 @@ Anti-Spyware',
       'You cannot delete higher administration' => 'Nu poti sterge in membru al echipei',
       'User does not exists' => 'Utilizatorul nu exista',
       'Admin Panel' => 'Panou Administrator',
-      'Permissions' => 'Permisiuni',
       'Access is allowed' => 'Acessul este permis',
       'Only for authorized' => 'Doar pentru cei autorizati',
       'Read only' => 'Doar de citit',
