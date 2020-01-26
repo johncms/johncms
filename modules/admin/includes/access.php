@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,20 +8,24 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $config = di('config')['johncms'];
 $errorMsg = false;
+$title = __('Permissions');
+$nav_chain->add($title);
 
 if (isset($_POST['submit'])) {
-    $config['mod_reg'] = (int) $_POST['reg'] ?? 0;
-    $config['mod_forum'] = (int) ($_POST['forum']) ?? 0;
-    $config['mod_guest'] = (int) ($_POST['guest']) ?? 0;
-    $config['mod_lib'] = (int) ($_POST['lib']) ?? 0;
+    $config['mod_reg'] = $request->getPost('reg', 0, FILTER_VALIDATE_INT);
+    $config['mod_forum'] = $request->getPost('forum', 0, FILTER_VALIDATE_INT);
+    $config['mod_guest'] = $request->getPost('guest', 0, FILTER_VALIDATE_INT);
+    $config['mod_lib'] = $request->getPost('lib', 0, FILTER_VALIDATE_INT);
     $config['mod_lib_comm'] = isset($_POST['libcomm']);
-    $config['mod_down'] = (int) ($_POST['down']) ?? 0;
+    $config['mod_down'] = $request->getPost('down', 0, FILTER_VALIDATE_INT);
     $config['mod_down_comm'] = isset($_POST['downcomm']);
-    $config['active'] = (int) ($_POST['active']) ?? 0;
+    $config['active'] = $request->getPost('active', 0, FILTER_VALIDATE_INT);
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
@@ -38,8 +40,13 @@ if (isset($_POST['submit'])) {
     }
 }
 
-echo $view->render('admin::access', [
-    'conf'         => $config,
-    'errorMsg'     => $errorMsg,
-    'confirmation' => $confirmation ?? false,
-]);
+echo $view->render(
+    'admin::access',
+    [
+        'title'        => $title,
+        'page_title'   => $title,
+        'conf'         => $config,
+        'errorMsg'     => $errorMsg,
+        'confirmation' => $confirmation ?? false,
+    ]
+);
