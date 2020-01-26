@@ -78,7 +78,7 @@ msgid "Clear all"
 msgstr ""
 
 #: modules/guestbook/templates/clear.phtml:25
-#: modules/guestbook/templates/index.phtml:156
+#: modules/guestbook/templates/index.phtml:199
 msgid "Clear"
 msgstr ""
 
@@ -97,7 +97,7 @@ msgid "Do you really want to delete?"
 msgstr ""
 
 #: modules/guestbook/templates/confirm_delete.phtml:10
-#: modules/guestbook/templates/index.phtml:140
+#: modules/guestbook/templates/index.phtml:182
 msgid "Delete"
 msgstr ""
 
@@ -162,11 +162,20 @@ msgstr ""
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:94
+#: modules/guestbook/templates/index.phtml:119
+#: modules/guestbook/templates/index.phtml:122
 msgid "Guest"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:100
+#: modules/guestbook/templates/index.phtml:130
+msgid "Edited:"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:131
+msgid "Edited"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:170
 #: modules/guestbook/templates/reply.phtml:2
 #: modules/guestbook/templates/reply.phtml:3
 #: modules/guestbook/templates/reply.phtml:9
@@ -174,10 +183,6 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:135
-msgid "Edited:"
-msgstr ""
-
-#: modules/guestbook/templates/index.phtml:139
+#: modules/guestbook/templates/index.phtml:181
 msgid "Edit"
 msgstr ""

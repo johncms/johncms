@@ -2,75 +2,75 @@ msgid ""
 msgstr ""
 "X-Domain: community\n"
 
-#: modules/community/includes/administration.php:25
-#: modules/community/includes/administration.php:31
-#: modules/community/includes/administration.php:32
+#: modules/community/includes/administration.php:27
+#: modules/community/includes/administration.php:33
+#: modules/community/includes/administration.php:34
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
 msgstr ""
 
-#: modules/community/includes/birthdays.php:18
-#: modules/community/includes/birthdays.php:24
-#: modules/community/includes/birthdays.php:25
+#: modules/community/includes/birthdays.php:20
+#: modules/community/includes/birthdays.php:26
+#: modules/community/includes/birthdays.php:27
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
 msgstr ""
 
-#: modules/community/includes/search.php:22
+#: modules/community/includes/search.php:24
 #: modules/community/templates/search.phtml:67
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
 msgstr ""
 
-#: modules/community/includes/search.php:31
-#: modules/community/includes/search.php:35
+#: modules/community/includes/search.php:33
+#: modules/community/includes/search.php:37
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
 msgstr ""
 
-#: modules/community/includes/search.php:31
+#: modules/community/includes/search.php:33
 msgid "Invalid length"
 msgstr ""
 
-#: modules/community/includes/search.php:35
+#: modules/community/includes/search.php:37
 msgid "Invalid characters"
 msgstr ""
 
-#: modules/community/includes/top.php:19
+#: modules/community/includes/top.php:21
 msgid "Forum"
 msgstr ""
 
-#: modules/community/includes/top.php:24
+#: modules/community/includes/top.php:26
 msgid "Guestbook"
 msgstr ""
 
-#: modules/community/includes/top.php:29
+#: modules/community/includes/top.php:31
 msgid "Comments"
 msgstr ""
 
-#: modules/community/includes/top.php:37
+#: modules/community/includes/top.php:39
 msgid "Karma"
 msgstr ""
 
-#: modules/community/includes/top.php:48
+#: modules/community/includes/top.php:50
 msgid "Most active in Guestbook"
 msgstr ""
 
-#: modules/community/includes/top.php:55
+#: modules/community/includes/top.php:57
 msgid "Most commentators"
 msgstr ""
 
-#: modules/community/includes/top.php:63
+#: modules/community/includes/top.php:65
 msgid "Best Karma"
 msgstr ""
 
-#: modules/community/includes/top.php:71
+#: modules/community/includes/top.php:73
 msgid "Most active in Forum"
 msgstr ""
 
-#: modules/community/includes/users.php:25
-#: modules/community/includes/users.php:31
-#: modules/community/includes/users.php:32
+#: modules/community/includes/users.php:27
+#: modules/community/includes/users.php:33
+#: modules/community/includes/users.php:34
 msgid "List of users"
 msgstr ""
 

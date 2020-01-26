@@ -2,29 +2,34 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
-#: modules/admin/includes/adminlist.php:20
+#: modules/admin/includes/access.php:17
+#: modules/admin/templates/sidebar-admin-menu.phtml:145
+msgid "Permissions"
+msgstr ""
+
+#: modules/admin/includes/adminlist.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:34
+#: modules/admin/includes/adminlist.php:36
 msgid "Supervisors"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:59
+#: modules/admin/includes/adminlist.php:56
 msgid "Administrators"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:84
+#: modules/admin/includes/adminlist.php:76
 msgid "Super Moderators"
 msgstr ""
 
-#: modules/admin/includes/adminlist.php:109
+#: modules/admin/includes/adminlist.php:96
 msgid "Moderators"
 msgstr ""
 
 #: modules/admin/includes/ads.php:21
-#: modules/admin/templates/sidebar-admin-menu.phtml:161
+#: modules/admin/templates/sidebar-admin-menu.phtml:169
 msgid "Advertisement"
 msgstr ""
 
@@ -47,9 +52,9 @@ msgstr ""
 #: modules/admin/includes/forum/del.php:84
 #: modules/admin/includes/forum/del.php:155
 #: modules/admin/includes/forum/del.php:174
-#: modules/admin/includes/reg.php:35
-#: modules/admin/includes/reg.php:77
-#: modules/admin/includes/reg.php:144
+#: modules/admin/includes/reg.php:37
+#: modules/admin/includes/reg.php:79
+#: modules/admin/includes/reg.php:146
 #: modules/admin/includes/usr_del.php:47
 msgid "Wrong data"
 msgstr ""
@@ -84,18 +89,18 @@ msgstr ""
 #: modules/admin/includes/antispy.php:228
 #: modules/admin/includes/counters.php:180
 #: modules/admin/includes/ipban.php:446
-#: modules/admin/includes/reg.php:49
-#: modules/admin/includes/reg.php:64
-#: modules/admin/includes/reg.php:95
-#: modules/admin/includes/reg.php:110
-#: modules/admin/includes/reg.php:135
+#: modules/admin/includes/reg.php:51
+#: modules/admin/includes/reg.php:66
+#: modules/admin/includes/reg.php:97
+#: modules/admin/includes/reg.php:112
+#: modules/admin/includes/reg.php:137
 #: modules/admin/includes/usr_clean.php:75
 msgid "Continue"
 msgstr ""
 
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ipban.php:452
-#: modules/admin/includes/reg.php:166
+#: modules/admin/includes/reg.php:168
 #: modules/admin/templates/ads_confirm.phtml:40
 #: modules/admin/templates/ads_index.phtml:60
 #: modules/admin/templates/counters.phtml:64
@@ -205,13 +210,13 @@ msgstr ""
 #: modules/admin/includes/antiflood.php:82
 #: modules/admin/includes/karma.php:76
 #: modules/admin/includes/news.php:57
-#: modules/admin/templates/access.phtml:10
+#: modules/admin/templates/access.phtml:31
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
 msgstr ""
 
 #: modules/admin/includes/antispy.php:21
-#: modules/admin/templates/sidebar-admin-menu.phtml:247
+#: modules/admin/templates/sidebar-admin-menu.phtml:255
 msgid "Anti-Spyware"
 msgstr ""
 
@@ -224,11 +229,11 @@ msgstr ""
 #: modules/admin/includes/settings.php:23
 #: modules/admin/includes/usr_del.php:22
 #: modules/admin/index.php:54
-#: modules/admin/templates/access.phtml:31
-#: modules/admin/templates/access.phtml:49
-#: modules/admin/templates/access.phtml:67
-#: modules/admin/templates/access.phtml:90
-#: modules/admin/templates/access.phtml:127
+#: modules/admin/templates/access.phtml:52
+#: modules/admin/templates/access.phtml:70
+#: modules/admin/templates/access.phtml:88
+#: modules/admin/templates/access.phtml:111
+#: modules/admin/templates/access.phtml:148
 msgid "Access denied"
 msgstr ""
 
@@ -296,43 +301,43 @@ msgstr ""
 msgid "Snapshot successfully created"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:22
+#: modules/admin/includes/ban_panel.php:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:34
+#: modules/admin/includes/ban_panel.php:36
 msgid "Amnesty is available for supervisors only"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:39
-#: modules/admin/includes/ban_panel.php:64
+#: modules/admin/includes/ban_panel.php:41
+#: modules/admin/includes/ban_panel.php:66
 #: modules/admin/templates/ban_panel.phtml:62
 msgid "Amnesty"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:52
+#: modules/admin/includes/ban_panel.php:54
 msgid "Amnesty has been successful"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:73
+#: modules/admin/includes/ban_panel.php:75
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:95
+#: modules/admin/includes/ban_panel.php:97
 msgid "Term"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:100
+#: modules/admin/includes/ban_panel.php:102
 msgid "Violations"
 msgstr ""
 
-#: modules/admin/includes/ban_panel.php:131
+#: modules/admin/includes/ban_panel.php:133
 msgid "Violations history"
 msgstr ""
 
 #: modules/admin/includes/counters.php:22
-#: modules/admin/templates/sidebar-admin-menu.phtml:170
+#: modules/admin/templates/sidebar-admin-menu.phtml:178
 msgid "Counters"
 msgstr ""
 
@@ -531,7 +536,7 @@ msgid "by section"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:21
-#: modules/admin/templates/sidebar-admin-menu.phtml:255
+#: modules/admin/templates/sidebar-admin-menu.phtml:263
 msgid "Ban by IP"
 msgstr ""
 
@@ -546,18 +551,18 @@ msgstr ""
 #: modules/admin/includes/ipban.php:271
 #: modules/admin/includes/ipban.php:348
 #: modules/admin/includes/ipban.php:366
-#: modules/admin/includes/search_ip.php:79
-#: modules/admin/includes/search_ip.php:86
+#: modules/admin/includes/search_ip.php:81
+#: modules/admin/includes/search_ip.php:88
 msgid "Invalid IP"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:81
-#: modules/admin/includes/search_ip.php:54
+#: modules/admin/includes/search_ip.php:56
 msgid "First IP is entered incorrectly"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:89
-#: modules/admin/includes/search_ip.php:62
+#: modules/admin/includes/search_ip.php:64
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
@@ -578,7 +583,7 @@ msgstr ""
 #: modules/admin/includes/ipban.php:204
 #: modules/admin/includes/ipban.php:402
 #: modules/admin/includes/ipban.php:500
-#: modules/admin/templates/access.phtml:115
+#: modules/admin/templates/access.phtml:136
 #: modules/admin/templates/ipban_add.phtml:53
 msgid "Registration"
 msgstr ""
@@ -701,58 +706,58 @@ msgstr ""
 msgid "News on the mainpage"
 msgstr ""
 
-#: modules/admin/includes/reg.php:21
+#: modules/admin/includes/reg.php:23
 msgid "Registration confirmation"
 msgstr ""
 
-#: modules/admin/includes/reg.php:47
-#: modules/admin/includes/reg.php:62
+#: modules/admin/includes/reg.php:49
+#: modules/admin/includes/reg.php:64
 msgid "Registration is confirmed"
 msgstr ""
 
-#: modules/admin/includes/reg.php:93
+#: modules/admin/includes/reg.php:95
 #: modules/admin/includes/usr_del.php:116
 msgid "User deleted"
 msgstr ""
 
-#: modules/admin/includes/reg.php:108
+#: modules/admin/includes/reg.php:110
 msgid "All unconfirmed registrations were removed"
 msgstr ""
 
-#: modules/admin/includes/reg.php:133
+#: modules/admin/includes/reg.php:135
 msgid "All unconfirmed registrations with selected IP were deleted"
 msgstr ""
 
-#: modules/admin/includes/reg.php:162
+#: modules/admin/includes/reg.php:164
 msgid "Approve"
 msgstr ""
 
-#: modules/admin/includes/reg.php:170
+#: modules/admin/includes/reg.php:172
 msgid "Remove IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:29
+#: modules/admin/includes/search_ip.php:31
 #: modules/admin/templates/search_ip.phtml:37
 #: modules/admin/templates/search_ip.phtml:39
 msgid "Search IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:35
+#: modules/admin/includes/search_ip.php:37
 msgid "Actual IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:40
+#: modules/admin/includes/search_ip.php:42
 msgid "IP history"
 msgstr ""
 
 #: modules/admin/includes/settings.php:27
 #: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/sidebar-admin-menu.phtml:201
+#: modules/admin/templates/sidebar-admin-menu.phtml:209
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
 msgstr ""
 
-#: modules/admin/includes/userlist.php:24
+#: modules/admin/includes/userlist.php:25
 #: modules/admin/templates/userlist.phtml:3
 msgid "List of Users"
 msgstr ""
@@ -779,8 +784,6 @@ msgid "User does not exists"
 msgstr ""
 
 #: modules/admin/index.php:50
-#: modules/admin/templates/access.phtml:2
-#: modules/admin/templates/access.phtml:5
 #: modules/admin/templates/index.phtml:1
 #: modules/admin/templates/ip_whois.phtml:8
 #: modules/admin/templates/languages.phtml:6
@@ -790,69 +793,65 @@ msgstr ""
 msgid "Admin Panel"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:5
-msgid "Permissions"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:15
-#: modules/admin/templates/sidebar-admin-menu.phtml:145
+#: modules/admin/templates/access.phtml:36
+#: modules/admin/templates/sidebar-admin-menu.phtml:153
 #: modules/admin/templates/usr_del.phtml:51
 msgid "Forum"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:19
-#: modules/admin/templates/access.phtml:41
-#: modules/admin/templates/access.phtml:59
-#: modules/admin/templates/access.phtml:82
-#: modules/admin/templates/access.phtml:105
-#: modules/admin/templates/access.phtml:119
+#: modules/admin/templates/access.phtml:40
+#: modules/admin/templates/access.phtml:62
+#: modules/admin/templates/access.phtml:80
+#: modules/admin/templates/access.phtml:103
+#: modules/admin/templates/access.phtml:126
+#: modules/admin/templates/access.phtml:140
 msgid "Access is allowed"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:23
-#: modules/admin/templates/access.phtml:45
-#: modules/admin/templates/access.phtml:63
-#: modules/admin/templates/access.phtml:86
-#: modules/admin/templates/access.phtml:109
+#: modules/admin/templates/access.phtml:44
+#: modules/admin/templates/access.phtml:66
+#: modules/admin/templates/access.phtml:84
+#: modules/admin/templates/access.phtml:107
+#: modules/admin/templates/access.phtml:130
 msgid "Only for authorized"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:27
+#: modules/admin/templates/access.phtml:48
 msgid "Read only"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:37
+#: modules/admin/templates/access.phtml:58
 msgid "Guestbook"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:55
+#: modules/admin/templates/access.phtml:76
 msgid "Library"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:72
-#: modules/admin/templates/access.phtml:95
+#: modules/admin/templates/access.phtml:93
+#: modules/admin/templates/access.phtml:116
 #: modules/admin/templates/news.phtml:69
 #: modules/admin/templates/usr_del.phtml:44
 msgid "Comments"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:78
+#: modules/admin/templates/access.phtml:99
 msgid "Downloads"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:101
+#: modules/admin/templates/access.phtml:122
 msgid "Community"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:123
+#: modules/admin/templates/access.phtml:144
 msgid "With moderation"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:133
+#: modules/admin/templates/access.phtml:154
 msgid "Administrators always have access to all closed modules and comments"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:135
+#: modules/admin/templates/access.phtml:156
 #: modules/admin/templates/ads_add.phtml:127
 #: modules/admin/templates/amnesty.phtml:44
 #: modules/admin/templates/antiflood.phtml:82
@@ -1655,23 +1654,23 @@ msgstr ""
 msgid "Modules"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:153
+#: modules/admin/templates/sidebar-admin-menu.phtml:161
 msgid "News"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:184
+#: modules/admin/templates/sidebar-admin-menu.phtml:192
 msgid "System"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:209
+#: modules/admin/templates/sidebar-admin-menu.phtml:217
 msgid "Update Smilies"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:217
+#: modules/admin/templates/sidebar-admin-menu.phtml:225
 msgid "Language Settings"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:230
+#: modules/admin/templates/sidebar-admin-menu.phtml:238
 msgid "Security"
 msgstr ""
 

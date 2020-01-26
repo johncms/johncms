@@ -22,7 +22,7 @@ msgstr ""
 #: modules/mail/templates/contact_list.phtml:93
 #: modules/mail/templates/conversations.phtml:86
 #: modules/mail/templates/files.phtml:76
-#: modules/mail/templates/messages.phtml:176
+#: modules/mail/templates/messages.phtml:203
 msgid "Back"
 msgstr ""
 
@@ -39,7 +39,7 @@ msgstr ""
 #: modules/mail/includes/new.php:44
 #: modules/mail/includes/output.php:96
 #: modules/mail/includes/write.php:91
-#: modules/mail/templates/messages.phtml:153
+#: modules/mail/templates/messages.phtml:180
 msgid "Delete"
 msgstr ""
 
@@ -220,7 +220,7 @@ msgid "Sent messages"
 msgstr ""
 
 #: modules/mail/includes/write.php:42
-#: modules/mail/templates/messages.phtml:161
+#: modules/mail/templates/messages.phtml:188
 msgid "Clear messages"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgstr[0] ""
 #: modules/mail/templates/contact_list.phtml:89
 #: modules/mail/templates/conversations.phtml:82
 #: modules/mail/templates/files.phtml:72
-#: modules/mail/templates/messages.phtml:172
+#: modules/mail/templates/messages.phtml:199
 msgid "Total:"
 msgstr ""
 
@@ -343,6 +343,6 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:105
+#: modules/mail/templates/messages.phtml:132
 msgid "Attached files"
 msgstr ""

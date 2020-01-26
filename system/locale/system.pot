@@ -188,7 +188,7 @@ msgstr ""
 #: system/src/Comments.php:290
 #: system/src/Comments.php:302
 #: system/src/Comments.php:322
-#: themes/default/templates/system/pages/comments_list.phtml:114
+#: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
@@ -200,7 +200,7 @@ msgstr ""
 #: system/src/Comments.php:139
 #: system/src/Comments.php:208
 #: system/src/Comments.php:209
-#: themes/default/templates/system/pages/comments_list.phtml:50
+#: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
 msgstr ""
 
@@ -227,7 +227,7 @@ msgstr ""
 #: system/src/Comments.php:233
 #: system/src/Comments.php:307
 #: system/src/Comments.php:308
-#: themes/default/templates/system/pages/comments_list.phtml:96
+#: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
 msgstr ""
 
@@ -239,23 +239,23 @@ msgstr ""
 #: system/src/Comments.php:372
 #: system/src/Comments.php:373
 #: themes/default/templates/system/pages/comments_delete.phtml:26
-#: themes/default/templates/system/pages/comments_list.phtml:99
+#: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:571
+#: system/src/Comments.php:568
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:577
+#: system/src/Comments.php:574
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:577
+#: system/src/Comments.php:574
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:585
+#: system/src/Comments.php:582
 msgid "Message already exists"
 msgstr ""
 
@@ -312,7 +312,6 @@ msgid "Spoiler"
 msgstr ""
 
 #: system/src/System/Legacy/Bbcode.php:233
-#: themes/default/templates/system/pages/comments_list.phtml:53
 msgid "Quote"
 msgstr ""
 
@@ -436,6 +435,30 @@ msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
 
+#: system/src/UserProperties.php:69
+msgid "Forum moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:70
+msgid "Download moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:71
+msgid "Library moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:72
+msgid "Super moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:73
+msgid "Administrator"
+msgstr ""
+
+#: system/src/UserProperties.php:74
+msgid "Supervisor"
+msgstr ""
+
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:37
 msgid "News archive"
 msgstr ""
@@ -480,6 +503,10 @@ msgstr ""
 msgid "The list is empty"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_list.phtml:92
+#: themes/default/templates/system/pages/comments_list.phtml:84
+msgid "Edited:"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
 msgstr ""

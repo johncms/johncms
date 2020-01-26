@@ -32,7 +32,7 @@ msgstr ""
 #: modules/album/includes/image_upload.php:160
 #: modules/album/includes/show.php:34
 #: modules/album/includes/show.php:48
-#: modules/album/includes/top.php:37
+#: modules/album/includes/top.php:39
 #: modules/album/includes/vote.php:35
 #: modules/album/includes/vote.php:95
 msgid "Wrong data"
@@ -79,15 +79,15 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: modules/album/includes/edit.php:87
+#: modules/album/includes/edit.php:89
 msgid "The album already exists"
 msgstr ""
 
-#: modules/album/includes/edit.php:152
+#: modules/album/includes/edit.php:155
 msgid "Album successfully changed"
 msgstr ""
 
-#: modules/album/includes/edit.php:152
+#: modules/album/includes/edit.php:155
 msgid "Album successfully created"
 msgstr ""
 
@@ -180,40 +180,40 @@ msgstr ""
 msgid "Photo added to the profile"
 msgstr ""
 
-#: modules/album/includes/top.php:43
+#: modules/album/includes/top.php:45
 msgid "Unread Comments"
 msgstr ""
 
-#: modules/album/includes/top.php:54
+#: modules/album/includes/top.php:64
 msgid "Recent comments"
 msgstr ""
 
-#: modules/album/includes/top.php:64
+#: modules/album/includes/top.php:82
 #: modules/album/templates/index.phtml:61
 msgid "Top Views"
 msgstr ""
 
-#: modules/album/includes/top.php:74
+#: modules/album/includes/top.php:98
 #: modules/album/templates/index.phtml:60
 msgid "Top Downloads"
 msgstr ""
 
-#: modules/album/includes/top.php:84
+#: modules/album/includes/top.php:114
 #: modules/album/templates/index.phtml:62
 msgid "Top Comments"
 msgstr ""
 
-#: modules/album/includes/top.php:94
+#: modules/album/includes/top.php:130
 #: modules/album/templates/index.phtml:59
 msgid "Top Votes"
 msgstr ""
 
-#: modules/album/includes/top.php:104
+#: modules/album/includes/top.php:147
 #: modules/album/templates/index.phtml:63
 msgid "Top Worst"
 msgstr ""
 
-#: modules/album/includes/top.php:114
+#: modules/album/includes/top.php:164
 msgid "New photos"
 msgstr ""
 
@@ -221,16 +221,16 @@ msgstr ""
 msgid "List of users"
 msgstr ""
 
-#: modules/album/includes/users.php:41
+#: modules/album/includes/users.php:46
 msgid "All"
 msgstr ""
 
-#: modules/album/includes/users.php:46
+#: modules/album/includes/users.php:51
 #: modules/album/templates/index.phtml:42
 msgid "Guys"
 msgstr ""
 
-#: modules/album/includes/users.php:51
+#: modules/album/includes/users.php:56
 #: modules/album/templates/index.phtml:46
 msgid "Girls"
 msgstr ""

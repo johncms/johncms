@@ -518,7 +518,7 @@ msgstr ""
 
 #: modules/downloads/templates/comments_review.phtml:93
 #: modules/downloads/templates/files_more.phtml:43
-#: modules/downloads/templates/index.phtml:62
+#: modules/downloads/templates/index.phtml:73
 msgid "Edit"
 msgstr ""
 
@@ -529,7 +529,7 @@ msgstr ""
 #: modules/downloads/templates/file_row.phtml:32
 #: modules/downloads/templates/files_more.phtml:44
 #: modules/downloads/templates/folder_delete.phtml:35
-#: modules/downloads/templates/index.phtml:63
+#: modules/downloads/templates/index.phtml:74
 msgid "Delete"
 msgstr ""
 
@@ -659,7 +659,7 @@ msgstr ""
 #: modules/downloads/templates/folder_form.phtml:57
 #: modules/downloads/templates/folder_form.phtml:58
 #: modules/downloads/templates/import.phtml:74
-#: modules/downloads/templates/index.phtml:73
+#: modules/downloads/templates/index.phtml:63
 msgid "Allowed extensions"
 msgstr ""
 
@@ -720,11 +720,11 @@ msgstr ""
 msgid "Top Files"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:59
+#: modules/downloads/templates/index.phtml:70
 msgid "Up"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:60
+#: modules/downloads/templates/index.phtml:71
 msgid "Down"
 msgstr ""
 
