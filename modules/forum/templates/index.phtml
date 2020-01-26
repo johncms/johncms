@@ -38,7 +38,7 @@ $this->layout(
 
 <?php foreach ($sections as $section): ?>
     <div class="shadow forum-section post-item mb-2">
-        <div class="section-header border-bottom-0 pb-0">
+        <div class="section-header border-bottom-0 <?= (! empty($section['description']) ? 'pb-2' : 'pb-0') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
                 <span class="badge badge-pill badge-light ml-3"><?= $section['cnt'] ?></span>
@@ -53,8 +53,8 @@ $this->layout(
             <?php endif; ?>
         </div>
         <?php if (! empty($section['subsections'])): ?>
-            <div class="collapse subsections border-top" id="subsections_<?= $section['id'] ?>">
-                <div class="pt-2 pb-2">
+            <div class="collapse subsections" id="subsections_<?= $section['id'] ?>">
+                <div class="<?= (! empty($section['description']) ? 'mt-0' : 'mt-2') ?> pt-2 pb-2 border-top">
                     <?php foreach ($section['subsections'] as $subsection): ?>
                         <span class="pr-2">&raquo;</span><a href="<?= $subsection['url'] ?>" class="text-dark-brown"><?= $subsection['name'] ?></a><br>
                     <?php endforeach; ?>

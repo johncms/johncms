@@ -58,7 +58,7 @@ $this->layout(
 <?php foreach ($topics as $topic): ?>
     <div class="shadow border-radius-12 forum-section post-item mb-2<?= $topic['deleted'] ? ' deleted-post' : '' ?><?= $topic['closed'] ? ' closed-topic' : '' ?>">
         <div class="section-header">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center w-100">
                 <?php if ($topic['has_icons']): ?>
                     <div class="topic-icons mr-1 d-flex align-items-center">
                         <?php if ($topic['pinned']): ?>
@@ -91,7 +91,7 @@ $this->layout(
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
-                <a href="<?= $topic['url'] ?>" class="text-dark-brown"><?= $topic['name'] ?></a>
+                <a href="<?= $topic['url'] ?>" class="text-dark-brown flex-grow-1 flex-md-grow-0"><?= $topic['name'] ?></a>
                 <span class="badge badge-pill badge-light border ml-3"><?= $topic['show_posts_count'] ?></span>
             </div>
         </div>
