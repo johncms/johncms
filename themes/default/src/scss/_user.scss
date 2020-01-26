@@ -17,3 +17,18 @@
         line-height: 1.2;
     }
 }
+
+.profile-avatar {
+    display: block;
+    @media (max-width: 991px) {
+        .avatar-image {
+            display: block !important;
+            width: 80px;
+            height: 80px;
+        }
+        .user-status {
+            height: 13px;
+            width: 13px;
+        }
+    }
+}
