@@ -15,6 +15,7 @@ namespace Johncms\System\Legacy;
 use Johncms\System\Users\User;
 use Johncms\System\Users\UserConfig;
 use Johncms\System\View\Extension\Assets;
+use Johncms\System\View\Render;
 use Psr\Container\ContainerInterface;
 
 class Tools
@@ -178,61 +179,95 @@ class Tools
      * @param int $kmess
      * @return string
      */
-    public function displayPagination($url, $start, $total, $kmess)
+    public function displayPagination($url, $start, $total, $kmess): string
     {
+        $render = di(Render::class);
+        $items = [];
         $neighbors = 2;
         if ($start >= $total) {
-            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
+            $start = max(0, $total - (($total % $kmess) === 0 ? $kmess : ($total % $kmess)));
         } else {
             $start = max(0, (int) $start - ((int) $start % (int) $kmess));
         }
 
-        $out[] = '<ul class="pagination">';
-        $base_link = '<li class="page-item"><a class="page-link" href="' .
-            strtr($url, ['%' => '%%']) . 'page=%d' . '">%s</a></li>';
-        $out[] = $start == 0 ? '' : sprintf($base_link, $start / $kmess, '&lt;&lt;');
+        $url = strtr($url, ['%' => '%%']);
+
+        if ($start !== 0) {
+            $items[] = [
+                'url'  => $url . 'page=' . $start / $kmess,
+                'name' => '&lt;&lt;',
+            ];
+        }
 
         if ($start > $kmess * $neighbors) {
-            $out[] = sprintf($base_link, 1, '1');
+            $items[] = [
+                'url'  => $url . 'page=' . 1,
+                'name' => '1',
+            ];
         }
 
         if ($start > $kmess * ($neighbors + 1)) {
-            $out[] = '<li class="page-item disabled"><a class="page-link" href="#">...</a></li>';
+            $items[] = [
+                'url'  => '',
+                'name' => '...',
+            ];
         }
 
         for ($nCont = $neighbors; $nCont >= 1; $nCont--) {
             if ($start >= $kmess * $nCont) {
                 $tmpStart = $start - $kmess * $nCont;
-                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
+                $items[] = [
+                    'url'  => $url . 'page=' . ($tmpStart / $kmess + 1),
+                    'name' => $tmpStart / $kmess + 1,
+                ];
             }
         }
 
-        $out[] = '<li class="page-item active"><a class="page-link" href="#">' . ($start / $kmess + 1) . '</a></li>';
+        $items[] = [
+            'url'    => '',
+            'active' => true,
+            'name'   => ($start / $kmess + 1),
+        ];
         $tmpMaxPages = (int) (($total - 1) / $kmess) * $kmess;
 
         for ($nCont = 1; $nCont <= $neighbors; $nCont++) {
             if ($start + $kmess * $nCont <= $tmpMaxPages) {
                 $tmpStart = $start + $kmess * $nCont;
-                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
+                $items[] = [
+                    'url'  => $url . 'page=' . ($tmpStart / $kmess + 1),
+                    'name' => $tmpStart / $kmess + 1,
+                ];
             }
         }
 
         if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages) {
-            $out[] = '<li class="page-item disabled"><a class="page-link" href="#">...</a></li>';
+            $items[] = [
+                'url'  => '',
+                'name' => '...',
+            ];
         }
 
         if ($start + $kmess * $neighbors < $tmpMaxPages) {
-            $out[] = sprintf($base_link, $tmpMaxPages / $kmess + 1, $tmpMaxPages / $kmess + 1);
+            $items[] = [
+                'url'  => $url . 'page=' . ($tmpMaxPages / $kmess + 1),
+                'name' => $tmpMaxPages / $kmess + 1,
+            ];
         }
 
         if ($start + $kmess < $total) {
             $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
-            $out[] = sprintf($base_link, $display_page, '&gt;&gt;');
+            $items[] = [
+                'url'  => $url . 'page=' . $display_page,
+                'name' => '&gt;&gt;',
+            ];
         }
 
-        $out[] = '</ul>';
-
-        return implode(' ', $out);
+        return $render->render(
+            'system::app/pagination',
+            [
+                'items' => $items,
+            ]
+        );
     }
 
     /**
