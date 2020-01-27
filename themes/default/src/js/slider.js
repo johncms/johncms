@@ -6,7 +6,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-import Swiper from 'swiper';
+import Swiper from 'swiper/js/swiper.min';
 
 var swiperSlider = new Swiper('.screenshots', {
     slidesPerView: 1,
