@@ -33,9 +33,9 @@ if ($id) {
     if ($topic) {
         $params = [(time() - 300), '/forum?type=topic&id=' . $id . '%'];
         if (! $do) {
-            $sql = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ? AND `place` LIKE ? OR `place` = ?';
-            $sql2 = 'SELECT * FROM `users` WHERE `lastdate` > ? AND `place` LIKE ? OR `place` = ? ORDER BY `name` LIMIT ?, ?';
-            $params = [(time() - 300), '/forum?type=topic&id=' . $id . '%', '/forum?act=who&id=' . $id];
+            $sql = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ? AND `place` REGEXP (?)';
+            $sql2 = 'SELECT * FROM `users` WHERE `lastdate` > ? AND  `place` REGEXP (?) ORDER BY `name` LIMIT ?, ?';
+            $params = [(time() - 300), '^/forum?(.*)id=([0-9]+)'];
         }
         $req = $db->prepare($sql);
         $req->execute($params);
@@ -45,36 +45,40 @@ if ($id) {
             // Исправляем запрос на несуществующую страницу
             $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
         }
-
+        $n = 0;
         if ($total) {
             $params = array_merge($params, [$start, $user->config->kmess]);
             $req = $db->prepare($sql2);
             $req->execute($params);
 
             foreach ($req as $res) {
-                if (empty($res['name'])) {
-                    $res['name'] = __('Guest');
+                preg_match('~^/forum?(.*)id=([0-9]+)~', $res['place'], $m);
+                if ($m[2] == $id || $db->query('SELECT COUNT(*) FROM `forum_messages` WHERE `id`=' . $m[2] . ' AND `topic_id`=' . $id)->fetchColumn()) {
+                    if (empty($res['name'])) {
+                        $res['name'] = __('Guest');
+                    }
+
+                    $res['user_profile_link'] = '';
+                    if (! empty($res['id']) && $user->isValid() && $user->id != $res['id']) {
+                        $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+                    }
+
+                    $res['user_rights_name'] = '';
+                    if (! empty($res['rights'])) {
+                        $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
+                    }
+
+                    $res['user_is_online'] = time() <= $res['lastdate'] + 300;
+
+                    $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
+                    $res['ip'] = long2ip($res['ip']);
+                    $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip_via_proxy']);
+                    $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+
+                    $res['place'] = '';
+                    $items[] = $res;
+                    $total = ++$n;
                 }
-
-                $res['user_profile_link'] = '';
-                if (! empty($res['id']) && $user->isValid() && $user->id != $res['id']) {
-                    $res['user_profile_link'] = '/profile/?user=' . $res['id'];
-                }
-
-                $res['user_rights_name'] = '';
-                if (! empty($res['rights'])) {
-                    $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
-                }
-
-                $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-
-                $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
-                $res['ip'] = long2ip($res['ip']);
-                $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip_via_proxy']);
-                $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
-
-                $res['place'] = '';
-                $items[] = $res;
             }
         }
     } else {
@@ -192,6 +196,9 @@ if ($id) {
                 case 'say': // phpcs:ignore
                     $sql = 'SELECT `frt`.`id`, `frt`.`name` FROM `forum_messages` frm
                     LEFT JOIN `forum_topic` frt ON `frt`.`id`=`frm`.`topic_id` WHERE `frm`.`id`= ?';
+                    if ($act_type == 'post') {
+                        $sql = 'SELECT `id`, `name` FROM `forum_topic` WHERE id = ?';
+                    }
                 case 'topic':
                     if (empty($sql)) {
                         $sql = 'SELECT `id`, `name` FROM `forum_topic` WHERE `id`= ?';
