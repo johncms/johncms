@@ -58,3 +58,17 @@
 .to-bottom {
     transform: rotate(180deg);
 }
+
+.bbpopup {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.bbpopup a {
+    border: 1px solid #a7a7a7;
+    height: 15px;
+    display: inline-block;
+    margin: 2px;
+    vertical-align: middle;
+    width: 15px;
+}
