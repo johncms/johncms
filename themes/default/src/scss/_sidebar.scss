@@ -153,7 +153,6 @@
         padding: 0 1rem;
         min-height: 3rem;
         background: #fff;
-
         a {
             color: #4a5865;
         }
@@ -171,7 +170,12 @@
 
     body.sidebar_opened {
         position: relative;
-        overflow-x: hidden;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .overlay {
+        display: none;
     }
 
     .sidebar_opened {
@@ -187,6 +191,16 @@
             transform: translate3d(17rem, 0, 0);
         }
 
+        .overlay {
+            display: block;
+            position: absolute;
+            background: #000000;
+            opacity: 0.2;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 12;
+        }
     }
 
     .content-container {
