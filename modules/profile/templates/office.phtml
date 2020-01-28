@@ -25,56 +25,60 @@ $this->layout(
 $counters = $data['counters'] ?? [];
 ?>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-8 col-xl-6">
         <h3><?= __('My Pages') ?></h3>
 
-        <div class="list-group">
-            <a href="./" class="list-group-item"><?= __('Profile') ?></a>
-            <a href="?act=stat" class="list-group-item"><?= __('Statistics') ?></a>
-            <a href="/album/?act=list" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Photo Album') ?>
-                <span class="badge badge-light badge-pill"><?= $counters['total_photo'] ?></span>
-            </a>
-            <a href="?act=guestbook" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Guestbook') ?>
-                <span class="badge badge-light badge-pill"><?= $user->comm_count ?></span>
-            </a>
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="./" class="link"><?= __('Profile') ?></a>
+            </div>
+            <div class="list-group-item">
+                <a href="?act=stat" class="link"><?= __('Statistics') ?></a>
+            </div>
+            <div class="list-group-item">
+                <a href="/album/?act=list" class="link"><?= __('Photo Album') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $counters['total_photo'] ?></span>
+            </div>
+            <div class="list-group-item">
+                <a href="?act=guestbook" class="link"><?= __('Guestbook') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $user->comm_count ?></span>
+            </div>
         </div>
 
         <h3 class="mt-3"><?= __('My Mailbox') ?></h3>
 
-        <div class="list-group">
-            <a href="/mail/?act=input" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Received') ?>
-                <span class="badge badge-pill <?= ($counters['new_messages'] > 0 ? 'badge-danger' : 'badge-light') ?>">
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="/mail/?act=input" class="link"><?= __('Received') ?></a>
+                <span class="counter badge badge-pill <?= ($counters['new_messages'] > 0 ? 'badge-danger' : 'badge-light') ?>">
                     <?= $counters['inbox'] ?>
                     <?= ($counters['new_messages'] > 0 ? ' / +' . $counters['new_messages'] : '') ?>
                 </span>
-            </a>
-            <a href="/mail/?act=output" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Sent') ?>
-                <span class="badge badge-pill <?= ($counters['unread_sent'] > 0 ? 'badge-danger' : 'badge-light') ?>">
+            </div>
+            <div class="list-group-item">
+                <a href="/mail/?act=output" class="link"><?= __('Sent') ?></a>
+                <span class="counter badge badge-pill <?= ($counters['unread_sent'] > 0 ? 'badge-danger' : 'badge-light') ?>">
                     <?= $counters['outbox'] ?>
                     <?= ($counters['unread_sent'] > 0 ? ' / +' . $counters['unread_sent'] : '') ?>
                 </span>
-            </a>
-            <a href="/mail/?act=files" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Files') ?>
-                <span class="badge badge-pill badge-light"><?= $counters['files'] ?></span>
-            </a>
+            </div>
+            <div class="list-group-item">
+                <a href="/mail/?act=files" class="link"><?= __('Files') ?></a>
+                <span class="counter badge badge-pill badge-light"><?= $counters['files'] ?></span>
+            </div>
         </div>
 
         <h3 class="mt-3"><?= __('Contacts') ?></h3>
 
-        <div class="list-group">
-            <a href="/mail/" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Contacts') ?>
-                <span class="badge badge-pill badge-light"><?= $counters['contacts'] ?></span>
-            </a>
-            <a href="/mail/?act=ignor" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Blocked') ?>
-                <span class="badge badge-pill badge-light"><?= $counters['blocked_contacts'] ?></span>
-            </a>
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="/mail/" class="link"><?= __('Contacts') ?></a>
+                <span class="counter badge badge-pill badge-light"><?= $counters['contacts'] ?></span>
+            </div>
+            <div class="list-group-item">
+                <a href="/mail/?act=ignor" class="link"><?= __('Blocked') ?></a>
+                <span class="counter badge badge-pill badge-light"><?= $counters['blocked_contacts'] ?></span>
+            </div>
         </div>
 
         <h3 class="mt-3"><?= __('Settings') ?></h3>

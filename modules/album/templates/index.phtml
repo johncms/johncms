@@ -25,31 +25,31 @@ $this->layout(
 
 <div class="row">
     <div class="col-md-6">
-        <div class="list-group">
-            <a href="./top" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('New Photos') ?>
-                <span class="badge badge-light badge-pill"><?= $data['new'] ?></span>
-            </a>
-            <a href="./top?mod=last_comm" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('New Comments') ?>
-            </a>
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="./top" class="link"><?= __('New Photos') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $data['new'] ?></span>
+            </div>
+            <div class="list-group-item">
+                <a href="./top?mod=last_comm" class="link"><?= __('New Comments') ?></a>
+            </div>
         </div>
 
         <h3 class="mt-3"><?= __('Albums') ?></h3>
 
-        <div class="list-group">
-            <a href="./users?mod=boys" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Guys') ?>
-                <span class="badge badge-light badge-pill"><?= $data['men'] ?></span>
-            </a>
-            <a href="./users?mod=girls" class="list-group-item d-flex justify-content-between align-items-center">
-                <?= __('Girls') ?>
-                <span class="badge badge-light badge-pill"><?= $data['women'] ?></span>
-            </a>
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="./users?mod=boys" class="link"><?= __('Guys') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $data['men'] ?></span>
+            </div>
+            <div class="list-group-item">
+                <a href="./users?mod=girls" class="link"><?= __('Girls') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $data['women'] ?></span>
+            </div>
             <?php if ($user->isValid()): ?>
-                <a href="./list" class="list-group-item d-flex justify-content-between align-items-center">
-                    <?= __('My Album') ?>
-                </a>
+                <div class="list-group-item">
+                    <a href="./list" class="link"><?= __('My Album') ?></a>
+                </div>
             <?php endif; ?>
         </div>
 
