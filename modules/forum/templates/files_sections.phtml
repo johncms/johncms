@@ -31,15 +31,21 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div>
-    <?php foreach ($sections as $section): ?>
-        <div class="shadow border-radius-12 forum-section post-item mb-2">
-            <div class="section-header border-0 pb-0">
-                <div class="d-flex align-items-center">
-                    <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
-                    <span class="badge badge-pill badge-light border ml-3"><?= $section['count'] ?></span>
+<?php if (! empty($sections)): ?>
+    <div>
+        <?php foreach ($sections as $section): ?>
+            <div class="shadow border-radius-12 forum-section post-item mb-2">
+                <div class="section-header border-0 pb-0">
+                    <div class="d-flex align-items-center">
+                        <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
+                        <span class="badge badge-pill badge-light border ml-3"><?= $section['count'] ?></span>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
-</div>
+        <?php endforeach; ?>
+    </div>
+<?php else: ?>
+    <div class="alert alert-info">
+        <?= __('The list is empty') ?>
+    </div>
+<?php endif ?>
