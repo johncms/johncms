@@ -54,6 +54,11 @@ $ads_array = $ads->getAds();
                             <span class="navbar-toggler-bar bar3"></span>
                         </button>
                     </div>
+                    <div class="logo">
+                        <a href="/">
+                            <img src="<?= $this->asset('images/logo_mobile.svg') ?>" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
+                        </a>
+                    </div>
                     <div>
                         <?php if ($user->isValid()): ?>
                             <a href="/notifications/" class="icon_with_badge mr-2">
