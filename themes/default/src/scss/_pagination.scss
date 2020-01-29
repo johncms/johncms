@@ -1,0 +1,17 @@
+@media (max-width: 500px) {
+    .pagination {
+        span.page-link {
+            display: none;
+        }
+        .page-link {
+            font-size: 0.7rem;
+            padding: 0.5rem 0.5rem;
+        }
+    }
+}
+
+.pagination-no-padding {
+    .pagination {
+        margin-bottom: 0;
+    }
+}

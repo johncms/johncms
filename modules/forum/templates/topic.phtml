@@ -141,13 +141,11 @@ $this->layout(
         </div>
     </div>
 <?php endif; ?>
-<div class="d-flex justify-content-between align-items-center mt-1 mb-3">
-    <div class="mb-n3">
-        <?php if ($total > $user->config->kmess): ?>
-            <?= $pagination ?>
-        <?php endif ?>
-    </div>
-    <div class="text-muted">
+<div class="d-flex flex-wrap justify-content-between align-items-center mt-1 mb-3 pagination-no-padding">
+    <?php if ($total > $user->config->kmess): ?>
+        <?= $pagination ?>
+    <?php endif ?>
+    <div class="text-muted forum-view-counter">
         <svg class="icon download-button-icon mt-n1">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"></use>
         </svg>
@@ -227,7 +225,9 @@ $this->layout(
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
                         <?php if (! empty($item['user_profile_link'])): ?>
-                            <a href="<?= $item['user_profile_link'] ?>"><div class="user-name d-inline mr-2"><?= $item['user_name'] ?></div></a>
+                            <a href="<?= $item['user_profile_link'] ?>">
+                                <div class="user-name d-inline mr-2"><?= $item['user_name'] ?></div>
+                            </a>
                         <?php else: ?>
                             <div class="user-name d-inline mr-2"><?= $item['user_name'] ?></div>
                         <?php endif; ?>

@@ -72,3 +72,9 @@
     vertical-align: middle;
     width: 15px;
 }
+
+@media (max-width: 350px) {
+    .forum-view-counter {
+        display: none;
+    }
+}
