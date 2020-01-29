@@ -115,9 +115,7 @@
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
                         <?php if (! empty($item['user_profile_link'])): ?>
-                            <a href="<?= $item['user_profile_link'] ?>">
-                                <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
-                            </a>
+                            <a href="<?= $item['user_profile_link'] ?>"><div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div></a>
                         <?php else: ?>
                             <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
                         <?php endif; ?>
