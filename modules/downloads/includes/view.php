@@ -238,6 +238,8 @@ if (! isset($_SESSION[$session_index]) && $user->isValid()) {
     $file_data['can_vote'] = true;
 }
 
+$file_rate[0] = (int) $file_rate[0];
+$file_rate[1] = (int) $file_rate[1];
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
 
 $file_data['rate'] = $file_rate;
