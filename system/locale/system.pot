@@ -30,8 +30,8 @@ msgstr ""
 #: modules/login/templates/login.phtml:4
 #: modules/login/templates/login.phtml:5
 #: modules/login/templates/login.phtml:41
-#: system/src/System/Legacy/Tools.php:261
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:83
+#: system/src/System/Legacy/Tools.php:296
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgid "Forgot password?"
 msgstr ""
 
 #: modules/login/templates/login.phtml:44
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 
 #: modules/notifications/index.php:122
 #: modules/notifications/index.php:141
-#: system/src/System/Legacy/Tools.php:258
+#: system/src/System/Legacy/Tools.php:293
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:62
 msgid "Guestbook"
 msgstr ""
@@ -210,7 +210,7 @@ msgstr ""
 #: system/src/Comments.php:245
 #: system/src/Comments.php:286
 #: system/src/Comments.php:318
-#: system/src/System/Legacy/Tools.php:256
+#: system/src/System/Legacy/Tools.php:291
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:75
 msgid "Downloads"
 msgstr ""
@@ -331,106 +331,105 @@ msgstr ""
 msgid "Added"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:147
+#: system/src/System/Legacy/Tools.php:148
 msgid "Today"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:150
+#: system/src/System/Legacy/Tools.php:151
 msgid "Yesterday"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:166
+#: system/src/System/Legacy/Tools.php:167
 msgid "ERROR"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:252
+#: system/src/System/Legacy/Tools.php:287
 msgid "On the Homepage"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:253
+#: system/src/System/Legacy/Tools.php:288
 msgid "Watching the photo album"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:254
+#: system/src/System/Legacy/Tools.php:289
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:100
 msgid "Users"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:255
+#: system/src/System/Legacy/Tools.php:290
 msgid "Users List"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:257
+#: system/src/System/Legacy/Tools.php:292
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:49
 msgid "Forum"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:259
+#: system/src/System/Legacy/Tools.php:294
 msgid "Reading the FAQ"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:260
+#: system/src/System/Legacy/Tools.php:295
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:88
 msgid "Library"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:262
+#: system/src/System/Legacy/Tools.php:297
 msgid "Personal correspondence"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:263
+#: system/src/System/Legacy/Tools.php:298
 msgid "Reading the news"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:264
+#: system/src/System/Legacy/Tools.php:299
 msgid "Profile"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:265
+#: system/src/System/Legacy/Tools.php:300
 msgid "Redirect on external link to another site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:266
+#: system/src/System/Legacy/Tools.php:301
 msgid "Registered on the site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:267
+#: system/src/System/Legacy/Tools.php:302
 msgid "List of users"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:268
-#: system/src/System/Legacy/Tools.php:269
-#: system/src/System/Legacy/Tools.php:270
-#: system/src/System/Legacy/Tools.php:271
+#: system/src/System/Legacy/Tools.php:303
+#: system/src/System/Legacy/Tools.php:304
+#: system/src/System/Legacy/Tools.php:305
+#: system/src/System/Legacy/Tools.php:306
 msgid "Who is online?"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:281
+#: system/src/System/Legacy/Tools.php:316
 msgid "Somewhere on the site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:309
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+#: system/src/System/Legacy/Tools.php:344
 msgid "Guest"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:384
+#: system/src/System/Legacy/Tools.php:419
 msgid "Last Visit"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:390
+#: system/src/System/Legacy/Tools.php:425
 msgid "Browser"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:392
+#: system/src/System/Legacy/Tools.php:427
 msgid "IP address"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:417
+#: system/src/System/Legacy/Tools.php:452
 msgid "IP History"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:598
+#: system/src/System/Legacy/Tools.php:633
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
@@ -477,6 +476,10 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:142
 msgid "Admin Chat"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+msgid "Log In"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61

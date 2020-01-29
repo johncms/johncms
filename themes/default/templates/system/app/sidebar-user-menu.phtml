@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div>
-                <?= ($user->id ? $user->name : d__('system', 'Guest')) ?>
+                <?= ($user->id ? $user->name : d__('system', 'Log In')) ?>
             </div>
         </div>
         <div>
@@ -64,6 +64,14 @@
             <?php else: ?>
                 <!-- Выпадающее меню для гостей -->
                 <li>
+                    <a href="/login/">
+                        <svg class="icon text-info">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-in"/>
+                        </svg>
+                        <span class="flex-grow-1 text-info"><?= d__('system', 'Login') ?></span>
+                    </a>
+                </li>
+                <li>
                     <a href="/registration/">
                         <svg class="icon text-info">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
@@ -73,14 +81,6 @@
                             <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
                             </span>
                         <?php endif ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="/login/">
-                        <svg class="icon text-info">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-in"/>
-                        </svg>
-                        <span class="flex-grow-1 text-info"><?= d__('system', 'Login') ?></span>
                     </a>
                 </li>
             <?php endif ?>

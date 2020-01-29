@@ -14,7 +14,7 @@ msgstr ""
 #: modules/profile/includes/images.php:161
 #: modules/profile/includes/ip.php:27
 #: modules/profile/includes/reset.php:22
-#: modules/profile/templates/office.phtml:32
+#: modules/profile/templates/office.phtml:33
 msgid "Profile"
 msgstr ""
 
@@ -163,7 +163,7 @@ msgstr ""
 
 #: modules/profile/includes/edit.php:16
 #: modules/profile/includes/reset.php:17
-#: modules/profile/templates/office.phtml:83
+#: modules/profile/templates/office.phtml:87
 msgid "Edit Profile"
 msgstr ""
 
@@ -212,7 +212,7 @@ msgstr ""
 #: modules/profile/includes/guestbook.php:28
 #: modules/profile/templates/ban.phtml:53
 #: modules/profile/templates/index.phtml:237
-#: modules/profile/templates/office.phtml:39
+#: modules/profile/templates/office.phtml:43
 #: modules/profile/templates/stat.phtml:56
 msgid "Guestbook"
 msgstr ""
@@ -418,7 +418,7 @@ msgstr ""
 #: modules/profile/includes/password.php:15
 #: modules/profile/includes/password.php:16
 #: modules/profile/templates/edit.phtml:241
-#: modules/profile/templates/office.phtml:84
+#: modules/profile/templates/office.phtml:88
 msgid "Change Password"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgstr ""
 
 #: modules/profile/includes/settings.php:15
 #: modules/profile/includes/settings.php:24
-#: modules/profile/templates/office.phtml:80
+#: modules/profile/templates/office.phtml:84
 msgid "Settings"
 msgstr ""
 
@@ -751,8 +751,8 @@ msgid "About myself"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:184
-#: modules/profile/templates/office.phtml:67
 #: modules/profile/templates/office.phtml:71
+#: modules/profile/templates/office.phtml:75
 msgid "Contacts"
 msgstr ""
 
@@ -952,7 +952,7 @@ msgid "hidden"
 msgstr ""
 
 #: modules/profile/templates/index.phtml:227
-#: modules/profile/templates/office.phtml:35
+#: modules/profile/templates/office.phtml:39
 msgid "Photo Album"
 msgstr ""
 
@@ -996,31 +996,31 @@ msgstr ""
 msgid "My Pages"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:33
+#: modules/profile/templates/office.phtml:36
 msgid "Statistics"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:44
+#: modules/profile/templates/office.phtml:48
 msgid "My Mailbox"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:48
+#: modules/profile/templates/office.phtml:52
 msgid "Received"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:55
+#: modules/profile/templates/office.phtml:59
 msgid "Sent"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:62
+#: modules/profile/templates/office.phtml:66
 msgid "Files"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:75
+#: modules/profile/templates/office.phtml:79
 msgid "Blocked"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:85
+#: modules/profile/templates/office.phtml:89
 msgid "System Settings"
 msgstr ""
 

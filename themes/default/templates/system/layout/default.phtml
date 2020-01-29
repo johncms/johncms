@@ -69,6 +69,12 @@ $ads_array = $ads->getAds();
                                     <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
                                 <?php endif ?>
                             </a>
+                        <?php else: ?>
+                            <a href="/login/" class="icon_with_badge">
+                                <svg class="icon ml-n2">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-in"/>
+                                </svg>
+                            </a>
                         <?php endif ?>
                     </div>
                 </div>

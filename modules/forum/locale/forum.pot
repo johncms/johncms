@@ -474,10 +474,11 @@ msgstr ""
 
 #: modules/forum/includes/new.php:192
 #: modules/forum/includes/new.php:258
-#: modules/forum/includes/who.php:89
-#: modules/forum/includes/who.php:270
+#: modules/forum/includes/who.php:93
+#: modules/forum/includes/who.php:277
 #: modules/forum/templates/curators.phtml:39
 #: modules/forum/templates/files_list.phtml:36
+#: modules/forum/templates/files_sections.phtml:49
 #: modules/forum/templates/filter_by_author.phtml:38
 msgid "The list is empty"
 msgstr ""
@@ -600,7 +601,7 @@ msgstr ""
 #: modules/forum/includes/search.php:179
 #: modules/forum/includes/search.php:234
 #: modules/forum/includes/search.php:235
-#: modules/forum/includes/who.php:169
+#: modules/forum/includes/who.php:173
 msgid "Forum search"
 msgstr ""
 
@@ -639,61 +640,61 @@ msgstr ""
 msgid "Vote accepted"
 msgstr ""
 
-#: modules/forum/includes/who.php:56
-#: modules/forum/includes/who.php:232
+#: modules/forum/includes/who.php:58
+#: modules/forum/includes/who.php:239
 msgid "Guest"
 msgstr ""
 
-#: modules/forum/includes/who.php:87
-#: modules/forum/includes/who.php:88
+#: modules/forum/includes/who.php:91
+#: modules/forum/includes/who.php:92
 #: modules/forum/templates/who.phtml:32
 msgid "Who in Topic"
 msgstr ""
 
-#: modules/forum/includes/who.php:153
-#: modules/forum/includes/who.php:178
-#: modules/forum/includes/who.php:188
-#: modules/forum/includes/who.php:213
-#: modules/forum/includes/who.php:223
-#: modules/forum/includes/who.php:228
+#: modules/forum/includes/who.php:157
+#: modules/forum/includes/who.php:182
+#: modules/forum/includes/who.php:192
+#: modules/forum/includes/who.php:220
+#: modules/forum/includes/who.php:230
+#: modules/forum/includes/who.php:235
 msgid "In the forum Main"
 msgstr ""
 
-#: modules/forum/includes/who.php:157
+#: modules/forum/includes/who.php:161
 msgid "Here, in the List"
 msgstr ""
 
-#: modules/forum/includes/who.php:161
+#: modules/forum/includes/who.php:165
 msgid "Looking forum files"
 msgstr ""
 
-#: modules/forum/includes/who.php:165
+#: modules/forum/includes/who.php:169
 msgid "In the unreads"
 msgstr ""
 
-#: modules/forum/includes/who.php:176
+#: modules/forum/includes/who.php:180
 msgid "In the Category"
 msgstr ""
 
-#: modules/forum/includes/who.php:186
+#: modules/forum/includes/who.php:190
 msgid "In the Section"
 msgstr ""
 
-#: modules/forum/includes/who.php:208
+#: modules/forum/includes/who.php:215
 msgid "Answers in the Topic"
 msgstr ""
 
-#: modules/forum/includes/who.php:210
+#: modules/forum/includes/who.php:217
 msgid "Writes in the Topic"
 msgstr ""
 
-#: modules/forum/includes/who.php:210
-#: modules/forum/includes/who.php:221
+#: modules/forum/includes/who.php:217
+#: modules/forum/includes/who.php:228
 msgid "In the Topic"
 msgstr ""
 
-#: modules/forum/includes/who.php:268
-#: modules/forum/includes/who.php:269
+#: modules/forum/includes/who.php:275
+#: modules/forum/includes/who.php:276
 #: modules/forum/templates/index.phtml:75
 #: modules/forum/templates/section.phtml:70
 #: modules/forum/templates/topics.phtml:122
