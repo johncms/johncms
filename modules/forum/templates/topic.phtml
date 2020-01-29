@@ -289,7 +289,7 @@ $this->layout(
                     <div class="d-flex flex-wrap">
                         <?php foreach ($item['files'] as $file): ?>
                             <div class="attached-file pr-3 d-flex flex-column justify-content-between">
-                                <div class="h-100 d-flex justify-content-center align-items-center">
+                                <div class="d-flex justify-content-center align-items-center">
                                     <?php if (! empty($file['file_preview'])): ?>
                                         <a href="<?= $file['file_url'] ?>" class="image-preview" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
                                             <img src="<?= $file['file_preview'] ?>" class="img-thumbnail thumb-limit-height" alt="<?= $file['filename'] ?>">
