@@ -81,40 +81,42 @@ $this->layout(
                 </div>
             </div>
         </div>
-        <div class="card border-0 shadow mt-4">
-            <div class="card-body">
-                <h2 class="h3 font-weight-bold text-center mb-4"><?= __('Karma') ?></h2>
-                <div class="rounded-progress <?= ($data['user']['karma_percent'] < 0) ? 'negative-progress' : '' ?> mx-auto" data-value='<?= $data['user']['karma_percent'] ?>'>
-                    <span class="progress-left"><span class="progress-bar border-success"></span></span>
-                    <span class="progress-right"><span class="progress-bar border-success"></span></span>
-                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
-                        <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
-                        <?php if (! empty($data['user']['karma_new'])): ?>
-                            <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= n__('vote', 'votes', $data['user']['karma_new']) ?></a></div>
-                        <?php endif; ?>
+        <?php if (! empty($config['karma']['on'])): ?>
+            <div class="card border-0 shadow mt-4">
+                <div class="card-body">
+                    <h2 class="h3 font-weight-bold text-center mb-4"><?= __('Karma') ?></h2>
+                    <div class="rounded-progress <?= ($data['user']['karma_percent'] < 0) ? 'negative-progress' : '' ?> mx-auto" data-value='<?= $data['user']['karma_percent'] ?>'>
+                        <span class="progress-left"><span class="progress-bar border-success"></span></span>
+                        <span class="progress-right"><span class="progress-bar border-success"></span></span>
+                        <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
+                            <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
+                            <?php if (! empty($data['user']['karma_new'])): ?>
+                                <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= n__('vote', 'votes', $data['user']['karma_new']) ?></a></div>
+                            <?php endif; ?>
+                        </div>
                     </div>
+                    <div class="row text-center mt-4">
+                        <div class="col-6 border-right">
+                            <a href="<?= $data['user']['positive_url'] ?>">
+                                <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_plus'] ?></div>
+                                <span class="small text-gray"><?= __('Positive') ?></span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="<?= $data['user']['negative_url'] ?>">
+                                <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_minus'] ?></div>
+                                <span class="small text-gray"><?= __('Negative') ?></span>
+                            </a>
+                        </div>
+                    </div>
+                    <?php if (! empty($data['user']['vote_url'])): ?>
+                        <div class="text-center mt-4">
+                            <a href="<?= $data['user']['vote_url'] ?>" class="btn btn-primary btn-sm"><?= __('Vote') ?></a>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <div class="row text-center mt-4">
-                    <div class="col-6 border-right">
-                        <a href="<?= $data['user']['positive_url'] ?>">
-                            <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_plus'] ?></div>
-                            <span class="small text-gray"><?= __('Positive') ?></span>
-                        </a>
-                    </div>
-                    <div class="col-6">
-                        <a href="<?= $data['user']['negative_url'] ?>">
-                            <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_minus'] ?></div>
-                            <span class="small text-gray"><?= __('Negative') ?></span>
-                        </a>
-                    </div>
-                </div>
-                <?php if (! empty($data['user']['vote_url'])): ?>
-                    <div class="text-center mt-4">
-                        <a href="<?= $data['user']['vote_url'] ?>" class="btn btn-primary btn-sm"><?= __('Vote') ?></a>
-                    </div>
-                <?php endif; ?>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
     <div class="col-md-8">
         <div class="card border-0 shadow mt-4 mt-md-0">

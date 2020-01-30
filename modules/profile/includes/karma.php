@@ -314,4 +314,6 @@ if ($set_karma['on']) {
                 ]
             );
     }
+} else {
+    pageNotFound();
 }
