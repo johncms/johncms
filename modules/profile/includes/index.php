@@ -69,7 +69,7 @@ if ($config['karma']['on']) {
         if (! $user->karma_off && (! $user_data['rights'] || ($user_data['rights'] && ! $config['karma']['adm'])) && $user_data['ip'] !== $user->ip) {
             $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `time` >= '" . $user->karma_time . "'")->fetchColumn();
             $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `karma_user` = '" . $user_data['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
-            if (empty($user->ban) && $user->postforum >= $config['karma']['forum'] && $user->total_on_site >= $config['karma']['karma_time'] && ($config['karma']['karma_points'] - $sum) > 0 && ! $count) {
+            if (empty($user->ban) && $user->postforum >= $config['karma']['forum'] && ($config['karma']['karma_points'] - $sum) > 0 && ! $count) {
                 $user_data['vote_url'] = '?act=karma&amp;mod=vote&amp;user=' . $user_data['id'];
             }
         }
