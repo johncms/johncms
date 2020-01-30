@@ -679,6 +679,8 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
                 }
 
+                $type1['view_count'] = $tools->formatNumber($type1['view_count']);
+
                 echo $view->render(
                     'forum::topic',
                     [
