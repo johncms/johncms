@@ -223,9 +223,9 @@ $file_rate = explode('|', $res_down['rate']);
 $session_index = 'rate_file_' . $id;
 if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION[$session_index]) && $user->isValid()) {
     if (isset($_GET['plus'])) {
-        $file_rate[0] = $file_rate[0] + 1;
+        $file_rate[0] = (int) $file_rate[0] + 1;
     } else {
-        $file_rate[1] = $file_rate[1] + 1;
+        $file_rate[1] = (int) $file_rate[1] + 1;
     }
 
     $db->exec("UPDATE `download__files` SET `rate`='" . $file_rate[0] . '|' . $file_rate[1] . "' WHERE `id`=" . $id);
