@@ -26,8 +26,8 @@ $this->layout(
 <h3><?= __('Statistic') ?></h3>
 
 <ul>
-    <li>
-        <?php if ($user->rights >= 7): ?>
+    <?php if ($user->rights >= 7): ?>
+        <li>
             <?php if (! $data['user']['preg'] && empty($data['user']['regadm'])): ?>
                 <?= __('Pending confirmation') ?>
             <?php elseif (! empty($data['user']['preg']) && ! empty($data['user']['regadm'])): ?>
@@ -35,8 +35,8 @@ $this->layout(
             <?php else: ?>
                 <?= __('Free registration') ?>
             <?php endif; ?>
-        <?php endif; ?>
-    </li>
+        </li>
+    <?php endif; ?>
     <li>
         <?= __('Registered') ?>: <?= date('d.m.Y', (int) $data['user']['datereg']) ?>
     </li>
