@@ -16,6 +16,7 @@
       'When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?' => 'Po usunięciu kontaktu zostanie usunięta wszelka korespondencja z nim.<br>Czy jesteś pewien, że chcesz usunąć?',
       'Contact for removal isn\'t chosen' => 'Kontakt do usuwania nie jest wybrany',
       'Files' => 'Pliki',
+      'Blacklist' => 'Czarna lista',
       'User does not exists' => 'Użytkownik nie istnieje',
       'User not blocked' => 'Użytkownik jest zablokowany',
       'User is unblocked' => 'Użytkownik odblokowany',
@@ -65,8 +66,29 @@
       'The user at your ignore list. Sending the message is impossible.' => 'Użytkownik dodał Cię do czarnej listy. Wysyłanie wiadomości jest niemożliwe.',
       'The user added you in the ignore list. Sending the message isn\'t possible.' => 'Użytkownik dodał Cię do czarnej listy. Wysyłanie wiadomości jest niemożliwe.',
       'Message already exists' => 'Taka wiadomość już istnieje',
+      'My Account' => 'Moje konto',
+      'Cancel' => 'Anuluj',
+      'message' => 
+      array (
+        0 => 'Wiadomość',
+        1 => 'Wiadomości',
+        2 => 'Wiadomości',
+        3 => 'Wiadomości',
+      ),
+      'unread message' => 
+      array (
+        0 => 'Nieprzeczytana wiadomość',
+        1 => 'Nieprzeczytane wiadomości',
+        2 => 'Nieprzeczytane wiadomości',
+        3 => 'Nieprzeczytanych wiadomości',
+      ),
+      'Total:' => 'Wszystkich:',
+      'Last:' => 'Ostatni:',
       'To Whom' => 'Do kogo',
+      'Message' => 'Wiadomość',
+      'Choose file' => 'Wybierz plik',
       'Send' => 'Wysłać',
+      'Attached files' => 'Załączone pliki:',
     ),
   ),
 );

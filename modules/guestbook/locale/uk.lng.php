@@ -43,6 +43,7 @@
       'The guestbook is empty.<br><strong>Be the first! :)</strong>' => 'Гостьова книга порожня.<br><strong>Бедь першим! :)</strong>',
       'Guest' => 'Гість',
       'Edited:' => 'Відредаговано:',
+      'Edited' => 'Відредаговано',
       'Reply' => 'Відповісти',
       'Edit' => 'Редагувати',
     ),

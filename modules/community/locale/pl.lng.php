@@ -11,8 +11,10 @@
       'Nickname' => 'Nazwa użytkownika',
       'Invalid length' => 'Nieprawidłowa długość',
       'Invalid characters' => 'Nieprawidłowe znaki',
+      'Forum' => 'Forum',
       'Guestbook' => 'Księga gości',
       'Comments' => 'Komentarze',
+      'Karma' => 'Karma',
       'Most active in Guestbook' => 'Najbardziej aktywni w księdze gości',
       'Most commentators' => 'Większość komentatorów',
       'Best Karma' => 'Najlepsza karma',
@@ -25,8 +27,31 @@
       'The search is performed by Nickname and are case-insensitive.' => 'Wyszukiwanie jest wykonywane przez nick i jest rozróżniana wielkość liter.',
       'Users' => 'Użytkownicy',
       'Top Activity' => 'Najbardziej aktywni',
+      'Username' => 'Login',
+      'List is empty' => 'Lista jest pusta',
       'Total' => 'Wszystkich',
       'Back' => 'Powrót',
+      'post' => 
+      array (
+        0 => 'post',
+        1 => 'posty',
+        2 => 'posty',
+        3 => 'posty',
+      ),
+      'comment' => 
+      array (
+        0 => 'komentarz',
+        1 => 'komentarze',
+        2 => 'komentarze',
+        3 => 'komentarze',
+      ),
+      'point' => 
+      array (
+        0 => 'punkt',
+        1 => 'punkty',
+        2 => 'punktów',
+        3 => 'punktów',
+      ),
     ),
   ),
 );

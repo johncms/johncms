@@ -9,6 +9,8 @@
       'Free, Open Source content management system' => 'Безкоштовна, з відкритим вихідним кодом система управління контентом',
       'Download' => 'Завантаження',
       'Documentation' => 'Документація',
+      'News' => 'Новини',
+      'Discuss' => 'Обговорення',
       'Features' => 'Можливості',
       'Responsive Layout' => 'Адаптивний Макет',
       'Your site will appear equally well on both computers and mobile devices.' => 'Ваш сайт буде однаково добре виглядати як на комп\'ютерах, так і мобільних пристроях.',

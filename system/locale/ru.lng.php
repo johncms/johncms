@@ -115,6 +115,7 @@
       'Information, FAQ' => 'Информация, FAQ',
       'Admin Panel' => 'Админ панель',
       'Admin Chat' => 'Админ Чат',
+      'Log In' => 'Авторизоваться',
       'Exit' => 'Выход',
       'Do you really want to delete?' => 'Действительно хотите удалить?',
       'Clear' => 'Очистить',

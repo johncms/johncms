@@ -5,15 +5,21 @@
   array (
     '' => 
     array (
+      'Add news' => 'Dodaj nowy',
       'You have not entered news title' => 'Nie podałeś tytułu wiadomości',
       'You have not entered news text' => 'Nie wpisałeś tekstu wiadomości',
       'You cannot add the message so often. Please, wait %d seconds.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać.',
       'News added' => 'Wiadomość dodana',
+      'Clear news' => 'Wyczyść wiadomości',
       'Delete all news older than 1 week' => 'Usuń wszystkie wiadomości starsze niż 1 tydzień',
       'Delete all news' => 'Usuwanie wszystkich wiadomości',
       'Delete all news older than 1 month' => 'Usuwanie wszystkich wiadomości starszych niż 1 miesiąc',
+      'Delete news' => 'Usuń aktualności',
+      'News deleted' => 'Usunięto News',
+      'Edit news' => 'Edytuj aktualności',
       'News' => 'Aktualności',
       'Wrong data' => 'Nieprawidłowe dane',
+      'News changed' => 'Aktualności zostały zmienione',
       'Title' => 'Tytuł',
       'Text' => 'Tekst',
       'Discussion' => 'Dyskusja',
