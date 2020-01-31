@@ -39,18 +39,18 @@ $this->layout(
                 <a class="user-login mr-2" href="<?= $album['album_url'] ?>"><?= $album['name'] ?></a>
                 <span class="badge badge-pill badge-light border ml-3"><?= $album['count_photos'] ?></span>
             </div>
-            <?php if (! empty($album['has_edit'])): ?>
-                <div>
-                    <a href="<?= $album['up_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Up') ?></a>
-                    <a href="<?= $album['down_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Down') ?></a>
-                    <a href="<?= $album['edit_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Edit') ?></a>
-                    <a href="<?= $album['delete_url'] ?>" class="btn btn-secondary btn-sm"><?= __('Delete') ?></a>
-                </div>
-            <?php endif; ?>
         </div>
         <?php if (! empty($album['description'])): ?>
             <div class="small pt-2 text-muted">
                 <div><?= $album['description'] ?></div>
+            </div>
+        <?php endif; ?>
+        <?php if (! empty($album['has_edit'])): ?>
+            <div class="mt-2 pt-2 border-top">
+                <a href="<?= $album['up_url'] ?>" class="mr-2"><?= __('Up') ?></a>
+                <a href="<?= $album['down_url'] ?>" class="mr-2"><?= __('Down') ?></a>
+                <a href="<?= $album['edit_url'] ?>" class="mr-2"><?= __('Edit') ?></a>
+                <a href="<?= $album['delete_url'] ?>" class="mr-2"><?= __('Delete') ?></a>
             </div>
         <?php endif; ?>
     </div>
