@@ -262,7 +262,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         "
         );
 
-        if ($_POST['addfiles'] == 1) {
+        if (isset($_POST['addfiles']) && $_POST['addfiles'] == 1) {
             header("Location: ?id=${postid}&act=addfile");
         } else {
             header("Location: ?type=topic&id=${rid}");
