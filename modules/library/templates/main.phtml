@@ -28,16 +28,16 @@ $this->layout(
         <?= __('Library is closed') ?>
     </div>
 <?php endif; ?>
-<div>
+<div class="mb-2 mt-n2">
     <?php if (! empty($new)): ?>
-        <a href="?act=new" class="btn btn-outline-primary btn-sm mr-1 mb-2">
+        <a href="?act=new" class="btn btn-outline-primary btn-sm mr-1 mt-1">
             <?= __('New Articles') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $new ?></span>
         </a>
     <?php endif; ?>
-    <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mb-2"><?= __('Search') ?></a>
+    <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
     <?php /* <a href="?act=tagcloud" class="btn btn-outline-primary btn-sm mr-1"><?= __('Tag Cloud') ?></a> */ ?>
-    <a href="?act=top" class="btn btn-outline-primary btn-sm mr-1 mb-2"><?= __('Rating articles') ?></a>
-    <a href="?act=lastcom" class="btn btn-outline-primary btn-sm mr-1 mb-2"><?= __('Latest comments') ?></a>
+    <a href="?act=top" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Rating articles') ?></a>
+    <a href="?act=lastcom" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Latest comments') ?></a>
 </div>
 
 <?php if ($total) : ?>

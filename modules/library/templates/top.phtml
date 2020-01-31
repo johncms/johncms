@@ -23,12 +23,10 @@ $this->layout(
 );
 ?>
 
-<div class="btn-group mb-3" role="group">
-    <div class="input-group-prepend">
-        <div class="input-group-text"><?= __('Sort') ?></div>
-    </div>
+<div class="mb-3">
+    <div><?= __('Sort') ?></div>
     <?php foreach ($data['filters'] as $filter): ?>
-        <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+        <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary mt-1 btn-sm <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
     <?php endforeach; ?>
 </div>
 
