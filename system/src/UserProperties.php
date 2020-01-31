@@ -54,7 +54,7 @@ class UserProperties
 
         $data_array['user_is_online'] = time() <= $user_data['lastdate'] + 300;
 
-        $data_array['user_rights_name'] = $this->getRightsName($user_data['rights']);
+        $data_array['user_rights_name'] = $this->getRightsName($user_data['rights'] ?? 0);
 
         return $data_array;
     }
