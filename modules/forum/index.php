@@ -200,42 +200,17 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     // Заголовки страниц форума
     if (! empty($id)) {
         // Фиксируем местоположение и получаем заголовок страницы
-        switch ($show_type) {
-            case 'topics':
-            case 'section':
-                $res = $db->query('SELECT `name` FROM `forum_sections` WHERE `id`= ' . $id)->fetch();
-                break;
-
-            case 'topic':
-                $res = $db->query('SELECT `name` FROM `forum_topic` WHERE `id`= ' . $id)->fetch();
-                break;
-
-            default:
-                $headmod = 'forum';
+        if ($show_type === 'topics' || $show_type === 'section') {
+            $res = $db->query('SELECT `name` FROM `forum_sections` WHERE `id`= ' . $id)->fetch();
+        } elseif ($show_type === 'topic') {
+            $res = $db->query('SELECT `name` FROM `forum_topic` WHERE `id`= ' . $id)->fetch();
         }
-
-        $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['name']);
-        $hdr = strtr(
-            $hdr,
-            [
-                '&laquo;' => '',
-                '&raquo;' => '',
-                '&quot;'  => '',
-                '&amp;'   => '',
-                '&lt;'    => '',
-                '&gt;'    => '',
-                '&#039;'  => '',
-            ]
-        );
-        $hdr = mb_substr($hdr, 0, 30);
-        $hdr = $tools->checkout($hdr, 2, 2);
-        $textl = empty($hdr) ? __('Forum') : $hdr;
     }
 
     // Редирект на новые адреса страниц
     if (! empty($id)) {
         $check_section = $db->query("SELECT * FROM `forum_sections` WHERE `id`= '${id}'");
-        if (! $check_section->rowCount() && (empty($_REQUEST['type']) || (! empty($_REQUEST['act']) && $_REQUEST['act'] == 'post'))) {
+        if ((empty($_REQUEST['type']) || (! empty($_REQUEST['act']) && $_REQUEST['act'] === 'post')) && ! $check_section->rowCount()) {
             $check_link = $db->query("SELECT * FROM `forum_redirects` WHERE `old_id`= '${id}'")->fetch();
             if (! empty($check_link)) {
                 http_response_code(301);
@@ -257,7 +232,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
     if ($id) {
         // Определяем тип запроса (каталог, или тема)
-        if ($show_type == 'topic') {
+        if ($show_type === 'topic') {
             $type = $db->query("SELECT * FROM `forum_topic` WHERE `id`= '${id}'");
         } else {
             $type = $db->query("SELECT * FROM `forum_sections` WHERE `id`= '${id}'");
@@ -291,7 +266,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         // Nav chain
         $res = true;
         $allow = 0;
-        $parent = $show_type == 'topic' ? $type1['section_id'] : $type1['parent'];
+        $parent = $show_type === 'topic' ? $type1['section_id'] : $type1['parent'];
         $tree = [];
         while (! empty($parent) && $res != false) {
             $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
@@ -311,7 +286,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         // Счетчик файлов и ссылка на них
         $sql = ($user->rights == 9) ? '' : " AND `del` != '1'";
 
-        if ($show_type == 'topic') {
+        if ($show_type === 'topic') {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `topic` = '${id}'" . $sql)->fetchColumn();
         } elseif ($type1['section_type'] == 0) {
             $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = ' . $type1['id'] . $sql)->fetchColumn();
