@@ -44,18 +44,19 @@ if ($do === 'clean') {
     $query = $db->query('SELECT `id`, `dir`, `name` FROM `download__category`');
 
     while ($result = $query->fetch()) {
-        if (! file_exists($result['dir'])) {
+        if (! is_dir($result['dir'])) {
             $arrayClean = [];
             $req = $db->query("SELECT `id` FROM `download__files` WHERE `refid` = '" . $result['id'] . "'");
-
             while ($res = $req->fetch()) {
-                $arrayClean = $res['id'];
+                $arrayClean[] = $res['id'];
             }
 
-            $idClean = implode(',', $arrayClean);
-            $db->exec('DELETE FROM `download__bookmark` WHERE `file_id` IN (' . $idClean . ')');
-            $db->exec('DELETE FROM `download__comments` WHERE `sub_id` IN (' . $idClean . ')');
-            $db->exec('DELETE FROM `download__more` WHERE `refid` IN (' . $idClean . ')');
+            if (! empty($arrayClean)) {
+                $idClean = implode(',', $arrayClean);
+                $db->exec('DELETE FROM `download__bookmark` WHERE `file_id` IN (' . $idClean . ')');
+                $db->exec('DELETE FROM `download__comments` WHERE `sub_id` IN (' . $idClean . ')');
+                $db->exec('DELETE FROM `download__more` WHERE `refid` IN (' . $idClean . ')');
+            }
             $db->exec("DELETE FROM `download__files` WHERE `refid` = '" . $result['id'] . "'");
             $db->exec("DELETE FROM `download__category` WHERE `id` = '" . $result['id'] . "'");
         }
@@ -168,6 +169,7 @@ if ($do === 'clean') {
                     "
             );
 
+            asort($arr_scan_dir);
             foreach ($arr_scan_dir as $val) {
                 if (! in_array($val, $array_dowm, true)) {
                     if (is_dir($val)) {
@@ -187,7 +189,6 @@ if ($do === 'clean') {
                         );
 
                         $array_id[$dir . '/' . $name] = $db->lastInsertId();
-
                         ++$i;
                     } else {
                         $name = basename($val);
