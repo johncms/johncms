@@ -24,7 +24,7 @@ JOIN `users` u ON `u`.`id` = `t1`.`user_id` WHERE `u`.`sex` = "zh" ' . ($user->r
 
 $data['albums'] = ($data['men'] + $data['women']);
 
-$data['new'] = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
+$data['new'] = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` = '4'")->fetchColumn();
 
 echo $view->render(
     'album::index',
