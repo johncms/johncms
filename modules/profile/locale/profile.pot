@@ -3,7 +3,7 @@ msgstr ""
 "X-Domain: profile\n"
 
 #: modules/profile/includes/activity.php:18
-#: modules/profile/templates/index.phtml:207
+#: modules/profile/templates/index.phtml:209
 #: modules/profile/templates/stat.phtml:53
 msgid "Activity"
 msgstr ""
@@ -211,7 +211,7 @@ msgstr ""
 #: modules/profile/includes/guestbook.php:16
 #: modules/profile/includes/guestbook.php:28
 #: modules/profile/templates/ban.phtml:53
-#: modules/profile/templates/index.phtml:237
+#: modules/profile/templates/index.phtml:239
 #: modules/profile/templates/office.phtml:43
 #: modules/profile/templates/stat.phtml:56
 msgid "Guestbook"
@@ -333,7 +333,7 @@ msgstr ""
 
 #: modules/profile/includes/karma.php:15
 #: modules/profile/includes/karma.php:20
-#: modules/profile/templates/index.phtml:86
+#: modules/profile/templates/index.phtml:87
 msgid "Karma"
 msgstr ""
 
@@ -399,13 +399,13 @@ msgid "All"
 msgstr ""
 
 #: modules/profile/includes/karma.php:274
-#: modules/profile/templates/index.phtml:101
+#: modules/profile/templates/index.phtml:102
 #: modules/profile/templates/karma_vote.phtml:46
 msgid "Positive"
 msgstr ""
 
 #: modules/profile/includes/karma.php:279
-#: modules/profile/templates/index.phtml:107
+#: modules/profile/templates/index.phtml:108
 #: modules/profile/templates/karma_vote.phtml:50
 msgid "Negative"
 msgstr ""
@@ -483,7 +483,7 @@ msgstr ""
 
 #: modules/profile/includes/stat.php:17
 #: modules/profile/includes/stat.php:20
-#: modules/profile/templates/index.phtml:217
+#: modules/profile/templates/index.phtml:219
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
 msgstr ""
@@ -711,7 +711,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:119
 #: modules/profile/templates/edit.phtml:123
-#: modules/profile/templates/index.phtml:125
+#: modules/profile/templates/index.phtml:127
 msgid "Photo"
 msgstr ""
 
@@ -742,7 +742,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:170
 #: modules/profile/templates/edit.phtml:176
-#: modules/profile/templates/index.phtml:151
+#: modules/profile/templates/index.phtml:153
 msgid "City, Country"
 msgstr ""
 
@@ -758,13 +758,13 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:186
 #: modules/profile/templates/edit.phtml:192
-#: modules/profile/templates/index.phtml:168
+#: modules/profile/templates/index.phtml:170
 msgid "Phone number"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:196
 #: modules/profile/templates/edit.phtml:202
-#: modules/profile/templates/index.phtml:174
+#: modules/profile/templates/index.phtml:176
 msgid "E-mail"
 msgstr ""
 
@@ -778,13 +778,13 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:213
 #: modules/profile/templates/edit.phtml:219
-#: modules/profile/templates/index.phtml:183
+#: modules/profile/templates/index.phtml:185
 msgid "Skype"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:224
 #: modules/profile/templates/edit.phtml:230
-#: modules/profile/templates/index.phtml:189
+#: modules/profile/templates/index.phtml:191
 msgid "Site"
 msgstr ""
 
@@ -805,12 +805,12 @@ msgid "Select gender"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:250
-#: modules/profile/templates/index.phtml:141
+#: modules/profile/templates/index.phtml:143
 msgid "Man"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:254
-#: modules/profile/templates/index.phtml:143
+#: modules/profile/templates/index.phtml:145
 msgid "Woman"
 msgstr ""
 
@@ -921,37 +921,37 @@ msgstr ""
 msgid "Edit profile"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:93
+#: modules/profile/templates/index.phtml:94
 msgid "vote"
 msgid_plural "votes"
 msgstr[0] ""
 
-#: modules/profile/templates/index.phtml:113
+#: modules/profile/templates/index.phtml:114
 #: modules/profile/templates/karma_vote.phtml:70
 msgid "Vote"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:122
+#: modules/profile/templates/index.phtml:124
 msgid "Information"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:133
+#: modules/profile/templates/index.phtml:135
 msgid "Birthday"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:138
+#: modules/profile/templates/index.phtml:140
 msgid "Gender"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:145
+#: modules/profile/templates/index.phtml:147
 msgid "Not specified"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:177
+#: modules/profile/templates/index.phtml:179
 msgid "hidden"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:227
+#: modules/profile/templates/index.phtml:229
 #: modules/profile/templates/office.phtml:39
 msgid "Photo Album"
 msgstr ""

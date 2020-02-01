@@ -302,7 +302,7 @@ msgid "Enter"
 msgstr ""
 
 #: modules/album/templates/image_delete.phtml:35
-#: modules/album/templates/list.phtml:47
+#: modules/album/templates/list.phtml:53
 #: modules/album/templates/show_one.phtml:138
 msgid "Delete"
 msgstr ""
@@ -324,15 +324,15 @@ msgstr ""
 msgid "Rating"
 msgstr ""
 
-#: modules/album/templates/list.phtml:44
+#: modules/album/templates/list.phtml:50
 msgid "Up"
 msgstr ""
 
-#: modules/album/templates/list.phtml:45
+#: modules/album/templates/list.phtml:51
 msgid "Down"
 msgstr ""
 
-#: modules/album/templates/list.phtml:46
+#: modules/album/templates/list.phtml:52
 #: modules/album/templates/show_one.phtml:136
 msgid "Edit"
 msgstr ""

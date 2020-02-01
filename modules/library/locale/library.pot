@@ -10,7 +10,7 @@ msgstr ""
 #: modules/library/templates/search.phtml:68
 #: modules/library/templates/sectionslist.phtml:51
 #: modules/library/templates/tags.phtml:59
-#: modules/library/templates/top.phtml:64
+#: modules/library/templates/top.phtml:62
 msgid "The list is empty"
 msgstr ""
 
@@ -270,7 +270,7 @@ msgstr ""
 #: modules/library/templates/book.phtml:59
 #: modules/library/templates/booklist.phtml:34
 #: modules/library/templates/new.phtml:39
-#: modules/library/templates/top.phtml:49
+#: modules/library/templates/top.phtml:47
 msgid "Rating:"
 msgstr ""
 
@@ -283,7 +283,7 @@ msgstr ""
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:43
 #: modules/library/templates/tags.phtml:43
-#: modules/library/templates/top.phtml:53
+#: modules/library/templates/top.phtml:51
 msgid "Comments:"
 msgstr ""
 
@@ -299,7 +299,7 @@ msgstr ""
 #: modules/library/templates/new.phtml:36
 #: modules/library/templates/search.phtml:51
 #: modules/library/templates/tags.phtml:36
-#: modules/library/templates/top.phtml:46
+#: modules/library/templates/top.phtml:44
 msgid "Author:"
 msgstr ""
 
@@ -323,7 +323,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:159
 #: modules/library/templates/lastcom.phtml:47
 #: modules/library/templates/moder.phtml:146
-#: modules/library/templates/top.phtml:68
+#: modules/library/templates/top.phtml:66
 msgid "Back"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgid "Number of readings"
 msgstr ""
 
 #: modules/library/templates/new.phtml:33
-#: modules/library/templates/top.phtml:43
+#: modules/library/templates/top.phtml:41
 msgid "Section:"
 msgstr ""
 
@@ -515,6 +515,6 @@ msgid "Tag Cloud"
 msgstr ""
 
 #: modules/library/templates/tagcloud.phtml:4
-#: modules/library/templates/top.phtml:28
+#: modules/library/templates/top.phtml:27
 msgid "Sort"
 msgstr ""

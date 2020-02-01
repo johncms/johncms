@@ -24,7 +24,7 @@ msgstr ""
 #: modules/downloads/includes/folder_edit.php:32
 #: modules/downloads/includes/folder_edit.php:138
 #: modules/downloads/includes/folder_edit.php:139
-#: modules/downloads/includes/scan_dir.php:96
+#: modules/downloads/includes/scan_dir.php:97
 #: modules/downloads/includes/search.php:65
 #: modules/downloads/includes/view.php:37
 #: modules/downloads/includes/view.php:54
@@ -146,8 +146,8 @@ msgstr ""
 #: modules/downloads/includes/fileControl/transfer_file.php:165
 #: modules/downloads/includes/files_upload.php:237
 #: modules/downloads/includes/files_upload.php:249
-#: modules/downloads/includes/scan_dir.php:78
-#: modules/downloads/includes/scan_dir.php:312
+#: modules/downloads/includes/scan_dir.php:79
+#: modules/downloads/includes/scan_dir.php:313
 #: modules/downloads/templates/file_import_result.phtml:48
 #: modules/downloads/templates/view.phtml:171
 msgid "Back"
@@ -173,7 +173,7 @@ msgstr ""
 #: modules/downloads/includes/fileControl/files_more.php:155
 #: modules/downloads/includes/fileControl/files_more.php:252
 #: modules/downloads/includes/files_import.php:36
-#: modules/downloads/includes/scan_dir.php:92
+#: modules/downloads/includes/scan_dir.php:93
 #: modules/downloads/includes/search.php:61
 msgid "Error"
 msgstr ""
@@ -232,7 +232,7 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:34
 #: modules/downloads/includes/folder_delete.php:31
 #: modules/downloads/includes/folder_edit.php:30
-#: modules/downloads/includes/scan_dir.php:94
+#: modules/downloads/includes/scan_dir.php:95
 #: modules/downloads/index.php:187
 msgid "The directory does not exist"
 msgstr ""
@@ -366,24 +366,24 @@ msgstr ""
 msgid "Edit Folder"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:74
+#: modules/downloads/includes/scan_dir.php:75
 #: modules/downloads/templates/index.phtml:146
 #: modules/downloads/templates/scan_dir.phtml:60
 msgid "Remove missing files"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:76
+#: modules/downloads/includes/scan_dir.php:77
 msgid "Database successfully updated"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:201
+#: modules/downloads/includes/scan_dir.php:202
 #: modules/downloads/templates/file_upload.phtml:62
 #: modules/downloads/templates/import.phtml:57
 msgid "Download"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:305
 #: modules/downloads/includes/scan_dir.php:306
+#: modules/downloads/includes/scan_dir.php:307
 msgid "Update"
 msgstr ""
 

@@ -1385,6 +1385,22 @@ msgstr ""
 msgid "View"
 msgstr ""
 
+#: modules/admin/templates/index.phtml:3
+msgid "Dashboard"
+msgstr ""
+
+#: modules/admin/templates/index.phtml:10
+msgid "registered visitors today"
+msgstr ""
+
+#: modules/admin/templates/index.phtml:18
+msgid "users registered today"
+msgstr ""
+
+#: modules/admin/templates/index.phtml:26
+msgid "posts on the forum today"
+msgstr ""
+
 #: modules/admin/templates/ip_whois.phtml:15
 msgid "IP Address"
 msgstr ""
