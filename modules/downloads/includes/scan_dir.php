@@ -182,7 +182,7 @@ if ($do === 'clean') {
                 if ($scan[$key] != $arr_scan_dir[$key]) {
                     if (is_dir($arr_scan_dir[$key]) && !is_dir($scan[$key])) {
                         mkdir($scan[$key]);
-                    } elseif (!is_file($scan[$key])) {
+                    } elseif (!file_exists($scan[$key])) {
                         if (copy($arr_scan_dir[$key], $scan[$key])) {
                             unlink($arr_scan_dir[$key]);
                         }
