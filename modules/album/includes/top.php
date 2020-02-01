@@ -59,8 +59,10 @@ ORDER BY mtime DESC LIMIT ' . $start . ', ' . $user->config->kmess;
 
     case 'last_comm':
         // Последние комментарии по всем альбомам
-        $total = $db->query('SELECT COUNT(DISTINCT `comm`.`sub_id`) FROM `cms_album_comments` comm
-JOIN `cms_album_files` files ON `files`.`id`=`comm`.`sub_id` WHERE `comm`.`time` >' . (time() - 86400) . '' . $user_right)->fetchColumn();
+        $total = $db->query(
+            'SELECT COUNT(DISTINCT `comm`.`sub_id`) FROM `cms_album_comments` comm
+JOIN `cms_album_files` files ON `files`.`id`=`comm`.`sub_id` WHERE `comm`.`time` >' . (time() - 86400) . '' . $user_right
+        )->fetchColumn();
         $title = __('Recent comments');
         $pattern = 'SELECT
     `files`.*,
@@ -198,7 +200,7 @@ if ($total) {
 
 $data['photos'] = $photos;
 $data['total'] = $total;
-$data['pagination'] = $tools->displayPagination('./top' . $link . '&amp;', $start, $total, $user->config->kmess);
+$data['pagination'] = $tools->displayPagination('./top' . (! empty($link) ? $link . '&amp;' : '?'), $start, $total, $user->config->kmess);
 
 $nav_chain->add($title);
 
