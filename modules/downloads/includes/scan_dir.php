@@ -170,11 +170,28 @@ if ($do === 'clean') {
             );
 
             asort($arr_scan_dir);
-            foreach ($arr_scan_dir as $val) {
-                if (! in_array($val, $array_dowm, true)) {
-                    if (is_dir($val)) {
-                        $name = basename($val);
-                        $dir = dirname($val);
+            $scan = preg_replace_callback(
+                '/[^a-z_-]+/ui',
+                function ($m) use ($tools) {
+                    return str_replace(' ', '_', $tools->rusLat($m[0]));
+                },
+                $arr_scan_dir
+            );
+            asort($scan);
+            foreach ($arr_scan_dir as $key => $val) {
+                if ($scan[$key] != $arr_scan_dir[$key]) {
+                    if (is_dir($arr_scan_dir[$key]) && !is_dir($scan[$key])) {
+                        mkdir($scan[$key]);
+                    } elseif (!is_file($scan[$key])) {
+                        if (copy($arr_scan_dir[$key], $scan[$key])) {
+                            unlink($arr_scan_dir[$key]);
+                        }
+                    }
+                }
+                if (! in_array($scan[$key], $array_dowm, true)) {
+                    if (is_dir($scan[$key])) {
+                        $name = basename($scan[$key]);
+                        $dir = dirname($scan[$key]);
                         $refid = isset($array_id[$dir]) ? (int) $array_id[$dir] : 0;
                         $sort = isset($sort) ? ++$sort : time();
 
@@ -191,7 +208,7 @@ if ($do === 'clean') {
                         $array_id[$dir . '/' . $name] = $db->lastInsertId();
                         ++$i;
                     } else {
-                        $name = basename($val);
+                        $name = basename($scan[$key]);
                         if (preg_match('/^file(\d+)_/', $name)) {
                             if (! in_array($name, $array_more, true)) {
                                 $refid = (int) str_replace('file', '', $name);
@@ -206,9 +223,9 @@ if ($do === 'clean') {
                                         200
                                     )
                                 );
-                                $size = filesize($val);
+                                $size = filesize($scan[$key]);
 
-                                $stmt_m->execute(
+                                $stmt_f->execute(
                                     [
                                         $refid,
                                         time(),
@@ -221,9 +238,9 @@ if ($do === 'clean') {
                                 ++$i_two;
                             }
                         } else {
-                            $isFile = $start ? is_file($val) : true;
+                            $isFile = $start ? is_file($scan[$key]) : true;
                             if ($isFile) {
-                                $dir = dirname($val);
+                                $dir = dirname($scan[$key]);
                                 $refid = (int) $array_id[$dir];
 
                                 $stmt_f->execute(
@@ -241,12 +258,12 @@ if ($do === 'clean') {
                                     $fileId = $db->lastInsertId();
                                     $screenFile = false;
 
-                                    if (is_file($val . '.jpg')) {
-                                        $screenFile = $val . '.jpg';
-                                    } elseif (is_file($val . '.gif')) {
-                                        $screenFile = $val . '.gif';
-                                    } elseif (is_file($val . '.png')) {
-                                        $screenFile = $val . '.png';
+                                    if (is_file($scan[$key] . '.jpg')) {
+                                        $screenFile = $scan[$key] . '.jpg';
+                                    } elseif (is_file($scan[$key] . '.gif')) {
+                                        $screenFile = $scan[$key] . '.gif';
+                                    } elseif (is_file($scan[$key] . '.png')) {
+                                        $screenFile = $scan[$key] . '.png';
                                     }
 
                                     if ($screenFile) {
@@ -257,13 +274,13 @@ if ($do === 'clean') {
                                             @chmod($screens_path . '/' . $fileId, 0777);
                                         }
 
-                                        @copy($screenFile, $screens_path . '/' . $fileId . '/' . str_replace($val, $fileId, $screenFile));
+                                        @copy($screenFile, $screens_path . '/' . $fileId . '/' . str_replace($scan[$key], $fileId, $screenFile));
                                         unlink($screenFile);
                                     }
 
-                                    if (is_file($val . '.txt')) {
-                                        @copy($val . '.txt', DOWNLOADS . 'about/' . $fileId . '.txt');
-                                        unlink($val . '.txt');
+                                    if (is_file($scan[$key] . '.txt')) {
+                                        @copy($scan[$key] . '.txt', DOWNLOADS . 'about/' . $fileId . '.txt');
+                                        unlink($scan[$key] . '.txt');
                                     }
                                 }
 
