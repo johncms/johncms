@@ -26,9 +26,9 @@ $this->layout(
     <form action="?url=<?= $redirect_url ?>" method="post">
         <h3><?= __('External Link') ?></h3>
         <strong><?= __('ATTENTION!') ?></strong>
-        <p>
+        <p class="break-word">
             <?= __('You are going to leave our site and go to an external link') ?>:
-            <span class="red"><?= htmlspecialchars($url) ?></span>
+            <span class="font-weight-bold"><?= htmlspecialchars($url) ?></span>
         </p>
         <p>
             <?= __('Administration of our site is not responsible for the content of external sites') ?><br>
