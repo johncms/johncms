@@ -55,15 +55,9 @@ $this->layout(
 <?php foreach ($results as $result): ?>
     <div class="shadow post-item post-item mb-2">
         <div class="post-header d-flex justify-content-between border-bottom pb-1">
-            <div class="d-flex align-items-end">
+            <div class="d-flex align-items-end flex-wrap">
                 <a href="<?= $result['topic_url'] ?>" class="user-login mr-2"><?= $result['name'] ?></a>
                 <span class="post-date"><?= $result['formatted_date'] ?></span>
-            </div>
-            <div class="post-actions">
-                <a href="<?= $result['topic_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Go to Topic') ?></a>
-                <?php if (! empty($result['post_url'])): ?>
-                    <a href="<?= $result['post_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Go to Message') ?></a>
-                <?php endif; ?>
             </div>
         </div>
         <div class="pt-2">
@@ -72,7 +66,17 @@ $this->layout(
                     <?= $result['formatted_text'] ?>
                 </div>
             <?php endif; ?>
-            <?= __('Author') ?>: <a href="/profile/?id=<?= $result['user_id'] ?>"><?= $result['user_name'] ?></a>
+            <div class="d-flex justify-content-between flex-wrap">
+                <div class="mr-2">
+                    <?= __('Author') ?>: <a href="/profile/?id=<?= $result['user_id'] ?>"><?= $result['user_name'] ?></a>
+                </div>
+                <div>
+                    <a href="<?= $result['topic_url'] ?>"><?= __('Go to Topic') ?></a>
+                    <?php if (! empty($result['post_url'])): ?>
+                        <a href="<?= $result['post_url'] ?>" class="ml-2"><?= __('Go to Message') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
 <?php endforeach; ?>
