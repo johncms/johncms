@@ -133,7 +133,6 @@ switch ($post_type) {
             isset($_POST['submit'])
             && ! empty($_POST['msg'])
             && isset($_POST['token'], $_SESSION['token'])
-
             && $_POST['token'] == $_SESSION['token']
         ) {
             // Проверяем на минимальную длину
@@ -276,6 +275,11 @@ switch ($post_type) {
             }
 
             if (isset($_POST['addfiles'])) {
+                $db->query(
+                    "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
+                VALUES ('${id}', '" . $user->id . "', '" . time() . "')
+                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
+                );
                 if ($update) {
                     header('Location: ?type=topic&id=' . $res['id'] . '&act=addfile');
                 } else {
