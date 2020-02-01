@@ -23,9 +23,9 @@ $this->layout(
 );
 ?>
 
-<div class="btn-group mb-3" role="group">
+<div class="mb-3 mt-n1" role="group">
     <?php foreach ($data['tabs'] as $tab): ?>
-        <a href="<?= $tab['url'] ?>" class="btn btn-outline-secondary <?= ($tab['active'] ? 'active' : '') ?>"><?= $tab['name'] ?></a>
+        <a href="<?= $tab['url'] ?>" class="btn btn-outline-secondary mt-1 <?= ($tab['active'] ? 'active' : '') ?>"><?= $tab['name'] ?></a>
     <?php endforeach; ?>
 </div>
 
