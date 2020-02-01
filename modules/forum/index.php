@@ -702,7 +702,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
         $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files`' . ($user->rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
         $req = $db->query(
-            'SELECT sct.`id`, sct.`name`, sct.`description`, (
+            'SELECT sct.`id`, sct.`name`, sct.`description`,  sct.`section_type`, (
 SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
 FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`'
         );
@@ -718,7 +718,8 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
             }
 
             $res['subsections'] = $subsections_array;
-            $res['url'] = '/forum/?id=' . $res['id'];
+            $type = ! empty($res['section_type']) ? 'type=topics&amp;' : '';
+            $res['url'] = '/forum/?' . $type . 'id=' . $res['id'];
             $sections[] = $res;
         }
 
