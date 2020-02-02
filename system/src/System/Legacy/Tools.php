@@ -308,12 +308,14 @@ class Tools
 
         if (array_key_exists($place, $placelist)) {
             return str_replace('#home#', $this->config['homeurl'], $placelist[$place]);
-        } elseif (array_key_exists($part[0], $placelist)) {
+        }
+
+        if (array_key_exists($part[0], $placelist)) {
             return str_replace('#home#', $this->config['homeurl'], $placelist[$part[0]]);
         }
 
-        return '<a href="' . $this->config['homeurl'] . '/">'
-            . ($this->user->rights >= 6 ? '[' . ($place) . ']' : d__('system', 'Somewhere on the site'))
+        return '<a href="' . $this->config['homeurl'] . ($this->user->rights >= 6 ? $place : '') . '/">'
+            . d__('system', 'Somewhere on the site')
             . '</a>';
     }
 
