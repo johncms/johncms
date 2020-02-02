@@ -89,7 +89,6 @@ $mods = [
     'input',
     'output',
     'delete',
-    'new',
     'index',
 ];
 
