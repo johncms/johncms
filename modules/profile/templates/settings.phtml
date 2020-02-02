@@ -29,9 +29,9 @@ $userConfig = $user->config;
 <div class="row">
     <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
 
-        <div class="buttons mb-3">
+        <div class="buttons mb-2">
             <?php foreach ($data['buttons'] as $button): ?>
-                <a href="<?= $button['url'] ?>" class="btn btn-outline-primary <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
+                <a href="<?= $button['url'] ?>" class="btn btn-outline-primary mb-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
             <?php endforeach; ?>
         </div>
 
@@ -114,10 +114,15 @@ $userConfig = $user->config;
                             </select>
                         </div>
                     <?php endif; ?>
-
-                    <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
-                    <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
-                    <a href="?act=settings&amp;reset" class="btn btn-danger float-right"><?= __('Reset Settings') ?></a>
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div class="mb-1 mr-1">
+                            <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
+                            <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                        </div>
+                        <div>
+                            <a href="?act=settings&amp;reset" class="btn btn-danger"><?= __('Reset Settings') ?></a>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
