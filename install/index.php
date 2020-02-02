@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 const JOHNCMS = '9.0.0';
 
@@ -276,7 +276,7 @@ switch ($act) {
             '<hr />';
         echo '<h3 class="blue">' . $lng['congratulations'] . '</h3>' .
             $lng['installation_completed'] . '<p><ul>' .
-            '<li><a href="../admin">' . $lng['admin_panel'] . '</a></li>' .
+            '<li><a href="../admin/">' . $lng['admin_panel'] . '</a></li>' .
             '<li><a href="../">' . $lng['to_site'] . '</a></li>' .
             '</ul></p>' .
             $lng['final_warning'];
@@ -317,7 +317,8 @@ switch ($act) {
             // Проверяем подключение к серверу базы данных
             if (empty($db_error)) {
                 try {
-                    $pdo = new \PDO('mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pass,
+                    $pdo = new \PDO(
+                        'mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pass,
                         [
                             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
                             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
@@ -461,7 +462,7 @@ switch ($act) {
                             'kom'      => true,
                         ],
                         'skindef'       => 'default',
-                        'timeshift' => 0,
+                        'timeshift'     => 0,
                     ],
                 ];
                 $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ";\n";
@@ -472,7 +473,8 @@ switch ($act) {
                 }
 
                 // Создаем Администратора
-                $stmt = $pdo->prepare("INSERT INTO `users` SET
+                $stmt = $pdo->prepare(
+                    "INSERT INTO `users` SET
                       `name`     = ?,
                       `name_lat` = ?,
                       `password` = ?,
@@ -490,15 +492,18 @@ switch ($act) {
                       `ip` = '" . ip2long($_SERVER['REMOTE_ADDR']) . "',
                       `browser` = ?,
                       `preg` = '1'
-                      ");
-                $stmt->execute([
-                    $admin_user,
-                    mb_strtolower($admin_user),
-                    md5(md5($admin_pass)),
-                    $site_mail,
-                    $site_url,
-                    htmlentities($_SERVER['HTTP_USER_AGENT']),
-                ]);
+                      "
+                );
+                $stmt->execute(
+                    [
+                        $admin_user,
+                        mb_strtolower($admin_user),
+                        md5(md5($admin_pass)),
+                        $site_mail,
+                        $site_url,
+                        htmlentities($_SERVER['HTTP_USER_AGENT']),
+                    ]
+                );
 
                 $user_id = $pdo->lastInsertId();
 
