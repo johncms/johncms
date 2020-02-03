@@ -561,7 +561,6 @@ class Counters
             $notifications['guestbook_comments'] = ($this->systemUser->comm_count - $this->systemUser->comm_old);
         }
 
-        $notifications['new_sys_mail'] = $this->db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $this->systemUser->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $this->systemUser->id . "'")->fetchColumn();
         $notifications['new_mail'] = $this->db->query(
             "SELECT COUNT(*) FROM `cms_mail`
                             LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'

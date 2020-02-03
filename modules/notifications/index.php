@@ -95,22 +95,11 @@ if ($all_counters['forum_new'] > 0) {
     ];
 }
 
-// Системные сообщения
-$list = [];
-if (! empty($all_counters['new_sys_mail'])) {
-    $notifications[] = [
-        'name'    => __('System messages'),
-        'url'     => '/mail/?act=systems',
-        'counter' => $all_counters['new_sys_mail'],
-        'type'    => 'info',
-    ];
-}
-
 // Личные сообщения
 if (! empty($all_counters['new_mail'])) {
     $notifications[] = [
         'name'    => __('Mail'),
-        'url'     => '/mail/?act=new',
+        'url'     => '/mail/?act=input',
         'counter' => $all_counters['new_mail'],
         'type'    => 'info',
     ];
