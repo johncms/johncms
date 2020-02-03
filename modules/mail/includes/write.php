@@ -479,7 +479,11 @@ if ($id) {
 
             $row['text'] = $post;
             $row['display_date'] = $tools->displayDate($row['mtime']);
-            $row['user_is_online'] = time() <= $row['lastdate'] + 300;
+
+            $row['user_id'] = $row['id'];
+            $user_properties = new \Johncms\UserProperties();
+            $user_data = $user_properties->getFromArray($row);
+            $row = array_merge($row, $user_data);
             if ($row['file_name']) {
                 $row['files'] = [
                     [
@@ -490,11 +494,6 @@ if ($id) {
                     ],
                 ];
             }
-
-            $row['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($row['ip']);
-            $row['ip'] = long2ip($row['ip']);
-            $row['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($row['ip_via_proxy']);
-            $row['ip_via_proxy'] = ! empty($row['ip_via_proxy']) ? long2ip($row['ip_via_proxy']) : 0;
             $row['browser'] = htmlspecialchars($row['browser']);
             $row['delete_url'] = '?act=delete&amp;id=' . $row['mid'];
 

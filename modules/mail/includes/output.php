@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\UserProperties;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = __('Sent messages');
@@ -80,20 +82,25 @@ if ($total) {
         $row['display_date'] = $tools->displayDate($last_msg['time']);
         $row['preview_text'] = $text;
         $row['unread'] = ! $last_msg['read'];
-        $row['user_is_online'] = time() <= $row['lastdate'] + 300;
 
+        $row['user_id'] = $row['id'];
+        $user_properties = new UserProperties();
+        $user_data = $user_properties->getFromArray($row);
+        $row = array_merge($row, $user_data);
+
+        $row['write_url'] = '?act=write&amp;id=' . $row['id'];
         $row['buttons'] = [
             [
                 'url'  => '?act=write&amp;id=' . $row['id'],
                 'name' => __('Correspondence'),
             ],
             [
-                'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
-                'name' => __('Block User'),
-            ],
-            [
                 'url'  => '?act=deluser&amp;id=' . $row['id'],
                 'name' => __('Delete'),
+            ],
+            [
+                'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
+                'name' => __('Block User'),
             ],
         ];
 
