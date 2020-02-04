@@ -1,5 +1,5 @@
 $(document)
-        .on('click', '.navbar-toggler', function () {
+        .on('click', '.navbar-toggler, .show_menu_btn', function () {
             toggle_menu();
         })
         .on('click', '.sidebar_opened .overlay', function () {
