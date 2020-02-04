@@ -21,7 +21,6 @@ $this->layout(
         'page_title' => $page_title,
     ]
 );
-
 ?>
 
 <div class="row mt-5 mb-3">
@@ -52,6 +51,12 @@ $this->layout(
                                 &nbsp;[<a href="<?= $data['user']['whois_ip_via_proxy_url'] ?>" title="<?= __('Whois') ?>">&nbsp;?&nbsp;</a>]
                             <?php endif; ?>
                         </div>
+
+                        <?php if (! empty($data['user']['ip_history_count'])): ?>
+                            <div>
+                                <a href="<?= $data['user']['ip_history_url'] ?>" title="<?= __('IP History') ?>"><?= __('IP History') ?> (<?= $data['user']['ip_history_count'] ?>)</a>
+                            </div>
+                        <?php endif ?>
                     </div>
                 <?php endif; ?>
 

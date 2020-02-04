@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,51 +8,48 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = htmlspecialchars($foundUser['name']) . ': ' . __('IP History');
+$title = __('IP History');
 
 // Проверяем права доступа
-if (! $user->rights && $user->id != $foundUser['id']) {
-    echo $view->render('system::app/old_content', [
-        'title'   => __('Administration'),
-        'content' => $tools->displayError(__('Access forbidden')),
-    ]);
+if (! $user->rights && $user->id !== $foundUser->id) {
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'   => $title,
+            'type'    => 'alert-danger',
+            'message' => __('Access forbidden'),
+        ]
+    );
     exit;
 }
 
-// История IP адресов
-echo '<div class="phdr"><a href="?user=' . $foundUser['id'] . '"><b>' . __('Profile') . '</b></a> | ' . __('IP History') . '</div>';
-echo '<div class="user"><p>';
-$arg = [
-    'lastvisit' => 1,
-    'header' => '<b>ID:' . $foundUser['id'] . '</b>',
-];
-echo $tools->displayUser($foundUser, $arg);
-echo '</p></div>';
-
-$total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
-
+$total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $foundUser->id . "'")->fetchColumn();
 if ($total) {
-    $req = $db->query("SELECT * FROM `cms_users_iphistory` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
-    $i = 0;
-
+    $req = $db->query("SELECT * FROM `cms_users_iphistory` WHERE `user_id` = '" . $foundUser->id . "' ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+    $items = [];
     while ($res = $req->fetch()) {
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        $link = $user->rights ? '<a href="' . $config['homeurl'] . '/admin/search_ip/?mod=history&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a>' : long2ip($res['ip']);
-        echo $link . ' <span class="gray">(' . date('d.m.Y / H:i', $res['time']) . ')</span></div>';
-        ++$i;
+        $res['ip'] = long2ip((int) $res['ip']);
+        $res['search_url'] = '/admin/search_ip/?mod=history&amp;ip=' . $res['ip'];
+        $res['display_date'] = $tools->displayDate($res['time']);
+        $items[] = $res;
     }
-} else {
-    echo '<div class="menu"><p>' . __('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . __('Total') . ': ' . $total . '</div>';
+$data['back_url'] = '?user=' . $foundUser->id;
+$data['total'] = $total;
+$data['filters'] = [];
+$data['pagination'] = $tools->displayPagination('?act=ip&amp;user=' . $foundUser->id . '&amp;', $start, $total, $user->config->kmess);
+$data['items'] = $items ?? [];
 
-if ($total > $user->config->kmess) {
-    echo '<p>' . $tools->displayPagination('?act=ip&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</p>';
-    echo '<p><form action="?act=ip&amp;user=' . $foundUser['id'] . '" method="post">' .
-        '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . __('To Page') . ' &gt;&gt;"/>' .
-        '</form></p>';
-}
+echo $view->render(
+    'profile::ip_history',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+        'data'       => $data,
+    ]
+);
