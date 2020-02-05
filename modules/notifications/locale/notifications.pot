@@ -28,20 +28,16 @@ msgstr ""
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/index.php:102
-msgid "System messages"
-msgstr ""
-
-#: modules/notifications/index.php:112
+#: modules/notifications/index.php:101
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/index.php:122
-#: modules/notifications/index.php:141
+#: modules/notifications/index.php:111
+#: modules/notifications/index.php:130
 msgid "Guestbook"
 msgstr ""
 
-#: modules/notifications/index.php:132
+#: modules/notifications/index.php:121
 msgid "Comments"
 msgstr ""
 

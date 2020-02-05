@@ -184,36 +184,36 @@ msgstr ""
 msgid "Unread Comments"
 msgstr ""
 
-#: modules/album/includes/top.php:64
+#: modules/album/includes/top.php:66
 msgid "Recent comments"
 msgstr ""
 
-#: modules/album/includes/top.php:82
+#: modules/album/includes/top.php:84
 #: modules/album/templates/index.phtml:61
 msgid "Top Views"
 msgstr ""
 
-#: modules/album/includes/top.php:98
+#: modules/album/includes/top.php:100
 #: modules/album/templates/index.phtml:60
 msgid "Top Downloads"
 msgstr ""
 
-#: modules/album/includes/top.php:114
+#: modules/album/includes/top.php:116
 #: modules/album/templates/index.phtml:62
 msgid "Top Comments"
 msgstr ""
 
-#: modules/album/includes/top.php:130
+#: modules/album/includes/top.php:132
 #: modules/album/templates/index.phtml:59
 msgid "Top Votes"
 msgstr ""
 
-#: modules/album/includes/top.php:147
+#: modules/album/includes/top.php:149
 #: modules/album/templates/index.phtml:63
 msgid "Top Worst"
 msgstr ""
 
-#: modules/album/includes/top.php:164
+#: modules/album/includes/top.php:166
 msgid "New photos"
 msgstr ""
 

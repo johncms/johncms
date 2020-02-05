@@ -3,7 +3,7 @@ msgstr ""
 "X-Domain: profile\n"
 
 #: modules/profile/includes/activity.php:18
-#: modules/profile/templates/index.phtml:209
+#: modules/profile/templates/index.phtml:214
 #: modules/profile/templates/stat.phtml:53
 msgid "Activity"
 msgstr ""
@@ -12,7 +12,6 @@ msgstr ""
 #: modules/profile/includes/edit.php:43
 #: modules/profile/includes/guestbook.php:15
 #: modules/profile/includes/images.php:161
-#: modules/profile/includes/ip.php:27
 #: modules/profile/includes/reset.php:22
 #: modules/profile/templates/office.phtml:33
 msgid "Profile"
@@ -173,7 +172,7 @@ msgid "You cannot edit profile of higher administration"
 msgstr ""
 
 #: modules/profile/includes/edit.php:38
-#: modules/profile/includes/ip.php:21
+#: modules/profile/includes/ip.php:24
 #: modules/profile/includes/office.php:24
 #: modules/profile/includes/password.php:25
 #: modules/profile/includes/settings.php:32
@@ -211,7 +210,7 @@ msgstr ""
 #: modules/profile/includes/guestbook.php:16
 #: modules/profile/includes/guestbook.php:28
 #: modules/profile/templates/ban.phtml:53
-#: modules/profile/templates/index.phtml:239
+#: modules/profile/templates/index.phtml:244
 #: modules/profile/templates/office.phtml:43
 #: modules/profile/templates/stat.phtml:56
 msgid "Guestbook"
@@ -308,32 +307,13 @@ msgid "Edit"
 msgstr ""
 
 #: modules/profile/includes/ip.php:15
-#: modules/profile/includes/ip.php:27
+#: modules/profile/templates/index.phtml:57
 msgid "IP History"
-msgstr ""
-
-#: modules/profile/includes/ip.php:20
-msgid "Administration"
-msgstr ""
-
-#: modules/profile/includes/ip.php:49
-#: modules/profile/templates/activity.phtml:37
-#: modules/profile/templates/karma.phtml:38
-msgid "The list is empty"
-msgstr ""
-
-#: modules/profile/includes/ip.php:52
-#: modules/profile/templates/ban_history.phtml:80
-msgid "Total"
-msgstr ""
-
-#: modules/profile/includes/ip.php:58
-msgid "To Page"
 msgstr ""
 
 #: modules/profile/includes/karma.php:15
 #: modules/profile/includes/karma.php:20
-#: modules/profile/templates/index.phtml:87
+#: modules/profile/templates/index.phtml:92
 msgid "Karma"
 msgstr ""
 
@@ -364,6 +344,7 @@ msgstr ""
 #: modules/profile/includes/karma.php:76
 #: modules/profile/includes/karma.php:149
 #: modules/profile/templates/ban_history.phtml:96
+#: modules/profile/templates/ip_history.phtml:75
 #: modules/profile/templates/karma.phtml:92
 #: modules/profile/templates/restore_password_result.phtml:16
 #: modules/profile/templates/stat.phtml:61
@@ -399,13 +380,13 @@ msgid "All"
 msgstr ""
 
 #: modules/profile/includes/karma.php:274
-#: modules/profile/templates/index.phtml:102
+#: modules/profile/templates/index.phtml:107
 #: modules/profile/templates/karma_vote.phtml:46
 msgid "Positive"
 msgstr ""
 
 #: modules/profile/includes/karma.php:279
-#: modules/profile/templates/index.phtml:108
+#: modules/profile/templates/index.phtml:113
 #: modules/profile/templates/karma_vote.phtml:50
 msgid "Negative"
 msgstr ""
@@ -483,7 +464,7 @@ msgstr ""
 
 #: modules/profile/includes/stat.php:17
 #: modules/profile/includes/stat.php:20
-#: modules/profile/templates/index.phtml:219
+#: modules/profile/templates/index.phtml:224
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
 msgstr ""
@@ -576,7 +557,14 @@ msgstr ""
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
+#: modules/profile/templates/activity.phtml:37
+#: modules/profile/templates/ip_history.phtml:49
+#: modules/profile/templates/karma.phtml:38
+msgid "The list is empty"
+msgstr ""
+
 #: modules/profile/templates/activity.phtml:53
+#: modules/profile/templates/ip_history.phtml:71
 #: modules/profile/templates/karma.phtml:88
 msgid "Total:"
 msgstr ""
@@ -638,7 +626,7 @@ msgstr ""
 #: modules/profile/templates/karma_vote.phtml:71
 #: modules/profile/templates/mail_settings.phtml:61
 #: modules/profile/templates/password.phtml:67
-#: modules/profile/templates/settings.phtml:119
+#: modules/profile/templates/settings.phtml:120
 msgid "Cancel"
 msgstr ""
 
@@ -664,6 +652,10 @@ msgstr ""
 
 #: modules/profile/templates/ban_history.phtml:73
 msgid "List is empty"
+msgstr ""
+
+#: modules/profile/templates/ban_history.phtml:80
+msgid "Total"
 msgstr ""
 
 #: modules/profile/templates/ban_history.phtml:90
@@ -711,7 +703,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:119
 #: modules/profile/templates/edit.phtml:123
-#: modules/profile/templates/index.phtml:127
+#: modules/profile/templates/index.phtml:132
 msgid "Photo"
 msgstr ""
 
@@ -742,7 +734,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:170
 #: modules/profile/templates/edit.phtml:176
-#: modules/profile/templates/index.phtml:153
+#: modules/profile/templates/index.phtml:158
 msgid "City, Country"
 msgstr ""
 
@@ -758,13 +750,13 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:186
 #: modules/profile/templates/edit.phtml:192
-#: modules/profile/templates/index.phtml:170
+#: modules/profile/templates/index.phtml:175
 msgid "Phone number"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:196
 #: modules/profile/templates/edit.phtml:202
-#: modules/profile/templates/index.phtml:176
+#: modules/profile/templates/index.phtml:181
 msgid "E-mail"
 msgstr ""
 
@@ -778,13 +770,13 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:213
 #: modules/profile/templates/edit.phtml:219
-#: modules/profile/templates/index.phtml:185
+#: modules/profile/templates/index.phtml:190
 msgid "Skype"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:224
 #: modules/profile/templates/edit.phtml:230
-#: modules/profile/templates/index.phtml:191
+#: modules/profile/templates/index.phtml:196
 msgid "Site"
 msgstr ""
 
@@ -805,12 +797,12 @@ msgid "Select gender"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:250
-#: modules/profile/templates/index.phtml:143
+#: modules/profile/templates/index.phtml:148
 msgid "Man"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:254
-#: modules/profile/templates/index.phtml:145
+#: modules/profile/templates/index.phtml:150
 msgid "Woman"
 msgstr ""
 
@@ -839,7 +831,7 @@ msgstr ""
 #: modules/profile/templates/images.phtml:62
 #: modules/profile/templates/mail_settings.phtml:60
 #: modules/profile/templates/password.phtml:66
-#: modules/profile/templates/settings.phtml:118
+#: modules/profile/templates/settings.phtml:119
 msgid "Save"
 msgstr ""
 
@@ -876,7 +868,7 @@ msgid "Never"
 msgstr ""
 
 #: modules/profile/templates/forum_settings.phtml:81
-#: modules/profile/templates/settings.phtml:120
+#: modules/profile/templates/settings.phtml:123
 msgid "Reset Settings"
 msgstr ""
 
@@ -888,72 +880,80 @@ msgstr ""
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr ""
 
-#: modules/profile/templates/index.phtml:46
+#: modules/profile/templates/index.phtml:45
 msgid "User Agent"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:48
+#: modules/profile/templates/index.phtml:47
 msgid "Ip"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:49
-#: modules/profile/templates/index.phtml:52
+#: modules/profile/templates/index.phtml:48
+#: modules/profile/templates/index.phtml:51
 msgid "Whois"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:61
+#: modules/profile/templates/index.phtml:66
 msgid "Write"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:64
+#: modules/profile/templates/index.phtml:69
 msgid "Block"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:66
+#: modules/profile/templates/index.phtml:71
 msgid "Unblock"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:70
+#: modules/profile/templates/index.phtml:75
 msgid "Actions"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:79
+#: modules/profile/templates/index.phtml:84
 msgid "Edit profile"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:94
+#: modules/profile/templates/index.phtml:99
 msgid "vote"
 msgid_plural "votes"
 msgstr[0] ""
 
-#: modules/profile/templates/index.phtml:114
+#: modules/profile/templates/index.phtml:119
 #: modules/profile/templates/karma_vote.phtml:70
 msgid "Vote"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:124
+#: modules/profile/templates/index.phtml:129
 msgid "Information"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:135
+#: modules/profile/templates/index.phtml:140
 msgid "Birthday"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:140
+#: modules/profile/templates/index.phtml:145
 msgid "Gender"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:147
+#: modules/profile/templates/index.phtml:152
 msgid "Not specified"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:179
+#: modules/profile/templates/index.phtml:184
 msgid "hidden"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:229
+#: modules/profile/templates/index.phtml:234
 #: modules/profile/templates/office.phtml:39
 msgid "Photo Album"
+msgstr ""
+
+#: modules/profile/templates/ip_history.phtml:41
+msgid "IP address"
+msgstr ""
+
+#: modules/profile/templates/ip_history.phtml:42
+msgid "Date"
 msgstr ""
 
 #: modules/profile/templates/karma.phtml:77

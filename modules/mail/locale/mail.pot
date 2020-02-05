@@ -20,9 +20,9 @@ msgstr ""
 #: modules/mail/includes/deluser.php:45
 #: modules/mail/includes/write.php:83
 #: modules/mail/templates/contact_list.phtml:93
-#: modules/mail/templates/conversations.phtml:86
+#: modules/mail/templates/conversations.phtml:106
 #: modules/mail/templates/files.phtml:76
-#: modules/mail/templates/messages.phtml:203
+#: modules/mail/templates/messages.phtml:201
 msgid "Back"
 msgstr ""
 
@@ -35,11 +35,10 @@ msgstr ""
 #: modules/mail/includes/deluser.php:53
 #: modules/mail/includes/ignor.php:220
 #: modules/mail/includes/index.php:134
-#: modules/mail/includes/input.php:97
-#: modules/mail/includes/new.php:44
-#: modules/mail/includes/output.php:96
+#: modules/mail/includes/input.php:100
+#: modules/mail/includes/output.php:99
 #: modules/mail/includes/write.php:91
-#: modules/mail/templates/messages.phtml:180
+#: modules/mail/templates/messages.phtml:178
 msgid "Delete"
 msgstr ""
 
@@ -88,8 +87,8 @@ msgstr ""
 #: modules/mail/includes/ignor.php:138
 #: modules/mail/includes/ignor.php:166
 #: modules/mail/includes/index.php:66
-#: modules/mail/includes/input.php:73
-#: modules/mail/includes/output.php:72
+#: modules/mail/includes/input.php:75
+#: modules/mail/includes/output.php:74
 msgid "Continue"
 msgstr ""
 
@@ -135,9 +134,8 @@ msgstr ""
 
 #: modules/mail/includes/ignor.php:216
 #: modules/mail/includes/index.php:130
-#: modules/mail/includes/input.php:89
-#: modules/mail/includes/new.php:44
-#: modules/mail/includes/output.php:88
+#: modules/mail/includes/input.php:96
+#: modules/mail/includes/output.php:95
 msgid "Correspondence"
 msgstr ""
 
@@ -162,17 +160,16 @@ msgid "Add"
 msgstr ""
 
 #: modules/mail/includes/index.php:138
-#: modules/mail/includes/input.php:93
-#: modules/mail/includes/output.php:92
+#: modules/mail/includes/input.php:104
+#: modules/mail/includes/output.php:103
 msgid "Block User"
 msgstr ""
 
-#: modules/mail/includes/input.php:15
+#: modules/mail/includes/input.php:17
 msgid "Incoming messages"
 msgstr ""
 
 #: modules/mail/includes/load.php:15
-#: modules/mail/includes/new.php:15
 #: modules/mail/includes/write.php:21
 #: modules/mail/index.php:77
 msgid "Mail"
@@ -187,40 +184,12 @@ msgstr ""
 msgid "No file selected"
 msgstr ""
 
-#: modules/mail/includes/new.php:16
-msgid "New Messages"
-msgstr ""
-
-#: modules/mail/includes/new.php:44
-msgid "Block Sender"
-msgstr ""
-
-#: modules/mail/includes/new.php:55
-#: modules/mail/templates/contact_list.phtml:38
-#: modules/mail/templates/conversations.phtml:31
-#: modules/mail/templates/files.phtml:31
-#: modules/mail/templates/messages.phtml:75
-msgid "The list is empty"
-msgstr ""
-
-#: modules/mail/includes/new.php:58
-msgid "Total"
-msgstr ""
-
-#: modules/mail/includes/new.php:65
-msgid "To Page"
-msgstr ""
-
-#: modules/mail/includes/new.php:68
-msgid "Personal"
-msgstr ""
-
-#: modules/mail/includes/output.php:15
+#: modules/mail/includes/output.php:17
 msgid "Sent messages"
 msgstr ""
 
 #: modules/mail/includes/write.php:42
-#: modules/mail/templates/messages.phtml:188
+#: modules/mail/templates/messages.phtml:186
 msgid "Clear messages"
 msgstr ""
 
@@ -304,8 +273,15 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: modules/mail/templates/contact_list.phtml:38
+#: modules/mail/templates/conversations.phtml:31
+#: modules/mail/templates/files.phtml:31
+#: modules/mail/templates/messages.phtml:75
+msgid "The list is empty"
+msgstr ""
+
 #: modules/mail/templates/contact_list.phtml:62
-#: modules/mail/templates/conversations.phtml:54
+#: modules/mail/templates/conversations.phtml:62
 msgid "message"
 msgid_plural "messages"
 msgstr[0] ""
@@ -316,13 +292,13 @@ msgid_plural "unread messages"
 msgstr[0] ""
 
 #: modules/mail/templates/contact_list.phtml:89
-#: modules/mail/templates/conversations.phtml:82
+#: modules/mail/templates/conversations.phtml:102
 #: modules/mail/templates/files.phtml:72
-#: modules/mail/templates/messages.phtml:199
+#: modules/mail/templates/messages.phtml:197
 msgid "Total:"
 msgstr ""
 
-#: modules/mail/templates/conversations.phtml:54
+#: modules/mail/templates/conversations.phtml:65
 msgid "Last:"
 msgstr ""
 
@@ -343,6 +319,6 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:132
+#: modules/mail/templates/messages.phtml:130
 msgid "Attached files"
 msgstr ""

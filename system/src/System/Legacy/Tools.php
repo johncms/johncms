@@ -272,6 +272,9 @@ class Tools
 
     /**
      * Показываем местоположение пользователя
+     *
+     * @param string $place
+     * @return string
      */
     public function displayPlace(string $place): string
     {
@@ -283,35 +286,21 @@ class Tools
 
         $part = explode('?', $place);
 
-        $placelist = [
-            '/'                => '<a href="#home#/">' . d__('system', 'On the Homepage') . '</a>',
-            '/album'           => '<a href="#home#/album/">' . d__('system', 'Watching the photo album') . '</a>',
-            '/community'       => '<a href="#home#/community/">' . d__('system', 'Users') . '</a>',
-            '/community/users' => '<a href="#home#/community/users/">' . d__('system', 'Users List') . '</a>',
-            '/downloads'       => '<a href="#home#/downloads/">' . d__('system', 'Downloads') . '</a>',
-            '/forum'           => '<a href="#home#/forum/">' . d__('system', 'Forum') . '</a>&#160;/&#160;<a href="#home#/forum/?act=who">&gt;&gt;</a>', // phpcs:ignore
-            '/guestbook'       => '<a href="#home#/guestbook/">' . d__('system', 'Guestbook') . '</a>',
-            '/help'            => '<a href="#home#/help/">' . d__('system', 'Reading the FAQ') . '</a>',
-            '/library'         => '<a href="#home#/library/">' . d__('system', 'Library') . '</a>',
-            '/login'           => d__('system', 'Login'),
-            '/mail'            => d__('system', 'Personal correspondence'),
-            '/news'            => '<a href="#home#/news/">' . d__('system', 'Reading the news') . '</a>',
-            '/profile'         => d__('system', 'Profile'),
-            '/redirect'        => d__('system', 'Redirect on external link to another site'),
-            '/registration'    => d__('system', 'Registered on the site'),
-            '/users'           => '<a href="#home#/users/">' . d__('system', 'List of users') . '</a>',
-            '/online'          => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
-            '/online/history'  => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
-            '/online/guest'    => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
-            '/online/ip'       => '<a href="#home#/users/?act=online">' . d__('system', 'Who is online?') . '</a>',
-        ];
+        $places = require CONFIG_PATH . 'places.global.php';
 
-        if (array_key_exists($place, $placelist)) {
-            return str_replace('#home#', $this->config['homeurl'], $placelist[$place]);
+        $places_local = [];
+        if (file_exists(CONFIG_PATH . 'places.local.php')) {
+            $places_local = require CONFIG_PATH . 'places.local.php';
         }
 
-        if (array_key_exists($part[0], $placelist)) {
-            return str_replace('#home#', $this->config['homeurl'], $placelist[$part[0]]);
+        $places_list = array_merge($places, $places_local);
+
+        if (array_key_exists($place, $places_list)) {
+            return str_replace('#home#', $this->config['homeurl'], $places_list[$place]);
+        }
+
+        if (array_key_exists($part[0], $places_list)) {
+            return str_replace('#home#', $this->config['homeurl'], $places_list[$part[0]]);
         }
 
         return '<a href="' . $this->config['homeurl'] . ($this->user->rights >= 6 ? $place : '') . '/">'

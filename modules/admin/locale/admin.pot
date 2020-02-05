@@ -1389,15 +1389,19 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: modules/admin/templates/index.phtml:10
+#: modules/admin/templates/index.phtml:6
+msgid "Show admin menu"
+msgstr ""
+
+#: modules/admin/templates/index.phtml:15
 msgid "registered visitors today"
 msgstr ""
 
-#: modules/admin/templates/index.phtml:18
+#: modules/admin/templates/index.phtml:23
 msgid "users registered today"
 msgstr ""
 
-#: modules/admin/templates/index.phtml:26
+#: modules/admin/templates/index.phtml:31
 msgid "posts on the forum today"
 msgstr ""
 

@@ -2,6 +2,99 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
+#: config/places.global.php:12
+msgid "On the Homepage"
+msgstr ""
+
+#: config/places.global.php:13
+msgid "Watching the photo album"
+msgstr ""
+
+#: config/places.global.php:14
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:100
+msgid "Users"
+msgstr ""
+
+#: config/places.global.php:15
+msgid "Users List"
+msgstr ""
+
+#: config/places.global.php:16
+#: system/src/Comments.php:150
+#: system/src/Comments.php:186
+#: system/src/Comments.php:219
+#: system/src/Comments.php:245
+#: system/src/Comments.php:286
+#: system/src/Comments.php:318
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:75
+msgid "Downloads"
+msgstr ""
+
+#: config/places.global.php:17
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
+msgid "Forum"
+msgstr ""
+
+#: config/places.global.php:18
+#: modules/notifications/index.php:111
+#: modules/notifications/index.php:130
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:62
+msgid "Guestbook"
+msgstr ""
+
+#: config/places.global.php:19
+msgid "Reading the FAQ"
+msgstr ""
+
+#: config/places.global.php:20
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:88
+msgid "Library"
+msgstr ""
+
+#: config/places.global.php:21
+#: modules/login/index.php:67
+#: modules/login/templates/captcha.phtml:2
+#: modules/login/templates/captcha.phtml:3
+#: modules/login/templates/confirm.phtml:2
+#: modules/login/templates/confirm.phtml:3
+#: modules/login/templates/login.phtml:4
+#: modules/login/templates/login.phtml:5
+#: modules/login/templates/login.phtml:41
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Login"
+msgstr ""
+
+#: config/places.global.php:22
+msgid "Personal correspondence"
+msgstr ""
+
+#: config/places.global.php:23
+msgid "Reading the news"
+msgstr ""
+
+#: config/places.global.php:24
+msgid "Profile"
+msgstr ""
+
+#: config/places.global.php:25
+msgid "Redirect on external link to another site"
+msgstr ""
+
+#: config/places.global.php:26
+msgid "Registered on the site"
+msgstr ""
+
+#: config/places.global.php:27
+msgid "List of users"
+msgstr ""
+
+#: config/places.global.php:28
+#: config/places.global.php:29
+#: config/places.global.php:30
+#: config/places.global.php:31
+msgid "Who is online?"
+msgstr ""
+
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
 msgstr ""
@@ -20,19 +113,6 @@ msgstr ""
 #: modules/login/templates/logout.phtml:3
 #: modules/login/templates/logout.phtml:9
 msgid "Logout"
-msgstr ""
-
-#: modules/login/index.php:67
-#: modules/login/templates/captcha.phtml:2
-#: modules/login/templates/captcha.phtml:3
-#: modules/login/templates/confirm.phtml:2
-#: modules/login/templates/confirm.phtml:3
-#: modules/login/templates/login.phtml:4
-#: modules/login/templates/login.phtml:5
-#: modules/login/templates/login.phtml:41
-#: system/src/System/Legacy/Tools.php:296
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
-msgid "Login"
 msgstr ""
 
 #: modules/login/index.php:77
@@ -128,22 +208,11 @@ msgstr ""
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/index.php:102
-msgid "System messages"
-msgstr ""
-
-#: modules/notifications/index.php:112
+#: modules/notifications/index.php:101
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/index.php:122
-#: modules/notifications/index.php:141
-#: system/src/System/Legacy/Tools.php:293
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:62
-msgid "Guestbook"
-msgstr ""
-
-#: modules/notifications/index.php:132
+#: modules/notifications/index.php:121
 msgid "Comments"
 msgstr ""
 
@@ -202,17 +271,6 @@ msgstr ""
 #: system/src/Comments.php:209
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
-
-#: system/src/Comments.php:150
-#: system/src/Comments.php:186
-#: system/src/Comments.php:219
-#: system/src/Comments.php:245
-#: system/src/Comments.php:286
-#: system/src/Comments.php:318
-#: system/src/System/Legacy/Tools.php:291
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:75
-msgid "Downloads"
 msgstr ""
 
 #: system/src/Comments.php:152
@@ -343,93 +401,11 @@ msgstr ""
 msgid "ERROR"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:287
-msgid "On the Homepage"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:288
-msgid "Watching the photo album"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:289
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:100
-msgid "Users"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:290
-msgid "Users List"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:292
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
-msgid "Forum"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:294
-msgid "Reading the FAQ"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:295
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:88
-msgid "Library"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:297
-msgid "Personal correspondence"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:298
-msgid "Reading the news"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:299
-msgid "Profile"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:300
-msgid "Redirect on external link to another site"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:301
-msgid "Registered on the site"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:302
-msgid "List of users"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:303
-#: system/src/System/Legacy/Tools.php:304
-#: system/src/System/Legacy/Tools.php:305
-#: system/src/System/Legacy/Tools.php:306
-msgid "Who is online?"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:316
+#: system/src/System/Legacy/Tools.php:307
 msgid "Somewhere on the site"
 msgstr ""
 
-#: system/src/System/Legacy/Tools.php:344
-msgid "Guest"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:419
-msgid "Last Visit"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:425
-msgid "Browser"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:427
-msgid "IP address"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:452
-msgid "IP History"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:633
+#: system/src/System/Legacy/Tools.php:461
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
