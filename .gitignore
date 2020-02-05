@@ -2,6 +2,7 @@
 /.idea
 /composer.lock
 /config/autoload/*.local.php
+/config/*.local.php
 /dist
 /distributive
 /node_modules
