@@ -590,4 +590,37 @@ class Tools
 
         return $number;
     }
+
+    /**
+     * get all parent sections
+     *
+     * @param $items, $parent
+     * @return array
+     */
+    public function getSections(array &$items, $parent): array
+    {
+        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
+        if ($res != false) {
+            $items[] = $res;
+            $items = $this->getSections($items, $res['parent']);
+        }
+        krsort($items);
+        return $items;
+    }
+
+    public function getSectionsTree(array &$section_tree, $parent = 0, $mark = ''): array
+    {
+        $req = $this->db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${parent}' ORDER BY `sort` ASC");
+        if ($req->rowCount()) {
+            while ($res = $req->fetch()) {
+                $section_tree[] = [
+                    'id'        => $res['id'],
+                    'name'      => $mark . ' ' . $res['name'],
+                    'parent'    => $res['parent'],
+                ];
+                $section_tree = $this->getSectionsTree($section_tree, $res['id'], $mark . '--');
+            }
+        }
+        return $section_tree;
+    }
 }

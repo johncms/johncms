@@ -312,5 +312,5 @@ if ($req->rowCount()) {
         );
     }
 } else {
-    header('Location: ?act=forum&mod=cat');
+    header('Location: ?mod=cat');
 }

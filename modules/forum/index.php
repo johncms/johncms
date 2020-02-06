@@ -264,25 +264,20 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         }
 
         // Nav chain
-        $res = true;
-        $allow = 0;
-        $parent = $show_type === 'topic' ? $type1['section_id'] : $type1['parent'];
-        $tree = [];
-        while (! empty($parent) && $res != false) {
-            $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
-            $tree[] = $res;
-            if ($res['section_type'] == 1 && ! empty($res['access'])) {
-                $allow = (int) $res['access'];
-            }
-            $parent = $res['parent'];
+        if ($show_type === 'topic') {
+            $parent = $type1['section_id'];
+            $allow = $db->query("SELECT `access` FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
+            $allow = (int) $allow['access'] ?? 0;
+        } else {
+            $parent = $type1['parent'];
         }
-        krsort($tree);
+        $tree = [];
+        $tools->getSections($tree, $parent);
         foreach ($tree as $item) {
             $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
         }
 
         $nav_chain->add($type1['name']);
-
         // Счетчик файлов и ссылка на них
         $sql = ($user->rights == 9) ? '' : " AND `del` != '1'";
 

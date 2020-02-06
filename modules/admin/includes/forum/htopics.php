@@ -74,7 +74,7 @@ if (isset($_POST['deltopic'])) {
     // Удаляем темы
     $db->exec("DELETE FROM `forum_topic` WHERE `deleted` = '1' ${sort}");
 
-    header('Location: ?act=forum&mod=htopics');
+    header('Location: ?mod=htopics');
 } else {
     $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = '1' ${sort}")->fetchColumn();
     $req = $db->query(
