@@ -607,4 +607,20 @@ class Tools
         krsort($items);
         return $items;
     }
+
+    public function getSectionsTree(array &$section_tree, $parent = 0, $mark = ''): array
+    {
+        $req = $this->db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${parent}' ORDER BY `sort` ASC");
+        if ($req->rowCount()) {
+            while ($res = $req->fetch()) {
+                $section_tree[] = [
+                    'id'        => $res['id'],
+                    'name'      => $mark . ' ' . $res['name'],
+                    'parent'    => $res['parent'],
+                ];
+                $section_tree = $this->getSectionsTree($section_tree, $res['id'], $mark . '--');
+            }
+        }
+        return $section_tree;
+    }
 }

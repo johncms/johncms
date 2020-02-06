@@ -276,7 +276,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         foreach ($tree as $item) {
             $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
         }
-        
+
         $nav_chain->add($type1['name']);
         // Счетчик файлов и ссылка на них
         $sql = ($user->rights == 9) ? '' : " AND `del` != '1'";

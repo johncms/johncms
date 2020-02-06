@@ -102,8 +102,11 @@ if ($req->rowCount()) {
                 $db->exec("UPDATE `forum_sections` SET `parent` = '${category}', `sort` = '${sort}' WHERE `id` = '${id}'");
                 // Меняем категорию для прикрепленных файлов
                 $db->exec("UPDATE `cms_forum_files` SET `cat` = '${category}' WHERE `cat` = '" . $res['parent'] . "'");
+                if ($res['parent'] == 0) {
+                    $db->exec("UPDATE `forum_sections` SET `parent` = '0' WHERE `parent` = '" . $res['id'] . "'");
+                }
             }
-            header('Location: ?act=forum&mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
+            header('Location: ?mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
         } else {
             // Выводим сообщение об ошибках
             echo $view->render(
@@ -129,12 +132,13 @@ if ($req->rowCount()) {
                 'selected' => empty($res['parent']),
             ],
         ];
-        $req_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '" . $res['id'] . "' ORDER BY `sort` ASC");
-        while ($res_c = $req_c->fetch()) {
+        $tree = [];
+        $tools->getSectionsTree($tree);
+        foreach ($tree as $item) {
             $categories[] = [
-                'id'       => $res_c['id'],
-                'name'     => $res_c['name'],
-                'selected' => $res_c['id'] === $res['parent'],
+                'id'       => $item['id'],
+                'name'     => $item['name'],
+                'selected' => $item['id'] === $res['parent'],
             ];
         }
         $data['categories'] = $categories;
@@ -160,5 +164,5 @@ if ($req->rowCount()) {
         );
     }
 } else {
-    header('Location: ?act=forum&mod=cat');
+    header('Location: ?mod=cat');
 }
