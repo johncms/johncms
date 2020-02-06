@@ -280,12 +280,14 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         );
     }
 } else {
-    $res_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res_r['parent'] . "'")->fetch();
+    $tree = [];
+    $tools->getSections($tree, $res_r['parent']);
     $msg_pre = $tools->checkout($msg, 1, 1);
     $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-
-    $nav_chain->add($res_c['name'], '/forum/?' . ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_c['id']);
+    foreach($tree as $item) {
+        $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
+    }
     $nav_chain->add($res_r['name'], '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id']);
     $nav_chain->add(__('New Topic'));
 
