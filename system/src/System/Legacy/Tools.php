@@ -369,9 +369,10 @@ class Tools
      * Транслитерация с Русского в латиницу
      *
      * @param string $str
+     * @param bool $to_lowercase
      * @return string
      */
-    public function rusLat($str)
+    public function rusLat($str, bool $to_lowercase = true): string
     {
         $replace = [
             'а' => 'a',
@@ -381,10 +382,10 @@ class Tools
             'д' => 'd',
             'е' => 'e',
             'ё' => 'e',
-            'ж' => 'j',
+            'ж' => 'zh',
             'з' => 'z',
             'и' => 'i',
-            'й' => 'i',
+            'й' => 'y',
             'к' => 'k',
             'л' => 'l',
             'м' => 'm',
@@ -401,15 +402,51 @@ class Tools
             'ч' => 'ch',
             'ш' => 'sh',
             'щ' => 'sch',
-            'ъ' => '',
+            'ь' => '\'',
             'ы' => 'y',
-            'ь' => '',
-            'э' => 'ye',
+            'ъ' => '\'',
+            'э' => 'e',
             'ю' => 'yu',
             'я' => 'ya',
+            'А' => 'A',
+            'Б' => 'B',
+            'В' => 'V',
+            'Г' => 'G',
+            'Д' => 'D',
+            'Е' => 'E',
+            'Ё' => 'E',
+            'Ж' => 'Zh',
+            'З' => 'Z',
+            'И' => 'I',
+            'Й' => 'Y',
+            'К' => 'K',
+            'Л' => 'L',
+            'М' => 'M',
+            'Н' => 'N',
+            'О' => 'O',
+            'П' => 'P',
+            'Р' => 'R',
+            'С' => 'S',
+            'Т' => 'T',
+            'У' => 'U',
+            'Ф' => 'F',
+            'Х' => 'H',
+            'Ц' => 'C',
+            'Ч' => 'Ch',
+            'Ш' => 'Sh',
+            'Щ' => 'Sch',
+            'Ь' => '\'',
+            'Ы' => 'Y',
+            'Ъ' => '\'',
+            'Э' => 'E',
+            'Ю' => 'Yu',
+            'Я' => 'Ya',
         ];
 
-        return strtr(mb_strtolower($str), $replace);
+        if ($to_lowercase) {
+            $str = mb_strtolower($str);
+        }
+        return strtr($str, $replace);
     }
 
     /**
@@ -594,7 +631,7 @@ class Tools
     /**
      * get all parent sections
      *
-     * @param $items, $parent
+     * @param $items , $parent
      * @return array
      */
     public function getSections(array &$items, $parent): array
@@ -614,9 +651,9 @@ class Tools
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 $section_tree[] = [
-                    'id'        => $res['id'],
-                    'name'      => $mark . ' ' . $res['name'],
-                    'parent'    => $res['parent'],
+                    'id'     => $res['id'],
+                    'name'   => $mark . ' ' . $res['name'],
+                    'parent' => $res['parent'],
                 ];
                 $section_tree = $this->getSectionsTree($section_tree, $res['id'], $mark . '--');
             }

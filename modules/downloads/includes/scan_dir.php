@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\FileInfo;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -170,20 +172,21 @@ if ($do === 'clean') {
             );
 
             asort($arr_scan_dir);
-            $scan = preg_replace_callback(
-                '/[^a-z_-]+/ui',
-                function ($m) use ($tools) {
-                    return str_replace(' ', '_', $tools->rusLat($m[0]));
+            $scan = array_map(
+                static function ($path) {
+                    $file_info = new FileInfo($path);
+                    return $file_info->getCleanPath();
                 },
                 $arr_scan_dir
             );
             asort($scan);
+
             foreach ($arr_scan_dir as $key => $val) {
                 if ($scan[$key] != $arr_scan_dir[$key]) {
-                    if (is_dir($arr_scan_dir[$key]) && !is_dir($scan[$key])) {
+                    if (is_dir($arr_scan_dir[$key]) && ! is_dir($scan[$key])) {
                         mkdir($scan[$key]);
                         $arr_old_dir[] = $arr_scan_dir[$key];
-                    } elseif (!file_exists($scan[$key])) {
+                    } elseif (! file_exists($scan[$key])) {
                         if (copy($arr_scan_dir[$key], $scan[$key])) {
                             unlink($arr_scan_dir[$key]);
                         }
@@ -296,12 +299,7 @@ if ($do === 'clean') {
             }
 
             if (! empty($arr_old_dir)) {
-                usort(
-                    $arr_old_dir,
-                    function ($a, $b) {
-                        return substr_count($b, '/') - substr_count($a, '/');
-                    }
-                );
+                arsort($arr_old_dir);
                 array_map('rmdir', $arr_old_dir);
             }
 
