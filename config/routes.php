@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,13 +8,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use FastRoute\RouteCollector;
 use Johncms\System\Users\User;
 
-return function (RouteCollector $map, User $user) {
-    // An example of a route where the URL has optional index.php
-    // $map->addRoute(['GET', 'POST'], '/users[/[index.php]]', 'modules/users/index.php');
-
+return static function (RouteCollector $map, User $user) {
     $map->get('/', 'modules/homepage/index.php');                                                     // Home Page
     $map->get('/rss[/]', 'modules/rss/index.php');                                                    // RSS
     $map->addRoute(['GET', 'POST'], '/album[/[{action}]]', 'modules/album/index.php');                          // Photo Album
@@ -40,7 +37,12 @@ return function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/notifications[/]', 'modules/notifications/index.php');      // Notifications
     }
 
-    if ($user->isValid() && $user->rights >= 6) {
+    if ($user->rights >= 6 && $user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/admin/[{action}/]', 'modules/admin/index.php');                      // Administration
+    }
+
+    // Custom routes
+    if (is_file(CONFIG_PATH . 'routes.local.php')) {
+        require CONFIG_PATH . 'routes.local.php';
     }
 };
