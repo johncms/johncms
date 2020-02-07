@@ -69,7 +69,7 @@ if ($req->rowCount()) {
         if ($desc && mb_strlen($desc) < 2) {
             $error[] = __('Description should be at least 2 characters in length');
         }
-        
+
         $isChild = function ($parent, $id) use ($db, &$isChild) {
             $res = $db->query("SELECT `id`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
             if ($res != false) {

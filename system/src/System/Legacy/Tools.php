@@ -655,7 +655,7 @@ class Tools
                     'name'   => $mark . ' ' . $res['name'],
                     'parent' => $res['parent'],
                 ];
-                $section_tree = $this->getSectionsTree($section_tree, $res['id'], $mark . '--');
+                $section_tree = $this->getSectionsTree($section_tree, $res['id'], $mark . ' . ');
             }
         }
         return $section_tree;
