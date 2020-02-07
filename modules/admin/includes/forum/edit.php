@@ -70,6 +70,19 @@ if ($req->rowCount()) {
             $error[] = __('Description should be at least 2 characters in length');
         }
 
+        $isChild = function ($parent, $id) use ($db, &$isChild) {
+            $res = $db->query("SELECT `id`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
+            if ($res != false) {
+                if ($res['id'] == $id) return true;
+                return $isChild($res['parent'], $id);
+            }
+            return false;
+        };
+
+        if ($isChild($category, $id)) {
+            $error[] = __('Please select a valid parent');
+        }
+
         if (! $error) {
             // Записываем в базу
             $db->prepare(
@@ -102,9 +115,6 @@ if ($req->rowCount()) {
                 $db->exec("UPDATE `forum_sections` SET `parent` = '${category}', `sort` = '${sort}' WHERE `id` = '${id}'");
                 // Меняем категорию для прикрепленных файлов
                 $db->exec("UPDATE `cms_forum_files` SET `cat` = '${category}' WHERE `cat` = '" . $res['parent'] . "'");
-                if ($res['parent'] == 0) {
-                    $db->exec("UPDATE `forum_sections` SET `parent` = '0' WHERE `parent` = '" . $res['id'] . "'");
-                }
             }
             header('Location: ?mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
         } else {
@@ -129,6 +139,7 @@ if ($req->rowCount()) {
             [
                 'id'       => 0,
                 'name'     => ' - ',
+
                 'selected' => empty($res['parent']),
             ],
         ];
