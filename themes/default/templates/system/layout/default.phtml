@@ -122,7 +122,7 @@ $ads_array = $ads->getAds();
                     </svg>
                 </a>
             </div>
-            <div class="flex-shrink-1 d-flex">
+            <div class="flex-shrink-1 d-flex position-relative">
                 <?php if (! empty($analytics)): ?>
                     <!-- Counters -->
                     <div class="mr-2 d-flex">
@@ -134,6 +134,9 @@ $ads_array = $ads->getAds();
                 <div>
                     &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
                 </div>
+                <?php if ($user->rights >= 7): ?>
+                    <div class="position-absolute small" style="bottom: -13px; right: 0;"><?= format_size(memory_get_usage()) ?>, <?= round(microtime(true) - START_TIME, 2) ?> sec.</div>
+                <?php endif ?>
             </div>
         </div>
     </div>
