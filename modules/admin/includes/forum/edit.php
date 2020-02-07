@@ -73,7 +73,9 @@ if ($req->rowCount()) {
         $isChild = function ($parent, $id) use ($db, &$isChild) {
             $res = $db->query("SELECT `id`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
             if ($res != false) {
-                if ($res['id'] == $id) return true;
+                if ($res['id'] == $id) {
+                    return true;
+                }
                 return $isChild($res['parent'], $id);
             }
             return false;
