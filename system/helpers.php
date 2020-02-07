@@ -95,3 +95,26 @@ if (! function_exists('d')) {
         }
     }
 }
+
+/**
+ * Convert bytes to KB/MB/GB/TB
+ *
+ * @param $bytes
+ * @return string
+ */
+function format_size(int $bytes): string
+{
+    if ($bytes < 1000 * 1024) {
+        return number_format($bytes / 1024, 2) . ' KB';
+    }
+
+    if ($bytes < 1000 * 1048576) {
+        return number_format($bytes / 1048576, 2) . ' MB';
+    }
+
+    if ($bytes < 1000 * 1073741824) {
+        return number_format($bytes / 1073741824, 2) . ' GB';
+    }
+
+    return number_format($bytes / 1099511627776, 2) . ' TB';
+}
