@@ -139,7 +139,6 @@ if ($req->rowCount()) {
             [
                 'id'       => 0,
                 'name'     => ' - ',
-
                 'selected' => empty($res['parent']),
             ],
         ];
