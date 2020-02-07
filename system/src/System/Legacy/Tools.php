@@ -636,10 +636,10 @@ class Tools
      */
     public function getSections(array &$items, $parent): array
     {
-        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
+        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
         if ($res != false) {
             $items[] = $res;
-            $items = $this->getSections($items, $res['parent']);
+            return $this->getSections($items, $res['parent']);
         }
         krsort($items);
         return $items;
