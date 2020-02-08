@@ -7,6 +7,7 @@
     array (
       'For administration' => 'Administracijai',
       'Smilies' => 'Šypsenėlės',
+      'Access forbidden' => 'Prieiga uždrausta',
       'Avatars' => 'Avatarai',
       'Avatar has been successfully applied' => 'Avataras sėkmingai nustatytas',
       'Continue' => 'Tęsti',
@@ -18,6 +19,7 @@
       'Forum rules' => 'Forumo taisyklės',
       'My smilies' => 'Mano šypsenėlės',
       'Wrong data' => 'Klaidingi duomenys',
+      'Smiles' => 'Šypsenėlės',
       'bbCode Tags' => 'bbCode Žymės',
       'Information, FAQ' => 'Informacija, klausimai ir atsakymai',
       'Animals' => 'Gyvūnai',
@@ -33,6 +35,7 @@
       'Sports' => 'Sportas',
       'Technology' => 'Technologijos',
       'The list is empty' => 'Sąrašas tuščias',
+      'Total:' => 'Viso:',
       'PHP code' => 'PHP kodas',
       'Link name' => 'Nuorodos pavadinimas',
       'URL Link' => 'URL Nuoroda',

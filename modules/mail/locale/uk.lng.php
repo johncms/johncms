@@ -41,12 +41,6 @@
       'Mail' => 'Пошта',
       'Such file does not exist' => 'Такого файлу не існує',
       'No file selected' => 'Не вибрано файлу',
-      'New Messages' => 'Нові повідомлення',
-      'Block Sender' => 'Блокувати відправника',
-      'The list is empty' => 'Список порожній',
-      'Total' => 'Разом',
-      'To Page' => 'На сторінку',
-      'Personal' => 'Персональні',
       'Sent messages' => 'Відправлені повідомлення',
       'Clear messages' => 'Очистити повідомлення',
       'Messages are deleted' => 'Повідомлення видалені',
@@ -68,6 +62,7 @@
       'Message already exists' => 'Повідомлення вже існує',
       'My Account' => 'Мій аккаунт',
       'Cancel' => 'Скасувати',
+      'The list is empty' => 'Список порожній',
       'message' => 
       array (
         0 => 'повідомлення',

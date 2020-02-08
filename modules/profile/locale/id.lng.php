@@ -63,8 +63,6 @@
       'Remove from Contacts' => 'Hapus kontak',
       'Edit' => 'Sunting',
       'IP History' => 'Riwayat IP',
-      'The list is empty' => 'Daftar ini kosong',
-      'To Page' => 'Ke halaman',
       'It is forbidden to vote for administration' => 'Pengurus tidak dizinkan untuk memberi voting',
       'Cheating karma is forbidden' => 'Kecurangan karma tidak diizinkan',
       'Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.' => 'Pengguna dapat memberi voting, jika aktif di situs selama %s dan memiliki skor %d pos forum.',
@@ -130,6 +128,7 @@ Kata sandi baru Anda: %s
 
 Setelah masuk Anda dapat mengubah kata sandi baru lagi.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Kata sandi berhasil diganti<br>Kata sandi berhasil dikirim ke alamat email Anda.',
+      'The list is empty' => 'Daftar ini kosong',
       'Ban type' => 'Tipe Blokir',
       'Full block' => 'Blokir penuh',
       'Private messages' => 'Pesan Pribadi',

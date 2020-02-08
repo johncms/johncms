@@ -11,7 +11,6 @@
       'Downloads on moderation' => 'Pliki w moderacji',
       'Ban' => 'Ban',
       'New forum posts' => 'Nowe posty na forum',
-      'System messages' => 'Komunikaty systemowe',
       'Mail' => 'Wiadomości',
       'Guestbook' => 'Księga gości',
       'Comments' => 'Komentarze',

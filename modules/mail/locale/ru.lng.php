@@ -41,12 +41,6 @@
       'Mail' => 'Почта',
       'Such file does not exist' => 'Такого файла не существует',
       'No file selected' => 'Не выбран файл',
-      'New Messages' => 'Новые сообщения',
-      'Block Sender' => 'Блокировать отправителя',
-      'The list is empty' => 'Список пуст',
-      'Total' => 'Всего',
-      'To Page' => 'На страницу',
-      'Personal' => 'Личное',
       'Sent messages' => 'Отправленные сообщения',
       'Clear messages' => 'Очистить сообщения',
       'Messages are deleted' => 'Сообщения удалены',
@@ -68,6 +62,7 @@
       'Message already exists' => 'Такое сообщение уже было',
       'My Account' => 'Личный кабинет',
       'Cancel' => 'Отмена',
+      'The list is empty' => 'Список пуст',
       'message' => 
       array (
         0 => 'сообщение',

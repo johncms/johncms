@@ -61,8 +61,6 @@
       'Remove from Contacts' => 'Sterge de la prieteni',
       'Edit' => 'Editeaza',
       'IP History' => 'Istoric IP',
-      'The list is empty' => 'Lista este goala',
-      'To Page' => 'La Pagina',
       'It is forbidden to vote for administration' => 'Este interzis sa votezi in administrator',
       'Cheating karma is forbidden' => 'Interzis inselaciune',
       'Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.' => 'Utilizatorii pot lua parte la votare daca au stat mai mult de %s pe site si scorul in postarile pe forum este de %d',
@@ -127,6 +125,7 @@ Parola ta noua este : %s
 
 Dupa logare, iti poti schimba parola in una mai usoara',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Parola a fost schimbata.<br>Noua parola va fi trimisa pe adresa ta de E-mail.',
+      'The list is empty' => 'Lista este goala',
       'Ban type' => 'Tipul banarii',
       'Full block' => 'Blocare totala',
       'Private messages' => 'Mesaje private',

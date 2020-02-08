@@ -41,12 +41,6 @@
       'Mail' => 'Wiadomości',
       'Such file does not exist' => 'Ten plik nie istnieje lub został usunięty',
       'No file selected' => 'Nie wybrano pliku',
-      'New Messages' => 'Nowe wiadomości',
-      'Block Sender' => 'Zablokuj nadawcę',
-      'The list is empty' => 'Lista jest pusta',
-      'Total' => 'Wszystkich',
-      'To Page' => 'Do strony',
-      'Personal' => 'Panel',
       'Sent messages' => 'Wysłane wiadomości',
       'Clear messages' => 'Wyczyść wiadomości',
       'Messages are deleted' => 'Wiadomości usunięte',
@@ -68,6 +62,7 @@
       'Message already exists' => 'Taka wiadomość już istnieje',
       'My Account' => 'Moje konto',
       'Cancel' => 'Anuluj',
+      'The list is empty' => 'Lista jest pusta',
       'message' => 
       array (
         0 => 'Wiadomość',

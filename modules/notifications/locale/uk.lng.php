@@ -11,7 +11,6 @@
       'Downloads on moderation' => 'Завантаження на модерації',
       'Ban' => 'Бан',
       'New forum posts' => 'Нові повідомлення форуму',
-      'System messages' => 'Системні повідомлення',
       'Mail' => 'Пошта',
       'Guestbook' => 'Гостьова книга',
       'Comments' => 'Коментарі',
