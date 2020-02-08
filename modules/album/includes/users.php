@@ -89,7 +89,7 @@ ORDER BY `u`.`name` ASC LIMIT ' . $start . ', ' . $user->config->kmess);
 }
 
 $data['total'] = $total;
-$data['pagination'] = $tools->displayPagination('?./users' . ($mod ? '?mod=' . $mod : '') . '&amp;', $start, $total, $user->config->kmess);
+$data['pagination'] = $tools->displayPagination('?' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $user->config->kmess);
 $data['users'] = $users ?? [];
 
 echo $view->render(
