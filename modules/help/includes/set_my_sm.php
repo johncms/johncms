@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -24,8 +24,7 @@ $delete = isset($_POST['delete']);
 $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
 if (($adm && ! $user->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_POST['delete_sm']) || ($add && ! $_POST['add_sm'])) {
-    echo $tools->displayError(__('Wrong data'), '<a href="?act=smileys">' . __('Smilies') . '</a>');
-    require 'system/end.php';
+    header('location: ?act=my_smilies');
     exit;
 }
 
