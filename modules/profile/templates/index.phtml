@@ -39,6 +39,9 @@ $this->layout(
                     <div class="text-muted small"><?= $data['user']['rights_name'] ?></div>
                     <div class="font-weight-bold h2 mb-1"><?= $data['user']['imname'] ?: $data['user']['name'] ?></div>
                     <div class="text-muted"><?= $data['user']['name'] ?></div>
+                    <?php if (! empty($data['user']['last_visit'])): ?>
+                        <div class="text-muted"><?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?></div>
+                    <?php endif; ?>
                 </div>
                 <?php if ($data['show_ip']): ?>
                     <div class="small">
