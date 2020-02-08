@@ -40,9 +40,6 @@ $this->layout(
     <li>
         <?= __('Registered') ?>: <?= date('d.m.Y', (int) $data['user']['datereg']) ?>
     </li>
-    <li>
-        <?= ($data['user']['sex'] === 'm' ? __('He stay on the site') : __('She stay on the site')) ?>: <?= $data['user']['total_on_site'] ?>
-    </li>
     <?php if (! empty($data['user']['last_visit'])): ?>
         <li>
             <?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?>
