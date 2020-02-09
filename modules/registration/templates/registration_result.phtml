@@ -1,0 +1,23 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => __('Registration'),
+    'page_title' => __('Registration'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-10">
+        <div class="card shadow border-0 border-radius-12">
+            <div class="card-body">
+                <h4 class="card-title"><?= __('Your registratiton data') ?></h4>
+                <p>
+                    <?= __('Your ID') ?>: <b><?= $usid ?></b><br>
+                    <?= __('Your Username') ?>: <b><?= $reg_nick ?></b><br>
+                    <?= __('Your Password') ?>: <b><?= $reg_pass ?></b>
+                </p>
+                <?php if ($config['mod_reg'] == 1): ?>
+                    <div class="alert alert-warning"><?= __('Please, wait until a moderator approves your registration') ?></div>
+                <?php else: ?>
+                    <a href="/" class="btn btn-primary"><?= __('Enter') ?></a>
+                <?php endif ?>
+            </div>
+        </div>
+    </div>
+</div>

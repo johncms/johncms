@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $topic
+ * @var $back_url
+ * @var $link_to_download
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="row">
+    <div class="col-md-6">
+        <?php if ($link_to_download): ?>
+            <div class="alert alert-success">
+                <div>
+                    <?= __('Link active 5 minutes') ?>
+                </div>
+            </div>
+            <div class="mt-2">
+                <a href="<?= $link_to_download ?>" class="btn btn-primary"><?= __('Download') ?></a>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+            </div>
+        <?php else: ?>
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <form name="rename_topic" action="/forum/?act=tema&amp;id=<?= $id ?>" method="post">
+                        <div class="form-group">
+                            <label for="mod"><?= __('Select format') ?></label>
+                            <select name="mod" id="mod" class="form-control">
+                                <option value="1">.txt</option>
+                                <option value="2">.htm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Download') ?></button>
+                            <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['adminlist' => true]]));
+?>
+
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php foreach ($data['items'] as $item): ?>
+    <h2><?= $item['name'] ?></h2>
+    <?php foreach ($item['items'] as $sub_item): ?>
+        <?= $this->fetch('admin::user_row', ['item' => $sub_item]) ?>
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
+<div class="mt-4">
+    <?php if ($data['total'] > 0): ?>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php endif; ?>
+</div>
+<div>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+</div>

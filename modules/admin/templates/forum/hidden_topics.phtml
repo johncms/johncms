@@ -1,0 +1,126 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['forum' => true]]));
+?>
+
+<?php if (! empty($data['filtered_by'])): ?>
+    <div class="alert alert-warning">
+        <?= __('Filtered:') ?> <?= $data['filtered_by'] ?><br>
+        <a href="<?= $data['reset_filter'] ?>"><?= __('Cancel') ?></a>
+    </div>
+<?php endif; ?>
+
+<?php if ($data['total'] > 0): ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <div class="shadow post-item mb-2">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    <?php if (! empty($item['user_profile_link'])): ?>
+                        <a href="<?= $item['user_profile_link'] ?>" class="user-login mr-2"><?= $item['user_name'] ?></a>
+                    <?php else: ?>
+                        <a class="user-login mr-2"><?= $item['user_name'] ?></a>
+                    <?php endif; ?>
+                    <span class="post-date"><?= $item['display_date'] ?></span>
+                </div>
+                <div class="post-actions"></div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar mr-2 mr-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <img src="<?= $this->avatar($item['id']) ?>" class="img-fluid" alt=".">
+                    </div>
+                    <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+                </div>
+                <div class="overflow-auto flex-grow-1">
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="mr-1"><?= __('Topic:') ?></span>
+                        <a href="<?= $item['topic_url'] ?>"><?= $item['topic_name'] ?></a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="mr-1"><?= __('Path:') ?></span>
+                        <?php foreach ($item['path'] as $k => $path_item): ?>
+                            <?= ($k > 0 ? '<span class="mr-1 ml-1"> / </span>' : '') ?>
+                            <a href="<?= $path_item['url'] ?>"><?= $path_item['name'] ?></a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="post-footer d-flex justify-content-between border-top pt-2">
+                <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                    <?php if ($user->rights >= $item['rights']): ?>
+                        <div class="user-ip mr-2">
+                            <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                            <?php if (! empty($item['ip_via_proxy'])): ?>
+                                / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                            <?php endif; ?>
+                        </div>
+                        <div class="useragent">
+                            <span>User-Agent:</span>
+                            <span><?= $item['browser'] ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="text-nowrap post-actions">
+                    <span class="text-muted pr-2 flex-grow-1">
+                        <?php if (! empty($item['deleted'])): ?>
+                            <?= __('Topic deleted:') ?> <?= $item['deleted_by'] ?>
+                        <?php endif; ?>
+                    </span>
+                    <?php if (! empty($item['buttons'])): ?>
+                        <span class="pr-1"><?= __('Filter:') ?></span>
+                        <?php foreach ($item['buttons'] as $button): ?>
+                            <a href="<?= $button['url'] ?>" class="btn btn-secondary btn-sm mr-1"><?= $button['name'] ?></a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php endforeach ?>
+<?php else: ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php endif ?>
+
+<?php if (! empty($data['del_all_url'])): ?>
+    <div class="mt-3 mb-2">
+        <form action="<?= $data['del_all_url'] ?>" method="POST">
+            <input type="submit" name="deltopic" value="<?= __('Delete all') ?>" class="btn btn-danger">
+        </form>
+    </div>
+<?php endif ?>
+
+<?php if ($data['total']): ?>
+    <div class="mb-1">
+        <div><?= __('Total') ?>: <?= $data['total'] ?></div>
+        <!-- Page switching -->
+        <?php if ($data['total'] > $user->config->kmess): ?>
+            <div class="mt-1"><?= $data['pagination'] ?></div>
+        <?php endif ?>
+    </div>
+<?php endif ?>
+
+<a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>

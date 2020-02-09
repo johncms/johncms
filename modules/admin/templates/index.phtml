@@ -1,0 +1,36 @@
+<?php $this->layout('system::layout/default', ['title' => __('Admin Panel'), 'homeButton' => true]) ?>
+<?php $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu')) ?>
+<h1><?= __('Dashboard') ?></h1>
+
+<div class="d-block d-md-none text-center">
+    <button class="show_menu_btn btn btn-outline-primary w-100"><?= __('Show admin menu') ?></button>
+</div>
+
+<div class="mobile_tiles">
+    <div class="row">
+        <div class="col-6 col-sm-4 col-md-4 col-lg-3 mt-3 tile">
+            <div class="card border-0 shadow text-center border-radius-12">
+                <div class="card-body">
+                    <div class="h1 font-weight-bold"><?= $data['last_day_users'] ?></div>
+                    <div class="mt-2 tile_name"><?= __('registered visitors today') ?></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-4 col-lg-3 mt-3 tile">
+            <div class="card border-0 shadow text-center border-radius-12">
+                <div class="card-body">
+                    <div class="h1 font-weight-bold"><?= $data['registered_users'] ?></div>
+                    <div class="mt-2 tile_name"><?= __('users registered today') ?></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-4 col-lg-3 mt-3 tile">
+            <div class="card border-0 shadow text-center border-radius-12">
+                <div class="card-body">
+                    <div class="h1 font-weight-bold"><?= $data['forum_messages'] ?></div>
+                    <div class="mt-2 tile_name"><?= __('posts on the forum today') ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

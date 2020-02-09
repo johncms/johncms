@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<h3><?= __('Statistic') ?></h3>
+
+<ul>
+    <?php if ($user->rights >= 7): ?>
+        <li>
+            <?php if (! $data['user']['preg'] && empty($data['user']['regadm'])): ?>
+                <?= __('Pending confirmation') ?>
+            <?php elseif (! empty($data['user']['preg']) && ! empty($data['user']['regadm'])): ?>
+                <?= __('Registration confirmed') ?>: <?= $data['user']['regadm'] ?>
+            <?php else: ?>
+                <?= __('Free registration') ?>
+            <?php endif; ?>
+        </li>
+    <?php endif; ?>
+    <li>
+        <?= __('Registered') ?>: <?= date('d.m.Y', (int) $data['user']['datereg']) ?>
+    </li>
+    <?php if (! empty($data['user']['last_visit'])): ?>
+        <li>
+            <?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?>
+        </li>
+    <?php endif; ?>
+</ul>
+
+<h3><?= __('Activity') ?></h3>
+<ul>
+    <li><span class="gray"><?= __('Forum') ?>:</span> <a href="?act=activity&amp;user=<?= $data['user']['id'] ?>"><?= $data['user']['postforum'] ?></a></li>
+    <li><span class="gray"><?= __('Guestbook') ?>:</span> <a href="?act=activity&amp;mod=comments&amp;user=<?= $data['user']['id'] ?>"><?= $data['user']['postguest'] ?></a></li>
+    <li><span class="gray"><?= __('Comments') ?>:</span> <?= $data['user']['komm'] ?></li>
+</ul>
+
+<div class="mt-2">
+    <a href="?user=<?= $data['user']['id'] ?>"><?= __('Back') ?></a>
+</div>

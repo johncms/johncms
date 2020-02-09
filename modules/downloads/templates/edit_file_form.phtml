@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $folder_params
+ * @var $action_url
+ * @var $extensions
+ * @var bool $edit_form
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <form name="file_edit_form" action="<?= $action_url ?>" method="post">
+                    <div class="form-group">
+                        <label for="text"><?= __('Name for display') ?></label>
+                        <input type="text" class="form-control" id="text" placeholder="<?= __('Name for display') ?>"
+                               name="text" value="<?= $file_data['text'] ?>" maxlength="200" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name_link"><?= __('Link to download file') ?></label>
+                        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
+                               name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="200" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc"><?= __('Description') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea id="desc" class="form-control" maxlength="500" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
+                    </div>
+                    <?php if (! empty($audio_tags)): ?>
+                        <div>
+                            <a data-toggle="collapse" href="#collapseExample"
+                               role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <?= __('Edit MP3 Tags') ?>
+                            </a>
+                            <div class="collapse" id="collapseExample">
+                                <div class="pt-2">
+                                    <label for="text"><?= __('Artist') ?></label>
+                                    <input type="text" class="form-control" id="text" placeholder="<?= __('Artist') ?>"
+                                           name="audio[artist]" value="<?= $audio_tags['artist'] ?>">
+                                </div>
+                                <div class="pt-2">
+                                    <label for="text"><?= __('Title') ?></label>
+                                    <input type="text" class="form-control" id="text" placeholder="<?= __('Title') ?>"
+                                           name="audio[title]" value="<?= $audio_tags['title'] ?>">
+                                </div>
+                                <div class="pt-2">
+                                    <label for="text"><?= __('Album') ?></label>
+                                    <input type="text" class="form-control" id="text" placeholder="<?= __('Album') ?>"
+                                           name="audio[album]" value="<?= $audio_tags['album'] ?>">
+                                </div>
+                                <div class="pt-2">
+                                    <label for="text"><?= __('Genre') ?></label>
+                                    <input type="text" class="form-control" id="text" placeholder="<?= __('Genre') ?>"
+                                           name="audio[genre]" value="<?= $audio_tags['genre'] ?>">
+                                </div>
+                                <div class="pt-2">
+                                    <label for="text"><?= __('Year') ?></label>
+                                    <input type="text" class="form-control" id="text" placeholder="<?= __('Year') ?>"
+                                           name="audio[year]" value="<?= $audio_tags['year'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="mt-3">
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+                        <a href="?act=view&amp;id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

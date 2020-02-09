@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['userlist' => true]]));
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <h3><?= __('Delete user:') ?> <?= $data['user']['name'] ?></h3>
+                <?= __('Are you sure that you want to delete this user?') ?>
+            </div>
+            <div>
+                <form action="<?= $data['form_action'] ?>" method="post">
+                    <?php if (! empty($data['hidden_fields'])): ?>
+                        <?php foreach ($data['hidden_fields'] as $field): ?>
+                            <input type="hidden" name="<?= $field['name'] ?>" value="<?= $field['value'] ?>">
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php if (! empty($data['activity']['comm_count'])): ?>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="comments" value="1" id="comments" checked>
+                            <label class="custom-control-label" for="comments"><?= __('Comments') ?> (<?= $data['activity']['comm_count'] ?>)</label>
+                        </div>
+                    <?php endif ?>
+                    <?php if (! empty($data['activity']['comm_count'])): ?>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="forum" value="1" id="forum" checked>
+                            <label class="custom-control-label" for="forum">
+                                <?= __('Forum') ?> (<?= $data['activity']['forumt_count'] ?>&nbsp;/&nbsp;<?= $data['activity']['forump_count'] ?>)
+                            </label>
+                        </div>
+                        <div class="text-muted small mb-2"><?= __('All threads and posts created by the user go in the hidden state') ?></div>
+                    <?php endif ?>
+                    <div class="mt-1">
+                        <button type="submit" name="submit" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+                        <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

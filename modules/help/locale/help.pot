@@ -1,0 +1,316 @@
+msgid ""
+msgstr ""
+"X-Domain: help\n"
+
+#: modules/help/includes/admsmilies.php:20
+#: modules/help/includes/smilies.php:35
+msgid "For administration"
+msgstr ""
+
+#: modules/help/includes/admsmilies.php:21
+#: modules/help/includes/my_smilies.php:22
+#: modules/help/includes/set_my_sm.php:27
+#: modules/help/includes/usersmilies.php:39
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr ""
+
+#: modules/help/includes/admsmilies.php:32
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/help/includes/avatars.php:20
+#: modules/help/templates/index.phtml:30
+msgid "Avatars"
+msgstr ""
+
+#: modules/help/includes/avatars.php:37
+msgid "Avatar has been successfully applied"
+msgstr ""
+
+#: modules/help/includes/avatars.php:39
+msgid "Continue"
+msgstr ""
+
+#: modules/help/includes/avatars.php:48
+msgid "An error occurred"
+msgstr ""
+
+#: modules/help/includes/avatars.php:50
+#: modules/help/templates/avatar_list.phtml:65
+#: modules/help/templates/avatars.phtml:48
+#: modules/help/templates/bbcode.phtml:89
+#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/index.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:81
+#: modules/help/templates/smiles.phtml:48
+#: modules/help/templates/smiles_list.phtml:88
+msgid "Back"
+msgstr ""
+
+#: modules/help/includes/avatars.php:55
+msgid "Set to Profile"
+msgstr ""
+
+#: modules/help/includes/avatars.php:58
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr ""
+
+#: modules/help/includes/avatars.php:61
+msgid "Save"
+msgstr ""
+
+#: modules/help/includes/forum.php:15
+#: modules/help/templates/index.phtml:28
+msgid "Forum rules"
+msgstr ""
+
+#: modules/help/includes/my_smilies.php:21
+#: modules/help/includes/smilies.php:27
+#: modules/help/templates/smiles_list.phtml:45
+msgid "My smilies"
+msgstr ""
+
+#: modules/help/includes/set_my_sm.php:27
+msgid "Wrong data"
+msgstr ""
+
+#: modules/help/includes/smilies.php:19
+msgid "Smiles"
+msgstr ""
+
+#: modules/help/includes/tags.php:15
+#: modules/help/templates/index.phtml:29
+msgid "bbCode Tags"
+msgstr ""
+
+#: modules/help/index.php:54
+msgid "Information, FAQ"
+msgstr ""
+
+#: modules/help/index.php:64
+msgid "Animals"
+msgstr ""
+
+#: modules/help/index.php:65
+msgid "Brawl, Weapons"
+msgstr ""
+
+#: modules/help/index.php:66
+msgid "Emotions"
+msgstr ""
+
+#: modules/help/index.php:67
+msgid "Flowers"
+msgstr ""
+
+#: modules/help/index.php:68
+msgid "Food, Alcohol"
+msgstr ""
+
+#: modules/help/index.php:69
+msgid "Gestures"
+msgstr ""
+
+#: modules/help/index.php:70
+msgid "Holidays"
+msgstr ""
+
+#: modules/help/index.php:71
+msgid "Love"
+msgstr ""
+
+#: modules/help/index.php:72
+msgid "Miscellaneous"
+msgstr ""
+
+#: modules/help/index.php:73
+msgid "Music, Dancing"
+msgstr ""
+
+#: modules/help/index.php:74
+msgid "Sports"
+msgstr ""
+
+#: modules/help/index.php:75
+msgid "Technology"
+msgstr ""
+
+#: modules/help/templates/avatar_list.phtml:33
+#: modules/help/templates/avatars.phtml:34
+#: modules/help/templates/my_smiles_list.phtml:33
+#: modules/help/templates/smiles.phtml:34
+#: modules/help/templates/smiles_list.phtml:33
+msgid "The list is empty"
+msgstr ""
+
+#: modules/help/templates/avatar_list.phtml:61
+#: modules/help/templates/my_smiles_list.phtml:77
+#: modules/help/templates/smiles_list.phtml:84
+msgid "Total:"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:30
+msgid "PHP code"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:33
+msgid "Link name"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:34
+msgid "URL Link"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:38
+msgid "Bold"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:42
+msgid "Italic"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:46
+msgid "Underline"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:50
+msgid "Strike"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:54
+msgid "Red"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:58
+msgid "Green"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:62
+msgid "Blue"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:66
+msgid "Text Color"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:70
+msgid "Background Color"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:74
+msgid "Quote"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:78
+msgid "Bulleted list"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Title"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:81
+msgid "Text"
+msgstr ""
+
+#: modules/help/templates/bbcode.phtml:82
+msgid "Spoiler"
+msgstr ""
+
+#: modules/help/templates/confirm.phtml:40
+msgid "Cancel"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:26
+msgid "FORBIDDEN"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:28
+msgid "Advertising messages"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:29
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:30
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:31
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:32
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:33
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:34
+msgid "Post messages not related to the topic"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:35
+msgid "Continuing topics that have been closed by moderator"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:38
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:40
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:41
+msgid "Register the nicknames having offensive tone for other users"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:44
+msgid "UNACCEPTABLE"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:46
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:47
+msgid "Post messages only contains external link"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:48
+msgid "Post messages written in translite"
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:49
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:54
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr ""
+
+#: modules/help/templates/forum_rules.phtml:55
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr ""
+
+#: modules/help/templates/my_smiles_list.phtml:36
+msgid "Add Smilies"
+msgstr ""
+
+#: modules/help/templates/my_smiles_list.phtml:55
+#: modules/help/templates/smiles_list.phtml:62
+msgid "or"
+msgstr ""
+
+#: modules/help/templates/my_smiles_list.phtml:64
+msgid "Delete"
+msgstr ""
+
+#: modules/help/templates/smiles_list.phtml:71
+msgid "Add"
+msgstr ""

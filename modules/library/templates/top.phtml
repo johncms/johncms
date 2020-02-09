@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<div class="mb-3">
+    <div><?= __('Sort') ?></div>
+    <?php foreach ($data['filters'] as $filter): ?>
+        <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary mt-1 btn-sm <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+    <?php endforeach; ?>
+</div>
+
+<?php if ($total) : ?>
+    <?php foreach ($list() as $top) : ?>
+        <div class="card mb-3 shadow border-0">
+            <div class="card-body">
+                <a href="?id=<?= $top['id'] ?>" class="card-title h3"><?= $top['name'] ?></a>
+                <p class="card-text"><?= $top['announce'] ?></p>
+                <div class="text-muted small d-flex align-items-center flex-wrap">
+                    <div class="mr-2">
+                        <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $top['cat_id'] ?>"><?= $top['cat_name'] ?></a>
+                    </div>
+                    <div class="mr-2">
+                        <span><?= __('Author:') ?></span><?= $top['who'] ?>
+                    </div>
+                    <div class="d-flex align-items-center mr-1">
+                        <span class="pr-1"><?= __('Rating:') ?></span><?= $top['ratingView'] ?>
+                    </div>
+                    <div>
+                        <?php if ($top['comments']) : ?>
+                            <a href="?act=comments&amp;id=<?= $top['id'] ?>"><?= __('Comments:') ?></a>
+                            (<?= $top['comm_count'] ?>)
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php else : ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+<div class="phdr"><a href="?"><?= __('Back') ?></a></div>

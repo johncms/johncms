@@ -1,0 +1,108 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => __('Registration'),
+    'page_title' => __('Registration'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-10">
+        <div class="card shadow border-0 border-radius-12">
+            <form method="post">
+                <div class="card-body">
+                    <h4 class="card-title"><?= __('Registration') ?></h4>
+
+                    <?php if ($config['mod_reg'] == 1): ?>
+                        <div class="alert alert-warning"><?= __('You can get authorized on the site after confirmation of your registration.') ?></div>
+                    <?php endif ?>
+
+                    <div class="alert alert-info">
+                        <?= __('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login"><?= __('Choose Nickname') ?></label>
+                        <input type="text"
+                               class="form-control <?= (isset($error['login']) ? 'is-invalid' : '') ?>"
+                               maxlength="20"
+                               minlength="2"
+                               name="nick"
+                               id="login"
+                               required
+                               value="<?= $this->e($reg_nick) ?>"
+                               placeholder="<?= __('Username') ?>"
+                        >
+                        <?php if (isset($error['login'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $error['login']) ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= __('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)') ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><?= __('Assign a password') ?></label>
+                        <input type="password"
+                               class="form-control <?= (isset($error['password']) ? 'is-invalid' : '') ?>"
+                               maxlength="20"
+                               minlength="2"
+                               name="password"
+                               id="password"
+                               required
+                               value="<?= $this->e($reg_pass) ?>"
+                               placeholder="<?= __('Assign a password') ?>"
+                        >
+                        <?php if (isset($error['password'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $error['password']) ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= __('Min. 3 characters') ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender"><?= __('Select Gender') ?></label>
+                        <select id="gender" name="sex" class="form-control <?= (isset($error['sex']) ? 'is-invalid' : '') ?>">
+                            <option value="?">- ? -</option>
+                            <option value="m"<?= ($reg_sex == 'm' ? ' selected="selected"' : '') ?>><?= __('Man') ?></option>
+                            <option value="zh"<?= ($reg_sex == 'zh' ? ' selected="selected"' : '') ?>><?= __('Woman') ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="imname"><?= __('Your name') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="20"
+                               name="imname"
+                               id="imname"
+                               value="<?= $this->e($reg_name) ?>"
+                               placeholder="<?= __('Your name') ?>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="about"><?= __('Tell us a little about yourself') ?></label>
+                        <textarea class="form-control" name="about" id="about" rows="3"><?= $this->e($reg_about) ?></textarea>
+                        <div class="text-muted small"><?= __('Max. 1000 characters') ?></div>
+                    </div>
+
+                    <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
+                    <div class="form-group">
+                        <label for="captcha"><?= __('Enter verification code') ?></label>
+                        <input type="text"
+                               class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
+                               maxlength="6"
+                               name="captcha"
+                               id="captcha"
+                               autocomplete="off"
+                               required
+                               placeholder="<?= __('Verification code') ?>"
+                        >
+                        <?php if (isset($error['captcha'])): ?>
+                            <div class="invalid-feedback"><?= $error['captcha'] ?></div>
+                        <?php endif ?>
+                        <div class="text-muted small">
+                            <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
+                        </div>
+                    </div>
+
+                    <input type="submit" name="submit" class="btn btn-primary" value="<?= __('Registration') ?>">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

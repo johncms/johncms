@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $files
+ * @var $pagination
+ * @var $urls
+ * @var $show_user
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<?php if (empty($files)): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php else: ?>
+    <?php foreach ($files as $file): ?>
+        <?= $this->fetch('downloads::file_row', ['file' => $file]) ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<form action="?act=mod_files" method="post" class="mb-2 mt-3">
+    <input type="submit" name="all_mod" class="btn btn-primary" value="<?= __('Accept all files') ?>"/>
+</form>
+
+<?php if ($total): ?>
+    <div>
+        <div><?= __('Total') ?>: <?= $total ?></div>
+        <!-- Page switching -->
+        <?php if ($total > $user->config->kmess): ?>
+            <div class="mt-1"><?= $pagination ?></div>
+        <?php endif ?>
+    </div>
+<?php endif; ?>
+
+<div class="mt-3">
+    <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
+</div>

@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $settings_forum
+ * @var $topic
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="shadow post-item mb-2">
+    <div class="post-header d-flex justify-content-between border-bottom pb-1">
+        <div class="d-flex align-items-end">
+            <?php if (! empty($post['user_profile_link'])): ?>
+                <a href="<?= $post['user_profile_link'] ?>" class="user-login mr-2"><?= $post['user_name'] ?></a>
+            <?php else: ?>
+                <a class="user-login mr-2"><?= $post['user_name'] ?></a>
+            <?php endif; ?>
+            <span class="post-date"><?= $post['post_time'] ?></span>
+        </div>
+        <div class="post-actions">
+            <?php if (! empty($post['reply_url'])): ?>
+                <a href="<?= $post['reply_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Reply') ?></a>
+            <?php endif; ?>
+            <?php if (! empty($post['quote_url'])): ?>
+                <a href="<?= $post['quote_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Quote') ?></a>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="post-body d-flex align-items-start pt-3 pb-3">
+        <div class="user-avatar mr-2 mr-md-4">
+            <div class="avatar-image rounded-circle overflow-hidden">
+                <img src="<?= $this->avatar($post['user_id']) ?>" class="img-fluid" alt=".">
+            </div>
+            <div class="user-status <?= $post['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+        </div>
+        <div class="overflow-auto flex-grow-1"><?= $post['post_text'] ?></div>
+    </div>
+
+    <?php if (! empty($post['files'])): ?>
+        <!-- Files block -->
+        <div class="border-top pt-1 pb-1">
+            <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
+            <div class="d-flex flex-wrap">
+                <?php foreach ($post['files'] as $file): ?>
+                    <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                        <div class="h-100 d-flex justify-content-center align-items-center">
+                            <?php if (! empty($file['file_preview'])): ?>
+                                <a href="<?= $file['file_url'] ?>" class="image-preview" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
+                                    <img src="<?= $file['file_preview'] ?>" class="img-thumbnail thumb-limit-height" alt="<?= $file['filename'] ?>">
+                                </a>
+                            <?php else: ?>
+                                <a href="<?= $file['file_url'] ?>">
+                                    <svg class="icon attachment-icon">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#file"/>
+                                    </svg>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                        <div class="pt-1">
+                            <div class="text-muted small d-flex flex-wrap justify-content-center">
+                                <div class="text-nowrap pr-1">
+                                    <svg class="icon downloads-icon">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+                                    </svg>
+                                    <?= $file['dlcount'] ?>
+                                </div>
+                                <div>(<?= $file['file_size'] ?>&nbsp;kb)</div>
+                            </div>
+                            <div class="file-name">
+                                <a href="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>"><?= $file['filename'] ?></a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+
+<div class="mt-2">
+    <a href="<?= $back_to_topic ?>"><?= __('Back to topic') ?></a><br>
+    <a href="/forum/"><?= __('Forum') ?></a>
+</div>

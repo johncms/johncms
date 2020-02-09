@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php foreach ($data['items'] as $item): ?>
+    <div class="new_post-item border-bottom shadow mb-2 <?= ($item['unread'] ? 'bg-yellow-light' : '') ?>">
+        <div class="new_post-header d-flex justify-content-between">
+            <div class="post-user">
+                <a href="<?= $item['write_url'] ?>">
+                    <div class="avatar">
+                        <img src="<?= $this->avatar($item['id']) ?>" class="img-fluid" alt=".">
+                    </div>
+                </a>
+                <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
+                <?php if (! empty($item['user_rights_name'])): ?>
+                    <div class="post-of-user"
+                         data-toggle="tooltip"
+                         data-placement="top"
+                         data-html="true"
+                         title="<?= $item['user_rights_name'] ?>">
+                        <svg class="icon-post">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
+                        </svg>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                <div class="w-100">
+                    <a href="<?= $item['write_url'] ?>"><span class="user-name d-inline mr-2"><?= $item['name'] ?></span></a>
+                    <div class="post-meta d-inline mr-2">
+                        <?= $item['count_message'] ?> <?= n__('message', 'messages', $item['count_message']) ?>,
+                    </div>
+                    <div class="post-meta d-inline text-nowrap">
+                        <?= __('Last:') ?> <?= $item['display_date'] ?>
+                    </div>
+                </div>
+                <?php if (! empty($item['status'])): ?>
+                    <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                        <span class="font-weight-bold"><?= $item['status'] ?></span>
+                    </div>
+                <?php endif ?>
+            </div>
+        </div>
+        <div class="post-body mt-2 border-top pt-2 pb-2">
+            <?= $item['preview_text'] ?>
+        </div>
+        <?php if (! empty($item['buttons'])): ?>
+            <div class="post-footer d-flex justify-content-between mt-2">
+                <div class="overflow-hidden">
+                </div>
+                <div class="d-flex flex-wrap">
+                    <?php foreach ($item['buttons'] as $button): ?>
+                        <div class="ml-2">
+                            <a href="<?= $button['url'] ?>"><?= $button['name'] ?></a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endforeach; ?>
+
+<div class="mt-4">
+    <?php if ($data['total'] > $user->config->kmess): ?>
+        <div>
+            <?= $data['pagination'] ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($data['total'] > 0): ?>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php endif; ?>
+</div>
+<div>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+</div>

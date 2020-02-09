@@ -1,0 +1,10 @@
+<form action="?id=<?= $id ?>&amp;vote" method="post">
+    <label for="vote" class="pr-2"><?= __('Select a rating:') ?></label>
+    <div class="form-inline">
+        <select name="vote" id="vote" class="form-control mr-2">
+            <?php for ($r = 0; $r < 6; $r++) : ?>
+                <option <?= ($r === $userVote ? 'selected ' : '') ?> value="<?= $r ?>"><?= $r ?></option>
+            <?php endfor; ?>
+        </select><input type="submit" name="rating_submit" class="btn btn-primary" value="<?= __('Vote') ?>"/>
+    </div>
+</form>

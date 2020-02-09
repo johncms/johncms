@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @var bool $confirmation
+ */
+$this->layout('system::layout/default', ['title' => __('Admin Panel')]);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['languages' => true]]));
+?>
+<div style="max-width: 640px">
+    <?php if ($confirmation): ?>
+        <div class="alert alert-success shadow" role="alert">
+            <?= __('Descriptions have been updated successfully') ?>
+        </div>
+    <?php endif ?>
+    <form method="post">
+        <fieldset>
+            <legend><?= __('Default language') ?></legend>
+            <?php foreach ($config['lng_list'] as $key => $val): ?>
+                <div class="custom-control custom-radio mb-2">
+                    <input type="radio" id="<?= $key ?>" name="lng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
+                    <label class="custom-control-label" for="<?= $key ?>">
+                        <img src="<?= $this->asset('images/flags/' . strtolower($key) . '.png') ?>" alt=".">
+                        <?= $val ?>
+                    </label>
+                </div>
+            <?php endforeach ?>
+        </fieldset>
+        <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="<?= __('Save') ?>"/>
+        <input type="submit" class="btn btn-link mt-4 mb-2" name="update" value="<?= __('Update List') ?>"/>
+    </form>
+</div>

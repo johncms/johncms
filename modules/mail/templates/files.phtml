@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php foreach ($data['items'] as $item): ?>
+    <div class="user-row card shadow border-0 mb-2">
+        <div class="card-body">
+            <div class="d-flex align-items-start">
+                <div class="user-avatar mr-2 mr-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                    </div>
+                    <div class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></div>
+                </div>
+                <div class="overflow-auto flex-grow-1">
+                    <div class="user-name">
+                        <?php if (! empty($item['user_id'])): ?>
+                            <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                        <?php else: ?>
+                            <a class="user-login mr-2"><?= $item['name'] ?></a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="small">
+                        <a href="?act=load&amp;id=<?= $item['id'] ?>"><?= $item['file_name'] ?></a> (<?= formatsize($item['size']) ?>) (<?= $item['count'] ?>)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+<?php endforeach; ?>
+
+<div class="mt-4">
+    <?php if ($data['total'] > $user->config->kmess): ?>
+        <div>
+            <?= $data['pagination'] ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($data['total'] > 0): ?>
+        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php endif; ?>
+</div>
+<div>
+    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+</div>

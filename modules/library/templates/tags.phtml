@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+<?php if ($total) : ?>
+    <?php foreach ($list as $tags) : ?>
+        <div class="card mb-3 shadow border-0">
+            <div class="card-body">
+                <a href="?id=<?= $tags['id'] ?>" class="card-title h3"><?= $tags['name'] ?></a>
+                <p class="card-text mb-1"><?= $tags['text'] ?></p>
+                <div class="mb-1">
+                    <?= $tags['tags'] ?>
+                </div>
+                <div class="text-muted small d-flex align-items-center flex-wrap">
+                    <div class="mr-2">
+                        <span><?= __('Author:') ?></span><?= $tags['who'] ?>
+                    </div>
+                    <div class="mr-2">
+                        <span><?= __('Number of readings:') ?></span><?= $tags['count_views'] ?>
+                    </div>
+                    <div>
+                        <?php if ($tags['comments']) : ?>
+                            <a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= __('Comments:') ?></a>
+                            (<?= $tags['comm_count'] ?>)
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <div><?= __('Total') ?>: <?= $total ?></div>
+    <?php if ($total > $user->config->kmess): ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+    <p><a href="?"><?= __('To Library') ?></a></p>
+<?php else: ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>

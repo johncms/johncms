@@ -1,0 +1,32 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => __('Clear guestbook'),
+    'page_title' => __('Clear guestbook'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+        <div class="card shadow border-0 border-radius-12">
+            <div class="card-body">
+                <h4 class="card-title"><?= __('Clear guestbook') ?></h4>
+                <form action="/guestbook/clean" method="post">
+                    <p><?= __('Clearing parameters') ?></p>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="week" name="cl" value="0" class="custom-control-input">
+                        <label class="custom-control-label" for="week"><?= __('Older than 1 week') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="day" name="cl" value="1" class="custom-control-input">
+                        <label class="custom-control-label" for="day"><?= __('Older than 1 day') ?></label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="all" name="cl" value="2" class="custom-control-input">
+                        <label class="custom-control-label" for="all"><?= __('Clear all') ?></label>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary"><?= __('Clear') ?></button>
+                        <a href="/guestbook/" class="btn btn-outline-primary ml-2"><?= __('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

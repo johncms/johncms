@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+<?php if ($total) : ?>
+    <?php foreach ($list() as $comment): ?>
+        <div class="card mb-3 shadow border-0">
+            <div class="card-body">
+                <a href="?act=comments&amp;id=<?= $comment['id'] ?>" class="card-title h3"><?= $comment['name'] ?></a>
+                <p class="card-text"><?= $comment['text'] ?></p>
+                <div class="text-muted small d-flex align-items-center flex-wrap">
+                    <div class="mr-2">
+                        <span><?= __('Author:') ?></span><?= $comment['who'] ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+<div class="mt-3">
+    <a href="?"><?= __('Back') ?></a>
+</div>

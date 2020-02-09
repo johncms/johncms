@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= $data['message'] ?>
+            </div>
+            <div>
+                <form action="<?= $data['form_action'] ?>" method="post">
+                    <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Delete') ?></button>
+                    <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

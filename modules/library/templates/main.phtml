@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<?php if (! $config['mod_lib']): ?>
+    <div class="alert alert-danger border-0 shadow">
+        <?= __('Library is closed') ?>
+    </div>
+<?php endif; ?>
+<div class="mb-2 mt-n2">
+    <?php if (! empty($new)): ?>
+        <a href="?act=new" class="btn btn-outline-primary btn-sm mr-1 mt-1">
+            <?= __('New Articles') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $new ?></span>
+        </a>
+    <?php endif; ?>
+    <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+    <?php /* <a href="?act=tagcloud" class="btn btn-outline-primary btn-sm mr-1"><?= __('Tag Cloud') ?></a> */ ?>
+    <a href="?act=top" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Rating articles') ?></a>
+    <a href="?act=lastcom" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Latest comments') ?></a>
+</div>
+
+<?php if ($total) : ?>
+    <!-- Listing Sections -->
+    <?php foreach ($list() as $main) : ?>
+        <div class="shadow border-radius-12 forum-section post-item mb-2">
+            <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
+                <div class="d-flex align-items-center">
+                    <a href="?do=dir&amp;id=<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
+                    <span class="badge badge-pill badge-light border ml-3"><?= $main['libCounter'] ?></span>
+                </div>
+            </div>
+            <?php if (! empty($main['description'])): ?>
+                <div class="small pt-2 mt-1 text-muted border-top">
+                    <div><?= $main['description'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if ($admin): ?>
+                <div class="border-top mt-2 pt-2">
+                    <?= $main['sectionListAdminPanel'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php else : ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if ($admin) : ?>
+    <div class="mt-3">
+        <a href="?act=mkdir&amp;id=0" class="btn btn-primary"><?= __('Create Section') ?></a>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,36 @@
+<?php return array (
+  'domain' => 'system',
+  'plural-forms' => 'nplurals=1; plural=0;',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Pengguna',
+      'Downloads' => 'Unduhan',
+      'Forum' => 'Forum',
+      'Guestbook' => 'Buku Tamu',
+      'Library' => 'Perpustakaan',
+      'Login' => 'Masuk',
+      'Personal' => 'Pribadi',
+      'Registration' => 'Pendaftaran',
+      'Cancel' => 'Batal',
+      'Notifications' => 'Pemberitahuan',
+      'Back' => 'Kembali',
+      'Reply' => 'Balas',
+      'Edit' => 'Sunting',
+      'Delete' => 'Hapus',
+      'Quote' => 'Kutipan',
+      'News archive' => 'Arsip berita',
+      'Photo Albums' => 'Album Foto',
+      'Information, FAQ' => 'Informasi, FAQ',
+      'Admin Panel' => 'Panel admin',
+      'Admin Chat' => 'Admin obrolan',
+      'Exit' => 'Keluar',
+      'Do you really want to delete?' => 'Apakah Anda yakin ingin menghapus?',
+      'Clear' => 'Hapus',
+      'Message' => 'Pesan',
+      'Send' => 'Kirim',
+      'The list is empty' => 'Daftar ini kosong',
+    ),
+  ),
+);

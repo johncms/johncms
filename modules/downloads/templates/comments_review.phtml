@@ -1,0 +1,113 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $files
+ * @var $buttons
+ * @var $urls
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (! $config['mod_down_comm']): ?>
+    <div class="alert alert-danger border-0 shadow">
+        <?= __('Comments are disabled') ?>
+    </div>
+<?php endif; ?>
+
+<!-- Отображаем комментарии -->
+<?php if (empty($data['items'])): ?>
+    <div class="alert alert-info"><?= __('The list is empty') ?></div>
+<?php else: ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <div class="shadow post-item mb-2">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                    <span class="post-date"><?= $item['created'] ?></span>
+                </div>
+                <div class="post-actions">
+                    <?php if (! empty($item['file_url'])): ?>
+                        <a href="<?= $item['file_url'] ?>" class="btn btn-sm btn-secondary"><?= $item['rus_name'] ?></a>
+                    <?php endif; ?>
+                    <?php if (! empty($item['comments_url'])): ?>
+                        <a href="<?= $item['comments_url'] ?>" class="btn btn-sm btn-secondary"><?= __('Comments') ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar mr-2 mr-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                    </div>
+                    <div class="user-status online shadow"></div>
+                </div>
+                <div class="overflow-auto flex-grow-1"><?= $item['post_text'] ?></div>
+            </div>
+            <?php if (! empty($item['reply_text'])): ?>
+                <div class="alert alert-warning mt-2 mb-2">
+                    <b><a href="<?= $item['reply_author_url'] ?>"><?= $item['reply_author_name'] ?></a></b> <?= $item['reply_time'] ?><br>
+                    <?= $item['reply_text'] ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($user->rights || ! empty($item['edit_count'])): ?>
+                <div class="post-footer d-flex justify-content-between border-top pt-2">
+                    <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                        <?php if ($user->rights): ?>
+                            <div class="user-ip mr-2">
+                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                                <?php if (! empty($item['ip_via_proxy'])): ?>
+                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="useragent">
+                                <span>User-Agent:</span>
+                                <span><?= $item['user_agent'] ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text-nowrap post-actions">
+                        <span class="text-muted pr-2 flex-grow-1">
+                            <?php if (! empty($item['edit_count'])): ?>
+                                <?= __('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
+                            <?php endif; ?>
+                        </span>
+                        <?php if (! empty($item['edit_url'])): ?>
+                            <a href="<?= $item['edit_url'] ?>" class="btn btn-light btn-sm mr-1"><?= __('Edit') ?></a>
+                        <?php endif; ?>
+                        <?php if (! empty($item['delete_url'])): ?>
+                            <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm"><?= __('Delete') ?></a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+
+    <?php if (! empty($data['pagination'])): ?>
+        <div class="mt-3">
+            <?= $data['pagination'] ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
+<div class="mt-3">
+    <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
+</div>

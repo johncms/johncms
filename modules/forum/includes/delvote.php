@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+declare(strict_types=1);
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var PDO $db
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
+ */
+
+if ($user->rights == 3 || $user->rights >= 6) {
+    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '${id}'")->fetchColumn();
+
+    if ($topic_vote == 0) {
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => __('Delete Poll'),
+                'type'          => 'alert-danger',
+                'message'       => __('Wrong data'),
+                'back_url'      => '/forum/',
+                'back_url_name' => __('Back'),
+            ]
+        );
+        exit;
+    }
+
+    if (isset($_GET['yes'])) {
+        $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '${id}'");
+        $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '${id}'");
+        $db->exec("UPDATE `forum_topic` SET  `has_poll` = NULL  WHERE `id` = '${id}'");
+        echo $view->render(
+            'system::pages/result',
+            [
+                'title'         => __('Delete Poll'),
+                'type'          => 'alert-success',
+                'message'       => __('Poll deleted'),
+                'back_url'      => '/forum/?type=topic&id=' . $id,
+                'back_url_name' => __('Back'),
+            ]
+        );
+        exit;
+    }
+
+    echo $view->render(
+        'forum::delete_poll',
+        [
+            'title'      => __('Delete Poll'),
+            'page_title' => __('Delete Poll'),
+            'id'         => $id,
+            'back_url'   => '/forum/?type=topic&id=' . $id,
+        ]
+    );
+} else {
+    http_response_code(403);
+    echo $view->render(
+        'system::pages/result',
+        [
+            'title'         => __('Access forbidden'),
+            'type'          => 'alert-danger',
+            'message'       => __('Access forbidden'),
+            'back_url'      => '/forum/',
+            'back_url_name' => __('Back'),
+        ]
+    );
+}

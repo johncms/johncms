@@ -1,0 +1,37 @@
+<?php return array (
+  'domain' => 'system',
+  'plural-forms' => 'nplurals=1; plural=0;',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Users' => 'Thành viên',
+      'Downloads' => 'Tải xuống',
+      'Forum' => 'Diễn đàn',
+      'Guestbook' => 'Phòng trò truyện',
+      'Library' => 'Thư viện',
+      'Login' => 'Đăng nhập',
+      'Personal' => 'Cá nhân',
+      'Registration' => 'Đăng ký Thành Viên',
+      'Cancel' => 'Hủy bỏ',
+      'Notifications' => 'Thông báo',
+      'Back' => 'Quay lại',
+      'Reply' => 'Phản hồi',
+      'Edit' => 'Chỉnh sửa',
+      'Delete' => 'Xóa',
+      'Quote' => 'Trích dẫn',
+      'News archive' => 'Tin tức lưu trữ',
+      'Photo Albums' => 'Albums hình ảnh',
+      'Information, FAQ' => 'Thông tin, câu hỏi thường gặp',
+      'Admin Panel' => 'Bảng Quản Trị',
+      'Admin Chat' => 'Quản Trị Nói Chuyện',
+      'Exit' => 'Thoát ra',
+      'Do you really want to delete?' => 'Bạn có thực sự muốn xóa không?',
+      'Clear' => 'Xoá',
+      'Message' => 'Nội dung tin nhắn',
+      'Send' => 'Gửi',
+      'The list is empty' => 'Danh sách này trống',
+      'Edited' => 'Chỉnh sửa',
+    ),
+  ),
+);

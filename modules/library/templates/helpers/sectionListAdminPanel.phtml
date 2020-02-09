@@ -1,0 +1,9 @@
+<?php if ($positionId !== 1) : ?>
+    <a href="?do=dir&amp;id=<?= $sectionId ?>&amp;act=move&amp;moveset=up&amp;posid=<?= $positionId ?>" class="mr-2"><?= __('Up') ?></a>
+<?php endif; ?>
+<?php if ($positionId !== $total) : ?>
+    <a href="?do=dir&amp;id=<?= $sectionId ?>&amp;act=move&amp;moveset=down&amp;posid=<?= $positionId ?>" class="mr-2"><?= __('Down') ?></a>
+<?php endif; ?>
+<a href="?act=moder&amp;type=dir&amp;id=<?= $sectionItemId ?>" class="mr-2"><?= __('Edit') ?></a>
+<a href="?act=del&amp;type=dir&amp;id=<?= $sectionItemId ?>"><?= __('Delete') ?></a>
+

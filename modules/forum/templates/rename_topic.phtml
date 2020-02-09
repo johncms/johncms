@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $topic
+ * @var $back_url
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <form name="rename_topic" action="/forum/?act=ren&amp;id=<?= $id ?>" method="post">
+                    <div class="form-group">
+                        <label for="nn"><?= __('Topic name') ?></label>
+                        <input type="text" class="form-control" id="nn" placeholder="<?= __('Topic name') ?>"
+                               name="nn" value="<?= $topic['name'] ?>" required>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+                        <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

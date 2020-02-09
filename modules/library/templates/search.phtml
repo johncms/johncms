@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form action="?act=search" method="post">
+            <div class="form-group">
+                <label for="search"><?= __('Search query') ?></label>
+                <input type="text" class="form-control" id="search" placeholder="<?= __('Search query') ?>"
+                       name="search" value="<?= $search ?>" maxlength="64" minlength="2" required>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= $search_t ?>>
+                    <label class="custom-control-label" for="search_t"><?= __('Search in titles Articles') ?></label>
+                </div>
+            </div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
+        </form>
+    </div>
+</div>
+<?php if ($total) : ?>
+    <?php foreach ($list as $search) : ?>
+        <div class="card mb-3 shadow border-0">
+            <div class="card-body">
+                <a href="?id=<?= $search['id'] ?>" class="card-title h3"><?= $search['name'] ?></a>
+                <p class="card-text"><?= $search['text'] ?></p>
+                <div class="text-muted small d-flex align-items-center flex-wrap">
+                    <div class="mr-2">
+                        <span><?= __('Author:') ?></span><?= $search['author'] ?> (<?= $search['time'] ?>)
+                    </div>
+                    <div>
+                        <?= __('Number of readings:') ?> <?= $search['count_views'] ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <div><?= __('Total') ?>: <?= $total ?></div>
+    <?php if ($total > $user->config->kmess) : ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <?php if (! empty($search)): ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info"><?= __('The list is empty') ?></div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= __('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance') ?></div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="mt-2">
+    <?php if ($search) : ?>
+        <a href="?act=search"><?= __('New Search') ?></a><br>
+    <?php endif; ?>
+    <a href="?"><?= __('To Library') ?></a>
+</div>

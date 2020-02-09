@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+chdir(dirname(__DIR__));
+
+if (is_file($a = 'vendor/autoload.php') === true) {
+    require $a;
+} else {
+    exit('ERROR: autoload.php not found');
+}
+
+use Gettext\Loader\PoLoader;
+use Gettext\Generator\ArrayGenerator;
+
+$loader = new PoLoader();
+$generator = new ArrayGenerator();
+
+$search = ['', '../modules/*/'];
+
+foreach ($search as $dir) {
+    $files = glob($dir . 'locale/*.po');
+
+    foreach ($files as $file) {
+        $file = pathinfo($file);
+        $file = $file['dirname'] . '/' . $file['filename'];
+        /** @var Gettext\Translations $translations */
+        $translations = $loader->loadFile($file . '.po');
+        $generator->generateFile($translations, $file . '.lng.php');
+        unlink($file . '.po');
+    }
+}
+
+exit('[32mLanguages has been successfully updated[0m' . "\n");

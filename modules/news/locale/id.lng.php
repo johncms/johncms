@@ -1,0 +1,37 @@
+<?php return array (
+  'domain' => 'news',
+  'plural-forms' => 'nplurals=1; plural=0;',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'You have not entered news title' => 'Anda tidak memasukkan judul berita',
+      'You have not entered news text' => 'Anda tidak memasukkan isi berita',
+      'You cannot add the message so often. Please, wait %d seconds.' => 'Anda tidak bisa mengirim pesan terlalu sering, mohon tunggu %d detik.',
+      'News added' => 'Berita ditambahkan',
+      'Delete all news older than 1 week' => 'Hapus berita lebih dari 1 minggu',
+      'Delete all news' => 'Hapus semua berita',
+      'Delete all news older than 1 month' => 'Hapus berita lebih dari 1 bulan',
+      'News' => 'Berita',
+      'Wrong data' => 'Data salah',
+      'Title' => 'Judul',
+      'Text' => 'Isi',
+      'Discussion' => 'Diskusi',
+      'Do not discuss' => 'Tidak didiskusikan',
+      'Save' => 'Simpan',
+      'Back to news' => 'Kembali ke berita',
+      'Clearing parameters' => 'Pilih metode penghapusan',
+      'Older than 1 month' => 'Lebih dari 1 bulan',
+      'Older than 1 week' => 'Lebih dari 1 minggu',
+      'Clear all' => 'Hapus semua',
+      'Clear' => 'Hapus',
+      'Cancel' => 'Batal',
+      'Do you really want to delete?' => 'Apakah Anda ingin menghapus ini?',
+      'Delete' => 'Hapus',
+      'Add' => 'Tambahkan',
+      'Author' => 'Oleh',
+      'Discuss in Forum' => 'Diskusikan di forum',
+      'Edit' => 'Sunting',
+    ),
+  ),
+);

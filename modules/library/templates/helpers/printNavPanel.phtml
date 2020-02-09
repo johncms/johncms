@@ -1,0 +1,16 @@
+<div class="phdr">
+    <a href="?"><strong><?= __('Library') ?></strong></a> |
+    <?php $count = count($data); ?>
+    <?php $i = 1; ?>
+    <?php foreach ($data as $value) : ?>
+        <?php if ($i === $count) : ?>
+            <strong><?= $value['name'] ?></strong>
+        <?php else: ?>
+            <a href="?do=dir&amp;id=<?= $value['id'] ?>"><?= $value['name'] ?></a>
+        <?php endif; ?>
+        <?php if ($i < $count) : ?>
+            |
+        <?php endif; ?>
+        <?php $i++; ?>
+    <?php endforeach; ?>
+</div>

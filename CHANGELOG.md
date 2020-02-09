@@ -1,7 +1,45 @@
 # Changelog 
 This project follows [semantic versioning](https://semver.org/).  
 All notable changes to this project will be documented in this file.  
-Detailed change can see in the [repository log](https://github.com/simba77/johncms/commits).
+Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
+
+## 9.0.0 - 2020-02-09
+
+#### Added
+- Внедрен роутер [nikic/fast-route](https://github.com/nikic/FastRoute)
+- Внедрен нативный PHP шаблонизатор [mobicms/render](https://github.com/mobicms/render)
+- Для классов модулей используется отдельный автозагрузчик [Aura.Autoload](https://github.com/auraphp/Aura.Autoload)
+- Добавлен класс Assets, который формирует ссылки с учетом текущей темы оформления
+- Для работы с пользовательскими аватарами используется хелпер шаблонов `avatar()`
+- Для подсветки синтаксиса кода в сообщениях используется JS библиотека [Prism](https://prismjs.com)
+- Модули используют шаблоны
+- Для перевода используется [gettext/translator](https://github.com/php-gettext/Translator)
+- С помощью CLI скриптов радикально упрощена процедура подготовки переводов.
+
+#### Changed
+- Полный рефакторинг кода системы
+- Для работы требуется версия PHP 7.2, или новее
+- Строгая типизация, проверка кода по [Style-CI](https://github.styleci.io/repos/30122305)
+- Заменена CAPTCHA, используется пакет [mobicms/captcha](https://github.com/mobicms/captcha)
+- Весь функционал распределен по модулям и перемещен в папку `/modules`
+- Ядро системы выделено в отдельный пакет [johncms/system](https://github.com/johncms/system)
+- Оптимизированы ссылки, удалены фрагменты `index.php`
+
+#### Deprecated
+- Nothing
+
+#### Removed
+- Удалены старые функции перевода `_t()` `_p()`
+- Из сканера безопасности удалена функция "Сканирование по дистрибутиву"
+- Удален старый метод для вывода картинок `Tools::image()`
+- Удалена библиотека geshi/geshi
+- Удалены старые темы оформления
+
+#### Fixed
+- Исправлены замеченные ошибки
+
+#### Security
+- Администратор мог непреднамеренно удалить новость, перейдя по специально сформированной ссылке.
 
 
 ## 8.0.0 - 2019-10-23
@@ -14,19 +52,11 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 - Изменена структура таблиц форума для повышения производительности
 - Изменено отображение результатов опросов на форуме
 
-#### Deprecated
-- Nothing
-
-#### Removed
-- Nothing
-
 #### Fixed
 - Исправлена проблема зависания сайта при автоочистке на больших базах
 - Исправлена постраничная навигация в списке избранных смайлов
 - Исправлены ошибки при добавлении статьи в библиотеке
 
-#### Security
-- Nothing
 
 ## 7.1.0 - 2017-04-07  
 

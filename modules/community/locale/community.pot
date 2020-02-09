@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"X-Domain: community\n"
+
+#: modules/community/includes/administration.php:27
+#: modules/community/includes/administration.php:33
+#: modules/community/includes/administration.php:34
+#: modules/community/templates/index.phtml:45
+msgid "Administration"
+msgstr ""
+
+#: modules/community/includes/birthdays.php:20
+#: modules/community/includes/birthdays.php:26
+#: modules/community/includes/birthdays.php:27
+#: modules/community/templates/index.phtml:50
+msgid "Birthdays"
+msgstr ""
+
+#: modules/community/includes/search.php:24
+#: modules/community/templates/search.phtml:67
+#: modules/community/templates/users.phtml:50
+msgid "User Search"
+msgstr ""
+
+#: modules/community/includes/search.php:33
+#: modules/community/includes/search.php:37
+#: modules/community/templates/index.phtml:32
+msgid "Nickname"
+msgstr ""
+
+#: modules/community/includes/search.php:33
+msgid "Invalid length"
+msgstr ""
+
+#: modules/community/includes/search.php:37
+msgid "Invalid characters"
+msgstr ""
+
+#: modules/community/includes/top.php:21
+msgid "Forum"
+msgstr ""
+
+#: modules/community/includes/top.php:26
+msgid "Guestbook"
+msgstr ""
+
+#: modules/community/includes/top.php:31
+msgid "Comments"
+msgstr ""
+
+#: modules/community/includes/top.php:39
+msgid "Karma"
+msgstr ""
+
+#: modules/community/includes/top.php:50
+msgid "Most active in Guestbook"
+msgstr ""
+
+#: modules/community/includes/top.php:57
+msgid "Most commentators"
+msgstr ""
+
+#: modules/community/includes/top.php:65
+msgid "Best Karma"
+msgstr ""
+
+#: modules/community/includes/top.php:73
+msgid "Most active in Forum"
+msgstr ""
+
+#: modules/community/includes/users.php:27
+#: modules/community/includes/users.php:33
+#: modules/community/includes/users.php:34
+msgid "List of users"
+msgstr ""
+
+#: modules/community/index.php:55
+msgid "Community"
+msgstr ""
+
+#: modules/community/index.php:66
+msgid "For registered users only"
+msgstr ""
+
+#: modules/community/templates/index.phtml:30
+#: modules/community/templates/search.phtml:29
+msgid "Look for the User"
+msgstr ""
+
+#: modules/community/templates/index.phtml:34
+#: modules/community/templates/search.phtml:33
+msgid "Search"
+msgstr ""
+
+#: modules/community/templates/index.phtml:37
+#: modules/community/templates/search.phtml:36
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr ""
+
+#: modules/community/templates/index.phtml:41
+msgid "Users"
+msgstr ""
+
+#: modules/community/templates/index.phtml:55
+msgid "Top Activity"
+msgstr ""
+
+#: modules/community/templates/search.phtml:31
+msgid "Username"
+msgstr ""
+
+#: modules/community/templates/search.phtml:50
+#: modules/community/templates/top.phtml:40
+#: modules/community/templates/users.phtml:33
+msgid "List is empty"
+msgstr ""
+
+#: modules/community/templates/search.phtml:57
+#: modules/community/templates/users.phtml:40
+msgid "Total"
+msgstr ""
+
+#: modules/community/templates/search.phtml:70
+#: modules/community/templates/top.phtml:47
+#: modules/community/templates/users.phtml:53
+msgid "Back"
+msgstr ""
+
+#: modules/community/templates/user_row.phtml:61
+#: modules/community/templates/user_row.phtml:67
+msgid "post"
+msgid_plural "posts"
+msgstr[0] ""
+
+#: modules/community/templates/user_row.phtml:63
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] ""
+
+#: modules/community/templates/user_row.phtml:65
+msgid "point"
+msgid_plural "points"
+msgstr[0] ""
+
+#: modules/community/templates/user_row.phtml:89
+msgid "Delete"
+msgstr ""

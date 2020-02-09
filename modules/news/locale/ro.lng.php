@@ -1,0 +1,36 @@
+<?php return array (
+  'domain' => 'news',
+  'plural-forms' => 'nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);',
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'You have not entered news title' => 'Nu ai introdus nici in titlu',
+      'You have not entered news text' => 'Nu ai introdus nici in text',
+      'You cannot add the message so often. Please, wait %d seconds.' => 'Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde',
+      'News added' => 'Stiri adaugate',
+      'Delete all news older than 1 week' => 'Sterge toate sterile mai vechi de o saptamana',
+      'Delete all news' => 'Sterge toate stirile',
+      'Delete all news older than 1 month' => 'Sterge toate sterile mai vechi de o luna',
+      'News' => 'Stiri',
+      'Wrong data' => 'Date gresite',
+      'Title' => 'Titlu',
+      'Discussion' => 'Discutii',
+      'Do not discuss' => 'Nu discuta',
+      'Save' => 'Salveaza',
+      'Back to news' => 'Inapoi la stiri',
+      'Clearing parameters' => 'Sterge parametri',
+      'Older than 1 month' => 'Mai vechi de o luna',
+      'Older than 1 week' => 'Mai vechi de o saptamana',
+      'Clear all' => 'Sterge tot',
+      'Clear' => 'Sterge',
+      'Cancel' => 'Anuleaza',
+      'Do you really want to delete?' => 'Esti sigur ca vrei sa stergi?',
+      'Delete' => 'Sterge',
+      'Add' => 'Adauga',
+      'Author' => 'Autor',
+      'Discuss in Forum' => 'Discuta in Forum',
+      'Edit' => 'Editeaza',
+    ),
+  ),
+);

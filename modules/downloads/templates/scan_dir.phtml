@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $urls
+ * @var $updated_info
+ * @var $select_mode
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?php if (! $config['mod_down']): ?>
+    <div class="alert alert-danger border-0 shadow">
+        <?= __('Downloads are closed') ?>
+    </div>
+<?php endif; ?>
+<?php if ($select_mode): ?>
+    <div>
+        <?php if ($id): ?>
+            <div>
+                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder') ?></a>
+            </div>
+            <div>
+                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder and all subfolders') ?></a>
+            </div>
+        <?php endif; ?>
+        <div>
+            <a href="?act=scan_dir&amp;yes" class="btn btn-outline-primary btn-sm mb-2"><?= __('Entire Downloads') ?></a>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-info">
+                <b><?= __('Added') ?>:</b><br>
+                <?= __('Categories') ?>: <?= $updated_info['categories'] ?><br>
+                <?= __('Files') ?>: <?= $updated_info['files'] ?><br>
+                <?= __('Additional Files') ?>: <?= $updated_info['additional_files'] ?>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
+        </div>
+        <div>
+            <a href="?act=recount&amp;do=clean&amp;id=<?= $id ?>"><?= __('Update counters') ?></a>
+        </div>
+        <a href="?act=scan_dir&amp;yes"><?= __('Entire Downloads') ?></a>
+        <div class="mt-2">
+            <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
+        </div>
+    </div>
+<?php endif; ?>

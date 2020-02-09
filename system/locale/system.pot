@@ -1,0 +1,491 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+
+#: config/places.global.php:12
+msgid "On the Homepage"
+msgstr ""
+
+#: config/places.global.php:13
+msgid "Watching the photo album"
+msgstr ""
+
+#: config/places.global.php:14
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:100
+msgid "Users"
+msgstr ""
+
+#: config/places.global.php:15
+msgid "Users List"
+msgstr ""
+
+#: config/places.global.php:16
+#: system/src/Comments.php:150
+#: system/src/Comments.php:186
+#: system/src/Comments.php:219
+#: system/src/Comments.php:245
+#: system/src/Comments.php:286
+#: system/src/Comments.php:318
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:75
+msgid "Downloads"
+msgstr ""
+
+#: config/places.global.php:17
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
+msgid "Forum"
+msgstr ""
+
+#: config/places.global.php:18
+#: modules/notifications/index.php:111
+#: modules/notifications/index.php:130
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:62
+msgid "Guestbook"
+msgstr ""
+
+#: config/places.global.php:19
+msgid "Reading the FAQ"
+msgstr ""
+
+#: config/places.global.php:20
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:88
+msgid "Library"
+msgstr ""
+
+#: config/places.global.php:21
+#: modules/login/index.php:67
+#: modules/login/templates/captcha.phtml:2
+#: modules/login/templates/captcha.phtml:3
+#: modules/login/templates/confirm.phtml:2
+#: modules/login/templates/confirm.phtml:3
+#: modules/login/templates/login.phtml:4
+#: modules/login/templates/login.phtml:5
+#: modules/login/templates/login.phtml:41
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Login"
+msgstr ""
+
+#: config/places.global.php:22
+msgid "Personal correspondence"
+msgstr ""
+
+#: config/places.global.php:23
+msgid "Reading the news"
+msgstr ""
+
+#: config/places.global.php:24
+msgid "Profile"
+msgstr ""
+
+#: config/places.global.php:25
+msgid "Redirect on external link to another site"
+msgstr ""
+
+#: config/places.global.php:26
+msgid "Registered on the site"
+msgstr ""
+
+#: config/places.global.php:27
+msgid "List of users"
+msgstr ""
+
+#: config/places.global.php:28
+#: config/places.global.php:29
+#: config/places.global.php:30
+#: config/places.global.php:31
+msgid "Who is online?"
+msgstr ""
+
+#: modules/language/templates/index.phtml:10
+msgid "Select language"
+msgstr ""
+
+#: modules/language/templates/index.phtml:30
+msgid "Apply"
+msgstr ""
+
+#: modules/login/index.php:52
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+msgid "Personal"
+msgstr ""
+
+#: modules/login/index.php:53
+#: modules/login/templates/logout.phtml:2
+#: modules/login/templates/logout.phtml:3
+#: modules/login/templates/logout.phtml:9
+msgid "Logout"
+msgstr ""
+
+#: modules/login/index.php:77
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/login/index.php:81
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/login/index.php:99
+msgid "The security code is not correct"
+msgstr ""
+
+#: modules/login/index.php:146
+#: modules/login/index.php:150
+msgid "Authorization failed"
+msgstr ""
+
+#: modules/login/templates/captcha.phtml:10
+#: modules/login/templates/captcha.phtml:19
+msgid "Verification code"
+msgstr ""
+
+#: modules/login/templates/captcha.phtml:12
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/login/templates/captcha.phtml:28
+msgid "Continue"
+msgstr ""
+
+#: modules/login/templates/confirm.phtml:8
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr ""
+
+#: modules/login/templates/login.phtml:13
+msgid "Authorization"
+msgstr ""
+
+#: modules/login/templates/login.phtml:18
+#: modules/login/templates/login.phtml:26
+msgid "Username"
+msgstr ""
+
+#: modules/login/templates/login.phtml:30
+#: modules/login/templates/login.phtml:38
+msgid "Password"
+msgstr ""
+
+#: modules/login/templates/login.phtml:42
+msgid "Forgot password?"
+msgstr ""
+
+#: modules/login/templates/login.phtml:44
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
+msgid "Registration"
+msgstr ""
+
+#: modules/login/templates/logout.phtml:7
+msgid "Are you sure you want to leave the site?"
+msgstr ""
+
+#: modules/login/templates/logout.phtml:10
+#: themes/default/templates/system/pages/comments_delete.phtml:28
+msgid "Cancel"
+msgstr ""
+
+#: modules/notifications/index.php:40
+#: modules/notifications/templates/index.phtml:10
+#: modules/notifications/templates/index.phtml:11
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+msgid "Notifications"
+msgstr ""
+
+#: modules/notifications/index.php:50
+msgid "Users on registration"
+msgstr ""
+
+#: modules/notifications/index.php:60
+msgid "Articles on moderation"
+msgstr ""
+
+#: modules/notifications/index.php:70
+msgid "Downloads on moderation"
+msgstr ""
+
+#: modules/notifications/index.php:81
+msgid "Ban"
+msgstr ""
+
+#: modules/notifications/index.php:91
+msgid "New forum posts"
+msgstr ""
+
+#: modules/notifications/index.php:101
+msgid "Mail"
+msgstr ""
+
+#: modules/notifications/index.php:121
+msgid "Comments"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:18
+msgid "All notifications have already been read"
+msgstr ""
+
+#: modules/redirect/index.php:30
+msgid "Redirect to an external link"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:27
+msgid "External Link"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:28
+msgid "ATTENTION!"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:30
+msgid "You are going to leave our site and go to an external link"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:34
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:36
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:40
+msgid "Go to Link"
+msgstr ""
+
+#: modules/redirect/templates/index.phtml:44
+#: system/src/Comments.php:154
+#: system/src/Comments.php:190
+#: system/src/Comments.php:203
+#: system/src/Comments.php:223
+#: system/src/Comments.php:249
+#: system/src/Comments.php:290
+#: system/src/Comments.php:302
+#: system/src/Comments.php:322
+#: themes/default/templates/system/pages/comments_list.phtml:156
+#: themes/default/templates/system/pages/result.phtml:33
+msgid "Back"
+msgstr ""
+
+#: system/helpers.php:55
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr ""
+
+#: system/src/Comments.php:139
+#: system/src/Comments.php:208
+#: system/src/Comments.php:209
+#: themes/default/templates/system/pages/comments_list.phtml:124
+msgid "Reply"
+msgstr ""
+
+#: system/src/Comments.php:152
+msgid "Administrator already replied to this message"
+msgstr ""
+
+#: system/src/Comments.php:221
+#: system/src/Comments.php:320
+msgid "Wrong data"
+msgstr ""
+
+#: system/src/Comments.php:233
+#: system/src/Comments.php:307
+#: system/src/Comments.php:308
+#: themes/default/templates/system/pages/comments_list.phtml:136
+msgid "Edit"
+msgstr ""
+
+#: system/src/Comments.php:247
+msgid "You cannot edit posts of higher administration"
+msgstr ""
+
+#: system/src/Comments.php:332
+#: system/src/Comments.php:372
+#: system/src/Comments.php:373
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_list.phtml:139
+msgid "Delete"
+msgstr ""
+
+#: system/src/Comments.php:568
+msgid "Text is too short"
+msgstr ""
+
+#: system/src/Comments.php:574
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr ""
+
+#: system/src/Comments.php:574
+msgid "seconds"
+msgstr ""
+
+#: system/src/Comments.php:582
+msgid "Message already exists"
+msgstr ""
+
+#: system/src/Counters.php:174
+msgid "Unread"
+msgstr ""
+
+#: system/src/Counters.php:180
+msgid "Last activity"
+msgstr ""
+
+#: system/src/NavChain.php:57
+msgid "Home"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:156
+msgid "Edit List"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:167
+msgid "Add Smilies"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:225
+msgid "Bold"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:226
+msgid "Italic"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:227
+msgid "Underline"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:228
+msgid "Strike"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:229
+msgid "Text Color"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:230
+msgid "Background Color"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:231
+msgid "List"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:232
+msgid "Spoiler"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:233
+msgid "Quote"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:234
+msgid "URL"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:235
+msgid "Code"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:239
+msgid "Smilies"
+msgstr ""
+
+#: system/src/System/Legacy/Bbcode.php:278
+msgid "Added"
+msgstr ""
+
+#: system/src/System/Legacy/Tools.php:148
+msgid "Today"
+msgstr ""
+
+#: system/src/System/Legacy/Tools.php:151
+msgid "Yesterday"
+msgstr ""
+
+#: system/src/System/Legacy/Tools.php:167
+msgid "ERROR"
+msgstr ""
+
+#: system/src/System/Legacy/Tools.php:307
+msgid "Somewhere on the site"
+msgstr ""
+
+#: system/src/System/Legacy/Tools.php:461
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+
+#: system/src/UserProperties.php:69
+msgid "Forum moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:70
+msgid "Download moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:71
+msgid "Library moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:72
+msgid "Super moderator"
+msgstr ""
+
+#: system/src/UserProperties.php:73
+msgid "Administrator"
+msgstr ""
+
+#: system/src/UserProperties.php:74
+msgid "Supervisor"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
+msgid "News archive"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:111
+msgid "Photo Albums"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:122
+msgid "Information, FAQ"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:133
+msgid "Admin Panel"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:142
+msgid "Admin Chat"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+msgid "Log In"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+msgid "Exit"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_delete.phtml:23
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_delete.phtml:27
+msgid "Clear"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_form.phtml:24
+msgid "Message"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_form.phtml:31
+msgid "Send"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:84
+msgid "Edited:"
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_list.phtml:85
+msgid "Edited"
+msgstr ""

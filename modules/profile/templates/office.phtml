@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+
+$counters = $data['counters'] ?? [];
+?>
+<div class="row">
+    <div class="col-lg-8 col-xl-6">
+        <h3><?= __('My Pages') ?></h3>
+
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="./" class="link"><?= __('Profile') ?></a>
+            </div>
+            <div class="list-group-item">
+                <a href="?act=stat" class="link"><?= __('Statistics') ?></a>
+            </div>
+            <div class="list-group-item">
+                <a href="/album/?act=list" class="link"><?= __('Photo Album') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $counters['total_photo'] ?></span>
+            </div>
+            <div class="list-group-item">
+                <a href="?act=guestbook" class="link"><?= __('Guestbook') ?></a>
+                <span class="counter badge badge-light badge-pill"><?= $user->comm_count ?></span>
+            </div>
+        </div>
+
+        <h3 class="mt-3"><?= __('My Mailbox') ?></h3>
+
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="/mail/?act=input" class="link"><?= __('Received') ?></a>
+                <span class="counter badge badge-pill <?= ($counters['new_messages'] > 0 ? 'badge-danger' : 'badge-light') ?>">
+                    <?= $counters['inbox'] ?>
+                    <?= ($counters['new_messages'] > 0 ? ' / +' . $counters['new_messages'] : '') ?>
+                </span>
+            </div>
+            <div class="list-group-item">
+                <a href="/mail/?act=output" class="link"><?= __('Sent') ?></a>
+                <span class="counter badge badge-pill <?= ($counters['unread_sent'] > 0 ? 'badge-danger' : 'badge-light') ?>">
+                    <?= $counters['outbox'] ?>
+                    <?= ($counters['unread_sent'] > 0 ? ' / +' . $counters['unread_sent'] : '') ?>
+                </span>
+            </div>
+            <div class="list-group-item">
+                <a href="/mail/?act=files" class="link"><?= __('Files') ?></a>
+                <span class="counter badge badge-pill badge-light"><?= $counters['files'] ?></span>
+            </div>
+        </div>
+
+        <h3 class="mt-3"><?= __('Contacts') ?></h3>
+
+        <div class="list-group with_counters">
+            <div class="list-group-item">
+                <a href="/mail/" class="link"><?= __('Contacts') ?></a>
+                <span class="counter badge badge-pill badge-light"><?= $counters['contacts'] ?></span>
+            </div>
+            <div class="list-group-item">
+                <a href="/mail/?act=ignor" class="link"><?= __('Blocked') ?></a>
+                <span class="counter badge badge-pill badge-light"><?= $counters['blocked_contacts'] ?></span>
+            </div>
+        </div>
+
+        <h3 class="mt-3"><?= __('Settings') ?></h3>
+
+        <div class="list-group">
+            <a href="?act=edit" class="list-group-item"><?= __('Edit Profile') ?></a>
+            <a href="?act=password" class="list-group-item"><?= __('Change Password') ?></a>
+            <a href="?act=settings" class="list-group-item"><?= __('System Settings') ?></a>
+        </div>
+    </div>
+</div>

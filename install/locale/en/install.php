@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 return [
     'access_rights'            => 'Access Rights',
     'admin'                    => 'Administrator',
@@ -43,6 +53,7 @@ return [
     'error_table_prepare'      => 'An error occurred while preparing the tables',
     'error'                    => 'ERROR!',
     'errors'                   => 'Errors',
+    'final'                    => 'Finish',
     'final_note'               => 'Do not forget to delete the folder <span class="red"><b>/install</b></span>',
     'final_warning'            => '<h2 class="red">WARNING!</h2><h3>After installation, you must delete folder /<span class="red">install</span></h3>',
     'go_to_site'               => 'Go to Site',
@@ -53,7 +64,7 @@ return [
     'install_demo_help'        => 'Will be installed the basic setup and some texts (in Russian)',
     'install_note'             => '<h3 class="green">Welcome!</h3><ul><li>List of changes located in the file <a href="?act=changelog">CHANGELOG.md</a></li><li>Additional information is available on the official project website <a href="http://johncms.com">http://johncms.com</a></li><li>Installing and using JohnCMS, means complete acceptance of the terms of the <a href="?act=license">license</a></li></ul>',
     'installation_completed'   => 'Installation successful<br />Now you can go to the admin panel and customize your site',
-    'languages'                => '​​After installation, you can add additional languages.<br />They can be downloaded from <a href="http://johncms.com/download/index.php?cat=483">JohnCMS</a>',
+    'languages'                => 'After installation, you can add additional languages.<br />They can be downloaded from <a href="http://johncms.com/download/index.php?cat=483">JohnCMS</a>',
     'not_recommended'          => '(not recommended)',
     'photoalbums_move'         => 'Transferring albums',
     'php_critical_error'       => 'PHP critical Errors',

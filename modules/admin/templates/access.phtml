@@ -1,0 +1,158 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $title,
+    ]
+);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['access' => true]]));
+$cls = ['', '', '', ''];
+?>
+<?php if ($errorMsg): ?>
+    <div class="alert alert-danger shadow border-0">ERROR: Can not write file `system.local.php`</div>
+<?php endif ?>
+<?php if ($confirmation): ?>
+    <div class="alert alert-success shadow border-0"><?= __('Settings are saved successfully') ?></div>
+<?php endif ?>
+<form method="post" action="/admin/access/">
+    <!-- Управление доступом к Форуму -->
+    <div class="<?= $cls[$conf['mod_forum']] ?>">
+        <h3><?= __('Forum') ?></h3>
+        <div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="forum" value="2" id="forum2" <?= $conf['mod_forum'] === 2 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="forum2"><?= __('Access is allowed') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="forum" value="1" id="forum1" <?= $conf['mod_forum'] === 1 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="forum1"><?= __('Only for authorized') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="forum" value="3" id="forum3" <?= $conf['mod_forum'] === 3 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="forum3"><?= __('Read only') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="forum" value="0" id="forum0" <?= ! $conf['mod_forum'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="forum0"><?= __('Access denied') ?></label>
+            </div>
+        </div>
+    </div>
+    <!-- Управление доступом к Гостевой -->
+    <div class="mt-3 <?= $cls[$conf['mod_guest']] ?>">
+        <h3><?= __('Guestbook') ?></h3>
+        <div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="guest" value="2" id="guest2" <?= $conf['mod_guest'] === 2 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="guest2"><?= __('Access is allowed') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="guest" value="1" id="guest1" <?= $conf['mod_guest'] === 1 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="guest1"><?= __('Only for authorized') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="guest" value="0" id="guest" <?= ! $conf['mod_guest'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="guest"><?= __('Access denied') ?></label>
+            </div>
+        </div>
+    </div>
+    <!-- Управление доступом к Библиотеке -->
+    <div class="mt-3 <?= $cls[$conf['mod_lib']] ?>">
+        <h3><?= __('Library') ?></h3>
+        <div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="lib" value="2" id="lib2" <?= $conf['mod_lib'] === 2 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="lib2"><?= __('Access is allowed') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="lib" value="1" id="lib1" <?= $conf['mod_lib'] === 1 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="lib1"><?= __('Only for authorized') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="lib" value="0" id="lib" <?= ! $conf['mod_lib'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="lib"><?= __('Access denied') ?></label>
+            </div>
+
+            <div class="custom-control custom-checkbox mt-2">
+                <input type="checkbox" class="custom-control-input" name="libcomm" value="1" id="libcomm" <?= $conf['mod_lib_comm'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="libcomm"><?= __('Comments') ?></label>
+            </div>
+        </div>
+    </div>
+    <!-- Управление доступом к Загрузкам -->
+    <div class="mt-3 <?= $cls[$conf['mod_down']] ?>">
+        <h3><?= __('Downloads') ?></h3>
+        <div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="down" value="2" id="down2" <?= $conf['mod_down'] === 2 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="down2"><?= __('Access is allowed') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="down" value="1" id="down1" <?= $conf['mod_down'] === 1 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="down1"><?= __('Only for authorized') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="down" value="0" id="down" <?= ! $conf['mod_down'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="down"><?= __('Access denied') ?></label>
+            </div>
+
+            <div class="custom-control custom-checkbox mt-2">
+                <input type="checkbox" class="custom-control-input" name="downcomm" value="1" id="downcomm" <?= $conf['mod_down_comm'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="downcomm"><?= __('Comments') ?></label>
+            </div>
+        </div>
+    </div>
+    <!-- Управление доступом к Активу сайта (списки юзеров и т.д.) -->
+    <div class="mt-3 <?= $cls[$conf['active'] + 1] ?>">
+        <h3><?= __('Community') ?></h3>
+        <div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="active" value="1" id="active1" <?= $conf['active'] === 1 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="active1"><?= __('Access is allowed') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="active" value="0" id="active" <?= ! $conf['active'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="active"><?= __('Only for authorized') ?></label>
+            </div>
+        </div>
+    </div>
+    <!-- Управление доступом к Регистрации -->
+    <div class="mt-3 <?= $cls[$conf['mod_reg']] ?>">
+        <h3><?= __('Registration') ?></h3>
+        <div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="reg" value="2" id="reg2" <?= $conf['mod_reg'] === 2 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="reg2"><?= __('Access is allowed') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="reg" value="1" id="reg1" <?= $conf['mod_reg'] === 1 ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="reg1"><?= __('With moderation') ?></label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="reg" value="0" id="reg" <?= ! $conf['mod_reg'] ? 'checked' : '' ?>>
+                <label class="custom-control-label" for="reg"><?= __('Access denied') ?></label>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <div class="alert alert-info">
+            <?= __('Administrators always have access to all closed modules and comments') ?>
+        </div>
+        <input type="submit" name="submit" id="button" value="<?= __('Save') ?>" class="btn btn-primary">
+    </div>
+</form>

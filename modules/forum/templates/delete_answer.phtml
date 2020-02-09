@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $delete_url
+ * @var $back_url
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                <?= __('Do you really want to delete the answer?') ?>
+            </div>
+            <div>
+                <a href="<?= $delete_url ?>" class="btn btn-danger btn-sm mr-2"><?= __('Delete') ?></a>
+                <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
+            </div>
+        </div>
+    </div>
+</div>

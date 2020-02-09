@@ -1,0 +1,32 @@
+name: PHP-CI
+on: [push, pull_request]
+
+jobs:
+  coding-standard:
+    name: Coding Standard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: '7.3'
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction --ignore-platform-reqs
+
+      - name: Check coding style
+        run: composer cs-check

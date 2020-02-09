@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $poll_name
+ * @var $back_url
+ * @var $count_vote
+ * @var $votes
+ * @var $saved_vote
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="row">
+    <div class="col-md-6">
+        <form name="new_topic" action="/forum/?act=editvote&amp;id=<?= $id ?>" method="post">
+            <input type="hidden" name="count_vote" value="<?= $count_vote ?>">
+            <div class="form-group">
+                <label for="name_vote"><?= __('Poll') ?></label>
+                <input type="text" class="form-control" id="name_vote" placeholder="<?= __('Poll') ?>"
+                       name="name_vote" value="<?= $poll_name ?>" maxlength="150" required>
+                <div class="small text-muted"><?= __('Maximum length: 150 characters') ?></div>
+            </div>
+
+            <h4><?= __('Answers') ?></h4>
+            <?php foreach ($votes as $vote): ?>
+                <div class="form-group">
+                    <label for="vote_<?= $vote['input_name'] ?>"><?= $vote['input_label'] ?></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="vote_<?= $vote['input_name'] ?>" placeholder="<?= $vote['input_label'] ?>"
+                               name="<?= $vote['input_name'] ?>" value="<?= $vote['input_value'] ?>" maxlength="50">
+                        <?php if (! empty($vote['delete_url'])): ?>
+                            <div class="input-group-append">
+                                <a href="<?= $vote['delete_url'] ?>" class="btn btn-danger">&times;</a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="small text-muted"><?= __('Maximum length: 50 characters') ?></div>
+                </div>
+            <?php endforeach; ?>
+
+            <div class="mb-4">
+                <?php if ($count_vote < 20): ?>
+                    <button type="submit" name="plus" value="1" class="btn btn-outline-primary btn-sm"><?= __('Add Answer') ?></button>
+                <?php endif; ?>
+                <?php if ($count_vote - $saved_vote): ?>
+                    <button type="submit" name="minus" value="1" class="btn btn-outline-danger btn-sm"><?= __('Delete last') ?></button>
+                <?php endif; ?>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+            </div>
+        </form>
+    </div>
+</div>

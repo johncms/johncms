@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $sections
+ * @var $online
+ * @var $files_count
+ * @var $unread_count
+ * @var $create_access
+ * @var $pagination
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<?= $this->fetch(
+    'forum::header',
+    [
+        'unread_count' => $unread_count,
+        'files_count'  => $files_count,
+        'files_url'    => '/forum/?act=files&s=' . $id,
+        'files_name'   => __('Category Files'),
+    ]
+) ?>
+
+<?php if (empty($topics)): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('No topics in this section'),
+        ]
+    ) ?>
+<?php endif; ?>
+<?php if ($create_access): ?>
+    <div class="mb-3">
+        <form action="?act=nt&amp;id=<?= $id ?>" method="post">
+            <button type="submit" class="btn btn-primary"><?= __('New Topic') ?></button>
+        </form>
+    </div>
+<?php endif; ?>
+
+<?php foreach ($topics as $topic): ?>
+    <div class="shadow border-radius-12 forum-section post-item mb-2<?= $topic['deleted'] ? ' deleted-post' : '' ?><?= $topic['closed'] ? ' closed-topic' : '' ?>">
+        <div class="section-header">
+            <div class="d-flex align-items-center w-100">
+                <?php if ($topic['has_icons']): ?>
+                    <div class="topic-icons mr-1 d-flex align-items-center">
+                        <?php if ($topic['pinned']): ?>
+                            <div class="mr-1" title="<?= __('Pinned topic') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pin"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($topic['has_poll']): ?>
+                            <div class="mr-1" title="<?= __('Topic has poll') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bar-chart"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($topic['closed']): ?>
+                            <div class="mr-1" title="<?= __('Closed topic') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#lock"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($topic['deleted']): ?>
+                            <div class="mr-1" title="<?= __('Deleted topic') ?>">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#x"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <a href="<?= $topic['url'] ?>" class="text-dark-brown flex-grow-1 flex-md-grow-0"><?= $topic['name'] ?></a>
+                <span class="badge badge-pill badge-light border ml-3"><?= $topic['show_posts_count'] ?></span>
+                <a href="<?= $topic['last_page_url'] ?>" class="ml-auto pl-2" title="<?= __('Last page') ?>">
+                    <svg class="icon icon-chevron-bottom text-dark-brown">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="small pt-2 text-muted">
+            <?= __('Author') ?>: <?= $topic['user_name'] ?>,
+            <?= __('Last post') ?>: <?= $topic['show_last_post_date'] ?>, <?= $topic['show_last_author'] ?>
+        </div>
+    </div>
+<?php endforeach; ?>
+<div class="mb-n2 pt-1">
+    <div><?= __('Total') ?>: <?= $total ?></div>
+    <!-- Page switching -->
+    <?php if ($total > $user->config->kmess): ?>
+        <div class="mt-1"><?= $pagination ?></div>
+    <?php endif ?>
+</div>
+
+<?= $this->fetch(
+    'forum::footer',
+    [
+        'online'   => $online,
+        'who_url'  => '/forum/?act=who',
+        'who_name' => __('Who in Forum'),
+    ]
+) ?>
+

@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $folder_params
+ * @var $action_url
+ * @var $extensions
+ * @var bool $edit_form
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <form name="folder_form" action="<?= $action_url ?>" method="post">
+                    <?php if (! $edit_form): ?>
+                        <div class="form-group">
+                            <label for="name"><?= __('Folder name') ?></label>
+                            <input type="text" class="form-control" id="name" placeholder="<?= __('Folder name') ?>"
+                                   name="name" value="<?= $folder_params['name'] ?>" required>
+                            <div class="text-muted small"><?= __('Only latin characters and numbers') ?></div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-group">
+                        <label for="rus_name"><?= __('Title to display') ?></label>
+                        <input type="text" class="form-control" id="rus_name" placeholder="<?= __('Title to display') ?>"
+                               name="rus_name" value="<?= $folder_params['rus_name'] ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc"><?= __('Description') ?></label>
+                        <textarea id="desc" class="form-control" maxlength="500" name="desc" cols="24" rows="4"><?= $folder_params['desc'] ?></textarea>
+                    </div>
+                    <?php if ($user->rights === 9): ?>
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" class="custom-control-input" name="user_down" value="1" id="user_down" <?= $folder_params['user_down'] ? 'checked' : '' ?>>
+                            <label class="custom-control-label" for="user_down"><?= __('Allow users to upload files') ?></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="format"><?= __('Allowed extensions') ?></label>
+                            <input type="text" class="form-control" id="format" placeholder="<?= __('Allowed extensions') ?>"
+                                   name="format" value="<?= $folder_params['format'] ?>">
+                            <div class="text-muted small"><?= __('You can write only the following extensions') ?>: <?= $extensions ?></div>
+                        </div>
+                    <?php endif; ?>
+                    <div>
+                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+                        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $back_url
+ * @var $action_url
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <?php if (! empty($sections)): ?>
+            <div class="h4 font-weight-bold"><?= __('Select a section to move') ?></div>
+            <div class="list-group">
+                <?php foreach ($sections as $section): ?>
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <a href="<?= $section['section_open_url'] ?>" class="mb-1"><?= $section['rus_name'] ?></a>
+                            <?php if (! empty($section['section_move_url'])): ?>
+                                <a href="<?= $section['section_move_url'] ?>" class="btn btn-primary btn-sm"><?= __('Move file to this section') ?></a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div class="alert alert-info"><?= __('The list is empty') ?></div>
+        <?php endif; ?>
+        <?php if (! empty($urls['move_to_current_url'])): ?>
+            <div class="mt-3">
+                <a href="<?= $urls['move_to_current_url'] ?>" class="btn btn-primary"><?= __('Move file here') ?></a>
+            </div>
+        <?php endif; ?>
+        <div class="mt-3">
+            <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
+        </div>
+    </div>
+</div>

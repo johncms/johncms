@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $sections
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<?php if (! empty($new_count)): ?>
+    <div class="border-top border-bottom mb-3">
+        <div class="py-3">
+            <a href="<?= $new_url ?>"><?= __('New Files') ?></a>
+            <span class="badge badge-pill badge-danger"><?= $new_count ?></span>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (! empty($sections)): ?>
+    <div>
+        <?php foreach ($sections as $section): ?>
+            <div class="shadow border-radius-12 forum-section post-item mb-2">
+                <div class="section-header border-0 pb-0">
+                    <div class="d-flex align-items-center">
+                        <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
+                        <span class="badge badge-pill badge-light border ml-3"><?= $section['count'] ?></span>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php else: ?>
+    <div class="alert alert-info">
+        <?= __('The list is empty') ?>
+    </div>
+<?php endif ?>

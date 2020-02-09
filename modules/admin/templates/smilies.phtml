@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @var bool $confirmation
+ * @var array $sysconf
+ * @var array $themelist
+ */
+$this->layout('system::layout/default', ['title' => __('Admin Panel'), 'page_title' => __('System Settings')]);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu'));
+?>

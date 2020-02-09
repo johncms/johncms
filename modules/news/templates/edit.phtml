@@ -1,0 +1,35 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => __('Edit news'),
+    'page_title' => __('Edit news'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+        <div class="card shadow border-0 border-radius-12">
+            <div class="card-body">
+                <h4 class="card-title"><?= __('Edit news') ?></h4>
+                <form action="/news/edit/<?= $id ?>" method="post">
+                    <div class="form-group">
+                        <label for="title"><?= __('Title') ?></label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="255"
+                               name="name"
+                               id="title"
+                               required
+                               value="<?= $name ?>"
+                               placeholder="<?= __('Title') ?>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="text"><?= __('Text') ?></label>
+                        <textarea id="text" class="form-control" name="text" rows="<?= $user->config->fieldHeight ?>"><?= $text ?></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary mr-2"><?= __('Save') ?></button>
+                        <a href="/news/" class="btn btn-outline-primary"><?= __('Back to news') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+<?php if ($total) : ?>
+    <!-- Listing Sections -->
+    <?php $i = 0; ?>
+    <?php foreach ($list() as $section): ?>
+        <div class="shadow border-radius-12 forum-section post-item mb-2">
+            <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
+                <div class="d-flex align-items-center">
+                    <a href="?do=dir&amp;id=<?= $section['id'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
+                    <span class="badge badge-pill badge-light border ml-3"><?= $section['libCounter'] ?></span>
+                </div>
+            </div>
+            <?php if (! empty($main['description'])): ?>
+                <div class="small pt-2 mt-1 border-top text-muted">
+                    <div><?= $main['description'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if ($admin): ?>
+                <div class="border-top mt-2 pt-2">
+                    <?= $section['sectionListAdminPanel'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
+        </div>
+    </div>
+<?php endif ?>
+
+<div class="mt-3"><?= __('Total') ?>: <?= $total ?></div>
+<!-- Page switching -->
+<?php if ($total > $user->config->kmess): ?>
+    <div><?= $pagination ?></div>
+<?php endif ?>
+<?php if ($admin) : ?>
+    <div class="mt-3">
+        <a href="?act=mkdir&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Create') ?></a>
+        <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Edit') ?></a>
+        <a href="?act=del&amp;type=dir&amp;id=<?= $id ?>" class="btn btn-danger"><?= __('Delete') ?></a>
+    </div>
+<?php endif; ?>

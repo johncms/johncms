@@ -1,0 +1,73 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+chdir(dirname(__DIR__, 2));
+
+if (is_file($a = 'system/vendor/autoload.php') === true) {
+    require $a;
+} else {
+    exit('ERROR: autoload.php not found');
+}
+
+use Gettext\Scanner\PhpScanner;
+use Gettext\Generator\PoGenerator;
+use Gettext\Translations;
+
+if (is_file($s = 'translate.xml') === true || is_file($s = 'translate.xml.dist') === true) {
+    $xml = simplexml_load_string(file_get_contents($s));
+}
+
+if (!isset($xml) || false === $xml) {
+    exit('[91mERROR: Configuration file not found, or contains errors.[0m');
+}
+
+foreach ($xml->domain as $domain) {
+    $list = [];
+
+    foreach ($domain->sourceDir as $dirertory) {
+        $list = array_merge($list, recursiveScan((string)$dirertory, '/^.+\.(?:phtml|php)$/i'));
+    }
+
+    if (isset($domain->sourceFile)) {
+        foreach ($domain->sourceFile as $fileToScan) {
+            $list[] = (string)$fileToScan;
+        }
+    }
+
+    sort($list, SORT_STRING);
+    $phpScanner = new PhpScanner(Translations::create($domain->name));
+    $phpScanner->setDefaultDomain($domain->name);
+    $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
+
+    foreach ($list as $file) {
+        $phpScanner->scanFile($file);
+    }
+
+    $name = (string)$domain->name;
+    $generator = new PoGenerator();
+    $generator->generateFile($phpScanner->getTranslations()[$name], $domain->target . '/' . $name . '.pot');
+}
+
+function recursiveScan($folder, $pattern)
+{
+    $dir = new RecursiveDirectoryIterator($folder);
+    $ite = new RecursiveIteratorIterator($dir);
+    $files = new RegexIterator($ite, $pattern, RegexIterator::GET_MATCH);
+    $fileList = [];
+
+    foreach ($files as $file) {
+        $fileList[] = str_replace('\\', '/', $file[0]);
+    }
+
+    return $fileList;
+}
+
+exit('[32mLanguage templates has been created successfully[0m' . "\n");

@@ -1,48 +1,58 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
+use FastRoute\Dispatcher;
+use FastRoute\Dispatcher\GroupCountBased;
+use FastRoute\RouteCollector;
+use Psr\Container\ContainerInterface;
 
-require('system/bootstrap.php');
+const DEBUG = true;
+const _IN_JOHNCMS = true;
 
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+require 'system/bootstrap.php';
 
+/** @var ContainerInterface $container */
+$container = Johncms\System\Container\Factory::getContainer();
+$dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
 
-if (isset($_SESSION['ref'])) {
-    unset($_SESSION['ref']);
-}
+$match = $dispatcher->dispatch(
+    $_SERVER['REQUEST_METHOD'],
+    (function () {
+        $uri = $_SERVER['REQUEST_URI'];
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
 
-if (isset($_GET['err'])) {
-    $act = 404;
-}
+        return rawurldecode($uri);
+    })()
+);
 
-switch ($act) {
-    case '404':
-        /** @var Johncms\Api\ToolsInterface $tools */
-        $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
+switch ($match[0]) {
+    case Dispatcher::FOUND:
+        // Register the location of the visitor on the site
+        new Johncms\System\Users\UserStat($container);
+        $container->setService('route', $match[2]);
 
-        $headmod = 'error404';
-        require('system/head.php');
-        echo $tools->displayError(_t('The requested page does not exists'));
+        if (is_callable($match[1])) {
+            call_user_func_array($match[1], $match[2]);
+        } else {
+            include ROOT_PATH . $match[1];
+        }
+        break;
+
+    case Dispatcher::METHOD_NOT_ALLOWED:
+        echo '405 Method Not Allowed';
         break;
 
     default:
-        // Главное меню сайта
-        if (isset($_SESSION['ref'])) {
-            unset($_SESSION['ref']);
-        }
-        $headmod = 'mainpage';
-        require('system/head.php');
-        include 'system/mainmenu.php';
+        pageNotFound();
 }
-
-require('system/end.php');

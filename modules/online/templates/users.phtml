@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="btn-group mb-3" role="group">
+    <?php foreach ($data['filters'] as $tab): ?>
+        <a href="<?= $tab['url'] ?>" class="btn btn-outline-secondary <?= ($tab['active'] ? 'active' : '') ?>"><?= $tab['name'] ?></a>
+    <?php endforeach; ?>
+</div>
+<!-- List of Users -->
+<?php if ($data['total'] > 0): ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <?= $this->fetch('online::user_row', ['item' => $item]) ?>
+    <?php endforeach ?>
+<?php else: ?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info"><?= __('List is empty') ?></div>
+        </div>
+    </div>
+<?php endif ?>
+
+<?php if ($data['total'] > 0): ?>
+    <div>
+        <div><?= __('Total') ?>: <?= $data['total'] ?></div>
+        <!-- Page switching -->
+        <?php if ($data['total'] > $user->config->kmess): ?>
+            <div class="mt-1"><?= $data['pagination'] ?></div>
+        <?php endif ?>
+    </div>
+<?php endif; ?>
+

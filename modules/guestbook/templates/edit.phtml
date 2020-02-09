@@ -1,0 +1,29 @@
+<?php $this->layout('system::layout/default', [
+    'title'      => __('Edit message'),
+    'page_title' => __('Edit message'),
+]) ?>
+<div class="row">
+    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+        <div class="card shadow border-0 border-radius-12">
+            <div class="card-body">
+                <h4 class="card-title"><?= __('Edit message') ?></h4>
+                <form action="/guestbook/edit?id=<?= $id ?>" method="post">
+                    <input type="hidden" name="token" value="<?= $token ?>"/>
+                    <p>
+                        <b><?= __('Author') ?>:</b> <?= $message['name'] ?>
+                    <p>
+                    <div class="form-group">
+                        <label for="msg"><?= __('Message') ?></label>
+                        <div><?= $bbcode ?></div>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $text ?></textarea>
+                        <div class="text-muted">Max: 5000</div>
+                    </div>
+                    <div>
+                        <button type="submit" name="submit" value="submit" class="btn btn-primary mr-2"><?= __('Save') ?></button>
+                        <a href="/guestbook/" class="btn btn-outline-primary"><?= __('Back') ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

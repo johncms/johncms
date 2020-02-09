@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+?>
+<div class="alert alert-danger" style="padding-top: 16px; padding-bottom: 16px">
+    <form action="?url=<?= $redirect_url ?>" method="post">
+        <h3><?= __('External Link') ?></h3>
+        <strong><?= __('ATTENTION!') ?></strong>
+        <p class="break-word">
+            <?= __('You are going to leave our site and go to an external link') ?>:
+            <span class="font-weight-bold"><?= htmlspecialchars($url) ?></span>
+        </p>
+        <p>
+            <?= __('Administration of our site is not responsible for the content of external sites') ?><br>
+            <?= sprintf(
+                __('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites'),
+                '<strong>' . parse_url($config['homeurl'], PHP_URL_HOST) . '</strong>'
+            ) ?>
+        </p>
+        <input type="submit" name="submit" value="<?= __('Go to Link') ?>" class="btn btn-danger">
+    </form>
+</div>
+<div class="mt-2">
+    <a href="<?= $referer ?>"><?= __('Back') ?></a>
+</div>

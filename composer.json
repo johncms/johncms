@@ -1,50 +1,72 @@
 {
-  "name": "simba77/johncms",
-  "description": "Mobile Content Management System",
-  "homepage": "http://johncms.com",
-  "license": "GPL-3.0-only",
-  "keywords": [
-    "johncms",
-    "cms",
-    "php",
-    "mysql",
-    "mobile"
-  ],
-  "authors": [
-    {
-      "name": "JohnCMS Contributors",
-      "homepage": "https://github.com/simba77/johncms/graphs/contributors"
-    }
-  ],
-  "support": {
-    "forum": "https://johncms.com/forum",
-    "source": "https://github.com/simba77/johncms",
-    "issues": "https://johncms.com/forum/index.php?id=67"
-  },
-  "config": {
-    "sort-packages": true,
-    "vendor-dir": "system/vendor"
-  },
-  "require": {
-    "php": "^7.1",
-    "ext-mbstring": "*",
-    "ext-pdo": "*",
-    "erusev/parsedown": "^1.7",
-    "geshi/geshi": "dev-master",
-    "verot/class.upload.php": "^2.0",
-    "zendframework/zend-i18n": "^2.9",
-    "zendframework/zend-servicemanager": "^3.4"
-  },
-  "require-dev": {
-    "roave/security-advisories": "dev-master"
-  },
-  "autoload": {
-    "psr-4": {
-      "Johncms\\": "system/johncms/",
-      "Library\\": "library/classes"
+    "name": "johncms/johncms",
+    "description": "Content Management System",
+    "homepage": "https://johncms.com",
+    "license": "GPL-3.0-only",
+    "keywords": [
+        "johncms",
+        "cms",
+        "php",
+        "mysql",
+        "mobile"
+    ],
+    "authors": [
+        {
+            "name": "JohnCMS Contributors",
+            "homepage": "https://github.com/johncms/johncms/graphs/contributors"
+        }
+    ],
+    "support": {
+        "forum": "https://johncms.com/forum",
+        "source": "https://github.com/johncms/johncms",
+        "issues": "https://johncms.com/forum/index.php?id=67"
     },
-    "files": [
-      "system/helpers.php"
-    ]
-  }
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "vendor-dir": "system/vendor"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.2",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-simplexml": "*",
+        "aura/autoload": "^2.0",
+        "intervention/image": "^2.5",
+        "james-heinrich/getid3": "^1.9",
+        "johncms/system": "^1.2",
+        "mobicms/captcha": "^2.0"
+    },
+    "require-dev": {
+        "gettext/gettext": "^5.2",
+        "gettext/php-scanner": "^1.1",
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "files": [
+            "config/constants.php",
+            "system/helpers.php"
+        ],
+        "psr-4": {
+            "Johncms\\": "system/src/"
+        }
+    },
+    "bin": [
+        "system/bin/scan",
+        "system/bin/translate"
+    ],
+    "scripts": {
+        "check": [
+            "@cs-check"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "translate": "translate",
+        "translate-scan": "scan"
+    }
 }

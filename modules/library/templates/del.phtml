@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <?php if ($error) : ?>
+            <div class="alert alert-danger">
+                <?= $error ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($dirchange) : ?>
+            <?php if ($mode === 'moveaction') : ?>
+                <?php if ($moving) : ?>
+                    <div class="alert alert-success"><?= __('Successful transfer') ?></div>
+                    <div class="mt-3">
+                        <a href="?do=dir&amp;id=<?= $move ?>"><?= __('Back') ?></a>
+                    </div>
+                <?php else : ?>
+                    <div class="alert alert-danger">
+                        <div><?= __('Are you sure you want to move the contents?') ?></div>
+                        <div class="mt-2">
+                            <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;movedeny&amp;do=moveaction&amp;move=<?= ($_POST['move']) ?>" class="btn btn-danger btn-sm"><?= __('Move') ?></a>
+                            <a href="?" class="btn btn-secondary btn-sm"><?= __('Cancel') ?></a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if ($mode === 'delmove') : ?>
+                <?php if ($delmove) : ?>
+                    <div class="menu">
+                        <form action="?act=del&amp;type=dir&amp;id=<?= $id ?>" method="post">
+                            <div>
+                                <label for=""><?= __('Move to Section') ?></label>
+                                <select name="move" class="form-control">
+                                    <?php foreach ($delmove as $itemId => $itemName) : ?>
+                                        <option value="<?= $itemId ?>"><?= $itemName ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="hidden" name="mode" value="moveaction">
+                            </div>
+                            <div class="mt-3">
+                                <input type="submit" name="submit" value="<?= __('Approve') ?>" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                <?php else : ?>
+                    <div class="alert alert-danger"><?= __('There are no Sections for moving') ?></div>
+                    <div class="mt-3">
+                        <a href="?"><?= __('Back') ?></a>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if ($mode === 'delall') : ?>
+                <?php if ($deldeny) : ?>
+                    <div class="alert alert-success"><?= $deldeny ?></div>
+                    <div class="mt-3"><a href="?"><?= __('Back') ?></a></div>
+                <?php else : ?>
+                    <div class="alert alert-danger">
+                        <div><?= __('Are you sure you want to delete content?') ?></div>
+                        <div class="mt-2">
+                            <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;deldeny&amp;do=delall" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+                            <a href="?" class="btn btn-secondary btn-sm"><?= __('Cancel') ?></a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if (! $mode) : ?>
+                <div class="alert alert-danger"><?= __('Section is not empty') ?></div>
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <h3><?= __('Select action') ?></h3>
+                        <form action="?act=del&amp;type=dir&amp;id=<?= $id ?>" method="post">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="type1" name="mode" value="delmove" class="custom-control-input" checked="checked">
+                                <label class="custom-control-label" for="type1"><?= __('Delete with movement') ?></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="type2" name="mode" value="delall" class="custom-control-input">
+                                <label class="custom-control-label" for="type2"><?= __('Delete all Sections and Articles') ?></label>
+                            </div>
+                            <div class="mt-2">
+                                <input type="submit" name="submit" value="<?= __('Do') ?>" class="btn btn-danger">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php else : ?>
+            <?php if (! isset($_GET['yes']) && $type !== 'article') : ?>
+                <div class="alert alert-danger">
+                    <div><?= __('Delete confirmation') ?></div>
+                    <div class="mt-2">
+                        <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;yes" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+                        <a href="?do=dir&amp;id=<?= $id ?>" class="btn btn-secondary btn-sm"><?= __('Cancel') ?></a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if ($type === 'article') : ?>
+            <?php if (! $article) : ?>
+                <div class="alert alert-danger">
+                    <div><?= __('Delete confirmation') ?></div>
+                    <div class="mt-2">
+                        <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;yes" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+                        <a href="?id=<?= $id ?>" class="btn btn-secondary btn-sm"><?= __('Cancel') ?></a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if ($type === 'image') : ?>
+            <?php if (! $image) : ?>
+                <div class="alert alert-danger">
+                    <div><?= __('Delete confirmation') ?></div>
+                    <div>
+                        <a href="?act=del&amp;type=<?= $type ?>&amp;id=<?= $id ?>&amp;yes" class="btn btn-danger"><?= __('Delete') ?></a>
+                        <a href="?act=moder&amp;type=article&amp;id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                    </div>
+                </div>
+            <?php else : ?>
+                <div class="alert alert-success">
+                    <?= __('Deleted') ?>
+                </div>
+                <div class="mt-3">
+                    <a href="?act=moder&amp;type=article&amp;id=<?= $id ?>"><?= __('Back') ?></a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php if ($deny) : ?>
+            <div class="alert alert-success">
+                <?= __('Deleted') ?>
+            </div>
+            <div class="mt-3">
+                <a href="?"><?= __('Back') ?></a>
+            </div>
+        <?php endif; ?>
+
+    </div>
+</div>
