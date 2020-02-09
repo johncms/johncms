@@ -37,8 +37,8 @@ class install
             $error[] = 'PDO';
         }
 
-        if (! extension_loaded('gd')) {
-            $error[] = 'gd';
+        if (! extension_loaded('imagick')) {
+            $error[] = 'imagick';
         }
 
         if (! extension_loaded('zlib')) {
