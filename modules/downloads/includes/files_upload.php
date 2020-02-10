@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Intervention\Image\ImageManagerStatic as Image;
 use Johncms\FileInfo;
+use Johncms\ImageManager;
 use Johncms\NavChain;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -132,8 +132,9 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                             // Save screenshot
                             if (mkdir($screens_dir, 0777) || is_dir($screens_dir)) {
                                 try {
-                                    Image::configure(['driver' => 'imagick']);
-                                    $img = Image::make($screen->getStream());
+                                    /** @var Intervention\Image\ImageManager $image_manager */
+                                    $image_manager = di(ImageManager::class);
+                                    $img = $image_manager->make($screen->getStream());
 
                                     if ($set_down['screen_resize']) {
                                         $img->resize(

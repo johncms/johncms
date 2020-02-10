@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Intervention\Image\Constraint;
+use Johncms\ImageManager;
 use PDO;
-use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * Статические методы помошники
@@ -94,8 +95,9 @@ class Utils
         $smallSize = 32;
         $bigSize = 240;
 
-        Image::configure(['driver' => 'imagick']);
-        $img = Image::make($image->getStream());
+        /** @var \Intervention\Image\ImageManager $image_manager */
+        $image_manager = di(ImageManager::class);
+        $img = $image_manager->make($image->getStream());
         // original
         $img->save(UPLOAD_PATH . 'library/images/orig/' . $id . '.png', 100, 'png');
         // big
@@ -103,7 +105,7 @@ class Utils
             $bigSize,
             null,
             static function ($constraint) {
-                /** @var $constraint Intervention\Image\Constraint */
+                /** @var $constraint Constraint */
                 $constraint->aspectRatio();
                 $constraint->upsize();
             }
@@ -114,7 +116,7 @@ class Utils
             $smallSize,
             null,
             static function ($constraint) {
-                /** @var $constraint Intervention\Image\Constraint */
+                /** @var $constraint Constraint */
                 $constraint->aspectRatio();
                 $constraint->upsize();
             }

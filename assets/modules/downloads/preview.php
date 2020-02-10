@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Intervention\Image\ImageManager;
+use Johncms\ImageManager;
 
 if (! isset($_GET['img'])) {
     exit;
@@ -36,7 +36,8 @@ if ($image && file_exists($image)) {
     ];
 
     if (in_array($att_ext, $pic_ext, true)) {
-        $manager = new ImageManager(['driver' => 'imagick']);
+        /** @var Intervention\Image\ImageManager $image_manager */
+        $manager = di(ImageManager::class);
         $resized = $manager->make($image)
             ->resize(
                 $width,

@@ -3,6 +3,21 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
+## 9.1.0 - unreleased
+
+#### Added
+- Добавлена поддержка php библиотеки GD в том случае если Imagick отсутствует.
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
 ## 9.0.0 - 2020-02-09
 
 #### Added
