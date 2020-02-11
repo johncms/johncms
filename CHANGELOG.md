@@ -7,6 +7,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
 #### Added
 - Добавлена поддержка php библиотеки GD в том случае если Imagick отсутствует.
+- В стандартный шаблон добавлена возможность вставлять свои скрипты и стили $this->push('styles') $this->push('scripts') $this->stop()
 
 #### Changed
 
@@ -15,6 +16,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 #### Removed
 
 #### Fixed
+- Исправлена ошибка в постраничной навигации в поиске по форуму
 
 #### Security
 

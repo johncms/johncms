@@ -27,6 +27,7 @@ $ads_array = $ads->getAds();
     <meta name="theme-color" content="#586776">
     <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
+    <?= $this->section('styles', '') ?>
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
     <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config['copyright'] ?></title>
 </head>
@@ -148,5 +149,6 @@ $ads_array = $ads->getAds();
     </div>
 </div>
 <script src="<?= $this->asset('js/app.js', true) ?>"></script>
+<?= $this->section('scripts', '') ?>
 </body>
 </html>
