@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-const JOHNCMS = '9.0.0';
+const JOHNCMS = '9.1.0';
 
 // Check the current PHP version
 if (version_compare(PHP_VERSION, '7.2', '<')) {
@@ -37,8 +37,8 @@ class install
             $error[] = 'PDO';
         }
 
-        if (! extension_loaded('imagick')) {
-            $error[] = 'imagick';
+        if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
+            $error[] = 'Imagick or GD';
         }
 
         if (! extension_loaded('zlib')) {
@@ -639,4 +639,4 @@ switch ($act) {
         }
 }
 
-echo '<hr />&copy;&#160;Powered by <a href="http://johncms.com">JohnCMS</a></body></html>';
+echo '<hr />&copy;&#160;Powered by <a href="https://johncms.com">JohnCMS</a></body></html>';
