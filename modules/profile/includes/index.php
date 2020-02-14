@@ -98,7 +98,15 @@ $data['notifications'] = $notifications;
 
 // Счетчики
 $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
+$ban_user = $db->query("SELECT *, MAX(`ban_time`) `mtime` FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "'")->fetch();
 $ban = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
+
+$data['active_ban'] = false;
+$data['active_ban_reason'] = '';
+if (! empty($ban_user)) {
+    $data['active_ban_reason'] = $ban_user['ban_reason'];
+    $data['active_ban'] = $ban_user['mtime'] > time();
+}
 
 $data['counters'] = [
     'photo' => $total_photo,

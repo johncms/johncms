@@ -117,8 +117,8 @@ msgstr ""
 #: modules/forum/includes/vip.php:30
 #: modules/forum/includes/vip.php:49
 #: modules/forum/includes/vote.php:35
-#: modules/forum/index.php:691
-#: modules/forum/index.php:693
+#: modules/forum/index.php:686
+#: modules/forum/index.php:688
 msgid "Wrong data"
 msgstr ""
 
@@ -286,8 +286,8 @@ msgstr ""
 #: modules/forum/index.php:49
 #: modules/forum/index.php:158
 #: modules/forum/index.php:246
-#: modules/forum/index.php:735
-#: modules/forum/index.php:736
+#: modules/forum/index.php:730
+#: modules/forum/index.php:731
 #: modules/forum/templates/files_list.phtml:114
 #: modules/forum/templates/forum_search.phtml:99
 #: modules/forum/templates/new_topics.phtml:121
@@ -488,16 +488,16 @@ msgid "Last 10"
 msgstr ""
 
 #: modules/forum/includes/nt.php:38
-#: modules/forum/index.php:446
+#: modules/forum/index.php:441
 msgid "Go to Section"
 msgstr ""
 
 #: modules/forum/includes/nt.php:93
 #: modules/forum/includes/nt.php:109
 #: modules/forum/includes/nt.php:274
-#: modules/forum/includes/nt.php:290
-#: modules/forum/includes/nt.php:298
-#: modules/forum/includes/nt.php:299
+#: modules/forum/includes/nt.php:292
+#: modules/forum/includes/nt.php:300
+#: modules/forum/includes/nt.php:301
 #: modules/forum/templates/topics.phtml:53
 msgid "New Topic"
 msgstr ""
@@ -733,12 +733,12 @@ msgstr ""
 msgid "For registered users only"
 msgstr ""
 
-#: modules/forum/index.php:442
-#: modules/forum/index.php:444
+#: modules/forum/index.php:437
+#: modules/forum/index.php:439
 msgid "Topic deleted"
 msgstr ""
 
-#: modules/forum/index.php:695
+#: modules/forum/index.php:690
 msgid "Go to Forum"
 msgstr ""
 

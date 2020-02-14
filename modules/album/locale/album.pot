@@ -29,7 +29,7 @@ msgstr ""
 #: modules/album/includes/image_move.php:35
 #: modules/album/includes/image_move.php:71
 #: modules/album/includes/image_upload.php:40
-#: modules/album/includes/image_upload.php:160
+#: modules/album/includes/image_upload.php:161
 #: modules/album/includes/show.php:34
 #: modules/album/includes/show.php:48
 #: modules/album/includes/top.php:39
@@ -119,7 +119,7 @@ msgstr ""
 #: modules/album/includes/image_edit.php:57
 #: modules/album/includes/image_move.php:62
 #: modules/album/includes/image_move.php:104
-#: modules/album/includes/image_upload.php:133
+#: modules/album/includes/image_upload.php:134
 msgid "Continue"
 msgstr ""
 
@@ -139,11 +139,11 @@ msgstr ""
 msgid "Upload image"
 msgstr ""
 
-#: modules/album/includes/image_upload.php:56
+#: modules/album/includes/image_upload.php:57
 msgid "The weight of the file exceeds"
 msgstr ""
 
-#: modules/album/includes/image_upload.php:131
+#: modules/album/includes/image_upload.php:132
 msgid "Image uploaded"
 msgstr ""
 

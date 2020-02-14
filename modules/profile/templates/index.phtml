@@ -39,6 +39,22 @@ $this->layout(
                     <div class="text-muted small"><?= $data['user']['rights_name'] ?></div>
                     <div class="font-weight-bold h2 mb-1"><?= $data['user']['imname'] ?: $data['user']['name'] ?></div>
                     <div class="text-muted"><?= $data['user']['name'] ?></div>
+                    <?php if ($data['active_ban']): ?>
+                        <div class="mt-2 mb-1">
+                            <div>
+                                <div class="font-weight-bold h3 mb-0">
+                                    <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>" class="text-danger"><?= __('User is banned') ?></a>
+                                </div>
+                                <div class="text-muted">
+                                    <?= __('Reason:') ?> <?= $data['active_ban_reason'] ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php elseif (! empty($data['counters']['ban'])): ?>
+                        <div class="mt-2 mb-1">
+                            <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>"><?= __('Violations') ?> (<?= $data['counters']['ban'] ?>)</a>
+                        </div>
+                    <?php endif ?>
                     <?php if (! empty($data['user']['last_visit'])): ?>
                         <div class="text-muted"><?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?></div>
                     <?php endif; ?>

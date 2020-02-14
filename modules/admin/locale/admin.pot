@@ -269,7 +269,7 @@ msgstr ""
 #: modules/admin/includes/forum/del.php:198
 #: modules/admin/includes/forum/del.php:213
 #: modules/admin/includes/forum/edit.php:38
-#: modules/admin/includes/forum/edit.php:119
+#: modules/admin/includes/forum/edit.php:134
 #: modules/admin/includes/forum/hposts.php:54
 #: modules/admin/includes/forum/htopics.php:55
 #: modules/admin/includes/ipban.php:63
@@ -501,6 +501,10 @@ msgstr ""
 
 #: modules/admin/includes/forum/edit.php:23
 msgid "Edit Section"
+msgstr ""
+
+#: modules/admin/includes/forum/edit.php:85
+msgid "Please select a valid parent"
 msgstr ""
 
 #: modules/admin/includes/forum/hposts.php:23
