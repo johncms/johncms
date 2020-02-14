@@ -10,6 +10,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - В стандартный шаблон добавлена возможность вставлять свои скрипты и стили $this->push('styles') $this->push('scripts') $this->stop()
 
 #### Changed
+- В загрузках увеличено максимальное количество символов в описании.
 
 #### Deprecated
 
