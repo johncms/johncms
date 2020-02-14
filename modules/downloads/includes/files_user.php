@@ -66,10 +66,10 @@ if (! empty($show_user['rights'])) {
 }
 
 $show_user['user_is_online'] = time() <= $show_user['lastdate'] + 300;
-$show_user['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($show_user['ip']);
-$show_user['ip'] = long2ip($show_user['ip']);
-$show_user['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($show_user['ip_via_proxy']);
-$show_user['ip_via_proxy'] = ! empty($show_user['ip_via_proxy']) ? long2ip($show_user['ip_via_proxy']) : 0;
+$show_user['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $show_user['ip']);
+$show_user['ip'] = long2ip((int) $show_user['ip']);
+$show_user['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip((int) $show_user['ip_via_proxy']);
+$show_user['ip_via_proxy'] = ! empty($show_user['ip_via_proxy']) ? long2ip((int) $show_user['ip_via_proxy']) : 0;
 
 echo $view->render(
     'downloads::files_user',
