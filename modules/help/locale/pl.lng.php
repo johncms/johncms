@@ -18,7 +18,6 @@
       'Save' => 'Zapisz',
       'Forum rules' => 'Regulamin forum',
       'My smilies' => 'Moje emotikony',
-      'Wrong data' => 'Nieprawidłowe dane',
       'Smiles' => 'Uśmiechy',
       'bbCode Tags' => 'Tagi BBCode',
       'Information, FAQ' => 'Informacje, pytania i odpowiedzi',

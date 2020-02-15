@@ -18,7 +18,6 @@
       'Save' => 'Išsaugoti',
       'Forum rules' => 'Forumo taisyklės',
       'My smilies' => 'Mano šypsenėlės',
-      'Wrong data' => 'Klaidingi duomenys',
       'Smiles' => 'Šypsenėlės',
       'bbCode Tags' => 'bbCode Žymės',
       'Information, FAQ' => 'Informacija, klausimai ir atsakymai',

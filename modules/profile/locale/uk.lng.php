@@ -209,6 +209,7 @@ After logging in, you can change your password to new one.' => 'Привіт %s
       'Reset Settings' => 'Скинути налаштування',
       'Choose file' => 'Виберіть файл',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'Дозволені формати зображень: JPG, GIF або PNG. Розмір файлу не повинен перевищувати %d Кб.<br>Нове зображення замінить старе (якщо було).',
+      'Last visit' => 'Останній візит',
       'User Agent' => 'Браузер',
       'Ip' => 'IP',
       'Whois' => 'Whois',
@@ -272,9 +273,6 @@ After logging in, you can change your password to new one.' => 'Привіт %s
       'Registration confirmed' => 'Реєстрація підтверджена',
       'Free registration' => 'Вільна реєстрація',
       'Registered' => 'Зареєстрований',
-      'He stay on the site' => 'Пробув на сайті',
-      'She stay on the site' => 'Пробула на сайті',
-      'Last visit' => 'Останній візит',
     ),
   ),
 );

@@ -17,7 +17,6 @@
       'Save' => 'حفظ',
       'Forum rules' => 'قواعد المنتدى',
       'My smilies' => 'ابتساماتي',
-      'Wrong data' => 'بيانات خاطئة',
       'bbCode Tags' => 'علامات الـ bbCode',
       'Information, FAQ' => 'معلومات، أسئلة وأجوبة',
       'Animals' => 'الحيوانات',

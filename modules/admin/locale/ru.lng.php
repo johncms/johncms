@@ -94,6 +94,7 @@
       'Section with all contents are removed' => 'Раздел со всем содержимым удален',
       'Go to category' => 'В категорию',
       'Edit Section' => 'Изменить раздел',
+      'Please select a valid parent' => 'Пожалуйста, выберите корректный родительский раздел',
       'Hidden posts' => 'Скрытые посты',
       'by topic' => 'по теме',
       'by author' => 'по автору',

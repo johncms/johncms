@@ -17,7 +17,6 @@
       'Save' => 'Lưu',
       'Forum rules' => 'Nội quy diễn đàn',
       'My smilies' => 'Biểu tượng mặt cười của tôi',
-      'Wrong data' => 'Lỗi dữ liệu',
       'bbCode Tags' => 'Hướng Dẫn Sử Dụng BBcode',
       'Information, FAQ' => 'Thông tin, câu hỏi thường gặp',
       'Animals' => 'Động vật',

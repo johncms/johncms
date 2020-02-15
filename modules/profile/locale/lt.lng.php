@@ -209,6 +209,7 @@ Jūsų naujas slaptažodis:%s
       'Reset Settings' => 'Atstatyti nustatymus',
       'Choose file' => 'Pasirinkite failą',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'Leidžiami vaizdo formatai: JPG, PNG, GIF. Failo dydis neturėtų viršyti %d kb.<br>Naujas vaizdas pakeis seną (jei buvo).',
+      'Last visit' => 'Paskutinis apsilankymas',
       'User Agent' => 'Naršymo agentas',
       'Ip' => 'Ip',
       'Whois' => 'Whois',
@@ -270,9 +271,6 @@ Jūsų naujas slaptažodis:%s
       'Registration confirmed' => 'Registracija patvirtintą',
       'Free registration' => 'Nemokama registracija',
       'Registered' => 'Registracijos data',
-      'He stay on the site' => 'Prabuvo svetainei',
-      'She stay on the site' => 'Prabuvo svetainei',
-      'Last visit' => 'Paskutinis apsilankymas',
     ),
   ),
 );

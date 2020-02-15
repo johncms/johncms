@@ -186,6 +186,7 @@ After تسجيل الدخول، يمكنك تغيير كلمة المرور ال
       'Never' => 'ابدًا',
       'Reset Settings' => 'إعادة تعيين الإعدادات',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'يسمح تنسيقات الصور: JPG، PNG، GIF. يجب إلا يتجاوز حجم الملف %d kb. <br>صورة جديدة سوف تحل محل القديمة (إذا كان).',
+      'Last visit' => 'آخر زيارة:',
       'Write' => 'اكتب',
       'Vote' => 'تصويت',
       'Information' => 'المعلومات',
@@ -229,9 +230,6 @@ After تسجيل الدخول، يمكنك تغيير كلمة المرور ال
       'Registration confirmed' => 'التسجيل أكتمل',
       'Free registration' => 'التسجيل مجاني',
       'Registered' => 'تم التسجيل',
-      'He stay on the site' => 'أنه يبقى على الموقع',
-      'She stay on the site' => 'تبقى على الموقع',
-      'Last visit' => 'آخر زيارة:',
     ),
   ),
 );
