@@ -43,6 +43,7 @@ return static function (RouteCollector $map, User $user) {
 
     // Custom routes
     if (is_file(CONFIG_PATH . 'routes.local.php')) {
+        /** @psalm-suppress MissingFile */
         require CONFIG_PATH . 'routes.local.php';
     }
 };

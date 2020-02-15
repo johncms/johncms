@@ -63,9 +63,9 @@ class Ads
                 $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
             }
             // Если было задано начертание шрифта, то применяем
-            $font = $res['bold'] ? 'font-weight: bold;' : false;
-            $font .= $res['italic'] ? ' font-style:italic;' : false;
-            $font .= $res['underline'] ? ' text-decoration:underline;' : false;
+            $font = $res['bold'] ? 'font-weight: bold;' : '';
+            $font .= $res['italic'] ? ' font-style:italic;' : '';
+            $font .= $res['underline'] ? ' text-decoration:underline;' : '';
 
             if ($font) {
                 $name = '<span style="' . $font . '">' . $name . '</span>';
@@ -89,10 +89,10 @@ class Ads
     /**
      * Получение места размещения рекламной ссылки
      *
-     * @param $item
+     * @param array $item
      * @return string
      */
-    private function getPlace($item): string
+    private function getPlace(array $item): string
     {
         $places = [
             0 => 'before_menu',
@@ -110,10 +110,10 @@ class Ads
     /**
      * Метод проверяет доступность объявления для показа текущему пользователю в текущем месте
      *
-     * @param $item
+     * @param array $item
      * @return bool
      */
-    private function checkAccess($item): bool
+    private function checkAccess(array $item): bool
     {
         return (
                 empty($item['layout']) ||

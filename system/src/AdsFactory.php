@@ -14,6 +14,7 @@ namespace Johncms;
 
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
+use PDO;
 use Psr\Container\ContainerInterface;
 
 class AdsFactory
@@ -21,7 +22,7 @@ class AdsFactory
     public function __invoke(ContainerInterface $container): Ads
     {
         return new Ads(
-            $container->get(\PDO::class),
+            $container->get(PDO::class),
             $container->get(Tools::class),
             $container->get(User::class)
         );
