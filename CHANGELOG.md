@@ -12,6 +12,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
 #### Changed
 - В загрузках увеличено максимальное количество символов в описании.
+- Изменен дизайн отдельной страницы просмотра поста
 
 #### Deprecated
 
@@ -20,6 +21,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 #### Fixed
 - Исправлена ошибка в постраничной навигации в поиске по форуму
 - Исправлено отображение шапки форума на некоторых разрешениях
+- Если к посту прикреплено несколько файлов, на странице просмотра поста отображался только один
 
 #### Security
 

@@ -94,4 +94,21 @@ class FileInfo extends SplFileInfo
 
         return $path;
     }
+
+    /**
+     * Is this file an image or not?
+     *
+     * @return bool
+     */
+    public function isImage(): bool
+    {
+        $picture_extensions = [
+            'gif',
+            'jpg',
+            'jpeg',
+            'png',
+        ];
+        $file_extension = strtolower($this->getExtension());
+        return in_array($file_extension, $picture_extensions);
+    }
 }
