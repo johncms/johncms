@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\ImageManager;
+use Intervention\Image\ImageManager;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -27,7 +27,7 @@ if (($user->id !== $foundUser['id'] && $user->rights < 7) || $foundUser['rights'
     );
     exit;
 }
-/** @var Intervention\Image\ImageManager $image_manager */
+/** @var ImageManager $image_manager */
 $image_manager = di(ImageManager::class);
 
 $data = [];

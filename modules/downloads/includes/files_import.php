@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\ImageManager;
+use Intervention\Image\ImageManager;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -142,7 +142,7 @@ if ($request->getMethod() === 'POST') {
                 // Save screenshot
                 if (mkdir($screens_dir, 0777) || is_dir($screens_dir)) {
                     try {
-                        /** @var Intervention\Image\ImageManager $image_manager */
+                        /** @var ImageManager $image_manager */
                         $image_manager = di(ImageManager::class);
                         $img = $image_manager->make($screen->getStream());
 

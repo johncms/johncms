@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\ImageManager;
+use Intervention\Image\ImageManager;
 
 if (! isset($_GET['img'])) {
     exit;
@@ -36,7 +36,7 @@ if ($image && file_exists($image)) {
     ];
 
     if (in_array($att_ext, $pic_ext, true)) {
-        /** @var Intervention\Image\ImageManager $image_manager */
+        /** @var ImageManager $manager */
         $manager = di(ImageManager::class);
         $resized = $manager->make($image)
             ->resize(

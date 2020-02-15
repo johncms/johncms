@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Library;
 
 use Intervention\Image\Constraint;
-use Johncms\ImageManager;
+use Intervention\Image\ImageManager;
 use PDO;
 
 /**
@@ -95,7 +95,7 @@ class Utils
         $smallSize = 32;
         $bigSize = 240;
 
-        /** @var \Intervention\Image\ImageManager $image_manager */
+        /** @var ImageManager $image_manager */
         $image_manager = di(ImageManager::class);
         $img = $image_manager->make($image->getStream());
         // original

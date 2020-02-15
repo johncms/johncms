@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Downloads\Screen;
 use Johncms\FileInfo;
-use Johncms\ImageManager;
+use Intervention\Image\ImageManager;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -77,7 +77,7 @@ if ($request->getMethod() === 'POST') {
         }
         // Пытаемся обработать файл и сохранить его
         try {
-            /** @var Intervention\Image\ImageManager $image_manager */
+            /** @var ImageManager $image_manager */
             $image_manager = di(ImageManager::class);
             $img = $image_manager->make($screen->getStream());
 

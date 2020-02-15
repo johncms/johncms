@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\ImageManager;
+use Intervention\Image\ImageManager;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -46,7 +46,7 @@ if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->right
 
     $res_a = $req_a->fetch();
     if ($request->getMethod() === 'POST') {
-        /** @var Intervention\Image\ImageManager $image_manager */
+        /** @var ImageManager $image_manager */
         $image_manager = di(ImageManager::class);
 
         $files = $request->getUploadedFiles();
