@@ -8,8 +8,9 @@
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="system"/>
+        <directory name="config"/>
         <directory name="modules"/>
+        <directory name="system"/>
         <ignoreFiles>
             <directory name="modules/admin"/>
             <directory name="modules/album"/>
@@ -55,6 +56,7 @@
         <UnusedClass>
             <errorLevel type="suppress">
                 <referencedClass name="Johncms\Ads"/>
+                <referencedClass name="Johncms\Comments"/>
                 <referencedClass name="Johncms\Counters"/>
                 <referencedClass name="Johncms\FileInfo"/>
                 <referencedClass name="Johncms\ImageManager"/>
