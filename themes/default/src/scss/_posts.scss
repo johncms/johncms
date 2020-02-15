@@ -85,9 +85,11 @@
 .post-footer {
     .user-ip {
         color: #252422;
+        display: flex;
 
         a {
             text-decoration: underline;
+            padding: 0 2px;
         }
 
     }
@@ -308,6 +310,7 @@
 
 .post-body {
     word-break: break-word;
+
     img {
         vertical-align: initial;
     }
