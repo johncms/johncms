@@ -25,7 +25,7 @@ return [
             ImageManager::class => ImageManager::class,
             Ads::class          => AdsFactory::class,
             Tools::class        => Tools::class,
-            'counters'          => Johncms\Counters::class,
+            'counters'          => Johncms\CountersFactory::class,
         ],
     ],
 ];
