@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <psalm
         totallyTyped="false"
-        findUnusedCode="true"
+        findUnusedCode="false"
         resolveFromConfigFile="true"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
@@ -43,30 +43,5 @@
 
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info"/>
-
-        <PossiblyUnusedMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Johncms\NavChain::add"/>
-                <referencedMethod name="Johncms\NavChain::getAll"/>
-                <referencedMethod name="Johncms\NavChain::lastIsActive"/>
-                <referencedMethod name="Johncms\NavChain::showHomePage"/>
-            </errorLevel>
-        </PossiblyUnusedMethod>
-
-        <UnusedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Johncms\Ads"/>
-                <referencedClass name="Johncms\Comments"/>
-                <referencedClass name="Johncms\Counters"/>
-                <referencedClass name="Johncms\FileInfo"/>
-                <referencedClass name="Johncms\ImageManager"/>
-            </errorLevel>
-        </UnusedClass>
-
-        <UnusedVariable>
-            <errorLevel type="suppress">
-                <file name="system/bootstrap.php"/>
-            </errorLevel>
-        </UnusedVariable>
     </issueHandlers>
 </psalm>
