@@ -14,6 +14,10 @@ use Johncms\System\Container\Factory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 
+/**
+ * @param string $service
+ * @return mixed
+ */
 function di(string $service)
 {
     return Factory::getContainer()->get($service);
@@ -74,13 +78,13 @@ if (! function_exists('array_key_last')) {
     }
 }
 
-/**
- * Обёртка над функцией print_r
- *
- * @param mixed $var
- * @param bool $to_file
- */
 if (! function_exists('d')) {
+    /**
+     * Обёртка над функцией print_r
+     *
+     * @param mixed $var
+     * @param bool $to_file
+     */
     function d($var = false, $to_file = false): void
     {
         if ($to_file) {
