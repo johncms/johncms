@@ -53,7 +53,8 @@
             "system/helpers.php"
         ],
         "psr-4": {
-            "Johncms\\": "system/src/"
+            "Johncms\\": "system/src/",
+            "Johncms\\System\\Legacy\\": "system/src-legacy/"
         }
     },
     "bin": [
