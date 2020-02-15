@@ -13,13 +13,11 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Intervention\Image\ImageManager;
-use Psr\Container\ContainerInterface;
 
 class ImageManagerFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(): ImageManager
     {
-        $config = ['driver' => (extension_loaded('imagick') ? 'imagick' : 'gd')];
-        return new ImageManager($config);
+        return new ImageManager(['driver' => (extension_loaded('imagick') ? 'imagick' : 'gd')]);
     }
 }

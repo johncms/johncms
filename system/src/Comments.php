@@ -96,6 +96,13 @@ class Comments
     /** @var NavChain $nav_chain */
     public $nav_chain;
 
+    /**
+     * Comments constructor.
+     *
+     * @psalm-suppress PossiblyInvalidArrayAccess
+     *
+     * @param array $arg
+     */
     public function __construct($arg = [])
     {
         global $mod, $start;
@@ -285,7 +292,7 @@ class Comments
                                 '
                                 )->execute(
                                     [
-                                        $message['text'],
+                                        $message['text'] ?? '',
                                         serialize($attributes),
                                         $this->item,
                                     ]
@@ -400,7 +407,7 @@ class Comments
                     isset($_POST['submit']) &&
                     $this->systemUser->isValid() &&
                     ! $this->tools->isIgnor($this->owner) &&
-                    ($message = $this->msgCheck(1)) !== false
+                    ($message = $this->msgCheck(true)) !== false
                 ) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
@@ -550,7 +557,7 @@ class Comments
     }
 
     // Форма ввода комментария
-    private function msgForm(string $submit_link = '', string $text = '', $reply = '')
+    private function msgForm(string $submit_link = '', string $text = '', string $reply = ''): string
     {
         return $this->view->render(
             $this->templates_namespace . '::pages/comments_form',
@@ -565,22 +572,18 @@ class Comments
         );
     }
 
-    // Проверка текста сообщения
-    // $rpt_check (boolean)    проверка на повтор сообщений
     /**
-     * @param false|int $rpt_check
+     * Проверка текста сообщения
      *
-     * @return (false|int|null|string|string[])[]|false
-     *
-     * @psalm-return array{code: int|null, text: false|string, error: list<string>}|false
+     * @param bool $rpt_check проверка на повтор сообщений
+     * @return array|bool
      */
-    private function msgCheck($rpt_check = false)
+    private function msgCheck(bool $rpt_check = false)
     {
         $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
         $code = isset($_POST['code']) ? (int) ($_POST['code']) : null;
         $code_chk = $_SESSION['code'] ?? null;
-        $translit = isset($_POST['translit']);
 
         // Проверяем код
         if ($code == $code_chk) {
@@ -619,10 +622,9 @@ class Comments
 
     /**
      * @param false|int $update
-     *
-     * @return bool|float|int|null|string
+     * @return int
      */
-    private function msgTotal($update = false)
+    private function msgTotal($update = false): int
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
 
@@ -631,6 +633,6 @@ class Comments
             $this->db->exec('UPDATE `' . $this->object_table . "` SET `comm_count` = '${total}' WHERE `id` = '" . $this->sub_id . "'");
         }
 
-        return $total;
+        return (int) $total;
     }
 }
