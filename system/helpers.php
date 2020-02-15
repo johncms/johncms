@@ -81,7 +81,7 @@ if (! function_exists('array_key_last')) {
  * @param bool $to_file
  */
 if (! function_exists('d')) {
-    function d($var = false, $to_file = false)
+    function d($var = false, $to_file = false): void
     {
         if ($to_file) {
             $file = fopen(DATA_PATH . 'debug.log', 'a');

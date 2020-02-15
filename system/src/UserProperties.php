@@ -60,10 +60,10 @@ class UserProperties
     }
 
     /**
-     * @param $rights
+     * @param int $rights
      * @return string
      */
-    public function getRightsName($rights): string
+    public function getRightsName(int $rights): string
     {
         $user_rights_names = [
             3 => __('Forum moderator'),

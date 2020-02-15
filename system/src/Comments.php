@@ -485,7 +485,10 @@ class Comments
     }
 
     // Добавляем комментарий в базу
-    private function addComment($message)
+    /**
+     * @param false|string $message
+     */
+    private function addComment($message): void
     {
         /** @var ContainerInterface $container */
         $container = Factory::getContainer();
@@ -533,7 +536,7 @@ class Comments
     }
 
     // Форма ввода комментария
-    private function msgForm($submit_link = '', $text = '', $reply = '')
+    private function msgForm(string $submit_link = '', string $text = '', $reply = '')
     {
         return $this->view->render(
             $this->templates_namespace . '::pages/comments_form',
@@ -550,6 +553,13 @@ class Comments
 
     // Проверка текста сообщения
     // $rpt_check (boolean)    проверка на повтор сообщений
+    /**
+     * @param false|int $rpt_check
+     *
+     * @return (false|int|null|string|string[])[]|false
+     *
+     * @psalm-return array{code: int|null, text: false|string, error: list<string>}|false
+     */
     private function msgCheck($rpt_check = false)
     {
         $error = [];
@@ -592,6 +602,11 @@ class Comments
     }
 
     // Счетчик комментариев
+    /**
+     * @param false|int $update
+     *
+     * @return bool|float|int|null|string
+     */
     private function msgTotal($update = false)
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
