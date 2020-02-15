@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\Ads;
+use Johncms\AdsFactory;
 use Johncms\ImageManager;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Bbcode;
@@ -22,7 +23,7 @@ return [
             Bbcode::class       => Bbcode::class,
             NavChain::class     => NavChain::class,
             ImageManager::class => ImageManager::class,
-            Ads::class          => Ads::class,
+            Ads::class          => AdsFactory::class,
             Tools::class        => Tools::class,
             'counters'          => Johncms\Counters::class,
         ],
