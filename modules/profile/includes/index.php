@@ -97,8 +97,8 @@ if ($user->rights >= 7 && ! $user_data['preg'] && empty($user_data['regadm'])) {
 $data['notifications'] = $notifications;
 
 // Счетчики
-$cnt = $db->query("SELECT (SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` =2) AS total_photo, (
-SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` =2) AS ban")->fetch();
+$cnt = $db->query("SELECT (SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user_data['id'] . "') AS total_photo, (
+SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "') AS ban")->fetch();
 $ban_user = $db->query("SELECT `ban_reason`, `ban_time` AS `mtime` FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' ORDER BY mtime DESC LIMIT 1")->fetch();
 
 $data['active_ban'] = false;
