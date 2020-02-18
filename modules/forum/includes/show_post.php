@@ -89,6 +89,9 @@ if ($freq->rowCount()) {
     while ($fres = $freq->fetch()) {
         $file_params = [];
         $file_info = new FileInfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename']);
+        if (! $file_info->isFile()) {
+            continue;
+        }
         $file_params['file_size'] = format_size($file_info->getSize());
         $file_params['file_preview'] = '';
         $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
