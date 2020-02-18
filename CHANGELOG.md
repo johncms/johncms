@@ -3,7 +3,7 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
-## 9.2.0 - 2020-02-16
+## 9.2.0 - unreleased
 
 #### Added
 
@@ -16,6 +16,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 #### Fixed
 - Исправлена ошибка на странице профиля. Отображался не последний бан.
 - Исправлена ошибка в форуме, когда файл отсутствовал в файловой системе, но был в БД
+- Испралвено отображение переводов для должностей
 
 #### Security
 
