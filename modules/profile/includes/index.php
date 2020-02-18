@@ -97,9 +97,9 @@ if ($user->rights >= 7 && ! $user_data['preg'] && empty($user_data['regadm'])) {
 $data['notifications'] = $notifications;
 
 // Счетчики
-$total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
-$ban_user = $db->query("SELECT *, MAX(`ban_time`) `mtime` FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "'")->fetch();
-$ban = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
+$cnt = $db->query("SELECT (SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user_data['id'] . "') AS total_photo, (
+SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "') AS ban")->fetch();
+$ban_user = $db->query("SELECT `ban_reason`, `ban_time` AS `mtime` FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' ORDER BY mtime DESC LIMIT 1")->fetch();
 
 $data['active_ban'] = false;
 $data['active_ban_reason'] = '';
@@ -109,8 +109,8 @@ if (! empty($ban_user)) {
 }
 
 $data['counters'] = [
-    'photo' => $total_photo,
-    'ban'   => $ban,
+    'photo' => $cnt['total_photo'],
+    'ban'   => $cnt['ban'],
 ];
 
 // Админские кнопки
