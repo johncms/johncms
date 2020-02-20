@@ -20,12 +20,9 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $data = [];
 $error = [];
-$search_post = isset($_POST['search']) ? trim($_POST['search']) : '';
-$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
-$search = $search_post ? $search_post : $search_get;
 
-if (isset($_GET['ip'])) {
-    $search = trim($_GET['ip']);
+if (! $search = $request->getQuery('ip', null, FILTER_VALIDATE_IP)) {
+    $search = $request->getPost('search') ?? rawurldecode(trim($request->getQuery('search', ''))) ?? '';
 }
 
 $title = __('Search IP');
@@ -106,13 +103,24 @@ if ($search && ! $error) {
 
     if ($total) {
         if ($mod === 'history') {
-            $req = $db->query(
-                "SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
-                FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
-                WHERE `cms_users_iphistory`.`ip` BETWEEN ${ip1} AND ${ip2} OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
-                GROUP BY `users`.`id`
-                ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess
-            );
+            $req = $db->query("SELECT
+    hst.ip,
+    hst.ip_via_proxy,
+    hst.`time`,
+    `u`.`id`,
+    `u`.`name`,
+    `u`.`rights`,
+    `u`.`lastdate`,
+    `u`.`sex`,
+    `u`.`status`,
+    `u`.`datereg`,
+    `u`.`browser`
+FROM `cms_users_iphistory` hst
+JOIN `users` u ON u.id = hst.user_id
+JOIN (SELECT user_id, MAX(`time`) `mtime` FROM `cms_users_iphistory` GROUP BY user_id) t
+ON t.mtime = hst.`time` AND t.user_id = u.id
+WHERE hst.`ip` BETWEEN ${ip1} AND ${ip2} OR hst.`ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
+ORDER BY hst.`time` DESC, u.`name` ASC LIMIT " . $start . ',' . $user->config->kmess);
         } else {
             $req = $db->query(
                 "SELECT * FROM `users`
