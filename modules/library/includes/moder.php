@@ -43,7 +43,7 @@ $author = (
     ? 1
     : 0;
 
-if (! $adm || (! $author && $type === 'article')) {
+if (! $adm && (! $author && $type === 'article')) {
     Utils::redir404();
 }
 
