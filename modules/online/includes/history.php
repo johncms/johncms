@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\UserProperties;
+use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -43,34 +43,31 @@ if ($user->rights) {
         'active' => false,
     ];
 }
-
-$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 172800 . ' AND `lastdate` < ' . (time() - 310)))->fetchColumn();
+$users = (new User())->whereBetween('lastdate', [(time() - 172800), (time() - 310)]);
+$total = $users->count();
 
 // Исправляем запрос на несуществующую страницу
 if ($start >= $total) {
-    $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
+    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
 }
 
 if ($total) {
-    $req = $db->query('SELECT * FROM `users` WHERE `lastdate` > ' . (time() - 172800) . ' AND `lastdate` < ' . (time() - 310) . " ORDER BY `sestime` DESC LIMIT ${start}, " . $user->config->kmess);
-    $i = 0;
-
-    while ($res = $req->fetch()) {
-        $res['id'] = $res['id'] ?? 0;
-        $res['user_id'] = $res['id'];
-        $user_properties = new UserProperties();
-        $user_data = $user_properties->getFromArray($res);
-        $res = array_merge($res, $user_data);
-        $res['place'] = $tools->displayPlace($res['place']);
-        $res['display_date'] = $tools->displayDate($res['sestime']);
-
-        $items[] = $res;
-    }
+    $req = $users->offset($start)
+        ->limit($user->config->kmess)
+        ->get()
+        ->map(
+            static function ($user) use ($tools) {
+                /** @var $user User */
+                $user->place_name = $tools->displayPlace($user->place);
+                $user->display_date = $tools->displayDate($user->sestime);
+                return $user;
+            }
+        );
 }
 
 $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
 $data['total'] = $total;
-$data['items'] = $items ?? [];
+$data['items'] = $req ?? [];
 
 echo $view->render(
     'online::users',

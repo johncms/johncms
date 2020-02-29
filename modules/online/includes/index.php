@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\UserProperties;
+use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -46,31 +46,31 @@ if ($user->rights) {
 }
 $title = __('Who is online?');
 
-$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+$users = (new User())->where('lastdate', '>', (time() - 300));
+$total = $users->count();
 
 // Исправляем запрос на несуществующую страницу
 if ($start >= $total) {
-    $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
+    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
 }
 
 if ($total) {
-    $req = $db->query('SELECT * FROM `users` WHERE `lastdate` > ' . (time() - 300) . " ORDER BY `name` ASC LIMIT ${start}, " . $user->config->kmess);
-    $items = [];
-    while ($res = $req->fetch()) {
-        $res['id'] = $res['id'] ?? 0;
-        $res['user_id'] = $res['id'];
-        $user_properties = new UserProperties();
-        $user_data = $user_properties->getFromArray($res);
-        $res = array_merge($res, $user_data);
-        $res['place'] = $tools->displayPlace($res['place']);
-        $res['display_date'] = $res['movings'] . ' - ' . $tools->timecount(time() - $res['sestime']);
-        $items[] = $res;
-    }
+    $req = $users->offset($start)
+        ->limit($user->config->kmess)
+        ->get()
+        ->map(
+            static function ($user) use ($tools) {
+                /** @var $user User */
+                $user->place_name = $tools->displayPlace($user->place);
+                $user->display_date = $user->movings . ' - ' . $tools->timecount(time() - $user->sestime);
+                return $user;
+            }
+        );
 }
 
 $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
 $data['total'] = $total;
-$data['items'] = $items ?? [];
+$data['items'] = $req ?? [];
 
 echo $view->render(
     'online::users',

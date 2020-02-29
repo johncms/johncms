@@ -50,6 +50,15 @@ trait UserMutators
 
     /**
      * @param string $value
+     * @return string
+     */
+    public function getBrowserAttribute(string $value): string
+    {
+        return htmlspecialchars($value);
+    }
+
+    /**
+     * @param string $value
      * @return array
      */
     public function getSetUserAttribute(string $value): array
