@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Container;
 
-use Johncms\System\ConfigProvider as JohncmsConfig;
+use Johncms\ConfigProvider as JohncmsConfigProvider;
 use Laminas\ConfigAggregator\{
     ArrayProvider,
     ConfigAggregator,
@@ -32,7 +32,7 @@ class Config
                 new ArrayProvider(['config_cache_path' => $this->cacheFile]),
 
                 // Include packages configuration
-                JohncmsConfig::class,
+                JohncmsConfigProvider::class,
 
                 // Load application config in a pre-defined order
                 new PhpFileProvider(CONFIG_PATH . 'autoload/{{,*.}global,{,*.}local}.php'),

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\System;
+namespace Johncms;
 
 use FastRoute\RouteCollector;
 use Johncms\System\{
