@@ -388,12 +388,12 @@ switch ($mod) {
             $i = 0;
 
             $types = [
-                1  => 'Full block',
-                2  => 'Private messages',
-                10 => 'Comments',
-                11 => 'Forum',
-                13 => 'Guestbook',
-                15 => 'Library',
+                1  => __('Full block'),
+                2  => __('Private messages'),
+                10 => __('Comments'),
+                11 => __('Forum'),
+                13 => __('Guestbook'),
+                15 => __('Library'),
             ];
 
             $items = [];
