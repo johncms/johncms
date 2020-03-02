@@ -67,9 +67,9 @@ trait UserMutators
     }
 
     /**
-     * @param string $value
+     * @param array $value
      */
-    public function setSetUserAttribute(string $value): void
+    public function setSetUserAttribute(array $value): void
     {
         $this->attributes['set_user'] = serialize($value);
     }
@@ -84,9 +84,9 @@ trait UserMutators
     }
 
     /**
-     * @param string $value
+     * @param array $value
      */
-    public function setSetForumAttribute(string $value): void
+    public function setSetForumAttribute(array $value): void
     {
         $this->attributes['set_forum'] = serialize($value);
     }
@@ -101,9 +101,9 @@ trait UserMutators
     }
 
     /**
-     * @param string $value
+     * @param array $value
      */
-    public function setSetMailAttribute(string $value): void
+    public function setSetMailAttribute(array $value): void
     {
         $this->attributes['set_mail'] = serialize($value);
     }
@@ -118,9 +118,9 @@ trait UserMutators
     }
 
     /**
-     * @param string $value
+     * @param array $value
      */
-    public function setSmileysAttribute(string $value): void
+    public function setSmileysAttribute(array $value): void
     {
         $this->attributes['smileys'] = serialize($value);
     }

@@ -78,6 +78,8 @@ class User extends Model
 {
     use UserMutators;
 
+    public $timestamps = false;
+
     protected $casts = [
         'preg'      => 'bool',
         'mailvis'   => 'bool',
