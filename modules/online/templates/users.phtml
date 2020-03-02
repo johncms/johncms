@@ -22,9 +22,9 @@ $this->layout(
     ]
 );
 ?>
-<div class="btn-group mb-3" role="group">
+<div class="mb-2">
     <?php foreach ($data['filters'] as $tab): ?>
-        <a href="<?= $tab['url'] ?>" class="btn btn-outline-secondary <?= ($tab['active'] ? 'active' : '') ?>"><?= $tab['name'] ?></a>
+        <a href="<?= $tab['url'] ?>" class="btn btn-outline-secondary mb-1 <?= ($tab['active'] ? 'active' : '') ?>"><?= $tab['name'] ?></a>
     <?php endforeach; ?>
 </div>
 <!-- List of Users -->
