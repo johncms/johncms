@@ -6,8 +6,11 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 ## 9.2.0 - unreleased
 
 #### Added
+- Внедрена библиотека для работы с базой данных [illuminate/database](https://github.com/illuminate/database)
+- Для работы с пользователями добавлен класс (модель) [Johncms\Users\User](https://github.com/johncms/johncms/blob/develop/system/src/Users/User.php) Наследует Illuminate\Database\Eloquent\Model со всем вытекающим функционалом.
 
 #### Changed
+- Модуль кто онлайн переделан для использования ORM.
 
 #### Deprecated
 
