@@ -67,6 +67,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $comm_count
  * @property int $comm_old
  * @property array $smileys
+ * @property array $notification_settings
  *
  * @property bool $is_online - Пользователь онлайн или нет?
  * @property string $rights_name - Название прав доступа
@@ -84,6 +85,8 @@ class User extends Model
         'preg'      => 'bool',
         'mailvis'   => 'bool',
         'karma_off' => 'bool',
+
+        'notification_settings' => 'array',
     ];
 
     protected $fillable = [
@@ -134,5 +137,6 @@ class User extends Model
         'comm_count',
         'comm_old',
         'smileys',
+        'notification_settings',
     ];
 }
