@@ -140,6 +140,9 @@ abstract class AbstractUserProperties
     /** @var UserConfig */
     public $config;
 
+    /** @var string */
+    public $notification_settings;
+
     ////////////////////////////////////////////////////////////
     // Устаревшее, по возможности выпилить                    //
     ////////////////////////////////////////////////////////////

@@ -20,7 +20,7 @@ $this->layout(
 <?php else: ?>
     <div class="row">
         <div class="col-md-6">
-            <div class="small-full-width list-items shadow mb-4 overflow-hidden">
+            <div class="small-full-width list-items shadow mb-3 overflow-hidden">
                 <?php foreach ($notifications as $notification): ?>
                     <a href="<?= $notification['url'] ?>" class="list-item d-flex">
                         <div class="flex-grow-1 item-content">
@@ -46,4 +46,6 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-
+<div>
+    <a href="/notifications/settings/"><?= __('Settings') ?></a>
+</div>
