@@ -15,7 +15,7 @@ return [
         'events' => [
             'new_message' => [
                 'name'    => d__('system', 'New replay in forum'),
-                'message' => d__('system', 'Новый ответ в теме: <a href="#topic_url#"><b>#topic_name#</b></a><br>Пользователь <b>#user_name#</b> ответил на Ваше сообщение'),
+                'message' => d__('system', 'New answer in the topic: <a href="#topic_url#"><b>#topic_name#</b></a><br>User <b>#user_name#</b> responded to Your message'),
             ],
         ],
     ],
