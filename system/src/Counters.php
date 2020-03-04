@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use PDO;
@@ -536,6 +537,7 @@ class Counters
             $notifications['forum_new'] = $forum_counters['new_messages'];
         }
 
+        $notifications['notifications'] = (new Notification())->count();
         $notifications['all'] = array_sum($notifications);
 
         return $notifications;

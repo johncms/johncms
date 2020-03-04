@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 
@@ -31,6 +32,9 @@ $user = di(User::class);
 
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
+
+/** @var Tools $tools */
+$tools = di(Tools::class);
 
 $route = di('route');
 

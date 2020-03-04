@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+$data = [];
 $notifications = [];
 
 $all_counters = $counters->notifications();
@@ -108,11 +109,22 @@ if ($user->comm_count > $user->comm_old) {
     ];
 }
 
+$data['notifications'] = $notifications;
+
+$notification = (new Johncms\Notifications\Notification());
+$total = $notification->count();
+$data['total'] = $total;
+
+// Исправляем запрос на несуществующую страницу
+if ($start >= $total) {
+    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
+}
+
+if ($total) {
+    $data['items'] = $notification->offset($start)->limit($user->config->kmess)->get();
+}
+
+$data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
 
 // Выводим шаблон списка уведомлений
-echo $view->render(
-    'notifications::index',
-    [
-        'notifications' => $notifications,
-    ]
-);
+echo $view->render('notifications::index', ['data' => $data]);

@@ -27,9 +27,13 @@ use Johncms\Users\User;
  * @property int $user_id - Идентификатор пользователя-получателя уведомления
  * @property int $sender_id - Идентификатор отправителя
  * @property array $fields - Массив полей, который будет доступен для использования в шаблонах
+ *
+ * @property array $message - Вычисляемое свойство - сообщение
  */
 class Notification extends Model
 {
+    protected $notification_templates = [];
+
     protected $casts = [
         'fields' => 'array',
     ];
@@ -41,6 +45,25 @@ class Notification extends Model
         'sender_id',
         'fields',
     ];
+
+    /**
+     * Добавляем глобальные ограничения
+     *
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::addGlobalScope(
+            'access',
+            static function (Builder $builder) {
+                /** @var \Johncms\System\Users\User $user */
+                $user = di(\Johncms\System\Users\User::class);
+                $builder->where('user_id', '=', $user->id);
+            }
+        );
+    }
 
     /**
      * Связь с пользователем
@@ -60,5 +83,39 @@ class Notification extends Model
     public function sender(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'sender_id');
+    }
+
+    /**
+     * Шаблоны сообщений
+     *
+     * @return array|mixed
+     */
+    private function getTemplates()
+    {
+        if (! empty($this->notification_templates)) {
+            return $this->notification_templates;
+        }
+
+        $this->notification_templates = require CONFIG_PATH . 'notifications.global.php';
+        return $this->notification_templates;
+    }
+
+    /**
+     * Обработанное сообщение
+     */
+    public function getMessageAttribute()
+    {
+        $this->getTemplates();
+        $message = 'Template is not defined';
+        if (
+            isset($this->notification_templates[$this->module]['events']) &&
+            array_key_exists($this->event_type, $this->notification_templates[$this->module]['events'])
+        ) {
+            $message = $this->notification_templates[$this->module]['events'][$this->event_type]['message'];
+            foreach ($this->fields as $key => $value) {
+                $message = str_replace('#' . $key . '#', $value, $message);
+            }
+        }
+        return $message;
     }
 }
