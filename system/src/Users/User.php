@@ -14,6 +14,8 @@ namespace Johncms\Users;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Johncms\Casts\Ip;
+use Johncms\Casts\Serialize;
 
 /**
  * Class User
@@ -85,6 +87,13 @@ class User extends Model
         'preg'      => 'bool',
         'mailvis'   => 'bool',
         'karma_off' => 'bool',
+
+        'set_user'     => Serialize::class,
+        'set_forum'    => Serialize::class,
+        'set_mail'     => Serialize::class,
+        'smileys'      => Serialize::class,
+        'ip'           => Ip::class,
+        'ip_via_proxy' => Ip::class,
 
         'notification_settings' => 'array',
     ];

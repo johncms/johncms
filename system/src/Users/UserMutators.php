@@ -15,114 +15,12 @@ namespace Johncms\Users;
 trait UserMutators
 {
     /**
-     * @param int $value
-     * @return string
-     */
-    public function getIpAttribute(int $value): string
-    {
-        return long2ip($value);
-    }
-
-    /**
-     * @param string $value
-     */
-    public function setIpAttribute(string $value): void
-    {
-        $this->attributes['ip'] = ip2long($value);
-    }
-
-    /**
-     * @param int $value
-     * @return string
-     */
-    public function getIpViaProxyAttribute(int $value): string
-    {
-        return ! empty($value) ? long2ip($value) : '';
-    }
-
-    /**
-     * @param string $value
-     */
-    public function setIpViaProxyAttribute(string $value): void
-    {
-        $this->attributes['ip_via_proxy'] = ip2long($value);
-    }
-
-    /**
      * @param string $value
      * @return string
      */
     public function getBrowserAttribute(string $value): string
     {
         return htmlspecialchars($value);
-    }
-
-    /**
-     * @param string $value
-     * @return array
-     */
-    public function getSetUserAttribute(string $value): array
-    {
-        return ! empty($value) ? unserialize($value, ['allowed_classes' => false]) : [];
-    }
-
-    /**
-     * @param array $value
-     */
-    public function setSetUserAttribute(array $value): void
-    {
-        $this->attributes['set_user'] = serialize($value);
-    }
-
-    /**
-     * @param string $value
-     * @return array
-     */
-    public function getSetForumAttribute(string $value): array
-    {
-        return ! empty($value) ? unserialize($value, ['allowed_classes' => false]) : [];
-    }
-
-    /**
-     * @param array $value
-     */
-    public function setSetForumAttribute(array $value): void
-    {
-        $this->attributes['set_forum'] = serialize($value);
-    }
-
-    /**
-     * @param string $value
-     * @return array
-     */
-    public function getSetMailAttribute(string $value): array
-    {
-        return ! empty($value) ? unserialize($value, ['allowed_classes' => false]) : [];
-    }
-
-    /**
-     * @param array $value
-     */
-    public function setSetMailAttribute(array $value): void
-    {
-        $this->attributes['set_mail'] = serialize($value);
-    }
-
-    /**
-     * @param string $value
-     * @return array
-     */
-    public function getSmileysAttribute(string $value): array
-    {
-        return ! empty($value) ? unserialize($value, ['allowed_classes' => false]) : [];
-    }
-
-    /**
-     * @param array $value
-     */
-    public function setSmileysAttribute(array $value): void
-    {
-        $this->attributes['smileys'] = serialize($value);
     }
 
     /**
