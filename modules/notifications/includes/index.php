@@ -126,5 +126,10 @@ if ($total) {
 
 $data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
 
+if (! empty($_SESSION['message'])) {
+    $data['message'] = htmlspecialchars($_SESSION['message']);
+    unset($_SESSION['message']);
+}
+
 // Выводим шаблон списка уведомлений
 echo $view->render('notifications::index', ['data' => $data]);

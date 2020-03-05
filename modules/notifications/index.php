@@ -50,6 +50,7 @@ $nav_chain->add(__('Notifications'));
 $pages = [
     'index'    => 'index.php',
     'settings' => 'settings.php',
+    'clear'    => 'clear.php',
 ];
 
 // Определяем наличие страницы и показываем если она есть

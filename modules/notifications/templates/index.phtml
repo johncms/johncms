@@ -13,7 +13,19 @@ $this->layout(
     ]
 );
 ?>
-
+<?php if (! empty($data['message'])): ?>
+    <div class="row">
+        <div class="col-lg-7">
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['message'],
+                ]
+            ) ?>
+        </div>
+    </div>
+<?php endif; ?>
 <?php if (empty($data['notifications'])): ?>
     <div class="alert alert-success shadow border-radius-12">
         <?= __('All notifications have already been read') ?>
@@ -67,7 +79,13 @@ $this->layout(
             <div class="mt-1"><?= $data['pagination'] ?></div>
         <?php endif ?>
     </div>
+    <div class="mb-2">
+        <form action="/notifications/clear/" method="post">
+            <button type="submit" name="clear" value="1" class="btn btn-outline-primary"><?= __('Clear notifications') ?></button>
+        </form>
+    </div>
 <?php endif; ?>
+
 
 <div>
     <a href="/notifications/settings/"><?= __('Settings') ?></a>
