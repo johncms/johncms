@@ -45,7 +45,8 @@
         "laminas/laminas-servicemanager": "^3.4",
         "mobicms/captcha": "^2.0",
         "mobicms/render": "^2.0",
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "simba77/johncms-pagination": "^1.0"
     },
     "require-dev": {
         "gettext/gettext": "^5.2",
