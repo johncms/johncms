@@ -10,6 +10,10 @@
 
 declare(strict_types=1);
 
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Johncms\Notifications\Notification;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $data = [];
@@ -111,10 +115,21 @@ if ($user->comm_count > $user->comm_old) {
 
 $data['notifications'] = $notifications;
 
-$notification = (new Johncms\Notifications\Notification())->paginate($user->config->kmess);
+$notification = (new Notification())->paginate($user->config->kmess);
 $data['total'] = $notification->total();
 $data['items'] = $notification->items();
 $data['pagination'] = $notification->render();
+
+// Помечаем уведомления прочитанными
+/** @var Collection $items */
+$items = $notification->getItems();
+$ids = array_column($items->toArray(), 'id');
+if (! empty($ids)) {
+    (new Notification())
+        ->whereIn('id', $ids)
+        ->unread()
+        ->update(['read_at' => Carbon::now()]);
+}
 
 if (! empty($_SESSION['message'])) {
     $data['message'] = htmlspecialchars($_SESSION['message']);

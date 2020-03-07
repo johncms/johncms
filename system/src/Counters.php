@@ -537,7 +537,7 @@ class Counters
             $notifications['forum_new'] = $forum_counters['new_messages'];
         }
 
-        $notifications['notifications'] = (new Notification())->count();
+        $notifications['notifications'] = (new Notification())->unread()->count();
         $notifications['all'] = array_sum($notifications);
 
         return $notifications;

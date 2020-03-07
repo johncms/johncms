@@ -29,6 +29,10 @@ use Johncms\Users\User;
  * @property array $fields - Массив полей, который будет доступен для использования в шаблонах
  *
  * @property array $message - Вычисляемое свойство - сообщение
+ * @property array $read_at - Дата прочтения
+ * @property array $created_at - Дата создания
+ *
+ * @method Builder unread() - Предустановленное условие для выборки непрочитанных
  */
 class Notification extends Model
 {
@@ -44,6 +48,7 @@ class Notification extends Model
         'user_id',
         'sender_id',
         'fields',
+        'read_at',
     ];
 
     /**
@@ -63,6 +68,17 @@ class Notification extends Model
                 $builder->where('user_id', '=', $user->id);
             }
         );
+    }
+
+    /**
+     * Выборка только непрочитанных
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeUnread(Builder $query): Builder
+    {
+        return $query->whereNull('read_at');
     }
 
     /**

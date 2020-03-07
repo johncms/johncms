@@ -30,6 +30,7 @@ Capsule::Schema()->create(
         $table->integer('user_id')->unsigned()->index()->comment('User identifier');
         $table->integer('sender_id')->unsigned()->nullable()->comment('Sender identifier');
         $table->text('fields')->nullable()->comment('Event fields');
+        $table->timestamp('read_at')->nullable()->comment('Read date');
         $table->timestamps();
 
         $table->foreign('user_id')
