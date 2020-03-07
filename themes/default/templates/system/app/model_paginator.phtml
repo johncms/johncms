@@ -13,11 +13,11 @@
             <!-- Previous Page Link -->
             <?php if ($paginator->onFirstPage()): ?>
                 <li class="page-item disabled" aria-disabled="true" aria-label="Previous">
-                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
                 </li>
             <?php else: ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?= $paginator->previousPageUrl() ?>" rel="prev" aria-label="Previous page">&lsaquo;</a>
+                    <a class="page-link" href="<?= $paginator->previousPageUrl() ?>" rel="prev" aria-label="Previous page">&laquo;</a>
                 </li>
             <?php endif ?>
 
@@ -43,11 +43,11 @@
             <!-- Next Page Link -->
             <?php if ($paginator->hasMorePages()): ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?= $paginator->nextPageUrl() ?>" rel="next" aria-label="Next">&rsaquo;</a>
+                    <a class="page-link" href="<?= $paginator->nextPageUrl() ?>" rel="next" aria-label="Next">&raquo;</a>
                 </li>
             <?php else: ?>
                 <li class="page-item disabled" aria-disabled="true" aria-label="Next">
-                    <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
                 </li>
             <?php endif ?>
         </ul>
