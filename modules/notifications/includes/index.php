@@ -111,20 +111,10 @@ if ($user->comm_count > $user->comm_old) {
 
 $data['notifications'] = $notifications;
 
-$notification = (new Johncms\Notifications\Notification());
-$total = $notification->count();
-$data['total'] = $total;
-
-// Исправляем запрос на несуществующую страницу
-if ($start >= $total) {
-    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
-}
-
-if ($total) {
-    $data['items'] = $notification->offset($start)->limit($user->config->kmess)->get();
-}
-
-$data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
+$notification = (new Johncms\Notifications\Notification())->paginate($user->config->kmess);
+$data['total'] = $notification->total();
+$data['items'] = $notification->items();
+$data['pagination'] = $notification->render();
 
 if (! empty($_SESSION['message'])) {
     $data['message'] = htmlspecialchars($_SESSION['message']);
