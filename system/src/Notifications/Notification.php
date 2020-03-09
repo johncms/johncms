@@ -15,6 +15,7 @@ namespace Johncms\Notifications;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\Casts\DateHuman;
 use Johncms\Users\User;
 
 /**
@@ -39,7 +40,10 @@ class Notification extends Model
     protected $notification_templates = [];
 
     protected $casts = [
-        'fields' => 'array',
+        'fields'     => 'array',
+        'created_at' => DateHuman::class,
+        'updated_at' => DateHuman::class,
+        'read_at'    => DateHuman::class,
     ];
 
     protected $fillable = [

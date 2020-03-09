@@ -115,7 +115,7 @@ if ($user->comm_count > $user->comm_old) {
 
 $data['notifications'] = $notifications;
 
-$notification = (new Notification())->paginate($user->config->kmess);
+$notification = (new Notification())->orderBy('created_at', 'desc')->paginate($user->config->kmess);
 $data['total'] = $notification->total();
 $data['items'] = $notification->items();
 $data['pagination'] = $notification->render();
