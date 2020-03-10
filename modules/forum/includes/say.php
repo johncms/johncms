@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Notifications\Notification;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -525,6 +527,21 @@ switch ($post_type) {
             );
 
             $tools->recountForumTopic($th);
+
+            // Добавляем уведомление об ответе
+            (new Notification())->create(
+                [
+                    'module'     => 'forum',
+                    'event_type' => 'new_message',
+                    'user_id'    => $type1['user_id'],
+                    'sender_id'  => $user->id,
+                    'fields'     => [
+                        'topic_name' => $th1['name'],
+                        'user_name'  => $user->name,
+                        'topic_url'  => '/forum/?type=topic&amp;id=' . $th,
+                    ],
+                ]
+            );
 
             // Вычисляем, на какую страницу попадает добавляемый пост
             if ($user->rights >= 7) {
