@@ -42,6 +42,6 @@ class Ip implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes): int
     {
-        return ip2long($value);
+        return ! empty($value) ? ip2long($value) : 0;
     }
 }
