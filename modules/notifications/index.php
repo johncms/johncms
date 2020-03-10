@@ -55,7 +55,7 @@ $pages = [
 
 // Определяем наличие страницы и показываем если она есть
 $action = $route['action'] ?? 'index';
-if (array_key_exists($action, $pages) && $user->rights >= 9) {
+if (array_key_exists($action, $pages)) {
     require __DIR__ . '/includes/' . $pages[$action];
 } else {
     pageNotFound();
