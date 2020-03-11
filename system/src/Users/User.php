@@ -76,6 +76,8 @@ use Johncms\Casts\Serialize;
  * @property string $profile_url - URL страницы профиля пользователя
  * @property string $search_ip_url - URL страницы поиска по IP
  * @property string $search_ip_via_proxy_url - URL страницы поиска по IP за прокси
+ *
+ * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
  */
 class User extends Model
 {
@@ -148,4 +150,15 @@ class User extends Model
         'smileys',
         'notification_settings',
     ];
+
+    /**
+     * Выборка только подтвержденных пользователей
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('preg', '=', 1);
+    }
 }
