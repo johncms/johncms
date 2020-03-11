@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -43,31 +44,28 @@ if ($user->rights) {
         'active' => false,
     ];
 }
-$users = (new User())->whereBetween('lastdate', [(time() - 172800), (time() - 310)]);
-$total = $users->count();
+/** @var LengthAwarePaginator $users */
+$users = (new User())
+    ->whereBetween('lastdate', [(time() - 172800), (time() - 310)])
+    ->orderBy('lastdate', 'desc')
+    ->paginate($user->config->kmess);
 
-// Исправляем запрос на несуществующую страницу
-if ($start >= $total) {
-    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
-}
+$total = $users->total();
 
 if ($total) {
-    $req = $users->offset($start)
-        ->limit($user->config->kmess)
-        ->get()
-        ->map(
-            static function ($user) use ($tools) {
-                /** @var $user User */
-                $user->place_name = $tools->displayPlace($user->place);
-                $user->display_date = $tools->displayDate($user->sestime);
-                return $user;
-            }
-        );
+    $items = $users->getItems()->map(
+        static function ($user) use ($tools) {
+            /** @var $user User */
+            $user->place_name = $tools->displayPlace($user->place);
+            $user->display_date = $tools->displayDate($user->sestime);
+            return $user;
+        }
+    );
 }
 
-$data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
+$data['pagination'] = $users->render();
 $data['total'] = $total;
-$data['items'] = $req ?? [];
+$data['items'] = $items ?? [];
 
 echo $view->render(
     'online::users',
