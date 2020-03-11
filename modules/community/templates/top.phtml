@@ -31,7 +31,7 @@ $this->layout(
 
 <!-- List of Users -->
 <?php if ($data['total']): ?>
-    <?php foreach ($data['list']() as $usr): ?>
+    <?php foreach ($data['list'] as $usr): ?>
         <?= $this->fetch('users::user_row', ['item' => $usr, 'active_tab' => $data['active_tab']]) ?>
     <?php endforeach ?>
 <?php else: ?>
