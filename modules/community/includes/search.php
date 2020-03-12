@@ -17,9 +17,7 @@ use Johncms\Users\User;
 $tools = di(Johncms\System\Legacy\Tools::class);
 
 // Принимаем данные, выводим форму поиска
-$search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
-$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
-$search = $search_post ? $search_post : $search_get;
+$search = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 
 $data = [];
 $title = __('User Search');
