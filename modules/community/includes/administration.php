@@ -22,9 +22,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\View\Render $view
  */
 
-$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchColumn();
-$req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, " . $user->config->kmess);
-
 /** @var LengthAwarePaginator $users */
 $users = (new User())
     ->approved()
