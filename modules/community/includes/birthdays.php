@@ -10,31 +10,27 @@
 
 declare(strict_types=1);
 
-use Johncms\UserProperties;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$total = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
-$req = $db->query("SELECT * FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1' LIMIT ${start}, " . $user->config->kmess);
+/** @var LengthAwarePaginator $users */
+$users = (new User())
+    ->approved()
+    ->where('dayb', '=', date('j'))
+    ->where('monthb', '=', date('n'))
+    ->paginate($user->config->kmess);
 
 $nav_chain->add(__('Birthdays'));
 
 echo $view->render(
     'users::users',
     [
-        'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
+        'pagination' => $users->render(),
         'title'      => __('Birthdays'),
         'page_title' => __('Birthdays'),
-        'total'      => $total,
-        'list'       =>
-            static function () use ($req, $user) {
-                while ($res = $req->fetch()) {
-                    $res['user_id'] = $res['id'];
-                    $user_properties = new UserProperties();
-                    $user_data = $user_properties->getFromArray($res);
-                    $res = array_merge($res, $user_data);
-                    yield $res;
-                }
-            },
+        'total'      => $users->total(),
+        'list'       => $users->items(),
     ]
 );
