@@ -8,9 +8,15 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 #### Added
 - Внедрена библиотека для работы с базой данных [illuminate/database](https://github.com/illuminate/database)
 - Для работы с пользователями добавлен класс (модель) [Johncms\Users\User](https://github.com/johncms/johncms/blob/develop/system/src/Users/User.php) Наследует Illuminate\Database\Eloquent\Model со всем вытекающим функционалом.
+- Для работы с уведомлениями добавлен класс (модель) [Johncms\Notifications\Notification](https://github.com/johncms/johncms/blob/develop/system/src/Notifications/Notification.php) Наследует Illuminate\Database\Eloquent\Model со всем вытекающим функционалом.
+- Добавлена возможность просмотра списка запросов, которые были выполнены на данной странице (функционал работает только для запросов выполненных через ORM). Запросы через обычный PDO не учитываются.
 
 #### Changed
 - Модуль кто онлайн переделан для использования ORM.
+- Модуль community переделан на новое api пользователей.
+- В модуль уведомлений добавлены настройки отображения непрочитанных на форуме
+- В модуль уведомлений добавлено оповещение об ответах и цитатах на форуме
+- Сторонние модули могут добавлять свои уведомления в центр уведомлений.
 
 #### Deprecated
 
