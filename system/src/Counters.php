@@ -502,6 +502,11 @@ class Counters
     public function notifications(): array
     {
         $notifications = [];
+
+        if (! $this->user->isValid()) {
+            return $notifications;
+        }
+
         if ($this->user->rights >= 7) {
             $notifications['reg_total'] = $this->db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
             $notifications['library_mod'] = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
