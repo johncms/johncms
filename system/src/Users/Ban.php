@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $ban_reason
  * @property string $ban_raz
  *
+ * @property bool $is_active
+ *
  * @method Builder active() - Предустановленное условие для выборки только активных банов
  */
 class Ban extends Model
@@ -57,5 +59,15 @@ class Ban extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('ban_time', '>', time());
+    }
+
+    /**
+     * Активность бана
+     *
+     * @return bool
+     */
+    public function getIsActiveAttribute(): bool
+    {
+        return $this->ban_time > time();
     }
 }

@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Users\Ban;
+use Johncms\Users\Karma;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -62,14 +64,15 @@ if ($config['karma']['on']) {
 
     if ($user_data->id !== $user->id) {
         if (! $user->karma_off && (! $user_data->rights || ($user_data->rights && ! $config['karma']['adm'])) && $user_data->ip !== $user->ip) {
-            $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `time` >= '" . $user->karma_time . "'")->fetchColumn();
-            $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `karma_user` = '" . $user_data->id . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
+            $karma = (new Karma())->where('user_id', '=', $user->id);
+            $sum = $karma->where('time', '>=', $user->karma_time)->sum('points');
+            $count = $karma->where('karma_user', '=', $user_data->id)->where('time', '>', (time() - 86400))->count();
             if (empty($user->ban) && $user->postforum >= $config['karma']['forum'] && ($config['karma']['karma_points'] - $sum) > 0 && ! $count) {
                 $user_data_array['vote_url'] = '?act=karma&amp;mod=vote&amp;user=' . $user_data->id;
             }
         }
     } else {
-        $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
+        $total_karma = (new Karma())->where('karma_user', '=', $user->id)->where('time', '>', (time() - 86400))->count();
         if ($total_karma > 0) {
             $user_data_array['karma_new_url'] = '?act=karma&amp;mod=new';
             $user_data_array['karma_new'] = $total_karma;
@@ -93,13 +96,14 @@ if ($user->rights >= 7 && ! $user_data->preg && empty($user_data->regadm)) {
 $data['notifications'] = $notifications;
 
 // Счетчики
-$ban_user = $db->query("SELECT `ban_reason`, `ban_time` AS `mtime` FROM `cms_ban_users` WHERE `user_id` = '" . $user_data->id . "' ORDER BY mtime DESC LIMIT 1")->fetch();
+/** @var Ban $ban_user */
+$ban_user = $user_data->bans()->orderBy('ban_time', 'desc')->first();
 
 $data['active_ban'] = false;
 $data['active_ban_reason'] = '';
-if (! empty($ban_user)) {
-    $data['active_ban_reason'] = $ban_user['ban_reason'];
-    $data['active_ban'] = $ban_user['mtime'] > time();
+if ($ban_user) {
+    $data['active_ban_reason'] = $ban_user->ban_reason;
+    $data['active_ban'] = $ban_user->is_active;
 }
 
 $data['counters'] = [
