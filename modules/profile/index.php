@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\System\i18n\Translator;
@@ -24,15 +24,17 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Assets $assets
  * @var PDO $db
  * @var Tools $tools
- * @var User $user
- * @var Render $view
  */
 
 $assets = di(Assets::class);
 $config = di('config')['johncms'];
 $db = di(PDO::class);
 $tools = di(Tools::class);
+
+/** @var User $user */
 $user = di(User::class);
+
+/** @var Render $view */
 $view = di(Render::class);
 
 /** @var Request $request */
@@ -47,13 +49,8 @@ $view->addFolder('profile', __DIR__ . '/templates/');
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
-$id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
-$user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);
-$act = $request->getQuery('act', 'index', FILTER_SANITIZE_STRING);
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
-
 // Закрываем от неавторизованных юзеров
-if (! $user->isValid()) {
+if (! $user->is_valid) {
     echo $view->render(
         'system::pages/result',
         [
@@ -65,10 +62,15 @@ if (! $user->isValid()) {
     exit;
 }
 
-/** @var User $foundUser Получаем данные пользователя */
-$foundUser = $tools->getUser((int) $user_id);
+$id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
+$user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);
+$act = $request->getQuery('act', 'index', FILTER_SANITIZE_STRING);
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
 
-if (empty($foundUser->id) || ($foundUser->preg !== 1 && $user->rights < 7)) {
+/** @var User $user_data Получаем данные пользователя */
+$user_data = $user_id !== $user->id ? (new User())->find($user_id) : $user;
+
+if (empty($user_data->id) || (! $user_data->preg && $user->rights < 7)) {
     echo $view->render(
         'system::pages/result',
         [
@@ -96,7 +98,7 @@ function is_contact($id = 0)
     static $user_id = null;
     static $return = 0;
 
-    if (! $user->isValid() && ! $id) {
+    if (! $user->is_valid && ! $id) {
         return 0;
     }
 

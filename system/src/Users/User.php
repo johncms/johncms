@@ -77,8 +77,18 @@ use Johncms\System\Users\UserConfig;
  * @property string $rights_name - Название прав доступа
  * @property string $profile_url - URL страницы профиля пользователя
  * @property string $search_ip_url - URL страницы поиска по IP
+ * @property string $whois_ip_url - URL страницы whois IP
  * @property string $search_ip_via_proxy_url - URL страницы поиска по IP за прокси
+ * @property string $whois_ip_via_proxy_url - URL страницы whois IP за прокси
  * @property array $ban - Массив банов.
+ * @property bool $is_valid - проверка валидности пользователя
+ * @property bool $is_birthday - у пользователя день рождения?
+ * @property string $birthday_date - дата рождения пользователя
+ * @property string $display_place - местоположение
+ * @property string $formatted_about - О себе в подготовленном для отображения виде
+ * @property string $website - Сайт
+ * @property string $last_visit - Последний визит
+ * @property array $photo - Фотография пользователя
  *
  * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
  */

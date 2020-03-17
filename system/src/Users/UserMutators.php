@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Carbon\Carbon;
+use Johncms\System\i18n\Translator;
+use Johncms\System\Legacy\Tools;
+
 trait UserMutators
 {
     /**
@@ -83,6 +87,16 @@ trait UserMutators
     }
 
     /**
+     * Ссылка на страницу whois IP
+     *
+     * @return string
+     */
+    public function getWhoisIpUrlAttribute(): string
+    {
+        return '/admin/ip_whois/?ip=' . $this->ip;
+    }
+
+    /**
      * Ссылка на страницу поиска по IP за прокси
      *
      * @return string
@@ -93,13 +107,108 @@ trait UserMutators
     }
 
     /**
+     * Ссылка на страницу whois IP за прокси
+     *
+     * @return string
+     */
+    public function getWhoisIpViaProxyUrlAttribute(): string
+    {
+        return ! empty($this->ip_via_proxy) ? '/admin/ip_whois/?ip=' . $this->ip_via_proxy : '';
+    }
+
+    /**
      * Проферка валидности пользователя
      *
      * @return bool
      */
     public function getIsValidAttribute(): bool
     {
-        return ($this->id && $this->preg === 1);
+        return ($this->id && $this->preg);
+    }
+
+    /**
+     * Получаем время последнего визита
+     *
+     * @return string
+     */
+    public function getLastVisitAttribute(): string
+    {
+        /** @var Translator $translator */
+        $translator = di(Translator::class);
+        return $this->is_online ? '' : Carbon::createFromTimestampUTC($this->lastdate)
+            ->locale($translator->getLocale())
+            ->diffForHumans(['join' => false, 'parts' => 2]);
+    }
+
+    /**
+     * У пользователя день рождения?
+     *
+     * @return bool
+     */
+    public function getIsBirthdayAttribute(): bool
+    {
+        return ($this->dayb === date('j') && $this->monthb === date('n'));
+    }
+
+    /**
+     * День рождения пользователя
+     *
+     * @return string
+     */
+    public function getBirthdayDateAttribute(): string
+    {
+        return (empty($this->dayb) ? '' : sprintf('%02d', $this->dayb) . '.' . sprintf('%02d', $this->monthb) . '.' . $this->yearofbirth);
+    }
+
+    /**
+     * Местоположение пользователя
+     *
+     * @return string
+     */
+    public function getDisplayPlaceAttribute(): string
+    {
+        /** @var Tools $tools */
+        $tools = di(Tools::class);
+        return $tools->displayPlace($this->place);
+    }
+
+    /**
+     * Обработанное поле О себе.
+     *
+     * @return string
+     */
+    public function getFormattedAboutAttribute(): string
+    {
+        /** @var Tools $tools */
+        $tools = di(Tools::class);
+        return $tools->smilies($tools->checkout($this->about, 1, 1));
+    }
+
+    /**
+     * Обработанное поле сайт
+     *
+     * @return string
+     */
+    public function getWebsiteAttribute(): string
+    {
+        /** @var Tools $tools */
+        $tools = di(Tools::class);
+        return $tools->checkout($this->www, 0, 1);
+    }
+
+    /**
+     * Фотография польхователя
+     *
+     * @return array
+     */
+    public function getPhotoAttribute(): array
+    {
+        $photo = [];
+        if (file_exists(UPLOAD_PATH . 'users/photo/' . $this->id . '_small.jpg')) {
+            $photo['photo'] = '/upload/users/photo/' . $this->id . '.jpg';
+            $photo['photo_preview'] = '/upload/users/photo/' . $this->id . '_small.jpg';
+        }
+        return $photo;
     }
 
     /**
