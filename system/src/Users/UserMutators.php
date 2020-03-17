@@ -15,6 +15,16 @@ namespace Johncms\Users;
 trait UserMutators
 {
     /**
+     * @var array Упрощенный массив банов для обратной совместимости
+     */
+    private $ban_list = [];
+
+    /**
+     * @var Ban Баны пользователя
+     */
+    private $active_bans = [];
+
+    /**
      * @param string $value
      * @return string
      */
@@ -80,5 +90,40 @@ trait UserMutators
     public function getSearchIpViaProxyUrlAttribute(): string
     {
         return ! empty($this->ip_via_proxy) ? '/admin/search_ip/?ip=' . $this->ip_via_proxy : '';
+    }
+
+    /**
+     * Проферка валидности пользователя
+     *
+     * @return bool
+     */
+    public function getIsValidAttribute(): bool
+    {
+        return ($this->id && $this->preg === 1);
+    }
+
+    /**
+     * Получаем баны пользоваетля
+     *
+     * @return array
+     */
+    public function getBanAttribute(): array
+    {
+        if (! empty($this->active_bans)) {
+            return $this->ban_list;
+        }
+
+        $this->ban_list = [];
+        /** @var Ban $bans */
+        $bans = $this->bans();
+        $this->active_bans = $bans->active()->get();
+        if ($this->active_bans->count()) {
+            foreach ($this->active_bans as $ban) {
+                /** @var Ban $ban */
+                $this->ban_list[$ban->ban_type] = 1;
+            }
+        }
+
+        return $this->ban_list;
     }
 }

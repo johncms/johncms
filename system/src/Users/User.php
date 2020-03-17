@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\Casts\Ip;
 use Johncms\Casts\Serialize;
+use Johncms\Casts\UserSettings;
+use Johncms\System\Users\UserConfig;
 
 /**
  * Class User
@@ -59,7 +61,7 @@ use Johncms\Casts\Serialize;
  * @property int $rest_time
  * @property int $movings
  * @property string $place
- * @property array $set_user
+ * @property UserConfig $set_user
  * @property array $set_forum
  * @property array $set_mail
  * @property int $karma_plus
@@ -76,7 +78,7 @@ use Johncms\Casts\Serialize;
  * @property string $profile_url - URL страницы профиля пользователя
  * @property string $search_ip_url - URL страницы поиска по IP
  * @property string $search_ip_via_proxy_url - URL страницы поиска по IP за прокси
- * @property array $ban - Массив банов. Доступен только после вызова метода checkBans()
+ * @property array $ban - Массив банов.
  *
  * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
  */
@@ -92,7 +94,7 @@ class User extends Model
         'mailvis'   => 'bool',
         'karma_off' => 'bool',
 
-        'set_user'     => Serialize::class,
+        'set_user'     => UserSettings::class,
         'set_forum'    => Serialize::class,
         'set_mail'     => Serialize::class,
         'smileys'      => Serialize::class,
@@ -162,24 +164,5 @@ class User extends Model
     public function scopeApproved(Builder $query): Builder
     {
         return $query->where('preg', '=', 1);
-    }
-
-    /**
-     * Метод служит для проверки наличия банов у пользователя
-     */
-    public function checkBans(): void
-    {
-        /** @var Ban $bans */
-        $bans = $this->bans();
-        $active_bans = $bans->active()->get();
-        if ($active_bans) {
-            $this->rights = 0;
-            $ban_list = [];
-            foreach ($active_bans as $ban) {
-                /** @var Ban $ban */
-                $ban_list[$ban->ban_type] = 1;
-            }
-            $this->ban = $ban_list;
-        }
     }
 }

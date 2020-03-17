@@ -24,7 +24,7 @@ class UserConfig
     public $fieldWidth = 40;
 
     /** @var int Размер списков */
-    public $kmess = 30;
+    public $kmess = 10;
 
     /** @var string Выбранный пользователем язык */
     public $lng = '';

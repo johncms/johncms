@@ -53,7 +53,6 @@ class UserFactory
 
         if ($user) {
             if ($userPassword === $user->password && $this->checkPermit($user)) {
-                $user->checkBans(); // Проверяем на бан
                 $this->ipHistory($user); // Фиксируем историю IP
                 return $user;
             }
