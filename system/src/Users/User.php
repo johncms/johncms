@@ -76,12 +76,14 @@ use Johncms\Casts\Serialize;
  * @property string $profile_url - URL страницы профиля пользователя
  * @property string $search_ip_url - URL страницы поиска по IP
  * @property string $search_ip_via_proxy_url - URL страницы поиска по IP за прокси
+ * @property array $ban - Массив банов. Доступен только после вызова метода checkBans()
  *
  * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
  */
 class User extends Model
 {
     use UserMutators;
+    use UserRelations;
 
     public $timestamps = false;
 
@@ -160,5 +162,24 @@ class User extends Model
     public function scopeApproved(Builder $query): Builder
     {
         return $query->where('preg', '=', 1);
+    }
+
+    /**
+     * Метод служит для проверки наличия банов у пользователя
+     */
+    public function checkBans(): void
+    {
+        /** @var Ban $bans */
+        $bans = $this->bans();
+        $active_bans = $bans->active()->get();
+        if ($active_bans) {
+            $this->rights = 0;
+            $ban_list = [];
+            foreach ($active_bans as $ban) {
+                /** @var Ban $ban */
+                $ban_list[$ban->ban_type] = 1;
+            }
+            $this->ban = $ban_list;
+        }
     }
 }

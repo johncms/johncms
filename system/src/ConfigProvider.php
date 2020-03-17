@@ -59,6 +59,7 @@ class ConfigProvider
                 Request::class        => RequestFactory::class,
                 Translator::class     => TranslatorServiceFactory::class,
                 User::class           => UserFactory::class,
+                Users\User::class     => Users\UserFactory::class,
             ],
 
             'invokables' => [],

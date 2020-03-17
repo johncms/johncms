@@ -16,6 +16,12 @@ use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class UserFactory
+ *
+ * @package Johncms\System\Users
+ * @deprecated use Johncms\Users\UserFactory
+ */
 class UserFactory
 {
     /**

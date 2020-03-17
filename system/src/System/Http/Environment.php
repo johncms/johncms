@@ -42,8 +42,12 @@ class Environment
         return $this;
     }
 
-    public function getIp(): int
+    public function getIp(bool $return_long = true)
     {
+        if (! $return_long) {
+            return $this->request->getServer('REMOTE_ADDR', '', FILTER_VALIDATE_IP);
+        }
+
         if (null === $this->ip) {
             /** @psalm-suppress PossiblyNullArgument */
             $ip = ip2long($this->request->getServer('REMOTE_ADDR', 0, FILTER_VALIDATE_IP));
@@ -53,7 +57,7 @@ class Environment
         return (int) $this->ip;
     }
 
-    public function getIpViaProxy(): int
+    public function getIpViaProxy(bool $return_long = true)
     {
         if ($this->ipViaProxy !== null) {
             return $this->ipViaProxy;
@@ -62,7 +66,7 @@ class Environment
         $httpString = $this->request->getServer('HTTP_X_FORWARDED_FOR', '', FILTER_SANITIZE_STRING);
         return $this->ipViaProxy = (
         ! empty($httpString) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $httpString, $vars)
-            ? $this->extractIpFromString($vars)
+            ? $this->extractIpFromString($vars, $return_long)
             : 0
         );
     }
@@ -87,12 +91,15 @@ class Environment
         return $this->ipCount;
     }
 
-    private function extractIpFromString(array $vars): int
+    private function extractIpFromString(array $vars, bool $return_long = true)
     {
         foreach ($vars[0] as $var) {
             $ipViaProxy = ip2long($var);
 
-            if ($ipViaProxy && $ipViaProxy != $this->getIp() && ! preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
+            if ($ipViaProxy && $ipViaProxy !== $this->getIp() && ! preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
+                if (! $return_long) {
+                    return long2ip($ipViaProxy);
+                }
                 return (int) sprintf('%u', $ipViaProxy);
             }
         }
