@@ -17,20 +17,18 @@ $title = __('Ban the User');
 $set_karma = $config['karma'];
 $data = [];
 
-$foundUser = (array) $foundUser;
-
 switch ($mod) {
     case 'do':
         // Баним пользователя (добавляем Бан в базу)
         $nav_chain->add($title);
-        if ($user->rights < 1 || ($user->rights < 6 && $foundUser['rights']) || ($user->rights <= $foundUser['rights'])) {
+        if ($user->rights < 1 || ($user->rights < 6 && $user_data['rights']) || ($user->rights <= $user_data['rights'])) {
             echo $view->render(
                 'system::pages/result',
                 [
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('You do not have enought rights to ban this user'),
-                    'back_url' => '?user=' . $foundUser['id'],
+                    'back_url' => '?user=' . $user_data['id'],
                 ]
             );
         } else {
@@ -60,7 +58,7 @@ switch ($mod) {
                     $error = __('You have no rights to ban in this section');
                 }
 
-                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '${term}'")->fetchColumn()) {
+                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '${term}'")->fetchColumn()) {
                     $error = __('Ban already active');
                 }
 
@@ -117,7 +115,7 @@ switch ($mod) {
 
                     $stmt->execute(
                         [
-                            $foundUser['id'],
+                            $user_data['id'],
                             (time() + $timeval),
                             time(),
                             $term,
@@ -143,14 +141,14 @@ switch ($mod) {
                         $stmt->execute(
                             [
                                 __('System'),
-                                $foundUser['id'],
+                                $user_data['id'],
                                 $points,
                                 time(),
                                 __('Ban'),
                             ]
                         );
 
-                        $db->exec('UPDATE `users` SET `karma_minus` = ' . (int) ($foundUser['karma_minus'] + $points) . ' WHERE `id` = ' . $foundUser['id']);
+                        $db->exec('UPDATE `users` SET `karma_minus` = ' . (int) ($user_data['karma_minus'] + $points) . ' WHERE `id` = ' . $user_data['id']);
                     }
                     echo $view->render(
                         'system::pages/result',
@@ -158,7 +156,7 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-success',
                             'message'  => __('User banned'),
-                            'back_url' => '?user=' . $foundUser['id'],
+                            'back_url' => '?user=' . $user_data['id'],
                         ]
                     );
                 } else {
@@ -168,15 +166,15 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-danger',
                             'message'  => $error,
-                            'back_url' => '?user=' . $foundUser['id'],
+                            'back_url' => '?user=' . $user_data['id'],
                         ]
                     );
                 }
             } else {
-                $data['form_action'] = '?act=ban&amp;mod=do&amp;user=' . $foundUser['id'];
+                $data['form_action'] = '?act=ban&amp;mod=do&amp;user=' . $user_data['id'];
                 $data['post_id'] = $request->getQuery('fid', 0, FILTER_VALIDATE_INT);
-                $data['back_url'] = '?user=' . $foundUser['id'];
-                $data['user_login'] = $foundUser['name'];
+                $data['back_url'] = '?user=' . $user_data['id'];
+                $data['user_login'] = $user_data['name'];
                 echo $view->render(
                     'profile::ban',
                     [
@@ -193,18 +191,18 @@ switch ($mod) {
         // Разбаниваем пользователя (с сохранением истории)
         $title = __('Ban termination');
         $nav_chain->add($title);
-        if (! $ban || $foundUser['id'] == $user->id || $user->rights < 7) {
+        if (! $ban || $user_data['id'] == $user->id || $user->rights < 7) {
             echo $view->render(
                 'system::pages/result',
                 [
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('Wrong data'),
-                    'back_url' => '?user=' . $foundUser['id'],
+                    'back_url' => '?user=' . $user_data['id'],
                 ]
             );
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $foundUser['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user_data['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -223,14 +221,14 @@ switch ($mod) {
                                 'title'    => $title,
                                 'type'     => 'alert-success',
                                 'message'  => __('Ban terminated'),
-                                'back_url' => '?act=ban&amp;user=' . $foundUser['id'],
+                                'back_url' => '?act=ban&amp;user=' . $user_data['id'],
                             ]
                         );
                     } else {
                         $data['message'] = __('Ban time is going to the end. Infrigement will be saved in the bans history');
                         $data['submit_name'] = __('Terminate Ban');
-                        $data['form_action'] = '?act=ban&amp;mod=cancel&amp;user=' . $foundUser['id'] . '&amp;ban=' . $ban;
-                        $data['back_url'] = '?user=' . $foundUser['id'];
+                        $data['form_action'] = '?act=ban&amp;mod=cancel&amp;user=' . $user_data['id'] . '&amp;ban=' . $ban;
+                        $data['back_url'] = '?user=' . $user_data['id'];
                         echo $view->render(
                             'profile::ban_cancel',
                             [
@@ -247,7 +245,7 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-danger',
                             'message'  => $error,
-                            'back_url' => '?user=' . $foundUser['id'],
+                            'back_url' => '?user=' . $user_data['id'],
                         ]
                     );
                 }
@@ -258,7 +256,7 @@ switch ($mod) {
                         'title'    => $title,
                         'type'     => 'alert-danger',
                         'message'  => __('Wrong data'),
-                        'back_url' => '?user=' . $foundUser['id'],
+                        'back_url' => '?user=' . $user_data['id'],
                     ]
                 );
             }
@@ -277,21 +275,21 @@ switch ($mod) {
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('Wrong data'),
-                    'back_url' => '?user=' . $foundUser['id'],
+                    'back_url' => '?user=' . $user_data['id'],
                 ]
             );
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $foundUser['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user_data['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 if (isset($_POST['submit'])) {
-                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
+                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
                     $points = $set_karma['karma_points'] * 2;
                     $db->exec(
                         "UPDATE `users` SET
-                        `karma_minus` = '" . ($foundUser['karma_minus'] > $points ? $foundUser['karma_minus'] - $points : 0) . "'
-                        WHERE `id` = " . $foundUser['id']
+                        `karma_minus` = '" . ($user_data['karma_minus'] > $points ? $user_data['karma_minus'] - $points : 0) . "'
+                        WHERE `id` = " . $user_data['id']
                     );
                     $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '${ban}'");
                     echo $view->render(
@@ -300,14 +298,14 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-success',
                             'message'  => __('Ban deleted'),
-                            'back_url' => '?act=ban&amp;user=' . $foundUser['id'],
+                            'back_url' => '?act=ban&amp;user=' . $user_data['id'],
                         ]
                     );
                 } else {
                     $data['message'] = __('Removing ban along with a record in the bans history');
                     $data['submit_name'] = __('Delete');
-                    $data['form_action'] = '?act=ban&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;ban=' . $ban;
-                    $data['back_url'] = '?act=ban&amp;user=' . $foundUser['id'];
+                    $data['form_action'] = '?act=ban&amp;mod=delete&amp;user=' . $user_data['id'] . '&amp;ban=' . $ban;
+                    $data['back_url'] = '?act=ban&amp;user=' . $user_data['id'];
                     echo $view->render(
                         'profile::ban_cancel',
                         [
@@ -324,7 +322,7 @@ switch ($mod) {
                         'title'    => $title,
                         'type'     => 'alert-danger',
                         'message'  => __('Wrong data'),
-                        'back_url' => '?user=' . $foundUser['id'],
+                        'back_url' => '?user=' . $user_data['id'],
                     ]
                 );
             }
@@ -337,21 +335,21 @@ switch ($mod) {
         $nav_chain->add($title);
         if ($user->rights === 9) {
             if (isset($_POST['submit'])) {
-                $db->exec('DELETE FROM `cms_ban_users` WHERE `user_id` = ' . $foundUser['id']);
+                $db->exec('DELETE FROM `cms_ban_users` WHERE `user_id` = ' . $user_data['id']);
                 echo $view->render(
                     'system::pages/result',
                     [
                         'title'    => $title,
                         'type'     => 'alert-success',
                         'message'  => __('Violations history cleared'),
-                        'back_url' => '?act=ban&amp;user=' . $foundUser['id'],
+                        'back_url' => '?act=ban&amp;user=' . $user_data['id'],
                     ]
                 );
             } else {
                 $data['message'] = __('Are you sure want to clean entire history of user violations?');
                 $data['submit_name'] = __('Clear');
-                $data['form_action'] = '?act=ban&amp;mod=delhist&amp;user=' . $foundUser['id'];
-                $data['back_url'] = '?act=ban&amp;user=' . $foundUser['id'];
+                $data['form_action'] = '?act=ban&amp;mod=delhist&amp;user=' . $user_data['id'];
+                $data['back_url'] = '?act=ban&amp;user=' . $user_data['id'];
                 echo $view->render(
                     'profile::ban_cancel',
                     [
@@ -368,7 +366,7 @@ switch ($mod) {
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('Violations history can be cleared by Supervisor only'),
-                    'back_url' => '?user=' . $foundUser['id'],
+                    'back_url' => '?user=' . $user_data['id'],
                 ]
             );
         }
@@ -379,17 +377,18 @@ switch ($mod) {
         $title = __('Violations History');
         $nav_chain->add($title);
         if ($user->rights === 9) {
-            $data['clear_history_url'] = '?act=ban&amp;mod=delhist&amp;user=' . $foundUser['id'];
+            $data['clear_history_url'] = '?act=ban&amp;mod=delhist&amp;user=' . $user_data['id'];
         }
-        $data['user_name'] = $foundUser['name'];
-        $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
+        $data['user_name'] = $user_data['name'];
+        $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, " . $user->config->kmess);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, " . $user->set_user->kmess);
             $i = 0;
 
             $types = [
                 1  => __('Full block'),
                 2  => __('Private messages'),
+                3  => __('Private messages'),
                 10 => __('Comments'),
                 11 => __('Forum'),
                 13 => __('Guestbook'),
@@ -413,13 +412,13 @@ switch ($mod) {
                 $buttons = [];
                 if ($user->rights >= 7 && $remain > 0) {
                     $buttons[] = [
-                        'url'  => '?act=ban&amp;mod=cancel&amp;user=' . $foundUser['id'] . '&amp;ban=' . $res['id'],
+                        'url'  => '?act=ban&amp;mod=cancel&amp;user=' . $user_data['id'] . '&amp;ban=' . $res['id'],
                         'name' => __('Cancel Ban'),
                     ];
                 }
                 if ($user->rights === 9) {
                     $buttons[] = [
-                        'url'  => '?act=ban&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;ban=' . $res['id'],
+                        'url'  => '?act=ban&amp;mod=delete&amp;user=' . $user_data['id'] . '&amp;ban=' . $res['id'],
                         'name' => __('Delete Ban'),
                     ];
                 }
@@ -429,9 +428,9 @@ switch ($mod) {
             }
         }
 
-        $data['back_url'] = '?user=' . $foundUser['id'];
+        $data['back_url'] = '?user=' . $user_data['id'];
         $data['total'] = $total;
-        $data['pagination'] = $tools->displayPagination('?act=ban&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess);
+        $data['pagination'] = $tools->displayPagination('?act=ban&amp;user=' . $user_data['id'] . '&amp;', $start, $total, $user->set_user->kmess);
         $data['items'] = $items ?? [];
 
         echo $view->render(

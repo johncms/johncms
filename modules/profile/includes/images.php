@@ -14,9 +14,7 @@ use Intervention\Image\ImageManager;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$foundUser = (array) $foundUser;
-
-if (($user->id !== $foundUser['id'] && $user->rights < 7) || $foundUser['rights'] > $user->rights) {
+if (($user->id !== $user_data['id'] && $user->rights < 7) || $user_data['rights'] > $user->rights) {
     echo $view->render(
         'system::pages/result',
         [
@@ -46,7 +44,7 @@ if ($mod === 'avatar') {
 
         if (empty($error)) {
             try {
-                $avatar = UPLOAD_PATH . 'users/avatar/' . $foundUser['id'] . '.png';
+                $avatar = UPLOAD_PATH . 'users/avatar/' . $user_data['id'] . '.png';
                 $img = $image_manager->make($file->getStream());
                 $img->resize(
                     150,
@@ -64,7 +62,7 @@ if ($mod === 'avatar') {
                         'title'         => $title,
                         'type'          => 'alert-success',
                         'message'       => __('The avatar is successfully uploaded'),
-                        'back_url'      => '?act=edit&amp;user=' . $foundUser['id'],
+                        'back_url'      => '?act=edit&amp;user=' . $user_data['id'],
                         'back_url_name' => __('Continue'),
                     ]
                 );
@@ -79,13 +77,13 @@ if ($mod === 'avatar') {
                 'title'         => $title,
                 'type'          => 'alert-danger',
                 'message'       => $error,
-                'back_url'      => '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'],
+                'back_url'      => '?act=images&amp;mod=avatar&amp;user=' . $user_data['id'],
                 'back_url_name' => __('Repeat'),
             ]
         );
         exit;
     }
-    $data['form_action'] = '?act=images&amp;mod=avatar&amp;user=' . $foundUser['id'];
+    $data['form_action'] = '?act=images&amp;mod=avatar&amp;user=' . $user_data['id'];
 } else {
     $title = __('Upload Photo');
     if ($request->getMethod() === 'POST') {
@@ -98,8 +96,8 @@ if ($mod === 'avatar') {
 
         if (empty($error)) {
             try {
-                $photo = UPLOAD_PATH . 'users/photo/' . $foundUser['id'] . '.jpg';
-                $small_photo = UPLOAD_PATH . 'users/photo/' . $foundUser['id'] . '_small.jpg';
+                $photo = UPLOAD_PATH . 'users/photo/' . $user_data['id'] . '.jpg';
+                $small_photo = UPLOAD_PATH . 'users/photo/' . $user_data['id'] . '_small.jpg';
                 $img = $image_manager->make($file->getStream());
                 $img->resize(
                     1024,
@@ -133,7 +131,7 @@ if ($mod === 'avatar') {
                         'title'         => $title,
                         'type'          => 'alert-success',
                         'message'       => __('The photo is successfully uploaded'),
-                        'back_url'      => '?act=edit&amp;user=' . $foundUser['id'],
+                        'back_url'      => '?act=edit&amp;user=' . $user_data['id'],
                         'back_url_name' => __('Continue'),
                     ]
                 );
@@ -148,20 +146,20 @@ if ($mod === 'avatar') {
                 'title'         => $title,
                 'type'          => 'alert-danger',
                 'message'       => $error,
-                'back_url'      => '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'],
+                'back_url'      => '?act=images&amp;mod=up_photo&amp;user=' . $user_data['id'],
                 'back_url_name' => __('Repeat'),
             ]
         );
         exit;
     }
 
-    $data['form_action'] = '?act=images&amp;mod=up_photo&amp;user=' . $foundUser['id'];
+    $data['form_action'] = '?act=images&amp;mod=up_photo&amp;user=' . $user_data['id'];
 }
 
-$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add(($user_data['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $user_data['id']);
 $nav_chain->add($title);
 
-$data['back_url'] = '?user=' . $foundUser['id'];
+$data['back_url'] = '?user=' . $user_data['id'];
 
 echo $view->render(
     'profile::images',

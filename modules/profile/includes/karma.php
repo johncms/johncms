@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = __('Karma');
 $set_karma = $config['karma'];
-$foundUser = (array) $foundUser;
+$user_data = (array) $foundUser;
 $data = [];
 $nav_chain->add(__('User Profile'), '?user=' . $foundUser['id']);
 $nav_chain->add(__('Karma'));

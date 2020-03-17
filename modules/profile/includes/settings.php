@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Collection;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = __('Settings');
@@ -17,13 +19,10 @@ $title = __('Settings');
 // Массив для основных данных, которые попадут в шаблон
 $data = [];
 
-/** @var Johncms\System\Users\UserConfig $userConfig */
-$userConfig = $user->config;
-
 $nav_chain->add(__('My Account'), '/profile/?act=office');
 $nav_chain->add(__('Settings'), '?act=settings');
 // Проверяем права доступа
-if ($foundUser->id !== $user->id) {
+if ($user_data->id !== $user->id) {
     echo $view->render(
         'system::pages/result',
         [
@@ -58,7 +57,7 @@ switch ($mod) {
     case 'mail':
         $title = __('Mail');
         $nav_chain->add($title);
-        $set_mail_user = ! empty($user->set_mail) ? unserialize($user->set_mail, ['allowed_classes' => false]) : ['access' => 0];
+        $set_mail_user = $user->set_mail ?: ['access' => 0];
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
@@ -93,8 +92,7 @@ switch ($mod) {
             'preview'  => 1,
             'postclip' => 1,
         ];
-        $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
-        $set_forum = array_merge($default_settings, (array) $set_forum);
+        $set_forum = array_merge($default_settings, $user->set_forum);
 
         if (isset($_POST['submit'])) {
             $set_forum['farea'] = isset($_POST['farea']);
@@ -142,7 +140,7 @@ switch ($mod) {
         $title = __('General setting');
         $nav_chain->add($title);
         if ($request->getMethod() === 'POST') {
-            $set_user = (array) $userConfig;
+            $set_user = (new Collection($user_data->set_user))->toArray();
 
             // Записываем новые настройки, заданные пользователем
             $set_user['timeshift'] = isset($_POST['timeshift']) ? (int) ($_POST['timeshift']) : 0;
@@ -204,11 +202,11 @@ switch ($mod) {
         }
 
         $data['form_action'] = '?act=settings';
-        $data['system_time'] = date('H:i', time() + ($config['timeshift'] + $userConfig->timeshift) * 3600);
+        $data['system_time'] = date('H:i', time() + ($config['timeshift'] + $user_data->set_user->timeshift) * 3600);
 
         // Выбор языка
         if (count($config['lng_list']) > 1) {
-            $data['user_lng'] = $userConfig->lng ?? $config['lng'];
+            $data['user_lng'] = $user_data->set_user->lng ?? $config['lng'];
             $data['lng_list'] = $config['lng_list'];
         }
 

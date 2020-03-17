@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $title = __('My Account');
 $nav_chain->add($title);
 // Проверяем права доступа
-if ($foundUser->id !== $user->id) {
+if ($user_data->id !== $user->id) {
     echo $view->render(
         'system::pages/result',
         [
