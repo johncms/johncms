@@ -2,6 +2,36 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
+#: config/notifications.global.php:14
+#: config/places.global.php:17
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
+msgid "Forum"
+msgstr ""
+
+#: config/notifications.global.php:17
+msgid "New reply on the forum"
+msgstr ""
+
+#: config/notifications.global.php:18
+msgid "New answer in the topic:"
+msgstr ""
+
+#: config/notifications.global.php:20
+msgid "User <b>#user_name#</b> responded to <a href=\"#reply_to_message#\">Your message</a>."
+msgstr ""
+
+#: config/notifications.global.php:26
+msgid "Karma"
+msgstr ""
+
+#: config/notifications.global.php:29
+msgid "New vote in karma"
+msgstr ""
+
+#: config/notifications.global.php:30
+msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
+msgstr ""
+
 #: config/places.global.php:12
 msgid "On the Homepage"
 msgstr ""
@@ -20,24 +50,19 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:150
-#: system/src/Comments.php:186
-#: system/src/Comments.php:219
-#: system/src/Comments.php:245
-#: system/src/Comments.php:286
-#: system/src/Comments.php:318
+#: system/src/Comments.php:170
+#: system/src/Comments.php:206
+#: system/src/Comments.php:239
+#: system/src/Comments.php:265
+#: system/src/Comments.php:306
+#: system/src/Comments.php:338
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:75
 msgid "Downloads"
 msgstr ""
 
-#: config/places.global.php:17
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
-msgid "Forum"
-msgstr ""
-
 #: config/places.global.php:18
-#: modules/notifications/index.php:111
-#: modules/notifications/index.php:130
+#: modules/notifications/includes/index.php:90
+#: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:62
 msgid "Guestbook"
 msgstr ""
@@ -177,47 +202,77 @@ msgid "Are you sure you want to leave the site?"
 msgstr ""
 
 #: modules/login/templates/logout.phtml:10
+#: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:28
 msgid "Cancel"
 msgstr ""
 
-#: modules/notifications/index.php:40
-#: modules/notifications/templates/index.phtml:10
+#: modules/notifications/includes/clear.php:23
+msgid "Notifications are cleared!"
+msgstr ""
+
+#: modules/notifications/includes/index.php:29
+msgid "Users on registration"
+msgstr ""
+
+#: modules/notifications/includes/index.php:39
+msgid "Articles on moderation"
+msgstr ""
+
+#: modules/notifications/includes/index.php:49
+msgid "Downloads on moderation"
+msgstr ""
+
+#: modules/notifications/includes/index.php:60
+msgid "Ban"
+msgstr ""
+
+#: modules/notifications/includes/index.php:70
+msgid "New forum posts"
+msgstr ""
+
+#: modules/notifications/includes/index.php:80
+msgid "Mail"
+msgstr ""
+
+#: modules/notifications/includes/index.php:100
+msgid "Comments"
+msgstr ""
+
+#: modules/notifications/includes/settings.php:18
+#: modules/notifications/templates/index.phtml:96
+msgid "Settings"
+msgstr ""
+
+#: modules/notifications/includes/settings.php:44
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
+#: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/index.php:50
-msgid "Users on registration"
-msgstr ""
-
-#: modules/notifications/index.php:60
-msgid "Articles on moderation"
-msgstr ""
-
-#: modules/notifications/index.php:70
-msgid "Downloads on moderation"
-msgstr ""
-
-#: modules/notifications/index.php:81
-msgid "Ban"
-msgstr ""
-
-#: modules/notifications/index.php:91
-msgid "New forum posts"
-msgstr ""
-
-#: modules/notifications/index.php:101
-msgid "Mail"
-msgstr ""
-
-#: modules/notifications/index.php:121
-msgid "Comments"
-msgstr ""
-
-#: modules/notifications/templates/index.phtml:18
+#: modules/notifications/templates/index.phtml:33
 msgid "All notifications have already been read"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:83
+msgid "Total"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:91
+msgid "Clear notifications"
+msgstr ""
+
+#: modules/notifications/templates/settings.phtml:45
+msgid "Display the number of unread messages in the forum"
+msgstr ""
+
+#: modules/notifications/templates/settings.phtml:49
+msgid "Save"
 msgstr ""
 
 #: modules/redirect/index.php:30
@@ -249,189 +304,130 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/index.phtml:44
-#: system/src/Comments.php:154
-#: system/src/Comments.php:190
-#: system/src/Comments.php:203
+#: system/src/Comments.php:174
+#: system/src/Comments.php:210
 #: system/src/Comments.php:223
-#: system/src/Comments.php:249
-#: system/src/Comments.php:290
-#: system/src/Comments.php:302
+#: system/src/Comments.php:243
+#: system/src/Comments.php:269
+#: system/src/Comments.php:310
 #: system/src/Comments.php:322
+#: system/src/Comments.php:342
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
 
-#: system/helpers.php:55
+#: system/helpers.php:59
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
-#: system/src/Comments.php:139
-#: system/src/Comments.php:208
-#: system/src/Comments.php:209
+#: system/src/Comments.php:159
+#: system/src/Comments.php:228
+#: system/src/Comments.php:229
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:152
+#: system/src/Comments.php:172
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:221
-#: system/src/Comments.php:320
+#: system/src/Comments.php:241
+#: system/src/Comments.php:340
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:233
-#: system/src/Comments.php:307
-#: system/src/Comments.php:308
+#: system/src/Comments.php:253
+#: system/src/Comments.php:327
+#: system/src/Comments.php:328
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:247
+#: system/src/Comments.php:267
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:332
-#: system/src/Comments.php:372
-#: system/src/Comments.php:373
+#: system/src/Comments.php:352
+#: system/src/Comments.php:392
+#: system/src/Comments.php:393
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:568
+#: system/src/Comments.php:595
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:574
+#: system/src/Comments.php:601
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:574
+#: system/src/Comments.php:601
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:582
+#: system/src/Comments.php:609
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:174
+#: system/src/Counters.php:168
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:180
+#: system/src/Counters.php:174
 msgid "Last activity"
 msgstr ""
 
-#: system/src/NavChain.php:57
+#: system/src/NavChain.php:58
 msgid "Home"
 msgstr ""
 
-#: system/src/System/Legacy/Bbcode.php:156
-msgid "Edit List"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:167
-msgid "Add Smilies"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:225
-msgid "Bold"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:226
-msgid "Italic"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:227
-msgid "Underline"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:228
-msgid "Strike"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:229
-msgid "Text Color"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:230
-msgid "Background Color"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:231
-msgid "List"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:232
-msgid "Spoiler"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:233
-msgid "Quote"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:234
-msgid "URL"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:235
-msgid "Code"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:239
-msgid "Smilies"
-msgstr ""
-
-#: system/src/System/Legacy/Bbcode.php:278
-msgid "Added"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:148
-msgid "Today"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:151
-msgid "Yesterday"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:167
-msgid "ERROR"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:307
-msgid "Somewhere on the site"
-msgstr ""
-
-#: system/src/System/Legacy/Tools.php:498
-msgid "Day"
-msgid_plural "Days"
-msgstr[0] ""
-
 #: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:58
 msgid "Forum moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:59
 msgid "Download moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:60
 msgid "Library moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:61
 msgid "Super moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:73
+#: system/src/Users/UserMutators.php:62
 msgid "Administrator"
 msgstr ""
 
 #: system/src/UserProperties.php:74
+#: system/src/Users/UserMutators.php:63
 msgid "Supervisor"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:15
+msgid "Sql query log"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:26
+msgid "Query"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:27
+msgid "Bindings"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:28
+msgid "Time"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:37

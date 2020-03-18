@@ -2,39 +2,39 @@ msgid ""
 msgstr ""
 "X-Domain: online\n"
 
-#: modules/online/includes/guest.php:21
-#: modules/online/includes/history.php:23
-#: modules/online/includes/index.php:24
+#: modules/online/includes/guest.php:24
+#: modules/online/includes/history.php:24
+#: modules/online/includes/index.php:25
 #: modules/online/includes/ip.php:21
 msgid "Users"
 msgstr ""
 
-#: modules/online/includes/guest.php:26
-#: modules/online/includes/history.php:28
-#: modules/online/includes/index.php:29
+#: modules/online/includes/guest.php:29
+#: modules/online/includes/history.php:29
+#: modules/online/includes/index.php:30
 #: modules/online/includes/ip.php:26
 msgid "History"
 msgstr ""
 
-#: modules/online/includes/guest.php:34
-#: modules/online/includes/history.php:36
-#: modules/online/includes/index.php:37
+#: modules/online/includes/guest.php:37
+#: modules/online/includes/history.php:37
+#: modules/online/includes/index.php:38
 #: modules/online/includes/ip.php:34
 msgid "Guests"
 msgstr ""
 
-#: modules/online/includes/guest.php:39
-#: modules/online/includes/history.php:41
-#: modules/online/includes/index.php:42
+#: modules/online/includes/guest.php:42
+#: modules/online/includes/history.php:42
+#: modules/online/includes/index.php:43
 #: modules/online/includes/ip.php:39
 msgid "IP Activity"
 msgstr ""
 
-#: modules/online/includes/guest.php:59
+#: modules/online/includes/guest.php:61
 msgid "Guest"
 msgstr ""
 
-#: modules/online/includes/index.php:47
+#: modules/online/includes/index.php:48
 msgid "Who is online?"
 msgstr ""
 

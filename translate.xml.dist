@@ -15,6 +15,7 @@
         <sourceFile>system/helpers.php</sourceFile>
         <sourceFile>system/bootstrap.php</sourceFile>
         <sourceFile>config/places.global.php</sourceFile>
+        <sourceFile>config/notifications.global.php</sourceFile>
     </domain>
 
     <!-- Admin module -->

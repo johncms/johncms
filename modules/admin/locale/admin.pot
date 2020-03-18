@@ -555,18 +555,18 @@ msgstr ""
 #: modules/admin/includes/ipban.php:271
 #: modules/admin/includes/ipban.php:348
 #: modules/admin/includes/ipban.php:366
-#: modules/admin/includes/search_ip.php:81
-#: modules/admin/includes/search_ip.php:88
+#: modules/admin/includes/search_ip.php:78
+#: modules/admin/includes/search_ip.php:85
 msgid "Invalid IP"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:81
-#: modules/admin/includes/search_ip.php:56
+#: modules/admin/includes/search_ip.php:53
 msgid "First IP is entered incorrectly"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:89
-#: modules/admin/includes/search_ip.php:64
+#: modules/admin/includes/search_ip.php:61
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
@@ -740,17 +740,17 @@ msgstr ""
 msgid "Remove IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:31
+#: modules/admin/includes/search_ip.php:28
 #: modules/admin/templates/search_ip.phtml:37
 #: modules/admin/templates/search_ip.phtml:39
 msgid "Search IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:37
+#: modules/admin/includes/search_ip.php:34
 msgid "Actual IP"
 msgstr ""
 
-#: modules/admin/includes/search_ip.php:42
+#: modules/admin/includes/search_ip.php:39
 msgid "IP history"
 msgstr ""
 
