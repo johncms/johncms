@@ -118,7 +118,13 @@ class Notification extends Model
             return $this->notification_templates;
         }
 
-        $this->notification_templates = require CONFIG_PATH . 'notifications.global.php';
+        $local = [];
+        $global = require CONFIG_PATH . 'notifications.global.php';
+        if (file_exists(CONFIG_PATH . 'notifications.local.php')) {
+            $local = require CONFIG_PATH . 'notifications.local.php';
+        }
+
+        $this->notification_templates = array_replace_recursive($global, $local);
         return $this->notification_templates;
     }
 
