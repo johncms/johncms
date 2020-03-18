@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Notifications\Notification;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = __('Karma');
@@ -109,6 +111,23 @@ if ($set_karma['on']) {
 
                     $sql = $type ? "`karma_plus` = '" . ($user_data['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user_data['karma_minus'] + $points) . "'";
                     $db->query("UPDATE `users` SET ${sql} WHERE `id` = " . $user_data['id']);
+
+                    // Добавляем уведомление пользователю
+                    (new Notification())->create(
+                        [
+                            'module'     => 'karma',
+                            'event_type' => 'new_vote',
+                            'user_id'    => $user_data->id,
+                            'sender_id'  => $user->id,
+                            'fields'     => [
+                                'user_name'   => htmlspecialchars($user->name),
+                                'karma_url'   => '/profile/?act=karma&user=' . $user_data->id . '&type=2',
+                                'vote_points' => ($type ? '+' : '-') . $points,
+                                'message'     => $tools->smilies($tools->checkout($text)),
+                            ],
+                        ]
+                    );
+
                     echo $view->render(
                         'system::pages/result',
                         [

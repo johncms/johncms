@@ -22,4 +22,14 @@ return [
             ],
         ],
     ],
+    'karma' => [
+        'name'   => d__('system', 'Karma'),
+        'events' => [
+            'new_vote' => [
+                'name'    => d__('system', 'New vote in karma'),
+                'message' => d__('system', 'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.') .
+                    '<div><b>#vote_points#</b> #message#</div>',
+            ],
+        ],
+    ],
 ];
