@@ -5,9 +5,9 @@
   array (
     '' => 
     array (
+      'Forum' => 'Forum',
       'Users' => 'Pengguna',
       'Downloads' => 'Unduhan',
-      'Forum' => 'Forum',
       'Guestbook' => 'Buku Tamu',
       'Library' => 'Perpustakaan',
       'Login' => 'Masuk',
@@ -19,7 +19,6 @@
       'Reply' => 'Balas',
       'Edit' => 'Sunting',
       'Delete' => 'Hapus',
-      'Quote' => 'Kutipan',
       'News archive' => 'Arsip berita',
       'Photo Albums' => 'Album Foto',
       'Information, FAQ' => 'Informasi, FAQ',

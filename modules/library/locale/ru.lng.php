@@ -101,7 +101,6 @@
       'All Articles added in database' => 'Все статьи добавлены в базу данных',
       'Article' => 'Статья',
       'Added to the database' => 'Добавлена в базу данных',
-      'Who added' => 'Кто добавил',
       'Approve all' => 'Одобрить все',
       'Search query' => 'Запрос',
       'Search in titles Articles' => 'Искать в заголовках статей',

@@ -93,7 +93,6 @@
       'All Articles added in database' => 'جميع المواد المضافة في قاعدة البيانات',
       'Article' => 'مقالة',
       'Added to the database' => 'تم اضافته في قاعدة البيانات',
-      'Who added' => 'الذي أضاف',
       'Approve all' => 'الموافقة على كل',
       'Search in titles Articles' => 'البحث في عناوين المقالات',
       'Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance' => 'طول الاستعلام: هو مين 4 64 حد<br>البحث عن الأحرف متحسسة لحالة الأحرف <br>يتم فرز النتائج حسب أهميتها',

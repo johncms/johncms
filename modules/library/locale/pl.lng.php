@@ -101,7 +101,6 @@
       'All Articles added in database' => 'Wszystkie artykuły dodane do bazy danych',
       'Article' => 'Artykuł',
       'Added to the database' => 'Dodany do bazy danych',
-      'Who added' => 'Kto dodał',
       'Approve all' => 'Zatwierdź wszystkie',
       'Search query' => 'Szukaj zapytania',
       'Search in titles Articles' => 'Szukaj po tytułach artykułów',

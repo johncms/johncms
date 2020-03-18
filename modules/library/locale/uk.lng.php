@@ -101,7 +101,6 @@
       'All Articles added in database' => 'Всі статті додані в базу даних',
       'Article' => 'Стаття',
       'Added to the database' => 'Додано в базу даних',
-      'Who added' => 'Хто додав',
       'Approve all' => 'Затвердити всі',
       'Search query' => 'Пошуковий запит',
       'Search in titles Articles' => 'Шукати у заголовках статей',

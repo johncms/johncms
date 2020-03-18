@@ -5,9 +5,9 @@
   array (
     '' => 
     array (
+      'Forum' => 'Forum',
       'Users' => 'Utilizatori',
       'Downloads' => 'Descarcari',
-      'Forum' => 'Forum',
       'Guestbook' => 'Guestbook',
       'Library' => 'Librarie',
       'Login' => 'Logare',
@@ -19,7 +19,6 @@
       'Reply' => 'Raspunde',
       'Edit' => 'Editeaza',
       'Delete' => 'Sterge',
-      'Quote' => 'Citat',
       'News archive' => 'Arhiva Stiri',
       'Photo Albums' => 'Albume Foto',
       'Information, FAQ' => 'Informatii, Reguli',

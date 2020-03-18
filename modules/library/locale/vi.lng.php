@@ -93,7 +93,6 @@
       'All Articles added in database' => 'Tất cả bài viết đã được thêm vào CSDL',
       'Article' => 'Bài viết',
       'Added to the database' => 'Đã thêm vào CSDL',
-      'Who added' => 'Những người thêm vào',
       'Approve all' => 'Chấp nhận tất cả',
       'Search in titles Articles' => 'Tìm kiếm trong tiêu đề bài viết',
       'Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance' => 'Chiều dài của truy vấn: tối thiểu 4, tối 64 ký tự <br>Tìm kiếm là trường hợp nhạy cảm <br>Kết quả được sắp xếp theo mức độ liên quan',

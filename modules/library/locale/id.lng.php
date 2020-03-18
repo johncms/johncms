@@ -92,7 +92,6 @@
       'All Articles added in database' => 'Semua artikel ditambahkan ke basis data',
       'Article' => 'Artikel',
       'Added to the database' => 'Ditambahkan ke basis data',
-      'Who added' => 'Yang ditambahkan',
       'Approve all' => 'Terima semua',
       'Search in titles Articles' => 'Cari judul artikel',
       'Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance' => 'Panjang kueri: min. 4, maks. 64<br>Pencarian menggunakan huruf tidak sensitif<br>Hasil diurutkan berdasarkan relevansi',
