@@ -10,7 +10,9 @@
 
 declare(strict_types=1);
 
+use Carbon\Carbon;
 use Johncms\FileInfo;
+use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\Counters;
@@ -626,6 +628,15 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     $messages[] = $res;
                     $i++;
                 }
+
+                // Помечаем уведомления прочитанными
+                $post_ids = array_column($messages, 'id');
+                $notifications = (new Notification())
+                    ->where('module', '=', 'forum')
+                    ->where('event_type', '=', 'new_message')
+                    ->whereNull('read_at')
+                    ->whereIn('entity_id', $post_ids)
+                    ->update(['read_at' => Carbon::now()]);
 
                 // Нижнее поле "Написать"
                 $write_access = false;
