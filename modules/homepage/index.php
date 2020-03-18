@@ -31,6 +31,15 @@ $tools = di(Tools::class);
 $nav_chain = di(NavChain::class);
 $nav_chain->showHomePage(false);
 
+// Устанавливаем мета теги keywords и description
+$config = di('config')['johncms'];
+$view->addData(
+    [
+        'keywords'    => $config['meta_key'],
+        'description' => $config['meta_desc'],
+    ]
+);
+
 // Register Namespace for module templates
 $view->addFolder('homepage', __DIR__ . '/templates/');
 

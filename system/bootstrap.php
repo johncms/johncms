@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
@@ -46,6 +46,9 @@ if (DEBUG) {
     ini_set('display_errors', 'Off');
     ini_set('log_errors', 'Off');
 }
+
+header('X-Powered-CMS: JohnCMS');
+header('X-CMS-Version: ' . CMS_VERSION);
 
 session_name('SESID');
 session_start();
