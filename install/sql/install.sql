@@ -729,7 +729,7 @@ CREATE TABLE `users`
     `comm_count`            INT(10) UNSIGNED    NOT NULL DEFAULT '0',
     `comm_old`              INT(10) UNSIGNED    NOT NULL DEFAULT '0',
     `smileys`               TEXT                NOT NULL,
-    `notification_settings` TEXT COMMENT 'Notification settings'
+    `notification_settings` TEXT COMMENT 'Notification settings',
         PRIMARY KEY (`id`),
     KEY `name_lat` (`name_lat`),
     KEY `lastdate` (`lastdate`),
@@ -888,7 +888,7 @@ ALTER TABLE `forum_topic`
     MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 1;
 
-
+DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE `notifications`
 (
     `id`         int(10) UNSIGNED                        NOT NULL,
