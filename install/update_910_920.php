@@ -29,6 +29,7 @@ Capsule::Schema()->create(
         $table->string('event_type')->comment('Event type');
         $table->integer('user_id')->unsigned()->index()->comment('User identifier');
         $table->integer('sender_id')->unsigned()->nullable()->comment('Sender identifier');
+        $table->integer('entity_id')->unsigned()->nullable()->comment('Entity identifier');
         $table->text('fields')->nullable()->comment('Event fields');
         $table->timestamp('read_at')->nullable()->comment('Read date');
         $table->timestamps();
@@ -38,6 +39,7 @@ Capsule::Schema()->create(
             ->on('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+        $table->index(['user_id', 'module', 'event_type', 'entity_id']);
     }
 );
 

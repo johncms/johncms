@@ -27,6 +27,7 @@ use Johncms\Users\User;
  * @property string $event_type - Тип события
  * @property int $user_id - Идентификатор пользователя-получателя уведомления
  * @property int $sender_id - Идентификатор отправителя
+ * @property int $entity_id - Идентификатор сущности к которой относится уведомление (например сообщение на форуме)
  * @property array $fields - Массив полей, который будет доступен для использования в шаблонах
  *
  * @property array $message - Вычисляемое свойство - сообщение
@@ -51,6 +52,7 @@ class Notification extends Model
         'event_type',
         'user_id',
         'sender_id',
+        'entity_id',
         'fields',
         'read_at',
     ];

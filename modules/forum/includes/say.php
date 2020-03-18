@@ -529,16 +529,22 @@ switch ($post_type) {
             $tools->recountForumTopic($th);
 
             // Добавляем уведомление об ответе
+            $preview_message = strip_tags($tools->checkout(trim($_POST['msg']), 1, 1));
+            $preview_message = strlen($preview_message) > 200 ? mb_substr($preview_message, 0, 200) . '...' : $preview_message;
+            $preview_message = $tools->smilies($preview_message, ($user->rights > 0));
             (new Notification())->create(
                 [
                     'module'     => 'forum',
                     'event_type' => 'new_message',
                     'user_id'    => $type1['user_id'],
                     'sender_id'  => $user->id,
+                    'entity_id'  => $fadd,
                     'fields'     => [
-                        'topic_name' => $th1['name'],
-                        'user_name'  => $user->name,
-                        'topic_url'  => '/forum/?type=topic&amp;id=' . $th,
+                        'topic_name'       => htmlspecialchars($th1['name']),
+                        'user_name'        => htmlspecialchars($user->name),
+                        'topic_url'        => '/forum/?type=topic&amp;id=' . $th,
+                        'reply_to_message' => '/forum/?act=show_post&id=' . $type1['id'],
+                        'message'          => $preview_message,
                     ],
                 ]
             );
