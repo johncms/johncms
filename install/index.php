@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-const JOHNCMS = '9.1.0';
+const JOHNCMS = '9.2.0';
 
 // Check the current PHP version
 if (version_compare(PHP_VERSION, '7.2', '<')) {
