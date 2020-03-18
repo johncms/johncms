@@ -7,16 +7,20 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
 #### Added
 - Внедрена библиотека для работы с базой данных [illuminate/database](https://github.com/illuminate/database)
-- Для работы с пользователями добавлен класс (модель) [Johncms\Users\User](https://github.com/johncms/johncms/blob/develop/system/src/Users/User.php) Наследует Illuminate\Database\Eloquent\Model со всем вытекающим функционалом.
-- Для работы с уведомлениями добавлен класс (модель) [Johncms\Notifications\Notification](https://github.com/johncms/johncms/blob/develop/system/src/Notifications/Notification.php) Наследует Illuminate\Database\Eloquent\Model со всем вытекающим функционалом.
+- Для работы с пользователями добавлен класс (модель) [Johncms\Users\User](https://github.com/johncms/johncms/blob/develop/system/src/Users/User.php) Наследует `Illuminate\Database\Eloquent\Model` со всем вытекающим функционалом.
+- Для работы с уведомлениями добавлен класс (модель) [Johncms\Notifications\Notification](https://github.com/johncms/johncms/blob/develop/system/src/Notifications/Notification.php) Наследует `Illuminate\Database\Eloquent\Model` со всем вытекающим функционалом.
 - Добавлена возможность просмотра списка запросов, которые были выполнены на данной странице (функционал работает только для запросов выполненных через ORM). Запросы через обычный PDO не учитываются.
+- В ORM добавлена упрощенная возможность работы с постраничной навигацией. Достаточно вызвать метод `->paginate()`. При этом запрос количества объектов и установка ограничений будет выполнена автоматически. URL адреса так же формируются автоматически исходя из адреса текущей страницы.
+- В классе `Johncms\System\Http\Request` добавлен метод `getQueryString()`, который позволяет получить текущий URL с отсечением ненужных параметров.
 
 #### Changed
 - Модуль кто онлайн переделан для использования ORM.
 - Модуль community переделан на новое api пользователей.
 - В модуль уведомлений добавлены настройки отображения непрочитанных на форуме
 - В модуль уведомлений добавлено оповещение об ответах и цитатах на форуме
+- В модуле уведомлений теперь отображаются уведомления о голосах в карме пользователя.
 - Сторонние модули могут добавлять свои уведомления в центр уведомлений.
+- Рефакторинг страниц личного кабинета для использования ORM. Попутно доработана модель пользователя, она теперь позволяет получить практически все данные пользователя в подготовленном виде в любом месте где используется `Johncms\Users\User`
 
 #### Deprecated
 
