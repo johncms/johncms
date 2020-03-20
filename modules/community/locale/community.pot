@@ -2,37 +2,37 @@ msgid ""
 msgstr ""
 "X-Domain: community\n"
 
-#: modules/community/includes/administration.php:27
 #: modules/community/includes/administration.php:33
-#: modules/community/includes/administration.php:34
+#: modules/community/includes/administration.php:39
+#: modules/community/includes/administration.php:40
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
 msgstr ""
 
-#: modules/community/includes/birthdays.php:20
-#: modules/community/includes/birthdays.php:26
-#: modules/community/includes/birthdays.php:27
+#: modules/community/includes/birthdays.php:25
+#: modules/community/includes/birthdays.php:31
+#: modules/community/includes/birthdays.php:32
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
 msgstr ""
 
-#: modules/community/includes/search.php:24
-#: modules/community/templates/search.phtml:67
+#: modules/community/includes/search.php:23
+#: modules/community/templates/search.phtml:81
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
 msgstr ""
 
-#: modules/community/includes/search.php:33
-#: modules/community/includes/search.php:37
+#: modules/community/includes/search.php:32
+#: modules/community/includes/search.php:36
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
 msgstr ""
 
-#: modules/community/includes/search.php:33
+#: modules/community/includes/search.php:32
 msgid "Invalid length"
 msgstr ""
 
-#: modules/community/includes/search.php:37
+#: modules/community/includes/search.php:36
 msgid "Invalid characters"
 msgstr ""
 
@@ -68,9 +68,9 @@ msgstr ""
 msgid "Most active in Forum"
 msgstr ""
 
-#: modules/community/includes/users.php:27
-#: modules/community/includes/users.php:33
+#: modules/community/includes/users.php:28
 #: modules/community/includes/users.php:34
+#: modules/community/includes/users.php:35
 msgid "List of users"
 msgstr ""
 
@@ -83,17 +83,17 @@ msgid "For registered users only"
 msgstr ""
 
 #: modules/community/templates/index.phtml:30
-#: modules/community/templates/search.phtml:29
+#: modules/community/templates/search.phtml:43
 msgid "Look for the User"
 msgstr ""
 
 #: modules/community/templates/index.phtml:34
-#: modules/community/templates/search.phtml:33
+#: modules/community/templates/search.phtml:47
 msgid "Search"
 msgstr ""
 
 #: modules/community/templates/index.phtml:37
-#: modules/community/templates/search.phtml:36
+#: modules/community/templates/search.phtml:50
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr ""
 
@@ -105,43 +105,43 @@ msgstr ""
 msgid "Top Activity"
 msgstr ""
 
-#: modules/community/templates/search.phtml:31
+#: modules/community/templates/search.phtml:45
 msgid "Username"
 msgstr ""
 
-#: modules/community/templates/search.phtml:50
+#: modules/community/templates/search.phtml:64
 #: modules/community/templates/top.phtml:40
 #: modules/community/templates/users.phtml:33
 msgid "List is empty"
 msgstr ""
 
-#: modules/community/templates/search.phtml:57
+#: modules/community/templates/search.phtml:71
 #: modules/community/templates/users.phtml:40
 msgid "Total"
 msgstr ""
 
-#: modules/community/templates/search.phtml:70
+#: modules/community/templates/search.phtml:84
 #: modules/community/templates/top.phtml:47
 #: modules/community/templates/users.phtml:53
 msgid "Back"
 msgstr ""
 
-#: modules/community/templates/user_row.phtml:61
-#: modules/community/templates/user_row.phtml:67
+#: modules/community/templates/user_row.phtml:62
+#: modules/community/templates/user_row.phtml:68
 msgid "post"
 msgid_plural "posts"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:63
+#: modules/community/templates/user_row.phtml:64
 msgid "comment"
 msgid_plural "comments"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:65
+#: modules/community/templates/user_row.phtml:66
 msgid "point"
 msgid_plural "points"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:89
+#: modules/community/templates/user_row.phtml:90
 msgid "Delete"
 msgstr ""

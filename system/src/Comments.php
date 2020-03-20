@@ -23,66 +23,86 @@ use Psr\Container\ContainerInterface;
 
 class Comments
 {
-    // Служебные данные
-    private $object_table;                                // Таблица комментируемых объектов
+    /** @var bool|mixed Таблица комментируемых объектов */
+    private $object_table;
 
-    private $comments_table;                              // Таблица с комментариями
+    /** @var string Таблица с комментариями */
+    private $comments_table;
 
-    private $templates_namespace;                         // Namespace для шаблонов
+    /** @var string Namespace для шаблонов */
+    private $templates_namespace;
 
-    private $sub_id = false;                              // Идентификатор комментируемого объекта
+    /** @var bool|mixed Идентификатор комментируемого объекта */
+    private $sub_id = false;
 
-    private $item;                                        // Локальный идентификатор
+    /** @var bool|int Локальный идентификатор */
+    private $item;
 
+    /** @var bool|int */
     private $owner = false;
 
-    private $ban = false;                                 // Находится ли юзер в бане?
+    /** @var bool Имеет ли юзер активный бан? */
+    private $ban = false;
 
-    private $url;                                         // URL формируемых ссылок
+    /** @var string URL формируемых ссылок */
+    private $url;
 
+    /** @var Render */
     private $view;
 
-    /**
-     * @var PDO
-     */
+    /** @var PDO */
     private $db;
 
-    /**
-     * @var Tools
-     */
+    /** @var Tools */
     private $tools;
 
-    /**
-     * @var User
-     */
+    /** @var User */
     private $systemUser;
 
-    // Права доступа
-    private $access_reply = false;                        // Возможность отвечать на комментарий
+    /** @var bool Возможность отвечать на комментарий */
+    private $access_reply = false;
 
-    private $access_edit = false;                         // Возможность редактировать комментарий
+    /** @var bool Возможность редактировать комментарий */
+    private $access_edit = false;
 
-    private $access_delete = false;                       // Возможность удалять комментарий
+    /** @var bool Возможность удалять комментарий */
+    private $access_delete = false;
 
-    private $access_level = 6;                            // Уровень доступа для Администрации
+    /** @var int Уровень доступа для Администрации */
+    private $access_level = 6;
 
     // Параметры отображения комментариев
-    public $min_lenght = 4;                               // Мин. к-во символов в комментарии
 
-    public $max_lenght = 5000;                            // Макс. к-во символов в комментарии
+    /** @var int Мин. к-во символов в комментарии */
+    public $min_lenght = 4;
 
-    public $captcha = false;                              // Показывать CAPTCHA
+    /** @var int Макс. к-во символов в комментарии */
+    public $max_lenght = 5000;
+
+    /** @var bool Показывать CAPTCHA */
+    public $captcha = false;
 
     // Возвращаемые значения
-    public $total = 0;                                    // Общее число комментариев объекта
 
-    public $added = false;                                // Метка добавления нового комментария
+    /** @var int Общее число комментариев объекта */
+    public $total = 0;
 
-    public $back_url = '';                                // Страница возврата назад
+    /** @var bool Метка добавления нового комментария */
+    public $added = false;
+
+    /** @var string Страница возврата назад */
+    public $back_url = '';
 
     /** @var NavChain $nav_chain */
     public $nav_chain;
 
+    /**
+     * Comments constructor.
+     *
+     * @psalm-suppress PossiblyInvalidArrayAccess
+     *
+     * @param array $arg
+     */
     public function __construct($arg = [])
     {
         global $mod, $start;
@@ -272,7 +292,7 @@ class Comments
                                 '
                                 )->execute(
                                     [
-                                        $message['text'],
+                                        $message['text'] ?? '',
                                         serialize($attributes),
                                         $this->item,
                                     ]
@@ -387,7 +407,7 @@ class Comments
                     isset($_POST['submit']) &&
                     $this->systemUser->isValid() &&
                     ! $this->tools->isIgnor($this->owner) &&
-                    ($message = $this->msgCheck(1)) !== false
+                    ($message = $this->msgCheck(true)) !== false
                 ) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
@@ -485,7 +505,11 @@ class Comments
     }
 
     // Добавляем комментарий в базу
-    private function addComment($message)
+
+    /**
+     * @param false|string $message
+     */
+    private function addComment($message): void
     {
         /** @var ContainerInterface $container */
         $container = Factory::getContainer();
@@ -533,7 +557,7 @@ class Comments
     }
 
     // Форма ввода комментария
-    private function msgForm($submit_link = '', $text = '', $reply = '')
+    private function msgForm(string $submit_link = '', string $text = '', string $reply = ''): string
     {
         return $this->view->render(
             $this->templates_namespace . '::pages/comments_form',
@@ -548,15 +572,18 @@ class Comments
         );
     }
 
-    // Проверка текста сообщения
-    // $rpt_check (boolean)    проверка на повтор сообщений
-    private function msgCheck($rpt_check = false)
+    /**
+     * Проверка текста сообщения
+     *
+     * @param bool $rpt_check проверка на повтор сообщений
+     * @return array|bool
+     */
+    private function msgCheck(bool $rpt_check = false)
     {
         $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
         $code = isset($_POST['code']) ? (int) ($_POST['code']) : null;
         $code_chk = $_SESSION['code'] ?? null;
-        $translit = isset($_POST['translit']);
 
         // Проверяем код
         if ($code == $code_chk) {
@@ -592,7 +619,12 @@ class Comments
     }
 
     // Счетчик комментариев
-    private function msgTotal($update = false)
+
+    /**
+     * @param false|int $update
+     * @return int
+     */
+    private function msgTotal($update = false): int
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
 
@@ -601,6 +633,6 @@ class Comments
             $this->db->exec('UPDATE `' . $this->object_table . "` SET `comm_count` = '${total}' WHERE `id` = '" . $this->sub_id . "'");
         }
 
-        return $total;
+        return (int) $total;
     }
 }

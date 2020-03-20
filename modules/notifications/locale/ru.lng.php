@@ -5,7 +5,7 @@
   array (
     '' => 
     array (
-      'Notifications' => 'Уведомления',
+      'Notifications are cleared!' => 'Уведомления очищены!',
       'Users on registration' => 'Пользователи на регистрации',
       'Articles on moderation' => 'Статьи на модерации',
       'Downloads on moderation' => 'Загрузки на модерации',
@@ -14,7 +14,15 @@
       'Mail' => 'Почта',
       'Guestbook' => 'Гостевая книга',
       'Comments' => 'Комментарии',
+      'Settings' => 'Настройки',
+      'Settings saved!' => 'Настройки сохранены!',
+      'Notifications' => 'Уведомления',
       'All notifications have already been read' => 'Все уведомления уже прочитаны',
+      'Total' => 'Всего',
+      'Clear notifications' => 'Очистить уведомления',
+      'Display the number of unread messages in the forum' => 'Показывать количество непрочитанных сообщений на форуме',
+      'Save' => 'Сохранить',
+      'Cancel' => 'Отмена',
     ),
   ),
 );

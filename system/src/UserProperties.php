@@ -53,25 +53,25 @@ class UserProperties
         }
 
         $data_array['user_is_online'] = time() <= $user_data['lastdate'] + 300;
-
-        $data_array['user_rights_name'] = $this->getRightsName($user_data['rights'] ?? 0);
+        $rights = isset($user_data['rights']) ? (int) $user_data['rights'] : 0;
+        $data_array['user_rights_name'] = $this->getRightsName($rights);
 
         return $data_array;
     }
 
     /**
-     * @param $rights
+     * @param int $rights
      * @return string
      */
-    public function getRightsName($rights): string
+    public function getRightsName(int $rights): string
     {
         $user_rights_names = [
-            3 => __('Forum moderator'),
-            4 => __('Download moderator'),
-            5 => __('Library moderator'),
-            6 => __('Super moderator'),
-            7 => __('Administrator'),
-            9 => __('Supervisor'),
+            3 => d__('system', 'Forum moderator'),
+            4 => d__('system', 'Download moderator'),
+            5 => d__('system', 'Library moderator'),
+            6 => d__('system', 'Super moderator'),
+            7 => d__('system', 'Administrator'),
+            9 => d__('system', 'Supervisor'),
         ];
 
         return array_key_exists($rights, $user_rights_names) ? $user_rights_names[$rights] : '';

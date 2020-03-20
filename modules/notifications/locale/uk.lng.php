@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Notifications' => 'Сповіщення',
       'Users on registration' => 'Користувачі на реєстрації',
       'Articles on moderation' => 'Статті на модерації',
       'Downloads on moderation' => 'Завантаження на модерації',
@@ -14,6 +13,7 @@
       'Mail' => 'Пошта',
       'Guestbook' => 'Гостьова книга',
       'Comments' => 'Коментарі',
+      'Notifications' => 'Сповіщення',
       'All notifications have already been read' => 'Всі сповіщення уже переглянуті',
     ),
   ),

@@ -34,7 +34,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/registration[/]', 'modules/registration/index.php');            // New users registration
 
     if ($user->isValid()) {
-        $map->addRoute(['GET', 'POST'], '/notifications[/]', 'modules/notifications/index.php');      // Notifications
+        $map->addRoute(['GET', 'POST'], '/notifications/[{action}/]', 'modules/notifications/index.php');      // Notifications
     }
 
     if ($user->rights >= 6 && $user->isValid()) {
@@ -43,6 +43,7 @@ return static function (RouteCollector $map, User $user) {
 
     // Custom routes
     if (is_file(CONFIG_PATH . 'routes.local.php')) {
+        /** @psalm-suppress MissingFile */
         require CONFIG_PATH . 'routes.local.php';
     }
 };

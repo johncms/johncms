@@ -47,7 +47,7 @@ if ($total) {
 		LIMIT " . $start . ',' . $user->config->kmess
     );
 
-    for ($i = 0; $row = $req->fetch(); ++$i) {
+    while ($row = $req->fetch()) {
         $count_message = $db->query(
             "SELECT COUNT(*) FROM `cms_mail`
             WHERE `user_id`='{$row['id']}'

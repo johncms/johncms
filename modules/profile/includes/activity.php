@@ -10,31 +10,36 @@
 
 declare(strict_types=1);
 
+use Johncms\Users\User;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$foundUser = (array) $foundUser;
+/**
+ * @var User $user_data
+ * @var User $user
+ */
 
 // История активности
-$title = __('Activity') . ' - ' . htmlspecialchars($foundUser['name']);
+$title = __('Activity') . ' - ' . htmlspecialchars($user_data->name);
 
-$nav_chain->add(($foundUser['id'] !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $foundUser['id']);
+$nav_chain->add(($user_data->id !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $user_data->id);
 $nav_chain->add($title);
 
 $data = [];
 $data['filters'] = [
     'messages' => [
         'name'   => __('Messages'),
-        'url'    => '?act=activity&amp;user=' . $foundUser['id'],
+        'url'    => '?act=activity&amp;user=' . $user_data->id,
         'active' => ! $mod,
     ],
     'topic'    => [
         'name'   => __('Themes'),
-        'url'    => '?act=activity&amp;mod=topic&amp;user=' . $foundUser['id'],
+        'url'    => '?act=activity&amp;mod=topic&amp;user=' . $user_data->id,
         'active' => $mod === 'topic',
     ],
     'comments' => [
         'name'   => __('Comments'),
-        'url'    => '?act=activity&amp;mod=comments&amp;user=' . $foundUser['id'],
+        'url'    => '?act=activity&amp;mod=comments&amp;user=' . $user_data->id,
         'active' => $mod === 'comments',
     ],
 ];
@@ -44,8 +49,8 @@ $activity = [];
 switch ($mod) {
     case 'comments':
         // Список сообщений в Гостевой
-        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
-        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess);
+        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
+        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->set_user->kmess);
         $data['item_type'] = 'comment';
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
@@ -59,8 +64,8 @@ switch ($mod) {
     case 'topic':
         // Список тем Форума
         $data['item_type'] = 'topic';
-        $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
-        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess);
+        $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->set_user->kmess);
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
@@ -90,9 +95,9 @@ switch ($mod) {
     default:
         // Список постов Форума
         $data['item_type'] = 'message';
-        $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
         $req = $db->query(
-            "SELECT * FROM `forum_messages` WHERE `user_id` = '" . $foundUser['id'] . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->config->kmess
+            "SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user_data->id . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->set_user->kmess
         );
 
         if ($req->rowCount()) {
@@ -122,7 +127,7 @@ switch ($mod) {
 }
 
 $data['total'] = $total;
-$data['pagination'] = $tools->displayPagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess);
+$data['pagination'] = $tools->displayPagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $user_data->id . '&amp;', $start, $total, $user->set_user->kmess);
 $data['activity'] = $activity ?? [];
 
 echo $view->render(

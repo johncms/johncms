@@ -68,7 +68,7 @@ $items = [];
 if ($total && $user->rights) {
     for ($i = $start; $i < $end; $i++) {
         $ipLong = key($ip_list[$i]);
-        $ip = long2ip($ipLong);
+        $ip = long2ip((int) $ipLong);
 
         $items[] = [
             'ip'              => $ip,

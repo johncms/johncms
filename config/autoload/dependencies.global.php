@@ -10,7 +10,10 @@
 
 declare(strict_types=1);
 
+use Intervention\Image\ImageManager;
 use Johncms\Ads;
+use Johncms\AdsFactory;
+use Johncms\ImageManagerFactory;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
@@ -18,11 +21,12 @@ use Johncms\System\Legacy\Tools;
 return [
     'dependencies' => [
         'factories' => [
-            Bbcode::class   => Bbcode::class,
-            NavChain::class => NavChain::class,
-            Ads::class      => Ads::class,
-            Tools::class    => Tools::class,
-            'counters'      => Johncms\Counters::class,
+            Bbcode::class       => Bbcode::class,
+            NavChain::class     => NavChain::class,
+            ImageManager::class => ImageManagerFactory::class,
+            Ads::class          => AdsFactory::class,
+            Tools::class        => Tools::class,
+            'counters'          => Johncms\CountersFactory::class,
         ],
     ],
 ];

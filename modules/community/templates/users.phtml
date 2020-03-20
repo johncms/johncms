@@ -24,7 +24,7 @@ $this->layout(
 ?>
 <!-- List of Users -->
 <?php if ($total): ?>
-    <?php foreach ($list() as $usr): ?>
+    <?php foreach ($list as $usr): ?>
         <?= $this->fetch('users::user_row', ['item' => $usr]) ?>
     <?php endforeach ?>
 <?php else: ?>

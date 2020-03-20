@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<psalm
+        totallyTyped="false"
+        findUnusedCode="false"
+        resolveFromConfigFile="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="config"/>
+        <directory name="modules"/>
+        <directory name="system"/>
+        <ignoreFiles>
+            <directory name="modules/admin"/>
+            <directory name="modules/album"/>
+            <directory name="modules/community"/>
+            <directory name="modules/downloads"/>
+            <directory name="modules/forum"/>
+            <directory name="modules/guestbook"/>
+            <directory name="modules/help"/>
+            <directory name="modules/homepage"/>
+            <directory name="modules/language"/>
+            <directory name="modules/library"/>
+            <directory name="modules/login"/>
+            <directory name="modules/mail"/>
+            <directory name="modules/news"/>
+            <directory name="modules/notifications"/>
+            <directory name="modules/online"/>
+            <directory name="modules/profile"/>
+            <directory name="modules/redirect"/>
+            <directory name="modules/registration"/>
+            <directory name="modules/rss"/>
+
+            <directory name="system/src-legacy"/>
+            <directory name="system/vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <stubs>
+        <file name="system/vendor/gettext/translator/src/functions.php"/>
+    </stubs>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info"/>
+    </issueHandlers>
+</psalm>

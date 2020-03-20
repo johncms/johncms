@@ -5,9 +5,9 @@
   array (
     '' => 
     array (
+      'Forum' => 'Diễn đàn',
       'Users' => 'Thành viên',
       'Downloads' => 'Tải xuống',
-      'Forum' => 'Diễn đàn',
       'Guestbook' => 'Phòng trò truyện',
       'Library' => 'Thư viện',
       'Login' => 'Đăng nhập',
@@ -19,7 +19,6 @@
       'Reply' => 'Phản hồi',
       'Edit' => 'Chỉnh sửa',
       'Delete' => 'Xóa',
-      'Quote' => 'Trích dẫn',
       'News archive' => 'Tin tức lưu trữ',
       'Photo Albums' => 'Albums hình ảnh',
       'Information, FAQ' => 'Thông tin, câu hỏi thường gặp',

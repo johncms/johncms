@@ -22,11 +22,16 @@ $ads_array = $ads->getAds();
     <meta name="MobileOptimized" content="width">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
-    <meta name="keywords" content="<?= $config['meta_key'] ?>">
-    <meta name="description" content="<?= $config['meta_desc'] ?>">
+    <?php if (! empty($keywords)): ?>
+        <meta name="keywords" content="<?= $this->e($keywords) ?>">
+    <?php endif ?>
+    <?php if (! empty($description)): ?>
+        <meta name="description" content="<?= $this->e($description) ?>">
+    <?php endif ?>
     <meta name="theme-color" content="#586776">
     <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
+    <?= $this->section('styles', '') ?>
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
     <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config['copyright'] ?></title>
 </head>
@@ -134,9 +139,7 @@ $ads_array = $ads->getAds();
                 <div>
                     &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
                 </div>
-                <?php if ($user->rights >= 7): ?>
-                    <div class="position-absolute small" style="bottom: -13px; right: 0;"><?= format_size(memory_get_usage()) ?>, <?= round(microtime(true) - START_TIME, 2) ?> sec.</div>
-                <?php endif ?>
+                <?= $this->fetch('system::app/debug') ?>
             </div>
         </div>
     </div>
@@ -148,5 +151,6 @@ $ads_array = $ads->getAds();
     </div>
 </div>
 <script src="<?= $this->asset('js/app.js', true) ?>"></script>
+<?= $this->section('scripts', '') ?>
 </body>
 </html>

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\UserProperties;
+use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -46,14 +46,14 @@ if ($config['karma']) {
 switch ($mod) {
     case 'guest':
         // Топ Гостевой
-        $req = $db->query('SELECT * FROM `users` WHERE `postguest` > 0 ORDER BY `postguest` DESC LIMIT 9');
+        $users = (new User())->where('postguest', '>', 0)->orderBy('postguest', 'desc')->limit(9)->get();
         $title = __('Most active in Guestbook');
         $active = 'guest';
         break;
 
     case 'comm':
         // Топ комментариев
-        $req = $db->query('SELECT * FROM `users` WHERE `komm` > 0 ORDER BY `komm` DESC LIMIT 9');
+        $users = (new User())->where('komm', '>', 0)->orderBy('komm', 'desc')->limit(9)->get();
         $title = __('Most commentators');
         $active = 'comm';
         break;
@@ -61,7 +61,7 @@ switch ($mod) {
     case 'karma':
         // Топ Кармы
         if ($config['karma']) {
-            $req = $db->query('SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9');
+            $users = (new User())->selectRaw('*, (`karma_plus` - `karma_minus`) as `karma`')->whereRaw('(`karma_plus` - `karma_minus`) > 0')->orderBy('karma', 'desc')->limit(9)->get();
             $title = __('Best Karma');
             $active = 'karma';
         }
@@ -69,7 +69,7 @@ switch ($mod) {
 
     default:
         // Топ Форума
-        $req = $db->query('SELECT * FROM `users` WHERE `postforum` > 0 ORDER BY `postforum` DESC LIMIT 9');
+        $users = (new User())->where('postforum', '>', 0)->orderBy('postforum', 'desc')->limit(9)->get();
         $title = __('Most active in Forum');
         $active = 'forum';
 }
@@ -79,18 +79,10 @@ $tabs[$active]['active'] = true;
 $nav_chain->add($title);
 
 $data = [
-    'total'      => $req->rowCount(),
+    'total'      => $users->count(),
     'active_tab' => $active,
     'tabs'       => $tabs,
-    'list'       => static function () use ($req, $user) {
-        while ($res = $req->fetch()) {
-            $res['user_id'] = $res['id'];
-            $user_properties = new UserProperties();
-            $user_data = $user_properties->getFromArray($res);
-            $res = array_merge($res, $user_data);
-            yield $res;
-        }
-    },
+    'list'       => $users,
 ];
 
 echo $view->render(

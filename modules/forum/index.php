@@ -10,6 +10,9 @@
 
 declare(strict_types=1);
 
+use Carbon\Carbon;
+use Johncms\FileInfo;
+use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\Counters;
@@ -593,20 +596,15 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
                         while ($fres = $freq->fetch()) {
                             $file_params = [];
-                            $file_params['file_size'] = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
-
-                            $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
-                            $pic_ext = [
-                                'gif',
-                                'jpg',
-                                'jpeg',
-                                'png',
-                            ];
-
+                            $file_info = new FileInfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename']);
+                            if (! $file_info->isFile()) {
+                                continue;
+                            }
+                            $file_params['file_size'] = format_size($file_info->getSize());
                             $file_params['file_preview'] = '';
                             $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
                             $file_params['delete_url'] = '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'];
-                            if (in_array($att_ext, $pic_ext)) {
+                            if ($file_info->isImage()) {
                                 $file_params['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename']));
                             }
 
@@ -630,6 +628,15 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     $messages[] = $res;
                     $i++;
                 }
+
+                // Помечаем уведомления прочитанными
+                $post_ids = array_column($messages, 'id');
+                $notifications = (new Notification())
+                    ->where('module', '=', 'forum')
+                    ->where('event_type', '=', 'new_message')
+                    ->whereNull('read_at')
+                    ->whereIn('entity_id', $post_ids)
+                    ->update(['read_at' => Carbon::now()]);
 
                 // Нижнее поле "Написать"
                 $write_access = false;

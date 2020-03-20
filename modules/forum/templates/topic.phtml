@@ -284,12 +284,12 @@ $this->layout(
                 <!-- Files block -->
                 <div class="mt-3 pb-1">
                     <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
-                    <div class="d-flex flex-wrap">
+                    <div class="d-flex flex-wrap image-gallery">
                         <?php foreach ($item['files'] as $file): ?>
                             <div class="attached-file pr-3 d-flex flex-column justify-content-between">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <?php if (! empty($file['file_preview'])): ?>
-                                        <a href="<?= $file['file_url'] ?>" class="image-preview" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
+                                        <a href="<?= $file['file_url'] ?>" class="gallery-item" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
                                             <img src="<?= $file['file_preview'] ?>" class="img-thumbnail thumb-limit-height" alt="<?= $file['filename'] ?>">
                                         </a>
                                     <?php else: ?>
@@ -308,7 +308,7 @@ $this->layout(
                                             </svg>
                                             <?= $file['dlcount'] ?>
                                         </div>
-                                        <div>(<?= $file['file_size'] ?>&nbsp;kb)</div>
+                                        <div>(<?= $file['file_size'] ?>)</div>
                                     </div>
                                     <div class="file-name">
                                         <a href="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>"><?= $file['filename'] ?></a>

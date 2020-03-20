@@ -59,13 +59,13 @@ switch ($mod) {
         $search_post = isset($_POST['search']) ? trim($_POST['search']) : '';
         $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
         $search = ! empty($search_post) ? $search_post : $search_get;
-        //$search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
+        $search = preg_replace("/[^\w\x7F-\xFF\s]/", ' ', $search);
         $search_t = isset($_REQUEST['t']);
         $to_history = false;
         $total = 0;
 
         // Проверям на ошибки
-        $error = $search && mb_strlen($search) < 4 || mb_strlen($search) > 64 ? true : false;
+        $error = (($search && mb_strlen($search) < 4) || mb_strlen($search) > 64);
         $results = [];
         if ($search && ! $error) {
             // Выводим результаты запроса
@@ -141,7 +141,7 @@ switch ($mod) {
 
                     foreach ($array as $srch) {
                         $needle = strtolower(str_replace('*', '', $srch));
-                        $pos = mb_stripos($res['text'] ?? '', $needle);
+                        $pos = (! empty($res['text']) && ! empty($needle)) ? mb_stripos($res['text'], $needle) : false;
                         if ($pos !== false) {
                             break;
                         }

@@ -18,7 +18,6 @@
       'Save' => 'Зберегти',
       'Forum rules' => 'Правила форуму',
       'My smilies' => 'Мої смайли',
-      'Wrong data' => 'Невірні дані',
       'Smiles' => 'Смайлики',
       'bbCode Tags' => 'Теги bbCode',
       'Information, FAQ' => 'Інформація, FAQ',

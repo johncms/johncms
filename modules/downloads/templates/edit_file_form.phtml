@@ -44,7 +44,7 @@ $this->layout(
                     <div class="form-group">
                         <label for="desc"><?= __('Description') ?></label>
                         <div><?= $bbcode ?></div>
-                        <textarea id="desc" class="form-control" maxlength="500" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
+                        <textarea id="desc" class="form-control" maxlength="65000" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
                     </div>
                     <?php if (! empty($audio_tags)): ?>
                         <div>

@@ -123,9 +123,9 @@ if (isset($_POST['delpost'])) {
                 $res['user_profile_link'] = '/profile/?user=' . $res['id'];
             }
             $res['user_is_online'] = time() <= $res['lastdate'] + 300;
-            $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res['ip']);
-            $res['ip'] = long2ip($res['ip']);
-            $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip($res['ip_via_proxy']) : 0;
+            $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip']);
+            $res['ip'] = long2ip((int) $res['ip']);
+            $res['ip_via_proxy'] = ! empty($res['ip_via_proxy']) ? long2ip((int) $res['ip_via_proxy']) : 0;
             $res['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $res['ip_via_proxy'];
 
             $items[] = $res;

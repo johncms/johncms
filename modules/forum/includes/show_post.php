@@ -10,6 +10,9 @@
 
 declare(strict_types=1);
 
+use Johncms\FileInfo;
+use Johncms\UserProperties;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -58,16 +61,11 @@ if (! $res) {
 $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
 
 $post = [];
-
-$res['user_profile_link'] = '';
-if ($user->isValid() && $user->id != $res['user_id']) {
-    $res['user_profile_link'] = '/profile/?user=' . $res['user_id'];
-}
-
-$res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
-
-$res['user_is_online'] = time() <= $res['lastdate'] + 300;
 $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
+
+$user_properties = new UserProperties();
+$user_data = $user_properties->getFromArray($res);
+$res = array_merge($res, $user_data);
 
 $res['reply_url'] = '';
 $res['quote_url'] = '';
@@ -77,6 +75,7 @@ if ($user->isValid() && $user->id != $res['user_id']) {
 }
 
 $res['post_time'] = $tools->displayDate($res['date']);
+$res['edit_time'] = $res['edit_count'] ? $tools->displayDate($res['edit_time']) : '';
 
 $text = $res['text'];
 $text = $tools->checkout($text, 1, 1);
@@ -87,26 +86,22 @@ $res['post_text'] = $text;
 $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
 $res['files'] = [];
 if ($freq->rowCount()) {
-    $fres = $freq->fetch();
-    $file_params = [];
-    $file_params['file_size'] = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
+    while ($fres = $freq->fetch()) {
+        $file_params = [];
+        $file_info = new FileInfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename']);
+        if (! $file_info->isFile()) {
+            continue;
+        }
+        $file_params['file_size'] = format_size($file_info->getSize());
+        $file_params['file_preview'] = '';
+        $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
+        $file_params['delete_url'] = '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'];
+        if ($file_info->isImage()) {
+            $file_params['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename']));
+        }
 
-    $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
-    $pic_ext = [
-        'gif',
-        'jpg',
-        'jpeg',
-        'png',
-    ];
-
-    $file_params['file_preview'] = '';
-    $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
-    $file_params['delete_url'] = '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'];
-    if (in_array($att_ext, $pic_ext)) {
-        $file_params['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename']));
+        $res['files'][] = array_merge($fres, $file_params);
     }
-
-    $res['files'][] = array_merge($fres, $file_params);
 }
 
 $post = $res;

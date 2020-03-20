@@ -118,17 +118,17 @@ $this->layout(
                         <div class="mb-2">
                             <?= __('Photo') ?>
                         </div>
-                        <?php if (! empty($data['user']['photo_preview'])): ?>
+                        <?php if (! empty($data['user']['photo']['photo_preview'])): ?>
                             <div class="mb-2">
-                                <a href="<?= $data['user']['photo'] ?>" title="<?= __('Photo') ?> "
-                                   data-source="<?= $data['user']['photo'] ?>" class="image-preview">
-                                    <img src="<?= $data['user']['photo_preview'] ?>" class="img-thumbnail" alt=".">
+                                <a href="<?= $data['user']['photo']['photo'] ?>" title="<?= __('Photo') ?> "
+                                   data-source="<?= $data['user']['photo']['photo'] ?>" class="image-preview">
+                                    <img src="<?= $data['user']['photo']['photo_preview'] ?>" class="img-thumbnail" alt=".">
                                 </a>
                             </div>
                         <?php endif; ?>
                         <div class="mt-2">
                             <a href="?act=images&amp;mod=up_photo&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
-                            <?php if (! empty($data['user']['photo_preview'])): ?>
+                            <?php if (! empty($data['user']['photo']['photo_preview'])): ?>
                                 <a href="?act=edit&amp;user=<?= $data['user']['id'] ?>&amp;delphoto" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
                             <?php endif; ?>
                         </div>

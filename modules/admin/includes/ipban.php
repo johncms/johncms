@@ -129,7 +129,7 @@ switch ($mod) {
                 if ($total) {
                     $data['message'] = __('Address you entered conflicts with other who in the database');
                     while ($res = $req->fetch()) {
-                        $get_ip = $res['ip1'] == $res['ip2'] ? long2ip($res['ip1']) : long2ip($res['ip1']) . ' - ' . long2ip($res['ip2']);
+                        $get_ip = $res['ip1'] == $res['ip2'] ? long2ip((int) $res['ip1']) : long2ip((int) $res['ip1']) . ' - ' . long2ip((int) $res['ip2']);
                         $res['detail_url'] = '?mod=detail&amp;id=' . $res['id'];
                         $res['ips'] = $get_ip;
 
@@ -181,17 +181,17 @@ switch ($mod) {
                 switch ($mode) {
                     case 1:
                         $ban_info['mode_name'] = __('Ban range address');
-                        $ban_info['mode_value'] = long2ip($ip1) . ' - ' . long2ip($ip2);
+                        $ban_info['mode_value'] = long2ip((int) $ip1) . ' - ' . long2ip((int) $ip2);
                         break;
 
                     case 2:
                         $ban_info['mode_name'] = __('Ban on the subnet mask');
-                        $ban_info['mode_value'] = long2ip($ip1) . ' - ' . long2ip($ip2);
+                        $ban_info['mode_value'] = long2ip((int) $ip1) . ' - ' . long2ip((int) $ip2);
                         break;
 
                     default:
                         $ban_info['mode_name'] = __('Ban IP address');
-                        $ban_info['mode_value'] = long2ip($ip1);
+                        $ban_info['mode_value'] = long2ip((int) $ip1);
                 }
 
                 switch ($ban_term) {
@@ -391,7 +391,7 @@ switch ($mod) {
             exit;
         }
         $res = $req->fetch();
-        $get_ip = $res['ip1'] == $res['ip2'] ? '<b>' . long2ip($res['ip1']) . '</b>' : '[<b>' . long2ip($res['ip1']) . '</b>] - [<b>' . long2ip($res['ip2']) . '</b>]';
+        $get_ip = $res['ip1'] == $res['ip2'] ? '<b>' . long2ip((int) $res['ip1']) . '</b>' : '[<b>' . long2ip((int) $res['ip1']) . '</b>] - [<b>' . long2ip((int) $res['ip2']) . '</b>]';
         $res['ips'] = $get_ip;
         switch ($res['ban_type']) {
             case 2:
@@ -487,7 +487,7 @@ switch ($mod) {
             $req = $db->query('SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT ' . $start . ',' . $user->config->kmess);
             $items = [];
             while ($res = $req->fetch()) {
-                $get_ip = $res['ip1'] == $res['ip2'] ? long2ip($res['ip1']) : long2ip($res['ip1']) . ' - ' . long2ip($res['ip2']);
+                $get_ip = $res['ip1'] == $res['ip2'] ? long2ip((int) $res['ip1']) : long2ip((int) $res['ip1']) . ' - ' . long2ip((int) $res['ip2']);
                 $res['detail_url'] = '?mod=detail&amp;id=' . $res['id'];
                 $res['ips'] = $get_ip;
 

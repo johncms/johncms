@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+// Пример файла для шаблонов уведомлений.
+// Для использования файла, убрать расширение .example
+// Должно получиться notifications.local.php
+
+return [
+    // Пример шаблонов уведомлений для модулей
+    'my_the_best_module' => [
+        'name'   => 'Мой лучший модуль!',
+        'events' => [
+            'my_module_event1' => [
+                'name'    => 'Новое сообщение',
+                'message' => 'Текст сообщения! #variable# дополнительный текст',
+            ],
+            'my_module_event2' => [
+                'name'    => 'Новый пост',
+                'message' => 'Текст уведомления! #variable# дополнительный текст',
+            ],
+        ],
+    ],
+];

@@ -2,26 +2,43 @@
 /**
  * @var array $notifications
  * @var array $breadcrumbs
+ * @var \Johncms\Notifications\Notification $item
  */
 
 $this->layout(
     'system::layout/default',
     [
-        'title'       => __('Notifications'),
-        'page_title'  => __('Notifications'),
+        'title'      => __('Notifications'),
+        'page_title' => __('Notifications'),
     ]
 );
 ?>
-
-<?php if (empty($notifications)): ?>
-    <div class="alert alert-success shadow border-radius-12">
-        <?= __('All notifications have already been read') ?>
-    </div>
-<?php else: ?>
+<?php if (! empty($data['message'])): ?>
     <div class="row">
-        <div class="col-md-6">
-            <div class="small-full-width list-items shadow mb-4 overflow-hidden">
-                <?php foreach ($notifications as $notification): ?>
+        <div class="col-lg-7">
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-success',
+                    'alert'      => $data['message'],
+                ]
+            ) ?>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if (empty($data['notifications']) && empty($data['total'])): ?>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="alert alert-success shadow border-radius-12">
+                <?= __('All notifications have already been read') ?>
+            </div>
+        </div>
+    </div>
+<?php elseif (! empty($data['notifications'])): ?>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="small-full-width list-items shadow mb-3 overflow-hidden">
+                <?php foreach ($data['notifications'] as $notification): ?>
                     <a href="<?= $notification['url'] ?>" class="list-item d-flex">
                         <div class="flex-grow-1 item-content">
                             <div class="item-name"><?= $notification['name'] ?></div>
@@ -45,5 +62,36 @@ $this->layout(
         </div>
     </div>
 <?php endif; ?>
-
-
+<?php if ($data['total'] > 0): ?>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="small-full-width list-items shadow mb-3 overflow-hidden">
+                <?php foreach ($data['items'] as $item): ?>
+                    <div class="list-item d-flex <?= empty($item->read_at) ? 'bg-yellow-light' : '' ?>">
+                        <div class="flex-grow-1 item-content">
+                            <div class="small text-muted"><?= $item->created_at ?></div>
+                            <div>
+                                <?= $item->message ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div><?= __('Total') ?>: <?= $data['total'] ?></div>
+        <!-- Page switching -->
+        <?php if ($data['total'] > $user->config->kmess): ?>
+            <div class="mt-1"><?= $data['pagination'] ?></div>
+        <?php endif ?>
+    </div>
+    <div class="mb-2 mt-2">
+        <form action="/notifications/clear/" method="post">
+            <button type="submit" name="clear" value="1" class="btn btn-outline-primary"><?= __('Clear notifications') ?></button>
+        </form>
+    </div>
+<?php endif; ?>
+<div>
+    <a href="/notifications/settings/"><?= __('Settings') ?></a>
+</div>

@@ -17,7 +17,6 @@
       'Save' => 'Salveaza',
       'Forum rules' => 'Reguli in forum',
       'My smilies' => 'Emoticoanele mele',
-      'Wrong data' => 'Date gresite',
       'bbCode Tags' => 'Coduri BB',
       'Information, FAQ' => 'Informatii, Reguli',
       'Animals' => 'Animale',

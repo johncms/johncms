@@ -5,9 +5,9 @@
   array (
     '' => 
     array (
+      'Forum' => 'منتديات',
       'Users' => 'الاعضاء',
       'Downloads' => 'التنزيلات',
-      'Forum' => 'منتديات',
       'Guestbook' => 'سجل الزوار',
       'Library' => 'مَكتبَة',
       'Login' => 'تسجيل دخول',
@@ -19,7 +19,6 @@
       'Reply' => 'رد ',
       'Edit' => 'تحرير',
       'Delete' => 'حذف',
-      'Quote' => 'اقتباس',
       'News archive' => 'أرشيف الأخبار',
       'Photo Albums' => 'ألبومات الصور',
       'Information, FAQ' => 'معلومات، أسئلة وأجوبة',

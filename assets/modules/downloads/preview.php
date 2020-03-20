@@ -36,7 +36,8 @@ if ($image && file_exists($image)) {
     ];
 
     if (in_array($att_ext, $pic_ext, true)) {
-        $manager = new ImageManager(['driver' => 'imagick']);
+        /** @var ImageManager $manager */
+        $manager = di(ImageManager::class);
         $resized = $manager->make($image)
             ->resize(
                 $width,

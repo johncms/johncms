@@ -17,7 +17,6 @@
       'Save' => 'Simpan',
       'Forum rules' => 'Ketentuan Forum',
       'My smilies' => 'Smile saya',
-      'Wrong data' => 'Data salah',
       'bbCode Tags' => 'tag bbCode',
       'Information, FAQ' => 'Informasi, FAQ',
       'Animals' => 'Binatang',

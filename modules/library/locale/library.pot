@@ -71,7 +71,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:129
 #: modules/library/templates/del.phtml:141
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:8
-#: modules/library/templates/premod.phtml:18
+#: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
 msgstr ""
@@ -174,7 +174,6 @@ msgstr ""
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
-#: modules/library/templates/premod.phtml:1
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
 msgstr ""
@@ -297,6 +296,7 @@ msgstr ""
 #: modules/library/templates/booklist.phtml:33
 #: modules/library/templates/lastcom.phtml:33
 #: modules/library/templates/new.phtml:36
+#: modules/library/templates/premod.phtml:40
 #: modules/library/templates/search.phtml:51
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:44
@@ -305,7 +305,7 @@ msgstr ""
 
 #: modules/library/templates/booklist.phtml:46
 #: modules/library/templates/new.phtml:52
-#: modules/library/templates/premod.phtml:22
+#: modules/library/templates/premod.phtml:51
 #: modules/library/templates/search.phtml:60
 #: modules/library/templates/sectionslist.phtml:56
 #: modules/library/templates/tags.phtml:51
@@ -341,7 +341,7 @@ msgid "Move to Section"
 msgstr ""
 
 #: modules/library/templates/del.phtml:66
-#: modules/library/templates/premod.phtml:18
+#: modules/library/templates/premod.phtml:44
 msgid "Approve"
 msgstr ""
 
@@ -458,34 +458,31 @@ msgid "Section:"
 msgstr ""
 
 #: modules/library/templates/new.phtml:57
-#: modules/library/templates/premod.phtml:29
+#: modules/library/templates/premod.phtml:58
 #: modules/library/templates/search.phtml:83
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:55
 msgid "To Library"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:1
+#: modules/library/templates/premod.phtml:20
+#: modules/library/templates/premod.phtml:21
 msgid "Moderation Articles"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:3
+#: modules/library/templates/premod.phtml:27
 msgid "All Articles added in database"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:6
+#: modules/library/templates/premod.phtml:30
 msgid "Article"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:6
+#: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:16
-msgid "Who added"
-msgstr ""
-
-#: modules/library/templates/premod.phtml:27
+#: modules/library/templates/premod.phtml:56
 msgid "Approve all"
 msgstr ""
 

@@ -10,13 +10,14 @@
 
 declare(strict_types=1);
 
+use Johncms\Notifications\Notification;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = __('Karma');
 $set_karma = $config['karma'];
-$foundUser = (array) $foundUser;
 $data = [];
-$nav_chain->add(__('User Profile'), '?user=' . $foundUser['id']);
+$nav_chain->add(__('User Profile'), '?user=' . $user_data['id']);
 $nav_chain->add(__('Karma'));
 
 $post = $request->getParsedBody();
@@ -37,11 +38,11 @@ if ($set_karma['on']) {
             if (! $user->karma_off && empty($user->ban)) {
                 $error = [];
 
-                if ($foundUser['rights'] && $set_karma['adm']) {
+                if ($user_data['rights'] && $set_karma['adm']) {
                     $error[] = __('It is forbidden to vote for administration');
                 }
 
-                if ($foundUser['ip'] === di(Johncms\System\Http\Environment::class)->getIp()) {
+                if ($user_data['ip'] === di(Johncms\System\Http\Environment::class)->getIp()) {
                     $error[] = __('Cheating karma is forbidden');
                 }
 
@@ -53,7 +54,7 @@ if ($set_karma['on']) {
                     );
                 }
 
-                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `karma_user` = '" . $foundUser['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
+                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $user->id . "' AND `karma_user` = '" . $user_data['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
                 if ($count) {
                     $error[] = __('You can vote for single user just one time for 24 hours');
@@ -72,7 +73,7 @@ if ($set_karma['on']) {
                             'title'         => $title,
                             'type'          => 'alert-danger',
                             'message'       => $error,
-                            'back_url'      => '?user=' . $foundUser['id'],
+                            'back_url'      => '?user=' . $user_data['id'],
                             'back_url_name' => __('Back'),
                         ]
                     );
@@ -100,7 +101,7 @@ if ($set_karma['on']) {
                         [
                             $user->id,
                             $user->name,
-                            $foundUser['id'],
+                            $user_data['id'],
                             $points,
                             $type,
                             time(),
@@ -108,15 +109,32 @@ if ($set_karma['on']) {
                         ]
                     );
 
-                    $sql = $type ? "`karma_plus` = '" . ($foundUser['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($foundUser['karma_minus'] + $points) . "'";
-                    $db->query("UPDATE `users` SET ${sql} WHERE `id` = " . $foundUser['id']);
+                    $sql = $type ? "`karma_plus` = '" . ($user_data['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user_data['karma_minus'] + $points) . "'";
+                    $db->query("UPDATE `users` SET ${sql} WHERE `id` = " . $user_data['id']);
+
+                    // Добавляем уведомление пользователю
+                    (new Notification())->create(
+                        [
+                            'module'     => 'karma',
+                            'event_type' => 'new_vote',
+                            'user_id'    => $user_data->id,
+                            'sender_id'  => $user->id,
+                            'fields'     => [
+                                'user_name'   => htmlspecialchars($user->name),
+                                'karma_url'   => '/profile/?act=karma&user=' . $user_data->id . '&type=2',
+                                'vote_points' => ($type ? '+' : '-') . $points,
+                                'message'     => $tools->smilies($tools->checkout($text)),
+                            ],
+                        ]
+                    );
+
                     echo $view->render(
                         'system::pages/result',
                         [
                             'title'         => $title,
                             'type'          => 'alert-success',
                             'message'       => __('You have successfully voted'),
-                            'back_url'      => '?user=' . $foundUser['id'],
+                            'back_url'      => '?user=' . $user_data['id'],
                             'back_url_name' => __('Continue'),
                         ]
                     );
@@ -126,9 +144,9 @@ if ($set_karma['on']) {
                         $options[] = $i;
                     }
                     $data['options'] = $options;
-                    $data['vote_title'] = __('Vote for') . ': ' . $tools->checkout($foundUser['name']);
-                    $data['form_action'] = '?act=karma&amp;mod=vote&amp;user=' . $foundUser['id'];
-                    $data['back_url'] = '?user=' . $foundUser['id'];
+                    $data['vote_title'] = __('Vote for') . ': ' . $tools->checkout($user_data['name']);
+                    $data['form_action'] = '?act=karma&amp;mod=vote&amp;user=' . $user_data['id'];
+                    $data['back_url'] = '?user=' . $user_data['id'];
                     echo $view->render(
                         'profile::karma_vote',
                         [
@@ -145,7 +163,7 @@ if ($set_karma['on']) {
                         'title'         => $title,
                         'type'          => 'alert-danger',
                         'message'       => __('You are not allowed to vote for users'),
-                        'back_url'      => '?user=' . $foundUser['id'],
+                        'back_url'      => '?user=' . $user_data['id'],
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -156,7 +174,7 @@ if ($set_karma['on']) {
             // Удаляем отдельный голос
             if ($user->rights === 9) {
                 $type = isset($_GET['type']) ? (int) $_GET['type'] : null;
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '${id}' AND `karma_user` = '" . $foundUser['id'] . "'");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '${id}' AND `karma_user` = '" . $user_data['id'] . "'");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
@@ -168,20 +186,20 @@ if ($set_karma['on']) {
                     ) {
                         $db->exec("DELETE FROM `karma_users` WHERE `id` = '${id}'");
                         if ($res['type']) {
-                            $sql = "`karma_plus` = '" . ($foundUser['karma_plus'] > $res['points'] ? $foundUser['karma_plus'] - $res['points'] : 0) . "'";
+                            $sql = "`karma_plus` = '" . ($user_data['karma_plus'] > $res['points'] ? $user_data['karma_plus'] - $res['points'] : 0) . "'";
                         } else {
-                            $sql = "`karma_minus` = '" . ($foundUser['karma_minus'] > $res['points'] ? $foundUser['karma_minus'] - $res['points'] : 0) . "'";
+                            $sql = "`karma_minus` = '" . ($user_data['karma_minus'] > $res['points'] ? $user_data['karma_minus'] - $res['points'] : 0) . "'";
                         }
 
-                        $db->exec("UPDATE `users` SET ${sql} WHERE `id` = " . $foundUser['id']);
-                        header('Location: ?act=karma&user=' . $foundUser['id'] . '&type=' . $type);
+                        $db->exec("UPDATE `users` SET ${sql} WHERE `id` = " . $user_data['id']);
+                        header('Location: ?act=karma&user=' . $user_data['id'] . '&type=' . $type);
                     } else {
                         $delete_token = uniqid('', true);
                         $_SESSION['delete_token'] = $delete_token;
                         $data['delete_token'] = $delete_token;
-                        $data['form_action'] = '?act=karma&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes';
+                        $data['form_action'] = '?act=karma&amp;mod=delete&amp;user=' . $user_data['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes';
                         $data['message'] = __('Do you really want to delete comment?');
-                        $data['back_url'] = '?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=' . $type;
+                        $data['back_url'] = '?act=karma&amp;user=' . $user_data['id'] . '&amp;type=' . $type;
 
                         echo $view->render(
                             'profile::karma_delete',
@@ -204,17 +222,17 @@ if ($set_karma['on']) {
                     $_SESSION['delete_token'] === $post['delete_token'] &&
                     $request->getMethod() === 'POST'
                 ) {
-                    $db->exec('DELETE FROM `karma_users` WHERE `karma_user` = ' . $foundUser['id']);
+                    $db->exec('DELETE FROM `karma_users` WHERE `karma_user` = ' . $user_data['id']);
                     $db->query('OPTIMIZE TABLE `karma_users`');
-                    $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $foundUser['id']);
-                    header('Location: ?user=' . $foundUser['id']);
+                    $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $user_data['id']);
+                    header('Location: ?user=' . $user_data['id']);
                 } else {
                     $delete_token = uniqid('', true);
                     $_SESSION['delete_token'] = $delete_token;
                     $data['delete_token'] = $delete_token;
-                    $data['form_action'] = '?act=karma&amp;mod=clean&amp;user=' . $foundUser['id'] . '&amp;yes';
+                    $data['form_action'] = '?act=karma&amp;mod=clean&amp;user=' . $user_data['id'] . '&amp;yes';
                     $data['message'] = __('Do you really want to delete all reviews about user?');
-                    $data['back_url'] = '?act=karma&amp;user=' . $foundUser['id'];
+                    $data['back_url'] = '?act=karma&amp;user=' . $user_data['id'];
 
                     echo $view->render(
                         'profile::karma_delete',
@@ -244,7 +262,7 @@ if ($set_karma['on']) {
                 }
             }
 
-            $data['back_url'] = '?user=' . $foundUser['id'];
+            $data['back_url'] = '?user=' . $user_data['id'];
             $data['total'] = $total;
             $data['filters'] = [];
             $data['pagination'] = $tools->displayPagination('?act=karma&amp;mod=new&amp;', $start, $total, $user->config->kmess);
@@ -267,42 +285,42 @@ if ($set_karma['on']) {
             $data['filters'] = [
                 'all'      => [
                     'name'   => __('All'),
-                    'url'    => '?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=2',
+                    'url'    => '?act=karma&amp;user=' . $user_data['id'] . '&amp;type=2',
                     'active' => $type === 2,
                 ],
                 'positive' => [
                     'name'   => __('Positive'),
-                    'url'    => '?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=1',
+                    'url'    => '?act=karma&amp;user=' . $user_data['id'] . '&amp;type=1',
                     'active' => $type === 1,
                 ],
                 'negative' => [
                     'name'   => __('Negative'),
-                    'url'    => '?act=karma&amp;user=' . $foundUser['id'],
+                    'url'    => '?act=karma&amp;user=' . $user_data['id'],
                     'active' => ! $type,
                 ],
             ];
 
             $items = [];
-            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'"))->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'"))->fetchColumn();
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'") . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'") . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
                 while ($res = $req->fetch()) {
                     $res['text'] = $tools->smilies($tools->checkout($res['text']));
                     $res['display_date'] = $tools->displayDate($res['time']);
                     if ($user->rights === 9) {
-                        $res['delete_url'] = '?act=karma&amp;mod=delete&amp;user=' . $foundUser['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type;
+                        $res['delete_url'] = '?act=karma&amp;mod=delete&amp;user=' . $user_data['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type;
                     }
                     $items[] = $res;
                 }
             }
 
             if ($user->rights === 9) {
-                $data['reset_url'] = '?act=karma&amp;user=' . $foundUser['id'] . '&amp;mod=clean';
+                $data['reset_url'] = '?act=karma&amp;user=' . $user_data['id'] . '&amp;mod=clean';
             }
-            $data['back_url'] = '?user=' . $foundUser['id'];
+            $data['back_url'] = '?user=' . $user_data['id'];
 
             $data['total'] = $total;
-            $data['pagination'] = $tools->displayPagination('?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $user->config->kmess);
+            $data['pagination'] = $tools->displayPagination('?act=karma&amp;user=' . $user_data['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $user->config->kmess);
             $data['items'] = $items ?? [];
 
             echo $view->render(

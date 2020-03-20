@@ -24,7 +24,7 @@ msgstr ""
 #: modules/downloads/includes/folder_edit.php:32
 #: modules/downloads/includes/folder_edit.php:138
 #: modules/downloads/includes/folder_edit.php:139
-#: modules/downloads/includes/scan_dir.php:97
+#: modules/downloads/includes/scan_dir.php:99
 #: modules/downloads/includes/search.php:65
 #: modules/downloads/includes/view.php:37
 #: modules/downloads/includes/view.php:54
@@ -114,14 +114,14 @@ msgid "The required fields are not filled"
 msgstr ""
 
 #: modules/downloads/includes/fileControl/edit_file.php:112
-#: modules/downloads/includes/fileControl/edit_screen.php:121
+#: modules/downloads/includes/fileControl/edit_screen.php:122
 #: modules/downloads/includes/fileControl/files_more.php:159
 #: modules/downloads/includes/fileControl/files_more.php:256
 #: modules/downloads/includes/files_import.php:105
-#: modules/downloads/includes/files_import.php:205
+#: modules/downloads/includes/files_import.php:206
 #: modules/downloads/includes/files_upload.php:89
-#: modules/downloads/includes/files_upload.php:198
-#: modules/downloads/includes/files_upload.php:211
+#: modules/downloads/includes/files_upload.php:199
+#: modules/downloads/includes/files_upload.php:212
 #: modules/downloads/includes/folder_add.php:78
 #: modules/downloads/includes/folder_add.php:138
 #: modules/downloads/includes/folder_edit.php:97
@@ -129,31 +129,31 @@ msgid "Repeat"
 msgstr ""
 
 #: modules/downloads/includes/fileControl/edit_screen.php:38
-#: modules/downloads/includes/fileControl/edit_screen.php:106
-#: modules/downloads/includes/fileControl/edit_screen.php:117
+#: modules/downloads/includes/fileControl/edit_screen.php:107
+#: modules/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:108
+#: modules/downloads/includes/fileControl/edit_screen.php:109
 #: modules/downloads/templates/file_import_result.phtml:38
 #: modules/downloads/templates/file_upload_result.phtml:39
 msgid "Screenshot is attached"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:110
+#: modules/downloads/includes/fileControl/edit_screen.php:111
 #: modules/downloads/includes/fileControl/files_more.php:237
 #: modules/downloads/includes/fileControl/transfer_file.php:66
 #: modules/downloads/includes/fileControl/transfer_file.php:165
-#: modules/downloads/includes/files_upload.php:237
-#: modules/downloads/includes/files_upload.php:249
-#: modules/downloads/includes/scan_dir.php:79
-#: modules/downloads/includes/scan_dir.php:313
+#: modules/downloads/includes/files_upload.php:238
+#: modules/downloads/includes/files_upload.php:250
+#: modules/downloads/includes/scan_dir.php:81
+#: modules/downloads/includes/scan_dir.php:342
 #: modules/downloads/templates/file_import_result.phtml:48
 #: modules/downloads/templates/view.phtml:171
 msgid "Back"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:119
+#: modules/downloads/includes/fileControl/edit_screen.php:120
 #: modules/downloads/templates/file_import_result.phtml:40
 #: modules/downloads/templates/file_upload_result.phtml:41
 msgid "Screenshot not attached"
@@ -173,7 +173,7 @@ msgstr ""
 #: modules/downloads/includes/fileControl/files_more.php:155
 #: modules/downloads/includes/fileControl/files_more.php:252
 #: modules/downloads/includes/files_import.php:36
-#: modules/downloads/includes/scan_dir.php:93
+#: modules/downloads/includes/scan_dir.php:95
 #: modules/downloads/includes/search.php:61
 msgid "Error"
 msgstr ""
@@ -198,9 +198,9 @@ msgstr ""
 
 #: modules/downloads/includes/fileControl/files_more.php:242
 #: modules/downloads/includes/fileControl/files_more.php:245
-#: modules/downloads/includes/files_import.php:203
-#: modules/downloads/includes/files_upload.php:196
-#: modules/downloads/includes/files_upload.php:209
+#: modules/downloads/includes/files_import.php:204
+#: modules/downloads/includes/files_upload.php:197
+#: modules/downloads/includes/files_upload.php:210
 msgid "File not attached"
 msgstr ""
 
@@ -228,11 +228,11 @@ msgstr ""
 
 #: modules/downloads/includes/files_import.php:38
 #: modules/downloads/includes/files_new.php:37
-#: modules/downloads/includes/files_upload.php:247
+#: modules/downloads/includes/files_upload.php:248
 #: modules/downloads/includes/folder_add.php:34
 #: modules/downloads/includes/folder_delete.php:31
 #: modules/downloads/includes/folder_edit.php:30
-#: modules/downloads/includes/scan_dir.php:95
+#: modules/downloads/includes/scan_dir.php:97
 #: modules/downloads/index.php:187
 msgid "The directory does not exist"
 msgstr ""
@@ -246,11 +246,11 @@ msgid "The file name contains invalid characters"
 msgstr ""
 
 #: modules/downloads/includes/files_import.php:101
-#: modules/downloads/includes/files_import.php:188
 #: modules/downloads/includes/files_import.php:189
-#: modules/downloads/includes/files_import.php:201
-#: modules/downloads/includes/files_import.php:214
+#: modules/downloads/includes/files_import.php:190
+#: modules/downloads/includes/files_import.php:202
 #: modules/downloads/includes/files_import.php:215
+#: modules/downloads/includes/files_import.php:216
 msgid "File import"
 msgstr ""
 
@@ -287,28 +287,28 @@ msgid "Popular Files"
 msgstr ""
 
 #: modules/downloads/includes/files_upload.php:85
-#: modules/downloads/includes/files_upload.php:194
-#: modules/downloads/includes/files_upload.php:207
-#: modules/downloads/includes/files_upload.php:233
-#: modules/downloads/includes/files_upload.php:245
+#: modules/downloads/includes/files_upload.php:195
+#: modules/downloads/includes/files_upload.php:208
+#: modules/downloads/includes/files_upload.php:234
+#: modules/downloads/includes/files_upload.php:246
 msgid "Upload file"
 msgstr ""
 
-#: modules/downloads/includes/files_upload.php:181
 #: modules/downloads/includes/files_upload.php:182
-#: modules/downloads/includes/files_upload.php:219
+#: modules/downloads/includes/files_upload.php:183
 #: modules/downloads/includes/files_upload.php:220
+#: modules/downloads/includes/files_upload.php:221
 #: modules/downloads/templates/index.phtml:131
 #: modules/downloads/templates/index.phtml:153
 msgid "Upload File"
 msgstr ""
 
-#: modules/downloads/includes/files_upload.php:235
+#: modules/downloads/includes/files_upload.php:236
 msgid "Access forbidden"
 msgstr ""
 
 #: modules/downloads/includes/files_user.php:25
-#: modules/downloads/includes/top_users.php:40
+#: modules/downloads/includes/top_users.php:42
 msgid "User Files"
 msgstr ""
 
@@ -366,24 +366,24 @@ msgstr ""
 msgid "Edit Folder"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:75
+#: modules/downloads/includes/scan_dir.php:77
 #: modules/downloads/templates/index.phtml:146
 #: modules/downloads/templates/scan_dir.phtml:60
 msgid "Remove missing files"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:77
+#: modules/downloads/includes/scan_dir.php:79
 msgid "Database successfully updated"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:202
+#: modules/downloads/includes/scan_dir.php:226
 #: modules/downloads/templates/file_upload.phtml:62
 #: modules/downloads/templates/import.phtml:57
 msgid "Download"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:306
-#: modules/downloads/includes/scan_dir.php:307
+#: modules/downloads/includes/scan_dir.php:335
+#: modules/downloads/includes/scan_dir.php:336
 msgid "Update"
 msgstr ""
 

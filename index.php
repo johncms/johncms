@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,12 +8,21 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
 use Psr\Container\ContainerInterface;
 
+// Включаем режим отладки
 const DEBUG = true;
+
+// Включаем режим отладки для всех пользователей (в т.ч. для гостей)
+// Использовать только когда вы понимаете что это вам действительно нужно т.к. отладочная информация может содержать конфиденциальные данные!
+const DEBUG_FOR_ALL = false;
+
+// Константа для проверки подключенного ядра
 const _IN_JOHNCMS = true;
 
 require 'system/bootstrap.php';

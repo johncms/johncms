@@ -23,7 +23,8 @@ $total = $db->query('SELECT COUNT(DISTINCT user_id) FROM `download__files` WHERE
 
 $users = [];
 if ($total) {
-    $req_down = $db->query("SELECT DISTINCT(d.user_id),
+    $req_down = $db->query(
+        "SELECT DISTINCT(d.user_id),
     u.id,
     u.`name`,
     u.rights,
@@ -34,10 +35,11 @@ if ($total) {
 SELECT COUNT(*) FROM download__files WHERE d.user_id = user_id AND `type` <> 3) AS cnt
 FROM download__files d
 JOIN users u ON u.id = d.user_id
-WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess);
+WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess
+    );
     while ($res_down = $req_down->fetch()) {
         $res_down['files_link'] = '<a href="?act=user_files&amp;id=' .
-        $res_down['id'] . '">' . __('User Files') . ': ' . $res_down['cnt'] . '</a>';
+            $res_down['id'] . '">' . __('User Files') . ': ' . $res_down['cnt'] . '</a>';
 
         $res_down['user_profile_link'] = '';
         if (! empty($res_down['id']) && $user->isValid() && $user->id !== $res_down['id']) {
@@ -50,10 +52,10 @@ WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess);
         }
 
         $res_down['user_is_online'] = time() <= $res_down['lastdate'] + 300;
-        $res_down['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip($res_down['ip']);
-        $res_down['ip'] = long2ip($res_down['ip']);
-        $res_down['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($res_down['ip_via_proxy']);
-        $res_down['ip_via_proxy'] = ! empty($res_down['ip_via_proxy']) ? long2ip($res_down['ip_via_proxy']) : 0;
+        $res_down['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res_down['ip']);
+        $res_down['ip'] = long2ip((int) $res_down['ip']);
+        $res_down['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res_down['ip_via_proxy']);
+        $res_down['ip_via_proxy'] = ! empty($res_down['ip_via_proxy']) ? long2ip((int) $res_down['ip_via_proxy']) : 0;
 
         $users[] = $res_down;
     }

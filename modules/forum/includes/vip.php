@@ -18,7 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-if ($user->rights == 3 || $user->rights >= 6) {
+if ($user->rights === 3 || $user->rights >= 6) {
     if (empty($_GET['id'])) {
         http_response_code(404);
         echo $view->render(
@@ -36,7 +36,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
     }
 
     if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '" . $id . "'")->fetchColumn()) {
-        $db->exec("UPDATE `forum_topic` SET  `pinned` = '" . (isset($_GET['vip']) ? '1' : null) . "' WHERE `id` = '${id}'");
+        $db->exec("UPDATE `forum_topic` SET  `pinned` = " . (isset($_GET['vip']) ? 1 : 'NULL') . " WHERE `id` = '${id}'");
         header('Location: ?type=topic&id=' . $id);
     } else {
         http_response_code(404);

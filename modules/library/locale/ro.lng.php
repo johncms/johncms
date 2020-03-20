@@ -91,7 +91,6 @@
       'All Articles added in database' => 'Toate articolele adaugate in baza de date',
       'Article' => 'Articol',
       'Added to the database' => 'Adaugat in baza de date',
-      'Who added' => 'Cine a adaugat',
       'Approve all' => 'Aproba toate',
       'Search in titles Articles' => 'Cauta in titlul articolului',
       'Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance' => 'Lungimea cautarii: 4 min. 64 max.<br>Rezultatele sunt sortate dupa relevanta ',

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use PDO;
@@ -19,31 +20,24 @@ use Psr\Container\ContainerInterface;
 
 class Counters
 {
-    /**
-     * @var PDO
-     */
+    /** @var PDO */
     private $db;
 
-    /**
-     * @var User
-     */
-    private $systemUser;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
+    /** @var string */
     private $homeurl;
 
-    public function __invoke(ContainerInterface $container)
-    {
-        $this->db = $container->get(PDO::class);
-        $this->systemUser = $container->get(User::class);
-        $this->tools = $container->get(Tools::class);
-        $this->homeurl = $container->get('config')['johncms']['homeurl'];
+    /** @var User */
+    private $user;
 
-        return $this;
+    /** @var Tools */
+    private $tools;
+
+    public function __construct(PDO $pdo, Tools $tools, User $user, string $homeUrl)
+    {
+        $this->db = $pdo;
+        $this->tools = $tools;
+        $this->user = $user;
+        $this->homeurl = $homeUrl;
     }
 
     /**
@@ -72,7 +66,7 @@ class Counters
         }
 
         $newcount = 0;
-        if ($this->systemUser->rights >= 6 && $new_adm) {
+        if ($this->user->rights >= 6 && $new_adm) {
             $newcount = $new_adm;
         } elseif ($new) {
             $newcount = $new;
@@ -111,7 +105,7 @@ class Counters
             $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=new_files">+' . $new . '</a></span>';
         }
 
-        if ($this->systemUser->rights == 4 || $this->systemUser->rights >= 6) {
+        if ($this->user->rights == 4 || $this->user->rights >= 6) {
             if ($mod) {
                 $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=mod_files">м. ' . $mod . '</a></span>';
             }
@@ -142,7 +136,7 @@ class Counters
             file_put_contents($file, json_encode(['top' => $top, 'msg' => $msg]), LOCK_EX);
         }
 
-        if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
+        if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
             $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/?act=new">+' . $new_msg . '</a></span>';
         }
 
@@ -161,12 +155,12 @@ class Counters
      */
     public function forumNew($mod = 0)
     {
-        if ($this->systemUser->isValid()) {
+        if ($this->user->isValid()) {
             $total = $this->db->query(
                 "SELECT COUNT(*) FROM `forum_topic`
-                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
+                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
-                " . ($this->systemUser->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
+                " . ($this->user->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
                 '
             )->fetchColumn();
 
@@ -189,56 +183,17 @@ class Counters
     public function forumUnreadCount()
     {
         $total = 0;
-        if ($this->systemUser->isValid()) {
+        if ($this->user->isValid()) {
             $total = $this->db->query(
                 "SELECT COUNT(*) FROM `forum_topic`
-                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
+                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
-                " . ($this->systemUser->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
+                " . ($this->user->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
                 '
             )->fetchColumn();
         }
 
         return $total;
-    }
-
-    /**
-     * Статистика гостевой
-     *
-     * $mod = 1    колличество новых в гостевой
-     * $mod = 2    колличество новых в Админ-Клубе
-     *
-     * @param int $mod
-     * @return int|string
-     * @deprecated use guestbookCounters
-     * TODO: содержимое guestbookCounters перенести в этот метод после проверки на использование
-     */
-    public function guestbook($mod = 0)
-    {
-        $count = 0;
-
-        switch ($mod) {
-            case 1:
-                $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=0 AND `time` > ' . (time() - 86400))->fetchColumn();
-                break;
-
-            case 2:
-                if ($this->systemUser->rights >= 1) {
-                    $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=1 AND `time` > ' . (time() - 86400))->fetchColumn();
-                    //$count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1' AND `time` > '" . (time() - 86400) . "'"), 0);
-                }
-                break;
-
-            default:
-                $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
-
-                if ($this->systemUser->rights >= 1) {
-                    $adm = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
-                    $count = $count . '&#160;/&#160;<span class="red"><a href="guestbook/?act=ga&amp;do=set">' . $adm . '</a></span>';
-                }
-        }
-
-        return $count;
     }
 
     /**
@@ -269,7 +224,7 @@ class Counters
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=new">+' . $new . '</a></span>';
         }
 
-        if (($this->systemUser->rights == 5 || $this->systemUser->rights >= 6) && $mod) {
+        if (($this->user->rights == 5 || $this->user->rights >= 6) && $mod) {
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=premod">M:' . $mod . '</a></span>';
         }
 
@@ -332,14 +287,14 @@ class Counters
     public function mail()
     {
         $new_mail = 0;
-        if (! $this->systemUser->isValid()) {
+        if (! $this->user->isValid()) {
             $new_mail = $this->db->query(
                 "SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
-                            WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id . "'
+                            WHERE `cms_mail`.`from_id`='" . $this->user->id . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $this->systemUser->id . "'
+                            AND `cms_mail`.`delete`!='" . $this->user->id . "'
                             AND `cms_contact`.`ban`!='1'"
             )->fetchColumn();
         }
@@ -377,7 +332,7 @@ class Counters
             file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message]), LOCK_EX);
         }
 
-        if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
+        if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
             $new_messages = $new_msg;
         }
 
@@ -398,7 +353,7 @@ class Counters
     {
         $guestbook = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
         $admin_club = 0;
-        if ($this->systemUser->rights >= 1) {
+        if ($this->user->rights >= 1) {
             $admin_club = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
         }
 
@@ -510,7 +465,7 @@ class Counters
             file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
         }
 
-        if ($this->systemUser->rights >= 6 && $new_adm) {
+        if ($this->user->rights >= 6 && $new_adm) {
             $newcount = $new_adm;
         } elseif ($new) {
             $newcount = $new;
@@ -547,35 +502,47 @@ class Counters
     public function notifications(): array
     {
         $notifications = [];
-        if ($this->systemUser->rights >= 7) {
+
+        if (! $this->user->isValid()) {
+            return $notifications;
+        }
+
+        if ($this->user->rights >= 7) {
             $notifications['reg_total'] = $this->db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
             $notifications['library_mod'] = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
             $notifications['downloads_mod'] = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
         }
 
-        if (! empty($this->systemUser->ban)) {
+        if (! empty($this->user->ban)) {
             $notifications['ban'] = 1;
         }
 
-        if ($this->systemUser->comm_count > $this->systemUser->comm_old) {
-            $notifications['guestbook_comments'] = ($this->systemUser->comm_count - $this->systemUser->comm_old);
+        if ($this->user->comm_count > $this->user->comm_old) {
+            $notifications['guestbook_comments'] = ($this->user->comm_count - $this->user->comm_old);
         }
 
         $notifications['new_mail'] = $this->db->query(
             "SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->systemUser->id . "'
-                            WHERE `cms_mail`.`from_id`='" . $this->systemUser->id . "'
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id . "'
+                            WHERE `cms_mail`.`from_id`='" . $this->user->id . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $this->systemUser->id . "'
+                            AND `cms_mail`.`delete`!='" . $this->user->id . "'
                             AND `cms_contact`.`ban`!='1'"
         )->fetchColumn();
 
-        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->systemUser->id . '\' AND `unread_comments` = 1')->fetchColumn();
+        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id . '\' AND `unread_comments` = 1')->fetchColumn();
 
-        $forum_counters = $this->forumCounters();
-        $notifications['forum_new'] = $forum_counters['new_messages'];
+        // Временный костыль для обратной совместимости
+        $default = ['show_forum_unread' => true];
+        $settings = ! empty($this->user->notification_settings) ? json_decode($this->user->notification_settings, true) : [];
+        $notification_settings = array_merge($default, $settings);
+        if ($notification_settings['show_forum_unread']) {
+            $forum_counters = $this->forumCounters();
+            $notifications['forum_new'] = $forum_counters['new_messages'];
+        }
 
+        $notifications['notifications'] = (new Notification())->unread()->count();
         $notifications['all'] = array_sum($notifications);
 
         return $notifications;

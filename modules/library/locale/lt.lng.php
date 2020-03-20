@@ -101,7 +101,6 @@
       'All Articles added in database' => 'Visi straipsniai įtraukti į duomenų bazę',
       'Article' => 'Straipsnis',
       'Added to the database' => 'Įtraukti į duomenų bazę',
-      'Who added' => 'Kas pridėjo',
       'Approve all' => 'Patvirtinti visus',
       'Search query' => 'Paieškos užklausa',
       'Search in titles Articles' => 'Paieška pagal straipsnių pavadinimus',

@@ -15,33 +15,26 @@ namespace Johncms;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use PDO;
-use Psr\Container\ContainerInterface;
 
 class Ads
 {
-    /**
-     * @var PDO
-     */
+    /** @var PDO */
     private $db;
 
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var Tools
-     */
+    /** @var Tools */
     private $tools;
 
+    /** @var User */
+    private $user;
+
+    /** @var null|array */
     private $ads;
 
-    public function __invoke(ContainerInterface $container)
+    public function __construct(PDO $pdo, Tools $tools, User $user)
     {
-        $this->db = $container->get(PDO::class);
-        $this->tools = $container->get(Tools::class);
-        $this->user = $container->get(User::class);
-        return $this;
+        $this->db = $pdo;
+        $this->tools = $tools;
+        $this->user = $user;
     }
 
     /**
@@ -54,6 +47,7 @@ class Ads
         if (! empty($this->ads)) {
             return $this->ads;
         }
+
         $ads = [];
 
         $req = $this->db->query("SELECT * FROM `cms_ads` WHERE `to` = '0'");
@@ -69,9 +63,9 @@ class Ads
                 $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
             }
             // Если было задано начертание шрифта, то применяем
-            $font = $res['bold'] ? 'font-weight: bold;' : false;
-            $font .= $res['italic'] ? ' font-style:italic;' : false;
-            $font .= $res['underline'] ? ' text-decoration:underline;' : false;
+            $font = $res['bold'] ? 'font-weight: bold;' : '';
+            $font .= $res['italic'] ? ' font-style:italic;' : '';
+            $font .= $res['underline'] ? ' text-decoration:underline;' : '';
 
             if ($font) {
                 $name = '<span style="' . $font . '">' . $name . '</span>';
@@ -95,10 +89,10 @@ class Ads
     /**
      * Получение места размещения рекламной ссылки
      *
-     * @param $item
+     * @param array $item
      * @return string
      */
-    private function getPlace($item): string
+    private function getPlace(array $item): string
     {
         $places = [
             0 => 'before_menu',
@@ -116,10 +110,10 @@ class Ads
     /**
      * Метод проверяет доступность объявления для показа текущему пользователю в текущем месте
      *
-     * @param $item
+     * @param array $item
      * @return bool
      */
-    private function checkAccess($item): bool
+    private function checkAccess(array $item): bool
     {
         return (
                 empty($item['layout']) ||

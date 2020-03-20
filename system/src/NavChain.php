@@ -12,17 +12,18 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Psr\Container\ContainerInterface;
-
 class NavChain
 {
+    /** @var array */
     private $items = [];
 
+    /** @var bool */
     private $show_home_page = true;
 
+    /** @var bool */
     private $last_is_active = true;
 
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(): self
     {
         return $this;
     }
@@ -73,8 +74,9 @@ class NavChain
      * Добавлять главную страницу в навигационную цепочку
      *
      * @param bool $value
+     * @return void
      */
-    public function showHomePage(bool $value)
+    public function showHomePage(bool $value): void
     {
         $this->show_home_page = $value;
     }
@@ -83,8 +85,9 @@ class NavChain
      * Помечать последний элемент активным
      *
      * @param bool $value
+     * @return void
      */
-    public function lastIsActive(bool $value)
+    public function lastIsActive(bool $value): void
     {
         $this->last_is_active = $value;
     }

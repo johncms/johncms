@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Notifications' => 'Powiadomienia',
       'Users on registration' => 'Rejestracja użytkownika',
       'Articles on moderation' => 'Plik znajduje się w moderacji',
       'Downloads on moderation' => 'Pliki w moderacji',
@@ -14,6 +13,7 @@
       'Mail' => 'Wiadomości',
       'Guestbook' => 'Księga gości',
       'Comments' => 'Komentarze',
+      'Notifications' => 'Powiadomienia',
       'All notifications have already been read' => 'Wszystkie powiadomienia zostały już przeczytane',
     ),
   ),

@@ -2,45 +2,78 @@ msgid ""
 msgstr ""
 "X-Domain: notifications\n"
 
-#: modules/notifications/index.php:40
-#: modules/notifications/templates/index.phtml:10
-#: modules/notifications/templates/index.phtml:11
-msgid "Notifications"
+#: modules/notifications/includes/clear.php:23
+msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/index.php:50
+#: modules/notifications/includes/index.php:29
 msgid "Users on registration"
 msgstr ""
 
-#: modules/notifications/index.php:60
+#: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
 msgstr ""
 
-#: modules/notifications/index.php:70
+#: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
 msgstr ""
 
-#: modules/notifications/index.php:81
+#: modules/notifications/includes/index.php:60
 msgid "Ban"
 msgstr ""
 
-#: modules/notifications/index.php:91
+#: modules/notifications/includes/index.php:70
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/index.php:101
+#: modules/notifications/includes/index.php:80
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/index.php:111
-#: modules/notifications/index.php:130
+#: modules/notifications/includes/index.php:90
+#: modules/notifications/includes/index.php:109
 msgid "Guestbook"
 msgstr ""
 
-#: modules/notifications/index.php:121
+#: modules/notifications/includes/index.php:100
 msgid "Comments"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:18
+#: modules/notifications/includes/settings.php:18
+#: modules/notifications/templates/index.phtml:96
+msgid "Settings"
+msgstr ""
+
+#: modules/notifications/includes/settings.php:44
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/notifications/index.php:47
+#: modules/notifications/templates/index.phtml:11
+#: modules/notifications/templates/index.phtml:12
+msgid "Notifications"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:33
 msgid "All notifications have already been read"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:83
+msgid "Total"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:91
+msgid "Clear notifications"
+msgstr ""
+
+#: modules/notifications/templates/settings.phtml:45
+msgid "Display the number of unread messages in the forum"
+msgstr ""
+
+#: modules/notifications/templates/settings.phtml:49
+msgid "Save"
+msgstr ""
+
+#: modules/notifications/templates/settings.phtml:50
+msgid "Cancel"
 msgstr ""

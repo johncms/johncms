@@ -10,7 +10,8 @@
 
 declare(strict_types=1);
 
-use Johncms\UserProperties;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -21,27 +22,23 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\View\Render $view
  */
 
-$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchColumn();
-$req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, " . $user->config->kmess);
+/** @var LengthAwarePaginator $users */
+$users = (new User())
+    ->approved()
+    ->where('rights', '>=', 1)
+    ->orderBy('rights', 'desc')
+    ->paginate($user->config->kmess);
+
 
 $nav_chain->add(__('Administration'));
 
 echo $view->render(
     'users::users',
     [
-        'pagination' => $tools->displayPagination('?', $start, $total, $user->config->kmess),
+        'pagination' => $users->render(),
         'title'      => __('Administration'),
         'page_title' => __('Administration'),
-        'total'      => $total,
-        'list'       =>
-            static function () use ($req, $user) {
-                while ($res = $req->fetch()) {
-                    $res['user_id'] = $res['id'];
-                    $user_properties = new UserProperties();
-                    $user_data = $user_properties->getFromArray($res);
-                    $res = array_merge($res, $user_data);
-                    yield $res;
-                }
-            },
+        'total'      => $users->total(),
+        'list'       => $users->items(),
     ]
 );

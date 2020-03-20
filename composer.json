@@ -36,16 +36,24 @@
         "ext-pdo": "*",
         "ext-simplexml": "*",
         "aura/autoload": "^2.0",
+        "gettext/translator": "^1.0",
+        "guzzlehttp/psr7": "^1.6",
+        "illuminate/database": "^7.0.4",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
-        "johncms/system": "^1.2",
-        "mobicms/captcha": "^2.0"
+        "laminas/laminas-config-aggregator": "^1.2",
+        "laminas/laminas-servicemanager": "^3.4",
+        "mobicms/captcha": "^2.0",
+        "mobicms/render": "^2.0",
+        "nikic/fast-route": "^1.3",
+        "simba77/johncms-pagination": "^1.0"
     },
     "require-dev": {
         "gettext/gettext": "^5.2",
         "gettext/php-scanner": "^1.1",
         "roave/security-advisories": "dev-master",
-        "squizlabs/php_codesniffer": "^3.5"
+        "squizlabs/php_codesniffer": "^3.5",
+        "vimeo/psalm": "^3.8"
     },
     "autoload": {
         "files": [
@@ -53,7 +61,8 @@
             "system/helpers.php"
         ],
         "psr-4": {
-            "Johncms\\": "system/src/"
+            "Johncms\\": "system/src/",
+            "Johncms\\System\\Legacy\\": "system/src-legacy/"
         }
     },
     "bin": [
@@ -66,6 +75,8 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "psalm": "psalm",
+        "psalm-fix": "psalm --alter --issues=MissingReturnType,MissingParamType",
         "translate": "translate",
         "translate-scan": "scan"
     }

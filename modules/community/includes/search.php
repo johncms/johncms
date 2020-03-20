@@ -10,15 +10,14 @@
 
 declare(strict_types=1);
 
-use Johncms\UserProperties;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Johncms\Users\User;
 
 /** @var Johncms\System\Legacy\Tools $tools */
 $tools = di(Johncms\System\Legacy\Tools::class);
 
 // Принимаем данные, выводим форму поиска
-$search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
-$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
-$search = $search_post ? $search_post : $search_get;
+$search = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 
 $data = [];
 $title = __('User Search');
@@ -43,28 +42,17 @@ if ($search && ! $error) {
 
     // Выводим результаты поиска
     $search_db = $tools->rusLat($search);
-    $search_db = strtr(
-        $search_db,
-        [
-            '_' => '\\_',
-            '%' => '\\%',
-        ]
-    );
     $search_db = '%' . $search_db . '%';
-    $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db))->fetchColumn();
-    if ($total) {
-        $req = $db->query('SELECT * FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db) . " ORDER BY `name` ASC LIMIT ${start}, " . $user->config->kmess);
-        $data['list'] = static function () use ($req, $user) {
-            while ($res = $req->fetch()) {
-                $res['user_id'] = $res['id'];
-                $user_properties = new UserProperties();
-                $user_data = $user_properties->getFromArray($res);
-                $res = array_merge($res, $user_data);
-                yield $res;
-            }
-        };
-    }
-    $data['pagination'] = $tools->displayPagination('?search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess);
+    /** @var LengthAwarePaginator $users */
+    $users = (new User())
+        ->approved()
+        ->where('name_lat', 'LIKE', $search_db)
+        ->orderBy('name')
+        ->paginate($user->config->kmess);
+
+    $total = $users->total();
+    $data['list'] = $users->items();
+    $data['pagination'] = $users->render();
 }
 
 $data['errors'] = $error;

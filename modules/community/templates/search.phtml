@@ -23,9 +23,23 @@ $this->layout(
 );
 ?>
 
+<?php if (! empty($data['errors'])): ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $this->fetch(
+                'system::app/alert',
+                [
+                    'alert_type' => 'alert-danger',
+                    'alert'      => $data['errors'],
+                ]
+            ) ?>
+        </div>
+    </div>
+<?php endif; ?>
+
 <div class="row">
     <div class="col-md-6">
-        <form action="/community/search/" method="post" class="mb-3">
+        <form action="/community/search/" method="get" class="mb-3">
             <label for="search"><?= __('Look for the User') ?></label>
             <div class="input-group">
                 <input type="text" name="search" id="search" class="form-control" placeholder="<?= __('Username') ?>" value="<?= $data['search_query'] ?>">
@@ -41,7 +55,7 @@ $this->layout(
 
 <!-- List of Users -->
 <?php if ($data['total']): ?>
-    <?php foreach ($data['list']() as $usr): ?>
+    <?php foreach ($data['list'] as $usr): ?>
         <?= $this->fetch('users::user_row', ['item' => $usr]) ?>
     <?php endforeach ?>
 <?php else: ?>

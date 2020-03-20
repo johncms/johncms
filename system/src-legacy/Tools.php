@@ -190,7 +190,7 @@ class Tools
             $start = max(0, (int) $start - ((int) $start % (int) $kmess));
         }
 
-        $url = strtr($url, ['%' => '%%']);
+        $url = filter_var($url, FILTER_SANITIZE_URL);
 
         if ($start !== 0) {
             $items[] = [

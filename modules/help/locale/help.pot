@@ -9,7 +9,6 @@ msgstr ""
 
 #: modules/help/includes/admsmilies.php:21
 #: modules/help/includes/my_smilies.php:22
-#: modules/help/includes/set_my_sm.php:27
 #: modules/help/includes/usersmilies.php:39
 #: modules/help/templates/index.phtml:31
 msgid "Smilies"
@@ -69,10 +68,6 @@ msgstr ""
 #: modules/help/includes/smilies.php:27
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
-msgstr ""
-
-#: modules/help/includes/set_my_sm.php:27
-msgid "Wrong data"
 msgstr ""
 
 #: modules/help/includes/smilies.php:19
