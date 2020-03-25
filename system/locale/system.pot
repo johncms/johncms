@@ -321,6 +321,87 @@ msgstr ""
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
+#: system/src-legacy/Bbcode.php:156
+msgid "Edit List"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:167
+msgid "Add Smilies"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:225
+msgid "Bold"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:226
+msgid "Italic"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:227
+msgid "Underline"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:228
+msgid "Strike"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:229
+msgid "Text Color"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:230
+msgid "Background Color"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:231
+msgid "List"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:232
+msgid "Spoiler"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:233
+msgid "Quote"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:234
+msgid "URL"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:235
+msgid "Code"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:239
+msgid "Smilies"
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:278
+msgid "Added"
+msgstr ""
+
+#: system/src-legacy/Tools.php:148
+msgid "Today"
+msgstr ""
+
+#: system/src-legacy/Tools.php:151
+msgid "Yesterday"
+msgstr ""
+
+#: system/src-legacy/Tools.php:167
+msgid "ERROR"
+msgstr ""
+
+#: system/src-legacy/Tools.php:307
+msgid "Somewhere on the site"
+msgstr ""
+
+#: system/src-legacy/Tools.php:498
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+
 #: system/src/Comments.php:159
 #: system/src/Comments.php:228
 #: system/src/Comments.php:229

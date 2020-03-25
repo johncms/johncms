@@ -11,6 +11,7 @@
         <sourceDir>modules/notifications</sourceDir>
         <sourceDir>modules/redirect</sourceDir>
         <sourceDir>system/src</sourceDir>
+        <sourceDir>system/src-legacy</sourceDir>
         <sourceDir>themes/default/templates</sourceDir>
         <sourceFile>system/helpers.php</sourceFile>
         <sourceFile>system/bootstrap.php</sourceFile>
