@@ -34,7 +34,7 @@ class UserFactory
     /**
      * @return User
      */
-    protected function getUserData(): ?User
+    protected function getUserData(): User
     {
         /** @psalm-suppress PossiblyNullArgument */
         $userPassword = md5($this->request->getCookie('cups', '', FILTER_SANITIZE_STRING));
@@ -44,7 +44,7 @@ class UserFactory
             return $this->authentication($userId, $userPassword);
         }
 
-        return null;
+        return new User();
     }
 
     private function authentication(int $userId, string $userPassword): ?User
