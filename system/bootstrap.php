@@ -15,8 +15,6 @@ use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
@@ -34,6 +32,8 @@ define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
 
 require __DIR__ . '/vendor/autoload.php';
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Error handling
 if (DEBUG) {
