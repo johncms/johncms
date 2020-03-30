@@ -14,15 +14,25 @@ $this->layout('system::layout/default', ['title' => __('Welcome')]);
     </p>
     <hr class="my-sm-3 my-md-4">
     <a class="btn btn-success btn-lg mr-1" href="https://johncms.com/downloads/">
-        <svg class="icon mr-2">
+        <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
         </svg>
-        <?= __('Download') ?>
+        <span class="hide-xs"><?= __('Download') ?></span>
     </a>
-    <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/"><?= __('Documentation') ?></a>
-    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1 hide-xs" target="_blank" rel="nofollow">
+    <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/">
+        <svg class="icon">
+            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book-open"/>
+        </svg>
+        <span class="hide-xs"><?= __('Documentation') ?></span>
+    </a>
+    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1" target="_blank" rel="nofollow">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#github"/>
+        </svg>
+    </a>
+    <a href="https://translate.johncms.com" title="Translate" class="btn btn-primary btn-lg-icon" target="_blank" rel="nofollow">
+        <svg class="icon">
+            <use xlink:href="<?= $this->asset('icons/sprite.svg', true) ?>#translate"/>
         </svg>
     </a>
 </div>
