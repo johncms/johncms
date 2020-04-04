@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Aura\Autoload\Loader;
 use Carbon\Carbon;
 use Johncms\FileInfo;
 use Johncms\Notifications\Notification;
@@ -47,6 +48,11 @@ di(Translator::class)->addTranslationDomain('forum', __DIR__ . '/locale');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('forum', __DIR__ . '/templates/');
+
+// Регистрируем автозагрузчик
+$loader = new Loader();
+$loader->register();
+$loader->addPrefix('Forum', __DIR__ . '/lib');
 
 // Добавляем раздел в навигационную цепочку
 $nav_chain->add(__('Forum'), '/forum/');
@@ -150,7 +156,7 @@ $error = '';
 
 if (! $config['mod_forum'] && $user->rights < 7) {
     $error = __('Forum is closed');
-} elseif ($config['mod_forum'] == 1 && ! $user->isValid()) {
+} elseif ($config['mod_forum'] === 1 && ! $user->isValid()) {
     $error = __('For registered users only');
 }
 
