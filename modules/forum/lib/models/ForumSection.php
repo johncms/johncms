@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $section_type
  * @property int $old_id
  */
-class Section extends Model
+class ForumSection extends Model
 {
     /**
      * Название таблицы

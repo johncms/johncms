@@ -10,17 +10,17 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumFile;
+use Forum\Models\ForumMessage;
 use Illuminate\Support\Collection;
 use Johncms\FileInfo;
 use Johncms\System\Http\Request;
+use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var array $config
- * @var PDO $db
- * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
  */
 
 $extensions = new Collection(di('config')['forum']['extensions']);
@@ -28,7 +28,10 @@ $extensions = new Collection(di('config')['forum']['extensions']);
 /** @var Request $request */
 $request = di(Request::class);
 
-if (! $id || ! $user->isValid()) {
+/** @var User $user */
+$user = di(User::class);
+
+if (! $id || ! $user->is_valid) {
     http_response_code(403);
     echo $view->render(
         'system::pages/result',
@@ -44,9 +47,8 @@ if (! $id || ! $user->isValid()) {
 }
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
-$res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'")->fetch();
-
-if (empty($res) || $res['user_id'] != $user->id) {
+$message = (new ForumMessage())->find($id);
+if ($message === null || $message->user_id !== $user->id) {
     echo $view->render(
         'system::pages/result',
         [
@@ -61,14 +63,14 @@ if (empty($res) || $res['user_id'] != $user->id) {
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
-if ($res['date'] < (time() - 3600)) {
+if ($message->date < (time() - 3600)) {
     echo $view->render(
         'system::pages/result',
         [
             'title'         => __('Add file'),
             'type'          => 'alert-danger',
             'message'       => __('The time allotted for the file upload has expired'),
-            'back_url'      => '/forum/?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+            'back_url'      => '/forum/?&typ=topic&id=' . $message->topic_id . '&amp;page=' . $page,
             'back_url_name' => __('Back'),
         ]
     );
@@ -94,7 +96,7 @@ if ($request->getMethod() === 'POST') {
         // Check allowed extensions
         // Список допустимых расширений файлов.
         $all_ext = $extensions->flatten();
-        if (! $all_ext->search($ext, true)) {
+        if ($all_ext->search($ext, true) === false) {
             $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $all_ext->implode(', ');
         }
 
@@ -115,7 +117,6 @@ if ($request->getMethod() === 'POST') {
 
         if (! $error) {
             // Определяем тип файла
-            $ext = strtolower($ext);
             if (in_array($ext, $extensions->get('windows'))) {
                 $type = 1;
             } elseif (in_array($ext, $extensions->get('java'))) {
@@ -136,22 +137,18 @@ if ($request->getMethod() === 'POST') {
                 $type = 9;
             }
 
-            // Определяем ID субкатегории и категории
-            $res2 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
-            $res3 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res2['section_id'] . "'")->fetch();
-
             // Заносим данные в базу
-            $db->exec(
-                "
-              INSERT INTO `cms_forum_files` SET
-              `cat` = '" . $res3['parent'] . "',
-              `subcat` = '" . $res2['section_id'] . "',
-              `topic` = '" . $res['topic_id'] . "',
-              `post` = '${id}',
-              `time` = '" . $res['date'] . "',
-              `filename` = " . $db->quote($file_name) . ",
-              `filetype` = '${type}'
-            "
+            $file = (new ForumFile());
+            $file->create(
+                [
+                    'cat'      => $message->topic->section->parent,
+                    'subcat'   => $message->topic->section_id,
+                    'topic'    => $message->topic_id,
+                    'post'     => $id,
+                    'time'     => $message->date,
+                    'filename' => $file_name,
+                    'filetype' => $type,
+                ]
             );
         } else {
             echo $view->render(
@@ -181,8 +178,8 @@ if ($request->getMethod() === 'POST') {
         );
         exit;
     }
-    $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();
-    $page = ceil($pa2 / $user->config->kmess);
+    $count_messages = (new ForumMessage())->where('topic_id', '=', $message->topic_id)->count();
+    $page = ceil($count_messages / $user->set_user->kmess);
     $file_attached = true;
 }
 
@@ -193,7 +190,7 @@ echo $view->render(
         'page_title'    => __('Add File'),
         'id'            => $id,
         'file_attached' => $file_attached ?? false,
-        'topic_id'      => $res['topic_id'],
-        'back_url'      => '?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+        'topic_id'      => $message->topic_id,
+        'back_url'      => '?type=topic&id=' . $message->topic_id . '&amp;page=' . $page,
     ]
 );
