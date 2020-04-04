@@ -80,68 +80,6 @@ if ($user->isValid() && ! empty($user->set_forum)) {
 }
 $set_forum = array_merge($set_forum_default, (array) $set_forum);
 
-// Список расширений файлов, разрешенных к выгрузке
-
-// Файлы архивов
-$ext_arch = [
-    'zip',
-    'rar',
-    '7z',
-    'tar',
-    'gz',
-    'apk',
-];
-// Звуковые файлы
-$ext_audio = [
-    'mp3',
-    'amr',
-];
-// Файлы документов и тексты
-$ext_doc = [
-    'txt',
-    'pdf',
-    'doc',
-    'docx',
-    'rtf',
-    'djvu',
-    'xls',
-    'xlsx',
-];
-// Файлы Java
-$ext_java = [
-    'sis',
-    'sisx',
-    'apk',
-];
-// Файлы картинок
-$ext_pic = [
-    'jpg',
-    'jpeg',
-    'gif',
-    'png',
-    'bmp',
-];
-// Файлы SIS
-$ext_sis = [
-    'sis',
-    'sisx',
-];
-// Файлы видео
-$ext_video = [
-    '3gp',
-    'avi',
-    'flv',
-    'mpeg',
-    'mp4',
-];
-// Файлы Windows
-$ext_win = [
-    'exe',
-    'msi',
-];
-// Другие типы файлов (что не перечислены выше)
-$ext_other = ['wmf'];
-
 $user_rights_names = [
     3 => __('Forum moderator'),
     4 => __('Download moderator'),

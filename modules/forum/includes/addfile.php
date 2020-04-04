@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Collection;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -18,6 +20,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  */
+
+$extensions = new Collection(di('config')['forum']['extensions']);
 
 if (! $id || ! $user->isValid()) {
     http_response_code(403);
@@ -81,8 +85,8 @@ if (isset($_POST['submit'])) {
     // Обработка файла (если есть), проверка на ошибки
     if ($do_file) {
         // Список допустимых расширений файлов.
-        $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $al_ext = $extensions->flatten();
+        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         $name = pathinfo($file, PATHINFO_FILENAME);
         $error = [];
 
@@ -92,8 +96,8 @@ if (isset($_POST['submit'])) {
         }
 
         // Check allowed extensions
-        if (! in_array($ext, $al_ext)) {
-            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
+        if (! $al_ext->search($ext, true)) {
+            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $al_ext->implode(', ');
         }
 
         // Replace invalid symbols
@@ -122,21 +126,21 @@ if (isset($_POST['submit'])) {
         if (! $error) {
             // Определяем тип файла
             $ext = strtolower($ext);
-            if (in_array($ext, $ext_win)) {
+            if (in_array($ext, $extensions->get('windows'))) {
                 $type = 1;
-            } elseif (in_array($ext, $ext_java)) {
+            } elseif (in_array($ext, $extensions->get('java'))) {
                 $type = 2;
-            } elseif (in_array($ext, $ext_sis)) {
+            } elseif (in_array($ext, $extensions->get('sis'))) {
                 $type = 3;
-            } elseif (in_array($ext, $ext_doc)) {
+            } elseif (in_array($ext, $extensions->get('documents'))) {
                 $type = 4;
-            } elseif (in_array($ext, $ext_pic)) {
+            } elseif (in_array($ext, $extensions->get('pictures'))) {
                 $type = 5;
-            } elseif (in_array($ext, $ext_arch)) {
+            } elseif (in_array($ext, $extensions->get('archives'))) {
                 $type = 6;
-            } elseif (in_array($ext, $ext_video)) {
+            } elseif (in_array($ext, $extensions->get('video'))) {
                 $type = 7;
-            } elseif (in_array($ext, $ext_audio)) {
+            } elseif (in_array($ext, $extensions->get('audio'))) {
                 $type = 8;
             } else {
                 $type = 9;
