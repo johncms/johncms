@@ -11,6 +11,8 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Collection;
+use Johncms\FileInfo;
+use Johncms\System\Http\Request;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -22,6 +24,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $extensions = new Collection(di('config')['forum']['extensions']);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 if (! $id || ! $user->isValid()) {
     http_response_code(403);
@@ -70,55 +75,40 @@ if ($res['date'] < (time() - 3600)) {
     exit;
 }
 
-if (isset($_POST['submit'])) {
-    // Проверка, был ли выгружен файл и с какого браузера
-    $do_file = false;
-    $file = '';
-
-    if ($_FILES['fail']['size'] > 0) {
-        // Проверка загрузки с обычного браузера
-        $do_file = true;
-        $file = $tools->rusLat($_FILES['fail']['name']);
-        $fsize = $_FILES['fail']['size'];
-    }
-
+if ($request->getMethod() === 'POST') {
     // Обработка файла (если есть), проверка на ошибки
-    if ($do_file) {
-        // Список допустимых расширений файлов.
-        $al_ext = $extensions->flatten();
-        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-        $name = pathinfo($file, PATHINFO_FILENAME);
-        $error = [];
+    $files = $request->getUploadedFiles();
+    if (! empty($files) && ! empty($files['fail'])) {
+        /** @var GuzzleHttp\Psr7\UploadedFile $file */
+        $file = $files['fail'];
 
+        $file_info = new FileInfo($file->getClientFilename());
+        $ext = strtolower($file_info->getExtension());
+
+        $error = [];
         // Check file size
-        if ($fsize > 1024 * $config['flsz']) {
+        if ($file->getSize() > 1024 * $config['flsz']) {
             $error[] = __('File size exceed') . ' ' . $config['flsz'] . 'kb.';
         }
 
         // Check allowed extensions
-        if (! $al_ext->search($ext, true)) {
-            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $al_ext->implode(', ');
+        // Список допустимых расширений файлов.
+        $all_ext = $extensions->flatten();
+        if (! $all_ext->search($ext, true)) {
+            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $all_ext->implode(', ');
         }
 
-        // Replace invalid symbols
-        $name = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $name);
-        $name = trim($name, '_');
-        // Delete repeated replacement
-        $name = preg_replace('/-{2,}/', '_', $name);
-        $fname = mb_substr($name, 0, 70) . '.' . $ext;
+        $file_name = $file_info->getCleanName();
 
         // Проверка наличия файла с таким же именем
-        if (file_exists(UPLOAD_PATH . 'forum/attach/' . $fname)) {
-            $fname = time() . $fname;
+        if (file_exists(UPLOAD_PATH . 'forum/attach/' . $file_name)) {
+            $file_name = time() . $file_name;
         }
 
-        // Окончательная обработка
-        if (! $error && $do_file) {
-            // Для обычного браузера
-            if ((move_uploaded_file($_FILES['fail']['tmp_name'], UPLOAD_PATH . 'forum/attach/' . $fname)) == true) {
-                @chmod("${fname}", 0777);
-                @chmod(UPLOAD_PATH . 'forum/attach/' . $fname, 0777);
-            } else {
+        // Сохраняем файл
+        if (! $error) {
+            $file->moveTo(UPLOAD_PATH . 'forum/attach/' . $file_name);
+            if (! $file->isMoved()) {
                 $error[] = __('Error uploading file');
             }
         }
@@ -159,7 +149,7 @@ if (isset($_POST['submit'])) {
               `topic` = '" . $res['topic_id'] . "',
               `post` = '${id}',
               `time` = '" . $res['date'] . "',
-              `filename` = " . $db->quote($fname) . ",
+              `filename` = " . $db->quote($file_name) . ",
               `filetype` = '${type}'
             "
             );
