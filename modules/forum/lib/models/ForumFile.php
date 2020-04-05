@@ -14,6 +14,7 @@ namespace Forum\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Johncms\System\Users\User;
 
 /**
  * Class File
@@ -54,4 +55,25 @@ class ForumFile extends Model
         'dlcount',
         'del',
     ];
+
+    /**
+     * Добавляем глобальные ограничения
+     *
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::addGlobalScope(
+            'access',
+            static function (Builder $builder) {
+                /** @var User $user */
+                $user = di(User::class);
+                if ($user->rights < 7) {
+                    $builder->where('del', '!=', 1);
+                }
+            }
+        );
+    }
 }

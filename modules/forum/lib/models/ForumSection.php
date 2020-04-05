@@ -29,13 +29,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $access
  * @property int $section_type
  * @property int $old_id
+ *
+ * @property string $url - URL раздела
+ * @property string $subsections_count - Количество подразделов (доступно только при вызове withCount('subsections'))
+ * @property ForumSection $subsections - Подразделы
  */
 class ForumSection extends Model
 {
+    use SectionMutators;
+    use SectionRelations;
+
     /**
      * Название таблицы
      *
      * @var string
      */
     protected $table = 'forum_sections';
+
+    protected $appends = ['url'];
 }

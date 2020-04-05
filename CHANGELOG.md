@@ -3,6 +3,24 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
+## 9.3.0 - unreleased
+
+#### Added
+
+#### Changed
+- Для таблиц форума добавлены модели.
+- Рефакторинг страницы добавления файла на форуме. Настройки расширений вынесены в отдельный конфигурационный файл: `config/autoload/forum.global.php`
+- На главной странице форума переделаны запросы на использование ORM. Получение подразделов теперь не создает дополнительных запросов к БД в количестве равном количеству разделов.
+- Изменен шаблон главной страницы форума `modules/forum/templates/index.phtml` Теперь `$sections` содержит объект `\Forum\Models\ForumSection` если вы кастомизировали шаблон, то его необходимо доработать. Количество подразделов теперь хранится в `subsections_count`, а не в `cnt`.
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
 ## 9.2.0 - 2020-03-20
 
 #### Added

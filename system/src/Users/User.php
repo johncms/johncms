@@ -91,6 +91,7 @@ use Johncms\System\Users\UserConfig;
  * @property array $photo - Фотография пользователя
  *
  * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
+ * @method Builder online() - Выбрать пользователей онлайн
  */
 class User extends Model
 {
@@ -174,5 +175,16 @@ class User extends Model
     public function scopeApproved(Builder $query): Builder
     {
         return $query->where('preg', '=', 1);
+    }
+
+    /**
+     * Выборка только пользователей онлайн
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOnline(Builder $query): Builder
+    {
+        return $query->where('lastdate', '>', (time() - 300));
     }
 }

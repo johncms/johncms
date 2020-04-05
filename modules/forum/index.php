@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 use Aura\Autoload\Loader;
 use Carbon\Carbon;
+use Forum\Models\ForumFile;
+use Forum\Models\ForumSection;
 use Johncms\FileInfo;
 use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
@@ -22,6 +24,7 @@ use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
 use Johncms\UserProperties;
+use Johncms\Users\GuestSession;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -645,34 +648,23 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
         }
     } else {
         // Forum categories
+        $sections = (new ForumSection())
+            ->withCount('subsections')
+            ->with('subsections')
+            ->where('parent', '=', 0)
+            ->orWhereNull('parent')
+            ->orderBy('sort')
+            ->get();
 
-        $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files`' . ($user->rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
-        $req = $db->query(
-            'SELECT sct.`id`, sct.`name`, sct.`description`,  sct.`section_type`, (
-SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
-FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`'
-        );
+        // Считаем файлы
+        $files_count = (new ForumFile())->count();
 
-        $sections = [];
-        while ($res = $req->fetch()) {
-            $subsections_array = [];
-            $subsections = $db->query('SELECT * FROM `forum_sections` WHERE parent = ' . $res['id'] . ' ORDER BY `sort`');
-            while ($arr = $subsections->fetch()) {
-                $type = ! empty($arr['section_type']) ? 'topics' : 'sections';
-                $arr['url'] = '/forum/?type=' . $type . '&id=' . $arr['id'];
-                $subsections_array[] = $arr;
-            }
+        // Считаем пользователей онлайн
+        $online = [
+            'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum%')->count(),
+            'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count()
+        ];
 
-            $res['subsections'] = $subsections_array;
-            $type = ! empty($res['section_type']) ? 'type=topics&amp;' : '';
-            $res['url'] = '/forum/?' . $type . 'id=' . $res['id'];
-            $sections[] = $res;
-        }
-
-        $online = $db->query(
-            'SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
-       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g"
-        )->fetch();
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
         echo $view->render(
@@ -682,7 +674,7 @@ FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sc
                 'page_title'   => __('Forum'),
                 'sections'     => $sections,
                 'online'       => $online,
-                'files_count'  => $tools->formatNumber($count),
+                'files_count'  => $tools->formatNumber($files_count),
                 'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
             ]
         );
