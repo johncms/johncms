@@ -15,7 +15,7 @@ namespace Forum\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 /**
  * Class Message

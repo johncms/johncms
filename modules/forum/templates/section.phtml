@@ -11,7 +11,8 @@
 /**
  * @var $title
  * @var $page_title
- * @var $sections
+ * @var \Forum\Models\ForumSection $sections
+ * @var \Forum\Models\ForumSection $section
  * @var $online
  * @var $files_count
  * @var $unread_count
@@ -36,7 +37,7 @@ $this->layout(
     ]
 ) ?>
 
-<?php if (empty($sections)): ?>
+<?php if ($sections->count() === 0): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
@@ -48,14 +49,14 @@ $this->layout(
 
 <?php foreach ($sections as $section): ?>
     <div class="shadow border-radius-12 forum-section post-item mb-2">
-        <div class="section-header <?= (empty($section['description']) ? 'border-0 pb-0' : '') ?>">
+        <div class="section-header <?= (empty($section->description) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
-                <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
-                <span class="badge badge-pill badge-light border ml-3"><?= $section['children_count'] ?></span>
+                <a href="<?= $section->url ?>" class="text-dark-brown"><?= $section->name ?></a>
+                <span class="badge badge-pill badge-light border ml-3"><?= ($section->section_type === 1 ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
         </div>
-        <?php if (! empty($section['description'])): ?>
-            <div class="small pt-2 text-muted"><?= $section['description'] ?></div>
+        <?php if (! empty($section->description)): ?>
+            <div class="small pt-2 text-muted"><?= $section->description ?></div>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>

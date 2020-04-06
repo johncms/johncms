@@ -32,7 +32,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $url - URL раздела
  * @property string $subsections_count - Количество подразделов (доступно только при вызове withCount('subsections'))
+ * @property string $topics_count - Количество подразделов (доступно только при вызове withCount('subsections'))
  * @property ForumSection $subsections - Подразделы
+ * @property ForumTopic $topics - Топики
  */
 class ForumSection extends Model
 {

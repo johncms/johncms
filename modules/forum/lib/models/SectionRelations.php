@@ -24,4 +24,12 @@ trait SectionRelations
     {
         return $this->hasMany(self::class, 'parent', 'id');
     }
+
+    /**
+     * Связь с топиками
+     */
+    public function topics(): HasMany
+    {
+        return $this->hasMany(ForumTopic::class, 'section_id', 'id');
+    }
 }

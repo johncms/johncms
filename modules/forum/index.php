@@ -242,28 +242,15 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         switch ($show_type) {
             case 'section':
                 // List of forum sections
-                $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent`='${id}' ORDER BY `sort`");
-                $total = $req->rowCount();
-                $sections = [];
-                if ($total) {
-                    while ($res = $req->fetch()) {
-                        if ($res['section_type'] == 1) {
-                            $children_count = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
-                        } else {
-                            $children_count = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn();
-                        }
+                $sections = (new ForumSection())->withCount(['subsections', 'topics'])->where('parent', '=', $id)->get();
 
-                        $res['children_count'] = $children_count;
-                        $res['url'] = '?' . ($res['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res['id'];
-                        $sections[] = $res;
-                    }
-                    unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
-                }
+                unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
-                $online = $db->query(
-                    'SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
-       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g"
-                )->fetch();
+                // Считаем пользователей онлайн
+                $online = [
+                    'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum%')->count(),
+                    'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count()
+                ];
 
                 echo $view->render(
                     'forum::section',
@@ -273,7 +260,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                         'id'           => $type1['id'],
                         'sections'     => $sections,
                         'online'       => $online,
-                        'total'        => $total,
+                        'total'        => $sections->count(),
                         'files_count'  => $tools->formatNumber($count),
                         'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
                     ]

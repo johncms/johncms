@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\Users\User;
 
 /**
  * Class Topic
@@ -60,6 +61,27 @@ class ForumTopic extends Model
      * @var string
      */
     protected $table = 'forum_topic';
+
+    /**
+     * Добавляем глобальные ограничения
+     *
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::addGlobalScope(
+            'access',
+            static function (Builder $builder) {
+                /** @var User $user */
+                $user = di(User::class);
+                if ($user->rights < 7) {
+                    $builder->where('deleted', '!=', 1)->orWhereNull('deleted');
+                }
+            }
+        );
+    }
 
     /**
      * Связь с родительским разделом
