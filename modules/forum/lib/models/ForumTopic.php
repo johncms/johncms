@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 /**
@@ -52,15 +53,67 @@ use Johncms\Users\User;
  * @property int $old_id - Устаревшее.
  *
  * @property ForumSection $section
+ * @method Builder read() - Метка прочитанного
+ * @property string $url
+ * @property string $show_posts_count
+ * @property string $show_last_author
+ * @property string $show_last_post_date
+ * @property bool $has_icons
+ * @property string $last_page_url
+ * @property bool $unread
+ * @property int $read
+ *
+ * @property User $current_user
+ * @property Tools $tools
  */
 class ForumTopic extends Model
 {
+    use TopicMutators;
+
     /**
      * Название таблицы
      *
      * @var string
      */
     protected $table = 'forum_topic';
+
+    public $timestamps = false;
+
+    protected $casts = [
+        'closed'   => 'boolean',
+        'deleted'  => 'boolean',
+        'pinned'   => 'boolean',
+        'has_poll' => 'boolean',
+    ];
+
+    protected $appends = [
+        'url',
+        'show_posts_count',
+        'show_last_author',
+        'show_last_post_date',
+        'has_icons',
+        'last_page_url',
+        'unread',
+    ];
+
+    /**
+     * Текущий пользователь
+     *
+     * @var User
+     */
+    protected $current_user;
+
+    /**
+     * @var Tools
+     */
+    protected $tools;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->current_user = di(User::class);
+        $this->tools = di(Tools::class);
+    }
 
     /**
      * Добавляем глобальные ограничения
@@ -81,6 +134,30 @@ class ForumTopic extends Model
                 }
             }
         );
+    }
+
+    /**
+     * Добавляем в выборку количество непрочитанных сообщений с момента последнего прочтения темы.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeRead(Builder $query): Builder
+    {
+        /** @var User $user */
+        $user = di(User::class);
+        if ($user->is_valid) {
+            return $query->selectSub(
+                (new ForumUnread())
+                    ->selectRaw('count(*)')
+                    ->whereRaw('cms_forum_rdm.time >= forum_topic.last_post_date')
+                    ->whereRaw('cms_forum_rdm.topic_id = forum_topic.id')
+                    ->where('user_id', '=', $user->id),
+                'read'
+            )
+                ->addSelect('forum_topic.*');
+        }
+        return $query;
     }
 
     /**

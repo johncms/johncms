@@ -17,6 +17,8 @@
  * @var $unread_count
  * @var $create_access
  * @var $pagination
+ * @var \Forum\Models\ForumTopic $topics
+ * @var \Forum\Models\ForumTopic $topic
  */
 
 $this->layout(
@@ -38,7 +40,7 @@ $this->layout(
     ]
 ) ?>
 
-<?php if (empty($topics)): ?>
+<?php if ($total === 0): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
@@ -56,33 +58,33 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($topics as $topic): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-2<?= $topic['deleted'] ? ' deleted-post' : '' ?><?= $topic['closed'] ? ' closed-topic' : '' ?>">
+    <div class="shadow border-radius-12 forum-section post-item mb-2<?= $topic->deleted ? ' deleted-post' : '' ?><?= $topic->closed ? ' closed-topic' : '' ?>">
         <div class="section-header">
             <div class="d-flex align-items-center w-100">
                 <?php if ($topic['has_icons']): ?>
                     <div class="topic-icons mr-1 d-flex align-items-center">
-                        <?php if ($topic['pinned']): ?>
+                        <?php if ($topic->pinned): ?>
                             <div class="mr-1" title="<?= __('Pinned topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pin"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
-                        <?php if ($topic['has_poll']): ?>
+                        <?php if ($topic->has_poll): ?>
                             <div class="mr-1" title="<?= __('Topic has poll') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bar-chart"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
-                        <?php if ($topic['closed']): ?>
+                        <?php if ($topic->closed): ?>
                             <div class="mr-1" title="<?= __('Closed topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#lock"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
-                        <?php if ($topic['deleted']): ?>
+                        <?php if ($topic->deleted): ?>
                             <div class="mr-1" title="<?= __('Deleted topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#x"/>
@@ -91,25 +93,27 @@ $this->layout(
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
-                <a href="<?= $topic['url'] ?>" class="text-dark-brown flex-grow-1 flex-md-grow-0"><?= $topic['name'] ?></a>
-                <span class="badge badge-pill badge-light border ml-3"><?= $topic['show_posts_count'] ?></span>
-                <a href="<?= $topic['last_page_url'] ?>" class="ml-auto pl-2" title="<?= __('Last page') ?>">
-                    <svg class="icon icon-chevron-bottom text-dark-brown">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
-                    </svg>
-                </a>
+                <a href="<?= $topic->url ?>" class="text-dark-brown flex-grow-1 flex-md-grow-0"><?= $topic->name ?></a>
+                <span class="badge badge-pill <?= $topic->unread ? 'badge-danger' : 'badge-light border' ?> ml-3"><?= $topic->show_posts_count ?></span>
+                <?php if (! empty($topic->last_page_url)): ?>
+                    <a href="<?= $topic->last_page_url ?>" class="ml-auto pl-2" title="<?= __('Last page') ?>">
+                        <svg class="icon icon-chevron-bottom text-dark-brown">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
+                        </svg>
+                    </a>
+                <?php endif ?>
             </div>
         </div>
         <div class="small pt-2 text-muted">
-            <?= __('Author') ?>: <?= $topic['user_name'] ?>,
-            <?= __('Last post') ?>: <?= $topic['show_last_post_date'] ?>, <?= $topic['show_last_author'] ?>
+            <?= __('Author') ?>: <?= $topic->user_name ?>,
+            <?= __('Last post') ?>: <?= $topic->show_last_post_date ?>, <?= $topic->show_last_author ?>
         </div>
     </div>
 <?php endforeach; ?>
 <div class="mb-n2 pt-1">
     <div><?= __('Total') ?>: <?= $total ?></div>
     <!-- Page switching -->
-    <?php if ($total > $user->config->kmess): ?>
+    <?php if (! empty($pagination)): ?>
         <div class="mt-1"><?= $pagination ?></div>
     <?php endif ?>
 </div>

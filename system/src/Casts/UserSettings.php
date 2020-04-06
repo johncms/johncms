@@ -30,7 +30,7 @@ class UserSettings implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes): UserConfig
     {
-        return new UserConfig($value);
+        return new UserConfig($value ?? '');
     }
 
     /**

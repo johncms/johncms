@@ -14,6 +14,7 @@ use Aura\Autoload\Loader;
 use Carbon\Carbon;
 use Forum\Models\ForumFile;
 use Forum\Models\ForumSection;
+use Forum\Models\ForumTopic;
 use Johncms\FileInfo;
 use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
@@ -249,7 +250,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 // Считаем пользователей онлайн
                 $online = [
                     'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum%')->count(),
-                    'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count()
+                    'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count(),
                 ];
 
                 echo $view->render(
@@ -269,48 +270,12 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
             case 'topics':
                 // List of forum topics
-                $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
-                if ($total) {
-                    $req = $db->query(
-                        'SELECT tpc.*, (
-SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= tpc.last_post_date AND `topic_id` = tpc.id AND `user_id` = ' . $user->id . ") as `np`
-FROM `forum_topic` tpc WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` <> '1' OR deleted IS NULL)") . "
-ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config->kmess
-                    );
-
-                    $topics = [];
-                    while ($res = $req->fetch()) {
-                        if ($user->rights >= 7) {
-                            $cpg = ceil($res['mod_post_count'] / $user->config->kmess);
-                            $res['show_posts_count'] = $tools->formatNumber($res['mod_post_count']);
-                            $res['show_last_author'] = $res['mod_last_post_author_name'];
-                            $res['show_last_post_date'] = $tools->displayDate($res['mod_last_post_date']);
-                        } else {
-                            $cpg = ceil($res['post_count'] / $user->config->kmess);
-                            $res['show_posts_count'] = $tools->formatNumber($res['post_count']);
-                            $res['show_last_author'] = $res['last_post_author_name'];
-                            $res['show_last_post_date'] = $tools->displayDate($res['last_post_date']);
-                        }
-
-                        $res['has_icons'] = ($res['pinned'] || $res['has_poll'] || $res['closed'] || $res['deleted']);
-
-                        $res['url'] = '/forum/?type=topic&amp;id=' . $res['id'];
-
-                        // Url to last page
-                        $res['last_page_url'] = '';
-                        if ($cpg > 1) {
-                            $res['last_page_url'] = '/forum/?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg;
-                        }
-
-                        $topics[] = $res;
-                    }
-                    unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
-                }
-
-                $online = $db->query(
-                    'SELECT (SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum%') AS online_u,
-       (SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum%') AS online_g"
-                )->fetch();
+                $topics = (new ForumTopic())
+                    ->read()
+                    ->where('section_id', '=', $id)
+                    ->orderByDesc('pinned')
+                    ->orderByDesc('last_post_date')
+                    ->paginate($user->config->kmess);
 
                 // Check access to create topic
                 $create_access = false;
@@ -318,17 +283,25 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config-
                     $create_access = true;
                 }
 
+                unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+
+                // Считаем пользователей онлайн
+                $online = [
+                    'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum%')->count(),
+                    'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count(),
+                ];
+
                 echo $view->render(
                     'forum::topics',
                     [
-                        'pagination'    => $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+                        'pagination'    => $topics->render(),
                         'id'            => $id,
                         'create_access' => $create_access,
                         'title'         => $type1['name'],
                         'page_title'    => $type1['name'],
-                        'topics'        => $topics ?? [],
+                        'topics'        => $topics->getItems(),
                         'online'        => $online,
-                        'total'         => $total,
+                        'total'         => $topics->total(),
                         'files_count'   => $tools->formatNumber($count),
                         'unread_count'  => $tools->formatNumber($counters->forumUnreadCount()),
                     ]
@@ -649,7 +622,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
         // Считаем пользователей онлайн
         $online = [
             'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum%')->count(),
-            'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count()
+            'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count(),
         ];
 
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
