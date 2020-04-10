@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
 
-class DateHuman implements CastsAttributes
+class TimeToDate implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -37,10 +37,10 @@ class DateHuman implements CastsAttributes
             /** @var Translator $translator */
             $translator = di(Translator::class);
 
-            return Carbon::parse($value, $user->config->timeshift)
+            return Carbon::createFromTimestampUTC($value)
                 ->addHours($user->set_user->timeshift)
                 ->locale($translator->getLocale())
-                ->diffForHumans(['join' => false, 'parts' => 2]);
+                ->calendar(null, ['sameElse' => 'lll']);
         }
 
         return $value;
