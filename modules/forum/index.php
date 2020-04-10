@@ -313,32 +313,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             case 'topic':
                 // List messages
                 if ($user->isValid()) {
-                    $online = $db->query(
-                        'SELECT (
-SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_u, (
-SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE '/forum?type=topic&id=${id}%') AS online_g"
-                    )->fetch();
-                }
-
-                $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $id ? 1 : 0;
-                $sql = '';
-
-                if ($filter && ! empty($_SESSION['fsort_users'])) {
-                    // Подготавливаем запрос на фильтрацию юзеров
-                    $sw = 0;
-                    $sql = ' AND (';
-                    $fsort_users = unserialize($_SESSION['fsort_users'], ['allowed_classes' => false]);
-
-                    foreach ($fsort_users as $val) {
-                        if ($sw) {
-                            $sql .= ' OR ';
-                        }
-
-                        $sortid = (int) $val;
-                        $sql .= "`forum_messages`.`user_id` = '${sortid}'";
-                        $sw = 1;
-                    }
-                    $sql .= ')';
+                    $online = [
+                        'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
+                        'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
+                    ];
                 }
 
                 // Если тема помечена для удаления, разрешаем доступ только администрации
@@ -360,16 +338,43 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                 // Фиксируем количество просмотров топика
                 if (! empty($type1['id']) && (empty($_SESSION['viewed_topics']) || ! in_array($type1['id'], $_SESSION['viewed_topics']))) {
                     $view_count = (int) $type1['view_count'] + 1;
-                    $db->query('UPDATE forum_topic SET view_count = ' . $view_count . ' WHERE id = ' . $type1['id']);
+                    (new ForumTopic())->where('id', '=', $type1['id'])->update(['view_count' => $view_count]);
                     $_SESSION['viewed_topics'][] = $type1['id'];
                 }
 
+
+                // Задаем правила сортировки (новые внизу / вверху)
+                if ($user->isValid()) {
+                    $order = $set_forum['upfp'] ? 'DESC' : 'ASC';
+                } else {
+                    $order = (empty($_SESSION['uppost']) || $_SESSION['uppost'] == 0) ? 'ASC' : 'DESC';
+                }
+
+                $filter_by_users = [];
+                $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $id ? 1 : 0;
+                if ($filter && ! empty($_SESSION['fsort_users'])) {
+                    $filter_by_users = unserialize($_SESSION['fsort_users'], ['allowed_classes' => false]);
+                }
+
+                $message = (new ForumMessage())
+                    ->users()
+                    ->with('files')
+                    ->where('topic_id', '=', $id);
+
+                // Filter by users
+                if (! empty($filter_by_users)) {
+                    $message->whereIn('user_id', $filter_by_users);
+                }
+
+                $message = $message->orderBy('id', $order)
+                    ->paginate($user->config->kmess);
+
                 // Счетчик постов темы
-                $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id`='${id}'${sql}" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)"))->fetchColumn();
+                $total = $message->total();
 
                 if ($start >= $total) {
                     // Исправляем запрос на несуществующую страницу
-                    $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
+                    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
                 }
 
                 $poll_data = [];
@@ -413,14 +418,12 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 $curators = ! empty($type1['curators']) ? unserialize($type1['curators'], ['allowed_classes' => false]) : [];
                 $curator = false;
 
-                if ($user->rights < 6 && $user->rights != 3 && $user->isValid()) {
-                    if (array_key_exists($user->id, $curators)) {
-                        $curator = true;
-                    }
+                if ($user->rights < 6 && $user->rights != 3 && $user->isValid() && array_key_exists($user->id, $curators)) {
+                    $curator = true;
                 }
 
                 // Fixed first post
-                $first_post = null;
+                $first_message = null;
                 if (isset($_GET['clip']) || ($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($total - $user->config->kmess)) : $start > 0))) {
                     $first_message = (new ForumMessage())
                         ->users()
@@ -428,20 +431,6 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         ->orderBy('id')
                         ->first();
                 }
-
-                // Задаем правила сортировки (новые внизу / вверху)
-                if ($user->isValid()) {
-                    $order = $set_forum['upfp'] ? 'DESC' : 'ASC';
-                } else {
-                    $order = ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) ? 'ASC' : 'DESC';
-                }
-
-                $message = (new ForumMessage())
-                    ->users()
-                    ->with('files')
-                    ->where('topic_id', '=', $id)
-                    ->orderBy('id', $order)
-                    ->paginate($user->config->kmess);
 
                 /** @var Collection $messages */
                 $messages = $message->getItems()->map(
