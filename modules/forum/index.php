@@ -13,8 +13,10 @@ declare(strict_types=1);
 use Aura\Autoload\Loader;
 use Carbon\Carbon;
 use Forum\Models\ForumFile;
+use Forum\Models\ForumMessage;
 use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
+use Illuminate\Support\Collection;
 use Johncms\FileInfo;
 use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
@@ -454,90 +456,38 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     $order = ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) ? 'ASC' : 'DESC';
                 }
 
-                // Messages
-                $req = $db->query(
-                    "
-                  SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`, (
-                  SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = forum_messages.id) as file
-                  FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-                  WHERE `forum_messages`.`topic_id` = '${id}'"
-                    . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "${sql}
-                  ORDER BY `forum_messages`.`id` ${order} LIMIT ${start}, " . $user->config->kmess
+                $message = (new ForumMessage())
+                    ->users()
+                    ->with('files')
+                    ->where('topic_id', '=', $id)
+                    ->orderBy('id', $order)
+                    ->paginate($user->config->kmess);
+
+                /** @var Collection $messages */
+                $messages = $message->getItems()->map(
+                    static function (ForumMessage $message) use ($user, $curator, $set_forum, $allow, &$i, $start, $total) {
+                        if (
+                            (($user->rights === 3 || $user->rights >= 6 || $curator) && $user->rights >= $message->rights)
+                            || ($i === 1 && $allow === 2 && $message->user_id === $user->id)
+                            || ($message->user_id === $user->id && ! $set_forum['upfp'] && ($start + $i) === $total && $message->date > time() - 300)
+                            || ($message->user_id === $user->id && $set_forum['upfp'] && $start === 0 && $i === 1 && $message->date > time() - 300)
+                        ) {
+                            $message->can_edit = true;
+                        }
+
+                        if ($user->id !== $message->user_id && $user->isValid()) {
+                            $message->reply_url = '/forum/?act=say&amp;type=reply&amp;id=' . $message->id . '&amp;start=' . $start;
+                            $message->quote_url = '/forum/?act=say&amp;type=reply&amp;id=' . $message->id . '&amp;start=' . $start . '&amp;cyt';
+                        }
+
+                        $i++;
+                        return $message;
+                    }
                 );
 
-                $i = 1;
-                $messages = [];
-                while ($res = $req->fetch()) {
-                    $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
-
-                    $res['reply_url'] = '';
-                    $res['quote_url'] = '';
-                    if ($user->isValid() && $user->id != $res['user_id']) {
-                        $res['reply_url'] = '/forum/?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start;
-                        $res['quote_url'] = '/forum/?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt';
-                    }
-
-                    $res['post_time'] = $tools->displayDate($res['date']);
-
-                    $text = $res['text'];
-                    $text = $tools->checkout($text, 1, 1);
-                    $text = $tools->smilies($text, $res['rights'] ? 1 : 0);
-                    $res['post_text'] = $text;
-
-                    $res['edit_time'] = $res['edit_count'] ? $tools->displayDate($res['edit_time']) : '';
-
-                    // Access to edit post
-                    $res['has_edit'] = false;
-                    if (
-                        (($user->rights == 3 || $user->rights >= 6 || $curator) && $user->rights >= $res['rights'])
-                        || ($res['user_id'] == $user->id && ! $set_forum['upfp'] && ($start + $i) == $total && $res['date'] > time() - 300)
-                        || ($res['user_id'] == $user->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['date'] > time() - 300)
-                        || ($i == 1 && $allow == 2 && $res['user_id'] == $user->id)
-                    ) {
-                        $res['has_edit'] = true;
-                    }
-
-                    // Attachments
-                    $res['files'] = [];
-                    if ($res['file']) {
-                        $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
-                        while ($fres = $freq->fetch()) {
-                            $file_params = [];
-                            $file_info = new FileInfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename']);
-                            if (! $file_info->isFile()) {
-                                continue;
-                            }
-                            $file_params['file_size'] = format_size($file_info->getSize());
-                            $file_params['file_preview'] = '';
-                            $file_params['file_url'] = '/forum/?act=file&amp;id=' . $fres['id'];
-                            $file_params['delete_url'] = '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'];
-                            if ($file_info->isImage()) {
-                                $file_params['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($fres['filename']));
-                            }
-
-                            $res['files'][] = array_merge($fres, $file_params);
-                        }
-                    }
-
-                    $user_properties = new UserProperties();
-                    $user_data = $user_properties->getFromArray($res);
-                    $res = array_merge($res, $user_data);
-
-                    if ($res['has_edit']) {
-                        $res['edit_url'] = '/forum/?act=editpost&amp;id=' . $res['id'];
-                        $res['delete_url'] = '/forum/?act=editpost&amp;do=del&amp;id=' . $res['id'];
-                        $res['restore_url'] = '';
-                        if ($user->rights >= 7 && $res['deleted'] == 1) {
-                            $res['restore_url'] = '?act=editpost&amp;do=restore&amp;id=' . $res['id'];
-                        }
-                    }
-
-                    $messages[] = $res;
-                    $i++;
-                }
-
                 // Помечаем уведомления прочитанными
-                $post_ids = array_column($messages, 'id');
+                $post_ids = $messages->pluck('id')->all();
+
                 $notifications = (new Notification())
                     ->where('module', '=', 'forum')
                     ->where('event_type', '=', 'new_message')
@@ -573,7 +523,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         'topic_vote'       => $topic_vote ?? null,
                         'curators_array'   => $curators_array,
                         'view_count'       => $view_count,
-                        'pagination'       => $tools->displayPagination('/forum/?type=topic&id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+                        'pagination'       => $message->render($user->config->kmess),
                         'start'            => $start,
                         'id'               => $id,
                         'token'            => $token ?? null,

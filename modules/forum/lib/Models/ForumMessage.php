@@ -14,7 +14,11 @@ namespace Forum\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\Casts\Ip;
+use Johncms\Casts\TimeToDate;
+use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 /**
@@ -41,11 +45,30 @@ use Johncms\Users\User;
  * @property int $old_id - Удалить
  *
  * @property ForumTopic $topic
+ * @property User $user
+ * @property User $user_data
+ * @property ForumFile $files
+ * @property string $url
+ * @property string $edit_url
+ * @property string $delete_url
+ * @property string $restore_url
+ * @property string $post_time
+ * @property string $post_text
+ * @property string $search_ip_url
+ * @property string $search_ip_via_proxy_url
+ * @property string $user_profile_link
+ *
+ * @property string $rights
+ *
+ * @method ForumMessage users()
+ *
  */
 class ForumMessage extends Model
 {
+    use MessageMutators;
+
     /**
-     * Название таблицы
+     * Table name
      *
      * @var string
      */
@@ -53,9 +76,16 @@ class ForumMessage extends Model
 
     public $timestamps = false;
 
+    public $can_edit = false;
+    public $reply_url = '';
+    public $quote_url = '';
+
     protected $casts = [
-        'pinned'  => 'bool',
-        'deleted' => 'bool',
+        'pinned'       => 'bool',
+        'deleted'      => 'bool',
+        'ip'           => Ip::class,
+        'ip_via_proxy' => Ip::class,
+        'edit_time'    => TimeToDate::class,
     ];
 
     protected $fillable = [
@@ -75,8 +105,37 @@ class ForumMessage extends Model
         'deleted_by',
     ];
 
+    protected $appends = [
+        'url',
+        'post_time',
+        'post_text',
+        'edit_time',
+        'edit_url',
+        'delete_url',
+        'restore_url',
+    ];
+
     /**
-     * Добавляем глобальные ограничения
+     * Current user
+     *
+     * @var User
+     */
+    protected $current_user;
+
+    /**
+     * @var Tools
+     */
+    protected $tools;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->current_user = di(User::class);
+        $this->tools = di(Tools::class);
+    }
+
+    /**
+     * Global scopes
      *
      * @return void
      */
@@ -97,12 +156,52 @@ class ForumMessage extends Model
     }
 
     /**
-     * Связь с темой форума к которой относится данный пост
+     * Adding user data to the query
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeUsers(Builder $query): Builder
+    {
+        return $query->leftJoin('users', 'forum_messages.user_id', '=', 'users.id')
+            ->addSelect(
+                [
+                    'forum_messages.*',
+                    'users.rights',
+                    'users.lastdate',
+                    'users.status',
+                    'users.datereg',
+                ]
+            );
+    }
+
+    /**
+     * Relationship to the parent topic
      *
      * @return HasOne
      */
     public function topic(): HasOne
     {
         return $this->hasOne(ForumTopic::class, 'id', 'topic_id');
+    }
+
+    /**
+     * Relationship to the author of the post.
+     *
+     * @return HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * Relationship to attached files.
+     *
+     * @return HasMany
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(ForumFile::class, 'post', 'id');
     }
 }
