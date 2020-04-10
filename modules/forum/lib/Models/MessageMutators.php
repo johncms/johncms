@@ -102,6 +102,21 @@ trait MessageMutators
     }
 
     /**
+     * Preview message
+     *
+     * @return string
+     */
+    public function getPostPreviewAttribute(): string
+    {
+        $post_preview = '';
+        if (mb_strlen($this->text) > 500) {
+            $post_preview = $this->tools->checkout(mb_substr($this->text, 0, 500), 0, 2);
+            $post_preview .= '...';
+        }
+        return $post_preview;
+    }
+
+    /**
      * User profile url
      *
      * @return string

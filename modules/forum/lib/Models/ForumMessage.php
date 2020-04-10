@@ -54,6 +54,7 @@ use Johncms\Users\User;
  * @property string $restore_url
  * @property string $post_time
  * @property string $post_text
+ * @property string $post_preview
  * @property string $search_ip_url
  * @property string $search_ip_via_proxy_url
  * @property string $user_profile_link

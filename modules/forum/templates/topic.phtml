@@ -22,6 +22,7 @@
  * @var $filter_by_author
  * @var \Forum\Models\ForumMessage $messages
  * @var \Forum\Models\ForumMessage $message
+ * @var \Forum\Models\ForumMessage $first_post
  * @var \Forum\Models\ForumFile $file
  */
 
@@ -156,18 +157,18 @@ $this->layout(
     </div>
 </div>
 
-<?php if (! empty($first_post)): ?>
+<?php if ($first_post): ?>
     <div class="shadow post-item post-item mb-2" id="first_post_block">
         <div class="section-header post-header collapsed" data-toggle="collapse" data-target="#first_post" aria-expanded="false" aria-controls="first_post">
             <div class="d-flex align-items-center">
-                <?php if (! empty($first_post['user_profile_link'])): ?>
-                    <a href="<?= $first_post['user_profile_link'] ?>" class="user-login mr-2"><?= $first_post['user_name'] ?></a>
+                <?php if (! empty($first_post->user_profile_link)): ?>
+                    <a href="<?= $first_post->user_profile_link ?>" class="user-login mr-2"><?= $first_post->user_data->name ?></a>
                 <?php else: ?>
-                    <a class="user-login mr-2"><?= $first_post['user_name'] ?></a>
+                    <a class="user-login mr-2"><?= $first_post->user_data->name ?></a>
                 <?php endif; ?>
-                <span class="post-date"><?= $first_post['post_time'] ?></span>
+                <span class="post-date"><?= $first_post->post_time ?></span>
             </div>
-            <?php if (! empty($first_post['post_preview'])): ?>
+            <?php if (! empty($first_post->post_preview)): ?>
                 <div class="toggle d-flex align-items-center pr-2">
                     <svg class="icon icon-chevron-bottom text-dark-brown">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
@@ -175,18 +176,18 @@ $this->layout(
                 </div>
             <?php endif; ?>
         </div>
-        <?php if (! empty($first_post['post_preview'])): ?>
+        <?php if (! empty($first_post->post_preview)): ?>
             <div class="collapse" id="first_post">
                 <div class="pt-2">
-                    <?= $first_post['post_text'] ?>
+                    <?= $first_post->post_text ?>
                 </div>
             </div>
             <div class="post-preview pt-2">
-                <?= $first_post['post_preview'] ?>
+                <?= $first_post->post_preview ?>
             </div>
         <?php else: ?>
             <div class="pt-2">
-                <?= $first_post['post_text'] ?>
+                <?= $first_post->post_text ?>
             </div>
         <?php endif; ?>
     </div>
@@ -288,7 +289,7 @@ $this->layout(
                 <div class="mt-3 pb-1">
                     <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
                     <div class="d-flex flex-wrap image-gallery">
-                        <?php foreach ($message->files as $file): $file->file_attrs; ?>
+                        <?php foreach ($message->files as $file): ?>
                             <div class="attached-file pr-3 d-flex flex-column justify-content-between">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <?php if (! empty($file->file_preview)): ?>
