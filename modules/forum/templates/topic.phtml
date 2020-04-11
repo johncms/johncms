@@ -17,7 +17,7 @@
  * @var $unread_count
  * @var $pagination
  * @var $settings_forum
- * @var $topic
+ * @var \Forum\Models\ForumTopic $topic
  * @var $write_access
  * @var $filter_by_author
  * @var \Forum\Models\ForumMessage $messages
@@ -52,19 +52,19 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<?php if ($topic['closed']): ?>
+<?php if ($topic->closed): ?>
     <div class="alert alert-danger">
         <?= __('Topic closed') ?>
     </div>
 <?php endif; ?>
 
-<?php if ($topic['deleted']): ?>
+<?php if ($topic->deleted): ?>
     <div class="alert alert-danger">
-        <?= __('Topic deleted by') ?> <b><?= $topic['deleted_by'] ?></b>
+        <?= __('Topic deleted by') ?> <b><?= $topic->deleted_by ?></b>
     </div>
-<?php elseif (! empty($topic['deleted_by']) && $user->rights >= 7): ?>
+<?php elseif (! empty($topic->deleted_by) && $user->rights >= 7): ?>
     <div class="alert alert-success">
-        <?= __('Undelete topic') ?> <b><?= $topic['deleted_by'] ?></b>
+        <?= __('Undelete topic') ?> <b><?= $topic->deleted_by ?></b>
     </div>
 <?php endif; ?>
 
@@ -153,7 +153,7 @@ $this->layout(
         <svg class="icon download-button-icon mt-n1">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"></use>
         </svg>
-        <?= $topic['view_count'] ?>
+        <?= $topic->formatted_view_count ?>
     </div>
 </div>
 
@@ -398,19 +398,19 @@ $this->layout(
 
                 <a class="dropdown-item" href="/forum/?act=ren&amp;id=<?= $id ?>"><?= __('Rename Topic') ?></a>
 
-                <?php if ($topic['closed'] == 1): ?>
+                <?php if ($topic->closed): ?>
                     <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>"><?= __('Open Topic') ?></a>
                 <?php else: ?>
                     <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>&amp;closed"><?= __('Close Topic') ?></a>
                 <?php endif; ?>
 
-                <?php if ($topic['deleted'] == 1): ?>
+                <?php if ($topic->deleted): ?>
                     <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= __('Restore Topic') ?></a>
                 <?php endif; ?>
 
                 <a class="dropdown-item" href="/forum/?act=deltema&amp;id=<?= $id ?>"><?= __('Delete Topic') ?></a>
 
-                <?php if ($topic['pinned'] == 1): ?>
+                <?php if ($topic->pinned): ?>
                     <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>"><?= __('Unfix Topic') ?></a>
                 <?php else: ?>
                     <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>&amp;vip"><?= __('Pin Topic') ?></a>

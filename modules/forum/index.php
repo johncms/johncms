@@ -151,29 +151,6 @@ $mods = [
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
-    // Заголовки страниц форума
-    if (! empty($id)) {
-        // Фиксируем местоположение и получаем заголовок страницы
-        if ($show_type === 'topics' || $show_type === 'section') {
-            $res = $db->query('SELECT `name` FROM `forum_sections` WHERE `id`= ' . $id)->fetch();
-        } elseif ($show_type === 'topic') {
-            $res = $db->query('SELECT `name` FROM `forum_topic` WHERE `id`= ' . $id)->fetch();
-        }
-    }
-
-    // Редирект на новые адреса страниц
-    if (! empty($id)) {
-        $check_section = $db->query("SELECT * FROM `forum_sections` WHERE `id`= '${id}'");
-        if ((empty($_REQUEST['type']) || (! empty($_REQUEST['act']) && $_REQUEST['act'] === 'post')) && ! $check_section->rowCount()) {
-            $check_link = $db->query("SELECT * FROM `forum_redirects` WHERE `old_id`= '${id}'")->fetch();
-            if (! empty($check_link)) {
-                http_response_code(301);
-                header('Location: ' . $check_link['new_link']);
-                exit;
-            }
-        }
-    }
-
     if (! $user->isValid()) {
         if (isset($_GET['newup'])) {
             $_SESSION['uppost'] = 1;
@@ -207,15 +184,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         }
 
         $type1 = $type->fetch();
-
-        // Фиксация факта прочтения Топика
-        if ($user->isValid() && $show_type == 'topic') {
-            $db->query(
-                "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
-                VALUES ('${id}', '" . $user->id . "', '" . time() . "')
-                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
-            );
-        }
 
         // Nav chain
         if ($show_type === 'topic') {
@@ -316,6 +284,13 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             case 'topic':
                 // List messages
                 if ($user->isValid()) {
+                    // Фиксация факта прочтения Топика
+                    $db->query(
+                        "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
+                VALUES ('${id}', '" . $user->id . "', '" . time() . "')
+                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
+                    );
+
                     $online = [
                         'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
                         'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
@@ -479,7 +454,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     'forum::topic',
                     [
                         'first_post'       => $first_message,
-                        'topic'            => $type1,
+                        'topic'            => $current_topic,
                         'topic_vote'       => $topic_vote ?? null,
                         'curators_array'   => $curators_array,
                         'view_count'       => $current_topic->view_count,
