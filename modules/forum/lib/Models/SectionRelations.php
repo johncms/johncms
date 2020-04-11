@@ -18,7 +18,7 @@ trait SectionRelations
 {
 
     /**
-     * Связь с подразделами
+     * Relation to subsections
      */
     public function subsections(): HasMany
     {
@@ -26,10 +26,26 @@ trait SectionRelations
     }
 
     /**
-     * Связь с топиками
+     * Relation to topics
      */
     public function topics(): HasMany
     {
         return $this->hasMany(ForumTopic::class, 'section_id', 'id');
+    }
+
+    /**
+     * Relation to files of section
+     */
+    public function sectionFiles(): HasMany
+    {
+        return $this->hasMany(ForumFile::class, 'subcat', 'id');
+    }
+
+    /**
+     * Relation to files of category
+     */
+    public function categoryFiles(): HasMany
+    {
+        return $this->hasMany(ForumFile::class, 'cat', 'id');
     }
 }

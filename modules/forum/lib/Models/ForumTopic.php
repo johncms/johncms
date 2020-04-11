@@ -15,6 +15,7 @@ namespace Forum\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -62,6 +63,10 @@ use Johncms\Users\User;
  * @property string $last_page_url
  * @property bool $unread
  * @property int $read
+ * @property string $formatted_view_count
+ *
+ * @property int $files_count
+ * @property ForumFile $files
  *
  * @property User $current_user
  * @property Tools $tools
@@ -80,10 +85,11 @@ class ForumTopic extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'closed'   => 'boolean',
-        'deleted'  => 'boolean',
-        'pinned'   => 'boolean',
-        'has_poll' => 'boolean',
+        'closed'     => 'boolean',
+        'deleted'    => 'boolean',
+        'pinned'     => 'boolean',
+        'has_poll'   => 'boolean',
+        'view_count' => 'int',
     ];
 
     protected $appends = [
@@ -168,5 +174,13 @@ class ForumTopic extends Model
     public function section(): HasOne
     {
         return $this->hasOne(ForumSection::class, 'id', 'section_id');
+    }
+
+    /**
+     * Relation to files of the topic
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(ForumFile::class, 'topic', 'id');
     }
 }

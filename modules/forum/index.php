@@ -16,6 +16,7 @@ use Forum\Models\ForumFile;
 use Forum\Models\ForumMessage;
 use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\FileInfo;
 use Johncms\Notifications\Notification;
@@ -231,19 +232,15 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         }
 
         $nav_chain->add($type1['name']);
-        // Счетчик файлов и ссылка на них
-        $sql = ($user->rights == 9) ? '' : " AND `del` != '1'";
-
-        if ($show_type === 'topic') {
-            $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `topic` = '${id}'" . $sql)->fetchColumn();
-        } elseif ($type1['section_type'] == 0) {
-            $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = ' . $type1['id'] . $sql)->fetchColumn();
-        } elseif ($type1['section_type'] == 1) {
-            $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `subcat` = '${id}'" . $sql)->fetchColumn();
-        }
 
         switch ($show_type) {
             case 'section':
+                try {
+                    $current_section = (new ForumSection())->withCount('categoryFiles')->findOrFail($id);
+                } catch (ModelNotFoundException $exception) {
+                    pageNotFound();
+                }
+
                 // List of forum sections
                 $sections = (new ForumSection())->withCount(['subsections', 'topics'])->where('parent', '=', $id)->get();
 
@@ -258,19 +255,25 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 echo $view->render(
                     'forum::section',
                     [
-                        'title'        => $type1['name'],
-                        'page_title'   => $type1['name'],
-                        'id'           => $type1['id'],
+                        'title'        => $current_section->name,
+                        'page_title'   => $current_section->name,
+                        'id'           => $current_section->id,
                         'sections'     => $sections,
                         'online'       => $online,
                         'total'        => $sections->count(),
-                        'files_count'  => $tools->formatNumber($count),
+                        'files_count'  => $tools->formatNumber($current_section->category_files_count),
                         'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
                     ]
                 );
                 break;
 
             case 'topics':
+                try {
+                    $current_section = (new ForumSection())->withCount('sectionFiles')->findOrFail($id);
+                } catch (ModelNotFoundException $exception) {
+                    pageNotFound();
+                }
+
                 // List of forum topics
                 $topics = (new ForumTopic())
                     ->read()
@@ -299,12 +302,12 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                         'pagination'    => $topics->render(),
                         'id'            => $id,
                         'create_access' => $create_access,
-                        'title'         => $type1['name'],
-                        'page_title'    => $type1['name'],
+                        'title'         => $current_section->name,
+                        'page_title'    => $current_section->name,
                         'topics'        => $topics->getItems(),
                         'online'        => $online,
                         'total'         => $topics->total(),
-                        'files_count'   => $tools->formatNumber($count),
+                        'files_count'   => $tools->formatNumber($current_section->section_files_count),
                         'unread_count'  => $tools->formatNumber($counters->forumUnreadCount()),
                     ]
                 );
@@ -319,27 +322,17 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                     ];
                 }
 
-                // Если тема помечена для удаления, разрешаем доступ только администрации
-                if ($user->rights < 6 && $type1['deleted'] == 1) {
-                    echo $view->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Topic deleted'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Topic deleted'),
-                            'back_url'      => '?type=topics&amp;id=' . $type1['section_id'],
-                            'back_url_name' => __('Go to Section'),
-                        ]
-                    );
-                    exit;
+                // Getting data for the current topic
+                try {
+                    $current_topic = (new ForumTopic())->withCount('files')->findOrFail($id);
+                } catch (ModelNotFoundException $exception) {
+                    pageNotFound();
                 }
 
-                $view_count = (int) $type1['view_count'];
-                // Фиксируем количество просмотров топика
-                if (! empty($type1['id']) && (empty($_SESSION['viewed_topics']) || ! in_array($type1['id'], $_SESSION['viewed_topics']))) {
-                    $view_count = (int) $type1['view_count'] + 1;
-                    (new ForumTopic())->where('id', '=', $type1['id'])->update(['view_count' => $view_count]);
-                    $_SESSION['viewed_topics'][] = $type1['id'];
+                // Increasing the number of views
+                if (empty($_SESSION['viewed_topics']) || ! in_array($current_topic->id, $_SESSION['viewed_topics'])) {
+                    $current_topic->increment('view_count');
+                    $_SESSION['viewed_topics'][] = $current_topic->id;
                 }
 
 
@@ -482,8 +475,6 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
                 }
 
-                $type1['view_count'] = $tools->formatNumber($type1['view_count']);
-
                 echo $view->render(
                     'forum::topic',
                     [
@@ -491,7 +482,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         'topic'            => $type1,
                         'topic_vote'       => $topic_vote ?? null,
                         'curators_array'   => $curators_array,
-                        'view_count'       => $view_count,
+                        'view_count'       => $current_topic->view_count,
                         'pagination'       => $message->render($user->config->kmess),
                         'start'            => $start,
                         'id'               => $id,
@@ -499,12 +490,12 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         'bbcode'           => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_message', 'msg'),
                         'settings_forum'   => $set_forum,
                         'write_access'     => $write_access,
-                        'title'            => $type1['name'],
-                        'page_title'       => $type1['name'],
+                        'title'            => $current_topic->name,
+                        'page_title'       => $current_topic->name,
                         'messages'         => $messages ?? [],
                         'online'           => $online ?? [],
                         'total'            => $total,
-                        'files_count'      => $tools->formatNumber($count),
+                        'files_count'      => $tools->formatNumber($current_topic->files_count),
                         'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
                         'filter_by_author' => $filter,
                         'poll_data'        => $poll_data,

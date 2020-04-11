@@ -113,4 +113,14 @@ trait TopicMutators
     {
         return $this->read !== null && $this->read === 0;
     }
+
+    /**
+     * Formatted view count of the topic
+     *
+     * @return string
+     */
+    public function getFormattedViewCountAttribute(): string
+    {
+        return (string) $this->tools->formatNumber($this->view_count);
+    }
 }
