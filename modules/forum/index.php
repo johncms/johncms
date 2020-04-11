@@ -18,7 +18,6 @@ use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
-use Johncms\FileInfo;
 use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
@@ -27,7 +26,6 @@ use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
-use Johncms\UserProperties;
 use Johncms\Users\GuestSession;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -210,7 +208,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 }
 
                 // List of forum sections
-                $sections = (new ForumSection())->withCount(['subsections', 'topics'])->where('parent', '=', $id)->get();
+                $sections = (new ForumSection())
+                    ->withCount(['subsections', 'topics'])
+                    ->where('parent', '=', $id)
+                    ->orderBy('sort')
+                    ->get();
 
                 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
@@ -422,15 +424,17 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
                 );
 
-                // Помечаем уведомления прочитанными
-                $post_ids = $messages->pluck('id')->all();
+                if ($user->isValid()) {
+                    // Помечаем уведомления прочитанными
+                    $post_ids = $messages->pluck('id')->all();
 
-                $notifications = (new Notification())
-                    ->where('module', '=', 'forum')
-                    ->where('event_type', '=', 'new_message')
-                    ->whereNull('read_at')
-                    ->whereIn('entity_id', $post_ids)
-                    ->update(['read_at' => Carbon::now()]);
+                    $notifications = (new Notification())
+                        ->where('module', '=', 'forum')
+                        ->where('event_type', '=', 'new_message')
+                        ->whereNull('read_at')
+                        ->whereIn('entity_id', $post_ids)
+                        ->update(['read_at' => Carbon::now()]);
+                }
 
                 // Нижнее поле "Написать"
                 $write_access = false;
