@@ -17,6 +17,7 @@ use Forum\Models\ForumMessage;
 use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
 use Forum\Models\ForumUnread;
+use Forum\Models\ForumVote;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\Notifications\Notification;
@@ -343,30 +344,28 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 $poll_data = [];
                 if ($current_topic->has_poll) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
-                    $topic_vote = $db->query(
-                        "SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
-SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $user->id . "' AND `topic`='" . $id . "') as vote_user
-FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . "' LIMIT 1"
-                    )->fetch();
-                    $topic_vote['name'] = $tools->checkout($topic_vote['name'], 0, 0);
-                    $poll_data['poll'] = $topic_vote;
-                    $poll_data['show_form'] = (! $type1['closed'] && ! isset($_GET['vote_result']) && $user->isValid() && $topic_vote['vote_user'] == 0);
+                    $topic_vote = (new ForumVote())
+                        ->voteUser()
+                        ->where('type', '=', 1)
+                        ->where('topic', '=', $id)
+                        ->first();
+
+                    $poll_data['show_form'] = (! $current_topic->closed && ! isset($_GET['vote_result']) && $user->isValid() && $topic_vote->vote_user !== 1);
                     $poll_data['results'] = [];
 
-                    $vote_result = $db->query("SELECT `id`, `name`, `count` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "' ORDER BY `id` ASC");
-                    while ($vote = $vote_result->fetch()) {
-                        $vote['name'] = $tools->checkout($vote['name'], 0, 1);
-                        $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
-
+                    $color_classes = di('config')['forum']['answer_colors'];
+                    foreach ($topic_vote->answers as $answer) {
+                        $vote = $answer->toArray();
+                        $count_vote = $topic_vote->count ? round(100 / $topic_vote->count * $vote['count']) : 0;
                         $color = null;
                         if ($count_vote > 0 && $count_vote <= 25) {
-                            $color = 'bg-success';
+                            $color = $color_classes['0_25'];
                         } elseif ($count_vote > 25 && $count_vote <= 50) {
-                            $color = 'bg-info';
+                            $color = $color_classes['25_50'];
                         } elseif ($count_vote > 50 && $count_vote <= 75) {
-                            $color = 'bg-warning';
+                            $color = $color_classes['50_75'];
                         } elseif ($count_vote > 75 && $count_vote <= 100) {
-                            $color = 'bg-danger';
+                            $color = $color_classes['75_100'];
                         }
 
                         $vote['color_class'] = $color;

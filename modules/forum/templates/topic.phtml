@@ -24,6 +24,7 @@
  * @var \Forum\Models\ForumMessage $message
  * @var \Forum\Models\ForumMessage $first_post
  * @var \Forum\Models\ForumFile $file
+ * @var \Forum\Models\ForumVote $topic_vote
  */
 
 $this->layout(
@@ -70,7 +71,7 @@ $this->layout(
 
 <?php if (! empty($poll_data)): ?>
     <!-- Poll block -->
-    <div class="h3"><?= $poll_data['poll']['name'] ?></div>
+    <div class="h3"><?= $topic_vote->name ?></div>
     <?php if ($poll_data['show_form']): ?>
         <form action="/forum/?act=vote&amp;id=<?= $id ?>" method="post" class="mb-3">
             <?php foreach ($poll_data['results'] as $item): ?>
@@ -103,12 +104,12 @@ $this->layout(
             <div>
                 <?= __('Total votes') ?>:
                 <?php if ($user->rights > 6): ?>
-                    <a href="?act=users&amp;id=<?= $id ?>"><?= $poll_data['poll']['count'] ?></a>
+                    <a href="?act=users&amp;id=<?= $id ?>"><?= $topic_vote->count ?></a>
                 <?php else: ?>
-                    <?= $poll_data['poll']['count'] ?>
+                    <?= $topic_vote->count ?>
                 <?php endif; ?>
             </div>
-            <?php if ($user->isValid() && $poll_data['poll']['vote_user'] == 0): ?>
+            <?php if ($topic_vote->vote_user !== 1 && $user->isValid()): ?>
                 <div>
                     <a href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start . $poll_data['clip'] ?>"><?= __('Vote') ?></a>
                 </div>
@@ -327,7 +328,7 @@ $this->layout(
                         <?php endforeach; ?>
                     </div>
                 </div>
-            <?php endif;  ?>
+            <?php endif; ?>
             <div class="post-footer d-flex justify-content-between mt-2">
                 <div class="overflow-hidden">
                     <?php if ($user->rights): ?>
