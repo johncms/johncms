@@ -65,7 +65,7 @@ class UserFactory
             $this->userUnset();
         }
 
-        return null;
+        return new User();
     }
 
     private function checkPermit(User $user): bool
