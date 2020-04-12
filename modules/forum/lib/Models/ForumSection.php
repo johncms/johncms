@@ -52,5 +52,11 @@ class ForumSection extends Model
      */
     protected $table = 'forum_sections';
 
+    protected $casts = [
+        'sort'         => 'integer',
+        'access'       => 'integer',
+        'section_type' => 'integer',
+    ];
+
     protected $appends = ['url'];
 }

@@ -16,6 +16,7 @@ use Forum\Models\ForumFile;
 use Forum\Models\ForumMessage;
 use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
+use Forum\Models\ForumUnread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\Notifications\Notification;
@@ -186,8 +187,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         // Nav chain
         if ($show_type === 'topic') {
             $parent = $type1['section_id'];
-            $allow = $db->query("SELECT `access` FROM `forum_sections` WHERE `id` = '${parent}' LIMIT 1")->fetch();
-            $allow = (int) $allow['access'] ?? 0;
         } else {
             $parent = $type1['parent'];
         }
@@ -284,21 +283,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 break;
 
             case 'topic':
-                // List messages
-                if ($user->isValid()) {
-                    // Фиксация факта прочтения Топика
-                    $db->query(
-                        "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
-                VALUES ('${id}', '" . $user->id . "', '" . time() . "')
-                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
-                    );
-
-                    $online = [
-                        'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
-                        'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
-                    ];
-                }
-
                 // Getting data for the current topic
                 try {
                     $current_topic = (new ForumTopic())->withCount('files')->findOrFail($id);
@@ -306,12 +290,25 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                     pageNotFound();
                 }
 
-                // Increasing the number of views
-                if (empty($_SESSION['viewed_topics']) || ! in_array($current_topic->id, $_SESSION['viewed_topics'])) {
-                    $current_topic->increment('view_count');
-                    $_SESSION['viewed_topics'][] = $current_topic->id;
+                $access = 0;
+                if ($user->isValid()) {
+                    // Mark the topic as read
+                    (new ForumUnread())->updateOrInsert(['topic_id' => $id, 'user_id' => $user->id], ['time' => time()]);
+
+                    $online = [
+                        'online_u' => (new \Johncms\Users\User())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
+                        'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum?type=topic&id=' . $id . '%')->count(),
+                    ];
+
+                    $current_section = $current_topic->section;
+                    $access = $current_section->access;
                 }
 
+                // Increasing the number of views
+                if (empty($_SESSION['viewed_topics']) || ! in_array($current_topic->id, $_SESSION['viewed_topics'])) {
+                    $current_topic->update(['view_count' => $current_topic->view_count + 1]);
+                    $_SESSION['viewed_topics'][] = $current_topic->id;
+                }
 
                 // Задаем правила сортировки (новые внизу / вверху)
                 if ($user->isValid()) {
@@ -326,6 +323,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                     $filter_by_users = unserialize($_SESSION['fsort_users'], ['allowed_classes' => false]);
                 }
 
+                // List of messages
                 $message = (new ForumMessage())
                     ->users()
                     ->with('files')
@@ -342,13 +340,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
                 // Счетчик постов темы
                 $total = $message->total();
 
-                if ($start >= $total) {
-                    // Исправляем запрос на несуществующую страницу
-                    $start = max(0, $total - (($total % $user->config->kmess) === 0 ? $user->config->kmess : ($total % $user->config->kmess)));
-                }
-
                 $poll_data = [];
-                if ($type1['has_poll']) {
+                if ($current_topic->has_poll) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
                     $topic_vote = $db->query(
                         "SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
@@ -404,10 +397,10 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
                 /** @var Collection $messages */
                 $messages = $message->getItems()->map(
-                    static function (ForumMessage $message) use ($user, $curator, $set_forum, $allow, &$i, $start, $total) {
+                    static function (ForumMessage $message) use ($user, $curator, $set_forum, $access, &$i, $start, $total) {
                         if (
                             (($user->rights === 3 || $user->rights >= 6 || $curator) && $user->rights >= $message->rights)
-                            || ($i === 1 && $allow === 2 && $message->user_id === $user->id)
+                            || ($i === 1 && $access === 2 && $message->user_id === $user->id)
                             || ($message->user_id === $user->id && ! $set_forum['upfp'] && ($start + $i) === $total && $message->date > time() - 300)
                             || ($message->user_id === $user->id && $set_forum['upfp'] && $start === 0 && $i === 1 && $message->date > time() - 300)
                         ) {
@@ -438,7 +431,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
                 // Нижнее поле "Написать"
                 $write_access = false;
-                if (($user->isValid() && ! $type1['closed'] && $config['mod_forum'] != 3 && $allow != 4) || ($user->rights >= 7)) {
+                if (($user->isValid() && ! $current_topic->closed && $config['mod_forum'] != 3 && $access != 4) || ($user->rights >= 7)) {
                     $write_access = true;
                     if ($set_forum['farea']) {
                         $token = mt_rand(1000, 100000);

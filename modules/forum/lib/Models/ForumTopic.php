@@ -89,7 +89,7 @@ class ForumTopic extends Model
         'deleted'    => 'boolean',
         'pinned'     => 'boolean',
         'has_poll'   => 'boolean',
-        'view_count' => 'int',
+        'view_count' => 'integer',
     ];
 
     protected $appends = [
@@ -100,6 +100,33 @@ class ForumTopic extends Model
         'has_icons',
         'last_page_url',
         'unread',
+    ];
+
+    protected $fillable = [
+        'section_id',
+        'name',
+        'description',
+        'view_count',
+        'user_id',
+        'user_name',
+        'created_at',
+        'post_count',
+        'mod_post_count',
+        'last_post_date',
+        'last_post_author',
+        'last_post_author_name',
+        'last_message_id',
+        'mod_last_post_date',
+        'mod_last_post_author',
+        'mod_last_post_author_name',
+        'mod_last_message_id',
+        'closed',
+        'closed_by',
+        'deleted',
+        'deleted_by',
+        'curators',
+        'pinned',
+        'has_poll',
     ];
 
     /**
