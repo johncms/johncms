@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\Casts\Serialize;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
@@ -48,7 +49,7 @@ use Johncms\Users\User;
  * @property string $closed_by
  * @property bool $deleted
  * @property string $deleted_by
- * @property string $curators
+ * @property array $curators
  * @property bool $pinned
  * @property bool $has_poll
  * @property int $old_id - Устаревшее.
@@ -90,6 +91,7 @@ class ForumTopic extends Model
         'pinned'     => 'boolean',
         'has_poll'   => 'boolean',
         'view_count' => 'integer',
+        'curators'   => Serialize::class,
     ];
 
     protected $appends = [
