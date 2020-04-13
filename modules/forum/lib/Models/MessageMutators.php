@@ -80,13 +80,7 @@ trait MessageMutators
      */
     public function getPostTimeAttribute(): string
     {
-        /** @var Translator $translator */
-        $translator = di(Translator::class);
-
-        return Carbon::createFromTimestampUTC($this->date)
-            ->addHours($this->current_user->set_user->timeshift)
-            ->locale($translator->getLocale())
-            ->calendar(null, ['sameElse' => 'lll']);
+        return $this->tools->displayDate($this->date);
     }
 
     /**
