@@ -26,7 +26,7 @@ use Johncms\Users\User;
 
 // Forum categories
 $sections = (new ForumSection())
-    ->withCount('subsections')
+    ->withCount('subsections', 'topics')
     ->with('subsections')
     ->where('parent', '=', 0)
     ->orWhereNull('parent')

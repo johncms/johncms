@@ -43,7 +43,7 @@ $this->layout(
         <div class="section-header border-bottom-0 <?= (! empty($section->description) ? 'pb-2' : 'pb-0') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $section->url ?>" class="text-dark-brown"><?= $section->name ?></a>
-                <span class="badge badge-pill badge-light ml-3"><?= $section->subsections_count ?></span>
+                <span class="badge badge-pill badge-light ml-3"><?= ($section->section_type ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
             <?php if (! empty($section->subsections_count)): ?>
                 <div class="toggle d-flex flex-grow-1 justify-content-end align-items-center pr-2 collapsed cursor-pointer"
