@@ -45,7 +45,7 @@ class Environment
     public function getIp(bool $return_long = true)
     {
         if (! $return_long) {
-            return $this->request->getServer('REMOTE_ADDR', '', FILTER_VALIDATE_IP);
+            return $this->request->getServer('REMOTE_ADDR', '', FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
         }
 
         if (null === $this->ip) {
