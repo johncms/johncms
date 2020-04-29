@@ -32,3 +32,7 @@ $(function () {
         }
     });
 });
+
+$(document).ready(function () {
+    $(wysibb_input).wysibb(wysibb_settings);
+})
