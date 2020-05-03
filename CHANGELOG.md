@@ -6,6 +6,8 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 ## 9.3.0 - unreleased
 
 #### Added
+- Добавлен WYSIWYG редактор
+- Добавлена микроразметка для хлебных крошек для улучшенного представления в результатах поиска в поисковых системах.
 
 #### Changed
 - Для таблиц форума добавлены модели.
