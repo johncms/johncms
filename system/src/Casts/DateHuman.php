@@ -37,7 +37,7 @@ class DateHuman implements CastsAttributes
             /** @var Translator $translator */
             $translator = di(Translator::class);
 
-            return Carbon::parse($value, $user->config->timeshift)
+            return Carbon::parse($value, $user->set_user->timeshift)
                 ->addHours($user->set_user->timeshift)
                 ->locale($translator->getLocale())
                 ->diffForHumans(['join' => false, 'parts' => 2]);
