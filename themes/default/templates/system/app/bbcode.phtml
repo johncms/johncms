@@ -11,4 +11,7 @@
         smileList: <?= json_encode($smiles) ?>
     }
     var wysibb_input = '#<?= $input ?>';
+    setTimeout(function () {
+        document.getElementById("<?= $input ?>").removeAttribute("required");
+    }, 50);
 </script>
