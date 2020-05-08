@@ -26,11 +26,7 @@ if (($user->rights !== 3 && $user->rights < 6) || ! $id) {
 
 try {
     $topic = (new ForumTopic())->findOrFail($id);
-    if (isset($_GET['closed'])) {
-        $topic->update(['closed' => true]);
-    } else {
-        $topic->update(['closed' => false]);
-    }
+    $topic->update(['closed' => isset($_GET['closed'])]);
     header('Location: ?type=topic&id=' . $id);
 } catch (ModelNotFoundException $exception) {
     pageNotFound();
