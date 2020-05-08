@@ -10,18 +10,26 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumTopic;
+use Forum\Models\ForumVote;
+use Forum\Models\ForumVoteUser;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Users\User;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  */
 
-if ($user->rights == 3 || $user->rights >= 6) {
-    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '${id}'")->fetchColumn();
+/** @var User $user */
+$user = di(User::class);
 
-    if ($topic_vote == 0) {
+if ($user->rights === 3 || $user->rights >= 6) {
+    try {
+        $topic_vote = (new ForumVote())->where('topic', $id)->where('type', 1)->firstOrFail();
+    } catch (ModelNotFoundException $exception) {
         echo $view->render(
             'system::pages/result',
             [
@@ -36,9 +44,9 @@ if ($user->rights == 3 || $user->rights >= 6) {
     }
 
     if (isset($_GET['yes'])) {
-        $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '${id}'");
-        $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '${id}'");
-        $db->exec("UPDATE `forum_topic` SET  `has_poll` = NULL  WHERE `id` = '${id}'");
+        (new ForumVote())->where('topic', $id)->delete();
+        (new ForumVoteUser())->where('topic', $id)->delete();
+        (new ForumTopic())->where('id', $id)->update(['has_poll' => null]);
         echo $view->render(
             'system::pages/result',
             [
