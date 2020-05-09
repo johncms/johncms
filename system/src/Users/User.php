@@ -188,4 +188,9 @@ class User extends Model
     {
         return $query->where('lastdate', '>', (time() - 300));
     }
+
+    public function isValid(): bool
+    {
+        return $this->is_valid;
+    }
 }
