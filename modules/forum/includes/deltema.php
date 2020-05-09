@@ -13,16 +13,13 @@ declare(strict_types=1);
 use Forum\Models\ForumFile;
 use Forum\Models\ForumMessage;
 use Forum\Models\ForumTopic;
+use Forum\Models\ForumUnread;
 use Forum\Models\ForumVote;
 use Forum\Models\ForumVoteUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-
-/**
- * @var PDO $db
- */
 
 /** @var User $user */
 $user = di(User::class);
@@ -62,7 +59,7 @@ if ($user->rights === 3 || $user->rights >= 6) {
                 (new ForumMessage())->where('topic_id', $id)->delete();
                 (new ForumVote())->where('topic', $id)->delete();
                 (new ForumVoteUser())->where('topic', $id)->delete();
-                $db->exec("DELETE FROM `cms_forum_rdm` WHERE `topic_id` = '${id}'");
+                (new ForumUnread())->where('topic_id', $id)->delete();
             } catch (Exception $e) {
                 exit($e->getMessage());
             }
