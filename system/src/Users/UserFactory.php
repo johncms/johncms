@@ -105,14 +105,9 @@ class UserFactory
             );
 
             // Обновляем текущий адрес в таблице `users`
-            (new User())
-                ->where('id', '=', $user->id)
-                ->update(
-                    [
-                        'ip'           => $this->env->getIp(false),
-                        'ip_via_proxy' => empty($ip_via_proxy) ? '' : $ip_via_proxy,
-                    ]
-                );
+            $user->ip = $this->env->getIp(false);
+            $user->ip_via_proxy = empty($ip_via_proxy) ? 0 : $ip_via_proxy;
+            $user->save();
         }
     }
 
