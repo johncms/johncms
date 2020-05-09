@@ -45,12 +45,12 @@ class Environment
     public function getIp(bool $return_long = true)
     {
         if (! $return_long) {
-            return $this->request->getServer('REMOTE_ADDR', '', FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+            return $this->request->getServer('REMOTE_ADDR', '127.0.0.1', FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
         }
 
         if (null === $this->ip) {
             /** @psalm-suppress PossiblyNullArgument */
-            $ip = ip2long($this->request->getServer('REMOTE_ADDR', 0, FILTER_VALIDATE_IP));
+            $ip = ip2long($this->request->getServer('REMOTE_ADDR', '127.0.0.1', FILTER_VALIDATE_IP));
             $this->ip = (int) sprintf('%u', $ip);
         }
 
