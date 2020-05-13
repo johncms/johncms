@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="JohnCMS coding standard">
     <description>JohnCMS coding standard</description>
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
     <!-- display progress -->
     <arg value="p"/>
@@ -29,6 +30,9 @@
             <property name="absoluteLineLimit" value="320"/>
         </properties>
     </rule>
+
+    <!-- Slevomat Coding Standard rules -->
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
     <!-- Ban some functions -->
     <rule ref="Generic.PHP.ForbiddenFunctions">
