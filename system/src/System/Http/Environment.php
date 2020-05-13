@@ -28,15 +28,11 @@ class Environment
     /** @var array */
     private $ipCount = [];
 
-    /** @var ContainerInterface */
-    private $container;
-
     /** @var Request */
     private $request;
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->container = $container;
         $this->request = $container->get(Request::class);
         $this->ipLog();
         return $this;

@@ -29,13 +29,9 @@ class Counters
     /** @var User */
     private $user;
 
-    /** @var Tools */
-    private $tools;
-
     public function __construct(PDO $pdo, Tools $tools, User $user, string $homeUrl)
     {
         $this->db = $pdo;
-        $this->tools = $tools;
         $this->user = $user;
         $this->homeurl = $homeUrl;
     }
