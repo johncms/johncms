@@ -79,13 +79,13 @@
         ]
     ) ?>
 <?php endif; ?>
-<div class="mt-4"></div>
+<div class="mt-4 border-bottom"></div>
 <!-- Отображаем сообщения -->
 <?php if (empty($data['items'])): ?>
     <div class="alert alert-info"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
-        <div class="new_post-item border-bottom shadow mb-2">
+        <div class="new_post-item border-bottom mb-2">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <?php if (! empty($item['user_profile_link'])): ?>
@@ -115,7 +115,9 @@
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
                         <?php if (! empty($item['user_profile_link'])): ?>
-                            <a href="<?= $item['user_profile_link'] ?>"><div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div></a>
+                            <a href="<?= $item['user_profile_link'] ?>">
+                                <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
+                            </a>
                         <?php else: ?>
                             <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
                         <?php endif; ?>
@@ -137,7 +139,7 @@
                     <?php endif ?>
                 </div>
             </div>
-            <div class="post-body mt-2 border-top pt-2 pb-2">
+            <div class="post-body mt-2 pt-2 pb-2">
                 <?= $item['post_text'] ?>
                 <?php if (! empty($item['otvet'])): ?>
                     <div class="alert alert-warning mt-2 mb-n2">
@@ -187,12 +189,11 @@
     <?php endforeach; ?>
 
     <?php if (! empty($data['pagination'])): ?>
-        <?= $data['pagination'] ?>
+        <div class="mt-4"><?= $data['pagination'] ?></div>
     <?php endif; ?>
 <?php endif; ?>
-<hr class="mt-4">
 <?php if ($data['access_to_buttons']): ?>
-    <div class="d-flex mt-4">
+    <div class="d-flex mt-4 pb-2">
         <?php if ($user->rights >= 7): ?>
             <a href="/guestbook/clean" class="btn btn-danger"><?= __('Clear') ?></a>
         <?php endif; ?>
