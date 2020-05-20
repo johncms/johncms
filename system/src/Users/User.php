@@ -89,6 +89,7 @@ use Johncms\System\Users\UserConfig;
  * @property string $website - Сайт
  * @property string $last_visit - Последний визит
  * @property array $photo - Фотография пользователя
+ * @property UserConfig $config - Настройки пользователя
  *
  * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
  * @method Builder online() - Выбрать пользователей онлайн

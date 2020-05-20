@@ -36,3 +36,10 @@ $(function () {
 $(document).ready(function () {
     $(wysibb_input).wysibb(wysibb_settings);
 })
+
+var sidebar = new StickySidebar('.sidebar', {
+    topSpacing: 0,
+    bottomSpacing: 20,
+    containerSelector: '.page_layout',
+    innerWrapperSelector: '.sidebar__inner'
+});

@@ -8,6 +8,7 @@
 
 require('./bootstrap');
 require('./jquery.magnific-popup');
+require('sticky-sidebar');
 require('./menu');
 require('./prism');
 require('./forum');

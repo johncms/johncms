@@ -1,14 +1,14 @@
 .sidebar {
-    background-color: #ffffff;
+    //background-color: #ffffff;
     color: #ffffff;
-    border-right: 1px solid #dadada;
+    //border-right: 1px solid #dadada;
     font-size: 0.95rem;
     font-weight: 500;
-    position: fixed;
+    //position: fixed;
     top: 0;
     height: 100%;
     bottom: 0;
-    width: 17rem;
+    width: 15rem;
     left: 0;
     z-index: 999;
 
@@ -25,6 +25,10 @@
     .dropdown-divider {
         border-top: 1px solid #dce0e6;
     }
+}
+
+.sidebar__inner {
+    padding: 0 20px;
 }
 
 .sidebar__logo {
@@ -58,7 +62,7 @@
 
         > a {
             display: flex;
-            padding: 7px 20px 8px 22px;
+            padding: 7px 0;
             justify-content: space-between;
             align-items: center;
 
@@ -83,7 +87,7 @@
 
 
 .sidebar__footer {
-    padding: 0.7rem 1.4rem;
+    padding: 0.7rem 0;
 
     .sidebar_online {
         height: 17px;
@@ -97,7 +101,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .7rem 1.4rem;
+    padding: 0.7rem 0.7rem 0.7rem 0;
 
     .sidebar_user_avatar {
         .user_photo {

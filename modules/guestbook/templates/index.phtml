@@ -17,7 +17,7 @@
 <?php endif; ?>
 <?php if ($data['access_to_form']): ?>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-12">
             <form name="form" action="/guestbook/say" method="post">
                 <input type="hidden" name="token" value="<?= $data['token'] ?>"/>
                 <?php if (! $user->isValid()): ?>
