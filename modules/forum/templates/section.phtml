@@ -48,10 +48,10 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($sections as $section): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-2">
-        <div class="section-header <?= (empty($section->description) ? 'border-0 pb-0' : '') ?>">
+    <div class="forum-section">
+        <div class="section-header">
             <div class="d-flex align-items-center">
-                <a href="<?= $section->url ?>" class="text-dark-brown"><?= $section->name ?></a>
+                <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
                 <span class="badge badge-pill badge-light border ml-3"><?= ($section->section_type === 1 ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
         </div>
@@ -60,9 +60,6 @@ $this->layout(
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
-
-<div class="mb-n3 pt-1"><?= __('Total') ?>: <?= $total ?></div>
-
 <?= $this->fetch(
     'forum::footer',
     [

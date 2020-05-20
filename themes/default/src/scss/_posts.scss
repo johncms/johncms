@@ -1,6 +1,6 @@
 .post-item {
     background: #ffffff;
-    padding: 0.6rem 1rem;
+    //padding: 0.6rem 1rem;
     border-radius: .25rem;
 }
 
@@ -179,8 +179,10 @@
 .new_post-item {
     min-height: 100px;
     padding: 10px 0 10px 85px;
-    border-radius: .25rem;
-    background: #ffffff;
+
+    &.shadow {
+        box-shadow: none!important;
+    }
 
     @media (max-width: 768px) {
         padding-left: 10px;
@@ -310,6 +312,8 @@
 
 .post-body {
     word-break: break-word;
+
+    border-top: none!important;
 
     img {
         vertical-align: initial;

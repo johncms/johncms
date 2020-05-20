@@ -39,10 +39,10 @@ $this->layout(
 ) ?>
 
 <?php foreach ($sections as $section): ?>
-    <div class="shadow forum-section post-item mb-2">
-        <div class="section-header border-bottom-0 <?= (! empty($section->description) ? 'pb-2' : 'pb-0') ?>">
+    <div class="forum-section">
+        <div class="section-header">
             <div class="d-flex align-items-center">
-                <a href="<?= $section->url ?>" class="text-dark-brown"><?= $section->name ?></a>
+                <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
                 <span class="badge badge-pill badge-light ml-3"><?= ($section->section_type ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
             <?php if (! empty($section->subsections_count)): ?>
@@ -56,7 +56,7 @@ $this->layout(
         </div>
         <?php if (! empty($section->subsections_count)): ?>
             <div class="collapse subsections" id="subsections_<?= $section->id ?>">
-                <div class="<?= (! empty($section->description) ? 'mt-0' : 'mt-2') ?> pt-2 pb-2 border-top">
+                <div class="pt-2">
                     <?php foreach ($section->subsections as $subsection): ?>
                         <span class="pr-2">&raquo;</span><a href="<?= $subsection->url ?>" class="text-dark-brown"><?= $subsection->name ?></a><br>
                     <?php endforeach; ?>
@@ -64,7 +64,7 @@ $this->layout(
             </div>
         <?php endif; ?>
         <?php if (! empty($section->description)): ?>
-            <div class="small pt-2 text-muted border-top"><?= $section->description ?></div>
+            <div class="small pt-2 text-muted"><?= $section->description ?></div>
         <?php endif ?>
     </div>
 <?php endforeach; ?>

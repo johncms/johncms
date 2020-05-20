@@ -36,9 +36,11 @@
 }
 
 .topic-icons {
+    margin: 0 0.25rem 0 0;
     .icon {
         height: 16px;
         width: 16px;
+        display: block;
     }
 }
 

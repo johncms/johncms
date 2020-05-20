@@ -200,7 +200,7 @@ $this->layout(
     <?php endif; ?>
 
     <?php foreach ($messages as $message): ?>
-        <div class="new_post-item border-bottom shadow mb-2 <?= $message->deleted ? ' deleted-post' : '' ?>">
+        <div class="new_post-item border-bottom shadow mb-2">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <?php if (! empty($message->user_profile_link)): ?>
@@ -252,7 +252,7 @@ $this->layout(
                         <?php endif; ?>
                         <?php if ($message->can_edit): ?>
                             <?php if (! empty($message->deleted)): ?>
-                                <div class="post-meta d-inline mr-2"
+                                <div class="d-inline mr-2 badge badge-danger"
                                      data-toggle="tooltip"
                                      data-placement="top"
                                      title="<?= __('Post deleted:') ?> <?= $message->deleted_by ?>">
