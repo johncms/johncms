@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Validator;
 
 use Illuminate\Support\Arr;
+use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Between;
 use Laminas\Validator\Callback;
@@ -110,8 +111,11 @@ class Validator
 
     private $errors = [];
 
+    private $messages;
+
     public function __construct(array $data, array $rules, array $messages = [])
     {
+        $this->messages = $messages;
         $this->validate($data, $rules);
     }
 
@@ -136,6 +140,14 @@ class Validator
                     } else {
                         $rule_object = new $this->rules[$name]($options);
                     }
+
+                    if (array_key_exists($name, $this->messages) && ! empty($this->messages[$name])) {
+                        foreach ($this->messages[$name] as $key => $message) {
+                            /** @var AbstractValidator $rule_object */
+                            $rule_object->setMessage($message, $key);
+                        }
+                    }
+
                     $validator_chain->attach($rule_object);
                 }
                 if (! $validator_chain->isValid($value)) {

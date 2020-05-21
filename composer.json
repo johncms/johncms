@@ -43,6 +43,7 @@
         "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-servicemanager": "^3.4",
+        "laminas/laminas-uri": "^2.7",
         "laminas/laminas-validator": "^2.13",
         "mobicms/captcha": "^2.0",
         "mobicms/render": "^2.0",
