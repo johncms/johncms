@@ -26,35 +26,30 @@ $this->layout(
     ]
 );
 ?>
-
-<div class="row">
-    <div class="col-md-6">
-        <h3><?= $topic['name'] ?></h3>
-        <?php if ($saved): ?>
-            <div class="alert alert-success"><?= __('Changes saved') ?></div>
-        <?php endif; ?>
-        <form action="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
-            <?php if (empty($curators_list)): ?>
-                <div class="alert alert-info">
-                    <?= __('The list is empty') ?>
+<h3><?= $topic['name'] ?></h3>
+<?php if ($saved): ?>
+    <div class="alert alert-success"><?= __('Changes saved') ?></div>
+<?php endif; ?>
+<form action="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
+    <?php if (empty($curators_list)): ?>
+        <div class="alert alert-info">
+            <?= __('The list is empty') ?>
+        </div>
+    <?php else: ?>
+        <?php foreach ($curators_list as $item): ?>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" name="users[<?= $item['user_id'] ?>]" value="<?= $item['user_name'] ?>"
+                           id="user_<?= $item['user_id'] ?>" <?= $item['checked'] ? ' checked="checked"' : '' ?>>
+                    <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
                 </div>
-            <?php else: ?>
-                <?php foreach ($curators_list as $item): ?>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" name="users[<?= $item['user_id'] ?>]" value="<?= $item['user_name'] ?>"
-                                   id="user_<?= $item['user_id'] ?>" <?= $item['checked'] ? ' checked="checked"' : '' ?>>
-                            <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            <div>
-                <?php if (! empty($curators_list)): ?>
-                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Assign') ?></button>
-                <?php endif; ?>
-                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
             </div>
-        </form>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <div>
+        <?php if (! empty($curators_list)): ?>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Assign') ?></button>
+        <?php endif; ?>
+        <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
     </div>
-</div>
+</form>

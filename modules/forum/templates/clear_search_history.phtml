@@ -23,17 +23,12 @@ $this->layout(
     ]
 );
 ?>
-
-<div class="row">
-    <div class="col-md-6">
-        <form action="/forum/?act=search&amp;mod=reset" method="post">
-            <div class="alert alert-danger">
-                <?= __('Do you really want to clear the search history?') ?>
-            </div>
-            <div>
-                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Clear') ?></button>
-                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
-            </div>
-        </form>
+<form action="/forum/?act=search&amp;mod=reset" method="post">
+    <div class="alert alert-danger">
+        <?= __('Do you really want to clear the search history?') ?>
     </div>
-</div>
+    <div>
+        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Clear') ?></button>
+        <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    </div>
+</form>

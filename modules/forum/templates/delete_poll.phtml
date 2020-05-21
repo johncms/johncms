@@ -23,16 +23,13 @@ $this->layout(
 );
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= __('Do you really want to delete a poll?') ?>
-            </div>
-            <div>
-                <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="pr-2"><?= __('Delete') ?></a>
-                <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
-            </div>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= __('Do you really want to delete a poll?') ?>
+    </div>
+    <div>
+        <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="mr-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
+        <a href="<?= $back_url ?>" class="mr-2 btn btn-primary btn-sm"><?= __('Cancel') ?></a>
     </div>
 </div>
+

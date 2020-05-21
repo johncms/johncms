@@ -26,25 +26,21 @@ $this->layout(
 );
 ?>
 
-<div class="row mb-3">
-    <div class="col-md-6">
-        <form action="/forum/?act=search" method="post">
-            <div class="form-group">
-                <label for="search_query"><?= __('Search query') ?></label>
-                <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
-                       name="search" value="<?= $query ?>" maxlength="150" minlength="4" required>
-                <div class="small text-muted"><?= __('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') ?></div>
-            </div>
-            <div class="form-group">
-                <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= ($search_t ? 'checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="search_t"><?= __('Search in the topic names') ?></label>
-                </div>
-            </div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
-        </form>
+<form action="/forum/?act=search" method="post">
+    <div class="form-group">
+        <label for="search_query"><?= __('Search query') ?></label>
+        <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
+               name="search" value="<?= $query ?>" maxlength="150" minlength="4" required>
+        <div class="small text-muted"><?= __('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') ?></div>
     </div>
-</div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= ($search_t ? 'checked="checked"' : '') ?>>
+            <label class="custom-control-label" for="search_t"><?= __('Search in the topic names') ?></label>
+        </div>
+    </div>
+    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
+</form>
 
 <?php if (! empty($query) && empty($total)): ?>
     <div class="alert alert-info">

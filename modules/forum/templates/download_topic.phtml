@@ -24,36 +24,30 @@ $this->layout(
     ]
 );
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <?php if ($link_to_download): ?>
-            <div class="alert alert-success">
-                <div>
-                    <?= __('Link active 5 minutes') ?>
-                </div>
-            </div>
-            <div class="mt-2">
-                <a href="<?= $link_to_download ?>" class="btn btn-primary"><?= __('Download') ?></a>
-                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
-            </div>
-        <?php else: ?>
-            <div class="card shadow border-0">
-                <div class="card-body">
-                    <form name="rename_topic" action="/forum/?act=tema&amp;id=<?= $id ?>" method="post">
-                        <div class="form-group">
-                            <label for="mod"><?= __('Select format') ?></label>
-                            <select name="mod" id="mod" class="form-control">
-                                <option value="1">.txt</option>
-                                <option value="2">.htm</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Download') ?></button>
-                            <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        <?php endif; ?>
+
+<?php if ($link_to_download): ?>
+    <div class="alert alert-success">
+        <div>
+            <?= __('Link active 5 minutes') ?>
+        </div>
     </div>
-</div>
+    <div class="mt-2">
+        <a href="<?= $link_to_download ?>" class="btn btn-primary"><?= __('Download') ?></a>
+        <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+    </div>
+<?php else: ?>
+    <form name="rename_topic" action="/forum/?act=tema&amp;id=<?= $id ?>" method="post">
+        <div class="form-group">
+            <label for="mod"><?= __('Select format') ?></label>
+            <select name="mod" id="mod" class="form-control">
+                <option value="1">.txt</option>
+                <option value="2">.htm</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Download') ?></button>
+            <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+        </div>
+    </form>
+<?php endif; ?>
+

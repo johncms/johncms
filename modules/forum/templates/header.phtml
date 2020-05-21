@@ -59,7 +59,9 @@
                 <span class="d-none d-sm-inline"><?= $files_name ?></span>
                 <span class="icon_with_badge mr-sm-3">
                     <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/></svg>
-                    <span class="badge badge-pill badge-success"><?= $files_count ?></span>
+                    <?php if ($files_count > 0): ?>
+                        <span class="badge badge-pill badge-success"><?= $files_count ?></span>
+                    <?php endif ?>
                 </span>
             </a>
         </div>
