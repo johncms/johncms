@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Validator;
 
 use Illuminate\Support\Arr;
+use Johncms\Validator\Rules\ModelExists;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Between;
@@ -107,6 +108,7 @@ class Validator
         'Upload'           => Upload::class,
         'UploadFile'       => UploadFile::class,
         'WordCount'        => WordCount::class,
+        'ModelExists'      => ModelExists::class,
     ];
 
     private $errors = [];
