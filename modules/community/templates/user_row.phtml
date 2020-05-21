@@ -56,8 +56,7 @@
         </div>
     </div>
     <?php if (! empty($active_tab)): ?>
-        <div class="post-body mt-2 border-top pt-2">
-
+        <div class="post-body pt-1">
             <?php if ($active_tab === 'guest'): ?>
                 <?= $item['postguest'] ?> <?= n__('post', 'posts', $item['postguest']) ?>
             <?php elseif ($active_tab === 'comm'): ?>
