@@ -47,7 +47,7 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($categories as $category): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-2">
+    <div class="forum-section">
         <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $category['url'] ?>" class="text-dark-brown"><?= $category['rus_name'] ?></a>
@@ -65,7 +65,7 @@ $this->layout(
             </div>
         <?php endif; ?>
         <?php if ($category['has_edit']): ?>
-            <div class="border-top mt-2 pt-2">
+            <div class="pt-2 small">
                 <?php if ($total_cat > 1): ?>
                     <a href="<?= $category['up_url'] ?>" class="mr-2"><?= __('Up') ?></a>
                     <a href="<?= $category['down_url'] ?>" class="mr-2"><?= __('Down') ?></a>

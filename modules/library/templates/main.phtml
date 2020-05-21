@@ -43,7 +43,7 @@ $this->layout(
 <?php if ($total) : ?>
     <!-- Listing Sections -->
     <?php foreach ($list() as $main) : ?>
-        <div class="shadow border-radius-12 forum-section post-item mb-2">
+        <div class="forum-section">
             <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
                 <div class="d-flex align-items-center">
                     <a href="?do=dir&amp;id=<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
@@ -51,23 +51,19 @@ $this->layout(
                 </div>
             </div>
             <?php if (! empty($main['description'])): ?>
-                <div class="small pt-2 mt-1 text-muted border-top">
+                <div class="small pt-2 mt-1 text-muted">
                     <div><?= $main['description'] ?></div>
                 </div>
             <?php endif; ?>
             <?php if ($admin): ?>
-                <div class="border-top mt-2 pt-2">
+                <div class="small pt-2">
                     <?= $main['sectionListAdminPanel'] ?>
                 </div>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
 <?php else : ?>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
-        </div>
-    </div>
+    <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
 <?php endif; ?>
 
 <?php if ($admin) : ?>
