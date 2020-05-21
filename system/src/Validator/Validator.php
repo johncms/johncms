@@ -132,7 +132,10 @@ class Validator
             if (! empty($rule)) {
                 $validator_chain = new ValidatorChain();
                 foreach ($rule as $name => $options) {
-                    if (! array_key_exists($name, $this->rules)) {
+                    if (
+                        (is_array($options) && ! array_key_exists($name, $this->rules)) ||
+                        (! is_array($options) && ! array_key_exists($options, $this->rules))
+                    ) {
                         continue;
                     }
                     if (! is_array($options)) {
