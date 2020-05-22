@@ -10,6 +10,10 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumMessage;
+use Forum\Models\ForumTopic;
+use Johncms\Validator\Validator;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -119,7 +123,7 @@ if (! $req_r->rowCount()) {
 $res_r = $req_r->fetch();
 
 $th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_var($_POST['th'], FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
+    ? filter_var($_POST['th'], FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH])
     : '';
 
 $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
@@ -129,52 +133,58 @@ $msg = preg_replace_callback(
     $msg
 );
 
+$errors = [];
+
 if (
     isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
     && $_POST['token'] == $_SESSION['token']
 ) {
-    $error = [];
+    $msg = preg_replace_callback(
+        '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+        'forum_link',
+        $msg
+    );
 
-    if (empty($th)) {
-        $error[] = __('You have not entered topic name');
-    }
+    $data = [
+        'name'    => $th,
+        'message' => $msg,
+    ];
 
-    if (mb_strlen($th) < 2) {
-        $error[] = __('Topic name too short');
-    }
+    $messages = [
+        'isEmpty'              => __('Value is required and can\'t be empty'),
+        'stringLengthTooShort' => __('The input is less than %min% characters long'),
+        'stringLengthTooLong'  => __('The input is more than %max% characters long'),
+        'modelExists'          => __('A record matching the input was found'),
+    ];
 
-    if (empty($msg)) {
-        $error[] = __('You have not entered the message');
-    }
+    $rules = [
+        'name'    => [
+            'NotEmpty',
+            'StringLength'   => ['min' => 3, 'max' => 200],
+            'ModelNotExists' => [
+                'model'   => ForumTopic::class,
+                'field'   => 'name',
+                'exclude' => static function ($query) use ($id) {
+                    $query->where('section_id', $id);
+                },
+            ],
+        ],
+        'message' => [
+            'NotEmpty',
+            'StringLength'   => ['min' => 4],
+            'ModelNotExists' => [
+                'model'   => ForumMessage::class,
+                'field'   => 'text',
+                'exclude' => static function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                },
+            ],
+        ],
+    ];
 
-    if (mb_strlen($msg) < 4) {
-        $error[] = __('Text is too short');
-    }
+    $validator = new Validator($data, $rules, $messages);
 
-    if (! $error) {
-        $msg = preg_replace_callback(
-            '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-            'forum_link',
-            $msg
-        );
-
-        $sql = 'SELECT (
-SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = ? AND `name` = ?) AS topic, (
-SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg';
-        $sth = $db->prepare($sql);
-        $sth->execute([$id, $th, $user->id, $msg]);
-        $row = $sth->fetch();
-        // Прверяем, есть ли уже такая тема в текущем разделе?
-        if ($row['topic']) {
-            $error[] = __('Topic with same name already exists in this section');
-        }
-        // Проверяем, не повторяется ли сообщение?
-        if ($row['msg']) {
-            $error[] = __('Message already exists');
-        }
-    }
-
-    if (! $error) {
+    if ($validator->isValid()) {
         unset($_SESSION['token']);
 
         // Если задано в настройках, то назначаем топикстартера куратором
@@ -267,48 +277,41 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         } else {
             header("Location: ?type=topic&id=${rid}");
         }
-    } else {
-        echo $view->render(
-            'system::pages/result',
-            [
-                'title'         => __('New Topic'),
-                'type'          => 'alert-danger',
-                'message'       => $error,
-                'back_url'      => '/forum/?act=nt&amp;id=' . $id,
-                'back_url_name' => __('Repeat'),
-            ]
-        );
+        exit;
     }
-} else {
-    $tree = [];
-    $tools->getSections($tree, $res_r['parent']);
-    $msg_pre = $tools->checkout($msg, 1, 1);
-    $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-    $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-    foreach ($tree as $item) {
-        $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
-    }
-    $nav_chain->add($res_r['name'], '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id']);
-    $nav_chain->add(__('New Topic'));
 
-    $token = mt_rand(1000, 100000);
-    $_SESSION['token'] = $token;
-
-    echo $view->render(
-        'forum::new_topic',
-        [
-            'title'             => __('New Topic'),
-            'page_title'        => __('New Topic'),
-            'settings_forum'    => $set_forum,
-            'id'                => $id,
-            'token'             => $token,
-            'th'                => $th,
-            'add_files'         => isset($_POST['addfiles']),
-            'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
-            'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_topic', 'msg'),
-            'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
-            'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
-            'preview_message'   => $msg_pre,
-        ]
-    );
+    $errors = $validator->getErrors();
 }
+
+$tree = [];
+$tools->getSections($tree, $res_r['parent']);
+$msg_pre = $tools->checkout($msg, 1, 1);
+$msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
+$msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
+foreach ($tree as $item) {
+    $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
+}
+$nav_chain->add($res_r['name'], '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id']);
+$nav_chain->add(__('New Topic'));
+
+$token = mt_rand(1000, 100000);
+$_SESSION['token'] = $token;
+
+echo $view->render(
+    'forum::new_topic',
+    [
+        'title'             => __('New Topic'),
+        'page_title'        => __('New Topic'),
+        'settings_forum'    => $set_forum,
+        'id'                => $id,
+        'token'             => $token,
+        'th'                => $th,
+        'add_files'         => isset($_POST['addfiles']),
+        'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
+        'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_topic', 'msg'),
+        'back_url'          => '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id,
+        'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
+        'preview_message'   => $msg_pre,
+        'errors'            => $errors,
+    ]
+);

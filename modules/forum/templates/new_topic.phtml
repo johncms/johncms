@@ -56,13 +56,19 @@ $this->layout(
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">
                 <label for="th"><?= __('Title') ?></label>
-                <input type="text" class="form-control" id="th" placeholder="" name="th" value="<?= $th ?>" maxlength="100" required>
-                <div class="small text-muted"><?= __('Maximum length: 100 characters') ?></div>
+                <input type="text" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="th" placeholder="" name="th" value="<?= $th ?>" maxlength="200" required>
+                <?php if (! empty($errors['name'])): ?>
+                    <div class="invalid-feedback d-block"><?= implode(', ', $errors['name']) ?></div>
+                <?php endif ?>
             </div>
             <div class="form-group">
                 <label for="msg"><?= __('Message') ?></label>
                 <div><?= $bbcode ?></div>
-                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
+                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg"
+                          class="form-control <?= ! empty($errors['message']) ? 'is-invalid' : '' ?>"><?= $msg ?></textarea>
+                <?php if (! empty($errors['message'])): ?>
+                    <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
+                <?php endif ?>
             </div>
             <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles" <?= $add_files ? 'checked' : '' ?>>
