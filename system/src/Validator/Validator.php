@@ -110,17 +110,24 @@ class Validator
         'UploadFile'       => UploadFile::class,
         'WordCount'        => WordCount::class,
         'ModelExists'      => ModelExists::class,
-        'ModelNotExists'      => ModelNotExists::class,
+        'ModelNotExists'   => ModelNotExists::class,
     ];
 
     private $errors = [];
 
     private $messages;
 
+    private $data;
+
+    private $rule_settings;
+
+    private $breakChainOnFailure = true;
+
     public function __construct(array $data, array $rules, array $messages = [])
     {
         $this->messages = $messages;
-        $this->validate($data, $rules);
+        $this->data = $data;
+        $this->rule_settings = $rules;
     }
 
     /**
@@ -155,7 +162,7 @@ class Validator
                         }
                     }
 
-                    $validator_chain->attach($rule_object);
+                    $validator_chain->attach($rule_object, $this->breakChainOnFailure);
                 }
                 if (! $validator_chain->isValid($value)) {
                     $this->errors[$field] = $validator_chain->getMessages();
@@ -171,6 +178,7 @@ class Validator
      */
     public function isValid(): bool
     {
+        $this->validate($this->data, $this->rule_settings);
         return empty($this->errors);
     }
 
@@ -182,5 +190,15 @@ class Validator
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    /**
+     * Break the chain on failure
+     *
+     * @param bool $value
+     */
+    public function setBreakChainOnFailure(bool $value): void
+    {
+        $this->breakChainOnFailure = $value;
     }
 }
