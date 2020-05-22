@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Validator;
 
 use Illuminate\Support\Arr;
+use Johncms\Validator\Rules\Csrf;
 use Johncms\Validator\Rules\ModelExists;
 use Johncms\Validator\Rules\ModelNotExists;
 use Laminas\Validator\AbstractValidator;
@@ -111,6 +112,7 @@ class Validator
         'WordCount'        => WordCount::class,
         'ModelExists'      => ModelExists::class,
         'ModelNotExists'   => ModelNotExists::class,
+        'Csrf'             => Csrf::class,
     ];
 
     private $errors = [];
