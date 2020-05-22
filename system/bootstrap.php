@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Security\Csrf;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
@@ -102,9 +103,12 @@ $translator->defaultDomain('system');
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
 
+/** @var Csrf $csrf */
+$csrf = di(Csrf::class);
+
 /** @var Johncms\System\View\Render $render */
 $render = di(Johncms\System\View\Render::class);
-$render->addData(['tools' => di(Johncms\System\Legacy\Tools::class)]);
+$render->addData(['tools' => di(Johncms\System\Legacy\Tools::class), 'csrf_token' => $csrf->getToken()]);
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;
