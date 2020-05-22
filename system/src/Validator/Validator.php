@@ -172,6 +172,17 @@ class Validator
     }
 
     /**
+     * Replace or add a custom rule
+     *
+     * @param string $name
+     * @param string $class
+     */
+    public function addRule(string $name, string $class): void
+    {
+        $this->rules[$name] = $class;
+    }
+
+    /**
      * The result of validation
      *
      * @return bool
