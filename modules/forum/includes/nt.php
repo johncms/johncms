@@ -135,10 +135,7 @@ $msg = preg_replace_callback(
 
 $errors = [];
 
-if (
-    isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
-    && $_POST['token'] == $_SESSION['token']
-) {
+if (isset($_POST['submit'])) {
     $msg = preg_replace_callback(
         '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
         'forum_link',
@@ -146,8 +143,9 @@ if (
     );
 
     $data = [
-        'name'    => $th,
-        'message' => $msg,
+        'name'       => $th,
+        'message'    => $msg,
+        'csrf_token' => $_POST['csrf_token'],
     ];
 
     $messages = [
@@ -158,7 +156,7 @@ if (
     ];
 
     $rules = [
-        'name'    => [
+        'name'       => [
             'NotEmpty',
             'StringLength'   => ['min' => 3, 'max' => 200],
             'ModelNotExists' => [
@@ -169,7 +167,7 @@ if (
                 },
             ],
         ],
-        'message' => [
+        'message'    => [
             'NotEmpty',
             'StringLength'   => ['min' => 4],
             'ModelNotExists' => [
@@ -180,13 +178,12 @@ if (
                 },
             ],
         ],
+        'csrf_token' => ['Csrf'],
     ];
 
     $validator = new Validator($data, $rules, $messages);
 
     if ($validator->isValid()) {
-        unset($_SESSION['token']);
-
         // Если задано в настройках, то назначаем топикстартера куратором
         $curator = $res_r['access'] == 1 ? serialize([$user->id => $user->name]) : '';
 
@@ -294,17 +291,18 @@ foreach ($tree as $item) {
 $nav_chain->add($res_r['name'], '/forum/?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id']);
 $nav_chain->add(__('New Topic'));
 
-$token = mt_rand(1000, 100000);
-$_SESSION['token'] = $token;
+$view->addData(
+    [
+        'title'      => __('New Topic'),
+        'page_title' => __('New Topic'),
+    ]
+);
 
 echo $view->render(
     'forum::new_topic',
     [
-        'title'             => __('New Topic'),
-        'page_title'        => __('New Topic'),
         'settings_forum'    => $set_forum,
         'id'                => $id,
-        'token'             => $token,
         'th'                => $th,
         'add_files'         => isset($_POST['addfiles']),
         'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',

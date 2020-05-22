@@ -9,8 +9,7 @@
  */
 
 /**
- * @var $title
- * @var $page_title
+ * @var $csrf_token
  * @var $show_post_preview
  * @var $preview_message
  * @var $add_files
@@ -19,13 +18,7 @@
  * @var $msg
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?php if ($show_post_preview): ?>
@@ -53,7 +46,10 @@ $this->layout(
 <div class="row">
     <div class="col-12">
         <form name="new_topic" action="/forum/?act=nt&amp;id=<?= $id ?>" method="post">
-            <input type="hidden" name="token" value="<?= $token ?>"/>
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
+            <?php if (! empty($errors['csrf_token'])): ?>
+                <div class="alert alert-danger"><?= implode(', ', $errors['csrf_token']) ?></div>
+            <?php endif ?>
             <div class="form-group">
                 <label for="th"><?= __('Title') ?></label>
                 <input type="text" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="th" placeholder="" name="th" value="<?= $th ?>" maxlength="200" required>
