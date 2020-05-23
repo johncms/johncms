@@ -17,6 +17,7 @@ use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
 use Forum\Models\ForumUnread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -24,12 +25,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var array $config
- * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
  */
 
 /** @var User $user */
 $user = di(User::class);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 try {
     $current_section = (new ForumSection())->where('section_type', 1)->where('id', $id)->firstOrFail();
@@ -49,7 +52,7 @@ try {
 
 // Check access
 if (
-    ! $user->isValid()
+    ! $user->is_valid
     || isset($user->ban['1'])
     || isset($user->ban['11'])
     || (! $user->rights && $config['mod_forum'] === 3)
@@ -68,51 +71,8 @@ if (
     exit;
 }
 
-// Вспомогательная Функция обработки ссылок форума
-function forum_link($m)
-{
-    global $config, $db;
-
-    if (! isset($m[3])) {
-        return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
-    }
-    $p = parse_url($m[3]);
-
-    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
-        $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
-        $req = $db->query("SELECT `text` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
-
-        if ($req->rowCount()) {
-            $res = $req->fetch();
-            $name = strtr(
-                $res['text'],
-                [
-                    '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
-                    '&#039;' => '',
-                    '['      => '',
-                    ']'      => '',
-                ]
-            );
-
-            if (mb_strlen($name) > 40) {
-                $name = mb_substr($name, 0, 40) . '...';
-            }
-
-            return '[url=' . $m[3] . ']' . $name . '[/url]';
-        }
-
-        return $m[3];
-    }
-
-    return $m[3];
-}
-
 // Проверка на флуд
 $flood = $tools->antiflood();
-
 if ($flood) {
     echo $view->render(
         'system::pages/result',
@@ -127,32 +87,16 @@ if ($flood) {
     exit;
 }
 
-$th = filter_has_var(INPUT_POST, 'th')
-    ? filter_var($_POST['th'], FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH])
-    : '';
-
-$msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
-$msg = preg_replace_callback(
-    '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-    'forum_link',
-    $msg
-);
+$data = [
+    'name'       => $request->getPost('th', '', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]),
+    'message'    => ForumUtils::topicLink($request->getPost('msg', '')),
+    'csrf_token' => $request->getPost('csrf_token', ''),
+    'add_files'  => (int) $request->getPost('addfiles', 0),
+];
+$data = array_map('trim', $data);
 
 $errors = [];
-
-if (isset($_POST['submit'])) {
-    $msg = preg_replace_callback(
-        '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-        'forum_link',
-        $msg
-    );
-
-    $data = [
-        'name'       => $th,
-        'message'    => $msg,
-        'csrf_token' => $_POST['csrf_token'],
-    ];
-
+if ($request->getPost('submit', null)) {
     $messages = [
         'isEmpty'              => __('Value is required and can\'t be empty'),
         'stringLengthTooShort' => __('The input is less than %min% characters long'),
@@ -237,7 +181,7 @@ if (isset($_POST['submit'])) {
             ]
         );
 
-        if (isset($_POST['addfiles']) && $_POST['addfiles'] == 1) {
+        if ($data['add_files'] === 1) {
             header("Location: ?id=" . $message->id . "&act=addfile");
         } else {
             header("Location: " . htmlspecialchars_decode($topic->url));
@@ -248,7 +192,7 @@ if (isset($_POST['submit'])) {
     $errors = $validator->getErrors();
 }
 
-$msg_pre = $tools->checkout($msg, 1, 1);
+$msg_pre = $tools->checkout($data['message'], 1, 1);
 $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
 
@@ -267,12 +211,12 @@ echo $view->render(
     [
         'settings_forum'    => $set_forum,
         'id'                => $id,
-        'th'                => $th,
-        'add_files'         => isset($_POST['addfiles']),
-        'msg'               => isset($_POST['msg']) ? $tools->checkout($_POST['msg'], 0, 0) : '',
+        'th'                => $data['name'],
+        'add_files'         => ($data['add_files'] === 1),
+        'msg'               => $tools->checkout($data['message'], 0, 0),
         'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_topic', 'msg'),
         'back_url'          => $current_section->url,
-        'show_post_preview' => $msg && $th && ! isset($_POST['submit']),
+        'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $request->getPost('submit', null),
         'preview_message'   => $msg_pre,
         'errors'            => $errors,
     ]

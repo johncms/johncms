@@ -12,7 +12,10 @@ declare(strict_types=1);
 
 namespace Forum;
 
+use Forum\Models\ForumTopic;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\NavChain;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 
@@ -64,5 +67,57 @@ class ForumUtils
             ]
         );
         exit;
+    }
+
+    /**
+     * Replaces the URL to a bb-code with name of the topic.
+     *
+     * @param string $message
+     * @return string
+     */
+    public static function topicLink(string $message): string
+    {
+        $message = preg_replace_callback(
+            '~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            static function ($link) {
+                if (! isset($link[3])) {
+                    return '[url=' . $link[1] . ']' . $link[2] . '[/url]';
+                }
+                $parsed_url = parse_url($link[3]);
+
+                /** @var Request $env */
+                $request = di(Request::class);
+                $host = $request->getServer('HTTP_HOST', '');
+
+                parse_str($parsed_url['query'], $query_params);
+
+                if ($parsed_url['host'] === $host && ! empty($query_params['id']) && ! empty($query_params['type']) && $query_params['type'] === 'topic') {
+                    try {
+                        $topic = (new ForumTopic())->findOrFail($query_params['id']);
+                        $name = strtr(
+                            $topic->name,
+                            [
+                                '&quot;' => '',
+                                '&amp;'  => '',
+                                '&lt;'   => '',
+                                '&gt;'   => '',
+                                '&#039;' => '',
+                                '['      => '',
+                                ']'      => '',
+                            ]
+                        );
+                        $name = mb_strimwidth($name, 0, 60, '...');
+                        return '[url=' . $link[3] . ']' . $name . '[/url]';
+                    } catch (ModelNotFoundException $exception) {
+                        return $link[3];
+                    }
+                }
+
+                return $link[3];
+            },
+            $message
+        );
+
+        return $message;
     }
 }

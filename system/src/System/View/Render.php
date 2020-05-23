@@ -34,6 +34,13 @@ class Render extends Engine
         return parent::addFolder($name, $directory, $searchFolder);
     }
 
+    /**
+     * Render the template
+     *
+     * @param string $name
+     * @param array $data
+     * @return string
+     */
     public function render(string $name, array $data = []): string
     {
         try {
