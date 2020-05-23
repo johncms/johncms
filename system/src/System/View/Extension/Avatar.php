@@ -18,15 +18,11 @@ use Psr\Container\ContainerInterface;
 
 class Avatar implements ExtensionInterface
 {
-    /** @var array */
-    private $config;
-
     /** @var Assets */
     private $assets;
 
     public function __invoke(ContainerInterface $container): self
     {
-        $this->config = $container->get('config')['johncms'];
         $this->assets = $container->get(Assets::class);
         return $this;
     }
