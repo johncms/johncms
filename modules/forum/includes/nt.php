@@ -155,8 +155,8 @@ if ($request->getPost('submit', null)) {
                 'date'         => time(),
                 'user_id'      => $user->id,
                 'user_name'    => $user->name,
-                'ip'           => $env->getIp(),
-                'ip_via_proxy' => $env->getIpViaProxy(),
+                'ip'           => $env->getIp(false),
+                'ip_via_proxy' => $env->getIpViaProxy(false),
                 'user_agent'   => $env->getUserAgent(),
                 'text'         => $data['message'],
             ]
