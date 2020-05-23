@@ -16,7 +16,7 @@
                     <div class="sidebar__notifications badge badge-danger badge-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
                 <div class="user_photo border rounded-circle mr-2 overflow-hidden">
-                    <img src="<?= $this->avatar($user->id) ?>" class="img-fluid" alt=".">
+                    <img src="<?= $this->avatar($user->id ?? 0) ?>" class="img-fluid" alt=".">
                 </div>
             </div>
             <div>
