@@ -139,7 +139,7 @@ if ($request->getPost('submit', null)) {
                 'created_at'     => Carbon::now(),
                 'user_id'        => $user->id,
                 'user_name'      => $user->name,
-                'name'           => $th,
+                'name'           => $data['name'],
                 'last_post_date' => time(),
                 'post_count'     => 0,
                 'curators'       => $current_section->access === 1 ? [$user->id => $user->name] : [],
@@ -158,7 +158,7 @@ if ($request->getPost('submit', null)) {
                 'ip'           => $env->getIp(),
                 'ip_via_proxy' => $env->getIpViaProxy(),
                 'user_agent'   => $env->getUserAgent(),
-                'text'         => $msg,
+                'text'         => $data['message'],
             ]
         );
 
