@@ -1,17 +1,16 @@
-<?php $this->layout('system::layout/default', [
-    'title'      => __('Delete news'),
-    'page_title' => __('Delete news'),
-]) ?>
-<div class="row">
-    <div class="m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
-        <div class="card shadow border-0 border-radius-12">
-            <div class="card-body">
-                <h4 class="card-title"><?= __('Do you really want to delete?') ?></h4>
-                <form action="/news/del/<?= $id ?>" method="post">
-                    <input type="submit" name="yes" class="btn btn-danger" value="<?= __('Delete') ?>">
-                    <a href="/news/" class="btn btn-link"><?= __('Cancel') ?></a>
-                </form>
-            </div>
-        </div>
-    </div>
+<?php $this->layout(
+    'system::layout/default',
+    [
+        'title'      => __('Delete news'),
+        'page_title' => __('Delete news'),
+    ]
+) ?>
+<div class="alert alert-danger">
+    <h4><?= __('Do you really want to delete?') ?></h4>
+    <form action="/news/del/<?= $id ?>" method="post">
+        <input type="submit" name="yes" class="btn btn-danger btn-sm" value="<?= __('Delete') ?>">
+        <a href="/news/" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
+    </form>
 </div>
+
+

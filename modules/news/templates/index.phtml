@@ -10,15 +10,13 @@
 <?php endif ?>
 <!-- Listing News -->
 <?php foreach ($list() as $news): ?>
-    <div class="card mb-3 shadow border-0">
+    <div class="card mb-3 border-0">
         <div class="card-body">
-            <h3 class="card-title"><?= $this->e($news['name']) ?></h3>
+            <h3 class="card-title font-weight-bold"><?= $this->e($news['name']) ?></h3>
             <p class="card-text"><?= $news['text'] ?></p>
-            <p class="card-text">
-                <small class="text-muted"><?= __('Author') ?>: <?= $news['avt'] ?> (<?= $tools->displayDate($news['time']) ?>)</small>
-            </p>
+            <div class="text-muted small"><?= __('Author') ?>: <?= $news['avt'] ?> (<?= $tools->displayDate($news['time']) ?>)</div>
             <?php if (! empty($news['kom']) || $user->rights >= 6): ?>
-                <div class="border-top pt-3 d-flex justify-content-between">
+                <div class="pt-1 d-flex justify-content-between">
                     <div>
                         <?php if (! empty($news['kom'])): ?>
                             <!-- Forum discussion -->
