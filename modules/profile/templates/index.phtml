@@ -23,201 +23,194 @@ $this->layout(
 );
 ?>
 
-<div class="row mt-5 mb-3">
-    <div class="col-md-4">
-        <div class="card border-0 shadow">
-            <div class="d-flex justify-content-center">
-                <div class="user-avatar profile-avatar">
-                    <div class="avatar-image rounded-circle mt-n5 overflow-hidden shadow">
-                        <img src="<?= $this->avatar($data['user']['id']) ?>" class="img-fluid" alt="">
-                    </div>
-                    <div class="user-status <?= $data['user']['is_online'] ? 'online' : 'offline' ?> shadow"
-                         data-toggle="tooltip" data-placement="top" title="<?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?: __('Online') ?>"></div>
+<div class="row mb-3">
+    <div class="col-sm-12 col-md-6">
+
+        <div class="d-flex justify-content-center">
+            <div class="user-avatar profile-avatar">
+                <div class="avatar-image rounded-circle overflow-hidden shadow">
+                    <img src="<?= $this->avatar($data['user']['id']) ?>" class="img-fluid" alt="">
                 </div>
+                <div class="user-status <?= $data['user']['is_online'] ? 'online' : 'offline' ?> shadow"
+                     data-toggle="tooltip" data-placement="top" title="<?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?: __('Online') ?>"></div>
             </div>
-            <div class="card-body text-center">
-                <div class="personal-info">
-                    <div class="text-muted small"><?= $data['user']['rights_name'] ?></div>
-                    <div class="font-weight-bold h2 mb-1"><?= $data['user']['imname'] ?: $data['user']['name'] ?></div>
-                    <div class="text-muted"><?= $data['user']['name'] ?></div>
-                    <?php if ($data['active_ban']): ?>
-                        <div class="mt-2 mb-1">
-                            <div>
-                                <div class="font-weight-bold h3 mb-0">
-                                    <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>" class="text-danger"><?= __('User is banned') ?></a>
-                                </div>
-                                <div class="text-muted">
-                                    <?= __('Reason:') ?> <?= $data['active_ban_reason'] ?>
-                                </div>
+        </div>
+        <div class="text-center">
+            <div class="personal-info">
+                <div class="text-muted small"><?= $data['user']['rights_name'] ?></div>
+                <div class="font-weight-bold h2 mb-1"><?= $data['user']['imname'] ?: $data['user']['name'] ?></div>
+                <div class="text-muted"><?= $data['user']['name'] ?></div>
+                <?php if ($data['active_ban']): ?>
+                    <div class="mt-2 mb-1">
+                        <div>
+                            <div class="font-weight-bold h3 mb-0">
+                                <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>" class="text-danger"><?= __('User is banned') ?></a>
+                            </div>
+                            <div class="text-muted">
+                                <?= __('Reason:') ?> <?= $data['active_ban_reason'] ?>
                             </div>
                         </div>
-                    <?php elseif (! empty($data['counters']['ban'])): ?>
-                        <div class="mt-2 mb-1">
-                            <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>"><?= __('Violations') ?> (<?= $data['counters']['ban'] ?>)</a>
+                    </div>
+                <?php elseif (! empty($data['counters']['ban'])): ?>
+                    <div class="mt-2 mb-1">
+                        <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>"><?= __('Violations') ?> (<?= $data['counters']['ban'] ?>)</a>
+                    </div>
+                <?php endif ?>
+                <?php if (! empty($data['user']['last_visit'])): ?>
+                    <div class="text-muted"><?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?></div>
+                <?php endif; ?>
+            </div>
+            <?php if ($data['show_ip']): ?>
+                <div class="small">
+                    <div><?= __('User Agent') ?>: <?= $data['user']['browser'] ?></div>
+                    <div>
+                        <?= __('Ip') ?>: <a href="<?= $data['user']['search_ip_url'] ?>"><?= $data['user']['ip'] ?></a>
+                        &nbsp;[<a href="<?= $data['user']['whois_ip_url'] ?>" title="<?= __('Whois') ?>">&nbsp;?&nbsp;</a>]
+                        <?php if (! empty($data['user']['ip_via_proxy'])): ?>
+                            - <a href="<?= $data['user']['search_ip_via_proxy_url'] ?>"><?= $data['user']['ip_via_proxy'] ?></a>
+                            &nbsp;[<a href="<?= $data['user']['whois_ip_via_proxy_url'] ?>" title="<?= __('Whois') ?>">&nbsp;?&nbsp;</a>]
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if (! empty($data['user']['ip_history_count'])): ?>
+                        <div>
+                            <a href="<?= $data['user']['ip_history_url'] ?>" title="<?= __('IP History') ?>"><?= __('IP History') ?> (<?= $data['user']['ip_history_count'] ?>)</a>
                         </div>
                     <?php endif ?>
-                    <?php if (! empty($data['user']['last_visit'])): ?>
-                        <div class="text-muted"><?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?></div>
-                    <?php endif; ?>
                 </div>
-                <?php if ($data['show_ip']): ?>
-                    <div class="small">
-                        <div><?= __('User Agent') ?>: <?= $data['user']['browser'] ?></div>
-                        <div>
-                            <?= __('Ip') ?>: <a href="<?= $data['user']['search_ip_url'] ?>"><?= $data['user']['ip'] ?></a>
-                            &nbsp;[<a href="<?= $data['user']['whois_ip_url'] ?>" title="<?= __('Whois') ?>">&nbsp;?&nbsp;</a>]
-                            <?php if (! empty($data['user']['ip_via_proxy'])): ?>
-                                - <a href="<?= $data['user']['search_ip_via_proxy_url'] ?>"><?= $data['user']['ip_via_proxy'] ?></a>
-                                &nbsp;[<a href="<?= $data['user']['whois_ip_via_proxy_url'] ?>" title="<?= __('Whois') ?>">&nbsp;?&nbsp;</a>]
-                            <?php endif; ?>
-                        </div>
+            <?php endif; ?>
 
-                        <?php if (! empty($data['user']['ip_history_count'])): ?>
-                            <div>
-                                <a href="<?= $data['user']['ip_history_url'] ?>" title="<?= __('IP History') ?>"><?= __('IP History') ?> (<?= $data['user']['ip_history_count'] ?>)</a>
-                            </div>
-                        <?php endif ?>
-                    </div>
-                <?php endif; ?>
-
-                <div>
-                    <?php if ($user->id !== $data['user']['id']): ?>
-                        <?php if ($data['can_write']): ?>
-                            <a href="../mail/?act=write&amp;id=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Write') ?></a>
-                        <?php endif; ?>
-                        <?php if ($data['can_write']): ?>
-                            <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;add" class="btn btn-secondary btn-sm mt-2"><?= __('Block') ?></a>
-                        <?php else: ?>
-                            <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;del" class="btn btn-secondary btn-sm mt-2"><?= __('Unblock') ?></a>
-                        <?php endif; ?>
-                        <?php if (! empty($data['buttons'])): ?>
-                            <button class="btn btn-danger dropdown-toggle btn-sm mt-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?= __('Actions') ?>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <?php foreach ($data['buttons'] as $button): ?>
-                                    <a class="dropdown-item" href="<?= $button['url'] ?>"><?= $button['name'] ?></a>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+            <div>
+                <?php if ($user->id !== $data['user']['id']): ?>
+                    <?php if ($data['can_write']): ?>
+                        <a href="../mail/?act=write&amp;id=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Write') ?></a>
+                    <?php endif; ?>
+                    <?php if ($data['can_write']): ?>
+                        <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;add" class="btn btn-secondary btn-sm mt-2"><?= __('Block') ?></a>
                     <?php else: ?>
-                        <a href="?act=edit&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Edit profile') ?></a>
+                        <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;del" class="btn btn-secondary btn-sm mt-2"><?= __('Unblock') ?></a>
                     <?php endif; ?>
-                </div>
+                    <?php if (! empty($data['buttons'])): ?>
+                        <button class="btn btn-danger dropdown-toggle btn-sm mt-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?= __('Actions') ?>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <?php foreach ($data['buttons'] as $button): ?>
+                                <a class="dropdown-item" href="<?= $button['url'] ?>"><?= $button['name'] ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <a href="?act=edit&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Edit profile') ?></a>
+                <?php endif; ?>
             </div>
         </div>
         <?php if (! empty($config['karma']['on'])): ?>
-            <div class="card border-0 shadow mt-4">
-                <div class="card-body">
-                    <h2 class="h3 font-weight-bold text-center mb-4"><?= __('Karma') ?></h2>
-                    <div class="rounded-progress <?= ($data['user']['karma_percent'] < 0) ? 'negative-progress' : '' ?> mx-auto" data-value='<?= $data['user']['karma_percent'] ?>'>
-                        <span class="progress-left"><span class="progress-bar border-success"></span></span>
-                        <span class="progress-right"><span class="progress-bar border-success"></span></span>
-                        <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
-                            <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
-                            <?php if (! empty($data['user']['karma_new'])): ?>
-                                <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= n__('vote', 'votes', $data['user']['karma_new']) ?></a></div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <div class="row text-center mt-4">
-                        <div class="col-6 border-right">
-                            <a href="<?= $data['user']['positive_url'] ?>">
-                                <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_plus'] ?></div>
-                                <span class="small text-gray"><?= __('Positive') ?></span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="<?= $data['user']['negative_url'] ?>">
-                                <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_minus'] ?></div>
-                                <span class="small text-gray"><?= __('Negative') ?></span>
-                            </a>
-                        </div>
-                    </div>
-                    <?php if (! empty($data['user']['vote_url'])): ?>
-                        <div class="text-center mt-4">
-                            <a href="<?= $data['user']['vote_url'] ?>" class="btn btn-primary btn-sm"><?= __('Vote') ?></a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
-    <div class="col-md-8">
-        <div class="card border-0 shadow mt-4 mt-md-0">
-            <div class="card-body">
-                <h2 class="h3 font-weight-bold text-center mb-2"><?= __('Information') ?></h2>
-                <?php if (! empty($data['user']['photo'])): ?>
-                    <div class="mb-2">
-                        <a href="<?= $data['user']['photo']['photo'] ?>" title="<?= __('Photo') ?> "
-                           data-source="<?= $data['user']['photo']['photo'] ?>" class="image-preview">
-                            <img src="<?= $data['user']['photo']['photo_preview'] ?>" class="img-thumbnail" alt=".">
-                        </a>
-                    </div>
-                <?php endif; ?>
-                <?php if (! empty($data['user']['birthday_date'])): ?>
-                    <div class="d-flex">
-                        <div class="text-muted pr-2"><?= __('Birthday') ?>:</div>
-                        <div><?= $data['user']['birthday_date'] ?></div>
-                    </div>
-                <?php endif; ?>
-                <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('Gender') ?>:</div>
-                    <div>
-                        <?php if ($data['user']['sex'] === 'm'): ?>
-                            <?= __('Man') ?>
-                        <?php elseif ($data['user']['sex'] === 'zh'): ?>
-                            <?= __('Woman') ?>
-                        <?php else: ?>
-                            <?= __('Not specified') ?>
+            <div class="border-0 mt-4">
+                <h2 class="h3 font-weight-bold text-center mb-4"><?= __('Karma') ?></h2>
+                <div class="rounded-progress <?= ($data['user']['karma_percent'] < 0) ? 'negative-progress' : '' ?> mx-auto" data-value='<?= $data['user']['karma_percent'] ?>'>
+                    <span class="progress-left"><span class="progress-bar border-success"></span></span>
+                    <span class="progress-right"><span class="progress-bar border-success"></span></span>
+                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
+                        <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
+                        <?php if (! empty($data['user']['karma_new'])): ?>
+                            <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= n__('vote', 'votes', $data['user']['karma_new']) ?></a></div>
                         <?php endif; ?>
                     </div>
                 </div>
-                <?php if (! empty($data['user']['live'])): ?>
-                    <div class="d-flex">
-                        <div class="text-muted pr-2"><?= __('City, Country') ?>:</div>
-                        <div><?= $data['user']['live'] ?></div>
+                <div class="row text-center mt-4">
+                    <div class="col-6 border-right">
+                        <a href="<?= $data['user']['positive_url'] ?>">
+                            <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_plus'] ?></div>
+                            <span class="small text-gray"><?= __('Positive') ?></span>
+                        </a>
                     </div>
-                <?php endif; ?>
-                <?php if (! empty($data['user']['formatted_about'])): ?>
-                    <div class="mt-3">
-                        <?= $data['user']['formatted_about'] ?>
+                    <div class="col-6">
+                        <a href="<?= $data['user']['negative_url'] ?>">
+                            <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_minus'] ?></div>
+                            <span class="small text-gray"><?= __('Negative') ?></span>
+                        </a>
+                    </div>
+                </div>
+                <?php if (! empty($data['user']['vote_url'])): ?>
+                    <div class="text-center mt-4">
+                        <a href="<?= $data['user']['vote_url'] ?>" class="btn btn-primary btn-sm"><?= __('Vote') ?></a>
                     </div>
                 <?php endif; ?>
             </div>
+        <?php endif; ?>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="mt-4 mt-md-0">
+            <h2 class="h3 font-weight-bold text-center mb-2"><?= __('Information') ?></h2>
+            <?php if (! empty($data['user']['photo'])): ?>
+                <div class="mb-2">
+                    <a href="<?= $data['user']['photo']['photo'] ?>" title="<?= __('Photo') ?> "
+                       data-source="<?= $data['user']['photo']['photo'] ?>" class="image-preview">
+                        <img src="<?= $data['user']['photo']['photo_preview'] ?>" class="img-thumbnail" alt=".">
+                    </a>
+                </div>
+            <?php endif; ?>
+            <?php if (! empty($data['user']['birthday_date'])): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('Birthday') ?>:</div>
+                    <div><?= $data['user']['birthday_date'] ?></div>
+                </div>
+            <?php endif; ?>
+            <div class="d-flex">
+                <div class="text-muted pr-2"><?= __('Gender') ?>:</div>
+                <div>
+                    <?php if ($data['user']['sex'] === 'm'): ?>
+                        <?= __('Man') ?>
+                    <?php elseif ($data['user']['sex'] === 'zh'): ?>
+                        <?= __('Woman') ?>
+                    <?php else: ?>
+                        <?= __('Not specified') ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php if (! empty($data['user']['live'])): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('City, Country') ?>:</div>
+                    <div><?= $data['user']['live'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if (! empty($data['user']['formatted_about'])): ?>
+                <div class="mt-3">
+                    <?= $data['user']['formatted_about'] ?>
+                </div>
+            <?php endif; ?>
         </div>
 
-        <div class="card border-0 shadow mt-4">
-            <div class="card-body">
-                <h2 class="h3 font-weight-bold text-center mb-2">Контакты</h2>
-                <?php if (! empty($data['user']['mibile'])): ?>
-                    <div class="d-flex">
-                        <div class="text-muted pr-2"><?= __('Phone number') ?>:</div>
-                        <div><?= $data['user']['mibile'] ?></div>
+        <div class="mt-4">
+            <h2 class="h3 font-weight-bold text-center mb-2">Контакты</h2>
+            <?php if (! empty($data['user']['mibile'])): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('Phone number') ?>:</div>
+                    <div><?= $data['user']['mibile'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if ((! empty($data['user']['mail']) && $data['user']['mailvis']) || $user->rights >= 7 || $data['user']['id'] === $user->id): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('E-mail') ?>:</div>
+                    <div>
+                        <?= $data['user']['mail'] ?>
+                        <?= ($data['user']['mailvis'] ? '' : '<span class="text-muted"> [' . __('hidden') . ']</span>') ?>
                     </div>
-                <?php endif; ?>
-                <?php if ((! empty($data['user']['mail']) && $data['user']['mailvis']) || $user->rights >= 7 || $data['user']['id'] === $user->id): ?>
-                    <div class="d-flex">
-                        <div class="text-muted pr-2"><?= __('E-mail') ?>:</div>
-                        <div>
-                            <?= $data['user']['mail'] ?>
-                            <?= ($data['user']['mailvis'] ? '' : '<span class="text-muted"> [' . __('hidden') . ']</span>') ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <?php if (! empty($data['user']['skype'])): ?>
-                    <div class="d-flex">
-                        <div class="text-muted pr-2"><?= __('Skype') ?>:</div>
-                        <div><?= $data['user']['skype'] ?></div>
-                    </div>
-                <?php endif; ?>
-                <?php if (! empty($data['user']['website'])): ?>
-                    <div class="d-flex">
-                        <div class="text-muted pr-2"><?= __('Site') ?>:</div>
-                        <div><?= $data['user']['website'] ?></div>
-                    </div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
+            <?php if (! empty($data['user']['skype'])): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('Skype') ?>:</div>
+                    <div><?= $data['user']['skype'] ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if (! empty($data['user']['website'])): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('Site') ?>:</div>
+                    <div><?= $data['user']['website'] ?></div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -225,45 +218,53 @@ $this->layout(
 <div class="border-top mt-4"></div>
 
 <div class="row mt-4 mb-3 ">
-    <div class="col-12 col-sm-6 col-xl-3 mb-2">
-        <div class="card border-0 shadow">
-            <div class="card-body d-flex align-items-center">
-                <svg class="icon-40 text-secondary">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
-                </svg>
-                <a href="?act=activity&amp;user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= __('Activity') ?></a>
+    <div class="col-12 col-sm-3 mb-2">
+        <a href="?act=activity&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
+            <div class="card-body">
+                <div class="icon_with_badge d-inline-block">
+                    <svg class="icon-40">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                    </svg>
+                </div>
+                <div class="mt-2 tile_name"><?= __('Activity') ?></div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-12 col-sm-6 col-xl-3 mb-2">
-        <div class="card border-0 shadow">
-            <div class="card-body d-flex align-items-center">
-                <svg class="icon-40 text-secondary">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
-                </svg>
-                <a href="?act=stat&amp;user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= __('Statistic') ?></a>
+    <div class="col-12 col-sm-3 mb-2">
+        <a href="?act=stat&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
+            <div class="card-body">
+                <div class="icon_with_badge d-inline-block">
+                    <svg class="icon-40">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
+                    </svg>
+                </div>
+                <div class="mt-2 tile_name"><?= __('Statistic') ?></div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-12 col-sm-6 mt-sm-3 mt-xl-0 col-xl-3  mb-2">
-        <div class="card border-0 shadow">
-            <div class="card-body d-flex align-items-center">
-                <svg class="icon-40 text-secondary">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#picasa"/>
-                </svg>
-                <a href="../album/list?user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= __('Photo Album') ?></a>
+    <div class="col-12 col-sm-3 mb-2">
+        <a href="../album/list?user=<?= $data['user']['id'] ?>" class="card text-center">
+            <div class="card-body">
+                <div class="icon_with_badge d-inline-block">
+                    <svg class="icon-40">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#picasa"/>
+                    </svg>
+                </div>
+                <div class="mt-2 tile_name"><?= __('Photo Album') ?></div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-12 col-sm-6 mt-sm-3 mt-xl-0 col-xl-3  mb-2">
-        <div class="card border-0 shadow h-100">
-            <div class="card-body d-flex align-items-center">
-                <svg class="icon-40 text-secondary" style="margin-top: -5px;">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
-                </svg>
-                <a href="?act=guestbook&amp;user=<?= $data['user']['id'] ?>" class="h3 ml-3 mb-0"><?= __('Guestbook') ?></a>
+    <div class="col-12 col-sm-3 mb-2">
+        <a href="?act=guestbook&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
+            <div class="card-body">
+                <div class="icon_with_badge d-inline-block">
+                    <svg class="icon-40">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
+                    </svg>
+                </div>
+                <div class="mt-2 tile_name"><?= __('Guestbook') ?></div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 
