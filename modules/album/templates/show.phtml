@@ -43,14 +43,14 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
     <?php foreach ($data['photos'] as $photo): ?>
         <div class="col mb-4">
-            <div class="card h-100 border-0 shadow overflow-hidden">
+            <div class="card py-0 h-100 overflow-hidden">
                 <a href="<?= $photo->detail_url ?>">
                     <div class="album-photo" style="background: url('<?= $photo->preview_picture ?>');"></div>
                 </a>
-                <div class="card-body d-flex flex-column justify-content-between">
+                <div class="card-body d-flex px-3 pb-3 flex-column justify-content-between">
                     <p class="card-text"><?= $photo->preview_text ?></p>
                     <?php if (! empty($photo->user_name || ! empty($photo->album_name))): ?>
                         <div class="small">
