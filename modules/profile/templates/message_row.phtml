@@ -14,19 +14,17 @@
 
 ?>
 
-<div class="shadow post-item post-item mb-2">
-    <div class="post-header d-flex justify-content-between border-bottom pb-1">
+<div class="post-item border-bottom mb-2 pb-2">
+    <div class="post-header d-flex justify-content-between pb-1">
         <div class="d-flex align-items-end">
             <a href="<?= $item['topic_url'] ?>" class="user-login mr-2"><?= $item['topic_name'] ?></a>
             <span class="post-date"><?= $item['display_date'] ?></span>
         </div>
         <div class="post-actions"></div>
     </div>
-    <div class="pt-2">
-        <div class="border-bottom pb-2 mb-2">
-            <div>
-                <?= $item['text'] ?>...
-            </div>
+    <div>
+        <div>
+            <div><?= $item['text'] ?></div>
             <div>
                 <a href="<?= $item['message_url'] ?>"><?= __('To message') ?> &gt;&gt;</a>
             </div>
