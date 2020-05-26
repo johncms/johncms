@@ -177,12 +177,26 @@
 /**  Стили для редизайна постов  **/
 
 .new_post-item {
-    min-height: 100px;
-    padding: 10px 0 10px 85px;
+    min-height: 80px;
     border-bottom: 1px solid $border-color;
+    padding: 10px 0 10px 85px;
+
+    &.without_avatar {
+        padding: 0.5rem 0;
+
+        .post-body {
+            padding: 0.2rem 0;
+        }
+    }
 
     &.shadow {
         box-shadow: none !important;
+    }
+
+    .post-title {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $dark_brown;
     }
 
     @media (max-width: 768px) {
@@ -313,8 +327,8 @@
 
 .post-body {
     word-break: break-word;
-
     border-top: none !important;
+    padding: 0.5rem 0;
 
     img {
         vertical-align: initial;

@@ -32,9 +32,9 @@ $this->layout(
 
 <?php if ($total) : ?>
     <?php foreach ($list() as $top) : ?>
-        <div class="post-item border-bottom mb-2 pb-2">
-            <a href="?id=<?= $top['id'] ?>" class="card-title h3"><?= $top['name'] ?></a>
-            <div><?= $top['announce'] ?></div>
+        <div class="new_post-item without_avatar">
+            <a href="?id=<?= $top['id'] ?>" class="post-title"><?= $top['name'] ?></a>
+            <div class="post-body"><?= $top['announce'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <div class="mr-2">
                     <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $top['cat_id'] ?>"><?= $top['cat_name'] ?></a>
