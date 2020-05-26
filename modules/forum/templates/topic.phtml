@@ -119,32 +119,28 @@ $this->layout(
 <?php endif; ?>
 
 <?php if ($write_access && $settings_forum['upfp']): ?>
-    <div class="row">
-        <div class="col-md-6">
-            <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
-                <?php if (! empty($settings_forum['farea'])): ?>
-                    <input type="hidden" name="token" value="<?= $token ?>"/>
-                    <div class="form-group">
-                        <label for="msg"><?= __('Message') ?></label>
-                        <div><?= $bbcode ?></div>
-                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
-                    </div>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
-                        <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
-                    </div>
-                    <div>
-                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
-                        <?php if (! empty($settings_forum['preview'])): ?>
-                            <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
-                        <?php endif; ?>
-                    </div>
-                <?php else: ?>
-                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+    <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
+        <?php if (! empty($settings_forum['farea'])): ?>
+            <input type="hidden" name="token" value="<?= $token ?>"/>
+            <div class="form-group">
+                <label for="msg"><?= __('Message') ?></label>
+                <div><?= $bbcode ?></div>
+                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+            </div>
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+                <?php if (! empty($settings_forum['preview'])): ?>
+                    <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
                 <?php endif; ?>
-            </form>
-        </div>
-    </div>
+            </div>
+        <?php else: ?>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+        <?php endif; ?>
+    </form>
 <?php endif; ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center mt-1 mb-3 pagination-no-padding">
     <?php if ($total > $user->config->kmess): ?>
@@ -287,12 +283,12 @@ $this->layout(
                     </div>
                 <?php endif; ?>
             </div>
-            <div class="post-body mt-2 border-top pt-2 pb-2">
+            <div class="post-body border-top pt-2 pb-2">
                 <?= $message->post_text ?>
             </div>
             <?php if ($message->files->count() > 0): ?>
                 <!-- Files block -->
-                <div class="mt-3 pb-1">
+                <div class="pb-1">
                     <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
                     <div class="d-flex flex-wrap image-gallery">
                         <?php foreach ($message->files as $file): ?>
@@ -430,32 +426,28 @@ $this->layout(
 <?php endif; ?>
 
 <?php if ($write_access && ! $settings_forum['upfp']): ?>
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1">
-                <?php if (! empty($settings_forum['farea'])): ?>
-                    <input type="hidden" name="token" value="<?= $token ?>"/>
-                    <div class="form-group">
-                        <label for="msg"><?= __('Message') ?></label>
-                        <div><?= $bbcode ?></div>
-                        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
-                    </div>
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
-                        <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
-                    </div>
-                    <div>
-                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
-                        <?php if (! empty($settings_forum['preview'])): ?>
-                            <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
-                        <?php endif; ?>
-                    </div>
-                <?php else: ?>
-                    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+    <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1 mb-2">
+        <?php if (! empty($settings_forum['farea'])): ?>
+            <input type="hidden" name="token" value="<?= $token ?>"/>
+            <div class="form-group">
+                <label for="msg"><?= __('Message') ?></label>
+                <div><?= $bbcode ?></div>
+                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+            </div>
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+                <?php if (! empty($settings_forum['preview'])): ?>
+                    <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
                 <?php endif; ?>
-            </form>
-        </div>
-    </div>
+            </div>
+        <?php else: ?>
+            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+        <?php endif; ?>
+    </form>
 <?php endif; ?>
 
 <div>

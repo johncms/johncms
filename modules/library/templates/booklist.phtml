@@ -25,14 +25,12 @@ $this->layout(
 <?php if ($total) : ?>
     <!-- Listing Sections -->
     <?php foreach ($list() as $booklist): ?>
-        <div class="card mb-3 shadow border-0">
-            <div class="card-body">
-                <a href="?id=<?= $booklist['id'] ?>" class="card-title h3"><?= $booklist['name'] ?></a>
-                <p class="card-text"><?= $booklist['announce'] ?></p>
-                <div class="text-muted small d-flex align-items-center flex-wrap">
-                    <span class="pr-2"><span><?= __('Author:') ?></span>&nbsp;<?= $booklist['who'] ?>,</span>
-                    <span class="d-flex align-items-center"><span class="pr-1"><?= __('Rating:') ?></span><?= $booklist['ratingView'] ?></span>
-                </div>
+        <div class="post-item border-bottom mb-2 pb-2">
+            <a href="?id=<?= $booklist['id'] ?>" class="card-title h3"><?= $booklist['name'] ?></a>
+            <div class="card-text"><?= $booklist['announce'] ?></div>
+            <div class="text-muted small d-flex align-items-center flex-wrap">
+                <span class="pr-2"><span><?= __('Author:') ?></span>&nbsp;<?= $booklist['who'] ?>,</span>
+                <span class="d-flex align-items-center"><span class="pr-1"><?= __('Rating:') ?></span><?= $booklist['ratingView'] ?></span>
             </div>
         </div>
     <?php endforeach; ?>
