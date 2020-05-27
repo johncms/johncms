@@ -81,31 +81,32 @@
 <?php endif; ?>
 <div class="mt-4 border-bottom"></div>
 <!-- Отображаем сообщения -->
-<?php if (empty($data['items'])): ?>
+<?php if (empty($data['items']->count())): ?>
     <div class="alert alert-info"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
+        <?php /** @var \Guestbook\Models\Guestbook $item */ ?>
         <div class="new_post-item border-bottom mb-2">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
-                    <?php if (! empty($item['user_profile_link'])): ?>
-                        <a href="<?= $item['user_profile_link'] ?>">
+                    <?php if (! empty($item->user) && ! empty($item->user->profile_url)): ?>
+                        <a href="<?= $item->user->profile_url ?>">
                             <div class="avatar">
-                                <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                                <img src="<?= $this->avatar($item->user_id) ?>" class="img-fluid" alt=".">
                             </div>
                         </a>
                     <?php else: ?>
                         <div class="avatar">
-                            <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                            <img src="<?= $this->avatar($item->user_id) ?>" class="img-fluid" alt=".">
                         </div>
                     <?php endif; ?>
-                    <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
-                    <?php if (! empty($item['user_rights_name'])): ?>
+                    <span class="user-status <?= $item->is_online ? 'online' : 'offline' ?> shadow"></span>
+                    <?php if (! empty($item->user->rights_name)): ?>
                         <div class="post-of-user"
                              data-toggle="tooltip"
                              data-placement="top"
                              data-html="true"
-                             title="<?= $item['user_rights_name'] ?>">
+                             title="<?= $item->user->rights_name ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
                             </svg>
@@ -114,37 +115,37 @@
                 </div>
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
-                        <?php if (! empty($item['user_profile_link'])): ?>
-                            <a href="<?= $item['user_profile_link'] ?>">
-                                <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
+                        <?php if (! empty($item->user) && ! empty($item->user->profile_url)): ?>
+                            <a href="<?= $item->user->profile_url ?>">
+                                <div class="user-name d-inline mr-2"><?= $item->name ?></div>
                             </a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
+                            <div class="user-name d-inline mr-2"><?= ! empty($item->user_id) ? $item->name : (__('Guest') . ': ' . $item->name) ?></div>
                         <?php endif; ?>
-                        <span class="post-meta d-inline mr-2"><?= $item['created'] ?></span>
-                        <?php if (! empty($item['edit_count'])): ?>
+                        <span class="post-meta d-inline mr-2"><?= $item->time ?></span>
+                        <?php if (! empty($item->edit_count)): ?>
                             <div class="post-meta d-inline mr-2"
                                  data-toggle="tooltip"
                                  data-placement="top"
                                  data-html="true"
-                                 title="<?= __('Edited:') ?> <?= $item['edit_who'] ?> <br> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]">
+                                 title="<?= __('Edited:') ?> <?= $item->edit_who ?> <br> (<?= $item->edit_time ?>) [<?= $item->edit_count ?>]">
                                 <?= __('Edited') ?>
                             </div>
                         <?php endif; ?>
                     </div>
-                    <?php if (! empty($item['status'])): ?>
+                    <?php if (! empty($item->user) && ! empty($item->user->status)): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="font-weight-bold"><?= $item['status'] ?></span>
+                            <span class="font-weight-bold"><?= $item->user->status ?></span>
                         </div>
                     <?php endif ?>
                 </div>
             </div>
             <div class="post-body pt-2 pb-2">
-                <?= $item['post_text'] ?>
-                <?php if (! empty($item['otvet'])): ?>
+                <?= $item->post_text ?>
+                <?php if (! empty($item->reply_text)): ?>
                     <div class="alert alert-warning mt-2 mb-n2">
-                        <b><?= $item['admin'] ?></b> <?= $item['reply_time'] ?><br>
-                        <?= $item['reply_text'] ?>
+                        <b><?= $item->admin ?></b> <?= $item->otime ?><br>
+                        <?= $item->reply_text ?>
                     </div>
                 <?php endif; ?>
             </div>
@@ -153,13 +154,10 @@
                     <?php if ($user->rights): ?>
                         <div class="post-meta d-flex">
                             <div class="user-ip mr-2">
-                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
-                                <?php if (! empty($item['ip_via_proxy'])): ?>
-                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
-                                <?php endif; ?>
+                                <a href="/admin/search_ip/?ip=<?= $item->ip ?>"><?= $item->ip ?></a>
                             </div>
                             <div class="useragent">
-                                <span><?= $item['browser'] ?></span>
+                                <span><?= $item->browser ?></span>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -167,10 +165,10 @@
                 <div class="d-flex">
                     <?php if ($user->rights >= 6): ?>
                         <div class="ml-3">
-                            <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>"><?= __('Reply') ?></a>
+                            <a href="/guestbook/otvet?id=<?= $item->id ?>"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?php if ($user->rights && $user->rights >= $item['rights']): ?>
+                    <?php if ($user->rights && $item->user && $user->rights >= $item->user->rights): ?>
                         <div class="dropdown ml-3">
                             <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
@@ -178,8 +176,8 @@
                                 </svg>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="/guestbook/edit?id=<?= $item['message_id'] ?>" class="dropdown-item"><?= __('Edit') ?></a>
-                                <a href="/guestbook/delpost?id=<?= $item['message_id'] ?>" class="dropdown-item"><?= __('Delete') ?></a>
+                                <a href="/guestbook/edit?id=<?= $item->id ?>" class="dropdown-item"><?= __('Edit') ?></a>
+                                <a href="/guestbook/delpost?id=<?= $item->id ?>" class="dropdown-item"><?= __('Delete') ?></a>
                             </div>
                         </div>
                     <?php endif; ?>
