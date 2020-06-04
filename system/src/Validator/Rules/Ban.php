@@ -10,47 +10,49 @@
 
 namespace Johncms\Validator\Rules;
 
+use Johncms\Users\User;
 use Laminas\Validator\AbstractValidator;
 
-class Captcha extends AbstractValidator
+class Ban extends AbstractValidator
 {
-    public const CAPTCHA = 'captcha';
+    public const BAN = 'ban';
 
     protected $messageTemplates = [
-        self::CAPTCHA => "The security code is not correct",
+        self::BAN => "You have a ban",
     ];
 
     /**
-     * @var string
+     * @var array
      */
-    private $sessionField = 'code';
+    private $bans = [1];
 
     public function isValid($value): bool
     {
         $this->setValue($value);
         $isValid = true;
 
-        if (
-            ! isset($_SESSION[$this->sessionField]) ||
-            empty($_SESSION[$this->sessionField]) ||
-            strtolower($_SESSION[$this->sessionField]) !== strtolower($value)
-        ) {
-            $this->error(self::CAPTCHA);
-            $isValid = false;
+        /** @var User $user */
+        $user = di(User::class);
+
+        foreach ($this->bans as $ban) {
+            if (array_key_exists($ban, $user->ban)) {
+                $this->error(self::BAN);
+                $isValid = false;
+            }
         }
 
         return $isValid;
     }
 
     /**
-     * Set the session field name
+     * Set bans to check
      *
      * @param $value
      * @return $this
      */
-    public function setSessionField($value): Captcha
+    public function setBans(array $value): Ban
     {
-        $this->sessionField = $value;
+        $this->bans = $value;
         return $this;
     }
 }
