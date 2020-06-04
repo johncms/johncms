@@ -14,7 +14,7 @@ use Laminas\Validator\AbstractValidator;
 
 class Csrf extends AbstractValidator
 {
-    public const NOT_SAME = 'modelNotFound';
+    public const NOT_SAME = 'notSameSite';
 
     protected $messageTemplates = [
         self::NOT_SAME => "The form submitted did not originate from the expected site",
