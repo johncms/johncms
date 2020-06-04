@@ -20,6 +20,7 @@ use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use Johncms\Validator\Validator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -105,115 +106,6 @@ switch ($act) {
             } else {
                 echo $view->render('guestbook::confirm_delete', ['id' => $id]);
             }
-        }
-        break;
-
-    case 'say':
-        // Add a new post
-        $admset = isset($_SESSION['ga']) ? 1 : 0; // Задаем куда вставляем, в Админ клуб (1), или в Гастивуху (0)
-        // Receive and process data
-        $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 20) : '';
-        $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
-        $trans = isset($_POST['msgtrans']) ? 1 : 0;
-        $code = isset($_POST['code']) ? trim($_POST['code']) : '';
-        $from = $user->isValid() ? $user->name : $name;
-        // Check for errors
-        $error = [];
-        $flood = false;
-
-        if (! isset($_POST['token']) || ! isset($_SESSION['token']) || $_POST['token'] != $_SESSION['token']) {
-            $error[] = __('Wrong data');
-        }
-
-        if (! $user->isValid() && empty($name)) {
-            $error[] = __('You have not entered a name');
-        }
-
-        if (empty($msg)) {
-            $error[] = __('You have not entered the message');
-        }
-
-        if (! empty($user->ban['1']) || ! empty($user->ban['13'])) {
-            $error[] = __('Access forbidden');
-        }
-
-        // CAPTCHA for guests
-        if (! $user->isValid() && (empty($code) || mb_strlen($code) < 3 || strtolower($code) != strtolower($_SESSION['code']))) {
-            $error[] = __('The security code is not correct');
-        }
-
-        unset($_SESSION['code']);
-
-        if ($user->isValid()) {
-            // Anti-flood for registered users
-            $flood = $tools->antiflood();
-        } else {
-            // Anti-flood for guests
-            $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '" . $env->getIp() . "' AND `browser` = " . $db->quote($env->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");
-
-            if ($req->rowCount()) {
-                $res = $req->fetch();
-                $flood = 60 - (time() - $res['time']);
-            }
-        }
-
-        if ($flood) {
-            $error = sprintf(__('You cannot add the message so often. Please, wait %d seconds.'), $flood);
-        }
-
-        if (! $error) {
-            // Check for duplicate messages
-            $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user->id . "' ORDER BY `time` DESC");
-            $res = $req->fetch();
-
-            if ($res['text'] == $msg) {
-                header('location: ./');
-                exit;
-            }
-        }
-
-        if (! $error) {
-            // Insert the message into the database
-            $db->prepare(
-                "INSERT INTO `guest` SET
-                `adm` = ?,
-                `time` = ?,
-                `user_id` = ?,
-                `name` = ?,
-                `text` = ?,
-                `ip` = ?,
-                `browser` = ?,
-                `otvet` = ''
-            "
-            )->execute(
-                [
-                    $admset,
-                    time(),
-                    $user->id,
-                    $from,
-                    $msg,
-                    $env->getIp(),
-                    $env->getUserAgent(),
-                ]
-            );
-
-            // Fix the time of the last post (antispam)
-            if ($user->isValid()) {
-                $postguest = $user->postguest + 1;
-                $db->exec("UPDATE `users` SET `postguest` = '${postguest}', `lastpost` = '" . time() . "' WHERE `id` = " . $user->id);
-            }
-
-            header('location: ./');
-        } else {
-            echo $view->render(
-                'guestbook::result',
-                [
-                    'title'    => __('Add message'),
-                    'message'  => $error,
-                    'type'     => 'error',
-                    'back_url' => '/guestbook/',
-                ]
-            );
         }
         break;
 
@@ -368,20 +260,96 @@ switch ($act) {
             'access_to_buttons' => ($user->rights > 0 || in_array($user->id, $guestAccess)),
             'is_guestbook'      => ! isset($_SESSION['ga']),
             'access_to_form'    => ($user->isValid() || $config['mod_guest'] === 2) && ! isset($user->ban['1']) && ! isset($user->ban['13']),
-            'bbcode'            => $bbcode->buttons('form', 'msg'),
+            'bbcode'            => $bbcode->buttons('form', 'message'),
+            'errors'            => [],
         ];
 
-        if ($data['access_to_form']) {
-            $token = mt_rand(1000, 100000);
-            $_SESSION['token'] = $token;
-            $data['token'] = $token;
+        $form_data = [
+            'name'       => $request->getPost('name', '', FILTER_SANITIZE_STRING),
+            'message'    => $request->getPost('message', ''),
+            'csrf_token' => $request->getPost('csrf_token', ''),
+            'code'       => $request->getPost('code', ''),
+        ];
+
+        $form_data = array_map('trim', $form_data);
+        $data['form_data'] = $form_data;
+
+        if ($request->getMethod() === 'POST') {
+            $messages = [
+                'isEmpty'              => __('Value is required and can\'t be empty'),
+                'stringLengthTooShort' => __('The input is less than %min% characters long'),
+                'stringLengthTooLong'  => __('The input is more than %max% characters long'),
+            ];
+
+            $rules = [
+                'message'    => [
+                    'NotEmpty',
+                    'StringLength'   => ['min' => 4],
+                    'ModelNotExists' => [
+                        'model'   => Guestbook::class,
+                        'field'   => 'text',
+                        'exclude' => static function ($query) use ($user) {
+                            $query->where('user_id', $user->id)->where('time', '>', (time() - 600));
+                        },
+                    ],
+                ],
+                'csrf_token' => [
+                    'Csrf',
+                    'Flood',
+                    'Ban' => [
+                        'bans' => [1, 13],
+                    ],
+                ],
+            ];
 
             if (! $user->isValid()) {
-                // CAPTCHA for guests
-                $code = (new Mobicms\Captcha\Code())->generate();
-                $_SESSION['code'] = $code;
-                $data['captcha'] = (new Mobicms\Captcha\Image($code))->generate();
+                $rules['name'] = [
+                    'NotEmpty',
+                    'StringLength' => ['min' => 3, 'max' => 25],
+                ];
+                $rules['code'] = [
+                    'Captcha',
+                ];
             }
+
+            $validator = new Validator($form_data, $rules, $messages);
+
+            if ($validator->isValid()) {
+                $new_message = (new Guestbook())->create(
+                    [
+                        'adm'     => ! $data['is_guestbook'],
+                        'time'    => time(),
+                        'user_id' => $user->id,
+                        'name'    => $user->isValid() ? $user->name : $form_data['name'],
+                        'text'    => $form_data['message'],
+                        'ip'      => $env->getIp(false),
+                        'browser' => $env->getUserAgent(),
+                        'otvet'   => '',
+                    ]
+                );
+                if ($user->isValid()) {
+                    $post_guest = $user->postguest + 1;
+                    (new \Johncms\Users\User())
+                        ->where('id', $user->id)
+                        ->update(
+                            [
+                                'postguest' => $post_guest,
+                                'lastpost'  => time(),
+                            ]
+                        );
+                }
+                $data['form_data']['message'] = '';
+            } else {
+                $data['errors'] = $validator->getErrors();
+            }
+            unset($_SESSION['code']);
+        }
+
+        if ($data['access_to_form'] && ! $user->isValid()) {
+            // CAPTCHA for guests
+            $code = (new Mobicms\Captcha\Code())->generate();
+            $_SESSION['code'] = $code;
+            $data['captcha'] = (new Mobicms\Captcha\Image($code))->generate();
         }
 
         $admin_club = (isset($_SESSION['ga']) && ($user->rights >= 1 || in_array($user->id, $guestAccess)));

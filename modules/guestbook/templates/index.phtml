@@ -18,29 +18,39 @@
 <?php if ($data['access_to_form']): ?>
     <div class="row">
         <div class="col-12">
-            <form name="form" action="/guestbook/say" method="post">
-                <input type="hidden" name="token" value="<?= $data['token'] ?>"/>
+            <?php if (! empty($data['errors']['csrf_token'])): ?>
+                <div class="alert alert-danger"><?= implode(', ', $data['errors']['csrf_token']) ?></div>
+            <?php endif ?>
+            <form name="form" action="/guestbook/" method="post">
+                <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
                 <?php if (! $user->isValid()): ?>
                     <div class="form-group">
                         <label for="name"><?= __('Name') ?></label>
                         <input type="text"
-                               class="form-control"
+                               class="form-control <?= ! empty($data['errors']['name']) ? 'is-invalid' : '' ?>"
                                maxlength="25"
                                name="name"
                                id="name"
                                required
-                               value=""
+                               value="<?= $this->e($data['form_data']['name']) ?>"
                                placeholder="<?= __('Name') ?>"
                         >
+                        <?php if (! empty($data['errors']['name'])): ?>
+                            <div class="invalid-feedback d-block"><?= implode(', ', $data['errors']['name']) ?></div>
+                        <?php endif ?>
                     </div>
                 <?php endif; ?>
                 <div class="form-group">
-                    <label for="msg"><?= __('Message') ?></label>
+                    <label for="message"><?= __('Message') ?></label>
                     <div>
                         <?= $data['bbcode'] ?>
                     </div>
-                    <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" required
+                              class="form-control <?= ! empty($data['errors']['message']) ? 'is-invalid' : '' ?>"><?= $this->e($data['form_data']['message']) ?></textarea>
                     <div class="text-muted">Max: 5000</div>
+                    <?php if (! empty($data['errors']['message'])): ?>
+                        <div class="invalid-feedback d-block"><?= implode(', ', $data['errors']['message']) ?></div>
+                    <?php endif ?>
                 </div>
 
                 <?php if (! $user->isValid()): ?>
@@ -48,7 +58,7 @@
                     <div class="form-group">
                         <label for="code"><?= __('Symbols on the picture') ?></label>
                         <input type="text"
-                               class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
+                               class="form-control <?= (isset($data['errors']['code']) ? 'is-invalid' : '') ?>"
                                maxlength="6"
                                name="code"
                                id="code"
@@ -56,8 +66,8 @@
                                required
                                placeholder="<?= __('Symbols on the picture') ?>"
                         >
-                        <?php if (isset($error['captcha'])): ?>
-                            <div class="invalid-feedback"><?= $error['captcha'] ?></div>
+                        <?php if (isset($data['errors']['code'])): ?>
+                            <div class="invalid-feedback"><?= implode(', ', $data['errors']['code']) ?></div>
                         <?php endif ?>
                         <div class="text-muted small">
                             <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
@@ -71,13 +81,15 @@
     </div>
 <?php else: ?>
     <!-- Гостевая только для зарегистрированных -->
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-danger',
-            'alert'      => __('For registered users only'),
-        ]
-    ) ?>
+    <?php if (! $user->isValid()): ?>
+        <?= $this->fetch(
+            'system::app/alert',
+            [
+                'alert_type' => 'alert-danger',
+                'alert'      => __('For registered users only'),
+            ]
+        ) ?>
+    <?php endif; ?>
 <?php endif; ?>
 <div class="mt-4 border-bottom"></div>
 <!-- Отображаем сообщения -->
