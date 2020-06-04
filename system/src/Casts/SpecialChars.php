@@ -36,12 +36,12 @@ class SpecialChars implements CastsAttributes
      *
      * @param Model $model
      * @param string $key
-     * @param array $value
+     * @param $value
      * @param array $attributes
      * @return string
      */
     public function set($model, $key, $value, $attributes): string
     {
-        return serialize($value);
+        return $value;
     }
 }
