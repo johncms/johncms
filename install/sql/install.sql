@@ -910,7 +910,7 @@ CREATE TABLE `notifications`
 --
 ALTER TABLE `notifications`
     ADD PRIMARY KEY (`id`),
-    ADD KEY `notifications_user_id_module_event_type_entity_id_index` (`user_id`, `module`, `event_type`, `entity_id`),
+    ADD KEY `notifications_user_id_module_event_type_entity_id_index` (`user_id`, `module`(191), `event_type`(191), `entity_id`),
     ADD KEY `notifications_user_id_index` (`user_id`);
 
 --
