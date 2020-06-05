@@ -33,37 +33,35 @@ $this->layout(
     ) ?>
 <?php endif; ?>
 <?php if (! empty($data['form_action'])): ?>
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <form name="form" action="<?= $data['form_action'] ?>" method="post" enctype="multipart/form-data">
-                <?php if (! $user->isValid()): ?>
-                    <div class="form-group">
-                        <label for="nick"><?= __('To Whom') ?></label>
-                        <input type="text"
-                               class="form-control"
-                               maxlength="25"
-                               name="nick"
-                               id="nick"
-                               required
-                               value="<?= $data['nick'] ?>"
-                               placeholder="<?= __('To Whom') ?>"
-                        >
-                    </div>
-                <?php endif; ?>
+    <div class="mb-3">
+        <form name="form" action="<?= $data['form_action'] ?>" method="post" enctype="multipart/form-data">
+            <?php if (! $user->isValid()): ?>
                 <div class="form-group">
-                    <label for="text"><?= __('Message') ?></label>
-                    <div><?= $data['bbcode'] ?></div>
-                    <textarea rows="<?= $user->config->fieldHeight ?>" name="text" id="text" required class="form-control"></textarea>
+                    <label for="nick"><?= __('To Whom') ?></label>
+                    <input type="text"
+                           class="form-control"
+                           maxlength="25"
+                           name="nick"
+                           id="nick"
+                           required
+                           value="<?= $data['nick'] ?>"
+                           placeholder="<?= __('To Whom') ?>"
+                    >
                 </div>
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
-                        <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
-                    </div>
+            <?php endif; ?>
+            <div class="form-group">
+                <label for="text"><?= __('Message') ?></label>
+                <div><?= $data['bbcode'] ?></div>
+                <textarea rows="<?= $user->config->fieldHeight ?>" name="text" id="text" required class="form-control"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
+                    <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
                 </div>
-                <input type="submit" class="btn btn-primary" name="submit" value="<?= __('Send') ?>"/>
-            </form>
-        </div>
+            </div>
+            <input type="submit" class="btn btn-primary" name="submit" value="<?= __('Send') ?>"/>
+        </form>
     </div>
 <?php endif; ?>
 
@@ -121,12 +119,12 @@ $this->layout(
                 <?php endif ?>
             </div>
         </div>
-        <div class="post-body mt-2 border-top pt-2 pb-2">
+        <div class="post-body">
             <?= $item['text'] ?>
         </div>
         <?php if (! empty($item['files'])): ?>
             <!-- Files block -->
-            <div class="border-top pt-1 pb-1">
+            <div>
                 <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
                 <div class="d-flex flex-wrap">
                     <?php foreach ($item['files'] as $file): ?>
