@@ -43,7 +43,7 @@
 
 .mobile_jumbotron {
     @media (max-width: 525px) {
-        padding: 1rem !important;
+        padding: 0 0 1rem 0 !important;
 
         .btn {
             .icon {
