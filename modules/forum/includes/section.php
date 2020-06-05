@@ -25,8 +25,14 @@ use Johncms\Users\User;
  * @var NavChain $nav_chain
  */
 
+$forum_settings = di('config')['forum']['settings'];
+
 try {
-    $current_section = (new ForumSection())->withCount('categoryFiles')->findOrFail($id);
+    $current_section = (new ForumSection());
+    if ($forum_settings['file_counters']) {
+        $current_section = $current_section->withCount('categoryFiles');
+    }
+    $current_section = $current_section->findOrFail($id);
 } catch (ModelNotFoundException $exception) {
     ForumUtils::notFound();
 }
@@ -58,7 +64,7 @@ echo $view->render(
         'sections'     => $sections,
         'online'       => $online,
         'total'        => $sections->count(),
-        'files_count'  => $tools->formatNumber($current_section->category_files_count),
+        'files_count'  => $forum_settings['file_counters'] ? $tools->formatNumber($current_section->category_files_count) : 0,
         'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
     ]
 );
