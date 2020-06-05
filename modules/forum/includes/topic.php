@@ -36,9 +36,15 @@ use Johncms\Users\User;
 /** @var User $user */
 $user = di(User::class);
 
+$forum_settings = di('config')['forum']['settings'];
+
 // Getting data for the current topic
 try {
-    $current_topic = (new ForumTopic())->withCount('files')->findOrFail($id);
+    $current_topic = (new ForumTopic());
+    if ($forum_settings['file_counters']) {
+        $current_topic = $current_topic->withCount('files');
+    }
+    $current_topic = $current_topic->findOrFail($id);
 } catch (ModelNotFoundException $exception) {
     ForumUtils::notFound();
 }
@@ -215,7 +221,7 @@ echo $view->render(
         'messages'         => $messages ?? [],
         'online'           => $online ?? [],
         'total'            => $total,
-        'files_count'      => $tools->formatNumber($current_topic->files_count),
+        'files_count'      => $forum_settings['file_counters'] ? $tools->formatNumber($current_topic->files_count) : 0,
         'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
         'filter_by_author' => $filter,
         'poll_data'        => $poll_data,

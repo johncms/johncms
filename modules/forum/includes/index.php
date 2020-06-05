@@ -33,8 +33,12 @@ $sections = (new ForumSection())
     ->orderBy('sort')
     ->get();
 
+$forum_settings = di('config')['forum']['settings'];
+
 // Считаем файлы
-$files_count = (new ForumFile())->count();
+if ($forum_settings['file_counters']) {
+    $files_count = (new ForumFile())->count();
+}
 
 // Считаем пользователей онлайн
 $online = [
@@ -51,7 +55,7 @@ echo $view->render(
         'page_title'   => __('Forum'),
         'sections'     => $sections,
         'online'       => $online,
-        'files_count'  => $tools->formatNumber($files_count),
+        'files_count'  => $forum_settings['file_counters'] ? $tools->formatNumber($files_count) : 0,
         'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
     ]
 );

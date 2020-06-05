@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 return [
     'forum' => [
+        'settings'      => [
+            'file_counters' => false,
+        ],
         'extensions'    => [
             // Архивы
             'archives'  => [
