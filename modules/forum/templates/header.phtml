@@ -27,12 +27,15 @@
         <?php if ($user->isValid()): ?>
             <?php if (! empty($unread_count)): ?>
                 <div class="d-flex align-items-center pr-2">
-                    <a href="?act=new" class="pr-2">
+                    <a href="?act=new" class="pr-2 d-flex">
                         <span class="d-none d-sm-inline"><?= __('Unread') ?></span>
-                        <span class="icon_with_badge mr-sm-3">
-                        <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/></svg>
-                        <span class="badge badge-pill badge-danger"><?= $unread_count ?></span>
-                    </span>
+                        <div class="icon_with_badge">
+                            <svg class="icon d-sm-none">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                            </svg>
+                            <span class="badge badge-pill badge-danger d-sm-none"><?= $unread_count ?></span>
+                            <span class="d-none d-sm-inline text-danger font-weight-bold pl-1">+<?= $unread_count ?></span>
+                        </div>
                     </a>
                 </div>
             <?php endif; ?>
