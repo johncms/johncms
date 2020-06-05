@@ -94,19 +94,19 @@ $this->layout(
                     </div>
                 <?php endif; ?>
                 <a href="<?= $topic->url ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $topic->name ?></a>
-                <span class="badge badge-pill <?= $topic->unread ? 'badge-danger' : 'badge-light border' ?> ml-3"><?= $topic->show_posts_count ?></span>
-                <div class="ml-3">
-                    <?php if ($topic->deleted): ?>
+                <?php if ($topic->deleted): ?>
+                    <div class="ml-3">
                         <span class="badge badge-danger"><?= __('Deleted topic') ?></span>
-                    <?php endif; ?>
-                </div>
-                <?php if (! empty($topic->last_page_url)): ?>
-                    <a href="<?= $topic->last_page_url ?>" class="ml-auto pl-2 pr-2" title="<?= __('Last page') ?>">
-                        <svg class="icon icon-chevron-bottom text-dark-brown">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-right"/>
-                        </svg>
-                    </a>
-                <?php endif ?>
+                    </div>
+                <?php else: ?>
+                    <?php if (! empty($topic->last_page_url)): ?>
+                        <a href="<?= $topic->last_page_url ?>" title="<?= __('Last page') ?>">
+                            <span class="badge badge-pill <?= $topic->unread ? 'badge-danger' : 'badge-light border' ?> ml-3"><?= $topic->show_posts_count ?></span>
+                        </a>
+                    <?php else: ?>
+                        <span class="badge badge-pill <?= $topic->unread ? 'badge-danger' : 'badge-light border' ?> ml-3"><?= $topic->show_posts_count ?></span>
+                    <?php endif ?>
+                <?php endif; ?>
             </div>
         </div>
         <div class="small pt-2 text-muted">

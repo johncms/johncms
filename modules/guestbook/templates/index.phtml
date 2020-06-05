@@ -98,7 +98,7 @@
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
         <?php /** @var \Guestbook\Models\Guestbook $item */ ?>
-        <div class="new_post-item border-bottom mb-2">
+        <div class="new_post-item border-bottom">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <?php if (! empty($item->user) && ! empty($item->user->profile_url)): ?>
