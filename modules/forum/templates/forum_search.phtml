@@ -43,46 +43,41 @@ $this->layout(
 </form>
 
 <?php if (! empty($query) && empty($total)): ?>
-    <div class="alert alert-info">
+    <div class="alert alert-info mt-3">
         <?= __('Your search did not match any results') ?>
     </div>
 <?php endif; ?>
 
 <?php foreach ($results as $result): ?>
-    <div class="shadow post-item post-item mb-2">
-        <div class="post-header d-flex justify-content-between border-bottom pb-1">
-            <div class="d-flex align-items-end flex-wrap">
-                <a href="<?= $result['topic_url'] ?>" class="user-login mr-2"><?= $result['name'] ?></a>
-                <span class="post-date"><?= $result['formatted_date'] ?></span>
+    <div class="forum-section">
+        <div class="section-header">
+            <div class="d-flex align-items-center w-100">
+                <a href="<?= $result['topic_url'] ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $result['name'] ?></a>
             </div>
         </div>
-        <div class="pt-2">
-            <?php if (! $search_t): ?>
-                <div class="border-bottom pb-2 mb-2 break-word">
-                    <?= $result['formatted_text'] ?>
-                </div>
+        <div class="small pt-2 text-muted">
+            <?= __('Author') ?>: <a href="/profile/?user=<?= $result['user_id'] ?>" class="mr-2"><?= $result['user_name'] ?></a>
+            <span class="mr-2"><?= $result['formatted_date'] ?></span>
+            <?php if (! empty($result['post_url'])): ?>
+                <a href="<?= $result['post_url'] ?>"><?= __('Go to Message') ?></a>
             <?php endif; ?>
-            <div class="d-flex justify-content-between flex-wrap">
-                <div class="mr-2">
-                    <?= __('Author') ?>: <a href="/profile/?id=<?= $result['user_id'] ?>"><?= $result['user_name'] ?></a>
-                </div>
-                <div>
-                    <a href="<?= $result['topic_url'] ?>"><?= __('Go to Topic') ?></a>
-                    <?php if (! empty($result['post_url'])): ?>
-                        <a href="<?= $result['post_url'] ?>" class="ml-2"><?= __('Go to Message') ?></a>
-                    <?php endif; ?>
-                </div>
-            </div>
         </div>
+        <?php if (! $search_t): ?>
+            <div class="post-body">
+                <?= $result['formatted_text'] ?>
+            </div>
+        <?php endif; ?>
     </div>
 <?php endforeach; ?>
-<div class="mb-3 pt-1">
-    <div><?= __('Total') ?>: <?= $total ?></div>
-    <!-- Page switching -->
-    <?php if ($total > $user->config->kmess): ?>
-        <div class="mt-1"><?= $pagination ?></div>
-    <?php endif ?>
-</div>
+<?php if ($total > 0): ?>
+    <div>
+        <div class="my-2"><?= __('Total') ?>: <?= $total ?></div>
+        <!-- Page switching -->
+        <?php if ($total > $user->config->kmess): ?>
+            <div><?= $pagination ?></div>
+        <?php endif ?>
+    </div>
+<?php endif; ?>
 <?php if (! empty($search_history)): ?>
     <div class="mb-2 alert alert-secondary">
         <div class="h5"><?= __('Search History') ?></div>

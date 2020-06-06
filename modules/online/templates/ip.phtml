@@ -55,11 +55,8 @@ $this->layout(
 
 <?php if ($data['total'] > 0): ?>
     <div>
-        <div><?= __('Total') ?>: <?= $data['total'] ?></div>
-        <!-- Page switching -->
-        <?php if ($data['total'] > $user->config->kmess): ?>
-            <div class="mt-1"><?= $data['pagination'] ?></div>
-        <?php endif ?>
+        <div class="my-2"><?= __('Total') ?>: <?= $data['total'] ?></div>
+        <?= $data['pagination'] ?>
     </div>
 <?php endif; ?>
 
