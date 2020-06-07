@@ -42,7 +42,7 @@ class EmailSender
             $translator->setLocale($item->locale);
             $translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
             TranslatorFunctions::register($translator);
-
+            $view->addData(['locale' => $item->locale]);
             $message_body = $view->render($item->template, $item->fields);
 
             $mail->setTo($fields['email_to'], $fields['name_to'] ?? null);
