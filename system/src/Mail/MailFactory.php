@@ -15,6 +15,9 @@ namespace Johncms\Mail;
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
 use Psr\Container\ContainerInterface;
+use Laminas\Mime\Message as MimeMessage;
+use Laminas\Mime\Mime;
+use Laminas\Mime\Part as MimePart;
 
 class MailFactory extends Message
 {
@@ -38,6 +41,19 @@ class MailFactory extends Message
         $this->setEncoding('utf-8');
 
         return $this;
+    }
+
+    public function setHtmlBody(string $html_body): void
+    {
+        $html = new MimePart($html_body);
+        $html->type = Mime::TYPE_HTML;
+        $html->charset = 'utf-8';
+        $html->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
+
+        $body = new MimeMessage();
+        $body->setParts([$html]);
+
+        $this->setBody($body);
     }
 
     public function send()
