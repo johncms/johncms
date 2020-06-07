@@ -14,6 +14,7 @@ use Intervention\Image\ImageManager;
 use Johncms\Ads;
 use Johncms\AdsFactory;
 use Johncms\ImageManagerFactory;
+use Johncms\Mail\MailFactory;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
 use Johncms\System\Legacy\Bbcode;
@@ -29,6 +30,7 @@ return [
             Tools::class        => Tools::class,
             Csrf::class         => Csrf::class,
             'counters'          => Johncms\CountersFactory::class,
+            MailFactory::class  => MailFactory::class,
         ],
     ],
 ];

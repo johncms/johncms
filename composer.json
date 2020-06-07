@@ -42,6 +42,7 @@
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.2",
+        "laminas/laminas-mail": "^2.10",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-uri": "^2.7",
         "laminas/laminas-validator": "^2.13",
