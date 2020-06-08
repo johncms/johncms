@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Mail\EmailMessage;
 use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
@@ -18,7 +19,9 @@ use Johncms\NavChain;
 $config = di('config')['johncms'];
 
 // Register the module languages domain and folder
-di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
+/** @var Translator $translator */
+$translator = di(Translator::class);
+$translator->addTranslationDomain('profile', __DIR__ . '/locale');
 
 /** @var PDO $db */
 $db = di(PDO::class);
@@ -94,32 +97,37 @@ switch ($act) {
         if (! $error) {
             // Высылаем инструкции на E-mail
             $link = $config['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
-            $subject = __('Password recovery');
-            $mail = sprintf(
-                __("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"), // phpcs:ignore
-                $res['name'],
-                $config['homeurl'],
-                $link
+            $name = ! empty($res['imname']) ? htmlspecialchars($res['imname']) : $res['name'];
+            (new EmailMessage())->create(
+                [
+                    'locale'   => $translator->getLocale(),
+                    'template' => 'system::mail/templates/restore_password',
+                    'fields'   => [
+                        'email_to'        => $res['mail'],
+                        'name_to'         => $name,
+                        'subject'         => __('Password recovery'),
+                        'user_name'       => $name,
+                        'link_to_restore' => $link,
+                    ],
+                ]
             );
-            $adds = 'From: <' . $config['email'] . ">\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n";
 
-            if (mail($res['mail'], $subject, $mail, $adds)) {
-                $req = $db->prepare('UPDATE `users` SET `rest_code` = ?, `rest_time` = ? WHERE `id` = ?');
-                $req->execute([$check_code, time(), $res['id']]);
-                $type = 'success';
-                $message = __('Check your e-mail for further information');
-            } else {
-                $message = __('Error sending E-mail');
-            }
+            $req = $db->prepare('UPDATE `users` SET `rest_code` = ?, `rest_time` = ? WHERE `id` = ?');
+            $req->execute([$check_code, time(), $res['id']]);
+            $type = 'success';
+            $message = __('Check your e-mail for further information');
         } else {
             // Выводим сообщение об ошибке
             $message = $error;
         }
 
-        echo $view->render('profile::restore_password_result', [
-            'type'    => $type,
-            'message' => $message,
-        ]);
+        echo $view->render(
+            'profile::restore_password_result',
+            [
+                'type'    => $type,
+                'message' => $message,
+            ]
+        );
         break;
 
     case 'set':
@@ -155,40 +163,49 @@ switch ($act) {
         if (! $error) {
             // Высылаем пароль на E-mail
             $pass = passgen(4);
-            $subject = __('Your new password');
-            $mail = sprintf(
-                __("Hello %s\nYou have changed your password on the site %s\n\nYour new password: %s\n\nAfter logging in, you can change your password to new one."),
-                $res['name'],
-                $config['homeurl'],
-                $pass
+            $name = ! empty($res['imname']) ? htmlspecialchars($res['imname']) : $res['name'];
+            (new EmailMessage())->create(
+                [
+                    'locale'   => $translator->getLocale(),
+                    'template' => 'system::mail/templates/restore_password_complete',
+                    'fields'   => [
+                        'email_to'      => $res['mail'],
+                        'name_to'       => $name,
+                        'subject'       => __('Your new password'),
+                        'user_name'     => $name,
+                        'user_login'    => $res['name'],
+                        'user_password' => $pass,
+                    ],
+                ]
             );
-            $adds = 'From: <' . $config['email'] . ">\nContent-Type: text/plain; charset=\"utf-8\"\n";
 
-            if (mail($res['mail'], $subject, $mail, $adds)) {
-                $req = $db->prepare('UPDATE `users` SET `rest_code` = "", `password` = ? WHERE `id` = ?');
-                $req->execute([md5(md5($pass)), $res['id']]);
-                $type = 'success';
-                $message = __('Password successfully changed.<br>New password sent to your E-mail address.');
-            } else {
-                $message = __('Error sending E-mail');
-            }
+            $req = $db->prepare('UPDATE `users` SET `rest_code` = "", `password` = ? WHERE `id` = ?');
+            $req->execute([md5(md5($pass)), $res['id']]);
+            $type = 'success';
+            $message = __('Password successfully changed.<br>New password sent to your E-mail address.');
         } else {
             // Выводим сообщение об ошибке
             $message = $error;
         }
 
-        echo $view->render('profile::restore_password_result', [
-            'type'    => $type,
-            'message' => $message,
-        ]);
+        echo $view->render(
+            'profile::restore_password_result',
+            [
+                'type'    => $type,
+                'message' => $message,
+            ]
+        );
         break;
 
     default:
         $code = (string) new Mobicms\Captcha\Code();
         $_SESSION['code'] = $code;
         // Показываем запрос на подтверждение выхода с сайта
-        echo $view->render('profile::restore_password', [
-            'captcha' => new Mobicms\Captcha\Image($code),
-        ]);
+        echo $view->render(
+            'profile::restore_password',
+            [
+                'captcha' => new Mobicms\Captcha\Image($code),
+            ]
+        );
         break;
 }
