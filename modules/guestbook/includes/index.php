@@ -84,7 +84,7 @@ if ($request->getMethod() === 'POST') {
             [
                 'adm'     => ! $data['is_guestbook'],
                 'time'    => time(),
-                'user_id' => $user->id,
+                'user_id' => $user->id ?? 0,
                 'name'    => $user->isValid() ? $user->name : $form_data['name'],
                 'text'    => $form_data['message'],
                 'ip'      => $env->getIp(false),

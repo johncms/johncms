@@ -180,7 +180,7 @@
                             <a href="/guestbook/otvet?id=<?= $item->id ?>"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?php if ($user->rights && $item->user && $user->rights >= $item->user->rights): ?>
+                    <?php if ($user->rights && (!$item->user || ($item->user && $user->rights >= $item->user->rights))): ?>
                         <div class="dropdown ml-3">
                             <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
