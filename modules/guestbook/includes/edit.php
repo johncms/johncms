@@ -10,8 +10,11 @@
 
 declare(strict_types=1);
 
+use Guestbook\Models\Guestbook;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
+use Johncms\Validator\Validator;
 
 /** @var User $user */
 $user = di(User::class);
@@ -21,49 +24,54 @@ $request = di(Request::class);
 
 // Edit post
 if ($user->rights >= 6 && $id) {
-    if (
-        isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
-        && $_POST['token'] == $_SESSION['token']
-    ) {
-        $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='${id}'")->fetch();
-        $edit_count = $res['edit_count'] + 1;
-        $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
+    $errors = [];
 
-        $db->prepare(
-            '
-                  UPDATE `guest` SET
-                  `text` = ?,
-                  `edit_who` = ?,
-                  `edit_time` = ?,
-                  `edit_count` = ?
-                  WHERE `id` = ?
-                '
-        )->execute(
-            [
-                $msg,
-                $user->name,
-                time(),
-                $edit_count,
-                $id,
-            ]
-        );
-
-        header('location: ./');
-    } else {
-        $token = mt_rand(1000, 100000);
-        $_SESSION['token'] = $token;
-        $res = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'")->fetch();
-        $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-
-        echo $view->render(
-            'guestbook::edit',
-            [
-                'id'      => $id,
-                'token'   => $token,
-                'message' => $res,
-                'text'    => $text,
-                'bbcode'  => $bbcode->buttons('form', 'msg'),
-            ]
-        );
+    try {
+        $message = (new Guestbook())->findOrFail($id);
+    } catch (ModelNotFoundException $exception) {
+        pageNotFound();
     }
+
+    $form_data = [
+        'message'    => $request->getPost('message', $message->text),
+        'csrf_token' => $request->getPost('csrf_token', ''),
+    ];
+    if ($request->getMethod() === 'POST') {
+        $rules = [
+            'message'    => [
+                'NotEmpty',
+                'StringLength' => ['min' => 4, 'max' => 5000],
+            ],
+            'csrf_token' => [
+                'Csrf',
+            ],
+        ];
+
+        $validator = new Validator($form_data, $rules);
+        if ($validator->isValid()) {
+            $message->update(
+                [
+                    'text'       => $form_data['message'],
+                    'edit_who'   => $user->name,
+                    'edit_time'  => time(),
+                    'edit_count' => ($message->edit_count + 1),
+                ]
+            );
+            header('location: ./');
+            exit;
+        }
+
+        $errors = $validator->getErrors();
+    }
+
+    echo $view->render(
+        'guestbook::edit',
+        [
+            'id'      => $id,
+            'message' => $message,
+            'text'    => $form_data['message'],
+            'errors'  => $errors,
+            'bbcode'  => $bbcode->buttons('form', 'msg'),
+        ]
+    );
 }
