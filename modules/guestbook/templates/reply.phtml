@@ -30,7 +30,7 @@ $this->layout(
                     <div class="form-group">
                         <label for="message"><?= __('Reply') ?></label>
                         <div><?= $bbcode ?></div>
-                        <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" class="form-control"><?= $message->otvet ?></textarea>
+                        <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" class="form-control"><?= $this->e($message->otvet) ?></textarea>
                         <?php if (! empty($errors['message'])): ?>
                             <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
                         <?php endif ?>
