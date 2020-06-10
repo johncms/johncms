@@ -16,14 +16,13 @@
                 <form action="/guestbook/edit?id=<?= $id ?>" method="post">
                     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
                     <p>
-                        <b><?= __('Author') ?>:</b> <?= $message['name'] ?>
+                        <b><?= __('Author') ?>:</b> <?= $message->name ?>
                     <p>
                     <div class="form-group">
-                        <label for="msg"><?= __('Message') ?></label>
+                        <label for="message"><?= __('Message') ?></label>
                         <div><?= $bbcode ?></div>
                         <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" required
-                                  class="form-control <?= ! empty($errors['message']) ? 'is-invalid' : '' ?>"><?= $this->e($text) ?></textarea>
-                        <div class="text-muted">Max: 5000</div>
+                                  class="form-control <?= ! empty($errors['message']) ? 'is-invalid' : '' ?>"><?= $text ?></textarea>
                         <?php if (! empty($errors['message'])): ?>
                             <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
                         <?php endif ?>

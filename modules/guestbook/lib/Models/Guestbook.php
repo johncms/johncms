@@ -31,7 +31,7 @@ use Johncms\Users\User;
  * @property bool $adm
  * @property int $time
  * @property int $user_id
- * @property int $name
+ * @property string $name
  * @property string $text
  * @property int $ip
  * @property string $browser

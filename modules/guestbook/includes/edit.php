@@ -40,7 +40,7 @@ if ($user->rights >= 6 && $id) {
         $rules = [
             'message'    => [
                 'NotEmpty',
-                'StringLength' => ['min' => 4, 'max' => 5000],
+                'StringLength' => ['min' => 4, 'max' => 16000],
             ],
             'csrf_token' => [
                 'Csrf',
@@ -69,9 +69,9 @@ if ($user->rights >= 6 && $id) {
         [
             'id'      => $id,
             'message' => $message,
-            'text'    => $form_data['message'],
+            'text'    => htmlspecialchars($form_data['message']),
             'errors'  => $errors,
-            'bbcode'  => $bbcode->buttons('form', 'msg'),
+            'bbcode'  => $bbcode->buttons('form', 'message'),
         ]
     );
 }

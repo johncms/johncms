@@ -10,8 +10,11 @@
 
 declare(strict_types=1);
 
+use Guestbook\Models\Guestbook;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
+use Johncms\Validator\Validator;
 
 /** @var User $user */
 $user = di(User::class);
@@ -21,35 +24,54 @@ $request = di(Request::class);
 
 // Add "admin response"
 if ($user->rights >= 6 && $id) {
-    if (
-        isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
-        && $_POST['token'] == $_SESSION['token']
-    ) {
-        $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
-        $db->exec(
-            "UPDATE `guest` SET
-                    `admin` = '" . $user->name . "',
-                    `otvet` = " . $db->quote($reply) . ",
-                    `otime` = '" . time() . "'
-                    WHERE `id` = '${id}'
-                "
-        );
-        header('location: ./');
-    } else {
-        $req = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'");
-        $res = $req->fetch();
-        $token = mt_rand(1000, 100000);
-        $_SESSION['token'] = $token;
-        echo $view->render(
-            'guestbook::reply',
-            [
-                'id'         => $id,
-                'token'      => $token,
-                'message'    => $res,
-                'reply_text' => $tools->checkout($res['otvet'], 0, 0),
-                'text'       => $tools->checkout($res['text'], 1, 1),
-                'bbcode'     => $bbcode->buttons('form', 'otv'),
-            ]
-        );
+    $errors = [];
+
+    try {
+        $message = (new Guestbook())->findOrFail($id);
+    } catch (ModelNotFoundException $exception) {
+        pageNotFound();
     }
+
+    $form_data = [
+        'message'    => $request->getPost('message', $message->otvet),
+        'csrf_token' => $request->getPost('csrf_token', ''),
+    ];
+
+    if ($request->getMethod() === 'POST') {
+        $rules = [
+            'message'    => [
+                'NotEmpty',
+                'StringLength' => ['min' => 4, 'max' => 16000],
+            ],
+            'csrf_token' => [
+                'Csrf',
+            ],
+        ];
+
+        $validator = new Validator($form_data, $rules);
+        if ($validator->isValid()) {
+            $message->update(
+                [
+                    'otvet' => $form_data['message'],
+                    'admin' => $user->name,
+                    'otime' => time(),
+                ]
+            );
+            header('location: ./');
+            exit;
+        }
+
+        $errors = $validator->getErrors();
+    }
+
+    echo $view->render(
+        'guestbook::reply',
+        [
+            'id'         => $id,
+            'message'    => $message,
+            'errors'     => $errors,
+            'reply_text' => htmlspecialchars($message->reply_text),
+            'bbcode'     => $bbcode->buttons('form', 'message'),
+        ]
+    );
 }
