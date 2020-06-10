@@ -91,14 +91,14 @@
         ) ?>
     <?php endif; ?>
 <?php endif; ?>
-<div class="mt-4 border-bottom"></div>
+<div class="mt-4 border-bottom full-mobile-width"></div>
 <!-- Отображаем сообщения -->
 <?php if (empty($data['items']->count())): ?>
     <div class="alert alert-info"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
         <?php /** @var \Guestbook\Models\Guestbook $item */ ?>
-        <div class="new_post-item border-bottom">
+        <div class="new_post-item">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <?php if (! empty($item->user) && ! empty($item->user->profile_url)): ?>
@@ -152,7 +152,7 @@
                     <?php endif ?>
                 </div>
             </div>
-            <div class="post-body pt-2 pb-2">
+            <div class="post-body pt-2">
                 <?= $item->post_text ?>
                 <?php if (! empty($item->reply_text)): ?>
                     <div class="alert alert-warning mt-2 mb-n2">

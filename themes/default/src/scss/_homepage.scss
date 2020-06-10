@@ -5,6 +5,10 @@
 
     .tile {
 
+        .card {
+            padding: 1.4rem 0;
+        }
+
         @media (max-width: 400px) {
             padding: 0;
             &:nth-child(odd) {
@@ -43,7 +47,6 @@
 
 .mobile_jumbotron {
     @media (max-width: 525px) {
-        padding: 0 0 1rem 0 !important;
 
         .btn {
             .icon {

@@ -7,12 +7,12 @@
 
 $this->layout('system::layout/default', ['title' => __('Welcome')]);
 ?>
-<div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom">
+<div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
     <h1 class="display-4 font-weight-bold">JohnCMS <?= CMS_VERSION ?></h1>
     <p class="lead">
         <?= __('Free, Open Source content management system') ?>
     </p>
-    <hr class="my-sm-3 my-md-4">
+    <hr class="my-sm-3 my-md-4 full-mobile-width">
     <a class="btn btn-success btn-lg mr-1" href="https://johncms.com/downloads/">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>

@@ -179,13 +179,23 @@
 .new_post-item {
     min-height: 80px;
     border-bottom: 1px solid $border-color;
-    padding: 10px 0 10px 85px;
+    padding: 15px 0 15px 85px;
 
     &.without_avatar {
         padding: 0.5rem 0;
+        @media (max-width: 768px) {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
 
         .post-body {
             padding: 0.2rem 0;
+
+            a {
+                text-decoration: underline;
+            }
         }
     }
 
@@ -200,7 +210,10 @@
     }
 
     @media (max-width: 768px) {
-        padding-left: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: -15px;
+        margin-right: -15px;
     }
 
     .post-footer {

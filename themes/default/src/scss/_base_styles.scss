@@ -32,7 +32,7 @@
     padding: 0.8rem 0.8rem;
 
     @media (max-width: 768px) {
-        padding: 0.4rem 0;
+        padding: 0.4rem 0 1rem 0;
     }
 
     @media (max-width: 991px) {
@@ -110,4 +110,13 @@
 
 .break-word {
     word-break: break-word;
+}
+
+@media (max-width: 768px) {
+    .full-mobile-width {
+        margin-left: -15px;
+        margin-right: -15px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
 }
