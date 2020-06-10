@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Guestbook\Models\Guestbook;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\System\Http\Request;
+use Johncms\System\Legacy\Bbcode;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -21,6 +22,9 @@ $user = di(User::class);
 
 /** @var Request $request */
 $request = di(Request::class);
+
+/** @var Bbcode $bbcode */
+$bbcode = di(Bbcode::class);
 
 // Add "admin response"
 if ($user->rights >= 6 && $id) {

@@ -12,30 +12,15 @@ declare(strict_types=1);
 
 use Aura\Autoload\Loader;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Bbcode;
-use Johncms\System\Http\Environment;
-use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = di(PDO::class);
-
 /** @var User $user */
 $user = di(User::class);
-
-/** @var Tools $tools */
-$tools = di(Tools::class);
-
-/** @var Environment $env */
-$env = di(Environment::class);
-
-/** @var Bbcode $bbcode */
-$bbcode = di(Bbcode::class);
 
 /** @var Render $view */
 $view = di(Render::class);

@@ -11,7 +11,9 @@
 declare(strict_types=1);
 
 use Guestbook\Models\Guestbook;
+use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
+use Johncms\System\Legacy\Bbcode;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -20,6 +22,12 @@ $user = di(User::class);
 
 /** @var Request $request */
 $request = di(Request::class);
+
+/** @var Environment $env */
+$env = di(Environment::class);
+
+/** @var Bbcode $bbcode */
+$bbcode = di(Bbcode::class);
 
 $data = [
     'access_to_buttons' => ($user->rights > 0 || in_array($user->id, $guestAccess)),
