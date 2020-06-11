@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Illuminate\Support\Str;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
@@ -53,13 +53,14 @@ if (! $config['mod_reg'] || $user->isValid()) {
 }
 
 $fields = [
-    'name'     => $request->getPost('nick', '', FILTER_SANITIZE_STRING),
-    'name_lat' => Str::slug($request->getPost('nick', '', FILTER_SANITIZE_STRING), '_'),
+    'name'     => $request->getPost('name', '', FILTER_SANITIZE_STRING),
+    'name_lat' => Str::slug($request->getPost('name', '', FILTER_SANITIZE_STRING), '_'),
     'password' => $request->getPost('password', ''),
     'sex'      => $request->getPost('sex', ''),
     'imname'   => $request->getPost('imname', '', FILTER_SANITIZE_STRING),
     'about'    => $request->getPost('about', '', FILTER_SANITIZE_STRING),
     'captcha'  => $request->getPost('captcha', null),
+    'email'    => $request->getPost('email', ''),
 ];
 
 $errors = [];
@@ -69,13 +70,13 @@ if ($request->getMethod() === 'POST') {
             'NotEmpty',
             'StringLength'   => ['min' => 2, 'max' => 20],
             'ModelNotExists' => [
-                'model' => \Johncms\Users\User::class,
+                'model' => User::class,
                 'field' => 'name',
             ],
         ],
         'name_lat' => [
             'ModelNotExists' => [
-                'model' => \Johncms\Users\User::class,
+                'model' => User::class,
                 'field' => 'name_lat',
             ],
         ],
@@ -89,18 +90,26 @@ if ($request->getMethod() === 'POST') {
         'captcha'  => ['Captcha'],
     ];
 
-    $messages = [
-        'ModelNotExists' => [
-            'modelExists' => __('Selected Nickname is already in use'),
-        ],
-    ];
+    if (! empty($config['user_email_required'])) {
+        $rules['email'] = [
+            'EmailAddress'   => [
+                'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
+                'useMxCheck'     => true,
+                'useDeepMxCheck' => true,
+            ],
+            'ModelNotExists' => [
+                'model' => User::class,
+                'field' => 'mail',
+            ],
+        ];
+    }
 
-    $validator = new Validator($fields, $rules, $messages);
+    $validator = new Validator($fields, $rules);
     if ($validator->isValid()) {
         /** @var Johncms\System\Http\Environment $env */
         $env = di(Johncms\System\Http\Environment::class);
 
-        $new_user = (new \Johncms\Users\User())->create(
+        $new_user = (new User())->create(
             [
                 'name'         => $fields['name'],
                 'name_lat'     => $fields['name_lat'],
@@ -108,6 +117,7 @@ if ($request->getMethod() === 'POST') {
                 'imname'       => $fields['imname'],
                 'about'        => $fields['about'],
                 'sex'          => $fields['sex'],
+                'mail'         => $fields['email'],
                 'rights'       => 0,
                 'ip'           => $env->getIp(false),
                 'ip_via_proxy' => $env->getIpViaProxy(false),
@@ -150,12 +160,8 @@ $_SESSION['code'] = $code;
 echo $view->render(
     'reg::index',
     [
-        'errors'    => $errors,
-        'reg_nick'  => $fields['name'],
-        'reg_pass'  => $fields['password'],
-        'reg_name'  => $fields['imname'],
-        'reg_sex'   => $fields['sex'],
-        'reg_about' => $fields['about'],
-        'captcha'   => new Mobicms\Captcha\Image($code),
+        'errors'  => $errors,
+        'fields'  => $fields,
+        'captcha' => new Mobicms\Captcha\Image($code),
     ]
 );

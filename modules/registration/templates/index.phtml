@@ -22,15 +22,15 @@
     </div>
 
     <div class="form-group">
-        <label for="login"><?= __('Choose Nickname') ?></label>
+        <label for="name"><?= __('Choose Nickname') ?></label>
         <input type="text"
                class="form-control <?= (isset($errors['name']) ? 'is-invalid' : '') ?>"
                maxlength="20"
                minlength="2"
-               name="nick"
-               id="login"
+               name="name"
+               id="name"
                required
-               value="<?= $this->e($reg_nick) ?>"
+               value="<?= $this->e($fields['name']) ?>"
                placeholder="<?= __('Username') ?>"
         >
         <?php if (isset($errors['name'])): ?>
@@ -49,19 +49,35 @@
                name="password"
                id="password"
                required
-               value="<?= $this->e($reg_pass) ?>"
+               value="<?= $this->e($fields['password']) ?>"
                placeholder="<?= __('Assign a password') ?>"
         >
         <?php if (isset($errors['password'])): ?>
             <div class="invalid-feedback"><?= implode('<br>', $errors['password']) ?></div>
         <?php endif ?>
     </div>
+    <?php if (! empty($config['user_email_required'])): ?>
+        <div class="form-group">
+            <label for="email"><?= __('E-mail') ?></label>
+            <input type="email"
+                   class="form-control <?= (isset($errors['email']) ? 'is-invalid' : '') ?>"
+                   name="email"
+                   id="email"
+                   required
+                   value="<?= $this->e($fields['email']) ?>"
+                   placeholder="<?= __('E-mail') ?>"
+            >
+            <?php if (isset($errors['email'])): ?>
+                <div class="invalid-feedback"><?= implode('<br>', $errors['email']) ?></div>
+            <?php endif ?>
+        </div>
+    <?php endif ?>
     <div class="form-group">
         <label for="gender"><?= __('Select Gender') ?></label>
         <select id="gender" name="sex" class="form-control <?= (isset($errors['sex']) ? 'is-invalid' : '') ?>">
             <option value="?">- ? -</option>
-            <option value="m"<?= ($reg_sex === 'm' ? ' selected="selected"' : '') ?>><?= __('Man') ?></option>
-            <option value="zh"<?= ($reg_sex === 'zh' ? ' selected="selected"' : '') ?>><?= __('Woman') ?></option>
+            <option value="m"<?= ($fields['sex'] === 'm' ? ' selected="selected"' : '') ?>><?= __('Man') ?></option>
+            <option value="zh"<?= ($fields['sex'] === 'zh' ? ' selected="selected"' : '') ?>><?= __('Woman') ?></option>
         </select>
         <?php if (isset($errors['sex'])): ?>
             <div class="invalid-feedback"><?= implode('<br>', $errors['sex']) ?></div>
@@ -74,7 +90,7 @@
                maxlength="20"
                name="imname"
                id="imname"
-               value="<?= $this->e($reg_name) ?>"
+               value="<?= $this->e($fields['imname']) ?>"
                placeholder="<?= __('Your name') ?>"
         >
         <?php if (isset($errors['imname'])): ?>
@@ -83,7 +99,7 @@
     </div>
     <div class="form-group">
         <label for="about"><?= __('Tell us a little about yourself') ?></label>
-        <textarea class="form-control <?= (isset($errors['about']) ? 'is-invalid' : '') ?>" name="about" id="about" rows="3"><?= $this->e($reg_about) ?></textarea>
+        <textarea class="form-control <?= (isset($errors['about']) ? 'is-invalid' : '') ?>" name="about" id="about" rows="3"><?= $this->e($fields['about']) ?></textarea>
         <?php if (isset($errors['about'])): ?>
             <div class="invalid-feedback"><?= implode('<br>', $errors['about']) ?></div>
         <?php endif ?>

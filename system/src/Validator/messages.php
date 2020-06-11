@@ -21,4 +21,14 @@ return [
     'stringLengthTooLong'  => d__('system', 'The input is more than %max% characters long'),
 
     'notInArray' => d__('system', 'The input was not found in the haystack'),
+
+    'emailAddressInvalid'          => d__('system', "Invalid type given. String expected"),
+    'emailAddressInvalidFormat'    => d__('system', "The input is not a valid email address. Use the basic format local-part@hostname"),
+    'emailAddressInvalidHostname'  => d__('system', "'%hostname%' is not a valid hostname for the email address"),
+    'emailAddressInvalidMxRecord'  => d__('system', "'%hostname%' does not appear to have any valid MX or A records for the email address"),
+    'emailAddressInvalidSegment'   => d__('system', "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"),
+    'emailAddressDotAtom'          => d__('system', "'%localPart%' can not be matched against dot-atom format"),
+    'emailAddressQuotedString'     => d__('system', "'%localPart%' can not be matched against quoted-string format"),
+    'emailAddressInvalidLocalPart' => d__('system', "'%localPart%' is not a valid local part for the email address"),
+    'emailAddressLengthExceeded'   => d__('system', "The input exceeds the allowed length"),
 ];
