@@ -10,27 +10,33 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Str;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use Johncms\Validator\Validator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
-
-/**
- * @var Tools $tools
- * @var User $user
- * @var Render $view
- * @var NavChain $nav_chain
- */
 
 $config = di('config')['johncms'];
+
+/** @var Tools $tools */
 $tools = di(Tools::class);
+
+/** @var User $user */
 $user = di(User::class);
+
+/** @var Render $view */
 $view = di(Render::class);
+
+/** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('reg', __DIR__ . '/templates/');
@@ -46,131 +52,95 @@ if (! $config['mod_reg'] || $user->isValid()) {
     exit;
 }
 
-$captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : null;
-$reg_nick = isset($_POST['nick']) ? trim($_POST['nick']) : '';
-$lat_nick = $tools->rusLat($reg_nick);
-$reg_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
-$reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
-$reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
-$reg_sex = isset($_POST['sex']) ? trim($_POST['sex']) : '';
+$fields = [
+    'name'     => $request->getPost('nick', '', FILTER_SANITIZE_STRING),
+    'name_lat' => Str::slug($request->getPost('nick', '', FILTER_SANITIZE_STRING), '_'),
+    'password' => $request->getPost('password', ''),
+    'sex'      => $request->getPost('sex', ''),
+    'imname'   => $request->getPost('imname', '', FILTER_SANITIZE_STRING),
+    'about'    => $request->getPost('about', '', FILTER_SANITIZE_STRING),
+    'captcha'  => $request->getPost('captcha', null),
+];
 
-$error = [];
+$errors = [];
+if ($request->getMethod() === 'POST') {
+    $rules = [
+        'name'     => [
+            'NotEmpty',
+            'StringLength'   => ['min' => 2, 'max' => 20],
+            'ModelNotExists' => [
+                'model' => \Johncms\Users\User::class,
+                'field' => 'name',
+            ],
+        ],
+        'name_lat' => [
+            'ModelNotExists' => [
+                'model' => \Johncms\Users\User::class,
+                'field' => 'name_lat',
+            ],
+        ],
+        'password' => [
+            'NotEmpty',
+            'StringLength' => ['min' => 6],
+        ],
+        'sex'      => [
+            'InArray' => ['haystack' => ['m', 'zh']],
+        ],
+        'captcha'  => ['Captcha'],
+    ];
 
-if (isset($_POST['submit'])) {
-    /** @var PDO $db */
-    $db = di(PDO::class);
+    $messages = [
+        'ModelNotExists' => [
+            'modelExists' => __('Selected Nickname is already in use'),
+        ],
+    ];
 
-    // Проверка Логина
-    if (empty($reg_nick)) {
-        $error['login'][] = __('You have not entered Nickname');
-    } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 20) {
-        $error['login'][] = __('Nickname wrong length');
-    }
-
-    if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
-        $error['login'][] = __('Invalid characters');
-    }
-
-    // Проверка пароля
-    if (empty($reg_pass)) {
-        $error['password'][] = __('You have not entered password');
-    } elseif (mb_strlen($reg_pass) < 3) {
-        $error['password'][] = __('Invalid length');
-    }
-
-    // Проверка пола
-    if ($reg_sex != 'm' && $reg_sex != 'zh') {
-        $error['sex'] = __('You have not selected genger');
-    }
-
-    // Проверка кода CAPTCHA
-    if (
-        ! $captcha
-        || ! isset($_SESSION['code'])
-        || mb_strlen($captcha) < 3
-        || strtolower($captcha) != strtolower($_SESSION['code'])
-    ) {
-        $error['captcha'] = __('The security code is not correct');
-    }
-
-    unset($_SESSION['code']);
-
-    // Проверка переменных
-    if (empty($error)) {
-        $pass = md5(md5($reg_pass));
-        $reg_name = htmlspecialchars(mb_substr($reg_name, 0, 50));
-        $reg_about = htmlspecialchars(mb_substr($reg_about, 0, 1000));
-        // Проверка, занят ли ник
-        $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ?');
-        $stmt->execute([$lat_nick]);
-
-        if ($stmt->rowCount()) {
-            $error['login'][] = __('Selected Nickname is already in use');
-        }
-    }
-
-    if (empty($error)) {
+    $validator = new Validator($fields, $rules, $messages);
+    if ($validator->isValid()) {
         /** @var Johncms\System\Http\Environment $env */
         $env = di(Johncms\System\Http\Environment::class);
 
-        $preg = $config['mod_reg'] > 1 ? 1 : 0;
-        $db->prepare(
-            '
-          INSERT INTO `users` SET
-          `name` = ?,
-          `name_lat` = ?,
-          `password` = ?,
-          `imname` = ?,
-          `about` = ?,
-          `sex` = ?,
-          `rights` = 0,
-          `ip` = ?,
-          `ip_via_proxy` = ?,
-          `browser` = ?,
-          `datereg` = ?,
-          `lastdate` = ?,
-          `sestime` = ?,
-          `preg` = ?,
-          `set_user` = \'\',
-          `set_forum` = \'\',
-          `set_mail` = \'\',
-          `smileys` = \'\'
-        '
-        )->execute(
+        $new_user = (new \Johncms\Users\User())->create(
             [
-                $reg_nick,
-                $lat_nick,
-                $pass,
-                $reg_name,
-                $reg_about,
-                $reg_sex,
-                $env->getIp(),
-                $env->getIpViaProxy(),
-                $env->getUserAgent(),
-                time(),
-                time(),
-                time(),
-                $preg,
+                'name'         => $fields['name'],
+                'name_lat'     => $fields['name_lat'],
+                'password'     => md5(md5($fields['password'])),
+                'imname'       => $fields['imname'],
+                'about'        => $fields['about'],
+                'sex'          => $fields['sex'],
+                'rights'       => 0,
+                'ip'           => $env->getIp(false),
+                'ip_via_proxy' => $env->getIpViaProxy(false),
+                'browser'      => $env->getUserAgent(),
+                'datereg'      => time(),
+                'lastdate'     => time(),
+                'sestime'      => time(),
+                'preg'         => $config['mod_reg'] > 1 ? 1 : 0,
+                'set_user'     => [],
+                'set_forum'    => [],
+                'set_mail'     => [],
+                'smileys'      => [],
             ]
         );
 
-        $usid = $db->lastInsertId();
-
-        if ($config['mod_reg'] != 1) {
-            setcookie('cuid', (string) $usid, time() + 3600 * 24 * 365, '/');
-            setcookie('cups', md5($reg_pass), time() + 3600 * 24 * 365, '/');
+        if ($config['mod_reg'] !== 1) {
+            setcookie('cuid', (string) $new_user->id, time() + 3600 * 24 * 365, '/');
+            setcookie('cups', md5($fields['password']), time() + 3600 * 24 * 365, '/');
         }
 
         echo $view->render(
             'reg::registration_result',
             [
-                'usid'     => $usid,
-                'reg_nick' => $reg_nick,
-                'reg_pass' => $reg_pass,
+                'usid'     => $new_user->id,
+                'reg_nick' => $fields['name'],
+                'reg_pass' => $fields['password'],
             ]
         );
         exit;
     }
+
+    $errors = $validator->getErrors();
+    unset($_SESSION['code']);
 }
 
 // Форма регистрации
@@ -180,12 +150,12 @@ $_SESSION['code'] = $code;
 echo $view->render(
     'reg::index',
     [
-        'error'     => $error,
-        'reg_nick'  => $reg_nick,
-        'reg_pass'  => $reg_pass,
-        'reg_name'  => $reg_name,
-        'reg_sex'   => $reg_sex,
-        'reg_about' => $reg_about,
+        'errors'    => $errors,
+        'reg_nick'  => $fields['name'],
+        'reg_pass'  => $fields['password'],
+        'reg_name'  => $fields['imname'],
+        'reg_sex'   => $fields['sex'],
+        'reg_about' => $fields['about'],
         'captcha'   => new Mobicms\Captcha\Image($code),
     ]
 );

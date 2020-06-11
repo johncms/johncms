@@ -9,8 +9,12 @@
 <form method="post">
     <h4><?= __('Registration') ?></h4>
 
-    <?php if ($config['mod_reg'] == 1): ?>
+    <?php if ($config['mod_reg'] === 1): ?>
         <div class="alert alert-warning"><?= __('You can get authorized on the site after confirmation of your registration.') ?></div>
+    <?php endif ?>
+
+    <?php if (! empty($errors['name_lat'])): ?>
+        <div class="alert alert-danger"><?= implode(', ', $errors['name_lat']) ?></div>
     <?php endif ?>
 
     <div class="alert alert-info">
@@ -20,7 +24,7 @@
     <div class="form-group">
         <label for="login"><?= __('Choose Nickname') ?></label>
         <input type="text"
-               class="form-control <?= (isset($error['login']) ? 'is-invalid' : '') ?>"
+               class="form-control <?= (isset($errors['name']) ? 'is-invalid' : '') ?>"
                maxlength="20"
                minlength="2"
                name="nick"
@@ -29,8 +33,8 @@
                value="<?= $this->e($reg_nick) ?>"
                placeholder="<?= __('Username') ?>"
         >
-        <?php if (isset($error['login'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $error['login']) ?></div>
+        <?php if (isset($errors['name'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['name']) ?></div>
         <?php endif ?>
         <div class="text-muted small">
             <?= __('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)') ?>
@@ -39,7 +43,7 @@
     <div class="form-group">
         <label for="password"><?= __('Assign a password') ?></label>
         <input type="password"
-               class="form-control <?= (isset($error['password']) ? 'is-invalid' : '') ?>"
+               class="form-control <?= (isset($errors['password']) ? 'is-invalid' : '') ?>"
                maxlength="20"
                minlength="2"
                name="password"
@@ -48,43 +52,48 @@
                value="<?= $this->e($reg_pass) ?>"
                placeholder="<?= __('Assign a password') ?>"
         >
-        <?php if (isset($error['password'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $error['password']) ?></div>
+        <?php if (isset($errors['password'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['password']) ?></div>
         <?php endif ?>
-        <div class="text-muted small">
-            <?= __('Min. 3 characters') ?>
-        </div>
     </div>
     <div class="form-group">
         <label for="gender"><?= __('Select Gender') ?></label>
-        <select id="gender" name="sex" class="form-control <?= (isset($error['sex']) ? 'is-invalid' : '') ?>">
+        <select id="gender" name="sex" class="form-control <?= (isset($errors['sex']) ? 'is-invalid' : '') ?>">
             <option value="?">- ? -</option>
             <option value="m"<?= ($reg_sex === 'm' ? ' selected="selected"' : '') ?>><?= __('Man') ?></option>
             <option value="zh"<?= ($reg_sex === 'zh' ? ' selected="selected"' : '') ?>><?= __('Woman') ?></option>
         </select>
+        <?php if (isset($errors['sex'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['sex']) ?></div>
+        <?php endif ?>
     </div>
     <div class="form-group">
         <label for="imname"><?= __('Your name') ?></label>
         <input type="text"
-               class="form-control"
+               class="form-control <?= (isset($errors['imname']) ? 'is-invalid' : '') ?>"
                maxlength="20"
                name="imname"
                id="imname"
                value="<?= $this->e($reg_name) ?>"
                placeholder="<?= __('Your name') ?>"
         >
+        <?php if (isset($errors['imname'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['imname']) ?></div>
+        <?php endif ?>
     </div>
     <div class="form-group">
         <label for="about"><?= __('Tell us a little about yourself') ?></label>
-        <textarea class="form-control" name="about" id="about" rows="3"><?= $this->e($reg_about) ?></textarea>
-        <div class="text-muted small"><?= __('Max. 1000 characters') ?></div>
+        <textarea class="form-control <?= (isset($errors['about']) ? 'is-invalid' : '') ?>" name="about" id="about" rows="3"><?= $this->e($reg_about) ?></textarea>
+        <?php if (isset($errors['about'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['about']) ?></div>
+        <?php endif ?>
     </div>
 
     <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
     <div class="form-group">
         <label for="captcha"><?= __('Enter verification code') ?></label>
         <input type="text"
-               class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
+               class="form-control <?= (isset($errors['captcha']) ? 'is-invalid' : '') ?>"
                maxlength="6"
                name="captcha"
                id="captcha"
@@ -92,8 +101,8 @@
                required
                placeholder="<?= __('Verification code') ?>"
         >
-        <?php if (isset($error['captcha'])): ?>
-            <div class="invalid-feedback"><?= $error['captcha'] ?></div>
+        <?php if (isset($errors['captcha'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['captcha']) ?></div>
         <?php endif ?>
         <div class="text-muted small">
             <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
