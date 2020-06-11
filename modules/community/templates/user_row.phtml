@@ -13,7 +13,7 @@
  */
 ?>
 
-<div class="new_post-item border-bottom shadow mb-2">
+<div class="new_post-item">
     <div class="new_post-header d-flex justify-content-between">
         <div class="post-user">
             <?php if ($item->id !== $user->id): ?>
@@ -56,7 +56,7 @@
         </div>
     </div>
     <?php if (! empty($active_tab)): ?>
-        <div class="post-body pt-1">
+        <div class="post-body">
             <?php if ($active_tab === 'guest'): ?>
                 <?= $item['postguest'] ?> <?= n__('post', 'posts', $item['postguest']) ?>
             <?php elseif ($active_tab === 'comm'): ?>
@@ -68,7 +68,7 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
-    <div class="post-footer d-flex justify-content-between mt-1">
+    <div class="post-footer d-flex justify-content-between">
         <div class="overflow-hidden">
             <?php if ($user->rights): ?>
                 <div class="post-meta d-flex">

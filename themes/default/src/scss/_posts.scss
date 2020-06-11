@@ -181,6 +181,12 @@
     border-bottom: 1px solid $border-color;
     padding: 15px 0 15px 85px;
 
+    .post-body {
+        a {
+            text-decoration: underline;
+        }
+    }
+
     &.without_avatar {
         padding: 0.5rem 0;
         @media (max-width: 768px) {
@@ -192,10 +198,6 @@
 
         .post-body {
             padding: 0.2rem 0;
-
-            a {
-                text-decoration: underline;
-            }
         }
     }
 

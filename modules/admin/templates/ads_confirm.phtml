@@ -24,23 +24,19 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['usr_clean' => true]]));
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= $data['message'] ?>
-            </div>
-            <div>
-                <form action="<?= $data['form_action'] ?>" method="post">
-                    <?php if (! empty($data['hidden_fields'])): ?>
-                        <?php foreach ($data['hidden_fields'] as $field): ?>
-                            <input type="hidden" name="<?= $field['name'] ?>" value="<?= $field['value'] ?>">
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                    <button type="submit" name="submit" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
-                    <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
-                </form>
-            </div>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= $data['message'] ?>
+    </div>
+    <div>
+        <form action="<?= $data['form_action'] ?>" method="post">
+            <?php if (! empty($data['hidden_fields'])): ?>
+                <?php foreach ($data['hidden_fields'] as $field): ?>
+                    <input type="hidden" name="<?= $field['name'] ?>" value="<?= $field['value'] ?>">
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <button type="submit" name="submit" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+            <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
+        </form>
     </div>
 </div>

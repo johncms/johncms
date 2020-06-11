@@ -24,16 +24,12 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ipban' => true]]));
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= $data['message'] ?>
-            </div>
-            <div>
-                <a href="<?= $data['confirm_url'] ?>" class="btn btn-danger"><?= $data['confirm_url_name'] ?></a>
-                <a href="<?= $data['back_url'] ?>" class="btn btn-primary"><?= $data['back_url_name'] ?></a>
-            </div>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= $data['message'] ?>
+    </div>
+    <div>
+        <a href="<?= $data['confirm_url'] ?>" class="btn btn-danger"><?= $data['confirm_url_name'] ?></a>
+        <a href="<?= $data['back_url'] ?>" class="btn btn-primary"><?= $data['back_url_name'] ?></a>
     </div>
 </div>

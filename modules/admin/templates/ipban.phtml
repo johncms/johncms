@@ -24,43 +24,39 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ipban' => true]]));
 ?>
 
+<?php if (! empty($data['message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => $data['message'],
+        ]
+    ) ?>
+<?php endif; ?>
+<table class="table table-striped">
+    <thead>
+    <tr class="bg-secondary text-white">
+        <th><?= __('IP address') ?></th>
+        <th><?= __('Reason') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if (empty($data['items'])): ?>
+        <tr>
+            <td colspan="2" class="text-center">
+                <?= __('The list is empty') ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <tr>
+            <td><a href="<?= $item['detail_url'] ?>"><?= $item['ips'] ?></a></td>
+            <td><?= $item['reason'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
 
-<div class="row">
-    <div class="col-md-6">
-        <?php if (! empty($data['message'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-info',
-                    'alert'      => $data['message'],
-                ]
-            ) ?>
-        <?php endif; ?>
-        <table class="table table-striped">
-            <thead>
-            <tr class="bg-secondary text-white">
-                <th><?= __('IP address') ?></th>
-                <th><?= __('Reason') ?></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php if (empty($data['items'])): ?>
-                <tr>
-                    <td colspan="2" class="text-center">
-                        <?= __('The list is empty') ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-            <?php foreach ($data['items'] as $item): ?>
-                <tr>
-                    <td><a href="<?= $item['detail_url'] ?>"><?= $item['ips'] ?></a></td>
-                    <td><?= $item['reason'] ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
 <div class="mt-2">
     <?php if ($data['total'] > $user->config->kmess): ?>
         <div>

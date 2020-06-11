@@ -23,51 +23,47 @@ $this->layout(
 );
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <?php if (! empty($data['message'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-info',
-                    'alert'      => $data['message'],
-                ]
-            ) ?>
-        <?php endif; ?>
 
-        <?php if (empty($data['items'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-info',
-                    'alert'      => __('The list is empty'),
-                ]
-            ) ?>
-        <?php endif; ?>
-        <?php foreach ($data['items'] as $item): ?>
-            <div class="card shadow border-0 mb-2">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="?mod=view&amp;id=<?= $item['id'] ?>" class="h3"><?= $item['name'] ?></a>
-                        <div>
-                            <?php if ($item['switch'] === 1): ?>
-                                <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
-                            <?php else: ?>
-                                <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="btn btn-primary btn-sm"><?= __('Up') ?></a>
-                        <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="btn btn-primary btn-sm"><?= __('Down') ?></a>
-                        <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="btn btn-primary btn-sm"><?= __('Edit') ?></a>
-                        <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
-                    </div>
-                </div>
+<?php if (! empty($data['message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => $data['message'],
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+<?php foreach ($data['items'] as $item): ?>
+    <div class="new_post-item without_avatar">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="?mod=view&amp;id=<?= $item['id'] ?>" class="h3"><?= $item['name'] ?></a>
+            <div>
+                <?php if ($item['switch'] === 1): ?>
+                    <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
+                <?php else: ?>
+                    <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
+                <?php endif; ?>
             </div>
-        <?php endforeach; ?>
+        </div>
+        <div class="mt-2">
+            <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Up') ?></a>
+            <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Down') ?></a>
+            <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Edit') ?></a>
+            <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="mr-2 text-danger"><?= __('Delete') ?></a>
+        </div>
     </div>
-</div>
+<?php endforeach; ?>
+
 <div class="mt-2">
     <?php if ($data['total'] > 0): ?>
         <div class="mb-2"><?= __('Total:') ?> <?= $data['total'] ?></div>
