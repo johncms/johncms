@@ -97,13 +97,6 @@ $data = array_map('trim', $data);
 
 $errors = [];
 if ($request->getPost('submit', null)) {
-    $messages = [
-        'isEmpty'              => __('Value is required and can\'t be empty'),
-        'stringLengthTooShort' => __('The input is less than %min% characters long'),
-        'stringLengthTooLong'  => __('The input is more than %max% characters long'),
-        'modelExists'          => __('A record matching the input was found'),
-    ];
-
     $rules = [
         'name'       => [
             'NotEmpty',
@@ -130,7 +123,7 @@ if ($request->getPost('submit', null)) {
         'csrf_token' => ['Csrf'],
     ];
 
-    $validator = new Validator($data, $rules, $messages);
+    $validator = new Validator($data, $rules);
 
     if ($validator->isValid()) {
         $topic = (new ForumTopic())->create(

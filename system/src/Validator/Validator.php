@@ -133,7 +133,8 @@ class Validator
 
     public function __construct(array $data, array $rules, array $messages = [])
     {
-        $this->messages = $messages;
+        $default_messages = require __DIR__ . '/messages.php';
+        $this->messages = array_merge($default_messages, $messages);
         $this->data = $data;
         $this->rule_settings = $rules;
     }

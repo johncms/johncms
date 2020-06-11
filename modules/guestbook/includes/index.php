@@ -48,12 +48,6 @@ $form_data = array_map('trim', $form_data);
 $data['form_data'] = $form_data;
 
 if ($request->getMethod() === 'POST') {
-    $messages = [
-        'isEmpty'              => __('Value is required and can\'t be empty'),
-        'stringLengthTooShort' => __('The input is less than %min% characters long'),
-        'stringLengthTooLong'  => __('The input is more than %max% characters long'),
-    ];
-
     $rules = [
         'message'    => [
             'NotEmpty',
@@ -85,7 +79,7 @@ if ($request->getMethod() === 'POST') {
         ];
     }
 
-    $validator = new Validator($form_data, $rules, $messages);
+    $validator = new Validator($form_data, $rules);
 
     if ($validator->isValid()) {
         $new_message = (new Guestbook())->create(
