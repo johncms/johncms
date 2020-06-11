@@ -109,7 +109,7 @@ class Request extends ServerRequest
     private function filterVar(string $key, $var, int $filter, $options)
     {
         if (is_array($var) && isset($var[$key])) {
-            $result = filter_var($var[$key], $filter, $options);
+            $result = filter_var(trim($var[$key]), $filter, $options);
 
             if (false !== $result) {
                 return $result;
