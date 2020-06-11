@@ -35,6 +35,7 @@ if (isset($_POST['submit'])) {
     $config['homeurl'] = isset($_POST['homeurl']) ? preg_replace('#/$#', '', trim($_POST['homeurl'])) : '/';
     $config['flsz'] = isset($_POST['flsz']) ? (int) ($_POST['flsz']) : 0;
     $config['gzip'] = isset($_POST['gz']);
+    $config['meta_title'] = isset($_POST['meta_title']) ? trim($_POST['meta_title']) : 'johncms';
     $config['meta_key'] = isset($_POST['meta_key']) ? trim($_POST['meta_key']) : 'johncms';
     $config['meta_desc'] = isset($_POST['meta_desc']) ? trim($_POST['meta_desc']) : 'johncms';
 
@@ -52,8 +53,11 @@ if (isset($_POST['submit'])) {
     }
 }
 
-echo $view->render('admin::settings', [
-    'sysconf'      => $config,
-    'confirmation' => $confirmation ?? false,
-    'themelist'    => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
-]);
+echo $view->render(
+    'admin::settings',
+    [
+        'sysconf'      => $config,
+        'confirmation' => $confirmation ?? false,
+        'themelist'    => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
+    ]
+);

@@ -449,6 +449,7 @@ switch ($act) {
                         'mod_lib_comm'  => 1,
                         'mod_down'      => 2,
                         'mod_down_comm' => 1,
+                        'meta_title'    => 'JohnCMS',
                         'meta_key'      => 'johncms',
                         'meta_desc'     => 'Powered by JohnCMS http://johncms.com',
                         'news'          => [

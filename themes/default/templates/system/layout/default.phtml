@@ -33,7 +33,7 @@ $ads_array = $ads->getAds();
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
-    <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config['copyright'] ?></title>
+    <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
 </head>
 <body>
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
