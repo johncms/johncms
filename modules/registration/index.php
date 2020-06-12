@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use Johncms\Mail\EmailMessage;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -42,9 +43,27 @@ $request = di(Request::class);
 $view->addFolder('reg', __DIR__ . '/templates/');
 
 // Register the module languages domain and folder
-di(Translator::class)->addTranslationDomain('registration', __DIR__ . '/locale');
+/** @var Translator $translator */
+$translator = di(Translator::class);
+$translator->addTranslationDomain('registration', __DIR__ . '/locale');
 
 $nav_chain->add(__('Registration'));
+
+// Email confirmation
+$action = $request->getQuery('act', '');
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+if ($action === 'confirm_email' && ! empty($id)) {
+    $code = $request->getQuery('code', '');
+    $confirm_user = (new User())->find($id);
+    if ($confirm_user !== null && ! $confirm_user->email_confirmed && $confirm_user->confirmation_code === $code) {
+        $confirm_user->email_confirmed = true;
+        $confirm_user->confirmation_code = null;
+        $confirm_user->save();
+    }
+
+    echo $view->render('reg::email_confirmed', ['confirm_user' => $confirm_user]);
+    exit;
+}
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config['mod_reg'] || $user->isValid()) {
@@ -90,7 +109,7 @@ if ($request->getMethod() === 'POST') {
         'captcha'  => ['Captcha'],
     ];
 
-    if (! empty($config['user_email_required'])) {
+    if (! empty($config['user_email_required']) || ! empty($config['user_email_confirmation'])) {
         $rules['email'] = [
             'EmailAddress'   => [
                 'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
@@ -130,10 +149,32 @@ if ($request->getMethod() === 'POST') {
                 'set_forum'    => [],
                 'set_mail'     => [],
                 'smileys'      => [],
+
+                'email_confirmed'   => ! empty($config['user_email_confirmation']) ? null : 1,
+                'confirmation_code' => ! empty($config['user_email_confirmation']) ? uniqid('email_', true) : null,
             ]
         );
 
-        if ($config['mod_reg'] !== 1) {
+        if ($config['user_email_confirmation']) {
+            $link = $config['homeurl'] . '/registration/?act=confirm_email&id=' . $new_user->id . '&code=' . $new_user->confirmation_code;
+            $name = ! empty($new_user->imname) ? htmlspecialchars($new_user->imname) : $new_user->name;
+            (new EmailMessage())->create(
+                [
+                    'locale'   => $translator->getLocale(),
+                    'template' => 'system::mail/templates/registration',
+                    'fields'   => [
+                        'email_to'        => $new_user->mail,
+                        'name_to'         => $name,
+                        'subject'         => __('Registration on the website'),
+                        'user_name'       => $name,
+                        'user_login'      => $new_user->name,
+                        'link_to_confirm' => $link,
+                    ],
+                ]
+            );
+        }
+
+        if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
             setcookie('cuid', (string) $new_user->id, time() + 3600 * 24 * 365, '/');
             setcookie('cups', md5($fields['password']), time() + 3600 * 24 * 365, '/');
         }

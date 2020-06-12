@@ -72,6 +72,8 @@ use Johncms\System\Users\UserConfig;
  * @property int $comm_old
  * @property array $smileys
  * @property array $notification_settings
+ * @property bool $email_confirmed
+ * @property string $confirmation_code
  *
  * @property bool $is_online - Пользователь онлайн или нет?
  * @property string $rights_name - Название прав доступа
@@ -114,6 +116,7 @@ class User extends Model
         'ip_via_proxy' => Ip::class,
 
         'notification_settings' => 'array',
+        'email_confirmed'       => 'bool',
     ];
 
     protected $fillable = [
@@ -166,6 +169,8 @@ class User extends Model
         'comm_old',
         'smileys',
         'notification_settings',
+        'email_confirmed',
+        'confirmation_code',
     ];
 
     /**

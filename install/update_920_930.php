@@ -37,4 +37,18 @@ if (! $schema->hasTable('email_messages')) {
     );
 }
 
+if (! $schema->hasColumns('users', ['email_confirmed', 'confirmation_code'])) {
+    $schema->table(
+        'users',
+        static function (Blueprint $table) {
+            $table->boolean('email_confirmed')->nullable();
+            $table->string('confirmation_code', 50)->nullable();
+        }
+    );
+}
+
+/** @var PDO $db */
+$db = di(PDO::class);
+$db->query('UPDATE users SET email_confirmed = 1');
+
 echo 'Update complete!';

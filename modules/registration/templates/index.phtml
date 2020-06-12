@@ -56,7 +56,7 @@
             <div class="invalid-feedback"><?= implode('<br>', $errors['password']) ?></div>
         <?php endif ?>
     </div>
-    <?php if (! empty($config['user_email_required'])): ?>
+    <?php if (! empty($config['user_email_required']) || ! empty($config['user_email_confirmation'])): ?>
         <div class="form-group">
             <label for="email"><?= __('E-mail') ?></label>
             <input type="email"

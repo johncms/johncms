@@ -126,7 +126,8 @@ trait UserMutators
      */
     public function getIsValidAttribute(): bool
     {
-        return ($this->id && $this->preg);
+        $config = di('config')['johncms'];
+        return ($this->id && $this->preg && (empty($config['user_email_confirmation']) || $this->email_confirmed));
     }
 
     /**
