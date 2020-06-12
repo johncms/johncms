@@ -21,9 +21,9 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:153
 #: modules/downloads/includes/folder_add.php:154
 #: modules/downloads/includes/folder_delete.php:33
-#: modules/downloads/includes/folder_edit.php:32
-#: modules/downloads/includes/folder_edit.php:138
+#: modules/downloads/includes/folder_edit.php:33
 #: modules/downloads/includes/folder_edit.php:139
+#: modules/downloads/includes/folder_edit.php:140
 #: modules/downloads/includes/scan_dir.php:99
 #: modules/downloads/includes/search.php:65
 #: modules/downloads/includes/view.php:37
@@ -33,7 +33,7 @@ msgstr ""
 #: modules/downloads/index.php:173
 #: modules/downloads/index.php:189
 #: modules/downloads/templates/bookmarks.phtml:58
-#: modules/downloads/templates/comments_review.phtml:112
+#: modules/downloads/templates/comments_review.phtml:131
 #: modules/downloads/templates/files_moderation.phtml:55
 #: modules/downloads/templates/files_user.phtml:52
 #: modules/downloads/templates/index.phtml:158
@@ -62,7 +62,7 @@ msgstr ""
 #: modules/downloads/includes/comments.php:57
 #: modules/downloads/includes/comments.php:60
 #: modules/downloads/includes/comments.php:85
-#: modules/downloads/templates/comments_review.phtml:50
+#: modules/downloads/templates/comments_review.phtml:78
 #: modules/downloads/templates/view.phtml:137
 msgid "Comments"
 msgstr ""
@@ -109,7 +109,7 @@ msgstr ""
 #: modules/downloads/includes/files_import.php:79
 #: modules/downloads/includes/files_upload.php:70
 #: modules/downloads/includes/folder_add.php:54
-#: modules/downloads/includes/folder_edit.php:65
+#: modules/downloads/includes/folder_edit.php:66
 msgid "The required fields are not filled"
 msgstr ""
 
@@ -124,7 +124,7 @@ msgstr ""
 #: modules/downloads/includes/files_upload.php:212
 #: modules/downloads/includes/folder_add.php:78
 #: modules/downloads/includes/folder_add.php:138
-#: modules/downloads/includes/folder_edit.php:97
+#: modules/downloads/includes/folder_edit.php:98
 msgid "Repeat"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgstr ""
 #: modules/downloads/includes/files_upload.php:248
 #: modules/downloads/includes/folder_add.php:34
 #: modules/downloads/includes/folder_delete.php:31
-#: modules/downloads/includes/folder_edit.php:30
+#: modules/downloads/includes/folder_edit.php:31
 #: modules/downloads/includes/scan_dir.php:97
 #: modules/downloads/index.php:187
 msgid "The directory does not exist"
@@ -321,7 +321,7 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:74
 #: modules/downloads/includes/folder_add.php:123
 #: modules/downloads/includes/folder_add.php:134
-#: modules/downloads/includes/folder_edit.php:93
+#: modules/downloads/includes/folder_edit.php:94
 #: modules/downloads/templates/index.phtml:141
 msgid "Create Folder"
 msgstr ""
@@ -331,7 +331,7 @@ msgid "Invalid characters"
 msgstr ""
 
 #: modules/downloads/includes/folder_add.php:64
-#: modules/downloads/includes/folder_edit.php:86
+#: modules/downloads/includes/folder_edit.php:87
 #: modules/downloads/templates/folder_form.phtml:60
 msgid "You can write only the following extensions"
 msgstr ""
@@ -362,7 +362,7 @@ msgstr ""
 msgid "Before removing, delete subdirectories"
 msgstr ""
 
-#: modules/downloads/includes/folder_edit.php:28
+#: modules/downloads/includes/folder_edit.php:29
 msgid "Edit Folder"
 msgstr ""
 
@@ -512,17 +512,21 @@ msgstr ""
 msgid "The list is empty"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:89
+#: modules/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:93
+#: modules/downloads/templates/comments_review.phtml:58
+msgid "Edited"
+msgstr ""
+
+#: modules/downloads/templates/comments_review.phtml:109
 #: modules/downloads/templates/files_more.phtml:43
 #: modules/downloads/templates/index.phtml:73
 msgid "Edit"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:96
+#: modules/downloads/templates/comments_review.phtml:112
 #: modules/downloads/templates/delete_additional.phtml:37
 #: modules/downloads/templates/delete_file.phtml:37
 #: modules/downloads/templates/edit_screen.phtml:45

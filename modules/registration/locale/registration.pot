@@ -2,141 +2,135 @@ msgid ""
 msgstr ""
 "X-Domain: registration\n"
 
-#: modules/registration/index.php:41
-#: modules/registration/templates/index.phtml:2
-#: modules/registration/templates/index.phtml:3
+#: modules/registration/index.php:50
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
 #: modules/registration/templates/index.phtml:10
-#: modules/registration/templates/index.phtml:103
-#: modules/registration/templates/registration_closed.phtml:2
-#: modules/registration/templates/registration_closed.phtml:3
-#: modules/registration/templates/registration_result.phtml:2
-#: modules/registration/templates/registration_result.phtml:3
+#: modules/registration/templates/index.phtml:128
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/index.php:65
-msgid "You have not entered Nickname"
+#: modules/registration/index.php:168
+msgid "Registration on the website"
 msgstr ""
 
-#: modules/registration/index.php:67
-msgid "Nickname wrong length"
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
 msgstr ""
 
-#: modules/registration/index.php:71
-msgid "Invalid characters"
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
 msgstr ""
 
-#: modules/registration/index.php:76
-msgid "You have not entered password"
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
 msgstr ""
 
-#: modules/registration/index.php:78
-msgid "Invalid length"
-msgstr ""
-
-#: modules/registration/index.php:83
-msgid "You have not selected genger"
-msgstr ""
-
-#: modules/registration/index.php:93
-msgid "The security code is not correct"
-msgstr ""
-
-#: modules/registration/index.php:108
-msgid "Selected Nickname is already in use"
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
 #: modules/registration/templates/index.phtml:13
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr ""
 
-#: modules/registration/templates/index.phtml:17
+#: modules/registration/templates/index.phtml:21
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:21
+#: modules/registration/templates/index.phtml:25
 msgid "Choose Nickname"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:30
+#: modules/registration/templates/index.phtml:34
 msgid "Username"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:36
+#: modules/registration/templates/index.phtml:40
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:40
-#: modules/registration/templates/index.phtml:49
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
 msgid "Assign a password"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:55
-msgid "Min. 3 characters"
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:59
+#: modules/registration/templates/index.phtml:76
 msgid "Select Gender"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:62
+#: modules/registration/templates/index.phtml:79
 msgid "Man"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:63
+#: modules/registration/templates/index.phtml:80
 msgid "Woman"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:67
-#: modules/registration/templates/index.phtml:74
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
 msgid "Your name"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:78
+#: modules/registration/templates/index.phtml:101
 msgid "Tell us a little about yourself"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:80
-msgid "Max. 1000 characters"
-msgstr ""
-
-#: modules/registration/templates/index.phtml:83
-#: modules/registration/templates/index.phtml:93
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
 msgid "Verification code"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:85
+#: modules/registration/templates/index.phtml:110
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:99
+#: modules/registration/templates/index.phtml:124
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
-#: modules/registration/templates/registration_closed.phtml:9
+#: modules/registration/templates/registration_closed.phtml:12
 msgid "Registration is temporarily closed"
 msgstr ""
 
 #: modules/registration/templates/registration_result.phtml:9
-msgid "Your registratiton data"
+msgid "Your registration data"
 msgstr ""
 
 #: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:14
 msgid "Your ID"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:12
+#: modules/registration/templates/registration_result.phtml:15
 msgid "Your Username"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:13
+#: modules/registration/templates/registration_result.phtml:16
 msgid "Your Password"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:16
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:21
 msgid "Please, wait until a moderator approves your registration"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:18
+#: modules/registration/templates/registration_result.phtml:23
 msgid "Enter"
 msgstr ""

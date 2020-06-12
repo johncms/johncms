@@ -189,27 +189,27 @@ msgid "Recent comments"
 msgstr ""
 
 #: modules/album/includes/top.php:84
-#: modules/album/templates/index.phtml:61
+#: modules/album/templates/index.phtml:59
 msgid "Top Views"
 msgstr ""
 
 #: modules/album/includes/top.php:100
-#: modules/album/templates/index.phtml:60
+#: modules/album/templates/index.phtml:58
 msgid "Top Downloads"
 msgstr ""
 
 #: modules/album/includes/top.php:116
-#: modules/album/templates/index.phtml:62
+#: modules/album/templates/index.phtml:60
 msgid "Top Comments"
 msgstr ""
 
 #: modules/album/includes/top.php:132
-#: modules/album/templates/index.phtml:59
+#: modules/album/templates/index.phtml:57
 msgid "Top Votes"
 msgstr ""
 
 #: modules/album/includes/top.php:149
-#: modules/album/templates/index.phtml:63
+#: modules/album/templates/index.phtml:61
 msgid "Top Worst"
 msgstr ""
 
@@ -226,12 +226,12 @@ msgid "All"
 msgstr ""
 
 #: modules/album/includes/users.php:51
-#: modules/album/templates/index.phtml:42
+#: modules/album/templates/index.phtml:40
 msgid "Guys"
 msgstr ""
 
 #: modules/album/includes/users.php:56
-#: modules/album/templates/index.phtml:46
+#: modules/album/templates/index.phtml:44
 msgid "Girls"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgid "You cannot vote for this photo."
 msgstr ""
 
 #: modules/album/index.php:54
-#: modules/album/templates/index.phtml:38
+#: modules/album/templates/index.phtml:36
 msgid "Albums"
 msgstr ""
 
@@ -307,19 +307,19 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/album/templates/index.phtml:30
+#: modules/album/templates/index.phtml:28
 msgid "New Photos"
 msgstr ""
 
-#: modules/album/templates/index.phtml:34
+#: modules/album/templates/index.phtml:32
 msgid "New Comments"
 msgstr ""
 
-#: modules/album/templates/index.phtml:51
+#: modules/album/templates/index.phtml:49
 msgid "My Album"
 msgstr ""
 
-#: modules/album/templates/index.phtml:56
+#: modules/album/templates/index.phtml:54
 #: modules/album/templates/show_one.phtml:73
 msgid "Rating"
 msgstr ""
@@ -409,16 +409,16 @@ msgstr ""
 msgid "Add to Profile"
 msgstr ""
 
-#: modules/album/templates/user_row.phtml:34
+#: modules/album/templates/user_row.phtml:33
 msgid "album"
 msgid_plural "albums"
 msgstr[0] ""
 
-#: modules/album/templates/user_row.phtml:35
+#: modules/album/templates/user_row.phtml:34
 msgid "photo"
 msgid_plural "photos"
 msgstr[0] ""
 
-#: modules/album/templates/users.phtml:53
+#: modules/album/templates/users.phtml:51
 msgid "Total:"
 msgstr ""

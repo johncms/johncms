@@ -22,7 +22,7 @@ msgstr ""
 #: modules/mail/templates/contact_list.phtml:93
 #: modules/mail/templates/conversations.phtml:106
 #: modules/mail/templates/files.phtml:76
-#: modules/mail/templates/messages.phtml:201
+#: modules/mail/templates/messages.phtml:199
 msgid "Back"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgstr ""
 #: modules/mail/includes/input.php:100
 #: modules/mail/includes/output.php:99
 #: modules/mail/includes/write.php:91
-#: modules/mail/templates/messages.phtml:178
+#: modules/mail/templates/messages.phtml:176
 msgid "Delete"
 msgstr ""
 
@@ -189,7 +189,7 @@ msgid "Sent messages"
 msgstr ""
 
 #: modules/mail/includes/write.php:42
-#: modules/mail/templates/messages.phtml:186
+#: modules/mail/templates/messages.phtml:184
 msgid "Clear messages"
 msgstr ""
 
@@ -276,7 +276,7 @@ msgstr ""
 #: modules/mail/templates/contact_list.phtml:38
 #: modules/mail/templates/conversations.phtml:31
 #: modules/mail/templates/files.phtml:31
-#: modules/mail/templates/messages.phtml:75
+#: modules/mail/templates/messages.phtml:73
 msgid "The list is empty"
 msgstr ""
 
@@ -294,7 +294,7 @@ msgstr[0] ""
 #: modules/mail/templates/contact_list.phtml:89
 #: modules/mail/templates/conversations.phtml:102
 #: modules/mail/templates/files.phtml:72
-#: modules/mail/templates/messages.phtml:197
+#: modules/mail/templates/messages.phtml:195
 msgid "Total:"
 msgstr ""
 
@@ -302,23 +302,23 @@ msgstr ""
 msgid "Last:"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:41
-#: modules/mail/templates/messages.phtml:49
+#: modules/mail/templates/messages.phtml:40
+#: modules/mail/templates/messages.phtml:48
 msgid "To Whom"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:54
+#: modules/mail/templates/messages.phtml:53
 msgid "Message"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:61
+#: modules/mail/templates/messages.phtml:60
 msgid "Choose file"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:64
+#: modules/mail/templates/messages.phtml:63
 msgid "Send"
 msgstr ""
 
-#: modules/mail/templates/messages.phtml:130
+#: modules/mail/templates/messages.phtml:128
 msgid "Attached files"
 msgstr ""

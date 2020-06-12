@@ -4,18 +4,18 @@ msgstr ""
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
-#: modules/library/templates/booklist.phtml:42
+#: modules/library/templates/booklist.phtml:40
 #: modules/library/templates/lastcom.phtml:42
-#: modules/library/templates/main.phtml:68
+#: modules/library/templates/main.phtml:66
 #: modules/library/templates/search.phtml:68
 #: modules/library/templates/sectionslist.phtml:51
 #: modules/library/templates/tags.phtml:59
-#: modules/library/templates/top.phtml:62
+#: modules/library/templates/top.phtml:60
 msgid "The list is empty"
 msgstr ""
 
 #: modules/library/includes/addnew.php:28
-#: modules/library/templates/booklist.phtml:54
+#: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgstr ""
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
-#: modules/library/templates/booklist.phtml:57
+#: modules/library/templates/booklist.phtml:55
 #: modules/library/templates/del.phtml:85
 #: modules/library/templates/del.phtml:117
 #: modules/library/templates/del.phtml:129
@@ -110,7 +110,7 @@ msgid "Latest comments"
 msgstr ""
 
 #: modules/library/includes/mkdir.php:19
-#: modules/library/templates/main.phtml:75
+#: modules/library/templates/main.phtml:71
 msgid "Create Section"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgid "Sorted by relevance"
 msgstr ""
 
 #: modules/library/includes/tags.php:19
-#: modules/library/templates/addnew.phtml:87
+#: modules/library/templates/addnew.phtml:86
 #: modules/library/templates/moder.phtml:79
 msgid "Tags"
 msgstr ""
@@ -200,8 +200,8 @@ msgstr ""
 msgid "To Section"
 msgstr ""
 
+#: modules/library/templates/addnew.phtml:54
 #: modules/library/templates/addnew.phtml:55
-#: modules/library/templates/addnew.phtml:56
 #: modules/library/templates/mkdir.phtml:52
 #: modules/library/templates/mkdir.phtml:53
 #: modules/library/templates/moder.phtml:51
@@ -209,41 +209,41 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:60
+#: modules/library/templates/addnew.phtml:59
 #: modules/library/templates/moder.phtml:62
 msgid "Announce"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:65
+#: modules/library/templates/addnew.phtml:64
 #: modules/library/templates/moder.phtml:70
 msgid "Text"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:72
+#: modules/library/templates/addnew.phtml:71
 #: modules/library/templates/moder.phtml:128
 msgid "Commenting on the Article"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:77
+#: modules/library/templates/addnew.phtml:76
 #: modules/library/templates/moder.phtml:46
 msgid "To upload a photo"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:82
+#: modules/library/templates/addnew.phtml:81
 msgid "Select the text file"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:83
+#: modules/library/templates/addnew.phtml:82
 msgid "Text entry field will be ignored"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:92
+#: modules/library/templates/addnew.phtml:91
 #: modules/library/templates/mkdir.phtml:72
 #: modules/library/templates/moder.phtml:137
 msgid "Save"
 msgstr ""
 
-#: modules/library/templates/addnew.phtml:93
+#: modules/library/templates/addnew.phtml:92
 #: modules/library/templates/del.phtml:45
 #: modules/library/templates/del.phtml:86
 #: modules/library/templates/del.phtml:118
@@ -267,9 +267,9 @@ msgid "Who added:"
 msgstr ""
 
 #: modules/library/templates/book.phtml:59
-#: modules/library/templates/booklist.phtml:34
+#: modules/library/templates/booklist.phtml:33
 #: modules/library/templates/new.phtml:39
-#: modules/library/templates/top.phtml:47
+#: modules/library/templates/top.phtml:46
 msgid "Rating:"
 msgstr ""
 
@@ -282,28 +282,28 @@ msgstr ""
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:43
 #: modules/library/templates/tags.phtml:43
-#: modules/library/templates/top.phtml:51
+#: modules/library/templates/top.phtml:50
 msgid "Comments:"
 msgstr ""
 
 #: modules/library/templates/book.phtml:82
-#: modules/library/templates/booklist.phtml:56
+#: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
 msgstr ""
 
-#: modules/library/templates/booklist.phtml:33
+#: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:33
 #: modules/library/templates/new.phtml:36
 #: modules/library/templates/premod.phtml:40
 #: modules/library/templates/search.phtml:51
 #: modules/library/templates/tags.phtml:36
-#: modules/library/templates/top.phtml:44
+#: modules/library/templates/top.phtml:43
 msgid "Author:"
 msgstr ""
 
-#: modules/library/templates/booklist.phtml:46
+#: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:52
 #: modules/library/templates/premod.phtml:51
 #: modules/library/templates/search.phtml:60
@@ -323,7 +323,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:159
 #: modules/library/templates/lastcom.phtml:47
 #: modules/library/templates/moder.phtml:146
-#: modules/library/templates/top.phtml:66
+#: modules/library/templates/top.phtml:64
 msgid "Back"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgid "Number of readings"
 msgstr ""
 
 #: modules/library/templates/new.phtml:33
-#: modules/library/templates/top.phtml:41
+#: modules/library/templates/top.phtml:40
 msgid "Section:"
 msgstr ""
 
