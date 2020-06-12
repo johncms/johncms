@@ -148,8 +148,7 @@ class Tools
         /** @var Translator $translator */
         $translator = di(Translator::class);
 
-        return Carbon::createFromTimestampUTC($var)
-            ->addHours($shift)
+        return Carbon::createFromTimestamp($var, $shift)
             ->locale($translator->getLocale())
             ->calendar(
                 null,
