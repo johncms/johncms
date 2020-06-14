@@ -181,7 +181,14 @@ class User extends Model
      */
     public function scopeApproved(Builder $query): Builder
     {
-        return $query->where('preg', '=', 1);
+        $query->where('preg', '=', 1);
+
+        $config = di('config')['johncms'];
+        if (! empty($config['user_email_confirmation'])) {
+            $query->where('email_confirmed', '=', 1);
+        }
+
+        return $query;
     }
 
     /**
