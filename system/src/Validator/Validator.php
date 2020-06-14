@@ -134,7 +134,7 @@ class Validator
     public function __construct(array $data, array $rules, array $messages = [])
     {
         $default_messages = require __DIR__ . '/messages.php';
-        $this->messages = array_merge($default_messages, $messages);
+        $this->messages = array_merge_recursive($default_messages, $messages);
         $this->data = $data;
         $this->rule_settings = $rules;
     }
@@ -160,12 +160,14 @@ class Validator
                     }
                     if (! is_array($options)) {
                         $rule_object = new $this->rules[$options]();
+                        $validator_name = $options;
                     } else {
                         $rule_object = new $this->rules[$name]($options);
+                        $validator_name = $name;
                     }
 
-                    if (array_key_exists($name, $this->messages) && ! empty($this->messages[$name])) {
-                        foreach ($this->messages[$name] as $key => $message) {
+                    if (array_key_exists($validator_name, $this->messages) && ! empty($this->messages[$validator_name])) {
+                        foreach ($this->messages[$validator_name] as $key => $message) {
                             /** @var AbstractValidator $rule_object */
                             $rule_object->setMessage($message, $key);
                         }
