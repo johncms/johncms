@@ -257,22 +257,10 @@ class Counters
      * @deprecated use usersCounters
      * TODO: содержимое usersCounters перенести в этот метод после проверки на использование
      */
-    public function users()
+    public function users(): string
     {
-        $file = CACHE_PATH . 'count-users.dat';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'];
-            $new = $res['new'];
-        } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
-        }
-
-        return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
+        $counter = $this->usersCounters();
+        return $counter['total'] . ($counter['new'] ? '&#160;/&#160;<span class="red">+' . $counter['new'] . '</span>' : '');
     }
 
     /**
@@ -422,12 +410,12 @@ class Counters
         $file = CACHE_PATH . 'counters-users.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'];
-            $new = $res['new'];
+            $cache = json_decode(file_get_contents($file), true);
+            $total = $cache['total'];
+            $new = $cache['new'];
         } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
+            $total = (new Users\User())->approved()->count();
+            $new = (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count();
 
             file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
         }
