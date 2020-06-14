@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Welcome' => 'Добро пожаловать',
       'Free, Open Source content management system' => 'Бесплатная система управления контентом с открытым исходным кодом',
       'Download' => 'Скачать',
       'Documentation' => 'Документация',

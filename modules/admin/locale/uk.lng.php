@@ -94,6 +94,7 @@
       'Section with all contents are removed' => 'Розділ з усім контентом видалено',
       'Go to category' => 'Перейти в категорію',
       'Edit Section' => 'Редагувати розділ',
+      'Please select a valid parent' => 'Будь ласка, оберіть правильний батьківський елемент',
       'Hidden posts' => 'Приховані повідомлення',
       'by topic' => 'по темі',
       'by author' => 'по авторові',

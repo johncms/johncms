@@ -5,15 +5,21 @@
   array (
     '' => 
     array (
+      'Add news' => 'إضافة أخبار',
       'You have not entered news title' => 'قم بادخال عنوان الخبر',
       'You have not entered news text' => 'قم بادخال نص الخبر',
       'You cannot add the message so often. Please, wait %d seconds.' => 'لا يمكنك الاضافة فضلا انتظر %d ثانيه لتستطيع اضافة خبر جديد.',
       'News added' => 'تم اضافة الخبر',
+      'Clear news' => 'مسح الأخبار',
       'Delete all news older than 1 week' => 'حذف جميع الأخبار التي مضى عليها أكثر من أسبوع واحد',
       'Delete all news' => 'حذف كل الاخبار',
       'Delete all news older than 1 month' => 'حذف جميع الأخبار التي مضى عليها أكثر من شهر',
+      'Delete news' => 'حذف الأخبار',
+      'News deleted' => 'تم حذف الأخبار',
+      'Edit news' => 'تعديل الأخبار',
       'News' => 'اخبار الموقع',
       'Wrong data' => 'بيانات خاطئة',
+      'News changed' => 'تم تغيير الأخبار',
       'Title' => 'عنوان',
       'Text' => 'النص',
       'Discussion' => 'مناقشة',

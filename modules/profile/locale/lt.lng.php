@@ -52,7 +52,6 @@
       'Min. nick length 2, max. 20 characters' => 'Min. Niko ilgis 2, maks. 20 simbolių',
       'Nick contains invalid characters' => 'Nike yra netinkamų simbolių',
       'Invalid format date of birth' => 'Neteisinga gimimo data',
-      'ICQ number must be at least 5 digits and max. 10' => 'ICQ numeris turi buti ne mažiau negu 5 skaičiu ir maks. 10',
       'Data saved' => 'Duomenys išsaugoti',
       'Upload Avatar' => 'Įkelti avatarą',
       'The weight of the file exceeds' => 'Failo dydis virsija',
@@ -91,6 +90,7 @@
       'The password confirmation you entered is wrong' => 'Naujo slaptažodžio patvirtinimas įvestas neteisingai',
       'The password must contain at least 3 characters' => 'Slaptažodis negali sudaryti mažiau, negu 3 simboliai',
       'Password successfully changed' => 'Slaptažodis sėkmingai pakeistas',
+      'Reset user settings' => 'Atstatyti nustatymus',
       'For user %s default settings were set.' => 'Vartotojo %s pradiniai nustatymai nustatyti.',
       'Settings' => 'Nustatymai',
       'General setting' => 'Bendrieji nustatymai',
@@ -107,33 +107,10 @@
       'Password can be recovered 1 time per day' => 'Slaptažodi galima atstatyti vieną kartą per dieną',
       'User does not exists' => 'Tokio vartotojo nėra',
       'Password recovery' => 'Slaptažodžio atkūrimas',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Sveiki %s!
- Jus pradėjote atstatynėti savo slaptažodi svetainei %s
- Kad atstatyti slaptažodi, jus turite pereit pagal šia nuoroda: %s
- Nuoroda veikia 1 val.
-
-Jeigu jus gavote ši laiška klaidingai, tiesiog proignorokite jį',
       'Check your e-mail for further information' => 'Instrukcijos del slaptažodžio atstatymo išsiusti į jūsų el. paštą',
-      'Error sending E-mail' => 'Klaida siunčiant el. laišką',
       'Password recovery is impossible' => 'Slaptažodžio atkūrimas neįmanomas',
       'Time allotted for the password recovery has been exceeded' => 'Laikas, per kuri galėjote atstatyti slaptažodį praejo',
       'Your new password' => 'Jūsų naujas slaptažodis',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Sveiki %s
- Jus sėkmingai pakeitėte slaptažodį svetainei %s
-
-Jūsų naujas slaptažodis:%s
-
- Po prisijungimo jus galite pakeisti slaptažodį į naują.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Slaptažodis pakeistas sėkmingai.<br>Naujas slaptažodis išsiųstas į jūsų E-pašto dežute.',
       'The list is empty' => 'Sąrašas tuščias',
       'Total:' => 'Viso:',
@@ -206,6 +183,10 @@ Jūsų naujas slaptažodis:%s
       'Choose file' => 'Pasirinkite failą',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'Leidžiami vaizdo formatai: JPG, PNG, GIF. Failo dydis neturėtų viršyti %d kb.<br>Naujas vaizdas pakeis seną (jei buvo).',
       'Last visit' => 'Paskutinis apsilankymas',
+      'Online' => 'Prisijungę',
+      'User is banned' => 'Vartotojas užblokuotas',
+      'Reason:' => 'Priežastis',
+      'Violations' => 'Blokai',
       'User Agent' => 'Naršymo agentas',
       'Ip' => 'Ip',
       'Whois' => 'Whois',
@@ -228,6 +209,8 @@ Jūsų naujas slaptažodis:%s
       'Not specified' => 'Nenurodyta',
       'hidden' => 'paslėptas',
       'Photo Album' => 'Nuotraukų Albumas',
+      'IP address' => 'Blokuoti IP adresą',
+      'Date' => 'Data',
       'Reset Karma' => 'Atstatyti karma',
       'Type of vote' => 'Balsavimo rušis',
       'Votes quantity' => 'Balsų kiekis',

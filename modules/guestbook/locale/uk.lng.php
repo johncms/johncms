@@ -5,20 +5,13 @@
   array (
     '' => 
     array (
-      'Admin Club' => 'Адмін-клуб',
-      'Guestbook' => 'Гостьова книга',
-      'Guestbook is closed' => 'Гостьова книга закрита',
-      'Wrong data' => 'Невірні дані',
-      'You have not entered a name' => 'Ви не ввели ім\'я',
-      'You have not entered the message' => 'Ви не ввели повідомлення',
-      'Access forbidden' => 'Доступ заборонено',
-      'The security code is not correct' => 'Захисний код введено невірно',
-      'You cannot add the message so often. Please, wait %d seconds.' => 'Ви не можете додавати повідомлення так часто. Будь ласка, зачекайте %d секунд.',
-      'Add message' => 'Додати повідомлення',
       'All messages older than 1 day were deleted' => 'Всі повідомлення старіші за 1 день було видалено',
       'Full clearing is finished' => 'Повне очищення завершено',
       'All messages older than 1 week were deleted' => 'Всі повідомлення старіші за 1 тиждень було видалено',
       'Clear guestbook' => 'Очистити гостьову книгу',
+      'Admin Club' => 'Адмін-клуб',
+      'Guestbook' => 'Гостьова книга',
+      'Guestbook is closed' => 'Гостьова книга закрита',
       'Clearing parameters' => 'Параметри видалення',
       'Older than 1 week' => 'Старіше 1 тижня',
       'Older than 1 day' => 'Старіше 1 дня',

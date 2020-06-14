@@ -52,7 +52,6 @@
       'Min. nick length 2, max. 20 characters' => 'Минимальная длина Ника - 2, максимальная 20 символов',
       'Nick contains invalid characters' => 'Недопустимые символы в Нике',
       'Invalid format date of birth' => 'Дата рождения указана неверно',
-      'ICQ number must be at least 5 digits and max. 10' => 'Номер ICQ должен состоять минимум из 5 цифр и максимум из 10',
       'Data saved' => 'Данные сохранены',
       'Upload Avatar' => 'Загрузить Аватар',
       'The weight of the file exceeds' => 'Размер файла превышает',
@@ -108,33 +107,10 @@
       'Password can be recovered 1 time per day' => 'Пароль можно восстанавливать не чаще 1 раза в сутки',
       'User does not exists' => 'Такого пользователя не существует',
       'Password recovery' => 'Восстановление пароля',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Здравствуйте, %s!
-Вы начали процесс восстановления пароля на сайте %s
-Чтоб восстановить ваш пароль, вы должны перейти по ссылке: %s
-Ссылка действительна 1 час
-
-Если вы получили это письмо по ошибке, просто игнорируйте его.',
       'Check your e-mail for further information' => 'Инструкции по восстановлению пароля высланы на указанный Вами адрес E-mail',
-      'Error sending E-mail' => 'Ошибка отправки E-mail',
       'Password recovery is impossible' => 'Восстановление пароля невозможно',
       'Time allotted for the password recovery has been exceeded' => 'Время, отведенное на восстановления пароля, прошло',
       'Your new password' => 'Ваш новый пароль',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Привет %s
-Вы изменили пароль на сайте %s
-
-Ваш новый пароль: %s
-
-После входа в систему Вы сможете сменить пароль на новый.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Пароль успешно изменен.<br>Новый пароль выслан на ваш адрес E-mail',
       'The list is empty' => 'Список пуст',
       'Total:' => 'Всего:',

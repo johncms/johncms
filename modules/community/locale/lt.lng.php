@@ -14,6 +14,7 @@
       'Forum' => 'Forumas',
       'Guestbook' => 'Svečių Knyga',
       'Comments' => 'Komentarai',
+      'Karma' => 'Karma',
       'Most active in Guestbook' => 'Aktyviausieji Svečių knygoje',
       'Most commentators' => 'Dažniausi komentatoriai',
       'Best Karma' => 'Geriausia Karma',
@@ -26,8 +27,32 @@
       'The search is performed by Nickname and are case-insensitive.' => 'Paieška atliekama pagal vartotojo slapyvardį, nejautrus didžiosioms arba mažosioms raidėms.',
       'Users' => 'Vartotojai',
       'Top Activity' => 'Top Aktyvumas',
+      'Username' => 'Vartotojo vardas',
+      'List is empty' => 'Sąrašas tuščias',
       'Total' => 'Viso',
       'Back' => 'Atgal',
+      'post' => 
+      array (
+        0 => 'pranešimas',
+        1 => 'pareigybės',
+        2 => 'pareigybės',
+        3 => 'pareigybės',
+      ),
+      'comment' => 
+      array (
+        0 => 'Komentaras',
+        1 => 'Komentarai',
+        2 => 'Komentarai',
+        3 => 'Komentarai',
+      ),
+      'point' => 
+      array (
+        0 => 'taškas',
+        1 => 'taškai',
+        2 => 'taškai',
+        3 => 'taškai',
+      ),
+      'Delete' => 'Ištrinti',
     ),
   ),
 );

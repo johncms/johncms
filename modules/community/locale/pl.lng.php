@@ -52,6 +52,7 @@
         2 => 'punktów',
         3 => 'punktów',
       ),
+      'Delete' => 'Usuń',
     ),
   ),
 );

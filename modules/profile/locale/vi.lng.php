@@ -26,6 +26,7 @@
       'Ban terminated' => 'Ban chấm dứt',
       'Ban time is going to the end. Infrigement will be saved in the bans history' => 'Ban thời điểm sẽ kết thúc. Infrigement sẽ được lưu lại trong cấm lịch sử',
       'Terminate Ban' => 'Chấm Dứt Cấm',
+      'Delete ban' => 'Xóa lệnh cấm',
       'Ban deleted' => 'Lệnh cấm đã được xóa',
       'Removing ban along with a record in the bans history' => 'Loại bỏ lệnh cấm cùng với ghi lại vào trong lịch sử của hành vi vi phạm',
       'Delete' => 'Xóa',
@@ -51,7 +52,6 @@
       'Min. nick length 2, max. 20 characters' => 'Tối thiểu nick chiều dài 2, tối đa. 20 ký tự',
       'Nick contains invalid characters' => 'Nick chứa các ký tự không hợp lệ',
       'Invalid format date of birth' => 'Định dạng không hợp ngày tháng năm sinh',
-      'ICQ number must be at least 5 digits and max. 10' => 'ICQ số phải có ít nhất 5 chữ số và max. 10',
       'Data saved' => 'Dữ liệu lưu thành công',
       'Upload Avatar' => 'Tải lên hình đại diện',
       'The weight of the file exceeds' => 'Dung lượng của tập tin vượt quá quy định',
@@ -90,6 +90,7 @@
       'The password confirmation you entered is wrong' => 'Mật mã xác nhận bạn nhập là sai',
       'The password must contain at least 3 characters' => 'Mật khẩu phải chứa ít nhất 3 ký tự',
       'Password successfully changed' => 'Thay đổi mật khẩu thành công',
+      'Reset user settings' => 'Khôi phục cài đặt gốc',
       'For user %s default settings were set.' => 'Đối với người sử dụng %s cài đặt mặc định đã được thiết lập.',
       'Settings' => 'Tùy chọn Thiết lập',
       'General setting' => 'Tùy chỉnh chung',
@@ -106,31 +107,14 @@
       'Password can be recovered 1 time per day' => 'Mật khẩu có thể được phục hồi 1 lần mỗi ngày',
       'User does not exists' => 'Người dùng không tồn tại',
       'Password recovery' => 'Khôi phục mật khẩu',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Xin chào %s! tính nem bắt đầu quá trình phục hồi mật khẩu trên trang web %s tính nIn để phục hồi mật khẩu của bạn, bạn phải bấm vào liên kết: %s tính nLink, hiệu lực trong 1 giờ đồng triệu tập lại bạn nhận được thư này bằng cách sai lầm, chỉ cần bỏ qua lá thư này',
       'Check your e-mail for further information' => 'Kiểm tra email của bạn để biết thêm thông tin',
-      'Error sending E-mail' => 'Lỗi gửi E-mail',
       'Password recovery is impossible' => 'Phục hồi mật khẩu là không thể',
       'Time allotted for the password recovery has been exceeded' => 'Thời gian được phân bổ cho việc phục hồi mật khẩu đã được vượt quá',
       'Your new password' => 'Mật khẩu mới',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Xin chào %s
-You đã thay đổi mật khẩu của bạn trên trang web %s
-
-Your mật khẩu mới: %s
-
-After đăng nhập, bạn có thể thay đổi mật khẩu mới.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Mật khẩu thay đổi thành công.<br>New mật khẩu gửi đến địa chỉ E-mail.',
       'The list is empty' => 'Danh sách này là trống rỗng',
       'Total:' => 'Tổng cộng:',
+      'Ban:' => 'Cấm',
       'Ban type' => 'Loại lệnh cấm',
       'Ban time' => 'Thời gian cấm',
       'Time' => 'Thời gian',
@@ -140,6 +124,12 @@ After đăng nhập, bạn có thể thay đổi mật khẩu mới.',
       'Reason' => 'Lý do',
       'Apply Ban' => 'Áp Dụng Lệnh Cấm',
       'Cancel' => 'Hủy bỏ',
+      'User:' => 'Thành viên:',
+      'Active' => 'Hoạt động',
+      'Blocked by:' => 'Chặn bởi:',
+      'Time:' => 'Thời gian:',
+      'Remains:' => 'Vẫn là:',
+      'List is empty' => 'Danh sách trống',
       'Total' => 'Tổng số',
       'Clear history' => 'Xoá lịch sử',
       'Username' => 'Tên tài khoản',
@@ -193,6 +183,10 @@ After đăng nhập, bạn có thể thay đổi mật khẩu mới.',
       'Choose file' => 'Chọn tập tin',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'Cho phép dạng hình ảnh: thử hình ảnh. Kích thước không nên quá %d chắn.<br>The hình ảnh mới sẽ thay thế, già (nếu là).',
       'Last visit' => 'Truy cập cuối',
+      'Online' => 'Trực tuyến',
+      'User is banned' => 'Dùng bị cấm',
+      'Reason:' => 'Lý do:',
+      'Violations' => 'Hành vi vi phạm',
       'User Agent' => 'User Agent',
       'Ip' => 'Ip',
       'Whois' => 'Whois',
@@ -209,6 +203,8 @@ After đăng nhập, bạn có thể thay đổi mật khẩu mới.',
       'Not specified' => 'Chưa xác định',
       'hidden' => 'ẩn',
       'Photo Album' => 'Album hình ảnh',
+      'IP address' => 'Địa chỉ IP',
+      'Date' => 'Ngày',
       'Reset Karma' => 'Thiết Lập Lại Karma',
       'Type of vote' => 'Loại bỏ phiếu',
       'Votes quantity' => 'Số lượng phiếu',

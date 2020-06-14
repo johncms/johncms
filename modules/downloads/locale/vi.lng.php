@@ -82,6 +82,7 @@
       'Total' => 'Tổng số',
       'The list is empty' => 'Danh sách trống',
       'Edited:' => 'Chỉnh sửa:',
+      'Edited' => 'Chỉnh sửa',
       'Edit' => 'Chỉnh sửa',
       'Delete' => 'Xóa',
       'Do you really want to delete?' => 'Bạn có thực sự muốn xóa?',

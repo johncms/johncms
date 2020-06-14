@@ -52,7 +52,6 @@
       'Min. nick length 2, max. 20 characters' => 'Min. długość nicku 2, max. 20 znaków',
       'Nick contains invalid characters' => 'Nick zawiera niedozwolone znaki',
       'Invalid format date of birth' => 'Nieprawidłowy format daty urodzenia',
-      'ICQ number must be at least 5 digits and max. 10' => 'Numer ICQ musi mieć nie mniej niż 5 cyfr i maksimum 10',
       'Data saved' => 'Dane zapisano',
       'Upload Avatar' => 'Prześlij awatar',
       'The weight of the file exceeds' => 'Waga pliku przekracza',
@@ -91,6 +90,7 @@
       'The password confirmation you entered is wrong' => 'Potwierdzone przez Ciebie hasło jest błędne',
       'The password must contain at least 3 characters' => 'Hasło musi zawierać co najmniej 6 znaków',
       'Password successfully changed' => 'Hasło zostało pomyślnie zmienione',
+      'Reset user settings' => 'Resetuj ustawienia użytkownika',
       'For user %s default settings were set.' => 'Dla %s użytkowników zostały zainstalowane ustawienia domyślne.',
       'Settings' => 'Ustawienia',
       'General setting' => 'Ustawienia ogólne',
@@ -107,29 +107,10 @@
       'Password can be recovered 1 time per day' => 'Hasło można odzyskać 1 raz dziennie',
       'User does not exists' => 'Użytkownik nie istnieje',
       'Password recovery' => 'Odzyskiwanie hasła',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Witaj %s!
-Rozpoczełeś proces odzyskiwania hasła na stronie %s
-Aby odzyskać hasło, należy kliknąć na link: %s
-Link ważny jest 1 godzinę
-
-Jeśli otrzymałeś tą wiadomość przez pomyłkę, zignoruj ten list',
       'Check your e-mail for further information' => 'Sprawdź pocztę w celu uzyskania dalszych informacji',
-      'Error sending E-mail' => 'Błąd podczas wysyłania e-mail',
       'Password recovery is impossible' => 'Odzyskanie hasła jest niemożliwe',
       'Time allotted for the password recovery has been exceeded' => 'Twój czas na odzyskanie hasła minął',
       'Your new password' => 'Twoje nowe hasło',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Cześć %s 
-Twoje nowe hasło to: %s.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Hasło zostało zmienione pomyślnie.<br>Nowe hasło wysłano na Twój adres e-mail.',
       'The list is empty' => 'Lista jest pusta',
       'Total:' => 'Wszystkich:',
@@ -202,6 +183,10 @@ Twoje nowe hasło to: %s.',
       'Choose file' => 'Wybierz plik',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'Dozwolone formaty zdjęć: JPG, GIF lub PNG. Rozmiar pliku nie powinien przekraczać %d kB.<br>Bowy obraz zastąpi stary (jeśli był).',
       'Last visit' => 'Ostatnia wizyta',
+      'Online' => 'Online',
+      'User is banned' => 'Użytkownik zbanowany',
+      'Reason:' => 'Powód:',
+      'Violations' => 'Nieprawidłowości',
       'User Agent' => 'Identyfikator przeglądarki',
       'Ip' => 'IP',
       'Whois' => 'Whois',
@@ -224,6 +209,8 @@ Twoje nowe hasło to: %s.',
       'Not specified' => 'Nie określono',
       'hidden' => 'ukryty',
       'Photo Album' => 'Album zdjęć',
+      'IP address' => 'Adres IP',
+      'Date' => 'Data',
       'Reset Karma' => 'Resetuj karmę',
       'Type of vote' => 'Rodzaj głosowania',
       'Votes quantity' => 'Liczba głosów',

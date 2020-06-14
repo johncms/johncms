@@ -5,16 +5,23 @@
   array (
     '' => 
     array (
+      'Add news' => 'Adaugă știri',
       'You have not entered news title' => 'Nu ai introdus nici in titlu',
       'You have not entered news text' => 'Nu ai introdus nici in text',
       'You cannot add the message so often. Please, wait %d seconds.' => 'Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde',
       'News added' => 'Stiri adaugate',
+      'Clear news' => 'Curăță știrile',
       'Delete all news older than 1 week' => 'Sterge toate sterile mai vechi de o saptamana',
       'Delete all news' => 'Sterge toate stirile',
       'Delete all news older than 1 month' => 'Sterge toate sterile mai vechi de o luna',
+      'Delete news' => 'Ștergere știri',
+      'News deleted' => 'Știri șterse',
+      'Edit news' => 'Editare știri',
       'News' => 'Stiri',
       'Wrong data' => 'Date gresite',
+      'News changed' => 'Știri schimbate',
       'Title' => 'Titlu',
+      'Text' => 'Text',
       'Discussion' => 'Discutii',
       'Do not discuss' => 'Nu discuta',
       'Save' => 'Salveaza',
@@ -31,6 +38,7 @@
       'Author' => 'Autor',
       'Discuss in Forum' => 'Discuta in Forum',
       'Edit' => 'Editeaza',
+      'Total' => 'Toatal',
     ),
   ),
 );

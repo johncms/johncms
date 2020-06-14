@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Welcome' => 'Witaj',
       'Free, Open Source content management system' => 'Bezpłatny, otwarty system zarządzania treściami',
       'Download' => 'Pobierz',
       'Documentation' => 'Dokumentacja',

@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Welcome' => 'Xush kelibsiz',
       'Free, Open Source content management system' => 'Erkin, Ochiq Manba kontentni boshqarish tizimi',
       'Download' => 'Yuklab olish',
       'Documentation' => 'Hujjatlar',

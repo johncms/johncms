@@ -5,20 +5,13 @@
   array (
     '' => 
     array (
-      'Admin Club' => 'Admin Club',
-      'Guestbook' => 'Mehmonlar kitobi',
-      'Guestbook is closed' => 'Mehmonlar kitobi yopiq',
-      'Wrong data' => 'Noto\'g\'ri ma\'lumotlar',
-      'You have not entered a name' => 'Tahallusni kiritmadingiz',
-      'You have not entered the message' => 'Xabarni kiritmadingiz',
-      'Access forbidden' => 'Ruxsat yo\'q',
-      'The security code is not correct' => 'Xavfsizlik kodi to\'g\'ri emas',
-      'You cannot add the message so often. Please, wait %d seconds.' => 'Xabarni juda tez-tez qo\'shish mumkin emas. Iltimos, %d soniya kuting.',
-      'Add message' => 'Xabar qo\'shish:',
       'All messages older than 1 day were deleted' => '1 kundan oldingi barcha xabarlar o\'chirildi',
       'Full clearing is finished' => 'To\'liq tozalash yakunlandi',
       'All messages older than 1 week were deleted' => '1 haftadan katta bo\'lgan barcha xabarlar o\'chirildi',
       'Clear guestbook' => 'Mehmonlar kitobini tozalash',
+      'Admin Club' => 'Admin Club',
+      'Guestbook' => 'Mehmonlar kitobi',
+      'Guestbook is closed' => 'Mehmonlar kitobi yopiq',
       'Clearing parameters' => 'Parametrlarni tozalash',
       'Older than 1 week' => '1 haftadan oldingilar',
       'Older than 1 day' => '1 oydan oldingilar',

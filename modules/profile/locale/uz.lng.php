@@ -52,7 +52,6 @@
       'Min. nick length 2, max. 20 characters' => 'Min. nik uzunligi 2, max. 20 belgilar',
       'Nick contains invalid characters' => 'Tahallusda ruxsat etilmahan belgilar bor',
       'Invalid format date of birth' => 'Tug‘ilgan sanasi noto‘g‘ri',
-      'ICQ number must be at least 5 digits and max. 10' => 'ICQ raqam kamida 5  va ko\'pida 10 bo\'lishi kerak.',
       'Data saved' => 'Ma\'lumotlar saqlandi',
       'Upload Avatar' => 'Avatarni yuklash',
       'The weight of the file exceeds' => 'Faylning hajmi juda katta',
@@ -108,33 +107,10 @@
       'Password can be recovered 1 time per day' => 'Parol 1sutkada 1marta qayta tiklanishi mumkin',
       'User does not exists' => 'Foydalanuvchi mavjud emas',
       'Password recovery' => 'Parolni tiklash',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Salom %s!
-Siz %s saytida parolni tiklash jarayonini boshlaysiz
-Parolni tiklash uchun siz quyidagi havolani bosishingiz kerak: %s
-Havola 1 soat davomida amal qiladi
-
-Agar siz ushbu xatni olgan bo\'lsangiz, ushbu xatni e\'tiborsiz qoldirmang',
       'Check your e-mail for further information' => 'Parolni tiklash yo\'riqnomasi emailingizga yuborildi',
-      'Error sending E-mail' => 'Emailga habar yuborishda xatolik',
       'Password recovery is impossible' => 'Parolni qayta tiklab bo\'lmadi',
       'Time allotted for the password recovery has been exceeded' => 'Parolni tiklash uchun ajratilgan vaqtdan oshib ketdi',
       'Your new password' => 'Siz yangi parol',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Salom %s
-Siz %s saytida parolingizni o\'zgartirdingiz
-
-Sizning yangi parolingiz: %s
-
-Kirganingizdan so\'ng parolingizni yangisiga o\'zgartirishingiz mumkin.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Parol muvaffaqtiyatli o\'zgartirildi<br>Yangi parol emailingizga yuborildi',
       'The list is empty' => 'Ro‘yxat bo‘sh',
       'Total:' => 'Jami',

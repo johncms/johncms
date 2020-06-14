@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Welcome' => 'Sveiki',
       'Free, Open Source content management system' => 'Nemokama, Atviro kodo turinio valdymo sistema',
       'Download' => 'Atsisiųsti',
       'Documentation' => 'Dokumentacija',
