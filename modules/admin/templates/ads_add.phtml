@@ -21,7 +21,7 @@ $this->layout(
         'page_title' => $title,
     ]
 );
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ipban' => true]]));
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['ads' => true]]));
 ?>
 
 <?php if (! empty($data['success_message'])): ?>

@@ -23,25 +23,22 @@ $this->layout(
 );
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['forum' => true]]));
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <h3><?= __('Statistic') ?></h3>
-        <ul>
-            <li><?= __('Categories') ?>:&#160;<?= $data['counters']['total_cat'] ?></li>
-            <li><?= __('Sections') ?>:&#160;<?= $data['counters']['total_sub'] ?></li>
-            <li><?= __('Topics') ?>:&#160;<?= $data['counters']['total_thm'] ?>&#160;/&#160;<span class="text-danger"><?= $data['counters']['total_thm_del'] ?></span></li>
-            <li><?= __('Messages') ?>:&#160;<?= $data['counters']['total_msg'] ?>&#160;/&#160;<span class="text-danger"><?= $data['counters']['total_msg_del'] ?></span></li>
-            <li><?= __('Files') ?>:&#160;<?= $data['counters']['total_files'] ?></li>
-            <li><?= __('Votes') ?>:&#160;<?= $data['counters']['total_votes'] ?></li>
-        </ul>
-        <h3><?= __('Settings') ?></h3>
-        <ul>
-            <li><a href="?act=forum&amp;mod=cat"><b><?= __('Forum structure') ?></b></a></li>
-            <li><a href="?act=forum&amp;mod=hposts"><?= __('Hidden posts') ?></a> (<?= $data['counters']['total_msg_del'] ?>)</li>
-            <li><a href="?act=forum&amp;mod=htopics"><?= __('Hidden topics') ?></a> (<?= $data['counters']['total_thm_del'] ?>)</li>
-        </ul>
-    </div>
-</div>
+
+<h3><?= __('Statistic') ?></h3>
+<ul>
+    <li><?= __('Categories') ?>:&#160;<?= $data['counters']['total_cat'] ?></li>
+    <li><?= __('Sections') ?>:&#160;<?= $data['counters']['total_sub'] ?></li>
+    <li><?= __('Topics') ?>:&#160;<?= $data['counters']['total_thm'] ?>&#160;/&#160;<span class="text-danger"><?= $data['counters']['total_thm_del'] ?></span></li>
+    <li><?= __('Messages') ?>:&#160;<?= $data['counters']['total_msg'] ?>&#160;/&#160;<span class="text-danger"><?= $data['counters']['total_msg_del'] ?></span></li>
+    <li><?= __('Files') ?>:&#160;<?= $data['counters']['total_files'] ?></li>
+    <li><?= __('Votes') ?>:&#160;<?= $data['counters']['total_votes'] ?></li>
+</ul>
+<h3><?= __('Settings') ?></h3>
+<ul>
+    <li><a href="?act=forum&amp;mod=cat"><b><?= __('Forum structure') ?></b></a></li>
+    <li><a href="?act=forum&amp;mod=hposts"><?= __('Hidden posts') ?></a> (<?= $data['counters']['total_msg_del'] ?>)</li>
+    <li><a href="?act=forum&amp;mod=htopics"><?= __('Hidden topics') ?></a> (<?= $data['counters']['total_thm_del'] ?>)</li>
+</ul>
 <div class="mt-2">
     <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
 </div>
