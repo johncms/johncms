@@ -123,9 +123,12 @@ if ($user->isValid()) {
                     $display_form = 0;
                     $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $loginUser->id);
 
-                    if (! $loginUser->preg) {
+                    if (! $loginUser->email_confirmed && $config['user_email_confirmation']) {
                         // Показываем сообщение о неподтвержденной регистрации
-                        echo $view->render('login::confirm');
+                        echo $view->render('login::confirm', ['confirm' => 'email']);
+                    } elseif (! $loginUser->preg) {
+                        // Показываем сообщение о неподтвержденной регистрации
+                        echo $view->render('login::confirm', ['confirm' => 'moderation']);
                     } else {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
                         setcookie('cuid', (string) $loginUser->id, time() + 3600 * 24 * 365, '/');
