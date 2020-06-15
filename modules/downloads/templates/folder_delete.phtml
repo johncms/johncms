@@ -24,18 +24,14 @@ $this->layout(
 );
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= __('Do you really want to delete?') ?>
-            </div>
-            <div>
-                <form action="<?= $action_url ?>" method="post">
-                    <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
-                    <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
-                </form>
-            </div>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= __('Do you really want to delete?') ?>
+    </div>
+    <div>
+        <form action="<?= $action_url ?>" method="post">
+            <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+            <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
+        </form>
     </div>
 </div>

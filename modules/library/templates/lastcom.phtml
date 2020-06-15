@@ -24,15 +24,11 @@ $this->layout(
 ?>
 <?php if ($total) : ?>
     <?php foreach ($list() as $comment): ?>
-        <div class="card mb-3 shadow border-0">
-            <div class="card-body">
-                <a href="?act=comments&amp;id=<?= $comment['id'] ?>" class="card-title h3"><?= $comment['name'] ?></a>
-                <p class="card-text"><?= $comment['text'] ?></p>
-                <div class="text-muted small d-flex align-items-center flex-wrap">
-                    <div class="mr-2">
-                        <span><?= __('Author:') ?></span><?= $comment['who'] ?>
-                    </div>
-                </div>
+        <div class="new_post-item without_avatar">
+            <a href="?act=comments&amp;id=<?= $comment['id'] ?>" class="card-title h3"><?= $comment['name'] ?></a>
+            <div class="post-body"><?= $comment['text'] ?></div>
+            <div class="mr-2 post-meta">
+                <span><?= __('Author:') ?></span><?= $comment['who'] ?>
             </div>
         </div>
     <?php endforeach; ?>

@@ -26,11 +26,7 @@ $this->layout(
 );
 ?>
 <?php if (empty($files)): ?>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-info"><?= __('The list is empty') ?></div>
-        </div>
-    </div>
+    <div class="alert alert-info"><?= __('The list is empty') ?></div>
 <?php else: ?>
     <?php foreach ($files as $file): ?>
         <?= $this->fetch('downloads::file_row', ['file' => $file]) ?>
@@ -38,11 +34,11 @@ $this->layout(
 <?php endif; ?>
 
 <?php if ($total): ?>
-    <div>
+    <div class="mt-2">
         <div><?= __('Total') ?>: <?= $total ?></div>
         <!-- Page switching -->
         <?php if ($total > $user->config->kmess): ?>
-            <div class="mt-1"><?= $pagination ?></div>
+            <div class="mt-2"><?= $pagination ?></div>
         <?php endif ?>
     </div>
 <?php endif; ?>

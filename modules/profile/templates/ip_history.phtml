@@ -23,43 +23,38 @@ $this->layout(
 );
 ?>
 
-
-<div class="row">
-    <div class="col-md-6">
-        <?php if (! empty($data['message'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-info',
-                    'alert'      => $data['message'],
-                ]
-            ) ?>
-        <?php endif; ?>
-        <table class="table table-striped">
-            <thead>
-            <tr class="bg-secondary text-white">
-                <th><?= __('IP address') ?></th>
-                <th><?= __('Date') ?></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php if (empty($data['items'])): ?>
-                <tr>
-                    <td colspan="2" class="text-center">
-                        <?= __('The list is empty') ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-            <?php foreach ($data['items'] as $item): ?>
-                <tr>
-                    <td><a href="<?= $item['search_url'] ?>"><?= $item['ip'] ?></a></td>
-                    <td><?= $item['display_date'] ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+<?php if (! empty($data['message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => $data['message'],
+        ]
+    ) ?>
+<?php endif; ?>
+<table class="table table-striped">
+    <thead>
+    <tr class="bg-secondary text-white">
+        <th><?= __('IP address') ?></th>
+        <th><?= __('Date') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if (empty($data['items'])): ?>
+        <tr>
+            <td colspan="2" class="text-center">
+                <?= __('The list is empty') ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <tr>
+            <td><a href="<?= $item['search_url'] ?>"><?= $item['ip'] ?></a></td>
+            <td><?= $item['display_date'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
 <div class="mt-2">
     <?php if ($data['total'] > $user->config->kmess): ?>
         <div>

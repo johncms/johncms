@@ -25,66 +25,56 @@ $this->layout(
 );
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
-
-                    <div class="form-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
-                            <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
-                        </div>
-                        <div class="text-muted mb-3 small">
-                            <?= __('Max. Size') ?>: <?= $config['flsz'] ?> kb.
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="new_file"><?= __('Save as') ?></label>
-                        <input type="text" class="form-control" id="new_file" placeholder="<?= __('Save as') ?>"
-                               name="new_file" value="" maxlength="100">
-                        <div class="text-muted small"><?= __('max. 100 characters') ?></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="text"><?= __('File Name') ?></label>
-                        <input type="text" class="form-control" id="text" placeholder="<?= __('File Name') ?>"
-                               name="text" value="" maxlength="200">
-                        <div class="text-muted small"><?= __('max. 200 characters') ?></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name_link"><?= __('Link to download file') ?></label>
-                        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
-                               name="name_link" value="<?= __('Download') ?>" maxlength="200" required>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="screen" name="screen" aria-describedby="screen">
-                            <label class="custom-file-label" for="screen"><?= __('Choose screenshot') ?></label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="desc"><?= __('Description') ?></label>
-                        <div><?= $bbcode ?></div>
-                        <textarea id="desc" class="form-control" maxlength="65000" name="opis" cols="24" rows="4"></textarea>
-                    </div>
-
-                    <div class="alert alert-warning mt-3">
-                        <?= __('Allowed extensions') ?>: <?= $extensions ?>
-                    </div>
-
-                    <div>
-                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-                        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
-                    </div>
-                </form>
-            </div>
+<form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
+            <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
+        </div>
+        <div class="text-muted mb-3 small">
+            <?= __('Max. Size') ?>: <?= $config['flsz'] ?> kb.
         </div>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="new_file"><?= __('Save as') ?></label>
+        <input type="text" class="form-control" id="new_file" placeholder="<?= __('Save as') ?>"
+               name="new_file" value="" maxlength="100">
+        <div class="text-muted small"><?= __('max. 100 characters') ?></div>
+    </div>
+
+    <div class="form-group">
+        <label for="text"><?= __('File Name') ?></label>
+        <input type="text" class="form-control" id="text" placeholder="<?= __('File Name') ?>"
+               name="text" value="" maxlength="200">
+        <div class="text-muted small"><?= __('max. 200 characters') ?></div>
+    </div>
+
+    <div class="form-group">
+        <label for="name_link"><?= __('Link to download file') ?></label>
+        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
+               name="name_link" value="<?= __('Download') ?>" maxlength="200" required>
+    </div>
+
+    <div class="form-group">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="screen" name="screen" aria-describedby="screen">
+            <label class="custom-file-label" for="screen"><?= __('Choose screenshot') ?></label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="desc"><?= __('Description') ?></label>
+        <div><?= $bbcode ?></div>
+        <textarea id="desc" class="form-control" maxlength="65000" name="opis" cols="24" rows="4"></textarea>
+    </div>
+
+    <div class="alert alert-warning mt-3">
+        <?= __('Allowed extensions') ?>: <?= $extensions ?>
+    </div>
+
+    <div>
+        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    </div>
+</form>

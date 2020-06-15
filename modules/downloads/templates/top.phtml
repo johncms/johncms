@@ -31,9 +31,9 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div class="mb-3">
+<div class="mb-3 mt-n1">
     <?php foreach ($buttons as $button): ?>
-        <a href="<?= $button['url'] ?>" class="btn btn-outline-primary btn-sm mr-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
+        <a href="<?= $button['url'] ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
     <?php endforeach; ?>
 </div>
 

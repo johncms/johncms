@@ -5,10 +5,6 @@
 
     .tile {
 
-        .card {
-            padding: 1.4rem 0;
-        }
-
         @media (max-width: 400px) {
             padding: 0;
             &:nth-child(odd) {
