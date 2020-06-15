@@ -10,13 +10,22 @@
 
 declare(strict_types=1);
 
+use Johncms\System\Http\Request;
+use Johncms\Users\User;
+use Johncms\Validator\Validator;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $title = __('Edit Profile');
-$data = [];
+$data = [
+    'errors' => [],
+];
+
+/** @var Request $request */
+$request = di(Request::class);
 
 // Проверяем права доступа для редактирования Профиля
-if ($user_data->id !== $user->id && ($user->rights < 7 || $user_data->rights >= $user->rights)) {
+if ($user_data->id !== $user->id && ($user->rights < 7 || $user_data->rights > $user->rights)) {
     echo $view->render(
         'system::pages/result',
         [
@@ -44,6 +53,30 @@ $nav_chain->add($title);
 
 $data['back_url'] = '?user=' . $user_data->id;
 
+// Готовим массив с данными пользователя
+$form_data = [
+    'imname'      => $request->getPost('imname', $user_data->imname, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'live'        => $request->getPost('live', $user_data->live, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'dayb'        => $request->getPost('dayb', $user_data->dayb, FILTER_SANITIZE_STRING),
+    'monthb'      => $request->getPost('monthb', $user_data->monthb, FILTER_SANITIZE_STRING),
+    'yearofbirth' => $request->getPost('yearofbirth', $user_data->yearofbirth, FILTER_SANITIZE_STRING),
+    'about'       => $request->getPost('about', $user_data->about, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'mibile'      => $request->getPost('mibile', $user_data->mibile, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'mail'        => $request->getPost('mail', $user_data->mail, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'mailvis'     => $request->getPost('mailvis', $user_data->mailvis, FILTER_VALIDATE_INT),
+    'skype'       => $request->getPost('skype', $user_data->skype, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'jabber'      => $request->getPost('jabber', $user_data->jabber, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'www'         => $request->getPost('www', $user_data->www, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'status'      => $request->getPost('status', $user_data->status, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+
+    // Данные юзера (для Администраторов)
+    'name'        => $request->getPost('name', $user_data->name, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'karma_off'   => $request->getPost('karma_off', $user_data->karma_off, FILTER_VALIDATE_INT),
+    'sex'         => $request->getPost('sex', $user_data->sex, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+    'rights'      => $request->getPost('rights', $user_data->rights, FILTER_VALIDATE_INT),
+    'csrf_token'  => $request->getPost('csrf_token', ''),
+];
+
 if (isset($_GET['delavatar'])) {
     // Удаляем аватар
     $avatar = UPLOAD_PATH . 'users/avatar/' . $user_data->id . '.png';
@@ -59,78 +92,75 @@ if (isset($_GET['delavatar'])) {
 } elseif (isset($_POST['submit'])) {
     // Принимаем данные из формы, проверяем и записываем в базу
     $error = [];
-    $user_save_data = [];
-    $user_save_data['imname'] = isset($_POST['imname']) ? htmlspecialchars(mb_substr(trim($_POST['imname']), 0, 25)) : '';
-    $user_save_data['live'] = isset($_POST['live']) ? htmlspecialchars(mb_substr(trim($_POST['live']), 0, 50)) : '';
-    $user_save_data['dayb'] = isset($_POST['dayb']) ? (int) ($_POST['dayb']) : 0;
-    $user_save_data['monthb'] = isset($_POST['monthb']) ? (int) ($_POST['monthb']) : 0;
-    $user_save_data['yearofbirth'] = isset($_POST['yearofbirth']) ? (int) ($_POST['yearofbirth']) : 0;
-    $user_save_data['about'] = isset($_POST['about']) ? htmlspecialchars(mb_substr(trim($_POST['about']), 0, 500)) : '';
-    $user_save_data['mibile'] = isset($_POST['mibile']) ? htmlspecialchars(mb_substr(trim($_POST['mibile']), 0, 40)) : '';
-    $user_save_data['mail'] = isset($_POST['mail']) ? htmlspecialchars(mb_substr(trim($_POST['mail']), 0, 40)) : '';
-    $user_save_data['mailvis'] = isset($_POST['mailvis']);
-    $user_save_data['skype'] = isset($_POST['skype']) ? htmlspecialchars(mb_substr(trim($_POST['skype']), 0, 40)) : '';
-    $user_save_data['jabber'] = isset($_POST['jabber']) ? htmlspecialchars(mb_substr(trim($_POST['jabber']), 0, 40)) : '';
-    $user_save_data['www'] = isset($_POST['www']) ? htmlspecialchars(mb_substr(trim($_POST['www']), 0, 40)) : '';
-    // Данные юзера (для Администраторов)
-    $user_save_data['name'] = isset($_POST['name']) ? htmlspecialchars(mb_substr(trim($_POST['name']), 0, 20)) : $user_data->name;
-    $user_save_data['status'] = isset($_POST['status']) ? htmlspecialchars(mb_substr(trim($_POST['status']), 0, 50)) : '';
-    $user_save_data['karma_off'] = isset($_POST['karma_off']);
-    $user_save_data['sex'] = isset($_POST['sex']) && $_POST['sex'] === 'm' ? 'm' : 'zh';
-    $user_save_data['rights'] = isset($_POST['rights']) ? abs((int) ($_POST['rights'])) : $user_data->rights;
+
+    // Правила валидации
+    $validation_rules = [
+        'imname'      => [
+            'NotEmpty',
+            'StringLength' => ['max' => 100],
+        ],
+        'live'        => ['StringLength' => ['max' => 100]],
+        'dayb'        => ['Between' => ['min' => 1, 'max' => 31]],
+        'monthb'      => ['Between' => ['min' => 1, 'max' => 12]],
+        'yearofbirth' => ['Between' => ['min' => 1900, 'max' => 3000]],
+        'mibile'      => ['StringLength' => ['max' => 50]],
+        'skype'       => ['StringLength' => ['max' => 50]],
+        'jabber'      => ['StringLength' => ['max' => 50]],
+        'www'         => ['StringLength' => ['max' => 50]],
+        'mail'        => [
+            'NotEmpty',
+            'EmailAddress'   => [
+                'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
+                'useMxCheck'     => true,
+                'useDeepMxCheck' => true,
+            ],
+            'ModelNotExists' => [
+                'model'   => User::class,
+                'field'   => 'mail',
+                'exclude' => [
+                    'field' => 'id',
+                    'value' => $user_data->id,
+                ],
+            ],
+        ],
+        'sex'         => ['InArray' => ['haystack' => ['m', 'zh']]],
+        'csrf_token'  => ['Csrf'],
+    ];
 
     // Проводим необходимые проверки
-    if ($user_save_data['rights'] > $user->rights || $user_save_data['rights'] > 9 || $user_save_data['rights'] < 0) {
-        $user_save_data['rights'] = 0;
+    if ($form_data['rights'] > $user->rights || $form_data['rights'] > 9 || $form_data['rights'] < 0) {
+        $form_data['rights'] = 0;
     }
 
     if ($user->rights >= 7) {
-        if (mb_strlen($user_save_data['name']) < 2 || mb_strlen($user_save_data['name']) > 20) {
-            $error[] = __('Min. nick length 2, max. 20 characters');
-        }
-
-        $lat_nick = $tools->rusLat($user_save_data['name']);
-
-        if (preg_match("/[^0-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick)) {
-            $error[] = __('Nick contains invalid characters');
-        }
-    }
-    if ($user_save_data['dayb'] || $user_save_data['monthb'] || $user_save_data['yearofbirth']) {
-        if ($user_save_data['dayb'] < 1 || $user_save_data['dayb'] > 31 || $user_save_data['monthb'] < 1 || $user_save_data['monthb'] > 12) {
-            $error[] = __('Invalid format date of birth');
-        }
+        $validation_rules['name'] = ['StringLength' => ['min' => 2, 'max' => 25]];
     }
 
-    if (! $error) {
+    // Проверяем данные
+    $validator = new Validator($form_data, $validation_rules);
+    if ($validator->isValid()) {
         // Обновляем пользовательские данные
         if ($user->rights < 7) {
-            unset($user_save_data['name'], $user_save_data['status'], $user_save_data['karma_off'], $user_save_data['sex'], $user_save_data['rights']);
+            unset($form_data['name'], $form_data['karma_off'], $form_data['sex'], $form_data['rights']);
         }
-        $user_data->update($user_save_data);
-
+        $user_data->update($form_data);
         $_SESSION['success_message'] = __('Data saved');
-    } else {
-        $_SESSION['edit_errors'] = $error;
+        header('Location: ?act=edit&user=' . $user_data->id);
+        exit;
     }
 
-    header('Location: ?act=edit&user=' . $user_data->id);
-    exit;
+    $data['errors'] = $validator->getErrors();
 }
 
 $data['form_action'] = '?act=edit&amp;user=' . $user_data->id;
-$user_data->about = htmlspecialchars($user_data->about);
-
-if (! empty($_SESSION['edit_errors'])) {
-    $data['errors'] = $_SESSION['edit_errors'];
-    unset($_SESSION['edit_errors']);
-}
 
 if (! empty($_SESSION['success_message'])) {
     $data['success_message'] = $_SESSION['success_message'];
     unset($_SESSION['success_message']);
 }
 
-$data['user'] = $user_data;
+$data['user'] = $user_data->toArray();
+$data['form_data'] = $form_data;
 
 $avatar = UPLOAD_PATH . 'users/avatar/' . $user_data['id'] . '.png';
 if (file_exists($avatar)) {

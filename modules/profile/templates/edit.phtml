@@ -22,6 +22,7 @@ $this->layout(
     ]
 );
 
+$errors = $data['errors'];
 ?>
 
 <?php if (! empty($data['success_message'])): ?>
@@ -34,17 +35,18 @@ $this->layout(
     ) ?>
 <?php endif; ?>
 
-<?php if (! empty($data['errors'])): ?>
+<?php if (! empty($data['errors']['csrf_token'])): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-danger',
-            'alert'      => $data['errors'],
+            'alert'      => $data['errors']['csrf_token'],
         ]
     ) ?>
 <?php endif; ?>
 <div class="border-0">
     <form action="<?= $data['form_action'] ?>" method="post">
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
         <div class="pb-2">
             <div>
                 <?= __('Username') ?>: <b><?= $data['user']['name_lat'] ?></b>
@@ -54,43 +56,40 @@ $this->layout(
                 <div class="form-group">
                     <label for="name"><?= __('Nickname') ?></label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control <?= (isset($errors['name']) ? 'is-invalid' : '') ?>"
                            name="name"
                            id="name"
-                           value="<?= $data['user']['name'] ?>"
+                           value="<?= $data['form_data']['name'] ?>"
                            required
                            placeholder="<?= __('Nickname') ?>"
                            maxlength="20"
                            minlength="2"
                     >
+                    <?php if (isset($errors['name'])): ?>
+                        <div class="invalid-feedback"><?= implode('<br>', $errors['name']) ?></div>
+                    <?php endif ?>
                     <div class="small text-muted"><?= __('Min.2, Max. 20') ?></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="status"><?= __('Status') ?></label>
-                    <input type="text"
-                           class="form-control"
-                           name="status"
-                           id="status"
-                           value="<?= $data['user']['status'] ?>"
-                           placeholder="<?= __('Status') ?>"
-                           maxlength="50"
-                    >
-                    <div class="small text-muted"><?= __('Max. 50') ?></div>
-                </div>
-
             <?php else: ?>
                 <div>
                     <?= __('Nickname') ?>: <b><?= $data['user']['name'] ?></b>
                 </div>
-                <?php if (! empty($data['user']['status'])): ?>
-                    <div>
-                        <?= __('Status') ?>: <b><?= $data['user']['status'] ?></b>
-                    </div>
-                <?php endif; ?>
             <?php endif; ?>
-
-
+            <div class="form-group">
+                <label for="status"><?= __('Status') ?></label>
+                <input type="text"
+                       class="form-control <?= (isset($errors['status']) ? 'is-invalid' : '') ?>"
+                       name="status"
+                       id="status"
+                       value="<?= $data['form_data']['status'] ?>"
+                       placeholder="<?= __('Status') ?>"
+                       maxlength="50"
+                >
+                <?php if (isset($errors['status'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['status']) ?></div>
+                <?php endif ?>
+                <div class="small text-muted"><?= __('Max. 50') ?></div>
+            </div>
             <div class="mb-3">
                 <div class="mb-2">
                     <?= __('Avatar') ?>
@@ -133,32 +132,45 @@ $this->layout(
 
             <h3><?= __('Personal info') ?></h3>
 
-
             <div class="form-group">
                 <label for="imname"><?= __('Your name') ?></label>
                 <input type="text"
-                       class="form-control"
+                       class="form-control <?= (isset($errors['imname']) ? 'is-invalid' : '') ?>"
                        name="imname"
                        id="imname"
-                       value="<?= $data['user']['imname'] ?>"
+                       value="<?= $data['form_data']['imname'] ?>"
                        placeholder="<?= __('Your name') ?>"
                 >
+                <?php if (isset($errors['imname'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['imname']) ?></div>
+                <?php endif ?>
             </div>
 
             <div class="form-group">
                 <label for="day"><?= __('Date of birth (d.m.y)') ?></label>
                 <div class="form-row align-items-center">
                     <div class="col">
-                        <input type="text" id="day" value="<?= $data['user']['dayb'] ?>" size="2" placeholder="<?= __('Day') ?>"
-                               maxlength="2" name="dayb" class="form-control">
+                        <input type="text" id="day" value="<?= $data['form_data']['dayb'] ?>" size="2" placeholder="<?= __('Day') ?>"
+                               maxlength="2" name="dayb" class="form-control <?= (isset($errors['dayb']) ? 'is-invalid' : '') ?>">
+                        <?php if (isset($errors['dayb'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $errors['dayb']) ?></div>
+                        <?php endif ?>
                     </div>
                     <div class="col flex-grow-0">-</div>
                     <div class="col">
-                        <input type="text" value="<?= $data['user']['monthb'] ?>" size="2" maxlength="2" name="monthb" placeholder="<?= __('Month') ?>" class="form-control">
+                        <input type="text" value="<?= $data['form_data']['monthb'] ?>" size="2" maxlength="2" name="monthb" placeholder="<?= __('Month') ?>"
+                               class="form-control <?= (isset($errors['monthb']) ? 'is-invalid' : '') ?>">
+                        <?php if (isset($errors['monthb'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $errors['monthb']) ?></div>
+                        <?php endif ?>
                     </div>
                     <div class="col flex-grow-0">-</div>
                     <div class="col">
-                        <input type="text" value="<?= $data['user']['yearofbirth'] ?>" size="4" maxlength="4" name="yearofbirth" placeholder="<?= __('Year') ?>" class="form-control">
+                        <input type="text" value="<?= $data['form_data']['yearofbirth'] ?>" size="4" maxlength="4" name="yearofbirth" placeholder="<?= __('Year') ?>"
+                               class="form-control <?= (isset($errors['yearofbirth']) ? 'is-invalid' : '') ?>">
+                        <?php if (isset($errors['yearofbirth'])): ?>
+                            <div class="invalid-feedback"><?= implode('<br>', $errors['yearofbirth']) ?></div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -166,41 +178,51 @@ $this->layout(
             <div class="form-group">
                 <label for="live"><?= __('City, Country') ?></label>
                 <input type="text"
-                       class="form-control"
+                       class="form-control <?= (isset($errors['live']) ? 'is-invalid' : '') ?>"
                        name="live"
                        id="live"
-                       value="<?= $data['user']['live'] ?>"
+                       value="<?= $data['form_data']['live'] ?>"
                        placeholder="<?= __('City, Country') ?>"
                 >
+                <?php if (isset($errors['live'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['live']) ?></div>
+                <?php endif ?>
             </div>
             <div class="form-group">
                 <label for="about"><?= __('About myself') ?></label>
-                <textarea id="about" rows="<?= $user->config->fieldHeight ?>" class="form-control" name="about"><?= $data['user']['about'] ?></textarea>
+                <textarea id="about" rows="<?= $user->config->fieldHeight ?>" class="form-control" name="about"><?= $data['form_data']['about'] ?></textarea>
             </div>
 
             <h3><?= __('Contacts') ?></h3>
             <div class="form-group">
                 <label for="mibile"><?= __('Phone number') ?></label>
                 <input type="text"
-                       class="form-control"
+                       class="form-control <?= (isset($errors['mibile']) ? 'is-invalid' : '') ?>"
                        name="mibile"
                        id="mibile"
-                       value="<?= $data['user']['mibile'] ?>"
+                       value="<?= $data['form_data']['mibile'] ?>"
                        placeholder="<?= __('Phone number') ?>"
                 >
+                <?php if (isset($errors['mibile'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['mibile']) ?></div>
+                <?php endif ?>
             </div>
             <div class="form-group">
                 <label for="mail"><?= __('E-mail') ?></label>
                 <input type="email"
-                       class="form-control"
+                       class="form-control <?= (isset($errors['mail']) ? 'is-invalid' : '') ?>"
                        name="mail"
                        id="mail"
-                       value="<?= $data['user']['mail'] ?>"
+                       value="<?= $data['form_data']['mail'] ?>"
                        placeholder="<?= __('E-mail') ?>"
                 >
+                <?php if (isset($errors['mail'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['mail']) ?></div>
+                <?php endif ?>
             </div>
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="mailvis" value="1" id="mailvis" <?= $data['user']['mailvis'] ? 'checked' : '' ?>>
+                <input type="hidden" name="mailvis" value="0">
+                <input type="checkbox" class="custom-control-input" name="mailvis" value="1" id="mailvis" <?= $data['form_data']['mailvis'] ? 'checked' : '' ?>>
                 <label class="custom-control-label" for="mailvis"><?= __('Show in Profile') ?></label>
             </div>
             <div class="small text-muted"><?= __('Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.') ?></div>
@@ -209,29 +231,36 @@ $this->layout(
             <div class="form-group mt-2">
                 <label for="skype"><?= __('Skype') ?></label>
                 <input type="text"
-                       class="form-control"
+                       class="form-control <?= (isset($errors['skype']) ? 'is-invalid' : '') ?>"
                        name="skype"
                        id="skype"
-                       value="<?= $data['user']['skype'] ?>"
+                       value="<?= $data['form_data']['skype'] ?>"
                        placeholder="<?= __('Skype') ?>"
                 >
+                <?php if (isset($errors['skype'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['skype']) ?></div>
+                <?php endif ?>
             </div>
 
             <div class="form-group">
                 <label for="www"><?= __('Site') ?></label>
                 <input type="text"
-                       class="form-control"
+                       class="form-control <?= (isset($errors['www']) ? 'is-invalid' : '') ?>"
                        name="www"
                        id="www"
-                       value="<?= $data['user']['www'] ?>"
+                       value="<?= $data['form_data']['www'] ?>"
                        placeholder="<?= __('Site') ?>"
                 >
+                <?php if (isset($errors['www'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['www']) ?></div>
+                <?php endif ?>
             </div>
 
             <?php if ($user->rights >= 7): ?>
                 <h3><?= __('Administrative Functions') ?></h3>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="karma_off" value="1" id="karma_off" <?= $data['user']['karma_off'] ? 'checked' : '' ?>>
+                    <input type="hidden" name="karma_off" value="0">
+                    <input type="checkbox" class="custom-control-input" name="karma_off" value="1" id="karma_off" <?= $data['form_data']['karma_off'] ? 'checked' : '' ?>>
                     <label class="custom-control-label" for="karma_off"><?= __('Prohibit Karma') ?></label>
                 </div>
                 <div class="mt-2 mb-3">
@@ -243,49 +272,48 @@ $this->layout(
 
                 <h3><?= __('Select gender') ?></h3>
                 <div class="custom-control custom-radio">
-                    <input type="radio" id="m" name="sex" value="m" class="custom-control-input" <?= ($data['user']['sex'] === 'm' ? 'checked="checked"' : '') ?>>
+                    <input type="radio" id="m" name="sex" value="m" class="custom-control-input" <?= ($data['form_data']['sex'] === 'm' ? 'checked="checked"' : '') ?>>
                     <label class="custom-control-label" for="m"><?= __('Man') ?></label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" id="zh" name="sex" value="zh" class="custom-control-input" <?= ($data['user']['sex'] === 'zh' ? 'checked="checked"' : '') ?>>
+                    <input type="radio" id="zh" name="sex" value="zh" class="custom-control-input" <?= ($data['form_data']['sex'] === 'zh' ? 'checked="checked"' : '') ?>>
                     <label class="custom-control-label" for="zh"><?= __('Woman') ?></label>
                 </div>
 
                 <?php if ($data['user']['id'] !== $user->id): ?>
                     <h3 class="mt-3"><?= __('Position on the Site') ?></h3>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="user" name="rights" value="0" class="custom-control-input" <?= (! $data['user']['rights'] ? 'checked="checked"' : '') ?>>
+                        <input type="radio" id="user" name="rights" value="0" class="custom-control-input" <?= (! $data['form_data']['rights'] ? 'checked="checked"' : '') ?>>
                         <label class="custom-control-label" for="user"><?= __('User') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="fmod" name="rights" value="3" class="custom-control-input" <?= ($data['user']['rights'] === 3 ? 'checked="checked"' : '') ?>>
+                        <input type="radio" id="fmod" name="rights" value="3" class="custom-control-input" <?= ($data['form_data']['rights'] === 3 ? 'checked="checked"' : '') ?>>
                         <label class="custom-control-label" for="fmod"><?= __('Forum Moderator') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="dmod" name="rights" value="4" class="custom-control-input" <?= ($data['user']['rights'] === 4 ? 'checked="checked"' : '') ?>>
+                        <input type="radio" id="dmod" name="rights" value="4" class="custom-control-input" <?= ($data['form_data']['rights'] === 4 ? 'checked="checked"' : '') ?>>
                         <label class="custom-control-label" for="dmod"><?= __('Download Moderator') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="lmod" name="rights" value="5" class="custom-control-input" <?= ($data['user']['rights'] === 5 ? 'checked="checked"' : '') ?>>
+                        <input type="radio" id="lmod" name="rights" value="5" class="custom-control-input" <?= ($data['form_data']['rights'] === 5 ? 'checked="checked"' : '') ?>>
                         <label class="custom-control-label" for="lmod"><?= __('Library Moderator') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="smod" name="rights" value="6" class="custom-control-input" <?= ($data['user']['rights'] === 6 ? 'checked="checked"' : '') ?>>
+                        <input type="radio" id="smod" name="rights" value="6" class="custom-control-input" <?= ($data['form_data']['rights'] === 6 ? 'checked="checked"' : '') ?>>
                         <label class="custom-control-label" for="smod"><?= __('Super Moderator') ?></label>
                     </div>
 
                     <?php if ($user->rights === 9): ?>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="adm" name="rights" value="7" class="custom-control-input" <?= ($data['user']['rights'] === 7 ? 'checked="checked"' : '') ?>>
+                            <input type="radio" id="adm" name="rights" value="7" class="custom-control-input" <?= ($data['form_data']['rights'] === 7 ? 'checked="checked"' : '') ?>>
                             <label class="custom-control-label" for="adm"><?= __('Administrator') ?></label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="sv" name="rights" value="9" class="custom-control-input" <?= ($data['user']['rights'] === 9 ? 'checked="checked"' : '') ?>>
+                            <input type="radio" id="sv" name="rights" value="9" class="custom-control-input" <?= ($data['form_data']['rights'] === 9 ? 'checked="checked"' : '') ?>>
                             <label class="custom-control-label" for="sv"><?= __('Supervisor') ?></label>
                         </div>
                     <?php endif; ?>
                 <?php endif; ?>
-
 
             <?php endif; ?>
 
