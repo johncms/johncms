@@ -231,15 +231,12 @@ $this->layout(
 </div>
 
 <?php if (! empty($data['user']['admin_notes']) && $user->rights > 0): ?>
-<div class="mt-4">
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-warning',
-            'alert'      => $data['user']['admin_notes'],
-        ]
-    ) ?>
-</div>
+    <div class="mt-4">
+        <div class="alert alert-warning">
+            <div class="font-weight-bold h4"><?= __('Admin Notes') ?></div>
+            <div><?= $data['user']['admin_notes'] ?></div>
+        </div>
+    </div>
 <?php endif; ?>
 
 <div class="border-top mt-4"></div>
