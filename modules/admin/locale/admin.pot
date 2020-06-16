@@ -106,9 +106,9 @@ msgstr ""
 #: modules/admin/templates/counters.phtml:62
 #: modules/admin/templates/counters_confirm.phtml:35
 #: modules/admin/templates/counters_view.phtml:60
-#: modules/admin/templates/forum/del_confirm.phtml:35
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:60
-#: modules/admin/templates/forum/structure.phtml:57
+#: modules/admin/templates/forum/del_confirm.phtml:33
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:58
+#: modules/admin/templates/forum/structure.phtml:55
 #: modules/admin/templates/user_clean_confirm.phtml:36
 #: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
@@ -288,8 +288,8 @@ msgstr ""
 #: modules/admin/templates/counters_view.phtml:61
 #: modules/admin/templates/forum/hidden_posts.phtml:130
 #: modules/admin/templates/forum/hidden_topics.phtml:126
-#: modules/admin/templates/forum/index.phtml:46
-#: modules/admin/templates/forum/structure.phtml:70
+#: modules/admin/templates/forum/index.phtml:43
+#: modules/admin/templates/forum/structure.phtml:65
 #: modules/admin/templates/ipban.phtml:83
 #: modules/admin/templates/ipban_detail.phtml:59
 #: modules/admin/templates/reg_list.phtml:64
@@ -342,7 +342,7 @@ msgid "Counters"
 msgstr ""
 
 #: modules/admin/includes/counters.php:45
-#: modules/admin/templates/counters_form.phtml:85
+#: modules/admin/templates/counters_form.phtml:82
 msgid "Viewing"
 msgstr ""
 
@@ -428,10 +428,10 @@ msgstr ""
 #: modules/admin/templates/ads_add.phtml:48
 #: modules/admin/templates/counters_add_confirm.phtml:41
 #: modules/admin/templates/counters_view.phtml:31
-#: modules/admin/templates/forum/add.phtml:46
-#: modules/admin/templates/forum/add.phtml:47
-#: modules/admin/templates/forum/edit.phtml:42
-#: modules/admin/templates/forum/edit.phtml:43
+#: modules/admin/templates/forum/add.phtml:42
+#: modules/admin/templates/forum/add.phtml:43
+#: modules/admin/templates/forum/edit.phtml:38
+#: modules/admin/templates/forum/edit.phtml:39
 #: modules/admin/templates/news.phtml:45
 #: modules/admin/templates/settings.phtml:57
 msgid "Title"
@@ -448,7 +448,7 @@ msgid "Description should be at least 2 characters in length"
 msgstr ""
 
 #: modules/admin/includes/forum/cat.php:22
-#: modules/admin/templates/forum/index.phtml:39
+#: modules/admin/templates/forum/index.phtml:38
 msgid "Forum structure"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgid "Please select a valid parent"
 msgstr ""
 
 #: modules/admin/includes/forum/hposts.php:23
-#: modules/admin/templates/forum/index.phtml:40
+#: modules/admin/templates/forum/index.phtml:39
 msgid "Hidden posts"
 msgstr ""
 
@@ -531,7 +531,7 @@ msgid "Access forbidden"
 msgstr ""
 
 #: modules/admin/includes/forum/htopics.php:23
-#: modules/admin/templates/forum/index.phtml:41
+#: modules/admin/templates/forum/index.phtml:40
 msgid "Hidden topics"
 msgstr ""
 
@@ -619,7 +619,7 @@ msgstr ""
 
 #: modules/admin/includes/ipban.php:200
 #: modules/admin/templates/ads_index.phtml:53
-#: modules/admin/templates/counters_form.phtml:63
+#: modules/admin/templates/counters_form.phtml:60
 msgid "Default"
 msgstr ""
 
@@ -645,12 +645,12 @@ msgstr ""
 #: modules/admin/templates/antispy_create_confirm.phtml:38
 #: modules/admin/templates/counters_add_confirm.phtml:64
 #: modules/admin/templates/counters_confirm.phtml:36
-#: modules/admin/templates/counters_form.phtml:86
-#: modules/admin/templates/forum/add.phtml:89
-#: modules/admin/templates/forum/del_confirm.phtml:36
-#: modules/admin/templates/forum/del_confirm_move.phtml:48
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:62
-#: modules/admin/templates/forum/edit.phtml:98
+#: modules/admin/templates/counters_form.phtml:83
+#: modules/admin/templates/forum/add.phtml:85
+#: modules/admin/templates/forum/del_confirm.phtml:34
+#: modules/admin/templates/forum/del_confirm_move.phtml:46
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:60
+#: modules/admin/templates/forum/edit.phtml:94
 #: modules/admin/templates/forum/hidden_posts.phtml:30
 #: modules/admin/templates/forum/hidden_topics.phtml:30
 #: modules/admin/templates/ipban_add.phtml:76
@@ -861,7 +861,7 @@ msgstr ""
 #: modules/admin/templates/amnesty.phtml:44
 #: modules/admin/templates/antiflood.phtml:77
 #: modules/admin/templates/counters_add_confirm.phtml:63
-#: modules/admin/templates/forum/edit.phtml:97
+#: modules/admin/templates/forum/edit.phtml:93
 #: modules/admin/templates/ipban_add.phtml:75
 #: modules/admin/templates/karma.phtml:63
 #: modules/admin/templates/languages.phtml:28
@@ -876,7 +876,7 @@ msgstr ""
 #: modules/admin/templates/counters.phtml:42
 #: modules/admin/templates/forum/hidden_posts.phtml:107
 #: modules/admin/templates/forum/hidden_topics.phtml:103
-#: modules/admin/templates/forum/structure.phtml:33
+#: modules/admin/templates/forum/structure.phtml:32
 #: modules/admin/templates/ipban.phtml:47
 #: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
@@ -1002,7 +1002,7 @@ msgstr ""
 #: modules/admin/templates/ads_index.phtml:58
 #: modules/admin/templates/counters.phtml:61
 #: modules/admin/templates/counters_view.phtml:59
-#: modules/admin/templates/forum/structure.phtml:56
+#: modules/admin/templates/forum/structure.phtml:54
 msgid "Edit"
 msgstr ""
 
@@ -1106,22 +1106,22 @@ msgid "Sort"
 msgstr ""
 
 #: modules/admin/templates/counters.phtml:71
-#: modules/admin/templates/forum/add.phtml:88
-#: modules/admin/templates/forum/structure.phtml:66
+#: modules/admin/templates/forum/add.phtml:84
+#: modules/admin/templates/forum/structure.phtml:61
 #: modules/admin/templates/ipban.phtml:74
 msgid "Add"
 msgstr ""
 
 #: modules/admin/templates/counters_add_confirm.phtml:44
-#: modules/admin/templates/counters_form.phtml:49
-#: modules/admin/templates/counters_form.phtml:71
+#: modules/admin/templates/counters_form.phtml:46
+#: modules/admin/templates/counters_form.phtml:68
 #: modules/admin/templates/counters_view.phtml:42
 msgid "Option 1"
 msgstr ""
 
 #: modules/admin/templates/counters_add_confirm.phtml:47
-#: modules/admin/templates/counters_form.phtml:54
-#: modules/admin/templates/counters_form.phtml:75
+#: modules/admin/templates/counters_form.phtml:51
+#: modules/admin/templates/counters_form.phtml:72
 #: modules/admin/templates/counters_view.phtml:45
 msgid "Option 2"
 msgstr ""
@@ -1130,36 +1130,36 @@ msgstr ""
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:45
-#: modules/admin/templates/counters_form.phtml:46
+#: modules/admin/templates/counters_form.phtml:42
+#: modules/admin/templates/counters_form.phtml:43
 msgid "Name"
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:51
+#: modules/admin/templates/counters_form.phtml:48
 msgid "Code for main page"
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:56
+#: modules/admin/templates/counters_form.phtml:53
 msgid "Code for other pages"
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:59
+#: modules/admin/templates/counters_form.phtml:56
 msgid "Display mode"
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:66
+#: modules/admin/templates/counters_form.phtml:63
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:79
+#: modules/admin/templates/counters_form.phtml:76
 msgid "WARNING!"
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:80
+#: modules/admin/templates/counters_form.phtml:77
 msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
 msgstr ""
 
-#: modules/admin/templates/counters_form.phtml:81
+#: modules/admin/templates/counters_form.phtml:78
 msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
 msgstr ""
 
@@ -1187,125 +1187,125 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:42
+#: modules/admin/templates/forum/add.phtml:38
 msgid "Parent section:"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:48
-#: modules/admin/templates/forum/edit.phtml:44
+#: modules/admin/templates/forum/add.phtml:44
+#: modules/admin/templates/forum/edit.phtml:40
 msgid "Min. 2, Max. 30 characters"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:52
-#: modules/admin/templates/forum/edit.phtml:54
+#: modules/admin/templates/forum/add.phtml:48
+#: modules/admin/templates/forum/edit.phtml:50
 #: modules/admin/templates/settings.phtml:65
 msgid "Description"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:54
-#: modules/admin/templates/forum/edit.phtml:56
+#: modules/admin/templates/forum/add.phtml:50
+#: modules/admin/templates/forum/edit.phtml:52
 msgid "Optional field"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:54
-#: modules/admin/templates/forum/edit.phtml:56
+#: modules/admin/templates/forum/add.phtml:50
+#: modules/admin/templates/forum/edit.phtml:52
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:58
-#: modules/admin/templates/forum/add.phtml:61
-#: modules/admin/templates/forum/edit.phtml:59
-#: modules/admin/templates/forum/edit.phtml:62
+#: modules/admin/templates/forum/add.phtml:54
+#: modules/admin/templates/forum/add.phtml:57
+#: modules/admin/templates/forum/edit.phtml:55
+#: modules/admin/templates/forum/edit.phtml:58
 msgid "Common access"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:61
+#: modules/admin/templates/forum/edit.phtml:62
+msgid "Assign the newly created authors as curators"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:65
 #: modules/admin/templates/forum/edit.phtml:66
-msgid "Assign the newly created authors as curators"
+msgid "Allow authors to edit the 1st post"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:69
 #: modules/admin/templates/forum/edit.phtml:70
-msgid "Allow authors to edit the 1st post"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:73
-#: modules/admin/templates/forum/edit.phtml:74
 msgid "Only for reading"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:77
-#: modules/admin/templates/forum/edit.phtml:77
+#: modules/admin/templates/forum/add.phtml:73
+#: modules/admin/templates/forum/edit.phtml:73
 msgid "Section type"
+msgstr ""
+
+#: modules/admin/templates/forum/add.phtml:76
+#: modules/admin/templates/forum/edit.phtml:76
+msgid "For subsections"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:80
 #: modules/admin/templates/forum/edit.phtml:80
-msgid "For subsections"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:84
-#: modules/admin/templates/forum/edit.phtml:84
 msgid "For topics"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:31
+#: modules/admin/templates/forum/del_confirm_move.phtml:29
 msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:37
-#: modules/admin/templates/forum/edit.phtml:88
+#: modules/admin/templates/forum/del_confirm_move.phtml:35
+#: modules/admin/templates/forum/edit.phtml:84
 msgid "Category"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:44
+#: modules/admin/templates/forum/del_confirm_move.phtml:42
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:47
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:53
+#: modules/admin/templates/forum/del_confirm_move.phtml:45
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:51
 msgid "Move"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:53
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:57
+#: modules/admin/templates/forum/del_confirm_move.phtml:51
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:55
 msgid "Complete removal"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:55
+#: modules/admin/templates/forum/del_confirm_move.phtml:53
 msgid "If you want to destroy all the information, first remove"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move.phtml:56
+#: modules/admin/templates/forum/del_confirm_move.phtml:54
 msgid "subsections"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:31
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:29
 msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:36
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:34
 msgid "Select section"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:43
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:41
 msgid "Other category"
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:50
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:48
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
 msgstr ""
 
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:58
+#: modules/admin/templates/forum/del_confirm_move_topics.phtml:56
 msgid "WARNING! All the information will be deleted"
 msgstr ""
 
-#: modules/admin/templates/forum/edit.phtml:48
-#: modules/admin/templates/forum/edit.phtml:49
+#: modules/admin/templates/forum/edit.phtml:44
+#: modules/admin/templates/forum/edit.phtml:45
 msgid "Order"
 msgstr ""
 
-#: modules/admin/templates/forum/edit.phtml:50
+#: modules/admin/templates/forum/edit.phtml:46
 msgid "Only numbers"
 msgstr ""
 
@@ -1354,39 +1354,39 @@ msgstr ""
 msgid "Topic deleted:"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:28
+#: modules/admin/templates/forum/index.phtml:27
 msgid "Statistic"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:30
+#: modules/admin/templates/forum/index.phtml:29
 msgid "Categories"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:31
+#: modules/admin/templates/forum/index.phtml:30
 msgid "Sections"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:32
+#: modules/admin/templates/forum/index.phtml:31
 msgid "Topics"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:33
+#: modules/admin/templates/forum/index.phtml:32
 msgid "Messages"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:34
+#: modules/admin/templates/forum/index.phtml:33
 msgid "Files"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:35
+#: modules/admin/templates/forum/index.phtml:34
 msgid "Votes"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:37
+#: modules/admin/templates/forum/index.phtml:36
 msgid "Settings"
 msgstr ""
 
-#: modules/admin/templates/forum/structure.phtml:49
+#: modules/admin/templates/forum/structure.phtml:47
 msgid "View"
 msgstr ""
 

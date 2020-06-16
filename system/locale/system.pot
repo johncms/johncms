@@ -80,8 +80,8 @@ msgstr ""
 #: modules/login/index.php:67
 #: modules/login/templates/captcha.phtml:4
 #: modules/login/templates/captcha.phtml:5
-#: modules/login/templates/confirm.phtml:2
-#: modules/login/templates/confirm.phtml:3
+#: modules/login/templates/confirm.phtml:10
+#: modules/login/templates/confirm.phtml:11
 #: modules/login/templates/login.phtml:4
 #: modules/login/templates/login.phtml:5
 #: modules/login/templates/login.phtml:38
@@ -153,8 +153,8 @@ msgstr ""
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/index.php:146
-#: modules/login/index.php:150
+#: modules/login/index.php:149
+#: modules/login/index.php:153
 msgid "Authorization failed"
 msgstr ""
 
@@ -171,7 +171,11 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: modules/login/templates/confirm.phtml:8
+#: modules/login/templates/confirm.phtml:20
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
@@ -241,7 +245,7 @@ msgid "Comments"
 msgstr ""
 
 #: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:96
+#: modules/notifications/templates/index.phtml:80
 msgid "Settings"
 msgstr ""
 
@@ -256,15 +260,15 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:33
+#: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:83
+#: modules/notifications/templates/index.phtml:67
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:91
+#: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
 msgstr ""
 
@@ -598,14 +602,50 @@ msgstr ""
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/registration.phtml:10
-msgid "Registration on the website"
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
+msgid "Changing email address"
 msgstr ""
 
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
 #: themes/default/templates/system/mail/templates/registration.phtml:13
 #: themes/default/templates/system/mail/templates/restore_password.phtml:12
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 msgid "Hello, %s!"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
+msgid "The new email address is:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
+msgid "Confirm email change"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
+msgid "To continue please click the confirm button"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
+#: themes/default/templates/system/mail/templates/registration.phtml:27
+msgid "Confirm"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:10
+msgid "Registration on the website"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
@@ -628,10 +668,6 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/registration.phtml:22
 msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:27
-msgid "Confirm"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/registration.phtml:31
