@@ -43,6 +43,7 @@ if (! $schema->hasColumns('users', ['email_confirmed', 'confirmation_code'])) {
         static function (Blueprint $table) {
             $table->boolean('email_confirmed')->nullable();
             $table->string('confirmation_code', 50)->nullable();
+            $table->string('new_email', 50)->nullable()->comment('New email address waiting for confirmation');
         }
     );
 }

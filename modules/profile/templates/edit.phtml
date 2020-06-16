@@ -219,6 +219,12 @@ $errors = $data['errors'];
                 <?php if (isset($errors['mail'])): ?>
                     <div class="invalid-feedback"><?= implode('<br>', $errors['mail']) ?></div>
                 <?php endif ?>
+                <?php if (! empty($data['user']['new_email'])): ?>
+                    <div class="alert alert-danger mt-3">
+                        <?= __('The new email address is:') ?> <b><?= $data['user']['new_email'] ?></b><br>
+                        <?= __('Please check your email and confirm it.') ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="custom-control custom-checkbox">
                 <input type="hidden" name="mailvis" value="0">
@@ -226,7 +232,6 @@ $errors = $data['errors'];
                 <label class="custom-control-label" for="mailvis"><?= __('Show in Profile') ?></label>
             </div>
             <div class="small text-muted"><?= __('Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.') ?></div>
-
 
             <div class="form-group mt-2">
                 <label for="skype"><?= __('Skype') ?></label>

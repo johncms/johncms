@@ -74,6 +74,7 @@ use Johncms\System\Users\UserConfig;
  * @property array $notification_settings
  * @property bool $email_confirmed
  * @property string $confirmation_code
+ * @property string $new_email
  *
  * @property bool $is_online - Пользователь онлайн или нет?
  * @property string $rights_name - Название прав доступа
@@ -171,6 +172,7 @@ class User extends Model
         'notification_settings',
         'email_confirmed',
         'confirmation_code',
+        'new_email',
     ];
 
     /**

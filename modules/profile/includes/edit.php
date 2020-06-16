@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Mail\EmailMessage;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -146,6 +147,46 @@ if (isset($_GET['delavatar'])) {
         if ($user->rights < 7) {
             unset($form_data['name'], $form_data['karma_off'], $form_data['sex'], $form_data['rights']);
         }
+
+        // Если включено подтверждение e-mail адреса, то при его изменении необходимо выполнить подтверждение
+        if (! empty($config['user_email_confirmation']) && $user_data->mail !== $form_data['mail'] && $user->rights < 7) {
+            // Новый e-mail записываем в отдельное поле, старый сохраняем, генерируем код подтверждения
+            $form_data['new_email'] = $form_data['mail'];
+            $form_data['mail'] = $user_data->mail;
+            $form_data['confirmation_code'] = uniqid('email_', true);
+
+            // Отправляем письмо на новый email
+            $link = $config['homeurl'] . '/profile/?act=confirm_new_email&id=' . $user_data->id . '&code=' . $form_data['confirmation_code'];
+            (new EmailMessage())->create(
+                [
+                    'locale'   => $translator->getLocale(),
+                    'template' => 'system::mail/templates/confirm_email_change',
+                    'fields'   => [
+                        'email_to'        => $form_data['new_email'],
+                        'name_to'         => $user_data->name,
+                        'subject'         => __('Confirm email change'),
+                        'user_name'       => $user_data->name,
+                        'link_to_confirm' => $link,
+                    ],
+                ]
+            );
+
+            // Отправляем уведомление о начале процедуры изменения на старый email
+            (new EmailMessage())->create(
+                [
+                    'locale'   => $translator->getLocale(),
+                    'template' => 'system::mail/templates/changed_email_notification',
+                    'fields'   => [
+                        'email_to'  => $user_data->mail,
+                        'name_to'   => $user_data->name,
+                        'subject'   => __('The procedure for changing the email address was started'),
+                        'user_name' => $user_data->name,
+                        'new_email' => $form_data['new_email'],
+                    ],
+                ]
+            );
+        }
+
         $user_data->update($form_data);
         $_SESSION['success_message'] = __('Data saved');
         header('Location: ?act=edit&user=' . $user_data->id);

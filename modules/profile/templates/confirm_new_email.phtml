@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @var Johncms\Users\User $confirm_user
+ *
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if ($confirm_user === null): ?>
+    <div class="alert alert-danger"><?= __('User is not found') ?></div>
+<?php elseif ($confirmed): ?>
+    <div class="alert alert-success"><?= __('Thanks! Your e-mail has been successfully confirmed.') ?></div>
+<?php elseif (! $confirmed): ?>
+    <div class="alert alert-danger"><?= __('Error when confirming e-mail. Invalid confirmation code.') ?></div>
+<?php endif; ?>

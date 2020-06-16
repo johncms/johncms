@@ -136,6 +136,7 @@ $mods = [
     'settings',
     'stat',
     'index',
+    'confirm_new_email',
 ];
 
 if ($act && ($key = array_search($act, $mods, true)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
