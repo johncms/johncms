@@ -76,6 +76,7 @@ $form_data = [
     'sex'         => $request->getPost('sex', $user_data->sex, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
     'rights'      => $request->getPost('rights', $user_data->rights, FILTER_VALIDATE_INT),
     'csrf_token'  => $request->getPost('csrf_token', ''),
+    'admin_notes' => $request->getPost('admin_notes', $user_data->admin_notes),
 ];
 
 if (isset($_GET['delavatar'])) {
@@ -113,7 +114,7 @@ if (isset($_GET['delavatar'])) {
                 'model'   => User::class,
                 'field'   => 'mail',
                 'exclude' => static function ($query) use ($user_data) {
-                    return $query->where('mail', '!=', '')->where('id', '!=', $user_data->mail);
+                    return $query->where('mail', '!=', '')->where('id', '!=', $user_data->id);
                 },
             ],
         ],
@@ -145,7 +146,7 @@ if (isset($_GET['delavatar'])) {
     if ($validator->isValid()) {
         // Обновляем пользовательские данные
         if ($user->rights < 7) {
-            unset($form_data['name'], $form_data['karma_off'], $form_data['sex'], $form_data['rights']);
+            unset($form_data['name'], $form_data['karma_off'], $form_data['sex'], $form_data['rights'], $form_data['admin_notes']);
         }
 
         // Если включено подтверждение e-mail адреса, то при его изменении необходимо выполнить подтверждение

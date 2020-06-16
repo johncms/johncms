@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\Casts\Ip;
 use Johncms\Casts\Serialize;
+use Johncms\Casts\SpecialChars;
 use Johncms\Casts\UserSettings;
 use Johncms\System\Users\UserConfig;
 
@@ -75,6 +76,7 @@ use Johncms\System\Users\UserConfig;
  * @property bool $email_confirmed
  * @property string $confirmation_code
  * @property string $new_email
+ * @property string $admin_notes
  *
  * @property bool $is_online - Пользователь онлайн или нет?
  * @property string $rights_name - Название прав доступа
@@ -115,6 +117,7 @@ class User extends Model
         'smileys'      => Serialize::class,
         'ip'           => Ip::class,
         'ip_via_proxy' => Ip::class,
+        'admin_notes'  => SpecialChars::class,
 
         'notification_settings' => 'array',
         'email_confirmed'       => 'bool',
@@ -173,6 +176,7 @@ class User extends Model
         'email_confirmed',
         'confirmation_code',
         'new_email',
+        'admin_notes',
     ];
 
     /**

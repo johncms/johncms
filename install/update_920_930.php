@@ -44,6 +44,7 @@ if (! $schema->hasColumns('users', ['email_confirmed', 'confirmation_code'])) {
             $table->boolean('email_confirmed')->nullable();
             $table->string('confirmation_code', 50)->nullable();
             $table->string('new_email', 50)->nullable()->comment('New email address waiting for confirmation');
+            $table->text('admin_notes')->nullable()->comment('Admin Notes');
         }
     );
 }

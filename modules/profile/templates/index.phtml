@@ -32,6 +32,15 @@ $this->layout(
         ]
     ) ?>
 <?php endif; ?>
+<?php if (! empty($data['user']['admin_notes'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-warning',
+            'alert'      => $data['user']['admin_notes'],
+        ]
+    ) ?>
+<?php endif; ?>
 
 <div class="row mb-3">
     <div class="col-sm-12 col-md-6">

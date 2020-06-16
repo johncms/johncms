@@ -263,6 +263,12 @@ $errors = $data['errors'];
 
             <?php if ($user->rights >= 7): ?>
                 <h3><?= __('Administrative Functions') ?></h3>
+
+                <div class="form-group">
+                    <label for="admin_notes"><?= __('Admin notes') ?></label>
+                    <textarea id="admin_notes" rows="<?= $user->config->fieldHeight ?>" class="form-control" name="admin_notes"><?= $data['form_data']['admin_notes'] ?></textarea>
+                </div>
+
                 <div class="custom-control custom-checkbox">
                     <input type="hidden" name="karma_off" value="0">
                     <input type="checkbox" class="custom-control-input" name="karma_off" value="1" id="karma_off" <?= $data['form_data']['karma_off'] ? 'checked' : '' ?>>
