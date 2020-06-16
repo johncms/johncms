@@ -23,9 +23,18 @@ $this->layout(
 );
 ?>
 
+<?php if (! empty($data['notifications'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => $data['notifications'],
+        ]
+    ) ?>
+<?php endif; ?>
+
 <div class="row mb-3">
     <div class="col-sm-12 col-md-6">
-
         <div class="d-flex justify-content-center">
             <div class="user-avatar profile-avatar">
                 <div class="avatar-image rounded-circle overflow-hidden shadow">
@@ -149,6 +158,12 @@ $this->layout(
                        data-source="<?= $data['user']['photo']['photo'] ?>" class="image-preview">
                         <img src="<?= $data['user']['photo']['photo_preview'] ?>" class="img-thumbnail" alt=".">
                     </a>
+                </div>
+            <?php endif; ?>
+            <?php if (! empty($data['user']['status'])): ?>
+                <div class="d-flex">
+                    <div class="text-muted pr-2"><?= __('Status') ?>:</div>
+                    <div><?= $data['user']['status'] ?></div>
                 </div>
             <?php endif; ?>
             <?php if (! empty($data['user']['birthday_date'])): ?>

@@ -108,24 +108,27 @@ if (isset($_GET['delavatar'])) {
         'jabber'      => ['StringLength' => ['max' => 50]],
         'www'         => ['StringLength' => ['max' => 50]],
         'mail'        => [
-            'NotEmpty',
-            'EmailAddress'   => [
-                'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
-                'useMxCheck'     => true,
-                'useDeepMxCheck' => true,
-            ],
             'ModelNotExists' => [
                 'model'   => User::class,
                 'field'   => 'mail',
-                'exclude' => [
-                    'field' => 'id',
-                    'value' => $user_data->id,
-                ],
+                'exclude' => static function ($query) use ($user_data) {
+                    return $query->where('mail', '!=', '')->where('id', '!=', $user_data->mail);
+                },
             ],
         ],
         'sex'         => ['InArray' => ['haystack' => ['m', 'zh']]],
         'csrf_token'  => ['Csrf'],
     ];
+
+    // Если включено подтверждение e-mail, делаем его обязательным
+    if (! empty($config['user_email_confirmation'])) {
+        $validation_rules['mail'][] = 'NotEmpty';
+        $validation_rules['mail']['EmailAddress'] = [
+            'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
+            'useMxCheck'     => true,
+            'useDeepMxCheck' => true,
+        ];
+    }
 
     // Проводим необходимые проверки
     if ($form_data['rights'] > $user->rights || $form_data['rights'] > 9 || $form_data['rights'] < 0) {
