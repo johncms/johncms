@@ -15,10 +15,12 @@ return [
         'events' => [
             'new_message' => [
                 'name'    => d__('system', 'New reply on the forum'),
-                'message' => d__('system', 'New answer in the topic:') .
-                    ' <a href="#topic_url#"><b>#topic_name#</b></a><br>' .
-                    d__('system', 'User <b>#user_name#</b> responded to <a href="#reply_to_message#">Your message</a>.') .
-                    '<div class="text-muted small mt-2">#message#</div>',
+                'message' => static function ($fields = []) {
+                    return d__('system', 'New answer in the topic:') .
+                        ' <a href="' . $fields['topic_url'] . '"><b>' . $fields['topic_name'] . '</b></a><br>' .
+                        d__('system', '<a href="%s">User <b>%s</b> responded to Your message</a>.', $fields['reply_to_message'], $fields['user_name']) .
+                        '<div class="text-muted small mt-1">' . $fields['message'] . '</div>';
+                },
             ],
         ],
     ],
