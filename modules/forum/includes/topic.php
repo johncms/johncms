@@ -149,6 +149,7 @@ if (isset($_GET['clip']) || ($set_forum['postclip'] === 2 && ($set_forum['upfp']
         ->first();
 }
 
+$i = 1;
 /** @var Collection $messages */
 $messages = $message->getItems()->map(
     static function (ForumMessage $message) use ($user, $curator, $set_forum, $access, &$i, $start, $total) {
