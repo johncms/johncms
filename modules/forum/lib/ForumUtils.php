@@ -12,12 +12,14 @@ declare(strict_types=1);
 
 namespace Forum;
 
+use Forum\Models\ForumMessage;
 use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 
 class ForumUtils
 {
@@ -119,5 +121,28 @@ class ForumUtils
         );
 
         return $message;
+    }
+
+    /**
+     * The method returns a link to the page with the post.
+     *
+     * @param int $post_id
+     * @param int $topic_id
+     * @return string
+     */
+    public static function getPostPage(int $post_id, int $topic_id): string
+    {
+        /** @var User $user */
+        $user = di(User::class);
+        $upfp = $user->set_forum['upfp'] ?? 0;
+        $message = (new ForumMessage())
+            ->where('topic_id', '=', $topic_id)
+            ->where('forum_messages.id', empty($upfp) ? '<=' : '>=', $post_id)
+            ->orderBy('id', empty($upfp) ? 'ASC' : 'DESC')
+            ->paginate($user->config->kmess);
+
+        $page = $message->lastPage();
+
+        return '/forum/?type=topic&id=' . $topic_id . ($page > 1 ? '&page=' . $page : '');
     }
 }

@@ -8,6 +8,12 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Aura\Autoload\Loader;
+
+$loader = new Loader();
+$loader->register();
+$loader->addPrefix('Forum', ROOT_PATH . 'modules/forum/lib');
+
 return [
     // Шаблоны уведомлений для модуля форума
     'forum' => [
@@ -16,9 +22,15 @@ return [
             'new_message' => [
                 'name'    => d__('system', 'New reply on the forum'),
                 'message' => static function ($fields = []) {
+                    if (! empty($fields['post_id']) && ! empty($fields['topic_id'])) {
+                        $post_page = \Forum\ForumUtils::getPostPage((int) $fields['post_id'], (int) $fields['topic_id']);
+                    } else {
+                        $post_page = '/forum/';
+                    }
+
                     return d__('system', 'New answer in the topic:') .
                         ' <a href="' . $fields['topic_url'] . '"><b>' . $fields['topic_name'] . '</b></a><br>' .
-                        d__('system', '<a href="%s">User <b>%s</b> responded to Your message</a>.', $fields['reply_to_message'], $fields['user_name']) .
+                        d__('system', '<a href="%s">User <b>%s</b> responded to Your message</a>.', $post_page, $fields['user_name']) .
                         '<div class="text-muted small mt-1">' . $fields['message'] . '</div>';
                 },
             ],
