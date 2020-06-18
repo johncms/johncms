@@ -24,13 +24,12 @@ return [
                 'message' => static function ($fields = []) {
                     if (! empty($fields['post_id']) && ! empty($fields['topic_id'])) {
                         $post_page = \Forum\ForumUtils::getPostPage((int) $fields['post_id'], (int) $fields['topic_id']);
+                        $post_page .= '#post_' . $fields['post_id'];
                     } else {
                         $post_page = '/forum/';
                     }
 
-                    return d__('system', 'New answer in the topic:') .
-                        ' <a href="' . $fields['topic_url'] . '"><b>' . $fields['topic_name'] . '</b></a><br>' .
-                        d__('system', '<a href="%s">User <b>%s</b> responded to Your message</a>.', $post_page, $fields['user_name']) .
+                    return d__('system', '<a href="%s">User <b>%s</b> responded to your message in the topic %s</a>', $post_page, $fields['user_name'], $fields['topic_name']) .
                         '<div class="text-muted small mt-1">' . $fields['message'] . '</div>';
                 },
             ],

@@ -201,7 +201,7 @@ $this->layout(
     <?php endif; ?>
 
     <?php foreach ($messages as $message): ?>
-        <div class="new_post-item border-bottom shadow mb-2">
+        <div class="new_post-item border-bottom shadow mb-2" id="post_<?= $message->id ?>">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <?php if (! empty($message->user_profile_link)): ?>
@@ -475,6 +475,16 @@ $this->layout(
     </div>
 </div>
 
+<?php $this->push('scripts') ?>
+<script>
+    if (window.location.hash !== '') {
+        var post = $(window.location.hash);
+        if (post.offset() !== undefined) {
+            $('body,html').animate({scrollTop: post.offset().top - 50}, 500);
+        }
+    }
+</script>
+<?php $this->stop(); ?>
 
 <?= $this->fetch(
     'forum::footer',
