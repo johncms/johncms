@@ -160,6 +160,7 @@ if ($request->getMethod() === 'POST') {
             $name = ! empty($new_user->imname) ? htmlspecialchars($new_user->imname) : $new_user->name;
             (new EmailMessage())->create(
                 [
+                    'priority' => 1,
                     'locale'   => $translator->getLocale(),
                     'template' => 'system::mail/templates/registration',
                     'fields'   => [

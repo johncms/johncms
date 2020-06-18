@@ -27,7 +27,7 @@ class EmailSender
         /** @var MailFactory $mail */
         $mail = di(MailFactory::class);
 
-        $email = (new EmailMessage())->unsent()->limit($message_count)->get();
+        $email = (new EmailMessage())->unsent()->orderBy('priority')->limit($message_count)->get();
 
         foreach ($email as $item) {
             /** @var EmailMessage $item */

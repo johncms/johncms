@@ -28,7 +28,8 @@ if (! $schema->hasTable('email_messages')) {
         'email_messages',
         static function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('locale', 8)->comment('The language used for displaying the message.');
+            $table->integer('priority')->nullable()->comment('Priority of sending the message');
+            $table->string('locale', 8)->comment('The language used for displaying the message');
             $table->string('template')->comment('Template name');
             $table->text('fields')->nullable()->comment('Event fields');
             $table->timestamp('sent_at')->nullable()->comment('The time when the message was sent');

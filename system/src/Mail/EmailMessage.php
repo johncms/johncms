@@ -21,6 +21,7 @@ use Johncms\Casts\DateHuman;
  *
  * @mixin Builder
  * @property int $id
+ * @property int $priority - Priority of sending the message
  * @property string $locale - The language used for displaying the message.
  * @property string $template - Template path
  * @property array $fields - Fields
@@ -41,10 +42,15 @@ class EmailMessage extends Model
     ];
 
     protected $fillable = [
+        'priority',
         'locale',
         'template',
         'fields',
         'sent_at',
+    ];
+
+    protected $attributes = [
+        'priority' => 100,
     ];
 
     /**

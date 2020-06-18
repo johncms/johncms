@@ -160,6 +160,7 @@ if (isset($_GET['delavatar'])) {
             $link = $config['homeurl'] . '/profile/?act=confirm_new_email&id=' . $user_data->id . '&code=' . $form_data['confirmation_code'];
             (new EmailMessage())->create(
                 [
+                    'priority' => 1,
                     'locale'   => $translator->getLocale(),
                     'template' => 'system::mail/templates/confirm_email_change',
                     'fields'   => [
@@ -173,19 +174,22 @@ if (isset($_GET['delavatar'])) {
             );
 
             // Отправляем уведомление о начале процедуры изменения на старый email
-            (new EmailMessage())->create(
-                [
-                    'locale'   => $translator->getLocale(),
-                    'template' => 'system::mail/templates/changed_email_notification',
-                    'fields'   => [
-                        'email_to'  => $user_data->mail,
-                        'name_to'   => $user_data->name,
-                        'subject'   => __('The procedure for changing the email address was started'),
-                        'user_name' => $user_data->name,
-                        'new_email' => $form_data['new_email'],
-                    ],
-                ]
-            );
+            if (! empty($user_data->mail)) {
+                (new EmailMessage())->create(
+                    [
+                        'priority' => 1,
+                        'locale'   => $translator->getLocale(),
+                        'template' => 'system::mail/templates/changed_email_notification',
+                        'fields'   => [
+                            'email_to'  => $user_data->mail,
+                            'name_to'   => $user_data->name,
+                            'subject'   => __('The procedure for changing the email address was started'),
+                            'user_name' => $user_data->name,
+                            'new_email' => $form_data['new_email'],
+                        ],
+                    ]
+                );
+            }
         }
 
         $user_data->update($form_data);

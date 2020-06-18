@@ -100,6 +100,7 @@ switch ($act) {
             $name = ! empty($res['imname']) ? htmlspecialchars($res['imname']) : $res['name'];
             (new EmailMessage())->create(
                 [
+                    'priority' => 1,
                     'locale'   => $translator->getLocale(),
                     'template' => 'system::mail/templates/restore_password',
                     'fields'   => [
@@ -166,6 +167,7 @@ switch ($act) {
             $name = ! empty($res['imname']) ? htmlspecialchars($res['imname']) : $res['name'];
             (new EmailMessage())->create(
                 [
+                    'priority' => 1,
                     'locale'   => $translator->getLocale(),
                     'template' => 'system::mail/templates/restore_password_complete',
                     'fields'   => [
