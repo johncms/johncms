@@ -25,14 +25,16 @@ if ($user->rights < 9) {
 $title = __('Languages');
 $nav_chain->add($title, '/admin/languages/');
 
-$mod = $request->getQuery('mod', 'index', FILTER_SANITIZE_STRING);
+$action = $request->getQuery('action', 'index', FILTER_SANITIZE_STRING);
 
 $pages = [
-    'index' => 'index.php',
+    'index'  => 'index.php',
+    'manage' => 'manage.php',
+    'delete' => 'delete.php',
 ];
 
-if (array_key_exists($mod, $pages)) {
-    require __DIR__ . '/languages/' . $pages[$mod];
+if (array_key_exists($action, $pages)) {
+    require __DIR__ . '/languages/' . $pages[$action];
 } else {
     pageNotFound();
 }

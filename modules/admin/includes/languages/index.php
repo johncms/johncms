@@ -26,7 +26,8 @@ if ($user->rights < 9) {
 }
 
 $config = di('config')['johncms'];
-$nav_chain->add(__('Default language'));
+
+$view->addData(['title' => __('Languages'), 'page_title' => __('Languages')]);
 
 if (isset($_POST['lng']) || isset($_POST['update'])) {
     if (isset($_POST['lng'])) {
@@ -67,7 +68,7 @@ if (isset($_POST['lng']) || isset($_POST['update'])) {
 }
 
 echo $view->render(
-    'admin::languages',
+    'admin::languages/index',
     [
         'config'       => $config,
         'confirmation' => $confirmation ?? false,
