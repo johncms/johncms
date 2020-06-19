@@ -20,7 +20,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                     <input type="radio" id="<?= $key ?>" name="lng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
                     <label class="custom-control-label" for="<?= $key ?>">
                         <img src="<?= $this->asset('images/flags/' . strtolower($key) . '.png') ?>" alt=".">
-                        <?= $val ?>
+                        <?= $val['name'] ?>
                     </label>
                 </div>
             <?php endforeach ?>
