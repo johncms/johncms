@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Forum\Models\ForumSection;
 use Johncms\Counters;
 use Johncms\NavChain;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\GuestSession;
 use Johncms\Users\User;
@@ -30,6 +31,9 @@ use Johncms\Users\User;
 
 /** @var User $user */
 $user = di(User::class);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 $forum_settings = di('config')['forum']['settings'];
 
@@ -68,14 +72,26 @@ $online = [
     'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count(),
 ];
 
+// Setting the canonical URL
+$page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
+$canonical = $config['homeurl'] . $current_section->url;
+if ($page > 1) {
+    $canonical .= '&amp;page=' . $page;
+}
+$view->addData(
+    [
+        'canonical'  => $canonical,
+        'title'      => htmlspecialchars_decode($current_section->name),
+        'page_title' => htmlspecialchars_decode($current_section->name),
+    ]
+);
+
 echo $view->render(
     'forum::topics',
     [
         'pagination'    => $topics->render(),
         'id'            => $id,
         'create_access' => $create_access,
-        'title'         => $current_section->name,
-        'page_title'    => $current_section->name,
         'topics'        => $topics->getItems(),
         'online'        => $online,
         'total'         => $topics->total(),

@@ -9,8 +9,6 @@
  */
 
 /**
- * @var $title
- * @var $page_title
  * @var $sections
  * @var $online
  * @var $files_count
@@ -21,13 +19,7 @@
  * @var \Forum\Models\ForumTopic $topic
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?= $this->fetch(

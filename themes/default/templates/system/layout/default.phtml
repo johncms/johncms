@@ -22,11 +22,15 @@ $ads_array = $ads->getAds();
     <meta name="MobileOptimized" content="width">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
+    <?= $this->section('meta', '') ?>
     <?php if (! empty($keywords)): ?>
         <meta name="keywords" content="<?= $this->e($keywords) ?>">
     <?php endif ?>
     <?php if (! empty($description)): ?>
         <meta name="description" content="<?= $this->e($description) ?>">
+    <?php endif ?>
+    <?php if (! empty($canonical)): ?>
+        <link rel="canonical" href="<?= $canonical ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
     <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">

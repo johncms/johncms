@@ -21,6 +21,7 @@ use Illuminate\Support\Collection;
 use Johncms\Counters;
 use Johncms\NavChain;
 use Johncms\Notifications\Notification;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\GuestSession;
 use Johncms\Users\User;
@@ -35,6 +36,9 @@ use Johncms\Users\User;
 
 /** @var User $user */
 $user = di(User::class);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 $forum_settings = di('config')['forum']['settings'];
 
@@ -202,6 +206,20 @@ if (! empty($current_topic->curators)) {
     }
 }
 
+// Setting the canonical URL
+$page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
+$canonical = $config['homeurl'] . $current_topic->url;
+if ($page > 1) {
+    $canonical .= '&amp;page=' . $page;
+}
+$view->addData(
+    [
+        'canonical'  => $canonical,
+        'title'      => htmlspecialchars_decode($current_topic->name),
+        'page_title' => htmlspecialchars_decode($current_topic->name),
+    ]
+);
+
 echo $view->render(
     'forum::topic',
     [
@@ -217,8 +235,6 @@ echo $view->render(
         'bbcode'           => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_message', 'msg'),
         'settings_forum'   => $set_forum,
         'write_access'     => $write_access,
-        'title'            => $current_topic->name,
-        'page_title'       => $current_topic->name,
         'messages'         => $messages ?? [],
         'online'           => $online ?? [],
         'total'            => $total,

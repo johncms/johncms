@@ -9,8 +9,6 @@
  */
 
 /**
- * @var $title
- * @var $page_title
  * @var $sections
  * @var $online
  * @var $files_count
@@ -27,13 +25,7 @@
  * @var \Forum\Models\ForumVote $topic_vote
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => htmlspecialchars_decode($title),
-        'page_title' => htmlspecialchars_decode($page_title),
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?= $this->fetch(
     'forum::header',
