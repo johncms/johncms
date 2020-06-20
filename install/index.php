@@ -431,6 +431,8 @@ switch ($act) {
                         'email'         => $site_mail,
                         'flsz'          => '16000',
                         'gzip'          => 1,
+                        'user_email_required' => 0,
+                        'user_email_confirmation' => 0,
                         'homeurl'       => $site_url,
                         'karma'         => [
                             'karma_points' => 5,
