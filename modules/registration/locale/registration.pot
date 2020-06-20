@@ -14,7 +14,7 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/index.php:168
+#: modules/registration/index.php:169
 msgid "Registration on the website"
 msgstr ""
 

@@ -3,7 +3,7 @@ msgstr ""
 "X-Domain: profile\n"
 
 #: modules/profile/includes/activity.php:23
-#: modules/profile/templates/index.phtml:244
+#: modules/profile/templates/index.phtml:253
 #: modules/profile/templates/stat.phtml:50
 msgid "Activity"
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 #: modules/profile/includes/ban.php:258
 #: modules/profile/includes/ban.php:277
 #: modules/profile/includes/ban.php:324
-#: modules/profile/skl.php:140
+#: modules/profile/skl.php:141
 msgid "Wrong data"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 #: modules/profile/includes/guestbook.php:16
 #: modules/profile/includes/guestbook.php:28
 #: modules/profile/templates/ban.phtml:49
-#: modules/profile/templates/index.phtml:280
+#: modules/profile/templates/index.phtml:289
 #: modules/profile/templates/office.phtml:42
 #: modules/profile/templates/stat.phtml:53
 msgid "Guestbook"
@@ -218,23 +218,23 @@ msgstr ""
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/profile/includes/edit.php:85
+#: modules/profile/includes/edit.php:86
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/profile/includes/edit.php:92
+#: modules/profile/includes/edit.php:93
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/profile/includes/edit.php:167
+#: modules/profile/includes/edit.php:169
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/profile/includes/edit.php:182
+#: modules/profile/includes/edit.php:186
 msgid "The procedure for changing the email address was started"
 msgstr ""
 
-#: modules/profile/includes/edit.php:191
+#: modules/profile/includes/edit.php:196
 msgid "Data saved"
 msgstr ""
 
@@ -393,7 +393,7 @@ msgstr ""
 
 #: modules/profile/includes/password.php:15
 #: modules/profile/includes/password.php:16
-#: modules/profile/templates/edit.phtml:272
+#: modules/profile/templates/edit.phtml:278
 #: modules/profile/templates/office.phtml:87
 msgid "Change Password"
 msgstr ""
@@ -456,7 +456,7 @@ msgstr ""
 
 #: modules/profile/includes/stat.php:16
 #: modules/profile/includes/stat.php:19
-#: modules/profile/templates/index.phtml:256
+#: modules/profile/templates/index.phtml:265
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
 msgstr ""
@@ -496,31 +496,31 @@ msgid "Password can be recovered 1 time per day"
 msgstr ""
 
 #: modules/profile/skl.php:93
-#: modules/profile/skl.php:159
+#: modules/profile/skl.php:160
 msgid "User does not exists"
 msgstr ""
 
-#: modules/profile/skl.php:108
+#: modules/profile/skl.php:109
 msgid "Password recovery"
 msgstr ""
 
-#: modules/profile/skl.php:118
+#: modules/profile/skl.php:119
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/skl.php:150
+#: modules/profile/skl.php:151
 msgid "Password recovery is impossible"
 msgstr ""
 
-#: modules/profile/skl.php:154
+#: modules/profile/skl.php:155
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/skl.php:174
+#: modules/profile/skl.php:176
 msgid "Your new password"
 msgstr ""
 
-#: modules/profile/skl.php:185
+#: modules/profile/skl.php:187
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
@@ -574,7 +574,7 @@ msgstr ""
 
 #: modules/profile/templates/ban.phtml:99
 #: modules/profile/templates/ban_cancel.phtml:32
-#: modules/profile/templates/edit.phtml:327
+#: modules/profile/templates/edit.phtml:333
 #: modules/profile/templates/forum_settings.phtml:74
 #: modules/profile/templates/images.phtml:60
 #: modules/profile/templates/karma_delete.phtml:34
@@ -759,61 +759,65 @@ msgstr ""
 msgid "Administrative Functions"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:269
+#: modules/profile/templates/edit.phtml:268
+msgid "Admin notes"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:275
 msgid "Prohibit Karma"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:274
+#: modules/profile/templates/edit.phtml:280
 msgid "Reset User options to default"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:278
+#: modules/profile/templates/edit.phtml:284
 msgid "Select gender"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:281
+#: modules/profile/templates/edit.phtml:287
 #: modules/profile/templates/index.phtml:179
 msgid "Man"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:285
+#: modules/profile/templates/edit.phtml:291
 #: modules/profile/templates/index.phtml:181
 msgid "Woman"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:289
+#: modules/profile/templates/edit.phtml:295
 msgid "Position on the Site"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:292
+#: modules/profile/templates/edit.phtml:298
 msgid "User"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:296
+#: modules/profile/templates/edit.phtml:302
 msgid "Forum Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:300
+#: modules/profile/templates/edit.phtml:306
 msgid "Download Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:304
+#: modules/profile/templates/edit.phtml:310
 msgid "Library Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:308
+#: modules/profile/templates/edit.phtml:314
 msgid "Super Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:314
+#: modules/profile/templates/edit.phtml:320
 msgid "Administrator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:318
+#: modules/profile/templates/edit.phtml:324
 msgid "Supervisor"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:326
+#: modules/profile/templates/edit.phtml:332
 #: modules/profile/templates/forum_settings.phtml:73
 #: modules/profile/templates/images.phtml:59
 #: modules/profile/templates/mail_settings.phtml:56
@@ -952,7 +956,11 @@ msgstr ""
 msgid "hidden"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:268
+#: modules/profile/templates/index.phtml:236
+msgid "Admin Notes"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:277
 #: modules/profile/templates/office.phtml:38
 msgid "Photo Album"
 msgstr ""

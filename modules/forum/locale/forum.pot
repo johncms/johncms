@@ -207,8 +207,8 @@ msgstr ""
 
 #: modules/forum/includes/curators.php:31
 #: modules/forum/includes/deltema.php:37
-#: modules/forum/includes/say.php:610
-#: modules/forum/lib/ForumUtils.php:65
+#: modules/forum/includes/say.php:612
+#: modules/forum/lib/ForumUtils.php:67
 msgid "Topic has been deleted or does not exists"
 msgstr ""
 
@@ -264,7 +264,7 @@ msgstr ""
 #: modules/forum/includes/index.php:54
 #: modules/forum/includes/index.php:55
 #: modules/forum/includes/new.php:58
-#: modules/forum/includes/say.php:612
+#: modules/forum/includes/say.php:614
 #: modules/forum/includes/show_post.php:33
 #: modules/forum/includes/show_post.php:55
 #: modules/forum/includes/tema.php:52
@@ -281,7 +281,7 @@ msgstr ""
 #: modules/forum/includes/vote.php:51
 #: modules/forum/index.php:54
 #: modules/forum/index.php:101
-#: modules/forum/lib/ForumUtils.php:63
+#: modules/forum/lib/ForumUtils.php:65
 #: modules/forum/templates/files_list.phtml:154
 #: modules/forum/templates/forum_search.phtml:90
 #: modules/forum/templates/new_topics.phtml:121
@@ -535,7 +535,7 @@ msgstr ""
 #: modules/forum/includes/say.php:434
 #: modules/forum/includes/say.php:449
 #: modules/forum/includes/say.php:469
-#: modules/forum/includes/say.php:608
+#: modules/forum/includes/say.php:610
 msgid "New message"
 msgstr ""
 
@@ -572,8 +572,8 @@ msgstr ""
 msgid "respond to Your message"
 msgstr ""
 
-#: modules/forum/includes/say.php:582
-#: modules/forum/includes/say.php:583
+#: modules/forum/includes/say.php:584
+#: modules/forum/includes/say.php:585
 msgid "Reply to message"
 msgstr ""
 
@@ -1204,7 +1204,7 @@ msgstr ""
 msgid "Download Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:484
+#: modules/forum/templates/topic.phtml:494
 msgid "Who is here"
 msgstr ""
 

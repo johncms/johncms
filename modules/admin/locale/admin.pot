@@ -109,6 +109,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm.phtml:33
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:58
 #: modules/admin/templates/forum/structure.phtml:55
+#: modules/admin/templates/languages/manage.phtml:36
 #: modules/admin/templates/user_clean_confirm.phtml:36
 #: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
@@ -225,10 +226,11 @@ msgstr ""
 #: modules/admin/includes/forum/del.php:208
 #: modules/admin/includes/ipban.php:31
 #: modules/admin/includes/karma.php:33
-#: modules/admin/includes/languages.php:25
-#: modules/admin/includes/settings.php:23
+#: modules/admin/includes/languages.php:22
+#: modules/admin/includes/languages/index.php:25
+#: modules/admin/includes/settings.php:24
 #: modules/admin/includes/usr_del.php:22
-#: modules/admin/index.php:54
+#: modules/admin/index.php:56
 #: modules/admin/templates/access.phtml:52
 #: modules/admin/templates/access.phtml:70
 #: modules/admin/templates/access.phtml:88
@@ -292,6 +294,7 @@ msgstr ""
 #: modules/admin/templates/forum/structure.phtml:65
 #: modules/admin/templates/ipban.phtml:83
 #: modules/admin/templates/ipban_detail.phtml:59
+#: modules/admin/templates/languages/manage.phtml:47
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
@@ -433,7 +436,7 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:38
 #: modules/admin/templates/forum/edit.phtml:39
 #: modules/admin/templates/news.phtml:45
-#: modules/admin/templates/settings.phtml:57
+#: modules/admin/templates/settings.phtml:66
 msgid "Title"
 msgstr ""
 
@@ -702,9 +705,28 @@ msgstr ""
 msgid "You really want to clear the Karma?"
 msgstr ""
 
-#: modules/admin/includes/languages.php:29
-#: modules/admin/templates/languages.phtml:17
-msgid "Default language"
+#: modules/admin/includes/languages.php:25
+#: modules/admin/includes/languages/index.php:30
+msgid "Languages"
+msgstr ""
+
+#: modules/admin/includes/languages/delete.php:26
+msgid "The language was successfully deleted"
+msgstr ""
+
+#: modules/admin/includes/languages/install.php:26
+msgid "The language was successfully installed"
+msgstr ""
+
+#: modules/admin/includes/languages/manage.php:29
+#: modules/admin/includes/languages/manage.php:30
+#: modules/admin/includes/languages/manage.php:34
+#: modules/admin/templates/languages/index.phtml:32
+msgid "Managing languages"
+msgstr ""
+
+#: modules/admin/includes/languages/update.php:26
+msgid "The language was successfully updated"
 msgstr ""
 
 #: modules/admin/includes/news.php:19
@@ -755,7 +777,7 @@ msgstr ""
 msgid "IP history"
 msgstr ""
 
-#: modules/admin/includes/settings.php:27
+#: modules/admin/includes/settings.php:31
 #: modules/admin/templates/settings.phtml:8
 #: modules/admin/templates/sidebar-admin-menu.phtml:209
 #: modules/admin/templates/smilies.phtml:8
@@ -788,10 +810,9 @@ msgstr ""
 msgid "User does not exists"
 msgstr ""
 
-#: modules/admin/index.php:50
+#: modules/admin/index.php:52
 #: modules/admin/templates/index.phtml:1
 #: modules/admin/templates/ip_whois.phtml:8
-#: modules/admin/templates/languages.phtml:6
 #: modules/admin/templates/settings.phtml:8
 #: modules/admin/templates/smilies.phtml:8
 #: modules/admin/templates/userlist.phtml:3
@@ -864,9 +885,9 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:93
 #: modules/admin/templates/ipban_add.phtml:75
 #: modules/admin/templates/karma.phtml:63
-#: modules/admin/templates/languages.phtml:28
+#: modules/admin/templates/languages/index.phtml:28
 #: modules/admin/templates/news.phtml:85
-#: modules/admin/templates/settings.phtml:77
+#: modules/admin/templates/settings.phtml:86
 msgid "Save"
 msgstr ""
 
@@ -1198,7 +1219,7 @@ msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:48
 #: modules/admin/templates/forum/edit.phtml:50
-#: modules/admin/templates/settings.phtml:65
+#: modules/admin/templates/settings.phtml:74
 msgid "Description"
 msgstr ""
 
@@ -1543,12 +1564,40 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: modules/admin/templates/languages.phtml:12
+#: modules/admin/templates/languages/index.phtml:12
 msgid "Descriptions have been updated successfully"
 msgstr ""
 
-#: modules/admin/templates/languages.phtml:29
+#: modules/admin/templates/languages/index.phtml:17
+msgid "Default language"
+msgstr ""
+
+#: modules/admin/templates/languages/index.phtml:29
 msgid "Update List"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:24
+msgid "Version:"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:26
+msgid "New version:"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:29
+msgid "Installed"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:31
+msgid "Not installed"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:38
+msgid "Install"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:41
+msgid "Update"
 msgstr ""
 
 #: modules/admin/templates/news.phtml:38
@@ -1647,23 +1696,31 @@ msgstr ""
 msgid "Gzip compression"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:44
+#: modules/admin/templates/settings.phtml:45
+msgid "E-mail is required for registration"
+msgstr ""
+
+#: modules/admin/templates/settings.phtml:49
+msgid "Request a confirmation email to activate the user's account."
+msgstr ""
+
+#: modules/admin/templates/settings.phtml:53
 msgid "Time shift"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:50
+#: modules/admin/templates/settings.phtml:59
 msgid "System Time"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:55
+#: modules/admin/templates/settings.phtml:64
 msgid "META tags"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:61
+#: modules/admin/templates/settings.phtml:70
 msgid "Keywords"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:70
+#: modules/admin/templates/settings.phtml:79
 msgid "Themes"
 msgstr ""
 

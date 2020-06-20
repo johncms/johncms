@@ -2,33 +2,29 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
-#: config/notifications.global.php:14
+#: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:49
 msgid "Forum"
 msgstr ""
 
-#: config/notifications.global.php:17
+#: config/notifications.global.php:23
 msgid "New reply on the forum"
 msgstr ""
 
-#: config/notifications.global.php:18
-msgid "New answer in the topic:"
+#: config/notifications.global.php:32
+msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
 msgstr ""
 
-#: config/notifications.global.php:20
-msgid "User <b>#user_name#</b> responded to <a href=\"#reply_to_message#\">Your message</a>."
-msgstr ""
-
-#: config/notifications.global.php:26
+#: config/notifications.global.php:39
 msgid "Karma"
 msgstr ""
 
-#: config/notifications.global.php:29
+#: config/notifications.global.php:42
 msgid "New vote in karma"
 msgstr ""
 
-#: config/notifications.global.php:30
+#: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
 msgstr ""
 
