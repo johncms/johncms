@@ -69,15 +69,15 @@ if ($user->isValid()) {
                 $sql = 'SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > ?';
                 $sql2 = 'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
 FROM `forum_topic` tpc
-JOIN forum_sections rzd ON rzd.id = tpc.section_id
-JOIN forum_sections frm ON frm.id = rzd.parent
+LEFT JOIN forum_sections rzd ON rzd.id = tpc.section_id
+LEFT JOIN forum_sections frm ON frm.id = rzd.parent
 WHERE `mod_last_post_date` > ? ORDER BY `mod_last_post_date` DESC LIMIT ?, ?';
             } else {
                 $sql = 'SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL)';
                 $sql2 = 'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
 FROM `forum_topic` tpc
-JOIN forum_sections rzd ON rzd.id = tpc.section_id
-JOIN forum_sections frm ON frm.id = rzd.parent
+LEFT JOIN forum_sections rzd ON rzd.id = tpc.section_id
+LEFT JOIN forum_sections frm ON frm.id = rzd.parent
 WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT ?, ?';
             }
             $sth = $db->prepare($sql);
@@ -139,8 +139,8 @@ WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `las
                     "SELECT tpc.*, rzd.`name` AS rzd_name, frm.id as frm_id, frm.`name` AS frm_name
                 FROM `forum_topic` tpc
                 LEFT JOIN `cms_forum_rdm` rdm ON `tpc`.`id` = `rdm`.`topic_id` AND `rdm`.`user_id` = '" . $user->id . "'
-                JOIN forum_sections rzd ON rzd.id = tpc.section_id
-                JOIN forum_sections frm ON frm.id = rzd.parent
+                LEFT JOIN forum_sections rzd ON rzd.id = tpc.section_id
+                LEFT JOIN forum_sections frm ON frm.id = rzd.parent
                 WHERE " . ($user->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
                 ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, " . $user->config->kmess
                 );
@@ -203,8 +203,8 @@ WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `las
     $req = $db->query(
         'SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
     FROM `forum_topic` tpc
-    JOIN forum_sections rzd ON rzd.id = tpc.section_id
-    JOIN forum_sections frm ON frm.id = rzd.parent
+    LEFT JOIN forum_sections rzd ON rzd.id = tpc.section_id
+    LEFT JOIN forum_sections frm ON frm.id = rzd.parent
     WHERE (`deleted` <> 1 OR deleted IS NULL)
     ORDER BY `last_post_date` DESC LIMIT 10'
     );
