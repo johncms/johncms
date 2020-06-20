@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Admin\Languages;
 
+use ZipArchive;
+
 class Languages
 {
     /**
@@ -56,6 +58,49 @@ class Languages
             $arr_files[] = ROOT_PATH . 'themes/default/assets/images/flags/' . $language . '.png';
             foreach ($arr_files as $file) {
                 unlink($file);
+            }
+        }
+    }
+
+    /**
+     * Getting a list of available languages
+     *
+     * @return array
+     */
+    public static function getAvailableLanguages(): array
+    {
+        $updates_url = 'https://johncms.com/updates/languages/?cms_version=' . CMS_VERSION;
+        $all_languages = [];
+        $updates = file_get_contents($updates_url);
+        if (! empty($updates)) {
+            $all_languages = json_decode($updates, true);
+        }
+
+        return $all_languages;
+    }
+
+    /**
+     * Installs the language into the system
+     *
+     * @param $language
+     */
+    public static function install($language): void
+    {
+        $all_languages = self::getAvailableLanguages();
+        if (array_key_exists($language, $all_languages)) {
+            $lang = $all_languages[$language];
+            if (! empty($lang['path'])) {
+                $filename = basename($lang['path']);
+                $tmp_file_path = DATA_PATH . 'tmp/' . $filename;
+                if (copy('https://johncms.com' . $lang['path'], $tmp_file_path)) {
+                    // Open archive
+                    $zip = new ZipArchive();
+                    if ($zip->open($tmp_file_path) === true) {
+                        $zip->extractTo(ROOT_PATH);
+                        $zip->close();
+                    }
+                    unlink($tmp_file_path);
+                }
             }
         }
     }

@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Admin\Languages\Languages;
 use Johncms\NavChain;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
@@ -32,13 +33,7 @@ $view->addData(
 
 $nav_chain->add(__('Managing languages'), '/admin/languages/?action=manage');
 
-$updates_url = 'https://johncms.com/updates/languages/';
-$all_languages = [];
-$updates = file_get_contents($updates_url);
-if (! empty($updates)) {
-    $all_languages = json_decode($updates, true);
-}
-
+$all_languages = Languages::getAvailableLanguages();
 $languages = [];
 foreach ($config['lng_list'] as $key => $item) {
     $item['installed'] = true;

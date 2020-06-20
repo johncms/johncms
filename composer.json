@@ -35,6 +35,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-simplexml": "*",
+        "ext-zip": "*",
         "aura/autoload": "^2.0",
         "gettext/translator": "^1.0",
         "guzzlehttp/psr7": "^1.6",

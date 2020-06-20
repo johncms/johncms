@@ -28,9 +28,11 @@ $nav_chain->add($title, '/admin/languages/');
 $action = $request->getQuery('action', 'index', FILTER_SANITIZE_STRING);
 
 $pages = [
-    'index'  => 'index.php',
-    'manage' => 'manage.php',
-    'delete' => 'delete.php',
+    'index'   => 'index.php',
+    'manage'  => 'manage.php',
+    'delete'  => 'delete.php',
+    'install' => 'install.php',
+    'update'  => 'update.php',
 ];
 
 if (array_key_exists($action, $pages)) {

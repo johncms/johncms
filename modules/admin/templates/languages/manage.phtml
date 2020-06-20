@@ -35,10 +35,10 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <?php if (! empty($val['installed'])): ?>
                     <a href="/admin/languages/?action=delete&code=<?= $key ?>" class="mr-2"><?= __('Delete') ?></a>
                 <?php else: ?>
-                    <a href="" class="mr-2"><?= __('Install') ?></a>
+                    <a href="/admin/languages/?action=install&code=<?= $key ?>" class="mr-2"><?= __('Install') ?></a>
                 <?php endif; ?>
                 <?php if (! empty($val['need_update'])): ?>
-                    <a href=""><?= __('Update') ?></a>
+                    <a href="/admin/languages/?action=update&code=<?= $key ?>"><?= __('Update') ?></a>
                 <?php endif; ?>
             </div>
         </div>
