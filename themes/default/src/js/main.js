@@ -34,7 +34,9 @@ $(function () {
 });
 
 $(document).ready(function () {
-    $(wysibb_input).wysibb(wysibb_settings);
+    if (typeof wysibb_input != "undefined") {
+        $(wysibb_input).wysibb(wysibb_settings);
+    }
 })
 
 var sidebar = new StickySidebar('.sidebar', {
