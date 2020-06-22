@@ -98,7 +98,7 @@ class Guestbook extends Model
     {
         if ($this->user_id) {
             $post = $this->tools->checkout($this->text, 1, 1);
-            $post = $this->tools->smilies($post, $this->user->rights >= 1 ? 1 : 0);
+            $post = $this->tools->smilies($post, ($this->user !== null && $this->user->rights >= 1 ? 1 : 0));
         } else {
             $post = $this->tools->checkout($this->text, 0, 2);
             $post = preg_replace(
@@ -139,7 +139,7 @@ class Guestbook extends Model
 
     public function getIsOnlineAttribute(): bool
     {
-        if ($this->user_id) {
+        if ($this->user_id && $this->user !== null) {
             return $this->user->is_online;
         }
         return false;
