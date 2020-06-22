@@ -51,6 +51,7 @@ di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 // Закрываем от неавторизованных юзеров
 if (! $user->is_valid) {
+    http_response_code(403);
     echo $view->render(
         'system::pages/result',
         [
