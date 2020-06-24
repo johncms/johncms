@@ -15,15 +15,8 @@
  * @var $topic
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-
 
 <div class="new_post-item border-bottom shadow mb-2 <?= $post['deleted'] ? ' deleted-post' : '' ?>">
     <div class="new_post-header d-flex justify-content-between">
