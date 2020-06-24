@@ -175,12 +175,12 @@
                     <?php endif; ?>
                 </div>
                 <div class="d-flex">
-                    <?php if ($user->rights >= 6): ?>
+                    <?php if ($data['access_to_form'] && $item->user_id !== $user->id): ?>
                         <div class="ml-3">
-                            <a href="/guestbook/otvet?id=<?= $item->id ?>"><?= __('Reply') ?></a>
+                            <a href="#" onclick="reply_to_post('<?= $item->name ?>')"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?php if ($user->rights && (!$item->user || ($item->user && $user->rights >= $item->user->rights))): ?>
+                    <?php if ($user->rights && (! $item->user || ($item->user && $user->rights >= $item->user->rights))): ?>
                         <div class="dropdown ml-3">
                             <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
@@ -188,6 +188,9 @@
                                 </svg>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
+                                <?php if ($user->rights >= 6): ?>
+                                    <a href="/guestbook/otvet?id=<?= $item->id ?>" class="dropdown-item"><?= __('Reply') ?></a>
+                                <?php endif; ?>
                                 <a href="/guestbook/edit?id=<?= $item->id ?>" class="dropdown-item"><?= __('Edit') ?></a>
                                 <a href="/guestbook/delpost?id=<?= $item->id ?>" class="dropdown-item"><?= __('Delete') ?></a>
                             </div>
@@ -209,3 +212,11 @@
         <?php endif; ?>
     </div>
 <?php endif ?>
+<script>
+    function reply_to_post(user_name)
+    {
+        event.preventDefault();
+        $('#message').htmlcode('<b>' + user_name + '</b>, ');
+        $('body,html').animate({scrollTop: 100}, 500);
+    }
+</script>
