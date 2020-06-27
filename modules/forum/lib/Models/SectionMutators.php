@@ -22,9 +22,9 @@ trait SectionMutators
     public function getUrlAttribute(): string
     {
         if (empty($this->parent)) {
-            $type = ! empty($this->section_type) ? 'type=topics&amp;' : '';
+            $type = ! empty($this->section_type) ? 'type=topics&' : '';
         } else {
-            $type = ! empty($this->section_type) ? 'type=topics&amp;' : 'type=section&amp;';
+            $type = ! empty($this->section_type) ? 'type=topics&' : 'type=section&';
         }
 
         return '/forum/?' . $type . 'id=' . $this->id;

@@ -76,7 +76,7 @@ $online = [
 $page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
 $canonical = $config['homeurl'] . $current_section->url;
 if ($page > 1) {
-    $canonical .= '&amp;page=' . $page;
+    $canonical .= '&page=' . $page;
 }
 $view->addData(
     [

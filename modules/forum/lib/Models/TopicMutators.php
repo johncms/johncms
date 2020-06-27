@@ -32,7 +32,7 @@ trait TopicMutators
      */
     public function getUrlAttribute(): string
     {
-        return '/forum/?type=topic&amp;id=' . $this->id;
+        return '/forum/?type=topic&id=' . $this->id;
     }
 
     /**
@@ -88,7 +88,7 @@ trait TopicMutators
         }
 
         if ($page > 1) {
-            return '/forum/?type=topic&amp;id=' . $this->id . '&amp;page=' . $page;
+            return '/forum/?type=topic&id=' . $this->id . '&page=' . $page;
         }
 
         return '';

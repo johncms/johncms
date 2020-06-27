@@ -167,8 +167,8 @@ $messages = $message->getItems()->map(
         }
 
         if ($user->id !== $message->user_id && $user->is_valid) {
-            $message->reply_url = '/forum/?act=say&amp;type=reply&amp;id=' . $message->id . '&amp;start=' . $start;
-            $message->quote_url = '/forum/?act=say&amp;type=reply&amp;id=' . $message->id . '&amp;start=' . $start . '&amp;cyt';
+            $message->reply_url = '/forum/?act=say&type=reply&amp;id=' . $message->id . '&start=' . $start;
+            $message->quote_url = '/forum/?act=say&type=reply&amp;id=' . $message->id . '&start=' . $start . '&cyt';
         }
 
         $i++;
@@ -210,7 +210,7 @@ if (! empty($current_topic->curators)) {
 $page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
 $canonical = $config['homeurl'] . $current_topic->url;
 if ($page > 1) {
-    $canonical .= '&amp;page=' . $page;
+    $canonical .= '&page=' . $page;
 }
 $view->addData(
     [
