@@ -3,7 +3,7 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
-## 9.3.0 - unreleased
+## 9.3.0 - 2020-06-28
 
 #### Added
 - Добавлен WYSIWYG редактор
