@@ -345,7 +345,7 @@
       'Site Email' => 'Email Сайта',
       'Max. file size' => 'Макс. размер файла',
       'Gzip compression' => 'Gzip сжатие',
-      'E-mail is required for registration' => 'Электронной почты обязателен при регистрации',
+      'E-mail is required for registration' => 'Адрес электронной почты обязателен при регистрации',
       'Request a confirmation email to activate the user\'s account.' => 'Требовать подтверждение электронной почты для активации учетной записи пользователя.',
       'Time shift' => 'Сдвиг времени',
       'System Time' => 'Системное время',
