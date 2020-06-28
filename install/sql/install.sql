@@ -277,7 +277,8 @@ CREATE TABLE `cms_forum_vote`
     `count` INT(10) UNSIGNED NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `type` (`type`),
-    KEY `topic` (`topic`)
+    KEY `topic` (`topic`),
+    KEY `type_topic` (`type`, `topic`)
 )
     ENGINE = MyISAM
     DEFAULT CHARSET = utf8mb4;
@@ -293,7 +294,8 @@ CREATE TABLE `cms_forum_vote_users`
     `topic` INT(11)          NOT NULL,
     `vote`  INT(11)          NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `topic` (`topic`)
+    KEY `topic` (`topic`),
+    KEY `topic_user` (`topic`, `user`)
 )
     ENGINE = MyISAM
     DEFAULT CHARSET = utf8mb4;
@@ -342,7 +344,7 @@ CREATE TABLE `cms_sessions`
     `sestime`      INT(10) UNSIGNED     NOT NULL DEFAULT '0',
     `views`        INT(10) UNSIGNED     NOT NULL DEFAULT '0',
     `movings`      SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-    `place`        VARCHAR(100)         NOT NULL DEFAULT '',
+    `place`        VARCHAR(255)         NOT NULL DEFAULT '',
     PRIMARY KEY (`session_id`),
     KEY `lastdate` (`lastdate`),
     KEY `place` (`place`(10))
@@ -718,7 +720,7 @@ CREATE TABLE `users`
     `rest_code`             VARCHAR(32)         NOT NULL DEFAULT '',
     `rest_time`             INT(10) UNSIGNED    NOT NULL DEFAULT '0',
     `movings`               INT(10) UNSIGNED    NOT NULL DEFAULT '0',
-    `place`                 VARCHAR(100)        NOT NULL DEFAULT '',
+    `place`                 VARCHAR(255)        NOT NULL DEFAULT '',
     `set_user`              TEXT                NOT NULL,
     `set_forum`             TEXT                NOT NULL,
     `set_mail`              TEXT                NOT NULL,
@@ -730,7 +732,11 @@ CREATE TABLE `users`
     `comm_old`              INT(10) UNSIGNED    NOT NULL DEFAULT '0',
     `smileys`               TEXT                NOT NULL,
     `notification_settings` TEXT COMMENT 'Notification settings',
-        PRIMARY KEY (`id`),
+    `email_confirmed`       tinyint(1)                   DEFAULT NULL,
+    `confirmation_code`     varchar(50)                  DEFAULT NULL,
+    `new_email`             varchar(50)                  DEFAULT NULL,
+    `admin_notes`           text,
+    PRIMARY KEY (`id`),
     KEY `name_lat` (`name_lat`),
     KEY `lastdate` (`lastdate`),
     KEY `place` (`place`)
@@ -866,8 +872,8 @@ ALTER TABLE `forum_sections`
 -- Индексы таблицы `forum_topic`
 --
 ALTER TABLE `forum_topic`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `deleted` (`deleted`);
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `deleted` (`deleted`);
 
 --
 -- AUTO_INCREMENT для таблицы `forum_messages`
@@ -923,3 +929,23 @@ ALTER TABLE `notifications`
 --
 ALTER TABLE `notifications`
     ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE `email_messages`
+(
+    `id`         bigint(20) UNSIGNED                     NOT NULL,
+    `priority`   int(11)                                      DEFAULT NULL,
+    `locale`     varchar(8) COLLATE utf8mb4_unicode_ci   NOT NULL COMMENT 'The language used for displaying the message.',
+    `template`   varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Template name',
+    `fields`     text COLLATE utf8mb4_unicode_ci COMMENT 'Event fields',
+    `sent_at`    timestamp                               NULL DEFAULT NULL COMMENT 'The time when the message was sent',
+    `created_at` timestamp                               NULL DEFAULT NULL,
+    `updated_at` timestamp                               NULL DEFAULT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+ALTER TABLE `email_messages`
+    ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `email_messages`
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
