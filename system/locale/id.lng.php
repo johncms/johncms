@@ -7,8 +7,6 @@
     array (
       'Forum' => 'Forum',
       'New reply on the forum' => 'Baru membalas di forum',
-      'New answer in the topic:' => 'Jawaban baru dalam topik:',
-      'User <b>#user_name#</b> responded to <a href="#reply_to_message#">Your message</a>.' => 'Pengguna <b>#username#</b> merespons <a href="#reply_to_message#">Anda pesan</a>.',
       'Karma' => 'Karma',
       'New vote in karma' => 'Suara baru di karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Pengguna <b>#username#</b> memilih <a href="#karma_url#">karma anda</a>.',

@@ -7,8 +7,6 @@
     array (
       'Forum' => 'Forum',
       'New reply on the forum' => 'Nowa odpowiedź na forum',
-      'New answer in the topic:' => 'Nowa odpowiedź w temacie:',
-      'User <b>#user_name#</b> responded to <a href="#reply_to_message#">Your message</a>.' => 'Użytkownik <b>#user_name#</b> odpowiedział na <a href="#reply_to_message#">Twoją wiadomość</a>.',
       'Karma' => 'Karma',
       'New vote in karma' => 'Nowy głos w karmie',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Użytkownik <b>#user_name#</b> zagłosował w <a href="#karma_url#">twojej karmie</a>.',

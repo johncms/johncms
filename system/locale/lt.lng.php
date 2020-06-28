@@ -7,8 +7,6 @@
     array (
       'Forum' => 'Forumas',
       'New reply on the forum' => 'Naujas atsakyti forume',
-      'New answer in the topic:' => 'Naujas atsakymas į temą:',
-      'User <b>#user_name#</b> responded to <a href="#reply_to_message#">Your message</a>.' => 'Vartotojo <b>#user_name#</b> atsakė į <a href="#reply_to_message#">Savo pranešimų</a>.',
       'Karma' => 'Karma',
       'New vote in karma' => 'Naujas balsavimo karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Vartotojo <b>#user_name#</b> balsavo <a href="#karma_url#">jūsų karma</a>.',

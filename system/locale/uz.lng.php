@@ -7,8 +7,6 @@
     array (
       'Forum' => 'Forum',
       'New reply on the forum' => 'Forumda yangi javob',
-      'New answer in the topic:' => 'Mavzu bo\'yicha yangi javob:',
-      'User <b>#user_name#</b> responded to <a href="#reply_to_message#">Your message</a>.' => 'Foydalanuvchi <b> #user_name# </b> <a href="#reply_to_message#"> sizning xabaringizga </a> javob berdi.',
       'Karma' => 'Karma',
       'New vote in karma' => 'Karmaga yangi ovoz',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => '<a href="#karma_url#"> sizning karma </a> da <b> #user_name# </b> foydalanuvchisi ovoz berdi.',

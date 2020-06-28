@@ -7,8 +7,6 @@
     array (
       'Forum' => 'Forum',
       'New reply on the forum' => 'Răspuns nou pe forum',
-      'New answer in the topic:' => 'Răspuns nou în subiect:',
-      'User <b>#user_name#</b> responded to <a href="#reply_to_message#">Your message</a>.' => 'Utilizatorul <b>#user_name#</b> a răspuns la <a href="#reply_to_message#">Mesajul tău</a>.',
       'Karma' => 'Karma',
       'New vote in karma' => 'Votare nouă în karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Utilizatorul <b>#user_name#</b> a votat în <a href="#karma_url#">karma</a>.',
