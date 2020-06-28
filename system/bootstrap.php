@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
+use Johncms\Mail\EmailSender;
+use Johncms\Security\Csrf;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
-
-defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
@@ -34,6 +34,8 @@ define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
 
 require __DIR__ . '/vendor/autoload.php';
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Error handling
 if (DEBUG) {
@@ -102,9 +104,12 @@ $translator->defaultDomain('system');
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
 
+/** @var Csrf $csrf */
+$csrf = di(Csrf::class);
+
 /** @var Johncms\System\View\Render $render */
 $render = di(Johncms\System\View\Render::class);
-$render->addData(['tools' => di(Johncms\System\Legacy\Tools::class)]);
+$render->addData(['tools' => di(Johncms\System\Legacy\Tools::class), 'csrf_token' => $csrf->getToken()]);
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;
@@ -112,8 +117,19 @@ $userConfig = $container->get(User::class)->config;
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
-if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
-    ob_start('ob_gzhandler');
-} else {
-    ob_start();
+if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
+    // If cron usage is disabled.
+    if (! USE_CRON) {
+        $cron_cache = CACHE_PATH . 'cron.cache';
+        if (! file_exists($cron_cache) || filemtime($cron_cache) < (time() - 5)) {
+            EmailSender::send();
+            file_put_contents($cron_cache, time());
+        }
+    }
+
+    if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
+        ob_start('ob_gzhandler');
+    } else {
+        ob_start();
+    }
 }

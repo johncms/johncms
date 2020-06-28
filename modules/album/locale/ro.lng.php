@@ -92,6 +92,18 @@
       'Download' => 'Descarcă',
       'Actions' => 'Actiuni',
       'Add to Profile' => 'Adauga la profil',
+      'album' => 
+      array (
+        0 => 'Album',
+        1 => 'Albume',
+        2 => 'Albume',
+      ),
+      'photo' => 
+      array (
+        0 => 'fotografie',
+        1 => 'fotografii',
+        2 => 'fotografii',
+      ),
       'Total:' => 'Total',
     ),
   ),

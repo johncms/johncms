@@ -9,8 +9,12 @@
       'History' => 'Istoric',
       'Guests' => 'Oaspeti',
       'IP Activity' => 'Activitate IP',
+      'Guest' => 'Oaspete',
       'Who is online?' => 'Cine este online?',
+      'Online' => 'Online',
       'For registered users only' => 'Doar pentru utilizatori inregistrati',
+      'List is empty' => 'Lista este goală',
+      'Total' => 'Toatal',
     ),
   ),
 );

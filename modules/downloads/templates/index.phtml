@@ -34,20 +34,20 @@ $this->layout(
 <?php endif; ?>
 
 <?php if (empty($id)): ?>
-    <div class="mb-3">
+    <div class="mb-3 mt-n1">
         <?php if (! empty($urls['new'])): ?>
-            <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1">
+            <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1">
                 <?= __('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
             </a>
         <?php endif; ?>
-        <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1"><?= __('Search') ?></a>
-        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1"><?= __('Top Files') ?></a>
-        <a href="?act=top_users" class="btn btn-outline-primary btn-sm"><?= __('Top Users') ?></a>
+        <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Top Files') ?></a>
+        <a href="?act=top_users" class="btn btn-outline-primary btn-sm mt-1"><?= __('Top Users') ?></a>
     </div>
 <?php endif; ?>
 
 <?php foreach ($categories as $category): ?>
-    <div class="shadow border-radius-12 forum-section post-item mb-2">
+    <div class="forum-section">
         <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $category['url'] ?>" class="text-dark-brown"><?= $category['rus_name'] ?></a>
@@ -65,7 +65,7 @@ $this->layout(
             </div>
         <?php endif; ?>
         <?php if ($category['has_edit']): ?>
-            <div class="border-top mt-2 pt-2">
+            <div class="pt-2 small">
                 <?php if ($total_cat > 1): ?>
                     <a href="<?= $category['up_url'] ?>" class="mr-2"><?= __('Up') ?></a>
                     <a href="<?= $category['down_url'] ?>" class="mr-2"><?= __('Down') ?></a>
@@ -102,11 +102,11 @@ $this->layout(
 <?php endforeach; ?>
 
 <?php if ($total_files): ?>
-    <div>
+    <div class="mt-2">
         <div><?= __('Total') ?>: <?= $total_files ?></div>
         <!-- Page switching -->
         <?php if ($total_files > $user->config->kmess): ?>
-            <div class="mt-1"><?= $pagination ?></div>
+            <div class="mt-2"><?= $pagination ?></div>
         <?php endif ?>
     </div>
 <?php endif; ?>

@@ -2,10 +2,6 @@ msgid ""
 msgstr ""
 "X-Domain: homepage\n"
 
-#: modules/homepage/templates/index.phtml:8
-msgid "Welcome"
-msgstr ""
-
 #: modules/homepage/templates/index.phtml:13
 msgid "Free, Open Source content management system"
 msgstr ""
@@ -14,67 +10,67 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:22
+#: modules/homepage/templates/index.phtml:26
 msgid "Documentation"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:43
-#: modules/homepage/templates/index.phtml:127
+#: modules/homepage/templates/index.phtml:53
+#: modules/homepage/templates/index.phtml:137
 msgid "News"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:136
+#: modules/homepage/templates/index.phtml:146
 msgid "Discuss"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:145
+#: modules/homepage/templates/index.phtml:155
 msgid "Features"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:151
+#: modules/homepage/templates/index.phtml:161
 msgid "Responsive Layout"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:154
+#: modules/homepage/templates/index.phtml:164
 msgid "Your site will appear equally well on both computers and mobile devices."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:161
+#: modules/homepage/templates/index.phtml:171
 msgid "Template System"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:164
+#: modules/homepage/templates/index.phtml:174
 msgid "Using templates, you can completely change the style of your site so that it becomes unique and not like the others."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:171
+#: modules/homepage/templates/index.phtml:181
 msgid "High Performance"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:174
+#: modules/homepage/templates/index.phtml:184
 msgid "When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:181
+#: modules/homepage/templates/index.phtml:191
 msgid "Multilingual"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:184
+#: modules/homepage/templates/index.phtml:194
 msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:193
+#: modules/homepage/templates/index.phtml:203
 msgid "Modularity"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:196
+#: modules/homepage/templates/index.phtml:206
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:200
+#: modules/homepage/templates/index.phtml:210
 msgid "Free License"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:210
+#: modules/homepage/templates/index.phtml:220
 msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
 msgstr ""

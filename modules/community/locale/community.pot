@@ -126,22 +126,22 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/community/templates/user_row.phtml:62
-#: modules/community/templates/user_row.phtml:68
+#: modules/community/templates/user_row.phtml:61
+#: modules/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:64
+#: modules/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:66
+#: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:90
+#: modules/community/templates/user_row.phtml:89
 msgid "Delete"
 msgstr ""

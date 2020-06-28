@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_online - Пользователь онлайн или нет?
  * @property string $search_ip_url - URL страницы поиска по IP
  * @property string $search_ip_via_proxy_url - URL страницы поиска по IP за прокси
+ *
+ * @method Builder online() - Выбрать пользователей онлайн
  */
 class GuestSession extends Model
 {
@@ -50,4 +52,15 @@ class GuestSession extends Model
         'movings',
         'place',
     ];
+
+    /**
+     * Выборка только пользователей онлайн
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOnline(Builder $query): Builder
+    {
+        return $query->where('lastdate', '>', (time() - 300));
+    }
 }

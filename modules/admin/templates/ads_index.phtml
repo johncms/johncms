@@ -24,42 +24,40 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['ads' => true]]));
 ?>
 <?php if (! empty($data['filters'])): ?>
-    <div class="btn-group mb-3" role="group">
+    <div class="mb-3">
         <?php foreach ($data['filters'] as $filter): ?>
-            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary mt-1 <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
 <?php if (! empty($data['items'])): ?>
     <?php foreach ($data['items'] as $item): ?>
-        <div class="card shadow border-0 mb-2">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="<?= $item['link'] ?>" class="h3" target="_blank"><?= $item['name'] ?></a>
-                    <div>
-                        <?php if (! $item['to']): ?>
-                            <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
-                        <?php else: ?>
-                            <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
-                        <?php endif; ?>
-                    </div>
+        <div class="new_post-item without_avatar">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="<?= $item['link'] ?>" class="h3" target="_blank"><?= $item['name'] ?></a>
+                <div>
+                    <?php if (! $item['to']): ?>
+                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
+                    <?php else: ?>
+                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
+                    <?php endif; ?>
                 </div>
-                <div class="text-muted small">
-                    <div><?= __('Start date') ?>: <?= $item['display_time'] ?></div>
-                    <div><?= __('Disposition') ?>: <?= $item['place'] ?></div>
-                    <div><?= __('Show') ?>: <?= $item['show_for'] ?></div>
-                    <div><?= __('Agreement') ?>: <?= $item['agreement'] ?></div>
-                    <div><?= __('Remains') ?>: <?= $item['remains'] ?></div>
-                    <div><?= __('Link type') ?>: <?= $item['show'] ? __('Direct Link') : __('Redirect') ?></div>
-                    <div><?= __('Style settings') ?>: <?= ! empty($item['styles']) ? $item['styles'] : __('Default') ?></div>
-                </div>
-                <div class="mt-2">
-                    <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="btn btn-primary btn-sm"><?= __('Up') ?></a>
-                    <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="btn btn-primary btn-sm"><?= __('Down') ?></a>
-                    <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="btn btn-primary btn-sm"><?= __('Edit') ?></a>
-                    <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
-                    <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="btn btn-danger btn-sm"><?= ($item['to'] ? __('Show') : __('Hide')) ?></a>
-                </div>
+            </div>
+            <div class="post-body small">
+                <div><?= __('Start date') ?>: <?= $item['display_time'] ?></div>
+                <div><?= __('Disposition') ?>: <?= $item['place'] ?></div>
+                <div><?= __('Show') ?>: <?= $item['show_for'] ?></div>
+                <div><?= __('Agreement') ?>: <?= $item['agreement'] ?></div>
+                <div><?= __('Remains') ?>: <?= $item['remains'] ?></div>
+                <div><?= __('Link type') ?>: <?= $item['show'] ? __('Direct Link') : __('Redirect') ?></div>
+                <div><?= __('Style settings') ?>: <?= ! empty($item['styles']) ? $item['styles'] : __('Default') ?></div>
+            </div>
+            <div>
+                <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Up') ?></a>
+                <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Down') ?></a>
+                <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Edit') ?></a>
+                <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="text-danger mr-2"><?= __('Delete') ?></a>
+                <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="text-danger"><?= ($item['to'] ? __('Show') : __('Hide')) ?></a>
             </div>
         </div>
     <?php endforeach; ?>

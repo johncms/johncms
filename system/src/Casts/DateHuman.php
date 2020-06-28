@@ -16,7 +16,6 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\System\i18n\Translator;
-use Johncms\System\Users\User;
 
 class DateHuman implements CastsAttributes
 {
@@ -32,13 +31,8 @@ class DateHuman implements CastsAttributes
     public function get($model, $key, $value, $attributes)
     {
         if (! empty($value)) {
-            /** @var User $user */
-            $user = di(User::class);
-            /** @var Translator $translator */
             $translator = di(Translator::class);
-
-            return Carbon::parse($value, $user->config->timeshift)
-                ->addHours($user->config->timeshift)
+            return Carbon::parse($value)
                 ->locale($translator->getLocale())
                 ->diffForHumans(['join' => false, 'parts' => 2]);
         }

@@ -24,13 +24,9 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['antispy' => true]]));
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= __('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') ?>
-            </div>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= __('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') ?>
     </div>
 </div>
 

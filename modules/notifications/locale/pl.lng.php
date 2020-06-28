@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Notifications are cleared!' => 'Powiadomienia są wyczyszczone!',
       'Users on registration' => 'Rejestracja użytkownika',
       'Articles on moderation' => 'Plik znajduje się w moderacji',
       'Downloads on moderation' => 'Pliki w moderacji',
@@ -13,8 +14,15 @@
       'Mail' => 'Wiadomości',
       'Guestbook' => 'Księga gości',
       'Comments' => 'Komentarze',
+      'Settings' => 'Ustawienia',
+      'Settings saved!' => 'Ustawienia zapisane!',
       'Notifications' => 'Powiadomienia',
       'All notifications have already been read' => 'Wszystkie powiadomienia zostały już przeczytane',
+      'Total' => 'Wszystkich',
+      'Clear notifications' => 'Wyczyść powiadomienia',
+      'Display the number of unread messages in the forum' => 'Wyświetl liczbę nieprzeczytanych wiadomości na forum',
+      'Save' => 'Zapisz',
+      'Cancel' => 'Anuluj',
     ),
   ),
 );

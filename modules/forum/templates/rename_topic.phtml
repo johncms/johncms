@@ -23,22 +23,18 @@ $this->layout(
     ]
 );
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <form name="rename_topic" action="/forum/?act=ren&amp;id=<?= $id ?>" method="post">
-                    <div class="form-group">
-                        <label for="nn"><?= __('Topic name') ?></label>
-                        <input type="text" class="form-control" id="nn" placeholder="<?= __('Topic name') ?>"
-                               name="nn" value="<?= $topic['name'] ?>" required>
-                    </div>
-                    <div>
-                        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-                        <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
-                    </div>
-                </form>
+<div class="card shadow border-0">
+    <div class="card-body">
+        <form name="rename_topic" action="/forum/?act=ren&amp;id=<?= $id ?>" method="post">
+            <div class="form-group">
+                <label for="nn"><?= __('Topic name') ?></label>
+                <input type="text" class="form-control" id="nn" placeholder="<?= __('Topic name') ?>"
+                       name="nn" value="<?= $topic['name'] ?>" required>
             </div>
-        </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+            </div>
+        </form>
     </div>
 </div>

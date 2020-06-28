@@ -5,15 +5,21 @@
   array (
     '' => 
     array (
+      'Add news' => 'Tambahkan berita',
       'You have not entered news title' => 'Anda tidak memasukkan judul berita',
       'You have not entered news text' => 'Anda tidak memasukkan isi berita',
       'You cannot add the message so often. Please, wait %d seconds.' => 'Anda tidak bisa mengirim pesan terlalu sering, mohon tunggu %d detik.',
       'News added' => 'Berita ditambahkan',
+      'Clear news' => 'Jelas berita',
       'Delete all news older than 1 week' => 'Hapus berita lebih dari 1 minggu',
       'Delete all news' => 'Hapus semua berita',
       'Delete all news older than 1 month' => 'Hapus berita lebih dari 1 bulan',
+      'Delete news' => 'Menghapus berita',
+      'News deleted' => 'Berita dihapus',
+      'Edit news' => 'Edit berita',
       'News' => 'Berita',
       'Wrong data' => 'Data salah',
+      'News changed' => 'Berita berubah',
       'Title' => 'Judul',
       'Text' => 'Isi',
       'Discussion' => 'Diskusi',
@@ -32,6 +38,7 @@
       'Author' => 'Oleh',
       'Discuss in Forum' => 'Diskusikan di forum',
       'Edit' => 'Sunting',
+      'Total' => 'Total',
     ),
   ),
 );

@@ -40,7 +40,7 @@ msgid "Comments"
 msgstr ""
 
 #: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:96
+#: modules/notifications/templates/index.phtml:80
 msgid "Settings"
 msgstr ""
 
@@ -54,15 +54,15 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:33
+#: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:83
+#: modules/notifications/templates/index.phtml:67
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:91
+#: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
 msgstr ""
 

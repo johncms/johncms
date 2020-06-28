@@ -15,16 +15,6 @@ use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
 use Psr\Container\ContainerInterface;
 
-// Включаем режим отладки
-const DEBUG = true;
-
-// Включаем режим отладки для всех пользователей (в т.ч. для гостей)
-// Использовать только когда вы понимаете что это вам действительно нужно т.к. отладочная информация может содержать конфиденциальные данные!
-const DEBUG_FOR_ALL = false;
-
-// Константа для проверки подключенного ядра
-const _IN_JOHNCMS = true;
-
 require 'system/bootstrap.php';
 
 /** @var ContainerInterface $container */

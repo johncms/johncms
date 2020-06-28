@@ -34,31 +34,23 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div class="row mb-3">
-    <div class="col-md-6">
-        <form action="?act=search" method="post">
-            <div class="form-group">
-                <label for="search_query"><?= __('Search query') ?></label>
-                <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
-                       name="search" value="<?= $search_query ?>" maxlength="64" minlength="2" required>
-            </div>
-            <div class="form-group">
-                <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" name="id" value="1" id="search_t" <?= ($id ? 'checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="search_t"><?= __('Search in description') ?></label>
-                </div>
-            </div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
-        </form>
+<form action="?act=search" method="post" class="mb-3">
+    <div class="form-group">
+        <label for="search_query"><?= __('Search query') ?></label>
+        <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
+               name="search" value="<?= $search_query ?>" maxlength="64" minlength="2" required>
     </div>
-</div>
-
-<?php if (empty($files) && $show_empty_info): ?>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-info"><?= __('List is empty') ?></div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="id" value="1" id="search_t" <?= ($id ? 'checked="checked"' : '') ?>>
+            <label class="custom-control-label" for="search_t"><?= __('Search in description') ?></label>
         </div>
     </div>
+    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
+</form>
+
+<?php if (empty($files) && $show_empty_info): ?>
+    <div class="alert alert-info"><?= __('List is empty') ?></div>
 <?php endif; ?>
 
 <?php foreach ($files as $file): ?>
@@ -76,12 +68,8 @@ $this->layout(
 <?php endif; ?>
 
 <?php if (empty($files)): ?>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-info">
-                <?= __('Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max.') ?>
-            </div>
-        </div>
+    <div class="alert alert-info">
+        <?= __('Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max.') ?>
     </div>
 <?php endif; ?>
 

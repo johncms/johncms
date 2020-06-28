@@ -1,13 +1,14 @@
-<?php $this->layout('system::layout/default', [
-    'title'      => __('Registration'),
-    'page_title' => __('Registration'),
-]) ?>
-<div class="row">
-    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-10">
-        <div class="card shadow border-0 border-radius-12">
-            <div class="card-body">
-                <?= __('Registration is temporarily closed') ?>
-            </div>
-        </div>
-    </div>
-</div>
+<?php $this->layout(
+    'system::layout/default',
+    [
+        'title'      => __('Registration'),
+        'page_title' => __('Registration'),
+    ]
+) ?>
+<?= $this->fetch(
+    'system::app/alert',
+    [
+        'alert_type' => 'alert-info',
+        'alert'      => __('Registration is temporarily closed'),
+    ]
+) ?>

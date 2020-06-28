@@ -24,55 +24,46 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['karma' => true]]));
 ?>
 
-<div class="row">
-    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
-        <?php if (! empty($data['success_message'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-success',
-                    'alert'      => $data['success_message'],
-                ]
-            ) ?>
-        <?php endif; ?>
-        <div class="card shadow border-0">
-            <form action="<?= $data['form_action'] ?>" method="post">
-                <div class="card-body">
+<?php if (! empty($data['success_message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-success',
+            'alert'      => $data['success_message'],
+        ]
+    ) ?>
+<?php endif; ?>
 
-                    <div class="form-group">
-                        <label for="karma_points"><?= __('Voices per day') ?></label>
-                        <input type="text" name="karma_points" class="form-control" id="karma_points" value="<?= $data['settings']['karma_points'] ?>">
-                    </div>
-
-                    <h3><?= __('Restriction for vote') ?></h3>
-
-                    <div class="form-group">
-                        <label for="forum"><?= __('Forum posts') ?></label>
-                        <input type="text" name="forum" class="form-control" id="forum" value="<?= $data['settings']['forum'] ?>">
-                    </div>
-
-                    <h3><?= __('General Settings') ?></h3>
-
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="on" value="1" id="on" <?= $data['settings']['on'] ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="on"><?= __('Switch module ON') ?></label>
-                    </div>
-
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="adm" value="1" id="adm" <?= $data['settings']['adm'] ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="adm"><?= __('Forbid to vote for the administration') ?></label>
-                    </div>
-
-
-                    <div class="mt-3">
-                        <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
-                        <a href="/admin/" class="btn btn-secondary"><?= __('Cancel') ?></a>
-                        <?php if ($user->rights === 9): ?>
-                            <a href="?do=clean" class="btn btn-danger float-right"><?= __('Clear Karma') ?></a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </form>
-        </div>
+<form action="<?= $data['form_action'] ?>" method="post">
+    <div class="form-group">
+        <label for="karma_points"><?= __('Voices per day') ?></label>
+        <input type="text" name="karma_points" class="form-control" id="karma_points" value="<?= $data['settings']['karma_points'] ?>">
     </div>
-</div>
+
+    <h3><?= __('Restriction for vote') ?></h3>
+
+    <div class="form-group">
+        <label for="forum"><?= __('Forum posts') ?></label>
+        <input type="text" name="forum" class="form-control" id="forum" value="<?= $data['settings']['forum'] ?>">
+    </div>
+
+    <h3><?= __('General Settings') ?></h3>
+
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="on" value="1" id="on" <?= $data['settings']['on'] ? 'checked' : '' ?>>
+        <label class="custom-control-label" for="on"><?= __('Switch module ON') ?></label>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="adm" value="1" id="adm" <?= $data['settings']['adm'] ? 'checked' : '' ?>>
+        <label class="custom-control-label" for="adm"><?= __('Forbid to vote for the administration') ?></label>
+    </div>
+
+    <div class="mt-3">
+        <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
+        <a href="/admin/" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <?php if ($user->rights === 9): ?>
+            <a href="?do=clean" class="btn btn-danger float-right"><?= __('Clear Karma') ?></a>
+        <?php endif; ?>
+    </div>
+</form>

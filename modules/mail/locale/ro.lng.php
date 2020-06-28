@@ -16,6 +16,7 @@
       'When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?' => 'Cand stergi un prieten, se sterg si toate mesajele primite si trimise de la acesta. <br> Esti sigur ca vrei sa stergi?',
       'Contact for removal isn\'t chosen' => 'Contactul de sters nu este selectat',
       'Files' => 'Fisiere',
+      'Blacklist' => 'Lista neagră',
       'User does not exists' => 'Utilizatorul nu exista',
       'User not blocked' => 'Utilizatorul nu este blocat',
       'User is unblocked' => 'Utilizatorul este deblocat',
@@ -59,9 +60,28 @@
       'The user at your ignore list. Sending the message is impossible.' => 'Utilizatorul este blocat. Trimiterea mesajelor catre acesta este imposibila.',
       'The user added you in the ignore list. Sending the message isn\'t possible.' => 'Utilizatorul te-a adăugat în lista de ignorare. Trimiterea mesajului nu este posibila.',
       'Message already exists' => 'Mesajul exista deja',
+      'My Account' => 'Contul meu',
+      'Cancel' => 'Anuleaza',
       'The list is empty' => 'Lista este goala',
+      'message' => 
+      array (
+        0 => 'Mesaj',
+        1 => 'Mesaje',
+        2 => 'Mesaje',
+      ),
+      'unread message' => 
+      array (
+        0 => 'mesaj necitit',
+        1 => 'Sterge mesaje',
+        2 => 'Sterge mesaje',
+      ),
+      'Total:' => 'Total',
+      'Last:' => 'Ultimul:',
       'To Whom' => 'Catre cine',
+      'Message' => 'Mesaj',
+      'Choose file' => 'Selecteaza Fisier',
       'Send' => 'Trimite',
+      'Attached files' => 'Fișiere atașate',
     ),
   ),
 );

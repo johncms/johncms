@@ -51,6 +51,7 @@ di(Translator::class)->addTranslationDomain('profile', __DIR__ . '/locale');
 
 // Закрываем от неавторизованных юзеров
 if (! $user->is_valid) {
+    http_response_code(403);
     echo $view->render(
         'system::pages/result',
         [
@@ -136,6 +137,7 @@ $mods = [
     'settings',
     'stat',
     'index',
+    'confirm_new_email',
 ];
 
 if ($act && ($key = array_search($act, $mods, true)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {

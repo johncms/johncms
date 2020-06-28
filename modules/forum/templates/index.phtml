@@ -15,6 +15,8 @@
  * @var $online
  * @var $files_count
  * @var $unread_count
+ * @var \Forum\Models\ForumSection $section
+ * @var \Forum\Models\ForumSection $subsection
  */
 
 $this->layout(
@@ -37,32 +39,32 @@ $this->layout(
 ) ?>
 
 <?php foreach ($sections as $section): ?>
-    <div class="shadow forum-section post-item mb-2">
-        <div class="section-header border-bottom-0 <?= (! empty($section['description']) ? 'pb-2' : 'pb-0') ?>">
+    <div class="forum-section">
+        <div class="section-header">
             <div class="d-flex align-items-center">
-                <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
-                <span class="badge badge-pill badge-light ml-3"><?= $section['cnt'] ?></span>
+                <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
+                <span class="badge badge-pill badge-light ml-3"><?= ($section->section_type ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
-            <?php if (! empty($section['subsections'])): ?>
+            <?php if (! empty($section->subsections_count)): ?>
                 <div class="toggle d-flex flex-grow-1 justify-content-end align-items-center pr-2 collapsed cursor-pointer"
-                     data-toggle="collapse" data-target="#subsections_<?= $section['id'] ?>" aria-expanded="false" aria-controls="subsections">
+                     data-toggle="collapse" data-target="#subsections_<?= $section->id ?>" aria-expanded="false" aria-controls="subsections">
                     <svg class="icon icon-chevron-bottom text-dark-brown">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
                     </svg>
                 </div>
             <?php endif; ?>
         </div>
-        <?php if (! empty($section['subsections'])): ?>
-            <div class="collapse subsections" id="subsections_<?= $section['id'] ?>">
-                <div class="<?= (! empty($section['description']) ? 'mt-0' : 'mt-2') ?> pt-2 pb-2 border-top">
-                    <?php foreach ($section['subsections'] as $subsection): ?>
-                        <span class="pr-2">&raquo;</span><a href="<?= $subsection['url'] ?>" class="text-dark-brown"><?= $subsection['name'] ?></a><br>
+        <?php if (! empty($section->subsections_count)): ?>
+            <div class="collapse subsections" id="subsections_<?= $section->id ?>">
+                <div class="pt-2">
+                    <?php foreach ($section->subsections as $subsection): ?>
+                        <span class="pr-2">&raquo;</span><a href="<?= $subsection->url ?>" class="text-dark-brown"><?= $subsection->name ?></a><br>
                     <?php endforeach; ?>
                 </div>
             </div>
         <?php endif; ?>
-        <?php if (! empty($section['description'])): ?>
-            <div class="small pt-2 text-muted border-top"><?= $section['description'] ?></div>
+        <?php if (! empty($section->description)): ?>
+            <div class="small pt-2 text-muted"><?= $section->description ?></div>
         <?php endif ?>
     </div>
 <?php endforeach; ?>

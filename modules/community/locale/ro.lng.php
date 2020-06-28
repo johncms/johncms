@@ -8,9 +8,13 @@
       'Administration' => 'Administratie',
       'Birthdays' => 'Aniversari',
       'User Search' => 'Cauta utilizatori',
+      'Nickname' => 'Porecla',
       'Invalid length' => 'Lungime invalida',
       'Invalid characters' => 'Caractere invalide',
+      'Forum' => 'Forum',
+      'Guestbook' => 'Guestbook',
       'Comments' => 'Comentarii',
+      'Karma' => 'Karma',
       'Most active in Guestbook' => 'Cei mai activi in Guestbook',
       'Most commentators' => 'Cei mai multi comentatori',
       'Best Karma' => 'Cea mai buna Karma',
@@ -23,7 +27,29 @@
       'The search is performed by Nickname and are case-insensitive.' => 'Cautarea se face dupa Nickname.Ai grija la majuscule.',
       'Users' => 'Utilizatori',
       'Top Activity' => 'Activitati de top',
+      'Username' => 'Nume',
+      'List is empty' => 'Lista este goală',
+      'Total' => 'Toatal',
       'Back' => 'Inapoi',
+      'post' => 
+      array (
+        0 => 'postare',
+        1 => 'postări',
+        2 => 'postări',
+      ),
+      'comment' => 
+      array (
+        0 => 'comentariu',
+        1 => 'Comentarii',
+        2 => 'Comentarii',
+      ),
+      'point' => 
+      array (
+        0 => 'punct',
+        1 => 'puncte',
+        2 => 'puncte',
+      ),
+      'Delete' => 'Șterge',
     ),
   ),
 );

@@ -29,13 +29,9 @@ class Counters
     /** @var User */
     private $user;
 
-    /** @var Tools */
-    private $tools;
-
     public function __construct(PDO $pdo, Tools $tools, User $user, string $homeUrl)
     {
         $this->db = $pdo;
-        $this->tools = $tools;
         $this->user = $user;
         $this->homeurl = $homeUrl;
     }
@@ -261,22 +257,10 @@ class Counters
      * @deprecated use usersCounters
      * TODO: содержимое usersCounters перенести в этот метод после проверки на использование
      */
-    public function users()
+    public function users(): string
     {
-        $file = CACHE_PATH . 'count-users.dat';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'];
-            $new = $res['new'];
-        } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
-        }
-
-        return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
+        $counter = $this->usersCounters();
+        return $counter['total'] . ($counter['new'] ? '&#160;/&#160;<span class="red">+' . $counter['new'] . '</span>' : '');
     }
 
     /**
@@ -426,12 +410,12 @@ class Counters
         $file = CACHE_PATH . 'counters-users.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'];
-            $new = $res['new'];
+            $cache = json_decode(file_get_contents($file), true);
+            $total = $cache['total'];
+            $new = $cache['new'];
         } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
+            $total = (new Users\User())->approved()->count();
+            $new = (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count();
 
             file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
         }
@@ -534,7 +518,7 @@ class Counters
         $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id . '\' AND `unread_comments` = 1')->fetchColumn();
 
         // Временный костыль для обратной совместимости
-        $default = ['show_forum_unread' => true];
+        $default = ['show_forum_unread' => false];
         $settings = ! empty($this->user->notification_settings) ? json_decode($this->user->notification_settings, true) : [];
         $notification_settings = array_merge($default, $settings);
         if ($notification_settings['show_forum_unread']) {

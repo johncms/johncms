@@ -3,22 +3,22 @@ msgstr ""
 "X-Domain: profile\n"
 
 #: modules/profile/includes/activity.php:23
-#: modules/profile/templates/index.phtml:234
+#: modules/profile/templates/index.phtml:253
 #: modules/profile/templates/stat.phtml:50
 msgid "Activity"
 msgstr ""
 
 #: modules/profile/includes/activity.php:25
-#: modules/profile/includes/edit.php:42
+#: modules/profile/includes/edit.php:52
 #: modules/profile/includes/guestbook.php:15
 #: modules/profile/includes/images.php:159
 #: modules/profile/includes/reset.php:20
-#: modules/profile/templates/office.phtml:33
+#: modules/profile/templates/office.phtml:32
 msgid "Profile"
 msgstr ""
 
 #: modules/profile/includes/activity.php:25
-#: modules/profile/includes/edit.php:42
+#: modules/profile/includes/edit.php:52
 #: modules/profile/includes/images.php:159
 #: modules/profile/includes/index.php:24
 msgid "My Profile"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: modules/profile/includes/activity.php:41
 #: modules/profile/includes/ban.php:392
-#: modules/profile/templates/ban.phtml:49
+#: modules/profile/templates/ban.phtml:45
 #: modules/profile/templates/stat.phtml:54
 msgid "Comments"
 msgstr ""
@@ -68,7 +68,7 @@ msgid "System"
 msgstr ""
 
 #: modules/profile/includes/ban.php:147
-#: modules/profile/includes/index.php:145
+#: modules/profile/includes/index.php:151
 msgid "Ban"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr ""
 #: modules/profile/includes/ban.php:258
 #: modules/profile/includes/ban.php:277
 #: modules/profile/includes/ban.php:324
-#: modules/profile/skl.php:132
+#: modules/profile/skl.php:141
 msgid "Wrong data"
 msgstr ""
 
@@ -117,10 +117,10 @@ msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
 #: modules/profile/includes/ban.php:306
-#: modules/profile/includes/index.php:139
-#: modules/profile/templates/edit.phtml:112
-#: modules/profile/templates/edit.phtml:132
-#: modules/profile/templates/karma_delete.phtml:35
+#: modules/profile/includes/index.php:145
+#: modules/profile/templates/edit.phtml:108
+#: modules/profile/templates/edit.phtml:128
+#: modules/profile/templates/karma_delete.phtml:33
 msgid "Delete"
 msgstr ""
 
@@ -149,20 +149,20 @@ msgid "Violations History"
 msgstr ""
 
 #: modules/profile/includes/ban.php:389
-#: modules/profile/templates/ban.phtml:41
+#: modules/profile/templates/ban.phtml:37
 msgid "Full block"
 msgstr ""
 
 #: modules/profile/includes/ban.php:390
 #: modules/profile/includes/ban.php:391
-#: modules/profile/templates/ban.phtml:45
+#: modules/profile/templates/ban.phtml:41
 msgid "Private messages"
 msgstr ""
 
 #: modules/profile/includes/ban.php:393
 #: modules/profile/includes/settings.php:45
 #: modules/profile/includes/settings.php:87
-#: modules/profile/templates/ban.phtml:59
+#: modules/profile/templates/ban.phtml:55
 #: modules/profile/templates/stat.phtml:52
 msgid "Forum"
 msgstr ""
@@ -170,20 +170,20 @@ msgstr ""
 #: modules/profile/includes/ban.php:394
 #: modules/profile/includes/guestbook.php:16
 #: modules/profile/includes/guestbook.php:28
-#: modules/profile/templates/ban.phtml:53
-#: modules/profile/templates/index.phtml:264
-#: modules/profile/templates/office.phtml:43
+#: modules/profile/templates/ban.phtml:49
+#: modules/profile/templates/index.phtml:289
+#: modules/profile/templates/office.phtml:42
 #: modules/profile/templates/stat.phtml:53
 msgid "Guestbook"
 msgstr ""
 
 #: modules/profile/includes/ban.php:395
-#: modules/profile/templates/ban.phtml:65
+#: modules/profile/templates/ban.phtml:61
 msgid "Library"
 msgstr ""
 
 #: modules/profile/includes/ban.php:405
-#: modules/profile/templates/ban.phtml:91
+#: modules/profile/templates/ban.phtml:87
 msgid "Till cancel"
 msgstr ""
 
@@ -195,17 +195,22 @@ msgstr ""
 msgid "Delete Ban"
 msgstr ""
 
-#: modules/profile/includes/edit.php:15
-#: modules/profile/templates/office.phtml:87
+#: modules/profile/includes/confirm_new_email.php:19
+#: modules/profile/includes/confirm_new_email.php:20
+msgid "Email confirmation"
+msgstr ""
+
+#: modules/profile/includes/edit.php:20
+#: modules/profile/templates/office.phtml:86
 msgid "Edit Profile"
 msgstr ""
 
-#: modules/profile/includes/edit.php:25
+#: modules/profile/includes/edit.php:35
 #: modules/profile/includes/images.php:23
 msgid "You cannot edit profile of higher administration"
 msgstr ""
 
-#: modules/profile/includes/edit.php:37
+#: modules/profile/includes/edit.php:47
 #: modules/profile/includes/ip.php:24
 #: modules/profile/includes/office.php:24
 #: modules/profile/includes/password.php:25
@@ -213,31 +218,23 @@ msgstr ""
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/profile/includes/edit.php:51
+#: modules/profile/includes/edit.php:86
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/profile/includes/edit.php:58
+#: modules/profile/includes/edit.php:93
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/profile/includes/edit.php:89
-msgid "Min. nick length 2, max. 20 characters"
+#: modules/profile/includes/edit.php:169
+msgid "Confirm email change"
 msgstr ""
 
-#: modules/profile/includes/edit.php:95
-msgid "Nick contains invalid characters"
+#: modules/profile/includes/edit.php:186
+msgid "The procedure for changing the email address was started"
 msgstr ""
 
-#: modules/profile/includes/edit.php:100
-msgid "Invalid format date of birth"
-msgstr ""
-
-#: modules/profile/includes/edit.php:105
-msgid "ICQ number must be at least 5 digits and max. 10"
-msgstr ""
-
-#: modules/profile/includes/edit.php:170
+#: modules/profile/includes/edit.php:196
 msgid "Data saved"
 msgstr ""
 
@@ -288,26 +285,30 @@ msgstr ""
 msgid "Pending confirmation"
 msgstr ""
 
-#: modules/profile/includes/index.php:120
+#: modules/profile/includes/index.php:99
+msgid "E-mail address is not confirmed"
+msgstr ""
+
+#: modules/profile/includes/index.php:126
 msgid "Add to Contacts"
 msgstr ""
 
-#: modules/profile/includes/index.php:125
+#: modules/profile/includes/index.php:131
 msgid "Remove from Contacts"
 msgstr ""
 
-#: modules/profile/includes/index.php:133
+#: modules/profile/includes/index.php:139
 msgid "Edit"
 msgstr ""
 
 #: modules/profile/includes/ip.php:15
-#: modules/profile/templates/index.phtml:77
+#: modules/profile/templates/index.phtml:86
 msgid "IP History"
 msgstr ""
 
 #: modules/profile/includes/karma.php:17
 #: modules/profile/includes/karma.php:21
-#: modules/profile/templates/index.phtml:112
+#: modules/profile/templates/index.phtml:119
 msgid "Karma"
 msgstr ""
 
@@ -338,9 +339,9 @@ msgstr ""
 #: modules/profile/includes/karma.php:77
 #: modules/profile/includes/karma.php:167
 #: modules/profile/templates/ban_history.phtml:96
-#: modules/profile/templates/ip_history.phtml:75
-#: modules/profile/templates/karma.phtml:92
-#: modules/profile/templates/restore_password_result.phtml:16
+#: modules/profile/templates/ip_history.phtml:70
+#: modules/profile/templates/karma.phtml:86
+#: modules/profile/templates/restore_password_result.phtml:19
 #: modules/profile/templates/stat.phtml:58
 msgid "Back"
 msgstr ""
@@ -374,14 +375,14 @@ msgid "All"
 msgstr ""
 
 #: modules/profile/includes/karma.php:292
-#: modules/profile/templates/index.phtml:127
-#: modules/profile/templates/karma_vote.phtml:46
+#: modules/profile/templates/index.phtml:134
+#: modules/profile/templates/karma_vote.phtml:41
 msgid "Positive"
 msgstr ""
 
 #: modules/profile/includes/karma.php:297
-#: modules/profile/templates/index.phtml:133
-#: modules/profile/templates/karma_vote.phtml:50
+#: modules/profile/templates/index.phtml:140
+#: modules/profile/templates/karma_vote.phtml:45
 msgid "Negative"
 msgstr ""
 
@@ -392,8 +393,8 @@ msgstr ""
 
 #: modules/profile/includes/password.php:15
 #: modules/profile/includes/password.php:16
-#: modules/profile/templates/edit.phtml:241
-#: modules/profile/templates/office.phtml:88
+#: modules/profile/templates/edit.phtml:278
+#: modules/profile/templates/office.phtml:87
 msgid "Change Password"
 msgstr ""
 
@@ -428,7 +429,7 @@ msgstr ""
 
 #: modules/profile/includes/settings.php:17
 #: modules/profile/includes/settings.php:23
-#: modules/profile/templates/office.phtml:84
+#: modules/profile/templates/office.phtml:83
 msgid "Settings"
 msgstr ""
 
@@ -455,7 +456,7 @@ msgstr ""
 
 #: modules/profile/includes/stat.php:16
 #: modules/profile/includes/stat.php:19
-#: modules/profile/templates/index.phtml:244
+#: modules/profile/templates/index.phtml:265
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
 msgstr ""
@@ -468,144 +469,119 @@ msgstr ""
 msgid "This User does not exists"
 msgstr ""
 
-#: modules/profile/skl.php:39
-#: modules/profile/templates/restore_password.phtml:2
-#: modules/profile/templates/restore_password.phtml:3
+#: modules/profile/skl.php:42
+#: modules/profile/templates/restore_password.phtml:4
+#: modules/profile/templates/restore_password.phtml:5
 #: modules/profile/templates/restore_password.phtml:10
-#: modules/profile/templates/restore_password_result.phtml:2
-#: modules/profile/templates/restore_password_result.phtml:3
+#: modules/profile/templates/restore_password_result.phtml:4
+#: modules/profile/templates/restore_password_result.phtml:5
 #: modules/profile/templates/restore_password_result.phtml:10
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/skl.php:67
+#: modules/profile/skl.php:70
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/profile/skl.php:69
+#: modules/profile/skl.php:72
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/skl.php:83
+#: modules/profile/skl.php:86
 msgid "Invalid Email address"
 msgstr ""
 
-#: modules/profile/skl.php:87
+#: modules/profile/skl.php:90
 msgid "Password can be recovered 1 time per day"
 msgstr ""
 
-#: modules/profile/skl.php:90
-#: modules/profile/skl.php:151
+#: modules/profile/skl.php:93
+#: modules/profile/skl.php:160
 msgid "User does not exists"
 msgstr ""
 
-#: modules/profile/skl.php:97
+#: modules/profile/skl.php:109
 msgid "Password recovery"
 msgstr ""
 
-#: modules/profile/skl.php:99
-msgid ""
-"Hello %s!\n"
-"You start process of password recovery on the site %s\n"
-"In order to recover your password, you must click on the link: %s\n"
-"Link valid for 1 hour\n"
-"\n"
-"If you receive this mail by mistake, just ignore this letter"
-msgstr ""
-
-#: modules/profile/skl.php:110
+#: modules/profile/skl.php:119
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/skl.php:112
-#: modules/profile/skl.php:173
-msgid "Error sending E-mail"
-msgstr ""
-
-#: modules/profile/skl.php:142
+#: modules/profile/skl.php:151
 msgid "Password recovery is impossible"
 msgstr ""
 
-#: modules/profile/skl.php:146
+#: modules/profile/skl.php:155
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/skl.php:158
+#: modules/profile/skl.php:176
 msgid "Your new password"
 msgstr ""
 
-#: modules/profile/skl.php:160
-msgid ""
-"Hello %s\n"
-"You have changed your password on the site %s\n"
-"\n"
-"Your new password: %s\n"
-"\n"
-"After logging in, you can change your password to new one."
-msgstr ""
-
-#: modules/profile/skl.php:171
+#: modules/profile/skl.php:187
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
 #: modules/profile/templates/activity.phtml:37
-#: modules/profile/templates/ip_history.phtml:49
+#: modules/profile/templates/ip_history.phtml:46
 #: modules/profile/templates/karma.phtml:38
 msgid "The list is empty"
 msgstr ""
 
 #: modules/profile/templates/activity.phtml:53
-#: modules/profile/templates/ip_history.phtml:71
-#: modules/profile/templates/karma.phtml:88
+#: modules/profile/templates/ip_history.phtml:66
+#: modules/profile/templates/karma.phtml:82
 msgid "Total:"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:35
+#: modules/profile/templates/ban.phtml:31
 msgid "Ban:"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:37
+#: modules/profile/templates/ban.phtml:33
 msgid "Ban type"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:69
+#: modules/profile/templates/ban.phtml:65
 msgid "Ban time"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:71
+#: modules/profile/templates/ban.phtml:67
 msgid "Time"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:76
+#: modules/profile/templates/ban.phtml:72
 msgid "Minutes (60 max.)"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:80
+#: modules/profile/templates/ban.phtml:76
 msgid "Hours (24 max.)"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:85
+#: modules/profile/templates/ban.phtml:81
 msgid "Days (30 max.)"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:96
+#: modules/profile/templates/ban.phtml:92
 msgid "Reason"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:102
+#: modules/profile/templates/ban.phtml:98
 msgid "Apply Ban"
 msgstr ""
 
-#: modules/profile/templates/ban.phtml:103
-#: modules/profile/templates/ban_cancel.phtml:36
-#: modules/profile/templates/edit.phtml:297
-#: modules/profile/templates/forum_settings.phtml:80
-#: modules/profile/templates/images.phtml:63
-#: modules/profile/templates/karma_delete.phtml:36
-#: modules/profile/templates/karma_vote.phtml:71
-#: modules/profile/templates/mail_settings.phtml:61
-#: modules/profile/templates/password.phtml:67
-#: modules/profile/templates/settings.phtml:120
+#: modules/profile/templates/ban.phtml:99
+#: modules/profile/templates/ban_cancel.phtml:32
+#: modules/profile/templates/edit.phtml:333
+#: modules/profile/templates/forum_settings.phtml:74
+#: modules/profile/templates/images.phtml:60
+#: modules/profile/templates/karma_delete.phtml:34
+#: modules/profile/templates/karma_vote.phtml:66
+#: modules/profile/templates/mail_settings.phtml:57
+#: modules/profile/templates/password.phtml:63
+#: modules/profile/templates/settings.phtml:114
 msgid "Cancel"
 msgstr ""
 
@@ -641,414 +617,442 @@ msgstr ""
 msgid "Clear history"
 msgstr ""
 
+#: modules/profile/templates/confirm_new_email.phtml:12
+msgid "User is not found"
+msgstr ""
+
+#: modules/profile/templates/confirm_new_email.phtml:14
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr ""
+
+#: modules/profile/templates/confirm_new_email.phtml:16
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr ""
+
 #: modules/profile/templates/edit.phtml:52
 #: modules/profile/templates/restore_password.phtml:12
 #: modules/profile/templates/restore_password.phtml:18
 msgid "Username"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:58
-#: modules/profile/templates/edit.phtml:65
-#: modules/profile/templates/edit.phtml:87
+#: modules/profile/templates/edit.phtml:57
+#: modules/profile/templates/edit.phtml:64
+#: modules/profile/templates/edit.phtml:75
 msgid "Nickname"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:69
+#: modules/profile/templates/edit.phtml:71
 msgid "Min.2, Max. 20"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:73
 #: modules/profile/templates/edit.phtml:79
-#: modules/profile/templates/edit.phtml:91
+#: modules/profile/templates/edit.phtml:85
+#: modules/profile/templates/index.phtml:165
 msgid "Status"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:82
+#: modules/profile/templates/edit.phtml:91
 msgid "Max. 50"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:99
+#: modules/profile/templates/edit.phtml:95
 msgid "Avatar"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:107
-#: modules/profile/templates/edit.phtml:130
+#: modules/profile/templates/edit.phtml:103
+#: modules/profile/templates/edit.phtml:126
 msgid "Upload"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:109
+#: modules/profile/templates/edit.phtml:105
 msgid "Select in Catalog"
 msgstr ""
 
+#: modules/profile/templates/edit.phtml:115
 #: modules/profile/templates/edit.phtml:119
-#: modules/profile/templates/edit.phtml:123
-#: modules/profile/templates/index.phtml:152
+#: modules/profile/templates/index.phtml:157
 msgid "Photo"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:137
+#: modules/profile/templates/edit.phtml:133
 msgid "Personal info"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:141
-#: modules/profile/templates/edit.phtml:147
+#: modules/profile/templates/edit.phtml:136
+#: modules/profile/templates/edit.phtml:142
 msgid "Your name"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:152
+#: modules/profile/templates/edit.phtml:150
 msgid "Date of birth (d.m.y)"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:155
+#: modules/profile/templates/edit.phtml:153
 msgid "Day"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:160
+#: modules/profile/templates/edit.phtml:161
 msgid "Month"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:164
+#: modules/profile/templates/edit.phtml:169
 msgid "Year"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:170
-#: modules/profile/templates/edit.phtml:176
-#: modules/profile/templates/index.phtml:178
+#: modules/profile/templates/edit.phtml:179
+#: modules/profile/templates/edit.phtml:185
+#: modules/profile/templates/index.phtml:189
 msgid "City, Country"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:180
+#: modules/profile/templates/edit.phtml:192
 msgid "About myself"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:184
-#: modules/profile/templates/office.phtml:71
-#: modules/profile/templates/office.phtml:75
+#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/office.phtml:70
+#: modules/profile/templates/office.phtml:74
 msgid "Contacts"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:186
-#: modules/profile/templates/edit.phtml:192
-#: modules/profile/templates/index.phtml:195
+#: modules/profile/templates/edit.phtml:198
+#: modules/profile/templates/edit.phtml:204
+#: modules/profile/templates/index.phtml:204
 msgid "Phone number"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:196
-#: modules/profile/templates/edit.phtml:202
-#: modules/profile/templates/index.phtml:201
+#: modules/profile/templates/edit.phtml:211
+#: modules/profile/templates/edit.phtml:217
+#: modules/profile/templates/index.phtml:210
 msgid "E-mail"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:207
+#: modules/profile/templates/edit.phtml:224
+msgid "The new email address is:"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:225
+msgid "Please check your email and confirm it."
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:232
 msgid "Show in Profile"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:209
+#: modules/profile/templates/edit.phtml:234
 msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:213
-#: modules/profile/templates/edit.phtml:219
-#: modules/profile/templates/index.phtml:210
+#: modules/profile/templates/edit.phtml:237
+#: modules/profile/templates/edit.phtml:243
+#: modules/profile/templates/index.phtml:219
 msgid "Skype"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:224
-#: modules/profile/templates/edit.phtml:230
-#: modules/profile/templates/index.phtml:216
+#: modules/profile/templates/edit.phtml:251
+#: modules/profile/templates/edit.phtml:257
+#: modules/profile/templates/index.phtml:225
 msgid "Site"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:235
+#: modules/profile/templates/edit.phtml:265
 msgid "Administrative Functions"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:238
+#: modules/profile/templates/edit.phtml:268
+msgid "Admin notes"
+msgstr ""
+
+#: modules/profile/templates/edit.phtml:275
 msgid "Prohibit Karma"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:243
+#: modules/profile/templates/edit.phtml:280
 msgid "Reset User options to default"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:247
+#: modules/profile/templates/edit.phtml:284
 msgid "Select gender"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:250
-#: modules/profile/templates/index.phtml:168
+#: modules/profile/templates/edit.phtml:287
+#: modules/profile/templates/index.phtml:179
 msgid "Man"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:254
-#: modules/profile/templates/index.phtml:170
+#: modules/profile/templates/edit.phtml:291
+#: modules/profile/templates/index.phtml:181
 msgid "Woman"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:258
+#: modules/profile/templates/edit.phtml:295
 msgid "Position on the Site"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:261
+#: modules/profile/templates/edit.phtml:298
 msgid "User"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:265
+#: modules/profile/templates/edit.phtml:302
 msgid "Forum Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:269
+#: modules/profile/templates/edit.phtml:306
 msgid "Download Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:273
+#: modules/profile/templates/edit.phtml:310
 msgid "Library Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:277
+#: modules/profile/templates/edit.phtml:314
 msgid "Super Moderator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:283
+#: modules/profile/templates/edit.phtml:320
 msgid "Administrator"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:287
+#: modules/profile/templates/edit.phtml:324
 msgid "Supervisor"
 msgstr ""
 
-#: modules/profile/templates/edit.phtml:296
-#: modules/profile/templates/forum_settings.phtml:79
-#: modules/profile/templates/images.phtml:62
-#: modules/profile/templates/mail_settings.phtml:60
-#: modules/profile/templates/password.phtml:66
-#: modules/profile/templates/settings.phtml:119
+#: modules/profile/templates/edit.phtml:332
+#: modules/profile/templates/forum_settings.phtml:73
+#: modules/profile/templates/images.phtml:59
+#: modules/profile/templates/mail_settings.phtml:56
+#: modules/profile/templates/password.phtml:62
+#: modules/profile/templates/settings.phtml:113
 msgid "Save"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:48
+#: modules/profile/templates/forum_settings.phtml:42
 msgid "Basic settings"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:52
+#: modules/profile/templates/forum_settings.phtml:46
 msgid "Inverse sorting"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:56
+#: modules/profile/templates/forum_settings.phtml:50
 msgid "Use the form of a quick answer"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:60
+#: modules/profile/templates/forum_settings.phtml:54
 msgid "Preview of messages"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:63
+#: modules/profile/templates/forum_settings.phtml:57
 msgid "Attach first post"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:67
+#: modules/profile/templates/forum_settings.phtml:61
 msgid "Always"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:71
+#: modules/profile/templates/forum_settings.phtml:65
 msgid "In unread topics"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:75
+#: modules/profile/templates/forum_settings.phtml:69
 msgid "Never"
 msgstr ""
 
-#: modules/profile/templates/forum_settings.phtml:81
-#: modules/profile/templates/settings.phtml:123
+#: modules/profile/templates/forum_settings.phtml:75
+#: modules/profile/templates/settings.phtml:117
 msgid "Reset Settings"
 msgstr ""
 
-#: modules/profile/templates/images.phtml:54
+#: modules/profile/templates/images.phtml:51
 msgid "Choose file"
 msgstr ""
 
-#: modules/profile/templates/images.phtml:57
+#: modules/profile/templates/images.phtml:54
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr ""
 
-#: modules/profile/templates/index.phtml:35
-#: modules/profile/templates/index.phtml:60
+#: modules/profile/templates/index.phtml:44
+#: modules/profile/templates/index.phtml:69
 #: modules/profile/templates/stat.phtml:45
 msgid "Last visit"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:35
+#: modules/profile/templates/index.phtml:44
 msgid "Online"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:47
+#: modules/profile/templates/index.phtml:56
 msgid "User is banned"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:50
+#: modules/profile/templates/index.phtml:59
 msgid "Reason:"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:56
+#: modules/profile/templates/index.phtml:65
 msgid "Violations"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:65
+#: modules/profile/templates/index.phtml:74
 msgid "User Agent"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:67
+#: modules/profile/templates/index.phtml:76
 msgid "Ip"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:68
-#: modules/profile/templates/index.phtml:71
+#: modules/profile/templates/index.phtml:77
+#: modules/profile/templates/index.phtml:80
 msgid "Whois"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:86
+#: modules/profile/templates/index.phtml:95
 msgid "Write"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:89
+#: modules/profile/templates/index.phtml:98
 msgid "Block"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:91
+#: modules/profile/templates/index.phtml:100
 msgid "Unblock"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:95
+#: modules/profile/templates/index.phtml:104
 msgid "Actions"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:104
+#: modules/profile/templates/index.phtml:113
 msgid "Edit profile"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:119
+#: modules/profile/templates/index.phtml:126
 msgid "vote"
 msgid_plural "votes"
 msgstr[0] ""
 
-#: modules/profile/templates/index.phtml:139
-#: modules/profile/templates/karma_vote.phtml:70
+#: modules/profile/templates/index.phtml:146
+#: modules/profile/templates/karma_vote.phtml:65
 msgid "Vote"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:149
+#: modules/profile/templates/index.phtml:154
 msgid "Information"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:160
+#: modules/profile/templates/index.phtml:171
 msgid "Birthday"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:165
+#: modules/profile/templates/index.phtml:176
 msgid "Gender"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:172
+#: modules/profile/templates/index.phtml:183
 msgid "Not specified"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:204
+#: modules/profile/templates/index.phtml:213
 msgid "hidden"
 msgstr ""
 
-#: modules/profile/templates/index.phtml:254
-#: modules/profile/templates/office.phtml:39
+#: modules/profile/templates/index.phtml:236
+msgid "Admin Notes"
+msgstr ""
+
+#: modules/profile/templates/index.phtml:277
+#: modules/profile/templates/office.phtml:38
 msgid "Photo Album"
 msgstr ""
 
-#: modules/profile/templates/ip_history.phtml:41
+#: modules/profile/templates/ip_history.phtml:38
 msgid "IP address"
 msgstr ""
 
-#: modules/profile/templates/ip_history.phtml:42
+#: modules/profile/templates/ip_history.phtml:39
 msgid "Date"
 msgstr ""
 
-#: modules/profile/templates/karma.phtml:77
+#: modules/profile/templates/karma.phtml:71
 msgid "Reset Karma"
 msgstr ""
 
-#: modules/profile/templates/karma_vote.phtml:43
+#: modules/profile/templates/karma_vote.phtml:38
 msgid "Type of vote"
 msgstr ""
 
-#: modules/profile/templates/karma_vote.phtml:54
+#: modules/profile/templates/karma_vote.phtml:49
 msgid "Votes quantity"
 msgstr ""
 
-#: modules/profile/templates/karma_vote.phtml:63
+#: modules/profile/templates/karma_vote.phtml:58
 msgid "Comment"
 msgstr ""
 
-#: modules/profile/templates/karma_vote.phtml:65
+#: modules/profile/templates/karma_vote.phtml:60
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
-#: modules/profile/templates/mail_settings.phtml:48
+#: modules/profile/templates/mail_settings.phtml:44
 msgid "Who can write you?"
 msgstr ""
 
-#: modules/profile/templates/mail_settings.phtml:52
+#: modules/profile/templates/mail_settings.phtml:48
 msgid "All can write"
 msgstr ""
 
-#: modules/profile/templates/mail_settings.phtml:56
+#: modules/profile/templates/mail_settings.phtml:52
 msgid "Only my contacts"
 msgstr ""
 
-#: modules/profile/templates/message_row.phtml:31
+#: modules/profile/templates/message_row.phtml:29
 msgid "To message"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:29
+#: modules/profile/templates/office.phtml:28
 msgid "My Pages"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:36
+#: modules/profile/templates/office.phtml:35
 msgid "Statistics"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:48
+#: modules/profile/templates/office.phtml:47
 msgid "My Mailbox"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:52
+#: modules/profile/templates/office.phtml:51
 msgid "Received"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:59
+#: modules/profile/templates/office.phtml:58
 msgid "Sent"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:66
+#: modules/profile/templates/office.phtml:65
 msgid "Files"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:79
+#: modules/profile/templates/office.phtml:78
 msgid "Blocked"
 msgstr ""
 
-#: modules/profile/templates/office.phtml:89
+#: modules/profile/templates/office.phtml:88
 msgid "System Settings"
 msgstr ""
 
-#: modules/profile/templates/password.phtml:34
-#: modules/profile/templates/password.phtml:40
+#: modules/profile/templates/password.phtml:30
+#: modules/profile/templates/password.phtml:36
 msgid "Enter old password"
 msgstr ""
 
-#: modules/profile/templates/password.phtml:46
-#: modules/profile/templates/password.phtml:52
+#: modules/profile/templates/password.phtml:42
+#: modules/profile/templates/password.phtml:48
 msgid "Enter new password"
 msgstr ""
 
-#: modules/profile/templates/password.phtml:56
-#: modules/profile/templates/password.phtml:62
+#: modules/profile/templates/password.phtml:52
+#: modules/profile/templates/password.phtml:58
 msgid "Repeat password"
 msgstr ""
 
@@ -1070,55 +1074,55 @@ msgstr ""
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:51
+#: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:53
-#: modules/profile/templates/settings.phtml:61
+#: modules/profile/templates/settings.phtml:47
+#: modules/profile/templates/settings.phtml:55
 msgid "Shift of time"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:64
+#: modules/profile/templates/settings.phtml:58
 msgid "System time"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:68
+#: modules/profile/templates/settings.phtml:62
 msgid "System Functions"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:71
+#: modules/profile/templates/settings.phtml:65
 msgid "Direct URL"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:75
+#: modules/profile/templates/settings.phtml:69
 msgid "Youtube Player"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:78
+#: modules/profile/templates/settings.phtml:72
 msgid "Text entering"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:80
-#: modules/profile/templates/settings.phtml:87
+#: modules/profile/templates/settings.phtml:74
+#: modules/profile/templates/settings.phtml:81
 msgid "Height of field"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:91
+#: modules/profile/templates/settings.phtml:85
 msgid "Appearance"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:93
-#: modules/profile/templates/settings.phtml:100
+#: modules/profile/templates/settings.phtml:87
+#: modules/profile/templates/settings.phtml:94
 msgid "Size of Lists"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:105
-#: modules/profile/templates/settings.phtml:107
+#: modules/profile/templates/settings.phtml:99
+#: modules/profile/templates/settings.phtml:101
 msgid "Select Language"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:112
+#: modules/profile/templates/settings.phtml:106
 msgid "Site Default"
 msgstr ""
 

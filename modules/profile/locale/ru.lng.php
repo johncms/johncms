@@ -44,15 +44,14 @@
       'Till cancel' => 'До отмены',
       'Cancel Ban' => 'Отменить Бан',
       'Delete Ban' => 'Удалить Бан',
+      'Email confirmation' => 'Подтверждение электронной почты',
       'Edit Profile' => 'Редактировать анкету',
       'You cannot edit profile of higher administration' => 'Вы не можете редактировать анкету старшего Вас по должности',
       'Access forbidden' => 'Доступ запрещен',
       'Avatar is successfully removed' => 'Аватар успешно удален',
       'Photo is successfully removed' => 'Фотография успешно удалена',
-      'Min. nick length 2, max. 20 characters' => 'Минимальная длина Ника - 2, максимальная 20 символов',
-      'Nick contains invalid characters' => 'Недопустимые символы в Нике',
-      'Invalid format date of birth' => 'Дата рождения указана неверно',
-      'ICQ number must be at least 5 digits and max. 10' => 'Номер ICQ должен состоять минимум из 5 цифр и максимум из 10',
+      'Confirm email change' => 'Подтвердите изменение электронной почты',
+      'The procedure for changing the email address was started' => 'Начата процедура изменения адреса электронной почты',
       'Data saved' => 'Данные сохранены',
       'Upload Avatar' => 'Загрузить Аватар',
       'The weight of the file exceeds' => 'Размер файла превышает',
@@ -61,8 +60,9 @@
       'Repeat' => 'Повторить',
       'Upload Photo' => 'Загрузить фото',
       'The photo is successfully uploaded' => 'Фотография успешно загружена',
-      'User Profile' => 'Анкета пользователя',
+      'User Profile' => 'Профиль пользователя',
       'Pending confirmation' => 'Ожидает подтверждения регистрации',
+      'E-mail address is not confirmed' => 'Адрес электронной почты не подтвержден',
       'Add to Contacts' => 'Добавить в контакты',
       'Remove from Contacts' => 'Удалить из контактов',
       'Edit' => 'Изменить',
@@ -108,33 +108,10 @@
       'Password can be recovered 1 time per day' => 'Пароль можно восстанавливать не чаще 1 раза в сутки',
       'User does not exists' => 'Такого пользователя не существует',
       'Password recovery' => 'Восстановление пароля',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Здравствуйте, %s!
-Вы начали процесс восстановления пароля на сайте %s
-Чтоб восстановить ваш пароль, вы должны перейти по ссылке: %s
-Ссылка действительна 1 час
-
-Если вы получили это письмо по ошибке, просто игнорируйте его.',
       'Check your e-mail for further information' => 'Инструкции по восстановлению пароля высланы на указанный Вами адрес E-mail',
-      'Error sending E-mail' => 'Ошибка отправки E-mail',
       'Password recovery is impossible' => 'Восстановление пароля невозможно',
       'Time allotted for the password recovery has been exceeded' => 'Время, отведенное на восстановления пароля, прошло',
       'Your new password' => 'Ваш новый пароль',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Привет %s
-Вы изменили пароль на сайте %s
-
-Ваш новый пароль: %s
-
-После входа в систему Вы сможете сменить пароль на новый.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Пароль успешно изменен.<br>Новый пароль выслан на ваш адрес E-mail',
       'The list is empty' => 'Список пуст',
       'Total:' => 'Всего:',
@@ -156,6 +133,9 @@ After logging in, you can change your password to new one.' => 'Привет %s
       'List is empty' => 'Список пуст',
       'Total' => 'Всего',
       'Clear history' => 'Очистить историю',
+      'User is not found' => 'Пользователь не найден',
+      'Thanks! Your e-mail has been successfully confirmed.' => 'Спасибо! Ваш адрес электронной почты был успешно подтвержден.',
+      'Error when confirming e-mail. Invalid confirmation code.' => 'Ошибка при подтверждении электронной почты. Неверный код подтверждения.',
       'Username' => 'Ваш логин',
       'Nickname' => 'Ник',
       'Min.2, Max. 20' => 'Мин.2, макс. 20',
@@ -176,11 +156,14 @@ After logging in, you can change your password to new one.' => 'Привет %s
       'Contacts' => 'Контакты',
       'Phone number' => 'Номер телефона',
       'E-mail' => 'Эл. почта',
+      'The new email address is:' => 'Новый адрес электронной почты:',
+      'Please check your email and confirm it.' => 'Пожалуйста проверьте свой адрес электронной почты для подтверждения.',
       'Show in Profile' => 'Показывать в анкете',
       'Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.' => 'Внимание! Правильно указывайте свой адрес электронной почты! Именно на него будет высылаться Ваш пароль',
       'Skype' => 'Skype',
       'Site' => 'Сайт',
       'Administrative Functions' => 'Административные функции',
+      'Admin notes' => 'Заметки администратора',
       'Prohibit Karma' => 'Запретить карму',
       'Reset User options to default' => 'Сбросить настройки пользователя по умолчанию',
       'Select gender' => 'Укажите пол',
@@ -232,6 +215,7 @@ After logging in, you can change your password to new one.' => 'Привет %s
       'Gender' => 'Пол',
       'Not specified' => 'Не указан',
       'hidden' => 'скрыт',
+      'Admin Notes' => 'Заметки Администратора',
       'Photo Album' => 'Фотоальбом',
       'IP address' => 'IP-адрес',
       'Date' => 'Дата',

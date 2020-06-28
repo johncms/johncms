@@ -18,15 +18,11 @@ use Psr\Container\ContainerInterface;
 
 class Avatar implements ExtensionInterface
 {
-    /** @var array */
-    private $config;
-
     /** @var Assets */
     private $assets;
 
     public function __invoke(ContainerInterface $container): self
     {
-        $this->config = $container->get('config')['johncms'];
         $this->assets = $container->get(Assets::class);
         return $this;
     }
@@ -41,7 +37,7 @@ class Avatar implements ExtensionInterface
         if ($userId > 0) {
             $avatar = UPLOAD_PATH . 'users/avatar/' . $userId . '.png';
             if (file_exists($avatar)) {
-                return $this->assets->urlFromPath($avatar, ROOT_PATH, $this->config['homeurl']) .
+                return $this->assets->urlFromPath($avatar, ROOT_PATH) .
                     '?v=' . filemtime($avatar);
             }
         }

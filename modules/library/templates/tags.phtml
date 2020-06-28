@@ -24,31 +24,30 @@ $this->layout(
 ?>
 <?php if ($total) : ?>
     <?php foreach ($list as $tags) : ?>
-        <div class="card mb-3 shadow border-0">
-            <div class="card-body">
-                <a href="?id=<?= $tags['id'] ?>" class="card-title h3"><?= $tags['name'] ?></a>
-                <p class="card-text mb-1"><?= $tags['text'] ?></p>
-                <div class="mb-1">
-                    <?= $tags['tags'] ?>
+        <div class="new_post-item without_avatar">
+
+            <a href="?id=<?= $tags['id'] ?>" class="card-title h3"><?= $tags['name'] ?></a>
+            <div class="post-body"><?= $tags['text'] ?></div>
+            <div class="mb-1">
+                <?= $tags['tags'] ?>
+            </div>
+            <div class="text-muted small d-flex align-items-center flex-wrap">
+                <div class="mr-2">
+                    <span><?= __('Author:') ?></span><?= $tags['who'] ?>
                 </div>
-                <div class="text-muted small d-flex align-items-center flex-wrap">
-                    <div class="mr-2">
-                        <span><?= __('Author:') ?></span><?= $tags['who'] ?>
-                    </div>
-                    <div class="mr-2">
-                        <span><?= __('Number of readings:') ?></span><?= $tags['count_views'] ?>
-                    </div>
-                    <div>
-                        <?php if ($tags['comments']) : ?>
-                            <a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= __('Comments:') ?></a>
-                            (<?= $tags['comm_count'] ?>)
-                        <?php endif; ?>
-                    </div>
+                <div class="mr-2">
+                    <span><?= __('Number of readings:') ?></span><?= $tags['count_views'] ?>
+                </div>
+                <div>
+                    <?php if ($tags['comments']) : ?>
+                        <a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= __('Comments:') ?></a>
+                        (<?= $tags['comm_count'] ?>)
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
-    <div><?= __('Total') ?>: <?= $total ?></div>
+    <div class="mt-3"><?= __('Total') ?>: <?= $total ?></div>
     <?php if ($total > $user->config->kmess): ?>
         <div><?= $pagination ?></div>
     <?php endif ?>

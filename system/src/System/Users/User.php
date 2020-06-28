@@ -25,6 +25,7 @@ class User extends AbstractUserProperties
 
     public function isValid(): bool
     {
-        return ($this->id > 0 && $this->preg == 1);
+        $config = di('config')['johncms'];
+        return ($this->id > 0 && $this->preg == 1 && (empty($config['user_email_confirmation']) || $this->email_confirmed == 1));
     }
 }

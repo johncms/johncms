@@ -3,7 +3,7 @@
 /**
  * @var bool $confirmation
  */
-$this->layout('system::layout/default', ['title' => __('Admin Panel')]);
+$this->layout('system::layout/default');
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['languages' => true]]));
 ?>
 <div style="max-width: 640px">
@@ -20,12 +20,15 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                     <input type="radio" id="<?= $key ?>" name="lng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
                     <label class="custom-control-label" for="<?= $key ?>">
                         <img src="<?= $this->asset('images/flags/' . strtolower($key) . '.png') ?>" alt=".">
-                        <?= $val ?>
+                        <?= $val['name'] ?>
                     </label>
                 </div>
             <?php endforeach ?>
         </fieldset>
-        <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="<?= __('Save') ?>"/>
+        <input type="submit" class="btn btn-primary mt-4 mb-2" name="submit" value="<?= __('Save') ?>"/>
         <input type="submit" class="btn btn-link mt-4 mb-2" name="update" value="<?= __('Update List') ?>"/>
     </form>
+    <div class="mt-3 mb-3">
+        <a href="/admin/languages/?action=manage"><?= __('Managing languages') ?></a>
+    </div>
 </div>

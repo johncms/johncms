@@ -5,6 +5,7 @@
   array (
     '' => 
     array (
+      'Notifications are cleared!' => 'Сповіщення очищено!',
       'Users on registration' => 'Користувачі на реєстрації',
       'Articles on moderation' => 'Статті на модерації',
       'Downloads on moderation' => 'Завантаження на модерації',
@@ -13,8 +14,15 @@
       'Mail' => 'Пошта',
       'Guestbook' => 'Гостьова книга',
       'Comments' => 'Коментарі',
+      'Settings' => 'Налаштування',
+      'Settings saved!' => 'Налаштування збережено!',
       'Notifications' => 'Сповіщення',
       'All notifications have already been read' => 'Всі сповіщення уже переглянуті',
+      'Total' => 'Всього',
+      'Clear notifications' => 'Очистити сповіщення',
+      'Display the number of unread messages in the forum' => 'Показувати кількість непрочитаних повідомлень на форумі',
+      'Save' => 'Зберегти',
+      'Cancel' => 'Скасувати',
     ),
   ),
 );

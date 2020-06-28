@@ -5,20 +5,13 @@
   array (
     '' => 
     array (
-      'Admin Club' => 'Админ клуб',
-      'Guestbook' => 'Гостевая',
-      'Guestbook is closed' => 'Гостевая закрыта',
-      'Wrong data' => 'Неверные данные',
-      'You have not entered a name' => 'Вы не ввели имя',
-      'You have not entered the message' => 'Вы не ввели сообщение',
-      'Access forbidden' => 'Доступ запрещен',
-      'The security code is not correct' => 'Проверочный код введен неверно',
-      'You cannot add the message so often. Please, wait %d seconds.' => 'Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд.',
-      'Add message' => 'Добавить сообщение',
       'All messages older than 1 day were deleted' => 'Удалены все сообщения, старше 1 дня',
       'Full clearing is finished' => 'Проведена полная очистка',
       'All messages older than 1 week were deleted' => 'Удалены все сообщения, старше 1 недели',
       'Clear guestbook' => 'Очистить гостевую',
+      'Admin Club' => 'Админ клуб',
+      'Guestbook' => 'Гостевая',
+      'Guestbook is closed' => 'Гостевая закрыта',
       'Clearing parameters' => 'Параметры очистки',
       'Older than 1 week' => 'Старше 1 недели',
       'Older than 1 day' => 'Старше 1 дня',

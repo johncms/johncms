@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\System\Legacy;
 
+use Carbon\Carbon;
+use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 use Johncms\System\Users\UserConfig;
 use Johncms\System\View\Extension\Assets;
@@ -139,20 +141,22 @@ class Tools
      * @param int $var Время в Unix формате
      * @return string Отформатированное время
      */
-    public function displayDate(int $var)
+    public function displayDate(int $var): string
     {
-        $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
+        $shift = $this->config['timeshift'] + $this->userConfig->timeshift;
 
-        if (date('Y', $var) == date('Y', time())) {
-            if (date('z', $var + $shift) == date('z', time() + $shift)) {
-                return d__('system', 'Today') . ', ' . date('H:i', $var + $shift);
-            }
-            if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
-                return d__('system', 'Yesterday') . ', ' . date('H:i', $var + $shift);
-            }
-        }
+        /** @var Translator $translator */
+        $translator = di(Translator::class);
 
-        return date('d.m.Y / H:i', $var + $shift);
+        return Carbon::createFromTimestamp($var, $shift)
+            ->locale($translator->getLocale())
+            ->calendar(
+                null,
+                [
+                    'lastWeek' => 'lll',
+                    'sameElse' => 'lll',
+                ]
+            );
     }
 
     /**

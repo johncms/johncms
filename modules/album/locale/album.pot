@@ -60,7 +60,7 @@ msgid "Create Album"
 msgstr ""
 
 #: modules/album/includes/edit.php:70
-#: modules/album/templates/album_form.phtml:42
+#: modules/album/templates/album_form.phtml:38
 msgid "Title"
 msgstr ""
 
@@ -74,8 +74,8 @@ msgid "You have not entered password"
 msgstr ""
 
 #: modules/album/includes/edit.php:78
-#: modules/album/templates/album_form.phtml:50
-#: modules/album/templates/enter_password.phtml:42
+#: modules/album/templates/album_form.phtml:46
+#: modules/album/templates/enter_password.phtml:38
 msgid "Password"
 msgstr ""
 
@@ -189,27 +189,27 @@ msgid "Recent comments"
 msgstr ""
 
 #: modules/album/includes/top.php:84
-#: modules/album/templates/index.phtml:61
+#: modules/album/templates/index.phtml:59
 msgid "Top Views"
 msgstr ""
 
 #: modules/album/includes/top.php:100
-#: modules/album/templates/index.phtml:60
+#: modules/album/templates/index.phtml:58
 msgid "Top Downloads"
 msgstr ""
 
 #: modules/album/includes/top.php:116
-#: modules/album/templates/index.phtml:62
+#: modules/album/templates/index.phtml:60
 msgid "Top Comments"
 msgstr ""
 
 #: modules/album/includes/top.php:132
-#: modules/album/templates/index.phtml:59
+#: modules/album/templates/index.phtml:57
 msgid "Top Votes"
 msgstr ""
 
 #: modules/album/includes/top.php:149
-#: modules/album/templates/index.phtml:63
+#: modules/album/templates/index.phtml:61
 msgid "Top Worst"
 msgstr ""
 
@@ -226,12 +226,12 @@ msgid "All"
 msgstr ""
 
 #: modules/album/includes/users.php:51
-#: modules/album/templates/index.phtml:42
+#: modules/album/templates/index.phtml:40
 msgid "Guys"
 msgstr ""
 
 #: modules/album/includes/users.php:56
-#: modules/album/templates/index.phtml:46
+#: modules/album/templates/index.phtml:44
 msgid "Girls"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgid "You cannot vote for this photo."
 msgstr ""
 
 #: modules/album/index.php:54
-#: modules/album/templates/index.phtml:38
+#: modules/album/templates/index.phtml:36
 msgid "Albums"
 msgstr ""
 
@@ -248,78 +248,78 @@ msgstr ""
 msgid "For registered users only"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:44
+#: modules/album/templates/add_photo.phtml:40
 msgid "Choose file"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:47
+#: modules/album/templates/add_photo.phtml:43
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:51
-#: modules/album/templates/album_form.phtml:46
-#: modules/album/templates/edit_photo.phtml:47
+#: modules/album/templates/add_photo.phtml:47
+#: modules/album/templates/album_form.phtml:42
+#: modules/album/templates/edit_photo.phtml:43
 msgid "Description"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:55
-#: modules/album/templates/album_form.phtml:70
-#: modules/album/templates/edit_photo.phtml:51
+#: modules/album/templates/add_photo.phtml:51
+#: modules/album/templates/album_form.phtml:66
+#: modules/album/templates/edit_photo.phtml:47
 msgid "Save"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:56
-#: modules/album/templates/album_form.phtml:71
-#: modules/album/templates/edit_photo.phtml:52
-#: modules/album/templates/enter_password.phtml:49
-#: modules/album/templates/image_delete.phtml:36
-#: modules/album/templates/move_photo.phtml:43
+#: modules/album/templates/add_photo.phtml:52
+#: modules/album/templates/album_form.phtml:67
+#: modules/album/templates/edit_photo.phtml:48
+#: modules/album/templates/enter_password.phtml:45
+#: modules/album/templates/image_delete.phtml:34
+#: modules/album/templates/move_photo.phtml:39
 msgid "Cancel"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:54
+#: modules/album/templates/album_form.phtml:50
 msgid "Access"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:58
+#: modules/album/templates/album_form.phtml:54
 msgid "Everyone"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:62
+#: modules/album/templates/album_form.phtml:58
 msgid "With Password"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:66
+#: modules/album/templates/album_form.phtml:62
 msgid "Only for me"
 msgstr ""
 
-#: modules/album/templates/enter_password.phtml:40
+#: modules/album/templates/enter_password.phtml:36
 msgid "You must type a password to view this album"
 msgstr ""
 
-#: modules/album/templates/enter_password.phtml:48
+#: modules/album/templates/enter_password.phtml:44
 msgid "Enter"
 msgstr ""
 
-#: modules/album/templates/image_delete.phtml:35
+#: modules/album/templates/image_delete.phtml:33
 #: modules/album/templates/list.phtml:53
 #: modules/album/templates/show_one.phtml:138
 msgid "Delete"
 msgstr ""
 
-#: modules/album/templates/index.phtml:30
+#: modules/album/templates/index.phtml:28
 msgid "New Photos"
 msgstr ""
 
-#: modules/album/templates/index.phtml:34
+#: modules/album/templates/index.phtml:32
 msgid "New Comments"
 msgstr ""
 
-#: modules/album/templates/index.phtml:51
+#: modules/album/templates/index.phtml:49
 msgid "My Album"
 msgstr ""
 
-#: modules/album/templates/index.phtml:56
+#: modules/album/templates/index.phtml:54
 #: modules/album/templates/show_one.phtml:73
 msgid "Rating"
 msgstr ""
@@ -337,11 +337,11 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/album/templates/move_photo.phtml:33
+#: modules/album/templates/move_photo.phtml:29
 msgid "Select Album"
 msgstr ""
 
-#: modules/album/templates/move_photo.phtml:42
+#: modules/album/templates/move_photo.phtml:38
 #: modules/album/templates/show_one.phtml:137
 msgid "Move"
 msgstr ""
@@ -357,17 +357,17 @@ msgstr ""
 msgid "Add image"
 msgstr ""
 
-#: modules/album/templates/show.phtml:58
+#: modules/album/templates/show.phtml:60
 #: modules/album/templates/top.phtml:49
 msgid "User:"
 msgstr ""
 
-#: modules/album/templates/show.phtml:61
+#: modules/album/templates/show.phtml:63
 #: modules/album/templates/top.phtml:52
 msgid "Album:"
 msgstr ""
 
-#: modules/album/templates/show.phtml:125
+#: modules/album/templates/show.phtml:127
 #: modules/album/templates/show_one.phtml:153
 #: modules/album/templates/top.phtml:116
 msgid "Total"
@@ -409,16 +409,16 @@ msgstr ""
 msgid "Add to Profile"
 msgstr ""
 
-#: modules/album/templates/user_row.phtml:34
+#: modules/album/templates/user_row.phtml:33
 msgid "album"
 msgid_plural "albums"
 msgstr[0] ""
 
-#: modules/album/templates/user_row.phtml:35
+#: modules/album/templates/user_row.phtml:34
 msgid "photo"
 msgid_plural "photos"
 msgstr[0] ""
 
-#: modules/album/templates/users.phtml:53
+#: modules/album/templates/users.phtml:51
 msgid "Total:"
 msgstr ""

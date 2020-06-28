@@ -418,21 +418,23 @@ switch ($act) {
 
                 $systemSettings = [
                     'johncms' => [
-                        'active'        => 1,
-                        'antiflood'     => [
+                        'active'                  => 1,
+                        'antiflood'               => [
                             'mode'    => 2,
                             'day'     => 10,
                             'night'   => 30,
                             'dayfrom' => 10,
                             'dayto'   => 22,
                         ],
-                        'clean_time'    => 0,
-                        'copyright'     => 'Powered by JohnCMS',
-                        'email'         => $site_mail,
-                        'flsz'          => '16000',
-                        'gzip'          => 1,
-                        'homeurl'       => $site_url,
-                        'karma'         => [
+                        'clean_time'              => 0,
+                        'copyright'               => 'Powered by JohnCMS',
+                        'email'                   => $site_mail,
+                        'flsz'                    => '16000',
+                        'gzip'                    => 1,
+                        'user_email_required'     => 0,
+                        'user_email_confirmation' => 0,
+                        'homeurl'                 => $site_url,
+                        'karma'                   => [
                             'karma_points' => 5,
                             'karma_time'   => 86400,
                             'forum'        => 20,
@@ -440,18 +442,19 @@ switch ($act) {
                             'on'           => 1,
                             'adm'          => 0,
                         ],
-                        'lng'           => $language,
-                        'lng_list'      => $lng_list,
-                        'mod_reg'       => 2,
-                        'mod_forum'     => 2,
-                        'mod_guest'     => 2,
-                        'mod_lib'       => 2,
-                        'mod_lib_comm'  => 1,
-                        'mod_down'      => 2,
-                        'mod_down_comm' => 1,
-                        'meta_key'      => 'johncms',
-                        'meta_desc'     => 'Powered by JohnCMS http://johncms.com',
-                        'news'          => [
+                        'lng'                     => $language,
+                        'lng_list'                => $lng_list,
+                        'mod_reg'                 => 2,
+                        'mod_forum'               => 2,
+                        'mod_guest'               => 2,
+                        'mod_lib'                 => 2,
+                        'mod_lib_comm'            => 1,
+                        'mod_down'                => 2,
+                        'mod_down_comm'           => 1,
+                        'meta_title'              => 'JohnCMS',
+                        'meta_key'                => 'johncms',
+                        'meta_desc'               => 'Powered by JohnCMS http://johncms.com',
+                        'news'                    => [
                             'view'     => 1,
                             'size'     => 200,
                             'quantity' => 3,
@@ -461,8 +464,8 @@ switch ($act) {
                             'tags'     => true,
                             'kom'      => true,
                         ],
-                        'skindef'       => 'default',
-                        'timeshift'     => 0,
+                        'skindef'                 => 'default',
+                        'timeshift'               => 0,
                     ],
                 ];
                 $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ";\n";
@@ -491,7 +494,8 @@ switch ($act) {
                       `rights` = '9',
                       `ip` = '" . ip2long($_SERVER['REMOTE_ADDR']) . "',
                       `browser` = ?,
-                      `preg` = '1'
+                      `preg` = '1',
+                      `email_confirmed` = '1'
                       "
                 );
                 $stmt->execute(
@@ -510,7 +514,7 @@ switch ($act) {
                 // Устанавливаем сессию и COOKIE c данными администратора
                 $_SESSION['uid'] = $user_id;
                 $_SESSION['ups'] = md5(md5($admin_pass));
-                setcookie('cuid', base64_encode($user_id), time() + 3600 * 24 * 365);
+                setcookie('cuid', $user_id, time() + 3600 * 24 * 365);
                 setcookie('cups', md5($admin_pass), time() + 3600 * 24 * 365);
 
                 // Установка ДЕМО данных

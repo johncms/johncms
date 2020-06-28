@@ -44,15 +44,14 @@
       'Till cancel' => 'До відміни',
       'Cancel Ban' => 'Скасувати бан',
       'Delete Ban' => 'Видалити бан',
+      'Email confirmation' => 'Підтвердження електронною поштою',
       'Edit Profile' => 'Редагувати профіль',
       'You cannot edit profile of higher administration' => 'Ви не можете редагувати профіль вищої адміністрації',
       'Access forbidden' => 'Доступ заборонено',
       'Avatar is successfully removed' => 'Аватар був успішно видалений',
       'Photo is successfully removed' => 'Фото було успішно видалено',
-      'Min. nick length 2, max. 20 characters' => 'Мін. довжина ніку 2, макс. 20 символів',
-      'Nick contains invalid characters' => 'Нік містить неприпустимі символи',
-      'Invalid format date of birth' => 'Невірний формат дати народження',
-      'ICQ number must be at least 5 digits and max. 10' => 'ICQ номер повинен складатися мінімум з 5 цифр і максимум з 10',
+      'Confirm email change' => 'Підтвердьте зміну електронної пошти',
+      'The procedure for changing the email address was started' => 'Почато процедуру зміни електронної адреси',
       'Data saved' => 'Дані збережені',
       'Upload Avatar' => 'Завантажити аватар',
       'The weight of the file exceeds' => 'Занадто великий розмір файлу',
@@ -63,6 +62,7 @@
       'The photo is successfully uploaded' => 'Фото успішно завантажено',
       'User Profile' => 'Профіль користувача',
       'Pending confirmation' => 'Чекає підтвердження',
+      'E-mail address is not confirmed' => 'Адреса електронної пошти не підтверджена',
       'Add to Contacts' => 'Додати в контакти',
       'Remove from Contacts' => 'Видалити з контактів',
       'Edit' => 'Редагувати',
@@ -91,6 +91,7 @@
       'The password confirmation you entered is wrong' => 'Підтвердження паролю введено невірно',
       'The password must contain at least 3 characters' => 'Пароль повинен містити щонайменше 3 символи',
       'Password successfully changed' => 'Пароль успішно змінено',
+      'Reset user settings' => 'Скинути налаштування користувача',
       'For user %s default settings were set.' => 'Для користувача %s були встановлені налаштування за замовчуванням.',
       'Settings' => 'Налаштування',
       'General setting' => 'Загальні налаштування',
@@ -107,33 +108,10 @@
       'Password can be recovered 1 time per day' => 'Пароль можна відновлювати не частіше 1 разу на добу',
       'User does not exists' => 'Користувача не існує',
       'Password recovery' => 'Відновлення пароля',
-      'Hello %s!
-You start process of password recovery on the site %s
-In order to recover your password, you must click on the link: %s
-Link valid for 1 hour
-
-If you receive this mail by mistake, just ignore this letter' => 'Привіт %s!
-Ви розпочали процес відновлення паролю на сайті %s
-Щоб відновити Ваш пароль Ви повинні перейти за посиланням: %s
-Посилання дійсне 1 годину
-
-Якщо Ви отримали цей лист помилково, просто проігноруйте його',
       'Check your e-mail for further information' => 'Перевірте ваш e-mail для отримання додаткової інформації',
-      'Error sending E-mail' => 'Помилка відправки E-mail',
       'Password recovery is impossible' => 'Відновлення пароля неможливе',
       'Time allotted for the password recovery has been exceeded' => 'Час, відведений на відновлення пароля, вийшов',
       'Your new password' => 'Ваш новий пароль',
-      'Hello %s
-You have changed your password on the site %s
-
-Your new password: %s
-
-After logging in, you can change your password to new one.' => 'Привіт %s
-Ви змінили пароль на сайті %s
-
-Ваш новий пароль: %s
-
-Після входу в систему Ви зможете знову змінити пароль.',
       'Password successfully changed.<br>New password sent to your E-mail address.' => 'Пароль успішно змінено.<br>Новий пароль висланий на вашу адресу E-mail.',
       'The list is empty' => 'Список порожній',
       'Total:' => 'Всього:',
@@ -155,6 +133,9 @@ After logging in, you can change your password to new one.' => 'Привіт %s
       'List is empty' => 'Перелік порожній',
       'Total' => 'Разом',
       'Clear history' => 'Очистити історію',
+      'User is not found' => 'Користувача не знайдено',
+      'Thanks! Your e-mail has been successfully confirmed.' => 'Дякую! Ваш електронний лист підтверджено.',
+      'Error when confirming e-mail. Invalid confirmation code.' => 'Помилка під час підтвердження електронної пошти. Невірний код підтвердження.',
       'Username' => 'Ім\'я користувача',
       'Nickname' => 'Нікнейм',
       'Min.2, Max. 20' => 'Мін.2, макс. 20',
@@ -175,11 +156,14 @@ After logging in, you can change your password to new one.' => 'Привіт %s
       'Contacts' => 'Контакти',
       'Phone number' => 'Номер телефону',
       'E-mail' => 'E-mail',
+      'The new email address is:' => 'Нова адреса електронної пошти:',
+      'Please check your email and confirm it.' => 'Перевірте свою електронну пошту та підтвердьте її.',
       'Show in Profile' => 'Показати у профілі',
       'Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.' => 'Увага! Правильно вказуйте свою адресу електронної пошти! Саме на неї висилатиметься Ваш пароль.',
       'Skype' => 'Skype',
       'Site' => 'Сайт',
       'Administrative Functions' => 'Функції адміністрації',
+      'Admin notes' => 'Примітки адміністратора',
       'Prohibit Karma' => 'Заборонити карму',
       'Reset User options to default' => 'Скинути параметри користувача до стандартних',
       'Select gender' => 'Виберіть стать',
@@ -206,6 +190,10 @@ After logging in, you can change your password to new one.' => 'Привіт %s
       'Choose file' => 'Виберіть файл',
       'Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).' => 'Дозволені формати зображень: JPG, GIF або PNG. Розмір файлу не повинен перевищувати %d Кб.<br>Нове зображення замінить старе (якщо було).',
       'Last visit' => 'Останній візит',
+      'Online' => 'В мережі',
+      'User is banned' => 'Користувач заблокований',
+      'Reason:' => 'Причина:',
+      'Violations' => 'Порушення',
       'User Agent' => 'Браузер',
       'Ip' => 'IP',
       'Whois' => 'Whois',
@@ -227,6 +215,7 @@ After logging in, you can change your password to new one.' => 'Привіт %s
       'Gender' => 'Пол',
       'Not specified' => 'Не вказано',
       'hidden' => 'прихований',
+      'Admin Notes' => 'Примітки адміністратора',
       'Photo Album' => 'Фотоальбом',
       'IP address' => 'IP-адресу',
       'Date' => 'Дата',

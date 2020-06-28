@@ -24,21 +24,17 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['antispy' => true]]));
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= __('WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.') ?>
-            </div>
-        </div>
-        <div class="text-muted mb-3 alert alert-info">
-            <?= __('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') ?>
-        </div>
-        <div>
-            <form action="<?= $data['form_action'] ?>" method="post">
-                <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Create snapshot') ?></button>
-                <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
-            </form>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= __('WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.') ?>
     </div>
+</div>
+<div class="text-muted mb-3 alert alert-info">
+    <?= __('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') ?>
+</div>
+<div>
+    <form action="<?= $data['form_action'] ?>" method="post">
+        <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Create snapshot') ?></button>
+        <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
+    </form>
 </div>

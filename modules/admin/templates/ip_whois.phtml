@@ -22,10 +22,6 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 </form>
 
 <?php if ($ipwhois): ?>
-    <div class="card">
-        <div class="card-header"><?= __('Search results') ?></div>
-        <div class="card-body">
-            <p class="card-text"><?= $ipwhois ?></p>
-        </div>
-    </div>
+    <div class="h3"><?= __('Search results') ?></div>
+    <p><?= $ipwhois ?></p>
 <?php endif ?>

@@ -143,6 +143,9 @@ abstract class AbstractUserProperties
     /** @var string */
     public $notification_settings;
 
+    /** @var int */
+    public $email_confirmed = 0;
+
     ////////////////////////////////////////////////////////////
     // Устаревшее, по возможности выпилить                    //
     ////////////////////////////////////////////////////////////

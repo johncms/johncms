@@ -8,10 +8,12 @@
 
 require('./bootstrap');
 require('./jquery.magnific-popup');
+require('sticky-sidebar');
 require('./menu');
 require('./prism');
 require('./forum');
 require('./modals');
 require('./slider');
 require('./progress');
+require('./wysibb');
 require('./main');

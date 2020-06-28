@@ -172,7 +172,7 @@ $ads_array = $ads->getAds();
         <div class="mt-1">
             <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
                 <img src="<?= $this->asset('images/flags/' . strtolower($locale) . '.png') ?>" alt="<?= $locale ?>">
-                <?= $config['lng_list'][$locale] ?>
+                <?= $config['lng_list'][$locale]['name'] ?>
             </button>
         </div>
     <?php endif ?>

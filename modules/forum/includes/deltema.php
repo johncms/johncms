@@ -10,33 +10,24 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumFile;
+use Forum\Models\ForumMessage;
+use Forum\Models\ForumTopic;
+use Forum\Models\ForumUnread;
+use Forum\Models\ForumVote;
+use Forum\Models\ForumVoteUser;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Users\User;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/**
- * @var PDO $db
- * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
- */
+/** @var User $user */
+$user = di(User::class);
 
-if ($user->rights == 3 || $user->rights >= 6) {
-    if (! $id) {
-        echo $view->render(
-            'system::pages/result',
-            [
-                'title'         => __('Delete Topic'),
-                'type'          => 'alert-danger',
-                'message'       => __('Wrong data'),
-                'back_url'      => '/forum/',
-                'back_url_name' => __('Back'),
-            ]
-        );
-        exit;
-    }
-
-    // Проверяем, существует ли тема
-    $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
-
-    if (! $req->rowCount()) {
+if ($user->rights === 3 || $user->rights >= 6) {
+    try {
+        $topic = (new ForumTopic())->findOrFail($id);
+    } catch (ModelNotFoundException $exception) {
         echo $view->render(
             'system::pages/result',
             [
@@ -51,36 +42,33 @@ if ($user->rights == 3 || $user->rights >= 6) {
         exit;
     }
 
-    $res = $req->fetch();
-
     if (isset($_POST['submit'])) {
         $del = isset($_POST['del']) ? (int) ($_POST['del']) : null;
-
-        if ($del == 2 && $user->rights == 9) {
+        if ($del === 2 && $user->rights === 9) {
             // Удаляем топик
-            $req1 = $db->query("SELECT * FROM `cms_forum_files` WHERE `topic` = '${id}'");
-
-            if ($req1->rowCount()) {
-                while ($res1 = $req1->fetch()) {
-                    unlink(UPLOAD_PATH . 'forum/attach/' . $res1['filename']);
+            $files = (new ForumFile())->where('topic', $id)->get();
+            if ($files->count() > 0) {
+                foreach ($files as $file) {
+                    unlink(UPLOAD_PATH . 'forum/attach/' . $file->filename);
+                    $file->delete();
                 }
-
-                $db->exec("DELETE FROM `cms_forum_files` WHERE `topic` = '${id}'");
-                $db->query('OPTIMIZE TABLE `cms_forum_files`');
             }
 
-            $db->exec("DELETE FROM `forum_messages` WHERE `topic_id` = '${id}'");
-            $db->exec("DELETE FROM `forum_topic` WHERE `id`='${id}'");
-            $db->exec("DELETE FROM `cms_forum_rdm` WHERE `topic_id` = '${id}'");
-            $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '${id}'");
-            $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '${id}'");
-            $db->query('OPTIMIZE TABLE `forum_messages`, `forum_topic`, `cms_forum_rdm`, `cms_forum_vote`, `cms_forum_vote_users`;');
+            try {
+                $topic->delete();
+                (new ForumMessage())->where('topic_id', $id)->delete();
+                (new ForumVote())->where('topic', $id)->delete();
+                (new ForumVoteUser())->where('topic', $id)->delete();
+                (new ForumUnread())->where('topic_id', $id)->delete();
+            } catch (Exception $e) {
+                exit($e->getMessage());
+            }
         } elseif ($del = 1) {
             // Скрываем топик
-            $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
-            $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '${id}'");
+            $topic->update(['deleted' => true, 'deleted_by' => $user->name]);
+            (new ForumFile())->where('topic', $id)->update(['del' => 1]);
         }
-        header('Location: /forum/?type=topics&id=' . $res['section_id']);
+        header('Location: /forum/?type=topics&id=' . $topic->section_id);
         exit;
     }
 

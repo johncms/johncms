@@ -23,46 +23,41 @@ $this->layout(
 );
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['forum' => true]]));
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <?php if (empty($data['items'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-info',
-                    'alert'      => __('The list is empty'),
-                ]
-            ) ?>
-        <?php endif; ?>
-        <?php foreach ($data['items'] as $item): ?>
-            <div class="card shadow border-0 mb-2">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <span class="text-muted mr-1">[<?= $item['sort'] ?>]</span>
-                            <a href="<?= $item['list_url'] ?>"><?= $item['name'] ?></a>
-                            <?php if (! empty($item['counter'])): ?>
-                                <span class="badge badge-pill badge-light border ml-2"><?= $item['counter'] ?></span>
-                            <?php endif; ?>
-                        </div>
-                        <div>
-                            <a href="<?= $item['public_url'] ?>" class="btn btn-secondary btn-sm"><?= __('View') ?></a>
-                        </div>
-                    </div>
-                    <?php if (! empty($item['description'])): ?>
-                        <div class="small text-muted"><?= $item['description'] ?></div>
-                    <?php endif; ?>
-                    <div class="mt-2">
-                        <a href="<?= $item['edit_url'] ?>" class="btn btn-primary btn-sm"><?= __('Edit') ?></a>
-                        <a href="<?= $item['delete_url'] ?>" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
-                    </div>
-                </div>
+
+<?php if (empty($data['items'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-info',
+            'alert'      => __('The list is empty'),
+        ]
+    ) ?>
+<?php endif; ?>
+<?php foreach ($data['items'] as $item): ?>
+    <div class="new_post-item without_avatar">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <span class="text-muted mr-1">[<?= $item['sort'] ?>]</span>
+                <a href="<?= $item['list_url'] ?>"><?= $item['name'] ?></a>
+                <?php if (! empty($item['counter'])): ?>
+                    <span class="badge badge-pill badge-light border ml-2"><?= $item['counter'] ?></span>
+                <?php endif; ?>
             </div>
-        <?php endforeach; ?>
+            <div>
+                <a href="<?= $item['public_url'] ?>" class="btn btn-secondary btn-sm"><?= __('View') ?></a>
+            </div>
+        </div>
+        <?php if (! empty($item['description'])): ?>
+            <div class="small text-muted"><?= $item['description'] ?></div>
+        <?php endif; ?>
+        <div class="mt-2">
+            <a href="<?= $item['edit_url'] ?>" class=""><?= __('Edit') ?></a>
+            <a href="<?= $item['delete_url'] ?>" class="text-danger ml-2"><?= __('Delete') ?></a>
+        </div>
     </div>
-</div>
+<?php endforeach; ?>
 <?php if (! empty($data['add_form_url'])): ?>
-    <div class="mt-2">
+    <div class="mt-3">
         <a href="<?= $data['add_form_url'] ?>" class="btn btn-primary"><?= __('Add') ?></a>
     </div>
 <?php endif; ?>

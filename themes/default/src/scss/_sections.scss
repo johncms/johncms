@@ -1,15 +1,30 @@
 .forum-section {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 0 !important;
 
+    &.shadow {
+        box-shadow: none !important;
+    }
+
+    @media (max-width: 768px) {
+        margin-left: -15px;
+        margin-right: -15px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #dbdbdb;
     font-size: 1.1rem;
     font-weight: 500;
-    padding-bottom: 0.5rem;
     line-height: 1.2;
+
+    .text-dark-brown {
+        font-weight: 500;
+    }
 
     @media (max-width: 560px) {
         font-size: 1rem;
@@ -21,7 +36,6 @@
 
     .badge {
         font-size: 0.8rem;
-        opacity: 0.8;
     }
 
     .toggle {
@@ -40,8 +54,8 @@
         }
     }
 
-}
-
-.section-name {
-
+    .section-name {
+        font-weight: 500;
+        color: $dark_brown;
+    }
 }

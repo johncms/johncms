@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\View\Extension;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
@@ -40,7 +41,7 @@ class Assets implements ExtensionInterface
 
         foreach ([$this->config['skindef'], 'default'] as $skin) {
             $file = (string) realpath(THEMES_PATH . $skin . '/assets/' . $url);
-            $resultUrl = $this->urlFromPath($file, ROOT_PATH, $this->config['homeurl']);
+            $resultUrl = $this->urlFromPath($file, ROOT_PATH);
 
             if (is_file($file)) {
                 return $versionStamp
@@ -52,13 +53,8 @@ class Assets implements ExtensionInterface
         throw new InvalidArgumentException('Unable to locate the asset: ' . $url);
     }
 
-    public function urlFromPath(string $path, string $rootPath, string $baseUrl): string
+    public function urlFromPath(string $path, string $rootPath): string
     {
-        $diff = array_diff(
-            explode(DIRECTORY_SEPARATOR, realpath($path)),
-            explode(DIRECTORY_SEPARATOR, realpath($rootPath))
-        );
-
-        return rtrim($baseUrl, '/') . '/' . implode('/', $diff);
+        return Str::after(realpath($path), realpath($rootPath));
     }
 }

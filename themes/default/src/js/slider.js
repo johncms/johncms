@@ -27,15 +27,7 @@ var swiperSlider = new Swiper('.screenshots', {
         },
         1024: {
             slidesPerView: 3,
-            spaceBetween: 40,
-        },
-        1350: {
-            slidesPerView: 4,
-            spaceBetween: 50,
-        },
-        1500: {
-            slidesPerView: 5,
-            spaceBetween: 50,
+            spaceBetween: 20,
         },
     }
 });

@@ -24,49 +24,41 @@ $this->layout(
 $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ipban' => true]]));
 ?>
 
-<div class="row">
-    <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
-        <?php if (! empty($data['success_message'])): ?>
-            <?= $this->fetch(
-                'system::app/alert',
-                [
-                    'alert_type' => 'alert-success',
-                    'alert'      => $data['success_message'],
-                ]
-            ) ?>
-        <?php endif; ?>
-        <div class="card shadow border-0">
-            <form action="<?= $data['form_action'] ?>" method="post">
-                <div class="card-body">
-                    <h3 class="mb-0"><?= __('Ban mode') ?></h3>
-                    <div><?= $data['ban_info']['mode_name'] ?> - <b><?= $data['ban_info']['mode_value'] ?></b></div>
+<?php if (! empty($data['success_message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-success',
+            'alert'      => $data['success_message'],
+        ]
+    ) ?>
+<?php endif; ?>
+<form action="<?= $data['form_action'] ?>" method="post">
+    <h3 class="mb-0"><?= __('Ban mode') ?></h3>
+    <div><?= $data['ban_info']['mode_name'] ?> - <b><?= $data['ban_info']['mode_value'] ?></b></div>
 
-                    <h3 class="mb-0 mt-2"><?= __('Ban type') ?></h3>
-                    <div><?= $data['ban_info']['ban_type'] ?></div>
-                    <?php if (! empty($data['ban_info']['ban_url'])): ?>
-                        <div>
-                            <?= __('Redirect URL:') ?> <?= $data['ban_info']['ban_url'] ?>
-                        </div>
-                    <?php endif; ?>
-                    <h3 class="mb-0 mt-2"><?= __('Reason') ?></h3>
-                    <div class="mb-2"><?= $data['ban_info']['reason_display'] ?></div>
-
-                    <input type="hidden" value="<?= $data['ban_info']['ip1'] ?>" name="ip1">
-                    <input type="hidden" value="<?= $data['ban_info']['ip2'] ?>" name="ip2">
-                    <input type="hidden" value="<?= $data['ban_info']['ban_term'] ?>" name="term">
-                    <input type="hidden" value="<?= $data['ban_info']['ban_url'] ?>" name="url">
-                    <input type="hidden" value="<?= $data['ban_info']['reason'] ?>" name="reason">
-
-                    <div class="alert alert-info">
-                        <?= __('Please, check up correctness of the input data') ?>
-                    </div>
-
-                    <div class="mt-3">
-                        <input type="submit" name="submit" value="<?= __('Add Ban') ?>" class="btn btn-danger"/>
-                        <a href="/admin/ipban/" class="btn btn-secondary"><?= __('Cancel') ?></a>
-                    </div>
-                </div>
-            </form>
+    <h3 class="mb-0 mt-2"><?= __('Ban type') ?></h3>
+    <div><?= $data['ban_info']['ban_type'] ?></div>
+    <?php if (! empty($data['ban_info']['ban_url'])): ?>
+        <div>
+            <?= __('Redirect URL:') ?> <?= $data['ban_info']['ban_url'] ?>
         </div>
+    <?php endif; ?>
+    <h3 class="mb-0 mt-2"><?= __('Reason') ?></h3>
+    <div class="mb-2"><?= $data['ban_info']['reason_display'] ?></div>
+
+    <input type="hidden" value="<?= $data['ban_info']['ip1'] ?>" name="ip1">
+    <input type="hidden" value="<?= $data['ban_info']['ip2'] ?>" name="ip2">
+    <input type="hidden" value="<?= $data['ban_info']['ban_term'] ?>" name="term">
+    <input type="hidden" value="<?= $data['ban_info']['ban_url'] ?>" name="url">
+    <input type="hidden" value="<?= $data['ban_info']['reason'] ?>" name="reason">
+
+    <div class="alert alert-info">
+        <?= __('Please, check up correctness of the input data') ?>
     </div>
-</div>
+
+    <div class="mt-3">
+        <input type="submit" name="submit" value="<?= __('Add Ban') ?>" class="btn btn-danger"/>
+        <a href="/admin/ipban/" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    </div>
+</form>

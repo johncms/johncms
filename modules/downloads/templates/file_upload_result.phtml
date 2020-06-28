@@ -28,35 +28,26 @@ $this->layout(
 );
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="card shadow border-0">
-            <div class="card-body">
+<div class="alert alert-success">
+    <div><?= __('File attached') ?></div>
+    <?php if ($screen_attached === true): ?>
+        <div><?= __('Screenshot is attached') ?></div>
+    <?php elseif ($screen_attached === false): ?>
+        <div><?= __('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
+    <?php endif; ?>
+</div>
 
-                <div class="alert alert-success">
-                    <div><?= __('File attached') ?></div>
-                    <?php if ($screen_attached === true): ?>
-                        <div><?= __('Screenshot is attached') ?></div>
-                    <?php elseif ($screen_attached === false): ?>
-                        <div><?= __('Screenshot not attached') ?> <?= $screen_attached_error ?></div>
-                    <?php endif; ?>
-                </div>
-
-                <?php if ($moderation): ?>
-                    <div class="alert alert-info">
-                        <?= __('If you pass moderation, it will be added to the Downloads') ?>
-                    </div>
-                <?php else: ?>
-                    <div class="mb-3">
-                        <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Continue') ?></a>
-                    </div>
-                <?php endif; ?>
-
-                <div>
-                    <a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Upload more') ?></a>
-                    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
-                </div>
-            </div>
-        </div>
+<?php if ($moderation): ?>
+    <div class="alert alert-info">
+        <?= __('If you pass moderation, it will be added to the Downloads') ?>
     </div>
+<?php else: ?>
+    <div class="mb-3">
+        <a href="<?= $urls['view_file_url'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Continue') ?></a>
+    </div>
+<?php endif; ?>
+
+<div>
+    <a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Upload more') ?></a>
+    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
 </div>

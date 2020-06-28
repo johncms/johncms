@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
  * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
  * @link      https://johncms.com JohnCMS Project
  */
+
+declare(strict_types=1);
 
 return [
     'bbcode' => [
@@ -93,7 +93,7 @@ return [
         // Спойлер
         'spoiler' => [
             'from' => '#\[spoiler=(.+?)](.+?)\[/spoiler]#is',
-            'to'   => '<div><div class="btn btn-light btn-sm" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="border rounded mt-2 p-2" style="display:none">$2</div></div>',
+            'to'   => '<div><div class="btn btn-light btn-sm" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="border rounded mt-2 p-2" style="display:none">$2</div></div>',// phpcs:ignore
             'data' => '$1',
         ],
     ],

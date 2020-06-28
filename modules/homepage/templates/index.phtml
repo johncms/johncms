@@ -5,32 +5,42 @@
  * @var $data
  */
 
-$this->layout('system::layout/default', ['title' => __('Welcome')]);
+$this->layout('system::layout/default');
 ?>
-<div class="jumbotron shadow pt-4 pb-5 bg-white mt-3 mobile_jumbotron">
+<div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
     <h1 class="display-4 font-weight-bold">JohnCMS <?= CMS_VERSION ?></h1>
     <p class="lead">
         <?= __('Free, Open Source content management system') ?>
     </p>
-    <hr class="my-sm-3 my-md-4">
+    <hr class="my-sm-3 my-md-4 full-mobile-width">
     <a class="btn btn-success btn-lg mr-1" href="https://johncms.com/downloads/">
-        <svg class="icon mr-2">
+        <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
         </svg>
-        <?= __('Download') ?>
+        <span class="hide-xs"><?= __('Download') ?></span>
     </a>
-    <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/"><?= __('Documentation') ?></a>
-    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1 hide-xs" target="_blank" rel="nofollow">
+    <a class="btn btn-primary btn-lg mr-1" href="https://johncms.com/documentation/">
+        <svg class="icon">
+            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book-open"/>
+        </svg>
+        <span class="hide-xs"><?= __('Documentation') ?></span>
+    </a>
+    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1" target="_blank" rel="nofollow">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#github"/>
         </svg>
     </a>
+    <a href="https://translate.johncms.com" title="Translate" class="btn btn-primary btn-lg-icon" target="_blank" rel="nofollow">
+        <svg class="icon">
+            <use xlink:href="<?= $this->asset('icons/sprite.svg', true) ?>#translate"/>
+        </svg>
+    </a>
 </div>
 
-<div class="d-block d-md-none mobile_tiles mt-n4">
+<div class="d-block d-md-none mobile_tiles">
     <div class="row">
         <div class="col-6 col-sm-4 mt-3 tile">
-            <a href="/news/" class="card border-0 shadow text-center">
+            <a href="/news/" class="card border text-center">
                 <div class="card-body">
                     <div class="icon_with_badge d-inline-block">
                         <svg class="icon-40">
@@ -45,7 +55,7 @@ $this->layout('system::layout/default', ['title' => __('Welcome')]);
             </a>
         </div>
         <div class="col-6 col-sm-4 mt-3 tile">
-            <a href="/forum/" class="card border-0 shadow text-center">
+            <a href="/forum/" class="card border text-center">
                 <div class="card-body">
                     <div class="icon_with_badge d-inline-block">
                         <svg class="icon-40">
@@ -60,7 +70,7 @@ $this->layout('system::layout/default', ['title' => __('Welcome')]);
             </a>
         </div>
         <div class="col-6 col-sm-4 mt-3 tile">
-            <a href="/guestbook/ga" class="card border-0 shadow text-center">
+            <a href="/guestbook/ga" class="card border text-center">
                 <div class="card-body">
                     <div class="icon_with_badge d-inline-block">
                         <svg class="icon-40">
@@ -75,7 +85,7 @@ $this->layout('system::layout/default', ['title' => __('Welcome')]);
             </a>
         </div>
         <div class="col-6 col-sm-4 mt-3 tile">
-            <a href="/downloads/" class="card border-0 shadow text-center">
+            <a href="/downloads/" class="card border text-center">
                 <div class="card-body">
                     <div class="icon_with_badge d-inline-block">
                         <svg class="icon-40">
@@ -90,7 +100,7 @@ $this->layout('system::layout/default', ['title' => __('Welcome')]);
             </a>
         </div>
         <div class="col-6 col-sm-4 mt-3 tile">
-            <a href="/library/" class="card border-0 shadow text-center">
+            <a href="/library/" class="card border text-center">
                 <div class="card-body">
                     <div class="icon_with_badge d-inline-block">
                         <svg class="icon-40">
@@ -105,7 +115,7 @@ $this->layout('system::layout/default', ['title' => __('Welcome')]);
             </a>
         </div>
         <div class="col-6 col-sm-4 mt-3 tile">
-            <a href="/community/" class="card border-0 shadow text-center">
+            <a href="/community/" class="card border text-center">
                 <div class="card-body">
                     <div class="icon_with_badge d-inline-block">
                         <svg class="icon-40">

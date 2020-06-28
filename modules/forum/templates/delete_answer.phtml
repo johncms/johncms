@@ -24,16 +24,12 @@ $this->layout(
 );
 ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="alert alert-danger">
-            <div class="pb-2">
-                <?= __('Do you really want to delete the answer?') ?>
-            </div>
-            <div>
-                <a href="<?= $delete_url ?>" class="btn btn-danger btn-sm mr-2"><?= __('Delete') ?></a>
-                <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
-            </div>
-        </div>
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= __('Do you really want to delete the answer?') ?>
+    </div>
+    <div>
+        <a href="<?= $delete_url ?>" class="btn btn-danger btn-sm mr-2"><?= __('Delete') ?></a>
+        <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
     </div>
 </div>

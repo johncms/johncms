@@ -32,11 +32,7 @@ $this->layout(
 <?php endif; ?>
 
 <?php if (empty($users)): ?>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-info"><?= __('List is empty') ?></div>
-        </div>
-    </div>
+    <div class="alert alert-info"><?= __('List is empty') ?></div>
 <?php endif; ?>
 
 <?php foreach ($users as $list_user): ?>

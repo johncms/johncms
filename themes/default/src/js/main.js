@@ -32,3 +32,17 @@ $(function () {
         }
     });
 });
+
+$(document).ready(function () {
+    if (typeof wysibb_input != "undefined") {
+        $(wysibb_input).wysibb(wysibb_settings);
+    }
+})
+
+var sidebar = new StickySidebar('.sidebar', {
+    topSpacing: 0,
+    bottomSpacing: 20,
+    containerSelector: '.page_layout',
+    innerWrapperSelector: '.sidebar__inner',
+    minWidth: 992,
+});

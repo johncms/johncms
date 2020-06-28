@@ -1,0 +1,17 @@
+<?php
+/**
+ * @var $input
+ * @var $smiles
+ */
+
+?>
+<script>
+    var wysibb_settings = {
+        buttons: "bold,italic,underline,strike,|,smilebox,link,code,quote,video,fontcolor,|,removeFormat",
+        smileList: <?= json_encode($smiles) ?>
+    }
+    var wysibb_input = '#<?= $input ?>';
+    setTimeout(function () {
+        document.getElementById("<?= $input ?>").removeAttribute("required");
+    }, 50);
+</script>

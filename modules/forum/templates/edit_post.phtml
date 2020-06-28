@@ -15,6 +15,7 @@
  * @var $preview_message
  * @var $back_url
  * @var $msg
+ * @var \Johncms\Users\User $message_author
  */
 
 $this->layout(
@@ -25,46 +26,58 @@ $this->layout(
     ]
 );
 ?>
-
-<?php if ($show_post_preview): ?>
-    <div class="shadow post-item post-item mb-2" id="first_post_block">
-        <div class="post-header d-flex justify-content-between border-bottom pb-1">
-            <div class="d-flex align-items-center">
-                <a class="user-login mr-2"><?= $message_author['name'] ?? '' ?></a>
-                <span class="post-date"><?= $tools->displayDate(time()) ?></span>
+<?php if ($show_post_preview && $message_author !== null): ?>
+    <div class="new_post-item mb-2">
+        <div class="new_post-header d-flex justify-content-between">
+            <div class="post-user">
+                <div class="avatar">
+                    <img src="<?= $this->avatar($message_author->id) ?>" class="img-fluid" alt=".">
+                </div>
+                <span class="user-status <?= $message_author->is_online ? 'online' : 'offline' ?> shadow"></span>
+                <?php if (! empty($message_author->rights_name)): ?>
+                    <div class="post-of-user"
+                         data-toggle="tooltip"
+                         data-placement="top"
+                         data-html="true"
+                         title="<?= $message_author->rights_name ?>">
+                        <svg class="icon-post">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
+                        </svg>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                <div class="w-100">
+                    <div class="user-name d-inline mr-2"><?= $message_author->name ?></div>
+                    <span class="post-meta"><?= $tools->displayDate(time()) ?></span>
+                </div>
+                <?php if (! empty($message_author->status)): ?>
+                    <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                        <span class="font-weight-bold"><?= $message_author->status ?></span>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
-        <div class="post-body d-flex align-items-start pt-3 pb-3">
-            <div class="user-avatar mr-2 mr-md-4">
-                <div class="avatar-image rounded-circle overflow-hidden">
-                    <img src="<?= $this->avatar($user_id) ?>" class="img-fluid" alt=".">
-                </div>
-                <div class="user-status online shadow"></div>
-            </div>
-            <div class="overflow-auto flex-grow-1"><?= $preview_message ?></div>
+        <div class="post-body mt-2 pt-2 pb-2">
+            <?= $preview_message ?>
         </div>
     </div>
-    <div class="border-bottom mt-4 mb-3"></div>
 <?php endif; ?>
 
-<div class="row">
-    <div class="col-md-6">
-        <form name="edit_post" action="/forum/?act=editpost&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
-            <div class="form-group">
-                <label for="msg"><?= __('Message') ?></label>
-                <div><?= $bbcode ?></div>
-                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
-            </div>
-            <div>
-                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-                <?php if (! empty($settings_forum['preview'])): ?>
-                    <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
-                <?php endif; ?>
-            </div>
-            <div class="mt-3">
-                <a href="/help/?act=smileys" class="pr-2"><?= __('Smilies') ?></a> <a href="<?= $back_url ?>"><?= __('Back') ?></a>
-            </div>
-        </form>
+<form name="edit_post" action="/forum/?act=editpost&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
+    <div class="form-group">
+        <label for="msg"><?= __('Message') ?></label>
+        <div><?= $bbcode ?></div>
+        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
     </div>
-</div>
+    <div>
+        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
+        <?php if (! empty($settings_forum['preview'])): ?>
+            <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
+        <?php endif; ?>
+    </div>
+    <div class="mt-3">
+        <a href="/help/?act=smileys" class="pr-2"><?= __('Smilies') ?></a> <a href="<?= $back_url ?>"><?= __('Back') ?></a>
+    </div>
+</form>
 

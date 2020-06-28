@@ -5,8 +5,8 @@ msgstr ""
 #: modules/news/includes/add.php:24
 #: modules/news/includes/add.php:133
 #: modules/news/includes/add.php:143
-#: modules/news/templates/add.phtml:2
-#: modules/news/templates/add.phtml:3
+#: modules/news/templates/add.phtml:4
+#: modules/news/templates/add.phtml:5
 #: modules/news/templates/add.phtml:9
 msgid "Add news"
 msgstr ""
@@ -31,9 +31,9 @@ msgstr ""
 
 #: modules/news/includes/clean.php:24
 #: modules/news/includes/clean.php:51
-#: modules/news/templates/clear.phtml:2
-#: modules/news/templates/clear.phtml:3
-#: modules/news/templates/clear.phtml:9
+#: modules/news/templates/clear.phtml:4
+#: modules/news/templates/clear.phtml:5
+#: modules/news/templates/clear.phtml:10
 msgid "Clear news"
 msgstr ""
 
@@ -51,8 +51,8 @@ msgstr ""
 
 #: modules/news/includes/del.php:24
 #: modules/news/includes/del.php:31
-#: modules/news/templates/confirm_delete.phtml:2
-#: modules/news/templates/confirm_delete.phtml:3
+#: modules/news/templates/confirm_delete.phtml:4
+#: modules/news/templates/confirm_delete.phtml:5
 msgid "Delete news"
 msgstr ""
 
@@ -63,16 +63,16 @@ msgstr ""
 #: modules/news/includes/edit.php:25
 #: modules/news/includes/edit.php:73
 #: modules/news/includes/edit.php:84
-#: modules/news/templates/edit.phtml:2
-#: modules/news/templates/edit.phtml:3
+#: modules/news/templates/edit.phtml:4
+#: modules/news/templates/edit.phtml:5
 #: modules/news/templates/edit.phtml:9
 msgid "Edit news"
 msgstr ""
 
 #: modules/news/includes/edit.php:31
 #: modules/news/index.php:43
-#: modules/news/templates/index.phtml:2
-#: modules/news/templates/index.phtml:3
+#: modules/news/templates/index.phtml:4
+#: modules/news/templates/index.phtml:5
 msgid "News"
 msgstr ""
 
@@ -114,28 +114,28 @@ msgstr ""
 msgid "Back to news"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:11
+#: modules/news/templates/clear.phtml:12
 msgid "Clearing parameters"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:14
+#: modules/news/templates/clear.phtml:15
 msgid "Older than 1 month"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:18
+#: modules/news/templates/clear.phtml:19
 msgid "Older than 1 week"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:22
+#: modules/news/templates/clear.phtml:23
 msgid "Clear all"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:25
-#: modules/news/templates/index.phtml:8
+#: modules/news/templates/clear.phtml:26
+#: modules/news/templates/index.phtml:11
 msgid "Clear"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:26
+#: modules/news/templates/clear.phtml:27
 #: modules/news/templates/confirm_delete.phtml:12
 msgid "Cancel"
 msgstr ""
@@ -149,11 +149,11 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/news/templates/index.phtml:7
+#: modules/news/templates/index.phtml:10
 msgid "Add"
 msgstr ""
 
-#: modules/news/templates/index.phtml:18
+#: modules/news/templates/index.phtml:19
 msgid "Author"
 msgstr ""
 
@@ -165,6 +165,6 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/news/templates/index.phtml:42
+#: modules/news/templates/index.phtml:41
 msgid "Total"
 msgstr ""

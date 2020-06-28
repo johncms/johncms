@@ -5,15 +5,21 @@
   array (
     '' => 
     array (
+      'Add news' => 'Pridėkite naujienos',
       'You have not entered news title' => 'Jūs neįrašėte jokio naujienos pavadinimo',
       'You have not entered news text' => 'Jūs neįrašėte jokio naujienos teksto',
       'You cannot add the message so often. Please, wait %d seconds.' => 'Jus negalite rašyti pranešimą taip dažnai. Prašome palaukti %d sekundžių.',
       'News added' => 'Naujiena pridėta',
+      'Clear news' => 'Aišku naujienos',
       'Delete all news older than 1 week' => 'Ištrinti naujienas vyresnios nei 1 savaite',
       'Delete all news' => 'Ištrinti visas naujienas',
       'Delete all news older than 1 month' => 'Ištrinti naujienas vyresnios nei 1 menuo',
+      'Delete news' => 'Ištrinti visas naujienas',
+      'News deleted' => 'Naujienų ištrinti',
+      'Edit news' => 'Redaguoti naujienos',
       'News' => 'Naujienos',
       'Wrong data' => 'Klaidingi duomenys',
+      'News changed' => 'Naujienų pasikeitė',
       'Title' => 'Pavadinimas',
       'Text' => 'Tekstas',
       'Discussion' => 'Diskusija',

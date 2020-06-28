@@ -24,9 +24,9 @@ $this->layout(
 ?>
 
 <?php if (! empty($data['filters'])): ?>
-    <div class="btn-group mb-3" role="group">
+    <div class="mb-2">
         <?php foreach ($data['filters'] as $filter): ?>
-            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary mb-1 <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
@@ -41,8 +41,8 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($data['items'] as $item): ?>
-    <div class="shadow post-item mb-2">
-        <div class="post-header d-flex justify-content-between pb-1">
+    <div class="user-row">
+        <div class="post-header d-flex justify-content-between">
             <div class="d-flex align-items-center">
                 <div class="badge <?= ($item['type'] > 0 ? 'badge-success' : 'badge-danger') ?> mr-2">
                     <?= ($item['type'] > 0 ? '+' : '-') ?><?= $item['points'] ?>
@@ -56,30 +56,24 @@ $this->layout(
             </div>
         </div>
         <?php if (! empty($item['text'])): ?>
-            <div class="post-body d-flex align-items-start pt-3 pb-3 border-top">
+            <div class="pt-1">
                 <?= $item['text'] ?>
             </div>
-        <?php endif; ?>
+        <?php endif ?>
         <?php if (! empty($item['delete_url'])): ?>
-            <div class="post-footer d-flex justify-content-between border-top pt-2">
-                <div class="post-user-info d-flex overflow-hidden small align-items-center"></div>
-                <div class="text-nowrap post-actions">
-                    <span class="text-muted pr-2 flex-grow-1"></span>
-                    <a href="<?= $item['delete_url'] ?>" class="btn btn-light btn-sm">Удалить</a>
-                </div>
-            </div>
+            <a href="<?= $item['delete_url'] ?>" class="small">Удалить</a>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
 
 <?php if (! empty($data['reset_url'])): ?>
-    <div class="mt-4">
+    <div class="mt-3 mb-2">
         <a href="<?= $data['reset_url'] ?>" class="btn btn-danger btn-sm"><?= __('Reset Karma') ?></a>
     </div>
 <?php endif; ?>
 
 <?php if ($data['total'] > $user->config->kmess): ?>
-    <div class="mt-4">
+    <div class="mt-3">
         <?= $data['pagination'] ?>
     </div>
 <?php endif; ?>

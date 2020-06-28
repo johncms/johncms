@@ -93,6 +93,12 @@ $notifications = [];
 if ($user->rights >= 7 && ! $user_data->preg && empty($user_data->regadm)) {
     $notifications[] = __('Pending confirmation');
 }
+
+// E-mail не подтвержден
+if (! empty($config['user_email_confirmation']) && ! $user_data->email_confirmed) {
+    $notifications[] = __('E-mail address is not confirmed');
+}
+
 $data['notifications'] = $notifications;
 
 // Счетчики
@@ -107,7 +113,7 @@ if ($ban_user) {
 }
 
 $data['counters'] = [
-    'ban'   => $user_data->bans()->count(),
+    'ban' => $user_data->bans()->count(),
 ];
 
 // Админские кнопки

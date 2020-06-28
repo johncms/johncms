@@ -42,6 +42,8 @@ $view->addFolder('admin', __DIR__ . '/templates/');
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('admin', __DIR__ . '/locale');
 
+module_lib_loader('admin');
+
 $id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
 $act = $route['action'] ?? 'index';
 $mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';

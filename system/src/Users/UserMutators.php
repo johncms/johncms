@@ -15,6 +15,7 @@ namespace Johncms\Users;
 use Carbon\Carbon;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Legacy\Tools;
+use Johncms\System\Users\UserConfig;
 
 trait UserMutators
 {
@@ -29,6 +30,8 @@ trait UserMutators
     private $active_bans = [];
 
     /**
+     * User agent
+     *
      * @param string $value
      * @return string
      */
@@ -123,7 +126,8 @@ trait UserMutators
      */
     public function getIsValidAttribute(): bool
     {
-        return ($this->id && $this->preg);
+        $config = di('config')['johncms'];
+        return ($this->id && $this->preg && (empty($config['user_email_confirmation']) || $this->email_confirmed));
     }
 
     /**
@@ -234,5 +238,15 @@ trait UserMutators
         }
 
         return $this->ban_list;
+    }
+
+    /**
+     * User settings
+     *
+     * @return UserConfig
+     */
+    public function getConfigAttribute(): UserConfig
+    {
+        return $this->set_user;
     }
 }

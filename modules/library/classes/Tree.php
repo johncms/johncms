@@ -48,16 +48,10 @@ class Tree
     /** @var PDO $db */
     private $db;
 
-    /**
-     * @var Tools
-     */
-    private $tools;
-
     public function __construct(int $id)
     {
         $this->start_id = $id;
         $this->db = di(PDO::class);
-        $this->tools = di(Tools::class);
     }
 
     /**

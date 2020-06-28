@@ -10,16 +10,28 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumFile;
+use Forum\Models\ForumMessage;
+use Illuminate\Support\Collection;
+use Johncms\FileInfo;
+use Johncms\System\Http\Request;
+use Johncms\Users\User;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var array $config
- * @var PDO $db
- * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
  */
 
-if (! $id || ! $user->isValid()) {
+$extensions = new Collection(di('config')['forum']['extensions']);
+
+/** @var Request $request */
+$request = di(Request::class);
+
+/** @var User $user */
+$user = di(User::class);
+
+if (! $id || ! $user->is_valid) {
     http_response_code(403);
     echo $view->render(
         'system::pages/result',
@@ -35,9 +47,8 @@ if (! $id || ! $user->isValid()) {
 }
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
-$res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'")->fetch();
-
-if (empty($res) || $res['user_id'] != $user->id) {
+$message = (new ForumMessage())->find($id);
+if ($message === null || $message->user_id !== $user->id) {
     echo $view->render(
         'system::pages/result',
         [
@@ -52,112 +63,92 @@ if (empty($res) || $res['user_id'] != $user->id) {
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
-if ($res['date'] < (time() - 3600)) {
+if ($message->date < (time() - 3600)) {
     echo $view->render(
         'system::pages/result',
         [
             'title'         => __('Add file'),
             'type'          => 'alert-danger',
             'message'       => __('The time allotted for the file upload has expired'),
-            'back_url'      => '/forum/?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+            'back_url'      => '/forum/?&typ=topic&id=' . $message->topic_id . '&amp;page=' . $page,
             'back_url_name' => __('Back'),
         ]
     );
     exit;
 }
 
-if (isset($_POST['submit'])) {
-    // Проверка, был ли выгружен файл и с какого браузера
-    $do_file = false;
-    $file = '';
-
-    if ($_FILES['fail']['size'] > 0) {
-        // Проверка загрузки с обычного браузера
-        $do_file = true;
-        $file = $tools->rusLat($_FILES['fail']['name']);
-        $fsize = $_FILES['fail']['size'];
-    }
-
+if ($request->getMethod() === 'POST') {
     // Обработка файла (если есть), проверка на ошибки
-    if ($do_file) {
-        // Список допустимых расширений файлов.
-        $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-        $name = pathinfo($file, PATHINFO_FILENAME);
-        $error = [];
+    $files = $request->getUploadedFiles();
+    if (! empty($files) && ! empty($files['fail'])) {
+        /** @var GuzzleHttp\Psr7\UploadedFile $file */
+        $file = $files['fail'];
 
+        $file_info = new FileInfo($file->getClientFilename());
+        $ext = strtolower($file_info->getExtension());
+
+        $error = [];
         // Check file size
-        if ($fsize > 1024 * $config['flsz']) {
+        if ($file->getSize() > 1024 * $config['flsz']) {
             $error[] = __('File size exceed') . ' ' . $config['flsz'] . 'kb.';
         }
 
         // Check allowed extensions
-        if (! in_array($ext, $al_ext)) {
-            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
+        // Список допустимых расширений файлов.
+        $all_ext = $extensions->flatten();
+        if ($all_ext->search($ext, true) === false) {
+            $error[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $all_ext->implode(', ');
         }
 
-        // Replace invalid symbols
-        $name = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $name);
-        $name = trim($name, '_');
-        // Delete repeated replacement
-        $name = preg_replace('/-{2,}/', '_', $name);
-        $fname = mb_substr($name, 0, 70) . '.' . $ext;
+        $file_name = $file_info->getCleanName();
 
         // Проверка наличия файла с таким же именем
-        if (file_exists(UPLOAD_PATH . 'forum/attach/' . $fname)) {
-            $fname = time() . $fname;
+        if (file_exists(UPLOAD_PATH . 'forum/attach/' . $file_name)) {
+            $file_name = time() . $file_name;
         }
 
-        // Окончательная обработка
-        if (! $error && $do_file) {
-            // Для обычного браузера
-            if ((move_uploaded_file($_FILES['fail']['tmp_name'], UPLOAD_PATH . 'forum/attach/' . $fname)) == true) {
-                @chmod("${fname}", 0777);
-                @chmod(UPLOAD_PATH . 'forum/attach/' . $fname, 0777);
-            } else {
+        // Сохраняем файл
+        if (! $error) {
+            $file->moveTo(UPLOAD_PATH . 'forum/attach/' . $file_name);
+            if (! $file->isMoved()) {
                 $error[] = __('Error uploading file');
             }
         }
 
         if (! $error) {
             // Определяем тип файла
-            $ext = strtolower($ext);
-            if (in_array($ext, $ext_win)) {
+            if (in_array($ext, $extensions->get('windows'))) {
                 $type = 1;
-            } elseif (in_array($ext, $ext_java)) {
+            } elseif (in_array($ext, $extensions->get('java'))) {
                 $type = 2;
-            } elseif (in_array($ext, $ext_sis)) {
+            } elseif (in_array($ext, $extensions->get('sis'))) {
                 $type = 3;
-            } elseif (in_array($ext, $ext_doc)) {
+            } elseif (in_array($ext, $extensions->get('documents'))) {
                 $type = 4;
-            } elseif (in_array($ext, $ext_pic)) {
+            } elseif (in_array($ext, $extensions->get('pictures'))) {
                 $type = 5;
-            } elseif (in_array($ext, $ext_arch)) {
+            } elseif (in_array($ext, $extensions->get('archives'))) {
                 $type = 6;
-            } elseif (in_array($ext, $ext_video)) {
+            } elseif (in_array($ext, $extensions->get('video'))) {
                 $type = 7;
-            } elseif (in_array($ext, $ext_audio)) {
+            } elseif (in_array($ext, $extensions->get('audio'))) {
                 $type = 8;
             } else {
                 $type = 9;
             }
 
-            // Определяем ID субкатегории и категории
-            $res2 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
-            $res3 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res2['section_id'] . "'")->fetch();
-
             // Заносим данные в базу
-            $db->exec(
-                "
-              INSERT INTO `cms_forum_files` SET
-              `cat` = '" . $res3['parent'] . "',
-              `subcat` = '" . $res2['section_id'] . "',
-              `topic` = '" . $res['topic_id'] . "',
-              `post` = '${id}',
-              `time` = '" . $res['date'] . "',
-              `filename` = " . $db->quote($fname) . ",
-              `filetype` = '${type}'
-            "
+            $file = (new ForumFile());
+            $file->create(
+                [
+                    'cat'      => $message->topic->section->parent,
+                    'subcat'   => $message->topic->section_id,
+                    'topic'    => $message->topic_id,
+                    'post'     => $id,
+                    'time'     => $message->date,
+                    'filename' => $file_name,
+                    'filetype' => $type,
+                ]
             );
         } else {
             echo $view->render(
@@ -187,8 +178,8 @@ if (isset($_POST['submit'])) {
         );
         exit;
     }
-    $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();
-    $page = ceil($pa2 / $user->config->kmess);
+    $count_messages = (new ForumMessage())->where('topic_id', '=', $message->topic_id)->count();
+    $page = ceil($count_messages / $user->set_user->kmess);
     $file_attached = true;
 }
 
@@ -199,7 +190,7 @@ echo $view->render(
         'page_title'    => __('Add File'),
         'id'            => $id,
         'file_attached' => $file_attached ?? false,
-        'topic_id'      => $res['topic_id'],
-        'back_url'      => '?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+        'topic_id'      => $message->topic_id,
+        'back_url'      => '?type=topic&id=' . $message->topic_id . '&amp;page=' . $page,
     ]
 );

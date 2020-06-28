@@ -41,11 +41,6 @@ class Links
     private $res;
 
     /**
-     * @var PDO $db
-     */
-    private $db;
-
-    /**
      * @var Tools
      */
     private $tools;
@@ -54,7 +49,6 @@ class Links
     {
         $this->link_url = $link_url;
         $this->in = $in;
-        $this->db = di(PDO::class);
         $this->tools = di(Tools::class);
     }
 
@@ -81,7 +75,7 @@ class Links
      * @param string $n
      * @return string
      */
-    private function tplTag(string $n): string
+    public function tplTag(string $n): string
     {
         return '<a href="' . $this->link_url . $n . '">' . $this->tools->checkout($n) . '</a>';
     }
@@ -92,7 +86,7 @@ class Links
      * @param array $n
      * @return string
      */
-    private function tplCloud(array $n): string
+    public function tplCloud(array $n): string
     {
         return '<a href="' . $this->link_url . $this->tools->checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . ' em;">' . $this->tools->checkout($n['name']) . '</span></a>';
     }

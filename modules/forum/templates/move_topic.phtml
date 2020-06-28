@@ -23,43 +23,39 @@ $this->layout(
     ]
 );
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <form name="move_topic" class="card card-body shadow" action="/forum/?act=per&amp;id=<?= $id ?>" method="post">
-            <div class="mb-2">
-                <div><?= __('Category') ?></div>
-                <b><?= $current_section['name'] ?></b>
-            </div>
-            <?php if (! empty($current_sections)): ?>
-                <div class="form-group">
-                    <label for="section"><?= __('New section') ?></label>
-                    <select class="form-control" name="razd" id="section">
-                        <?php foreach ($current_sections as $section): ?>
-                            <option value="<?= $section['id'] ?>"><?= $section['name'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php else: ?>
-                <div class="alert alert-warning">
-                    <?= __('Category is empty') ?>
-                </div>
-            <?php endif; ?>
-            <div>
-                <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Move') ?></button>
-                <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
-            </div>
-            <?php if (! empty($other_categories)): ?>
-                <div class="mt-4">
-                    <div class="h4"><?= __('Other categories') ?></div>
-                    <ul class="list-group list-group-flush">
-                        <?php foreach ($other_categories as $category): ?>
-                            <li class="list-group-item">
-                                <a href="?act=per&amp;id=<?= $id ?>&amp;other=<?= $category['id'] ?>"><?= $category['name'] ?></a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            <?php endif; ?>
-        </form>
+<form name="move_topic" class="card card-body shadow" action="/forum/?act=per&amp;id=<?= $id ?>" method="post">
+    <div class="mb-2">
+        <div><?= __('Category') ?></div>
+        <b><?= $current_section['name'] ?></b>
     </div>
-</div>
+    <?php if (! empty($current_sections)): ?>
+        <div class="form-group">
+            <label for="section"><?= __('New section') ?></label>
+            <select class="form-control" name="razd" id="section">
+                <?php foreach ($current_sections as $section): ?>
+                    <option value="<?= $section['id'] ?>"><?= $section['name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-warning">
+            <?= __('Category is empty') ?>
+        </div>
+    <?php endif; ?>
+    <div>
+        <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Move') ?></button>
+        <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
+    </div>
+    <?php if (! empty($other_categories)): ?>
+        <div class="mt-4">
+            <div class="h4"><?= __('Other categories') ?></div>
+            <ul class="list-group list-group-flush">
+                <?php foreach ($other_categories as $category): ?>
+                    <li class="list-group-item">
+                        <a href="?act=per&amp;id=<?= $id ?>&amp;other=<?= $category['id'] ?>"><?= $category['name'] ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+</form>

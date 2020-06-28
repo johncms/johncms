@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/*
+/**
  * This file is part of JohnCMS Content Management System.
  *
  * @copyright JohnCMS Community
@@ -10,7 +8,10 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 use Johncms\NavChain;
+use Johncms\System\Http\Request;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
@@ -23,20 +24,29 @@ if ($user->rights < 9) {
     exit(__('Access denied'));
 }
 
+/** @var Request $request */
+$request = di(Request::class);
+
 $config = di('config')['johncms'];
 $nav_chain->add(__('System Settings'));
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы
-    $config['skindef'] = isset($_POST['skindef']) ? trim($_POST['skindef']) : 'default';
-    $config['email'] = isset($_POST['madm']) ? trim($_POST['madm']) : '@';
-    $config['timeshift'] = isset($_POST['timeshift']) ? (int) ($_POST['timeshift']) : 0;
-    $config['copyright'] = isset($_POST['copyright']) ? trim($_POST['copyright']) : 'JohnCMS';
-    $config['homeurl'] = isset($_POST['homeurl']) ? preg_replace('#/$#', '', trim($_POST['homeurl'])) : '/';
-    $config['flsz'] = isset($_POST['flsz']) ? (int) ($_POST['flsz']) : 0;
-    $config['gzip'] = isset($_POST['gz']);
-    $config['meta_key'] = isset($_POST['meta_key']) ? trim($_POST['meta_key']) : 'johncms';
-    $config['meta_desc'] = isset($_POST['meta_desc']) ? trim($_POST['meta_desc']) : 'johncms';
+    $config['skindef'] = $request->getPost('skindef', 'default', FILTER_SANITIZE_STRING);
+    $config['email'] = $request->getPost('madm', 'example@example.com', FILTER_SANITIZE_STRING);
+    $config['timeshift'] = $request->getPost('timeshift', 0, FILTER_VALIDATE_INT);
+    $config['copyright'] = $request->getPost('copyright', 'JohnCMS', FILTER_SANITIZE_STRING);
+
+    $current_host = 'https://' . $request->getServer('HTTP_HOST', '', FILTER_SANITIZE_STRING);
+    $config['homeurl'] = rtrim($request->getPost('homeurl', $current_host, FILTER_SANITIZE_STRING), '/');
+
+    $config['flsz'] = $request->getPost('flsz', 0, FILTER_VALIDATE_INT);
+    $config['gzip'] = $request->getPost('gz', 0, FILTER_VALIDATE_INT);
+    $config['meta_title'] = $request->getPost('meta_title', 'johncms', FILTER_SANITIZE_STRING);
+    $config['meta_key'] = $request->getPost('meta_key', 'johncms', FILTER_SANITIZE_STRING);
+    $config['meta_desc'] = $request->getPost('meta_desc', 'johncms', FILTER_SANITIZE_STRING);
+    $config['user_email_required'] = $request->getPost('user_email_required', 0, FILTER_VALIDATE_INT);
+    $config['user_email_confirmation'] = $request->getPost('user_email_confirmation', 0, FILTER_VALIDATE_INT);
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
@@ -52,8 +62,11 @@ if (isset($_POST['submit'])) {
     }
 }
 
-echo $view->render('admin::settings', [
-    'sysconf'      => $config,
-    'confirmation' => $confirmation ?? false,
-    'themelist'    => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
-]);
+echo $view->render(
+    'admin::settings',
+    [
+        'sysconf'      => $config,
+        'confirmation' => $confirmation ?? false,
+        'themelist'    => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
+    ]
+);

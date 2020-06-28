@@ -7,6 +7,7 @@
     array (
       'For administration' => 'الإدارة',
       'Smilies' => 'الابتسامات',
+      'Access forbidden' => 'ممنوع الوصول',
       'Avatars' => 'الصورة الشخصية',
       'Avatar has been successfully applied' => 'تم بنجاح إزالة الحظر',
       'Continue' => 'الاستمرار',
@@ -17,6 +18,7 @@
       'Save' => 'حفظ',
       'Forum rules' => 'قواعد المنتدى',
       'My smilies' => 'ابتساماتي',
+      'Smiles' => 'ابتسامات',
       'bbCode Tags' => 'علامات الـ bbCode',
       'Information, FAQ' => 'معلومات، أسئلة وأجوبة',
       'Animals' => 'الحيوانات',
@@ -32,6 +34,7 @@
       'Sports' => 'الرياضة',
       'Technology' => 'تكنولوجيا',
       'The list is empty' => 'القائمة فارغة',
+      'Total:' => 'مجموع',
       'PHP code' => 'كود PHP',
       'Link name' => 'اسم الرابط',
       'URL Link' => 'رابط URL',

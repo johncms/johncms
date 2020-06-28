@@ -35,6 +35,7 @@ $nav_chain->showHomePage(false);
 $config = di('config')['johncms'];
 $view->addData(
     [
+        'title'       => $config['meta_title'] ?? '',
         'keywords'    => $config['meta_key'],
         'description' => $config['meta_desc'],
     ]

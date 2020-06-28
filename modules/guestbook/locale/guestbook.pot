@@ -2,63 +2,35 @@ msgid ""
 msgstr ""
 "X-Domain: guestbook\n"
 
-#: modules/guestbook/index.php:67
-msgid "Admin Club"
-msgstr ""
-
-#: modules/guestbook/index.php:67
-msgid "Guestbook"
-msgstr ""
-
-#: modules/guestbook/index.php:77
-msgid "Guestbook is closed"
-msgstr ""
-
-#: modules/guestbook/index.php:112
-msgid "Wrong data"
-msgstr ""
-
-#: modules/guestbook/index.php:116
-msgid "You have not entered a name"
-msgstr ""
-
-#: modules/guestbook/index.php:120
-msgid "You have not entered the message"
-msgstr ""
-
-#: modules/guestbook/index.php:124
-msgid "Access forbidden"
-msgstr ""
-
-#: modules/guestbook/index.php:129
-msgid "The security code is not correct"
-msgstr ""
-
-#: modules/guestbook/index.php:148
-msgid "You cannot add the message so often. Please, wait %d seconds."
-msgstr ""
-
-#: modules/guestbook/index.php:198
-msgid "Add message"
-msgstr ""
-
-#: modules/guestbook/index.php:307
+#: modules/guestbook/includes/clean.php:34
 msgid "All messages older than 1 day were deleted"
 msgstr ""
 
-#: modules/guestbook/index.php:313
+#: modules/guestbook/includes/clean.php:39
 msgid "Full clearing is finished"
 msgstr ""
 
-#: modules/guestbook/index.php:318
+#: modules/guestbook/includes/clean.php:44
 msgid "All messages older than 1 week were deleted"
 msgstr ""
 
-#: modules/guestbook/index.php:325
+#: modules/guestbook/includes/clean.php:50
 #: modules/guestbook/templates/clear.phtml:2
 #: modules/guestbook/templates/clear.phtml:3
 #: modules/guestbook/templates/clear.phtml:9
 msgid "Clear guestbook"
+msgstr ""
+
+#: modules/guestbook/index.php:64
+msgid "Admin Club"
+msgstr ""
+
+#: modules/guestbook/index.php:64
+msgid "Guestbook"
+msgstr ""
+
+#: modules/guestbook/index.php:74
+msgid "Guestbook is closed"
 msgstr ""
 
 #: modules/guestbook/templates/clear.phtml:11
@@ -78,7 +50,7 @@ msgid "Clear all"
 msgstr ""
 
 #: modules/guestbook/templates/clear.phtml:25
-#: modules/guestbook/templates/index.phtml:197
+#: modules/guestbook/templates/index.phtml:208
 msgid "Clear"
 msgstr ""
 
@@ -97,33 +69,33 @@ msgid "Do you really want to delete?"
 msgstr ""
 
 #: modules/guestbook/templates/confirm_delete.phtml:10
-#: modules/guestbook/templates/index.phtml:180
+#: modules/guestbook/templates/index.phtml:192
 msgid "Delete"
 msgstr ""
 
-#: modules/guestbook/templates/edit.phtml:2
-#: modules/guestbook/templates/edit.phtml:3
+#: modules/guestbook/templates/edit.phtml:4
+#: modules/guestbook/templates/edit.phtml:5
 #: modules/guestbook/templates/edit.phtml:9
 msgid "Edit message"
 msgstr ""
 
-#: modules/guestbook/templates/edit.phtml:13
-#: modules/guestbook/templates/reply.phtml:13
+#: modules/guestbook/templates/edit.phtml:16
+#: modules/guestbook/templates/reply.phtml:24
 msgid "Author"
 msgstr ""
 
-#: modules/guestbook/templates/edit.phtml:16
-#: modules/guestbook/templates/index.phtml:38
+#: modules/guestbook/templates/edit.phtml:19
+#: modules/guestbook/templates/index.phtml:44
 msgid "Message"
 msgstr ""
 
-#: modules/guestbook/templates/edit.phtml:22
-#: modules/guestbook/templates/reply.phtml:23
+#: modules/guestbook/templates/edit.phtml:28
+#: modules/guestbook/templates/reply.phtml:36
 msgid "Save"
 msgstr ""
 
-#: modules/guestbook/templates/edit.phtml:23
-#: modules/guestbook/templates/reply.phtml:24
+#: modules/guestbook/templates/edit.phtml:29
+#: modules/guestbook/templates/reply.phtml:37
 #: modules/guestbook/templates/result.phtml:15
 msgid "Back"
 msgstr ""
@@ -132,57 +104,56 @@ msgstr ""
 msgid "The guestbook is closed"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:25
-#: modules/guestbook/templates/index.phtml:33
+#: modules/guestbook/templates/index.phtml:28
+#: modules/guestbook/templates/index.phtml:36
 msgid "Name"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:47
+#: modules/guestbook/templates/index.phtml:57
 msgid "Verification code"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:49
-#: modules/guestbook/templates/index.phtml:57
+#: modules/guestbook/templates/index.phtml:59
+#: modules/guestbook/templates/index.phtml:67
 msgid "Symbols on the picture"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:63
+#: modules/guestbook/templates/index.phtml:73
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:68
+#: modules/guestbook/templates/index.phtml:78
 msgid "Write"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:78
+#: modules/guestbook/templates/index.phtml:89
 msgid "For registered users only"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:85
+#: modules/guestbook/templates/index.phtml:97
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:118
-#: modules/guestbook/templates/index.phtml:120
+#: modules/guestbook/templates/index.phtml:135
 msgid "Guest"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:128
+#: modules/guestbook/templates/index.phtml:143
 msgid "Edited:"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:129
+#: modules/guestbook/templates/index.phtml:144
 msgid "Edited"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:168
-#: modules/guestbook/templates/reply.phtml:2
-#: modules/guestbook/templates/reply.phtml:3
-#: modules/guestbook/templates/reply.phtml:9
+#: modules/guestbook/templates/index.phtml:180
+#: modules/guestbook/templates/reply.phtml:12
+#: modules/guestbook/templates/reply.phtml:13
 #: modules/guestbook/templates/reply.phtml:17
+#: modules/guestbook/templates/reply.phtml:28
 msgid "Reply"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:179
+#: modules/guestbook/templates/index.phtml:191
 msgid "Edit"
 msgstr ""

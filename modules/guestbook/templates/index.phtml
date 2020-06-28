@@ -17,30 +17,40 @@
 <?php endif; ?>
 <?php if ($data['access_to_form']): ?>
     <div class="row">
-        <div class="col-md-6">
-            <form name="form" action="/guestbook/say" method="post">
-                <input type="hidden" name="token" value="<?= $data['token'] ?>"/>
+        <div class="col-12">
+            <?php if (! empty($data['errors']['csrf_token'])): ?>
+                <div class="alert alert-danger"><?= implode(', ', $data['errors']['csrf_token']) ?></div>
+            <?php endif ?>
+            <form name="form" action="/guestbook/" method="post">
+                <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
                 <?php if (! $user->isValid()): ?>
                     <div class="form-group">
                         <label for="name"><?= __('Name') ?></label>
                         <input type="text"
-                               class="form-control"
+                               class="form-control <?= ! empty($data['errors']['name']) ? 'is-invalid' : '' ?>"
                                maxlength="25"
                                name="name"
                                id="name"
                                required
-                               value=""
+                               value="<?= $this->e($data['form_data']['name']) ?>"
                                placeholder="<?= __('Name') ?>"
                         >
+                        <?php if (! empty($data['errors']['name'])): ?>
+                            <div class="invalid-feedback d-block"><?= implode(', ', $data['errors']['name']) ?></div>
+                        <?php endif ?>
                     </div>
                 <?php endif; ?>
                 <div class="form-group">
-                    <label for="msg"><?= __('Message') ?></label>
+                    <label for="message"><?= __('Message') ?></label>
                     <div>
                         <?= $data['bbcode'] ?>
                     </div>
-                    <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                    <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" required
+                              class="form-control <?= ! empty($data['errors']['message']) ? 'is-invalid' : '' ?>"><?= $this->e($data['form_data']['message']) ?></textarea>
                     <div class="text-muted">Max: 5000</div>
+                    <?php if (! empty($data['errors']['message'])): ?>
+                        <div class="invalid-feedback d-block"><?= implode(', ', $data['errors']['message']) ?></div>
+                    <?php endif ?>
                 </div>
 
                 <?php if (! $user->isValid()): ?>
@@ -48,7 +58,7 @@
                     <div class="form-group">
                         <label for="code"><?= __('Symbols on the picture') ?></label>
                         <input type="text"
-                               class="form-control <?= (isset($error['captcha']) ? 'is-invalid' : '') ?>"
+                               class="form-control <?= (isset($data['errors']['code']) ? 'is-invalid' : '') ?>"
                                maxlength="6"
                                name="code"
                                id="code"
@@ -56,8 +66,8 @@
                                required
                                placeholder="<?= __('Symbols on the picture') ?>"
                         >
-                        <?php if (isset($error['captcha'])): ?>
-                            <div class="invalid-feedback"><?= $error['captcha'] ?></div>
+                        <?php if (isset($data['errors']['code'])): ?>
+                            <div class="invalid-feedback"><?= implode(', ', $data['errors']['code']) ?></div>
                         <?php endif ?>
                         <div class="text-muted small">
                             <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
@@ -71,41 +81,44 @@
     </div>
 <?php else: ?>
     <!-- Гостевая только для зарегистрированных -->
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-danger',
-            'alert'      => __('For registered users only'),
-        ]
-    ) ?>
+    <?php if (! $user->isValid()): ?>
+        <?= $this->fetch(
+            'system::app/alert',
+            [
+                'alert_type' => 'alert-danger',
+                'alert'      => __('For registered users only'),
+            ]
+        ) ?>
+    <?php endif; ?>
 <?php endif; ?>
-<div class="mt-4"></div>
+<div class="mt-4 border-bottom full-mobile-width"></div>
 <!-- Отображаем сообщения -->
-<?php if (empty($data['items'])): ?>
+<?php if (empty($data['items']->count())): ?>
     <div class="alert alert-info"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['items'] as $item): ?>
-        <div class="new_post-item border-bottom shadow mb-2">
+        <?php /** @var \Guestbook\Models\Guestbook $item */ ?>
+        <div class="new_post-item">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
-                    <?php if (! empty($item['user_profile_link'])): ?>
-                        <a href="<?= $item['user_profile_link'] ?>">
+                    <?php if (! empty($item->user) && ! empty($item->user->profile_url)): ?>
+                        <a href="<?= $item->user->profile_url ?>">
                             <div class="avatar">
-                                <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                                <img src="<?= $this->avatar($item->user_id) ?>" class="img-fluid" alt=".">
                             </div>
                         </a>
                     <?php else: ?>
                         <div class="avatar">
-                            <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                            <img src="<?= $this->avatar($item->user_id) ?>" class="img-fluid" alt=".">
                         </div>
                     <?php endif; ?>
-                    <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
-                    <?php if (! empty($item['user_rights_name'])): ?>
+                    <span class="user-status <?= $item->is_online ? 'online' : 'offline' ?> shadow"></span>
+                    <?php if (! empty($item->user->rights_name)): ?>
                         <div class="post-of-user"
                              data-toggle="tooltip"
                              data-placement="top"
                              data-html="true"
-                             title="<?= $item['user_rights_name'] ?>">
+                             title="<?= $item->user->rights_name ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
                             </svg>
@@ -114,35 +127,37 @@
                 </div>
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
-                        <?php if (! empty($item['user_profile_link'])): ?>
-                            <a href="<?= $item['user_profile_link'] ?>"><div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div></a>
+                        <?php if (! empty($item->user) && ! empty($item->user->profile_url)): ?>
+                            <a href="<?= $item->user->profile_url ?>">
+                                <div class="user-name d-inline mr-2"><?= $item->name ?></div>
+                            </a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= ! empty($item['user_id']) ? $item['name'] : (__('Guest') . ': ' . $item['name']) ?></div>
+                            <div class="user-name d-inline mr-2"><?= ! empty($item->user_id) ? $item->name : (__('Guest') . ': ' . $item->name) ?></div>
                         <?php endif; ?>
-                        <span class="post-meta d-inline mr-2"><?= $item['created'] ?></span>
-                        <?php if (! empty($item['edit_count'])): ?>
+                        <span class="post-meta d-inline mr-2"><?= $item->time ?></span>
+                        <?php if (! empty($item->edit_count)): ?>
                             <div class="post-meta d-inline mr-2"
                                  data-toggle="tooltip"
                                  data-placement="top"
                                  data-html="true"
-                                 title="<?= __('Edited:') ?> <?= $item['edit_who'] ?> <br> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]">
+                                 title="<?= __('Edited:') ?> <?= $item->edit_who ?> <br> (<?= $item->edit_time ?>) [<?= $item->edit_count ?>]">
                                 <?= __('Edited') ?>
                             </div>
                         <?php endif; ?>
                     </div>
-                    <?php if (! empty($item['status'])): ?>
+                    <?php if (! empty($item->user) && ! empty($item->user->status)): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="font-weight-bold"><?= $item['status'] ?></span>
+                            <span class="font-weight-bold"><?= $item->user->status ?></span>
                         </div>
                     <?php endif ?>
                 </div>
             </div>
-            <div class="post-body mt-2 border-top pt-2 pb-2">
-                <?= $item['post_text'] ?>
-                <?php if (! empty($item['otvet'])): ?>
+            <div class="post-body pt-2">
+                <?= $item->post_text ?>
+                <?php if (! empty($item->reply_text)): ?>
                     <div class="alert alert-warning mt-2 mb-n2">
-                        <b><?= $item['admin'] ?></b> <?= $item['reply_time'] ?><br>
-                        <?= $item['reply_text'] ?>
+                        <b><?= $item->admin ?></b> <?= $item->otime ?><br>
+                        <?= $item->reply_text ?>
                     </div>
                 <?php endif; ?>
             </div>
@@ -151,24 +166,21 @@
                     <?php if ($user->rights): ?>
                         <div class="post-meta d-flex">
                             <div class="user-ip mr-2">
-                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
-                                <?php if (! empty($item['ip_via_proxy'])): ?>
-                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
-                                <?php endif; ?>
+                                <a href="/admin/search_ip/?ip=<?= $item->ip ?>"><?= $item->ip ?></a>
                             </div>
                             <div class="useragent">
-                                <span><?= $item['browser'] ?></span>
+                                <span><?= $item->browser ?></span>
                             </div>
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="d-flex">
-                    <?php if ($user->rights >= 6): ?>
+                    <?php if ($data['access_to_form'] && $item->user_id !== $user->id): ?>
                         <div class="ml-3">
-                            <a href="/guestbook/otvet?id=<?= $item['message_id'] ?>"><?= __('Reply') ?></a>
+                            <a href="#" onclick="reply_to_post('<?= $item->name ?>')"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?php if ($user->rights && $user->rights >= $item['rights']): ?>
+                    <?php if ($user->rights && (! $item->user || ($item->user && $user->rights >= $item->user->rights))): ?>
                         <div class="dropdown ml-3">
                             <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
@@ -176,8 +188,11 @@
                                 </svg>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="/guestbook/edit?id=<?= $item['message_id'] ?>" class="dropdown-item"><?= __('Edit') ?></a>
-                                <a href="/guestbook/delpost?id=<?= $item['message_id'] ?>" class="dropdown-item"><?= __('Delete') ?></a>
+                                <?php if ($user->rights >= 6): ?>
+                                    <a href="/guestbook/otvet?id=<?= $item->id ?>" class="dropdown-item"><?= __('Reply') ?></a>
+                                <?php endif; ?>
+                                <a href="/guestbook/edit?id=<?= $item->id ?>" class="dropdown-item"><?= __('Edit') ?></a>
+                                <a href="/guestbook/delpost?id=<?= $item->id ?>" class="dropdown-item"><?= __('Delete') ?></a>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -187,14 +202,21 @@
     <?php endforeach; ?>
 
     <?php if (! empty($data['pagination'])): ?>
-        <?= $data['pagination'] ?>
+        <div class="mt-4"><?= $data['pagination'] ?></div>
     <?php endif; ?>
 <?php endif; ?>
-<hr class="mt-4">
 <?php if ($data['access_to_buttons']): ?>
-    <div class="d-flex mt-4">
+    <div class="d-flex mt-4 pb-2">
         <?php if ($user->rights >= 7): ?>
             <a href="/guestbook/clean" class="btn btn-danger"><?= __('Clear') ?></a>
         <?php endif; ?>
     </div>
 <?php endif ?>
+<script>
+    function reply_to_post(user_name)
+    {
+        event.preventDefault();
+        $('#message').htmlcode('<b>' + user_name + '</b>, ');
+        $('body,html').animate({scrollTop: 100}, 500);
+    }
+</script>

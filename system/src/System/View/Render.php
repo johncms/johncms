@@ -35,6 +35,8 @@ class Render extends Engine
     }
 
     /**
+     * Render the template
+     *
      * @param string $name
      * @param array $data
      * @return string

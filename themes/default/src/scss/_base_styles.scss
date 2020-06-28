@@ -1,13 +1,38 @@
 .content-container {
-    width: calc(100% - 17rem);
+    background: #ffffff;
+    width: calc(100% - 15rem);
+
+    .card {
+        //padding: 0.8rem 0;
+
+        &.mb-3 {
+            //margin-bottom: 0 !important;
+        }
+
+/*        &.shadow {
+            box-shadow: none !important;
+        }*/
+
+/*        .card-body {
+            padding: 0;
+        }*/
+    }
+
+    .phdr {
+        margin-top: 1rem;
+    }
 }
 
+.page_layout {
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
 .content-container-padding {
     padding: 0.8rem 0.8rem;
 
     @media (max-width: 768px) {
-        padding: 0.4rem 0;
+        padding: 0.4rem 0 1rem 0;
     }
 
     @media (max-width: 991px) {
@@ -19,10 +44,14 @@
     }
 }
 
+.footer-padding {
+    padding-top: 0 !important;
+}
+
 .page-footer {
     margin: 0.8rem -0.8rem -0.8rem;
     @media (max-width: 768px) {
-        margin: 0.4rem 0 -0.4rem;
+        margin: 0 0 -0.4rem;
     }
 }
 
@@ -81,4 +110,13 @@
 
 .break-word {
     word-break: break-word;
+}
+
+@media (max-width: 768px) {
+    .full-mobile-width {
+        margin-left: -15px;
+        margin-right: -15px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
 }

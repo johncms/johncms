@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <ruleset name="JohnCMS coding standard">
     <description>JohnCMS coding standard</description>
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
     <!-- display progress -->
     <arg value="p"/>
 
     <!-- Paths to check -->
+    <file>config</file>
     <file>modules</file>
     <file>system/src</file>
-    <exclude-pattern>/modules/downloads/classes/pear.php</exclude-pattern>
+    <exclude-pattern>/config/autoload/*.local.php</exclude-pattern>
     <exclude-pattern>/modules/*/locale/*.lng.php</exclude-pattern>
 
     <!-- inherit rules from: -->
@@ -28,6 +30,9 @@
             <property name="absoluteLineLimit" value="320"/>
         </properties>
     </rule>
+
+    <!-- Slevomat Coding Standard rules -->
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
     <!-- Ban some functions -->
     <rule ref="Generic.PHP.ForbiddenFunctions">

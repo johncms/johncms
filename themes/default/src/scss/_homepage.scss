@@ -42,20 +42,11 @@
 }
 
 .mobile_jumbotron {
-    @media (max-width: 450px) {
-        padding: 1rem !important;
+    @media (max-width: 525px) {
 
-        .btn-lg {
-            font-size: 0.9rem;
-
+        .btn {
             .icon {
-                width: 15px;
-            }
-
-            &.btn-success {
-                .icon {
-                    display: none;
-                }
+                width: 20px;
             }
         }
         .hide-xs {

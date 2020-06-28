@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Users\User;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -286,7 +288,7 @@ if (! $error) {
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
 
             if ($msg && ! isset($_POST['submit'])) {
-                $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
+                $foundUser = (new User())->find($res['user_id']);
             }
 
             $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
@@ -304,8 +306,7 @@ if (! $error) {
                     'settings_forum'    => $set_forum,
                     'show_post_preview' => $msg && ! isset($_POST['submit']),
                     'preview_message'   => $msg_pre,
-                    'user_id'           => $foundUser['id'] ?? 0,
-                    'message_author'    => $foundUser ?? [],
+                    'message_author'    => $foundUser ?? null,
                 ]
             );
     }

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\Casts\Ip;
 use Johncms\Casts\Serialize;
+use Johncms\Casts\SpecialChars;
 use Johncms\Casts\UserSettings;
 use Johncms\System\Users\UserConfig;
 
@@ -72,6 +73,10 @@ use Johncms\System\Users\UserConfig;
  * @property int $comm_old
  * @property array $smileys
  * @property array $notification_settings
+ * @property bool $email_confirmed
+ * @property string $confirmation_code
+ * @property string $new_email
+ * @property string $admin_notes
  *
  * @property bool $is_online - Пользователь онлайн или нет?
  * @property string $rights_name - Название прав доступа
@@ -89,8 +94,10 @@ use Johncms\System\Users\UserConfig;
  * @property string $website - Сайт
  * @property string $last_visit - Последний визит
  * @property array $photo - Фотография пользователя
+ * @property UserConfig $config - Настройки пользователя
  *
  * @method Builder approved() - Предустановленное условие для выборки подтвержденных пользователей
+ * @method Builder online() - Выбрать пользователей онлайн
  */
 class User extends Model
 {
@@ -110,11 +117,14 @@ class User extends Model
         'smileys'      => Serialize::class,
         'ip'           => Ip::class,
         'ip_via_proxy' => Ip::class,
+        'admin_notes'  => SpecialChars::class,
 
         'notification_settings' => 'array',
+        'email_confirmed'       => 'bool',
     ];
 
     protected $fillable = [
+        'id',
         'name',
         'name_lat',
         'password',
@@ -163,6 +173,10 @@ class User extends Model
         'comm_old',
         'smileys',
         'notification_settings',
+        'email_confirmed',
+        'confirmation_code',
+        'new_email',
+        'admin_notes',
     ];
 
     /**
@@ -173,6 +187,29 @@ class User extends Model
      */
     public function scopeApproved(Builder $query): Builder
     {
-        return $query->where('preg', '=', 1);
+        $query->where('preg', '=', 1);
+
+        $config = di('config')['johncms'];
+        if (! empty($config['user_email_confirmation'])) {
+            $query->where('email_confirmed', '=', 1);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Выборка только пользователей онлайн
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOnline(Builder $query): Builder
+    {
+        return $query->where('lastdate', '>', (time() - 300));
+    }
+
+    public function isValid(): bool
+    {
+        return $this->is_valid;
     }
 }

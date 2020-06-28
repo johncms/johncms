@@ -82,6 +82,7 @@
       'Total' => 'Всего',
       'The list is empty' => 'Список пуст',
       'Edited:' => 'Изменен',
+      'Edited' => 'Изменен',
       'Edit' => 'Изменить',
       'Delete' => 'Удалить',
       'Do you really want to delete?' => 'Действительно хотите удалить?',

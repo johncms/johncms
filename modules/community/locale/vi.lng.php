@@ -34,6 +34,7 @@
       'post' => 'bài viết',
       'comment' => 'bình luận',
       'point' => 'điểm',
+      'Delete' => 'Xóa',
     ),
   ),
 );

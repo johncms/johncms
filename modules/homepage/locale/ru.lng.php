@@ -5,7 +5,6 @@
   array (
     '' => 
     array (
-      'Welcome' => 'Добро пожаловать',
       'Free, Open Source content management system' => 'Бесплатная система управления контентом с открытым исходным кодом',
       'Download' => 'Скачать',
       'Documentation' => 'Документация',
@@ -17,7 +16,7 @@
       'Template System' => 'Система шаблонов',
       'Using templates, you can completely change the style of your site so that it becomes unique and not like the others.' => 'Используя шаблоны, вы можете полностью изменить стиль вашего сайта так, чтобы он стал уникальным и не похожим на другие.',
       'High Performance' => 'Высокая производительность',
-      'When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.' => 'При разработке JohnCMS мы уделяем особое внимание производительности системы.<br>Ваш сайт не будет требовать мощного сервера на столько долго, на сколько это возможно.',
+      'When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.' => 'При разработке JohnCMS мы уделяем особое внимание производительности системы.<br>Ваш сайт не будет требовать мощного сервера настолько долго, насколько это возможно.',
       'Multilingual' => 'Мультиязычность',
       'Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.' => 'Охватывайте максимальную аудиторию благодаря мультиязычности. В систему уже встроено несколько языков.<br>А если нужного языка нет, Вы сможете легко его добавить, благодаря продвинутым инструментам для перевода, которые поддерживают работу с JohnCMS.',
       'Modularity' => 'Модульность',

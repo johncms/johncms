@@ -2,33 +2,29 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
-#: config/notifications.global.php:14
+#: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:49
 msgid "Forum"
 msgstr ""
 
-#: config/notifications.global.php:17
+#: config/notifications.global.php:23
 msgid "New reply on the forum"
 msgstr ""
 
-#: config/notifications.global.php:18
-msgid "New answer in the topic:"
+#: config/notifications.global.php:32
+msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
 msgstr ""
 
-#: config/notifications.global.php:20
-msgid "User <b>#user_name#</b> responded to <a href=\"#reply_to_message#\">Your message</a>."
-msgstr ""
-
-#: config/notifications.global.php:26
+#: config/notifications.global.php:39
 msgid "Karma"
 msgstr ""
 
-#: config/notifications.global.php:29
+#: config/notifications.global.php:42
 msgid "New vote in karma"
 msgstr ""
 
-#: config/notifications.global.php:30
+#: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
 msgstr ""
 
@@ -78,13 +74,13 @@ msgstr ""
 
 #: config/places.global.php:21
 #: modules/login/index.php:67
-#: modules/login/templates/captcha.phtml:2
-#: modules/login/templates/captcha.phtml:3
-#: modules/login/templates/confirm.phtml:2
-#: modules/login/templates/confirm.phtml:3
+#: modules/login/templates/captcha.phtml:4
+#: modules/login/templates/captcha.phtml:5
+#: modules/login/templates/confirm.phtml:10
+#: modules/login/templates/confirm.phtml:11
 #: modules/login/templates/login.phtml:4
 #: modules/login/templates/login.phtml:5
-#: modules/login/templates/login.phtml:41
+#: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
 msgstr ""
@@ -134,9 +130,9 @@ msgid "Personal"
 msgstr ""
 
 #: modules/login/index.php:53
-#: modules/login/templates/logout.phtml:2
-#: modules/login/templates/logout.phtml:3
-#: modules/login/templates/logout.phtml:9
+#: modules/login/templates/logout.phtml:4
+#: modules/login/templates/logout.phtml:5
+#: modules/login/templates/logout.phtml:11
 msgid "Logout"
 msgstr ""
 
@@ -149,11 +145,12 @@ msgid "You have not entered password"
 msgstr ""
 
 #: modules/login/index.php:99
+#: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/index.php:146
-#: modules/login/index.php:150
+#: modules/login/index.php:149
+#: modules/login/index.php:153
 msgid "Authorization failed"
 msgstr ""
 
@@ -170,40 +167,44 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: modules/login/templates/confirm.phtml:8
+#: modules/login/templates/confirm.phtml:20
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
-#: modules/login/templates/login.phtml:13
+#: modules/login/templates/login.phtml:10
 msgid "Authorization"
 msgstr ""
 
-#: modules/login/templates/login.phtml:18
-#: modules/login/templates/login.phtml:26
+#: modules/login/templates/login.phtml:15
+#: modules/login/templates/login.phtml:23
 msgid "Username"
 msgstr ""
 
-#: modules/login/templates/login.phtml:30
-#: modules/login/templates/login.phtml:38
+#: modules/login/templates/login.phtml:27
+#: modules/login/templates/login.phtml:35
 msgid "Password"
 msgstr ""
 
-#: modules/login/templates/login.phtml:42
+#: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
 msgstr ""
 
-#: modules/login/templates/login.phtml:44
+#: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
 msgstr ""
 
-#: modules/login/templates/logout.phtml:7
+#: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
 msgstr ""
 
-#: modules/login/templates/logout.phtml:10
+#: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
-#: themes/default/templates/system/pages/comments_delete.phtml:28
+#: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
 msgstr ""
 
@@ -240,7 +241,7 @@ msgid "Comments"
 msgstr ""
 
 #: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:96
+#: modules/notifications/templates/index.phtml:80
 msgid "Settings"
 msgstr ""
 
@@ -255,15 +256,15 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:33
+#: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:83
+#: modules/notifications/templates/index.phtml:67
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:91
+#: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
 msgstr ""
 
@@ -321,6 +322,23 @@ msgstr ""
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
+#: system/src-legacy/Bbcode.php:155
+msgid "Added"
+msgstr ""
+
+#: system/src-legacy/Tools.php:171
+msgid "ERROR"
+msgstr ""
+
+#: system/src-legacy/Tools.php:311
+msgid "Somewhere on the site"
+msgstr ""
+
+#: system/src-legacy/Tools.php:502
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+
 #: system/src/Comments.php:159
 #: system/src/Comments.php:228
 #: system/src/Comments.php:229
@@ -351,7 +369,7 @@ msgstr ""
 #: system/src/Comments.php:352
 #: system/src/Comments.php:392
 #: system/src/Comments.php:393
-#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
@@ -372,11 +390,11 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:168
+#: system/src/Counters.php:164
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:174
+#: system/src/Counters.php:170
 msgid "Last activity"
 msgstr ""
 
@@ -385,33 +403,151 @@ msgid "Home"
 msgstr ""
 
 #: system/src/UserProperties.php:69
-#: system/src/Users/UserMutators.php:58
+#: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:70
-#: system/src/Users/UserMutators.php:59
+#: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:71
-#: system/src/Users/UserMutators.php:60
+#: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:72
-#: system/src/Users/UserMutators.php:61
+#: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:73
-#: system/src/Users/UserMutators.php:62
+#: system/src/Users/UserMutators.php:65
 msgid "Administrator"
 msgstr ""
 
 #: system/src/UserProperties.php:74
-#: system/src/Users/UserMutators.php:63
+#: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
+msgstr ""
+
+#: system/src/Validator/messages.php:13
+msgid "You have a ban"
+msgstr ""
+
+#: system/src/Validator/messages.php:21
+msgid "The form submitted did not originate from the expected site"
+msgstr ""
+
+#: system/src/Validator/messages.php:25
+msgid "You cannot add the message so often. Please, wait %value% seconds."
+msgstr ""
+
+#: system/src/Validator/messages.php:29
+msgid "A record matching the input was found"
+msgstr ""
+
+#: system/src/Validator/messages.php:33
+msgid "No record matching the input was found"
+msgstr ""
+
+#: system/src/Validator/messages.php:37
+#: system/src/Validator/messages.php:74
+msgid "Value is required and can't be empty"
+msgstr ""
+
+#: system/src/Validator/messages.php:41
+msgid "The input is less than %min% characters long"
+msgstr ""
+
+#: system/src/Validator/messages.php:42
+msgid "The input is more than %max% characters long"
+msgstr ""
+
+#: system/src/Validator/messages.php:46
+msgid "The input was not found in the haystack"
+msgstr ""
+
+#: system/src/Validator/messages.php:50
+#: system/src/Validator/messages.php:61
+msgid "Invalid type given. String expected"
+msgstr ""
+
+#: system/src/Validator/messages.php:51
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr ""
+
+#: system/src/Validator/messages.php:52
+msgid "'%hostname%' is not a valid hostname for the email address"
+msgstr ""
+
+#: system/src/Validator/messages.php:53
+msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
+msgstr ""
+
+#: system/src/Validator/messages.php:54
+msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
+msgstr ""
+
+#: system/src/Validator/messages.php:55
+msgid "'%localPart%' can not be matched against dot-atom format"
+msgstr ""
+
+#: system/src/Validator/messages.php:56
+msgid "'%localPart%' can not be matched against quoted-string format"
+msgstr ""
+
+#: system/src/Validator/messages.php:57
+msgid "'%localPart%' is not a valid local part for the email address"
+msgstr ""
+
+#: system/src/Validator/messages.php:58
+msgid "The input exceeds the allowed length"
+msgstr ""
+
+#: system/src/Validator/messages.php:60
+msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
+msgstr ""
+
+#: system/src/Validator/messages.php:62
+msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
+msgstr ""
+
+#: system/src/Validator/messages.php:63
+msgid "The input does not match the expected structure for a DNS hostname"
+msgstr ""
+
+#: system/src/Validator/messages.php:64
+msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr ""
+
+#: system/src/Validator/messages.php:65
+msgid "The input does not appear to be a valid local network name"
+msgstr ""
+
+#: system/src/Validator/messages.php:66
+msgid "The input does not appear to be a valid URI hostname"
+msgstr ""
+
+#: system/src/Validator/messages.php:67
+msgid "The input appears to be an IP address, but IP addresses are not allowed"
+msgstr ""
+
+#: system/src/Validator/messages.php:68
+msgid "The input appears to be a local network name but local network names are not allowed"
+msgstr ""
+
+#: system/src/Validator/messages.php:69
+msgid "The input appears to be a DNS hostname but cannot extract TLD part"
+msgstr ""
+
+#: system/src/Validator/messages.php:70
+msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
+msgstr ""
+
+#: system/src/Validator/messages.php:75
+msgid "Invalid type given. String, integer, float, boolean or array expected"
 msgstr ""
 
 #: themes/default/templates/system/app/debug.phtml:15
@@ -458,19 +594,128 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_delete.phtml:23
+#: themes/default/templates/system/mail/layouts/default.phtml:115
+msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
+msgid "Changing email address"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
+#: themes/default/templates/system/mail/templates/registration.phtml:13
+#: themes/default/templates/system/mail/templates/restore_password.phtml:12
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
+msgid "Hello, %s!"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
+msgid "The new email address is:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
+msgid "Confirm email change"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
+msgid "To continue please click the confirm button"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
+#: themes/default/templates/system/mail/templates/registration.phtml:27
+msgid "Confirm"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:10
+msgid "Registration on the website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:15
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:18
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
+msgid "Your login:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:19
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
+msgid "Your password:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:19
+msgid "The one you specified when registering"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:22
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:9
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
+msgid "Password recovery"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:14
+msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:17
+msgid "In order to recover your password, you must click on the link:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:22
+msgid "Restore"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:25
+msgid "Link valid for 1 hour"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:27
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
+msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
+msgid "After logging in, you can change your password to new one."
+msgstr ""
+
+#: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_delete.phtml:27
+#: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_form.phtml:24
+#: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_form.phtml:31
+#: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
 msgstr ""
 

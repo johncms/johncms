@@ -20,6 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
 $res = $req->fetch();
+$error = [];
 
 if (! $req->rowCount() || ! is_dir($res['dir'])) {
     echo $view->render(
@@ -86,7 +87,7 @@ if (isset($_POST['submit'])) {
         $error[] = __('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
     }
 
-    if ($error) {
+    if (! empty($error)) {
         echo $view->render(
             'system::pages/result',
             [

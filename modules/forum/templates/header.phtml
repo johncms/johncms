@@ -22,17 +22,20 @@
     <div class="alert alert-danger"><?= __('Read only') ?></div>
 <?php endif; ?>
 
-<div class="border-top border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
+<div class="border-top full-mobile-width border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
     <div class="mr-auto d-flex pt-2 pb-2 flex-shrink-0">
         <?php if ($user->isValid()): ?>
             <?php if (! empty($unread_count)): ?>
                 <div class="d-flex align-items-center pr-2">
-                    <a href="?act=new" class="pr-2">
+                    <a href="?act=new" class="pr-2 d-flex">
                         <span class="d-none d-sm-inline"><?= __('Unread') ?></span>
-                        <span class="icon_with_badge mr-sm-3">
-                        <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/></svg>
-                        <span class="badge badge-pill badge-danger"><?= $unread_count ?></span>
-                    </span>
+                        <div class="icon_with_badge">
+                            <svg class="icon d-sm-none">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                            </svg>
+                            <span class="badge badge-pill badge-danger d-sm-none"><?= $unread_count ?></span>
+                            <span class="d-none d-sm-inline text-danger font-weight-bold pl-1">+<?= $unread_count ?></span>
+                        </div>
                     </a>
                 </div>
             <?php endif; ?>
@@ -59,7 +62,9 @@
                 <span class="d-none d-sm-inline"><?= $files_name ?></span>
                 <span class="icon_with_badge mr-sm-3">
                     <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/></svg>
-                    <span class="badge badge-pill badge-success"><?= $files_count ?></span>
+                    <?php if ($files_count > 0): ?>
+                        <span class="badge badge-pill badge-success"><?= $files_count ?></span>
+                    <?php endif ?>
                 </span>
             </a>
         </div>

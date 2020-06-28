@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Utility;
 
+use Johncms\Users\User;
 use PDO;
 
 class Cleanup
@@ -30,6 +31,12 @@ class Cleanup
         if (! file_exists($cache) || filemtime($cache) < (time() - $lifeFime)) {
             $this->cleanupTable('cms_sessions', 'lastdate', time() - 86400);
             $this->cleanupTable('cms_users_iphistory', 'time', time() - 7776000);
+
+            // Delete unconfirmed users
+            $config = di('config')['johncms'];
+            if (! empty($config['user_email_confirmation'])) {
+                (new User())->where('datereg', '<', time() - 86400)->whereNull('email_confirmed')->delete();
+            }
 
             file_put_contents($cache, time());
         }

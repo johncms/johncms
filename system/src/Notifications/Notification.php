@@ -140,8 +140,12 @@ class Notification extends Model
             array_key_exists($this->event_type, $this->notification_templates[$this->module]['events'])
         ) {
             $message = $this->notification_templates[$this->module]['events'][$this->event_type]['message'];
-            foreach ($this->fields as $key => $value) {
-                $message = str_replace('#' . $key . '#', $value, $message);
+            if (is_callable($message)) {
+                $message = $message($this->fields);
+            } else {
+                foreach ($this->fields as $key => $value) {
+                    $message = str_replace('#' . $key . '#', $value, $message);
+                }
             }
         }
         return $message;

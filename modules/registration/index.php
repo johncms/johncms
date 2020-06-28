@@ -10,35 +10,60 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Str;
+use Johncms\Mail\EmailMessage;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use Johncms\Validator\Validator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
-ob_start(); // Перехват вывода скриптов без шаблона
-
-/**
- * @var Tools $tools
- * @var User $user
- * @var Render $view
- * @var NavChain $nav_chain
- */
 
 $config = di('config')['johncms'];
+
+/** @var Tools $tools */
 $tools = di(Tools::class);
+
+/** @var User $user */
 $user = di(User::class);
+
+/** @var Render $view */
 $view = di(Render::class);
+
+/** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
+
+/** @var Request $request */
+$request = di(Request::class);
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('reg', __DIR__ . '/templates/');
 
 // Register the module languages domain and folder
-di(Translator::class)->addTranslationDomain('registration', __DIR__ . '/locale');
+/** @var Translator $translator */
+$translator = di(Translator::class);
+$translator->addTranslationDomain('registration', __DIR__ . '/locale');
 
 $nav_chain->add(__('Registration'));
+
+// Email confirmation
+$action = $request->getQuery('act', '');
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+if ($action === 'confirm_email' && ! empty($id)) {
+    $code = $request->getQuery('code', '');
+    $confirm_user = (new User())->find($id);
+    if ($confirm_user !== null && ! $confirm_user->email_confirmed && $confirm_user->confirmation_code === $code) {
+        $confirm_user->email_confirmed = true;
+        $confirm_user->confirmation_code = null;
+        $confirm_user->save();
+    }
+
+    echo $view->render('reg::email_confirmed', ['confirm_user' => $confirm_user]);
+    exit;
+}
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config['mod_reg'] || $user->isValid()) {
@@ -46,131 +71,128 @@ if (! $config['mod_reg'] || $user->isValid()) {
     exit;
 }
 
-$captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : null;
-$reg_nick = isset($_POST['nick']) ? trim($_POST['nick']) : '';
-$lat_nick = $tools->rusLat($reg_nick);
-$reg_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
-$reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
-$reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
-$reg_sex = isset($_POST['sex']) ? trim($_POST['sex']) : '';
+$fields = [
+    'name'     => $request->getPost('name', '', FILTER_SANITIZE_STRING),
+    'name_lat' => Str::slug($request->getPost('name', '', FILTER_SANITIZE_STRING), '_'),
+    'password' => $request->getPost('password', ''),
+    'sex'      => $request->getPost('sex', ''),
+    'imname'   => $request->getPost('imname', '', FILTER_SANITIZE_STRING),
+    'about'    => $request->getPost('about', '', FILTER_SANITIZE_STRING),
+    'captcha'  => $request->getPost('captcha', null),
+    'email'    => $request->getPost('email', ''),
+];
 
-$error = [];
+$errors = [];
+if ($request->getMethod() === 'POST') {
+    $rules = [
+        'name'     => [
+            'NotEmpty',
+            'StringLength'   => ['min' => 2, 'max' => 20],
+            'ModelNotExists' => [
+                'model' => User::class,
+                'field' => 'name',
+            ],
+        ],
+        'name_lat' => [
+            'ModelNotExists' => [
+                'model' => User::class,
+                'field' => 'name_lat',
+            ],
+        ],
+        'password' => [
+            'NotEmpty',
+            'StringLength' => ['min' => 6],
+        ],
+        'sex'      => [
+            'InArray' => ['haystack' => ['m', 'zh']],
+        ],
+        'captcha'  => ['Captcha'],
+    ];
 
-if (isset($_POST['submit'])) {
-    /** @var PDO $db */
-    $db = di(PDO::class);
-
-    // Проверка Логина
-    if (empty($reg_nick)) {
-        $error['login'][] = __('You have not entered Nickname');
-    } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 20) {
-        $error['login'][] = __('Nickname wrong length');
+    if (! empty($config['user_email_required']) || ! empty($config['user_email_confirmation'])) {
+        $rules['email'] = [
+            'EmailAddress'   => [
+                'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
+                'useMxCheck'     => true,
+                'useDeepMxCheck' => true,
+            ],
+            'ModelNotExists' => [
+                'model' => User::class,
+                'field' => 'mail',
+            ],
+        ];
     }
 
-    if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
-        $error['login'][] = __('Invalid characters');
-    }
-
-    // Проверка пароля
-    if (empty($reg_pass)) {
-        $error['password'][] = __('You have not entered password');
-    } elseif (mb_strlen($reg_pass) < 3) {
-        $error['password'][] = __('Invalid length');
-    }
-
-    // Проверка пола
-    if ($reg_sex != 'm' && $reg_sex != 'zh') {
-        $error['sex'] = __('You have not selected genger');
-    }
-
-    // Проверка кода CAPTCHA
-    if (
-        ! $captcha
-        || ! isset($_SESSION['code'])
-        || mb_strlen($captcha) < 3
-        || strtolower($captcha) != strtolower($_SESSION['code'])
-    ) {
-        $error['captcha'] = __('The security code is not correct');
-    }
-
-    unset($_SESSION['code']);
-
-    // Проверка переменных
-    if (empty($error)) {
-        $pass = md5(md5($reg_pass));
-        $reg_name = htmlspecialchars(mb_substr($reg_name, 0, 50));
-        $reg_about = htmlspecialchars(mb_substr($reg_about, 0, 1000));
-        // Проверка, занят ли ник
-        $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ?');
-        $stmt->execute([$lat_nick]);
-
-        if ($stmt->rowCount()) {
-            $error['login'][] = __('Selected Nickname is already in use');
-        }
-    }
-
-    if (empty($error)) {
+    $validator = new Validator($fields, $rules);
+    if ($validator->isValid()) {
         /** @var Johncms\System\Http\Environment $env */
         $env = di(Johncms\System\Http\Environment::class);
 
-        $preg = $config['mod_reg'] > 1 ? 1 : 0;
-        $db->prepare(
-            '
-          INSERT INTO `users` SET
-          `name` = ?,
-          `name_lat` = ?,
-          `password` = ?,
-          `imname` = ?,
-          `about` = ?,
-          `sex` = ?,
-          `rights` = 0,
-          `ip` = ?,
-          `ip_via_proxy` = ?,
-          `browser` = ?,
-          `datereg` = ?,
-          `lastdate` = ?,
-          `sestime` = ?,
-          `preg` = ?,
-          `set_user` = \'\',
-          `set_forum` = \'\',
-          `set_mail` = \'\',
-          `smileys` = \'\'
-        '
-        )->execute(
+        $new_user = (new User())->create(
             [
-                $reg_nick,
-                $lat_nick,
-                $pass,
-                $reg_name,
-                $reg_about,
-                $reg_sex,
-                $env->getIp(),
-                $env->getIpViaProxy(),
-                $env->getUserAgent(),
-                time(),
-                time(),
-                time(),
-                $preg,
+                'name'         => $fields['name'],
+                'name_lat'     => $fields['name_lat'],
+                'password'     => md5(md5($fields['password'])),
+                'imname'       => $fields['imname'],
+                'about'        => $fields['about'],
+                'sex'          => $fields['sex'],
+                'mail'         => $fields['email'],
+                'rights'       => 0,
+                'ip'           => $env->getIp(false),
+                'ip_via_proxy' => $env->getIpViaProxy(false),
+                'browser'      => $env->getUserAgent(),
+                'datereg'      => time(),
+                'lastdate'     => time(),
+                'sestime'      => time(),
+                'preg'         => $config['mod_reg'] > 1 ? 1 : 0,
+                'set_user'     => [],
+                'set_forum'    => [],
+                'set_mail'     => [],
+                'smileys'      => [],
+
+                'email_confirmed'   => ! empty($config['user_email_confirmation']) ? null : 1,
+                'confirmation_code' => ! empty($config['user_email_confirmation']) ? uniqid('email_', true) : null,
             ]
         );
 
-        $usid = $db->lastInsertId();
+        if ($config['user_email_confirmation']) {
+            $link = $config['homeurl'] . '/registration/?act=confirm_email&id=' . $new_user->id . '&code=' . $new_user->confirmation_code;
+            $name = ! empty($new_user->imname) ? htmlspecialchars($new_user->imname) : $new_user->name;
+            (new EmailMessage())->create(
+                [
+                    'priority' => 1,
+                    'locale'   => $translator->getLocale(),
+                    'template' => 'system::mail/templates/registration',
+                    'fields'   => [
+                        'email_to'        => $new_user->mail,
+                        'name_to'         => $name,
+                        'subject'         => __('Registration on the website'),
+                        'user_name'       => $name,
+                        'user_login'      => $new_user->name,
+                        'link_to_confirm' => $link,
+                    ],
+                ]
+            );
+        }
 
-        if ($config['mod_reg'] != 1) {
-            setcookie('cuid', (string) $usid, time() + 3600 * 24 * 365, '/');
-            setcookie('cups', md5($reg_pass), time() + 3600 * 24 * 365, '/');
+        if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
+            setcookie('cuid', (string) $new_user->id, time() + 3600 * 24 * 365, '/');
+            setcookie('cups', md5($fields['password']), time() + 3600 * 24 * 365, '/');
         }
 
         echo $view->render(
             'reg::registration_result',
             [
-                'usid'     => $usid,
-                'reg_nick' => $reg_nick,
-                'reg_pass' => $reg_pass,
+                'usid'     => $new_user->id,
+                'reg_nick' => $fields['name'],
+                'reg_pass' => $fields['password'],
             ]
         );
         exit;
     }
+
+    $errors = $validator->getErrors();
+    unset($_SESSION['code']);
 }
 
 // Форма регистрации
@@ -180,12 +202,8 @@ $_SESSION['code'] = $code;
 echo $view->render(
     'reg::index',
     [
-        'error'     => $error,
-        'reg_nick'  => $reg_nick,
-        'reg_pass'  => $reg_pass,
-        'reg_name'  => $reg_name,
-        'reg_sex'   => $reg_sex,
-        'reg_about' => $reg_about,
-        'captcha'   => new Mobicms\Captcha\Image($code),
+        'errors'  => $errors,
+        'fields'  => $fields,
+        'captcha' => new Mobicms\Captcha\Image($code),
     ]
 );

@@ -1,14 +1,13 @@
+$sidebar_width: 15rem;
+
 .sidebar {
-    background-color: #ffffff;
     color: #ffffff;
-    border-right: 1px solid #dadada;
     font-size: 0.95rem;
     font-weight: 500;
-    position: fixed;
     top: 0;
     height: 100%;
     bottom: 0;
-    width: 17rem;
+    width: $sidebar_width;
     left: 0;
     z-index: 999;
 
@@ -25,6 +24,10 @@
     .dropdown-divider {
         border-top: 1px solid #dce0e6;
     }
+}
+
+.sidebar__inner {
+    padding: 0 20px;
 }
 
 .sidebar__logo {
@@ -58,7 +61,7 @@
 
         > a {
             display: flex;
-            padding: 7px 20px 8px 22px;
+            padding: 7px 0;
             justify-content: space-between;
             align-items: center;
 
@@ -83,7 +86,7 @@
 
 
 .sidebar__footer {
-    padding: 0.7rem 1.4rem;
+    padding: 0.7rem 0;
 
     .sidebar_online {
         height: 17px;
@@ -97,7 +100,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .7rem 1.4rem;
+    padding: 0.7rem 0.7rem 0.7rem 0;
 
     .sidebar_user_avatar {
         .user_photo {
@@ -153,9 +156,25 @@
         padding: 0 1rem;
         min-height: 3rem;
         background: #fff;
+
         a {
             color: #4a5865;
         }
+    }
+
+    .nav__vertical {
+        > li {
+            > a {
+                padding: 7px 20px;
+            }
+        }
+    }
+    .user__link {
+        padding: 0.7rem 1.25rem;
+    }
+
+    .sidebar__footer {
+        padding: 0.7rem 1.25rem;
     }
 
     .navbar-toggler {
@@ -164,8 +183,16 @@
     }
 
     .sidebar {
-        transform: translate3d(-17rem, 0, 0);
+        transform: translate3d(-$sidebar_width, 0, 0);
         transition: all .5s;
+        position: fixed;
+        background-color: #ffffff;
+        border-right: 1px solid #dadada;
+        display: flex;
+    }
+
+    .sidebar__inner {
+        padding: 0;
     }
 
     body.sidebar_opened {
@@ -196,14 +223,15 @@
         }
 
         .content-container {
-            transform: translate3d(17rem, 0, 0);
+            transform: translate3d($sidebar_width, 0, 0);
         }
 
         .overlay {
             opacity: 0.2;
-            height: 100%;
+            height: 100vh;
             width: 100%;
             z-index: 12;
+            position: fixed;
         }
     }
 

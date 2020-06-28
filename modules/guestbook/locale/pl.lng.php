@@ -5,20 +5,13 @@
   array (
     '' => 
     array (
-      'Admin Club' => 'Klub Admina',
-      'Guestbook' => 'Księga gości',
-      'Guestbook is closed' => 'Księga gości jest zamknięta',
-      'Wrong data' => 'Nieprawidłowe dane',
-      'You have not entered a name' => 'Nie wpisałeś nazwy',
-      'You have not entered the message' => 'Wpisz wiadomość!',
-      'Access forbidden' => 'Dostęp zabroniony',
-      'The security code is not correct' => 'Kod zabezpieczający nie jest poprawny',
-      'You cannot add the message so often. Please, wait %d seconds.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać.',
-      'Add message' => 'Dodaj wiadomość',
       'All messages older than 1 day were deleted' => 'Wszystkie wiadomości starsze niż 1 dzień zostały usunięte',
       'Full clearing is finished' => 'Pełne czyszczenie zostało zakończone',
       'All messages older than 1 week were deleted' => 'Wszystkie wiadomości starsze niż 1 tydzień zostały usunięte',
       'Clear guestbook' => 'Wyczyść książkę gości',
+      'Admin Club' => 'Klub Admina',
+      'Guestbook' => 'Księga gości',
+      'Guestbook is closed' => 'Księga gości jest zamknięta',
       'Clearing parameters' => 'Usuwanie parametrów',
       'Older than 1 week' => 'Starsze niż 1 tydzień',
       'Older than 1 day' => 'Starsze niż 1 dzień',

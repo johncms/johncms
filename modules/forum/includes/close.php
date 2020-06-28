@@ -10,24 +10,24 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumTopic;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Users\User;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/**
- * @var PDO $db
- * @var Johncms\System\Users\User $user
- */
+/** @var User $user */
+$user = di(User::class);
 
-if (($user->rights != 3 && $user->rights < 6) || ! $id) {
-    header('Location: ./');
+if (($user->rights !== 3 && $user->rights < 6) || ! $id) {
+    header('Location: /forum/');
     exit;
 }
 
-if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '${id}'")->fetchColumn()) {
-    if (isset($_GET['closed'])) {
-        $db->exec("UPDATE `forum_topic` SET `closed` = '1' WHERE `id` = '${id}'");
-    } else {
-        $db->exec("UPDATE `forum_topic` SET `closed` = '0' WHERE `id` = '${id}'");
-    }
+try {
+    $topic = (new ForumTopic())->findOrFail($id);
+    $topic->update(['closed' => isset($_GET['closed'])]);
+    header('Location: ?type=topic&id=' . $id);
+} catch (ModelNotFoundException $exception) {
+    pageNotFound();
 }
-
-header("Location: ?type=topic&id=${id}");

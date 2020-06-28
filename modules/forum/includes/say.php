@@ -545,6 +545,8 @@ switch ($post_type) {
                         'topic_url'        => '/forum/?type=topic&amp;id=' . $th,
                         'reply_to_message' => '/forum/?act=show_post&id=' . $type1['id'],
                         'message'          => $preview_message,
+                        'post_id'          => $fadd,
+                        'topic_id'         => $th,
                     ],
                 ]
             );
