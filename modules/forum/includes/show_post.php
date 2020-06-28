@@ -109,7 +109,10 @@ $post = $res;
 // Вычисляем, на какой странице сообщение?
 $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'")->fetchColumn() / $user->config->kmess);
 
-$canonical = $config['homeurl'] . '/forum/?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
+$canonical = $config['homeurl'] . '/forum/?type=topic&id=' . $res['topic_id'];
+if ($page > 1) {
+    $canonical .= '&page=' . $page;
+}
 
 $view->addData(
     [
@@ -124,6 +127,6 @@ echo $view->render(
     [
         'post'          => $post,
         'topic'         => $them,
-        'back_to_topic' => '/forum/?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page,
+        'back_to_topic' => '/forum/?type=topic&id=' . $res['topic_id'] . '&page=' . $page,
     ]
 );
