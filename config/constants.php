@@ -12,6 +12,8 @@ const LOG_PATH = DATA_PATH . 'logs' . DS;
 const THEMES_PATH = ROOT_PATH . 'themes' . DS;
 const CMS_VERSION = '9.2.0';
 
+const USE_CRON = false;
+
 // Включаем режим отладки
 const DEBUG = true;
 

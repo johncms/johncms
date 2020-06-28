@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Mail\EmailSender;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
@@ -115,6 +116,15 @@ $userConfig = $container->get(User::class)->config;
 
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
+
+// If cron usage is disabled.
+if (! USE_CRON) {
+    $cron_cache = CACHE_PATH . 'cron.cache';
+    if (! file_exists($cron_cache) || filemtime($cron_cache) < (time() - 5)) {
+        EmailSender::send();
+        file_put_contents($cron_cache, time());
+    }
+}
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
