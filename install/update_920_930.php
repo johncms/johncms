@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
+const CONSOLE_MODE = true;
+
 require '../system/bootstrap.php';
 
 $schema = Capsule::Schema();
