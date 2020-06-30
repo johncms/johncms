@@ -21,6 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if (! $user->isValid() || ! $id) {
+    http_response_code(403);
     echo $view->render(
         'system::pages/result',
         [

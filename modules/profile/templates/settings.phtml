@@ -103,7 +103,7 @@ $userConfig = $user->config;
                 <?php foreach ($data['lng_list'] as $key => $lang): ?>
                     <option value="<?= $key ?>"
                         <?= ($key === $data['user_lng'] || ($key === $config['lng'] && empty($data['user_lng']))) ? 'selected' : '' ?>
-                    ><?= $lang ?><?= ($key === $config['lng'] ? ' (' . __('Site Default') . ')' : '') ?></option>
+                    ><?= $lang['name'] ?><?= ($key === $config['lng'] ? ' (' . __('Site Default') . ')' : '') ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
