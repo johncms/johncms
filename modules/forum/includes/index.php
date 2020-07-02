@@ -48,6 +48,13 @@ $online = [
 
 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
+$view->addData(
+    [
+        'keywords'    => $forum_settings['forum_keywords'],
+        'description' => $forum_settings['forum_description'],
+    ]
+);
+
 echo $view->render(
     'forum::index',
     [

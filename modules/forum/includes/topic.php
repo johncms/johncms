@@ -214,9 +214,11 @@ if ($page > 1) {
 }
 $view->addData(
     [
-        'canonical'  => $canonical,
-        'title'      => htmlspecialchars_decode($current_topic->name),
-        'page_title' => htmlspecialchars_decode($current_topic->name),
+        'canonical'   => $canonical,
+        'title'       => htmlspecialchars_decode($current_topic->name),
+        'page_title'  => htmlspecialchars_decode($current_topic->name),
+        'keywords'    => '',
+        'description' => $current_topic->meta_description,
     ]
 );
 

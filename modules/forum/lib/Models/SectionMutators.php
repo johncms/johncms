@@ -12,6 +12,12 @@ declare(strict_types=1);
 
 namespace Forum\Models;
 
+/**
+ * Trait SectionMutators
+ *
+ * @package Forum\Models
+ * @property string $meta_description
+ */
 trait SectionMutators
 {
     /**
@@ -28,5 +34,29 @@ trait SectionMutators
         }
 
         return '/forum/?' . $type . 'id=' . $this->id;
+    }
+
+    /**
+     * Topic meta description
+     *
+     * @return string
+     */
+    public function getMetaDescriptionAttribute(): string
+    {
+        $config = di('config')['forum']['settings'];
+        $template = $config['section_description'] ?? '';
+        return trim(
+            str_replace(
+                [
+                    '#name#',
+                    '#description#',
+                ],
+                [
+                    $this->name,
+                    strip_tags($this->description),
+                ],
+                $template
+            )
+        );
     }
 }

@@ -22,6 +22,8 @@ use Johncms\Users\User;
  *
  * @property User $current_user
  * @property Tools $tools
+ *
+ * @property string $meta_description
  */
 trait TopicMutators
 {
@@ -122,5 +124,17 @@ trait TopicMutators
     public function getFormattedViewCountAttribute(): string
     {
         return (string) $this->tools->formatNumber($this->view_count);
+    }
+
+    /**
+     * Topic meta description
+     *
+     * @return string
+     */
+    public function getMetaDescriptionAttribute(): string
+    {
+        $config = di('config')['forum']['settings'];
+        $template = $config['topic_description'] ?? '';
+        return str_replace('#name#', $this->name, $template);
     }
 }
