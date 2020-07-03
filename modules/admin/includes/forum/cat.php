@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumSection;
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
@@ -22,38 +24,48 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 $title = __('Forum structure');
 $nav_chain->add($title, '?mod=cat');
 
+module_lib_loader('forum');
+
 // Управление категориями и разделами
 if ($id) {
     // Управление разделами
-    $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
-    $res = $req->fetch();
-    $nav_chain->add($res['name'], '?mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : ''));
+    $current_section = (new ForumSection())->findOrFail($id);
+    $nav_chain->add($current_section->name, '?mod=cat' . (! empty($current_section->parent) ? '&amp;id=' . $current_section->parent : ''));
     $title = __('List of sections');
-    $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${id}' ORDER BY `sort` ASC");
-    if ($req->rowCount()) {
+    $subsections = $current_section->subsections()->withCount('subsections')->get();
+    if ($subsections->count() > 0) {
         $items = [];
-        while ($res = $req->fetch()) {
-            $res['list_url'] = '?mod=cat&amp;id=' . $res['id'];
-            $res['public_url'] = '/forum/?' . ($res['section_type'] === 1 ? 'type=topics&amp;' : '') . 'id=' . $res['id'];
-            $res['description'] = htmlspecialchars($res['description']);
-            $res['counter'] = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn();
-            $res['edit_url'] = '?mod=edit&amp;id=' . $res['id'];
-            $res['delete_url'] = '?mod=del&amp;id=' . $res['id'];
+        foreach ($subsections as $subsection) {
+            /** @var ForumSection $subsection */
+            $res = $subsection->toArray();
+            $res['list_url'] = '?mod=cat&amp;id=' . $subsection->id;
+            $res['public_url'] = $subsection->url;
+            $res['description'] = htmlspecialchars($subsection->description);
+            $res['counter'] = $subsection->subsections_count;
+            $res['edit_url'] = '?mod=edit&amp;id=' . $subsection->id;
+            $res['delete_url'] = '?mod=del&amp;id=' . $subsection->id;
             $items[] = $res;
         }
     }
 } else {
     // Управление категориями
     $title = __('List of categories');
-    $req = $db->query('SELECT * FROM `forum_sections` WHERE `parent` = 0 OR `parent` IS NULL ORDER BY `sort` ASC');
+    $sections = (new ForumSection())
+        ->where('parent', 0)
+        ->orWhereNull('parent')
+        ->orderBy('sort')
+        ->withCount('subsections')
+        ->get();
     $items = [];
-    while ($res = $req->fetch()) {
-        $res['list_url'] = '?mod=cat&amp;id=' . $res['id'];
-        $res['public_url'] = '/forum/?id=' . $res['id'];
-        $res['description'] = htmlspecialchars($res['description']);
-        $res['counter'] = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn();
-        $res['edit_url'] = '?mod=edit&amp;id=' . $res['id'];
-        $res['delete_url'] = '?mod=del&amp;id=' . $res['id'];
+    foreach ($sections as $section) {
+        /** @var ForumSection $section */
+        $res = $section->toArray();
+        $res['list_url'] = '?mod=cat&amp;id=' . $section->id;
+        $res['public_url'] = $section->url;
+        $res['description'] = htmlspecialchars($section->description);
+        $res['counter'] = $section->subsections_count;
+        $res['edit_url'] = '?mod=edit&amp;id=' . $section->id;
+        $res['delete_url'] = '?mod=del&amp;id=' . $section->id;
         $items[] = $res;
     }
 }
