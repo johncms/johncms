@@ -31,7 +31,7 @@
     "laravel-mix": "^5.0.0",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.23.7",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^9.0.2",
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
