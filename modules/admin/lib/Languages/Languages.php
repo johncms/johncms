@@ -17,11 +17,12 @@ use ZipArchive;
 class Languages
 {
     /**
-     * Updates the list of languages.
+     * Gets installed languages in the system
+     *
+     * @return array
      */
-    public static function updateList(): void
+    public static function getLngList(): array
     {
-        $config = di('config')['johncms'];
         $lng_list = [];
         foreach (glob(ROOT_PATH . 'system/locale/*.ini') as $val) {
             $iso = pathinfo($val, PATHINFO_FILENAME);
@@ -31,7 +32,17 @@ class Languages
                 'version' => ! empty($lang_data['version']) ? (float) $lang_data['version'] : 1,
             ];
         }
-        $config['lng_list'] = $lng_list;
+
+        return $lng_list;
+    }
+
+    /**
+     * Updates the list of languages.
+     */
+    public static function updateList(): void
+    {
+        $config = di('config')['johncms'];
+        $config['lng_list'] = self::getLngList();
         $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
         if (! file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
             echo 'ERROR: Can not write system.local.php';
