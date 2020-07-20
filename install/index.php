@@ -15,6 +15,11 @@ use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 
+// Check the current PHP version
+if (PHP_VERSION_ID < 70200) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.2 or higher</div>');
+}
+
 require '../system/vendor/autoload.php';
 
 session_name('SESID');
@@ -74,7 +79,7 @@ switch ($current_step) {
         break;
 
     case 2:
-        require 'steps/step_1.php';
+        require 'steps/step_2.php';
         break;
 
     default:
