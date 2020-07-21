@@ -41,6 +41,10 @@ TranslatorFunctions::register($translator);
 $view = di(Render::class);
 $view->addFolder('install', __DIR__ . '/templates/');
 
+$loader = new Aura\Autoload\Loader();
+$loader->register();
+$loader->addPrefix('Install', __DIR__ . '/lib');
+
 $current_step = $request->getQuery('step', 1, FILTER_VALIDATE_INT);
 
 $steps = [
@@ -55,7 +59,7 @@ $steps = [
         'current' => ($current_step === 2),
     ],
     [
-        'name'    => 'Установка',
+        'name'    => 'Базы данных',
         'active'  => ($current_step > 3),
         'current' => ($current_step === 3),
     ],
@@ -75,7 +79,7 @@ switch ($current_step) {
         break;
 
     case 3:
-        require 'steps/step_1.php';
+        require 'steps/step_3.php';
         break;
 
     case 2:
