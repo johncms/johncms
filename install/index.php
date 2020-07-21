@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Gettext\TranslatorFunctions;
 use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
+use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 
 // Check the current PHP version
@@ -28,17 +29,22 @@ session_start();
 /** @var Request $request */
 $request = di(Request::class);
 
-/** @var Render $view */
-$view = di(Render::class);
-
 $translator = new Translator();
 $translator->setLocale($_SESSION['lng'] ?? 'en');
 $translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
 $translator->defaultDomain('system');
 TranslatorFunctions::register($translator);
 
-/** @var Render $view */
-$view = di(Render::class);
+// Подключаем шаблонизатор
+$view = new Render('phtml');
+$view->setTheme('default');
+$view->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
+$view->loadExtension(di(Assets::class));
+$view->addData(
+    [
+        'locale' => $translator->getLocale(),
+    ]
+);
 $view->addFolder('install', __DIR__ . '/templates/');
 
 $loader = new Aura\Autoload\Loader();
@@ -59,7 +65,7 @@ $steps = [
         'current' => ($current_step === 2),
     ],
     [
-        'name'    => 'Базы данных',
+        'name'    => 'База данных',
         'active'  => ($current_step > 3),
         'current' => ($current_step === 3),
     ],
@@ -75,7 +81,7 @@ $view->addData(['current_step' => $current_step, 'steps' => $steps]);
 
 switch ($current_step) {
     case 4:
-        require 'steps/step_1.php';
+        require 'steps/step_4.php';
         break;
 
     case 3:

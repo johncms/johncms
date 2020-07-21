@@ -12,12 +12,8 @@ declare(strict_types=1);
 
 use Admin\Languages\Languages;
 use Johncms\System\Http\Request;
-use Johncms\System\View\Render;
 
 module_lib_loader('admin');
-
-/** @var Render $view */
-$view = di(Render::class);
 
 /** @var Request $request */
 $request = di(Request::class);

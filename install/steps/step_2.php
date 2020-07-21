@@ -11,10 +11,6 @@
 declare(strict_types=1);
 
 use Johncms\System\Http\Request;
-use Johncms\System\View\Render;
-
-/** @var Render $view */
-$view = di(Render::class);
 
 /** @var Request $request */
 $request = di(Request::class);

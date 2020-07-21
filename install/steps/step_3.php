@@ -12,11 +12,7 @@ declare(strict_types=1);
 
 use Install\Database;
 use Johncms\System\Http\Request;
-use Johncms\System\View\Render;
 use Illuminate\Database\Capsule\Manager as Capsule;
-
-/** @var Render $view */
-$view = di(Render::class);
 
 /** @var Request $request */
 $request = di(Request::class);
@@ -59,7 +55,25 @@ if ($request->getMethod() === 'POST') {
 
     try {
         $connection->getPdo();
-        Database::createTables();
+
+        // Создаем системный файл database.local.php
+        $db_settings = [
+            'pdo' => [
+                'db_host' => $fields['db_host'],
+                'db_port' => $fields['db_port'],
+                'db_name' => $fields['db_name'],
+                'db_user' => $fields['db_user'],
+                'db_pass' => $fields['db_password'],
+            ],
+        ];
+        $db_file = "<?php\n\n" . 'return ' . var_export($db_settings, true) . ";\n";
+
+        if (file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)) {
+            Database::createTables();
+            header('Location: /install/?step=4');
+        } else {
+            $errors['unknown'][] = 'ERROR: Can not write database.local.php';
+        }
     } catch (Exception $exception) {
         $db_error = $exception->getMessage();
         $error_code = $exception->getCode();
