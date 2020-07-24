@@ -8,7 +8,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 const DEBUG = true;
 const _IN_JOHNCMS = true;
 
-require '../system/bootstrap.php';
+require __DIR__ . '/../../system/bootstrap.php';
 
 // Меняем тип таблицы пользователей
 Capsule::connection()->statement('ALTER TABLE users ENGINE = InnoDB');

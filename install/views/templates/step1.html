@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-header">{{ lang_arr['step'] }} 1: {{ lang_arr['check_1'] }}</div>
+
+    <div class="card-content">
+        {{ lang_arr['install_note'] }}
+
+        <form action="" method="post">
+            <strong style="padding-bottom: 10px; display: block">{{ lang_arr['change_language'] }}</strong>
+            <label><input type="radio" name="lng" value="en" /> English</label><br>
+            <label><input type="radio" name="lng" value="ru" /> Русский</label><br>
+            <input class="btn" type="submit" name="submit" style="margin-top: 6px" value="{{ lang_arr['change'] }}">
+        </form>
+
+        <strong class="d-block" style="margin-top: 20px;">{{ lang_arr['check_1'] }}</strong>
+        <span class="text-green">{{ lang_arr['configuration_successful'] }}<br></span>
+    </div>
+
+    <div class="card-actions">
+        <form action="index.php?act=set" method="post">
+            <input class="btn" type="submit" value="{{ lang_arr['install'] }}"/>
+        </form>
+    </div>
+</div>

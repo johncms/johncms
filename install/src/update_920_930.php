@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 const CONSOLE_MODE = true;
 
-require '../system/bootstrap.php';
+require __DIR__ . '/../../system/bootstrap.php';
 
 $schema = Capsule::Schema();
 

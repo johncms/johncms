@@ -5,11 +5,10 @@ declare(strict_types=1);
 const DEBUG = true;
 const _IN_JOHNCMS = true;
 
-require '../system/bootstrap.php';
+require __DIR__ . '/../../system/bootstrap.php';
 
 /** @var PDO $db */
 $db = di(PDO::class);
-
 
 $files = $db->query('SELECT * FROM download__files');
 

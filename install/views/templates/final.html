@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header">{{ lang_arr['final'] }}</div>
+
+    <div class="card-content">
+        <h4>{{ lang_arr['congratulations'] }}</h4>
+        <p class="text-green">{{ lang_arr['installation_completed'] }}</p>
+        <p style="color: orange">{{ lang_arr['final_warning'] }}</p>
+    </div>
+
+    <div class="card-actions">
+        <a onclick="window.location.href=window.location.origin+'/admin'">
+            <button class="btn">{{ lang_arr['admin_panel'] }}</button>
+        </a>
+        <a onclick="window.location.href=window.location.origin">
+            <button class="btn">{{ lang_arr['go_to_site'] }}</button>
+        </a>
+    </div>
+</div>

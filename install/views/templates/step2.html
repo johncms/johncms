@@ -1,0 +1,43 @@
+<form class="card" method="post" action="" style="width: 500px">
+    <div class="card-header">{{ lang_arr['step'] }} 2: {{ lang_arr['database'] }}</div>
+
+    <div class="card-content">
+        <label for="dbhost">MySQL host</label>
+        <input id="dbhost" type="text" name="dbhost" value="localhost" /><br>
+
+        <label for="dbname">MySQL database</label>
+        <input id="dbname" type="text" name="dbname" value="johncms" /><br>
+
+        <label for="dbuser">MySQL user</label>
+        <input id="dbuser" type="text" name="dbuser" value="root" /><br>
+
+        <label for="dbpass">MySQL password</label>
+        <input id="dbpass" type="password" name="dbpass" value="" /><br>
+
+        <label for="siteurl">{{ lang_arr['site_url'] }}</label>
+        <input id="siteurl" type="text" name="siteurl" value="http://127.0.0.1" /><br />
+        <small class="text-muted">Если адрес определился правильно, то не изменяйте это поле</small>
+
+
+        <label for="sitemail">{{ lang_arr['site_email'] }}</label>
+        <input id="sitemail" type="text" name="sitemail" value="@" /><br />
+        <small class="text-muted">{{ lang_arr['site_email_help'] }}</small>
+
+        <label for="admin">{{ lang_arr['admin_login'] }}</label>
+        <input id="admin" type="text" name="admin" value="admin" /><br>
+        <small class="text-muted">{{ lang_arr['admin_login_help'] }}</small>
+
+        <label for="password">{{  lang_arr['admin_password'] }}</label>
+        <input id="password" type="password" name="password" value="" /><br />
+        <small class="text-muted">{{ lang_arr['admin_password_help'] }}</small>
+
+
+        <label for="demo">{{ lang_arr['install_demo'] }}</label>
+        <input id="demo" type="checkbox" name="demo" value="1" />
+        <small class="text-muted">{{ lang_arr['install_demo_help'] }}</small>
+    </div>
+
+    <div class="card-actions">
+        <input class="btn" name="install" type="submit" value="{{ lang_arr['continue'] }}"/>
+    </div>
+</form>
