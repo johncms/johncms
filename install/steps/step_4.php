@@ -25,8 +25,8 @@ di(PDO::class);
 
 $view->addData(
     [
-        'title'      => 'Настройка',
-        'page_title' => 'Настройка',
+        'title'      => __('Setting'),
+        'page_title' => __('Setting'),
     ]
 );
 
@@ -115,7 +115,7 @@ if ($request->getMethod() === 'POST') {
             exit;
         }
 
-        $errors['unknown'][] = 'ERROR: Can not write system.local.php';
+        $errors['unknown'][] = __("ERROR: Can't write system.local.php");
     } else {
         $errors = $validator->getErrors();
     }

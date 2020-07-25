@@ -19,8 +19,8 @@ $request = di(Request::class);
 
 $view->addData(
     [
-        'title'      => 'База данных',
-        'page_title' => 'База данных',
+        'title'      => __('Database'),
+        'page_title' => __('Database'),
     ]
 );
 
@@ -74,14 +74,14 @@ if ($request->getMethod() === 'POST') {
             exit;
         }
 
-        $errors['unknown'][] = 'ERROR: Can not write database.local.php';
+        $errors['unknown'][] = __("ERROR: Can't write database.local.php");
     } catch (Exception $exception) {
         $db_error = $exception->getMessage();
         $error_code = $exception->getCode();
         if ($error_code === 2002) {
-            $errors['db_host'][] = __('Invalid DataBase host name');
+            $errors['db_host'][] = __('Invalid database host name');
         } elseif ($error_code === 1045) {
-            $errors['db_user'][] = __('Invalid DataBase user');
+            $errors['db_user'][] = __('Invalid database user or password');
         } elseif ($error_code === 1049) {
             $errors['db_name'][] = __('Database does not exist');
         } else {
@@ -89,7 +89,6 @@ if ($request->getMethod() === 'POST') {
         }
     }
 }
-
 
 $data = [
     'errors'             => $errors,

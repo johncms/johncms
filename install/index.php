@@ -53,36 +53,39 @@ $loader->addPrefix('Install', __DIR__ . '/lib');
 
 $current_step = $request->getQuery('step', 1, FILTER_VALIDATE_INT);
 
+if ($current_step !== 5 && is_file('../config/autoload/database.local.php') && is_file('../config/autoload/system.local.php')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>The system is already installed</div>');
+}
+
 $steps = [
     [
-        'name'    => 'Подготовка к установке',
+        'name'    => __('Preparing for installation'),
         'active'  => ($current_step > 1),
         'current' => ($current_step === 1),
     ],
     [
-        'name'    => 'Проверка параметров',
+        'name'    => __('Checking parameters'),
         'active'  => ($current_step > 2),
         'current' => ($current_step === 2),
     ],
     [
-        'name'    => 'База данных',
+        'name'    => __('Database'),
         'active'  => ($current_step > 3),
         'current' => ($current_step === 3),
     ],
     [
-        'name'    => 'Настройка',
+        'name'    => __('Setting'),
         'active'  => ($current_step > 4),
         'current' => ($current_step === 4),
     ],
     [
-        'name'    => 'Завершение',
+        'name'    => __('Completion'),
         'active'  => ($current_step > 5),
         'current' => ($current_step === 5),
     ],
 ];
 
 $view->addData(['current_step' => $current_step, 'steps' => $steps]);
-
 
 switch ($current_step) {
     case 5:

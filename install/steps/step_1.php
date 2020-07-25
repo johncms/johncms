@@ -20,7 +20,7 @@ $request = di(Request::class);
 
 $view->addData(
     [
-        'title'      => 'Подготовка к установке',
+        'title'      => __('Preparing for installation'),
         'page_title' => 'JohnCMS ' . CMS_VERSION,
     ]
 );

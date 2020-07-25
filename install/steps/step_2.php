@@ -17,41 +17,41 @@ $request = di(Request::class);
 
 $view->addData(
     [
-        'title'      => 'Проверка параметров',
-        'page_title' => 'Проверка параметров',
+        'title'      => __('Checking parameters'),
+        'page_title' => __('Checking parameters'),
     ]
 );
 
 $check_extensions = [
     [
-        'name'        => 'Версия PHP',
+        'name'        => __('PHP version'),
         'value'       => PHP_VERSION,
         'error'       => (PHP_VERSION_ID < 70200),
-        'description' => 'Версия PHP должна быть не ниже 7.2',
+        'description' => __('The PHP version must be at least 7.2'),
     ],
     [
         'name'        => 'PDO',
-        'value'       => class_exists(PDO::class) ? 'Да' : 'Нет',
+        'value'       => class_exists(PDO::class) ? __('Yes') : __('No'),
         'error'       => ! class_exists(PDO::class),
-        'description' => 'Необходимо установить php расширение PDO',
+        'description' => __('PHP extension PDO must be installed'),
     ],
     [
-        'name'        => 'Расширение Imagick или GD',
-        'value'       => (extension_loaded('gd') || extension_loaded('imagick')) ? 'Да' : 'Нет',
+        'name'        => __('Imagick or GD extension'),
+        'value'       => (extension_loaded('gd') || extension_loaded('imagick')) ? __('Yes') : __('No'),
         'error'       => (! extension_loaded('gd') && ! extension_loaded('imagick')),
-        'description' => 'Необходимо установить php расширение Imagick или GD',
+        'description' => __('You must install the php extension Imagick or GD'),
     ],
     [
-        'name'        => 'Расширение zlib',
-        'value'       => extension_loaded('zlib') ? 'Да' : 'Нет',
+        'name'        => __('zlib extension'),
+        'value'       => extension_loaded('zlib') ? __('Yes') : __('No'),
         'error'       => ! extension_loaded('zlib'),
-        'description' => 'Необходимо установить php расширение zlib',
+        'description' => __('PHP extension zlib must be installed'),
     ],
     [
-        'name'        => 'Расширение mbstring',
-        'value'       => extension_loaded('mbstring') ? 'Да' : 'Нет',
+        'name'        => __('mbstring extension'),
+        'value'       => extension_loaded('mbstring') ? __('Yes') : __('No'),
         'error'       => ! extension_loaded('mbstring'),
-        'description' => 'Необходимо установить php расширение mbstring',
+        'description' => __('PHP extension mbstring must be installed'),
     ],
 ];
 

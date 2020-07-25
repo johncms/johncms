@@ -10,23 +10,11 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Http\Request;
-
-/** @var Request $request */
-$request = di(Request::class);
-
 $view->addData(
     [
-        'title'      => 'Завершение установки',
-        'page_title' => 'Завершение установки',
+        'title'      => __('Complete the installation'),
+        'page_title' => __('Complete the installation'),
     ]
 );
 
-
-$data = [
-    'errors'             => $errors ?? [],
-    'fields'             => $fields ?? [],
-    'next_step_disabled' => false,
-];
-
-echo $view->render('install::step_5', ['data' => $data]);
+echo $view->render('install::step_5');
