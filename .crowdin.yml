@@ -32,4 +32,4 @@ files:
   - source: /system/locale/system.pot
     translation: /system/locale/%two_letters_code%.po
   - source: /install/locale/install.pot
-    translation: /system/locale/%two_letters_code%.po
+    translation: /install/locale/%two_letters_code%.po
