@@ -74,12 +74,21 @@ $steps = [
         'active'  => ($current_step > 4),
         'current' => ($current_step === 4),
     ],
+    [
+        'name'    => 'Завершение',
+        'active'  => ($current_step > 5),
+        'current' => ($current_step === 5),
+    ],
 ];
 
 $view->addData(['current_step' => $current_step, 'steps' => $steps]);
 
 
 switch ($current_step) {
+    case 5:
+        require 'steps/step_5.php';
+        break;
+
     case 4:
         require 'steps/step_4.php';
         break;

@@ -71,9 +71,10 @@ if ($request->getMethod() === 'POST') {
         if (file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)) {
             Database::createTables();
             header('Location: /install/?step=4');
-        } else {
-            $errors['unknown'][] = 'ERROR: Can not write database.local.php';
+            exit;
         }
+
+        $errors['unknown'][] = 'ERROR: Can not write database.local.php';
     } catch (Exception $exception) {
         $db_error = $exception->getMessage();
         $error_code = $exception->getCode();

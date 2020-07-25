@@ -14,6 +14,7 @@ namespace Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Johncms\Users\User;
 
 class Database
 {
@@ -526,7 +527,7 @@ class Database
                 $table->string('skype')->default('');
                 $table->string('jabber')->default('');
                 $table->string('www')->default('');
-                $table->text('about');
+                $table->text('about')->nullable();
                 $table->string('live')->default('');
                 $table->string('mibile')->default('');
                 $table->string('status')->default('');
@@ -544,22 +545,22 @@ class Database
                 $table->string('rest_code')->default('');
                 $table->integer('rest_time')->unsigned()->default(0);
                 $table->integer('movings')->unsigned()->default(0);
-                $table->text('place');
-                $table->text('set_user');
-                $table->text('set_forum');
-                $table->text('set_mail');
+                $table->text('place')->nullable();
+                $table->text('set_user')->nullable();
+                $table->text('set_forum')->nullable();
+                $table->text('set_mail')->nullable();
                 $table->integer('karma_plus')->default(0);
                 $table->integer('karma_minus')->default(0);
                 $table->integer('karma_time')->unsigned()->default(0);
                 $table->boolean('karma_off')->default(0);
                 $table->integer('comm_count')->unsigned()->default(0);
                 $table->integer('comm_old')->unsigned()->default(0);
-                $table->text('smileys');
-                $table->text('notification_settings');
+                $table->text('smileys')->nullable();
+                $table->text('notification_settings')->nullable();
                 $table->boolean('email_confirmed')->nullable();
                 $table->string('confirmation_code')->nullable();
                 $table->string('new_email')->nullable();
-                $table->text('admin_notes');
+                $table->text('admin_notes')->nullable();
             }
         );
 
@@ -665,6 +666,48 @@ class Database
                 $table->timestamp('sent_at')->nullable()->comment('The time when the message was sent');
                 $table->timestamps();
             }
+        );
+    }
+
+    public static function installDemo(): void
+    {
+        $connection = Capsule::connection();
+        $user = (new User())->find(1);
+
+        $connection->table('news')->insert(
+            [
+                'time' => time(),
+                'avt'  => $user->name,
+                'name' => __('Welcome to our website!'),
+                'text' => "Hello!\r\nWe hope that You will like it here and you will be our regular visitor.",
+            ]
+        );
+
+        $connection->statement(
+            "INSERT INTO `forum_sections` (`id`, `parent`, `name`, `description`, `sort`, `access`, `section_type`) VALUES
+(1, 0, 'Общение', 'Свободное общение на любую тему', 1, 0, 0),
+(2, 1, 'О разном', '', 1, 0, 1),
+(3, 1, 'Знакомства', '', 2, 0, 1),
+(4, 1, 'Жизнь ресурса', '', 3, 0, 1),
+(5, 1, 'Новости', '', 4, 0, 1),
+(6, 1, 'Предложения и пожелания', '', 5, 0, 1),
+(7, 1, 'Разное', '', 6, 0, 1);"
+        );
+
+        $connection->statement(
+            "INSERT INTO `forum_topic` (`id`, `section_id`, `name`, `description`, `view_count`, `user_id`, `user_name`, `created_at`, `post_count`, `mod_post_count`, `last_post_date`, `last_post_author`, `last_post_author_name`, `last_message_id`, `mod_last_post_date`, `mod_last_post_author`, `mod_last_post_author_name`, `mod_last_message_id`, `closed`, `closed_by`, `deleted`, `deleted_by`, `curators`, `pinned`, `has_poll`) VALUES
+(1, 3, 'Привет всем!', '', 1, 1, 'admin', '2019-10-16 20:18:00', 1, 1, 1571257080, 1, 'admin', 1, 1571257080, 1, 'admin', 1, NULL, NULL, NULL, NULL, '', NULL, NULL);"
+        );
+        $connection->statement(
+            "INSERT INTO `forum_messages` (`id`, `topic_id`, `text`, `date`, `user_id`, `user_name`, `user_agent`, `ip`, `ip_via_proxy`, `pinned`, `editor_name`, `edit_time`, `edit_count`, `deleted`, `deleted_by`) VALUES
+(1, 1, 'Мы рады приветствовать Вас на нашем сайте :)\r\nДавайте знакомиться!', 1571257080, 1, 'admin', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.121 Safari/537.36 Vivaldi/2.8.1664.44', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);"
+        );
+
+        $connection->statement(
+            "INSERT INTO `guest` (`adm`, `time`, `user_id`, `name`, `text`, `ip`, `browser`, `admin`, `otvet`, `otime`) VALUES
+(1, 1217060516, 1, 'admin', 'Добро пожаловать в Админ Клуб!\r\nСюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\nПростым пользователям доступ сюда закрыт.', 2130706433, 'Opera/9.51', '', '', 0),
+(0, 1217060536, 1, 'admin', 'Добро пожаловать в Гостевую!', 2130706433, 'Opera/9.51', 'admin', 'Проверка ответа Администратора', 1217064021),
+(0, 1217061125, 1, 'admin', 'Для зарегистрированных пользователей Гостевая поддерживает BBcode:\r\n[b]жирный[/b]\r\n[i]курсив[/i]\r\n[u]подчеркнутый[/u]\r\n[red]красный[/red]\r\n[green]зеленый[/green]\r\n[blue]синий[/blue]\r\n\r\nи ссылки:\r\nhttp://gazenwagen.com\r\n\r\nДля гостей, эти функции закрыты.', 2130706433, 'Opera/9.51', '', '', 0);"
         );
     }
 }
