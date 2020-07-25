@@ -38,11 +38,11 @@ msgstr ""
 #: modules/forum/includes/delvote.php:35
 #: modules/forum/includes/delvote.php:52
 #: modules/forum/includes/delvote.php:76
-#: modules/forum/includes/editpost.php:31
-#: modules/forum/includes/editpost.php:68
-#: modules/forum/includes/editpost.php:75
-#: modules/forum/includes/editpost.php:95
-#: modules/forum/includes/editpost.php:100
+#: modules/forum/includes/editpost.php:32
+#: modules/forum/includes/editpost.php:69
+#: modules/forum/includes/editpost.php:76
+#: modules/forum/includes/editpost.php:96
+#: modules/forum/includes/editpost.php:101
 #: modules/forum/includes/editvote.php:33
 #: modules/forum/includes/files.php:92
 #: modules/forum/includes/filter.php:28
@@ -89,7 +89,7 @@ msgstr ""
 #: modules/forum/includes/addfile.php:57
 #: modules/forum/includes/addvote.php:32
 #: modules/forum/includes/delvote.php:33
-#: modules/forum/includes/editpost.php:29
+#: modules/forum/includes/editpost.php:30
 #: modules/forum/includes/editvote.php:31
 #: modules/forum/includes/files.php:90
 #: modules/forum/includes/filter.php:26
@@ -146,7 +146,7 @@ msgstr ""
 #: modules/forum/includes/addfile.php:162
 #: modules/forum/includes/addfile.php:176
 #: modules/forum/includes/addvote.php:98
-#: modules/forum/includes/editpost.php:258
+#: modules/forum/includes/editpost.php:259
 #: modules/forum/includes/ren.php:63
 #: modules/forum/includes/ren.php:80
 #: modules/forum/includes/say.php:438
@@ -160,8 +160,8 @@ msgstr ""
 #: modules/forum/includes/addvote.php:131
 #: modules/forum/templates/new_topic.phtml:87
 #: modules/forum/templates/reply_message.phtml:93
-#: modules/forum/templates/topic.phtml:132
-#: modules/forum/templates/topic.phtml:439
+#: modules/forum/templates/topic.phtml:124
+#: modules/forum/templates/topic.phtml:431
 msgid "Add File"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 #: modules/forum/includes/addvote.php:82
 #: modules/forum/includes/addvote.php:93
 #: modules/forum/includes/addvote.php:94
-#: modules/forum/templates/topic.phtml:394
+#: modules/forum/templates/topic.phtml:386
 msgid "Add Poll"
 msgstr ""
 
@@ -201,7 +201,7 @@ msgstr ""
 #: modules/forum/includes/curators.php:75
 #: modules/forum/includes/deltema.php:34
 #: modules/forum/includes/deltema.php:35
-#: modules/forum/templates/topic.phtml:462
+#: modules/forum/templates/topic.phtml:454
 msgid "Curators"
 msgstr ""
 
@@ -214,7 +214,7 @@ msgstr ""
 
 #: modules/forum/includes/deltema.php:78
 #: modules/forum/includes/deltema.php:79
-#: modules/forum/templates/topic.phtml:413
+#: modules/forum/templates/topic.phtml:405
 msgid "Delete Topic"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgstr ""
 #: modules/forum/includes/delvote.php:48
 #: modules/forum/includes/delvote.php:61
 #: modules/forum/includes/delvote.php:62
-#: modules/forum/templates/topic.phtml:392
+#: modules/forum/templates/topic.phtml:384
 msgid "Delete Poll"
 msgstr ""
 
@@ -230,39 +230,39 @@ msgstr ""
 msgid "Poll deleted"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:27
-#: modules/forum/includes/editpost.php:159
-#: modules/forum/includes/editpost.php:254
-#: modules/forum/includes/editpost.php:299
+#: modules/forum/includes/editpost.php:28
+#: modules/forum/includes/editpost.php:160
+#: modules/forum/includes/editpost.php:255
 #: modules/forum/includes/editpost.php:300
+#: modules/forum/includes/editpost.php:301
 msgid "Edit Message"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:68
+#: modules/forum/includes/editpost.php:69
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:75
+#: modules/forum/includes/editpost.php:76
 msgid "You are trying to change another's post"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:95
+#: modules/forum/includes/editpost.php:96
 msgid "Your message not already latest, you cannot change it"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:100
-#: modules/forum/includes/editpost.php:161
+#: modules/forum/includes/editpost.php:101
+#: modules/forum/includes/editpost.php:162
 msgid "You cannot edit your posts after 5 minutes"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:106
+#: modules/forum/includes/editpost.php:107
 msgid "Message does not exists or has been deleted"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:106
+#: modules/forum/includes/editpost.php:107
 #: modules/forum/includes/file.php:49
-#: modules/forum/includes/index.php:54
-#: modules/forum/includes/index.php:55
+#: modules/forum/includes/index.php:61
+#: modules/forum/includes/index.php:62
 #: modules/forum/includes/new.php:58
 #: modules/forum/includes/say.php:614
 #: modules/forum/includes/show_post.php:33
@@ -285,26 +285,26 @@ msgstr ""
 #: modules/forum/templates/files_list.phtml:154
 #: modules/forum/templates/forum_search.phtml:90
 #: modules/forum/templates/new_topics.phtml:121
-#: modules/forum/templates/show_post.phtml:155
+#: modules/forum/templates/show_post.phtml:148
 msgid "Forum"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:137
 #: modules/forum/includes/editpost.php:138
+#: modules/forum/includes/editpost.php:139
 msgid "Delete file"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:236
 #: modules/forum/includes/editpost.php:237
+#: modules/forum/includes/editpost.php:238
 msgid "Delete Message"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:256
+#: modules/forum/includes/editpost.php:257
 #: modules/forum/includes/say.php:436
 msgid "You have not entered the message"
 msgstr ""
 
-#: modules/forum/includes/editpost.php:318
+#: modules/forum/includes/editpost.php:319
 msgid "Error"
 msgstr ""
 
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/forum/includes/editvote.php:102
 #: modules/forum/includes/editvote.php:154
 #: modules/forum/includes/editvote.php:155
-#: modules/forum/templates/topic.phtml:391
+#: modules/forum/templates/topic.phtml:383
 msgid "Edit Poll"
 msgstr ""
 
@@ -372,7 +372,7 @@ msgid "Other"
 msgstr ""
 
 #: modules/forum/includes/files.php:44
-#: modules/forum/templates/topics.phtml:39
+#: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
 msgstr ""
 
@@ -381,7 +381,7 @@ msgid "Section files"
 msgstr ""
 
 #: modules/forum/includes/files.php:58
-#: modules/forum/templates/topic.phtml:44
+#: modules/forum/templates/topic.phtml:36
 msgid "Topic Files"
 msgstr ""
 
@@ -407,7 +407,7 @@ msgstr ""
 #: modules/forum/includes/filter.php:88
 #: modules/forum/includes/filter.php:102
 #: modules/forum/includes/filter.php:103
-#: modules/forum/templates/topic.phtml:470
+#: modules/forum/templates/topic.phtml:462
 msgid "Filter by author"
 msgstr ""
 
@@ -485,7 +485,7 @@ msgstr ""
 #: modules/forum/includes/nt.php:193
 #: modules/forum/includes/nt.php:197
 #: modules/forum/includes/nt.php:198
-#: modules/forum/templates/topics.phtml:55
+#: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
 msgstr ""
 
@@ -593,15 +593,15 @@ msgstr ""
 
 #: modules/forum/includes/show_post.php:29
 #: modules/forum/includes/show_post.php:51
-#: modules/forum/includes/show_post.php:115
-#: modules/forum/includes/show_post.php:116
+#: modules/forum/includes/show_post.php:120
+#: modules/forum/includes/show_post.php:121
 msgid "Show post"
 msgstr ""
 
 #: modules/forum/includes/tema.php:86
 #: modules/forum/templates/reply_message.phtml:65
-#: modules/forum/templates/show_post.phtml:146
-#: modules/forum/templates/topic.phtml:357
+#: modules/forum/templates/show_post.phtml:139
+#: modules/forum/templates/topic.phtml:349
 msgid "Quote"
 msgstr ""
 
@@ -679,7 +679,7 @@ msgstr ""
 #: modules/forum/includes/who.php:276
 #: modules/forum/templates/index.phtml:77
 #: modules/forum/templates/section.phtml:68
-#: modules/forum/templates/topics.phtml:131
+#: modules/forum/templates/topics.phtml:123
 msgid "Who in Forum"
 msgstr ""
 
@@ -734,7 +734,7 @@ msgstr ""
 #: modules/forum/templates/filter_by_author.phtml:61
 #: modules/forum/templates/move_topic.phtml:47
 #: modules/forum/templates/rename_topic.phtml:36
-#: modules/forum/templates/show_post.phtml:154
+#: modules/forum/templates/show_post.phtml:147
 msgid "Back to topic"
 msgstr ""
 
@@ -826,8 +826,8 @@ msgstr ""
 #: modules/forum/templates/delete_post.phtml:37
 #: modules/forum/templates/delete_topic.phtml:40
 #: modules/forum/templates/mass_delete.phtml:32
-#: modules/forum/templates/topic.phtml:324
-#: modules/forum/templates/topic.phtml:369
+#: modules/forum/templates/topic.phtml:316
+#: modules/forum/templates/topic.phtml:361
 msgid "Delete"
 msgstr ""
 
@@ -876,16 +876,16 @@ msgstr ""
 #: modules/forum/templates/edit_post.phtml:69
 #: modules/forum/templates/new_topic.phtml:77
 #: modules/forum/templates/reply_message.phtml:87
-#: modules/forum/templates/topic.phtml:126
-#: modules/forum/templates/topic.phtml:433
+#: modules/forum/templates/topic.phtml:118
+#: modules/forum/templates/topic.phtml:425
 msgid "Message"
 msgstr ""
 
 #: modules/forum/templates/edit_post.phtml:76
 #: modules/forum/templates/new_topic.phtml:92
 #: modules/forum/templates/reply_message.phtml:98
-#: modules/forum/templates/topic.phtml:137
-#: modules/forum/templates/topic.phtml:444
+#: modules/forum/templates/topic.phtml:129
+#: modules/forum/templates/topic.phtml:436
 msgid "Preview"
 msgstr ""
 
@@ -896,7 +896,7 @@ msgid "Smilies"
 msgstr ""
 
 #: modules/forum/templates/files_list.phtml:80
-#: modules/forum/templates/topic.phtml:242
+#: modules/forum/templates/topic.phtml:234
 msgid "Link to post"
 msgstr ""
 
@@ -911,8 +911,8 @@ msgstr ""
 #: modules/forum/templates/files_list.phtml:144
 #: modules/forum/templates/forum_search.phtml:74
 #: modules/forum/templates/new_topics.phtml:107
-#: modules/forum/templates/topic.phtml:454
-#: modules/forum/templates/topics.phtml:119
+#: modules/forum/templates/topic.phtml:446
+#: modules/forum/templates/topics.phtml:111
 #: modules/forum/templates/voted_users.phtml:44
 #: modules/forum/templates/who.phtml:52
 msgid "Total"
@@ -954,7 +954,7 @@ msgstr ""
 
 #: modules/forum/templates/forum_search.phtml:59
 #: modules/forum/templates/new_topics.phtml:96
-#: modules/forum/templates/topics.phtml:113
+#: modules/forum/templates/topics.phtml:105
 msgid "Author"
 msgstr ""
 
@@ -1012,10 +1012,10 @@ msgstr ""
 
 #: modules/forum/templates/new_topic.phtml:90
 #: modules/forum/templates/reply_message.phtml:96
-#: modules/forum/templates/topic.phtml:135
-#: modules/forum/templates/topic.phtml:141
-#: modules/forum/templates/topic.phtml:442
-#: modules/forum/templates/topic.phtml:448
+#: modules/forum/templates/topic.phtml:127
+#: modules/forum/templates/topic.phtml:133
+#: modules/forum/templates/topic.phtml:434
+#: modules/forum/templates/topic.phtml:440
 msgid "Write"
 msgstr ""
 
@@ -1028,28 +1028,28 @@ msgid "Show period"
 msgstr ""
 
 #: modules/forum/templates/new_topics.phtml:62
-#: modules/forum/templates/topics.phtml:67
+#: modules/forum/templates/topics.phtml:59
 msgid "Pinned topic"
 msgstr ""
 
 #: modules/forum/templates/new_topics.phtml:69
-#: modules/forum/templates/topics.phtml:74
+#: modules/forum/templates/topics.phtml:66
 msgid "Topic has poll"
 msgstr ""
 
 #: modules/forum/templates/new_topics.phtml:76
-#: modules/forum/templates/topics.phtml:81
+#: modules/forum/templates/topics.phtml:73
 msgid "Closed topic"
 msgstr ""
 
 #: modules/forum/templates/new_topics.phtml:83
-#: modules/forum/templates/topics.phtml:88
-#: modules/forum/templates/topics.phtml:99
+#: modules/forum/templates/topics.phtml:80
+#: modules/forum/templates/topics.phtml:91
 msgid "Deleted topic"
 msgstr ""
 
 #: modules/forum/templates/new_topics.phtml:97
-#: modules/forum/templates/topics.phtml:114
+#: modules/forum/templates/topics.phtml:106
 msgid "Last post"
 msgstr ""
 
@@ -1082,137 +1082,137 @@ msgstr ""
 msgid "There are no sections in this category"
 msgstr ""
 
-#: modules/forum/templates/show_post.phtml:68
-#: modules/forum/templates/topic.phtml:250
+#: modules/forum/templates/show_post.phtml:61
+#: modules/forum/templates/topic.phtml:242
 msgid "Edited:"
 msgstr ""
 
-#: modules/forum/templates/show_post.phtml:69
-#: modules/forum/templates/topic.phtml:251
+#: modules/forum/templates/show_post.phtml:62
+#: modules/forum/templates/topic.phtml:243
 msgid "Edited"
 msgstr ""
 
-#: modules/forum/templates/show_post.phtml:86
-#: modules/forum/templates/topic.phtml:292
+#: modules/forum/templates/show_post.phtml:79
+#: modules/forum/templates/topic.phtml:284
 msgid "Attached files"
 msgstr ""
 
-#: modules/forum/templates/show_post.phtml:141
-#: modules/forum/templates/topic.phtml:352
+#: modules/forum/templates/show_post.phtml:134
+#: modules/forum/templates/topic.phtml:344
 msgid "Reply"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:50
+#: modules/forum/templates/topic.phtml:42
 msgid "Filter by author is activated"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:52
-#: modules/forum/templates/topic.phtml:468
+#: modules/forum/templates/topic.phtml:44
+#: modules/forum/templates/topic.phtml:460
 msgid "Cancel Filter"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:58
+#: modules/forum/templates/topic.phtml:50
 msgid "Topic closed"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:64
+#: modules/forum/templates/topic.phtml:56
 msgid "Topic deleted by"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:68
+#: modules/forum/templates/topic.phtml:60
 msgid "Undelete topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:84
-#: modules/forum/templates/topic.phtml:114
+#: modules/forum/templates/topic.phtml:76
+#: modules/forum/templates/topic.phtml:106
 msgid "Vote"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:85
+#: modules/forum/templates/topic.phtml:77
 msgid "Results"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:105
+#: modules/forum/templates/topic.phtml:97
 msgid "Total votes"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:259
+#: modules/forum/templates/topic.phtml:251
 msgid "Post deleted:"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:260
+#: modules/forum/templates/topic.phtml:252
 msgid "Deleted"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:266
+#: modules/forum/templates/topic.phtml:258
 msgid "Post restored by:"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:267
+#: modules/forum/templates/topic.phtml:259
 msgid "Restored"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:368
+#: modules/forum/templates/topic.phtml:360
 msgid "Edit"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:371
+#: modules/forum/templates/topic.phtml:363
 msgid "Restore"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:383
+#: modules/forum/templates/topic.phtml:375
 msgid "Delete selected"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:387
+#: modules/forum/templates/topic.phtml:379
 msgid "Actions with topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:398
+#: modules/forum/templates/topic.phtml:390
 msgid "Curators of the Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:401
+#: modules/forum/templates/topic.phtml:393
 msgid "Rename Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:404
+#: modules/forum/templates/topic.phtml:396
 msgid "Open Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:406
+#: modules/forum/templates/topic.phtml:398
 msgid "Close Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:410
+#: modules/forum/templates/topic.phtml:402
 msgid "Restore Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:416
+#: modules/forum/templates/topic.phtml:408
 msgid "Unfix Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:418
+#: modules/forum/templates/topic.phtml:410
 msgid "Pin Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:421
+#: modules/forum/templates/topic.phtml:413
 msgid "Move Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:474
+#: modules/forum/templates/topic.phtml:466
 msgid "Download Topic"
 msgstr ""
 
-#: modules/forum/templates/topic.phtml:494
+#: modules/forum/templates/topic.phtml:486
 msgid "Who is here"
 msgstr ""
 
-#: modules/forum/templates/topics.phtml:48
+#: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
 msgstr ""
 
-#: modules/forum/templates/topics.phtml:103
+#: modules/forum/templates/topics.phtml:95
 msgid "Last page"
 msgstr ""
 

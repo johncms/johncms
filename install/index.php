@@ -31,8 +31,8 @@ $request = di(Request::class);
 
 $translator = new Translator();
 $translator->setLocale($_SESSION['lng'] ?? 'en');
-$translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
-$translator->defaultDomain('system');
+$translator->addTranslationDomain('install', ROOT_PATH . 'install/locale');
+$translator->defaultDomain('install');
 TranslatorFunctions::register($translator);
 
 // Подключаем шаблонизатор

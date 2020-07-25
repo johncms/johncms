@@ -50,7 +50,7 @@ msgid "Clear all"
 msgstr ""
 
 #: modules/guestbook/templates/clear.phtml:25
-#: modules/guestbook/templates/index.phtml:208
+#: modules/guestbook/templates/index.phtml:211
 msgid "Clear"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Do you really want to delete?"
 msgstr ""
 
 #: modules/guestbook/templates/confirm_delete.phtml:10
-#: modules/guestbook/templates/index.phtml:192
+#: modules/guestbook/templates/index.phtml:195
 msgid "Delete"
 msgstr ""
 
@@ -147,6 +147,7 @@ msgid "Edited"
 msgstr ""
 
 #: modules/guestbook/templates/index.phtml:180
+#: modules/guestbook/templates/index.phtml:192
 #: modules/guestbook/templates/reply.phtml:12
 #: modules/guestbook/templates/reply.phtml:13
 #: modules/guestbook/templates/reply.phtml:17
@@ -154,6 +155,6 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: modules/guestbook/templates/index.phtml:191
+#: modules/guestbook/templates/index.phtml:194
 msgid "Edit"
 msgstr ""

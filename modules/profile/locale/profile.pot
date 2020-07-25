@@ -275,8 +275,8 @@ msgstr ""
 
 #: modules/profile/includes/index.php:24
 #: modules/profile/includes/karma.php:20
-#: modules/profile/index.php:57
-#: modules/profile/index.php:77
+#: modules/profile/index.php:58
+#: modules/profile/index.php:78
 msgid "User Profile"
 msgstr ""
 
@@ -461,11 +461,11 @@ msgstr ""
 msgid "Statistic"
 msgstr ""
 
-#: modules/profile/index.php:59
+#: modules/profile/index.php:60
 msgid "For registered users only"
 msgstr ""
 
-#: modules/profile/index.php:79
+#: modules/profile/index.php:80
 msgid "This User does not exists"
 msgstr ""
 

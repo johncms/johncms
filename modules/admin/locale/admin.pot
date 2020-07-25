@@ -450,16 +450,16 @@ msgstr ""
 msgid "Description should be at least 2 characters in length"
 msgstr ""
 
-#: modules/admin/includes/forum/cat.php:22
+#: modules/admin/includes/forum/cat.php:24
 #: modules/admin/templates/forum/index.phtml:38
 msgid "Forum structure"
 msgstr ""
 
-#: modules/admin/includes/forum/cat.php:31
+#: modules/admin/includes/forum/cat.php:34
 msgid "List of sections"
 msgstr ""
 
-#: modules/admin/includes/forum/cat.php:47
+#: modules/admin/includes/forum/cat.php:52
 msgid "List of categories"
 msgstr ""
 
