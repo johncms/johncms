@@ -1,5 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Install;
+
+use PDO;
+use PDOException;
+
+/**
+ * Class Installer
+ *
+ * @package Install
+ * @version 1.0
+ * @author AkioSarkiz
+ */
 class Installer
 {
     public static $lang = null;

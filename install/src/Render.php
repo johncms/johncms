@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
+namespace Install;
+
 /**
- * Class Render - render templates with layouts
+ * Class Render
+ *
+ * @package Install
  * @version 1.0
+ * @author AkioSarkiz
  */
 class Render
 {
     public const DEFAULT_NAME_LAYOUT = 'base';
 
-    public const DEFAULT_CONTENT_TAG = '{{ content }}';
+    public const DEFAULT_CONTENT_TAG = '{{ template }}';
 
     protected static $env = [];
 
@@ -23,7 +28,7 @@ class Render
      */
     public static function html($templateName, $variables = []): ?string
     {
-        self::$env = $variables;
+        self::$env = array_merge($variables, Installer::$lang ? ['lang_arr' => Installer::$lang] : []);
         return self::simpleRender($templateName);
     }
 

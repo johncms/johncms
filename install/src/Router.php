@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Install;
+
+/**
+ * Class Router
+ *
+ * @package Install
+ * @version 1.0
+ * @author AkioSarkiz
+ */
 class Router
 {
     /**

@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Install;
+
+/**
+ * Class Checker
+ *
+ * @package Install
+ * @version 1.0
+ * @author AkioSarkiz
+ */
 class Checker
 {
     public const MIN_PHP_VERSION = '7.2';
@@ -80,7 +91,7 @@ class Checker
                 'error' => true,
                 'data' => [
                     'error_title' => 'Invalid php version',
-                    'error_message' => sprintf('Minimum php version %s<br/>Your php version %s', MIN_PHP_VERSION, PHP_VERSION),
+                    'error_message' => sprintf('Minimum php version %s<br/>Your php version %s', self::MIN_PHP_VERSION, PHP_VERSION),
                 ],
             ];
         }

@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+use Install\Installer;
+use Install\Render;
+
 // Создание базы данных и Администратора системы
 $db_check = false;
 $db_error = [];
@@ -34,26 +39,38 @@ if (isset($_POST['check']) || isset($_POST['install'])) {
     // Проверяем подключение к серверу базы данных
     if (empty($db_error)) {
         try {
-            $pdo = new \PDO(
+            $pdo = new PDO(
                 'mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pass,
                 [
-                    \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
-                    \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
+                    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
                 ]
             );
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $pdo_error = $e->getMessage();
 
             if (stristr($pdo_error, 'no such host')) {
-                $db_error['host'] = Installer::$lang['error_db_host'];
+                die(Render::html('error', [
+                    'error_title' => Installer::$lang['database'],
+                    'error_message' => Installer::$lang['error_db_host'],
+                ]));
             } elseif (stristr($pdo_error, 'access denied for user')) {
-                $db_error['access'] = Installer::$lang['error_db_user'];
+                die(Render::html('error', [
+                    'error_title' => Installer::$lang['database'],
+                    'error_message' => Installer::$lang['error_db_user'],
+                ]));
             } elseif (stristr($pdo_error, 'unknown database')) {
-                $db_error['name'] = Installer::$lang['error_db_name'];
+                die(Render::html('error', [
+                    'error_title' => Installer::$lang['database'],
+                    'error_message' => Installer::$lang['error_db_name'],
+                ]));
             } else {
-                $db_error['unknown'] = Installer::$lang['error_db_unknown'] . ' ' . $pdo_error;
+                die(Render::html('error', [
+                    'error_title' => Installer::$lang['database'],
+                    'error_message' => Installer::$lang['error_db_unknown'] . ' ' . $pdo_error,
+                ]));
             }
         }
     }
@@ -113,7 +130,7 @@ if ($db_check && isset($_POST['install'])) {
         }
 
         // Заливаем базу данных
-        $sql = Installer::parseSql(__DIR__ . '/../sql/install.sql', $pdo);
+        $sql = Installer::parseSql(__DIR__ . '/../database/install.sql', $pdo);
 
         if (! empty($sql)) {
             foreach ($sql as $val) {
@@ -236,7 +253,7 @@ if ($db_check && isset($_POST['install'])) {
 
         // Установка ДЕМО данных
         if ($demo) {
-            $demo_data = Installer::parseSql(__DIR__ . '/../sql/demo.sql', $pdo);
+            $demo_data = Installer::parseSql(__DIR__ . '/../database/demo.sql', $pdo);
         }
 
         // Установка завершена

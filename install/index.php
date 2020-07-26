@@ -10,6 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Install\Checker;
+use Install\Router;
+
 const JOHNCMS = '9.2.0';
 
 session_name('SESID');
@@ -17,7 +20,7 @@ session_start();
 
 // Load files for install
 require __DIR__ . '/../system/vendor/autoload.php';
-require __DIR__ . '/includes/Parsedown.php';
+require __DIR__ . '/src/vendor/Parsedown.php';
 require __DIR__ . '/src/Checker.php';
 require __DIR__ . '/src/Render.php';
 require __DIR__ . '/src/Installer.php';
