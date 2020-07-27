@@ -41,6 +41,6 @@
     "lodash": "^4.17.11",
     "popper.js": "^1.15.0",
     "sticky-sidebar": "^3.3.1",
-    "swiper": "^5.2.1"
+    "swiper": "^6.0.4"
   }
 }
