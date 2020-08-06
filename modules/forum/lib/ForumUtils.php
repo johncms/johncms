@@ -53,6 +53,7 @@ class ForumUtils
      */
     public static function notFound(): void
     {
+        checkRedirect();
         $view = di(Render::class);
 
         if (! headers_sent()) {

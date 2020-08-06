@@ -44,6 +44,8 @@ function pageNotFound(
     string $title = 'ERROR: 404 Not Found',
     string $message = ''
 ): void {
+    checkRedirect();
+
     $engine = di(Render::class);
 
     if (! headers_sent()) {
@@ -134,4 +136,14 @@ function module_lib_loader($module_name, $dir = 'lib')
     $loader = new Loader();
     $loader->register();
     $loader->addPrefix(ucfirst($module_name), ROOT_PATH . 'modules/' . $module_name . '/' . $dir);
+}
+
+function checkRedirect()
+{
+    $redirects = require CONFIG_PATH . 'redirects.php';
+    if (array_key_exists($_SERVER['REQUEST_URI'], $redirects)) {
+        http_response_code(301);
+        header('Location: ' . $redirects[$_REQUEST['URI']]);
+        exit;
+    }
 }
