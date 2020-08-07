@@ -57,7 +57,7 @@ $online = [
 
 $view->addData(
     [
-        'keywords'    => '',
+        'keywords'    => $current_section->meta_keywords,
         'description' => $current_section->meta_description,
     ]
 );

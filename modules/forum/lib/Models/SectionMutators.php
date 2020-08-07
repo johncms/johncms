@@ -17,6 +17,7 @@ namespace Forum\Models;
  *
  * @package Forum\Models
  * @property string $meta_description
+ * @property string $meta_keywords
  */
 trait SectionMutators
 {
@@ -37,7 +38,7 @@ trait SectionMutators
     }
 
     /**
-     * Topic meta description
+     * Section meta description
      *
      * @return string
      */
@@ -45,6 +46,30 @@ trait SectionMutators
     {
         $config = di('config')['forum']['settings'];
         $template = $config['section_description'] ?? '';
+        return trim(
+            str_replace(
+                [
+                    '#name#',
+                    '#description#',
+                ],
+                [
+                    $this->name,
+                    strip_tags($this->description),
+                ],
+                $template
+            )
+        );
+    }
+
+    /**
+     * Section meta keywords
+     *
+     * @return string
+     */
+    public function getMetaKeywordsAttribute(): string
+    {
+        $config = di('config')['forum']['settings'];
+        $template = $config['section_keywords'] ?? '';
         return trim(
             str_replace(
                 [

@@ -24,6 +24,7 @@ use Johncms\Users\User;
  * @property Tools $tools
  *
  * @property string $meta_description
+ * @property string $meta_keywords
  */
 trait TopicMutators
 {
@@ -135,6 +136,18 @@ trait TopicMutators
     {
         $config = di('config')['forum']['settings'];
         $template = $config['topic_description'] ?? '';
+        return str_replace('#name#', $this->name, $template);
+    }
+
+    /**
+     * Topic meta keywords
+     *
+     * @return string
+     */
+    public function getMetaKeywordsAttribute(): string
+    {
+        $config = di('config')['forum']['settings'];
+        $template = $config['topic_keywords'] ?? '';
         return str_replace('#name#', $this->name, $template);
     }
 }
