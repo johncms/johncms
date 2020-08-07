@@ -208,7 +208,7 @@ msgstr ""
 #: modules/forum/includes/curators.php:31
 #: modules/forum/includes/deltema.php:37
 #: modules/forum/includes/say.php:612
-#: modules/forum/lib/ForumUtils.php:67
+#: modules/forum/lib/ForumUtils.php:68
 msgid "Topic has been deleted or does not exists"
 msgstr ""
 
@@ -281,7 +281,7 @@ msgstr ""
 #: modules/forum/includes/vote.php:51
 #: modules/forum/index.php:54
 #: modules/forum/index.php:101
-#: modules/forum/lib/ForumUtils.php:65
+#: modules/forum/lib/ForumUtils.php:66
 #: modules/forum/templates/files_list.phtml:154
 #: modules/forum/templates/forum_search.phtml:90
 #: modules/forum/templates/new_topics.phtml:121

@@ -212,6 +212,7 @@ msgstr ""
 #: modules/admin/includes/karma.php:76
 #: modules/admin/includes/news.php:57
 #: modules/admin/templates/access.phtml:31
+#: modules/admin/templates/forum/settings.phtml:14
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
 msgstr ""
@@ -224,6 +225,7 @@ msgstr ""
 #: modules/admin/includes/antispy.php:31
 #: modules/admin/includes/counters.php:31
 #: modules/admin/includes/forum/del.php:208
+#: modules/admin/includes/forum/settings.php:25
 #: modules/admin/includes/ipban.php:31
 #: modules/admin/includes/karma.php:33
 #: modules/admin/includes/languages.php:22
@@ -290,7 +292,7 @@ msgstr ""
 #: modules/admin/templates/counters_view.phtml:61
 #: modules/admin/templates/forum/hidden_posts.phtml:130
 #: modules/admin/templates/forum/hidden_topics.phtml:126
-#: modules/admin/templates/forum/index.phtml:43
+#: modules/admin/templates/forum/index.phtml:46
 #: modules/admin/templates/forum/structure.phtml:65
 #: modules/admin/templates/ipban.phtml:83
 #: modules/admin/templates/ipban_detail.phtml:59
@@ -451,7 +453,7 @@ msgid "Description should be at least 2 characters in length"
 msgstr ""
 
 #: modules/admin/includes/forum/cat.php:24
-#: modules/admin/templates/forum/index.phtml:38
+#: modules/admin/templates/forum/index.phtml:41
 msgid "Forum structure"
 msgstr ""
 
@@ -512,7 +514,7 @@ msgid "Please select a valid parent"
 msgstr ""
 
 #: modules/admin/includes/forum/hposts.php:23
-#: modules/admin/templates/forum/index.phtml:39
+#: modules/admin/templates/forum/index.phtml:42
 msgid "Hidden posts"
 msgstr ""
 
@@ -534,13 +536,18 @@ msgid "Access forbidden"
 msgstr ""
 
 #: modules/admin/includes/forum/htopics.php:23
-#: modules/admin/templates/forum/index.phtml:40
+#: modules/admin/templates/forum/index.phtml:43
 msgid "Hidden topics"
 msgstr ""
 
 #: modules/admin/includes/forum/htopics.php:40
 #: modules/admin/includes/forum/htopics.php:112
 msgid "by section"
+msgstr ""
+
+#: modules/admin/includes/forum/settings.php:32
+#: modules/admin/templates/forum/settings.phtml:7
+msgid "Forum Settings"
 msgstr ""
 
 #: modules/admin/includes/ipban.php:21
@@ -883,6 +890,7 @@ msgstr ""
 #: modules/admin/templates/antiflood.phtml:77
 #: modules/admin/templates/counters_add_confirm.phtml:63
 #: modules/admin/templates/forum/edit.phtml:93
+#: modules/admin/templates/forum/settings.phtml:58
 #: modules/admin/templates/ipban_add.phtml:75
 #: modules/admin/templates/karma.phtml:63
 #: modules/admin/templates/languages/index.phtml:28
@@ -1384,10 +1392,12 @@ msgid "Categories"
 msgstr ""
 
 #: modules/admin/templates/forum/index.phtml:30
+#: modules/admin/templates/forum/settings.phtml:35
 msgid "Sections"
 msgstr ""
 
 #: modules/admin/templates/forum/index.phtml:31
+#: modules/admin/templates/forum/settings.phtml:46
 msgid "Topics"
 msgstr ""
 
@@ -1404,7 +1414,54 @@ msgid "Votes"
 msgstr ""
 
 #: modules/admin/templates/forum/index.phtml:36
+#: modules/admin/templates/forum/index.phtml:39
 msgid "Settings"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:19
+msgid "Common settings"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:22
+msgid "Show file counters"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:26
+msgid "SEO settings"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:28
+msgid "Forum keywords"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:32
+msgid "Forum description"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:37
+msgid "Section keywords"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:39
+#: modules/admin/templates/forum/settings.phtml:44
+msgid "Macros available: #name#, #description#"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:42
+msgid "Section description"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:48
+msgid "Topic keywords"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:50
+#: modules/admin/templates/forum/settings.phtml:55
+msgid "Macros available: #name#"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:53
+msgid "Topic description"
 msgstr ""
 
 #: modules/admin/templates/forum/structure.phtml:47
