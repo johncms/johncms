@@ -45,6 +45,7 @@ $pages = [
     'cat',
     'htopics',
     'hposts',
+    'settings',
 ];
 
 if (($key = array_search($mod, $pages)) !== false) {

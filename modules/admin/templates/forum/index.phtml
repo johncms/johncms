@@ -35,6 +35,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 </ul>
 <h3><?= __('Settings') ?></h3>
 <ul>
+    <?php if ($user->rights >= 9): ?>
+        <li><a href="?act=forum&amp;mod=settings"><?= __('Settings') ?></a></li>
+    <?php endif; ?>
     <li><a href="?act=forum&amp;mod=cat"><b><?= __('Forum structure') ?></b></a></li>
     <li><a href="?act=forum&amp;mod=hposts"><?= __('Hidden posts') ?></a> (<?= $data['counters']['total_msg_del'] ?>)</li>
     <li><a href="?act=forum&amp;mod=htopics"><?= __('Hidden topics') ?></a> (<?= $data['counters']['total_thm_del'] ?>)</li>
