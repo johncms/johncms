@@ -16,8 +16,8 @@ namespace Forum\Models;
  * Trait SectionMutators
  *
  * @package Forum\Models
- * @property string $meta_description
- * @property string $meta_keywords
+ * @property string $calculated_meta_description
+ * @property string $calculated_meta_keywords
  */
 trait SectionMutators
 {
@@ -42,8 +42,12 @@ trait SectionMutators
      *
      * @return string
      */
-    public function getMetaDescriptionAttribute(): string
+    public function getCalculatedMetaDescriptionAttribute(): string
     {
+        if (! empty($this->meta_description)) {
+            return $this->meta_description;
+        }
+
         $config = di('config')['forum']['settings'];
         $template = $config['section_description'] ?? '';
         return trim(
@@ -66,8 +70,12 @@ trait SectionMutators
      *
      * @return string
      */
-    public function getMetaKeywordsAttribute(): string
+    public function getCalculatedMetaKeywordsAttribute(): string
     {
+        if (! empty($this->meta_keywords)) {
+            return $this->meta_keywords;
+        }
+
         $config = di('config')['forum']['settings'];
         $template = $config['section_keywords'] ?? '';
         return trim(

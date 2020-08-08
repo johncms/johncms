@@ -594,6 +594,8 @@ class Database
                 $table->integer('parent')->nullable()->index('parent');
                 $table->string('name');
                 $table->text('description');
+                $table->text('meta_description');
+                $table->string('meta_keywords')->nullable();
                 $table->integer('sort')->default('100');
                 $table->integer('access')->nullable();
                 $table->integer('section_type')->nullable();
@@ -607,6 +609,8 @@ class Database
                 $table->integer('section_id')->unsigned()->nullable();
                 $table->string('name');
                 $table->mediumText('description');
+                $table->text('meta_description');
+                $table->string('meta_keywords')->nullable();
                 $table->integer('view_count')->nullable();
                 $table->integer('user_id')->unsigned();
                 $table->string('user_name')->nullable();
@@ -684,19 +688,19 @@ class Database
         );
 
         $connection->statement(
-            "INSERT INTO `forum_sections` (`id`, `parent`, `name`, `description`, `sort`, `access`, `section_type`) VALUES
-(1, 0, 'Общение', 'Свободное общение на любую тему', 1, 0, 0),
-(2, 1, 'О разном', '', 1, 0, 1),
-(3, 1, 'Знакомства', '', 2, 0, 1),
-(4, 1, 'Жизнь ресурса', '', 3, 0, 1),
-(5, 1, 'Новости', '', 4, 0, 1),
-(6, 1, 'Предложения и пожелания', '', 5, 0, 1),
-(7, 1, 'Разное', '', 6, 0, 1);"
+            "INSERT INTO `forum_sections` (`id`, `parent`, `name`, `description`, `meta_description`, `meta_keywords`, `sort`, `access`, `section_type`) VALUES
+(1, 0, 'Общение', 'Свободное общение на любую тему', '', NULL, 1, 0, 0),
+(2, 1, 'О разном', '', '', NULL, 1, 0, 1),
+(3, 1, 'Знакомства', '', '', NULL, 2, 0, 1),
+(4, 1, 'Жизнь ресурса', '', '', NULL, 3, 0, 1),
+(5, 1, 'Новости', '', '', NULL, 4, 0, 1),
+(6, 1, 'Предложения и пожелания', '', '', NULL, 5, 0, 1),
+(7, 1, 'Разное', '', '', NULL, 6, 0, 1);"
         );
 
         $connection->statement(
-            "INSERT INTO `forum_topic` (`id`, `section_id`, `name`, `description`, `view_count`, `user_id`, `user_name`, `created_at`, `post_count`, `mod_post_count`, `last_post_date`, `last_post_author`, `last_post_author_name`, `last_message_id`, `mod_last_post_date`, `mod_last_post_author`, `mod_last_post_author_name`, `mod_last_message_id`, `closed`, `closed_by`, `deleted`, `deleted_by`, `curators`, `pinned`, `has_poll`) VALUES
-(1, 3, 'Привет всем!', '', 1, 1, 'admin', '2019-10-16 20:18:00', 1, 1, 1571257080, 1, 'admin', 1, 1571257080, 1, 'admin', 1, NULL, NULL, NULL, NULL, '', NULL, NULL);"
+            "INSERT INTO `forum_topic` (`id`, `section_id`, `name`, `description`, `meta_description`, `meta_keywords`, `view_count`, `user_id`, `user_name`, `created_at`, `post_count`, `mod_post_count`, `last_post_date`, `last_post_author`, `last_post_author_name`, `last_message_id`, `mod_last_post_date`, `mod_last_post_author`, `mod_last_post_author_name`, `mod_last_message_id`, `closed`, `closed_by`, `deleted`, `deleted_by`, `curators`, `pinned`, `has_poll`) VALUES
+(1, 3, 'Привет всем!', '', '', NULL, 1, 1, 'admin', '2019-10-16 20:18:00', 1, 1, 1571257080, 1, 'admin', 1, 1571257080, 1, 'admin', 1, NULL, NULL, NULL, NULL, '', NULL, NULL);"
         );
         $connection->statement(
             "INSERT INTO `forum_messages` (`id`, `topic_id`, `text`, `date`, `user_id`, `user_name`, `user_agent`, `ip`, `ip_via_proxy`, `pinned`, `editor_name`, `edit_time`, `edit_count`, `deleted`, `deleted_by`) VALUES

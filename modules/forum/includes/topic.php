@@ -217,8 +217,8 @@ $view->addData(
         'canonical'   => $canonical,
         'title'       => htmlspecialchars_decode($current_topic->name),
         'page_title'  => htmlspecialchars_decode($current_topic->name),
-        'keywords'    => $current_topic->meta_keywords,
-        'description' => $current_topic->meta_description,
+        'keywords'    => $current_topic->calculated_meta_keywords,
+        'description' => $current_topic->calculated_meta_description,
     ]
 );
 

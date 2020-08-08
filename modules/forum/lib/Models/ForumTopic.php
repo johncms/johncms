@@ -31,6 +31,8 @@ use Johncms\Users\User;
  * @property int $section_id
  * @property string $name
  * @property string $description
+ * @property string $meta_description
+ * @property string $meta_keywords
  * @property int $view_count
  * @property int $user_id
  * @property string $user_name
@@ -108,6 +110,8 @@ class ForumTopic extends Model
         'section_id',
         'name',
         'description',
+        'meta_description',
+        'meta_keywords',
         'view_count',
         'user_id',
         'user_name',
