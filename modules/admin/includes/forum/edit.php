@@ -10,6 +10,9 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumFile;
+use Forum\Models\ForumSection;
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
@@ -18,13 +21,16 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  * @var Johncms\NavChain $nav_chain
  * @var Johncms\System\Http\Request $request
+ * @var Johncms\System\View\Render $view
  */
 
 $title = __('Edit Section');
 $nav_chain->add($title);
 
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+
 // Редактирование выбранной категории, или раздела
-if (! $id) {
+if (empty($id)) {
     echo $view->render(
         'system::pages/result',
         [
@@ -41,19 +47,18 @@ if (! $id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
+module_lib_loader('forum');
 
-if ($req->rowCount()) {
-    $res = $req->fetch();
-
+$section = (new ForumSection())->find($id);
+if ($section) {
     if (isset($_POST['submit'])) {
         // Принимаем данные
-        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-        $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
-        $sort = isset($_POST['sort']) ? (int) ($_POST['sort']) : 100;
-        $section_type = isset($_POST['section_type']) ? (int) ($_POST['section_type']) : 0;
-        $category = isset($_POST['category']) ? (int) ($_POST['category']) : 0;
-        $allow = isset($_POST['allow']) ? (int) ($_POST['allow']) : 0;
+        $name = $request->getPost('name', '', FILTER_SANITIZE_STRING);
+        $desc = $request->getPost('desc', '', FILTER_SANITIZE_STRING);
+        $sort = $request->getPost('sort', 100, FILTER_VALIDATE_INT);
+        $section_type = $request->getPost('section_type', 0, FILTER_VALIDATE_INT);
+        $category = $request->getPost('category', 0, FILTER_VALIDATE_INT);
+        $allow = $request->getPost('allow', 0, FILTER_VALIDATE_INT);
 
         // проверяем на ошибки
         $error = [];
@@ -62,7 +67,7 @@ if ($req->rowCount()) {
             $error[] = __('You have not entered Title');
         }
 
-        if ($name && (mb_strlen($name) < 2 || mb_strlen($name) > 30)) {
+        if ($name && (mb_strlen($name) < 2 || mb_strlen($name) > 150)) {
             $error[] = __('Title') . ': ' . __('Invalid length');
         }
 
@@ -70,13 +75,13 @@ if ($req->rowCount()) {
             $error[] = __('Description should be at least 2 characters in length');
         }
 
-        $isChild = function ($parent, $id) use ($db, &$isChild) {
-            $res = $db->query("SELECT `id`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
-            if ($res != false) {
-                if ($res['id'] == $id) {
+        $isChild = static function ($parent, $id) use (&$isChild) {
+            $parent_section = (new ForumSection())->find($parent);
+            if ($parent_section) {
+                if ($parent_section->id === $id) {
                     return true;
                 }
-                return $isChild($res['parent'], $id);
+                return $isChild($parent_section->parent, $id);
             }
             return false;
         };
@@ -86,39 +91,31 @@ if ($req->rowCount()) {
         }
 
         if (! $error) {
-            // Записываем в базу
-            $db->prepare(
-                '
-                      UPDATE `forum_sections` SET
-                      `name` = ?,
-                      `description` = ?,
-                      `access` = ?,
-                      `sort` = ?,
-                      `section_type` = ?
-                      WHERE `id` = ?
-                    '
-            )->execute(
-                [
-                    $name,
-                    $desc,
-                    $allow,
-                    $sort,
-                    $section_type,
-                    $id,
-                ]
-            );
+            $fields = [
+                'name'         => $name,
+                'description'  => $desc,
+                'access'       => $allow,
+                'sort'         => $sort,
+                'section_type' => $section_type,
+            ];
 
-            if ($category != $res['parent']) {
+            if ($category !== $section->parent) {
                 // Вычисляем сортировку
-                $req_s = $db->query("SELECT `sort` FROM `forum_sections` WHERE `parent` = '${category}' ORDER BY `sort` DESC LIMIT 1");
-                $res_s = $req_s->fetch();
-                $sort = $res_s['sort'] + 1;
+                $new_parent = (new ForumSection())->where('parent', $category)->orderByDesc('sort')->first();
+                $sort = $new_parent->sort + 1;
                 // Меняем категорию
-                $db->exec("UPDATE `forum_sections` SET `parent` = '${category}', `sort` = '${sort}' WHERE `id` = '${id}'");
+                $fields['parent'] = $category;
+                $fields['sort'] = $sort;
                 // Меняем категорию для прикрепленных файлов
-                $db->exec("UPDATE `cms_forum_files` SET `cat` = '${category}' WHERE `cat` = '" . $res['parent'] . "'");
+                (new ForumFile())
+                    ->where('cat', $section->parent)
+                    ->where('subcat', $section->id)
+                    ->update(['cat' => $category]);
             }
-            header('Location: ?mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
+
+            // Записываем в базу
+            $section->update($fields);
+            header('Location: ?mod=cat' . (! empty($section->parent) ? '&id=' . $section->parent : ''));
         } else {
             // Выводим сообщение об ошибках
             echo $view->render(
@@ -141,7 +138,7 @@ if ($req->rowCount()) {
             [
                 'id'       => 0,
                 'name'     => ' - ',
-                'selected' => empty($res['parent']),
+                'selected' => empty($section->parent),
             ],
         ];
         $tree = [];
@@ -150,22 +147,23 @@ if ($req->rowCount()) {
             $categories[] = [
                 'id'       => $item['id'],
                 'name'     => $item['name'],
-                'selected' => $item['id'] === $res['parent'],
+                'selected' => $item['id'] === $section->parent,
             ];
         }
         $data['categories'] = $categories;
-        $res['name'] = htmlspecialchars($res['name']);
-        $res['sort'] = (int) $res['sort'];
-        $res['description'] = htmlspecialchars($res['description']);
-        $res['access'] = ! empty($res['access']) ? (int) ($res['access']) : 0;
-        $res['section_type'] = ! empty($res['section_type']) ? (int) ($res['section_type']) : 0;
 
-        $data['item'] = $res;
+        $item = [];
+        $item['name'] = htmlspecialchars($section->name);
+        $item['sort'] = $section->sort;
+        $item['description'] = htmlspecialchars($section->description);
+        $item['access'] = ! empty($section->access) ? $section->access : 0;
+        $item['section_type'] = ! empty($section->section_type) ? $section->section_type : 0;
+        $data['item'] = $item;
 
         $data['id'] = $id;
         $data['parent_section_name'] = $cat_name ?? '';
         $data['form_action'] = '?mod=edit&amp;id=' . $id;
-        $data['back_url'] = '?mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '');
+        $data['back_url'] = '?mod=cat' . (! empty($section->parent) ? '&amp;id=' . $section->parent : '');
         echo $view->render(
             'admin::forum/edit',
             [

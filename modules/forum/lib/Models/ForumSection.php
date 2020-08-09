@@ -54,10 +54,23 @@ class ForumSection extends Model
      */
     protected $table = 'forum_sections';
 
+    public $timestamps = false;
+
     protected $casts = [
         'sort'         => 'integer',
         'access'       => 'integer',
         'section_type' => 'integer',
+    ];
+
+    protected $fillable = [
+        'parent',
+        'name',
+        'description',
+        'meta_description',
+        'meta_keywords',
+        'sort',
+        'access',
+        'section_type',
     ];
 
     protected $appends = ['url'];
