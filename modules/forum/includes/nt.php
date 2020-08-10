@@ -26,6 +26,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var array $config
  * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\View\Render $view
+ * @var Johncms\NavChain $nav_chain
  */
 
 /** @var User $user */
@@ -93,7 +95,11 @@ $data = [
     'csrf_token' => $request->getPost('csrf_token', ''),
     'add_files'  => (int) $request->getPost('addfiles', 0),
 ];
-$data = array_map('trim', $data);
+
+if ($user->rights > 0) {
+    $data['meta_keywords'] = $request->getPost('meta_keywords', null, FILTER_SANITIZE_STRING);
+    $data['meta_description'] = $request->getPost('meta_description', null, FILTER_SANITIZE_STRING);
+}
 
 $errors = [];
 if ($request->getPost('submit', null)) {
@@ -128,14 +134,16 @@ if ($request->getPost('submit', null)) {
     if ($validator->isValid()) {
         $topic = (new ForumTopic())->create(
             [
-                'section_id'     => $current_section->id,
-                'created_at'     => Carbon::now(),
-                'user_id'        => $user->id,
-                'user_name'      => $user->name,
-                'name'           => $data['name'],
-                'last_post_date' => time(),
-                'post_count'     => 0,
-                'curators'       => $current_section->access === 1 ? [$user->id => $user->name] : [],
+                'section_id'       => $current_section->id,
+                'created_at'       => Carbon::now(),
+                'user_id'          => $user->id,
+                'user_name'        => $user->name,
+                'name'             => $data['name'],
+                'meta_keywords'    => $data['meta_keywords'] ?? null,
+                'meta_description' => $data['meta_description'] ?? null,
+                'last_post_date'   => time(),
+                'post_count'       => 0,
+                'curators'         => $current_section->access === 1 ? [$user->id => $user->name] : [],
             ]
         );
 
@@ -212,5 +220,6 @@ echo $view->render(
         'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $request->getPost('submit', null),
         'preview_message'   => $msg_pre,
         'errors'            => $errors,
+        'data'              => $data,
     ]
 );

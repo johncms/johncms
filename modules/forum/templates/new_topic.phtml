@@ -16,6 +16,7 @@
  * @var $back_url
  * @var $th
  * @var $msg
+ * @var $data
  * @var \Johncms\Users\User $user
  */
 
@@ -82,6 +83,16 @@ $this->layout('system::layout/default');
             <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
         <?php endif ?>
     </div>
+    <?php if ($user->rights > 0): ?>
+        <div class="form-group">
+            <label for="meta_description"><?= __('Meta description') ?></label>
+            <textarea name="meta_description" class="form-control" id="meta_description" rows="1"><?= $data['meta_description'] ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="meta_keywords"><?= __('Meta keywords') ?></label>
+            <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="1"><?= $data['meta_keywords'] ?></textarea>
+        </div>
+    <?php endif; ?>
     <div class="custom-control custom-checkbox mb-3">
         <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles" <?= $add_files ? 'checked' : '' ?>>
         <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>
