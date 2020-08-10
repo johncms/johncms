@@ -14,7 +14,7 @@ $schema = Capsule::Schema();
 $schema->table(
     'forum_sections',
     static function (Blueprint $table) {
-        $table->text('meta_description')->after('description');
+        $table->text('meta_description')->nullable()->after('description');
         $table->string('meta_keywords')->nullable()->after('meta_description');
     }
 );
@@ -22,7 +22,7 @@ $schema->table(
 $schema->table(
     'forum_topic',
     static function (Blueprint $table) {
-        $table->text('meta_description')->after('description');
+        $table->text('meta_description')->nullable()->after('description');
         $table->string('meta_keywords')->nullable()->after('meta_description');
     }
 );

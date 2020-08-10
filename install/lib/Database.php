@@ -593,8 +593,8 @@ class Database
                 $table->increments('id');
                 $table->integer('parent')->nullable()->index('parent');
                 $table->string('name');
-                $table->text('description');
-                $table->text('meta_description');
+                $table->text('description')->nullable();
+                $table->text('meta_description')->nullable();
                 $table->string('meta_keywords')->nullable();
                 $table->integer('sort')->default('100');
                 $table->integer('access')->nullable();
@@ -608,8 +608,8 @@ class Database
                 $table->increments('id');
                 $table->integer('section_id')->unsigned()->nullable();
                 $table->string('name');
-                $table->mediumText('description');
-                $table->text('meta_description');
+                $table->text('description')->nullable();
+                $table->text('meta_description')->nullable();
                 $table->string('meta_keywords')->nullable();
                 $table->integer('view_count')->nullable();
                 $table->integer('user_id')->unsigned();
@@ -629,7 +629,7 @@ class Database
                 $table->string('closed_by')->nullable();
                 $table->boolean('deleted')->nullable()->index('deleted');
                 $table->string('deleted_by')->nullable();
-                $table->mediumText('curators');
+                $table->mediumText('curators')->nullable();
                 $table->boolean('pinned')->nullable();
                 $table->boolean('has_poll')->nullable();
             }
