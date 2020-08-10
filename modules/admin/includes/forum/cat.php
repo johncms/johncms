@@ -32,7 +32,7 @@ if ($id) {
     $current_section = (new ForumSection())->findOrFail($id);
     $nav_chain->add($current_section->name, '?mod=cat' . (! empty($current_section->parent) ? '&amp;id=' . $current_section->parent : ''));
     $title = __('List of sections');
-    $subsections = $current_section->subsections()->withCount('subsections')->get();
+    $subsections = $current_section->subsections()->orderBy('sort')->withCount('subsections')->get();
     if ($subsections->count() > 0) {
         $items = [];
         foreach ($subsections as $subsection) {
