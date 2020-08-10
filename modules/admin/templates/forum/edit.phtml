@@ -55,6 +55,15 @@ $errors = $data['errors'];
         <div class="small text-muted"><?= __('Optional field') ?><br><?= __('Min. 2, Max. 500 characters') ?></div>
     </div>
 
+    <div class="form-group">
+        <label for="meta_description"><?= __('Meta description') ?></label>
+        <textarea name="meta_description" class="form-control" id="meta_description" rows="2"><?= $this->e($data['item']['meta_description']) ?></textarea>
+    </div>
+    <div class="form-group">
+        <label for="meta_keywords"><?= __('Meta keywords') ?></label>
+        <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="2"><?= $this->e($data['item']['meta_keywords']) ?></textarea>
+    </div>
+
     <h3><?= __('Common access') ?></h3>
     <div class="custom-control custom-radio">
         <input type="radio" id="access0" name="access" value="0" class="custom-control-input" <?= $data['item']['access'] === 0 ? ' checked="checked"' : '' ?>>

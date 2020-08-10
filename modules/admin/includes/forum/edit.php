@@ -60,6 +60,9 @@ if ($section) {
         'parent'       => $request->getPost('parent', $section->parent ?? 0, FILTER_VALIDATE_INT),
         'access'       => $request->getPost('access', $section->access ?? 0, FILTER_VALIDATE_INT),
         'csrf_token'   => $request->getPost('csrf_token'),
+
+        'meta_description' => $request->getPost('meta_description', $section->meta_description ?? '', FILTER_SANITIZE_STRING),
+        'meta_keywords'    => $request->getPost('meta_keywords', $section->meta_keywords ?? '', FILTER_SANITIZE_STRING),
     ];
 
     if ($request->getMethod() === 'POST') {
