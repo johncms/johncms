@@ -13,11 +13,9 @@ declare(strict_types=1);
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
-use Psr\Container\ContainerInterface;
 
 require 'system/bootstrap.php';
 
-/** @var ContainerInterface $container */
 $container = Johncms\System\Container\Factory::getContainer();
 $dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
 

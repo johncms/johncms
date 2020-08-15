@@ -83,7 +83,6 @@ if ($req->rowCount()) {
                 header('Location: http://johncms.com');
             }
             exit;
-            break;
         case 3:
             //TODO: реализовать запрет регистрации
             //self::$deny_registration = true;
