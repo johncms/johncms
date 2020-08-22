@@ -11,6 +11,8 @@
 /**
  * @var $title
  * @var $page_title
+ * @var $csrf_token
+ * @var $form_data
  * @var Forum\Models\ForumTopic $topic
  * @var $back_url
  */
@@ -18,11 +20,26 @@
 $this->layout('system::layout/default');
 ?>
 
-<form name="rename_topic" action="/forum/?act=ren&amp;id=<?= $topic->id ?>" method="post">
+<form name="rename_topic" action="/forum/?act=change_topic&amp;id=<?= $topic->id ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
+    <?php if (! empty($errors['csrf_token'])): ?>
+        <div class="alert alert-danger"><?= implode(', ', $errors['csrf_token']) ?></div>
+    <?php endif ?>
     <div class="form-group">
-        <label for="nn"><?= __('Topic name') ?></label>
-        <input type="text" class="form-control" id="nn" placeholder="<?= __('Topic name') ?>"
-               name="nn" value="<?= $topic->name ?>" required>
+        <label for="name"><?= __('Topic name') ?></label>
+        <input type="text" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="name" placeholder="<?= __('Topic name') ?>"
+               name="name" value="<?= $form_data['name'] ?>" required>
+        <?php if (! empty($errors['name'])): ?>
+            <div class="invalid-feedback d-block"><?= implode(', ', $errors['name']) ?></div>
+        <?php endif ?>
+    </div>
+    <div class="form-group">
+        <label for="meta_description"><?= __('Meta description') ?></label>
+        <textarea name="meta_description" class="form-control" id="meta_description" rows="1"><?= $form_data['meta_description'] ?></textarea>
+    </div>
+    <div class="form-group">
+        <label for="meta_keywords"><?= __('Meta keywords') ?></label>
+        <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="1"><?= $form_data['meta_keywords'] ?></textarea>
     </div>
     <div>
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>

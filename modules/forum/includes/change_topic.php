@@ -10,8 +10,11 @@
 
 declare(strict_types=1);
 
+use Forum\ForumUtils;
 use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\System\Http\Request;
+use Johncms\Validator\Validator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -21,18 +24,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\View\Render $view
  */
 
+/** @var Request $request */
+$request = di(Request::class);
+
+$id = $request->getQuery('id', null, FILTER_VALIDATE_INT);
+
 if ($user->rights !== 3 && $user->rights < 6) {
-    http_response_code(403);
-    echo $view->render(
-        'system::pages/result',
-        [
-            'title'         => __('Access forbidden'),
-            'type'          => 'alert-danger',
-            'message'       => __('Access forbidden'),
-            'back_url'      => '/forum/',
-            'back_url_name' => __('Back'),
-        ]
-    );
+    ForumUtils::notFound();
 }
 
 $view->addData(['title' => __('Change the topic'), 'page_title' => __('Change the topic')]);
@@ -52,48 +50,45 @@ try {
     exit;
 }
 
-if (isset($_POST['submit'])) {
-    $nn = isset($_POST['nn']) ? trim($_POST['nn']) : '';
+$form_data = [
+    'name'             => $request->getPost('name', $current_topic->name, FILTER_SANITIZE_STRING),
+    'meta_keywords'    => $request->getPost('meta_keywords', $current_topic->meta_keywords, FILTER_SANITIZE_STRING),
+    'meta_description' => $request->getPost('meta_description', $current_topic->meta_description, FILTER_SANITIZE_STRING),
+    'csrf_token'       => $request->getPost('csrf_token', ''),
+];
 
-    if (! $nn) {
-        echo $view->render(
-            'system::pages/result',
-            [
-                'type'          => 'alert-danger',
-                'message'       => __('You have not entered topic name'),
-                'back_url'      => '/forum/?act=ren&amp;id=' . $id,
-                'back_url_name' => __('Repeat'),
-            ]
-        );
+if ($request->getMethod() === 'POST') {
+    $rules = [
+        'name'       => [
+            'NotEmpty',
+            'StringLength'   => ['min' => 3, 'max' => 200],
+            'ModelNotExists' => [
+                'model'   => ForumTopic::class,
+                'field'   => 'name',
+                'exclude' => static function ($query) use ($current_topic, $id) {
+                    $query->where('section_id', $current_topic->section_id)->where('id', '!=', $id);
+                },
+            ],
+        ],
+        'csrf_token' => ['Csrf'],
+    ];
+
+    $validator = new Validator($form_data, $rules);
+    if ($validator->isValid()) {
+        $current_topic->update($form_data);
+        header("Location: ?type=topic&id=${id}");
         exit;
     }
-
-    // Проверяем, есть ли тема с таким же названием?
-    $check_topic = (new ForumTopic())->where('section_id', $current_topic->section_id)->where('name', $nn)->first();
-    if ($check_topic) {
-        echo $view->render(
-            'system::pages/result',
-            [
-                'type'          => 'alert-danger',
-                'message'       => __('Topic with same name already exists in this section'),
-                'back_url'      => '/forum/?act=ren&amp;id=' . $id,
-                'back_url_name' => __('Repeat'),
-            ]
-        );
-        exit;
-    }
-
-    $current_topic->update(['name' => $nn]);
-
-    header("Location: ?type=topic&id=${id}");
-    exit;
+    $errors = $validator->getErrors();
 }
 
 echo $view->render(
     'forum::change_topic',
     [
-        'id'       => $id,
-        'topic'    => $current_topic,
-        'back_url' => '?type=topic&id=' . $id,
+        'id'        => $id,
+        'topic'     => $current_topic,
+        'form_data' => $form_data,
+        'back_url'  => '?type=topic&id=' . $id,
+        'errors'    => $errors ?? [],
     ]
 );
