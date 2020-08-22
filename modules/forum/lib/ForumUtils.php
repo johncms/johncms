@@ -92,7 +92,7 @@ class ForumUtils
                 $request = di(Request::class);
                 $host = $request->getServer('HTTP_HOST', '');
 
-                parse_str($parsed_url['query'], $query_params);
+                parse_str($parsed_url['query'] ?? '', $query_params);
 
                 if ($parsed_url['host'] === $host && ! empty($query_params['id']) && ! empty($query_params['type']) && $query_params['type'] === 'topic') {
                     try {
