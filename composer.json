@@ -39,7 +39,7 @@
         "aura/autoload": "^2.0",
         "gettext/translator": "^1.0",
         "guzzlehttp/psr7": "^1.6",
-        "illuminate/database": "^7.11",
+        "illuminate/database": "^8.1",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.2",
