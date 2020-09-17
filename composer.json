@@ -37,6 +37,7 @@
         "ext-simplexml": "*",
         "ext-zip": "*",
         "aura/autoload": "^2.0",
+        "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",
         "guzzlehttp/psr7": "^1.6",
         "illuminate/database": "^7.11",
