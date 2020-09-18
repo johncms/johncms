@@ -21,6 +21,7 @@ mix.js('themes/default/src/js/app.js', 'themes/default/assets/js')
         });
 
 mix.sourceMaps(true, 'source-map');
+mix.extract();
 
 // Если не нужен сервер статики, закомментировать...
 /*
