@@ -148,7 +148,7 @@ class Comments extends AbstractAction
                         'ip'           => $env->getIp(false),
                         'ip_via_proxy' => $env->getIpViaProxy(false),
                     ],
-                    'created_at' => Carbon::now()->toIso8601String(),
+                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]
             );
 

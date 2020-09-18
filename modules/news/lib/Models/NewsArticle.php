@@ -2,6 +2,7 @@
 
 namespace News\Models;
 
+use Johncms\Casts\FormattedDate;
 use News\Utils\Helpers;
 use News\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Johncms\Casts\DateHuman;
 use Johncms\Casts\SpecialChars;
 use Johncms\System\Users\User;
 
@@ -75,8 +75,8 @@ class NewsArticle extends Model
         'keywords'    => SpecialChars::class,
         'description' => SpecialChars::class,
         'tags'        => SpecialChars::class,
-        'created_at'  => DateHuman::class,
-        'updated_at'  => DateHuman::class,
+        'created_at'  => FormattedDate::class,
+        'updated_at'  => FormattedDate::class,
     ];
 
     private $rating_cache;
