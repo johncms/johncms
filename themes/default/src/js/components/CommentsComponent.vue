@@ -2,7 +2,7 @@
     <div class="mt-4">
         <h3 class="font-weight-bold">{{__('comments')}} <span class="text-success" v-if="messages.total > 0">{{messages.total}}</span></h3>
         <div v-if="messages.data && messages.data.length < 1" class="alert alert-info">{{__('empty_list')}}</div>
-        <div class="blog-comment" v-for="message in messages.data">
+        <div class="new_post-item" v-for="message in messages.data">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <a :href="message.user.profile_url" v-if="message.user.profile_url">
@@ -157,7 +157,7 @@
             quote(message)
             {
                 let text = message.text.replace(/(<([^>]+)>)/ig, "");
-                this.comment_text = '[quote][b]' + message.user.user_name + "[/b] " + message.created_at + message.id + "\n" + text + "[/quote]";
+                this.comment_text = '[quote][b]' + message.user.user_name + "[/b] " + message.created_at + "\n" + text + "[/quote]";
                 $('#comment_text').focus();
             },
             sendComment()
