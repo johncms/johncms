@@ -28,6 +28,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                            // Personal Messages
     $map->addRoute(['GET', 'POST'], '/news/admin[/[{action}[/]]]', 'modules/news/admin.php');
     $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}[/[{article:[\w.+-]+}.html]]]', 'modules/news/index.php');
+    $map->addRoute(['GET', 'POST'], '/news/{article:[\w.+-]+}.html', 'modules/news/index.php');
     $map->addRoute(['GET', 'POST'], '/online/[{action}/]', 'modules/online/index.php');               // Online site activity
     $map->addRoute(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php');                   // Restore Password
     $map->addRoute(['GET', 'POST'], '/profile[/]', 'modules/profile/index.php');                      // User Profile
