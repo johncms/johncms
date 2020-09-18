@@ -46,6 +46,11 @@ $connection->statement('ALTER TABLE library_tags ENGINE = InnoDB');
 $connection->statement('ALTER TABLE library_texts ENGINE = InnoDB');
 $connection->statement('ALTER TABLE news ENGINE = InnoDB');
 
+$connection->statement('ALTER TABLE `users` DROP INDEX `place`');
+$connection->statement('ALTER TABLE `users` CHANGE `place` `place` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;');
+$connection->statement('ALTER TABLE `cms_sessions` DROP INDEX `place`');
+$connection->statement('ALTER TABLE `cms_sessions` CHANGE `place` `place` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;');
+
 $schema->table(
     'forum_sections',
     static function (Blueprint $table) use ($schema) {
