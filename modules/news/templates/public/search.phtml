@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @var $user
+ * @var $query
+ * @var $articles Illuminate\Contracts\Pagination\LengthAwarePaginator
+ */
+
+$this->layout('system::layout/default');
+?>
+<div>
+    <form action="/news/" method="get" class="mb-3" style="max-width: 300px;">
+        <input type="hidden" name="action" value="search">
+        <label for="query"><?= __('Search query') ?></label>
+        <div class="input-group">
+            <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>" value="<?= $query ?>">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-12 col-xl-9">
+        <?php if ($articles !== null && $articles->count() > 0): ?>
+            <?php foreach ($articles as $article): ?>
+                <?php /** @var $article \News\Models\NewsArticle */ ?>
+                <div class="card border-0 mb-2 shadow">
+                    <div class="card-body">
+                        <h3 class="card-title mb-0"><a href="<?= $article->url ?>"><?= $article->name ?></a></h3>
+                        <?php if ($article->preview_text_safe): ?>
+                            <p class="card-text mt-2"><?= $article->preview_text_safe ?></p>
+                        <?php endif ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <div class="mt-3">
+                <?= $articles->render() ?>
+            </div>
+        <?php else: ?>
+            <div class="alert alert-info"><?= __('The search didn\'t yield any results.') ?></div>
+        <?php endif; ?>
+    </div>
+</div>

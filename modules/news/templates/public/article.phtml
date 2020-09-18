@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @var \News\Models\NewsArticle $article
+ * @var \News\Models\NewsSection $current_section
+ */
+
+$this->layout('system::layout/default');
+
+$tags = [];
+if (! empty($article->tags)) {
+    foreach ($article->tags as $k => $tag) {
+        $tags[] = '<a href="/news/?action=search_by_tag&tag=' . urlencode($tag) . '">' . $tag . '</a>';
+    }
+}
+
+?>
+<div id="blog">
+    <div class="p-no-margin overflow-hidden" style="max-width: 900px;">
+        <?= $article->text_safe ?>
+    </div>
+    <?php if (! empty($tags)): ?>
+        <div class="mt-3"><?= __('Tags:') ?> <?= implode(', ', $tags) ?></div>
+    <?php endif; ?>
+
+    <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
+        <div class="d-flex align-items-center mr-4">
+            <div class="d-flex align-items-center mr-2"><?= __('Rating:') ?></div>
+            <article-likes
+                :article_id="<?= $article->id ?>"
+                :rating="<?= $article->rating ?>"
+                :can_vote="<?= $user->isValid() ? 'true' : 'false' ?>"
+                :voted="<?= $article->current_vote ?>"
+            ></article-likes>
+        </div>
+        <?php if ($article->view_count): ?>
+            <div class="d-flex justify-content-end">
+                <div class="text-muted forum-view-counter">
+                    <svg class="icon download-button-icon mt-n1 mr-1">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"></use>
+                    </svg>
+                    <?= $article->view_count ?>
+                </div>
+            </div>
+        <?php endif ?>
+    </div>
+    <?php
+    $messages = [
+        'write_comment' => __('Write a comment'),
+        'send'          => __('Send'),
+        'delete'        => __('Delete'),
+        'quote'         => __('Quote'),
+        'reply'         => __('Reply'),
+        'comments'      => __('Comments'),
+        'empty_list'    => __('The list is empty'),
+    ];
+    ?>
+    <blog-comments
+        :article_id="<?= $article->id ?>"
+        :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"
+        :i18n='<?= json_encode($messages) ?>'
+    ></blog-comments>
+
+    <?php if (! $user->isValid()): ?>
+        <div class="d-flex">
+            <div class="alert alert-warning">
+                <?= __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="mt-3">
+        <a href="<?= $current_section->url ?>"><?= __('Back') ?></a>
+    </div>
+</div>

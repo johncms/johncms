@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $current_section
+ * @var $user
+ * @var $articles Illuminate\Contracts\Pagination\LengthAwarePaginator
+ * @var $sections \News\Models\NewsSection
+ */
+
+$this->layout('system::layout/default');
+?>
+<?php if ($user->rights >= 9): ?>
+    <div class="mb-3 mt-n1">
+        <a href="/news/admin/" class="btn btn-outline-danger btn-sm"><?= __('Admin panel') ?></a>
+    </div>
+<?php endif ?>
+
+<div class="mb-3">
+    <form action="/news/" method="get" class="mb-3">
+        <input type="hidden" name="action" value="search">
+        <div class="input-group">
+            <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
+            </div>
+        </div>
+    </form>
+    <?php if ($sections->count() > 0): ?>
+        <nav class="nav">
+            <?php foreach ($sections as $section): ?>
+                <?php /** @var $section \News\Models\NewsSection */ ?>
+                <a class="nav-link pl-0" href="<?= $section->url ?>"><?= $section->name ?></a>
+            <?php endforeach; ?>
+        </nav>
+    <?php endif; ?>
+</div>
+
+<div>
+    <?php if ($articles->count() > 0): ?>
+        <?php foreach ($articles as $article): ?>
+            <?php /** @var $article \News\Models\NewsArticle */ ?>
+            <div class="new_post-item without_avatar">
+                <a href="<?= $article->url ?>" class="post-title"><?= $article->name ?></a>
+                <?php if ($article->preview_text_safe): ?>
+                    <div class="post-body pt-2"><?= $article->preview_text_safe ?></div>
+                <?php endif ?>
+                <div class="d-flex">
+                    <div class="text-muted forum-view-counter">
+                        <svg class="icon download-button-icon mt-n1 mr-1">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
+                        </svg>
+                        <?php if ($article->rating > 0): ?>
+                            <span class="text-success font-weight-bold"><?= $article->rating ?></span>
+                        <?php elseif ($article->rating < 0): ?>
+                            <span class="text-danger font-weight-bold"><?= $article->rating ?></span>
+                        <?php else: ?>
+                            <span class="font-weight-bold"><?= $article->rating ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="text-muted forum-view-counter ml-3">
+                        <svg class="icon download-button-icon mt-n1 mr-1">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"/>
+                        </svg>
+                        <?= (int) $article->view_count ?>
+                    </div>
+                    <div class="text-muted forum-view-counter ml-3">
+                        <svg class="icon download-button-icon mr-1">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                        </svg>
+                        <?= $article->comments_count ?>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <div class="mt-3">
+            <?= $articles->render() ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info"><?= __('The list is empty') ?></div>
+    <?php endif; ?>
+</div>

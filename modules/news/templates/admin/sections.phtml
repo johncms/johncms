@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+
+/** @var \News\Models\NewsSection $sections */
+$sections = $data['sections'];
+
+/** @var \Illuminate\Pagination\LengthAwarePaginator $articles */
+$articles = $data['articles'];
+
+?>
+<?php if (! empty($data['messages'])): ?>
+    <div>
+        <?= $this->fetch(
+            'system::app/alert',
+            [
+                'alert_type' => 'alert-success',
+                'alert'      => $data['messages'],
+            ]
+        ) ?>
+    </div>
+<?php endif ?>
+
+<div class="mb-3">
+    <a href="/news/admin/add_article/?section_id=<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add article') ?></a>
+    <a href="/news/admin/add_section/?section_id=<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
+</div>
+
+<table class="table table-bordered bg-white">
+    <thead>
+    <tr>
+        <th style="width: 58px;" class="border-right-0"></th>
+        <th class="border-left-0">#</th>
+        <th><?= __('Name') ?></th>
+        <th><?= __('Code') ?></th>
+        <th><?= __('Type') ?></th>
+        <th style="width: 170px;"><?= __('Created at') ?></th>
+        <th style="width: 170px;"><?= __('Updated at') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($sections->count() > 0 || $articles->count() > 0): ?>
+        <?php foreach ($sections as $section): ?>
+            <!-- List of sections -->
+            <?php /** @var \News\Models\NewsSection $section */ ?>
+            <tr>
+                <th scope="row" style="width: 58px;" class="border-right-0">
+                    <div class="dropdown">
+                        <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="menu-icon">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#menu"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/news/admin/edit_section/?section_id=<?= $section->id ?>"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" data-url="/news/admin/del_section/?id=<?= $section->id ?>" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="row" class="border-left-0">
+                    <a href="/news/admin/content/?section_id=<?= $section->id ?>"><?= $section->id ?></a>
+                </th>
+                <td><a href="/news/admin/content/?section_id=<?= $section->id ?>"><?= $section->name ?></a></td>
+                <td><a href="/news/admin/content/?section_id=<?= $section->id ?>"><?= $section->code ?></a></td>
+                <td><?= __('Section') ?></td>
+                <td><?= $section->created_at ?></td>
+                <td><?= $section->updated_at ?></td>
+            </tr>
+        <?php endforeach; ?>
+        <?php foreach ($articles as $article): ?>
+            <!-- List of articles -->
+            <?php /** @var \News\Models\NewsArticle $article */ ?>
+            <tr>
+                <th scope="row" style="width: 58px;" class="border-right-0">
+                    <div class="dropdown">
+                        <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="menu-icon">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#menu"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" data-url="/news/admin/del_article/?id=<?= $article->id ?>" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="row" class="border-left-0"><a href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->id ?></a></th>
+                <td><a href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->name ?></a></td>
+                <td><a href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->code ?></a></td>
+                <td><?= __('Article') ?></td>
+                <td><?= $article->created_at ?></td>
+                <td><?= $article->updated_at ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7" class="text-center font-weight-bold"><?= __('The list is empty') ?></td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
+<?= $articles->render() ?>

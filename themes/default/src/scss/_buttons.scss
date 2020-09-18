@@ -25,3 +25,17 @@
 .btn__transparent {
     background: transparent;
 }
+
+.btn {
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    &.liked {
+        color: #036a0c;
+    }
+
+    &.disliked {
+        color: #ff0000;
+    }
+}
