@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Casts\SpecialChars;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 /**
  * @mixin Builder
@@ -36,6 +36,7 @@ use Johncms\System\Users\User;
  *
  * Computed properties
  * @property NewsSection $parentSection - Родительский раздел
+ * @property User $author - Author
  * @property NewsVote $votes - Votes for the article
  * @property $url - URL адрес страницы просмотра статьи
  * @property $meta_title
@@ -96,6 +97,11 @@ class NewsArticle extends Model
     public function parentSection(): HasOne
     {
         return $this->hasOne(NewsSection::class, 'id', 'section_id');
+    }
+
+    public function author(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
     }
 
     /**

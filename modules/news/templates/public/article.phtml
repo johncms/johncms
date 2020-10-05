@@ -19,8 +19,9 @@ if (! empty($article->tags)) {
     <div class="p-no-margin overflow-hidden">
         <?= $article->text_safe ?>
     </div>
+    <div class="mt-3"><?= __('Author:') ?> <a href="<?= $article->author->profile_url ?>" rel="nofollow"><?= $article->author->name ?></a></div>
     <?php if (! empty($tags)): ?>
-        <div class="mt-3"><?= __('Tags:') ?> <?= implode(', ', $tags) ?></div>
+        <div class="mt-1"><?= __('Tags:') ?> <?= implode(', ', $tags) ?></div>
     <?php endif; ?>
 
     <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
