@@ -82,6 +82,7 @@
       'Total' => 'المجموع',
       'The list is empty' => 'القائمة فارغة',
       'Edited:' => 'تحرير:',
+      'Edited' => 'محررة',
       'Edit' => 'تحرير',
       'Delete' => 'حذف',
       'Do you really want to delete?' => 'هل ترغب بالحذف ؟',

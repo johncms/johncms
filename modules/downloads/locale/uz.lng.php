@@ -82,6 +82,7 @@
       'Total' => 'Jami',
       'The list is empty' => 'Ro\'yhat bo\'sh',
       'Edited:' => 'Tahrirlangan',
+      'Edited' => 'Tahrirlangan',
       'Edit' => 'Tahrirlash',
       'Delete' => 'O\'chirish',
       'Do you really want to delete?' => 'Rostdan ham o‘chirmoqchimisiz?',
