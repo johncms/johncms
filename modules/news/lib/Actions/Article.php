@@ -104,6 +104,7 @@ class Article extends AbstractAction
             'back_url'   => '/news/admin/content/?section_id=' . $section_id,
             'section_id' => $section_id,
             'fields'     => [
+                'active'       => (int) $this->request->getPost('active', 1),
                 'section_id'   => $section_id,
                 'name'         => $this->request->getPost('name', '', FILTER_SANITIZE_STRING),
                 'page_title'   => $this->request->getPost('page_title', '', FILTER_SANITIZE_STRING),
@@ -193,6 +194,7 @@ class Article extends AbstractAction
             'back_url'   => '/news/admin/content/?section_id=' . $article->section_id,
             'article_id' => $article_id,
             'fields'     => [
+                'active'       => (int) $this->request->getPost('active', $article->active),
                 'name'         => $this->request->getPost('name', $article->name, FILTER_SANITIZE_STRING),
                 'page_title'   => $this->request->getPost('page_title', $article->page_title, FILTER_SANITIZE_STRING),
                 'code'         => $this->request->getPost('code', $article->code, FILTER_SANITIZE_STRING),

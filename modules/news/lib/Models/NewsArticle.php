@@ -18,6 +18,7 @@ use Johncms\Users\User;
  *
  * @property $id - Идентификатор
  * @property $section_id - Родительский раздел
+ * @property $active - Активность
  * @property $name - Название
  * @property $page_title - Заголовок страницы
  * @property $code - Символьный код
@@ -46,6 +47,7 @@ use Johncms\Users\User;
  * @property $current_vote - The user's current vote.
  * @property $comments_count
  * @method NewsArticle search()
+ * @method NewsArticle active()
  */
 class NewsArticle extends Model
 {
@@ -54,6 +56,7 @@ class NewsArticle extends Model
     protected $table = 'news_articles';
 
     protected $fillable = [
+        'active',
         'section_id',
         'name',
         'page_title',
@@ -69,6 +72,7 @@ class NewsArticle extends Model
     ];
 
     protected $casts = [
+        'active'      => 'bool',
         'section_id'  => 'integer',
         'view_count'  => 'integer',
         'name'        => SpecialChars::class,
@@ -92,6 +96,17 @@ class NewsArticle extends Model
     {
         return $query->leftJoin('news_search_index', 'news_articles.id', '=', 'news_search_index.article_id')
             ->addSelect('news_articles.*');
+    }
+
+    /**
+     * Only active
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('active', 1);
     }
 
     public function parentSection(): HasOne

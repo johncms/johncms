@@ -50,10 +50,19 @@ class Section extends AbstractAction
             $subsections = di(Subsections::class);
             $ids = $subsections->getIds($current_section);
             $ids[] = $current_section->id;
-            $articles = (new NewsArticle())->withCount('comments')->orderByDesc('id')->whereIn('section_id', $ids)->paginate($this->user->config->kmess);
+            $articles = (new NewsArticle())
+                ->active()
+                ->withCount('comments')
+                ->orderByDesc('id')
+                ->whereIn('section_id', $ids)
+                ->paginate($this->user->config->kmess);
         } else {
             $sections = (new NewsSection())->where('parent', 0)->get();
-            $articles = (new NewsArticle())->withCount('comments')->orderByDesc('id')->paginate($this->user->config->kmess);
+            $articles = (new NewsArticle())
+                ->active()
+                ->withCount('comments')
+                ->orderByDesc('id')
+                ->paginate($this->user->config->kmess);
             $title = $this->settings['title'] ?? __('News');
             $page_title = $this->settings['title'] ?? __('News');
             $keywords = $this->settings['meta_keywords'];
