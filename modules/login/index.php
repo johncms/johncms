@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Str;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
@@ -84,7 +85,7 @@ if ($user->isValid()) {
     if (! $error) {
         // Запрос в базу на юзера
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ? LIMIT 1');
-        $stmt->execute([$tools->rusLat($user_login)]);
+        $stmt->execute([Str::slug($user_login, '_')]);
 
         if ($stmt->rowCount()) {
             $loginUser = new User($stmt->fetch());
