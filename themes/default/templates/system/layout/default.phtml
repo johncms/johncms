@@ -170,6 +170,17 @@ $ads_array = $ads->getAds();
 <script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
 <script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
 <script src="<?= $this->asset('js/app.js', true) ?>"></script>
+<?php if ($locale !== 'en'): ?>
+    <?php
+    try { // TODO: improve the asset method for simplify this construction
+        ?>
+        <script src="<?= $this->asset('js/flatpickr/' . $locale . '.js') ?>"></script>
+        <script>flatpickr.localize(flatpickr.l10ns.<?= $locale ?>);</script>
+        <?php
+    } catch (Exception $exception) {
+    }
+    ?>
+<?php endif; ?>
 <?= $this->section('scripts', '') ?>
 </body>
 </html>

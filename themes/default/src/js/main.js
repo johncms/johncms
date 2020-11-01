@@ -37,6 +37,14 @@ $(document).ready(function () {
     if (typeof wysibb_input != "undefined") {
         $(wysibb_input).wysibb(wysibb_settings);
     }
+
+    $(".flatpickr").flatpickr({
+        dateFormat: 'd.m.Y',
+    });
+    $(".flatpickr_time").flatpickr({
+        dateFormat: 'd.m.Y H:i',
+        enableTime: true,
+    });
 })
 
 var sidebar = new StickySidebar('.sidebar', {
