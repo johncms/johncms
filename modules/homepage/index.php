@@ -48,55 +48,15 @@ $view->addFolder('homepage', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationDomain('homepage', __DIR__ . '/locale');
 
 $data = [];
+module_lib_loader('news');
 if ($news_config['view'] > 0) {
-    $reqtime = $news_config['days'] ? time() - ($news_config['days'] * 86400) : 0;
-    $req = $db->query(
-        "SELECT * FROM `news` WHERE `time` > '${reqtime}' ORDER BY `time` DESC LIMIT " .
-        $news_config['quantity']
-    );
-
-    if ($req->rowCount()) {
-        $i = 0;
-        $news = '';
-
-        $items = [];
-        while ($res = $req->fetch()) {
-            $text = $res['text'];
-            $moreLink = '';
-
-            // Если текст больше заданного предела, обрезаем
-            if (mb_strlen($text) > $news_config['size']) {
-                $text = mb_substr($text, 0, $news_config['size']);
-                $text = htmlentities($text, ENT_QUOTES, 'UTF-8') . '...';
-            }
-
-            $text = $tools->checkout($text, $news_config['breaks'] ? 1 : 2, $news_config['tags'] ? 1 : 2);
-
-            if ($news_config['smileys']) {
-                $text = $tools->smilies($text);
-            }
-
-            // Ссылка на каменты
-            $comments_url = '';
-            $comments_count = 0;
-
-            if (! empty($res['kom']) && $news_config['view'] !== 2 && $news_config['kom'] > 0) {
-                $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
-                if ($mes = $res_mes->fetch()) {
-                    $comments_count = $mes['post_count'] - 1;
-                }
-                if ($comments_count >= 0) {
-                    $comments_url = '/forum/?type=topic&id=' . $res['kom'];
-                }
-            }
-
-            $items[] = [
-                'text'         => $news_config['view'] !== 2 ? $text : '',
-                'title'        => $res['name'],
-                'comments'     => $comments_count ?? 0,
-                'comments_url' => $comments_url,
-            ];
-        }
+    module_lib_loader('news');
+    $news = (new \News\Models\NewsArticle())->active()->lastDays(1)->limit(6)->get();
+    foreach ($news as $item) {
+        $items[] = [
+            'text'  => $item->preview_text_safe,
+            'title' => $item->name,
+        ];
     }
 }
 
@@ -110,7 +70,9 @@ $count['guestbook'] = $counters->guestbookCounters();
 $count['downloads'] = $counters->downloadsCounters();
 $count['library'] = $counters->libraryCounters();
 $count['users'] = $counters->usersCounters();
-$count['news'] = $counters->news();
+$count['news'] = [
+    'new' => 0,
+];
 
 $data['counters'] = $count;
 

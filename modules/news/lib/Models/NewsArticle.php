@@ -127,6 +127,23 @@ class NewsArticle extends Model
             );
     }
 
+    /**
+     * For last n days
+     *
+     * @param Builder $query
+     * @param int $days
+     * @return Builder
+     */
+    public function scopeLastDays(Builder $query, int $days = 3): Builder
+    {
+        $date = Carbon::now()->addDays(-$days)->format('Y-m-d 00:00:00');
+        return $query->where('active_from', '>=', $date)->orWhere(
+            function (Builder $builder) use ($date) {
+                $builder->whereNull('active_from')->where('created_at', '>=', $date);
+            }
+        );
+    }
+
     public function parentSection(): HasOne
     {
         return $this->hasOne(NewsSection::class, 'id', 'section_id');

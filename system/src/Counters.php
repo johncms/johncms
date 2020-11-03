@@ -465,16 +465,14 @@ class Counters
     /**
      * Счетчик всех новостей
      *
+     * @deprecated
      * @return array
      */
     public function news(): array
     {
-        $total = $this->db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
-        $new = $this->db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
-
         return [
-            'total' => $total,
-            'new'   => $new,
+            'total' => 0,
+            'new'   => 0,
         ];
     }
 
