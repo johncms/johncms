@@ -49,6 +49,7 @@ use Johncms\Users\User;
  * @property $rating - Article rating
  * @property $current_vote - The user's current vote.
  * @property $comments_count
+ * @property $display_date
  * @method NewsArticle search()
  * @method NewsArticle active()
  */
@@ -285,5 +286,13 @@ class NewsArticle extends Model
             $tags = array_map('htmlspecialchars', $tags);
         }
         return $tags;
+    }
+
+    public function getDisplayDateAttribute(): string
+    {
+        if (! empty($this->active_from)) {
+            return $this->active_from;
+        }
+        return $this->created_at;
     }
 }
