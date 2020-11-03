@@ -513,6 +513,8 @@ class Database
                 $table->increments('id');
                 $table->integer('section_id')->unsigned()->nullable()->index();
                 $table->boolean('active')->nullable();
+                $table->dateTime('active_from')->nullable();
+                $table->dateTime('active_to')->nullable();
                 $table->string('name');
                 $table->string('page_title')->nullable();
                 $table->string('code')->index();

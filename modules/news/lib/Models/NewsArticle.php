@@ -2,6 +2,7 @@
 
 namespace News\Models;
 
+use Carbon\Carbon;
 use Johncms\Casts\FormattedDate;
 use News\Utils\Helpers;
 use News\Utils\SectionPathCache;
@@ -19,6 +20,8 @@ use Johncms\Users\User;
  * @property $id - Идентификатор
  * @property $section_id - Родительский раздел
  * @property $active - Активность
+ * @property $active_from - Дата начала активности
+ * @property $active_to - Дата завершения активности
  * @property $name - Название
  * @property $page_title - Заголовок страницы
  * @property $code - Символьный код
@@ -57,6 +60,8 @@ class NewsArticle extends Model
 
     protected $fillable = [
         'active',
+        'active_from',
+        'active_to',
         'section_id',
         'name',
         'page_title',
@@ -73,6 +78,8 @@ class NewsArticle extends Model
 
     protected $casts = [
         'active'      => 'bool',
+        'active_from' => FormattedDate::class,
+        'active_to'   => FormattedDate::class,
         'section_id'  => 'integer',
         'view_count'  => 'integer',
         'name'        => SpecialChars::class,
@@ -106,7 +113,17 @@ class NewsArticle extends Model
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where('active', 1);
+        return $query->where('active', 1)
+            ->where(
+                function (Builder $builder) {
+                    $builder->whereNull('active_from')->orWhere('active_from', '<=', Carbon::now());
+                }
+            )
+            ->where(
+                function (Builder $builder) {
+                    $builder->whereNull('active_to')->orWhere('active_to', '>=', Carbon::now());
+                }
+            );
     }
 
     public function parentSection(): HasOne

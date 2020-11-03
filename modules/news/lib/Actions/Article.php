@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace News\Actions;
 
+use Carbon\Carbon;
 use News\Models\NewsArticle;
 use News\Models\NewsSearchIndex;
 use News\Models\NewsSection;
@@ -106,6 +107,8 @@ class Article extends AbstractAction
             'fields'     => [
                 'active'       => (int) $this->request->getPost('active', 1),
                 'section_id'   => $section_id,
+                'active_from'  => $this->request->getPost('active_from', '', FILTER_SANITIZE_STRING),
+                'active_to'    => $this->request->getPost('active_to', '', FILTER_SANITIZE_STRING),
                 'name'         => $this->request->getPost('name', '', FILTER_SANITIZE_STRING),
                 'page_title'   => $this->request->getPost('page_title', '', FILTER_SANITIZE_STRING),
                 'code'         => $this->request->getPost('code', '', FILTER_SANITIZE_STRING),
@@ -189,12 +192,21 @@ class Article extends AbstractAction
         Helpers::buildAdminBreadcrumbs($article->parentSection);
         $this->nav_chain->add($article->name);
 
+        if (! empty($article->getRawOriginal('active_from'))) {
+            $active_from = Carbon::parse($article->getRawOriginal('active_from'))->format('d.m.Y H:i');
+        }
+        if (! empty($article->getRawOriginal('active_to'))) {
+            $active_to = Carbon::parse($article->getRawOriginal('active_to'))->format('d.m.Y H:i');
+        }
+
         $data = [
             'action_url' => '/news/admin/edit_article/?article_id=' . $article->id,
             'back_url'   => '/news/admin/content/?section_id=' . $article->section_id,
             'article_id' => $article_id,
             'fields'     => [
                 'active'       => (int) $this->request->getPost('active', $article->active),
+                'active_from'  => $this->request->getPost('active_from', $active_from ?? '', FILTER_SANITIZE_STRING),
+                'active_to'    => $this->request->getPost('active_to', $active_to ?? '', FILTER_SANITIZE_STRING),
                 'name'         => $this->request->getPost('name', $article->name, FILTER_SANITIZE_STRING),
                 'page_title'   => $this->request->getPost('page_title', $article->page_title, FILTER_SANITIZE_STRING),
                 'code'         => $this->request->getPost('code', $article->code, FILTER_SANITIZE_STRING),

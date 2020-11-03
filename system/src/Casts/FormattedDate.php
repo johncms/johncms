@@ -49,6 +49,10 @@ class FormattedDate implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes): ?string
     {
-        return $value;
+        if (! empty($value)) {
+            return Carbon::parse($value)->toDateTimeString();
+        }
+
+        return null;
     }
 }

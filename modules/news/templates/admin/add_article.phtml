@@ -46,6 +46,28 @@
         >
     </div>
     <div class="form-group">
+        <label for="date_active_from"><?= __('Active from') ?></label>
+        <input type="text"
+               class="form-control flatpickr_time"
+               name="active_from"
+               id="active_from"
+               required
+               value="<?= $data['fields']['active_from'] ?>"
+               placeholder="<?= __('Active from') ?>"
+        >
+    </div>
+    <div class="form-group">
+        <label for="date_active_to"><?= __('Active to') ?></label>
+        <input type="text"
+               class="form-control flatpickr_time"
+               name="active_to"
+               id="active_to"
+               required
+               value="<?= $data['fields']['active_to'] ?>"
+               placeholder="<?= __('Active to') ?>"
+        >
+    </div>
+    <div class="form-group">
         <label for="code"><?= __('Article code') ?></label>
         <input type="text"
                class="form-control"
@@ -106,8 +128,14 @@
 </form>
 
 <?php $this->push('scripts') ?>
-<?php if ($locale !== 'en'): ?>
-    <script src="<?= $this->asset('ckeditor5/translations/' . $locale . '.js') ?>"></script>
+<?php if ($locale !== 'en'):
+    try {
+        ?>
+        <script src="<?= $this->asset('ckeditor5/translations/' . $locale . '.js') ?>"></script>
+        <?php
+    } catch (Exception $exception) {
+    }
+    ?>
 <?php endif; ?>
 <script src="<?= $this->asset('ckeditor5/ckeditor.js') ?>"></script>
 
