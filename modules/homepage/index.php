@@ -15,6 +15,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
+use News\Models\NewsArticle;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 define('_IS_HOMEPAGE', 1); // Пометка главной страницы
@@ -50,17 +51,10 @@ di(Translator::class)->addTranslationDomain('homepage', __DIR__ . '/locale');
 $data = [];
 module_lib_loader('news');
 if ($news_config['view'] > 0) {
-    module_lib_loader('news');
-    $news = (new \News\Models\NewsArticle())->active()->lastDays(1)->limit(6)->get();
-    foreach ($news as $item) {
-        $items[] = [
-            'text'  => $item->preview_text_safe,
-            'title' => $item->name,
-        ];
-    }
+    $news = (new NewsArticle())->active()->lastDays($news_config['days'])->limit($news_config['quantity'])->get();
 }
 
-$data['news'] = $items ?? [];
+$data['news'] = $news ?? [];
 
 // TODO: Если приживется, объединить со счетчиками в меню для избежания лишних запросов
 /** @var Counters $counters */
@@ -71,7 +65,7 @@ $count['downloads'] = $counters->downloadsCounters();
 $count['library'] = $counters->libraryCounters();
 $count['users'] = $counters->usersCounters();
 $count['news'] = [
-    'new' => 0,
+    'new' => (new NewsArticle())->active()->lastDays($news_config['days'])->count(),
 ];
 
 $data['counters'] = $count;

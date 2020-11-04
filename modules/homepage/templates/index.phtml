@@ -133,18 +133,17 @@ $this->layout('system::layout/default');
 </div>
 
 <?php if (! empty($data['news'])): ?>
-    <div>
+    <div class="mb-n3">
         <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
-        <div class="row">
-            <?php foreach ($data['news'] as $item): ?>
-                <div class="col-12 col-md-4 mb-3">
-                    <a class="h4 font-weight-bold" href="/news/"><?= $item['title'] ?></a>
-                    <?php if (! empty($item['text'])): ?>
-                        <div class="small"><?= $item['text'] ?></div>
+        <div class="row row-cols-md-1">
+            <?php foreach ($data['news'] as $news_item): ?>
+                <?php /** @var News\Models\NewsArticle $news_item */  ?>
+                <div class="col mb-3">
+                    <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
+                    <?php if (! empty($news_item->preview_text_safe)): ?>
+                        <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
                     <?php endif; ?>
-                    <?php if (! empty($item['comments_url'])): ?>
-                        <div class="small"><a href="<?= $item['comments_url'] ?>"><?= __('Discuss') ?></a> (<?= $item['comments'] ?>)</div>
-                    <?php endif; ?>
+                    <div class="text-muted small pt-1"><?= $news_item->display_date ?></div>
                 </div>
             <?php endforeach; ?>
         </div>

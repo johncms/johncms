@@ -52,6 +52,7 @@ use Johncms\Users\User;
  * @property $display_date
  * @method NewsArticle search()
  * @method NewsArticle active()
+ * @method NewsArticle lastDays($day_count)
  */
 class NewsArticle extends Model
 {
