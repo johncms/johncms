@@ -43,7 +43,6 @@
     "laravel-vue-pagination": "^2.3.1",
     "lodash": "^4.17.20",
     "popper.js": "^1.15.0",
-    "sticky-sidebar": "^3.3.1",
     "swiper": "^5.4.5",
     "vue": "^2.6.12"
   }

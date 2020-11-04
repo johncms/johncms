@@ -9,7 +9,6 @@
 require('./bootstrap');
 require('./jquery.magnific-popup');
 require("flatpickr");
-require('sticky-sidebar');
 require('./menu');
 require('./prism');
 require('./forum');

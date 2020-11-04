@@ -46,11 +46,3 @@ $(document).ready(function () {
         enableTime: true,
     });
 })
-
-var sidebar = new StickySidebar('.sidebar', {
-    topSpacing: 0,
-    bottomSpacing: 20,
-    containerSelector: '.page_layout',
-    innerWrapperSelector: '.sidebar__inner',
-    minWidth: 992,
-});
