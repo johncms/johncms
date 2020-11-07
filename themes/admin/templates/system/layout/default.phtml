@@ -9,8 +9,6 @@
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
 $analytics = $counters->counters();
-$ads = di(Johncms\Ads::class);
-$ads_array = $ads->getAds();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>">
@@ -41,7 +39,6 @@ $ads_array = $ads->getAds();
     <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
 </head>
 <body>
-<div>Админка</div>
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
     <div class="page_layout justify-content-end d-flex w-100">
         <div class="sidebar">
@@ -99,15 +96,7 @@ $ads_array = $ads->getAds();
                     <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
                 <?php endif ?>
                 <?= $this->fetch('system::app/breadcrumbs') ?>
-                <?php if (! empty($ads_array['content_header'])): ?>
-                    <div class="pb-3">
-                        <?php foreach ($ads_array['content_header'] as $item): ?>
-                            <div><?= $item ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
                 <?= $this->section('content') ?>
-
                 <div class="to-top to-top_hidden">
                     <button class="btn btn__top">
                         <svg class="icon-40">
@@ -115,13 +104,6 @@ $ads_array = $ads->getAds();
                         </svg>
                     </button>
                 </div>
-                <?php if (! empty($ads_array['content_footer'])): ?>
-                    <div class="pb-3 pt-2">
-                        <?php foreach ($ads_array['content_footer'] as $item): ?>
-                            <div><?= $item ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
             </div>
         </div>
     </div>

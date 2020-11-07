@@ -15,19 +15,10 @@ $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
 $album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
-$ads = di(Johncms\Ads::class);
-$ads_array = $ads->getAds();
 
 ?>
 <!-- Меню -->
 <div class="flex-grow-1">
-    <?php if (! empty($ads_array['before_menu'])): ?>
-        <div class="pl-4 pr-3 pt-3">
-            <?php foreach ($ads_array['before_menu'] as $item): ?>
-                <div><?= $item ?></div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
     <ul class="nav nav__vertical">
         <li>
             <a href="/news/">
@@ -152,13 +143,6 @@ $ads_array = $ads->getAds();
     <div class="border-bottom"></div>
 </div>
 <div class="sidebar__footer">
-    <?php if (! empty($ads_array['after_menu'])): ?>
-        <div class="pr-3 pt-2 mb-2">
-            <?php foreach ($ads_array['after_menu'] as $item): ?>
-                <div><?= $item ?></div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
     <div>
         <a href="/online/">
             <svg class="icon sidebar_online">

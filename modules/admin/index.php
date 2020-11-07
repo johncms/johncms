@@ -14,27 +14,32 @@ use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
+use Johncms\System\View\AdminRenderEngineFactory;
+use Johncms\System\View\Extension\AdminAssets;
+use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\System\i18n\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
-/**
- * @var Render $view
- * @var PDO $db
- * @var Tools $tools
- * @var User $user
- * @var NavChain $nav_chain
- */
+$container = Johncms\System\Container\Factory::getContainer();
+$container->setFactory(Assets::class, AdminAssets::class);
+$container->setFactory(Render::class, AdminRenderEngineFactory::class);
 
+/** @var PDO $db */
 $db = di(PDO::class);
+/** @var Tools $tools */
 $tools = di(Tools::class);
+/** @var User $user */
 $user = di(User::class);
+/** @var Render $view */
 $view = di(Render::class);
-$route = di('route');
+/** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
+/** @var Request $request */
 $request = di(Request::class);
+$route = di('route');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');
@@ -44,10 +49,10 @@ di(Translator::class)->addTranslationDomain('admin', __DIR__ . '/locale');
 
 module_lib_loader('admin');
 
-$id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = $route['action'] ?? 'index';
-$mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
-$do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
+$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$do = $request->getQuery('do', '', FILTER_SANITIZE_STRING);
 
 $nav_chain->add(__('Admin Panel'), '/admin/');
 
