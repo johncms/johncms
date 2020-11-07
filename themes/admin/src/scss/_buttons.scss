@@ -1,0 +1,41 @@
+.btn-info {
+    color: $white;
+}
+
+.btn-outline-info {
+    &:hover {
+        color: $white;
+    }
+}
+
+.btn-lg-icon {
+    .icon {
+        width: 25px;
+        height: 31px;
+    }
+}
+
+.btn__top {
+    padding: 0;
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.btn__transparent {
+    background: transparent;
+}
+
+.btn {
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    &.liked {
+        color: #036a0c;
+    }
+
+    &.disliked {
+        color: #ff0000;
+    }
+}

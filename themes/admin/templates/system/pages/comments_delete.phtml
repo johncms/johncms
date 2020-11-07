@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var string $message
+ * @var string $max_length
+ * @var string $action_url
+ * @var string $code
+ * @var string $bb_codes
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<div class="alert alert-danger">
+    <div class="pb-2">
+        <?= d__('system', 'Do you really want to delete?') ?>
+    </div>
+    <div>
+        <a href="<?= $data['delete_url'] ?>" class="btn btn-danger btn-sm"><?= d__('system', 'Delete') ?></a>
+        <a href="<?= $data['clear_url'] ?>" class="btn btn-danger btn-sm"><?= d__('system', 'Clear') ?></a>
+        <a href="<?= $data['back_url'] ?>" class="btn btn-primary btn-sm"><?= d__('system', 'Cancel') ?></a>
+    </div>
+</div>

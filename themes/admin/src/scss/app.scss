@@ -1,0 +1,39 @@
+// Variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+// Основные стили шаблона
+@import "base_styles";
+// Анимации
+@import "animations";
+// Левое меню
+@import "sidebar";
+// Шапка
+@import "header";
+// Иконки
+@import "icons";
+@import "posts";
+@import "sections";
+@import "lists";
+@import "inputs";
+@import "buttons";
+@import "user";
+@import "../css/prism.css";
+@import "../css/magnific-popup.css";
+
+@import "~swiper/css/swiper";
+
+@import "slider";
+
+@import "album";
+
+@import "progress";
+
+@import "homepage";
+
+@import "pagination";
+
+// Editor
+@import "wbbtheme";
+
+@import '~flatpickr/dist/flatpickr.css';

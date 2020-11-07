@@ -1,0 +1,344 @@
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="messages" viewBox="0 0 24 24">
+        <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Group-3" fill-rule="nonzero" stroke="currentcolor" stroke-width="2">
+                <g transform="translate(2.000000, 4.000000)" id="chat-speech-bubbles">
+                    <g>
+                        <path d="M10,0 C4.47692308,0 0,3.41802174 0,7.63633097 C0,9.70424939 1.07846154,11.5843141 2.82923077,12.9588537 C2.72769231,14.360884 2.38769231,16.076004 1.40307692,17 C3.36307692,17 5.36615385,15.7812416 6.63230769,14.8282275 C7.68461538,15.1153535 8.81692308,15.2726619 10,15.2726619 C15.5230769,15.2726619 20,11.8561675 20,7.63633097 C20,3.41802174 15.5230769,0 10,0 Z"
+                              id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </symbol>
+
+    <symbol id="user" viewBox="0 0 32 32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M22 11 C22 16 19 20 16 20 13 20 10 16 10 11 10 6 12 3 16 3 20 3 22 6 22 11 Z M4 30 L28 30 C28 21 22 20 16 20 10 20 4 21 4 30 Z"/>
+    </symbol>
+
+    <symbol id="settings" viewBox="0 0 32 32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M13 2 L13 6 11 7 8 4 4 8 7 11 6 13 2 13 2 19 6 19 7 21 4 24 8 28 11 25 13 26 13 30 19 30 19 26 21 25 24 28 28 24 25 21 26 19 30 19 30 13 26 13 25 11 28 8 24 4 21 7 19 6 19 2 Z"/>
+        <circle cx="16" cy="16" r="4"/>
+    </symbol>
+
+
+    <symbol id="book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+    </symbol>
+
+    <symbol id="book-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </symbol>
+
+
+    <symbol id="forum" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </symbol>
+
+
+    <symbol id="chat" viewBox="2 0 20 20">
+        <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M15.61 17.99a6.976 6.976 0 0 1-3.61 1c-3.866 0-7-3.131-7-6.995A6.998 6.998 0 0 1 12 5a6.998 6.998 0 0 1 5.902 10.76M16 17.992l3 .999-1-2.998M10 10.996h4M10 13.994h2"/>
+        </g>
+    </symbol>
+
+    <symbol id="download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+    </symbol>
+
+    <symbol id="text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+    </symbol>
+
+    <symbol id="users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </symbol>
+
+
+    <symbol id="picasa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+        <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+        <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+        <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+        <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+        <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+    </symbol>
+
+    <symbol id="info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </symbol>
+
+    <symbol id="help-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </symbol>
+
+
+    <symbol id="chevron-bottom" viewBox="0 0 32 32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M30 12 L16 24 2 12"/>
+    </symbol>
+
+    <symbol id="chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M12 30 L24 16 12 2"/>
+    </symbol>
+
+    <symbol id="calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+    </symbol>
+
+    <symbol id="search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </symbol>
+
+    <symbol id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+    </symbol>
+
+    <symbol id="github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+    </symbol>
+
+    <symbol id="pin" viewBox="0 0 50 50" fill="currentColor" stroke="currentColor">
+        <path d="M 35.9375 0 C 35.746094 0.00390625 35.5625 0.0429688 35.375 0.09375 C 34.632813 0.300781 33.964844 0.792969 33.4375 1.46875 C 33.425781 1.480469 33.417969 1.488281 33.40625 1.5 L 25.0625 13.1875 C 19.933594 12 14.335938 13.351563 10.34375 17.34375 C 9.957031 17.734375 9.957031 18.359375 10.34375 18.75 L 17.78125 26.15625 L 0.21875 48.375 C -0.101563 48.773438 -0.0703125 49.347656 0.289063 49.710938 C 0.652344 50.070313 1.226563 50.101563 1.625 49.78125 L 23.8125 32.21875 L 31.25 39.625 C 31.640625 40.011719 32.265625 40.011719 32.65625 39.625 C 36.707031 35.578125 38.03125 29.875 36.75 24.6875 L 48.46875 16.71875 C 48.480469 16.707031 48.488281 16.699219 48.5 16.6875 C 49.183594 16.179688 49.65625 15.550781 49.875 14.8125 C 50.09375 14.074219 49.984375 13.140625 49.375 12.53125 L 37.625 0.625 C 37.324219 0.316406 36.925781 0.144531 36.53125 0.0625 C 36.332031 0.0195313 36.128906 -0.00390625 35.9375 0 Z M 36.125 2 C 36.160156 2.003906 36.164063 2.007813 36.1875 2.03125 L 47.96875 13.9375 C 48.011719 13.980469 48.035156 13.992188 47.96875 14.21875 C 47.902344 14.4375 47.671875 14.78125 47.3125 15.0625 L 47.28125 15.09375 L 35.125 23.375 C 35.113281 23.386719 35.105469 23.394531 35.09375 23.40625 L 35.03125 23.4375 C 34.699219 23.695313 34.5625 24.128906 34.6875 24.53125 C 35.996094 28.917969 34.996094 33.753906 31.84375 37.40625 L 12.5625 18.15625 C 16.167969 15.046875 20.941406 14.019531 25.28125 15.25 C 25.695313 15.363281 26.136719 15.199219 26.375 14.84375 L 35 2.6875 L 35.03125 2.65625 C 35.320313 2.300781 35.683594 2.09375 35.90625 2.03125 C 36.023438 2 36.089844 1.996094 36.125 2 Z M 19.1875 27.59375 L 22.40625 30.78125 L 7.125 42.875 Z"></path>
+    </symbol>
+
+    <symbol id="bar-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"></line>
+        <line x1="12" y1="20" x2="12" y2="4"></line>
+        <line x1="6" y1="20" x2="6" y2="14"></line>
+    </symbol>
+
+    <symbol id="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    </symbol>
+
+    <symbol id="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+    </symbol>
+
+    <symbol id="youtube" viewBox="0 -64 511.92802 511">
+        <path class="icon-bg" fill="currentColor"
+              d="m255.964844 384.402344c-63.839844-.011719-127.617188-3.859375-190.992188-11.519532-28.5-3.765624-51.050781-25.964843-55.265625-54.398437-12.941406-83.554687-12.941406-168.605469 0-252.160156 4.214844-28.433594 26.765625-50.632813 55.265625-54.398438 126.867188-15.28125 255.113282-15.28125 381.984375 0 28.496094 3.765625 51.046875 25.964844 55.261719 54.398438 12.945312 83.554687 12.945312 168.605469 0 252.160156-4.214844 28.433594-26.765625 50.632813-55.261719 54.398437-63.378906 7.660157-127.15625 11.507813-190.992187 11.519532zm0 0"/>
+        <path d="m191.964844 301.285156v-217.761718l174.191406 108.878906zm0 0" fill="#fff"/>
+    </symbol>
+
+    <symbol id="file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+        <polyline points="13 2 13 9 20 9"></polyline>
+    </symbol>
+
+    <symbol id="bell-off" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell-off">
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        <path d="M18.63 13A17.89 17.89 0 0 1 18 8"></path>
+        <path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"></path>
+        <path d="M18 8a6 6 0 0 0-9.33-5"></path>
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+    </symbol>
+
+    <symbol id="database" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database">
+        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+    </symbol>
+
+    <symbol id="log-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="feather feather-log-in">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+        <polyline points="10 17 15 12 10 7"></polyline>
+        <line x1="15" y1="12" x2="3" y2="12"></line>
+    </symbol>
+
+    <symbol id="log-out" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+    </symbol>
+
+    <symbol id="pie-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="feather feather-pie-chart">
+        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+    </symbol>
+
+    <symbol id="radio" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-radio">
+        <circle cx="12" cy="12" r="2"></circle>
+        <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+    </symbol>
+
+    <symbol id="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+    </symbol>
+
+    <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </symbol>
+
+    <symbol id="slash" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slash">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+    </symbol>
+
+    <symbol id="smile" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+    </symbol>
+
+    <symbol id="twitter" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter">
+        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+    </symbol>
+
+    <symbol id="telegram" viewBox="0 -39 512.00011 512" fill="currentColor" stroke="currentColor">
+        <path d="m504.09375 11.859375c-6.253906-7.648437-15.621094-11.859375-26.378906-11.859375-5.847656 0-12.042969 1.230469-18.410156 3.664062l-433.398438 165.441407c-23 8.777343-26.097656 21.949219-25.8984375 29.019531s4.0390625 20.046875 27.4999995 27.511719c.140626.042969.28125.085937.421876.125l89.898437 25.726562 48.617187 139.023438c6.628907 18.953125 21.507813 30.726562 38.835938 30.726562 10.925781 0 21.671875-4.578125 31.078125-13.234375l55.605469-51.199218 80.652344 64.941406c.007812.007812.019531.011718.027343.019531l.765625.617187c.070313.054688.144532.113282.214844.167969 8.964844 6.953125 18.75 10.625 28.308594 10.628907h.003906c18.675781 0 33.546875-13.824219 37.878906-35.214844l71.011719-350.640625c2.851563-14.074219.460937-26.667969-6.734375-35.464844zm-356.191406 234.742187 173.441406-88.605468-107.996094 114.753906c-1.769531 1.878906-3.023437 4.179688-3.640625 6.683594l-20.824219 84.351562zm68.132812 139.332032c-.71875.660156-1.441406 1.25-2.164062 1.792968l19.320312-78.25 35.144532 28.300782zm265.390625-344.566406-71.011719 350.644531c-.683593 3.355469-2.867187 11.164062-8.480468 11.164062-2.773438 0-6.257813-1.511719-9.824219-4.257812l-91.390625-73.585938c-.011719-.011719-.027344-.023437-.042969-.03125l-54.378906-43.789062 156.175781-165.949219c5-5.3125 5.453125-13.449219 1.074219-19.285156-4.382813-5.835938-12.324219-7.671875-18.820313-4.351563l-256.867187 131.226563-91.121094-26.070313 433.265625-165.390625c3.660156-1.398437 6.214844-1.691406 7.710938-1.691406.917968 0 2.550781.109375 3.15625.855469.796875.972656 1.8125 4.289062.554687 10.511719zm0 0"/>
+    </symbol>
+
+    <symbol id="dislike" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down">
+        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+    </symbol>
+
+    <symbol id="like" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
+        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+    </symbol>
+
+    <symbol id="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </symbol>
+
+    <symbol id="more_horizontal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal">
+        <circle cx="11" cy="12" r="1"></circle>
+        <circle cx="17" cy="12" r="1"></circle>
+        <circle cx="5" cy="12" r="1"></circle>
+    </symbol>
+
+    <symbol id="top" viewBox="0 0 41 41">
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Forsage_4" transform="translate(-227.000000, -558.000000)">
+                <g id="Top" transform="translate(227.000000, 558.000000)">
+                    <circle id="Oval" fill="#D8D8D8" fill-rule="nonzero" opacity="0.550000012" cx="20.5" cy="20.5"
+                            r="20.5"></circle>
+                    <g id="arrow-up" opacity="0.119999997" stroke-width="1" fill-rule="evenodd"
+                       transform="translate(11.000000, 12.000000)" fill="#000000">
+                        <path d="M18.5486828,8.41315754 L10.6096269,0.452461685 C10.3088342,0.150806285 9.9393145,0 9.50004271,0 C9.05295424,0 8.68693713,0.150806285 8.40241851,0.452461685 L0.463362544,8.41315754 C0.154411467,8.72290791 0,9.09399159 0,9.52606594 C0,9.94995967 0.154582323,10.3166746 0.463362544,10.6265107 L1.37791411,11.5434694 C1.67067655,11.853177 2.03656552,12.0083948 2.47553831,12.0083948 C2.91455382,12.0083948 3.28035736,11.853177 3.57316251,11.5434694 L7.15854124,7.96065302 L7.15854124,16.5695032 C7.15854124,16.9930971 7.31090243,17.3377116 7.61583838,17.6028325 C7.92077434,17.8676965 8.28867087,18 8.71944255,18 L10.2804293,18 C10.7113718,18 11.0790975,17.8676537 11.3840335,17.6028325 C11.6889694,17.3377972 11.8415869,16.9930971 11.8415869,16.5695032 L11.8415869,7.96069585 L15.4269229,11.5435122 C15.7194291,11.8532198 16.0852753,12.0084376 16.5246753,12.0084376 C16.9553188,12.0084376 17.3254365,11.8532198 17.634174,11.5435122 L18.5486401,10.6265535 C18.8494755,10.308494 19,9.94177904 19,9.52610878 C19.0000427,9.10217222 18.8495182,8.73121703 18.5486828,8.41315754 Z"
+                              id="Shape" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </symbol>
+
+    <symbol id="translate" viewBox="0 0 488 488" stroke="currentColor" fill="currentColor">
+        <g transform="translate(0 -540.36)">
+            <g>
+                <g>
+                    <path d="M213.769,651.94L213.769,651.94c-5.499,0-9.999,4.501-9.999,10.003v51.216h-10.498c0-0.2,0-0.5,0-0.7c0-0.1,0-0.2,0-0.2
+                        c-3.5-34.911-36.995-63.02-71.79-60.219c-5.499,0.4-9.599,5.302-9.199,10.803c0.4,5.502,5.299,9.603,10.798,9.203
+                        c23.597-1.901,47.193,17.606,50.093,41.213H71.09c-2.8,0-5.499,1.2-7.399,3.301c-1.9,2.101-2.8,4.902-2.5,7.702
+                        c1.7,17.005,10.698,33.211,24.596,44.614c12.098,9.803,26.796,15.205,41.294,15.205c2,0,4.099-0.1,6.099-0.3
+                        c27.996-3.001,51.193-24.308,58.092-50.416h12.498v40.513c0,5.502,4.499,10.003,9.999,10.003c5.499,0,9.999-4.501,9.999-10.003
+                        V662.244C223.768,656.442,219.269,651.94,213.769,651.94z M131.081,763.776c-10.998,1.2-22.897-2.601-32.695-10.503
+                        c-6.699-5.402-11.798-12.404-14.698-20.006h86.688C164.176,749.271,148.979,761.875,131.081,763.776z"/>
+                    <path d="M405.742,869.409l-50.293-99.432c-1.7-3.401-5.199-5.502-8.899-5.502c-3.799,0-7.199,2.101-8.899,5.502L286.559,871.71
+                        c-2.5,4.902-0.5,10.903,4.399,13.404c1.4,0.7,3,1.1,4.499,1.1c3.699,0,7.199-2.001,8.899-5.502l17.597-35.011h49.393
+                        l16.598,32.81c2.5,4.902,8.499,6.902,13.398,4.401C406.242,880.313,408.241,874.311,405.742,869.409L405.742,869.409z
+                         M331.952,825.595l14.598-29.009l14.698,29.009H331.952z"/>
+                    <path d="M486.33,812.991c-4.799-31.31-20.097-60.319-43.094-81.826c-43.494-40.613-106.985-49.516-159.377-23.808
+                        c-7.899-71.023-68.09-126.54-141.08-126.54c-38.094,0-73.889,14.705-100.885,41.513C14.898,649.139,0,684.951,0,723.163
+                        c0,38.112,14.898,73.924,41.894,100.832c26.896,26.809,62.791,41.513,100.885,41.513c22.097,0,43.094-5.102,61.791-14.205
+                        c6.399,58.118,48.093,107.334,105.685,122.539h0.1c11.498,2.801,22.997,4.201,34.395,4.201
+                        c51.293,0,99.986-27.709,125.482-74.124C485.53,876.412,491.129,844.101,486.33,812.991z M142.78,845.502
+                        c-67.59,0-122.682-54.817-122.682-122.339c0-67.421,55.092-122.339,122.682-122.339c67.29,0,121.982,54.917,121.982,122.339
+                        S210.07,845.502,142.78,845.502z M452.835,894.317c-26.796,48.816-83.288,73.523-137.48,60.119
+                        c-52.492-13.904-89.587-60.619-91.487-114.436c35.195-24.608,58.692-64.721,60.791-110.335
+                        c46.493-27.209,105.385-20.907,144.979,16.205C470.432,783.882,479.931,844.902,452.835,894.317z"/>
+                    <path d="M193.172,966.24v-0.1c-0.1-0.4-0.2-0.8-0.3-1.1c0,0,0,0,0-0.1c-0.1-0.3-0.2-0.7-0.4-1c0-0.1-0.1-0.2-0.2-0.3
+                        c-0.1-0.2-0.3-0.5-0.4-0.7c-0.1-0.1-0.1-0.2-0.2-0.3c-0.2-0.3-0.4-0.6-0.6-0.9c-0.2-0.3-0.5-0.6-0.8-0.9
+                        c-0.1-0.1-0.1-0.1-0.2-0.2c-0.2-0.2-0.5-0.4-0.7-0.6c-0.1-0.1-0.2-0.1-0.3-0.2c-0.2-0.2-0.5-0.3-0.7-0.5
+                        c-0.1-0.1-0.2-0.1-0.3-0.2c-0.3-0.2-0.7-0.4-1-0.5l-51.093-20.607c-5.099-2.101-10.898,0.4-12.998,5.502s0.4,10.903,5.499,13.004
+                        l34.195,13.804c-18.797,10.103-41.494,10.903-61.191,1.5h-0.1c-24.896-11.504-40.594-36.912-39.994-64.921
+                        c0.1-5.502-4.199-10.103-9.799-10.203c-5.499-0.1-10.099,4.201-10.199,9.803c-0.9,35.911,19.397,68.622,51.493,83.527
+                        c11.998,5.702,24.796,8.503,37.595,8.503c10.898,0,21.797-2.101,32.095-6.102l-9.099,22.207c-2.1,5.102,0.4,11.004,5.499,13.004
+                        c1.2,0.5,2.5,0.7,3.799,0.7c3.899,0,7.699-2.301,9.299-6.202l20.597-50.516c0-0.1,0.1-0.2,0.1-0.3c-0.1-0.1-0.1-0.2,0-0.3
+                        c0.1-0.3,0.2-0.6,0.2-0.8c0-0.1,0-0.2,0.1-0.3c0.1-0.4,0.1-0.8,0.2-1.2c0-0.4,0-0.7,0-1.1c0-0.1,0-0.2,0-0.3
+                        c0-0.3-0.1-0.6-0.1-0.9C193.172,966.34,193.172,966.34,193.172,966.24z"/>
+                    <path d="M295.458,602.625v0.1c0.1,0.4,0.2,0.8,0.3,1.1c0,0,0,0,0,0.1c0.1,0.3,0.2,0.7,0.4,1c0,0.1,0.1,0.2,0.2,0.3
+                        c0.1,0.2,0.3,0.5,0.4,0.7c0.1,0.1,0.1,0.2,0.2,0.3c0.2,0.3,0.4,0.6,0.6,0.9c0.2,0.3,0.5,0.6,0.8,0.9c0.1,0.1,0.1,0.1,0.2,0.2
+                        c0.2,0.2,0.5,0.4,0.7,0.6c0.1,0.1,0.2,0.1,0.3,0.2c0.2,0.2,0.5,0.3,0.7,0.5c0.1,0.1,0.2,0.1,0.3,0.2c0.3,0.2,0.7,0.4,1,0.5
+                        l51.093,20.607c5.099,2.101,10.898-0.4,12.998-5.502c2.1-5.102-0.4-10.903-5.499-13.004l-34.195-13.804
+                        c18.797-10.103,41.494-10.903,61.191-1.5h0.1c24.896,11.504,40.594,36.912,39.994,64.921c-0.1,5.502,4.199,10.103,9.799,10.203
+                        c0.1,0,0.2,0,0.2,0c5.399,0,9.899-4.301,9.999-9.803c0.8-36.011-19.397-68.822-51.593-83.627l0,0
+                        c-22.297-10.603-47.393-11.104-69.59-2.401l9.099-22.207c2.1-5.102-0.4-11.003-5.499-13.004
+                        c-5.099-2.101-10.998,0.4-12.998,5.502l-20.597,50.516c0,0.1-0.1,0.2-0.1,0.3s-0.1,0.3-0.1,0.4c-0.1,0.3-0.2,0.6-0.2,0.8
+                        c0,0.1,0,0.2-0.1,0.3c-0.1,0.4-0.1,0.8-0.2,1.2c0,0.4,0,0.7,0,1.1c0,0.1,0,0.2,0,0.3c0,0.3,0.1,0.6,0.1,0.9
+                        C295.458,602.525,295.458,602.525,295.458,602.625z"/>
+                </g>
+            </g>
+        </g>
+    </symbol>
+
+    <symbol id="check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </symbol>
+
+    <symbol id="circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+    </symbol>
+
+    <symbol id="youtube2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+    </symbol>
+
+    <symbol id="menu" viewBox="0 0 51 51">
+        <g>
+            <path d="M2,13.5h49c1.104,0,2-0.896,2-2s-0.896-2-2-2H2c-1.104,0-2,0.896-2,2S0.896,13.5,2,13.5z"></path>
+            <path d="M2,28.5h49c1.104,0,2-0.896,2-2s-0.896-2-2-2H2c-1.104,0-2,0.896-2,2S0.896,28.5,2,28.5z"></path>
+            <path d="M2,43.5h49c1.104,0,2-0.896,2-2s-0.896-2-2-2H2c-1.104,0-2,0.896-2,2S0.896,43.5,2,43.5z"></path>
+        </g>
+    </symbol>
+
+    <symbol id="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+    </symbol>
+
+    <symbol id="rating" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+        <line x1="18" y1="20" x2="18" y2="10"></line>
+        <line x1="12" y1="20" x2="12" y2="4"></line>
+        <line x1="6" y1="20" x2="6" y2="14"></line>
+    </symbol>
+</svg>

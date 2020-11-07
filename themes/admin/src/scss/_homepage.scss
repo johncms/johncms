@@ -1,0 +1,60 @@
+.mobile_tiles {
+    @media (max-width: 575px) {
+        padding: 0 15px;
+    }
+
+    .tile {
+
+        @media (max-width: 400px) {
+            padding: 0;
+            &:nth-child(odd) {
+                padding-right: 5px;
+            }
+            &:nth-child(even) {
+                padding-left: 5px;
+            }
+
+            .icon-40 {
+                height: 30px;
+                width: 30px;
+            }
+        }
+
+        @media (min-width: 401px) and (max-width: 575px) {
+            padding: 0;
+            &:nth-child(odd) {
+                padding-right: 10px;
+            }
+            &:nth-child(even) {
+                padding-left: 10px;
+            }
+        }
+
+    }
+
+    .tile_name {
+        font-size: 1.1rem;
+        @media (max-width: 400px) {
+            font-size: 0.9rem;
+        }
+    }
+
+}
+
+.mobile_jumbotron {
+    @media (max-width: 525px) {
+
+        .btn {
+            .icon {
+                width: 20px;
+            }
+        }
+        .hide-xs {
+            display: none;
+        }
+
+        .lead {
+            font-size: 0.95rem;
+        }
+    }
+}

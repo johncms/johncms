@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var string $message
+ * @var string $max_length
+ * @var string $action_url
+ * @var string $code
+ * @var string $bb_codes
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<?php if (! empty($data['message_form'])): ?>
+    <div class="mb-3">
+        <?= $data['message_form'] ?>
+    </div>
+<?php endif; ?>
+
+<?php if (! empty($data['back_url'])): ?>
+    <div>
+        <a href="<?= $data['back_url'] ?>"><?= $data['back_url_name'] ?></a>
+    </div>
+<?php endif; ?>

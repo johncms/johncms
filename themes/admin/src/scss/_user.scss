@@ -1,0 +1,60 @@
+.user-row {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid $border-color !important;
+    border-radius: 0;
+
+    @media (max-width: 768px) {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    &.shadow {
+        box-shadow: none !important;
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .post-footer {
+        padding-top: 0 !important;
+
+        &.border-top {
+            border-top: none !important;
+        }
+    }
+
+    .user-avatar {
+        .avatar-image {
+            width: 40px;
+            height: 40px;
+        }
+
+        .user-status {
+            width: 10px;
+            height: 10px;
+        }
+    }
+
+    .user-login {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+}
+
+.profile-avatar {
+    display: block;
+    @media (max-width: 991px) {
+        .avatar-image {
+            width: 80px;
+            height: 80px;
+        }
+        .user-status {
+            height: 13px;
+            width: 13px;
+        }
+    }
+}

@@ -1,0 +1,101 @@
+// Body
+$body-bg: #f4f3ef;
+
+// Typography
+$font-family-sans-serif: "Roboto", sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$font-size-lg: $font-size-base * 1.25 !default;
+$font-size-sm: $font-size-base * .875 !default;
+
+$enable-responsive-font-sizes: true;
+
+$input-font-size: 1rem;
+
+//$fa-font-path: '/assets/fonts';
+
+// Цвета
+$blue: #2f75be;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66D9b;
+$red: #c81f4c;
+$orange: #EB5E28;
+$yellow: #F3BB45;
+$yellow_light: #fffbeb;
+$green: #42A084;
+$teal: #918d88;
+$cyan: #68B3C8;
+$brown: #66615B;
+$dark_brown: #7d4e3c;
+
+$theme-colors: (
+        "orange": $orange,
+        "dark-brown": $dark_brown,
+        "yellow-light": $yellow-light,
+);
+
+// Color system
+
+$white: #fff !default;
+$gray-100: #f4f3ef !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$primary: $brown !default;
+$secondary: $teal !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $orange !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
+
+
+// Размеры шрифтов
+$line-height-base: 1.5 !default;
+
+$h1-font-size: $font-size-base * 1.85;
+$h2-font-size: $font-size-base * 1.5;
+$h3-font-size: $font-size-base * 1.35;
+$h4-font-size: $font-size-base * 1.15;
+$h5-font-size: $font-size-base;
+$h6-font-size: $font-size-base;
+
+
+$border-radius: .25rem !default;
+$border-radius-lg: .3rem !default;
+$border-radius-sm: .2rem !default;
+
+
+// Настройки хлебных крошек
+$breadcrumb-padding-y: 0;
+$breadcrumb-padding-x: 0;
+$breadcrumb-item-padding: .5rem;
+
+$breadcrumb-margin-bottom: 1rem;
+
+$breadcrumb-bg: none !default;
+$breadcrumb-divider-color: $gray-600;
+$breadcrumb-active-color: $gray-600;
+$breadcrumb-divider: quote("/");
+
+$breadcrumb-border-radius: $border-radius;
+
+
+$box-shadow-sm: 0 .125rem .25rem rgba($black, .075) !default;
+$box-shadow: 0 6px 10px -4px rgba(0, 0, 0, .15);
+$box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
+
+
+$btn-border-radius: .25rem;
+$btn-border-radius-lg: .3rem;
+$btn-border-radius-sm: .2rem;

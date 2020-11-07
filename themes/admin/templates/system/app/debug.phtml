@@ -1,0 +1,47 @@
+<?php if (($user->rights >= 7 && DEBUG) || DEBUG_FOR_ALL): ?>
+    <?php
+    $connection = \Illuminate\Database\Capsule\Manager::connection();
+    $query_log = $connection->getQueryLog();
+    ?>
+    <div class="position-absolute small text-nowrap" style="bottom: -13px; right: 0;">
+        <a href="#" data-toggle="modal" data-target=".query_log_modal">SQL: <?= count($query_log) ?></a>, <?= format_size(memory_get_usage()) ?>, <?= round(microtime(true) - START_TIME, 2) ?> sec.
+    </div>
+    <?php if (! empty($query_log)): ?>
+        <div class="modal fade query_log_modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header align-items-center">
+                        <h4 class="modal-title">
+                            <?= d__('system', 'Sql query log') ?>
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="icon">&times;</span>
+                        </button>
+                    </div>
+                    <div class="p-2">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="border-top-0">#</th>
+                                <th scope="col" class="border-top-0"><?= d__('system', 'Query') ?></th>
+                                <th scope="col" class="border-top-0"><?= d__('system', 'Bindings') ?></th>
+                                <th scope="col" class="border-top-0"><?= d__('system', 'Time') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($query_log as $k => $query): ?>
+                                <tr>
+                                    <th scope="row"><?= $k ?></th>
+                                    <td><?= $query['query'] ?></td>
+                                    <td><?= implode(', ', $query['bindings']) ?></td>
+                                    <td><?= $query['time'] ?> ms.</td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif ?>
+<?php endif ?>

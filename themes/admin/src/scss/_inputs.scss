@@ -1,0 +1,46 @@
+.input-with-inner-btn {
+    display: flex;
+
+    .icon-button {
+        margin: 0 0 0 -50px;
+        cursor: pointer;
+        z-index: 5;
+        color: #878f95;
+    }
+}
+
+.search-in-nav {
+    .form-control {
+        background: #f5f5f5;
+        border: none;
+        width: 100%;
+    }
+}
+
+// В верхнем навбаре на форуме поиск на мобилках должен вести себя по-другому
+@media (max-width: 576px) {
+    .search-in-nav {
+        width: 70%;
+
+        .input-with-inner-btn {
+            transition: all 0.2s;
+            width: 70%;
+            min-width: 125px;
+            margin-left: auto;
+        }
+
+        &:focus-within {
+            position: absolute;
+            right: 15px;
+            width: calc(100% - 30px);
+
+            .input-with-inner-btn {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.custom-file-label {
+    overflow: hidden;
+}
