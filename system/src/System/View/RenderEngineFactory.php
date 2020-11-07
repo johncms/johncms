@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\System\View;
 
+use Johncms\Security\Csrf;
+use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Extension\Avatar;
@@ -30,10 +32,12 @@ class RenderEngineFactory
         $engine->loadExtension($container->get(Avatar::class));
         $engine->addData(
             [
-                'container' => $container,
-                'config'    => $config,
-                'locale'    => $container->get(Translator::class)->getLocale(),
-                'user'      => $container->get(User::class),
+                'container'  => $container,
+                'config'     => $config,
+                'locale'     => $container->get(Translator::class)->getLocale(),
+                'user'       => $container->get(User::class),
+                'tools'      => $container->get(Tools::class),
+                'csrf_token' => $container->get(Csrf::class)->getToken(),
             ]
         );
 

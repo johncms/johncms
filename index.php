@@ -13,6 +13,7 @@ declare(strict_types=1);
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
+use Johncms\Mail\EmailSender;
 
 require 'system/bootstrap.php';
 
@@ -50,4 +51,13 @@ switch ($match[0]) {
 
     default:
         pageNotFound();
+}
+
+// If cron usage is disabled.
+if (! USE_CRON && ! defined('_IN_JOHNADM')) {
+    $cron_cache = CACHE_PATH . 'cron.cache';
+    if (! file_exists($cron_cache) || filemtime($cron_cache) < (time() - 5)) {
+        EmailSender::send();
+        file_put_contents($cron_cache, time());
+    }
 }
