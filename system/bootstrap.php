@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Security\BanIP;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
@@ -19,7 +20,7 @@ date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
 // Check the current PHP version
-if (version_compare(PHP_VERSION, '7.2', '<')) {
+if (PHP_VERSION_ID < 70200) {
     die('<h1>ERROR!</h1><p>Your needs PHP 7.2 or higher</p>');
 }
 
@@ -63,34 +64,7 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    // Проверка на IP бан
-    $req = $db->query(
-        "SELECT `ban_type`, `link` FROM `cms_ban_ip`
-    WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
-    " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . '
-    LIMIT 1'
-    );
-
-    if ($req->rowCount()) {
-        $res = $req->fetch();
-
-        switch ($res['ban_type']) {
-            case 2:
-                if (! empty($res['link'])) {
-                    header('Location: ' . $res['link']);
-                } else {
-                    header('Location: http://johncms.com');
-                }
-                exit;
-            case 3:
-                //TODO: реализовать запрет регистрации
-                //self::$deny_registration = true;
-                break;
-            default:
-                header('HTTP/1.0 404 Not Found');
-                exit;
-        }
-    }
+    (new BanIP())->checkBan();
 
     // System cleanup
     new Johncms\System\Utility\Cleanup($db);
