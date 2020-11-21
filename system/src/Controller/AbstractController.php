@@ -37,6 +37,7 @@ abstract class AbstractController
                 $parameters[] = [
                     'name'  => $parameter->getName(),
                     'class' => $class !== null ? $class->getName() : null,
+                    'value' => $parameter->isOptional() ? $parameter->getDefaultValue() : null,
                 ];
             }
         } catch (ReflectionException $e) {
@@ -53,6 +54,8 @@ abstract class AbstractController
                 $injected_parameters[$parameter['name']] = di($parameter['class']);
             } elseif (array_key_exists($parameter['name'], $param_values)) {
                 $injected_parameters[$parameter['name']] = $param_values[$parameter['name']];
+            } else {
+                $injected_parameters[$parameter['name']] = $parameter['value'];
             }
         }
         return $injected_parameters;
