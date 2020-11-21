@@ -18,27 +18,25 @@ use ReflectionMethod;
 
 abstract class AbstractController
 {
-    public function runAction(string $action_name)
+    public function runAction(string $action_name, array $param_values = [])
     {
         if (! method_exists($this, $action_name)) {
             throw new BadMethodCallException(sprintf('Method %s::%s does not exist.', static::class, $action_name));
         }
-        $dependencies = $this->injectDependencies($action_name);
-        return $this->$action_name(...array_values($dependencies));
+        $parameters = $this->injectParameters($action_name, $param_values);
+        return $this->$action_name(...array_values($parameters));
     }
 
-    private function getMethodDependencies(string $action_name): array
+    private function getMethodParameters(string $action_name): array
     {
         $parameters = [];
         try {
             $reflection_method = new ReflectionMethod(static::class, $action_name);
             foreach ($reflection_method->getParameters() as $parameter) {
-                if ($parameter->getClass() === null) {
-                    continue;
-                }
+                $class = $parameter->getClass();
                 $parameters[] = [
                     'name'  => $parameter->getName(),
-                    'class' => $parameter->getClass()->getName(),
+                    'class' => $class !== null ? $class->getName() : null,
                 ];
             }
         } catch (ReflectionException $e) {
@@ -46,13 +44,17 @@ abstract class AbstractController
         return $parameters;
     }
 
-    private function injectDependencies(string $action_name): array
+    private function injectParameters(string $action_name, array $param_values): array
     {
-        $dependencies = $this->getMethodDependencies($action_name);
-        $parameters = [];
-        foreach ($dependencies as $dependency) {
-            $parameters[$dependency['name']] = di($dependency['class']);
+        $parameters = $this->getMethodParameters($action_name);
+        $injected_parameters = [];
+        foreach ($parameters as $parameter) {
+            if ($parameter['class'] !== null) {
+                $injected_parameters[$parameter['name']] = di($parameter['class']);
+            } elseif (array_key_exists($parameter['name'], $param_values)) {
+                $injected_parameters[$parameter['name']] = $param_values[$parameter['name']];
+            }
         }
-        return $parameters;
+        return $injected_parameters;
     }
 }
