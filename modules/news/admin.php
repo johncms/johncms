@@ -20,8 +20,6 @@ $route = di('route');
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('news', __DIR__ . '/locale');
 
-module_lib_loader('news');
-
 $category = $route['action'] ?? 'index';
 $category = rtrim($category, '/');
 

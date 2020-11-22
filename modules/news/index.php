@@ -18,8 +18,6 @@ $route = di('route');
 /** @var Request $request */
 $request = di(Request::class);
 
-module_lib_loader('news');
-
 $action_type = $request->getQuery('action', '');
 if (empty($category) && ! empty($action_type)) {
     switch ($action_type) {

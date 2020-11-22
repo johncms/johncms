@@ -33,7 +33,6 @@ class HomepageController extends BaseController
         );
 
         $data = [];
-        module_lib_loader('news');
         if ($config['news']['view'] > 0) {
             $news = (new NewsArticle())->active()->lastDays($config['news']['days'])->limit($config['news']['quantity'])->get();
         }
