@@ -130,6 +130,7 @@ function format_size(int $bytes): string
  *
  * @param $module_name
  * @param string $dir
+ * @deprecated Use the module's root directory as the folder for the namespace.
  */
 function module_lib_loader($module_name, $dir = 'lib')
 {

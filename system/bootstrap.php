@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Modules;
 use Johncms\Security\BanIP;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
@@ -76,6 +77,8 @@ $translator->addTranslationDomain('system', __DIR__ . '/locale');
 $translator->defaultDomain('system');
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
+
+(new Modules())->registerAutoloader();
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;
