@@ -9,8 +9,7 @@
 $this->layout('system::layout/default');
 ?>
 <div>
-    <form action="/news/" method="get" class="mb-3" style="max-width: 300px;">
-        <input type="hidden" name="action" value="search_by_tag">
+    <form action="/news/search_tags/" method="get" class="mb-3" style="max-width: 300px;">
         <label for="tag"><?= __('Enter a tag') ?></label>
         <div class="input-group">
             <input type="text" name="tag" id="tag" class="form-control" placeholder="<?= __('Enter a tag') ?>" value="<?= $query ?>">

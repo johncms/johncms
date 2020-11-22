@@ -18,8 +18,7 @@ $this->layout('system::layout/default');
 <?php endif ?>
 
 <div class="mb-3">
-    <form action="/news/" method="get" class="mb-3">
-        <input type="hidden" name="action" value="search">
+    <form action="/news/search/" method="get" class="mb-3">
         <div class="input-group">
             <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>">
             <div class="input-group-append">

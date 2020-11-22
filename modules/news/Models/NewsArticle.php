@@ -95,6 +95,14 @@ class NewsArticle extends Model
 
     private $rating_cache;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        /** @var User $user */
+        $user = di(User::class);
+        $this->perPage = $user->config->kmess;
+    }
+
     /**
      * Adding a search index to the query
      *

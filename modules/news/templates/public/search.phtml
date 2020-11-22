@@ -9,8 +9,7 @@
 $this->layout('system::layout/default');
 ?>
 <div>
-    <form action="/news/" method="get" class="mb-3" style="max-width: 300px;">
-        <input type="hidden" name="action" value="search">
+    <form action="/news/search/" method="get" class="mb-3" style="max-width: 300px;">
         <label for="query"><?= __('Search query') ?></label>
         <div class="input-group">
             <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>" value="<?= $query ?>">

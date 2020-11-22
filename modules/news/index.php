@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use News\Actions\Article;
 use News\Actions\Comments;
-use News\Actions\Search;
 use News\Actions\Section;
 use News\Actions\Vote;
 use Johncms\System\Http\Request;
@@ -24,16 +23,6 @@ if (empty($category) && ! empty($action_type)) {
         // Страница добавления голоса
         case 'set_vote':
             (new Vote())->add();
-            break;
-
-        // Страница поиска по тегам
-        case 'search_by_tag':
-            (new Search())->byTags();
-            break;
-
-        // Страница поиска по содержимому
-        case 'search':
-            (new Search())->index();
             break;
 
         // Страница списка комментариев
