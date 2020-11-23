@@ -34,10 +34,12 @@ abstract class AbstractController
             $reflection_method = new ReflectionMethod(static::class, $action_name);
             foreach ($reflection_method->getParameters() as $parameter) {
                 $class = $parameter->getClass();
+                $type = $parameter->getType();
                 $parameters[] = [
                     'name'  => $parameter->getName(),
                     'class' => $class !== null ? $class->getName() : null,
                     'value' => $parameter->isOptional() ? $parameter->getDefaultValue() : null,
+                    'type'  => $type !== null ? $type->getName() : '',
                 ];
             }
         } catch (ReflectionException $e) {
@@ -53,11 +55,32 @@ abstract class AbstractController
             if ($parameter['class'] !== null) {
                 $injected_parameters[$parameter['name']] = di($parameter['class']);
             } elseif (array_key_exists($parameter['name'], $param_values)) {
-                $injected_parameters[$parameter['name']] = $param_values[$parameter['name']];
+                $injected_parameters[$parameter['name']] = $this->castValue($parameter['type'], $param_values[$parameter['name']]);
             } else {
-                $injected_parameters[$parameter['name']] = $parameter['value'];
+                $injected_parameters[$parameter['name']] = $this->castValue($parameter['type'], $parameter['value']);
             }
         }
         return $injected_parameters;
+    }
+
+    /**
+     * @param string $type
+     * @param $value
+     * @return bool|float|int|string
+     */
+    private function castValue(string $type, $value)
+    {
+        switch ($type) {
+            case 'int':
+                return (int) $value;
+            case 'float':
+                return (float) $value;
+            case 'string':
+                return (string) $value;
+            case 'bool':
+                return (bool) $value;
+            default:
+                return $value;
+        }
     }
 }
