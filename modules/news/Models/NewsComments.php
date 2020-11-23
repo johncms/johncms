@@ -44,6 +44,14 @@ class NewsComments extends Model
 
     protected $appends = [];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        /** @var User $user */
+        $user = di(User::class);
+        $this->perPage = $user->config->kmess;
+    }
+
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');

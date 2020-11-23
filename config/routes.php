@@ -30,6 +30,9 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/news/search/', [News\Controllers\SearchController::class, 'index']);
     $map->addRoute(['GET', 'POST'], '/news/search_tags/', [News\Controllers\SearchController::class, 'byTags']);
     $map->addRoute(['GET', 'POST'], '/news/add_vote/{article_id:\d+}/{type_vote:\d}/', [News\Controllers\VoteController::class, 'add']);
+    $map->addRoute(['GET', 'POST'], '/news/comments/{article_id:\d+}/', [News\Controllers\CommentsController::class, 'index']);
+    $map->addRoute(['GET', 'POST'], '/news/comments/add/{article_id:\d+}/', [News\Controllers\CommentsController::class, 'add']);
+    $map->addRoute(['GET', 'POST'], '/news/comments/del/', [News\Controllers\CommentsController::class, 'del']);
     $map->addRoute(['GET', 'POST'], '/news/admin[/[{action}[/]]]', 'modules/news/admin.php');
     $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}[/[{article:[\w.+-]+}.html]]]', 'modules/news/index.php');
     $map->addRoute(['GET', 'POST'], '/news/{article:[\w.+-]+}.html', 'modules/news/index.php');

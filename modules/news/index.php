@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use News\Actions\Article;
-use News\Actions\Comments;
 use News\Actions\Section;
 use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
@@ -16,29 +15,7 @@ $route = di('route');
 /** @var Request $request */
 $request = di(Request::class);
 
-$action_type = $request->getQuery('action', '');
-if (empty($category) && ! empty($action_type)) {
-    switch ($action_type) {
-        // Страница списка комментариев
-        case 'comments':
-            (new Comments())->index();
-            break;
-
-        // Страница добавления комментария
-        case 'add_comment':
-            (new Comments())->add();
-            break;
-
-        // Страница удаления комментария
-        case 'del_comment':
-            (new Comments())->del();
-            break;
-
-        // Неизвестная страница
-        default:
-            pageNotFound();
-    }
-} elseif (! empty($route['article'])) {
+if (! empty($route['article'])) {
     // Если запросили страницу статьи, открываем её
     (new Article())->index();
 } else {

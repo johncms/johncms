@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VoteController extends BaseController
 {
+    protected $module_name = 'news';
+
     /**
      * Add vote
      *
