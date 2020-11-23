@@ -5,7 +5,6 @@ declare(strict_types=1);
 use News\Actions\Article;
 use News\Actions\Comments;
 use News\Actions\Section;
-use News\Actions\Vote;
 use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
 
@@ -20,11 +19,6 @@ $request = di(Request::class);
 $action_type = $request->getQuery('action', '');
 if (empty($category) && ! empty($action_type)) {
     switch ($action_type) {
-        // Страница добавления голоса
-        case 'set_vote':
-            (new Vote())->add();
-            break;
-
         // Страница списка комментариев
         case 'comments':
             (new Comments())->index();

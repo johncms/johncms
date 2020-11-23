@@ -11,7 +11,7 @@
             </svg>
         </button>
         <span :class="rating_color" class="ml-2 mr-2 font-weight-bold">{{ rating > 0 ? '+' : '' }}{{ rating }}</span>
-        <button class="btn btn-light btn-sm" @click="setVote(-1)" :class="voted < 0 ? 'disliked' : ''" :disabled="voted < 0 || !can_vote">
+        <button class="btn btn-light btn-sm" @click="setVote(0)" :class="voted < 0 ? 'disliked' : ''" :disabled="voted < 0 || !can_vote">
             <svg class="icon download-button-icon mr-1">
                 <use xlink:href="/themes/default/assets/icons/sprite.svg#dislike"/>
             </svg>
@@ -38,7 +38,7 @@ export default {
         },
         set_vote_url: {
             type: String,
-            default: '/news/',
+            default: '/news/add_vote/',
         }
     },
     data()
@@ -63,7 +63,7 @@ export default {
         setVote(type)
         {
             this.loading = true;
-            axios.get(this.set_vote_url + '?action=set_vote&type_vote=' + type + '&article_id=' + this.article_id)
+            axios.get(this.set_vote_url + this.article_id + '/' + type + '/')
                     .then(response => {
                         this.rating = response.data.rating;
                         this.voted = response.data.voted;

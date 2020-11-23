@@ -1,25 +1,35 @@
 <?php
 
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 declare(strict_types=1);
 
-namespace News\Actions;
+namespace News\Controllers;
 
+use Johncms\Controller\BaseController;
+use Johncms\Users\User;
 use News\Models\NewsArticle;
-use News\Utils\AbstractAction;
 use News\Utils\Helpers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class Vote extends AbstractAction
+class VoteController extends BaseController
 {
     /**
      * Add vote
+     *
+     * @param User $user
+     * @param int $article_id
+     * @param bool $type_vote
      */
-    public function add(): void
+    public function add(User $user, int $article_id, bool $type_vote = false): void
     {
-        $article_id = $this->request->getQuery('article_id', 0, FILTER_VALIDATE_INT);
-        $type_vote = $this->request->getQuery('type_vote', 1, FILTER_VALIDATE_INT);
-
-        if (! $this->user->isValid()) {
+        if (! $user->isValid()) {
             http_response_code(403);
             Helpers::returnJson(['error' => __('The user is not authorized')]);
         }
@@ -28,10 +38,10 @@ class Vote extends AbstractAction
             $current_article = (new NewsArticle())->findOrFail($article_id);
             $current_article->votes()->updateOrCreate(
                 [
-                    'user_id' => $this->user->id,
+                    'user_id' => $user->id,
                 ],
                 [
-                    'vote' => $type_vote === 1 ? 1 : -1,
+                    'vote' => $type_vote ? 1 : -1,
                 ]
             );
             Helpers::returnJson(
