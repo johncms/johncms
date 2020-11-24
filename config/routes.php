@@ -33,9 +33,12 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/news/comments/{article_id:\d+}/', [News\Controllers\CommentsController::class, 'index']);
     $map->addRoute(['GET', 'POST'], '/news/comments/add/{article_id:\d+}/', [News\Controllers\CommentsController::class, 'add']);
     $map->addRoute(['GET', 'POST'], '/news/comments/del/', [News\Controllers\CommentsController::class, 'del']);
+
     $map->addRoute(['GET', 'POST'], '/news/admin[/[{action}[/]]]', 'modules/news/admin.php');
-    $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}[/[{article:[\w.+-]+}.html]]]', 'modules/news/index.php');
-    $map->addRoute(['GET', 'POST'], '/news/{article:[\w.+-]+}.html', 'modules/news/index.php');
+
+    $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}]', [News\Controllers\SectionController::class, 'index']);
+    $map->addRoute(['GET', 'POST'], '/news/{category:[\w/+-]+}/{article_code:[\w.+-]+}.html', [News\Controllers\ArticleController::class, 'index']);
+    $map->addRoute(['GET', 'POST'], '/news/{article_code:[\w.+-]+}.html', [News\Controllers\ArticleController::class, 'index']);
 
     $map->addRoute(['GET', 'POST'], '/online/[{action}/]', 'modules/online/index.php');               // Online site activity
     $map->addRoute(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php');                   // Restore Password

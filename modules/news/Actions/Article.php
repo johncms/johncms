@@ -16,61 +16,6 @@ use Illuminate\Support\Str;
 class Article extends AbstractAction
 {
     /**
-     * Article page
-     */
-    public function index(): void
-    {
-        $this->nav_chain->add(__('News'), '/news/');
-
-        $route = $this->route;
-        $current_section = null;
-        if (! empty($route['category'])) {
-            $path = Helpers::checkPath($route['category']);
-            if (! empty($path)) {
-                foreach ($path as $item) {
-                    /** @var $item NewsSection */
-                    $this->nav_chain->add($item->name, $item->url);
-                }
-                /** @var NewsSection $current_section */
-                $current_section = $path[array_key_last($path)];
-            }
-        }
-
-        try {
-            $article = (new NewsArticle())->where('code', $route['article'])->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            pageNotFound();
-        }
-
-        // Фиксируем количество просмотров
-        if (empty($_SESSION['news_viewed_articles']) || ! in_array($article->id, $_SESSION['news_viewed_articles'], true)) {
-            ++$article->view_count;
-            $article->save();
-            $_SESSION['news_viewed_articles'][] = $article->id;
-        }
-
-        $page_title = $article->name;
-        $this->nav_chain->add($page_title, $article->url);
-
-        $this->render->addData(
-            [
-                'title'       => $article->meta_title,
-                'page_title'  => $page_title,
-                'keywords'    => $article->meta_keywords,
-                'description' => $article->meta_description,
-            ]
-        );
-
-        echo $this->render->render(
-            'news::public/article',
-            [
-                'article'         => $article,
-                'current_section' => $current_section,
-            ]
-        );
-    }
-
-    /**
      * Article creation page
      */
     public function add(): void
