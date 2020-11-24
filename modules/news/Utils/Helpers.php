@@ -28,7 +28,7 @@ class Helpers
             while ($parent !== null) {
                 $parent_tree[] = [
                     'name' => $parent->name,
-                    'url'  => '/news/admin/content/?section_id=' . $parent->id,
+                    'url'  => '/news/admin/content/' . $parent->id . '/',
                 ];
                 $parent = $parent->parentSection;
             }

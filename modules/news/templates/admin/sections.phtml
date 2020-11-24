@@ -70,10 +70,10 @@ $articles = $data['articles'];
                     </div>
                 </th>
                 <th scope="row" class="border-left-0">
-                    <a href="/news/admin/content/?section_id=<?= $section->id ?>"><?= $section->id ?></a>
+                    <a href="/news/admin/content/<?= $section->id ?>/"><?= $section->id ?></a>
                 </th>
-                <td><a href="/news/admin/content/?section_id=<?= $section->id ?>"><?= $section->name ?></a></td>
-                <td><a href="/news/admin/content/?section_id=<?= $section->id ?>"><?= $section->code ?></a></td>
+                <td><a href="/news/admin/content/<?= $section->id ?>/"><?= $section->name ?></a></td>
+                <td><a href="/news/admin/content/<?= $section->id ?>/"><?= $section->code ?></a></td>
                 <td><?= __('Section') ?></td>
                 <td><?= $section->created_at ?></td>
                 <td><?= $section->updated_at ?></td>

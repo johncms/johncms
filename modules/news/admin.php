@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use News\Actions\Admin;
 use News\Actions\Article;
 use News\Actions\Section;
 use Johncms\NavChain;
@@ -34,21 +33,6 @@ if ($user->rights >= 9) {
             break;
         case 'del_article':
             (new Article())->del();
-            break;
-
-        // Главная страница админки
-        case 'index':
-            (new Admin())->index();
-            break;
-
-        // Управление контентом
-        case 'content':
-            (new Admin())->section();
-            break;
-
-        // Настройки
-        case 'settings':
-            (new Admin())->settings();
             break;
 
         // Страница добавления раздела

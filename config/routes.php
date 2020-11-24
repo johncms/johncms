@@ -34,7 +34,12 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/news/comments/add/{article_id:\d+}/', [News\Controllers\CommentsController::class, 'add']);
     $map->addRoute(['GET', 'POST'], '/news/comments/del/', [News\Controllers\CommentsController::class, 'del']);
 
-    $map->addRoute(['GET', 'POST'], '/news/admin[/[{action}[/]]]', 'modules/news/admin.php');
+    if ($user->rights >= 9 && $user->isValid()) {
+        $map->addRoute(['GET', 'POST'], '/news/admin/', [News\Controllers\Admin\AdminController::class, 'index']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/content/[{section_id:\d+}[/]]', [News\Controllers\Admin\AdminController::class, 'section']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/settings/', [News\Controllers\Admin\AdminController::class, 'settings']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/{action}[/]', 'modules/news/admin.php');
+    }
 
     $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}]', [News\Controllers\SectionController::class, 'index']);
     $map->addRoute(['GET', 'POST'], '/news/{category:[\w/+-]+}/{article_code:[\w.+-]+}.html', [News\Controllers\ArticleController::class, 'index']);

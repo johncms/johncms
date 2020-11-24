@@ -1,20 +1,38 @@
 <?php
 
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 declare(strict_types=1);
 
-namespace News\Actions;
+namespace News\Controllers\Admin;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Controller\BaseController;
+use Johncms\System\Http\Request;
 use News\Models\NewsArticle;
 use News\Models\NewsSection;
-use News\Utils\AbstractAction;
 use News\Utils\Helpers;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class Admin extends AbstractAction
+class AdminController extends BaseController
 {
-    /**
-     * Главная страница админ панели блога
-     */
+    protected $module_name = 'news';
+
+    protected $config;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->config = di('config')['news'] ?? [];
+        $this->nav_chain->add(__('News'), '/news/');
+        $this->nav_chain->add(__('Admin panel'), '/news/admin/');
+    }
+
     public function index(): void
     {
         $this->render->addData(
@@ -27,11 +45,13 @@ class Admin extends AbstractAction
     }
 
     /**
-     * Список разделов
+     * List of sections and articles
+     *
+     * @param int $section_id
+     * @return string
      */
-    public function section(): void
+    public function section(int $section_id = 0): string
     {
-        $section_id = $this->request->getQuery('section_id', 0);
         $title = __('Section list');
         $this->nav_chain->add($title, '/news/admin/content/');
 
@@ -39,9 +59,7 @@ class Admin extends AbstractAction
             try {
                 $current_section = (new NewsSection())->findOrFail($section_id);
                 $title = $current_section->name;
-
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
-
                 // Adding the current section to the navigation chain
                 $this->nav_chain->add($current_section->name);
             } catch (ModelNotFoundException $exception) {
@@ -50,7 +68,6 @@ class Admin extends AbstractAction
         }
 
         $data = [];
-
         if (! empty($_SESSION['success_message'])) {
             $data['messages'] = htmlspecialchars($_SESSION['success_message']);
             unset($_SESSION['success_message']);
@@ -58,10 +75,10 @@ class Admin extends AbstractAction
 
         if (empty($section_id)) {
             $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderBy('id')->paginate($this->user->config->kmess);
+            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderBy('id')->paginate();
         } else {
             $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderBy('id')->paginate($this->user->config->kmess);
+            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderBy('id')->paginate();
         }
 
         $data['current_section'] = $section_id;
@@ -72,13 +89,16 @@ class Admin extends AbstractAction
                 'page_title' => $title,
             ]
         );
-        echo $this->render->render('news::admin/sections', ['data' => $data]);
+        return $this->render->render('news::admin/sections', ['data' => $data]);
     }
 
     /**
-     * Страница настроек блога
+     * Module settings page.
+     *
+     * @param Request $request
+     * @return string
      */
-    public function settings(): void
+    public function settings(Request $request): string
     {
         $data = [
             'title'       => __('Settings'),
@@ -87,23 +107,30 @@ class Admin extends AbstractAction
             'form_action' => '/news/admin/settings/',
             'message'     => '',
         ];
+        $this->render->addData(
+            [
+                'title'      => $data['title'],
+                'page_title' => $data['page_title'],
+            ]
+        );
+        $this->nav_chain->add($data['page_title']);
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $config = [
-                'ckfinder_license_key'  => $this->request->getPost('ckfinder_license_key', '', FILTER_SANITIZE_STRING),
-                'ckfinder_license_name' => $this->request->getPost('ckfinder_license_name', '', FILTER_SANITIZE_STRING),
+                'ckfinder_license_key'  => $request->getPost('ckfinder_license_key', '', FILTER_SANITIZE_STRING),
+                'ckfinder_license_name' => $request->getPost('ckfinder_license_name', '', FILTER_SANITIZE_STRING),
 
-                'title'            => $this->request->getPost('title', '', FILTER_SANITIZE_STRING),
-                'meta_keywords'    => $this->request->getPost('meta_keywords', '', FILTER_SANITIZE_STRING),
-                'meta_description' => $this->request->getPost('meta_description', '', FILTER_SANITIZE_STRING),
+                'title'            => $request->getPost('title', '', FILTER_SANITIZE_STRING),
+                'meta_keywords'    => $request->getPost('meta_keywords', '', FILTER_SANITIZE_STRING),
+                'meta_description' => $request->getPost('meta_description', '', FILTER_SANITIZE_STRING),
 
-                'section_title'            => $this->request->getPost('section_title', '', FILTER_SANITIZE_STRING),
-                'section_meta_keywords'    => $this->request->getPost('section_meta_keywords', '', FILTER_SANITIZE_STRING),
-                'section_meta_description' => $this->request->getPost('section_meta_description', '', FILTER_SANITIZE_STRING),
+                'section_title'            => $request->getPost('section_title', '', FILTER_SANITIZE_STRING),
+                'section_meta_keywords'    => $request->getPost('section_meta_keywords', '', FILTER_SANITIZE_STRING),
+                'section_meta_description' => $request->getPost('section_meta_description', '', FILTER_SANITIZE_STRING),
 
-                'article_title'            => $this->request->getPost('article_title', '', FILTER_SANITIZE_STRING),
-                'article_meta_keywords'    => $this->request->getPost('article_meta_keywords', '', FILTER_SANITIZE_STRING),
-                'article_meta_description' => $this->request->getPost('article_meta_description', '', FILTER_SANITIZE_STRING),
+                'article_title'            => $request->getPost('article_title', '', FILTER_SANITIZE_STRING),
+                'article_meta_keywords'    => $request->getPost('article_meta_keywords', '', FILTER_SANITIZE_STRING),
+                'article_meta_description' => $request->getPost('article_meta_description', '', FILTER_SANITIZE_STRING),
             ];
 
             $configFile = "<?php\n\n" . 'return ' . var_export(['news' => $config], true) . ";\n";
@@ -147,6 +174,6 @@ class Admin extends AbstractAction
         $data['current_settings'] = array_merge($default_settings, $config);
 
         // Выводим шаблон настроек уведомлений
-        echo $this->render->render('news::admin/settings', ['data' => $data]);
+        return $this->render->render('news::admin/settings', ['data' => $data]);
     }
 }
