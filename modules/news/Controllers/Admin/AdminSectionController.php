@@ -1,33 +1,56 @@
 <?php
 
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 declare(strict_types=1);
 
-namespace News\Actions;
+namespace News\Controllers\Admin;
 
-use News\Models\NewsArticle;
-use News\Models\NewsSection;
-use News\Utils\AbstractAction;
-use News\Utils\Helpers;
-use News\Utils\Subsections;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Johncms\Controller\BaseController;
+use Johncms\System\Http\Request;
+use News\Models\NewsArticle;
+use News\Models\NewsSection;
+use News\Utils\Helpers;
+use News\Utils\Subsections;
 
-class Section extends AbstractAction
+class AdminSectionController extends BaseController
 {
+    protected $module_name = 'news';
+
+    protected $config;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->config = di('config')['news'] ?? [];
+        $this->nav_chain->add(__('News'), '/news/');
+        $this->nav_chain->add(__('Admin panel'), '/news/admin/');
+        $this->nav_chain->add(__('Section list'), '/news/admin/content/');
+    }
+
     /**
      * Section creation page
+     *
+     * @param Request $request
+     * @param int $section_id
+     * @return string
      */
-    public function add(): void
+    public function add(Request $request, int $section_id = 0): string
     {
-        $this->nav_chain->add(__('Section list'), '/news/admin/content/');
         $this->render->addData(
             [
                 'title'      => __('Create section'),
                 'page_title' => __('Create section'),
             ]
         );
-
-        $section_id = $this->request->getQuery('section_id', null, FILTER_VALIDATE_INT);
 
         if (! empty($section_id)) {
             try {
@@ -36,7 +59,7 @@ class Section extends AbstractAction
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name, '/news/admin/content/?section_id=' . $current_section->id);
+                $this->nav_chain->add($current_section->name, '/news/admin/content/' . $current_section->id);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
@@ -45,16 +68,16 @@ class Section extends AbstractAction
         $this->nav_chain->add(__('Create section'));
 
         $data = [
-            'action_url' => '/news/admin/add_section/?section_id=' . $section_id,
-            'back_url'   => '/news/admin/content/?section_id=' . $section_id,
+            'action_url' => '/news/admin/add_section/' . $section_id,
+            'back_url'   => '/news/admin/content/' . $section_id,
             'section_id' => $section_id,
             'fields'     => [
                 'parent'      => $section_id,
-                'name'        => $this->request->getPost('name', '', FILTER_SANITIZE_STRING),
-                'code'        => $this->request->getPost('code', '', FILTER_SANITIZE_STRING),
-                'keywords'    => $this->request->getPost('keywords', '', FILTER_SANITIZE_STRING),
-                'description' => $this->request->getPost('description', '', FILTER_SANITIZE_STRING),
-                'text'        => $this->request->getPost('text', ''),
+                'name'        => $request->getPost('name', '', FILTER_SANITIZE_STRING),
+                'code'        => $request->getPost('code', '', FILTER_SANITIZE_STRING),
+                'keywords'    => $request->getPost('keywords', '', FILTER_SANITIZE_STRING),
+                'description' => $request->getPost('description', '', FILTER_SANITIZE_STRING),
+                'text'        => $request->getPost('text', ''),
             ],
         ];
 
@@ -62,7 +85,7 @@ class Section extends AbstractAction
 
         $errors = [];
         // Processing the sent data from the form.
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             if (empty($data['fields']['name'])) {
                 $errors[] = __('The section name cannot be empty');
             }
@@ -90,7 +113,7 @@ class Section extends AbstractAction
                 if (! $check) {
                     (new NewsSection())->create($data['fields']);
                     $_SESSION['success_message'] = __('The section was created successfully');
-                    header('Location: /news/admin/content/?section_id=' . $section_id);
+                    header('Location: /news/admin/content/' . $section_id);
                     exit;
                 }
                 $errors[] = __('A section with this code already exists');
@@ -99,24 +122,25 @@ class Section extends AbstractAction
 
         $data['errors'] = $errors;
 
-        echo $this->render->render('news::admin/add_section', ['data' => $data]);
+        return $this->render->render('news::admin/add_section', ['data' => $data]);
     }
-
 
     /**
      * The edit section page
+     *
+     * @param int $section_id
+     * @param Request $request
+     * @return string
      */
-    public function edit(): void
+    public function edit(int $section_id, Request $request): string
     {
-        $this->nav_chain->add(__('Section list'), '/news/admin/content/');
+        $this->nav_chain->add(__('Edit section'));
         $this->render->addData(
             [
                 'title'      => __('Edit section'),
                 'page_title' => __('Edit section'),
             ]
         );
-
-        $section_id = $this->request->getQuery('section_id', 0, FILTER_VALIDATE_INT);
 
         try {
             $section = (new NewsSection())->findOrFail($section_id);
@@ -125,18 +149,16 @@ class Section extends AbstractAction
             pageNotFound();
         }
 
-        $this->nav_chain->add(__('Edit section'));
-
         $data = [
-            'action_url' => '/news/admin/edit_section/?section_id=' . $section_id,
-            'back_url'   => '/news/admin/content/?section_id=' . $section->parent,
+            'action_url' => '/news/admin/edit_section/' . $section_id,
+            'back_url'   => '/news/admin/content/' . $section->parent,
             'section_id' => $section_id,
             'fields'     => [
-                'name'        => $this->request->getPost('name', $section->name, FILTER_SANITIZE_STRING),
-                'code'        => $this->request->getPost('code', $section->code, FILTER_SANITIZE_STRING),
-                'keywords'    => $this->request->getPost('keywords', $section->keywords, FILTER_SANITIZE_STRING),
-                'description' => $this->request->getPost('description', $section->description, FILTER_SANITIZE_STRING),
-                'text'        => $this->request->getPost('text', $section->text),
+                'name'        => $request->getPost('name', $section->name, FILTER_SANITIZE_STRING),
+                'code'        => $request->getPost('code', $section->code, FILTER_SANITIZE_STRING),
+                'keywords'    => $request->getPost('keywords', $section->keywords, FILTER_SANITIZE_STRING),
+                'description' => $request->getPost('description', $section->description, FILTER_SANITIZE_STRING),
+                'text'        => $request->getPost('text', $section->text),
             ],
         ];
 
@@ -144,7 +166,7 @@ class Section extends AbstractAction
 
         $errors = [];
         // Processing the sent data from the form.
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             if (empty($data['fields']['name'])) {
                 $errors[] = __('The section name cannot be empty');
             }
@@ -166,7 +188,7 @@ class Section extends AbstractAction
                 if (! $check) {
                     $section->update($data['fields']);
                     $_SESSION['success_message'] = __('The section was updated successfully');
-                    header('Location: /news/admin/content/?section_id=' . $section->parent);
+                    header('Location: /news/admin/content/' . $section->parent);
                     exit;
                 }
                 $errors[] = __('A section with this code already exists');
@@ -175,31 +197,33 @@ class Section extends AbstractAction
 
         $data['errors'] = $errors;
 
-        echo $this->render->render('news::admin/add_section', ['data' => $data]);
+        return $this->render->render('news::admin/add_section', ['data' => $data]);
     }
 
     /**
      * Delete section
+     *
+     * @param int $section_id
+     * @param Request $request
+     * @return string
      */
-    public function del(): void
+    public function del(int $section_id, Request $request): string
     {
         $data = [];
-        $id = $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
-
         // Get the section to delete
         try {
-            $section = (new NewsSection())->findOrFail($id);
+            $section = (new NewsSection())->findOrFail($section_id);
         } catch (ModelNotFoundException $exception) {
             exit($exception->getMessage());
         }
 
-        $post = $this->request->getParsedBody();
+        $post = $request->getParsedBody();
 
         // Checking the data and deleting the section
         if (
             isset($post['delete_token'], $_SESSION['delete_token']) &&
             $_SESSION['delete_token'] === $post['delete_token'] &&
-            $this->request->getMethod() === 'POST'
+            $request->getMethod() === 'POST'
         ) {
             /** @var Subsections $subsections */
             $subsections = di(Subsections::class);
@@ -215,7 +239,7 @@ class Section extends AbstractAction
             (new NewsSection())->whereIn('id', $children_sections)->delete();
 
             $_SESSION['success_message'] = __('The section was successfully deleted');
-            header('Location: /news/admin/content/?section_id=' . $section->parent);
+            header('Location: /news/admin/content/' . $section->parent);
             exit;
         }
 
@@ -225,8 +249,8 @@ class Section extends AbstractAction
         $data['delete_token'] = uniqid('', true);
         $_SESSION['delete_token'] = $data['delete_token'];
 
-        $data['action_url'] = '/news/admin/del_section/?id=' . $id;
+        $data['action_url'] = '/news/admin/del_section/' . $section_id;
 
-        echo $this->render->render('news::admin/del', ['data' => $data]);
+        return $this->render->render('news::admin/del', ['data' => $data]);
     }
 }

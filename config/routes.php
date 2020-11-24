@@ -38,7 +38,12 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/news/admin/', [News\Controllers\Admin\AdminController::class, 'index']);
         $map->addRoute(['GET', 'POST'], '/news/admin/content/[{section_id:\d+}[/]]', [News\Controllers\Admin\AdminController::class, 'section']);
         $map->addRoute(['GET', 'POST'], '/news/admin/settings/', [News\Controllers\Admin\AdminController::class, 'settings']);
-        $map->addRoute(['GET', 'POST'], '/news/admin/{action}[/]', 'modules/news/admin.php');
+        $map->addRoute(['GET', 'POST'], '/news/admin/edit_article/{article_id:\d+}[/]', [News\Controllers\Admin\AdminArticleController::class, 'edit']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/add_article/[{section_id:\d+}[/]]', [News\Controllers\Admin\AdminArticleController::class, 'add']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/del_article/{article_id:\d+}[/]', [News\Controllers\Admin\AdminArticleController::class, 'del']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/add_section/[{section_id:\d+}[/]]', [News\Controllers\Admin\AdminSectionController::class, 'add']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/edit_section/{section_id:\d+}[/]', [News\Controllers\Admin\AdminSectionController::class, 'edit']);
+        $map->addRoute(['GET', 'POST'], '/news/admin/del_section/{section_id:\d+}[/]', [News\Controllers\Admin\AdminSectionController::class, 'del']);
     }
 
     $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}]', [News\Controllers\SectionController::class, 'index']);

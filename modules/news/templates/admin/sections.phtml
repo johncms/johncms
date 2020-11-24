@@ -34,8 +34,8 @@ $articles = $data['articles'];
 <?php endif ?>
 
 <div class="mb-3">
-    <a href="/news/admin/add_article/?section_id=<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add article') ?></a>
-    <a href="/news/admin/add_section/?section_id=<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
+    <a href="/news/admin/add_article/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add article') ?></a>
+    <a href="/news/admin/add_section/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
 </div>
 
 <table class="table table-bordered bg-white">
@@ -64,8 +64,8 @@ $articles = $data['articles'];
                             </svg>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/news/admin/edit_section/?section_id=<?= $section->id ?>"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" data-url="/news/admin/del_section/?id=<?= $section->id ?>" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" href="/news/admin/edit_section/<?= $section->id ?>/"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" data-url="/news/admin/del_section/<?= $section->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>
@@ -91,14 +91,14 @@ $articles = $data['articles'];
                             </svg>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" data-url="/news/admin/del_article/?id=<?= $article->id ?>" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" href="/news/admin/edit_article/<?= $article->id ?>/"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" data-url="/news/admin/del_article/<?= $article->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>
-                <th scope="row" class="border-left-0"><a href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->id ?></a></th>
-                <td><a href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->name ?></a></td>
-                <td><a href="/news/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->code ?></a></td>
+                <th scope="row" class="border-left-0"><a href="/news/admin/edit_article/<?= $article->id ?>/"><?= $article->id ?></a></th>
+                <td><a href="/news/admin/edit_article/<?= $article->id ?>/"><?= $article->name ?></a></td>
+                <td><a href="/news/admin/edit_article/<?= $article->id ?>/"><?= $article->code ?></a></td>
                 <td><?= __('Article') ?></td>
                 <td><?= $article->created_at ?></td>
                 <td><?= $article->updated_at ?></td>
