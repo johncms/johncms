@@ -757,16 +757,6 @@ class Database
     public static function installDemo(): void
     {
         $connection = Capsule::connection();
-        $user = (new User())->find(1);
-
-        $connection->table('news')->insert(
-            [
-                'time' => time(),
-                'avt'  => $user->name,
-                'name' => __('Welcome to our website!'),
-                'text' => "Hello!\r\nWe hope that You will like it here and you will be our regular visitor.",
-            ]
-        );
 
         $connection->statement(
             "INSERT INTO `forum_sections` (`id`, `parent`, `name`, `description`, `meta_description`, `meta_keywords`, `sort`, `access`, `section_type`) VALUES
