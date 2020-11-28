@@ -54,7 +54,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getQuery(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getQuery(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getQueryParams(), $filter, $options)
             ?? $default;
@@ -67,7 +67,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getPost(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getPost(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getParsedBody(), $filter, $options)
             ?? $default;
@@ -80,7 +80,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getCookie(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getCookie(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getCookieParams(), $filter, $options)
             ?? $default;
@@ -93,7 +93,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getServer(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getServer(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getServerParams(), $filter, $options)
             ?? $default;
