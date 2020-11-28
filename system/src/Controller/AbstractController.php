@@ -33,11 +33,11 @@ abstract class AbstractController
         try {
             $reflection_method = new ReflectionMethod(static::class, $action_name);
             foreach ($reflection_method->getParameters() as $parameter) {
-                $class = $parameter->getClass();
                 $type = $parameter->getType();
+                $class_name = $type && ! $type->isBuiltin() ? $type->getName() : null;
                 $parameters[] = [
                     'name'  => $parameter->getName(),
-                    'class' => $class !== null ? $class->getName() : null,
+                    'class' => $class_name ?? null,
                     'value' => $parameter->isOptional() ? $parameter->getDefaultValue() : null,
                     'type'  => $type !== null ? $type->getName() : '',
                 ];
