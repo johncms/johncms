@@ -14,7 +14,6 @@ namespace Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
-use Johncms\Users\User;
 
 class Database
 {
@@ -22,7 +21,8 @@ class Database
     {
         $schema = Capsule::schema();
         $connection = Capsule::connection();
-
+        // For older versions of mysql
+        $schema::defaultStringLength(191);
         $schema->dropAllTables();
 
         // Реклама
