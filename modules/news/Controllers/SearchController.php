@@ -50,7 +50,12 @@ class SearchController extends BaseController
 
         $query = $request->getQuery('query', '', FILTER_SANITIZE_STRING);
         if (! empty($query)) {
-            $articles = (new NewsArticle())->search()->where('news_search_index.text', 'like', '%' . $query . '%')->paginate();
+            $articles = (new NewsArticle())
+                ->active()
+                ->withCount('comments')
+                ->search()
+                ->where('news_search_index.text', 'like', '%' . $query . '%')
+                ->paginate();
         }
 
         return $this->render->render(
@@ -83,7 +88,11 @@ class SearchController extends BaseController
 
         $query = $request->getQuery('tag', '', FILTER_SANITIZE_STRING);
         if (! empty($query)) {
-            $articles = (new NewsArticle())->where('tags', 'like', '%' . $query . '%')->paginate();
+            $articles = (new NewsArticle())
+                ->active()
+                ->withCount('comments')
+                ->where('tags', 'like', '%' . $query . '%')
+                ->paginate();
         }
 
         return $this->render->render(

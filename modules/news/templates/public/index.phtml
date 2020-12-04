@@ -5,7 +5,7 @@
  * @var $page_title
  * @var $current_section
  * @var $user
- * @var $articles Illuminate\Contracts\Pagination\LengthAwarePaginator
+ * @var $articles \News\Models\NewsArticle[]
  * @var $sections \News\Models\NewsSection
  */
 
@@ -18,18 +18,19 @@ $this->layout('system::layout/default');
 <?php endif ?>
 
 <div class="mb-3">
-    <form action="/news/search/" method="get" class="mb-3">
-        <div class="input-group">
-            <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
-            </div>
+    <form action="/news/search/" method="get" class="search-in-nav mb-3" style="max-width: 500px;">
+        <div class="input-with-inner-btn">
+            <input name="query" type="text" minlength="4" placeholder="<?= __('Search query') ?>" class="form-control pr-5 border-radius-12">
+            <button type="submit" name="submit" value="1" class="btn icon-button">
+                <svg class="icon">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"></use>
+                </svg>
+            </button>
         </div>
     </form>
     <?php if ($sections->count() > 0): ?>
         <nav class="nav">
             <?php foreach ($sections as $section): ?>
-                <?php /** @var $section \News\Models\NewsSection */ ?>
                 <a class="nav-link pl-0" href="<?= $section->url ?>"><?= $section->name ?></a>
             <?php endforeach; ?>
         </nav>
@@ -39,7 +40,6 @@ $this->layout('system::layout/default');
 <div>
     <?php if ($articles->count() > 0): ?>
         <?php foreach ($articles as $article): ?>
-            <?php /** @var $article \News\Models\NewsArticle */ ?>
             <div class="new_post-item without_avatar">
                 <a href="<?= $article->url ?>" class="post-title"><?= $article->name ?></a>
                 <?php if ($article->preview_text_safe): ?>
