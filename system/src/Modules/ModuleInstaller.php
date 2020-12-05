@@ -32,12 +32,12 @@ class ModuleInstaller
 
     public function install(): void
     {
-        $this->installer->doInstall();
+        $this->installer->install();
     }
 
     public function uninstall(): void
     {
-        $this->installer->doUninstall();
+        $this->installer->uninstall();
     }
 
     protected function getInstallerClassName(): string

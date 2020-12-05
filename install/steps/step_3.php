@@ -11,6 +11,8 @@
 declare(strict_types=1);
 
 use Install\Database;
+use Johncms\Modules\ModuleInstaller;
+use Johncms\Modules\Modules;
 use Johncms\System\Http\Request;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -70,6 +72,18 @@ if ($request->getMethod() === 'POST') {
 
         if (file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)) {
             Database::createTables();
+
+            // Installing modules
+            $modules = new Modules();
+            $modules->registerAutoloader();
+            $installed_modules = $modules->getInstalled();
+            foreach ($installed_modules as $module) {
+                try {
+                    (new ModuleInstaller($module))->install();
+                } catch (Exception $exception) {
+                }
+            }
+
             header('Location: /install/?step=4');
             exit;
         }

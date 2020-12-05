@@ -23,7 +23,7 @@ abstract class Installer
         $this->module_name = $module_name;
     }
 
-    abstract public function doInstall(): void;
+    abstract public function install(): void;
 
-    abstract public function doUninstall(): void;
+    abstract public function uninstall(): void;
 }
