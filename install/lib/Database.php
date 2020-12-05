@@ -20,7 +20,6 @@ class Database
     public static function createTables(): void
     {
         $schema = Capsule::schema();
-        $connection = Capsule::connection();
         // For older versions of mysql
         $schema::defaultStringLength(191);
         $schema->dropAllTables();
@@ -46,84 +45,6 @@ class Database
                 $table->tinyInteger('italic')->unsigned()->default(0)->nullable();
                 $table->tinyInteger('underline')->unsigned()->default(0)->nullable();
                 $table->tinyInteger('show')->unsigned()->default(0)->nullable();
-            }
-        );
-
-        // Альбомы
-        $schema->create(
-            'cms_album_cat',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned()->index('user_id');
-                $table->integer('sort')->unsigned()->default(0);
-                $table->string('name');
-                $table->text('description');
-                $table->string('password')->nullable();
-                $table->integer('access')->nullable()->index('access');
-            }
-        );
-
-        $schema->create(
-            'cms_album_comments',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('sub_id')->unsigned()->default(0)->index('sub_id');
-                $table->integer('time')->unsigned()->default(0);
-                $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->text('text');
-                $table->text('reply');
-                $table->text('attributes');
-            }
-        );
-
-        $schema->create(
-            'cms_album_downloads',
-            static function (Blueprint $table) {
-                $table->integer('user_id')->unsigned()->default(0);
-                $table->integer('file_id')->unsigned()->default(0);
-                $table->integer('time')->unsigned()->default(0);
-                $table->primary(['user_id', 'file_id'], 'user_file');
-            }
-        );
-
-        $schema->create(
-            'cms_album_files',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned()->index('user_id');
-                $table->integer('album_id')->unsigned()->index('album_id');
-                $table->text('description');
-                $table->string('img_name')->default('');
-                $table->string('tmb_name')->default('');
-                $table->integer('time')->unsigned()->default(0);
-                $table->boolean('comments')->default(1);
-                $table->integer('comm_count')->unsigned()->default(0);
-                $table->tinyInteger('access')->unsigned()->default(0)->index('access');
-                $table->integer('vote_plus')->default(0);
-                $table->integer('vote_minus')->default(0);
-                $table->integer('views')->unsigned()->default(0);
-                $table->integer('downloads')->unsigned()->default(0);
-                $table->boolean('unread_comments')->default(0);
-            }
-        );
-
-        $schema->create(
-            'cms_album_views',
-            static function (Blueprint $table) {
-                $table->integer('user_id')->unsigned()->default(0);
-                $table->integer('file_id')->unsigned()->default(0);
-                $table->integer('time')->unsigned()->default(0);
-                $table->primary(['user_id', 'file_id'], 'user_file');
-            }
-        );
-
-        $schema->create(
-            'cms_album_votes',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->integer('file_id')->unsigned()->default(0)->index('file_id');
-                $table->tinyInteger('vote');
             }
         );
 
@@ -157,22 +78,6 @@ class Database
             }
         );
 
-        // Контакты
-        $schema->create(
-            'cms_contact',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned()->default(0);
-                $table->integer('from_id')->unsigned()->default(0);
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->tinyInteger('type')->unsigned()->default(1);
-                $table->tinyInteger('friends')->unsigned()->default(0);
-                $table->tinyInteger('ban')->unsigned()->default(0)->index('ban');
-                $table->tinyInteger('man')->unsigned()->default(0);
-                $table->unique(['user_id', 'from_id'], 'id_user');
-            }
-        );
-
         // Счетчики
         $schema->create(
             'cms_counters',
@@ -184,80 +89,6 @@ class Database
                 $table->text('link2');
                 $table->tinyInteger('mode')->default(1);
                 $table->boolean('switch')->default(0);
-            }
-        );
-
-        // Файлы форума
-        $schema->create(
-            'cms_forum_files',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('cat')->unsigned()->default(0)->index('cat');
-                $table->integer('subcat')->unsigned()->default(0)->index('subcat');
-                $table->integer('topic')->unsigned()->default(0)->index('topic');
-                $table->integer('post')->unsigned()->default(0)->index('post');
-                $table->integer('time')->unsigned()->default(0);
-                $table->text('filename');
-                $table->tinyInteger('filetype')->unsigned()->default(0);
-                $table->integer('dlcount')->unsigned()->default(0);
-                $table->boolean('del')->default(0);
-            }
-        );
-
-        // Непрочитанное форума
-        $schema->create(
-            'cms_forum_rdm',
-            static function (Blueprint $table) {
-                $table->integer('topic_id')->unsigned()->default(0);
-                $table->integer('user_id')->unsigned()->default(0);
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->primary(['topic_id', 'user_id'], 'topic_user');
-            }
-        );
-
-        // Опросы форума
-        $schema->create(
-            'cms_forum_vote',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('type')->default(0)->index('type');
-                $table->integer('time')->unsigned()->default(0);
-                $table->integer('topic')->unsigned()->default(0)->index('topic');
-                $table->string('name');
-                $table->integer('count')->unsigned()->default(0);
-                $table->index(['type', 'topic'], 'type_topic');
-            }
-        );
-
-        // Участники опросов
-        $schema->create(
-            'cms_forum_vote_users',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user')->default(0);
-                $table->integer('topic')->index('topic');
-                $table->integer('vote');
-                $table->index(['topic', 'user'], 'topic_user');
-            }
-        );
-
-        // Почта
-        $schema->create(
-            'cms_mail',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->integer('from_id')->unsigned()->default(0)->index('from_id');
-                $table->text('text');
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->boolean('read')->default(0)->index('read');
-                $table->boolean('sys')->default(0)->index('sys');
-                $table->integer('delete')->unsigned()->default(0)->index('delete');
-                $table->string('file_name')->default('');
-                $table->integer('count')->default(0);
-                $table->integer('size')->default(0);
-                $table->string('them')->default('');
-                $table->boolean('spam')->default(0);
             }
         );
 
@@ -314,102 +145,6 @@ class Database
             }
         );
 
-        // Закладки в загрузках
-        $schema->create(
-            'download__bookmark',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->index('user_id');
-                $table->integer('file_id')->index('file_id');
-            }
-        );
-
-        // Категории в загрузках
-        $schema->create(
-            'download__category',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('refid')->unsigned()->default(0)->index('refid');
-                $table->text('dir');
-                $table->integer('sort')->default(0);
-                $table->text('name');
-                $table->integer('total')->unsigned()->default(0)->index('total');
-                $table->text('rus_name');
-                $table->text('text');
-                $table->integer('field')->unsigned()->default(0);
-                $table->text('desc');
-            }
-        );
-
-        // Комментарии в загрузках
-        $schema->create(
-            'download__comments',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('sub_id')->unsigned()->index('sub_id');
-                $table->integer('time');
-                $table->integer('user_id')->unsigned()->index('user_id');
-                $table->text('text');
-                $table->text('reply');
-                $table->text('attributes');
-            }
-        );
-
-        // Файлы в загрузках
-        $schema->create(
-            'download__files',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('refid')->unsigned()->default(0)->index('refid');
-                $table->text('dir');
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->text('name');
-                $table->integer('type')->unsigned()->default(0)->index('type');
-                $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->text('rus_name');
-                $table->text('text');
-                $table->integer('field')->unsigned()->default(0);
-                $table->string('rate')->default('0|0');
-                $table->text('about');
-                $table->text('desc');
-                $table->integer('comm_count')->unsigned()->default(0)->index('comm_count');
-            }
-        );
-
-        // Доп файлы в загрузках
-        $schema->create(
-            'download__more',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('refid')->unsigned()->default(0)->index('refid');
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->text('name');
-                $table->text('rus_name');
-                $table->integer('size')->unsigned()->default(0);
-            }
-        );
-
-        // Гостевая
-        $schema->create(
-            'guest',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->boolean('adm')->default(0)->index('adm');
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->integer('user_id')->unsigned()->default(0);
-                $table->string('name')->default('');
-                $table->text('text');
-                $table->bigInteger('ip')->default(0)->index('ip');
-                $table->string('browser')->default('');
-                $table->string('admin')->default('');
-                $table->text('otvet');
-                $table->integer('otime')->unsigned()->default(0);
-                $table->string('edit_who')->default('');
-                $table->integer('edit_time')->unsigned()->default(0);
-                $table->tinyInteger('edit_count')->unsigned()->default(0);
-            }
-        );
-
         // Карма
         $schema->create(
             'karma_users',
@@ -422,72 +157,6 @@ class Database
                 $table->tinyInteger('type')->unsigned()->default(0)->index('type');
                 $table->integer('time')->unsigned()->default(0);
                 $table->text('text');
-            }
-        );
-
-        // Библиотека
-        $schema->create(
-            'library_cats',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('parent')->unsigned()->default(0);
-                $table->string('name')->default('');
-                $table->text('description');
-                $table->boolean('dir')->default(0);
-                $table->integer('pos')->unsigned()->default(0);
-                $table->boolean('user_add')->default(0);
-            }
-        );
-
-        $schema->create(
-            'library_texts',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('cat_id')->unsigned()->default(0);
-                $table->mediumText('text');
-                $table->string('name')->default('')->index('name');
-                $table->text('announce');
-                $table->string('uploader')->default('');
-                $table->integer('uploader_id')->unsigned()->default(0);
-                $table->integer('count_views')->unsigned()->default(0);
-                $table->boolean('premod')->default(0);
-                $table->boolean('comments')->default(0);
-                $table->integer('comm_count')->unsigned()->default(0);
-                $table->integer('time')->unsigned()->default(0);
-            }
-        );
-        $connection->statement('ALTER TABLE `library_texts` ADD FULLTEXT `text` (`text`)');
-
-        $schema->create(
-            'library_tags',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('lib_text_id')->unsigned()->default(0)->index('lib_text_id');
-                $table->string('tag_name')->default('')->index('tag_name');
-            }
-        );
-
-        $schema->create(
-            'cms_library_comments',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('sub_id')->unsigned()->default(0)->index('sub_id');
-                $table->integer('time')->default(0);
-                $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->text('text');
-                $table->text('reply');
-                $table->text('attributes');
-            }
-        );
-
-        $schema->create(
-            'cms_library_rating',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned();
-                $table->integer('st_id')->unsigned();
-                $table->tinyInteger('point');
-                $table->index(['user_id', 'st_id'], 'user_article');
             }
         );
 
@@ -548,100 +217,6 @@ class Database
                 $table->string('confirmation_code')->nullable();
                 $table->string('new_email')->nullable();
                 $table->text('admin_notes')->nullable();
-            }
-        );
-
-        // Форум
-        $schema->create(
-            'forum_messages',
-            static function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->integer('topic_id')->index('topic_id');
-                $table->longText('text');
-                $table->integer('date')->nullable();
-                $table->integer('user_id')->unsigned();
-                $table->string('user_name')->nullable();
-                $table->string('user_agent')->nullable();
-                $table->bigInteger('ip')->nullable();
-                $table->bigInteger('ip_via_proxy')->nullable();
-                $table->boolean('pinned')->nullable();
-                $table->string('editor_name')->nullable();
-                $table->integer('edit_time')->nullable();
-                $table->integer('edit_count')->nullable();
-                $table->boolean('deleted')->nullable()->index('deleted');
-                $table->string('deleted_by')->nullable();
-            }
-        );
-        $connection->statement('ALTER TABLE `forum_messages` ADD FULLTEXT `text` (`text`)');
-
-        $schema->create(
-            'forum_sections',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('parent')->nullable()->index('parent');
-                $table->string('name');
-                $table->text('description')->nullable();
-                $table->text('meta_description')->nullable();
-                $table->string('meta_keywords')->nullable();
-                $table->integer('sort')->default('100');
-                $table->integer('access')->nullable();
-                $table->integer('section_type')->nullable();
-            }
-        );
-
-        $schema->create(
-            'forum_topic',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('section_id')->unsigned()->nullable();
-                $table->string('name');
-                $table->text('description')->nullable();
-                $table->text('meta_description')->nullable();
-                $table->string('meta_keywords')->nullable();
-                $table->integer('view_count')->nullable();
-                $table->integer('user_id')->unsigned();
-                $table->string('user_name')->nullable();
-                $table->dateTime('created_at')->nullable();
-                $table->integer('post_count')->nullable();
-                $table->integer('mod_post_count')->nullable();
-                $table->integer('last_post_date')->nullable();
-                $table->integer('last_post_author')->unsigned()->nullable();
-                $table->string('last_post_author_name')->nullable();
-                $table->bigInteger('last_message_id')->nullable();
-                $table->integer('mod_last_post_date')->nullable();
-                $table->integer('mod_last_post_author')->unsigned()->nullable();
-                $table->string('mod_last_post_author_name')->nullable();
-                $table->bigInteger('mod_last_message_id')->nullable();
-                $table->boolean('closed')->nullable();
-                $table->string('closed_by')->nullable();
-                $table->boolean('deleted')->nullable()->index('deleted');
-                $table->string('deleted_by')->nullable();
-                $table->mediumText('curators')->nullable();
-                $table->boolean('pinned')->nullable();
-                $table->boolean('has_poll')->nullable();
-            }
-        );
-
-        // Уведомления
-        $schema->create(
-            'notifications',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('module')->comment('Module name');
-                $table->string('event_type')->comment('Event type');
-                $table->integer('user_id')->unsigned()->index()->comment('User identifier');
-                $table->integer('sender_id')->unsigned()->nullable()->comment('Sender identifier');
-                $table->integer('entity_id')->unsigned()->nullable()->comment('Entity identifier');
-                $table->text('fields')->nullable()->comment('Event fields');
-                $table->timestamp('read_at')->nullable()->comment('Read date');
-                $table->timestamps();
-
-                $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-                $table->index(['user_id', 'module', 'event_type', 'entity_id'], 'user_module_type_entity');
             }
         );
 
