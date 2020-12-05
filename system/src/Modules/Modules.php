@@ -14,6 +14,7 @@ use Aura\Autoload\Loader;
 
 class Modules
 {
+    /** @var array */
     protected $config;
 
     public function __construct()
