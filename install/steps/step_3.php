@@ -78,10 +78,7 @@ if ($request->getMethod() === 'POST') {
             $modules->registerAutoloader();
             $installed_modules = $modules->getInstalled();
             foreach ($installed_modules as $module) {
-                try {
-                    (new ModuleInstaller($module))->install();
-                } catch (Exception $exception) {
-                }
+                (new ModuleInstaller($module))->install();
             }
 
             header('Location: /install/?step=4');
@@ -100,6 +97,9 @@ if ($request->getMethod() === 'POST') {
             $errors['db_name'][] = __('Database does not exist');
         } else {
             $errors['unknown'][] = $db_error;
+            if (file_exists(CONFIG_PATH . 'autoload/database.local.php')) {
+                unlink(CONFIG_PATH . 'autoload/database.local.php');
+            }
         }
     }
 }
