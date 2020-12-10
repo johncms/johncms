@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Controller;
 
 use BadMethodCallException;
+use Illuminate\Container\Container;
+use Johncms\System\Container\Factory;
 use ReflectionException;
 use ReflectionMethod;
 
@@ -53,7 +55,14 @@ abstract class AbstractController
         $injected_parameters = [];
         foreach ($parameters as $parameter) {
             if ($parameter['class'] !== null) {
-                $injected_parameters[$parameter['name']] = di($parameter['class']);
+                // TODO: Replace container
+                $container = Factory::getContainer();
+                if ($container->has($parameter['class'])) {
+                    $injected_parameters[$parameter['name']] = $container->get($parameter['class']);
+                } else {
+                    $injector = Container::getInstance();
+                    $injected_parameters[$parameter['name']] = $injector->get($parameter['class']);
+                }
             } elseif (array_key_exists($parameter['name'], $param_values)) {
                 $injected_parameters[$parameter['name']] = $this->castValue($parameter['type'], $param_values[$parameter['name']]);
             } else {

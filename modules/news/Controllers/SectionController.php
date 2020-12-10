@@ -39,13 +39,13 @@ class SectionController extends BaseController
     /**
      * List of articles and sections
      *
+     * @param Article $article
+     * @param Section $section
      * @param string $category
      * @return string
      */
-    public function index(string $category = ''): string
+    public function index(Article $article, Section $section, string $category = ''): string
     {
-        $article = new Article();
-        $section = new Section();
         $section->checkPath($category);
         $current_section = $section->getLastSection();
 
