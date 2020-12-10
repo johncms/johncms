@@ -13,22 +13,27 @@ declare(strict_types=1);
 namespace News\Controllers;
 
 use Johncms\Controller\BaseController;
-use News\Models\NewsArticle;
-use News\Models\NewsSection;
-use News\Utils\Helpers;
+use News\Article;
+use News\MetaTagsManager;
+use News\Section;
 use News\Utils\Subsections;
 
 class SectionController extends BaseController
 {
     protected $module_name = 'news';
 
+    /** @var array */
     protected $config;
+
+    /** @var MetaTagsManager */
+    protected $meta_tags;
 
     public function __construct()
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
         $this->nav_chain->add(__('News'), '/news/');
+        $this->meta_tags = new MetaTagsManager();
     }
 
     /**
@@ -39,67 +44,25 @@ class SectionController extends BaseController
      */
     public function index(string $category = ''): string
     {
-        $current_section = null;
-        $page_title = __('News');
-        $title = __('News');
-
-        if (! empty($category)) {
-            $path = Helpers::checkPath($category);
-            if (! empty($path)) {
-                foreach ($path as $item) {
-                    /** @var $item NewsSection */
-                    $this->nav_chain->add($item->name, $item->url);
-                }
-                /** @var NewsSection $current_section */
-                $current_section = $path[array_key_last($path)];
-                $title = $current_section->meta_title;
-                $page_title = $current_section->name;
-                $keywords = $current_section->meta_keywords;
-                $description = $current_section->meta_description;
-            }
-        }
+        $article = new Article();
+        $section = new Section();
+        $section->checkPath($category);
+        $current_section = $section->getLastSection();
 
         if ($current_section !== null) {
-            $sections = (new NewsSection())->where('parent', $current_section->id)->get();
-
             // Get all articles in the current section with subsections
             /** @var Subsections $subsections */
             $subsections = di(Subsections::class);
             $ids = $subsections->getIds($current_section);
             $ids[] = $current_section->id;
-            $articles = (new NewsArticle())
-                ->active()
-                ->withCount('comments')
-                ->orderByDesc('id')
-                ->whereIn('section_id', $ids)
-                ->paginate();
-        } else {
-            $sections = (new NewsSection())->where('parent', 0)->get();
-            $articles = (new NewsArticle())
-                ->active()
-                ->withCount('comments')
-                ->orderByDesc('id')
-                ->paginate();
-            $title = $this->settings['title'] ?? __('News');
-            $page_title = $this->config['title'] ?? __('News');
-            $keywords = $this->config['meta_keywords'];
-            $description = $this->config['meta_description'];
         }
 
-        $this->render->addData(
-            [
-                'title'       => $title,
-                'page_title'  => $page_title,
-                'keywords'    => $keywords ?? '',
-                'description' => $description ?? '',
-            ]
-        );
-
+        $this->render->addData($this->meta_tags->setForSection($current_section)->toArray());
         return $this->render->render(
             'news::public/index',
             [
-                'sections'        => $sections,
-                'articles'        => $articles,
+                'sections'        => $section->getSections($current_section->id ?? 0),
+                'articles'        => $article->getArticles($ids ?? []),
                 'current_section' => $current_section,
             ]
         );
