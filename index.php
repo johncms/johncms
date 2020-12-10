@@ -14,6 +14,7 @@ use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
 use Johncms\Controller\AbstractController;
+use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Mail\EmailSender;
 
 require 'system/bootstrap.php';
@@ -23,7 +24,7 @@ $dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getDat
 
 $match = $dispatcher->dispatch(
     $_SERVER['REQUEST_METHOD'],
-    (function () {
+    (static function () {
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== $pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
@@ -38,14 +39,18 @@ switch ($match[0]) {
         // Register the location of the visitor on the site
         new Johncms\System\Users\UserStat($container);
         $container->setService('route', $match[2]);
-        if (
-            is_array($match[1]) &&
-            class_exists($match[1][0]) &&
-            is_subclass_of($match[1][0], AbstractController::class)
-        ) {
-            echo (new $match[1][0]())->runAction($match[1][1], $match[2]);
-        } else {
-            include ROOT_PATH . $match[1];
+        try {
+            if (
+                is_array($match[1]) &&
+                class_exists($match[1][0]) &&
+                is_subclass_of($match[1][0], AbstractController::class)
+            ) {
+                echo (new $match[1][0]())->runAction($match[1][1], $match[2]);
+            } else {
+                include ROOT_PATH . $match[1];
+            }
+        } catch (PageNotFoundException $exception) {
+            pageNotFound($exception->getTemplate(), $exception->getTitle(), $exception->getMessage());
         }
         break;
 
