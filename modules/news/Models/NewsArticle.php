@@ -43,9 +43,6 @@ use Johncms\Users\User;
  * @property User $author - Author
  * @property NewsVote $votes - Votes for the article
  * @property $url - URL адрес страницы просмотра статьи
- * @property $meta_title
- * @property $meta_keywords
- * @property $meta_description
  * @property $rating - Article rating
  * @property $current_vote - The user's current vote.
  * @property $comments_count
@@ -197,48 +194,6 @@ class NewsArticle extends Model
     public function getPreviewTextSafeAttribute(): string
     {
         return Helpers::purifyHtml($this->preview_text);
-    }
-
-    /**
-     * Meta title
-     *
-     * @return string|string[]
-     */
-    public function getMetaTitleAttribute()
-    {
-        if (! empty($this->page_title)) {
-            return $this->page_title;
-        }
-        $config = di('config')['news'];
-        return ! empty($config['article_title']) ? str_replace('#article_name#', $this->name, $config['article_title']) : $this->name;
-    }
-
-    /**
-     * Meta keywords
-     *
-     * @return string|string[]
-     */
-    public function getMetaKeywordsAttribute()
-    {
-        if (! empty($this->keywords)) {
-            return $this->keywords;
-        }
-        $config = di('config')['news'];
-        return str_replace('#article_name#', $this->name, $config['article_meta_keywords']);
-    }
-
-    /**
-     * Meta description
-     *
-     * @return string|string[]
-     */
-    public function getMetaDescriptionAttribute()
-    {
-        if (! empty($this->description)) {
-            return $this->description;
-        }
-        $config = di('config')['news'];
-        return str_replace('#article_name#', $this->name, $config['article_meta_description']);
     }
 
     /**

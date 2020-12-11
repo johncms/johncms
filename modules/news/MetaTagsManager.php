@@ -68,8 +68,31 @@ class MetaTagsManager
         return $this;
     }
 
-    public function setForArticle(NewsArticle $article): MetaTagsManager
+    public function setForArticle(?NewsArticle $article): MetaTagsManager
     {
+        if ($article === null) {
+            return $this;
+        }
+
+        $this->page_title = $article->name;
+        if (empty($article->page_title)) {
+            $this->title = str_replace('#article_name#', $article->name, $this->config['article_title']);
+        } else {
+            $this->title = $article->page_title;
+        }
+
+        if (empty($article->keywords)) {
+            $this->keywords = str_replace('#article_name#', $article->name, $this->config['article_meta_keywords']);
+        } else {
+            $this->keywords = $article->keywords;
+        }
+
+        if (empty($article->description)) {
+            $this->description = str_replace('#article_name#', $article->name, $this->config['article_meta_description']);
+        } else {
+            $this->description = $article->description;
+        }
+
         return $this;
     }
 

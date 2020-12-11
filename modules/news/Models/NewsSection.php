@@ -27,9 +27,6 @@ use Johncms\Casts\SpecialChars;
  * @property NewsSection $parentSection - Родительский раздел
  * @property NewsSection $childSections - Дочерние раздел
  * @property $url - Ссылка на страницу просмотра раздела
- * @property $meta_title
- * @property $meta_keywords
- * @property $meta_description
  */
 class NewsSection extends Model
 {
@@ -81,44 +78,5 @@ class NewsSection extends Model
             $url = $cache->getSectionPath($this->parent) . '/';
         }
         return '/news/' . $url . $this->code . '/';
-    }
-
-    /**
-     * Meta title
-     *
-     * @return string|string[]
-     */
-    public function getMetaTitleAttribute()
-    {
-        $config = di('config')['news'];
-        return ! empty($config['section_title']) ? str_replace('#section_name#', $this->name, $config['section_title']) : $this->name;
-    }
-
-    /**
-     * Meta keywords
-     *
-     * @return string|string[]
-     */
-    public function getMetaKeywordsAttribute()
-    {
-        if (! empty($this->keywords)) {
-            return $this->keywords;
-        }
-        $config = di('config')['news'];
-        return str_replace('#section_name#', $this->name, $config['section_meta_keywords']);
-    }
-
-    /**
-     * Meta description
-     *
-     * @return string|string[]
-     */
-    public function getMetaDescriptionAttribute()
-    {
-        if (! empty($this->description)) {
-            return $this->description;
-        }
-        $config = di('config')['news'];
-        return str_replace('#section_name#', $this->name, $config['section_meta_description']);
     }
 }
