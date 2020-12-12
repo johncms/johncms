@@ -26,8 +26,8 @@ $check_extensions = [
     [
         'name'        => __('PHP version'),
         'value'       => PHP_VERSION,
-        'error'       => (PHP_VERSION_ID < 70200),
-        'description' => __('The PHP version must be at least 7.2'),
+        'error'       => (PHP_VERSION_ID < 70300),
+        'description' => __('The PHP version must be at least %s', '7.3'),
     ],
     [
         'name'        => 'PDO',

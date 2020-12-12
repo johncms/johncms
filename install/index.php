@@ -17,8 +17,8 @@ use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 
 // Check the current PHP version
-if (PHP_VERSION_ID < 70200) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.2 or higher</div>');
+if (PHP_VERSION_ID < 70300) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.3 or higher</div>');
 }
 
 require '../system/vendor/autoload.php';

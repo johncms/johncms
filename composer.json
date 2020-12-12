@@ -29,7 +29,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.2",
+        "php": "^7.3|^8.0",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -40,7 +40,7 @@
         "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",
         "guzzlehttp/psr7": "^1.7",
-        "illuminate/database": "^7.29",
+        "illuminate/database": "^8.0",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.3",
