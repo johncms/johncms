@@ -1,7 +1,6 @@
 <?php
 
 use News\Utils\SectionPathCache;
-use News\Utils\Subsections;
 
 return [
     'news'         =>
@@ -21,7 +20,6 @@ return [
     'dependencies' => [
         'factories' => [
             SectionPathCache::class => SectionPathCache::class,
-            Subsections::class      => Subsections::class,
         ],
     ],
 ];

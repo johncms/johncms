@@ -12,14 +12,15 @@ declare(strict_types=1);
 
 namespace News\Controllers\Admin;
 
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\Controller\BaseController;
 use Johncms\System\Http\Request;
 use News\Models\NewsArticle;
 use News\Models\NewsSection;
+use News\Section;
 use News\Utils\Helpers;
-use News\Utils\Subsections;
 
 class AdminSectionController extends BaseController
 {
@@ -43,7 +44,7 @@ class AdminSectionController extends BaseController
      * @param int $section_id
      * @return string
      */
-    public function add(Request $request, int $section_id = 0): string
+    public function add(Request $request, Section $section_service, int $section_id = 0): string
     {
         $this->render->addData(
             [
@@ -112,6 +113,7 @@ class AdminSectionController extends BaseController
 
                 if (! $check) {
                     (new NewsSection())->create($data['fields']);
+                    $section_service->clearCache();
                     $_SESSION['success_message'] = __('The section was created successfully');
                     header('Location: /news/admin/content/' . $section_id);
                     exit;
@@ -205,9 +207,11 @@ class AdminSectionController extends BaseController
      *
      * @param int $section_id
      * @param Request $request
+     * @param Section $section_service
      * @return string
+     * @throws Exception
      */
-    public function del(int $section_id, Request $request): string
+    public function del(int $section_id, Request $request, Section $section_service): string
     {
         $data = [];
         // Get the section to delete
@@ -225,12 +229,8 @@ class AdminSectionController extends BaseController
             $_SESSION['delete_token'] === $post['delete_token'] &&
             $request->getMethod() === 'POST'
         ) {
-            /** @var Subsections $subsections */
-            $subsections = di(Subsections::class);
-            $children_sections = $subsections->getIds($section);
-            $children_sections[] = $section->id;
-
-            $subsections->clearCache();
+            $children_sections = $section_service->getCachedSubsections($section);
+            $section_service->clearCache();
 
             // Delete articles
             (new NewsArticle())->whereIn('section_id', $children_sections)->delete();

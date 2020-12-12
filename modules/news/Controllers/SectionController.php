@@ -48,21 +48,12 @@ class SectionController extends BaseController
     {
         $section->checkPath($category);
         $current_section = $section->getLastSection();
-
-        if ($current_section !== null) {
-            // Get all articles in the current section with subsections
-            /** @var Subsections $subsections */
-            $subsections = di(Subsections::class);
-            $ids = $subsections->getIds($current_section);
-            $ids[] = $current_section->id;
-        }
-
         $this->render->addData($this->meta_tags->setForSection($current_section)->toArray());
         return $this->render->render(
             'news::public/index',
             [
                 'sections'        => $section->getSections($current_section->id ?? 0),
-                'articles'        => $article->getArticles($ids ?? []),
+                'articles'        => $article->getArticles($section->getCachedSubsections($current_section)),
                 'current_section' => $current_section,
             ]
         );
