@@ -74,10 +74,10 @@ class AdminSectionController extends BaseController
             'section_id' => $section_id,
             'fields'     => [
                 'parent'      => $section_id,
-                'name'        => $request->getPost('name', '', FILTER_SANITIZE_STRING),
-                'code'        => $request->getPost('code', '', FILTER_SANITIZE_STRING),
-                'keywords'    => $request->getPost('keywords', '', FILTER_SANITIZE_STRING),
-                'description' => $request->getPost('description', '', FILTER_SANITIZE_STRING),
+                'name'        => $request->getPost('name', ''),
+                'code'        => $request->getPost('code', ''),
+                'keywords'    => $request->getPost('keywords', ''),
+                'description' => $request->getPost('description', ''),
                 'text'        => $request->getPost('text', ''),
             ],
         ];
@@ -156,10 +156,10 @@ class AdminSectionController extends BaseController
             'back_url'   => '/news/admin/content/' . $section->parent,
             'section_id' => $section_id,
             'fields'     => [
-                'name'        => $request->getPost('name', $section->name, FILTER_SANITIZE_STRING),
-                'code'        => $request->getPost('code', $section->code, FILTER_SANITIZE_STRING),
-                'keywords'    => $request->getPost('keywords', $section->keywords, FILTER_SANITIZE_STRING),
-                'description' => $request->getPost('description', $section->description, FILTER_SANITIZE_STRING),
+                'name'        => $request->getPost('name', $section->name),
+                'code'        => $request->getPost('code', $section->code),
+                'keywords'    => $request->getPost('keywords', $section->keywords),
+                'description' => $request->getPost('description', $section->description),
                 'text'        => $request->getPost('text', $section->text),
             ],
         ];

@@ -16,7 +16,6 @@ use Johncms\Controller\BaseController;
 use News\Article;
 use News\MetaTagsManager;
 use News\Section;
-use News\Utils\Subsections;
 
 class SectionController extends BaseController
 {

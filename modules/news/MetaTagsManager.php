@@ -47,22 +47,22 @@ class MetaTagsManager
             return $this;
         }
 
-        $this->title = $section->name;
-        $this->page_title = $section->name;
+        $this->title = $section->getRawOriginal('name');
+        $this->page_title = $section->getRawOriginal('name');
         if (! empty($this->config['section_title'])) {
-            $this->title = str_replace('#section_name#', $section->name, $this->config['section_title']);
+            $this->title = str_replace('#section_name#', $section->getRawOriginal('name'), $this->config['section_title']);
         }
 
         if (empty($section->keywords)) {
-            $this->keywords = str_replace('#section_name#', $section->name, $this->config['section_meta_keywords']);
+            $this->keywords = str_replace('#section_name#', $section->getRawOriginal('name'), $this->config['section_meta_keywords']);
         } else {
-            $this->keywords = $section->keywords;
+            $this->keywords = $section->getRawOriginal('keywords');
         }
 
         if (empty($section->description)) {
-            $this->description = str_replace('#section_name#', $section->name, $this->config['section_meta_description']);
+            $this->description = str_replace('#section_name#', $section->getRawOriginal('name'), $this->config['section_meta_description']);
         } else {
-            $this->description = $section->description;
+            $this->description = $section->getRawOriginal('description');
         }
 
         return $this;
@@ -74,23 +74,23 @@ class MetaTagsManager
             return $this;
         }
 
-        $this->page_title = $article->name;
+        $this->page_title = $article->getRawOriginal('name');
         if (empty($article->page_title)) {
-            $this->title = str_replace('#article_name#', $article->name, $this->config['article_title']);
+            $this->title = str_replace('#article_name#', $article->getRawOriginal('name'), $this->config['article_title']);
         } else {
-            $this->title = $article->page_title;
+            $this->title = $article->getRawOriginal('page_title');
         }
 
         if (empty($article->keywords)) {
-            $this->keywords = str_replace('#article_name#', $article->name, $this->config['article_meta_keywords']);
+            $this->keywords = str_replace('#article_name#', $article->getRawOriginal('name'), $this->config['article_meta_keywords']);
         } else {
-            $this->keywords = $article->keywords;
+            $this->keywords = $article->getRawOriginal('keywords');
         }
 
         if (empty($article->description)) {
-            $this->description = str_replace('#article_name#', $article->name, $this->config['article_meta_description']);
+            $this->description = str_replace('#article_name#', $article->getRawOriginal('name'), $this->config['article_meta_description']);
         } else {
-            $this->description = $article->description;
+            $this->description = $article->getRawOriginal('description');
         }
 
         return $this;
