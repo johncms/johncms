@@ -33,7 +33,7 @@
                                 <tr>
                                     <th scope="row"><?= $k ?></th>
                                     <td><?= $query['query'] ?></td>
-                                    <td><?= implode(', ', $query['bindings']) ?></td>
+                                    <td><?= $this->e(implode(', ', $query['bindings'])) ?></td>
                                     <td><?= $query['time'] ?> ms.</td>
                                 </tr>
                             <?php endforeach; ?>

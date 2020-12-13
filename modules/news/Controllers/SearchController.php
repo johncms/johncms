@@ -48,7 +48,7 @@ class SearchController extends BaseController
             ]
         );
 
-        $query = $request->getQuery('query', '', FILTER_SANITIZE_STRING);
+        $query = $request->getQuery('query');
         if (! empty($query)) {
             $articles = (new NewsArticle())
                 ->active()
@@ -61,7 +61,7 @@ class SearchController extends BaseController
         return $this->render->render(
             'news::public/search',
             [
-                'query'    => $query,
+                'query'    => htmlspecialchars($query ?? ''),
                 'articles' => $articles ?? null,
             ]
         );
@@ -86,7 +86,7 @@ class SearchController extends BaseController
             ]
         );
 
-        $query = $request->getQuery('tag', '', FILTER_SANITIZE_STRING);
+        $query = $request->getQuery('tag');
         if (! empty($query)) {
             $articles = (new NewsArticle())
                 ->active()
@@ -98,7 +98,7 @@ class SearchController extends BaseController
         return $this->render->render(
             'news::public/search_by_tags',
             [
-                'query'    => $query,
+                'query'    => htmlspecialchars($query ?? ''),
                 'articles' => $articles ?? null,
             ]
         );

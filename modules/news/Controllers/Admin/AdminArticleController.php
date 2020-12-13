@@ -119,7 +119,7 @@ class AdminArticleController extends BaseController
                     $data['fields']['created_by'] = $user->id;
                     $created_article = (new NewsArticle())->create($data['fields']);
 
-                    $search_text = strip_tags($created_article->name . ' ' . $created_article->preview_text . ' ' . $created_article->text);
+                    $search_text = $created_article->getRawOriginal('name') . strip_tags(' ' . $created_article->getRawOriginal('preview_text') . ' ' . $created_article->getRawOriginal('text'));
                     (new NewsSearchIndex())->create(
                         [
                             'article_id' => $created_article->id,
@@ -218,7 +218,7 @@ class AdminArticleController extends BaseController
                     $data['fields']['updated_by'] = $user->id;
                     $article->update($data['fields']);
 
-                    $search_text = strip_tags($data['fields']['name'] . ' ' . $data['fields']['preview_text'] . ' ' . $data['fields']['text']);
+                    $search_text = $data['fields']['name'] . strip_tags(' ' . $data['fields']['preview_text'] . ' ' . $data['fields']['text']);
                     (new NewsSearchIndex())->updateOrCreate(
                         ['article_id' => $article->id],
                         ['text' => $search_text]
