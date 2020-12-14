@@ -31,7 +31,7 @@ $view->addData(
 );
 
 $fields = [
-    'homeurl'        => $request->getPost('homeurl', ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'], FILTER_SANITIZE_URL),
+    'homeurl'        => $request->getPost('homeurl', ($request->isHttps() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'], FILTER_SANITIZE_URL),
     'email'          => $request->getPost('email'),
     'admin_login'    => $request->getPost('admin_login', 'admin', FILTER_SANITIZE_STRING),
     'admin_password' => $request->getPost('admin_password', '', FILTER_SANITIZE_SPECIAL_CHARS),
