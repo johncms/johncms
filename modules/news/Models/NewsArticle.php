@@ -4,8 +4,8 @@ namespace News\Models;
 
 use Carbon\Carbon;
 use Johncms\Casts\FormattedDate;
+use News\Section;
 use News\Utils\Helpers;
-use News\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -169,9 +169,7 @@ class NewsArticle extends Model
     {
         $url = '';
         if (! empty($this->section_id)) {
-            /** @var SectionPathCache $cache */
-            $cache = di(SectionPathCache::class);
-            $url = $cache->getSectionPath($this->section_id) . '/';
+            $url = (new Section())->getCachedPath($this->section_id) . '/';
         }
         return '/news/' . $url . $this->code . '.html';
     }

@@ -3,7 +3,7 @@
 namespace News\Models;
 
 use Johncms\Casts\FormattedDate;
-use News\Utils\SectionPathCache;
+use News\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -73,9 +73,7 @@ class NewsSection extends Model
     {
         $url = '';
         if (! empty($this->parent)) {
-            /** @var SectionPathCache $cache */
-            $cache = di(SectionPathCache::class);
-            $url = $cache->getSectionPath($this->parent) . '/';
+            $url = (new Section())->getCachedPath($this->parent) . '/';
         }
         return '/news/' . $url . $this->code . '/';
     }

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace News;
 
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\Cache;
@@ -25,12 +26,16 @@ class Section
     /** @var NavChain */
     protected $nav_chain;
 
+    /** @var Cache $cache */
+    protected $cache;
+
     /** @var NewsSection[] */
     protected $path = [];
 
     public function __construct()
     {
         $this->nav_chain = di(NavChain::class);
+        $this->cache = di(Cache::class);
     }
 
     /**
@@ -113,14 +118,13 @@ class Section
      *
      * @param NewsSection|null $section
      * @return array
+     * @psalm-suppress TypeDoesNotContainType, InvalidCatch
      */
     public function getCachedSubsections(?NewsSection $section): array
     {
         $ids = [];
         if ($section !== null) {
-            /** @var Cache $cache */
-            $cache = di(Cache::class);
-            $ids = $cache->rememberForever(
+            $ids = $this->cache->rememberForever(
                 'news_subsections',
                 function () use ($section) {
                     return [$section->id => $this->getSubsections($section, [$section->id])];
@@ -128,11 +132,15 @@ class Section
             );
 
             if (empty($ids) || ! array_key_exists($section->id, $ids)) {
-                $this->clearCache();
-                $ids = $cache->rememberForever(
+                try {
+                    $this->cache->delete('news_subsections');
+                } catch (InvalidArgumentException $exception) {
+                }
+                $ids = $this->cache->rememberForever(
                     'news_subsections',
-                    function () use ($section) {
-                        return [$section->id => $this->getSubsections($section, [$section->id])];
+                    function () use ($section, $ids) {
+                        $ids[$section->id] = $this->getSubsections($section, [$section->id]);
+                        return $ids;
                     }
                 );
             }
@@ -141,12 +149,75 @@ class Section
         return $ids[$section->id ?? 0] ?? [];
     }
 
+    /**
+     * Getting the full URL of the section from cache.
+     *
+     * @param int $section_id
+     * @return string
+     * @psalm-suppress InvalidCatch
+     */
+    public function getCachedPath(int $section_id): string
+    {
+        $paths = $this->cache->rememberForever(
+            'news_section_paths',
+            function () use ($section_id) {
+                return [$section_id => $this->getPath($section_id)];
+            }
+        );
+
+        if (empty($paths) || ! array_key_exists($section_id, $paths)) {
+            try {
+                $this->cache->delete('news_section_paths');
+            } catch (InvalidArgumentException $e) {
+            }
+            $paths = $this->cache->rememberForever(
+                'news_section_paths',
+                function () use ($section_id, $paths) {
+                    $paths[$section_id] = $this->getPath($section_id);
+                    return $paths;
+                }
+            );
+        }
+        return $paths[$section_id] ?? '';
+    }
+
+    /**
+     * Getting the full URL of the section.
+     *
+     * @param int $id
+     * @return string
+     */
+    public function getPath(int $id): string
+    {
+        $section_url = '';
+        $section = (new NewsSection())->find($id);
+        if ($section !== null) {
+            $path = [
+                $section->code,
+            ];
+            $parent = $section->parentSection;
+            while ($parent !== null) {
+                $path[] = $parent->code;
+                $parent = $parent->parentSection;
+            }
+            krsort($path);
+
+            $section_url = implode('/', $path);
+        }
+
+        return $section_url;
+    }
+
+    /**
+     * Clearing the cache.
+     *
+     * @psalm-suppress InvalidCatch
+     */
     public function clearCache(): void
     {
-        /** @var Cache $cache */
-        $cache = di(Cache::class);
         try {
-            $cache->delete('news_subsections');
+            $this->cache->delete('news_subsections');
+            $this->cache->delete('news_section_paths');
         } catch (InvalidArgumentException $e) {
         }
     }
