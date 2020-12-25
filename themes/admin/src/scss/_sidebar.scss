@@ -1,8 +1,8 @@
-$sidebar_width: 15rem;
+$sidebar_width: 16rem;
 
 .sidebar {
-    position: sticky;
-    color: #ffffff;
+    position: fixed;
+    background-color: #fff;
     font-size: 0.95rem;
     font-weight: 500;
     top: 0;
@@ -55,6 +55,7 @@ $sidebar_width: 15rem;
 
     li {
         width: 100%;
+        padding: 0 1rem;
 
         &.active {
             background: #f0f0f0;
@@ -87,7 +88,7 @@ $sidebar_width: 15rem;
 
 
 .sidebar__footer {
-    padding: 0.7rem 0;
+    padding: 0.7rem 1rem;
 
     .sidebar_online {
         height: 17px;
@@ -101,7 +102,7 @@ $sidebar_width: 15rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.7rem 0.7rem 0.7rem 0;
+    padding: 0.7rem 1rem;
 
     .sidebar_user_avatar {
         .user_photo {
@@ -189,7 +190,6 @@ $sidebar_width: 15rem;
         position: fixed;
         background-color: #ffffff;
         border-right: 1px solid #dadada;
-        display: flex;
     }
 
     .sidebar__inner {
