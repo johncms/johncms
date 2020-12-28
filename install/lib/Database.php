@@ -17,11 +17,13 @@ use Illuminate\Database\Schema\Blueprint;
 
 class Database
 {
-    public static function createTables(): void
+    public static function createTables(bool $old_server = false): void
     {
         $schema = Capsule::schema();
-        // For older versions of mysql
-        $schema::defaultStringLength(191);
+        if ($old_server) {
+            // For older versions of mysql
+            $schema::defaultStringLength(191);
+        }
         $schema->dropAllTables();
 
         // Реклама

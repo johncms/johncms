@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Install\Database;
+use Johncms\Checker\DBChecker;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\System\Http\Request;
@@ -57,6 +58,8 @@ if ($request->getMethod() === 'POST') {
 
     try {
         $connection->getPdo();
+        $db_checker = new DBChecker();
+        $version_info = $db_checker->versionInfo();
 
         // Создаем системный файл database.local.php
         $db_settings = [
@@ -70,8 +73,11 @@ if ($request->getMethod() === 'POST') {
         ];
         $db_file = "<?php\n\n" . 'return ' . var_export($db_settings, true) . ";\n";
 
-        if (file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)) {
-            Database::createTables();
+        if (
+            (! $version_info['error'] || $request->getPost('anyway_continue') === 'yes') &&
+            file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)
+        ) {
+            Database::createTables($version_info['error']);
 
             // Installing modules
             $modules = new Modules();
@@ -85,7 +91,13 @@ if ($request->getMethod() === 'POST') {
             exit;
         }
 
-        $errors['unknown'][] = __("ERROR: Can't write database.local.php");
+        if ($version_info['error']) {
+            $db_version_error = true;
+            $errors['unknown'][] = __("Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk.");
+            $errors['unknown'][] = __("Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required.", $version_info['server_name'], $version_info['version_clean'], $version_info['required_version']);
+        } else {
+            $errors['unknown'][] = __("ERROR: Can't write database.local.php");
+        }
     } catch (Exception $exception) {
         $db_error = $exception->getMessage();
         $error_code = $exception->getCode();
@@ -108,6 +120,7 @@ $data = [
     'errors'             => $errors,
     'fields'             => $fields,
     'next_step_disabled' => false,
+    'db_version_error'   => $db_version_error ?? false,
 ];
 
 echo $view->render('install::step_3', ['data' => $data]);
