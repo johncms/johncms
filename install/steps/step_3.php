@@ -60,6 +60,7 @@ if ($request->getMethod() === 'POST') {
         $connection->getPdo();
         $db_checker = new DBChecker();
         $version_info = $db_checker->versionInfo();
+        $check_mysqlnd = $db_checker->checkMysqlnd();
 
         // Создаем системный файл database.local.php
         $db_settings = [
@@ -74,6 +75,7 @@ if ($request->getMethod() === 'POST') {
         $db_file = "<?php\n\n" . 'return ' . var_export($db_settings, true) . ";\n";
 
         if (
+            $check_mysqlnd &&
             (! $version_info['error'] || $request->getPost('anyway_continue') === 'yes') &&
             file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)
         ) {
@@ -95,7 +97,14 @@ if ($request->getMethod() === 'POST') {
             $db_version_error = true;
             $errors['unknown'][] = __("Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk.");
             $errors['unknown'][] = __("Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required.", $version_info['server_name'], $version_info['version_clean'], $version_info['required_version']);
-        } else {
+        }
+
+        if (! $check_mysqlnd) {
+            $errors['unknown'][] = __("The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>.");
+            $errors['unknown'][] = __("Please contact your hosting provider's technical support to resolve this issue.");
+        }
+
+        if (empty($errors['unknown'])) {
             $errors['unknown'][] = __("ERROR: Can't write database.local.php");
         }
     } catch (Exception $exception) {
