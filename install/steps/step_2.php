@@ -53,6 +53,12 @@ $check_extensions = [
         'error'       => ! extension_loaded('mbstring'),
         'description' => __('PHP extension mbstring must be installed'),
     ],
+    [
+        'name'        => __('fileinfo extension'),
+        'value'       => extension_loaded('fileinfo') ? __('Yes') : __('No'),
+        'error'       => ! extension_loaded('fileinfo'),
+        'description' => __('PHP extension fileinfo must be installed'),
+    ],
 ];
 
 $error_extensions = array_filter(
