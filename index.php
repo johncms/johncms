@@ -17,6 +17,12 @@ use Johncms\Controller\AbstractController;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Mail\EmailSender;
 
+// If the system is not installed, redirect to the installer.
+if (! is_file('config/autoload/database.local.php')) {
+    header('Location: /install/');
+    exit;
+}
+
 require 'system/bootstrap.php';
 
 $container = Johncms\System\Container\Factory::getContainer();
