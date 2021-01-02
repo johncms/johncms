@@ -55,7 +55,7 @@ $analytics = $counters->counters();
             </div>
             <div class="sidebar__wrapper d-flex flex-column">
                 <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu', ['notifications' => $notifications])) ?>
-                <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-main-menu')) ?>
+                <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-admin-menu')) ?>
             </div>
         </div>
         <div class="content-container content-container-padding d-flex flex-column">

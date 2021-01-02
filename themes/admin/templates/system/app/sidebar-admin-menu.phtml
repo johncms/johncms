@@ -44,7 +44,7 @@ $news_counters = $counters->news();
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
             <li class="<?= isset($usr_menu['search_ip']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/search_ip/">
+                <a href="/admin/search_ip/">
                     <svg class="icon text-info">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
                     </svg>
@@ -53,7 +53,7 @@ $news_counters = $counters->news();
             </li>
             <?php if ($regtotal): ?>
                 <li class="<?= isset($usr_menu['reg']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/reg/">
+                    <a href="/admin/reg/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
                         </svg>
@@ -63,7 +63,7 @@ $news_counters = $counters->news();
                 </li>
             <?php endif ?>
             <li class="<?= isset($usr_menu['userlist']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/userlist/">
+                <a href="/admin/userlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                     </svg>
@@ -72,7 +72,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($usr_menu['adminlist']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/adminlist/">
+                <a href="/admin/adminlist/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
                     </svg>
@@ -81,7 +81,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($usr_menu['ban_panel']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/ban_panel/">
+                <a href="/admin/ban_panel/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
@@ -91,7 +91,7 @@ $news_counters = $counters->news();
             </li>
             <?php if ($user->rights === 9): ?>
                 <li class="<?= isset($usr_menu['usr_clean']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/usr_clean/">
+                    <a href="/admin/usr_clean/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
                         </svg>
@@ -99,7 +99,7 @@ $news_counters = $counters->news();
                     </a>
                 </li>
                 <li class="<?= isset($usr_menu['antiflood']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/antiflood/">
+                    <a href="/admin/antiflood/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bell-off"/>
                         </svg>
@@ -107,7 +107,7 @@ $news_counters = $counters->news();
                     </a>
                 </li>
                 <li class="<?= isset($usr_menu['karma']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/karma/">
+                    <a href="/admin/karma/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                         </svg>
@@ -138,7 +138,7 @@ $news_counters = $counters->news();
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
             <li class="<?= isset($module_menu['access']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/access/">
+                <a href="/admin/access/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shield"/>
                     </svg>
@@ -146,7 +146,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($module_menu['forum']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/forum/">
+                <a href="/admin/forum/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
@@ -154,7 +154,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($module_menu['news']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/news/">
+                <a href="/admin/news/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                     </svg>
@@ -162,7 +162,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($module_menu['ads']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/ads/">
+                <a href="/admin/ads/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
                     </svg>
@@ -171,7 +171,7 @@ $news_counters = $counters->news();
             </li>
             <?php if ($user->rights == 9): ?>
                 <li class="<?= isset($module_menu['counters']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/counters/">
+                    <a href="/admin/counters/">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
                         </svg>
@@ -202,7 +202,7 @@ $news_counters = $counters->news();
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
             <li class="<?= isset($sys_menu['settings']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/settings/">
+                <a href="/admin/settings/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
                     </svg>
@@ -210,7 +210,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($sys_menu['emoticons']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/emoticons/">
+                <a href="/admin/emoticons/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#smile"/>
                     </svg>
@@ -218,7 +218,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($sys_menu['languages']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/languages/">
+                <a href="/admin/languages/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                     </svg>
@@ -256,7 +256,7 @@ $news_counters = $counters->news();
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
             <li class="<?= isset($sec_menu['antispy']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/antispy/">
+                <a href="/admin/antispy/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
                     </svg>
@@ -264,7 +264,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($sec_menu['ipban']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/ipban/">
+                <a href="/admin/ipban/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
@@ -272,7 +272,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($sec_menu['ip_whois']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/ip_whois/">
+                <a href="/admin/ip_whois/">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
                     </svg>

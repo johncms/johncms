@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Admin\Controllers\System\SystemCheckController;
 use FastRoute\RouteCollector;
 use Johncms\System\Users\User;
 
@@ -61,6 +62,7 @@ return static function (RouteCollector $map, User $user) {
     }
 
     if ($user->rights >= 6 && $user->isValid()) {
+        $map->addRoute(['GET', 'POST'], '/admin/system_check[/]', [SystemCheckController::class, 'index']);                      // Administration
         $map->addRoute(['GET', 'POST'], '/admin/[{action}/]', 'modules/admin/index.php');                      // Administration
     }
 

@@ -1,0 +1,16 @@
+<?php $this->layout('system::layout/default'); ?>
+<div class="mw-750px">
+    <?php foreach ($data['check_extensions'] as $extension): ?>
+        <div class="row border-bottom py-2">
+            <div class="col-12 col-sm-7 col-md-8 font-weight-bold"><?= $extension['name'] ?></div>
+            <div class="col-12 col-sm-5 col-md-4 font-weight-bold <?= $extension['error'] ? 'text-danger' : 'text-success' ?>">
+                <?= $extension['value'] ?>
+            </div>
+            <?php if ($extension['error']): ?>
+                <div class="col-12 text-muted mt-1">
+                    <?= $extension['description'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach ?>
+</div>
