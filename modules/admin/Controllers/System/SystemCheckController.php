@@ -21,15 +21,28 @@ class SystemCheckController extends BaseAdminController
 
     public function index(SystemChecker $checker): string
     {
-        $check_extensions = $checker->checkExtensions();
         $this->render->addData(
             [
                 'title'      => __('System check'),
                 'page_title' => __('System check'),
-                'sys_menu' => ['system_check' => true],
+                'sys_menu'   => ['system_check' => true],
             ]
         );
         $this->nav_chain->add(__('System check'));
-        return $this->render->render('admin::system/system_check', ['data' => ['check_extensions' => $check_extensions]]);
+
+        $check_extensions = $checker->checkExtensions();
+        $recommendations = $checker->recommendations();
+        $database = $checker->checkDatabase();
+
+        return $this->render->render(
+            'admin::system/system_check',
+            [
+                'data' => [
+                    'required_checks' => $check_extensions,
+                    'recommendations' => $recommendations,
+                    'database'        => $database,
+                ],
+            ]
+        );
     }
 }

@@ -1,16 +1,61 @@
 <?php $this->layout('system::layout/default'); ?>
-<div class="mw-750px">
-    <?php foreach ($data['check_extensions'] as $extension): ?>
-        <div class="row border-bottom py-2">
-            <div class="col-12 col-sm-7 col-md-8 font-weight-bold"><?= $extension['name'] ?></div>
-            <div class="col-12 col-sm-5 col-md-4 font-weight-bold <?= $extension['error'] ? 'text-danger' : 'text-success' ?>">
-                <?= $extension['value'] ?>
-            </div>
-            <?php if ($extension['error']): ?>
-                <div class="col-12 text-muted mt-1">
-                    <?= $extension['description'] ?>
-                </div>
-            <?php endif; ?>
-        </div>
+
+<h2 class="mb-3"><?= __('Required parameters') ?></h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 20%;"><?= __('Check name') ?></th>
+        <th scope="col"><?= __('Value') ?></th>
+        <th scope="col"><?= __('Description') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($data['required_checks'] as $check): ?>
+        <tr>
+            <th scope="row"><?= $check['name'] ?></th>
+            <td class="break-word <?= $check['error'] ? 'text-danger' : 'text-success' ?>"><?= $check['value'] ?></td>
+            <td><?= $check['description'] ?></td>
+        </tr>
     <?php endforeach ?>
-</div>
+    </tbody>
+</table>
+
+<h2 class="mb-3"><?= __('Database') ?></h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 20%;"><?= __('Check name') ?></th>
+        <th scope="col" style="width: 20%;"><?= __('Value') ?></th>
+        <th scope="col"><?= __('Description') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($data['database'] as $check): ?>
+        <tr>
+            <th scope="row"><?= $check['name'] ?></th>
+            <td class="break-word <?= $check['error'] ? 'text-danger' : 'text-success' ?>"><?= $check['value'] ?></td>
+            <td><?= $check['description'] ?></td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>
+
+<h2 class="mb-3"><?= __('Recommended parameters') ?></h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col"><?= __('Check name') ?></th>
+        <th scope="col"><?= __('Value') ?></th>
+        <th scope="col"><?= __('Description') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($data['recommendations'] as $check): ?>
+        <tr>
+            <th scope="row"><?= $check['name'] ?></th>
+            <td class="break-word <?= $check['error'] ? 'text-danger' : 'text-success' ?>"><?= $check['value'] ?></td>
+            <td><?= $check['description'] ?></td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>
