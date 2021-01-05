@@ -12,17 +12,17 @@ declare(strict_types=1);
 
 namespace News\Controllers\Admin;
 
+use Admin\Controllers\BaseAdminController;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\Controller\BaseController;
 use Johncms\System\Http\Request;
 use News\Models\NewsArticle;
 use News\Models\NewsSection;
 use News\Section;
 use News\Utils\Helpers;
 
-class AdminSectionController extends BaseController
+class AdminSectionController extends BaseAdminController
 {
     protected $module_name = 'news';
 
@@ -32,15 +32,22 @@ class AdminSectionController extends BaseController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->nav_chain->add(__('Admin panel'), '/news/admin/');
-        $this->nav_chain->add(__('Section list'), '/news/admin/content/');
+        $this->nav_chain->add(__('News'), '/admin/news/');
+        $this->render->addData(
+            [
+                'title'       => __('News'),
+                'page_title'  => __('News'),
+                'module_menu' => ['news' => true],
+            ]
+        );
+        $this->nav_chain->add(__('Section list'), '/admin/news/content/');
     }
 
     /**
      * Section creation page
      *
      * @param Request $request
+     * @param Section $section_service
      * @param int $section_id
      * @return string
      */
@@ -60,7 +67,7 @@ class AdminSectionController extends BaseController
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name, '/news/admin/content/' . $current_section->id);
+                $this->nav_chain->add($current_section->name, '/admin/news/content/' . $current_section->id);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
@@ -69,8 +76,8 @@ class AdminSectionController extends BaseController
         $this->nav_chain->add(__('Create section'));
 
         $data = [
-            'action_url' => '/news/admin/add_section/' . $section_id,
-            'back_url'   => '/news/admin/content/' . $section_id,
+            'action_url' => '/admin/news/add_section/' . $section_id,
+            'back_url'   => '/admin/news/content/' . $section_id,
             'section_id' => $section_id,
             'fields'     => [
                 'parent'      => $section_id,
@@ -115,7 +122,7 @@ class AdminSectionController extends BaseController
                     (new NewsSection())->create($data['fields']);
                     $section_service->clearCache();
                     $_SESSION['success_message'] = __('The section was created successfully');
-                    header('Location: /news/admin/content/' . $section_id);
+                    header('Location: /admin/news/content/' . $section_id);
                     exit;
                 }
                 $errors[] = __('A section with this code already exists');
@@ -152,8 +159,8 @@ class AdminSectionController extends BaseController
         }
 
         $data = [
-            'action_url' => '/news/admin/edit_section/' . $section_id,
-            'back_url'   => '/news/admin/content/' . $section->parent,
+            'action_url' => '/admin/news/edit_section/' . $section_id,
+            'back_url'   => '/admin/news/content/' . $section->parent,
             'section_id' => $section_id,
             'fields'     => [
                 'name'        => $request->getPost('name', $section->name),
@@ -190,7 +197,7 @@ class AdminSectionController extends BaseController
                 if (! $check) {
                     $section->update($data['fields']);
                     $_SESSION['success_message'] = __('The section was updated successfully');
-                    header('Location: /news/admin/content/' . $section->parent);
+                    header('Location: /admin/news/content/' . $section->parent);
                     exit;
                 }
                 $errors[] = __('A section with this code already exists');
@@ -239,7 +246,7 @@ class AdminSectionController extends BaseController
             (new NewsSection())->whereIn('id', $children_sections)->delete();
 
             $_SESSION['success_message'] = __('The section was successfully deleted');
-            header('Location: /news/admin/content/' . $section->parent);
+            header('Location: /admin/news/content/' . $section->parent);
             exit;
         }
 
@@ -249,7 +256,7 @@ class AdminSectionController extends BaseController
         $data['delete_token'] = uniqid('', true);
         $_SESSION['delete_token'] = $data['delete_token'];
 
-        $data['action_url'] = '/news/admin/del_section/' . $section_id;
+        $data['action_url'] = '/admin/news/del_section/' . $section_id;
 
         return $this->render->render('news::admin/del', ['data' => $data]);
     }

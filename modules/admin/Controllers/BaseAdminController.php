@@ -29,6 +29,8 @@ class BaseAdminController extends BaseController
         $container->setFactory(Render::class, AdminRenderEngineFactory::class);
         parent::__construct();
 
+        $this->translator->addTranslationDomain('admin', MODULES_PATH . 'admin/locale');
+
         $db = di(PDO::class);
         $this->render->addData(
             [

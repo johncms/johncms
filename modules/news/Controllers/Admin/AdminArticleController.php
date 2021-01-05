@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace News\Controllers\Admin;
 
+use Admin\Controllers\BaseAdminController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\Controller\BaseController;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use News\Models\NewsArticle;
@@ -23,7 +23,7 @@ use News\Models\NewsSearchIndex;
 use News\Models\NewsSection;
 use News\Utils\Helpers;
 
-class AdminArticleController extends BaseController
+class AdminArticleController extends BaseAdminController
 {
     protected $module_name = 'news';
 
@@ -33,9 +33,15 @@ class AdminArticleController extends BaseController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->nav_chain->add(__('Admin panel'), '/news/admin/');
-        $this->nav_chain->add(__('Section list'), '/news/admin/content/');
+        $this->nav_chain->add(__('News'), '/admin/news/');
+        $this->render->addData(
+            [
+                'title'       => __('News'),
+                'page_title'  => __('News'),
+                'module_menu' => ['news' => true],
+            ]
+        );
+        $this->nav_chain->add(__('Section list'), '/admin/news/content/');
     }
 
     /**
@@ -62,7 +68,7 @@ class AdminArticleController extends BaseController
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name, '/news/admin/content/' . $current_section->id);
+                $this->nav_chain->add($current_section->name, '/admin/news/content/' . $current_section->id);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
@@ -71,8 +77,8 @@ class AdminArticleController extends BaseController
         $this->nav_chain->add(__('Add article'));
 
         $data = [
-            'action_url' => '/news/admin/add_article/' . $section_id,
-            'back_url'   => '/news/admin/content/' . $section_id,
+            'action_url' => '/admin/news/add_article/' . $section_id,
+            'back_url'   => '/admin/news/content/' . $section_id,
             'section_id' => $section_id,
             'fields'     => [
                 'active'       => (int) $request->getPost('active', 1),
@@ -127,7 +133,7 @@ class AdminArticleController extends BaseController
                         ]
                     );
                     $_SESSION['success_message'] = __('The article was created successfully');
-                    header('Location: /news/admin/content/' . $section_id);
+                    header('Location: /admin/news/content/' . $section_id);
                     exit;
                 }
                 $errors[] = __('An article with this code already exists');
@@ -173,8 +179,8 @@ class AdminArticleController extends BaseController
         }
 
         $data = [
-            'action_url' => '/news/admin/edit_article/' . $article->id . '/',
-            'back_url'   => '/news/admin/content/' . $article->section_id . '/',
+            'action_url' => '/admin/news/edit_article/' . $article->id . '/',
+            'back_url'   => '/admin/news/content/' . $article->section_id . '/',
             'article_id' => $article_id,
             'fields'     => [
                 'active'       => (int) $request->getPost('active', $article->active),
@@ -224,7 +230,7 @@ class AdminArticleController extends BaseController
                         ['text' => $search_text]
                     );
                     $_SESSION['success_message'] = __('The article was updated successfully');
-                    header('Location: /news/admin/content/' . $article->section_id . '/');
+                    header('Location: /admin/news/content/' . $article->section_id . '/');
                     exit;
                 }
                 $errors[] = __('An article with this code already exists');
@@ -268,7 +274,7 @@ class AdminArticleController extends BaseController
             }
 
             $_SESSION['success_message'] = __('The article was successfully deleted');
-            header('Location: /news/admin/content/' . $article->section_id);
+            header('Location: /admin/news/content/' . $article->section_id);
             exit;
         }
 
@@ -278,7 +284,7 @@ class AdminArticleController extends BaseController
         $data['delete_token'] = uniqid('', true);
         $_SESSION['delete_token'] = $data['delete_token'];
 
-        $data['action_url'] = '/news/admin/del_article/' . $article_id;
+        $data['action_url'] = '/admin/news/del_article/' . $article_id;
 
         echo $this->render->render('news::admin/del', ['data' => $data]);
     }

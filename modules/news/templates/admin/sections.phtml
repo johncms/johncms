@@ -3,7 +3,9 @@
 /**
  * @var $title
  * @var $page_title
- * @var $data
+ * @var array $data
+ * @var \Mobicms\Render\Template\Template $this
+ * @noinspection PhpFullyQualifiedNameUsageInspection
  */
 
 $this->layout(
@@ -34,8 +36,8 @@ $articles = $data['articles'];
 <?php endif ?>
 
 <div class="mb-3">
-    <a href="/news/admin/add_article/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add article') ?></a>
-    <a href="/news/admin/add_section/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
+    <a href="/admin/news/add_article/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add article') ?></a>
+    <a href="/admin/news/add_section/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
 </div>
 
 <table class="table table-bordered bg-white">
@@ -64,16 +66,16 @@ $articles = $data['articles'];
                             </svg>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/news/admin/edit_section/<?= $section->id ?>/"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" data-url="/news/admin/del_section/<?= $section->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" href="/admin/news/edit_section/<?= $section->id ?>/"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" data-url="/admin/news/del_section/<?= $section->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>
                 <th scope="row" class="border-left-0">
-                    <a href="/news/admin/content/<?= $section->id ?>/"><?= $section->id ?></a>
+                    <a href="/admin/news/content/<?= $section->id ?>/"><?= $section->id ?></a>
                 </th>
-                <td><a href="/news/admin/content/<?= $section->id ?>/"><?= $section->name ?></a></td>
-                <td><a href="/news/admin/content/<?= $section->id ?>/"><?= $section->code ?></a></td>
+                <td><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->name ?></a></td>
+                <td><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->code ?></a></td>
                 <td><?= __('Section') ?></td>
                 <td><?= $section->created_at ?></td>
                 <td><?= $section->updated_at ?></td>
@@ -91,14 +93,14 @@ $articles = $data['articles'];
                             </svg>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/news/admin/edit_article/<?= $article->id ?>/"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" data-url="/news/admin/del_article/<?= $article->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" href="/admin/news/edit_article/<?= $article->id ?>/"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" data-url="/admin/news/del_article/<?= $article->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>
-                <th scope="row" class="border-left-0"><a href="/news/admin/edit_article/<?= $article->id ?>/"><?= $article->id ?></a></th>
-                <td><a href="/news/admin/edit_article/<?= $article->id ?>/"><?= $article->name ?></a></td>
-                <td><a href="/news/admin/edit_article/<?= $article->id ?>/"><?= $article->code ?></a></td>
+                <th scope="row" class="border-left-0"><a href="/admin/news//edit_article/<?= $article->id ?>/"><?= $article->id ?></a></th>
+                <td><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->name ?></a></td>
+                <td><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->code ?></a></td>
                 <td><?= __('Article') ?></td>
                 <td><?= $article->created_at ?></td>
                 <td><?= $article->updated_at ?></td>

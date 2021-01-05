@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace News\Controllers\Admin;
 
+use Admin\Controllers\BaseAdminController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\Controller\BaseController;
 use Johncms\System\Http\Request;
 use News\Models\NewsArticle;
 use News\Models\NewsSection;
 use News\Utils\Helpers;
 
-class AdminController extends BaseController
+class AdminController extends BaseAdminController
 {
     protected $module_name = 'news';
 
@@ -29,18 +29,19 @@ class AdminController extends BaseController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->nav_chain->add(__('Admin panel'), '/news/admin/');
+
+        $this->render->addData(
+            [
+                'title'       => __('News'),
+                'page_title'  => __('News'),
+                'module_menu' => ['news' => true],
+            ]
+        );
+        $this->nav_chain->add(__('News'), '/admin/news/');
     }
 
     public function index(): void
     {
-        $this->render->addData(
-            [
-                'title'      => __('Admin panel'),
-                'page_title' => __('Admin panel'),
-            ]
-        );
         echo $this->render->render('news::admin/index');
     }
 
@@ -53,7 +54,7 @@ class AdminController extends BaseController
     public function section(int $section_id = 0): string
     {
         $title = __('Section list');
-        $this->nav_chain->add($title, '/news/admin/content/');
+        $this->nav_chain->add($title, '/admin/news/content/');
 
         if (! empty($section_id)) {
             try {
@@ -75,10 +76,10 @@ class AdminController extends BaseController
 
         if (empty($section_id)) {
             $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderBy('id')->paginate();
+            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderByDesc('id')->paginate();
         } else {
             $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderBy('id')->paginate();
+            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderByDesc('id')->paginate();
         }
 
         $data['current_section'] = $section_id;
@@ -103,8 +104,8 @@ class AdminController extends BaseController
         $data = [
             'title'       => __('Settings'),
             'page_title'  => __('Settings'),
-            'back_url'    => '/news/admin/',
-            'form_action' => '/news/admin/settings/',
+            'back_url'    => '/admin/news/',
+            'form_action' => '/admin/news/settings/',
             'message'     => '',
         ];
         $this->render->addData(
@@ -143,7 +144,7 @@ class AdminController extends BaseController
             }
 
             $_SESSION['message'] = __('Settings saved!');
-            header('Location: /news/admin/settings/');
+            header('Location: /admin/news/settings/');
             exit;
         }
 
