@@ -24,6 +24,7 @@ class HomepageController extends BaseController
         $this->nav_chain->showHomePage(false);
 
         $config = di('config')['johncms'];
+        $news_config = di('config')['news'];
         $this->render->addData(
             [
                 'title'       => $config['meta_title'] ?? '',
@@ -33,8 +34,13 @@ class HomepageController extends BaseController
         );
 
         $data = [];
-        if ($config['news']['view'] > 0) {
-            $news = (new NewsArticle())->active()->lastDays($config['news']['days'])->limit($config['news']['quantity'])->get();
+        if ($news_config['homepage_show']) {
+            $news = (new NewsArticle())->active();
+            if ($news_config['homepage_days'] > 0) {
+                $news->lastDays($news_config['homepage_days']);
+                $news_new_count = $news->count();
+            }
+            $news = $news->limit($news_config['homepage_quantity'])->orderByDesc('active_from')->orderByDesc('id')->get();
         }
 
         $data['news'] = $news ?? [];
@@ -47,7 +53,7 @@ class HomepageController extends BaseController
         $count['library'] = $counters->libraryCounters();
         $count['users'] = $counters->usersCounters();
         $count['news'] = [
-            'new' => (new NewsArticle())->active()->lastDays($config['news']['days'])->count(),
+            'new' => $news_new_count ?? 0,
         ];
         $data['counters'] = $count;
 

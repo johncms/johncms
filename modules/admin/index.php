@@ -77,7 +77,6 @@ $actions = [
     'karma',
     'languages',
     'mail',
-    'news',
     'reg',
     'search_ip',
     'settings',

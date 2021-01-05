@@ -118,20 +118,21 @@ class AdminController extends BaseAdminController
 
         if ($request->getMethod() === 'POST') {
             $config = [
-                'ckfinder_license_key'  => $request->getPost('ckfinder_license_key', '', FILTER_SANITIZE_STRING),
-                'ckfinder_license_name' => $request->getPost('ckfinder_license_name', '', FILTER_SANITIZE_STRING),
+                'homepage_show'     => (bool) $request->getPost('homepage_show', false),
+                'homepage_quantity' => $request->getPost('homepage_quantity', 3, FILTER_VALIDATE_INT),
+                'homepage_days'     => $request->getPost('homepage_days', 0, FILTER_VALIDATE_INT),
 
-                'title'            => $request->getPost('title', '', FILTER_SANITIZE_STRING),
-                'meta_keywords'    => $request->getPost('meta_keywords', '', FILTER_SANITIZE_STRING),
-                'meta_description' => $request->getPost('meta_description', '', FILTER_SANITIZE_STRING),
+                'title'            => $request->getPost('title', ''),
+                'meta_keywords'    => $request->getPost('meta_keywords', ''),
+                'meta_description' => $request->getPost('meta_description', ''),
 
-                'section_title'            => $request->getPost('section_title', '', FILTER_SANITIZE_STRING),
-                'section_meta_keywords'    => $request->getPost('section_meta_keywords', '', FILTER_SANITIZE_STRING),
-                'section_meta_description' => $request->getPost('section_meta_description', '', FILTER_SANITIZE_STRING),
+                'section_title'            => $request->getPost('section_title', ''),
+                'section_meta_keywords'    => $request->getPost('section_meta_keywords', ''),
+                'section_meta_description' => $request->getPost('section_meta_description', ''),
 
-                'article_title'            => $request->getPost('article_title', '', FILTER_SANITIZE_STRING),
-                'article_meta_keywords'    => $request->getPost('article_meta_keywords', '', FILTER_SANITIZE_STRING),
-                'article_meta_description' => $request->getPost('article_meta_description', '', FILTER_SANITIZE_STRING),
+                'article_title'            => $request->getPost('article_title', ''),
+                'article_meta_keywords'    => $request->getPost('article_meta_keywords', ''),
+                'article_meta_description' => $request->getPost('article_meta_description', ''),
             ];
 
             $configFile = "<?php\n\n" . 'return ' . var_export(['news' => $config], true) . ";\n";
@@ -155,9 +156,6 @@ class AdminController extends BaseAdminController
 
         // Стандартные настройки
         $default_settings = [
-            'ckfinder_license_key'  => '',
-            'ckfinder_license_name' => '',
-
             'title'            => '',
             'meta_keywords'    => '',
             'meta_description' => '',

@@ -132,10 +132,10 @@ $this->layout('system::layout/default');
     </div>
 </div>
 
-<?php if ($data['news']->count() > 0): ?>
+<?php if (! empty($data['news']) && $data['news']->count() > 0): ?>
     <div class="mb-n3">
         <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
-        <div class="row row-cols-md-1">
+        <div class="row row-cols-1">
             <?php foreach ($data['news'] as $news_item): ?>
                 <?php /** @var News\Models\NewsArticle $news_item */  ?>
                 <div class="col mb-3">

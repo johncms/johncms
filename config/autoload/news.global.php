@@ -2,6 +2,10 @@
 
 return [
     'news' => [
+        'homepage_show'     => true,
+        'homepage_quantity' => 3,
+        'homepage_days'     => 0,
+
         'title'            => null,
         'meta_keywords'    => 'keywords',
         'meta_description' => 'descriptions',
