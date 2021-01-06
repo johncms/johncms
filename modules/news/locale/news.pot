@@ -2,169 +2,441 @@ msgid ""
 msgstr ""
 "X-Domain: news\n"
 
-#: modules/news/includes/add.php:24
-#: modules/news/includes/add.php:133
-#: modules/news/includes/add.php:143
-#: modules/news/templates/add.phtml:4
-#: modules/news/templates/add.phtml:5
-#: modules/news/templates/add.phtml:9
-msgid "Add news"
+#: modules/news/Article.php:48
+msgid "The requested article was not found."
 msgstr ""
 
-#: modules/news/includes/add.php:33
-#: modules/news/includes/edit.php:44
-msgid "You have not entered news title"
-msgstr ""
-
-#: modules/news/includes/add.php:37
-#: modules/news/includes/edit.php:48
-msgid "You have not entered news text"
-msgstr ""
-
-#: modules/news/includes/add.php:43
-msgid "You cannot add the message so often. Please, wait %d seconds."
-msgstr ""
-
-#: modules/news/includes/add.php:134
-msgid "News added"
-msgstr ""
-
-#: modules/news/includes/clean.php:24
-#: modules/news/includes/clean.php:51
-#: modules/news/templates/clear.phtml:4
-#: modules/news/templates/clear.phtml:5
-#: modules/news/templates/clear.phtml:10
-msgid "Clear news"
-msgstr ""
-
-#: modules/news/includes/clean.php:33
-msgid "Delete all news older than 1 week"
-msgstr ""
-
-#: modules/news/includes/clean.php:39
-msgid "Delete all news"
-msgstr ""
-
-#: modules/news/includes/clean.php:45
-msgid "Delete all news older than 1 month"
-msgstr ""
-
-#: modules/news/includes/del.php:24
-#: modules/news/includes/del.php:31
-#: modules/news/templates/confirm_delete.phtml:4
-#: modules/news/templates/confirm_delete.phtml:5
-msgid "Delete news"
-msgstr ""
-
-#: modules/news/includes/del.php:32
-msgid "News deleted"
-msgstr ""
-
-#: modules/news/includes/edit.php:25
-#: modules/news/includes/edit.php:73
-#: modules/news/includes/edit.php:84
-#: modules/news/templates/edit.phtml:4
-#: modules/news/templates/edit.phtml:5
-#: modules/news/templates/edit.phtml:9
-msgid "Edit news"
-msgstr ""
-
-#: modules/news/includes/edit.php:31
-#: modules/news/index.php:43
-#: modules/news/templates/index.phtml:4
-#: modules/news/templates/index.phtml:5
+#: modules/news/Controllers/Admin/AdminArticleController.php:36
+#: modules/news/Controllers/Admin/AdminArticleController.php:39
+#: modules/news/Controllers/Admin/AdminArticleController.php:40
+#: modules/news/Controllers/Admin/AdminController.php:35
+#: modules/news/Controllers/Admin/AdminController.php:36
+#: modules/news/Controllers/Admin/AdminController.php:40
+#: modules/news/Controllers/Admin/AdminSectionController.php:35
+#: modules/news/Controllers/Admin/AdminSectionController.php:38
+#: modules/news/Controllers/Admin/AdminSectionController.php:39
+#: modules/news/Controllers/ArticleController.php:34
+#: modules/news/Controllers/SearchController.php:29
+#: modules/news/Controllers/SectionController.php:34
+#: modules/news/MetaTagsManager.php:38
+#: modules/news/MetaTagsManager.php:39
 msgid "News"
 msgstr ""
 
-#: modules/news/includes/edit.php:33
-msgid "Wrong data"
+#: modules/news/Controllers/Admin/AdminArticleController.php:44
+#: modules/news/Controllers/Admin/AdminController.php:56
+#: modules/news/Controllers/Admin/AdminSectionController.php:43
+msgid "Section list"
 msgstr ""
 
-#: modules/news/includes/edit.php:85
-msgid "News changed"
+#: modules/news/Controllers/Admin/AdminArticleController.php:59
+#: modules/news/Controllers/Admin/AdminArticleController.php:60
+#: modules/news/Controllers/Admin/AdminArticleController.php:77
+#: modules/news/templates/admin/sections.phtml:39
+msgid "Add article"
 msgstr ""
 
-#: modules/news/templates/add.phtml:12
-#: modules/news/templates/add.phtml:20
-#: modules/news/templates/edit.phtml:12
-#: modules/news/templates/edit.phtml:20
-msgid "Title"
+#: modules/news/Controllers/Admin/AdminArticleController.php:105
+#: modules/news/Controllers/Admin/AdminArticleController.php:206
+msgid "The article name cannot be empty"
 msgstr ""
 
-#: modules/news/templates/add.phtml:24
-#: modules/news/templates/edit.phtml:24
+#: modules/news/Controllers/Admin/AdminArticleController.php:135
+msgid "The article was created successfully"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminArticleController.php:139
+#: modules/news/Controllers/Admin/AdminArticleController.php:236
+msgid "An article with this code already exists"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminArticleController.php:160
+#: modules/news/Controllers/Admin/AdminArticleController.php:161
+msgid "Edit article"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminArticleController.php:232
+msgid "The article was updated successfully"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminArticleController.php:276
+msgid "The article was successfully deleted"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminController.php:105
+#: modules/news/Controllers/Admin/AdminController.php:106
+#: modules/news/templates/admin/index.phtml:34
+msgid "Settings"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminController.php:147
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:58
+#: modules/news/Controllers/Admin/AdminSectionController.php:59
+#: modules/news/Controllers/Admin/AdminSectionController.php:76
+msgid "Create section"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:98
+#: modules/news/Controllers/Admin/AdminSectionController.php:180
+msgid "The section name cannot be empty"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:124
+msgid "The section was created successfully"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:128
+#: modules/news/Controllers/Admin/AdminSectionController.php:203
+msgid "A section with this code already exists"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:146
+#: modules/news/Controllers/Admin/AdminSectionController.php:149
+#: modules/news/Controllers/Admin/AdminSectionController.php:150
+msgid "Edit section"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:199
+msgid "The section was updated successfully"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminSectionController.php:248
+msgid "The section was successfully deleted"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:45
+msgid "Bad Request"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:126
+msgid "You have a ban!"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:131
+msgid "You are not logged in"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:153
+msgid "The comment was added successfully"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:156
+msgid "Enter the comment text"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:177
+msgid "The comment was deleted successfully"
+msgstr ""
+
+#: modules/news/Controllers/CommentsController.php:184
+msgid "Access denied"
+msgstr ""
+
+#: modules/news/Controllers/SearchController.php:40
+msgid "Search"
+msgstr ""
+
+#: modules/news/Controllers/SearchController.php:78
+msgid "Search by tags"
+msgstr ""
+
+#: modules/news/Controllers/VoteController.php:36
+msgid "The user is not authorized"
+msgstr ""
+
+#: modules/news/Controllers/VoteController.php:51
+msgid "Your vote is accepted"
+msgstr ""
+
+#: modules/news/Section.php:77
+msgid "The requested section was not found."
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:21
+msgid "Active"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:25
+#: modules/news/templates/admin/add_article.phtml:33
+msgid "Article name"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:37
+#: modules/news/templates/admin/add_article.phtml:45
+msgid "Page title"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:49
+#: modules/news/templates/admin/add_article.phtml:56
+msgid "Active from"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:60
+#: modules/news/templates/admin/add_article.phtml:67
+msgid "Active to"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:71
+#: modules/news/templates/admin/add_article.phtml:78
+msgid "Article code"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:80
+#: modules/news/templates/admin/add_section.phtml:39
+msgid "Leave it empty for automatic generation"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:83
+#: modules/news/templates/admin/add_article.phtml:90
+#: modules/news/templates/admin/add_section.phtml:42
+#: modules/news/templates/admin/add_section.phtml:49
+#: modules/news/templates/admin/settings.phtml:61
+#: modules/news/templates/admin/settings.phtml:68
+#: modules/news/templates/admin/settings.phtml:89
+#: modules/news/templates/admin/settings.phtml:96
+#: modules/news/templates/admin/settings.phtml:119
+#: modules/news/templates/admin/settings.phtml:126
+msgid "Keywords"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:94
+#: modules/news/templates/admin/add_article.phtml:101
+#: modules/news/templates/admin/add_section.phtml:53
+#: modules/news/templates/admin/add_section.phtml:60
+#: modules/news/templates/admin/settings.phtml:72
+#: modules/news/templates/admin/settings.phtml:100
+#: modules/news/templates/admin/settings.phtml:130
+msgid "Description"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:105
+#: modules/news/templates/admin/add_article.phtml:112
+msgid "Tags"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:114
+msgid "Enter words or phrases separated by commas"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:117
+msgid "Preview text"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:121
 msgid "Text"
 msgstr ""
 
-#: modules/news/templates/add.phtml:29
-msgid "Discussion"
-msgstr ""
-
-#: modules/news/templates/add.phtml:31
-msgid "Do not discuss"
-msgstr ""
-
-#: modules/news/templates/add.phtml:43
-#: modules/news/templates/edit.phtml:28
+#: modules/news/templates/admin/add_article.phtml:125
+#: modules/news/templates/admin/add_section.phtml:68
+#: modules/news/templates/admin/settings.phtml:138
 msgid "Save"
 msgstr ""
 
-#: modules/news/templates/add.phtml:44
-#: modules/news/templates/edit.phtml:29
-msgid "Back to news"
+#: modules/news/templates/admin/add_article.phtml:126
+#: modules/news/templates/admin/add_section.phtml:69
+#: modules/news/templates/public/article.phtml:77
+msgid "Back"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:12
-msgid "Clearing parameters"
+#: modules/news/templates/admin/add_section.phtml:18
+#: modules/news/templates/admin/add_section.phtml:26
+msgid "Section name"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:15
-msgid "Older than 1 month"
+#: modules/news/templates/admin/add_section.phtml:30
+#: modules/news/templates/admin/add_section.phtml:37
+msgid "Section code"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:19
-msgid "Older than 1 week"
+#: modules/news/templates/admin/add_section.phtml:64
+msgid "Text after a list"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:23
-msgid "Clear all"
+#: modules/news/templates/admin/del.phtml:11
+msgid "Confirm the action"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:26
-#: modules/news/templates/index.phtml:11
-msgid "Clear"
+#: modules/news/templates/admin/del.phtml:20
+msgid "Section:"
 msgstr ""
 
-#: modules/news/templates/clear.phtml:27
-#: modules/news/templates/confirm_delete.phtml:12
-msgid "Cancel"
+#: modules/news/templates/admin/del.phtml:23
+msgid "Article:"
 msgstr ""
 
-#: modules/news/templates/confirm_delete.phtml:9
+#: modules/news/templates/admin/del.phtml:25
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/news/templates/confirm_delete.phtml:11
-#: modules/news/templates/index.phtml:34
+#: modules/news/templates/admin/del.phtml:28
+#: modules/news/templates/admin/sections.phtml:70
+#: modules/news/templates/admin/sections.phtml:97
+#: modules/news/templates/public/article.phtml:55
 msgid "Delete"
 msgstr ""
 
-#: modules/news/templates/index.phtml:10
-msgid "Add"
+#: modules/news/templates/admin/del.phtml:29
+#: modules/news/templates/admin/settings.phtml:139
+msgid "Cancel"
 msgstr ""
 
-#: modules/news/templates/index.phtml:19
-msgid "Author"
+#: modules/news/templates/admin/index.phtml:22
+msgid "Content management"
 msgstr ""
 
-#: modules/news/templates/index.phtml:26
-msgid "Discuss in Forum"
+#: modules/news/templates/admin/sections.phtml:40
+msgid "Add section"
 msgstr ""
 
-#: modules/news/templates/index.phtml:33
+#: modules/news/templates/admin/sections.phtml:48
+#: modules/news/templates/admin/sections.phtml:102
+msgid "Name"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:49
+#: modules/news/templates/admin/sections.phtml:78
+#: modules/news/templates/admin/sections.phtml:103
+msgid "Code"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:50
+#: modules/news/templates/admin/sections.phtml:79
+#: modules/news/templates/admin/sections.phtml:104
+msgid "Type"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:51
+#: modules/news/templates/admin/sections.phtml:80
+#: modules/news/templates/admin/sections.phtml:105
+msgid "Created at"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:52
+#: modules/news/templates/admin/sections.phtml:81
+#: modules/news/templates/admin/sections.phtml:106
+msgid "Updated at"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:69
+#: modules/news/templates/admin/sections.phtml:96
 msgid "Edit"
 msgstr ""
 
-#: modules/news/templates/index.phtml:41
-msgid "Total"
+#: modules/news/templates/admin/sections.phtml:79
+msgid "Section"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:104
+msgid "Article"
+msgstr ""
+
+#: modules/news/templates/admin/sections.phtml:111
+#: modules/news/templates/public/article.phtml:59
+#: modules/news/templates/public/index.phtml:80
+msgid "The list is empty"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:30
+msgid "Home page settings"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:35
+msgid "Show on home page"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:39
+msgid "Quantity of news"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:43
+msgid "How many days to show?"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:45
+msgid "0 - always display."
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:48
+msgid "Meta tags for the main page"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:50
+#: modules/news/templates/admin/settings.phtml:57
+msgid "Module name"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:76
+msgid "Meta tag templates for sections"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:78
+#: modules/news/templates/admin/settings.phtml:85
+#: modules/news/templates/admin/settings.phtml:108
+#: modules/news/templates/admin/settings.phtml:115
+msgid "Title"
+msgstr ""
+
+#: modules/news/templates/admin/settings.phtml:106
+msgid "Meta tag templates for articles"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:23
+msgid "Published:"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:24
+msgid "Author:"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:26
+msgid "Tags:"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:32
+msgid "Rating:"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:53
+msgid "Write a comment"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:54
+msgid "Send"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:56
+msgid "Quote"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:57
+msgid "Reply"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:58
+msgid "Comments"
+msgstr ""
+
+#: modules/news/templates/public/article.phtml:71
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
+msgstr ""
+
+#: modules/news/templates/public/index.phtml:16
+msgid "Admin panel"
+msgstr ""
+
+#: modules/news/templates/public/index.phtml:23
+#: modules/news/templates/public/search.phtml:14
+msgid "Search query"
+msgstr ""
+
+#: modules/news/templates/public/search.phtml:63
+#: modules/news/templates/public/search_by_tags.phtml:63
+msgid "The search didn't yield any results."
+msgstr ""
+
+#: modules/news/templates/public/search_by_tags.phtml:14
+msgid "Enter a tag"
 msgstr ""

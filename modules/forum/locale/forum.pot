@@ -14,10 +14,8 @@ msgstr ""
 #: modules/forum/includes/delvote.php:74
 #: modules/forum/includes/massdel.php:82
 #: modules/forum/includes/massdel.php:84
-#: modules/forum/includes/nt.php:64
 #: modules/forum/includes/nt.php:66
-#: modules/forum/includes/ren.php:106
-#: modules/forum/includes/ren.php:108
+#: modules/forum/includes/nt.php:68
 #: modules/forum/includes/say.php:38
 #: modules/forum/includes/vip.php:60
 #: modules/forum/includes/vip.php:62
@@ -31,6 +29,7 @@ msgstr ""
 #: modules/forum/includes/addfile.php:74
 #: modules/forum/includes/addvote.php:34
 #: modules/forum/includes/addvote.php:148
+#: modules/forum/includes/change_topic.php:47
 #: modules/forum/includes/curators.php:33
 #: modules/forum/includes/curators.php:94
 #: modules/forum/includes/deltema.php:39
@@ -53,15 +52,12 @@ msgstr ""
 #: modules/forum/includes/massdel.php:43
 #: modules/forum/includes/massdel.php:57
 #: modules/forum/includes/massdel.php:86
-#: modules/forum/includes/nt.php:47
-#: modules/forum/includes/nt.php:84
+#: modules/forum/includes/nt.php:49
+#: modules/forum/includes/nt.php:86
 #: modules/forum/includes/per.php:30
 #: modules/forum/includes/per.php:45
 #: modules/forum/includes/per.php:61
 #: modules/forum/includes/per.php:76
-#: modules/forum/includes/ren.php:30
-#: modules/forum/includes/ren.php:46
-#: modules/forum/includes/ren.php:110
 #: modules/forum/includes/say.php:40
 #: modules/forum/includes/say.php:103
 #: modules/forum/includes/say.php:120
@@ -80,7 +76,7 @@ msgstr ""
 #: modules/forum/includes/vote.php:55
 #: modules/forum/includes/vote.php:67
 #: modules/forum/templates/edit_post.phtml:80
-#: modules/forum/templates/new_topic.phtml:96
+#: modules/forum/templates/new_topic.phtml:107
 #: modules/forum/templates/reply_message.phtml:102
 msgid "Back"
 msgstr ""
@@ -96,7 +92,7 @@ msgstr ""
 #: modules/forum/includes/filter.php:90
 #: modules/forum/includes/loadtem.php:26
 #: modules/forum/includes/loadtem.php:55
-#: modules/forum/includes/nt.php:45
+#: modules/forum/includes/nt.php:47
 #: modules/forum/includes/per.php:26
 #: modules/forum/includes/per.php:28
 #: modules/forum/includes/per.php:41
@@ -105,8 +101,6 @@ msgstr ""
 #: modules/forum/includes/per.php:59
 #: modules/forum/includes/per.php:72
 #: modules/forum/includes/per.php:74
-#: modules/forum/includes/ren.php:28
-#: modules/forum/includes/ren.php:44
 #: modules/forum/includes/show_post.php:31
 #: modules/forum/includes/show_post.php:53
 #: modules/forum/includes/tema.php:50
@@ -147,8 +141,6 @@ msgstr ""
 #: modules/forum/includes/addfile.php:176
 #: modules/forum/includes/addvote.php:98
 #: modules/forum/includes/editpost.php:259
-#: modules/forum/includes/ren.php:63
-#: modules/forum/includes/ren.php:80
 #: modules/forum/includes/say.php:438
 #: modules/forum/includes/search.php:183
 msgid "Repeat"
@@ -158,7 +150,7 @@ msgstr ""
 #: modules/forum/includes/addfile.php:190
 #: modules/forum/includes/addvote.php:130
 #: modules/forum/includes/addvote.php:131
-#: modules/forum/templates/new_topic.phtml:87
+#: modules/forum/templates/new_topic.phtml:98
 #: modules/forum/templates/reply_message.phtml:93
 #: modules/forum/templates/topic.phtml:124
 #: modules/forum/templates/topic.phtml:431
@@ -193,6 +185,11 @@ msgstr ""
 #: modules/forum/includes/editvote.php:145
 #: modules/forum/includes/tema.php:87
 msgid "Answer"
+msgstr ""
+
+#: modules/forum/includes/change_topic.php:36
+#: modules/forum/templates/topic.phtml:393
+msgid "Change the topic"
 msgstr ""
 
 #: modules/forum/includes/curators.php:28
@@ -480,20 +477,20 @@ msgstr ""
 msgid "Last 10"
 msgstr ""
 
-#: modules/forum/includes/nt.php:43
-#: modules/forum/includes/nt.php:80
-#: modules/forum/includes/nt.php:193
-#: modules/forum/includes/nt.php:197
-#: modules/forum/includes/nt.php:198
+#: modules/forum/includes/nt.php:45
+#: modules/forum/includes/nt.php:82
+#: modules/forum/includes/nt.php:201
+#: modules/forum/includes/nt.php:205
+#: modules/forum/includes/nt.php:206
 #: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
 msgstr ""
 
-#: modules/forum/includes/nt.php:68
+#: modules/forum/includes/nt.php:70
 msgid "Go to Section"
 msgstr ""
 
-#: modules/forum/includes/nt.php:82
+#: modules/forum/includes/nt.php:84
 #: modules/forum/includes/say.php:101
 #: modules/forum/includes/say.php:349
 msgid "You cannot add the message so often<br>Please, wait %d sec."
@@ -502,23 +499,6 @@ msgstr ""
 #: modules/forum/includes/per.php:117
 #: modules/forum/includes/per.php:118
 msgid "Move topic"
-msgstr ""
-
-#: modules/forum/includes/ren.php:26
-#: modules/forum/includes/ren.php:42
-#: modules/forum/includes/ren.php:59
-#: modules/forum/includes/ren.php:76
-#: modules/forum/includes/ren.php:94
-#: modules/forum/includes/ren.php:95
-msgid "Rename topic"
-msgstr ""
-
-#: modules/forum/includes/ren.php:61
-msgid "You have not entered topic name"
-msgstr ""
-
-#: modules/forum/includes/ren.php:78
-msgid "Topic with same name already exists in this section"
 msgstr ""
 
 #: modules/forum/includes/say.php:36
@@ -727,13 +707,13 @@ msgstr ""
 #: modules/forum/templates/add_file.phtml:33
 #: modules/forum/templates/add_file.phtml:48
 #: modules/forum/templates/add_poll.phtml:57
+#: modules/forum/templates/change_topic.phtml:46
 #: modules/forum/templates/curators.phtml:53
 #: modules/forum/templates/download_topic.phtml:36
 #: modules/forum/templates/download_topic.phtml:49
 #: modules/forum/templates/edit_poll.phtml:67
 #: modules/forum/templates/filter_by_author.phtml:61
 #: modules/forum/templates/move_topic.phtml:47
-#: modules/forum/templates/rename_topic.phtml:36
 #: modules/forum/templates/show_post.phtml:147
 msgid "Back to topic"
 msgstr ""
@@ -783,10 +763,25 @@ msgid "Delete last"
 msgstr ""
 
 #: modules/forum/templates/add_poll.phtml:56
+#: modules/forum/templates/change_topic.phtml:45
 #: modules/forum/templates/edit_poll.phtml:66
 #: modules/forum/templates/edit_post.phtml:74
-#: modules/forum/templates/rename_topic.phtml:35
 msgid "Save"
+msgstr ""
+
+#: modules/forum/templates/change_topic.phtml:29
+#: modules/forum/templates/change_topic.phtml:30
+msgid "Topic name"
+msgstr ""
+
+#: modules/forum/templates/change_topic.phtml:37
+#: modules/forum/templates/new_topic.phtml:88
+msgid "Meta description"
+msgstr ""
+
+#: modules/forum/templates/change_topic.phtml:41
+#: modules/forum/templates/new_topic.phtml:92
+msgid "Meta keywords"
 msgstr ""
 
 #: modules/forum/templates/clear_search_history.phtml:28
@@ -874,7 +869,7 @@ msgid "Select format"
 msgstr ""
 
 #: modules/forum/templates/edit_post.phtml:69
-#: modules/forum/templates/new_topic.phtml:77
+#: modules/forum/templates/new_topic.phtml:78
 #: modules/forum/templates/reply_message.phtml:87
 #: modules/forum/templates/topic.phtml:118
 #: modules/forum/templates/topic.phtml:425
@@ -882,7 +877,7 @@ msgid "Message"
 msgstr ""
 
 #: modules/forum/templates/edit_post.phtml:76
-#: modules/forum/templates/new_topic.phtml:92
+#: modules/forum/templates/new_topic.phtml:103
 #: modules/forum/templates/reply_message.phtml:98
 #: modules/forum/templates/topic.phtml:129
 #: modules/forum/templates/topic.phtml:436
@@ -890,7 +885,7 @@ msgid "Preview"
 msgstr ""
 
 #: modules/forum/templates/edit_post.phtml:80
-#: modules/forum/templates/new_topic.phtml:101
+#: modules/forum/templates/new_topic.phtml:112
 #: modules/forum/templates/reply_message.phtml:102
 msgid "Smilies"
 msgstr ""
@@ -1006,11 +1001,11 @@ msgstr ""
 msgid "Other categories"
 msgstr ""
 
-#: modules/forum/templates/new_topic.phtml:70
+#: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
 msgstr ""
 
-#: modules/forum/templates/new_topic.phtml:90
+#: modules/forum/templates/new_topic.phtml:101
 #: modules/forum/templates/reply_message.phtml:96
 #: modules/forum/templates/topic.phtml:127
 #: modules/forum/templates/topic.phtml:133
@@ -1055,11 +1050,6 @@ msgstr ""
 
 #: modules/forum/templates/new_topics.phtml:117
 msgid "Mark as read"
-msgstr ""
-
-#: modules/forum/templates/rename_topic.phtml:30
-#: modules/forum/templates/rename_topic.phtml:31
-msgid "Topic name"
 msgstr ""
 
 #: modules/forum/templates/reply_message.phtml:58
@@ -1170,10 +1160,6 @@ msgstr ""
 
 #: modules/forum/templates/topic.phtml:390
 msgid "Curators of the Topic"
-msgstr ""
-
-#: modules/forum/templates/topic.phtml:393
-msgid "Rename Topic"
 msgstr ""
 
 #: modules/forum/templates/topic.phtml:396

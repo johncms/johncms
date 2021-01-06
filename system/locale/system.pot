@@ -73,7 +73,7 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/index.php:67
+#: modules/login/index.php:68
 #: modules/login/templates/captcha.phtml:4
 #: modules/login/templates/captcha.phtml:5
 #: modules/login/templates/confirm.phtml:10
@@ -124,33 +124,33 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/login/index.php:52
+#: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
 msgstr ""
 
-#: modules/login/index.php:53
+#: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
 msgstr ""
 
-#: modules/login/index.php:77
+#: modules/login/index.php:78
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/index.php:81
+#: modules/login/index.php:82
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/login/index.php:99
+#: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/index.php:149
-#: modules/login/index.php:153
+#: modules/login/index.php:150
+#: modules/login/index.php:154
 msgid "Authorization failed"
 msgstr ""
 
@@ -338,6 +338,102 @@ msgstr ""
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
+
+#: system/src/Checker/SystemChecker.php:29
+msgid "PHP version"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:34
+msgid "The PHP version must be at least %s"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:39
+#: system/src/Checker/SystemChecker.php:47
+#: system/src/Checker/SystemChecker.php:55
+#: system/src/Checker/SystemChecker.php:63
+#: system/src/Checker/SystemChecker.php:71
+#: system/src/Checker/SystemChecker.php:88
+#: system/src/Checker/SystemChecker.php:96
+#: system/src/Checker/SystemChecker.php:122
+msgid "Yes"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:39
+#: system/src/Checker/SystemChecker.php:47
+#: system/src/Checker/SystemChecker.php:55
+#: system/src/Checker/SystemChecker.php:63
+#: system/src/Checker/SystemChecker.php:71
+#: system/src/Checker/SystemChecker.php:88
+#: system/src/Checker/SystemChecker.php:96
+#: system/src/Checker/SystemChecker.php:122
+msgid "No"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:42
+msgid "PHP extension PDO must be installed"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:45
+msgid "Imagick or GD extension"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:50
+msgid "You must install the php extension Imagick or GD"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:53
+msgid "zlib extension"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:58
+msgid "PHP extension zlib must be installed"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:61
+msgid "mbstring extension"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:66
+msgid "PHP extension mbstring must be installed"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:69
+msgid "fileinfo extension"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:74
+msgid "PHP extension fileinfo must be installed"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:86
+msgid "opcache extension"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:91
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:99
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:112
+msgid "Version of the database server"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:117
+msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:120
+msgid "mysqlnd test"
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:125
+msgid ""
+"We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
+"PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+msgstr ""
 
 #: system/src/Comments.php:159
 #: system/src/Comments.php:228

@@ -14,8 +14,8 @@ msgid "Checking parameters"
 msgstr ""
 
 #: install/index.php:72
-#: install/steps/step_3.php:22
-#: install/steps/step_3.php:23
+#: install/steps/step_3.php:25
+#: install/steps/step_3.php:26
 msgid "Database"
 msgstr ""
 
@@ -29,22 +29,19 @@ msgstr ""
 msgid "Completion"
 msgstr ""
 
-#: install/lib/Database.php:681
-msgid "Welcome to our website!"
-msgstr ""
-
 #: install/steps/step_2.php:27
 msgid "PHP version"
 msgstr ""
 
 #: install/steps/step_2.php:30
-msgid "The PHP version must be at least 7.2"
+msgid "The PHP version must be at least %s"
 msgstr ""
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40
 #: install/steps/step_2.php:46
 #: install/steps/step_2.php:52
+#: install/steps/step_2.php:58
 msgid "Yes"
 msgstr ""
 
@@ -52,6 +49,7 @@ msgstr ""
 #: install/steps/step_2.php:40
 #: install/steps/step_2.php:46
 #: install/steps/step_2.php:52
+#: install/steps/step_2.php:58
 msgid "No"
 msgstr ""
 
@@ -83,19 +81,43 @@ msgstr ""
 msgid "PHP extension mbstring must be installed"
 msgstr ""
 
-#: install/steps/step_3.php:77
+#: install/steps/step_2.php:57
+msgid "fileinfo extension"
+msgstr ""
+
+#: install/steps/step_2.php:60
+msgid "PHP extension fileinfo must be installed"
+msgstr ""
+
+#: install/steps/step_3.php:98
+msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
+msgstr ""
+
+#: install/steps/step_3.php:99
+msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
+msgstr ""
+
+#: install/steps/step_3.php:103
+msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
+msgstr ""
+
+#: install/steps/step_3.php:104
+msgid "Please contact your hosting provider's technical support to resolve this issue."
+msgstr ""
+
+#: install/steps/step_3.php:108
 msgid "ERROR: Can't write database.local.php"
 msgstr ""
 
-#: install/steps/step_3.php:82
+#: install/steps/step_3.php:114
 msgid "Invalid database host name"
 msgstr ""
 
-#: install/steps/step_3.php:84
+#: install/steps/step_3.php:116
 msgid "Invalid database user or password"
 msgstr ""
 
-#: install/steps/step_3.php:86
+#: install/steps/step_3.php:118
 msgid "Database does not exist"
 msgstr ""
 
@@ -127,7 +149,7 @@ msgstr ""
 #: install/templates/step_1.phtml:28
 #: install/templates/step_2.phtml:34
 #: install/templates/step_2.phtml:36
-#: install/templates/step_3.phtml:88
+#: install/templates/step_3.phtml:92
 #: install/templates/step_4.phtml:81
 msgid "Continue"
 msgstr ""
@@ -152,29 +174,33 @@ msgstr ""
 msgid "Database connection settings"
 msgstr ""
 
-#: install/templates/step_3.phtml:18
-#: install/templates/step_3.phtml:25
+#: install/templates/step_3.phtml:21
+#: install/templates/step_3.phtml:28
 msgid "DB Host"
 msgstr ""
 
-#: install/templates/step_3.phtml:32
-#: install/templates/step_3.phtml:39
+#: install/templates/step_3.phtml:35
+#: install/templates/step_3.phtml:42
 msgid "Port"
 msgstr ""
 
-#: install/templates/step_3.phtml:46
-#: install/templates/step_3.phtml:53
+#: install/templates/step_3.phtml:49
+#: install/templates/step_3.phtml:56
 msgid "DB Name"
 msgstr ""
 
-#: install/templates/step_3.phtml:60
-#: install/templates/step_3.phtml:67
+#: install/templates/step_3.phtml:63
+#: install/templates/step_3.phtml:70
 msgid "DB User"
 msgstr ""
 
-#: install/templates/step_3.phtml:74
-#: install/templates/step_3.phtml:80
+#: install/templates/step_3.phtml:77
+#: install/templates/step_3.phtml:83
 msgid "DB Password"
+msgstr ""
+
+#: install/templates/step_3.phtml:92
+msgid "Continue anyway"
 msgstr ""
 
 #: install/templates/step_4.phtml:10
