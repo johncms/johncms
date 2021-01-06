@@ -9,7 +9,6 @@
       'Download' => 'Unduh',
       'Documentation' => 'Dokumentasi',
       'News' => 'Berita',
-      'Discuss' => 'Membahas',
       'Features' => 'Fitur',
       'Responsive Layout' => 'Tata Letak Responsif',
       'Your site will appear equally well on both computers and mobile devices.' => 'Situs anda akan muncul sama dengan baik pada kedua komputer dan perangkat mobile.',

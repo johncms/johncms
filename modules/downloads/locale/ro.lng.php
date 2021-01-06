@@ -82,6 +82,7 @@
       'Total' => 'Toatal',
       'The list is empty' => 'Lista este goala',
       'Edited:' => 'Editat:',
+      'Edited' => 'Editat:',
       'Edit' => 'Editeaza',
       'Delete' => 'Șterge',
       'Do you really want to delete?' => 'Esti sigur ca vrei sa stergi?',

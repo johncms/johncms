@@ -9,7 +9,6 @@
       'Download' => 'Жүктөө',
       'Documentation' => 'Документация',
       'News' => 'Жаңылыктар',
-      'Discuss' => 'Талкуулоо',
       'Features' => 'Мүмкүнчүлүктөрү',
       'Responsive Layout' => 'Адаптивдүү белги',
       'Your site will appear equally well on both computers and mobile devices.' => 'Сиздин сайт компьютерде жана мобилдик түзмөктөрдө бирдей көрүнөт.',

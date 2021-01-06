@@ -9,7 +9,6 @@
       'Download' => 'Жүктеу',
       'Documentation' => 'Құжаттама',
       'News' => 'Жаңалықтар',
-      'Discuss' => 'Талқылау',
       'Features' => 'Мүмкіндіктер',
       'Responsive Layout' => 'Адаптивті макет',
       'Your site will appear equally well on both computers and mobile devices.' => 'Сіздің сайтыңыз компьютерлерде де, мобильдік құрылғыларда да бірдей жақсы көрсетілетін болады.',

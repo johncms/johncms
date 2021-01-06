@@ -9,7 +9,6 @@
       'Download' => 'Yüklə',
       'Documentation' => 'Sənədlər',
       'News' => 'Xəbərlər',
-      'Discuss' => 'Müzakirə',
       'Features' => 'Xüsusiyyətlər',
       'Responsive Layout' => 'Responsiv dizayn',
       'Your site will appear equally well on both computers and mobile devices.' => 'Sizin veb səhifəniz eyni dərəcədə yaxşı görünücək həm kompüter, həm də mobil cihazlarda',

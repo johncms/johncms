@@ -7,6 +7,7 @@
     array (
       'Forum' => 'Forum',
       'New reply on the forum' => 'Răspuns nou pe forum',
+      '<a href="%s">User <b>%s</b> responded to your message in the topic %s</a>' => '<a href="%s">Utilizatorul <b>%s</b> a raspuns la mesajul tau în subiectul %s</a>',
       'Karma' => 'Karma',
       'New vote in karma' => 'Votare nouă în karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Utilizatorul <b>#user_name#</b> a votat în <a href="#karma_url#">karma</a>.',
@@ -37,6 +38,7 @@
       'Verification code' => 'Cod de verificare',
       'Enter verification code' => 'Introduceți codul de verificare',
       'Continue' => 'Continua',
+      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Acum trebuie doar sa confirmati adresa dvs. de e-mail.<br> Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta.',
       'Sorry, but your request for registration is not considered yet. Please, be patient.' => 'Ne pare rău, dar solicitarea dvs. de înregistrare nu este încă luată în considerare. Vă rugăm să aveți răbdare.',
       'Authorization' => 'Autorizare',
       'Username' => 'Nume',
@@ -98,6 +100,7 @@
       'Super moderator' => 'Super Moderatori',
       'Administrator' => 'Adnistratori',
       'Supervisor' => 'Administrator Principal',
+      'You have a ban' => 'Ati fost banat',
       'Sql query log' => 'Jurnal de interogare Sql',
       'Query' => 'Interogare',
       'Bindings' => 'Legături',
