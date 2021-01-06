@@ -40,16 +40,16 @@ $articles = $data['articles'];
     <a href="/admin/news/add_section/<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
 </div>
 
-<table class="table table-bordered bg-white">
+<table class="table table-bordered responsive-table">
     <thead>
     <tr>
-        <th style="width: 58px;" class="border-right-0"></th>
-        <th class="border-left-0">#</th>
-        <th><?= __('Name') ?></th>
-        <th><?= __('Code') ?></th>
-        <th><?= __('Type') ?></th>
-        <th style="width: 170px;"><?= __('Created at') ?></th>
-        <th style="width: 170px;"><?= __('Updated at') ?></th>
+        <th scope="col" style="width: 58px;" class="border-right-0"></th>
+        <th scope="col" class="border-left-0">#</th>
+        <th scope="col"><?= __('Name') ?></th>
+        <th scope="col"><?= __('Code') ?></th>
+        <th scope="col"><?= __('Type') ?></th>
+        <th scope="col" style="width: 170px;"><?= __('Created at') ?></th>
+        <th scope="col" style="width: 170px;"><?= __('Updated at') ?></th>
     </tr>
     </thead>
     <tbody>
@@ -74,18 +74,18 @@ $articles = $data['articles'];
                 <th scope="row" class="border-left-0">
                     <a href="/admin/news/content/<?= $section->id ?>/"><?= $section->id ?></a>
                 </th>
-                <td><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->name ?></a></td>
-                <td><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->code ?></a></td>
-                <td><?= __('Section') ?></td>
-                <td><?= $section->created_at ?></td>
-                <td><?= $section->updated_at ?></td>
+                <th scope="row"><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->name ?></a></th>
+                <td data-title="<?= __('Code') ?>"><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->code ?></a></td>
+                <td data-title="<?= __('Type') ?>"><?= __('Section') ?></td>
+                <td data-title="<?= __('Created at') ?>"><?= $section->created_at ?></td>
+                <td data-title="<?= __('Updated at') ?>"><?= $section->updated_at ?></td>
             </tr>
         <?php endforeach; ?>
         <?php foreach ($articles as $article): ?>
             <!-- List of articles -->
             <?php /** @var \News\Models\NewsArticle $article */ ?>
             <tr>
-                <th scope="row" style="width: 58px;" class="border-right-0">
+                <th scope="row" style="width: 40px;" class="border-right-0">
                     <div class="dropdown">
                         <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg class="menu-icon">
@@ -99,11 +99,11 @@ $articles = $data['articles'];
                     </div>
                 </th>
                 <th scope="row" class="border-left-0"><a href="/admin/news//edit_article/<?= $article->id ?>/"><?= $article->id ?></a></th>
-                <td><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->name ?></a></td>
-                <td><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->code ?></a></td>
-                <td><?= __('Article') ?></td>
-                <td><?= $article->created_at ?></td>
-                <td><?= $article->updated_at ?></td>
+                <td data-title="<?= __('Name') ?>"><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->name ?></a></td>
+                <td data-title="<?= __('Code') ?>"><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->code ?></a></td>
+                <td data-title="<?= __('Type') ?>"><?= __('Article') ?></td>
+                <td data-title="<?= __('Created at') ?>"><?= $article->created_at ?></td>
+                <td data-title="<?= __('Updated at') ?>"><?= $article->updated_at ?></td>
             </tr>
         <?php endforeach; ?>
     <?php else: ?>

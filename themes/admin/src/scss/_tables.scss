@@ -1,0 +1,237 @@
+// Breakpoints
+$bp-xs: 15em;
+$bp-sm: 48rem;
+$bp-sm1: 55rem;
+$bp-md: 62rem;
+$bp-lg: 75em;
+
+.table_container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.responsive-table {
+    width: 100%;
+    margin-bottom: 1.5em;
+    border-spacing: 0;
+
+    @media (min-width: $bp-sm1) {
+        font-size: .9em;
+    }
+
+    @media (max-width: $bp-sm1) {
+        border: none;
+    }
+
+    @media (min-width: $bp-md) {
+        font-size: 1em;
+    }
+
+    thead {
+        // Accessibly hide <thead> on narrow viewports
+        position: absolute;
+        clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+        padding: 0;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+
+        @media (min-width: $bp-sm1) {
+            position: relative;
+            clip: auto;
+            height: auto;
+            width: auto;
+            overflow: auto;
+        }
+
+        th {
+            color: #495057;
+            background-color: #f8f9fa;
+            border-color: $border-color;
+            border-bottom: 2px solid $border-color;
+            font-weight: 700;
+            border-top: 1px solid $border-color;
+            padding: .75rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            text-align: left;
+
+            &:first-of-type {
+                text-align: left;
+            }
+
+            @media (max-width: $bp-lg) {
+                &:first-of-type {
+                    padding: .75em .5em;
+                }
+            }
+        }
+    }
+
+    // Set these items to display: block for narrow viewports
+    tbody,
+    tr,
+    th,
+    td {
+        display: block;
+        padding: 0;
+        text-align: left;
+        white-space: normal;
+    }
+
+    tr {
+        @media (min-width: $bp-sm1) {
+            // Undo display: block
+            display: table-row;
+        }
+    }
+
+    th,
+    td {
+        padding: .5em;
+        vertical-align: middle;
+        border-top: 1px solid $border-color;
+
+        @media (min-width: $bp-sm) {
+            padding: .75em .5em;
+        }
+
+        @media (min-width: $bp-sm1) {
+            // Undo display: block
+            display: table-cell;
+            padding: .5em;
+        }
+
+        @media (min-width: $bp-md) {
+            padding: .75em .5em;
+        }
+
+        @media (min-width: $bp-lg) {
+            padding: 1em 0.9rem;
+        }
+    }
+
+    caption {
+        margin-bottom: 1em;
+        font-size: 1em;
+        font-weight: bold;
+        text-align: center;
+
+        @media (min-width: $bp-sm1) {
+            font-size: 1.5em;
+        }
+    }
+
+    tfoot {
+        font-size: .8em;
+
+        @media (min-width: $bp-md) {
+            font-size: .9em;
+        }
+    }
+
+    tbody {
+        @media (min-width: $bp-sm1) {
+            // Undo display: block
+            display: table-row-group;
+        }
+
+        tr {
+            margin-bottom: 1em;
+
+            @media (min-width: $bp-sm1) {
+                // Undo display: block
+                display: table-row;
+                border-width: 1px;
+            }
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            &:hover {
+                background-color: #f8f8f8;
+            }
+
+            @media (max-width: $bp-sm1) {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+
+        th[scope="row"] {
+            //background-color: rgba(29,150,178,1);
+            color: white;
+
+            @media (min-width: $bp-sm) {
+                /*border-bottom: 1px solid #d6d6d6;*/
+            }
+
+            @media (min-width: $bp-sm1) {
+                background-color: transparent;
+                color: #1a1a1a;
+                font-weight: 400;
+                text-align: left;
+            }
+
+            @media (max-width: $bp-sm1) {
+                color: #1a1a1a;
+                background: #f5f5f5;
+                display: flex;
+                align-items: center;
+
+                &:nth-of-type(3) {
+                    flex-grow: 1;
+                }
+
+                &.context_menu {
+                    width: 35px;
+                    align-self: center;
+                    text-align: center;
+                    min-height: 47px;
+                    display: flex;
+                    align-items: center;
+
+                    > .dropdown {
+                        margin: 0 auto;
+                    }
+                }
+
+            }
+        }
+
+        td {
+            text-align: right;
+            color: #1a1a1a;
+
+            @media (min-width: $bp-sm1) {
+                /*border-bottom: 1px solid #d6d6d6;*/
+                text-align: left;
+                color: #1a1a1a;
+            }
+
+            @media (max-width: $bp-sm1) {
+                flex-basis: 100%;
+            }
+        }
+
+
+        td[data-title]:before {
+            content: attr(data-title);
+            float: left;
+            font-size: .8em;
+            color: rgba(94, 93, 82, .75);
+
+            @media (min-width: $bp-sm) {
+                font-size: .9em;
+            }
+
+            @media (min-width: $bp-sm1) {
+                // Don’t show data-title labels
+                content: none;
+            }
+        }
+    }
+}
