@@ -163,23 +163,13 @@
                 'outdent',
                 '|',
                 'codeBlock',
-                'imageUpload',
-                'CKFinder',
                 'blockQuote',
                 'insertTable',
-                'mediaEmbed',
                 'undo',
                 'redo'
             ]
         },
         language: '<?= $locale ?>',
-        image: {
-            toolbar: [
-                'imageTextAlternative',
-                'imageStyle:full',
-                'imageStyle:side'
-            ]
-        },
         table: {
             contentToolbar: [
                 'tableColumn',
@@ -214,30 +204,12 @@
                     class: 'alert alert-success',
                 },
                 {
-                    model: 'alertSuccessInline',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-success', 'd-inline-block']
-                    },
-                    title: 'alert-success inline',
-                    class: 'alert alert-success',
-                },
-                {
                     model: 'alertInfo',
                     view: {
                         name: 'div',
                         classes: ['alert', 'alert-info']
                     },
                     title: 'alert-info',
-                    class: 'alert alert-success',
-                },
-                {
-                    model: 'alertInfoInline',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-info', 'd-inline-block']
-                    },
-                    title: 'alert-info inline',
                     class: 'alert alert-success',
                 },
                 {
@@ -250,15 +222,6 @@
                     class: 'alert alert-danger',
                 },
                 {
-                    model: 'alertDangerInline',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-danger', 'd-inline-block']
-                    },
-                    title: 'alert-danger inline',
-                    class: 'alert alert-danger',
-                },
-                {
                     model: 'alertWarning',
                     view: {
                         name: 'div',
@@ -266,16 +229,7 @@
                     },
                     title: 'alert-warning',
                     class: 'alert alert-warning',
-                },
-                {
-                    model: 'alertWarningInline',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-warning', 'd-inline-block']
-                    },
-                    title: 'alert-warning inline',
-                    class: 'alert alert-warning',
-                },
+                }
             ]
         },
         licenseKey: '',

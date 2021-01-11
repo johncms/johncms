@@ -120,26 +120,31 @@
         margin-bottom: 0.8rem;
     }
 
-    blockquote {
-        overflow: hidden;
-        padding-right: 1.5em;
-        padding-left: 1.5em;
-        margin-left: 0;
-        margin-right: 0;
-        font-style: italic;
-        border-left: solid 5px hsl(0, 0%, 80%);
-
-        p {
-            margin-bottom: 0;
-        }
-    }
-
     &[dir="rtl"] {
         blockquote {
             border-left: 0;
             border-right: solid 5px hsl(0, 0%, 80%);
         }
+    }
 
+    blockquote {
+        p {
+            margin-bottom: 0;
+        }
+    }
+}
+
+blockquote {
+    overflow: hidden;
+    padding-right: 1.5em;
+    padding-left: 1.5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    border-left: solid 5px hsl(0, 0%, 80%);
+
+    p {
+        margin-bottom: 0;
     }
 }
 
