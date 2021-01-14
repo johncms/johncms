@@ -19,7 +19,7 @@
             <div class="custom-control custom-radio mb-2">
                 <input type="radio" id="lang_<?= $key ?>" name="setlng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $locale ? ' checked="checked"' : '') ?>>
                 <label class="custom-control-label" for="lang_<?= $key ?>">
-                    <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($key) . '.png') ?>" alt=".">
+                    <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($key) . '.svg') ?>" alt=".">
                     <?= $val['name'] ?>
                 </label>
             </div>
