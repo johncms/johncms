@@ -3,7 +3,7 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
-## 9.4.0 - unreleased
+## 9.4.0 - 2021-01-16
 
 #### Added
 - Добавлена страница настроек форума с возможностью задавать мета теги и шаблоны мета тегов для SEO оптимизации.
