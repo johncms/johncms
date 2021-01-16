@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\System\Legacy\Tools;
 
 const CONSOLE_MODE = true;
 
@@ -196,6 +197,21 @@ if (! $schema->hasTable('news_comments')) {
     );
 }
 
-// TODO: News converter
+$tools = di(Tools::class);
+
+$old_news = $connection->table('news')->get();
+
+foreach ($old_news as $item) {
+    $user = (new \Johncms\Users\User())->where('name', $item->avt)->first();
+    $article = new \News\Models\NewsArticle();
+    $article->active = true;
+    $article->section_id = 0;
+    $article->name = $item->name;
+    $article->code = \Illuminate\Support\Str::slug($item->name);
+    $article->text = $tools->checkout($item->text, 1, 1);
+    $article->created_at = \Carbon\Carbon::createFromTimestamp($item->time);
+    $article->created_by = $user->id ?? null;
+    $article->save();
+}
 
 echo 'Update complete!';
