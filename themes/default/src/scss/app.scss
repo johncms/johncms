@@ -1,5 +1,3 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap');
 // Variables
 @import 'variables';
 // Bootstrap
@@ -37,3 +35,5 @@
 
 // Editor
 @import "wbbtheme";
+
+@import '~flatpickr/dist/flatpickr.css';

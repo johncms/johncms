@@ -1,0 +1,124 @@
+<?php
+/**
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
+/**
+ * @var string $locale
+ */
+?>
+<!DOCTYPE html>
+<html lang="<?= $locale ?>">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="width">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="Generator" content="JohnCMS, https://johncms.com">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#586776">
+    <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
+    <?= $this->section('styles', '') ?>
+    <title><?= (isset($title) ? $this->e($title) : 'JohnCMS') ?></title>
+</head>
+<body>
+<div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
+    <div class="page_layout justify-content-end d-flex w-100">
+        <div class="sidebar">
+            <div class="sidebar__inner">
+                <div class="sidebar__logo">
+                    <a href="/">
+                        <span class="logo__image"><img src="<?= $this->asset('images/logo.svg') ?>" alt="logo" style="width: 70%;" class="img-fluid"></span>
+                    </a>
+                </div>
+                <div class="sidebar__wrapper d-flex flex-column text-black-50 pb-3">
+                    <?php foreach ($steps as $step): ?>
+                        <div class="step d-flex align-items-center border-bottom px-2 py-3">
+                            <div class="pr-3">
+                                <svg class="icon">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#<?= $step['active'] ? 'check-circle' : 'circle' ?>"/>
+                                </svg>
+                            </div>
+                            <div class="<?= $step['active'] || $step['current'] ? 'font-weight-bold' : '' ?> h5 mb-0"><?= $step['name'] ?></div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+        <div class="content-container content-container-padding d-flex flex-column shadow">
+            <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper d-flex w-100 justify-content-between">
+                        <div class="navbar-toggle">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <div class="logo">
+                            <a href="/">
+                                <img src="<?= $this->asset('images/logo_mobile.svg') ?>" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid flex-grow-1">
+                <?php if (! empty($page_title)): ?>
+                    <h1 class="mb-2"><?= $this->e($page_title) ?></h1>
+                <?php endif ?>
+                <?= $this->section('content') ?>
+                <div class="to-top to-top_hidden">
+                    <button class="btn btn__top">
+                        <svg class="icon-40">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#top"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="page_layout w-100">
+        <div class="content-container-padding footer-padding">
+            <div class="d-flex justify-content-between align-items-center border-top p-4 page-footer">
+                <div class="pl-1">
+                    <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="mr-4 text-muted text-decoration-none">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#twitter"/>
+                        </svg>
+                    </a>
+                    <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="mr-2 text-muted">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#telegram"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex-shrink-1 d-flex position-relative">
+                    <div>
+                        &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
+<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
+<script src="<?= $this->asset('js/app.js', true) ?>"></script>
+<?= $this->section('scripts', '') ?>
+</body>
+</html>

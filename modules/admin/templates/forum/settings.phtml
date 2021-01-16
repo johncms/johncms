@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @var bool $confirmation
+ * @var array $forum_config
+ */
+$this->layout('system::layout/default', ['title' => __('Forum Settings'), 'page_title' => __('Forum Settings')]);
+$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['settings' => true]]));
+?>
+
+<div style="max-width: 640px">
+    <?php if ($confirmation): ?>
+        <div class="alert alert-success shadow" role="alert">
+            <?= __('Settings are saved successfully') ?>
+        </div>
+    <?php endif ?>
+    <form method="post">
+        <fieldset>
+            <legend><?= __('Common settings') ?></legend>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="file_counters" value="1" id="file_counters" <?= ($forum_config['file_counters'] ? 'checked="checked"' : '') ?>>
+                <label class="custom-control-label" for="file_counters"><?= __('Show file counters') ?></label>
+            </div>
+        </fieldset>
+        <fieldset class="mt-3">
+            <legend><?= __('SEO settings') ?></legend>
+            <div class="form-group">
+                <label for="forum_keywords"><?= __('Forum keywords') ?></label>
+                <textarea name="forum_keywords" class="form-control" id="forum_keywords" cols="30" rows="2"><?= $this->e($forum_config['forum_keywords']) ?></textarea>
+            </div>
+            <div class="form-group">
+                <label for="forum_description"><?= __('Forum description') ?></label>
+                <textarea name="forum_description" class="form-control" id="forum_description" cols="30" rows="2"><?= $this->e($forum_config['forum_description']) ?></textarea>
+            </div>
+            <h3><?= __('Sections') ?></h3>
+            <div class="form-group">
+                <label for="section_keywords"><?= __('Section keywords') ?></label>
+                <textarea name="section_keywords" class="form-control" id="section_keywords" cols="30" rows="2"><?= $this->e($forum_config['section_keywords']) ?></textarea>
+                <div class="small text-muted"><?= __('Macros available: #name#, #description#') ?></div>
+            </div>
+            <div class="form-group">
+                <label for="section_description"><?= __('Section description') ?></label>
+                <textarea name="section_description" class="form-control" id="section_description" cols="30" rows="2"><?= $this->e($forum_config['section_description']) ?></textarea>
+                <div class="small text-muted"><?= __('Macros available: #name#, #description#') ?></div>
+            </div>
+            <h3><?= __('Topics') ?></h3>
+            <div class="form-group">
+                <label for="topic_keywords"><?= __('Topic keywords') ?></label>
+                <textarea name="topic_keywords" class="form-control" id="topic_keywords" cols="30" rows="2"><?= $this->e($forum_config['topic_keywords']) ?></textarea>
+                <div class="small text-muted"><?= __('Macros available: #name#') ?></div>
+            </div>
+            <div class="form-group">
+                <label for="topic_description"><?= __('Topic description') ?></label>
+                <textarea name="topic_description" class="form-control" id="topic_description" cols="30" rows="2"><?= $this->e($forum_config['topic_description']) ?></textarea>
+                <div class="small text-muted"><?= __('Macros available: #name#') ?></div>
+            </div>
+        </fieldset>
+        <input type="submit" class="btn btn-primary mb-2" name="submit" value="<?= __('Save') ?>"/>
+    </form>
+</div>

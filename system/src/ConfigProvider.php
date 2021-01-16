@@ -60,6 +60,7 @@ class ConfigProvider
                 Translator::class     => TranslatorServiceFactory::class,
                 User::class           => UserFactory::class,
                 Users\User::class     => Users\UserFactory::class,
+                Cache::class          => Cache::class,
             ],
 
             'invokables' => [],

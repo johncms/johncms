@@ -9,7 +9,6 @@
       'Download' => 'Descarcă',
       'Documentation' => 'Documentație',
       'News' => 'Stiri',
-      'Discuss' => 'Discutii',
       'Features' => 'Caracteristici',
       'Responsive Layout' => 'Aspect Responsive',
       'Your site will appear equally well on both computers and mobile devices.' => 'Site-ul dvs. va apărea la fel de bine pe calculatoare și dispozitive mobile.',

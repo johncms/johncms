@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Johncms\Mail\EmailSender;
-use Johncms\Security\Csrf;
+use Johncms\Modules\Modules;
+use Johncms\Security\BanIP;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
@@ -21,8 +21,8 @@ date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
 // Check the current PHP version
-if (version_compare(PHP_VERSION, '7.2', '<')) {
-    die('<h1>ERROR!</h1><p>Your needs PHP 7.2 or higher</p>');
+if (PHP_VERSION_ID < 70300) {
+    die('<h1>ERROR!</h1><p>Your needs PHP 7.3 or higher</p>');
 }
 
 // If there are no dependencies, we stop the script and displays an error
@@ -49,53 +49,27 @@ if (DEBUG) {
     ini_set('log_errors', 'Off');
 }
 
-header('X-Powered-CMS: JohnCMS');
-header('X-CMS-Version: ' . CMS_VERSION);
-
-session_name('SESID');
-session_start();
-
 /** @var ContainerInterface $container */
 $container = Johncms\System\Container\Factory::getContainer();
 
-/** @var Environment $env */
-$env = $container->get(Environment::class);
+if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
+    header('X-Powered-CMS: JohnCMS');
+    header('X-CMS-Version: ' . CMS_VERSION);
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+    session_name('SESID');
+    session_start();
 
-// Проверка на IP бан
-$req = $db->query(
-    "SELECT `ban_type`, `link` FROM `cms_ban_ip`
-    WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
-    " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . '
-    LIMIT 1'
-);
+    /** @var Environment $env */
+    $env = $container->get(Environment::class);
 
-if ($req->rowCount()) {
-    $res = $req->fetch();
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
 
-    switch ($res['ban_type']) {
-        case 2:
-            if (! empty($res['link'])) {
-                header('Location: ' . $res['link']);
-            } else {
-                header('Location: http://johncms.com');
-            }
-            exit;
-            break;
-        case 3:
-            //TODO: реализовать запрет регистрации
-            //self::$deny_registration = true;
-            break;
-        default:
-            header('HTTP/1.0 404 Not Found');
-            exit;
-    }
+    (new BanIP())->checkBan();
+
+    // System cleanup
+    new Johncms\System\Utility\Cleanup($db);
 }
-
-// System cleanup
-new Johncms\System\Utility\Cleanup($db);
 
 // Register the system languages domain and folder
 $translator = di(Translator::class);
@@ -104,12 +78,7 @@ $translator->defaultDomain('system');
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
 
-/** @var Csrf $csrf */
-$csrf = di(Csrf::class);
-
-/** @var Johncms\System\View\Render $render */
-$render = di(Johncms\System\View\Render::class);
-$render->addData(['tools' => di(Johncms\System\Legacy\Tools::class), 'csrf_token' => $csrf->getToken()]);
+(new Modules())->registerAutoloader();
 
 /** @var Johncms\System\Users\UserConfig $userConfig */
 $userConfig = $container->get(User::class)->config;
@@ -118,15 +87,6 @@ $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['pa
 $start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
-    // If cron usage is disabled.
-    if (! USE_CRON) {
-        $cron_cache = CACHE_PATH . 'cron.cache';
-        if (! file_exists($cron_cache) || filemtime($cron_cache) < (time() - 5)) {
-            EmailSender::send();
-            file_put_contents($cron_cache, time());
-        }
-    }
-
     if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
         ob_start('ob_gzhandler');
     } else {

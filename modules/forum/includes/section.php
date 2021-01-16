@@ -55,6 +55,13 @@ $online = [
     'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count(),
 ];
 
+$view->addData(
+    [
+        'keywords'    => $current_section->calculated_meta_keywords,
+        'description' => $current_section->calculated_meta_description,
+    ]
+);
+
 echo $view->render(
     'forum::section',
     [

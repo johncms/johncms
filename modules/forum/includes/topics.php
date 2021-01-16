@@ -83,6 +83,9 @@ $view->addData(
         'canonical'  => $canonical,
         'title'      => htmlspecialchars_decode($current_section->name),
         'page_title' => htmlspecialchars_decode($current_section->name),
+
+        'keywords'    => $current_section->calculated_meta_keywords,
+        'description' => $current_section->calculated_meta_description,
     ]
 );
 

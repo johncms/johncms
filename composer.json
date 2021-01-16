@@ -29,7 +29,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.2",
+        "php": "^7.3|^8.0",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -37,13 +37,16 @@
         "ext-simplexml": "*",
         "ext-zip": "*",
         "aura/autoload": "^2.0",
+        "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",
-        "guzzlehttp/psr7": "^1.6",
-        "illuminate/database": "^7.11",
+        "guzzlehttp/psr7": "^1.7",
+        "illuminate/cache": "^8.18",
+        "illuminate/database": "^8.0",
+        "illuminate/filesystem": "^8.18",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
-        "laminas/laminas-config-aggregator": "^1.2",
-        "laminas/laminas-mail": "^2.10",
+        "laminas/laminas-config-aggregator": "^1.3",
+        "laminas/laminas-mail": "^2.12",
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-uri": "^2.7",
         "laminas/laminas-validator": "^2.13",
@@ -53,12 +56,12 @@
         "simba77/johncms-pagination": "^1.1"
     },
     "require-dev": {
-        "gettext/gettext": "^5.4",
-        "gettext/php-scanner": "^1.1",
+        "gettext/gettext": "^5.5",
+        "gettext/php-scanner": "^1.2",
         "roave/security-advisories": "dev-master",
-        "slevomat/coding-standard": "^6.3",
+        "slevomat/coding-standard": "^6.4",
         "squizlabs/php_codesniffer": "^3.5",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.1"
     },
     "autoload": {
         "files": [

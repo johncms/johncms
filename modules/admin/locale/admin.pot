@@ -2,6 +2,23 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
+#: modules/admin/Controllers/BaseAdminController.php:46
+#: modules/admin/index.php:57
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/ip_whois.phtml:8
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
+#: modules/admin/Controllers/System/SystemCheckController.php:26
+#: modules/admin/Controllers/System/SystemCheckController.php:27
+#: modules/admin/Controllers/System/SystemCheckController.php:31
+#: modules/admin/templates/sidebar-admin-menu.phtml:233
+msgid "System check"
+msgstr ""
+
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
@@ -204,33 +221,33 @@ msgid "Antiflood Settings"
 msgstr ""
 
 #: modules/admin/includes/antiflood.php:76
-#: modules/admin/includes/news.php:46
 msgid "ERROR: Can not write system.local.php"
 msgstr ""
 
 #: modules/admin/includes/antiflood.php:82
 #: modules/admin/includes/karma.php:76
-#: modules/admin/includes/news.php:57
 #: modules/admin/templates/access.phtml:31
+#: modules/admin/templates/forum/settings.phtml:14
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
 msgstr ""
 
 #: modules/admin/includes/antispy.php:21
-#: modules/admin/templates/sidebar-admin-menu.phtml:255
+#: modules/admin/templates/sidebar-admin-menu.phtml:263
 msgid "Anti-Spyware"
 msgstr ""
 
 #: modules/admin/includes/antispy.php:31
 #: modules/admin/includes/counters.php:31
 #: modules/admin/includes/forum/del.php:208
+#: modules/admin/includes/forum/settings.php:25
 #: modules/admin/includes/ipban.php:31
 #: modules/admin/includes/karma.php:33
 #: modules/admin/includes/languages.php:22
 #: modules/admin/includes/languages/index.php:25
 #: modules/admin/includes/settings.php:24
 #: modules/admin/includes/usr_del.php:22
-#: modules/admin/index.php:56
+#: modules/admin/index.php:61
 #: modules/admin/templates/access.phtml:52
 #: modules/admin/templates/access.phtml:70
 #: modules/admin/templates/access.phtml:88
@@ -270,8 +287,7 @@ msgstr ""
 #: modules/admin/includes/forum/del.php:179
 #: modules/admin/includes/forum/del.php:198
 #: modules/admin/includes/forum/del.php:213
-#: modules/admin/includes/forum/edit.php:38
-#: modules/admin/includes/forum/edit.php:134
+#: modules/admin/includes/forum/edit.php:45
 #: modules/admin/includes/forum/hposts.php:54
 #: modules/admin/includes/forum/htopics.php:55
 #: modules/admin/includes/ipban.php:63
@@ -281,7 +297,6 @@ msgstr ""
 #: modules/admin/includes/ipban.php:371
 #: modules/admin/includes/ipban.php:388
 #: modules/admin/includes/ipban.php:419
-#: modules/admin/includes/news.php:51
 #: modules/admin/templates/admin_list.phtml:50
 #: modules/admin/templates/ads_index.phtml:89
 #: modules/admin/templates/antispy_scan_result.phtml:42
@@ -290,7 +305,7 @@ msgstr ""
 #: modules/admin/templates/counters_view.phtml:61
 #: modules/admin/templates/forum/hidden_posts.phtml:130
 #: modules/admin/templates/forum/hidden_topics.phtml:126
-#: modules/admin/templates/forum/index.phtml:43
+#: modules/admin/templates/forum/index.phtml:46
 #: modules/admin/templates/forum/structure.phtml:65
 #: modules/admin/templates/ipban.phtml:83
 #: modules/admin/templates/ipban_detail.phtml:59
@@ -416,50 +431,45 @@ msgstr ""
 
 #: modules/admin/includes/forum/add.php:40
 #: modules/admin/includes/forum/del.php:30
-#: modules/admin/includes/forum/edit.php:33
+#: modules/admin/includes/forum/edit.php:40
 msgid "Invalid ID"
 msgstr ""
 
 #: modules/admin/includes/forum/add.php:63
-#: modules/admin/includes/forum/edit.php:62
 msgid "You have not entered Title"
 msgstr ""
 
 #: modules/admin/includes/forum/add.php:67
-#: modules/admin/includes/forum/edit.php:66
 #: modules/admin/templates/ads_add.phtml:47
 #: modules/admin/templates/ads_add.phtml:48
 #: modules/admin/templates/counters_add_confirm.phtml:41
 #: modules/admin/templates/counters_view.phtml:31
 #: modules/admin/templates/forum/add.phtml:42
 #: modules/admin/templates/forum/add.phtml:43
+#: modules/admin/templates/forum/edit.phtml:37
 #: modules/admin/templates/forum/edit.phtml:38
-#: modules/admin/templates/forum/edit.phtml:39
-#: modules/admin/templates/news.phtml:45
 #: modules/admin/templates/settings.phtml:66
 msgid "Title"
 msgstr ""
 
 #: modules/admin/includes/forum/add.php:67
-#: modules/admin/includes/forum/edit.php:66
 msgid "Invalid length"
 msgstr ""
 
 #: modules/admin/includes/forum/add.php:71
-#: modules/admin/includes/forum/edit.php:70
 msgid "Description should be at least 2 characters in length"
 msgstr ""
 
-#: modules/admin/includes/forum/cat.php:22
-#: modules/admin/templates/forum/index.phtml:38
+#: modules/admin/includes/forum/cat.php:24
+#: modules/admin/templates/forum/index.phtml:41
 msgid "Forum structure"
 msgstr ""
 
-#: modules/admin/includes/forum/cat.php:31
+#: modules/admin/includes/forum/cat.php:34
 msgid "List of sections"
 msgstr ""
 
-#: modules/admin/includes/forum/cat.php:47
+#: modules/admin/includes/forum/cat.php:52
 msgid "List of categories"
 msgstr ""
 
@@ -503,16 +513,16 @@ msgstr ""
 msgid "Go to category"
 msgstr ""
 
-#: modules/admin/includes/forum/edit.php:23
+#: modules/admin/includes/forum/edit.php:28
 msgid "Edit Section"
 msgstr ""
 
-#: modules/admin/includes/forum/edit.php:85
+#: modules/admin/includes/forum/edit.php:119
 msgid "Please select a valid parent"
 msgstr ""
 
 #: modules/admin/includes/forum/hposts.php:23
-#: modules/admin/templates/forum/index.phtml:39
+#: modules/admin/templates/forum/index.phtml:42
 msgid "Hidden posts"
 msgstr ""
 
@@ -534,7 +544,7 @@ msgid "Access forbidden"
 msgstr ""
 
 #: modules/admin/includes/forum/htopics.php:23
-#: modules/admin/templates/forum/index.phtml:40
+#: modules/admin/templates/forum/index.phtml:43
 msgid "Hidden topics"
 msgstr ""
 
@@ -543,8 +553,13 @@ msgstr ""
 msgid "by section"
 msgstr ""
 
+#: modules/admin/includes/forum/settings.php:32
+#: modules/admin/templates/forum/settings.phtml:7
+msgid "Forum Settings"
+msgstr ""
+
 #: modules/admin/includes/ipban.php:21
-#: modules/admin/templates/sidebar-admin-menu.phtml:263
+#: modules/admin/templates/sidebar-admin-menu.phtml:271
 msgid "Ban by IP"
 msgstr ""
 
@@ -653,7 +668,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm.phtml:34
 #: modules/admin/templates/forum/del_confirm_move.phtml:46
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:60
-#: modules/admin/templates/forum/edit.phtml:94
+#: modules/admin/templates/forum/edit.phtml:106
 #: modules/admin/templates/forum/hidden_posts.phtml:30
 #: modules/admin/templates/forum/hidden_topics.phtml:30
 #: modules/admin/templates/ipban_add.phtml:76
@@ -661,7 +676,6 @@ msgstr ""
 #: modules/admin/templates/ipban_search.phtml:40
 #: modules/admin/templates/karma.phtml:64
 #: modules/admin/templates/karma_clean_confirm.phtml:35
-#: modules/admin/templates/news.phtml:86
 #: modules/admin/templates/user_clean_confirm.phtml:37
 #: modules/admin/templates/usr_del.phtml:58
 msgid "Cancel"
@@ -727,10 +741,6 @@ msgstr ""
 
 #: modules/admin/includes/languages/update.php:26
 msgid "The language was successfully updated"
-msgstr ""
-
-#: modules/admin/includes/news.php:19
-msgid "News on the mainpage"
 msgstr ""
 
 #: modules/admin/includes/reg.php:23
@@ -810,15 +820,6 @@ msgstr ""
 msgid "User does not exists"
 msgstr ""
 
-#: modules/admin/index.php:52
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/ip_whois.phtml:8
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
-msgstr ""
-
 #: modules/admin/templates/access.phtml:36
 #: modules/admin/templates/sidebar-admin-menu.phtml:153
 #: modules/admin/templates/usr_del.phtml:51
@@ -856,7 +857,6 @@ msgstr ""
 
 #: modules/admin/templates/access.phtml:93
 #: modules/admin/templates/access.phtml:116
-#: modules/admin/templates/news.phtml:66
 #: modules/admin/templates/usr_del.phtml:44
 msgid "Comments"
 msgstr ""
@@ -882,11 +882,11 @@ msgstr ""
 #: modules/admin/templates/amnesty.phtml:44
 #: modules/admin/templates/antiflood.phtml:77
 #: modules/admin/templates/counters_add_confirm.phtml:63
-#: modules/admin/templates/forum/edit.phtml:93
+#: modules/admin/templates/forum/edit.phtml:105
+#: modules/admin/templates/forum/settings.phtml:58
 #: modules/admin/templates/ipban_add.phtml:75
 #: modules/admin/templates/karma.phtml:63
 #: modules/admin/templates/languages/index.phtml:28
-#: modules/admin/templates/news.phtml:85
 #: modules/admin/templates/settings.phtml:86
 msgid "Save"
 msgstr ""
@@ -1213,60 +1213,62 @@ msgid "Parent section:"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:44
-#: modules/admin/templates/forum/edit.phtml:40
 msgid "Min. 2, Max. 30 characters"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:48
-#: modules/admin/templates/forum/edit.phtml:50
+#: modules/admin/templates/forum/edit.phtml:53
 #: modules/admin/templates/settings.phtml:74
+#: modules/admin/templates/system/system_check.phtml:9
+#: modules/admin/templates/system/system_check.phtml:29
+#: modules/admin/templates/system/system_check.phtml:49
 msgid "Description"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:50
-#: modules/admin/templates/forum/edit.phtml:52
+#: modules/admin/templates/forum/edit.phtml:55
 msgid "Optional field"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:50
-#: modules/admin/templates/forum/edit.phtml:52
+#: modules/admin/templates/forum/edit.phtml:55
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:54
 #: modules/admin/templates/forum/add.phtml:57
-#: modules/admin/templates/forum/edit.phtml:55
-#: modules/admin/templates/forum/edit.phtml:58
+#: modules/admin/templates/forum/edit.phtml:67
+#: modules/admin/templates/forum/edit.phtml:70
 msgid "Common access"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:61
-#: modules/admin/templates/forum/edit.phtml:62
+#: modules/admin/templates/forum/edit.phtml:74
 msgid "Assign the newly created authors as curators"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:65
-#: modules/admin/templates/forum/edit.phtml:66
+#: modules/admin/templates/forum/edit.phtml:78
 msgid "Allow authors to edit the 1st post"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:69
-#: modules/admin/templates/forum/edit.phtml:70
+#: modules/admin/templates/forum/edit.phtml:82
 msgid "Only for reading"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:73
-#: modules/admin/templates/forum/edit.phtml:73
+#: modules/admin/templates/forum/edit.phtml:85
 msgid "Section type"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:76
-#: modules/admin/templates/forum/edit.phtml:76
+#: modules/admin/templates/forum/edit.phtml:88
 msgid "For subsections"
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:80
-#: modules/admin/templates/forum/edit.phtml:80
+#: modules/admin/templates/forum/edit.phtml:92
 msgid "For topics"
 msgstr ""
 
@@ -1275,7 +1277,7 @@ msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
 msgstr ""
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:35
-#: modules/admin/templates/forum/edit.phtml:84
+#: modules/admin/templates/forum/edit.phtml:96
 msgid "Category"
 msgstr ""
 
@@ -1321,13 +1323,25 @@ msgstr ""
 msgid "WARNING! All the information will be deleted"
 msgstr ""
 
-#: modules/admin/templates/forum/edit.phtml:44
-#: modules/admin/templates/forum/edit.phtml:45
+#: modules/admin/templates/forum/edit.phtml:43
+msgid "Min. 2, Max. 150 characters"
+msgstr ""
+
+#: modules/admin/templates/forum/edit.phtml:47
+#: modules/admin/templates/forum/edit.phtml:48
 msgid "Order"
 msgstr ""
 
-#: modules/admin/templates/forum/edit.phtml:46
+#: modules/admin/templates/forum/edit.phtml:49
 msgid "Only numbers"
+msgstr ""
+
+#: modules/admin/templates/forum/edit.phtml:59
+msgid "Meta description"
+msgstr ""
+
+#: modules/admin/templates/forum/edit.phtml:63
+msgid "Meta keywords"
 msgstr ""
 
 #: modules/admin/templates/forum/hidden_posts.phtml:29
@@ -1384,10 +1398,12 @@ msgid "Categories"
 msgstr ""
 
 #: modules/admin/templates/forum/index.phtml:30
+#: modules/admin/templates/forum/settings.phtml:35
 msgid "Sections"
 msgstr ""
 
 #: modules/admin/templates/forum/index.phtml:31
+#: modules/admin/templates/forum/settings.phtml:46
 msgid "Topics"
 msgstr ""
 
@@ -1404,7 +1420,54 @@ msgid "Votes"
 msgstr ""
 
 #: modules/admin/templates/forum/index.phtml:36
+#: modules/admin/templates/forum/index.phtml:39
 msgid "Settings"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:19
+msgid "Common settings"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:22
+msgid "Show file counters"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:26
+msgid "SEO settings"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:28
+msgid "Forum keywords"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:32
+msgid "Forum description"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:37
+msgid "Section keywords"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:39
+#: modules/admin/templates/forum/settings.phtml:44
+msgid "Macros available: #name#, #description#"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:42
+msgid "Section description"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:48
+msgid "Topic keywords"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:50
+#: modules/admin/templates/forum/settings.phtml:55
+msgid "Macros available: #name#"
+msgstr ""
+
+#: modules/admin/templates/forum/settings.phtml:53
+msgid "Topic description"
 msgstr ""
 
 #: modules/admin/templates/forum/structure.phtml:47
@@ -1600,54 +1663,6 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: modules/admin/templates/news.phtml:38
-msgid "Appearance"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:41
-msgid "Title + Text"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:49
-msgid "Not to show"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:54
-msgid "Line breaks"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:58
-msgid "Smiles"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:62
-msgid "bbCode Tags"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:70
-msgid "Text size"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:72
-#: modules/admin/templates/news.phtml:77
-#: modules/admin/templates/news.phtml:82
-msgid "min:"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:72
-#: modules/admin/templates/news.phtml:77
-#: modules/admin/templates/news.phtml:82
-msgid "max:"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:75
-msgid "Quantity of news"
-msgstr ""
-
-#: modules/admin/templates/news.phtml:80
-msgid "How many days to show?"
-msgstr ""
-
 #: modules/admin/templates/reg_list.phtml:58
 msgid "Confirm all"
 msgstr ""
@@ -1752,8 +1767,32 @@ msgstr ""
 msgid "Language Settings"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:238
+#: modules/admin/templates/sidebar-admin-menu.phtml:246
 msgid "Security"
+msgstr ""
+
+#: modules/admin/templates/system/system_check.phtml:3
+msgid "Required parameters"
+msgstr ""
+
+#: modules/admin/templates/system/system_check.phtml:7
+#: modules/admin/templates/system/system_check.phtml:27
+#: modules/admin/templates/system/system_check.phtml:47
+msgid "Check name"
+msgstr ""
+
+#: modules/admin/templates/system/system_check.phtml:8
+#: modules/admin/templates/system/system_check.phtml:28
+#: modules/admin/templates/system/system_check.phtml:48
+msgid "Value"
+msgstr ""
+
+#: modules/admin/templates/system/system_check.phtml:23
+msgid "Database"
+msgstr ""
+
+#: modules/admin/templates/system/system_check.phtml:43
+msgid "Recommended parameters"
 msgstr ""
 
 #: modules/admin/templates/user_clean_confirm.phtml:29

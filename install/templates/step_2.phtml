@@ -1,0 +1,38 @@
+<?php $this->layout('install::layout'); ?>
+
+<h4 class="mb-2 mt-3 font-weight-bold"><?= __('Checking extensions') ?></h4>
+<div>
+    <?php foreach ($data['check_extensions'] as $extension): ?>
+        <div class="row border-bottom py-2">
+            <div class="col-9 col-md-8 font-weight-bold"><?= $extension['name'] ?></div>
+            <div class="col-3 col-md-4 font-weight-bold <?= $extension['error'] ? 'text-danger' : 'text-success' ?>">
+                <?= $extension['value'] ?>
+            </div>
+            <?php if ($extension['error']): ?>
+                <div class="col-12 text-muted mt-1">
+                    <?= $extension['description'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach ?>
+</div>
+
+<h4 class="mb-2 mt-4 font-weight-bold"><?= __('Permissions check (chmod)') ?></h4>
+<?php if (empty($data['folder_right_errors'])): ?>
+    <div class="alert alert-success"><?= __('Everything is good') ?></div>
+<?php else: ?>
+    <div class="alert alert-danger">
+        <?php foreach ($data['folder_right_errors'] as $folder): ?>
+            <div class="font-weight-bold"><?= $folder ?></div>
+        <?php endforeach; ?>
+    </div>
+    <div><?= __('For the specified directories, you must set the permissions to allow writing (777).') ?></div>
+<?php endif; ?>
+
+<div class="mt-4 mb-2">
+    <?php if ($data['next_step_disabled']): ?>
+        <button type="button" class="btn btn-primary" disabled><?= __('Continue') ?></button>
+    <?php else: ?>
+        <a href="/install/?step=3" class="btn btn-primary"><?= __('Continue') ?></a>
+    <?php endif; ?>
+</div>

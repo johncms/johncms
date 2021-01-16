@@ -9,7 +9,6 @@
       'Download' => 'Atsisiųsti',
       'Documentation' => 'Dokumentacija',
       'News' => 'Naujienos',
-      'Discuss' => 'Bendrauti',
       'Features' => 'Ypatybės',
       'Responsive Layout' => 'Adaptyvus išdėstymas',
       'Your site will appear equally well on both computers and mobile devices.' => 'Jūsų svetainė atrodys taip pat gerai ir ant kompiuterių ir ant mobiliųjų įrenginių.',

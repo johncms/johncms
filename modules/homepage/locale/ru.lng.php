@@ -9,7 +9,6 @@
       'Download' => 'Скачать',
       'Documentation' => 'Документация',
       'News' => 'Новости',
-      'Discuss' => 'Обсудить',
       'Features' => 'Возможности',
       'Responsive Layout' => 'Адаптивная разметка',
       'Your site will appear equally well on both computers and mobile devices.' => 'Ваш сайт будет одинаково хорошо отображаться как на компьютерах, так и на мобильных устройствах.',

@@ -125,7 +125,7 @@ $mods = [
     'nt',
     'per',
     'show_post',
-    'ren',
+    'change_topic',
     'restore',
     'say',
     'search',

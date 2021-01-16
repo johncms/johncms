@@ -1,0 +1,306 @@
+<?php
+/**
+ * @var int $bantotal
+ * @var int $countadm
+ * @var int $countusers
+ * @var string $locale
+ * @var int $regtotal
+ * @var Johncms\System\Legacy\Tools $tools
+ * @var Johncms\System\Users\User $user
+ */
+
+/** @var \Johncms\Counters $counters */
+$counters = $container->get('counters');
+$forum_counters = $counters->forumCounters();
+$guestbook_counters = $counters->guestbookCounters();
+$downloads_counters = $counters->downloadsCounters();
+$library_counters = $counters->libraryCounters();
+$users_counters = $counters->usersCounters();
+$album_counters = $counters->albumCounters();
+$news_counters = $counters->news();
+?>
+<div style="background-color: #bd0719; height: 5px">&nbsp;</div>
+
+<div class="accordion flex-grow-1" id="accordionAdmin">
+    <!-- Users Button -->
+    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger d-flex align-items-center">
+            <svg class="icon">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
+            </svg>
+            <span class="flex-grow-1"><?= d__('admin', 'Users') ?></span>
+            <?php if ($regtotal): ?>
+                <div class="badge badge-danger badge-pill ml-2">+&nbsp;<?= $regtotal ?></div>
+            <?php endif ?>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <!-- Users Slider -->
+    <div id="collapseUsers" class="collapse<?= isset($usr_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="<?= isset($usr_menu['search_ip']) ? 'active' : '' ?>">
+                <a href="/admin/search_ip/">
+                    <svg class="icon text-info">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
+                    </svg>
+                    <span class="flex-grow-1 text-info"><?= d__('admin', 'Search') ?></span>
+                </a>
+            </li>
+            <?php if ($regtotal): ?>
+                <li class="<?= isset($usr_menu['reg']) ? 'active' : '' ?>">
+                    <a href="/admin/reg/">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
+                        </svg>
+                        <span class="flex-grow-1"><?= d__('admin', 'On registration') ?></span>
+                        <span class="badge badge-pill badge-danger"><?= $tools->formatNumber($regtotal) ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+            <li class="<?= isset($usr_menu['userlist']) ? 'active' : '' ?>">
+                <a href="/admin/userlist/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Users') ?></span>
+                    <span class="badge badge-pill badge-light"><?= $tools->formatNumber($countusers) ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($usr_menu['adminlist']) ? 'active' : '' ?>">
+                <a href="/admin/adminlist/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Administration') ?></span>
+                    <span class="badge badge-pill badge-light"><?= $tools->formatNumber($countadm) ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($usr_menu['ban_panel']) ? 'active' : '' ?>">
+                <a href="/admin/ban_panel/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Ban Panel') ?></span>
+                    <span class="badge badge-pill badge-light"><?= $tools->formatNumber($bantotal) ?></span>
+                </a>
+            </li>
+            <?php if ($user->rights === 9): ?>
+                <li class="<?= isset($usr_menu['usr_clean']) ? 'active' : '' ?>">
+                    <a href="/admin/usr_clean/">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
+                        </svg>
+                        <span class="flex-grow-1"><?= d__('admin', 'Database cleanup') ?></span>
+                    </a>
+                </li>
+                <li class="<?= isset($usr_menu['antiflood']) ? 'active' : '' ?>">
+                    <a href="/admin/antiflood/">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bell-off"/>
+                        </svg>
+                        <span class="flex-grow-1"><?= d__('admin', 'Antiflood') ?></span>
+                    </a>
+                </li>
+                <li class="<?= isset($usr_menu['karma']) ? 'active' : '' ?>">
+                    <a href="/admin/karma/">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
+                        </svg>
+                        <span class="flex-grow-1"><?= d__('admin', 'Karma') ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+
+    <!-- Modules Button -->
+    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseModules" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger">
+            <svg class="icon">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
+            </svg>
+            <span class="flex-grow-1"><?= d__('admin', 'Modules') ?></span>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <!-- Modules Slider -->
+    <div id="collapseModules" class="collapse<?= isset($module_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="<?= isset($module_menu['access']) ? 'active' : '' ?>">
+                <a href="/admin/access/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shield"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Permissions') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($module_menu['forum']) ? 'active' : '' ?>">
+                <a href="/admin/forum/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Forum') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($module_menu['news']) ? 'active' : '' ?>">
+                <a href="/admin/news/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'News') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($module_menu['ads']) ? 'active' : '' ?>">
+                <a href="/admin/ads/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Advertisement') ?></span>
+                </a>
+            </li>
+            <?php if ($user->rights == 9): ?>
+                <li class="<?= isset($module_menu['counters']) ? 'active' : '' ?>">
+                    <a href="/admin/counters/">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
+                        </svg>
+                        <span class="flex-grow-1"><?= d__('admin', 'Counters') ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+
+    <!-- System Button -->
+    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseSystem" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger">
+            <svg class="icon">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
+            </svg>
+            <span class="flex-grow-1"><?= d__('admin', 'System') ?></span>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <!-- System Slider -->
+    <div id="collapseSystem" class="collapse<?= isset($sys_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="<?= isset($sys_menu['settings']) ? 'active' : '' ?>">
+                <a href="/admin/settings/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'System Settings') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($sys_menu['emoticons']) ? 'active' : '' ?>">
+                <a href="/admin/emoticons/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#smile"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Update Smilies') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($sys_menu['languages']) ? 'active' : '' ?>">
+                <a href="/admin/languages/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Language Settings') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($sys_menu['system_check']) ? 'active' : '' ?>">
+                <a href="/admin/system_check/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check-circle"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'System check') ?></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+
+    <!-- Security Button -->
+    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger">
+            <svg class="icon">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shield"/>
+            </svg>
+            <span class="flex-grow-1"><?= d__('admin', 'Security') ?></span>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <!-- Security Slider -->
+    <div id="collapseSecurity" class="collapse<?= isset($sec_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="<?= isset($sec_menu['antispy']) ? 'active' : '' ?>">
+                <a href="/admin/antispy/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Anti-Spyware') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($sec_menu['ipban']) ? 'active' : '' ?>">
+                <a href="/admin/ipban/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
+                    </svg>
+                    <span class="flex-grow-1"><?= d__('admin', 'Ban by IP') ?></span>
+                </a>
+            </li>
+            <li class="<?= isset($sec_menu['ip_whois']) ? 'active' : '' ?>">
+                <a href="/admin/ip_whois/">
+                    <svg class="icon">
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
+                    </svg>
+                    <span class="flex-grow-1">IP Whois</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+</div>
+
+<!-- Footer -->
+<div class="sidebar__footer">
+    <div>
+        <a href="/online/">
+            <svg class="icon sidebar_online">
+                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+            </svg>
+            <?= $container->get('counters')->online() ?>
+        </a>
+    </div>
+
+    <?php if (count($config['lng_list']) > 1): ?>
+        <div class="mt-1">
+            <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
+                <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
+                <?= $config['lng_list'][$locale]['name'] ?>
+            </button>
+        </div>
+    <?php endif ?>
+</div>

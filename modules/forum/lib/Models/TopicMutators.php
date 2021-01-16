@@ -22,6 +22,9 @@ use Johncms\Users\User;
  *
  * @property User $current_user
  * @property Tools $tools
+ *
+ * @property string $calculated_meta_description
+ * @property string $calculated_meta_keywords
  */
 trait TopicMutators
 {
@@ -122,5 +125,37 @@ trait TopicMutators
     public function getFormattedViewCountAttribute(): string
     {
         return (string) $this->tools->formatNumber($this->view_count);
+    }
+
+    /**
+     * Topic meta description
+     *
+     * @return string
+     */
+    public function getCalculatedMetaDescriptionAttribute(): string
+    {
+        if (! empty($this->meta_description)) {
+            return $this->meta_description;
+        }
+
+        $config = di('config')['forum']['settings'];
+        $template = $config['topic_description'] ?? '';
+        return str_replace('#name#', $this->name, $template);
+    }
+
+    /**
+     * Topic meta keywords
+     *
+     * @return string
+     */
+    public function getCalculatedMetaKeywordsAttribute(): string
+    {
+        if (! empty($this->meta_keywords)) {
+            return $this->meta_keywords;
+        }
+
+        $config = di('config')['forum']['settings'];
+        $template = $config['topic_keywords'] ?? '';
+        return str_replace('#name#', $this->name, $template);
     }
 }

@@ -10,6 +10,10 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumFile;
+use Forum\Models\ForumSection;
+use Johncms\Validator\Validator;
+
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
@@ -18,13 +22,16 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  * @var Johncms\NavChain $nav_chain
  * @var Johncms\System\Http\Request $request
+ * @var Johncms\System\View\Render $view
  */
 
 $title = __('Edit Section');
 $nav_chain->add($title);
 
+$id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+
 // Редактирование выбранной категории, или раздела
-if (! $id) {
+if (empty($id)) {
     echo $view->render(
         'system::pages/result',
         [
@@ -41,140 +48,106 @@ if (! $id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
+module_lib_loader('forum');
 
-if ($req->rowCount()) {
-    $res = $req->fetch();
+$section = (new ForumSection())->find($id);
+if ($section) {
+    $form_data = [
+        'name'         => $request->getPost('name', $section->name, FILTER_SANITIZE_STRING),
+        'description'  => $request->getPost('description', $section->description, FILTER_SANITIZE_STRING),
+        'sort'         => $request->getPost('sort', $section->sort ?? 100, FILTER_VALIDATE_INT),
+        'section_type' => $request->getPost('section_type', $section->section_type ?? 0, FILTER_VALIDATE_INT),
+        'parent'       => $request->getPost('parent', $section->parent ?? 0, FILTER_VALIDATE_INT),
+        'access'       => $request->getPost('access', $section->access ?? 0, FILTER_VALIDATE_INT),
+        'csrf_token'   => $request->getPost('csrf_token'),
 
-    if (isset($_POST['submit'])) {
+        'meta_description' => $request->getPost('meta_description', $section->meta_description ?? '', FILTER_SANITIZE_STRING),
+        'meta_keywords'    => $request->getPost('meta_keywords', $section->meta_keywords ?? '', FILTER_SANITIZE_STRING),
+    ];
+
+    if ($request->getMethod() === 'POST') {
         // Принимаем данные
-        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-        $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
-        $sort = isset($_POST['sort']) ? (int) ($_POST['sort']) : 100;
-        $section_type = isset($_POST['section_type']) ? (int) ($_POST['section_type']) : 0;
-        $category = isset($_POST['category']) ? (int) ($_POST['category']) : 0;
-        $allow = isset($_POST['allow']) ? (int) ($_POST['allow']) : 0;
+        $rules = [
+            'name'       => [
+                'NotEmpty',
+                'StringLength' => ['min' => 2, 'max' => 150],
+            ],
+            'csrf_token' => [
+                'Csrf',
+            ],
+        ];
 
-        // проверяем на ошибки
-        $error = [];
-
-        if (! $name) {
-            $error[] = __('You have not entered Title');
-        }
-
-        if ($name && (mb_strlen($name) < 2 || mb_strlen($name) > 30)) {
-            $error[] = __('Title') . ': ' . __('Invalid length');
-        }
-
-        if ($desc && mb_strlen($desc) < 2) {
-            $error[] = __('Description should be at least 2 characters in length');
-        }
-
-        $isChild = function ($parent, $id) use ($db, &$isChild) {
-            $res = $db->query("SELECT `id`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
-            if ($res != false) {
-                if ($res['id'] == $id) {
+        $isChild = static function ($parent, $id) use (&$isChild) {
+            $parent_section = (new ForumSection())->find($parent);
+            if ($parent_section) {
+                if ($parent_section->id === $id) {
                     return true;
                 }
-                return $isChild($res['parent'], $id);
+                return $isChild($parent_section->parent, $id);
             }
             return false;
         };
 
-        if ($isChild($category, $id)) {
-            $error[] = __('Please select a valid parent');
+        $check_child = true;
+        if ($isChild($form_data['parent'], $id)) {
+            $check_child = false;
         }
 
-        if (! $error) {
-            // Записываем в базу
-            $db->prepare(
-                '
-                      UPDATE `forum_sections` SET
-                      `name` = ?,
-                      `description` = ?,
-                      `access` = ?,
-                      `sort` = ?,
-                      `section_type` = ?
-                      WHERE `id` = ?
-                    '
-            )->execute(
-                [
-                    $name,
-                    $desc,
-                    $allow,
-                    $sort,
-                    $section_type,
-                    $id,
-                ]
-            );
-
-            if ($category != $res['parent']) {
+        $validator = new Validator($form_data, $rules);
+        if ($check_child && $validator->isValid()) {
+            if ($form_data['parent'] !== $section->parent) {
                 // Вычисляем сортировку
-                $req_s = $db->query("SELECT `sort` FROM `forum_sections` WHERE `parent` = '${category}' ORDER BY `sort` DESC LIMIT 1");
-                $res_s = $req_s->fetch();
-                $sort = $res_s['sort'] + 1;
+                $new_parent = (new ForumSection())->where('parent', $form_data['parent'])->orderByDesc('sort')->first();
+                $sort = $new_parent->sort + 1;
                 // Меняем категорию
-                $db->exec("UPDATE `forum_sections` SET `parent` = '${category}', `sort` = '${sort}' WHERE `id` = '${id}'");
+                $form_data['sort'] = $sort;
                 // Меняем категорию для прикрепленных файлов
-                $db->exec("UPDATE `cms_forum_files` SET `cat` = '${category}' WHERE `cat` = '" . $res['parent'] . "'");
+                (new ForumFile())
+                    ->where('cat', $section->parent)
+                    ->where('subcat', $section->id)
+                    ->update(['cat' => $form_data['parent']]);
             }
-            header('Location: ?mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
-        } else {
-            // Выводим сообщение об ошибках
-            echo $view->render(
-                'system::pages/result',
-                [
-                    'title'         => $title,
-                    'type'          => 'alert-danger',
-                    'message'       => $error,
-                    'admin'         => true,
-                    'menu_item'     => 'forum',
-                    'parent_menu'   => 'module_menu',
-                    'back_url'      => '?mod=edit' . ($id ? '&amp;id=' . $id : ''),
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-    } else {
-        // Форма ввода
-        $categories = [
-            [
-                'id'       => 0,
-                'name'     => ' - ',
-                'selected' => empty($res['parent']),
-            ],
-        ];
-        $tree = [];
-        $tools->getSectionsTree($tree);
-        foreach ($tree as $item) {
-            $categories[] = [
-                'id'       => $item['id'],
-                'name'     => $item['name'],
-                'selected' => $item['id'] === $res['parent'],
-            ];
-        }
-        $data['categories'] = $categories;
-        $res['name'] = htmlspecialchars($res['name']);
-        $res['sort'] = (int) $res['sort'];
-        $res['description'] = htmlspecialchars($res['description']);
-        $res['access'] = ! empty($res['access']) ? (int) ($res['access']) : 0;
-        $res['section_type'] = ! empty($res['section_type']) ? (int) ($res['section_type']) : 0;
 
-        $data['item'] = $res;
+            // Записываем в базу
+            $section->update($form_data);
+            header('Location: ?mod=cat' . (! empty($section->parent) ? '&id=' . $section->parent : ''));
+            exit();
+        }
 
-        $data['id'] = $id;
-        $data['parent_section_name'] = $cat_name ?? '';
-        $data['form_action'] = '?mod=edit&amp;id=' . $id;
-        $data['back_url'] = '?mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '');
-        echo $view->render(
-            'admin::forum/edit',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => $data,
-            ]
-        );
+        $errors = $validator->getErrors();
+        if (! $check_child) {
+            $errors['csrf_token'][] = __('Please select a valid parent');
+        }
     }
+
+    // Форма ввода
+    $categories = [
+        [
+            'id'       => 0,
+            'name'     => ' - ',
+            'selected' => empty($section->parent),
+        ],
+    ];
+    $tree = [];
+    $tools->getSectionsTree($tree);
+    foreach ($tree as $item) {
+        $categories[] = [
+            'id'       => $item['id'],
+            'name'     => $item['name'],
+            'selected' => $item['id'] === $section->parent,
+        ];
+    }
+
+    $data['errors'] = $errors ?? [];
+    $data['categories'] = $categories;
+    $data['item'] = $form_data;
+    $data['id'] = $id;
+    $data['parent_section_name'] = $cat_name ?? '';
+    $data['form_action'] = '?mod=edit&amp;id=' . $id;
+    $data['back_url'] = '?mod=cat' . (! empty($section->parent) ? '&amp;id=' . $section->parent : '');
+
+    $view->addData(['title' => $title, 'page_title' => $title]);
+    echo $view->render('admin::forum/edit', ['data' => $data]);
 } else {
     header('Location: ?mod=cat');
 }

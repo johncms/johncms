@@ -1,0 +1,158 @@
+<?php
+/**
+ * @var array|string $message
+ * @var string $type
+ * @var string $title
+ * @var string $page_title
+ * @var string $back_url
+ * @var string $back_url_name
+ * @var string $message_form
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title ?? $title,
+    ]
+);
+?>
+
+<?php if (! empty($data['error'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-danger',
+            'alert'      => $data['error'],
+        ]
+    ) ?>
+<?php endif; ?>
+
+<?php if (! empty($data['message_form'])): ?>
+    <div class="mb-3">
+        <?= $data['message_form'] ?>
+    </div>
+<?php endif; ?>
+
+<!-- Отображаем комментарии -->
+<?php if (empty($data['items'])): ?>
+    <div class="alert alert-info"><?= d__('system', 'The list is empty') ?></div>
+<?php else: ?>
+    <?php foreach ($data['items'] as $item): ?>
+        <div class="new_post-item border-bottom shadow mb-2">
+            <div class="new_post-header d-flex justify-content-between">
+                <div class="post-user">
+                    <?php if (! empty($item['user_profile_link'])): ?>
+                        <a href="<?= $item['user_profile_link'] ?>">
+                            <div class="avatar">
+                                <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                            </div>
+                        </a>
+                    <?php else: ?>
+                        <div class="avatar">
+                            <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
+                        </div>
+                    <?php endif; ?>
+                    <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
+                    <?php if (! empty($item['user_rights_name'])): ?>
+                        <div class="post-of-user"
+                             data-toggle="tooltip"
+                             data-placement="top"
+                             data-html="true"
+                             title="<?= $item['user_rights_name'] ?>">
+                            <svg class="icon-post">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
+                            </svg>
+                        </div>
+                    <?php endif ?>
+                </div>
+                <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                    <div class="w-100">
+                        <?php if (! empty($item['user_profile_link'])): ?>
+                            <a href="<?= $item['user_profile_link'] ?>">
+                                <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
+                            </a>
+                        <?php else: ?>
+                            <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
+                        <?php endif; ?>
+                        <span class="post-meta d-inline mr-2"><?= $item['created'] ?></span>
+                        <?php if (! empty($item['edit_count'])): ?>
+                            <div class="post-meta d-inline mr-2"
+                                 data-toggle="tooltip"
+                                 data-placement="top"
+                                 data-html="true"
+                                 title="<?= __('Edited:') ?> <?= $item['editor_name'] ?> <br> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]">
+                                <?= __('Edited') ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php if (! empty($item['status'])): ?>
+                        <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                            <span class="font-weight-bold"><?= $item['status'] ?></span>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+            <div class="post-body mt-2 border-top pt-2 pb-2">
+                <?= $item['post_text'] ?>
+                <?php if (! empty($item['reply_text'])): ?>
+                    <div class="alert alert-warning mt-2 mb-n2">
+                        <b><a href="<?= $item['reply_author_url'] ?>"><?= $item['reply_author_name'] ?></a></b> <?= $item['reply_time'] ?><br>
+                        <?= $item['reply_text'] ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="post-footer d-flex justify-content-between mt-2">
+                <div class="overflow-hidden">
+                    <?php if ($user->rights): ?>
+                        <div class="post-meta d-flex">
+                            <div class="user-ip mr-2">
+                                <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
+                                <?php if (! empty($item['ip_via_proxy'])): ?>
+                                    / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="useragent">
+                                <span><?= $item['user_agent'] ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="d-flex">
+                    <?php if (! empty($item['reply_url'])): ?>
+                        <div class="ml-3">
+                            <a href="<?= $item['reply_url'] ?>"><?= d__('system', 'Reply') ?></a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($item['has_edit']): ?>
+                        <div class="dropdown ml-3">
+                            <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon text-primary">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#more_horizontal"/>
+                                </svg>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <?php if (! empty($item['edit_url'])): ?>
+                                    <a href="<?= $item['edit_url'] ?>" class="dropdown-item"><?= d__('system', 'Edit') ?></a>
+                                <?php endif; ?>
+                                <?php if (! empty($item['delete_url'])): ?>
+                                    <a href="<?= $item['delete_url'] ?>" class="dropdown-item"><?= d__('system', 'Delete') ?></a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+    <?php if (! empty($data['pagination'])): ?>
+        <?= $data['pagination'] ?>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if (! empty($back_url)): ?>
+    <div class="mt-4">
+        <a href="<?= $back_url ?>"><?= d__('system', 'Back') ?></a>
+    </div>
+<?php endif; ?>

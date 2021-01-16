@@ -28,7 +28,13 @@ class Serialize implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes): array
     {
-        return ! empty($value) ? unserialize($value, ['allowed_classes' => false]) : [];
+        if (! empty($value)) {
+            $unserialized = unserialize($value, ['allowed_classes' => false]);
+            if (is_array($unserialized)) {
+                return $unserialized;
+            }
+        }
+        return [];
     }
 
     /**

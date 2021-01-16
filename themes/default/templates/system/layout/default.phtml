@@ -13,7 +13,7 @@ $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
 ?>
 <!DOCTYPE html>
-<html lang="<?= $locale ?>">
+<html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +33,12 @@ $ads_array = $ads->getAds();
         <link rel="canonical" href="<?= $canonical ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
-    <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <?php if($locale === 'ar'): ?>
+        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
+    <?php else: ?>
+        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <?php endif; ?>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
@@ -123,19 +128,27 @@ $ads_array = $ads->getAds();
             </div>
         </div>
     </div>
+    <div class="page_layout container">
+        <?= $this->section('footer_content') ?>
+    </div>
     <div class="overlay"></div>
     <div class="page_layout w-100">
         <div class="content-container-padding footer-padding">
             <div class="d-flex justify-content-between align-items-center border-top p-4 page-footer">
                 <div class="pl-1">
-                    <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="mr-4 text-muted text-decoration-none">
+                    <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="mr-3 text-muted text-decoration-none">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#twitter"/>
                         </svg>
                     </a>
-                    <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="mr-2 text-muted">
+                    <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="mr-3 text-muted text-decoration-none">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#telegram"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCIzwmZMHJgnBPEicpU9Itsw" title="YouTube" target="_blank" rel="nofollow" class="mr-2 text-muted text-decoration-none">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#youtube2"/>
                         </svg>
                     </a>
                 </div>
@@ -162,7 +175,20 @@ $ads_array = $ads->getAds();
         <div class="modal-content"></div>
     </div>
 </div>
+<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
+<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
 <script src="<?= $this->asset('js/app.js', true) ?>"></script>
+<?php if ($locale !== 'en'): ?>
+    <?php
+    try { // TODO: improve the asset method for simplify this construction
+        ?>
+        <script src="<?= $this->asset('js/flatpickr/' . $locale . '.js') ?>"></script>
+        <script>flatpickr.localize(flatpickr.l10ns.<?= $locale ?>);</script>
+        <?php
+    } catch (Exception $exception) {
+    }
+    ?>
+<?php endif; ?>
 <?= $this->section('scripts', '') ?>
 </body>
 </html>

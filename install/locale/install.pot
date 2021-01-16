@@ -1,0 +1,268 @@
+msgid ""
+msgstr ""
+"X-Domain: install\n"
+
+#: install/index.php:62
+#: install/steps/step_1.php:23
+msgid "Preparing for installation"
+msgstr ""
+
+#: install/index.php:67
+#: install/steps/step_2.php:20
+#: install/steps/step_2.php:21
+msgid "Checking parameters"
+msgstr ""
+
+#: install/index.php:72
+#: install/steps/step_3.php:25
+#: install/steps/step_3.php:26
+msgid "Database"
+msgstr ""
+
+#: install/index.php:77
+#: install/steps/step_4.php:28
+#: install/steps/step_4.php:29
+msgid "Setting"
+msgstr ""
+
+#: install/index.php:82
+msgid "Completion"
+msgstr ""
+
+#: install/steps/step_2.php:27
+msgid "PHP version"
+msgstr ""
+
+#: install/steps/step_2.php:30
+msgid "The PHP version must be at least %s"
+msgstr ""
+
+#: install/steps/step_2.php:34
+#: install/steps/step_2.php:40
+#: install/steps/step_2.php:46
+#: install/steps/step_2.php:52
+#: install/steps/step_2.php:58
+msgid "Yes"
+msgstr ""
+
+#: install/steps/step_2.php:34
+#: install/steps/step_2.php:40
+#: install/steps/step_2.php:46
+#: install/steps/step_2.php:52
+#: install/steps/step_2.php:58
+msgid "No"
+msgstr ""
+
+#: install/steps/step_2.php:36
+msgid "PHP extension PDO must be installed"
+msgstr ""
+
+#: install/steps/step_2.php:39
+msgid "Imagick or GD extension"
+msgstr ""
+
+#: install/steps/step_2.php:42
+msgid "You must install the php extension Imagick or GD"
+msgstr ""
+
+#: install/steps/step_2.php:45
+msgid "zlib extension"
+msgstr ""
+
+#: install/steps/step_2.php:48
+msgid "PHP extension zlib must be installed"
+msgstr ""
+
+#: install/steps/step_2.php:51
+msgid "mbstring extension"
+msgstr ""
+
+#: install/steps/step_2.php:54
+msgid "PHP extension mbstring must be installed"
+msgstr ""
+
+#: install/steps/step_2.php:57
+msgid "fileinfo extension"
+msgstr ""
+
+#: install/steps/step_2.php:60
+msgid "PHP extension fileinfo must be installed"
+msgstr ""
+
+#: install/steps/step_3.php:98
+msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
+msgstr ""
+
+#: install/steps/step_3.php:99
+msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
+msgstr ""
+
+#: install/steps/step_3.php:103
+msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
+msgstr ""
+
+#: install/steps/step_3.php:104
+msgid "Please contact your hosting provider's technical support to resolve this issue."
+msgstr ""
+
+#: install/steps/step_3.php:108
+msgid "ERROR: Can't write database.local.php"
+msgstr ""
+
+#: install/steps/step_3.php:114
+msgid "Invalid database host name"
+msgstr ""
+
+#: install/steps/step_3.php:116
+msgid "Invalid database user or password"
+msgstr ""
+
+#: install/steps/step_3.php:118
+msgid "Database does not exist"
+msgstr ""
+
+#: install/steps/step_4.php:118
+msgid "ERROR: Can't write system.local.php"
+msgstr ""
+
+#: install/steps/step_5.php:15
+#: install/steps/step_5.php:16
+msgid "Complete the installation"
+msgstr ""
+
+#: install/templates/step_1.phtml:3
+msgid "Welcome to JohnCMS installation wizard"
+msgstr ""
+
+#: install/templates/step_1.phtml:6
+msgid "During the installation process, a basic check of the hosting will be performed for compliance with the CMS requirements."
+msgstr ""
+
+#: install/templates/step_1.phtml:7
+msgid "If errors occurred during the installation stage and you do not know how to solve them, you can ask for help on <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">our forum.</a>"
+msgstr ""
+
+#: install/templates/step_1.phtml:11
+msgid "Choose language"
+msgstr ""
+
+#: install/templates/step_1.phtml:28
+#: install/templates/step_2.phtml:34
+#: install/templates/step_2.phtml:36
+#: install/templates/step_3.phtml:92
+#: install/templates/step_4.phtml:81
+msgid "Continue"
+msgstr ""
+
+#: install/templates/step_2.phtml:3
+msgid "Checking extensions"
+msgstr ""
+
+#: install/templates/step_2.phtml:20
+msgid "Permissions check (chmod)"
+msgstr ""
+
+#: install/templates/step_2.phtml:22
+msgid "Everything is good"
+msgstr ""
+
+#: install/templates/step_2.phtml:29
+msgid "For the specified directories, you must set the permissions to allow writing (777)."
+msgstr ""
+
+#: install/templates/step_3.phtml:10
+msgid "Database connection settings"
+msgstr ""
+
+#: install/templates/step_3.phtml:21
+#: install/templates/step_3.phtml:28
+msgid "DB Host"
+msgstr ""
+
+#: install/templates/step_3.phtml:35
+#: install/templates/step_3.phtml:42
+msgid "Port"
+msgstr ""
+
+#: install/templates/step_3.phtml:49
+#: install/templates/step_3.phtml:56
+msgid "DB Name"
+msgstr ""
+
+#: install/templates/step_3.phtml:63
+#: install/templates/step_3.phtml:70
+msgid "DB User"
+msgstr ""
+
+#: install/templates/step_3.phtml:77
+#: install/templates/step_3.phtml:83
+msgid "DB Password"
+msgstr ""
+
+#: install/templates/step_3.phtml:92
+msgid "Continue anyway"
+msgstr ""
+
+#: install/templates/step_4.phtml:10
+msgid "Website settings"
+msgstr ""
+
+#: install/templates/step_4.phtml:18
+#: install/templates/step_4.phtml:25
+msgid "Site address"
+msgstr ""
+
+#: install/templates/step_4.phtml:32
+#: install/templates/step_4.phtml:39
+msgid "E-mail"
+msgstr ""
+
+#: install/templates/step_4.phtml:46
+msgid "Administrator data"
+msgstr ""
+
+#: install/templates/step_4.phtml:48
+#: install/templates/step_4.phtml:55
+msgid "Admin login"
+msgstr ""
+
+#: install/templates/step_4.phtml:62
+#: install/templates/step_4.phtml:68
+msgid "Admin password"
+msgstr ""
+
+#: install/templates/step_4.phtml:74
+msgid "Additionally"
+msgstr ""
+
+#: install/templates/step_4.phtml:77
+msgid "Install demo data"
+msgstr ""
+
+#: install/templates/step_5.phtml:3
+msgid "Congratulations!"
+msgstr ""
+
+#: install/templates/step_5.phtml:4
+msgid "JohnCMS %s installation completed successfully."
+msgstr ""
+
+#: install/templates/step_5.phtml:7
+msgid "ATTENTION!"
+msgstr ""
+
+#: install/templates/step_5.phtml:8
+msgid "Now you need to delete the folder <b>/install/</b>"
+msgstr ""
+
+#: install/templates/step_5.phtml:11
+msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" class=\"text-underline\">our forum</a>."
+msgstr ""
+
+#: install/templates/step_5.phtml:12
+msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://johncms.com/documentation/\" class=\"text-underline\">the documentation</a>"
+msgstr ""
+
+#: install/templates/step_5.phtml:15
+msgid "Go to website"
+msgstr ""

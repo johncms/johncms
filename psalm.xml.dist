@@ -42,6 +42,16 @@
     </stubs>
 
     <issueHandlers>
+        <UndefinedClass>
+          <errorLevel type="suppress">
+            <referencedClass name="*" />
+          </errorLevel>
+        </UndefinedClass>
+        <UndefinedDocblockClass>
+          <errorLevel type="suppress">
+            <referencedClass name="*" />
+          </errorLevel>
+        </UndefinedDocblockClass>
         <LessSpecificReturnType errorLevel="info"/>
     </issueHandlers>
 </psalm>

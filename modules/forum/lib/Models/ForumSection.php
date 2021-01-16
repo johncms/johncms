@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $parent
  * @property string $name
  * @property string $description
+ * @property string $meta_description
+ * @property string $meta_keywords
  * @property int $sort
  * @property int $access
  * @property int $section_type
@@ -52,10 +54,23 @@ class ForumSection extends Model
      */
     protected $table = 'forum_sections';
 
+    public $timestamps = false;
+
     protected $casts = [
         'sort'         => 'integer',
         'access'       => 'integer',
         'section_type' => 'integer',
+    ];
+
+    protected $fillable = [
+        'parent',
+        'name',
+        'description',
+        'meta_description',
+        'meta_keywords',
+        'sort',
+        'access',
+        'section_type',
     ];
 
     protected $appends = ['url'];

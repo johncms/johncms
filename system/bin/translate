@@ -23,7 +23,7 @@ use Gettext\Generator\ArrayGenerator;
 $loader = new PoLoader();
 $generator = new ArrayGenerator();
 
-$search = ['', '../modules/*/'];
+$search = ['', '../modules/*/', '../install/'];
 
 foreach ($search as $dir) {
     $files = glob($dir . 'locale/*.po');
@@ -31,10 +31,9 @@ foreach ($search as $dir) {
     foreach ($files as $file) {
         $file = pathinfo($file);
         $file = $file['dirname'] . '/' . $file['filename'];
-        /** @var Gettext\Translations $translations */
         $translations = $loader->loadFile($file . '.po');
         $generator->generateFile($translations, $file . '.lng.php');
-        unlink($file . '.po');
+        // unlink($file . '.po');
     }
 }
 

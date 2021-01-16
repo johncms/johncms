@@ -9,7 +9,6 @@
       'Download' => 'تحميل',
       'Documentation' => 'الوثائق',
       'News' => 'اخبار الموقع',
-      'Discuss' => 'مناقشة',
       'Features' => 'الميزات',
       'Responsive Layout' => 'تخطيط الاستجابة',
       'Your site will appear equally well on both computers and mobile devices.' => 'سوف يظهر موقعك بشكل جيد على كل من أجهزة الكمبيوتر والأجهزة المحمولة.',

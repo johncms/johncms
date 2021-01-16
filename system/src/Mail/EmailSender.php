@@ -45,6 +45,11 @@ class EmailSender
             $view->addData(['locale' => $item->locale]);
             $message_body = $view->render($item->template, $item->fields);
 
+            // In some cases, using the @ symbol in the sender's name resulted in an error.
+            if (strpos($fields['name_to'], '@') !== false) {
+                $fields['name_to'] = null;
+            }
+
             $mail->setTo($fields['email_to'], $fields['name_to'] ?? null);
             if (! empty($fields['subject'])) {
                 $mail->setSubject($fields['subject']);

@@ -123,4 +123,11 @@
         <target>modules/notifications/locale</target>
         <sourceDir>modules/notifications</sourceDir>
     </domain>
+
+    <!-- Installation -->
+    <domain>
+        <name>install</name>
+        <target>install/locale</target>
+        <sourceDir>install</sourceDir>
+    </domain>
 </scanRuleset>

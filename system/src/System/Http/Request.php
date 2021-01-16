@@ -31,7 +31,7 @@ class Request extends ServerRequest
      *
      * @return ServerRequestInterface
      */
-    public static function fromGlobals()
+    public static function fromGlobals(): ServerRequestInterface
     {
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         $headers = getallheaders();
@@ -54,7 +54,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getQuery(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getQuery(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getQueryParams(), $filter, $options)
             ?? $default;
@@ -67,7 +67,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getPost(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getPost(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getParsedBody(), $filter, $options)
             ?? $default;
@@ -80,7 +80,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getCookie(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getCookie(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getCookieParams(), $filter, $options)
             ?? $default;
@@ -93,7 +93,7 @@ class Request extends ServerRequest
      * @param mixed $options
      * @return mixed|null
      */
-    public function getServer(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = null)
+    public function getServer(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
     {
         return $this->filterVar($name, $this->getServerParams(), $filter, $options)
             ?? $default;
@@ -120,6 +120,8 @@ class Request extends ServerRequest
     }
 
     /**
+     * Getting a query string without the specified parameters.
+     *
      * @param array $remove_params
      * @return string
      */
@@ -132,5 +134,32 @@ class Request extends ServerRequest
         $str = http_build_query($query_params);
 
         return $this->getUri()->getPath() . (! empty($str) ? '?' . $str : '');
+    }
+
+    /**
+     * Checking that the site is open over https.
+     *
+     * @psalm-suppress PossiblyNullArgument
+     * @return bool
+     */
+    public function isHttps(): bool
+    {
+        if ($this->getServer('SERVER_PORT', FILTER_VALIDATE_INT) === 443) {
+            return true;
+        }
+
+        $https = strtolower($this->getServer('HTTPS', ''));
+        if ($https === 'on' || $https === '1') {
+            return true;
+        }
+
+        if (
+            strtolower($this->getServer('HTTP_X_FORWARDED_PROTO', '')) === 'https' ||
+            strtolower($this->getServer('HTTP_X_FORWARDED_SSL', '')) === 'on'
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }

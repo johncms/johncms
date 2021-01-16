@@ -9,7 +9,6 @@
       'Download' => 'Tải xuống',
       'Documentation' => 'Tài Liệu',
       'News' => 'Tin tức',
-      'Discuss' => 'Thảo luận',
       'Features' => 'Tính năng',
       'Responsive Layout' => 'Giao diện thân thiện',
       'Your site will appear equally well on both computers and mobile devices.' => 'Trang web của bạn sẽ hiển thị tốt trên cả máy tính và thiết bị di động.',
