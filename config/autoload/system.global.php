@@ -43,7 +43,7 @@ return [
         'meta_desc'               => 'Powered by JohnCMS http://johncms.com',
         'skindef'                 => 'default',
         'timeshift'               => 3,
-        'meta_title'              => 'test',
+        'meta_title'              => 'JohnCMS',
         'user_email_required'     => 1,
         'user_email_confirmation' => 1,
     ],
