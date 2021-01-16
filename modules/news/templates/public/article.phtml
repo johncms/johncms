@@ -14,6 +14,8 @@ if (! empty($article->tags)) {
     }
 }
 
+$author = $article->author;
+
 ?>
 <div id="blog">
     <div class="p-no-margin overflow-hidden">
@@ -21,7 +23,9 @@ if (! empty($article->tags)) {
     </div>
     <div class="meta text-muted">
         <div class="mt-3"><?= __('Published:') ?> <?= $article->display_date ?></div>
-        <div class="mt-1"><?= __('Author:') ?> <a href="<?= $article->author->profile_url ?>" rel="nofollow"><?= $article->author->name ?></a></div>
+        <?php if($author): ?>
+            <div class="mt-1"><?= __('Author:') ?> <a href="<?= $author->profile_url ?>" rel="nofollow"><?= $author->name ?></a></div>
+        <?php endif; ?>
         <?php if (! empty($tags)): ?>
             <div class="mt-1"><?= __('Tags:') ?> <?= implode(', ', $tags) ?></div>
         <?php endif; ?>
