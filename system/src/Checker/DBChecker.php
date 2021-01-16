@@ -22,10 +22,10 @@ class DBChecker
     protected $connection;
 
     /** @var string */
-    public const MARIADB_VERSION = '10.1.26';
+    public const MARIADB_VERSION = '10.2';
 
     /** @var string */
-    public const MYSQL_VERSION = '5.6.4';
+    public const MYSQL_VERSION = '5.7';
 
     public function __construct()
     {
@@ -43,10 +43,10 @@ class DBChecker
         $res = $this->connection->select('SELECT VERSION() as ver;');
         $version = $res[0]->ver;
         preg_match('/\d*\.\d*\.\d*/', $version, $matches);
-        preg_match('/maria/', $version, $server_name_matches);
+        preg_match('/maria/i', $version, $server_name_matches);
         if (! empty($matches[0])) {
             $server_name = 'MySQL';
-            if (! empty($server_name_matches[0]) && $server_name_matches[0] === 'maria') {
+            if (! empty($server_name_matches[0]) && strtolower($server_name_matches[0]) === 'maria') {
                 $server_name = 'MariaDB';
             }
             $required_version = $this->getRequiredVersion($server_name);
