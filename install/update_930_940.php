@@ -13,6 +13,8 @@ require '../system/bootstrap.php';
 $schema = Capsule::Schema();
 $connection = Capsule::connection();
 
+$schema::defaultStringLength(191);
+
 $connection->statement('ALTER TABLE cms_ads ENGINE = InnoDB');
 $connection->statement('ALTER TABLE cms_album_cat ENGINE = InnoDB');
 $connection->statement('ALTER TABLE cms_album_comments ENGINE = InnoDB');
@@ -43,6 +45,13 @@ $connection->statement('ALTER TABLE download__more ENGINE = InnoDB');
 $connection->statement('ALTER TABLE guest ENGINE = InnoDB');
 $connection->statement('ALTER TABLE karma_users ENGINE = InnoDB');
 $connection->statement('ALTER TABLE library_cats ENGINE = InnoDB');
+
+try {
+    $connection->statement('ALTER TABLE `library_tags` DROP INDEX `tag_name`, ADD INDEX `tag_name` (`tag_name`(191)) USING BTREE;');
+    $connection->statement('ALTER TABLE `library_texts` DROP INDEX `name`, ADD INDEX `name` (`name`(191)) USING BTREE;');
+} catch (Exception $exception) {
+}
+
 $connection->statement('ALTER TABLE library_tags ENGINE = InnoDB');
 $connection->statement('ALTER TABLE library_texts ENGINE = InnoDB');
 $connection->statement('ALTER TABLE news ENGINE = InnoDB');
