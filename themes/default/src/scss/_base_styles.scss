@@ -150,6 +150,8 @@ blockquote {
 
 figure {
     &.table {
+        overflow: scroll;
+
         table {
             border-collapse: collapse;
             border-spacing: 0;

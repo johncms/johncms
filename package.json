@@ -34,7 +34,8 @@
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.11",
     "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "webpack-rtl-plugin": "^2.0.0"
   },
   "dependencies": {
     "axios": "^0.21",
