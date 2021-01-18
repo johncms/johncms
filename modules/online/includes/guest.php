@@ -59,7 +59,7 @@ if ($total) {
             /** @var $user GuestSession */
             $user->id = 0;
             $user->name = __('Guest');
-            $user->place_name = $tools->displayPlace($user->place);
+            $user->place_name = $tools->displayPlace((string) $user->place);
             $user->display_date = $user->movings . ' - ' . $tools->timecount(time() - $user->sestime);
             return $user;
         }
