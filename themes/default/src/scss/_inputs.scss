@@ -39,6 +39,23 @@
             }
         }
     }
+    .news-search {
+        width: 100%;
+
+        .input-with-inner-btn {
+            width: 100%;
+        }
+
+        &:focus-within {
+            position: relative;
+            right: 0;
+            width: 100%;
+
+            .input-with-inner-btn {
+                width: 100%;
+            }
+        }
+    }
 }
 
 .custom-file-label {
