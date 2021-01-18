@@ -3,6 +3,25 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
+## 9.4.1 - 2021-01-18
+
+#### Added
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+- Исправлена ошибка в работе редиректов
+- В загрузках в тексте предпросмотра убрано отображение бб-кодов
+- Исправлена ошибка на странице настроек новостей
+- Исправлен внешний вид строки поиска в новостях
+- В некоторых случаях в модуле онлайн на странице истории могла возникать ошибка.
+
+#### Security
+
 ## 9.4.0 - 2021-01-16
 
 #### Added
