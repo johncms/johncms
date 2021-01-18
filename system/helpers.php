@@ -144,7 +144,7 @@ function checkRedirect()
     $redirects = require CONFIG_PATH . 'redirects.php';
     if (array_key_exists($_SERVER['REQUEST_URI'], $redirects)) {
         http_response_code(301);
-        header('Location: ' . $redirects[$_REQUEST['URI']]);
+        header('Location: ' . $redirects[$_SERVER['REQUEST_URI']]);
         exit;
     }
 }
