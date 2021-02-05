@@ -62,11 +62,17 @@ if (isset($_POST['submit'])) {
     }
 }
 
+$themes = array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR));
+$admin_theme = array_search('admin', $themes);
+if ($admin_theme !== false) {
+    unset($themes[$admin_theme]);
+}
+
 echo $view->render(
     'admin::settings',
     [
         'sysconf'      => $config,
         'confirmation' => $confirmation ?? false,
-        'themelist'    => array_map('basename', glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR)),
+        'themelist'    => $themes,
     ]
 );
