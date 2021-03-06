@@ -46,10 +46,13 @@ use Johncms\Users\User;
  * @property $rating - Article rating
  * @property $current_vote - The user's current vote.
  * @property $comments_count
+ * @property $votes_sum_vote
  * @property $display_date
  * @method NewsArticle search()
  * @method NewsArticle active()
  * @method NewsArticle lastDays($day_count)
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class NewsArticle extends Model
 {
@@ -89,8 +92,6 @@ class NewsArticle extends Model
         'created_at'  => FormattedDate::class,
         'updated_at'  => FormattedDate::class,
     ];
-
-    private $rating_cache;
 
     public function __construct(array $attributes = [])
     {
@@ -217,15 +218,12 @@ class NewsArticle extends Model
     /**
      * Article rating
      *
+     * @psalm-suppress UndefinedThisPropertyFetch
      * @return int
      */
     public function getRatingAttribute(): int
     {
-        if ($this->rating_cache !== null) {
-            return $this->rating_cache;
-        }
-        $this->rating_cache = $this->votes()->sum('vote');
-        return $this->rating_cache;
+        return (int) $this->votes_sum_vote;
     }
 
     /**
