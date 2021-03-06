@@ -137,13 +137,20 @@ $this->layout('system::layout/default');
         <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
         <div class="row row-cols-1">
             <?php foreach ($data['news'] as $news_item): ?>
-                <?php /** @var News\Models\NewsArticle $news_item */  ?>
+                <?php /** @var News\Models\NewsArticle $news_item */ ?>
                 <div class="col mb-3">
                     <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
                     <?php if (! empty($news_item->preview_text_safe)): ?>
                         <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
                     <?php endif; ?>
-                    <div class="text-muted small pt-1"><?= $news_item->display_date ?></div>
+                    <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
+                        <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
+                        </svg> <?= (int) $news_item->votes_sum_vote ?>,
+                        <svg class="icon ml-2" style="width: 13px;">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                        </svg> <?= $news_item->comments_count ?>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
