@@ -36,7 +36,12 @@ class FileInfo extends SplFileInfo
     public function getCleanName()
     {
         $name = $this->sanitizeName($this->getNameWithoutExtension());
-        $name = mb_substr($name, 0, 150) . '.' . $this->getExtension();
+        $name = mb_substr($name, 0, 150);
+
+        $extension = mb_strtolower($this->getExtension());
+        if (! empty($extension)) {
+            $name .= '.' . $extension;
+        }
 
         return $name;
     }
@@ -110,5 +115,25 @@ class FileInfo extends SplFileInfo
         ];
         $file_extension = strtolower($this->getExtension());
         return in_array($file_extension, $picture_extensions);
+    }
+
+    /**
+     * Getting the md5 hash of the file.
+     *
+     * @return string
+     */
+    public function getMd5(): string
+    {
+        return md5_file($this->getRealPath());
+    }
+
+    /**
+     * Getting the sha1 hash of the file.
+     *
+     * @return string
+     */
+    public function getSha1(): string
+    {
+        return sha1_file($this->getRealPath());
     }
 }

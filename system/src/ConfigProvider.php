@@ -30,6 +30,7 @@ use Johncms\System\View\Extension\{
     Assets,
     Avatar
 };
+use Johncms\Files\Filesystem;
 use PDO;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -61,6 +62,7 @@ class ConfigProvider
                 User::class           => UserFactory::class,
                 Users\User::class     => Users\UserFactory::class,
                 Cache::class          => Cache::class,
+                Filesystem::class     => Filesystem::class,
             ],
 
             'invokables' => [],

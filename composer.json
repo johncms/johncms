@@ -50,6 +50,7 @@
         "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-uri": "^2.7",
         "laminas/laminas-validator": "^2.13",
+        "league/flysystem": "^2.0",
         "mobicms/captcha": "^2.0",
         "mobicms/render": "^2.0",
         "nikic/fast-route": "^1.3",
