@@ -129,6 +129,10 @@ class File
         $file_path = $file_path_base . $this->getStoragePath() . '/' . $this->getHash();
 
         $extension = mb_strtolower($this->file_info->getExtension());
+        if (empty($extension)) {
+            $extension = mb_strtolower(pathinfo($this->file_name, PATHINFO_EXTENSION));
+        }
+
         if (! empty($extension)) {
             $file_path .= '.' . $extension;
         }
