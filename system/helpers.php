@@ -11,8 +11,10 @@
 declare(strict_types=1);
 
 use Aura\Autoload\Loader;
+use Illuminate\Container\Container;
 use Johncms\System\Container\Factory;
 use Johncms\System\View\Render;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
 /**
  * @param string $service
@@ -20,7 +22,11 @@ use Johncms\System\View\Render;
  */
 function di(string $service)
 {
-    return Factory::getContainer()->get($service);
+    try {
+        return Factory::getContainer()->get($service);
+    } catch (ServiceNotFoundException $exception) {
+        return Container::getInstance()->get($service);
+    }
 }
 
 function pathToUrl(string $path): string
