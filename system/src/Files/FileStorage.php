@@ -12,8 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Files;
 
+use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Files\Exceptions\BadRequest;
+use Johncms\Files\Exceptions\FileNotFound;
 use Johncms\System\Http\Request;
 use League\Flysystem\FilesystemException;
 
@@ -79,5 +81,21 @@ class FileStorage
             }
         }
         return $filename;
+    }
+
+    /**
+     * @param int $id
+     * @throws FilesystemException
+     * @throws Exception
+     */
+    public function delete(int $id): void
+    {
+        /** @var \Johncms\Files\Models\File|null $file */
+        $file = (new \Johncms\Files\Models\File())->find($id);
+        if ($file === null) {
+            throw new FileNotFound(sprintf('File #%s not found', $id));
+        }
+        di(Filesystem::class)->storage($file->storage)->delete($file->path);
+        $file->delete();
     }
 }
