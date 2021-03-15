@@ -46,6 +46,7 @@ class VoteController extends BaseController
                     'vote' => $type_vote ? 1 : -1,
                 ]
             );
+            $current_article->loadSum('votes', 'vote');
             Helpers::returnJson(
                 [
                     'message' => __('Your vote is accepted'),
