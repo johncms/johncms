@@ -150,7 +150,7 @@ blockquote {
 
 figure {
     &.table {
-        overflow: scroll;
+        overflow: auto;
 
         table {
             border-collapse: collapse;
