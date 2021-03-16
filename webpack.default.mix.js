@@ -12,5 +12,11 @@ mix.js('themes/default/src/js/app.js', 'themes/default/assets/js')
             processCssUrls: false
         });
 
-mix.sourceMaps(true, 'source-map');
+mix.sourceMaps(false, 'source-map');
 mix.extract();
+
+if (!mix.inProduction()) {
+    mix.webpackConfig({
+        devtool: 'inline-source-map'
+    })
+}
