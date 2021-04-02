@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Ip;
 use Johncms\Casts\SpecialChars;
 use Johncms\Casts\TimeToDate;
+use Johncms\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
@@ -99,9 +100,11 @@ class Guestbook extends Model
     public function getPostTextAttribute(): string
     {
         if ($this->user_id) {
+            $media = di(MediaEmbed::class);
             /** @var \HTMLPurifier $purifier */
             $purifier = di(HTMLPurifier::class);
             $post = $purifier->purify($this->text);
+            $post = $media->embedMedia($post);
             $post = di(Bbcode::class)->tags($post);
             $post = $this->tools->smilies($post, ($this->user !== null && $this->user->rights >= 1 ? 1 : 0));
         } else {

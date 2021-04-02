@@ -189,3 +189,10 @@ figure {
         text-overflow: ellipsis;
     }
 }
+
+.ck.ck-editor {
+    font-size: 16px;
+    @media (min-width: 768px) {
+        font-size: 14px;
+    }
+}

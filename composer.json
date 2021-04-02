@@ -54,6 +54,7 @@
         "mobicms/captcha": "^2.0",
         "mobicms/render": "^2.0",
         "nikic/fast-route": "^1.3",
+        "simba77/ckeditor-media-embed": "^1.0",
         "simba77/johncms-pagination": "^1.1"
     },
     "require-dev": {

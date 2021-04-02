@@ -63,6 +63,7 @@ class ConfigProvider
                 Users\User::class     => Users\UserFactory::class,
                 Cache::class          => Cache::class,
                 Filesystem::class     => Filesystem::class,
+                MediaEmbed::class     => MediaEmbed::class,
             ],
 
             'invokables' => [],
