@@ -32,7 +32,7 @@ $author = $article->author;
     </div>
 
     <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
-        <div class="d-flex align-items-center mr-4">
+        <div class="d-flex align-items-center mr-4 vue_app">
             <div class="d-flex align-items-center mr-2"><?= __('Rating:') ?></div>
             <likes-component
                 :article_id="<?= $article->id ?>"
@@ -63,11 +63,13 @@ $author = $article->author;
         'empty_list'    => __('The list is empty'),
     ];
     ?>
-    <comments-component
-        :article_id="<?= $article->id ?>"
-        :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"
-        :i18n='<?= json_encode($messages) ?>'
-    ></comments-component>
+    <div class="vue_app">
+        <comments-component
+            :article_id="<?= $article->id ?>"
+            :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"
+            :i18n='<?= json_encode($messages) ?>'
+        ></comments-component>
+    </div>
 
     <?php if (! $user->isValid()): ?>
         <div class="d-flex">
