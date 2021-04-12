@@ -61,7 +61,7 @@
         "gettext/gettext": "^5.5",
         "gettext/php-scanner": "^1.2",
         "roave/security-advisories": "dev-master",
-        "slevomat/coding-standard": "^6.4",
+        "slevomat/coding-standard": "^7.0",
         "squizlabs/php_codesniffer": "^3.5",
         "vimeo/psalm": "^4.1"
     },
