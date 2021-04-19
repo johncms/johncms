@@ -1,6 +1,5 @@
 # Common ignores
 /.idea
-/composer.lock
 /config/autoload/*.local.php
 /config/*.local.php
 /dist
