@@ -16,6 +16,12 @@ use HTMLPurifier_Config;
 use HTMLPurifier_AttrDef_Enum;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class HTMLPurifier
+ *
+ * @package Johncms\Security
+ * @mixin \HTMLPurifier
+ */
 class HTMLPurifier
 {
     public function __invoke(ContainerInterface $container): \HTMLPurifier
