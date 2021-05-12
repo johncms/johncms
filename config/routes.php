@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Admin\Controllers\System\SystemCheckController;
 use FastRoute\RouteCollector;
+use Guestbook\Controllers\GuestbookController;
 use Johncms\System\Users\User;
 use News\Controllers\Admin\AdminArticleController;
 use News\Controllers\Admin\AdminController;
@@ -29,7 +30,8 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php'); // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                  // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                          // Forum
-    $map->addRoute(['GET', 'POST'], '/guestbook[/[{action}]]', 'modules/guestbook/index.php');        // Guestbook, mini-chat
+    $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
+    $map->addRoute(['GET', 'POST'], '/guestbook/{action}', 'modules/guestbook/index.php');        // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Help
     $map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');                      // Articles Library
     $map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                    // Language switcher
