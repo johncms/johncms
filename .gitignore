@@ -5,7 +5,6 @@
 /dist
 /distributive
 /node_modules
-/package-lock.json
 /phpcs.xml
 /translate.xml
 /system/vendor
