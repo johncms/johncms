@@ -199,15 +199,14 @@
     </div>
 <?php endif ?>
 <?php $this->push('scripts') ?>
-<?php if ($locale !== 'en'):
+<?php
+if ($locale !== 'en') {
     try {
-        ?>
-        <script src="<?= $this->asset('ckeditor5/translations/' . $locale . '.js') ?>"></script>
-        <?php
+        echo '<script src="' . $this->asset('ckeditor5/translations/' . $locale . '.js') . '"></script>';
     } catch (Exception $exception) {
     }
-    ?>
-<?php endif; ?>
+}
+?>
 <script src="<?= $this->asset('ckeditor5/ckeditor.js') ?>"></script>
 <script>
     // Disable prism
