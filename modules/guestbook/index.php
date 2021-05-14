@@ -92,15 +92,7 @@ switch ($act) {
         require 'includes/edit.php';
         break;
 
-    case 'ga':
-        require 'includes/switch.php';
-        break;
-
     case 'clean':
         require 'includes/clean.php';
-        break;
-
-    default:
-        require 'includes/index.php';
         break;
 }

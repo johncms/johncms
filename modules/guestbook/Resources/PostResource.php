@@ -69,7 +69,7 @@ class PostResource extends BaseResource
                 'user_agent'    => $this->model->browser,
             ];
 
-            if ($this->model->user === null || $current_user->rights > $this->model->user->rights) {
+            if ($this->model->user === null || $current_user->rights >= $this->model->user->rights) {
                 $meta['can_manage'] = true;
                 $meta['edit_url'] = '/guestbook/edit?id=' . $this->model->id;
                 $meta['delete_url'] = '/guestbook/delpost?id=' . $this->model->id;

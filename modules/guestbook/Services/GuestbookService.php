@@ -18,6 +18,7 @@ use Guestbook\Resources\PostResource;
 use Guestbook\Resources\ResourceCollection;
 use Johncms\Exceptions\ValidationException;
 use Johncms\System\Http\Environment;
+use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Mobicms\Captcha\Code;
@@ -169,5 +170,20 @@ class GuestbookService
         unset($_SESSION['code']);
 
         return $message;
+    }
+
+    /**
+     * Switching the mode of operation Guest / admin club
+     */
+    public function switchGuestbookType(): void
+    {
+        $request = di(Request::class);
+        if ($this->user->rights >= 1 || in_array($this->user->id, $this->guest_access)) {
+            if ($request->getQuery('do', '') === 'set') {
+                $_SESSION['ga'] = 1;
+            } else {
+                unset($_SESSION['ga']);
+            }
+        }
     }
 }

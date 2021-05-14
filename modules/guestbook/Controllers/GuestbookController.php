@@ -62,4 +62,16 @@ class GuestbookController extends BaseController
             ]
         );
     }
+
+    /**
+     * Switching the mode of operation Guest / admin club
+     *
+     * @param GuestbookService $guestbook
+     */
+    public function switchGuestbookType(GuestbookService $guestbook): void
+    {
+        $guestbook->switchGuestbookType();
+        header('Location: /guestbook/');
+        exit;
+    }
 }
