@@ -17,6 +17,8 @@ use Guestbook\Services\GuestbookService;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\System\Http\Request;
+use Johncms\Users\User;
+use Johncms\Validator\Validator;
 
 class GuestbookController extends BaseController
 {
@@ -73,5 +75,44 @@ class GuestbookController extends BaseController
         $guestbook->switchGuestbookType();
         header('Location: /guestbook/');
         exit;
+    }
+
+    /**
+     * Cleaning the guestbook
+     *
+     * @param Request $request
+     * @param User $user
+     * @param GuestbookService $guestbook
+     * @return string
+     */
+    public function clean(Request $request, User $user, GuestbookService $guestbook): string
+    {
+        if ($user->rights >= 7) {
+            if ($request->getMethod() === 'POST') {
+                $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
+                if (! $validator->isValid()) {
+                    header('Location: /guestbook/');
+                    exit;
+                }
+                // We clean the Guest, according to the specified parameters
+                $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
+                $message = $guestbook->clear($period);
+                return $this->render->render(
+                    'guestbook::result',
+                    [
+                        'title'    => __('Clear guestbook'),
+                        'message'  => $message,
+                        'type'     => 'success',
+                        'back_url' => '/guestbook/',
+                    ]
+                );
+            } else {
+                // Request cleaning options
+                return $this->render->render('guestbook::clear');
+            }
+        } else {
+            header('Location: /guestbook/');
+            exit;
+        }
     }
 }

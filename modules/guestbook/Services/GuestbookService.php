@@ -186,4 +186,31 @@ class GuestbookService
             }
         }
     }
+
+    /**
+     * Cleaning the guestbook
+     *
+     * @param int $period
+     * @return string
+     */
+    public function clear(int $period = 0): string
+    {
+        $adm = ! $this->isGuestbook() ? 1 : 0;
+        switch ($period) {
+            case '1':
+                // Clean messages older than 1 day
+                (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 86400))->delete();
+                return __('All messages older than 1 day were deleted');
+                break;
+            case '2':
+                // Perform a full cleanup
+                (new Guestbook())->where('adm', $adm)->delete();
+                return __('Full clearing is finished');
+                break;
+            default:
+                // Clean messages older than 1 week""
+                (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 604800))->delete();
+                return __('All messages older than 1 week were deleted');
+        }
+    }
 }

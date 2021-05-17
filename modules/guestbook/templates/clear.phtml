@@ -1,4 +1,5 @@
 <form action="/guestbook/clean" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="modal-header align-items-center">
         <h4 class="modal-title">
             <?= __('Clear guestbook') ?>

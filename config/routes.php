@@ -32,6 +32,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                          // Forum
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', [GuestbookController::class, 'switchGuestbookType']);        // Guestbook, mini-chat
+    $map->addRoute(['GET', 'POST'], '/guestbook/clean[/]', [GuestbookController::class, 'clean']);        // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/guestbook/{action}', 'modules/guestbook/index.php');        // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Help
     $map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');                      // Articles Library

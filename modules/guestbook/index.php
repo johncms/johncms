@@ -91,8 +91,4 @@ switch ($act) {
     case 'edit':
         require 'includes/edit.php';
         break;
-
-    case 'clean':
-        require 'includes/clean.php';
-        break;
 }
