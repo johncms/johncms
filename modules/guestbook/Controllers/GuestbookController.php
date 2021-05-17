@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Guestbook\Controllers;
 
+use Guestbook\Models\Guestbook;
 use Guestbook\Services\GuestbookForm;
 use Guestbook\Services\GuestbookService;
 use Johncms\Controller\BaseController;
@@ -109,6 +110,38 @@ class GuestbookController extends BaseController
             } else {
                 // Request cleaning options
                 return $this->render->render('guestbook::clear');
+            }
+        }
+
+        header('Location: /guestbook/');
+        exit;
+    }
+
+    /**
+     * Cleaning the guestbook
+     *
+     * @param Request $request
+     * @param User $user
+     * @param Session $session
+     * @return string
+     */
+    public function delete(Request $request, User $user, Session $session): string
+    {
+        if ($user->rights >= 6) {
+            if ($request->getMethod() === 'POST') {
+                $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
+                if (! $validator->isValid()) {
+                    $session->flash('errors', $validator->getErrors());
+                    header('Location: /guestbook/');
+                    exit;
+                }
+                // We clean the Guest, according to the specified parameters
+                $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
+                (new Guestbook())->where('id', $id)->delete();
+                // Set result message
+                $session->flash('message', __('The message was deleted'));
+            } else {
+                return $this->render->render('guestbook::confirm_delete', ['id' => $request->getQuery('id')]);
             }
         }
 

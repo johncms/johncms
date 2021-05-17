@@ -189,7 +189,7 @@
                                     <a href="<?= $post['meta']['reply_url'] ?>" class="dropdown-item"><?= __('Reply') ?></a>
                                 <?php endif; ?>
                                 <a href="<?= $post['meta']['edit_url'] ?>" class="dropdown-item"><?= __('Edit') ?></a>
-                                <a href="<?= $post['meta']['delete_url'] ?>" class="dropdown-item"><?= __('Delete') ?></a>
+                                <a href="#" data-url="<?= $post['meta']['delete_url'] ?>" data-toggle="modal" data-target=".ajax_modal" class="dropdown-item"><?= __('Delete') ?></a>
                             </div>
                         </div>
                     <?php endif; ?>
