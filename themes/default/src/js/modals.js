@@ -21,7 +21,7 @@ $(function () {
         let button = $(event.relatedTarget);
         let params = button.data();
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: params.url,
             dataType: "html",
             data: params,

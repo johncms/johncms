@@ -195,7 +195,7 @@
 <?php endif; ?>
 <?php if ($data['can_clear']): ?>
     <div class="d-flex mt-4 pb-2">
-        <a href="/guestbook/clean" class="btn btn-danger"><?= __('Clear') ?></a>
+        <button type="button" class="btn btn-danger" data-url="/guestbook/clean" data-toggle="modal" data-target=".ajax_modal"><?= __('Clear') ?></button>
     </div>
 <?php endif ?>
 <?php $this->push('scripts') ?>
