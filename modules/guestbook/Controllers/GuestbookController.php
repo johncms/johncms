@@ -17,6 +17,7 @@ use Guestbook\Services\GuestbookService;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\System\Http\Request;
+use Johncms\System\Http\Session;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -30,9 +31,12 @@ class GuestbookController extends BaseController
         $this->nav_chain->add(__('Guestbook'), '/guestbook/');
     }
 
-    public function index(GuestbookService $guestbook, GuestbookForm $form, Request $request): string
+    public function index(GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
     {
         $this->render->addData(['title' => __('Guestbook'), 'page_title' => __('Guestbook')]);
+
+        $flash_errors = $session->getFlash('errors');
+        $errors = $flash_errors ?? [];
 
         // If the form was sent using POST method, then try to create the new post.
         if ($request->getMethod() === 'POST') {
@@ -51,7 +55,8 @@ class GuestbookController extends BaseController
             'guestbook::index',
             [
                 'data' => [
-                    'errors'       => $errors ?? [],
+                    'message'      => $session->getFlash('message'),
+                    'errors'       => $errors,
                     'form_data'    => $form->getFormData(),
                     'is_closed'    => $guestbook->isClosed(),
                     'can_write'    => $guestbook->canWrite(),
@@ -83,36 +88,31 @@ class GuestbookController extends BaseController
      * @param Request $request
      * @param User $user
      * @param GuestbookService $guestbook
+     * @param Session $session
      * @return string
      */
-    public function clean(Request $request, User $user, GuestbookService $guestbook): string
+    public function clean(Request $request, User $user, GuestbookService $guestbook, Session $session): string
     {
         if ($user->rights >= 7) {
             if ($request->getMethod() === 'POST') {
                 $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
                 if (! $validator->isValid()) {
+                    $session->flash('errors', $validator->getErrors());
                     header('Location: /guestbook/');
                     exit;
                 }
                 // We clean the Guest, according to the specified parameters
                 $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
                 $message = $guestbook->clear($period);
-                return $this->render->render(
-                    'guestbook::result',
-                    [
-                        'title'    => __('Clear guestbook'),
-                        'message'  => $message,
-                        'type'     => 'success',
-                        'back_url' => '/guestbook/',
-                    ]
-                );
+                // Set result message
+                $session->flash('message', $message);
             } else {
                 // Request cleaning options
                 return $this->render->render('guestbook::clear');
             }
-        } else {
-            header('Location: /guestbook/');
-            exit;
         }
+
+        header('Location: /guestbook/');
+        exit;
     }
 }

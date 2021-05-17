@@ -9,6 +9,15 @@
         ]
     ) ?>
 <?php endif; ?>
+<?php if (! empty($data['message'])): ?>
+    <?= $this->fetch(
+        'system::app/alert',
+        [
+            'alert_type' => 'alert-success',
+            'alert'      => $data['message'],
+        ]
+    ) ?>
+<?php endif; ?>
 <?php if ($data['can_write']): ?>
     <div class="row">
         <div class="col-12">
