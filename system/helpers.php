@@ -44,6 +44,7 @@ function pathToUrl(string $path): string
  * @param string $template
  * @param string $title
  * @param string $message
+ * @return never-return
  */
 function pageNotFound(
     string $template = 'system::error/404',

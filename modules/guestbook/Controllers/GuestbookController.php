@@ -15,6 +15,7 @@ namespace Guestbook\Controllers;
 use Guestbook\Models\Guestbook;
 use Guestbook\Services\GuestbookForm;
 use Guestbook\Services\GuestbookService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\System\Http\Request;
@@ -146,6 +147,68 @@ class GuestbookController extends BaseController
         }
 
         header('Location: /guestbook/');
+        exit;
+    }
+
+
+    public function edit(User $user, Request $request, Session $session): string
+    {
+        $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        if ($user->rights >= 6 && $id) {
+            $errors = [];
+            $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
+
+            try {
+                $message = (new Guestbook())->findOrFail($id);
+            } catch (ModelNotFoundException $exception) {
+                pageNotFound();
+            }
+
+            $form_data = [
+                'message'    => $request->getPost('message', $message->text),
+                'csrf_token' => $request->getPost('csrf_token', ''),
+            ];
+            if ($request->getMethod() === 'POST') {
+                $rules = [
+                    'message'    => [
+                        'NotEmpty',
+                        'StringLength' => ['min' => 4, 'max' => 16000],
+                    ],
+                    'csrf_token' => [
+                        'Csrf',
+                    ],
+                ];
+
+                $validator = new Validator($form_data, $rules);
+                if ($validator->isValid()) {
+                    $message->update(
+                        [
+                            'text'       => $form_data['message'],
+                            'edit_who'   => $user->name,
+                            'edit_time'  => time(),
+                            'edit_count' => ($message->edit_count + 1),
+                        ]
+                    );
+                    $session->flash('message', __('The message was saved'));
+                    header('location: ./');
+                    exit;
+                }
+
+                $errors = $validator->getErrors();
+            }
+
+            return $this->render->render(
+                'guestbook::edit',
+                [
+                    'id'      => $id,
+                    'message' => $message,
+                    'text'    => htmlspecialchars($form_data['message']),
+                    'errors'  => $errors,
+                ]
+            );
+        }
+
+        header('location: ./');
         exit;
     }
 }

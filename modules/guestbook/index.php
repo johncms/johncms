@@ -80,15 +80,7 @@ if (! $config['mod_guest'] && $user->rights < 7) {
 }
 
 switch ($act) {
-    case 'delpost':
-        require 'includes/delete.php';
-        break;
-
     case 'otvet':
         require 'includes/reply.php';
-        break;
-
-    case 'edit':
-        require 'includes/edit.php';
         break;
 }

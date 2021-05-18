@@ -1,0 +1,113 @@
+<?php
+if ($locale !== 'en') {
+    try {
+        echo '<script src="' . $this->asset('ckeditor5/translations/' . $locale . '.js') . '"></script>';
+    } catch (Exception $exception) {
+    }
+}
+?>
+<script src="<?= $this->asset('ckeditor5/ckeditor.js') ?>"></script>
+<script>
+    var ckeditor_settings = {
+        ckfinder: {
+            uploadUrl: '/modules/blog/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+        },
+        toolbar: {
+            items: [
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'link',
+                'fontColor',
+                'bulletedList',
+                'numberedList',
+                'removeFormat',
+                '|',
+                'alignment',
+                'indent',
+                'outdent',
+                '|',
+                'codeBlock',
+                'blockQuote',
+                'insertTable',
+                'undo',
+                'redo'
+            ]
+        },
+        language: '<?= $locale ?>',
+        table: {
+            contentToolbar: [
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells',
+                'tableProperties',
+                'tableCellProperties'
+            ]
+        },
+        codeBlock: {
+            languages: [
+                {language: 'php', label: 'PHP', class: 'language-php line-numbers'},
+                {language: 'css', label: 'CSS', class: 'language-css line-numbers'},
+                {language: 'javascript', label: 'JavaScript', class: 'language-javascript line-numbers'},
+                {language: 'html', label: 'HTML', class: 'language-html line-numbers'},
+                {language: 'sql', label: 'SQL', class: 'language-sql line-numbers'},
+                {language: 'xml', label: 'XML', class: 'language-xml line-numbers'},
+            ]
+        },
+        heading: {
+            options: [
+                {model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph'},
+                {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1'},
+                {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2'},
+                {
+                    model: 'alertSuccess',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-success']
+                    },
+                    title: 'alert-success',
+                    class: 'alert alert-success',
+                },
+                {
+                    model: 'alertInfo',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-info']
+                    },
+                    title: 'alert-info',
+                    class: 'alert alert-success',
+                },
+                {
+                    model: 'alertDanger',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-danger']
+                    },
+                    title: 'alert-danger',
+                    class: 'alert alert-danger',
+                },
+                {
+                    model: 'alertWarning',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-warning']
+                    },
+                    title: 'alert-warning',
+                    class: 'alert alert-warning',
+                }
+            ]
+        },
+        licenseKey: '',
+    };
+
+    ClassicEditor
+        .create(document.querySelector('#message'), ckeditor_settings)
+        .then(editor => {
+            window.editor = editor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+</script>
