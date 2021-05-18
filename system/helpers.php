@@ -155,3 +155,13 @@ function checkRedirect()
         exit;
     }
 }
+
+/**
+ * @param string $url
+ * @return never-return
+ */
+function redirect(string $url)
+{
+    header('Location: ' . $url);
+    exit;
+}

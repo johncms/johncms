@@ -27,25 +27,48 @@ class GuestbookController extends BaseController
 {
     protected $module_name = 'guestbook';
 
+    /** @var string */
+    protected $page_title = '';
+
+    /** @var string */
+    protected $base_url = '/guestbook/';
+
     public function __construct()
     {
         parent::__construct();
-        $this->nav_chain->add(__('Guestbook'), '/guestbook/');
+        $guestbook = di(GuestbookService::class);
+        $this->page_title = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
+        $this->nav_chain->add($this->page_title, $this->base_url);
+
+        $config = di('config')['johncms'];
+        $user = di(User::class);
+        // If the guest is closed, display a message and close access (except for Admins)
+        if (! $config['mod_guest'] && $user->rights < 7) {
+            echo $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => $this->page_title,
+                    'message'  => __('Guestbook is closed'),
+                    'type'     => 'alert-danger',
+                    'back_url' => '/',
+                ]
+            );
+            exit;
+        }
     }
 
     public function index(GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
     {
-        $this->render->addData(['title' => __('Guestbook'), 'page_title' => __('Guestbook')]);
+        $this->render->addData(['title' => $this->page_title, 'page_title' => $this->page_title]);
 
         $flash_errors = $session->getFlash('errors');
         $errors = $flash_errors ?? [];
 
         // If the form was sent using POST method, then try to create the new post.
-        if ($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST' && $guestbook->canWrite()) {
             try {
                 $guestbook->create();
-                header('Location: /guestbook/');
-                exit;
+                redirect($this->base_url);
             } catch (ValidationException $exception) {
                 $errors = $exception->getErrors();
             }
@@ -80,37 +103,34 @@ class GuestbookController extends BaseController
     public function switchGuestbookType(GuestbookService $guestbook): void
     {
         $guestbook->switchGuestbookType();
-        header('Location: /guestbook/');
-        exit;
+        redirect($this->base_url);
     }
 
     /**
      * Cleaning the guestbook
      *
      * @param Request $request
-     * @param User $user
      * @param GuestbookService $guestbook
      * @param Session $session
      * @return string
      */
-    public function clean(Request $request, User $user, GuestbookService $guestbook, Session $session): string
+    public function clean(Request $request, GuestbookService $guestbook, Session $session): string
     {
         if ($request->getMethod() === 'POST') {
             $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
             if (! $validator->isValid()) {
                 $session->flash('errors', $validator->getErrors());
-                header('Location: /guestbook/');
-                exit;
+                redirect($this->base_url);
             }
             // We clean the Guest, according to the specified parameters
             $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
             $message = $guestbook->clear($period);
             // Set result message
             $session->flash('message', $message);
-        } else {
-            // Request cleaning options
-            return $this->render->render('guestbook::clear');
+            redirect($this->base_url);
         }
+        // Request cleaning options
+        return $this->render->render('guestbook::clear');
     }
 
     /**
@@ -128,8 +148,7 @@ class GuestbookController extends BaseController
                 $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
                 if (! $validator->isValid()) {
                     $session->flash('errors', $validator->getErrors());
-                    header('Location: /guestbook/');
-                    exit;
+                    redirect($this->base_url);
                 }
                 // We clean the Guest, according to the specified parameters
                 $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
@@ -141,8 +160,7 @@ class GuestbookController extends BaseController
             }
         }
 
-        header('Location: /guestbook/');
-        exit;
+        redirect($this->base_url);
     }
 
     /**
@@ -191,8 +209,7 @@ class GuestbookController extends BaseController
                     ]
                 );
                 $session->flash('message', __('The message was saved'));
-                header('location: ./');
-                exit;
+                redirect($this->base_url);
             }
 
             $errors = $validator->getErrors();
@@ -255,8 +272,7 @@ class GuestbookController extends BaseController
                     ]
                 );
                 $session->flash('message', __('Your reply to the message was saved'));
-                header('location: ./');
-                exit;
+                redirect($this->base_url);
             }
 
             $errors = $validator->getErrors();
