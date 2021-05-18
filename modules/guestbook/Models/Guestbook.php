@@ -113,13 +113,9 @@ class Guestbook extends Model
 
     public function getReplyTextAttribute(): string
     {
-        if ($this->user_id) {
-            $post = $this->purifier->purify($this->otvet);
-            $post = $this->media->embedMedia($post);
-            $post = $this->tools->smilies($post, true);
-        }
-
-        return $post ?? '';
+        $post = $this->purifier->purify($this->otvet);
+        $post = $this->media->embedMedia($post);
+        return $this->tools->smilies($post, true);
     }
 
     public function getIsOnlineAttribute(): bool
