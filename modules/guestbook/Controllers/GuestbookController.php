@@ -68,6 +68,7 @@ class GuestbookController extends BaseController
         if ($request->getMethod() === 'POST' && $guestbook->canWrite()) {
             try {
                 $guestbook->create();
+                $session->flash('message', __('Your message was added successfully'));
                 redirect($this->base_url);
             } catch (ValidationException $exception) {
                 $errors = $exception->getErrors();
