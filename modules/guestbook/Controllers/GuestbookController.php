@@ -12,16 +12,21 @@ declare(strict_types=1);
 
 namespace Guestbook\Controllers;
 
+use Exception;
 use Guestbook\Models\Guestbook;
 use Guestbook\Services\GuestbookForm;
 use Guestbook\Services\GuestbookService;
+use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
+use Johncms\FileInfo;
+use Johncms\Files\FileStorage;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use League\Flysystem\FilesystemException;
 
 class GuestbookController extends BaseController
 {
@@ -288,5 +293,36 @@ class GuestbookController extends BaseController
                 'reply_text' => htmlspecialchars($message->reply_text),
             ]
         );
+    }
+
+    public function loadFile(Request $request): string
+    {
+        try {
+            /** @var UploadedFile[] $files */
+            $files = $request->getUploadedFiles();
+            $file_info = new FileInfo($files['upload']->getClientFilename());
+            if (! $file_info->isImage()) {
+                return json_encode(
+                    [
+                        'error' => [
+                            'message' => __('Only images are allowed'),
+                        ],
+                    ]
+                );
+            }
+
+            $file = (new FileStorage())->saveFromRequest('upload', 'guestbook');
+            $file_array = [
+                'fileName' => $file->name,
+                'uploaded' => 1,
+                'url'      => $file->url,
+            ];
+            header('Content-Type: application/json');
+            return json_encode($file_array);
+        } catch (FilesystemException | Exception $e) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            return json_encode(['errors' => $e->getMessage()]);
+        }
     }
 }

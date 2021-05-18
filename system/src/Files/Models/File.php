@@ -14,6 +14,7 @@ namespace Johncms\Files\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Johncms\Casts\DateHuman;
 
 /**
@@ -30,6 +31,7 @@ use Johncms\Casts\DateHuman;
  *
  * @property array $created_at - Creation date
  * @property array $updated_at - Date of change
+ * @property string $url
  */
 class File extends Model
 {
@@ -50,4 +52,9 @@ class File extends Model
         'md5',
         'sha1',
     ];
+
+    public function getUrlAttribute(): string
+    {
+        return Str::after(realpath(UPLOAD_PATH . $this->path), realpath(ROOT_PATH));
+    }
 }
