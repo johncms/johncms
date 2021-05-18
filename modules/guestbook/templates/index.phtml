@@ -91,8 +91,8 @@
 <?php endif; ?>
 <div class="mt-4 border-bottom full-mobile-width"></div>
 <!-- Отображаем сообщения -->
-<?php if (empty($data['posts'])): ?>
-    <div class="alert alert-info"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
+<?php if (empty($data['posts']['data'])): ?>
+    <div class="alert alert-info mt-3"><?= __('The guestbook is empty.<br><strong>Be the first! :)</strong>') ?></div>
 <?php else: ?>
     <?php foreach ($data['posts']['data'] as $post): ?>
         <div class="new_post-item">
