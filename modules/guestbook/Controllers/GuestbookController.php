@@ -95,27 +95,22 @@ class GuestbookController extends BaseController
      */
     public function clean(Request $request, User $user, GuestbookService $guestbook, Session $session): string
     {
-        if ($user->rights >= 7) {
-            if ($request->getMethod() === 'POST') {
-                $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
-                if (! $validator->isValid()) {
-                    $session->flash('errors', $validator->getErrors());
-                    header('Location: /guestbook/');
-                    exit;
-                }
-                // We clean the Guest, according to the specified parameters
-                $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
-                $message = $guestbook->clear($period);
-                // Set result message
-                $session->flash('message', $message);
-            } else {
-                // Request cleaning options
-                return $this->render->render('guestbook::clear');
+        if ($request->getMethod() === 'POST') {
+            $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
+            if (! $validator->isValid()) {
+                $session->flash('errors', $validator->getErrors());
+                header('Location: /guestbook/');
+                exit;
             }
+            // We clean the Guest, according to the specified parameters
+            $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
+            $message = $guestbook->clear($period);
+            // Set result message
+            $session->flash('message', $message);
+        } else {
+            // Request cleaning options
+            return $this->render->render('guestbook::clear');
         }
-
-        header('Location: /guestbook/');
-        exit;
     }
 
     /**
@@ -150,65 +145,131 @@ class GuestbookController extends BaseController
         exit;
     }
 
-
+    /**
+     * The edit message page
+     *
+     * @param User $user
+     * @param Request $request
+     * @param Session $session
+     * @return string
+     */
     public function edit(User $user, Request $request, Session $session): string
     {
         $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
-        if ($user->rights >= 6 && $id) {
-            $errors = [];
-            $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
+        $errors = [];
+        $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
 
-            try {
-                $message = (new Guestbook())->findOrFail($id);
-            } catch (ModelNotFoundException $exception) {
-                pageNotFound();
-            }
-
-            $form_data = [
-                'message'    => $request->getPost('message', $message->text),
-                'csrf_token' => $request->getPost('csrf_token', ''),
-            ];
-            if ($request->getMethod() === 'POST') {
-                $rules = [
-                    'message'    => [
-                        'NotEmpty',
-                        'StringLength' => ['min' => 4, 'max' => 16000],
-                    ],
-                    'csrf_token' => [
-                        'Csrf',
-                    ],
-                ];
-
-                $validator = new Validator($form_data, $rules);
-                if ($validator->isValid()) {
-                    $message->update(
-                        [
-                            'text'       => $form_data['message'],
-                            'edit_who'   => $user->name,
-                            'edit_time'  => time(),
-                            'edit_count' => ($message->edit_count + 1),
-                        ]
-                    );
-                    $session->flash('message', __('The message was saved'));
-                    header('location: ./');
-                    exit;
-                }
-
-                $errors = $validator->getErrors();
-            }
-
-            return $this->render->render(
-                'guestbook::edit',
-                [
-                    'id'      => $id,
-                    'message' => $message,
-                    'text'    => htmlspecialchars($form_data['message']),
-                    'errors'  => $errors,
-                ]
-            );
+        try {
+            $message = (new Guestbook())->findOrFail($id);
+        } catch (ModelNotFoundException $exception) {
+            pageNotFound();
         }
 
-        header('location: ./');
-        exit;
+        $form_data = [
+            'message'    => $request->getPost('message', $message->text),
+            'csrf_token' => $request->getPost('csrf_token', ''),
+        ];
+        if ($request->getMethod() === 'POST') {
+            $rules = [
+                'message'    => [
+                    'NotEmpty',
+                    'StringLength' => ['min' => 4, 'max' => 16000],
+                ],
+                'csrf_token' => [
+                    'Csrf',
+                ],
+            ];
+
+            $validator = new Validator($form_data, $rules);
+            if ($validator->isValid()) {
+                $message->update(
+                    [
+                        'text'       => $form_data['message'],
+                        'edit_who'   => $user->name,
+                        'edit_time'  => time(),
+                        'edit_count' => ($message->edit_count + 1),
+                    ]
+                );
+                $session->flash('message', __('The message was saved'));
+                header('location: ./');
+                exit;
+            }
+
+            $errors = $validator->getErrors();
+        }
+
+        return $this->render->render(
+            'guestbook::edit',
+            [
+                'id'      => $id,
+                'message' => $message,
+                'text'    => htmlspecialchars($form_data['message']),
+                'errors'  => $errors,
+            ]
+        );
+    }
+
+    /**
+     * The reply to message page
+     *
+     * @param User $user
+     * @param Request $request
+     * @param Session $session
+     * @return string
+     */
+    public function reply(User $user, Request $request, Session $session): string
+    {
+        $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $errors = [];
+        $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
+
+        try {
+            $message = (new Guestbook())->findOrFail($id);
+        } catch (ModelNotFoundException $exception) {
+            pageNotFound();
+        }
+
+        $form_data = [
+            'message'    => $request->getPost('message', $message->otvet),
+            'csrf_token' => $request->getPost('csrf_token', ''),
+        ];
+
+        if ($request->getMethod() === 'POST') {
+            $rules = [
+                'message'    => [
+                    'NotEmpty',
+                    'StringLength' => ['min' => 4, 'max' => 16000],
+                ],
+                'csrf_token' => [
+                    'Csrf',
+                ],
+            ];
+
+            $validator = new Validator($form_data, $rules);
+            if ($validator->isValid()) {
+                $message->update(
+                    [
+                        'otvet' => $form_data['message'],
+                        'admin' => $user->name,
+                        'otime' => time(),
+                    ]
+                );
+                $session->flash('message', __('Your reply to the message was saved'));
+                header('location: ./');
+                exit;
+            }
+
+            $errors = $validator->getErrors();
+        }
+
+        return $this->render->render(
+            'guestbook::reply',
+            [
+                'id'         => $id,
+                'message'    => $message,
+                'errors'     => $errors,
+                'reply_text' => htmlspecialchars($message->reply_text),
+            ]
+        );
     }
 }

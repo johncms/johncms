@@ -30,12 +30,19 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php'); // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                  // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                          // Forum
+
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
-    $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', [GuestbookController::class, 'switchGuestbookType']);        // Guestbook, mini-chat
-    $map->addRoute(['GET', 'POST'], '/guestbook/clean[/]', [GuestbookController::class, 'clean']);        // Guestbook, mini-chat
-    $map->addRoute(['GET', 'POST'], '/guestbook/delpost[/]', [GuestbookController::class, 'delete']);        // Guestbook, mini-chat
-    $map->addRoute(['GET', 'POST'], '/guestbook/edit[/]', [GuestbookController::class, 'edit']);        // Guestbook, mini-chat
-    $map->addRoute(['GET', 'POST'], '/guestbook/{action}', 'modules/guestbook/index.php');        // Guestbook, mini-chat
+    $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', [GuestbookController::class, 'switchGuestbookType']);
+
+    if ($user->isValid() && $user->rights >= 6) {
+        $map->addRoute(['GET', 'POST'], '/guestbook/edit[/]', [GuestbookController::class, 'edit']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/delpost[/]', [GuestbookController::class, 'delete']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/otvet[/]', [GuestbookController::class, 'reply']);
+    }
+    if ($user->isValid() && $user->rights >= 7) {
+        $map->addRoute(['GET', 'POST'], '/guestbook/clean[/]', [GuestbookController::class, 'clean']);
+    }
+
     $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Help
     $map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');                      // Articles Library
     $map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                    // Language switcher

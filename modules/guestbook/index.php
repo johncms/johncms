@@ -78,9 +78,3 @@ if (! $config['mod_guest'] && $user->rights < 7) {
     );
     exit;
 }
-
-switch ($act) {
-    case 'otvet':
-        require 'includes/reply.php';
-        break;
-}
