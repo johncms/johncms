@@ -142,7 +142,6 @@ class File
         $i = 1;
         while ($file_storage->fileExists($file_path)) {
             $file_path = $file_path_base . $this->getStoragePath() . '/' . $this->getHash() . '_' . $i;
-            $extension = mb_strtolower($this->file_info->getExtension());
             if (! empty($extension)) {
                 $file_path .= '.' . $extension;
             }
