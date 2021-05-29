@@ -265,8 +265,9 @@ class GuestbookController extends BaseController
         }
 
         $form_data = [
-            'message'    => $request->getPost('message', $message->otvet),
-            'csrf_token' => $request->getPost('csrf_token', ''),
+            'message'        => $request->getPost('message', $message->otvet),
+            'csrf_token'     => $request->getPost('csrf_token', ''),
+            'attached_files' => (array) $request->getPost('attached_files', [], FILTER_VALIDATE_INT),
         ];
 
         if ($request->getMethod() === 'POST') {
@@ -284,9 +285,10 @@ class GuestbookController extends BaseController
             if ($validator->isValid()) {
                 $message->update(
                     [
-                        'otvet' => $form_data['message'],
-                        'admin' => $user->name,
-                        'otime' => time(),
+                        'otvet'          => $form_data['message'],
+                        'admin'          => $user->name,
+                        'otime'          => time(),
+                        'attached_files' => array_merge((array) $message->attached_files, $form_data['attached_files']),
                     ]
                 );
                 $session->flash('message', __('Your reply to the message was saved'));

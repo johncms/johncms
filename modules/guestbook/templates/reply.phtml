@@ -18,13 +18,14 @@ $this->layout('system::layout/default'); ?>
         <b><?= __('Author') ?>:</b> <?= $message->name ?> <br>
         <?= $message->post_text ?>
     <p>
-    <div class="form-group">
-        <label for="message"><?= __('Reply') ?></label>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" class="form-control"><?= $this->e($message->otvet) ?></textarea>
-        <?php if (! empty($errors['message'])): ?>
-            <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
-        <?php endif ?>
-    </div>
+        <?= $this->fetch(
+            'guestbook::ckeditor',
+            [
+                'label'  => __('Reply'),
+                'errors' => implode(', ', $errors['message'] ?? []),
+                'value'  => $this->e($message->otvet),
+            ]
+        ) ?>
     <div>
         <button type="submit" name="submit" value="submit" class="btn btn-primary mr-2"><?= __('Save') ?></button>
         <a href="/guestbook/" class="btn btn-outline-primary"><?= __('Back') ?></a>
