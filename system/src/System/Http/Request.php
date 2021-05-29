@@ -100,16 +100,23 @@ class Request extends ServerRequest
     }
 
     /**
-     * @param string $key
+     * @param string|int $key
      * @param mixed $var
      * @param int $filter
      * @param mixed $options
      * @return mixed|null
      */
-    private function filterVar(string $key, $var, int $filter, $options)
+    private function filterVar($key, $var, int $filter, $options)
     {
         if (is_array($var) && isset($var[$key])) {
-            $result = filter_var(trim($var[$key]), $filter, $options);
+            if (is_array($var[$key])) {
+                $result = [];
+                foreach ($var[$key] as $k => $v) {
+                    $result[$k] = $this->filterVar($k, $var[$key], $filter, $options);
+                }
+            } else {
+                $result = filter_var(trim($var[$key]), $filter, $options);
+            }
 
             if (false !== $result) {
                 return $result;
