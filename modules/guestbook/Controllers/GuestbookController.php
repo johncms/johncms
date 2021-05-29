@@ -145,9 +145,10 @@ class GuestbookController extends BaseController
      * @param Request $request
      * @param User $user
      * @param Session $session
+     * @param FileStorage $storage
      * @return string
      */
-    public function delete(Request $request, User $user, Session $session): string
+    public function delete(Request $request, User $user, Session $session, FileStorage $storage): string
     {
         if ($user->rights >= 6) {
             if ($request->getMethod() === 'POST') {
@@ -158,7 +159,16 @@ class GuestbookController extends BaseController
                 }
                 // We clean the Guest, according to the specified parameters
                 $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
-                (new Guestbook())->where('id', $id)->delete();
+                $post = (new Guestbook())->find($id);
+                if (! empty($post->attached_files)) {
+                    foreach ($post->attached_files as $attached_file) {
+                        try {
+                            $storage->delete($attached_file);
+                        } catch (Exception | FilesystemException $exception) {
+                        }
+                    }
+                }
+                $post->delete();
                 // Set result message
                 $session->flash('message', __('The message was deleted'));
             } else {
@@ -190,8 +200,9 @@ class GuestbookController extends BaseController
         }
 
         $form_data = [
-            'message'    => $request->getPost('message', $message->text),
-            'csrf_token' => $request->getPost('csrf_token', ''),
+            'message'        => $request->getPost('message', $message->text),
+            'csrf_token'     => $request->getPost('csrf_token', ''),
+            'attached_files' => (array) $request->getPost('attached_files', [], FILTER_VALIDATE_INT),
         ];
         if ($request->getMethod() === 'POST') {
             $rules = [
@@ -208,10 +219,11 @@ class GuestbookController extends BaseController
             if ($validator->isValid()) {
                 $message->update(
                     [
-                        'text'       => $form_data['message'],
-                        'edit_who'   => $user->name,
-                        'edit_time'  => time(),
-                        'edit_count' => ($message->edit_count + 1),
+                        'text'           => $form_data['message'],
+                        'edit_who'       => $user->name,
+                        'edit_time'      => time(),
+                        'edit_count'     => ($message->edit_count + 1),
+                        'attached_files' => array_merge((array) $message->attached_files, $form_data['attached_files']),
                     ]
                 );
                 $session->flash('message', __('The message was saved'));

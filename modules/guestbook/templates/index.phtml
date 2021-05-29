@@ -48,7 +48,7 @@
                     [
                         'label'  => __('Message'),
                         'errors' => implode(', ', $data['errors']['message'] ?? []),
-                        'value'  => $data['form_data']['message'],
+                        'value'  => $this->e($data['form_data']['message']),
                     ]
                 ) ?>
 

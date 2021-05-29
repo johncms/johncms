@@ -9,14 +9,14 @@
     <p>
         <b><?= __('Author') ?>:</b> <?= $message->name ?>
     <p>
-    <div class="form-group">
-        <label for="message"><?= __('Message') ?></label>
-        <textarea name="message" id="message" required
-                  class="form-control <?= ! empty($errors['message']) ? 'is-invalid' : '' ?>"><?= $text ?></textarea>
-        <?php if (! empty($errors['message'])): ?>
-            <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
-        <?php endif ?>
-    </div>
+        <?= $this->fetch(
+            'guestbook::ckeditor',
+            [
+                'label'  => __('Message'),
+                'errors' => implode(', ', $errors['message'] ?? []),
+                'value'  => $text,
+            ]
+        ) ?>
     <div>
         <button type="submit" name="submit" value="submit" class="btn btn-primary mr-2"><?= __('Save') ?></button>
         <a href="/guestbook/" class="btn btn-outline-primary"><?= __('Back') ?></a>
