@@ -142,14 +142,15 @@ class GuestbookService
         if ($validator->isValid()) {
             $message = (new Guestbook())->create(
                 [
-                    'adm'     => ! $this->isGuestbook(),
-                    'time'    => time(),
-                    'user_id' => $this->user->id ?? 0,
-                    'name'    => $this->user->isValid() ? $this->user->name : $fields['name'],
-                    'text'    => $fields['message'],
-                    'ip'      => $env->getIp(false),
-                    'browser' => $env->getUserAgent(),
-                    'otvet'   => '',
+                    'adm'            => ! $this->isGuestbook(),
+                    'time'           => time(),
+                    'user_id'        => $this->user->id ?? 0,
+                    'name'           => $this->user->isValid() ? $this->user->name : $fields['name'],
+                    'text'           => $fields['message'],
+                    'ip'             => $env->getIp(false),
+                    'browser'        => $env->getUserAgent(),
+                    'otvet'          => '',
+                    'attached_files' => $fields['attached_files'],
                 ]
             );
             if ($this->user->isValid()) {

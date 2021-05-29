@@ -43,4 +43,13 @@ if (! $schema->hasTable('files')) {
     );
 }
 
+$schema->table(
+    'guest',
+    static function (Blueprint $table) use ($schema) {
+        if (! $schema->hasColumns('guest', ['attached_files'])) {
+            $table->json('attached_files')->nullable();
+        }
+    }
+);
+
 echo 'Update complete!';

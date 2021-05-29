@@ -313,7 +313,8 @@ class GuestbookController extends BaseController
 
             $file = (new FileStorage())->saveFromRequest('upload', 'guestbook');
             $file_array = [
-                'fileName' => $file->name,
+                'id'       => $file->id,
+                'name'     => $file->name,
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];

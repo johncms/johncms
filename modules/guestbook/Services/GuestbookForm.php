@@ -42,8 +42,10 @@ class GuestbookForm
             'csrf_token' => $this->request->getPost('csrf_token', ''),
             'code'       => $this->request->getPost('code', ''),
         ];
+        $form_data = array_map('trim', $form_data);
+        $form_data['attached_files'] = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
 
-        return array_map('trim', $form_data);
+        return $form_data;
     }
 
     /**

@@ -43,6 +43,7 @@ use Johncms\Users\User;
  * @property string $edit_who
  * @property int $edit_time
  * @property int $edit_count
+ * @property array $attached_files
  *
  * @property User|null $user
  * @property string $post_text
@@ -56,14 +57,15 @@ class Guestbook extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'adm'       => 'boolean',
-        'time'      => TimeToDate::class,
-        'otime'     => TimeToDate::class,
-        'edit_time' => TimeToDate::class,
-        'ip'        => Ip::class,
-        'name'      => SpecialChars::class,
-        'edit_who'  => SpecialChars::class,
-        'browser'   => SpecialChars::class,
+        'adm'            => 'boolean',
+        'time'           => TimeToDate::class,
+        'otime'          => TimeToDate::class,
+        'edit_time'      => TimeToDate::class,
+        'ip'             => Ip::class,
+        'name'           => SpecialChars::class,
+        'edit_who'       => SpecialChars::class,
+        'browser'        => SpecialChars::class,
+        'attached_files' => 'array',
     ];
 
     protected $fillable = [
@@ -80,6 +82,7 @@ class Guestbook extends Model
         'edit_who',
         'edit_time',
         'edit_count',
+        'attached_files',
     ];
 
     /** @var Tools */

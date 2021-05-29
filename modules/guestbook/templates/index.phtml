@@ -43,13 +43,14 @@
                         <?php endif ?>
                     </div>
                 <?php endif; ?>
-                <div class="form-group">
-                    <label for="message"><?= __('Message') ?></label>
-                    <textarea name="message" id="message" class="form-control <?= ! empty($data['errors']['message']) ? 'is-invalid' : '' ?>"><?= $this->e($data['form_data']['message']) ?></textarea>
-                    <?php if (! empty($data['errors']['message'])): ?>
-                        <div class="invalid-feedback d-block"><?= implode(', ', $data['errors']['message']) ?></div>
-                    <?php endif ?>
-                </div>
+                <?= $this->fetch(
+                    'guestbook::ckeditor',
+                    [
+                        'label'  => __('Message'),
+                        'errors' => implode(', ', $data['errors']['message'] ?? []),
+                        'value'  => $data['form_data']['message'],
+                    ]
+                ) ?>
 
                 <?php if (! $user->isValid()): ?>
                     <img alt="<?= __('Verification code') ?>" src="<?= $data['captcha'] ?>">
@@ -208,7 +209,6 @@
     </div>
 <?php endif ?>
 <?php $this->push('scripts') ?>
-<?= $this->fetch('guestbook::ckeditor') ?>
 <script>
     function reply_to_post(user_name)
     {
