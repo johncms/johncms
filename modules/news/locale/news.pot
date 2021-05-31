@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "X-Domain: news\n"
 
-#: modules/news/Article.php:48
+#: modules/news/Article.php:52
 msgid "The requested article was not found."
 msgstr ""
 
@@ -147,7 +147,7 @@ msgstr ""
 msgid "The user is not authorized"
 msgstr ""
 
-#: modules/news/Controllers/VoteController.php:51
+#: modules/news/Controllers/VoteController.php:52
 msgid "Your vote is accepted"
 msgstr ""
 
@@ -237,7 +237,7 @@ msgstr ""
 
 #: modules/news/templates/admin/add_article.phtml:126
 #: modules/news/templates/admin/add_section.phtml:69
-#: modules/news/templates/public/article.phtml:77
+#: modules/news/templates/public/article.phtml:83
 msgid "Back"
 msgstr ""
 
@@ -274,7 +274,7 @@ msgstr ""
 #: modules/news/templates/admin/del.phtml:28
 #: modules/news/templates/admin/sections.phtml:70
 #: modules/news/templates/admin/sections.phtml:97
-#: modules/news/templates/public/article.phtml:55
+#: modules/news/templates/public/article.phtml:59
 msgid "Delete"
 msgstr ""
 
@@ -334,7 +334,7 @@ msgid "Article"
 msgstr ""
 
 #: modules/news/templates/admin/sections.phtml:111
-#: modules/news/templates/public/article.phtml:59
+#: modules/news/templates/public/article.phtml:63
 #: modules/news/templates/public/index.phtml:80
 msgid "The list is empty"
 msgstr ""
@@ -383,43 +383,43 @@ msgstr ""
 msgid "Meta tag templates for articles"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:23
+#: modules/news/templates/public/article.phtml:25
 msgid "Published:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:24
+#: modules/news/templates/public/article.phtml:27
 msgid "Author:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:26
+#: modules/news/templates/public/article.phtml:30
 msgid "Tags:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:32
+#: modules/news/templates/public/article.phtml:36
 msgid "Rating:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:53
+#: modules/news/templates/public/article.phtml:57
 msgid "Write a comment"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:54
+#: modules/news/templates/public/article.phtml:58
 msgid "Send"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:56
+#: modules/news/templates/public/article.phtml:60
 msgid "Quote"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:57
+#: modules/news/templates/public/article.phtml:61
 msgid "Reply"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:58
+#: modules/news/templates/public/article.phtml:62
 msgid "Comments"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:71
+#: modules/news/templates/public/article.phtml:77
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 

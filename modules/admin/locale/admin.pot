@@ -1220,8 +1220,11 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:53
 #: modules/admin/templates/settings.phtml:74
 #: modules/admin/templates/system/system_check.phtml:9
+#: modules/admin/templates/system/system_check.phtml:17
 #: modules/admin/templates/system/system_check.phtml:29
+#: modules/admin/templates/system/system_check.phtml:37
 #: modules/admin/templates/system/system_check.phtml:49
+#: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
 msgstr ""
 
@@ -1782,8 +1785,11 @@ msgid "Check name"
 msgstr ""
 
 #: modules/admin/templates/system/system_check.phtml:8
+#: modules/admin/templates/system/system_check.phtml:16
 #: modules/admin/templates/system/system_check.phtml:28
+#: modules/admin/templates/system/system_check.phtml:36
 #: modules/admin/templates/system/system_check.phtml:48
+#: modules/admin/templates/system/system_check.phtml:56
 msgid "Value"
 msgstr ""
 

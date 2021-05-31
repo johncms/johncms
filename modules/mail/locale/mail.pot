@@ -214,6 +214,7 @@ msgid "You cannot send messages to yourself"
 msgstr ""
 
 #: modules/mail/includes/write.php:140
+#, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
 msgstr ""
 

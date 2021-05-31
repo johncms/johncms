@@ -20,6 +20,7 @@ msgid "Write Article"
 msgstr ""
 
 #: modules/library/includes/addnew.php:43
+#, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
 msgstr ""
 
@@ -81,6 +82,7 @@ msgid "Section does not exist"
 msgstr ""
 
 #: modules/library/includes/del.php:88
+#, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
 msgstr ""
 

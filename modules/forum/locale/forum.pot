@@ -454,6 +454,7 @@ msgstr ""
 
 #: modules/forum/includes/new.php:124
 #: modules/forum/includes/new.php:125
+#, php-format
 msgid "All for period %d hours"
 msgstr ""
 
@@ -493,6 +494,7 @@ msgstr ""
 #: modules/forum/includes/nt.php:84
 #: modules/forum/includes/say.php:101
 #: modules/forum/includes/say.php:349
+#, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr ""
 

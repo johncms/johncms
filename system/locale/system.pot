@@ -13,6 +13,7 @@ msgid "New reply on the forum"
 msgstr ""
 
 #: config/notifications.global.php:32
+#, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
 msgstr ""
 
@@ -297,6 +298,7 @@ msgid "Administration of our site is not responsible for the content of external
 msgstr ""
 
 #: modules/redirect/templates/index.phtml:36
+#, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
 msgstr ""
 
@@ -318,7 +320,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/helpers.php:61
+#: system/helpers.php:68
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
@@ -344,6 +346,7 @@ msgid "PHP version"
 msgstr ""
 
 #: system/src/Checker/SystemChecker.php:34
+#, php-format
 msgid "The PHP version must be at least %s"
 msgstr ""
 
@@ -422,6 +425,7 @@ msgid "Version of the database server"
 msgstr ""
 
 #: system/src/Checker/SystemChecker.php:117
+#, php-format
 msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
 msgstr ""
 
@@ -537,6 +541,7 @@ msgid "The form submitted did not originate from the expected site"
 msgstr ""
 
 #: system/src/Validator/messages.php:25
+#, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
 msgstr ""
 
@@ -554,10 +559,12 @@ msgid "Value is required and can't be empty"
 msgstr ""
 
 #: system/src/Validator/messages.php:41
+#, php-format
 msgid "The input is less than %min% characters long"
 msgstr ""
 
 #: system/src/Validator/messages.php:42
+#, php-format
 msgid "The input is more than %max% characters long"
 msgstr ""
 
@@ -575,22 +582,27 @@ msgid "The input is not a valid email address. Use the basic format local-part@h
 msgstr ""
 
 #: system/src/Validator/messages.php:52
+#, php-format
 msgid "'%hostname%' is not a valid hostname for the email address"
 msgstr ""
 
 #: system/src/Validator/messages.php:53
+#, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
 msgstr ""
 
 #: system/src/Validator/messages.php:54
+#, php-format
 msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
 msgstr ""
 
 #: system/src/Validator/messages.php:55
+#, php-format
 msgid "'%localPart%' can not be matched against dot-atom format"
 msgstr ""
 
 #: system/src/Validator/messages.php:56
+#, php-format
 msgid "'%localPart%' can not be matched against quoted-string format"
 msgstr ""
 
@@ -703,11 +715,13 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:13
 #: themes/default/templates/system/mail/templates/restore_password.phtml:12
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
+#, php-format
 msgid "Hello, %s!"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
+#, php-format
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
@@ -741,6 +755,7 @@ msgid "Registration on the website"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
+#, php-format
 msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
@@ -759,6 +774,7 @@ msgid "The one you specified when registering"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/registration.phtml:22
+#, php-format
 msgid "To activate your account, please confirm your registration on the %s website."
 msgstr ""
 
@@ -772,6 +788,7 @@ msgid "Password recovery"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
+#, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
@@ -792,6 +809,7 @@ msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
+#, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
