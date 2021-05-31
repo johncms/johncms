@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of JohnCMS Content Management System.
  *
@@ -52,4 +53,17 @@ $schema->table(
     }
 );
 
-echo 'Update complete!';
+if (empty($_SESSION['converted_posts'])) {
+    $_SESSION['converted_posts'] = [];
+}
+$tools = di(\Johncms\System\Legacy\Tools::class);
+$posts = (new \Guestbook\Models\Guestbook())->get();
+foreach ($posts as $post) {
+    if (! in_array($post->id, $_SESSION['converted_posts'])) {
+        $post->text = $tools->checkout($post->text, 1, 1);
+        $post->save();
+        $_SESSION['converted_posts'][] = $post->id;
+    }
+}
+
+echo 'The update was completed successfully';

@@ -265,7 +265,14 @@ class Database
             "INSERT INTO `guest` (`adm`, `time`, `user_id`, `name`, `text`, `ip`, `browser`, `admin`, `otvet`, `otime`) VALUES
 (1, 1217060516, 1, 'admin', 'Добро пожаловать в Админ Клуб!\r\nСюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\nПростым пользователям доступ сюда закрыт.', 2130706433, 'Opera/9.51', '', '', 0),
 (0, 1217060536, 1, 'admin', 'Добро пожаловать в Гостевую!', 2130706433, 'Opera/9.51', 'admin', 'Проверка ответа Администратора', 1217064021),
-(0, 1217061125, 1, 'admin', 'Для зарегистрированных пользователей Гостевая поддерживает BBcode:\r\n[b]жирный[/b]\r\n[i]курсив[/i]\r\n[u]подчеркнутый[/u]\r\n[red]красный[/red]\r\n[green]зеленый[/green]\r\n[blue]синий[/blue]\r\n\r\nи ссылки:\r\nhttp://gazenwagen.com\r\n\r\nДля гостей, эти функции закрыты.', 2130706433, 'Opera/9.51', '', '', 0);"
+(0, 1217061125, 1, 'admin', 'Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>
+<span style=\"font-weight: bold\">жирный</span><br>
+<span style=\"font-style:italic\">курсив</span><br>
+<span style=\"text-decoration:underline\">подчеркнутый</span><br>
+<span style=\"color:red\">красный</span><br>
+<span style=\"color:green\">зеленый</span><br>
+<span style=\"color:blue\">синий</span><br>
+Вставку ссылок: <a href=\"https://johncms.com\">https://johncms.com</a>, картинок, таблиц, видео и многого другого', 2130706433, 'Opera/9.51', '', '', 0);"
         );
     }
 }
