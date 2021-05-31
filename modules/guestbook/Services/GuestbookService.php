@@ -17,10 +17,12 @@ use Guestbook\Models\Guestbook;
 use Guestbook\Resources\PostResource;
 use Guestbook\Resources\ResourceCollection;
 use Johncms\Exceptions\ValidationException;
+use Johncms\Files\FileStorage;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use League\Flysystem\FilesystemException;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 
@@ -197,19 +199,54 @@ class GuestbookService
     public function clear(int $period = 0): string
     {
         $adm = ! $this->isGuestbook() ? 1 : 0;
+        $storage = di(FileStorage::class);
         switch ($period) {
             case '1':
                 // Clean messages older than 1 day
+                $messages = (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 86400))->get();
+                foreach ($messages as $message) {
+                    if (! empty($message->attached_files)) {
+                        foreach ($message->attached_files as $attached_file) {
+                            try {
+                                $storage->delete($attached_file);
+                            } catch (Exception | FilesystemException $exception) {
+                            }
+                        }
+                    }
+                }
+
                 (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 86400))->delete();
                 return __('All messages older than 1 day were deleted');
-                break;
+
             case '2':
                 // Perform a full cleanup
+                $messages = (new Guestbook())->where('adm', $adm)->get();
+                foreach ($messages as $message) {
+                    if (! empty($message->attached_files)) {
+                        foreach ($message->attached_files as $attached_file) {
+                            try {
+                                $storage->delete($attached_file);
+                            } catch (Exception | FilesystemException $exception) {
+                            }
+                        }
+                    }
+                }
                 (new Guestbook())->where('adm', $adm)->delete();
                 return __('Full clearing is finished');
-                break;
+
             default:
                 // Clean messages older than 1 week""
+                $messages = (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 604800))->get();
+                foreach ($messages as $message) {
+                    if (! empty($message->attached_files)) {
+                        foreach ($message->attached_files as $attached_file) {
+                            try {
+                                $storage->delete($attached_file);
+                            } catch (Exception | FilesystemException $exception) {
+                            }
+                        }
+                    }
+                }
                 (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 604800))->delete();
                 return __('All messages older than 1 week were deleted');
         }
