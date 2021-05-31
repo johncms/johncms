@@ -143,37 +143,34 @@ class GuestbookController extends BaseController
      * Cleaning the guestbook
      *
      * @param Request $request
-     * @param User $user
      * @param Session $session
      * @param FileStorage $storage
      * @return string
      */
-    public function delete(Request $request, User $user, Session $session, FileStorage $storage): string
+    public function delete(Request $request, Session $session, FileStorage $storage): string
     {
-        if ($user->rights >= 6) {
-            if ($request->getMethod() === 'POST') {
-                $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
-                if (! $validator->isValid()) {
-                    $session->flash('errors', $validator->getErrors());
-                    redirect($this->base_url);
-                }
-                // We clean the Guest, according to the specified parameters
-                $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
-                $post = (new Guestbook())->find($id);
-                if (! empty($post->attached_files)) {
-                    foreach ($post->attached_files as $attached_file) {
-                        try {
-                            $storage->delete($attached_file);
-                        } catch (Exception | FilesystemException $exception) {
-                        }
+        if ($request->getMethod() === 'POST') {
+            $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
+            if (! $validator->isValid()) {
+                $session->flash('errors', $validator->getErrors());
+                redirect($this->base_url);
+            }
+            // We clean the Guest, according to the specified parameters
+            $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
+            $post = (new Guestbook())->find($id);
+            if (! empty($post->attached_files)) {
+                foreach ($post->attached_files as $attached_file) {
+                    try {
+                        $storage->delete($attached_file);
+                    } catch (Exception | FilesystemException $exception) {
                     }
                 }
-                $post->delete();
-                // Set result message
-                $session->flash('message', __('The message was deleted'));
-            } else {
-                return $this->render->render('guestbook::confirm_delete', ['id' => $request->getQuery('id')]);
             }
+            $post->delete();
+            // Set result message
+            $session->flash('message', __('The message was deleted'));
+        } else {
+            return $this->render->render('guestbook::confirm_delete', ['id' => $request->getQuery('id')]);
         }
 
         redirect($this->base_url);
