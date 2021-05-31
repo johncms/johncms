@@ -68,12 +68,20 @@ if ($search && empty($error)) {
     exit;
 }
 
+$pagination_url = http_build_query(
+    [
+        'act' => 'search',
+        'search' => $search,
+        'id' => $id,
+    ]
+);
+
 echo $view->render(
     'downloads::search',
     [
         'title'           => __('Search results'),
         'page_title'      => __('Search results'),
-        'pagination'      => $tools->displayPagination('?act=search&amp;search=' . htmlspecialchars($search ?? '') . '&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess),
+        'pagination'      => $tools->displayPagination('?' . $pagination_url . '&amp;', $start, $total, $user->config->kmess),
         'files'           => $files ?? [],
         'total'           => $total,
         'search_query'    => htmlspecialchars($search),
