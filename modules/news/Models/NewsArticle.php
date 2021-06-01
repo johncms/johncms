@@ -3,16 +3,16 @@
 namespace News\Models;
 
 use Carbon\Carbon;
-use Johncms\Casts\FormattedDate;
-use News\Section;
-use News\Utils\Helpers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Johncms\Casts\FormattedDate;
 use Johncms\Casts\SpecialChars;
 use Johncms\Users\User;
+use News\Section;
+use News\Utils\Helpers;
 
 /**
  * @mixin Builder
@@ -37,6 +37,7 @@ use Johncms\Users\User;
  * @property $updated_at - Дата изменения
  * @property $created_by - Автор
  * @property $updated_by - Пользователь, изменивший запись
+ * @property array $attached_files
  *
  * Computed properties
  * @property NewsSection $parentSection - Родительский раздел
@@ -76,21 +77,23 @@ class NewsArticle extends Model
         'view_count',
         'created_by',
         'updated_by',
+        'attached_files',
     ];
 
     protected $casts = [
-        'active'      => 'bool',
-        'active_from' => FormattedDate::class,
-        'active_to'   => FormattedDate::class,
-        'section_id'  => 'integer',
-        'view_count'  => 'integer',
-        'name'        => SpecialChars::class,
-        'page_title'  => SpecialChars::class,
-        'keywords'    => SpecialChars::class,
-        'description' => SpecialChars::class,
-        'tags'        => SpecialChars::class,
-        'created_at'  => FormattedDate::class,
-        'updated_at'  => FormattedDate::class,
+        'active'         => 'bool',
+        'active_from'    => FormattedDate::class,
+        'active_to'      => FormattedDate::class,
+        'section_id'     => 'integer',
+        'view_count'     => 'integer',
+        'name'           => SpecialChars::class,
+        'page_title'     => SpecialChars::class,
+        'keywords'       => SpecialChars::class,
+        'description'    => SpecialChars::class,
+        'tags'           => SpecialChars::class,
+        'created_at'     => FormattedDate::class,
+        'updated_at'     => FormattedDate::class,
+        'attached_files' => 'array',
     ];
 
     public function __construct(array $attributes = [])

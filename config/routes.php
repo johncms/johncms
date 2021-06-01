@@ -69,6 +69,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/admin/news/add_section/[{section_id:\d+}[/]]', [AdminSectionController::class, 'add']);
         $map->addRoute(['GET', 'POST'], '/admin/news/edit_section/{section_id:\d+}[/]', [AdminSectionController::class, 'edit']);
         $map->addRoute(['GET', 'POST'], '/admin/news/del_section/{section_id:\d+}[/]', [AdminSectionController::class, 'del']);
+        $map->addRoute(['GET', 'POST'], '/admin/news/upload_file[/]', [AdminArticleController::class, 'loadFile']);
     }
 
     $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}]', [SectionController::class, 'index']);

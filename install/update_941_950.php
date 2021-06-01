@@ -53,6 +53,15 @@ $schema->table(
     }
 );
 
+$schema->table(
+    'news_articles',
+    static function (Blueprint $table) use ($schema) {
+        if (! $schema->hasColumns('news_articles', ['attached_files'])) {
+            $table->json('attached_files')->nullable();
+        }
+    }
+);
+
 if (empty($_SESSION['converted_posts'])) {
     $_SESSION['converted_posts'] = [];
 }
