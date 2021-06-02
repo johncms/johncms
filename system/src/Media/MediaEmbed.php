@@ -10,8 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Johncms;
+namespace Johncms\Media;
 
+use Johncms\Media\Providers\ImagesPopup;
 use Simba77\EmbedMedia\Embed;
 use Simba77\EmbedMedia\Providers\Youtube;
 
@@ -34,6 +35,7 @@ class MediaEmbed
                     ],
                 ]
             ),
+            new ImagesPopup(),
         ];
         return new Embed($providers);
     }

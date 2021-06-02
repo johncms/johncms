@@ -30,8 +30,10 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.3 || ^8.0",
+        "ext-dom": "*",
         "ext-gd": "*",
         "ext-json": "*",
+        "ext-libxml": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-simplexml": "*",
@@ -43,6 +45,7 @@
         "illuminate/cache": "^8.37",
         "illuminate/database": "^8.37",
         "illuminate/filesystem": "^8.37",
+        "imangazaliev/didom": "^1.16",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.5",

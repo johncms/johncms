@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Ip;
 use Johncms\Casts\SpecialChars;
 use Johncms\Casts\TimeToDate;
-use Johncms\MediaEmbed;
+use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -91,7 +91,7 @@ class Guestbook extends Model
     /** @var HTMLPurifier|mixed */
     protected $purifier;
 
-    /** @var MediaEmbed|mixed */
+    /** @var \Johncms\Media\MediaEmbed|mixed */
     protected $media;
 
     public function __construct(array $attributes = [])
