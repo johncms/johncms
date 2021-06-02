@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Database;
 
+use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use PDO;
 use Psr\Container\ContainerInterface;
@@ -48,6 +49,10 @@ class PdoFactory
             $capsule->getDatabaseManager()->enableQueryLog();
         }
 
-        return $capsule->getDatabaseManager()->getPdo();
+        try {
+            return $capsule->getDatabaseManager()->getPdo();
+        } catch (Exception $exception) {
+            die('<b>Error connecting to the database server:</b><br>' . $exception->getMessage());
+        }
     }
 }
