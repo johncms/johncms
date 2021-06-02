@@ -350,6 +350,12 @@
     img {
         vertical-align: initial;
     }
+
+    &:after {
+        content: '';
+        clear: both;
+        display: block;
+    }
 }
 
 .first-post {

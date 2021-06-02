@@ -30,6 +30,10 @@ return [
             'table',
             'image',
             'image-style-side',
+            'image_resized',
+            'image-style-align-right',
+            'image-style-align-left',
+            'image-style-align-center',
         ],
     ],
 ];

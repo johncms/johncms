@@ -175,6 +175,8 @@ figure {
     }
 
     &.image {
+        clear: both;
+
         img {
             max-width: 100%;
         }
@@ -186,6 +188,21 @@ figure {
             font-style: italic;
         }
     }
+}
+
+.image-style-align-left {
+    float: left;
+    margin-right: 0.5rem;
+}
+
+.image-style-align-right {
+    float: right;
+    margin-left: 0.5rem;
+}
+
+.image-style-align-center {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .breadcrumb-item {
