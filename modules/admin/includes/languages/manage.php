@@ -40,6 +40,7 @@ foreach ($config['lng_list'] as $key => $item) {
 
     $item['need_update'] = false;
     $item['new_version'] = '';
+    $item['access_problem'] = Languages::checkAccessToFiles($key);
     if (array_key_exists($key, $all_languages)) {
         $update = $all_languages[$key];
         if ($update['version'] > $item['version']) {
