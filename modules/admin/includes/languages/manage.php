@@ -48,7 +48,7 @@ foreach ($config['lng_list'] as $key => $item) {
         }
     }
 
-    $flag = THEMES_PATH . 'default/assets/images/flags/' . strtolower($key) . '.png';
+    $flag = THEMES_PATH . 'default/assets/images/flags/' . strtolower($key) . '.svg';
     if (is_file($flag)) {
         $item['flag'] = pathToUrl($flag);
     }
