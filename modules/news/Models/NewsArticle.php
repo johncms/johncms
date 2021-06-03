@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Casts\FormattedDate;
 use Johncms\Casts\SpecialChars;
+use Johncms\Media\MediaEmbed;
 use Johncms\Users\User;
 use News\Section;
 use News\Utils\Helpers;
@@ -96,12 +97,16 @@ class NewsArticle extends Model
         'attached_files' => 'array',
     ];
 
+    /** @var MediaEmbed|mixed */
+    protected $media;
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         /** @var User $user */
         $user = di(User::class);
         $this->perPage = $user->config->kmess;
+        $this->media = di(MediaEmbed::class);
     }
 
     /**
@@ -185,7 +190,8 @@ class NewsArticle extends Model
      */
     public function getTextSafeAttribute(): string
     {
-        return Helpers::purifyHtml($this->text);
+        $text = Helpers::purifyHtml($this->text);
+        return $this->media->embedMedia($text);
     }
 
     /**
@@ -195,7 +201,8 @@ class NewsArticle extends Model
      */
     public function getPreviewTextSafeAttribute(): string
     {
-        return Helpers::purifyHtml($this->preview_text);
+        $text = Helpers::purifyHtml($this->preview_text);
+        return $this->media->embedMedia($text);
     }
 
     /**
