@@ -62,6 +62,15 @@ $schema->table(
     }
 );
 
+$schema->table(
+    'news_comments',
+    static function (Blueprint $table) use ($schema) {
+        if (! $schema->hasColumns('news_comments', ['attached_files'])) {
+            $table->longText('attached_files')->nullable();
+        }
+    }
+);
+
 if (empty($_SESSION['converted_posts'])) {
     $_SESSION['converted_posts'] = [];
 }

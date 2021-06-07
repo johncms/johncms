@@ -12,19 +12,24 @@ declare(strict_types=1);
 
 namespace News\Controllers;
 
-use Johncms\Controller\BaseController;
-use Johncms\System\Http\Request;
-use Johncms\Users\User;
-use News\Models\NewsArticle;
-use News\Models\NewsComments;
-use News\Utils\Helpers;
 use Carbon\Carbon;
+use Exception;
+use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
+use Johncms\Controller\BaseController;
+use Johncms\FileInfo;
+use Johncms\Files\FileStorage;
 use Johncms\System\Http\Environment;
+use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Avatar;
+use Johncms\Users\User;
+use League\Flysystem\FilesystemException;
+use News\Models\NewsArticle;
+use News\Models\NewsComments;
+use News\Utils\Helpers;
 
 class CommentsController extends BaseController
 {
@@ -135,17 +140,19 @@ class CommentsController extends BaseController
             $article = (new NewsArticle())->findOrFail($article_id);
             $comment = trim($post_body['comment']);
             if (! empty($comment)) {
+                $attached_files = array_map('intval', (array) ($post_body['attached_files'] ?? []));
                 (new NewsComments())->create(
                     [
-                        'article_id' => $article->id,
-                        'user_id'    => $user->id,
-                        'text'       => $comment,
-                        'user_data'  => [
+                        'article_id'     => $article->id,
+                        'user_id'        => $user->id,
+                        'text'           => $comment,
+                        'user_data'      => [
                             'user_agent'   => $env->getUserAgent(),
                             'ip'           => $env->getIp(false),
                             'ip_via_proxy' => $env->getIpViaProxy(false),
                         ],
-                        'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'created_at'     => Carbon::now()->format('Y-m-d H:i:s'),
+                        'attached_files' => $attached_files,
                     ]
                 );
 
@@ -160,7 +167,7 @@ class CommentsController extends BaseController
         }
     }
 
-    public function del(Request $request, User $user): void
+    public function del(Request $request, User $user, FileStorage $storage): void
     {
         $post_body = $request->getBody();
         if ($post_body) {
@@ -173,7 +180,15 @@ class CommentsController extends BaseController
             $post = (new NewsComments())->findOrFail($comment_id);
             if ($user->rights >= 6 || $user->id === $post->user_id) {
                 try {
-                    $post->delete();
+                    if (! empty($post->attached_files)) {
+                        foreach ($post->attached_files as $attached_file) {
+                            try {
+                                $storage->delete($attached_file);
+                            } catch (Exception | FilesystemException $exception) {
+                            }
+                        }
+                    }
+                    $post->forceDelete();
                     Helpers::returnJson(['message' => __('The comment was deleted successfully')]);
                 } catch (\Exception $e) {
                     http_response_code(500);
@@ -186,6 +201,38 @@ class CommentsController extends BaseController
         } catch (ModelNotFoundException $exception) {
             http_response_code(404);
             Helpers::returnJson(['message' => $exception->getMessage()]);
+        }
+    }
+
+    public function loadFile(Request $request): string
+    {
+        try {
+            /** @var UploadedFile[] $files */
+            $files = $request->getUploadedFiles();
+            $file_info = new FileInfo($files['upload']->getClientFilename());
+            if (! $file_info->isImage()) {
+                return json_encode(
+                    [
+                        'error' => [
+                            'message' => __('Only images are allowed'),
+                        ],
+                    ]
+                );
+            }
+
+            $file = (new FileStorage())->saveFromRequest('upload', 'news_comments');
+            $file_array = [
+                'id'       => $file->id,
+                'name'     => $file->name,
+                'uploaded' => 1,
+                'url'      => $file->url,
+            ];
+            header('Content-Type: application/json');
+            return json_encode($file_array);
+        } catch (FilesystemException | Exception $e) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            return json_encode(['errors' => $e->getMessage()]);
         }
     }
 }

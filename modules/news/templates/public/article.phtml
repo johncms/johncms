@@ -62,12 +62,21 @@ $author = $article->author;
         'comments'      => __('Comments'),
         'empty_list'    => __('The list is empty'),
     ];
+    if ($locale !== 'en') {
+        try {
+            echo '<script src="' . $this->asset('ckeditor5/translations/' . $locale . '.js', true) . '"></script>';
+        } catch (Exception $exception) {
+        }
+    }
     ?>
+    <script src="<?= $this->asset('ckeditor5/ckeditor.js', true) ?>"></script>
     <div class="vue_app">
         <comments-component
+            upload_url="/news/comments/upload_file/"
             :article_id="<?= $article->id ?>"
             :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"
             :i18n='<?= json_encode($messages) ?>'
+            language="<?= $locale ?>"
         ></comments-component>
     </div>
 

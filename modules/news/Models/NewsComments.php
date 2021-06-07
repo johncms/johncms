@@ -18,6 +18,7 @@ use Johncms\Users\User;
  * @property $text - Текст с описанием
  * @property array $user_data - Некоторые данные пользователя
  * @property $created_at - Дата создания
+ * @property array $attached_files
  *
  * @property User $user
  */
@@ -33,13 +34,15 @@ class NewsComments extends Model
         'text',
         'user_data',
         'created_at',
+        'attached_files',
     ];
 
     protected $casts = [
-        'article_id' => 'integer',
-        'user_id'    => 'integer',
-        'user_data'  => 'array',
-        'created_at' => DateHuman::class,
+        'article_id'     => 'integer',
+        'user_id'        => 'integer',
+        'user_data'      => 'array',
+        'created_at'     => DateHuman::class,
+        'attached_files' => 'array',
     ];
 
     protected $appends = [];

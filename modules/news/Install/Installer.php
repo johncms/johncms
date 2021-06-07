@@ -112,6 +112,7 @@ class Installer extends \Johncms\Modules\Installer
                 $table->longText('text');
                 $table->text('user_data');
                 $table->dateTime('created_at');
+                $table->longText('attached_files')->nullable();
                 $table->softDeletes();
 
                 $table->foreign('article_id')

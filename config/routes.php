@@ -58,6 +58,9 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/news/comments/{article_id:\d+}/', [CommentsController::class, 'index']);
     $map->addRoute(['GET', 'POST'], '/news/comments/add/{article_id:\d+}/', [CommentsController::class, 'add']);
     $map->addRoute(['GET', 'POST'], '/news/comments/del/', [CommentsController::class, 'del']);
+    if ($user->isValid() && empty($user->ban)) {
+        $map->addRoute(['GET', 'POST'], '/news/comments/upload_file[/]', [CommentsController::class, 'loadFile']);
+    }
 
     if ($user->rights >= 9 && $user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/admin/news/', [AdminController::class, 'index']);

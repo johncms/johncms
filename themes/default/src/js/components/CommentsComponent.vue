@@ -82,7 +82,9 @@
                     <div class="alert alert-success d-inline">{{ comment_added_message }}</div>
                 </div>
                 <div style="max-width: 800px;">
-                    <textarea name="text" id="comment_text" rows="6" required class="form-control" v-model="comment_text"></textarea>
+                    <div class="form-group">
+                        <textarea :name="'text'" id="comment_text" required class="form-control" v-model="comment_text"></textarea>
+                    </div>
                 </div>
                 <div class="mt-2">
                     <button type="submit" name="submit" value="1" class="btn btn-primary" :disabled="loading">
@@ -118,6 +120,14 @@ export default {
                     empty_list: 'The list is empty',
                 }
             }
+        },
+        language: {
+            type: String,
+            default: 'en'
+        },
+        upload_url: {
+            type: String,
+            default: ''
         }
     },
     data()
@@ -128,11 +138,37 @@ export default {
             comment_added_message: '',
             error_message: '',
             loading: false,
+            attached_files: [],
         }
     },
     mounted()
     {
         this.getComments();
+
+        const self = this;
+        let config = {
+            simpleUpload: {
+                uploadUrl: this.upload_url,
+                withCredentials: false,
+                savedCallback: function (file) {
+                    self.attached_files.push(file.id);
+                },
+            },
+            language: this.language
+        };
+
+        ClassicEditor
+                .create(document.querySelector('#comment_text'), config)
+                .then(editor => {
+                    window.editor = editor;
+                    editor.model.document.on('change:data', () => {
+                        this.comment_text = editor.getData();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
     },
     computed: {},
     methods: {
@@ -164,13 +200,16 @@ export default {
         {
             this.loading = true;
             axios.post('/news/comments/add/' + this.article_id + '/', {
-                comment: this.comment_text
+                comment: this.comment_text,
+                attached_files: this.attached_files,
             })
                     .then(response => {
                         this.comment_added_message = response.data.message;
                         this.loading = false;
                         this.comment_text = '';
                         this.error_message = '';
+                        this.attached_files = [];
+                        window.editor.setData('');
                         this.getComments(response.data.last_page);
                     })
                     .catch(error => {
