@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Admin\Controllers\System\SystemCheckController;
+use Admin\Controllers\Users\UsersController;
 use FastRoute\RouteCollector;
 use Guestbook\Controllers\GuestbookController;
 use Johncms\System\Users\User;
@@ -89,10 +90,11 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/notifications/[{action}/]', 'modules/notifications/index.php');      // Notifications
     }
 
+    $map->addRoute(['GET', 'POST'], '/admin/login[/]', [UsersController::class, 'login']);
     if ($user->rights >= 6 && $user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/admin/system_check[/]', [SystemCheckController::class, 'index']);                      // Administration
-        $map->addRoute(['GET', 'POST'], '/admin/[{action}/]', 'modules/admin/index.php');                      // Administration
     }
+    $map->addRoute(['GET', 'POST'], '/admin[/[{action}/]]', 'modules/admin/index.php');                      // Administration
 
     // Custom routes
     if (is_file(CONFIG_PATH . 'routes.local.php')) {

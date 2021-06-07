@@ -1,0 +1,38 @@
+<?php $this->layout(
+    'system::layout/guest',
+    [
+        'title'      => __('Login'),
+        'page_title' => __('Login'),
+    ]
+) ?>
+<div class="min-vh-100 d-flex align-items-center">
+    <div class="card w-100 mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <form method="post">
+                <div class="text-center mb-2">
+                    <img src="<?= $this->asset('images/logo.svg') ?>" alt="logo" style="max-width: 200px;" class="img-fluid">
+                </div>
+
+                <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
+                <div class="form-group">
+                    <label for="code"><?= __('Enter verification code') ?></label>
+                    <input type="text"
+                           class="form-control"
+                           maxlength="5"
+                           name="code"
+                           id="code"
+                           required
+                           placeholder="<?= __('Verification code') ?>"
+                    >
+                </div>
+                <?php if ($id): ?>
+                    <input type="hidden" name="id" value="<?= $id ?>"/>
+                <?php endif ?>
+                <input type="hidden" name="n" value="<?= $user_login ?>"/>
+                <input type="hidden" name="p" value="<?= $user_pass ?>"/>
+                <input type="hidden" name="mem" value="<?= $remember ?? '' ?>"/>
+                <input type="submit" name="login" value="<?= __('Continue') ?>" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+</div>
