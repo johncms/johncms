@@ -71,6 +71,7 @@ $schema->table(
     }
 );
 
+// Guestbook posts converter
 if (empty($_SESSION['converted_posts'])) {
     $_SESSION['converted_posts'] = [];
 }
@@ -78,6 +79,20 @@ $tools = di(\Johncms\System\Legacy\Tools::class);
 $posts = (new \Guestbook\Models\Guestbook())->get();
 foreach ($posts as $post) {
     if (! in_array($post->id, $_SESSION['converted_posts'])) {
+        $post->text = $tools->checkout($post->text, 1, 1);
+        $post->save();
+        $_SESSION['converted_posts'][] = $post->id;
+    }
+}
+
+// News comments converter
+if (empty($_SESSION['converted_comments'])) {
+    $_SESSION['converted_comments'] = [];
+}
+$tools = di(\Johncms\System\Legacy\Tools::class);
+$posts = (new \News\Models\NewsComments())->get();
+foreach ($posts as $post) {
+    if (! in_array($post->id, $_SESSION['converted_comments'])) {
         $post->text = $tools->checkout($post->text, 1, 1);
         $post->save();
         $_SESSION['converted_posts'][] = $post->id;
