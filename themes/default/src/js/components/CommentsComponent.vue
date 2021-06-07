@@ -187,14 +187,21 @@ export default {
         },
         reply(message)
         {
-            this.comment_text = '[b]' + message.user.user_name + '[/b], ';
-            $('#comment_text').focus();
+            editor.editing.view.focus();
+            editor.model.change(writer => {
+                const insertPosition = editor.model.document.selection.getFirstPosition();
+                writer.insertText(message.user.user_name + ', ', {}, insertPosition);
+                writer.setSelection(writer.createPositionAt(editor.model.document.getRoot(), 'end'));
+            });
         },
         quote(message)
         {
             let text = message.text.replace(/(<([^>]+)>)/ig, "");
-            this.comment_text = '[quote][b]' + message.user.user_name + "[/b] " + message.created_at + "\n" + text + "[/quote]";
-            $('#comment_text').focus();
+            const content = '<blockquote><p>' + message.user.user_name + ', ' + message.created_at + '<br>' + text + '</p></blockquote><p></p>';
+            const viewFragment = editor.data.processor.toView(content);
+            const modelFragment = editor.data.toModel(viewFragment);
+            editor.model.insertContent(modelFragment);
+            editor.editing.view.focus();
         },
         sendComment()
         {

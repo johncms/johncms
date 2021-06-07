@@ -21,6 +21,8 @@ use Illuminate\Support\Arr;
 use Johncms\Controller\BaseController;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Media\MediaEmbed;
+use Johncms\Security\HTMLPurifier;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
@@ -53,10 +55,13 @@ class CommentsController extends BaseController
         /** @var LengthAwarePaginator $comments */
         $comments = (new NewsComments())->with('user')->where('article_id', $article_id)->paginate();
 
+        $purifier = di(HTMLPurifier::class);
+        $embed = di(MediaEmbed::class);
+
         $array = [
             'current_page'   => $comments->currentPage(),
             'data'           => $comments->getItems()->map(
-                static function (NewsComments $comment) use ($avatar, $tools, $current_user) {
+                static function (NewsComments $comment) use ($avatar, $tools, $current_user, $purifier, $embed) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -71,7 +76,8 @@ class CommentsController extends BaseController
                         ];
                     }
 
-                    $text = $tools->checkout($comment->text, 1, 1);
+                    $text = $purifier->purify($comment->text);
+                    $text = $embed->embedMedia($text);
                     $text = $tools->smilies($text, ($user->rights > 0));
 
                     $message = [
