@@ -20,6 +20,7 @@
       'Continue' => 'متابعه',
       'The required fields are not filled' => 'لا يتم ملء الحقول المطلوبة',
       'Answer' => 'إجابة',
+      'Change the topic' => 'إنشاء الموضوع',
       'Curators' => 'القيمين',
       'Topic has been deleted or does not exists' => 'تم حذف الموضوع أو غير موجود',
       'Delete Topic' => 'حذف الموضوع',
