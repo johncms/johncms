@@ -13,8 +13,9 @@ declare(strict_types=1);
 namespace Johncms;
 
 use FastRoute\RouteCollector;
-use Johncms\System\{
-    Database\PdoFactory,
+use Johncms\Files\Filesystem;
+use Johncms\Media\MediaEmbed;
+use Johncms\System\{Database\PdoFactory,
     Http\Environment,
     Http\Request,
     Http\RequestFactory,
@@ -26,10 +27,7 @@ use Johncms\System\{
     View\Render,
     View\RenderEngineFactory
 };
-use Johncms\System\View\Extension\{
-    Assets,
-    Avatar
-};
+use Johncms\System\View\Extension\{Assets, Avatar};
 use PDO;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -61,6 +59,8 @@ class ConfigProvider
                 User::class           => UserFactory::class,
                 Users\User::class     => Users\UserFactory::class,
                 Cache::class          => Cache::class,
+                Filesystem::class     => Filesystem::class,
+                MediaEmbed::class     => MediaEmbed::class,
             ],
 
             'invokables' => [],

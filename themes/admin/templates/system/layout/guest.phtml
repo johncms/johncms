@@ -1,0 +1,44 @@
+<?php
+/**
+ * @var string $locale
+ * @var Johncms\Counters $counters
+ */
+
+?>
+<!DOCTYPE html>
+<html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="width">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="Generator" content="JohnCMS, https://johncms.com">
+    <?= $this->section('meta', '') ?>
+    <meta name="theme-color" content="#586776">
+    <?php if ($locale === 'ar'): ?>
+        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
+    <?php else: ?>
+        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <?php endif; ?>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
+    <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
+    <?= $this->section('styles', '') ?>
+    <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
+</head>
+<body>
+<div class="wrapper bg-light">
+    <?= $this->section('content') ?>
+</div>
+<div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
+<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
+<script src="<?= $this->asset('js/app.js', true) ?>"></script>
+<?= $this->section('scripts', '') ?>
+</body>
+</html>

@@ -12,8 +12,8 @@ msgstr ""
 #: modules/forum/includes/deltema.php:91
 #: modules/forum/includes/delvote.php:72
 #: modules/forum/includes/delvote.php:74
-#: modules/forum/includes/massdel.php:82
-#: modules/forum/includes/massdel.php:84
+#: modules/forum/includes/massdel.php:91
+#: modules/forum/includes/massdel.php:93
 #: modules/forum/includes/nt.php:66
 #: modules/forum/includes/nt.php:68
 #: modules/forum/includes/say.php:38
@@ -49,9 +49,9 @@ msgstr ""
 #: modules/forum/includes/filter.php:92
 #: modules/forum/includes/loadtem.php:28
 #: modules/forum/includes/loadtem.php:57
-#: modules/forum/includes/massdel.php:43
-#: modules/forum/includes/massdel.php:57
-#: modules/forum/includes/massdel.php:86
+#: modules/forum/includes/massdel.php:52
+#: modules/forum/includes/massdel.php:66
+#: modules/forum/includes/massdel.php:95
 #: modules/forum/includes/nt.php:49
 #: modules/forum/includes/nt.php:86
 #: modules/forum/includes/per.php:30
@@ -424,20 +424,20 @@ msgstr ""
 msgid "Download topic"
 msgstr ""
 
-#: modules/forum/includes/massdel.php:38
-#: modules/forum/includes/massdel.php:39
-#: modules/forum/includes/massdel.php:52
-#: modules/forum/includes/massdel.php:53
-#: modules/forum/includes/massdel.php:72
-#: modules/forum/includes/massdel.php:73
+#: modules/forum/includes/massdel.php:47
+#: modules/forum/includes/massdel.php:48
+#: modules/forum/includes/massdel.php:61
+#: modules/forum/includes/massdel.php:62
+#: modules/forum/includes/massdel.php:81
+#: modules/forum/includes/massdel.php:82
 msgid "Delete posts"
 msgstr ""
 
-#: modules/forum/includes/massdel.php:41
+#: modules/forum/includes/massdel.php:50
 msgid "Marked posts are deleted"
 msgstr ""
 
-#: modules/forum/includes/massdel.php:55
+#: modules/forum/includes/massdel.php:64
 msgid "You did not choose something to delete"
 msgstr ""
 
@@ -454,6 +454,7 @@ msgstr ""
 
 #: modules/forum/includes/new.php:124
 #: modules/forum/includes/new.php:125
+#, php-format
 msgid "All for period %d hours"
 msgstr ""
 
@@ -493,6 +494,7 @@ msgstr ""
 #: modules/forum/includes/nt.php:84
 #: modules/forum/includes/say.php:101
 #: modules/forum/includes/say.php:349
+#, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr ""
 

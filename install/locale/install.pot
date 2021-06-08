@@ -34,6 +34,7 @@ msgid "PHP version"
 msgstr ""
 
 #: install/steps/step_2.php:30
+#, php-format
 msgid "The PHP version must be at least %s"
 msgstr ""
 
@@ -94,6 +95,7 @@ msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server
 msgstr ""
 
 #: install/steps/step_3.php:99
+#, php-format
 msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
 msgstr ""
 
@@ -244,6 +246,7 @@ msgid "Congratulations!"
 msgstr ""
 
 #: install/templates/step_5.phtml:4
+#, php-format
 msgid "JohnCMS %s installation completed successfully."
 msgstr ""
 

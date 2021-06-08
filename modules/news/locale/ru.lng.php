@@ -15,6 +15,7 @@
       'Edit article' => 'Редактировать статью',
       'The article was updated successfully' => 'Статья успешно обновлена',
       'The article was successfully deleted' => 'Статья успешно удалена',
+      'Only images are allowed' => 'Разрешены только изображения',
       'Settings' => 'Настройки',
       'Settings saved!' => 'Настройки сохранены!',
       'Create section' => 'Создать раздел',

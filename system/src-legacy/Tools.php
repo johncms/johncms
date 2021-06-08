@@ -277,12 +277,12 @@ class Tools
     /**
      * Показываем местоположение пользователя
      *
-     * @param string $place
+     * @param string|null $place
      * @return string
      */
-    public function displayPlace(string $place): string
+    public function displayPlace(?string $place): string
     {
-        $place = rtrim($place, '/');
+        $place = rtrim((string) $place, '/');
 
         if (empty($place)) {
             $place = '/';

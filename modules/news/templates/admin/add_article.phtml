@@ -113,144 +113,30 @@
         >
         <div class="small text-muted"><?= __('Enter words or phrases separated by commas') ?></div>
     </div>
-    <div class="form-group p-no-margin">
-        <label for="preview_text"><?= __('Preview text') ?></label>
-        <textarea id="preview_text" class="form-control preview_text_editor" name="preview_text"><?= $this->e($data['fields']['preview_text']) ?></textarea>
-    </div>
-    <div class="form-group p-no-margin">
-        <label for="text"><?= __('Text') ?></label>
-        <textarea id="text" class="form-control editor" name="text"><?= $this->e($data['fields']['text']) ?></textarea>
-    </div>
+    <?= $this->fetch(
+        'news::admin/ckeditor',
+        [
+            'label'        => __('Preview text'),
+            'errors'       => implode(', ', $data['errors']['preview_text'] ?? []),
+            'value'        => $this->e($data['fields']['preview_text']),
+            'id'           => 'preview_text',
+            'name'         => 'preview_text',
+            'load_scripts' => true,
+        ]
+    ) ?>
+
+    <?= $this->fetch(
+        'news::admin/ckeditor',
+        [
+            'label'  => __('Text'),
+            'errors' => implode(', ', $data['errors']['text'] ?? []),
+            'value'  => $this->e($data['fields']['text']),
+            'id'     => 'text',
+            'name'   => 'text',
+        ]
+    ) ?>
     <div>
         <button type="submit" class="btn btn-primary"><?= __('Save') ?></button>
         <a href="<?= $data['back_url'] ?>" class="btn btn-outline-primary ml-2"><?= __('Back') ?></a>
     </div>
 </form>
-
-<?php $this->push('scripts') ?>
-<?php if ($locale !== 'en'):
-    try {
-        ?>
-        <script src="<?= $this->asset('ckeditor5/translations/' . $locale . '.js') ?>"></script>
-        <?php
-    } catch (Exception $exception) {
-    }
-    ?>
-<?php endif; ?>
-<script src="<?= $this->asset('ckeditor5/ckeditor.js') ?>"></script>
-
-<script>
-    // Disable prism
-    Prism.manual = true;
-    var ckeditor_settings = {
-        ckfinder: {
-            uploadUrl: '/modules/blog/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
-        },
-        toolbar: {
-            items: [
-                'heading',
-                '|',
-                'bold',
-                'italic',
-                'link',
-                'fontColor',
-                'bulletedList',
-                'numberedList',
-                'removeFormat',
-                '|',
-                'alignment',
-                'indent',
-                'outdent',
-                '|',
-                'codeBlock',
-                'blockQuote',
-                'insertTable',
-                'undo',
-                'redo'
-            ]
-        },
-        language: '<?= $locale ?>',
-        table: {
-            contentToolbar: [
-                'tableColumn',
-                'tableRow',
-                'mergeTableCells',
-                'tableProperties',
-                'tableCellProperties'
-            ]
-        },
-        codeBlock: {
-            languages: [
-                {language: 'php', label: 'PHP', class: 'language-php line-numbers'},
-                {language: 'css', label: 'CSS', class: 'language-css line-numbers'},
-                {language: 'javascript', label: 'JavaScript', class: 'language-javascript line-numbers'},
-                {language: 'html', label: 'HTML', class: 'language-html line-numbers'},
-                {language: 'sql', label: 'SQL', class: 'language-sql line-numbers'},
-                {language: 'xml', label: 'XML', class: 'language-xml line-numbers'},
-            ]
-        },
-        heading: {
-            options: [
-                {model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph'},
-                {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1'},
-                {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2'},
-                {
-                    model: 'alertSuccess',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-success']
-                    },
-                    title: 'alert-success',
-                    class: 'alert alert-success',
-                },
-                {
-                    model: 'alertInfo',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-info']
-                    },
-                    title: 'alert-info',
-                    class: 'alert alert-success',
-                },
-                {
-                    model: 'alertDanger',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-danger']
-                    },
-                    title: 'alert-danger',
-                    class: 'alert alert-danger',
-                },
-                {
-                    model: 'alertWarning',
-                    view: {
-                        name: 'div',
-                        classes: ['alert', 'alert-warning']
-                    },
-                    title: 'alert-warning',
-                    class: 'alert alert-warning',
-                }
-            ]
-        },
-        licenseKey: '',
-    };
-
-    ClassicEditor
-        .create(document.querySelector('.editor'), ckeditor_settings)
-        .then(editor => {
-            window.editor = editor;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    ClassicEditor
-        .create(document.querySelector('.preview_text_editor'), ckeditor_settings)
-        .then(editor => {
-            window.editor = editor;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-<?php $this->stop(); ?>
-

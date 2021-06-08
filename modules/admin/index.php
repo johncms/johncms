@@ -56,6 +56,10 @@ $do = $request->getQuery('do', '', FILTER_SANITIZE_STRING);
 
 $nav_chain->add(__('Admin Panel'), '/admin/');
 
+if (! $user->isValid()) {
+    redirect('/admin/login/');
+}
+
 // Проверяем права доступа
 if ($user->rights < 7) {
     exit(__('Access denied'));

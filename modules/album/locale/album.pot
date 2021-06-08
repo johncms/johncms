@@ -253,6 +253,7 @@ msgid "Choose file"
 msgstr ""
 
 #: modules/album/templates/add_photo.phtml:43
+#, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
 msgstr ""
 

@@ -3,16 +3,17 @@
 namespace News\Models;
 
 use Carbon\Carbon;
-use Johncms\Casts\FormattedDate;
-use News\Section;
-use News\Utils\Helpers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Johncms\Casts\FormattedDate;
 use Johncms\Casts\SpecialChars;
+use Johncms\Media\MediaEmbed;
 use Johncms\Users\User;
+use News\Section;
+use News\Utils\Helpers;
 
 /**
  * @mixin Builder
@@ -37,6 +38,7 @@ use Johncms\Users\User;
  * @property $updated_at - Дата изменения
  * @property $created_by - Автор
  * @property $updated_by - Пользователь, изменивший запись
+ * @property array $attached_files
  *
  * Computed properties
  * @property NewsSection $parentSection - Родительский раздел
@@ -46,10 +48,13 @@ use Johncms\Users\User;
  * @property $rating - Article rating
  * @property $current_vote - The user's current vote.
  * @property $comments_count
+ * @property $votes_sum_vote
  * @property $display_date
  * @method NewsArticle search()
  * @method NewsArticle active()
  * @method NewsArticle lastDays($day_count)
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class NewsArticle extends Model
 {
@@ -73,24 +78,27 @@ class NewsArticle extends Model
         'view_count',
         'created_by',
         'updated_by',
+        'attached_files',
     ];
 
     protected $casts = [
-        'active'      => 'bool',
-        'active_from' => FormattedDate::class,
-        'active_to'   => FormattedDate::class,
-        'section_id'  => 'integer',
-        'view_count'  => 'integer',
-        'name'        => SpecialChars::class,
-        'page_title'  => SpecialChars::class,
-        'keywords'    => SpecialChars::class,
-        'description' => SpecialChars::class,
-        'tags'        => SpecialChars::class,
-        'created_at'  => FormattedDate::class,
-        'updated_at'  => FormattedDate::class,
+        'active'         => 'bool',
+        'active_from'    => FormattedDate::class,
+        'active_to'      => FormattedDate::class,
+        'section_id'     => 'integer',
+        'view_count'     => 'integer',
+        'name'           => SpecialChars::class,
+        'page_title'     => SpecialChars::class,
+        'keywords'       => SpecialChars::class,
+        'description'    => SpecialChars::class,
+        'tags'           => SpecialChars::class,
+        'created_at'     => FormattedDate::class,
+        'updated_at'     => FormattedDate::class,
+        'attached_files' => 'array',
     ];
 
-    private $rating_cache;
+    /** @var MediaEmbed|mixed */
+    protected $media;
 
     public function __construct(array $attributes = [])
     {
@@ -98,6 +106,7 @@ class NewsArticle extends Model
         /** @var User $user */
         $user = di(User::class);
         $this->perPage = $user->config->kmess;
+        $this->media = di(MediaEmbed::class);
     }
 
     /**
@@ -181,7 +190,8 @@ class NewsArticle extends Model
      */
     public function getTextSafeAttribute(): string
     {
-        return Helpers::purifyHtml($this->text);
+        $text = Helpers::purifyHtml($this->text);
+        return $this->media->embedMedia($text);
     }
 
     /**
@@ -191,7 +201,8 @@ class NewsArticle extends Model
      */
     public function getPreviewTextSafeAttribute(): string
     {
-        return Helpers::purifyHtml($this->preview_text);
+        $text = Helpers::purifyHtml($this->preview_text);
+        return $this->media->embedMedia($text);
     }
 
     /**
@@ -217,15 +228,12 @@ class NewsArticle extends Model
     /**
      * Article rating
      *
+     * @psalm-suppress UndefinedThisPropertyFetch
      * @return int
      */
     public function getRatingAttribute(): int
     {
-        if ($this->rating_cache !== null) {
-            return $this->rating_cache;
-        }
-        $this->rating_cache = $this->votes()->sum('vote');
-        return $this->rating_cache;
+        return (int) $this->votes_sum_vote;
     }
 
     /**

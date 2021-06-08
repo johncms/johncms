@@ -321,6 +321,7 @@ msgid "Cheating karma is forbidden"
 msgstr ""
 
 #: modules/profile/includes/karma.php:51
+#, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
 msgstr ""
 
@@ -333,6 +334,7 @@ msgid "You can vote for single user just one time for 24 hours"
 msgstr ""
 
 #: modules/profile/includes/karma.php:66
+#, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
@@ -424,6 +426,7 @@ msgid "Reset user settings"
 msgstr ""
 
 #: modules/profile/includes/reset.php:36
+#, php-format
 msgid "For user %s default settings were set."
 msgstr ""
 
@@ -868,6 +871,7 @@ msgid "Choose file"
 msgstr ""
 
 #: modules/profile/templates/images.phtml:54
+#, php-format
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr ""
 

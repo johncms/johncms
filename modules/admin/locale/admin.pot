@@ -19,6 +19,33 @@ msgstr ""
 msgid "System check"
 msgstr ""
 
+#: modules/admin/Controllers/Users/UsersController.php:34
+#: modules/admin/Controllers/Users/UsersController.php:35
+#: modules/admin/templates/users/captcha.phtml:4
+#: modules/admin/templates/users/captcha.phtml:5
+#: modules/admin/templates/users/login.phtml:4
+#: modules/admin/templates/users/login.phtml:5
+#: modules/admin/templates/users/login.phtml:45
+msgid "Login"
+msgstr ""
+
+#: modules/admin/Controllers/Users/UsersController.php:50
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/admin/Controllers/Users/UsersController.php:54
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/admin/Controllers/Users/UsersController.php:72
+msgid "The security code is not correct"
+msgstr ""
+
+#: modules/admin/Controllers/Users/UsersController.php:116
+#: modules/admin/Controllers/Users/UsersController.php:120
+msgid "Authorization failed"
+msgstr ""
+
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
@@ -112,6 +139,7 @@ msgstr ""
 #: modules/admin/includes/reg.php:112
 #: modules/admin/includes/reg.php:137
 #: modules/admin/includes/usr_clean.php:75
+#: modules/admin/templates/users/captcha.phtml:34
 msgid "Continue"
 msgstr ""
 
@@ -126,7 +154,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm.phtml:33
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:58
 #: modules/admin/templates/forum/structure.phtml:55
-#: modules/admin/templates/languages/manage.phtml:36
+#: modules/admin/templates/languages/manage.phtml:39
 #: modules/admin/templates/user_clean_confirm.phtml:36
 #: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
@@ -247,7 +275,7 @@ msgstr ""
 #: modules/admin/includes/languages/index.php:25
 #: modules/admin/includes/settings.php:24
 #: modules/admin/includes/usr_del.php:22
-#: modules/admin/index.php:61
+#: modules/admin/index.php:65
 #: modules/admin/templates/access.phtml:52
 #: modules/admin/templates/access.phtml:70
 #: modules/admin/templates/access.phtml:88
@@ -309,7 +337,7 @@ msgstr ""
 #: modules/admin/templates/forum/structure.phtml:65
 #: modules/admin/templates/ipban.phtml:83
 #: modules/admin/templates/ipban_detail.phtml:59
-#: modules/admin/templates/languages/manage.phtml:47
+#: modules/admin/templates/languages/manage.phtml:51
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
@@ -1220,8 +1248,11 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:53
 #: modules/admin/templates/settings.phtml:74
 #: modules/admin/templates/system/system_check.phtml:9
+#: modules/admin/templates/system/system_check.phtml:17
 #: modules/admin/templates/system/system_check.phtml:29
+#: modules/admin/templates/system/system_check.phtml:37
 #: modules/admin/templates/system/system_check.phtml:49
+#: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
 msgstr ""
 
@@ -1655,11 +1686,15 @@ msgstr ""
 msgid "Not installed"
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:38
-msgid "Install"
+#: modules/admin/templates/languages/manage.phtml:36
+msgid "The language files of this language are not writable! "
 msgstr ""
 
 #: modules/admin/templates/languages/manage.phtml:41
+msgid "Install"
+msgstr ""
+
+#: modules/admin/templates/languages/manage.phtml:44
 msgid "Update"
 msgstr ""
 
@@ -1782,8 +1817,11 @@ msgid "Check name"
 msgstr ""
 
 #: modules/admin/templates/system/system_check.phtml:8
+#: modules/admin/templates/system/system_check.phtml:16
 #: modules/admin/templates/system/system_check.phtml:28
+#: modules/admin/templates/system/system_check.phtml:36
 #: modules/admin/templates/system/system_check.phtml:48
+#: modules/admin/templates/system/system_check.phtml:56
 msgid "Value"
 msgstr ""
 
@@ -1805,6 +1843,29 @@ msgstr ""
 
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
+msgstr ""
+
+#: modules/admin/templates/users/captcha.phtml:16
+#: modules/admin/templates/users/captcha.phtml:25
+msgid "Verification code"
+msgstr ""
+
+#: modules/admin/templates/users/captcha.phtml:18
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/admin/templates/users/login.phtml:17
+msgid "Authorization"
+msgstr ""
+
+#: modules/admin/templates/users/login.phtml:22
+#: modules/admin/templates/users/login.phtml:30
+msgid "Username"
+msgstr ""
+
+#: modules/admin/templates/users/login.phtml:34
+#: modules/admin/templates/users/login.phtml:42
+msgid "Password"
 msgstr ""
 
 #: modules/admin/templates/usr_del.phtml:31

@@ -62,6 +62,7 @@ class Installer extends \Johncms\Modules\Installer
                 $table->string('tags')->nullable()->index();
                 $table->integer('created_by')->nullable();
                 $table->integer('updated_by')->nullable();
+                $table->longText('attached_files')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
@@ -111,6 +112,7 @@ class Installer extends \Johncms\Modules\Installer
                 $table->longText('text');
                 $table->text('user_data');
                 $table->dateTime('created_at');
+                $table->longText('attached_files')->nullable();
                 $table->softDeletes();
 
                 $table->foreign('article_id')

@@ -6,6 +6,8 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+import Vue from "vue";
+
 require('./bootstrap');
 require('./jquery.magnific-popup');
 require("flatpickr");
@@ -31,6 +33,9 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-const app = new Vue({
-    el: '#app',
+const vue_apps = document.querySelectorAll('.vue_app');
+vue_apps.forEach(function (el) {
+    new Vue({
+        el: el,
+    });
 });

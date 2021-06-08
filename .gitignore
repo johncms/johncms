@@ -1,12 +1,10 @@
 # Common ignores
 /.idea
-/composer.lock
 /config/autoload/*.local.php
 /config/*.local.php
 /dist
 /distributive
 /node_modules
-/package-lock.json
 /phpcs.xml
 /translate.xml
 /system/vendor

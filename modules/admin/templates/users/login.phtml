@@ -1,0 +1,51 @@
+<?php $this->layout(
+    'system::layout/guest',
+    [
+        'title'      => __('Login'),
+        'page_title' => __('Login'),
+    ]
+) ?>
+
+<div class="min-vh-100 d-flex align-items-center">
+    <div class="card w-100 mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <form method="post">
+                <div class="text-center mb-2">
+                    <img src="<?= $this->asset('images/logo.svg') ?>" alt="logo" style="max-width: 200px;" class="img-fluid">
+                </div>
+
+                <h4><?= __('Authorization') ?></h4>
+                <?php if (! empty($data['error'])): ?>
+                    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-danger', 'alert' => $data['error']]) ?>
+                <?php endif ?>
+                <div class="form-group">
+                    <label for="login"><?= __('Username') ?></label>
+                    <input type="text"
+                           class="form-control"
+                           maxlength="20"
+                           name="n"
+                           id="login"
+                           required
+                           value="<?= $this->e($data['user_login']) ?>"
+                           placeholder="<?= __('Username') ?>"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="password"><?= __('Password') ?></label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        name="p"
+                        maxlength="20"
+                        id="password"
+                        required
+                        placeholder="<?= __('Password') ?>"
+                    >
+                </div>
+                <button type="submit" name="login" value="1" class="btn btn-fill btn-primary"><?= __('Login') ?></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

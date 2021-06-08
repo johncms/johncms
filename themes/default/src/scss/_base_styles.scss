@@ -150,7 +150,7 @@ blockquote {
 
 figure {
     &.table {
-        overflow: scroll;
+        overflow: auto;
 
         table {
             border-collapse: collapse;
@@ -175,10 +175,35 @@ figure {
     }
 
     &.image {
+        clear: both;
+
         img {
             max-width: 100%;
+            max-height: 400px;
+        }
+
+        figcaption {
+            font-size: .8em;
+            text-align: center;
+            color: #888888;
+            font-style: italic;
         }
     }
+}
+
+.image-style-align-left {
+    float: left;
+    margin-right: 0.5rem;
+}
+
+.image-style-align-right {
+    float: right;
+    margin-left: 0.5rem;
+}
+
+.image-style-align-center {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .breadcrumb-item {
@@ -187,5 +212,13 @@ figure {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        display: block;
+    }
+}
+
+.ck.ck-editor {
+    font-size: 16px;
+    @media (min-width: 768px) {
+        font-size: 14px;
     }
 }

@@ -67,10 +67,32 @@ class Languages
             $arr_files[] = ROOT_PATH . 'system/locale/' . $language . '.ini';
             $arr_files[] = ROOT_PATH . 'system/locale/' . $language . '.lng.php';
             $arr_files[] = ROOT_PATH . 'themes/default/assets/images/flags/' . $language . '.png';
+            $arr_files[] = ROOT_PATH . 'themes/default/assets/images/flags/' . $language . '.svg';
             foreach ($arr_files as $file) {
-                unlink($file);
+                @unlink($file);
             }
         }
+    }
+
+    /**
+     * Check access to language files.
+     *
+     * @param string $language
+     * @return bool
+     */
+    public static function checkAccessToFiles(string $language): bool
+    {
+        $arr_files = glob(ROOT_PATH . 'modules/*/locale/' . $language . '.lng.php');
+        $arr_files[] = ROOT_PATH . 'system/locale/' . $language . '.ini';
+        $arr_files[] = ROOT_PATH . 'system/locale/' . $language . '.lng.php';
+        $arr_files[] = ROOT_PATH . 'themes/default/assets/images/flags/' . $language . '.svg';
+        foreach ($arr_files as $file) {
+            if (! is_writable($file)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

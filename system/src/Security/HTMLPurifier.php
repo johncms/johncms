@@ -16,6 +16,12 @@ use HTMLPurifier_Config;
 use HTMLPurifier_AttrDef_Enum;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class HTMLPurifier
+ *
+ * @package Johncms\Security
+ * @mixin \HTMLPurifier
+ */
 class HTMLPurifier
 {
     public function __invoke(ContainerInterface $container): \HTMLPurifier
@@ -23,6 +29,7 @@ class HTMLPurifier
         $htmlpurifier_config = di('config')['htmlpurifier'];
         $config = HTMLPurifier_Config::createDefault();
         $config->set('Attr.AllowedClasses', $htmlpurifier_config['allowed_classes']);
+        $config->set('AutoFormat.Linkify', true);
 
         $def = $config->getHTMLDefinition(true);
         if ($def) {

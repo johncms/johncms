@@ -35,7 +35,7 @@ class HomepageController extends BaseController
 
         $data = [];
         if ($news_config['homepage_show']) {
-            $news = (new NewsArticle())->active();
+            $news = (new NewsArticle())->withCount('comments')->withSum('votes', 'vote')->active();
             if ($news_config['homepage_days'] > 0) {
                 $news->lastDays($news_config['homepage_days']);
                 $news_new_count = $news->count();

@@ -10,6 +10,9 @@
 
 declare(strict_types=1);
 
+use Forum\Models\ForumMessage;
+use Johncms\System\Legacy\Tools;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
@@ -31,6 +34,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 WHERE `id` IN (" . implode(',', $dc) . ')
             '
             );
+
+            $posts = (new ForumMessage())->whereIn('id', $dc)->first();
+            if ($posts) {
+                $tools = di(Tools::class);
+                $tools->recountForumTopic($posts->topic_id);
+            }
         }
         echo $view->render(
             'system::pages/result',

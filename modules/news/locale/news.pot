@@ -2,13 +2,13 @@ msgid ""
 msgstr ""
 "X-Domain: news\n"
 
-#: modules/news/Article.php:48
+#: modules/news/Article.php:52
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:36
-#: modules/news/Controllers/Admin/AdminArticleController.php:39
-#: modules/news/Controllers/Admin/AdminArticleController.php:40
+#: modules/news/Controllers/Admin/AdminArticleController.php:41
+#: modules/news/Controllers/Admin/AdminArticleController.php:44
+#: modules/news/Controllers/Admin/AdminArticleController.php:45
 #: modules/news/Controllers/Admin/AdminController.php:35
 #: modules/news/Controllers/Admin/AdminController.php:36
 #: modules/news/Controllers/Admin/AdminController.php:40
@@ -23,44 +23,49 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:44
+#: modules/news/Controllers/Admin/AdminArticleController.php:49
 #: modules/news/Controllers/Admin/AdminController.php:56
 #: modules/news/Controllers/Admin/AdminSectionController.php:43
 msgid "Section list"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:59
-#: modules/news/Controllers/Admin/AdminArticleController.php:60
-#: modules/news/Controllers/Admin/AdminArticleController.php:77
+#: modules/news/Controllers/Admin/AdminArticleController.php:64
+#: modules/news/Controllers/Admin/AdminArticleController.php:65
+#: modules/news/Controllers/Admin/AdminArticleController.php:82
 #: modules/news/templates/admin/sections.phtml:39
 msgid "Add article"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:105
-#: modules/news/Controllers/Admin/AdminArticleController.php:206
+#: modules/news/Controllers/Admin/AdminArticleController.php:111
+#: modules/news/Controllers/Admin/AdminArticleController.php:213
 msgid "The article name cannot be empty"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:135
+#: modules/news/Controllers/Admin/AdminArticleController.php:141
 msgid "The article was created successfully"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:139
-#: modules/news/Controllers/Admin/AdminArticleController.php:236
+#: modules/news/Controllers/Admin/AdminArticleController.php:145
+#: modules/news/Controllers/Admin/AdminArticleController.php:244
 msgid "An article with this code already exists"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:160
-#: modules/news/Controllers/Admin/AdminArticleController.php:161
+#: modules/news/Controllers/Admin/AdminArticleController.php:166
+#: modules/news/Controllers/Admin/AdminArticleController.php:167
 msgid "Edit article"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:232
+#: modules/news/Controllers/Admin/AdminArticleController.php:240
 msgid "The article was updated successfully"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:276
+#: modules/news/Controllers/Admin/AdminArticleController.php:293
 msgid "The article was successfully deleted"
+msgstr ""
+
+#: modules/news/Controllers/Admin/AdminArticleController.php:319
+#: modules/news/Controllers/CommentsController.php:223
+msgid "Only images are allowed"
 msgstr ""
 
 #: modules/news/Controllers/Admin/AdminController.php:105
@@ -107,31 +112,31 @@ msgstr ""
 msgid "The section was successfully deleted"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:45
+#: modules/news/Controllers/CommentsController.php:52
 msgid "Bad Request"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:126
+#: modules/news/Controllers/CommentsController.php:137
 msgid "You have a ban!"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:131
+#: modules/news/Controllers/CommentsController.php:142
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:153
+#: modules/news/Controllers/CommentsController.php:166
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:156
+#: modules/news/Controllers/CommentsController.php:169
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:177
+#: modules/news/Controllers/CommentsController.php:198
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:184
+#: modules/news/Controllers/CommentsController.php:205
 msgid "Access denied"
 msgstr ""
 
@@ -147,7 +152,7 @@ msgstr ""
 msgid "The user is not authorized"
 msgstr ""
 
-#: modules/news/Controllers/VoteController.php:51
+#: modules/news/Controllers/VoteController.php:52
 msgid "Your vote is accepted"
 msgstr ""
 
@@ -221,23 +226,23 @@ msgstr ""
 msgid "Enter words or phrases separated by commas"
 msgstr ""
 
-#: modules/news/templates/admin/add_article.phtml:117
+#: modules/news/templates/admin/add_article.phtml:119
 msgid "Preview text"
 msgstr ""
 
-#: modules/news/templates/admin/add_article.phtml:121
+#: modules/news/templates/admin/add_article.phtml:131
 msgid "Text"
 msgstr ""
 
-#: modules/news/templates/admin/add_article.phtml:125
+#: modules/news/templates/admin/add_article.phtml:139
 #: modules/news/templates/admin/add_section.phtml:68
 #: modules/news/templates/admin/settings.phtml:138
 msgid "Save"
 msgstr ""
 
-#: modules/news/templates/admin/add_article.phtml:126
+#: modules/news/templates/admin/add_article.phtml:140
 #: modules/news/templates/admin/add_section.phtml:69
-#: modules/news/templates/public/article.phtml:77
+#: modules/news/templates/public/article.phtml:92
 msgid "Back"
 msgstr ""
 
@@ -274,7 +279,7 @@ msgstr ""
 #: modules/news/templates/admin/del.phtml:28
 #: modules/news/templates/admin/sections.phtml:70
 #: modules/news/templates/admin/sections.phtml:97
-#: modules/news/templates/public/article.phtml:55
+#: modules/news/templates/public/article.phtml:59
 msgid "Delete"
 msgstr ""
 
@@ -334,7 +339,7 @@ msgid "Article"
 msgstr ""
 
 #: modules/news/templates/admin/sections.phtml:111
-#: modules/news/templates/public/article.phtml:59
+#: modules/news/templates/public/article.phtml:63
 #: modules/news/templates/public/index.phtml:80
 msgid "The list is empty"
 msgstr ""
@@ -383,43 +388,43 @@ msgstr ""
 msgid "Meta tag templates for articles"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:23
+#: modules/news/templates/public/article.phtml:25
 msgid "Published:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:24
+#: modules/news/templates/public/article.phtml:27
 msgid "Author:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:26
+#: modules/news/templates/public/article.phtml:30
 msgid "Tags:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:32
+#: modules/news/templates/public/article.phtml:36
 msgid "Rating:"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:53
+#: modules/news/templates/public/article.phtml:57
 msgid "Write a comment"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:54
+#: modules/news/templates/public/article.phtml:58
 msgid "Send"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:56
+#: modules/news/templates/public/article.phtml:60
 msgid "Quote"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:57
+#: modules/news/templates/public/article.phtml:61
 msgid "Reply"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:58
+#: modules/news/templates/public/article.phtml:62
 msgid "Comments"
 msgstr ""
 
-#: modules/news/templates/public/article.phtml:71
+#: modules/news/templates/public/article.phtml:86
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 

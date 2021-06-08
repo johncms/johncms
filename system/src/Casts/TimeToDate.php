@@ -40,7 +40,13 @@ class TimeToDate implements CastsAttributes
 
             return Carbon::createFromTimestamp($value, ($user->set_user->timeshift + $config['timeshift']))
                 ->locale($translator->getLocale())
-                ->calendar(null, ['sameElse' => 'lll']);
+                ->calendar(
+                    null,
+                    [
+                        'lastWeek' => 'lll',
+                        'sameElse' => 'lll',
+                    ]
+                );
         }
 
         return $value;

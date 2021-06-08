@@ -350,10 +350,22 @@
     img {
         vertical-align: initial;
     }
+
+    &:after {
+        content: '';
+        clear: both;
+        display: block;
+    }
 }
 
 .first-post {
     font-size: 0.8rem;
     background: #f5f5f5;
     padding: 0.5rem 1rem;
+}
+
+.last-p-no-margin {
+    p:last-of-type {
+        margin-bottom: 0;
+    }
 }

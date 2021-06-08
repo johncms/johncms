@@ -15,7 +15,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             <div class="d-flex justify-content-between">
                 <div>
                     <?php if (! empty($val['flag'])): ?>
-                        <img src="<?= $val['flag'] ?>" alt="." class="mr-2">
+                        <img src="<?= $val['flag'] ?>" alt="." class="mr-2 icon icon-flag">
                     <?php endif ?>
                     <?= $val['name'] ?>
                 </div>
@@ -32,13 +32,17 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <?php endif; ?>
             </div>
             <div class="post-meta">
-                <?php if (! empty($val['installed'])): ?>
-                    <a href="/admin/languages/?action=delete&code=<?= $key ?>" class="mr-2"><?= __('Delete') ?></a>
+                <?php if ($val['access_problem']): ?>
+                    <div class="font-weight-bold text-danger"><?= __('The language files of this language are not writable! ') ?></div>
                 <?php else: ?>
-                    <a href="/admin/languages/?action=install&code=<?= $key ?>" class="mr-2"><?= __('Install') ?></a>
-                <?php endif; ?>
-                <?php if (! empty($val['need_update'])): ?>
-                    <a href="/admin/languages/?action=update&code=<?= $key ?>"><?= __('Update') ?></a>
+                    <?php if (! empty($val['installed'])): ?>
+                        <a href="/admin/languages/?action=delete&code=<?= $key ?>" class="mr-2"><?= __('Delete') ?></a>
+                    <?php else: ?>
+                        <a href="/admin/languages/?action=install&code=<?= $key ?>" class="mr-2"><?= __('Install') ?></a>
+                    <?php endif; ?>
+                    <?php if (! empty($val['need_update'])): ?>
+                        <a href="/admin/languages/?action=update&code=<?= $key ?>"><?= __('Update') ?></a>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>

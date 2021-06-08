@@ -1,10 +1,4 @@
-<?php $this->layout(
-    'system::layout/default',
-    [
-        'title'      => __('Edit message'),
-        'page_title' => __('Edit message'),
-    ]
-) ?>
+<?php $this->layout('system::layout/default') ?>
 
 <h4><?= __('Edit message') ?></h4>
 <?php if (! empty($errors['csrf_token'])): ?>
@@ -15,17 +9,19 @@
     <p>
         <b><?= __('Author') ?>:</b> <?= $message->name ?>
     <p>
-    <div class="form-group">
-        <label for="message"><?= __('Message') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" required
-                  class="form-control <?= ! empty($errors['message']) ? 'is-invalid' : '' ?>"><?= $text ?></textarea>
-        <?php if (! empty($errors['message'])): ?>
-            <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
-        <?php endif ?>
-    </div>
+        <?= $this->fetch(
+            'guestbook::ckeditor',
+            [
+                'label'  => __('Message'),
+                'errors' => implode(', ', $errors['message'] ?? []),
+                'value'  => $text,
+            ]
+        ) ?>
     <div>
         <button type="submit" name="submit" value="submit" class="btn btn-primary mr-2"><?= __('Save') ?></button>
         <a href="/guestbook/" class="btn btn-outline-primary"><?= __('Back') ?></a>
     </div>
 </form>
+<?php $this->push('scripts') ?>
+<?= $this->fetch('guestbook::ckeditor') ?>
+<?php $this->stop(); ?>

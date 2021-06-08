@@ -6,8 +6,14 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+Prism.manual = true;
+
 $(function () {
     const scroll_button = $('.to-top');
+
+    $(".post-body").each(function () {
+        Prism.highlightAllUnder(this);
+    });
 
     if ($(document).height() > $(window).height() && $(this).scrollTop() < 50) {
         scroll_button.addClass('to-bottom').removeClass('to-top_hidden');

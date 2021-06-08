@@ -45,6 +45,7 @@ class Installer extends \Johncms\Modules\Installer
                 $table->string('edit_who')->default('');
                 $table->integer('edit_time')->unsigned()->default(0);
                 $table->tinyInteger('edit_count')->unsigned()->default(0);
+                $table->longText('attached_files')->nullable();
             }
         );
     }

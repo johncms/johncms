@@ -14,10 +14,15 @@ namespace News\Controllers\Admin;
 
 use Admin\Controllers\BaseAdminController;
 use Carbon\Carbon;
+use Exception;
+use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Johncms\FileInfo;
+use Johncms\Files\FileStorage;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
+use League\Flysystem\FilesystemException;
 use News\Models\NewsArticle;
 use News\Models\NewsSearchIndex;
 use News\Models\NewsSection;
@@ -97,6 +102,7 @@ class AdminArticleController extends BaseAdminController
         ];
 
         $data['fields'] = array_map('trim', $data['fields']);
+        $data['fields']['attached_files'] = (array) $request->getPost('attached_files', [], FILTER_VALIDATE_INT);
 
         $errors = [];
         // Processing the sent data from the form.
@@ -198,6 +204,7 @@ class AdminArticleController extends BaseAdminController
         ];
 
         $data['fields'] = array_map('trim', $data['fields']);
+        $data['fields']['attached_files'] = (array) $request->getPost('attached_files', [], FILTER_VALIDATE_INT);
 
         $errors = [];
         // Processing the sent data from the form.
@@ -222,6 +229,7 @@ class AdminArticleController extends BaseAdminController
 
                 if (! $check) {
                     $data['fields']['updated_by'] = $user->id;
+                    $data['fields']['attached_files'] = array_merge((array) $article->attached_files, $data['fields']['attached_files']);
                     $article->update($data['fields']);
 
                     $search_text = $data['fields']['name'] . strip_tags(' ' . $data['fields']['preview_text'] . ' ' . $data['fields']['text']);
@@ -247,8 +255,9 @@ class AdminArticleController extends BaseAdminController
      *
      * @param int $article_id
      * @param Request $request
+     * @param FileStorage $storage
      */
-    public function del(int $article_id, Request $request): void
+    public function del(int $article_id, Request $request, FileStorage $storage): void
     {
         $data = [];
         // Get the section to delete
@@ -268,6 +277,14 @@ class AdminArticleController extends BaseAdminController
         ) {
             // Delete article
             try {
+                if (! empty($article->attached_files)) {
+                    foreach ($article->attached_files as $attached_file) {
+                        try {
+                            $storage->delete($attached_file);
+                        } catch (Exception | FilesystemException $exception) {
+                        }
+                    }
+                }
                 $article->delete();
             } catch (\Exception $exception) {
                 exit($exception->getMessage());
@@ -287,5 +304,37 @@ class AdminArticleController extends BaseAdminController
         $data['action_url'] = '/admin/news/del_article/' . $article_id;
 
         echo $this->render->render('news::admin/del', ['data' => $data]);
+    }
+
+    public function loadFile(Request $request): string
+    {
+        try {
+            /** @var UploadedFile[] $files */
+            $files = $request->getUploadedFiles();
+            $file_info = new FileInfo($files['upload']->getClientFilename());
+            if (! $file_info->isImage()) {
+                return json_encode(
+                    [
+                        'error' => [
+                            'message' => __('Only images are allowed'),
+                        ],
+                    ]
+                );
+            }
+
+            $file = (new FileStorage())->saveFromRequest('upload', 'news');
+            $file_array = [
+                'id'       => $file->id,
+                'name'     => $file->name,
+                'uploaded' => 1,
+                'url'      => $file->url,
+            ];
+            header('Content-Type: application/json');
+            return json_encode($file_array);
+        } catch (FilesystemException | Exception $e) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            return json_encode(['errors' => $e->getMessage()]);
+        }
     }
 }

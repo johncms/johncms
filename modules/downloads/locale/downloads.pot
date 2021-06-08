@@ -397,8 +397,8 @@ msgstr ""
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
 msgstr ""
 
-#: modules/downloads/includes/search.php:74
-#: modules/downloads/includes/search.php:75
+#: modules/downloads/includes/search.php:82
+#: modules/downloads/includes/search.php:83
 msgid "Search results"
 msgstr ""
 

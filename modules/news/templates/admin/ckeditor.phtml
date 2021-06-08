@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @var string $label
+ * @var string $value
+ * @var string $errors
+ * @var string $locale
+ * @var string $id
+ * @var string $name
+ */
+if (isset($load_scripts) && $load_scripts !== false) {
+    if ($locale !== 'en') {
+        try {
+            echo '<script src="' . $this->asset('ckeditor5/translations/' . $locale . '.js', true) . '"></script>';
+        } catch (Exception $exception) {
+        }
+    }
+    ?>
+    <script src="<?= $this->asset('ckeditor5/ckeditor.js', true) ?>"></script>
+    <?php
+}
+?>
+
+<div class="vue_app">
+    <ckeditor-input-component
+        :class="'p-no-margin'"
+        upload_url="/admin/news/upload_file/"
+        name="<?= $name ?>"
+        language="<?= $locale ?>"
+        errors="<?= $errors ?>"
+        id="<?= $id ?>"
+        label="<?= $label ?>"
+        value="<?= $value ?>"
+    ></ckeditor-input-component>
+</div>

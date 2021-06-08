@@ -32,6 +32,7 @@ class Article
         $articles = (new NewsArticle())
             ->active()
             ->withCount('comments')
+            ->withSum('votes', 'vote')
             ->orderByDesc('id');
 
         if (! empty($sections)) {
@@ -43,7 +44,10 @@ class Article
 
     public function getArticle(string $article_code): NewsArticle
     {
-        $article = (new NewsArticle())->where('code', $article_code)->first();
+        $article = (new NewsArticle())
+            ->withSum('votes', 'vote')
+            ->where('code', $article_code)
+            ->first();
         if ($article === null) {
             throw new PageNotFoundException(__('The requested article was not found.'));
         }

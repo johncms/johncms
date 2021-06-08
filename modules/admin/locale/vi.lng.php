@@ -5,7 +5,8 @@
   array (
     '' => 
     array (
-      'Admin Panel' => 'Quản Trị Viên',
+      'Admin Panel' => 'Trang quản trị',
+      'System check' => 'Kiểm tra hệ thống',
       'Permissions' => 'Quyền truy cập',
       'Administration' => 'Dành cho quản trị',
       'Supervisors' => 'Giám sát',
@@ -257,8 +258,11 @@ Nếu bạn nhấp vào &quot;Xem&quot; và XHTML đã xảy ra lỗi, sau đó 
       'Other category' => 'Các thể loại',
       'All the topics and files will be moved to selected section. Old section will be deleted.' => 'Tất cả các chủ đề và các tập tin sẽ được chuyển đến phần cũ mà bạn chọn <br>Nó sẽ được gỡ bỏ hoàn toàn.',
       'WARNING! All the information will be deleted' => 'CẢNH BÁO! Điều này sẽ loại bỏ tất cả bài viết',
+      'Min. 2, Max. 150 characters' => 'Ít nhất. 2, nhiều nhất. 150 ký tự',
       'Order' => 'Đặt hàng',
       'Only numbers' => 'Chỉ số',
+      'Meta description' => 'Thông tin mô tả Meta',
+      'Meta keywords' => 'Từ khóa mô tả',
       'Filtered:' => 'Lọc:',
       'Go to page' => 'Đi đến trang',
       'Topic:' => 'Chủ đề:',
@@ -361,6 +365,11 @@ Nếu bạn nhấp vào &quot;Xem&quot; và XHTML đã xảy ra lỗi, sau đó 
       'Update Smilies' => 'Cập Nhật biểu tượng mặt cười',
       'Language Settings' => 'Thiết Lập Ngôn Ngữ',
       'Security' => 'Bảo mật',
+      'Required parameters' => 'Các thông số được yêu cầu',
+      'Check name' => 'Kiểm tra tên',
+      'Value' => 'Giá trị',
+      'Database' => 'Cơ sở dữ liệu',
+      'Recommended parameters' => 'Các thông số đề nghị',
       'This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.' => 'Thể loại này bao gồm hồ sơ đăng ký nhiều hơn 6 tháng trước, với ngày cuối cùng ghé thăm hơn 6 tháng trước và số không hoạt động.<br>Có thể loại bỏ chúng một cách an toàn.',
       'Nickname' => 'Tên Bạn',
       'List is empty' => 'Danh sách trống',

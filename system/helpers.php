@@ -11,8 +11,10 @@
 declare(strict_types=1);
 
 use Aura\Autoload\Loader;
+use Illuminate\Container\Container;
 use Johncms\System\Container\Factory;
 use Johncms\System\View\Render;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
 /**
  * @param string $service
@@ -20,7 +22,11 @@ use Johncms\System\View\Render;
  */
 function di(string $service)
 {
-    return Factory::getContainer()->get($service);
+    try {
+        return Factory::getContainer()->get($service);
+    } catch (ServiceNotFoundException $exception) {
+        return Container::getInstance()->get($service);
+    }
 }
 
 function pathToUrl(string $path): string
@@ -38,6 +44,7 @@ function pathToUrl(string $path): string
  * @param string $template
  * @param string $title
  * @param string $message
+ * @return never-return
  */
 function pageNotFound(
     string $template = 'system::error/404',
@@ -147,4 +154,14 @@ function checkRedirect()
         header('Location: ' . $redirects[$_SERVER['REQUEST_URI']]);
         exit;
     }
+}
+
+/**
+ * @param string $url
+ * @return never-return
+ */
+function redirect(string $url)
+{
+    header('Location: ' . $url);
+    exit;
 }

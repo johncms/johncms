@@ -11,7 +11,9 @@
 declare(strict_types=1);
 
 use Admin\Controllers\System\SystemCheckController;
+use Admin\Controllers\Users\UsersController;
 use FastRoute\RouteCollector;
+use Guestbook\Controllers\GuestbookController;
 use Johncms\System\Users\User;
 use News\Controllers\Admin\AdminArticleController;
 use News\Controllers\Admin\AdminController;
@@ -29,7 +31,22 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php'); // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                  // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                          // Forum
-    $map->addRoute(['GET', 'POST'], '/guestbook[/[{action}]]', 'modules/guestbook/index.php');        // Guestbook, mini-chat
+
+    $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
+    $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', [GuestbookController::class, 'switchGuestbookType']);
+    if ($user->isValid()) {
+        $map->addRoute(['GET', 'POST'], '/guestbook/upload_file[/]', [GuestbookController::class, 'loadFile']);
+    }
+
+    if ($user->isValid() && $user->rights >= 6) {
+        $map->addRoute(['GET', 'POST'], '/guestbook/edit[/]', [GuestbookController::class, 'edit']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/delpost[/]', [GuestbookController::class, 'delete']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/otvet[/]', [GuestbookController::class, 'reply']);
+    }
+    if ($user->isValid() && $user->rights >= 7) {
+        $map->addRoute(['GET', 'POST'], '/guestbook/clean[/]', [GuestbookController::class, 'clean']);
+    }
+
     $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Help
     $map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');                      // Articles Library
     $map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                    // Language switcher
@@ -42,6 +59,9 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/news/comments/{article_id:\d+}/', [CommentsController::class, 'index']);
     $map->addRoute(['GET', 'POST'], '/news/comments/add/{article_id:\d+}/', [CommentsController::class, 'add']);
     $map->addRoute(['GET', 'POST'], '/news/comments/del/', [CommentsController::class, 'del']);
+    if ($user->isValid() && empty($user->ban)) {
+        $map->addRoute(['GET', 'POST'], '/news/comments/upload_file[/]', [CommentsController::class, 'loadFile']);
+    }
 
     if ($user->rights >= 9 && $user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/admin/news/', [AdminController::class, 'index']);
@@ -53,6 +73,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/admin/news/add_section/[{section_id:\d+}[/]]', [AdminSectionController::class, 'add']);
         $map->addRoute(['GET', 'POST'], '/admin/news/edit_section/{section_id:\d+}[/]', [AdminSectionController::class, 'edit']);
         $map->addRoute(['GET', 'POST'], '/admin/news/del_section/{section_id:\d+}[/]', [AdminSectionController::class, 'del']);
+        $map->addRoute(['GET', 'POST'], '/admin/news/upload_file[/]', [AdminArticleController::class, 'loadFile']);
     }
 
     $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}]', [SectionController::class, 'index']);
@@ -69,10 +90,11 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/notifications/[{action}/]', 'modules/notifications/index.php');      // Notifications
     }
 
+    $map->addRoute(['GET', 'POST'], '/admin/login[/]', [UsersController::class, 'login']);
     if ($user->rights >= 6 && $user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/admin/system_check[/]', [SystemCheckController::class, 'index']);                      // Administration
-        $map->addRoute(['GET', 'POST'], '/admin/[{action}/]', 'modules/admin/index.php');                      // Administration
     }
+    $map->addRoute(['GET', 'POST'], '/admin[/[{action}/]]', 'modules/admin/index.php');                      // Administration
 
     // Custom routes
     if (is_file(CONFIG_PATH . 'routes.local.php')) {
