@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 Detailed change can see in the [repository log](https://github.com/johncms/johncms/commits).
 
 
-## Unreleased
+## 9.5 - 2021-06-09
 
 #### Added
 - Интегрирована библиотека для работы с файловой системой https://github.com/thephpleague/flysystem
@@ -20,21 +20,12 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Оптимизировано получение количества голосов за новость и рейтинга.
 - В комментариях к новостям добавлен визуальный редактор. Возможности такие же как и в гостевой.
 
-#### Deprecated
-- Nothing
-
-#### Removed
-- Nothing
-
 #### Fixed
 - [Загрузки] В поиске в некоторых случаях некорректно строился URL для постраничной навигации.
 - [Загрузки] В тексте предпросмотра html сущности могли обрезаться некорректно
 - Исправлено название украинского языка
 - При определенных сочетаниях символов могла ломаться вся страница из-за JS ошибки.
 - В некоторых случаях могла возникать ошибка при просмотре профиля пользователя
-
-#### Security
-- Nothing
 
 
 ## 9.4.1 - 2021-01-18
