@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use FastRoute\RouteCollector;
 use Johncms\Files\Filesystem;
 use Johncms\Media\MediaEmbed;
 use Johncms\System\{Database\PdoFactory,
@@ -21,7 +20,6 @@ use Johncms\System\{Database\PdoFactory,
     Http\RequestFactory,
     i18n\Translator,
     i18n\TranslatorServiceFactory,
-    Router\RouteCollectorFactory,
     Users\User,
     Users\UserFactory,
     View\Render,
@@ -37,6 +35,8 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
+            'middlewares'  => [],
+            'providers'    => [],
         ];
     }
 
@@ -51,14 +51,12 @@ class ConfigProvider
                 Assets::class         => Assets::class,
                 Avatar::class         => Avatar::class,
                 Environment::class    => Environment::class,
-                RouteCollector::class => RouteCollectorFactory::class,
                 PDO::class            => PdoFactory::class,
                 Render::class         => RenderEngineFactory::class,
                 Request::class        => RequestFactory::class,
                 Translator::class     => TranslatorServiceFactory::class,
                 User::class           => UserFactory::class,
                 Users\User::class     => Users\UserFactory::class,
-                Cache::class          => Cache::class,
                 Filesystem::class     => Filesystem::class,
                 MediaEmbed::class     => MediaEmbed::class,
             ],

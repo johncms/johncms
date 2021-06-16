@@ -36,6 +36,9 @@ class Config
 
                 // Load application config in a pre-defined order
                 new PhpFileProvider(CONFIG_PATH . 'autoload/{{,*.}global,{,*.}local}.php'),
+
+                // Load modules configs
+                new PhpFileProvider(MODULES_PATH . '*/config/{{,*.}global,{,*.}local}.php'),
             ],
             $this->cacheFile
         );

@@ -10,11 +10,8 @@
 
 declare(strict_types=1);
 
-use FastRoute\Dispatcher;
-use FastRoute\Dispatcher\GroupCountBased;
-use FastRoute\RouteCollector;
-use Johncms\Controller\AbstractController;
-use Johncms\Exceptions\PageNotFoundException;
+use Illuminate\Container\Container;
+use Johncms\Application;
 use Johncms\Mail\EmailSender;
 
 // If the system is not installed, redirect to the installer.
@@ -25,48 +22,9 @@ if (! is_file('config/autoload/database.local.php')) {
 
 require 'system/bootstrap.php';
 
-$container = Johncms\System\Container\Factory::getContainer();
-$dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
-
-$match = $dispatcher->dispatch(
-    $_SERVER['REQUEST_METHOD'],
-    (static function () {
-        $uri = $_SERVER['REQUEST_URI'];
-        if (false !== $pos = strpos($uri, '?')) {
-            $uri = substr($uri, 0, $pos);
-        }
-
-        return rawurldecode($uri);
-    })()
-);
-
-switch ($match[0]) {
-    case Dispatcher::FOUND:
-        // Register the location of the visitor on the site
-        new Johncms\System\Users\UserStat($container);
-        $container->setService('route', $match[2]);
-        try {
-            if (
-                is_array($match[1]) &&
-                class_exists($match[1][0]) &&
-                is_subclass_of($match[1][0], AbstractController::class)
-            ) {
-                echo (new $match[1][0]())->runAction($match[1][1], $match[2]);
-            } else {
-                include ROOT_PATH . $match[1];
-            }
-        } catch (PageNotFoundException $exception) {
-            pageNotFound($exception->getTemplate(), $exception->getTitle(), $exception->getMessage());
-        }
-        break;
-
-    case Dispatcher::METHOD_NOT_ALLOWED:
-        echo '405 Method Not Allowed';
-        break;
-
-    default:
-        pageNotFound();
-}
+$container = Container::getInstance();
+$application = new Application($container);
+$application->run();
 
 // If cron usage is disabled.
 if (! USE_CRON && ! defined('_IN_JOHNADM')) {

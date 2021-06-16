@@ -8,10 +8,5 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-declare(strict_types=1);
-
-namespace Johncms\Controller;
-
-abstract class AbstractController
-{
-}
+return function (\League\Route\Router $router) {
+};

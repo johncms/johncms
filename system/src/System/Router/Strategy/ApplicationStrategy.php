@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\System\Router\Strategy;
 
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Container\Container;
 use Johncms\System\Router\ParametersInjector;
 use JsonSerializable;
 use League\Route\Http\Exception\{MethodNotAllowedException, NotFoundException};
@@ -25,13 +26,12 @@ use Throwable;
 
 class ApplicationStrategy extends AbstractStrategy
 {
-    protected ContainerInterface $container;
+    protected ?ContainerInterface $container = null;
     protected ResponseFactoryInterface $responseFactory;
 
-    public function __construct(ResponseFactoryInterface $responseFactory, ContainerInterface $container)
+    public function __construct(ResponseFactoryInterface $responseFactory)
     {
         $this->responseFactory = $responseFactory;
-        $this->container = $container;
     }
 
     public function getMethodNotAllowedDecorator(MethodNotAllowedException $exception): MiddlewareInterface
@@ -66,7 +66,7 @@ class ApplicationStrategy extends AbstractStrategy
 
         $params = [];
         if (is_array($controller) && is_object($controller[0]) && ! empty($controller[1])) {
-            $injector = new ParametersInjector($this->container);
+            $injector = new ParametersInjector($this->getContainer());
             $params = $injector->injectParameters($controller[0], $controller[1], $route->getVars());
         }
 
@@ -132,12 +132,6 @@ class ApplicationStrategy extends AbstractStrategy
 
     public function getContainer(): ContainerInterface
     {
-        return $this->container;
-    }
-
-    public function setContainer(ContainerInterface $container): ApplicationStrategy
-    {
-        $this->container = $container;
-        return $this;
+        return Container::getInstance();
     }
 }
