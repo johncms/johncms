@@ -13,9 +13,11 @@ declare(strict_types=1);
 use Aura\Autoload\Loader;
 use Illuminate\Container\Container;
 use Johncms\System\Container\Factory;
+use Johncms\System\Http\ResponseFactory;
 use Johncms\System\Router\RouterFactory;
 use Johncms\System\View\Render;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @param string $service
@@ -73,19 +75,27 @@ function pageNotFound(
 }
 
 /**
- * array_key_last для php версий ниже 7.3
+ * 403 error page
  *
- * @param array $array
+ * @param string $template
+ * @param string $title
+ * @param string $message
+ * @return ResponseInterface
  */
-if (! function_exists('array_key_last')) {
-    function array_key_last($array)
-    {
-        if (! is_array($array) || empty($array)) {
-            return null;
-        }
-
-        return array_keys($array)[count($array) - 1];
-    }
+function access_denied(string $template = 'system::error/403', string $title = '403 | Access Denied', string $message = ''): ResponseInterface
+{
+    $engine = di(Render::class);
+    $response = di(ResponseFactory::class)->createResponse(403);
+    $response->getBody()->write(
+        $engine->render(
+            $template,
+            [
+                'title'   => $title,
+                'message' => ! empty($message) ? $message : __('Unfortunately, you do not have access to the requested page.'),
+            ]
+        )
+    );
+    return $response;
 }
 
 if (! function_exists('d')) {
