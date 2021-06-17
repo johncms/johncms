@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\System\Router;
 
 use Johncms\Modules\Modules;
+use Johncms\System\Container\Config;
 use Johncms\System\Router\Strategy\ApplicationStrategy;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
@@ -36,6 +37,13 @@ class RouterFactory
             function (Router $router) use ($response_factory) {
                 $strategy = (new ApplicationStrategy($response_factory));
                 $router->setStrategy($strategy);
+
+                // Set global middleware
+                $config = di(Config::class);
+                foreach ($config['middleware'] as $item) {
+                    $router->middleware(new $item());
+                }
+
                 $this->collectRoutes($router);
                 return $router;
             },

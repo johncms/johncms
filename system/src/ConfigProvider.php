@@ -35,7 +35,7 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
-            'middlewares'  => [],
+            'middleware'   => [],
             'providers'    => [],
         ];
     }
@@ -48,17 +48,17 @@ class ConfigProvider
             ],
 
             'factories' => [
-                Assets::class         => Assets::class,
-                Avatar::class         => Avatar::class,
-                Environment::class    => Environment::class,
-                PDO::class            => PdoFactory::class,
-                Render::class         => RenderEngineFactory::class,
-                Request::class        => RequestFactory::class,
-                Translator::class     => TranslatorServiceFactory::class,
-                User::class           => UserFactory::class,
-                Users\User::class     => Users\UserFactory::class,
-                Filesystem::class     => Filesystem::class,
-                MediaEmbed::class     => MediaEmbed::class,
+                Assets::class      => Assets::class,
+                Avatar::class      => Avatar::class,
+                Environment::class => Environment::class,
+                PDO::class         => PdoFactory::class,
+                Render::class      => RenderEngineFactory::class,
+                Request::class     => RequestFactory::class,
+                Translator::class  => TranslatorServiceFactory::class,
+                User::class        => UserFactory::class,
+                Users\User::class  => Users\UserFactory::class,
+                Filesystem::class  => Filesystem::class,
+                MediaEmbed::class  => MediaEmbed::class,
             ],
 
             'invokables' => [],

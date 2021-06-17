@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Johncms\System\Users;
 
 use Johncms\System\Http\Environment;
-use Psr\Container\ContainerInterface;
 
 class UserStat
 {
@@ -37,12 +36,12 @@ class UserStat
      */
     private $config;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct()
     {
-        $this->db = $container->get(\PDO::class);
-        $this->env = $container->get(Environment::class);
-        $this->user = $container->get(User::class);
-        $this->config = $container->get('config');
+        $this->db = di(\PDO::class);
+        $this->env = di(Environment::class);
+        $this->user = di(User::class);
+        $this->config = di('config');
 
         if ($this->user->isValid()) {
             $this->processUser();
