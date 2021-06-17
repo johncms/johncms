@@ -14,8 +14,8 @@ namespace Johncms\System\Router;
 
 use Johncms\Modules\Modules;
 use Johncms\System\Router\Strategy\ApplicationStrategy;
-use League\Route\Cache\Router;
 use League\Route\Http\Exception\NotFoundException;
+use League\Route\Router;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,7 +23,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class RouterFactory
 {
-    protected Router $cached_router;
+    protected CachedRouter $cached_router;
     protected ServerRequestInterface $server_request;
 
     public function __construct(
@@ -32,8 +32,8 @@ class RouterFactory
         CacheInterface $cache
     ) {
         $this->server_request = $server_request;
-        $this->cached_router = new Router(
-            function (\League\Route\Router $router) use ($response_factory) {
+        $this->cached_router = new CachedRouter(
+            function (Router $router) use ($response_factory) {
                 $strategy = (new ApplicationStrategy($response_factory));
                 $router->setStrategy($strategy);
                 $this->collectRoutes($router);
@@ -43,7 +43,7 @@ class RouterFactory
         );
     }
 
-    public function collectRoutes(\League\Route\Router $router): void
+    public function collectRoutes(Router $router): void
     {
         $modules = di(Modules::class)->getInstalled();
         foreach ($modules as $module) {
@@ -62,5 +62,14 @@ class RouterFactory
         } catch (NotFoundException $exception) {
             pageNotFound();
         }
+    }
+
+    public function getRouter(): Router
+    {
+        $router = $this->cached_router->getRouter();
+        if ($router === null) {
+            throw new \RuntimeException('The router is not configured yet');
+        }
+        return $router;
     }
 }

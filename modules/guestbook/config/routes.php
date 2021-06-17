@@ -22,7 +22,7 @@ return function (Router $router) {
             // TODO: Delete unused routes and add middlewares for check rights
             $router->get('/ga[/]', [GuestbookController::class, 'switchGuestbookType']);
             $router->post('/ga[/]', [GuestbookController::class, 'switchGuestbookType']);
-            $router->post('/upload_file[/]', [GuestbookController::class, 'loadFile']);
+            $router->post('/upload_file/', [GuestbookController::class, 'loadFile'])->setName('upload_file');
             $router->get('/edit[/]', [GuestbookController::class, 'edit']);
             $router->post('/edit[/]', [GuestbookController::class, 'edit']);
             $router->get('/delpost[/]', [GuestbookController::class, 'delete']);

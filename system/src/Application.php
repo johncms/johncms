@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Johncms\System\Container\Config;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\ResponseFactory;
@@ -37,18 +36,14 @@ class Application
     {
         $this->registerSystemProviders();
         $this->runModuleProviders();
-        try {
-            $router = $this->container->make(RouterFactory::class);
-            (new SapiEmitter())->emit($router->dispatch());
-        } catch (BindingResolutionException $e) {
-            die($e->getMessage());
-        }
+        $router = $this->container->get(RouterFactory::class);
+        (new SapiEmitter())->emit($router->dispatch());
     }
 
     private function runModuleProviders(): void
     {
         $config = $this->container->get(Config::class);
-        $providers = $config()['providers'] ?? [];
+        $providers = $config['providers'] ?? [];
         foreach ($providers as $provider) {
             /** @var ServiceProvider $module_providers */
             $module_providers = $this->container->get($provider);
@@ -63,5 +58,13 @@ class Application
         $this->container->singleton(Request::class, fn() => $this->container->get(ServerRequestInterface::class));
         $this->container->bind(ResponseFactoryInterface::class, ResponseFactory::class);
         $this->container->bind(CacheInterface::class, Cache::class);
+        $this->container->singleton(RouterFactory::class, RouterFactory::class);
+
+        $this->container->singleton(
+            Config::class,
+            function () {
+                return (new Config())();
+            }
+        );
     }
 }
