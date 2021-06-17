@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Aura\Autoload\Loader;
 use Illuminate\Container\Container;
 use Johncms\System\Container\Factory;
+use Johncms\System\Router\RouterFactory;
 use Johncms\System\View\Render;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
@@ -164,4 +165,17 @@ function redirect(string $url)
 {
     header('Location: ' . $url);
     exit;
+}
+
+/**
+ * Build url by route name
+ *
+ * @param string $route_name
+ * @param array $params
+ * @return string
+ */
+function route(string $route_name, array $params = []): string
+{
+    $router = di(RouterFactory::class);
+    return $router->getRouter()->getNamedRoute($route_name)->getPath($params);
 }
