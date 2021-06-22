@@ -21,15 +21,14 @@ use Laminas\ConfigAggregator\{
 
 class Config
 {
-    /** @var string */
-    private $cacheFile = 'system-config.cache';
+    private string $cacheFile = CACHE_PATH . 'system-config.cache';
 
     public function __invoke(): array
     {
         $aggregator = new ConfigAggregator(
             [
                 // Include cache configuration
-                new ArrayProvider(['config_cache_path' => $this->cacheFile]),
+                new ArrayProvider(['config_cache_enabled' => false, 'config_cache_path' => $this->cacheFile]),
 
                 // Include packages configuration
                 JohncmsConfigProvider::class,

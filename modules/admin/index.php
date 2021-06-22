@@ -23,7 +23,7 @@ use Johncms\System\i18n\Translator;
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
-$container = Johncms\System\Container\Factory::getContainer();
+$container = Johncms\System\Container\ContainerFactory::getContainer();
 $container->setFactory(Assets::class, AdminAssets::class);
 $container->setFactory(Render::class, AdminRenderEngineFactory::class);
 

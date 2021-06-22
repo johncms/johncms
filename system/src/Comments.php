@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\System\Container\Factory;
+use Johncms\System\Container\ContainerFactory;
 use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
 use Johncms\System\Legacy\Bbcode;
@@ -107,7 +107,7 @@ class Comments
     {
         global $mod, $start;
         /** @var ContainerInterface $container */
-        $container = Factory::getContainer();
+        $container = ContainerFactory::getContainer();
         $this->tools = $container->get(Tools::class);
         $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
@@ -512,7 +512,7 @@ class Comments
     private function addComment($message): void
     {
         /** @var ContainerInterface $container */
-        $container = Factory::getContainer();
+        $container = ContainerFactory::getContainer();
 
         /** @var Environment $env */
         $env = $container->get(Environment::class);
@@ -595,7 +595,7 @@ class Comments
             $error[] = d__('system', 'Text is too short');
         } else {
             // Проверка на флуд
-            $flood = Factory::getContainer()->get(Tools::class)->antiflood();
+            $flood = ContainerFactory::getContainer()->get(Tools::class)->antiflood();
 
             if ($flood) {
                 $error[] = d__('system', 'You cannot add the message so often<br>Please, wait') . ' ' . $flood . '&#160;' . d__('system', 'seconds');

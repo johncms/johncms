@@ -12,16 +12,12 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Gettext\TranslatorFunctions;
 use Illuminate\Container\Container;
-use Johncms\System\Container\Config;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\ResponseFactory;
+use Johncms\Modules\Modules;
+use Johncms\System\i18n\Translator;
 use Johncms\System\Router\RouterFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\SimpleCache\CacheInterface;
 
 class Application
 {
@@ -34,15 +30,16 @@ class Application
 
     public function run(): void
     {
-        $this->registerSystemProviders();
+        (new Modules())->registerAutoloader();
         $this->runModuleProviders();
+        $this->setupTranslator();
         $router = $this->container->get(RouterFactory::class);
         (new SapiEmitter())->emit($router->dispatch());
     }
 
     private function runModuleProviders(): void
     {
-        $config = $this->container->get(Config::class);
+        $config = $this->container->get('config');
         $providers = $config['providers'] ?? [];
         foreach ($providers as $provider) {
             /** @var ServiceProvider $module_providers */
@@ -51,20 +48,13 @@ class Application
         }
     }
 
-    public function registerSystemProviders(): void
+    private function setupTranslator(): void
     {
-        $this->container->singleton(ContainerInterface::class, fn() => Container::getInstance());
-        $this->container->singleton(ServerRequestInterface::class, fn() => Request::fromGlobals());
-        $this->container->singleton(Request::class, fn() => $this->container->get(ServerRequestInterface::class));
-        $this->container->bind(ResponseFactoryInterface::class, ResponseFactory::class);
-        $this->container->bind(CacheInterface::class, Cache::class);
-        $this->container->singleton(RouterFactory::class, RouterFactory::class);
-
-        $this->container->singleton(
-            Config::class,
-            function () {
-                return (new Config())();
-            }
-        );
+        // Register the system languages domain and folder
+        $translator = di(Translator::class);
+        $translator->addTranslationDomain('system', __DIR__ . '/../locale');
+        $translator->defaultDomain('system');
+        // Register language helpers
+        TranslatorFunctions::register($translator);
     }
 }

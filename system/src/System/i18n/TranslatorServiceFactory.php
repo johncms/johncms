@@ -19,7 +19,7 @@ use Psr\Container\ContainerInterface;
 
 class TranslatorServiceFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): Translator
     {
         /** @var Request $request */
         $request = $container->get(Request::class);

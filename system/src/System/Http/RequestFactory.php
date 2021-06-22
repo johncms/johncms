@@ -13,10 +13,11 @@ declare(strict_types=1);
 namespace Johncms\System\Http;
 
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class RequestFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): ServerRequestInterface
     {
         return Request::fromGlobals();
     }

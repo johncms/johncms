@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-use Illuminate\Container\Container;
 use Johncms\Application;
 use Johncms\Mail\EmailSender;
+use Johncms\System\Container\ContainerFactory;
 
 // If the system is not installed, redirect to the installer.
 if (! is_file('config/autoload/database.local.php')) {
@@ -22,7 +22,7 @@ if (! is_file('config/autoload/database.local.php')) {
 
 require 'system/bootstrap.php';
 
-$container = Container::getInstance();
+$container = ContainerFactory::getContainer();
 $application = new Application($container);
 $application->run();
 

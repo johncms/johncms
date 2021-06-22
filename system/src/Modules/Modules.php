@@ -33,7 +33,7 @@ class Modules
         $loader = (new Loader());
         $loader->register();
         foreach ($installed_modules as $module) {
-            $loader->addPrefix(ucfirst($module), ROOT_PATH . 'modules/' . $module . '/');
+            $loader->addPrefix(ucfirst($module), ROOT_PATH . 'modules/' . $module . '/src/');
         }
     }
 }

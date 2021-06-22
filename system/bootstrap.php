@@ -50,7 +50,7 @@ if (DEBUG) {
 }
 
 /** @var ContainerInterface $container */
-$container = Johncms\System\Container\Factory::getContainer();
+// $container = Johncms\System\Container\Factory::getContainer();
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');
@@ -60,28 +60,16 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     session_start();
 
     /** @var Environment $env */
-    $env = $container->get(Environment::class);
+    // $env = di(Environment::class);
 
     /** @var PDO $db */
-    $db = $container->get(PDO::class);
+    //$db = $container->get(PDO::class);
 
-    (new BanIP())->checkBan();
+    //(new BanIP())->checkBan();
 
     // System cleanup
-    new Johncms\System\Utility\Cleanup($db);
+    //new Johncms\System\Utility\Cleanup($db);
 }
 
-// Register the system languages domain and folder
-$translator = di(Translator::class);
-$translator->addTranslationDomain('system', __DIR__ . '/locale');
-$translator->defaultDomain('system');
-// Register language helpers
-Gettext\TranslatorFunctions::register($translator);
 
-(new Modules())->registerAutoloader();
 
-/** @var Johncms\System\Users\UserConfig $userConfig */
-$userConfig = $container->get(User::class)->config;
-
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);

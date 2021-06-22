@@ -19,7 +19,7 @@ use Psr\Container\ContainerInterface;
 
 class CountersFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): Counters
     {
         return new Counters(
             $container->get(PDO::class),
