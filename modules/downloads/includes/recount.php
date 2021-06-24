@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 $req_down = $db->query('SELECT `dir`, `name`, `id` FROM `download__category`');

@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
+use Johncms\i18n\Translator;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
-use Johncms\System\i18n\Translator;
+use Johncms\Users\User;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -24,7 +24,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO $db
  * @var Tools $tools
  * @var User $user
- * @var Render $view
+ * @var \Johncms\View\Render $view
  */
 
 $assets = di(Assets::class);

@@ -14,7 +14,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 $config = di('config')['johncms'];

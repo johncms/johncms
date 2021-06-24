@@ -15,7 +15,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 $title = __('Ban by IP');
@@ -168,8 +168,8 @@ switch ($mod) {
 
             // Проверяем, не попадает ли IP администратора в диапазон
 
-            /** @var Johncms\System\Http\Environment $env */
-            $env = di(Johncms\System\Http\Environment::class);
+            /** @var \Johncms\Http\Environment $env */
+            $env = di(\Johncms\Http\Environment::class);
 
             if (($env->getIp() >= $ip1 && $env->getIp() <= $ip2) || ($env->getIpViaProxy() >= $ip1 && $env->getIpViaProxy() <= $ip2)) {
                 $error = __('Ban impossible. Your own IP address in the range');

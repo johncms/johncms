@@ -13,11 +13,11 @@ declare(strict_types=1);
 namespace Johncms\System\Legacy;
 
 use Carbon\Carbon;
-use Johncms\System\i18n\Translator;
-use Johncms\System\Users\User;
-use Johncms\System\Users\UserConfig;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
+use Johncms\i18n\Translator;
+use Johncms\Users\User;
+use Johncms\Users\UserConfig;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 use Psr\Container\ContainerInterface;
 
 class Tools
@@ -28,7 +28,7 @@ class Tools
     private $container;
 
     /**
-     * @var Assets
+     * @var \Johncms\View\Extension\Assets
      */
     private $assets;
 
@@ -43,7 +43,7 @@ class Tools
     private $user;
 
     /**
-     * @var UserConfig
+     * @var \Johncms\Users\UserConfig
      */
     private $userConfig;
 

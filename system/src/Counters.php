@@ -14,10 +14,16 @@ namespace Johncms;
 
 use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class Counters
+ *
+ * @package Johncms
+ * @deprecated
+ */
 class Counters
 {
     /** @var PDO */

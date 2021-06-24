@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
 use News\Models\NewsArticle;

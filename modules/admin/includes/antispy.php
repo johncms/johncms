@@ -15,7 +15,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 const ROOT_DIR = ROOT_PATH;
 
 /**
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 $title = __('Anti-Spyware');

@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Admin\Languages\Languages;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 module_lib_loader('admin');
 

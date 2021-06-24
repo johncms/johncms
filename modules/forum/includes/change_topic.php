@@ -13,15 +13,15 @@ declare(strict_types=1);
 use Forum\ForumUtils;
 use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Validator\Validator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
- * @var Johncms\System\View\Render $view
+ * @var Johncms\Users\User $user
+ * @var \Johncms\View\Render $view
  */
 
 /** @var Request $request */

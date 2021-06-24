@@ -13,10 +13,16 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class AdsFactory
+ *
+ * @package Johncms
+ * @deprecated
+ */
 class AdsFactory
 {
     public function __invoke(ContainerInterface $container): Ads

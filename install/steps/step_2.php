@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 $view->addData(

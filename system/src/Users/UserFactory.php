@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
 use Psr\Container\ContainerInterface;
 
 class UserFactory
@@ -21,7 +21,7 @@ class UserFactory
     /** @var Environment */
     private $env;
 
-    /** @var Request */
+    /** @var \Johncms\Http\Request */
     private $request;
 
     public function __invoke(ContainerInterface $container)

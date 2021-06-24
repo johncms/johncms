@@ -14,7 +14,7 @@ namespace News\Controllers\Admin;
 
 use Admin\Controllers\BaseAdminController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use News\Models\NewsArticle;
 use News\Models\NewsSection;
 use News\Utils\Helpers;
@@ -96,7 +96,7 @@ class AdminController extends BaseAdminController
     /**
      * Module settings page.
      *
-     * @param Request $request
+     * @param \Johncms\Http\Request $request
      * @return string
      */
     public function settings(Request $request): string

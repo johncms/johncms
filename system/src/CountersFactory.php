@@ -13,10 +13,16 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class CountersFactory
+ *
+ * @package Johncms
+ * @deprecated
+ */
 class CountersFactory
 {
     public function __invoke(ContainerInterface $container): Counters

@@ -16,7 +16,7 @@ use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Files\Exceptions\BadRequest;
 use Johncms\Files\Exceptions\FileNotFound;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use League\Flysystem\FilesystemException;
 
 class FileStorage

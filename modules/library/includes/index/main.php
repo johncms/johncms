@@ -6,7 +6,7 @@ use Library\ViewHelper;
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\View\Render $view
+ * @var \Johncms\View\Render $view
  */
 
 $premod = false;

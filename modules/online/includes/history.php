@@ -15,8 +15,8 @@ use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Johncms\System\Http\Environment $env */
-$env = di(Johncms\System\Http\Environment::class);
+/** @var \Johncms\Http\Environment $env */
+$env = di(\Johncms\Http\Environment::class);
 
 $data = [];
 $data['filters'] = [

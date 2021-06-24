@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace News\Controllers;
 
 use Johncms\Controller\BaseController;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use News\Models\NewsArticle;
 
 class SearchController extends BaseController

@@ -14,14 +14,14 @@ namespace Johncms\Mail;
 
 use Carbon\Carbon;
 use Gettext\TranslatorFunctions;
-use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
+use Johncms\i18n\Translator;
+use Johncms\View\Render;
 
 class EmailSender
 {
     public static function send(int $message_count = 5): void
     {
-        /** @var Render $view */
+        /** @var \Johncms\View\Render $view */
         $view = di(Render::class);
 
         /** @var MailFactory $mail */

@@ -12,17 +12,16 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Library\Hashtags;
 use Library\Tree;
 use Library\Utils;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @var PDO $db
- * @var Johncms\System\Users\User $user
- * @var Johncms\System\View\Render $view
- * @var Request $request
+ * @var Johncms\Users\User $user
+ * @var \Johncms\View\Render $view
+ * @var \Johncms\Http\Request $request
  */
 
 $request = di(Request::class);

@@ -36,7 +36,7 @@ switch ($mod) {
         );
 
         if ($req->rowCount()) {
-            $del = new Johncms\System\Users\UserClean($db);
+            $del = new \Johncms\Users\UserClean($db);
 
             // Удаляем всю информацию
             while ($res = $req->fetch()) {

@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 use Aura\Autoload\Loader;
 use Illuminate\Container\Container;
-use Johncms\System\Container\ContainerFactory;
-use Johncms\System\Http\ResponseFactory;
-use Johncms\System\Router\RouterFactory;
-use Johncms\System\View\Render;
-use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Johncms\Http\ResponseFactory;
+use Johncms\Router\RouterFactory;
+use Johncms\View\Render;
 use Psr\Http\Message\ResponseInterface;
 
 /**

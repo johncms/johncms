@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {

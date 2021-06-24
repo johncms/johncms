@@ -10,11 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\Modules\Modules;
-use Johncms\Security\BanIP;
-use Johncms\System\Http\Environment;
-use Johncms\System\i18n\Translator;
-use Johncms\System\Users\User;
+use Johncms\Http\Environment;
 use Psr\Container\ContainerInterface;
 
 date_default_timezone_set('UTC');
@@ -59,7 +55,7 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     session_name('SESID');
     session_start();
 
-    /** @var Environment $env */
+    /** @var \Johncms\Http\Environment $env */
     // $env = di(Environment::class);
 
     /** @var PDO $db */
@@ -68,7 +64,7 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     //(new BanIP())->checkBan();
 
     // System cleanup
-    //new Johncms\System\Utility\Cleanup($db);
+    //new Johncms\Utility\Cleanup($db);
 }
 
 

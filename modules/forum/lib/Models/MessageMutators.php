@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Forum\Models;
 
-use Carbon\Carbon;
-use Johncms\System\i18n\Translator;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 

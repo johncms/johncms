@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -22,7 +22,7 @@ $view = di(Render::class);
 /** @var PDO $db */
 $db = di(PDO::class);
 $nav_chain = di(NavChain::class);
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 // Регистрируем Namespace для шаблонов модуля

@@ -13,9 +13,15 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PDO;
 
+/**
+ * Class Ads
+ *
+ * @package Johncms
+ * @deprecated
+ */
 class Ads
 {
     /** @var PDO */

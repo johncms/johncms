@@ -14,8 +14,8 @@ namespace Admin\Controllers\Users;
 
 use Admin\Controllers\BaseAdminController;
 use Illuminate\Support\Str;
-use Johncms\System\Http\Request;
-use Johncms\System\Users\User;
+use Johncms\Http\Request;
+use Johncms\Users\User;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 

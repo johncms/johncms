@@ -52,11 +52,11 @@ class Download // phpcs:ignore
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = self::$extensions[$format_file] ?? 9;
 
-        /** @var Johncms\System\View\Extension\Assets $assets */
-        $assets = di(Johncms\System\View\Extension\Assets::class);
+        /** @var \Johncms\View\Extension\Assets $assets */
+        $assets = di(Johncms\View\Extension\Assets::class);
 
-        /** @var Johncms\System\Users\User $systemUser */
-        $systemUser = di(Johncms\System\Users\User::class);
+        /** @var Johncms\Users\User $systemUser */
+        $systemUser = di(Johncms\Users\User::class);
 
         /** @var Johncms\System\Legacy\Tools $tools */
         $tools = di(Johncms\System\Legacy\Tools::class);
@@ -124,8 +124,8 @@ class Download // phpcs:ignore
         /** @var Johncms\System\Legacy\Tools $tools */
         $tools = di(Johncms\System\Legacy\Tools::class);
 
-        /** @var Johncms\System\View\Extension\Assets $assets */
-        $assets = di(Johncms\System\View\Extension\Assets::class);
+        /** @var \Johncms\View\Extension\Assets $assets */
+        $assets = di(Johncms\View\Extension\Assets::class);
 
         $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';

@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\View\Render;
-use Johncms\System\i18n\Translator;
+use Johncms\Users\User;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO $db
  * @var Tools $tools
  * @var User $user
- * @var Render $view
+ * @var \Johncms\View\Render $view
  */
 
 $config = di('config')['johncms'];
@@ -35,7 +35,7 @@ $view = di(Render::class);
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
 
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 // Register the module languages domain and folder

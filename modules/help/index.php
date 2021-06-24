@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\i18n\Translator;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

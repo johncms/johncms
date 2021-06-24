@@ -17,7 +17,7 @@ use Forum\Models\ForumSection;
 use Forum\Models\ForumTopic;
 use Forum\Models\ForumUnread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -26,14 +26,14 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var array $config
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\View\Render $view
+ * @var \Johncms\View\Render $view
  * @var Johncms\NavChain $nav_chain
  */
 
 /** @var User $user */
 $user = di(User::class);
 
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 try {
@@ -147,8 +147,8 @@ if ($request->getPost('submit', null)) {
             ]
         );
 
-        /** @var Johncms\System\Http\Environment $env */
-        $env = di(Johncms\System\Http\Environment::class);
+        /** @var \Johncms\Http\Environment $env */
+        $env = di(\Johncms\Http\Environment::class);
 
         $message = (new ForumMessage())->create(
             [

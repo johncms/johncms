@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Carbon\Carbon;
-use Johncms\System\i18n\Translator;
+use Johncms\i18n\Translator;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\UserConfig;
 
 trait UserMutators
 {

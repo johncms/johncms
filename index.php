@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Johncms\Application;
+use Johncms\Container\ContainerFactory;
 use Johncms\Mail\EmailSender;
-use Johncms\System\Container\ContainerFactory;
 
 // If the system is not installed, redirect to the installer.
 if (! is_file('config/autoload/database.local.php')) {
@@ -23,6 +23,7 @@ if (! is_file('config/autoload/database.local.php')) {
 require 'system/bootstrap.php';
 
 $container = ContainerFactory::getContainer();
+di(PDO::class);
 $application = new Application($container);
 $application->run();
 

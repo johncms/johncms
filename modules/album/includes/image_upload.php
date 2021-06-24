@@ -17,8 +17,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
- * @var Johncms\System\Http\Request $request
+ * @var Johncms\Users\User $user
+ * @var \Johncms\Http\Request $request
  * @var Johncms\NavChain $nav_chain
  */
 

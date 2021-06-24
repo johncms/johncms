@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
 use Johncms\Mail\EmailMessage;
-use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 

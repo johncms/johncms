@@ -11,10 +11,10 @@
 declare(strict_types=1);
 
 use Gettext\TranslatorFunctions;
-use Johncms\System\Http\Request;
-use Johncms\System\i18n\Translator;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 
 // Check the current PHP version
 if (PHP_VERSION_ID < 70300) {

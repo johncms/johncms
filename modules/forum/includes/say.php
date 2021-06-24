@@ -18,7 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var array $config
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 // Закрываем доступ для определенных ситуаций
@@ -221,8 +221,8 @@ switch ($post_type) {
                     )->execute([$newpost, time()]);
                 } else {
                     $update = false;
-                    /** @var Johncms\System\Http\Environment $env */
-                    $env = di(Johncms\System\Http\Environment::class);
+                    /** @var \Johncms\Http\Environment $env */
+                    $env = di(\Johncms\Http\Environment::class);
 
                     // Добавляем сообщение в базу
                     $db->prepare(
@@ -484,8 +484,8 @@ switch ($post_type) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\System\Http\Environment $env */
-            $env = di(Johncms\System\Http\Environment::class);
+            /** @var \Johncms\Http\Environment $env */
+            $env = di(\Johncms\Http\Environment::class);
 
             // Добавляем сообщение в базу
             $db->prepare(

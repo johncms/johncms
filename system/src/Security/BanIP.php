@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Security;
 
 use Illuminate\Database\Capsule\Manager;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 
 class BanIP
 {
@@ -22,7 +22,7 @@ class BanIP
 
     public function __construct()
     {
-        /** @var Environment $env */
+        /** @var \Johncms\Http\Environment $env */
         $env = di(Environment::class);
         $this->ip = $env->getIp();
         $this->ip_via_proxy = $env->getIpViaProxy();

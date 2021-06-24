@@ -14,7 +14,7 @@ namespace Library;
 
 use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\View\Render;
+use Johncms\View\Render;
 
 class ViewHelper
 {

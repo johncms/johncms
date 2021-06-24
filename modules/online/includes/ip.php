@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Johncms\System\Http\Environment $env */
-$env = di(Johncms\System\Http\Environment::class);
+/** @var \Johncms\Http\Environment $env */
+$env = di(\Johncms\Http\Environment::class);
 
 $data = [];
 $data['filters'] = [
@@ -74,7 +74,7 @@ if ($total && $user->rights) {
             'ip'              => $ip,
             'search_ip'       => '/admin/search_ip/?ip=' . $ip,
             'whois_ip'        => '/admin/ip_whois/?ip=' . $ip,
-            'current_user_ip' => ($ipLong === di(Johncms\System\Http\Environment::class)->getIp()),
+            'current_user_ip' => ($ipLong === di(\Johncms\Http\Environment::class)->getIp()),
             'count'           => $ip_list[$i][$ipLong],
         ];
     }

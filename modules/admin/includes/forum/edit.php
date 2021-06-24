@@ -19,10 +19,10 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  * @var Johncms\NavChain $nav_chain
- * @var Johncms\System\Http\Request $request
- * @var Johncms\System\View\Render $view
+ * @var \Johncms\Http\Request $request
+ * @var \Johncms\View\Render $view
  */
 
 $title = __('Edit Section');

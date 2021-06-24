@@ -18,7 +18,6 @@ use Johncms\Casts\Ip;
 use Johncms\Casts\Serialize;
 use Johncms\Casts\SpecialChars;
 use Johncms\Casts\UserSettings;
-use Johncms\System\Users\UserConfig;
 
 /**
  * Class User

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -19,7 +19,7 @@ $title = __('Settings');
 
 $nav_chain->add($title, '/notifications/settings/');
 
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 $data = [

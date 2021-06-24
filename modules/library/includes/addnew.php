@@ -20,8 +20,8 @@ $request = di(ServerRequestInterface::class);
 
 /**
  * @var PDO $db
- * @var Johncms\System\Users\User $user
- * @var Johncms\System\View\Render $view
+ * @var Johncms\Users\User $user
+ * @var \Johncms\View\Render $view
  * @var  ServerRequestInterface $request
  */
 

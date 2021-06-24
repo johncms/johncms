@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
 use Johncms\Notifications\Notification;
-use Johncms\System\Http\Request;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

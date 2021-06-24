@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
  * @var NavChain $nav_chain
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 if ($user->rights < 9) {

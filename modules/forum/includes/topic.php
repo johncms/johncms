@@ -19,9 +19,9 @@ use Forum\Models\ForumVote;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\Counters;
+use Johncms\Http\Request;
 use Johncms\NavChain;
 use Johncms\Notifications\Notification;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\GuestSession;
 use Johncms\Users\User;
@@ -37,7 +37,7 @@ use Johncms\Users\User;
 /** @var User $user */
 $user = di(User::class);
 
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 $forum_settings = di('config')['forum']['settings'];

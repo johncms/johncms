@@ -16,7 +16,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 if (! $config['mod_down_comm'] && $user->rights < 7) {

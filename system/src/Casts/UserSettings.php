@@ -15,7 +15,7 @@ namespace Johncms\Casts;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Johncms\System\Users\UserConfig;
+use Johncms\Users\UserConfig;
 
 class UserSettings implements CastsAttributes
 {

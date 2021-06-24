@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\System\Container\ContainerFactory;
-use Johncms\System\Http\Environment;
-use Johncms\System\Users\User;
+use Johncms\Container\ContainerFactory;
+use Johncms\Http\Environment;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\View\Render;
 use PDO;
 use Psr\Container\ContainerInterface;
 

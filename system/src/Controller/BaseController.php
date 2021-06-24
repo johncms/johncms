@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Controller;
 
+use Johncms\i18n\Translator;
 use Johncms\NavChain;
-use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
+use Johncms\View\Render;
 
 class BaseController extends AbstractController
 {

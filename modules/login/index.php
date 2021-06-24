@@ -11,18 +11,18 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\View\Render;
+use Johncms\Http\Request;
 use Johncms\NavChain;
+use Johncms\System\Legacy\Tools;
+use Johncms\Users\User;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
- * @var Request $request
+ * @var \Johncms\Http\Request $request
  * @var User $user
- * @var Render $view
+ * @var \Johncms\View\Render $view
  * @var NavChain $nav_chain
  */
 

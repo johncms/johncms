@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 // Список альбомов юзера

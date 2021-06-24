@@ -15,7 +15,7 @@ namespace Forum\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\FileInfo;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 /**
  * Class File

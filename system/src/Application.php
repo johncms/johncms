@@ -14,9 +14,9 @@ namespace Johncms;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Container\Container;
+use Johncms\i18n\Translator;
 use Johncms\Modules\Modules;
-use Johncms\System\i18n\Translator;
-use Johncms\System\Router\RouterFactory;
+use Johncms\Router\RouterFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 
 class Application

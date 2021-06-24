@@ -15,7 +15,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 if ($user->rights < 9) {
@@ -73,7 +73,7 @@ if (! $error) {
     switch ($mod) {
         case 'del':
             // Удаляем личные данные
-            $del = new Johncms\System\Users\UserClean($db);
+            $del = new \Johncms\Users\UserClean($db);
             $del->removeAlbum($foundUser['id']);         // Удаляем личные Фотоальбомы
             $del->removeGuestbook($foundUser['id']);     // Удаляем личную Гостевую
             $del->removeMail($foundUser['id']);          // Удаляем почту

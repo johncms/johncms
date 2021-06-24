@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
 use Johncms\Mail\EmailMessage;
-use Johncms\System\Http\Request;
-use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
 use Johncms\NavChain;
+use Johncms\View\Render;
 
 $config = di('config')['johncms'];
 

@@ -11,14 +11,14 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
 use Johncms\Mail\EmailMessage;
-use Johncms\System\Http\Request;
+use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
-use Johncms\System\View\Render;
-use Johncms\NavChain;
-use Johncms\System\i18n\Translator;
 use Johncms\Validator\Validator;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -43,7 +43,7 @@ $request = di(Request::class);
 $view->addFolder('reg', __DIR__ . '/templates/');
 
 // Register the module languages domain and folder
-/** @var Translator $translator */
+/** @var \Johncms\i18n\Translator $translator */
 $translator = di(Translator::class);
 $translator->addTranslationDomain('registration', __DIR__ . '/locale');
 
@@ -125,8 +125,8 @@ if ($request->getMethod() === 'POST') {
 
     $validator = new Validator($fields, $rules);
     if ($validator->isValid()) {
-        /** @var Johncms\System\Http\Environment $env */
-        $env = di(Johncms\System\Http\Environment::class);
+        /** @var \Johncms\Http\Environment $env */
+        $env = di(\Johncms\Http\Environment::class);
 
         $new_user = (new User())->create(
             [

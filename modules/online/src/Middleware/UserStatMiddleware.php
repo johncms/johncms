@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Online\Middleware;
 
-use Johncms\System\Users\UserStat;
+use Johncms\Users\UserStat;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

@@ -16,7 +16,7 @@ use Admin\Controllers\BaseAdminController;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use News\Models\NewsArticle;
 use News\Models\NewsSection;
 use News\Section;
@@ -46,7 +46,7 @@ class AdminSectionController extends BaseAdminController
     /**
      * Section creation page
      *
-     * @param Request $request
+     * @param \Johncms\Http\Request $request
      * @param Section $section_service
      * @param int $section_id
      * @return string

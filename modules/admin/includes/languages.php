@@ -13,9 +13,9 @@ declare(strict_types=1);
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  * @var Johncms\NavChain $nav_chain
- * @var Johncms\System\Http\Request $request
+ * @var \Johncms\Http\Request $request
  */
 
 if ($user->rights < 9) {

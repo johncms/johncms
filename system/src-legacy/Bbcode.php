@@ -12,12 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\System\Legacy;
 
-use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\Container\ContainerFactory;
-use Johncms\System\Users\UserConfig;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\Users\UserConfig;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 use Psr\Container\ContainerInterface;
 
 class Bbcode

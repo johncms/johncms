@@ -12,10 +12,19 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Database\PdoFactory;
 use Johncms\Files\Filesystem;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
+use Johncms\Http\RequestFactory;
+use Johncms\Http\ResponseFactory;
+use Johncms\i18n\Translator;
+use Johncms\i18n\TranslatorServiceFactory;
 use Johncms\Media\MediaEmbed;
-use Johncms\System\{Database\PdoFactory, Http\Environment, Http\Request, Http\RequestFactory, Http\ResponseFactory, i18n\Translator, i18n\TranslatorServiceFactory, Users\User, Users\UserFactory, View\Render, View\RenderEngineFactory};
-use Johncms\System\View\Extension\{Assets, Avatar};
+use Johncms\View\Extension\{Avatar};
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
+use Johncms\View\RenderEngineFactory;
 use PDO;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -48,7 +57,6 @@ class ConfigProvider
                 Render::class                   => RenderEngineFactory::class,
                 ServerRequestInterface::class   => RequestFactory::class,
                 Translator::class               => TranslatorServiceFactory::class,
-                User::class                     => UserFactory::class,
                 Users\User::class               => Users\UserFactory::class,
                 Filesystem::class               => Filesystem::class,
                 ResponseFactoryInterface::class => ResponseFactory::class,

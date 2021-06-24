@@ -14,7 +14,7 @@ use Forum\Models\ForumFile;
 use Forum\Models\ForumMessage;
 use Illuminate\Support\Collection;
 use Johncms\FileInfo;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

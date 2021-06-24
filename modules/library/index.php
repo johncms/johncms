@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
-use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
-use Johncms\System\i18n\Translator;
 use Aura\Autoload\Loader;
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
+use Johncms\NavChain;
+use Johncms\System\Legacy\Tools;
+use Johncms\Users\User;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -28,7 +28,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var User $user
  * @var Render $view
  * @var NavChain $nav_chain
- * @var Request $request
+ * @var \Johncms\Http\Request $request
  */
 
 $assets = di(Assets::class);

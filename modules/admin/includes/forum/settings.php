@@ -10,22 +10,22 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /**
  * @var NavChain $nav_chain
- * @var Johncms\System\Users\User $user
- * @var Johncms\System\View\Render $view
+ * @var Johncms\Users\User $user
+ * @var \Johncms\View\Render $view
  */
 
 if ($user->rights < 9) {
     exit(__('Access denied'));
 }
 
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 
 $forum_config = di('config')['forum'];

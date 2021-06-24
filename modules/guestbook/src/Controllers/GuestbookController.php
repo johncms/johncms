@@ -22,8 +22,8 @@ use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use League\Flysystem\FilesystemException;
@@ -115,9 +115,9 @@ class GuestbookController extends BaseController
     /**
      * Cleaning the guestbook
      *
-     * @param Request $request
+     * @param \Johncms\Http\Request $request
      * @param GuestbookService $guestbook
-     * @param Session $session
+     * @param \Johncms\Http\Session $session
      * @return string
      */
     public function clean(Request $request, GuestbookService $guestbook, Session $session): string
@@ -143,7 +143,7 @@ class GuestbookController extends BaseController
      * Cleaning the guestbook
      *
      * @param Request $request
-     * @param Session $session
+     * @param \Johncms\Http\Session $session
      * @param FileStorage $storage
      * @return string
      */
@@ -180,8 +180,8 @@ class GuestbookController extends BaseController
      * The edit message page
      *
      * @param User $user
-     * @param Request $request
-     * @param Session $session
+     * @param \Johncms\Http\Request $request
+     * @param \Johncms\Http\Session $session
      * @return string
      */
     public function edit(User $user, Request $request, Session $session): string
@@ -245,8 +245,8 @@ class GuestbookController extends BaseController
      * The reply to message page
      *
      * @param User $user
-     * @param Request $request
-     * @param Session $session
+     * @param \Johncms\Http\Request $request
+     * @param \Johncms\Http\Session $session
      * @return string
      */
     public function reply(User $user, Request $request, Session $session): string

@@ -6,8 +6,8 @@ use Library\ViewHelper;
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
- * @var Johncms\System\View\Render $view
+ * @var Johncms\Users\User $user
+ * @var \Johncms\View\Render $view
  */
 
 $total = $db->query(

@@ -15,11 +15,11 @@ namespace Forum;
 use Forum\Models\ForumMessage;
 use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Http\Request;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Johncms\View\Render;
 
 class ForumUtils
 {
@@ -88,7 +88,7 @@ class ForumUtils
                 }
                 $parsed_url = parse_url($link[3]);
 
-                /** @var Request $env */
+                /** @var \Johncms\Http\Request $env */
                 $request = di(Request::class);
                 $host = $request->getServer('HTTP_HOST', '');
 

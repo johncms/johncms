@@ -10,20 +10,20 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Request;
+use Johncms\i18n\Translator;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
-use Johncms\System\View\AdminRenderEngineFactory;
-use Johncms\System\View\Extension\AdminAssets;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
-use Johncms\System\i18n\Translator;
+use Johncms\Users\User;
+use Johncms\View\AdminRenderEngineFactory;
+use Johncms\View\Extension\AdminAssets;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
-$container = Johncms\System\Container\ContainerFactory::getContainer();
+$container = \Johncms\Container\ContainerFactory::getContainer();
 $container->setFactory(Assets::class, AdminAssets::class);
 $container->setFactory(Render::class, AdminRenderEngineFactory::class);
 
@@ -33,11 +33,11 @@ $db = di(PDO::class);
 $tools = di(Tools::class);
 /** @var User $user */
 $user = di(User::class);
-/** @var Render $view */
+/** @var \Johncms\View\Render $view */
 $view = di(Render::class);
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
-/** @var Request $request */
+/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
 $route = di('route');
 

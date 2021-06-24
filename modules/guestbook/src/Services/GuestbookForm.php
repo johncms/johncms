@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Guestbook\Services;
 
 use Guestbook\Models\Guestbook;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 
 class GuestbookForm

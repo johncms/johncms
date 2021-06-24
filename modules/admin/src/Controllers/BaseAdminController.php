@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Admin\Controllers;
 
+use Johncms\Container\ContainerFactory;
 use Johncms\Controller\BaseController;
-use Johncms\System\Container\ContainerFactory;
-use Johncms\System\View\AdminRenderEngineFactory;
-use Johncms\System\View\Extension\AdminAssets;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
+use Johncms\View\AdminRenderEngineFactory;
+use Johncms\View\Extension\AdminAssets;
+use Johncms\View\Extension\Assets;
+use Johncms\View\Render;
 use PDO;
 
 class BaseAdminController extends BaseController

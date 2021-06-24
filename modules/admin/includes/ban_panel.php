@@ -17,7 +17,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 /**
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';

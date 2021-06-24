@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Library;
 
-use Johncms\System\Users\User;
-use Johncms\System\View\Extension\Assets;
+use Johncms\Users\User;
+use Johncms\View\Extension\Assets;
 use PDO;
 
 /**
@@ -26,7 +26,7 @@ use PDO;
 class Rating
 {
     /**
-     * @var Assets
+     * @var \Johncms\View\Extension\Assets
      */
     private $asset;
 
