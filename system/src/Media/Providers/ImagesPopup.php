@@ -22,12 +22,14 @@ class ImagesPopup implements EmbedProvider
             foreach ($images as $image) {
                 $html = $image->innerHtml();
                 $img = $image->first('img');
-                $image->setInnerHtml(
-                    '<a class="image-preview"
-                data-source="' . $img->attr('src') . '"
-                title="' . $img->attr('alt') . '"
-                href="' . $img->attr('src') . '">' . $html . '</a>'
-                );
+                if ($img) {
+                    $image->setInnerHtml(
+                        '<a class="image-preview"
+                        data-source="' . $img->getAttribute('src', '') . '"
+                        title="' . $img->getAttribute('alt', '') . '"
+                        href="' . $img->getAttribute('src', '') . '">' . $html . '</a>'
+                    );
+                }
             }
             return $document->html();
         } catch (Exception $exception) {
