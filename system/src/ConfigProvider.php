@@ -18,9 +18,11 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\RequestFactory;
 use Johncms\Http\ResponseFactory;
+use Johncms\Http\Session;
 use Johncms\i18n\Translator;
 use Johncms\i18n\TranslatorServiceFactory;
 use Johncms\Media\MediaEmbed;
+use Johncms\Middlewares\SessionMiddleware;
 use Johncms\View\Extension\{Avatar};
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
@@ -36,7 +38,7 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
-            'middleware'   => [],
+            'middleware'   => $this->getMiddlewares(),
             'providers'    => [],
         ];
     }
@@ -62,7 +64,15 @@ class ConfigProvider
                 ResponseFactoryInterface::class => ResponseFactory::class,
                 CacheInterface::class           => Cache::class,
                 MediaEmbed::class               => MediaEmbed::class,
+                Session::class                  => Session::class,
             ],
+        ];
+    }
+
+    private function getMiddlewares(): array
+    {
+        return [
+            SessionMiddleware::class,
         ];
     }
 }

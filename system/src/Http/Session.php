@@ -14,7 +14,26 @@ namespace Johncms\Http;
 
 class Session
 {
-    protected const FLASH_PREFIX = '_flash_';
+    protected const FLASH = '_flash_';
+
+    public const SESSION_NAME = 'SESID';
+
+    public function __invoke(): Session
+    {
+        $session = new self();
+        $session->start();
+        return $session;
+    }
+
+    public function start(): void
+    {
+        if (\PHP_SESSION_ACTIVE === session_status()) {
+            throw new \RuntimeException('Failed to start the session: already started by PHP.');
+        }
+
+        session_name(self::SESSION_NAME);
+        session_start();
+    }
 
     /**
      * @param string $key
@@ -22,7 +41,7 @@ class Session
      */
     public function flash(string $key, $value): void
     {
-        $_SESSION[self::FLASH_PREFIX . $key] = $value;
+        $_SESSION[self::FLASH][$key] = $value;
     }
 
     /**
@@ -31,8 +50,30 @@ class Session
      */
     public function getFlash(string $key)
     {
-        $value = $_SESSION[self::FLASH_PREFIX . $key] ?? null;
-        unset($_SESSION[self::FLASH_PREFIX . $key]);
-        return $value;
+        if (isset($_SESSION[self::FLASH][$key])) {
+            $value = $_SESSION[self::FLASH][$key];
+            unset($_SESSION[self::FLASH][$key]);
+            return $value;
+        }
+        return null;
+    }
+
+    /**
+     * @param string|int $key
+     * @param mixed|null $default
+     * @return mixed|null
+     */
+    public function get($key, $default = null)
+    {
+        return $_SESSION[$key] ?? $default;
+    }
+
+    /**
+     * @param string|int $key
+     * @param mixed $value
+     */
+    public function set($key, $value): void
+    {
+        $_SESSION[$key] = $value;
     }
 }

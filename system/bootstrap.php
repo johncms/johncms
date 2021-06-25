@@ -52,9 +52,6 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');
     header('X-CMS-Version: ' . CMS_VERSION);
 
-    session_name('SESID');
-    session_start();
-
     /** @var \Johncms\Http\Environment $env */
     // $env = di(Environment::class);
 

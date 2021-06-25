@@ -9,7 +9,6 @@
  */
 
 use Guestbook\Controllers\GuestbookController;
-use Johncms\Middleware\AuthMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 

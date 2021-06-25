@@ -10,32 +10,23 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Middleware;
+namespace Johncms\Middlewares;
 
-use Johncms\Users\User;
+use Johncms\Http\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class AuthMiddleware implements MiddlewareInterface
+class SessionMiddleware implements MiddlewareInterface
 {
-    protected array $rights;
-
-    public function __construct(array $rights = [])
-    {
-        $this->rights = $rights;
-    }
-
     /**
      * @inheritDoc
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $user = di(User::class);
-        if ((empty($this->rights) && $user->isValid()) || (! empty($this->rights) && in_array($user->rights, $this->rights))) {
-            return $handler->handle($request);
-        }
-        return access_denied();
+        // Session start
+        di(Session::class);
+        return $handler->handle($request);
     }
 }
