@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Install\Database;
 use Johncms\Checker\DBChecker;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\System\Http\Request;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 /** @var Request $request */
 $request = di(Request::class);
@@ -51,6 +51,7 @@ if ($request->getMethod() === 'POST') {
             'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
             'timezone'  => '+00:00',
+            'engine'    => 'InnoDB ROW_FORMAT=DYNAMIC',
         ]
     );
     $capsule->setAsGlobal();
