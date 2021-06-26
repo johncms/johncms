@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Illuminate\Support\Arr;
+
 class Session
 {
     protected const FLASH = '_flash_';
@@ -20,9 +22,8 @@ class Session
 
     public function __invoke(): Session
     {
-        $session = new self();
-        $session->start();
-        return $session;
+        $this->start();
+        return $this;
     }
 
     public function start(): void
@@ -59,21 +60,37 @@ class Session
     }
 
     /**
-     * @param string|int $key
+     * @param string $key
      * @param mixed|null $default
      * @return mixed|null
+     * @psalm-suppress NullReference
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
-        return $_SESSION[$key] ?? $default;
+        return Arr::get($_SESSION, $key, $default);
     }
 
     /**
-     * @param string|int $key
+     * @param string $key
      * @param mixed $value
+     * @psalm-suppress NullReference
      */
-    public function set($key, $value): void
+    public function set(string $key, $value): void
     {
-        $_SESSION[$key] = $value;
+        Arr::set($_SESSION, $key, $value);
+    }
+
+    public function has(string $key): bool
+    {
+        return Arr::has($_SESSION, $key);
+    }
+
+    /**
+     * @param string $key
+     * @psalm-suppress NullReference
+     */
+    public function remove(string $key): void
+    {
+        Arr::forget($_SESSION, $key);
     }
 }

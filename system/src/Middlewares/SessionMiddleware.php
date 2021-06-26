@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Middlewares;
 
-use Johncms\Http\Session;
+use Johncms\Security\Csrf;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -25,8 +25,8 @@ class SessionMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // Session start
-        di(Session::class);
+        // Starting a session and generate a csrf token
+        di(Csrf::class)->getToken();
         return $handler->handle($request);
     }
 }
