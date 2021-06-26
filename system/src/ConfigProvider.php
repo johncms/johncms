@@ -22,6 +22,7 @@ use Johncms\Http\Session;
 use Johncms\i18n\Translator;
 use Johncms\i18n\TranslatorServiceFactory;
 use Johncms\Media\MediaEmbed;
+use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
 use Johncms\View\Extension\{Avatar};
 use Johncms\View\Extension\Assets;
@@ -73,6 +74,7 @@ class ConfigProvider
     {
         return [
             SessionMiddleware::class,
+            CsrfMiddleware::class,
         ];
     }
 }

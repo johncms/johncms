@@ -26,7 +26,7 @@ function di(string $service)
     // try {
     //    return Factory::getContainer()->get($service);
     //} catch (ServiceNotFoundException $exception) {
-        return Container::getInstance()->get($service);
+    return Container::getInstance()->get($service);
     //}
 }
 
@@ -46,6 +46,7 @@ function pathToUrl(string $path): string
  * @param string $title
  * @param string $message
  * @return never-return
+ * @deprecated use the status_page() function
  */
 function pageNotFound(
     string $template = 'system::error/404',
@@ -73,23 +74,42 @@ function pageNotFound(
 }
 
 /**
- * 403 error page
+ * Status page
  *
- * @param string $template
- * @param string $title
- * @param string $message
+ * @param int $status_code
+ * @param string|null $template
+ * @param string|null $title
+ * @param string|null $message
  * @return ResponseInterface
  */
-function access_denied(string $template = 'system::error/403', string $title = '403 | Access Denied', string $message = ''): ResponseInterface
+function status_page(int $status_code, ?string $template = null, ?string $title = null, ?string $message = null): ResponseInterface
 {
+    $default_params = [
+        403 => [
+            'template' => 'system::error/403',
+            'title'    => '403 | Access Denied',
+            'message'  => __('Unfortunately, you do not have access to the requested page.'),
+        ],
+        404 => [
+            'template' => 'system::error/404',
+            'title'    => '404 | Page Not Found',
+            'message'  => __('You are looking for something that doesn\'t exist or may have moved'),
+        ],
+        419 => [
+            'template' => 'system::error/419',
+            'title'    => '419 | Page Expired',
+            'message'  => __('The page is outdated or an attempt to fake the request was prevented.'),
+        ],
+    ];
+
     $engine = di(Render::class);
-    $response = di(ResponseFactory::class)->createResponse(403);
+    $response = di(ResponseFactory::class)->createResponse($status_code);
     $response->getBody()->write(
         $engine->render(
-            $template,
+            $template ?? $default_params[$status_code]['template'],
             [
-                'title'   => $title,
-                'message' => ! empty($message) ? $message : __('Unfortunately, you do not have access to the requested page.'),
+                'title'   => $title ?? $default_params[$status_code]['title'],
+                'message' => $message ?? $default_params[$status_code]['message'],
             ]
         )
     );

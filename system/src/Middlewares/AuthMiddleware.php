@@ -36,6 +36,6 @@ class AuthMiddleware implements MiddlewareInterface
         if ((empty($this->rights) && $user->isValid()) || (! empty($this->rights) && in_array($user->rights, $this->rights))) {
             return $handler->handle($request);
         }
-        return access_denied();
+        return status_page(403);
     }
 }
