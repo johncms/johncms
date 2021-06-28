@@ -51,7 +51,18 @@ class CsrfMiddleware implements MiddlewareInterface
 
     private function needToValidate(): bool
     {
-        //TODO: Need to add the ability to exclude some pages from the check.
+        $excepts = di('config')['csrf']['excepts'] ?? [];
+        if (! empty($excepts)) {
+            $request_path = di(Request::class)->getUri()->getPath();
+            foreach ($excepts as $pattern) {
+                $pattern = preg_quote($pattern, '#');
+                $pattern = str_replace('\*', '.*', $pattern);
+                if (preg_match('#^' . $pattern . '\z#u', $request_path) === 1) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 }
