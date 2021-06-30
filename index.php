@@ -23,9 +23,8 @@ if (! is_file('config/autoload/database.local.php')) {
 require 'system/bootstrap.php';
 
 $container = ContainerFactory::getContainer();
-di(PDO::class);
 $application = new Application($container);
-$application->run();
+$application->run()->handleRequest();
 
 // If cron usage is disabled.
 if (! USE_CRON && ! defined('_IN_JOHNADM')) {

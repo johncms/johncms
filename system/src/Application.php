@@ -18,6 +18,7 @@ use Johncms\i18n\Translator;
 use Johncms\Modules\Modules;
 use Johncms\Router\RouterFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use PDO;
 
 class Application
 {
@@ -28,13 +29,13 @@ class Application
         $this->container = $container;
     }
 
-    public function run(): void
+    public function run(): Application
     {
+        di(PDO::class);
         (new Modules())->registerAutoloader();
         $this->runModuleProviders();
         $this->setupTranslator();
-        $router = $this->container->get(RouterFactory::class);
-        (new SapiEmitter())->emit($router->dispatch());
+        return $this;
     }
 
     private function runModuleProviders(): void
@@ -56,5 +57,11 @@ class Application
         $translator->defaultDomain('system');
         // Register language helpers
         TranslatorFunctions::register($translator);
+    }
+
+    public function handleRequest(): void
+    {
+        $router = $this->container->get(RouterFactory::class);
+        (new SapiEmitter())->emit($router->dispatch());
     }
 }

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Console\Commands\MigrationCommand;
 use Johncms\Database\PdoFactory;
 use Johncms\Files\Filesystem;
 use Johncms\Http\Environment;
@@ -41,6 +42,7 @@ class ConfigProvider
             'dependencies' => $this->getDependencies(),
             'middleware'   => $this->getMiddlewares(),
             'providers'    => [],
+            'commands'     => $this->getCommands(),
         ];
     }
 
@@ -75,6 +77,13 @@ class ConfigProvider
         return [
             SessionMiddleware::class,
             CsrfMiddleware::class,
+        ];
+    }
+
+    private function getCommands(): array
+    {
+        return [
+            MigrationCommand::class,
         ];
     }
 }

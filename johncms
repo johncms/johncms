@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require 'system/vendor/autoload.php';
+
+use Johncms\Application;
+use Johncms\Console\ConsoleApp;
+use Johncms\Container\ContainerFactory;
+
+$container = ContainerFactory::getContainer();
+
+$application = new Application($container);
+$application->run();
+
+$application = new ConsoleApp();
+try {
+    $application->run();
+} catch (Exception $e) {
+    exit($e->getMessage());
+}

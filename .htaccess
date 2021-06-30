@@ -1,5 +1,5 @@
 # Protect files and directories
-<FilesMatch "\.(po|mo|phtml|cache|dat)$|^(\.(?!well-known).composer\.(json|lock))$|^#.*#$|\.php(~)$">
+<FilesMatch "\.(po|mo|phtml|cache|dat)$|johncms|^(\.(?!well-known).composer\.(json|lock))$|^#.*#$|\.php(~)$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
