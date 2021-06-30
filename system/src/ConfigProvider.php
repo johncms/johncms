@@ -12,7 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\Console\Commands\MigrationCommand;
+use Johncms\Console\Commands\MakeMigrationCommand;
+use Johncms\Console\Commands\MigrateCommand;
 use Johncms\Database\PdoFactory;
 use Johncms\Files\Filesystem;
 use Johncms\Http\Environment;
@@ -83,7 +84,8 @@ class ConfigProvider
     private function getCommands(): array
     {
         return [
-            MigrationCommand::class,
+            MakeMigrationCommand::class,
+            MigrateCommand::class,
         ];
     }
 }

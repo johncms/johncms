@@ -13,13 +13,31 @@ declare(strict_types=1);
 namespace Johncms\Database;
 
 use Exception;
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\ConnectionResolver;
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Database\Migrations\MigrationCreator;
+use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
+use Johncms\Modules\Modules;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Migration
 {
+    protected Filesystem $filesystem;
+    protected Migrator $migrator;
+
     public function __construct()
     {
+        $this->filesystem = new Filesystem();
+        $connection = Manager::connection();
+        $resolver = new ConnectionResolver(['default' => $connection]);
+        $resolver->setDefaultConnection('default');
+        $db_repository = new DatabaseMigrationRepository($resolver, 'migrations');
+        if (! $db_repository->repositoryExists()) {
+            $db_repository->createRepository();
+        }
+        $this->migrator = new Migrator($db_repository, $resolver, new Filesystem());
     }
 
     /**
@@ -32,7 +50,7 @@ class Migration
      */
     public function create(string $name, string $module_name, ?string $table = null, bool $create = false): string
     {
-        $migration_creator = new MigrationCreator(new Filesystem(), ROOT_PATH . 'system/stubs/migrations');
+        $migration_creator = new MigrationCreator($this->filesystem, ROOT_PATH . 'system/stubs/migrations');
         $migration_path = $migration_creator->create($name, $this->getModuleMigrationsPath($module_name), $table, $create);
         return mb_substr($migration_path, mb_strlen(ROOT_PATH));
     }
@@ -43,5 +61,58 @@ class Migration
             return ROOT_PATH . 'system/migrations';
         }
         return MODULES_PATH . $module_name . '/migrations';
+    }
+
+    public function getAllModulesPaths(): array
+    {
+        $paths = [
+            $this->getModuleMigrationsPath('system'),
+        ];
+
+        $modules = di(Modules::class)->getInstalled();
+        foreach ($modules as $module) {
+            $paths[] = $this->getModuleMigrationsPath($module);
+        }
+
+        return $paths;
+    }
+
+    public function setMigratorOutput(OutputInterface $output): void
+    {
+        $this->migrator->setOutput($output);
+    }
+
+    /**
+     * Run migrations
+     *
+     * @param string|null $module_name
+     * @param array $options
+     * @return array
+     */
+    public function run(?string $module_name = null, array $options = []): array
+    {
+        if (! $module_name) {
+            $paths = $this->getAllModulesPaths();
+        } else {
+            $paths = $this->getModuleMigrationsPath($module_name);
+        }
+        return $this->migrator->run($paths, $options);
+    }
+
+    /**
+     * Rollback migrations
+     *
+     * @param string|null $module_name
+     * @param array $options
+     * @return array
+     */
+    public function rollback(?string $module_name = null, array $options = []): array
+    {
+        if (! $module_name) {
+            $paths = $this->getAllModulesPaths();
+        } else {
+            $paths = $this->getModuleMigrationsPath($module_name);
+        }
+        return $this->migrator->rollback($paths, $options);
     }
 }
