@@ -11,6 +11,8 @@
     <file>system/src</file>
     <exclude-pattern>/config/autoload/*.local.php</exclude-pattern>
     <exclude-pattern>/modules/*/locale/*.lng.php</exclude-pattern>
+    <exclude-pattern>/modules/*/migrations/*</exclude-pattern>
+    <exclude-pattern>/system/migrations/*</exclude-pattern>
 
     <!-- inherit rules from: -->
     <rule ref="PSR12"/>
