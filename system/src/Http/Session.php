@@ -32,8 +32,10 @@ class Session
             throw new \RuntimeException('Failed to start the session: already started by PHP.');
         }
 
-        session_name(self::SESSION_NAME);
-        session_start();
+        if (! headers_sent()) {
+            session_name(self::SESSION_NAME);
+            session_start();
+        }
     }
 
     /**

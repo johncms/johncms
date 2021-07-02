@@ -16,7 +16,7 @@ use News\Models\NewsArticle;
 
 class HomepageController extends BaseController
 {
-    protected $module_name = 'homepage';
+    protected string $module_name = 'homepage';
 
     public function index(): string
     {

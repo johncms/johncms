@@ -18,17 +18,12 @@ use Johncms\View\Render;
 
 class BaseController extends AbstractController
 {
-    /** @var Render */
-    protected $render;
-
-    /** @var Translator */
-    protected $translator;
-
-    /** @var NavChain */
-    protected $nav_chain;
+    protected Render $render;
+    protected Translator $translator;
+    protected NavChain $nav_chain;
 
     /** @var string The module name */
-    protected $module_name = '';
+    protected string $module_name = '';
 
     public function __construct()
     {

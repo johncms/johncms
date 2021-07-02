@@ -34,6 +34,7 @@
 
             <directory name="system/src-legacy"/>
             <directory name="system/vendor"/>
+            <directory name="tests"/>
         </ignoreFiles>
     </projectFiles>
 
