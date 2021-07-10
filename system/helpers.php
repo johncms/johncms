@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Aura\Autoload\Loader;
-use Illuminate\Container\Container;
+use Johncms\Container\ContainerFactory;
 use Johncms\Http\ResponseFactory;
 use Johncms\Router\RouterFactory;
 use Johncms\View\Render;
@@ -23,11 +23,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 function di(string $service)
 {
-    // try {
-    //    return Factory::getContainer()->get($service);
-    //} catch (ServiceNotFoundException $exception) {
-    return Container::getInstance()->get($service);
-    //}
+    return ContainerFactory::getContainer()->get($service);
 }
 
 function pathToUrl(string $path): string
