@@ -235,6 +235,21 @@ class Database
                 $table->timestamps();
             }
         );
+
+        $schema->create(
+            'files',
+            static function (Blueprint $table) {
+                $table->id();
+                $table->string('storage')->index();
+                $table->string('name');
+                $table->string('path');
+                $table->integer('size')->unsigned()->nullable();
+                $table->string('md5', 32)->nullable();
+                $table->string('sha1', 40)->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
     }
 
     public static function installDemo(): void
