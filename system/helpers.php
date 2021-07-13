@@ -203,3 +203,17 @@ function route(string $route_name, array $params = []): string
     $router = di(RouterFactory::class);
     return $router->getRouter()->getNamedRoute($route_name)->getPath($params);
 }
+
+/**
+ * Get a value from config
+ *
+ * @param string|int|null $key
+ * @param mixed $default
+ * @return mixed
+ */
+function config($key = null, $default = null)
+{
+    /** @var array $config */
+    $config = di('config');
+    return \Illuminate\Support\Arr::get($config, $key, $default);
+}
