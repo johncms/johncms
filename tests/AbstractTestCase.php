@@ -12,11 +12,29 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Faker\Factory;
+use Faker\Generator;
+use Johncms\Application;
 use Johncms\Container\ContainerFactory;
+use Johncms\Database\Migration;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTestCase extends TestCase
 {
+    public Generator $faker;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        $this->faker = Factory::create();
+        parent::__construct($name, $data, $dataName);
+    }
+
+    public function runMigrations()
+    {
+        $migrations = new Migration();
+        $migrations->run();
+    }
+
     public static function setUpBeforeClass(): void
     {
         $container = ContainerFactory::getContainer();
@@ -29,5 +47,7 @@ abstract class AbstractTestCase extends TestCase
         $config['pdo']['db_pass'] = '';
 
         $container->instance('config', $config);
+        $application = new Application($container);
+        $application->run();
     }
 }

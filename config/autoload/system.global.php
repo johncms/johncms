@@ -46,5 +46,18 @@ return [
         'meta_title'              => 'JohnCMS',
         'user_email_required'     => 1,
         'user_email_confirmation' => 1,
+
+        // User model settings
+        'user_model'              => [
+            'casts'      => [],
+            'fillable'   => [],
+            'attributes' => [],
+            'dates'      => [],
+        ],
+
+        // Settings for users
+        'users'                   => [
+            'login_field' => 'login', // login|phone|email - the field which using for authorization.
+        ],
     ],
 ];
