@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4">
+    <div class="mt-4 comments-list">
         <h3 class="font-weight-bold">{{ __('comments') }} <span class="text-success" v-if="messages.total > 0">{{ messages.total }}</span></h3>
         <div v-if="messages.data && messages.data.length < 1" class="alert alert-info">{{ __('empty_list') }}</div>
         <div class="new_post-item" v-for="message in messages.data">
@@ -74,7 +74,7 @@
 
         <div class="mt-4" v-if="can_write">
             <h3 class="font-weight-bold">{{ __('write_comment') }}</h3>
-            <form action="" @submit.prevent="sendComment">
+            <form action="" class="comment-form" @submit.prevent="sendComment">
                 <div class="d-flex" v-if="error_message">
                     <div class="alert alert-danger d-inline">{{ error_message }}</div>
                 </div>
@@ -143,7 +143,7 @@ export default {
     },
     mounted()
     {
-        this.getComments();
+        this.getComments(1, false);
 
         const self = this;
         let config = {
@@ -191,11 +191,16 @@ export default {
     },
     computed: {},
     methods: {
-        getComments(page = 1)
+        getComments(page = 1, scroll_to_comments = true)
         {
             this.loading = true;
             axios.get('/news/comments/' + this.article_id + '/?page=' + page)
                     .then(response => {
+                        if (scroll_to_comments) {
+                            $('html, body').animate({
+                                scrollTop: $('.comments-list').offset().top
+                            }, 500);
+                        }
                         this.messages = response.data;
                         this.loading = false;
                     })
@@ -207,6 +212,9 @@ export default {
         reply(message)
         {
             editor.editing.view.focus();
+            $('html, body').animate({
+                scrollTop: $('.comment-form').position().top
+            }, 500);
             editor.model.change(writer => {
                 const insertPosition = editor.model.document.selection.getFirstPosition();
                 writer.insertText(message.user.user_name + ', ', {}, insertPosition);
@@ -215,6 +223,9 @@ export default {
         },
         quote(message)
         {
+            $('html, body').animate({
+                scrollTop: $('.comment-form').position().top
+            }, 500);
             let text = message.text.replace(/(<([^>]+)>)/ig, "");
             const content = '<blockquote><p>' + message.user.user_name + ', ' + message.created_at + '<br>' + text + '</p></blockquote><p></p>';
             const viewFragment = editor.data.processor.toView(content);
@@ -236,7 +247,7 @@ export default {
                         this.error_message = '';
                         this.attached_files = [];
                         window.editor.setData('');
-                        this.getComments(response.data.last_page);
+                        this.getComments(response.data.last_page, false);
                     })
                     .catch(error => {
                         this.error_message = error.response.data.message;
@@ -250,7 +261,7 @@ export default {
                 comment_id: comment_id
             })
                     .then(response => {
-                        this.getComments(this.messages.current_page);
+                        this.getComments(this.messages.current_page, false);
                     })
                     .catch(error => {
                         alert(error.response.data.message);
