@@ -147,9 +147,11 @@ $this->layout('system::layout/default');
                         <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
                         </svg> <?= (int) $news_item->votes_sum_vote ?>,
-                        <svg class="icon ml-2" style="width: 13px;">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
-                        </svg> <?= $news_item->comments_count ?>
+                        <a href="<?= $news_item->url ?>#article-comments">
+                            <svg class="icon ml-2" style="width: 13px;">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                            </svg> <?= $news_item->comments_count ?>
+                        </a>
                     </div>
                 </div>
             <?php endforeach; ?>

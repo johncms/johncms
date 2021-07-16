@@ -65,10 +65,12 @@ $this->layout('system::layout/default');
                         <?= (int) $article->view_count ?>
                     </div>
                     <div class="text-muted forum-view-counter ml-3">
-                        <svg class="icon download-button-icon mr-1">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
-                        </svg>
-                        <?= $article->comments_count ?>
+                        <a href="<?= $article->url ?>#article-comments">
+                            <svg class="icon download-button-icon mr-1">
+                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                            </svg>
+                            <?= $article->comments_count ?>
+                        </a>
                     </div>
                 </div>
             </div>
