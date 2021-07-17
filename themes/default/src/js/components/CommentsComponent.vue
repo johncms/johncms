@@ -26,12 +26,7 @@
                     <div class="w-100">
                         <a :href="message.user.profile_url" v-if="message.user.profile_url"><span class="user-name d-inline mr-2">{{ message.user.user_name }}</span></a>
                         <div class="user-name d-inline mr-2" v-if="!message.user.profile_url">{{ message.user.user_name }}</div>
-                        <span class="post-meta d-inline mr-2"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Link to post">
-                            {{ message.created_at }}
-                        </span>
+                        <span class="post-meta d-inline mr-2">{{ message.created_at }}</span>
                     </div>
                     <div v-if="message.user.status" class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
                         <span class="font-weight-bold">{{ message.user.status }}</span>
