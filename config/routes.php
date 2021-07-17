@@ -38,9 +38,11 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/guestbook/upload_file[/]', [GuestbookController::class, 'loadFile']);
     }
 
-    if ($user->isValid() && $user->rights >= 6) {
+    if ($user->isValid() && $user->rights > 0) {
         $map->addRoute(['GET', 'POST'], '/guestbook/edit[/]', [GuestbookController::class, 'edit']);
         $map->addRoute(['GET', 'POST'], '/guestbook/delpost[/]', [GuestbookController::class, 'delete']);
+    }
+    if ($user->isValid() && $user->rights >= 6) {
         $map->addRoute(['GET', 'POST'], '/guestbook/otvet[/]', [GuestbookController::class, 'reply']);
     }
     if ($user->isValid() && $user->rights >= 7) {
