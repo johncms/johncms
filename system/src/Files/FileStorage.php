@@ -75,7 +75,7 @@ class FileStorage
     protected function makeTmpName(): string
     {
         while (true) {
-            $filename = UPLOAD_PATH . uniqid('uploaded_file_');
+            $filename = UPLOAD_PATH . 'tmp' . DS . uniqid('uploaded_file_');
             if (! file_exists($filename)) {
                 break;
             }
