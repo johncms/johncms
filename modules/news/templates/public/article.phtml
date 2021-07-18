@@ -70,7 +70,7 @@ $author = $article->author;
     }
     ?>
     <script src="<?= $this->asset('ckeditor5/ckeditor.js', true) ?>"></script>
-    <div class="vue_app">
+    <div class="vue_app" id="article-comments">
         <comments-component
             upload_url="/news/comments/upload_file/"
             :article_id="<?= $article->id ?>"

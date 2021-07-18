@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4">
+    <div class="mt-4 comments-list">
         <h3 class="font-weight-bold">{{ __('comments') }} <span class="text-success" v-if="messages.total > 0">{{ messages.total }}</span></h3>
         <div v-if="messages.data && messages.data.length < 1" class="alert alert-info">{{ __('empty_list') }}</div>
         <div class="new_post-item" v-for="message in messages.data">
@@ -26,12 +26,7 @@
                     <div class="w-100">
                         <a :href="message.user.profile_url" v-if="message.user.profile_url"><span class="user-name d-inline mr-2">{{ message.user.user_name }}</span></a>
                         <div class="user-name d-inline mr-2" v-if="!message.user.profile_url">{{ message.user.user_name }}</div>
-                        <span class="post-meta d-inline mr-2"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Link to post">
-                            {{ message.created_at }}
-                        </span>
+                        <span class="post-meta d-inline mr-2">{{ message.created_at }}</span>
                     </div>
                     <div v-if="message.user.status" class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
                         <span class="font-weight-bold">{{ message.user.status }}</span>
@@ -74,7 +69,7 @@
 
         <div class="mt-4" v-if="can_write">
             <h3 class="font-weight-bold">{{ __('write_comment') }}</h3>
-            <form action="" @submit.prevent="sendComment">
+            <form action="" class="comment-form" @submit.prevent="sendComment">
                 <div class="d-flex" v-if="error_message">
                     <div class="alert alert-danger d-inline">{{ error_message }}</div>
                 </div>
@@ -143,7 +138,7 @@ export default {
     },
     mounted()
     {
-        this.getComments();
+        this.getComments(1, false);
 
         const self = this;
         let config = {
@@ -191,11 +186,16 @@ export default {
     },
     computed: {},
     methods: {
-        getComments(page = 1)
+        getComments(page = 1, scroll_to_comments = true)
         {
             this.loading = true;
             axios.get('/news/comments/' + this.article_id + '/?page=' + page)
                     .then(response => {
+                        if (scroll_to_comments) {
+                            $('html, body').animate({
+                                scrollTop: $('.comments-list').offset().top
+                            }, 500);
+                        }
                         this.messages = response.data;
                         this.loading = false;
                     })
@@ -207,6 +207,9 @@ export default {
         reply(message)
         {
             editor.editing.view.focus();
+            $('html, body').animate({
+                scrollTop: $('.comment-form').position().top
+            }, 500);
             editor.model.change(writer => {
                 const insertPosition = editor.model.document.selection.getFirstPosition();
                 writer.insertText(message.user.user_name + ', ', {}, insertPosition);
@@ -215,6 +218,9 @@ export default {
         },
         quote(message)
         {
+            $('html, body').animate({
+                scrollTop: $('.comment-form').position().top
+            }, 500);
             let text = message.text.replace(/(<([^>]+)>)/ig, "");
             const content = '<blockquote><p>' + message.user.user_name + ', ' + message.created_at + '<br>' + text + '</p></blockquote><p></p>';
             const viewFragment = editor.data.processor.toView(content);
@@ -236,7 +242,7 @@ export default {
                         this.error_message = '';
                         this.attached_files = [];
                         window.editor.setData('');
-                        this.getComments(response.data.last_page);
+                        this.getComments(response.data.last_page, false);
                     })
                     .catch(error => {
                         this.error_message = error.response.data.message;
@@ -250,7 +256,7 @@ export default {
                 comment_id: comment_id
             })
                     .then(response => {
-                        this.getComments(this.messages.current_page);
+                        this.getComments(this.messages.current_page, false);
                     })
                     .catch(error => {
                         alert(error.response.data.message);

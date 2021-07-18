@@ -39,6 +39,7 @@ class PdoFactory
                 'prefix'    => '',
                 'timezone'  => '+00:00',
                 'strict'    => DB_STRICT_MODE,
+                'engine'    => 'InnoDB ROW_FORMAT=DYNAMIC',
             ]
         );
 

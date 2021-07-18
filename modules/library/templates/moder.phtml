@@ -33,10 +33,12 @@ $this->layout(
     ) ?>
 <?php else : ?>
     <form action="?act=moder&amp;type=<?= $type ?>&amp;id=<?= $id ?>" method="post" enctype="multipart/form-data">
-        <?php if ($type === 'article' && $res['cover']) : ?>
+        <?php if ($type === 'article') : ?>
             <div class="mb-3">
-                <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
-                <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
+                <?php if ($res['cover']): ?>
+                    <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
+                    <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
+                <?php endif; ?>
                 <div class="custom-file mt-2">
                     <input type="file" class="custom-file-input" id="image" name="image" aria-describedby="file_label">
                     <label class="custom-file-label" for="image"><?= __('To upload a photo') ?></label>
