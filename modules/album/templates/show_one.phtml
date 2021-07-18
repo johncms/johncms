@@ -50,7 +50,7 @@ $photo = $data['photos'][0] ?? [];
         <div class="col-md-5">
             <a href="<?= $photo->picture ?>" title="<?= __('Photo') ?> "
                data-source="<?= $photo->download_url ?>" class="image-preview">
-                <img src="<?= $photo->preview_picture ?>" alt=".">
+                <img src="<?= $photo->preview_picture ?>" alt="." class="img-fluid">
             </a>
         </div>
     </div>
