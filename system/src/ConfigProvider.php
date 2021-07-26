@@ -26,6 +26,7 @@ use Johncms\i18n\TranslatorServiceFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
+use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\View\Extension\{Avatar};
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
@@ -40,10 +41,11 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies' => $this->getDependencies(),
-            'middleware'   => $this->getMiddlewares(),
-            'providers'    => [],
-            'commands'     => $this->getCommands(),
+            'dependencies'   => $this->getDependencies(),
+            'middleware'     => $this->getMiddlewares(),
+            'providers'      => [],
+            'commands'       => $this->getCommands(),
+            'auth_providers' => $this->getAuthProviders(),
         ];
     }
 
@@ -86,6 +88,13 @@ class ConfigProvider
         return [
             MakeMigrationCommand::class,
             MigrateCommand::class,
+        ];
+    }
+
+    private function getAuthProviders(): array
+    {
+        return [
+            SessionAuthProvider::class,
         ];
     }
 }
