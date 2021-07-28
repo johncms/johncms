@@ -16,11 +16,6 @@ use Johncms\i18n\Translator;
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 
-// Check the current PHP version
-if (PHP_VERSION_ID < 70300) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.3 or higher</div>');
-}
-
 require '../system/vendor/autoload.php';
 
 session_name('SESID');
