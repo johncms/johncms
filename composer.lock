@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47a8788c65d4a0ab30d04cd7f3147ab6",
+    "content-hash": "eb8227e154c86e8aec642faf1d0a4e98",
     "packages": [
         {
             "name": "aura/autoload",
@@ -878,16 +878,16 @@
         },
         {
             "name": "imangazaliev/didom",
-            "version": "1.17",
+            "version": "1.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Imangazaliev/DiDOM.git",
-                "reference": "8f5200d80c62c525ab852f3af0683187e9ce0bbd"
+                "reference": "346db1ea94a0f6ead225c2358af770bf33659cf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Imangazaliev/DiDOM/zipball/8f5200d80c62c525ab852f3af0683187e9ce0bbd",
-                "reference": "8f5200d80c62c525ab852f3af0683187e9ce0bbd",
+                "url": "https://api.github.com/repos/Imangazaliev/DiDOM/zipball/346db1ea94a0f6ead225c2358af770bf33659cf7",
+                "reference": "346db1ea94a0f6ead225c2358af770bf33659cf7",
                 "shasum": ""
             },
             "require": {
@@ -924,9 +924,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Imangazaliev/DiDOM/issues",
-                "source": "https://github.com/Imangazaliev/DiDOM/tree/1.17"
+                "source": "https://github.com/Imangazaliev/DiDOM/tree/1.18"
             },
-            "time": "2021-07-26T15:46:07+00:00"
+            "time": "2021-07-27T18:50:53+00:00"
         },
         {
             "name": "intervention/image",
@@ -2037,12 +2037,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mobicms/render.git",
-                "reference": "ac2baa4f3113d295a6b692fc3daba2c196d055be"
+                "reference": "861581627ba0670c38628db881d3bd38edf1b10d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mobicms/render/zipball/ac2baa4f3113d295a6b692fc3daba2c196d055be",
-                "reference": "ac2baa4f3113d295a6b692fc3daba2c196d055be",
+                "url": "https://api.github.com/repos/mobicms/render/zipball/861581627ba0670c38628db881d3bd38edf1b10d",
+                "reference": "861581627ba0670c38628db881d3bd38edf1b10d",
                 "shasum": ""
             },
             "require": {
@@ -2090,26 +2090,27 @@
                 "issues": "https://github.com/mobicms/render/issues",
                 "source": "https://github.com/mobicms/render/tree/develop"
             },
-            "time": "2021-07-20T23:52:48+00:00"
+            "time": "2021-07-28T06:59:45+00:00"
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.50.0",
+            "version": "2.51.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "f47f17d17602b2243414a44ad53d9f8b9ada5fdb"
+                "reference": "48ebff252df4d3b60ecb8e2583f79dfba6b56bc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f47f17d17602b2243414a44ad53d9f8b9ada5fdb",
-                "reference": "f47f17d17602b2243414a44ad53d9f8b9ada5fdb",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/48ebff252df4d3b60ecb8e2583f79dfba6b56bc8",
+                "reference": "48ebff252df4d3b60ecb8e2583f79dfba6b56bc8",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": "^7.1.8 || ^8.0",
                 "symfony/polyfill-mbstring": "^1.0",
+                "symfony/polyfill-php80": "^1.16",
                 "symfony/translation": "^3.4 || ^4.0 || ^5.0"
             },
             "require-dev": {
@@ -2128,8 +2129,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.x-dev",
-                    "dev-3.x": "3.x-dev"
+                    "dev-3.x": "3.x-dev",
+                    "dev-master": "2.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -2183,7 +2184,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-28T22:38:45+00:00"
+            "time": "2021-07-28T08:28:41+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -2796,6 +2797,7 @@
                     "Illuminate\\Pagination\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2808,8 +2810,8 @@
             "description": "The JohnCMS Pagination package.",
             "homepage": "https://johncms.com",
             "support": {
-                "source": "https://github.com/simba77/johncms-pagination/tree/2.0.1",
-                "issues": "https://github.com/simba77/johncms-pagination/issues"
+                "issues": "https://github.com/simba77/johncms-pagination/issues",
+                "source": "https://github.com/simba77/johncms-pagination/tree/2.0.1"
             },
             "time": "2021-07-27T19:43:09+00:00"
         },
