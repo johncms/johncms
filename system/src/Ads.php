@@ -36,7 +36,7 @@ class Ads
     /** @var null|array */
     private $ads;
 
-    public function __construct(PDO $pdo, Tools $tools, User $user)
+    public function __construct(PDO $pdo, Tools $tools, ?User $user)
     {
         $this->db = $pdo;
         $this->tools = $tools;

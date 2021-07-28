@@ -43,7 +43,7 @@ class UserStat
         $this->user = di(User::class);
         $this->config = di('config');
 
-        if ($this->user->isValid()) {
+        if ($this->user) {
             $this->processUser();
         } else {
             $this->processGuest();
@@ -73,7 +73,7 @@ class UserStat
             $karma_time = time();
         }
 
-        $update = $this->db->prepare(
+        /*$update = $this->db->prepare(
             'UPDATE `users` SET
             `lastdate` = ?,
             `sestime`  = ?,
@@ -93,7 +93,7 @@ class UserStat
                 $karma_time,
                 $this->user->id,
             ]
-        );
+        );*/
     }
 
     private function processGuest(): void

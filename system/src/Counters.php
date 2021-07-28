@@ -35,7 +35,7 @@ class Counters
     /** @var User */
     private $user;
 
-    public function __construct(PDO $pdo, Tools $tools, User $user, string $homeUrl)
+    public function __construct(PDO $pdo, Tools $tools, ?User $user = null, string $homeUrl = '')
     {
         $this->db = $pdo;
         $this->user = $user;
@@ -138,7 +138,7 @@ class Counters
             file_put_contents($file, json_encode(['top' => $top, 'msg' => $msg]), LOCK_EX);
         }
 
-        if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
+        if ($this->user && ($new_msg = $this->forumNew()) > 0) {
             $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/?act=new">+' . $new_msg . '</a></span>';
         }
 
@@ -157,7 +157,7 @@ class Counters
      */
     public function forumNew($mod = 0)
     {
-        if ($this->user->isValid()) {
+        if ($this->user) {
             $total = $this->db->query(
                 "SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
@@ -185,7 +185,7 @@ class Counters
     public function forumUnreadCount()
     {
         $total = 0;
-        if ($this->user->isValid()) {
+        if ($this->user) {
             $total = $this->db->query(
                 "SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
@@ -247,8 +247,8 @@ class Counters
             $users = $res['users'];
             $guests = $res['guests'];
         } else {
-            $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-            $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+            $users = 0; // = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+            $guests = 0; // = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 
             file_put_contents($file, json_encode(['users' => $users, 'guests' => $guests]), LOCK_EX);
         }
@@ -277,7 +277,7 @@ class Counters
     public function mail()
     {
         $new_mail = 0;
-        if (! $this->user->isValid()) {
+        if (! $this->user) {
             $new_mail = $this->db->query(
                 "SELECT COUNT(*) FROM `cms_mail`
                             LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id . "'
@@ -322,7 +322,7 @@ class Counters
             file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message]), LOCK_EX);
         }
 
-        if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
+        if ($this->user && ($new_msg = $this->forumNew()) > 0) {
             $new_messages = $new_msg;
         }
 
@@ -343,7 +343,7 @@ class Counters
     {
         $guestbook = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
         $admin_club = 0;
-        if ($this->user->rights >= 1) {
+        if ($this->user?->rights >= 1) {
             $admin_club = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
         }
 
@@ -421,9 +421,9 @@ class Counters
             $new = $cache['new'];
         } else {
             $total = (new Users\User())->approved()->count();
-            $new = (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count();
+            //$new = (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count();
 
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new ?? 0]), LOCK_EX);
         }
 
         return [
@@ -491,7 +491,7 @@ class Counters
     {
         $notifications = [];
 
-        if (! $this->user->isValid()) {
+        if (! $this->user) {
             return $notifications;
         }
 

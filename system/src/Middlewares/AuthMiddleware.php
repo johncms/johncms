@@ -33,7 +33,7 @@ class AuthMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $user = di(User::class);
-        if ((empty($this->rights) && $user->isValid()) || (! empty($this->rights) && in_array($user->rights, $this->rights))) {
+        if ((empty($this->rights) && $user !== null) || (! empty($this->rights) && in_array($user->rights, $this->rights))) {
             return $handler->handle($request);
         }
         return status_page(403);

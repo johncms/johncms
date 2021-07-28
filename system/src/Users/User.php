@@ -15,7 +15,7 @@ namespace Johncms\Users;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Casts\UserSettings;
+use Johncms\Users\Casts\UserSettings;
 
 /**
  * Class User
@@ -34,7 +34,7 @@ use Johncms\Casts\UserSettings;
  * @property int|null $gender
  * @property Carbon|null $birthday
  * @property Carbon|null $last_visit
- * @property UserSettings $settings
+ * @property UserConfig $settings
  *
  * @method Builder online() - Выбрать пользователей онлайн
  */
@@ -47,7 +47,7 @@ class User extends Model
     protected $casts = [
         'confirmed'       => 'bool',
         'email_confirmed' => 'bool',
-        'set_user'        => UserSettings::class,
+        'settings'        => UserSettings::class,
     ];
 
     protected $fillable = [

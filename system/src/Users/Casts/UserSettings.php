@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Casts;
+namespace Johncms\Users\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
@@ -28,9 +28,13 @@ class UserSettings implements CastsAttributes
      * @param array $attributes
      * @return UserConfig
      */
-    public function get($model, $key, $value, $attributes): UserConfig
+    public function get($model, string $key, $value, array $attributes): UserConfig
     {
-        return new UserConfig($value ?? '');
+        $settings = [];
+        if (! empty($value)) {
+            $settings = json_decode($value, true);
+        }
+        return new UserConfig($settings);
     }
 
     /**
@@ -42,8 +46,8 @@ class UserSettings implements CastsAttributes
      * @param array $attributes
      * @return string
      */
-    public function set($model, $key, $value, $attributes): string
+    public function set($model, string $key, $value, array $attributes): string
     {
-        return serialize((new Collection($value))->toArray());
+        return json_encode((new Collection($value))->toArray());
     }
 }

@@ -52,7 +52,7 @@ class NewsComments extends Model
         parent::__construct($attributes);
         /** @var User $user */
         $user = di(User::class);
-        $this->perPage = $user->config->kmess;
+        $this->perPage = $user?->settings->perPage ?? 10;
     }
 
     public function user(): HasOne

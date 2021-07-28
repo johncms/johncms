@@ -13,19 +13,18 @@ declare(strict_types=1);
 namespace Johncms\i18n;
 
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Users\User;
-use Johncms\Users\UserConfig;
 use Psr\Container\ContainerInterface;
 
 class TranslatorServiceFactory
 {
     public function __invoke(ContainerInterface $container): Translator
     {
-        /** @var \Johncms\Http\Request $request */
+        /** @var Request $request */
         $request = $container->get(Request::class);
 
-        /** @var UserConfig $userConfig */
-        $userConfig = $container->get(User::class)->config;
+        $userLng = $container->get(User::class)?->settings ?? '';
 
         // Configure the translator
         $config = $container->get('config');
@@ -33,7 +32,7 @@ class TranslatorServiceFactory
         $translator = new Translator();
         $translator->setLocale(
             $this->determineLocale(
-                $userConfig->lng,
+                $userLng,
                 $config['johncms']['lng'] ?? 'en',
                 $config['johncms']['lng_list'] ?? [],
                 $request->getPost('setlng')
@@ -45,14 +44,15 @@ class TranslatorServiceFactory
 
     private function determineLocale(string $userLng, string $systemLng, array $lngList, string $setLng = null): string
     {
+        $session = di(Session::class);
         if (null !== $setLng && array_key_exists($setLng, $lngList)) {
             $locale = trim($setLng);
-            $_SESSION['lng'] = $locale;
-        } elseif (isset($_SESSION['lng']) && array_key_exists($_SESSION['lng'], $lngList)) {
-            $locale = $_SESSION['lng'];
+            $session->set('lng', $locale);
+        } elseif ($session->has('lng') && array_key_exists($session->get('lng'), $lngList)) {
+            $locale = $session->get('lng');
         } elseif (array_key_exists($userLng, $lngList)) {
             $locale = $userLng;
-            $_SESSION['lng'] = $locale;
+            $session->set('lng', $locale);
         } else {
             $locale = $systemLng;
         }

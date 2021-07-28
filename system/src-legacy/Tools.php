@@ -60,7 +60,7 @@ class Tools
         $this->config = $config['johncms'] ?? [];
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(User::class);
-        $this->userConfig = $this->user->config;
+        $this->userConfig = $this->user?->config;
 
         return $this;
     }

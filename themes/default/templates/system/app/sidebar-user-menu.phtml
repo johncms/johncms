@@ -32,7 +32,7 @@
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
         <ul class="nav nav__vertical pl-2 pt-0">
             <!-- Выпадающее меню для пользователей -->
-            <?php if ($user->isValid()): ?>
+            <?php if ($user): ?>
                 <li>
                     <a href="/notifications/">
                         <svg class="icon text-info">
