@@ -36,22 +36,18 @@ class Session
             session_name(self::SESSION_NAME);
             session_start();
         }
+
+        if (! isset($_SESSION) || PHP_SAPI === 'cli') {
+            $_SESSION = [];
+        }
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
-    public function flash(string $key, $value): void
+    public function flash(string $key, mixed $value): void
     {
         $_SESSION[self::FLASH][$key] = $value;
     }
 
-    /**
-     * @param string $key
-     * @return mixed|null
-     */
-    public function getFlash(string $key)
+    public function getFlash(string $key): mixed
     {
         if (isset($_SESSION[self::FLASH][$key])) {
             $value = $_SESSION[self::FLASH][$key];
@@ -64,10 +60,10 @@ class Session
     /**
      * @param string $key
      * @param mixed|null $default
-     * @return mixed|null
+     * @return mixed
      * @psalm-suppress NullReference
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return Arr::get($_SESSION, $key, $default);
     }
@@ -77,7 +73,7 @@ class Session
      * @param mixed $value
      * @psalm-suppress NullReference
      */
-    public function set(string $key, $value): void
+    public function set(string $key, mixed $value): void
     {
         Arr::set($_SESSION, $key, $value);
     }
