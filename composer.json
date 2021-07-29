@@ -56,7 +56,7 @@
         "league/flysystem": "^2.2",
         "league/route": "^5.1",
         "mobicms/captcha": "^3.1",
-        "mobicms/render": "dev-develop",
+        "mobicms/render": "^3.0",
         "nikic/fast-route": "^1.3",
         "simba77/ckeditor-media-embed": "^1.1",
         "simba77/johncms-pagination": "^2.0"
