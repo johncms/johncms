@@ -2,7 +2,7 @@
 /**
  * @var string $locale
  * @var Johncms\System\Legacy\Tools $tools
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  */
 
 ?>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div>
-                <?= ($user->id ? $user->name : d__('system', 'Log In')) ?>
+                <?= ($user ? $user->name : d__('system', 'Log In')) ?>
             </div>
         </div>
         <div>

@@ -1,4 +1,4 @@
-<?php if (($user->rights >= 7 && DEBUG) || DEBUG_FOR_ALL): ?>
+<?php if (($user?->isAdmin() && DEBUG) || DEBUG_FOR_ALL): ?>
     <?php
     $connection = \Illuminate\Database\Capsule\Manager::connection();
     $query_log = $connection->getQueryLog();

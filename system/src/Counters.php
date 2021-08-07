@@ -455,7 +455,7 @@ class Counters
             file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
         }
 
-        if ($this->user->rights >= 6 && $new_adm) {
+        if ($this->user?->isAdmin() && $new_adm) {
             $newcount = $new_adm;
         } elseif ($new) {
             $newcount = $new;
