@@ -17,9 +17,13 @@ use Johncms\Cache;
 class UserRoleChecker
 {
     private ?array $userRoles = null;
+    private string $cacheId;
+    private Cache $cache;
 
     public function __construct(private User $user)
     {
+        $this->cacheId = 'user_roles_' . $this->user->id;
+        $this->cache = di(Cache::class);
     }
 
     public function getUserRoles()
@@ -28,9 +32,7 @@ class UserRoleChecker
             return $this->userRoles;
         }
 
-        $cacheId = 'user_roles_' . $this->user->id;
-        $cache = di(Cache::class);
-        $this->userRoles = $cache->remember($cacheId, 60, function () {
+        $this->userRoles = $this->cache->remember($this->cacheId, 60, function () {
             return $this->user->roles()->get()->toArray();
         });
 
@@ -49,5 +51,16 @@ class UserRoleChecker
         $intersectedRoles = array_intersect($roles, $roleNames);
 
         return ! empty($intersectedRoles);
+    }
+
+    public function hasAnyRole(): bool
+    {
+        return ! empty($this->getUserRoles());
+    }
+
+    public function clearCache()
+    {
+        $this->cache->forget($this->cacheId);
+        $this->userRoles = null;
     }
 }

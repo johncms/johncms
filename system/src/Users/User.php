@@ -113,6 +113,11 @@ class User extends Model
         return $this;
     }
 
+    public function getRoleChecker(): UserRoleChecker
+    {
+        return $this->userRoleChecker;
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'role_user');
@@ -121,5 +126,15 @@ class User extends Model
     public function hasRole(array|string $roles): bool
     {
         return $this->userRoleChecker->hasRole($roles);
+    }
+
+    public function hasAnyRole(): bool
+    {
+        return $this->userRoleChecker->hasAnyRole();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->userRoleChecker->hasRole('admin');
     }
 }

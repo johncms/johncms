@@ -55,12 +55,21 @@ class UserRoleCheckerTest extends AbstractTestCase
     /**
      * @covers \Johncms\Users\User::hasRole
      * @covers \Johncms\Users\UserRoleChecker::hasRole
+     * @covers \Johncms\Users\UserRoleChecker::hasAnyRole
+     * @covers \Johncms\Users\User::hasAnyRole
+     * @covers \Johncms\Users\User::isAdmin
+     * @covers \Johncms\Users\UserRoleChecker::clearCache
+     * @covers \Johncms\Users\User::getRoleChecker
      */
     public function testHasRole()
     {
         // Test create
         $created_user = $this->userManager->create($this->userFields);
+        $this->assertFalse($created_user->hasAnyRole());
+        $this->assertFalse($created_user->isAdmin());
+
         $created_user->roles()->sync([1]);
+        $created_user->getRoleChecker()->clearCache();
 
         $found_user = (new User())->find($created_user->id);
 
@@ -68,5 +77,7 @@ class UserRoleCheckerTest extends AbstractTestCase
         $this->assertFalse($found_user->hasRole('moderator'));
         $this->assertFalse($found_user->hasRole(['moderator', 'testRole']));
         $this->assertTrue($found_user->hasRole(['moderator', 'testRole', 'admin']));
+        $this->assertTrue($found_user->hasAnyRole());
+        $this->assertTrue($found_user->isAdmin());
     }
 }
