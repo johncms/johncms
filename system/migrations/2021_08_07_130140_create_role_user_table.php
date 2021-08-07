@@ -19,7 +19,7 @@ class CreateRoleUserTable extends Migration
         $schema->create('role_user', function (Blueprint $table) {
             $table->unsignedInteger('role_id');
             $table->foreignId('user_id');
-            $table->unique(['role_id', 'user_id'], 'role_user');
+            $table->unique(['role_id', 'user_id'], 'role_user_index');
         });
     }
 

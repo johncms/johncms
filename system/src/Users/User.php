@@ -15,6 +15,7 @@ namespace Johncms\Users;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Johncms\Users\Casts\UserSettings;
 
 /**
@@ -72,10 +73,13 @@ class User extends Model
         'last_visit',
     ];
 
+    protected UserRoleChecker $userRoleChecker;
+
     public function __construct(array $attributes = [])
     {
         $this->setUpModel();
         parent::__construct($attributes);
+        $this->userRoleChecker = new UserRoleChecker($this);
     }
 
     private function setUpModel(): void
@@ -107,5 +111,15 @@ class User extends Model
         }
 
         return $this;
+    }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function hasRole(array|string $roles): bool
+    {
+        return $this->userRoleChecker->hasRole($roles);
     }
 }
