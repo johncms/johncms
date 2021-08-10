@@ -86,10 +86,11 @@ class Bbcode
         $replace = array_column($replacements, 'data');
         $var = preg_replace($search, $replace, $var);
 
-        $var = preg_replace('#\[timestamp\](.+?)\[/timestamp]#si', '$2', $var);
         $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
 
         $replace = [
+            '[timestamp]'  => '',
+            '[/timestamp]'  => '',
             '[youtube]'  => '',
             '[/youtube]' => '',
             '[php]'      => '',
