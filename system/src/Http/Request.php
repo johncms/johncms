@@ -43,66 +43,27 @@ class Request extends ServerRequest
             ->withUploadedFiles(self::normalizeFiles($_FILES));
     }
 
-    /**
-     * @param string $name
-     * @param null|mixed $default
-     * @param int $filter
-     * @param mixed $options
-     * @return mixed|null
-     */
-    public function getQuery(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
+    public function getQuery(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
     {
-        return $this->filterVar($name, $this->getQueryParams(), $filter, $options)
-            ?? $default;
+        return $this->filterVar($name, $this->getQueryParams(), $filter, $options) ?? $default;
     }
 
-    /**
-     * @param string $name
-     * @param null|mixed $default
-     * @param int $filter
-     * @param mixed $options
-     * @return mixed|null
-     */
-    public function getPost(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
+    public function getPost(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
     {
-        return $this->filterVar($name, $this->getParsedBody(), $filter, $options)
-            ?? $default;
+        return $this->filterVar($name, $this->getParsedBody(), $filter, $options) ?? $default;
     }
 
-    /**
-     * @param string $name
-     * @param null|mixed $default
-     * @param int $filter
-     * @param mixed $options
-     * @return mixed|null
-     */
-    public function getCookie(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
+    public function getCookie(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
     {
-        return $this->filterVar($name, $this->getCookieParams(), $filter, $options)
-            ?? $default;
+        return $this->filterVar($name, $this->getCookieParams(), $filter, $options) ?? $default;
     }
 
-    /**
-     * @param string $name
-     * @param null|mixed $default
-     * @param int $filter
-     * @param mixed $options
-     * @return mixed|null
-     */
-    public function getServer(string $name, $default = null, int $filter = FILTER_DEFAULT, $options = 0)
+    public function getServer(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
     {
-        return $this->filterVar($name, $this->getServerParams(), $filter, $options)
-            ?? $default;
+        return $this->filterVar($name, $this->getServerParams(), $filter, $options) ?? $default;
     }
 
-    /**
-     * @param string|int $key
-     * @param mixed $var
-     * @param int $filter
-     * @param mixed $options
-     * @return mixed|null
-     */
-    private function filterVar($key, $var, int $filter, $options)
+    private function filterVar(int|string $key, mixed $var, int $filter, mixed $options): mixed
     {
         if (is_array($var) && isset($var[$key])) {
             if (is_array($var[$key])) {
