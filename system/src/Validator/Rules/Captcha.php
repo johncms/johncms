@@ -8,49 +8,32 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 namespace Johncms\Validator\Rules;
 
+use Johncms\Http\Session;
 use Laminas\Validator\AbstractValidator;
 
 class Captcha extends AbstractValidator
 {
     public const CAPTCHA = 'captcha';
+    public const SESSION_FIELD = 'code';
 
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::CAPTCHA => "The security code is not correct",
     ];
-
-    /**
-     * @var string
-     */
-    private $sessionField = 'code';
 
     public function isValid($value): bool
     {
         $this->setValue($value);
         $isValid = true;
-
-        if (
-            ! isset($_SESSION[$this->sessionField]) ||
-            empty($_SESSION[$this->sessionField]) ||
-            strtolower($_SESSION[$this->sessionField]) !== strtolower($value)
-        ) {
+        $code = di(Session::class)->get(Captcha::SESSION_FIELD);
+        if (empty($code) || strtolower($code) !== strtolower($value)) {
             $this->error(self::CAPTCHA);
             $isValid = false;
         }
 
         return $isValid;
-    }
-
-    /**
-     * Set the session field name
-     *
-     * @param $value
-     * @return $this
-     */
-    public function setSessionField($value): Captcha
-    {
-        $this->sessionField = $value;
-        return $this;
     }
 }

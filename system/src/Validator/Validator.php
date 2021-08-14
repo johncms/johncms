@@ -70,7 +70,7 @@ class Validator
 {
     public const VALIDATION_ERRORS_KEY = '_validationErrors';
 
-    protected $rules = [
+    protected array $rules = [
         'Barcode'          => Barcode::class,
         'Between'          => Between::class,
         'Callback'         => Callback::class,
@@ -123,15 +123,15 @@ class Validator
         'Ban'              => Ban::class,
     ];
 
-    private $errors = [];
+    private array $errors = [];
 
-    private $messages;
+    private array $messages;
 
-    private $data;
+    private array $data;
 
-    private $rule_settings;
+    private array $rule_settings;
 
-    private $breakChainOnFailure = true;
+    private bool $breakChainOnFailure = true;
 
     public function __construct(array $data, array $rules, array $messages = [])
     {

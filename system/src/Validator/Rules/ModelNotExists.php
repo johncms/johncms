@@ -8,6 +8,8 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 namespace Johncms\Validator\Rules;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,15 +19,15 @@ class ModelNotExists extends AbstractValidator
 {
     public const ERROR_RECORD_FOUND = 'modelExists';
 
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::ERROR_RECORD_FOUND => "A record matching the input was found",
     ];
 
-    private $model;
+    private string $model;
 
-    private $field;
+    private string $field;
 
-    private $exclude;
+    private mixed $exclude = null;
 
     public function isValid($value): bool
     {
@@ -43,7 +45,7 @@ class ModelNotExists extends AbstractValidator
             $model->where($this->field, $value)->firstOrFail();
             $this->error(self::ERROR_RECORD_FOUND);
             $isValid = false;
-        } catch (ModelNotFoundException $exception) {
+        } catch (ModelNotFoundException) {
             $isValid = true;
         }
 
@@ -53,10 +55,10 @@ class ModelNotExists extends AbstractValidator
     /**
      * Set exclude parameter
      *
-     * @param $value
+     * @param mixed $value
      * @return ModelNotExists
      */
-    public function setExclude($value): ModelNotExists
+    public function setExclude(mixed $value): ModelNotExists
     {
         $this->exclude = $value;
         return $this;
@@ -65,10 +67,10 @@ class ModelNotExists extends AbstractValidator
     /**
      * Set model parameter
      *
-     * @param $value
+     * @param string $value
      * @return ModelNotExists
      */
-    public function setModel($value): ModelNotExists
+    public function setModel(string $value): ModelNotExists
     {
         $this->model = $value;
         return $this;
@@ -77,10 +79,10 @@ class ModelNotExists extends AbstractValidator
     /**
      * Set field parameter
      *
-     * @param $value
+     * @param string $value
      * @return ModelNotExists
      */
-    public function setField($value): ModelNotExists
+    public function setField(string $value): ModelNotExists
     {
         $this->field = $value;
         return $this;

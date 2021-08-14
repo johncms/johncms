@@ -8,6 +8,8 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 namespace Johncms\Validator\Rules;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,13 +19,13 @@ class ModelExists extends AbstractValidator
 {
     public const NOT_FOUND = 'modelNotFound';
 
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_FOUND => "No record matching the input was found",
     ];
 
-    private $model;
+    private string $model;
 
-    private $field;
+    private string $field;
 
     public function isValid($value): bool
     {
@@ -33,7 +35,7 @@ class ModelExists extends AbstractValidator
         try {
             $model = (new $this->model());
             $model->where($this->field, $value)->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
+        } catch (ModelNotFoundException) {
             $this->error(self::NOT_FOUND);
             $isValid = false;
         }
@@ -44,10 +46,10 @@ class ModelExists extends AbstractValidator
     /**
      * Set model parameter
      *
-     * @param $value
+     * @param string $value
      * @return $this
      */
-    public function setModel($value): ModelExists
+    public function setModel(string $value): ModelExists
     {
         $this->model = $value;
         return $this;
@@ -56,10 +58,10 @@ class ModelExists extends AbstractValidator
     /**
      * Set field parameter
      *
-     * @param $value
+     * @param string $value
      * @return $this
      */
-    public function setField($value): ModelExists
+    public function setField(string $value): ModelExists
     {
         $this->field = $value;
         return $this;

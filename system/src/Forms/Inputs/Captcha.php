@@ -25,7 +25,7 @@ class Captcha extends AbstractInput
     public function generateCode(): Captcha
     {
         $code = (string) new Code();
-        di(Session::class)->set('code', $code);
+        di(Session::class)->set(\Johncms\Validator\Rules\Captcha::SESSION_FIELD, $code);
         $this->code = $code;
         $this->image = new Image($code);
         return $this;

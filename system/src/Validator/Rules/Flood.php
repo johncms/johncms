@@ -8,6 +8,8 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 namespace Johncms\Validator\Rules;
 
 use Johncms\System\Legacy\Tools;
@@ -17,7 +19,7 @@ class Flood extends AbstractValidator
 {
     public const FLOOD = 'flood';
 
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::FLOOD => "You cannot add the message so often. Please, wait %value% seconds.",
     ];
 
