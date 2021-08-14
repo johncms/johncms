@@ -36,10 +36,16 @@ class Request extends ServerRequest
         $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? str_replace('HTTP/', '', $_SERVER['SERVER_PROTOCOL']) : '1.1';
         $serverRequest = new self($method, $uri, /** @scrutinizer ignore-type */ $headers, $body, $protocol, $_SERVER);
 
+        $post = $_POST;
+        $sessionPost = di(Session::class)->getFlash('_POST');
+        if ($sessionPost !== null) {
+            $post = array_merge($sessionPost, $post);
+        }
+
         return $serverRequest
             ->withCookieParams($_COOKIE)
             ->withQueryParams($_GET)
-            ->withParsedBody($_POST)
+            ->withParsedBody($post)
             ->withUploadedFiles(self::normalizeFiles($_FILES));
     }
 
