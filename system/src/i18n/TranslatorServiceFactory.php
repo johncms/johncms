@@ -24,7 +24,7 @@ class TranslatorServiceFactory
         /** @var Request $request */
         $request = $container->get(Request::class);
 
-        $userLng = $container->get(User::class)?->settings ?? '';
+        $userLng = $container->get(User::class)?->settings->lang ?? '';
 
         // Configure the translator
         $config = $container->get('config');

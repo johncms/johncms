@@ -8,6 +8,11 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-return function (\League\Route\Router $router) {
-    $router->get('/', [\Homepage\Controllers\HomepageController::class, 'index'])->setName('homepage.index');
-};
+declare(strict_types=1);
+
+namespace Johncms\Forms\Inputs;
+
+class InputPassword extends AbstractInput
+{
+    public string $type = 'password';
+}

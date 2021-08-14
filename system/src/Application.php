@@ -61,6 +61,7 @@ class Application
 
     public function handleRequest(): void
     {
+        $this->container->bind(RouterFactory::class, RouterFactory::class, true);
         $router = $this->container->get(RouterFactory::class);
         (new SapiEmitter())->emit($router->dispatch());
     }

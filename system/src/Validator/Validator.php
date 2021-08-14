@@ -68,6 +68,8 @@ use Laminas\Validator\ValidatorChain;
 
 class Validator
 {
+    public const VALIDATION_ERRORS_KEY = '_validationErrors';
+
     protected $rules = [
         'Barcode'          => Barcode::class,
         'Between'          => Between::class,

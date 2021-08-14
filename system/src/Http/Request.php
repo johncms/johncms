@@ -17,6 +17,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Request extends ServerRequest
 {
+    public const POST_SESSION_KEY = '_POST';
+
     /**
      * Return a ServerRequest populated with superglobals:
      * $_GET
@@ -37,7 +39,7 @@ class Request extends ServerRequest
         $serverRequest = new self($method, $uri, /** @scrutinizer ignore-type */ $headers, $body, $protocol, $_SERVER);
 
         $post = $_POST;
-        $sessionPost = di(Session::class)->getFlash('_POST');
+        $sessionPost = di(Session::class)->getFlash(Request::POST_SESSION_KEY);
         if ($sessionPost !== null) {
             $post = array_merge($sessionPost, $post);
         }

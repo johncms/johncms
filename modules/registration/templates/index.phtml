@@ -1,129 +1,32 @@
-<?php $this->layout(
-    'system::layout/default',
-    [
-        'title'      => __('Registration'),
-        'page_title' => __('Registration'),
-    ]
-) ?>
+<?php
 
-<form method="post">
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var array $data
+ * @var array $config
+ * @noinspection PhpUnhandledExceptionInspection
+ */
+
+$this->layout('system::layout/default');
+?>
+<form method="post" class="mb-3" action="<?= $data['storeUrl'] ?>">
     <h4><?= __('Registration') ?></h4>
 
     <?php if ($config['mod_reg'] === 1): ?>
         <div class="alert alert-warning"><?= __('You can get authorized on the site after confirmation of your registration.') ?></div>
     <?php endif ?>
 
-    <?php if (! empty($errors['name_lat'])): ?>
-        <div class="alert alert-danger"><?= implode(', ', $errors['name_lat']) ?></div>
-    <?php endif ?>
-
     <div class="alert alert-info">
         <?= __('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') ?>
     </div>
 
-    <div class="form-group">
-        <label for="name"><?= __('Choose Nickname') ?></label>
-        <input type="text"
-               class="form-control <?= (isset($errors['name']) ? 'is-invalid' : '') ?>"
-               maxlength="20"
-               minlength="2"
-               name="name"
-               id="name"
-               required
-               value="<?= $this->e($fields['name']) ?>"
-               placeholder="<?= __('Username') ?>"
-        >
-        <?php if (isset($errors['name'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['name']) ?></div>
-        <?php endif ?>
-        <div class="text-muted small">
-            <?= __('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)') ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="password"><?= __('Assign a password') ?></label>
-        <input type="password"
-               class="form-control <?= (isset($errors['password']) ? 'is-invalid' : '') ?>"
-               maxlength="20"
-               minlength="2"
-               name="password"
-               id="password"
-               required
-               value="<?= $this->e($fields['password']) ?>"
-               placeholder="<?= __('Assign a password') ?>"
-        >
-        <?php if (isset($errors['password'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['password']) ?></div>
-        <?php endif ?>
-    </div>
-    <?php if (! empty($config['user_email_required']) || ! empty($config['user_email_confirmation'])): ?>
-        <div class="form-group">
-            <label for="email"><?= __('E-mail') ?></label>
-            <input type="email"
-                   class="form-control <?= (isset($errors['email']) ? 'is-invalid' : '') ?>"
-                   name="email"
-                   id="email"
-                   required
-                   value="<?= $this->e($fields['email']) ?>"
-                   placeholder="<?= __('E-mail') ?>"
-            >
-            <?php if (isset($errors['email'])): ?>
-                <div class="invalid-feedback"><?= implode('<br>', $errors['email']) ?></div>
-            <?php endif ?>
-        </div>
-    <?php endif ?>
-    <div class="form-group">
-        <label for="gender"><?= __('Select Gender') ?></label>
-        <select id="gender" name="sex" class="form-control <?= (isset($errors['sex']) ? 'is-invalid' : '') ?>">
-            <option value="?">- ? -</option>
-            <option value="m"<?= ($fields['sex'] === 'm' ? ' selected="selected"' : '') ?>><?= __('Man') ?></option>
-            <option value="zh"<?= ($fields['sex'] === 'zh' ? ' selected="selected"' : '') ?>><?= __('Woman') ?></option>
-        </select>
-        <?php if (isset($errors['sex'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['sex']) ?></div>
-        <?php endif ?>
-    </div>
-    <div class="form-group">
-        <label for="imname"><?= __('Your name') ?></label>
-        <input type="text"
-               class="form-control <?= (isset($errors['imname']) ? 'is-invalid' : '') ?>"
-               maxlength="20"
-               name="imname"
-               id="imname"
-               value="<?= $this->e($fields['imname']) ?>"
-               placeholder="<?= __('Your name') ?>"
-        >
-        <?php if (isset($errors['imname'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['imname']) ?></div>
-        <?php endif ?>
-    </div>
-    <div class="form-group">
-        <label for="about"><?= __('Tell us a little about yourself') ?></label>
-        <textarea class="form-control <?= (isset($errors['about']) ? 'is-invalid' : '') ?>" name="about" id="about" rows="3"><?= $this->e($fields['about']) ?></textarea>
-        <?php if (isset($errors['about'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['about']) ?></div>
-        <?php endif ?>
-    </div>
+    <?= $this->fetch(
+        'system::forms/simple_form',
+        [
+            'fields' => $data['formFields'],
+            'errors' => $data['validationErrors'],
+        ]
+    ); ?>
 
-    <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
-    <div class="form-group">
-        <label for="captcha"><?= __('Enter verification code') ?></label>
-        <input type="text"
-               class="form-control <?= (isset($errors['captcha']) ? 'is-invalid' : '') ?>"
-               maxlength="6"
-               name="captcha"
-               id="captcha"
-               autocomplete="off"
-               required
-               placeholder="<?= __('Verification code') ?>"
-        >
-        <?php if (isset($errors['captcha'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['captcha']) ?></div>
-        <?php endif ?>
-        <div class="text-muted small">
-            <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>
-        </div>
-    </div>
-
-    <input type="submit" name="submit" class="btn btn-primary" value="<?= __('Registration') ?>">
+    <button type="submit" name="submit" class="btn btn-primary"><?= __('Registration') ?></button>
 </form>
