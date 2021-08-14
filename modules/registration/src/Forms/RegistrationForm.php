@@ -12,34 +12,17 @@ declare(strict_types=1);
 
 namespace Registration\Forms;
 
-use Johncms\Exceptions\ValidationException;
-use Johncms\Forms\Inputs\AbstractInput;
+use Johncms\Forms\AbstractForm;
 use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
-use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 use Laminas\Validator\Hostname;
 
-class RegistrationForm
+class RegistrationForm extends AbstractForm
 {
-    /** @var AbstractInput[] */
-    protected array $formFields = [];
-
-    protected ?array $requestValues = null;
-
-    protected Request $request;
-
-    public function __construct()
+    protected function prepareFormFields(): array
     {
-        $this->request = di(Request::class);
-        $this->prepareFormFields();
-    }
-
-    protected function prepareFormFields(): void
-    {
-        $this->formFields = [
+        return [
             'login'    => (new InputText())
                 ->setLabel(__('Login'))
                 ->setPlaceholder(__('Enter your login'))
@@ -88,55 +71,5 @@ class RegistrationForm
                     ]
                 ),
         ];
-    }
-
-    public function getValue(string $fieldName, mixed $default = null)
-    {
-        return $this->request->getPost($fieldName, $default);
-    }
-
-    public function getValidationErrors(): array
-    {
-        $session = di(Session::class);
-        return (array) $session->getFlash(Validator::VALIDATION_ERRORS_KEY);
-    }
-
-    public function getFormFields(): array
-    {
-        return $this->formFields;
-    }
-
-    public function validate(): void
-    {
-        $rules = $this->collectValidationRules();
-        $values = $this->getRequestValues();
-        $validator = new Validator($values, $rules);
-        if (! $validator->isValid()) {
-            throw ValidationException::withErrors($validator->getErrors());
-        }
-    }
-
-    protected function collectValidationRules(): array
-    {
-        $rules = [];
-        foreach ($this->formFields as $key => $formField) {
-            if (! empty($formField->validationRules)) {
-                $rules[$key] = $formField->validationRules;
-            }
-        }
-        return $rules;
-    }
-
-    public function getRequestValues(): array
-    {
-        if ($this->requestValues !== null) {
-            return $this->requestValues;
-        }
-
-        $this->requestValues = [];
-        foreach ($this->formFields as $key => $formField) {
-            $this->requestValues[$key] = $this->request->getPost($formField->name);
-        }
-        return $this->requestValues;
     }
 }

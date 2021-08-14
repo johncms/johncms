@@ -20,11 +20,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthMiddleware implements MiddlewareInterface
 {
-    protected array $rights;
+    protected array $roles;
 
-    public function __construct(array $rights = [])
+    public function __construct(array $roles = [])
     {
-        $this->rights = $rights;
+        $this->roles = $roles;
     }
 
     /**
@@ -33,7 +33,7 @@ class AuthMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $user = di(User::class);
-        if ((empty($this->rights) && $user !== null) || (! empty($this->rights) && in_array($user->rights, $this->rights))) {
+        if ((empty($this->roles) && $user !== null) || (! empty($this->roles) && $user?->hasRole($this->roles))) {
             return $handler->handle($request);
         }
         return status_page(403);

@@ -14,6 +14,7 @@ use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\RedirectResponse;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
+use Johncms\Users\User;
 use Johncms\Users\UserManager;
 use Registration\Forms\RegistrationForm;
 use Throwable;
@@ -21,6 +22,16 @@ use Throwable;
 class RegistrationController extends BaseController
 {
     protected string $module_name = 'registration';
+
+    public function __construct()
+    {
+        // If the user is authorized, we redirect him to the homepage
+        $user = di(User::class);
+        if ($user !== null) {
+            redirect(route('homepage.index'));
+        }
+        parent::__construct();
+    }
 
     /**
      * @throws Throwable
@@ -57,8 +68,8 @@ class RegistrationController extends BaseController
             // Create user
             $user = $userManager->create($registrationForm->getRequestValues());
             // Authorize the user
-            $session_provider = di(SessionAuthProvider::class);
-            $session_provider->store($user);
+            $sessionProvider = di(SessionAuthProvider::class);
+            $sessionProvider->store($user);
             return (new RedirectResponse(route('homepage.index')));
         } catch (ValidationException $validationException) {
             // Redirect to the registration form if the form is invalid
