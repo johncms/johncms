@@ -69,9 +69,9 @@ abstract class AbstractForm
     protected function collectValidationRules(): array
     {
         $rules = [];
-        foreach ($this->formFields as $key => $formField) {
+        foreach ($this->formFields as $formField) {
             if (! empty($formField->validationRules)) {
-                $rules[$key] = $formField->validationRules;
+                $rules[$formField->name] = $formField->validationRules;
             }
         }
         return $rules;
@@ -84,8 +84,8 @@ abstract class AbstractForm
         }
 
         $this->requestValues = [];
-        foreach ($this->formFields as $key => $formField) {
-            $this->requestValues[$key] = $this->request->getPost($formField->name);
+        foreach ($this->formFields as $formField) {
+            $this->requestValues[$formField->name] = $this->request->getPost($formField->name);
         }
         return $this->requestValues;
     }

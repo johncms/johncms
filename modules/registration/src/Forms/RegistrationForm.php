@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Registration\Forms;
 
 use Johncms\Forms\AbstractForm;
+use Johncms\Forms\Inputs\Captcha;
 use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Users\User;
@@ -70,6 +71,11 @@ class RegistrationForm extends AbstractForm
                         'StringLength' => ['min' => 6],
                     ]
                 ),
+            'captcha'  => (new Captcha())
+                ->setLabel(__('Enter verification code'))
+                ->setPlaceholder(__('Verification code'))
+                ->setNameAndId('captcha')
+                ->setValidationRules(['Captcha']),
         ];
     }
 }

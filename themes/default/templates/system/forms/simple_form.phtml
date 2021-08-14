@@ -25,6 +25,9 @@ if (! empty($fields)) {
             case 'textarea':
                 echo $this->fetch('system::forms/textarea', ['field' => $field, 'errors' => $errors]);
                 break;
+            case 'captcha':
+                echo $this->fetch('system::forms/captcha', ['field' => $field, 'errors' => $errors]);
+                break;
         }
     }
 }
