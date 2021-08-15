@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Aura\Autoload\Loader;
+use JetBrains\PhpStorm\NoReturn;
 use Johncms\Container\ContainerFactory;
 use Johncms\Http\ResponseFactory;
 use Johncms\Router\RouterFactory;
@@ -77,6 +78,7 @@ function pageNotFound(
  * @param string|null $title
  * @param string|null $message
  * @return ResponseInterface
+ * @throws Throwable
  */
 function status_page(int $status_code, ?string $template = null, ?string $title = null, ?string $message = null): ResponseInterface
 {
@@ -117,9 +119,9 @@ if (! function_exists('d')) {
      * Обёртка над функцией print_r
      *
      * @param mixed $var
-     * @param bool $to_file
+     * @param int $to_file
      */
-    function d($var = false, $to_file = false): void
+    function d(mixed $var = false, int $to_file = 0): void
     {
         if ($to_file) {
             $file = fopen(DATA_PATH . 'debug.log', 'a');
@@ -137,7 +139,7 @@ if (! function_exists('d')) {
 /**
  * Convert bytes to KB/MB/GB/TB
  *
- * @param $bytes
+ * @param int $bytes
  * @return string
  */
 function format_size(int $bytes): string
@@ -173,6 +175,7 @@ function module_lib_loader($module_name, $dir = 'lib')
 
 function checkRedirect()
 {
+    /** @var array<string, string> $redirects */
     $redirects = require CONFIG_PATH . 'redirects.php';
     if (array_key_exists($_SERVER['REQUEST_URI'], $redirects)) {
         http_response_code(301);
@@ -185,6 +188,7 @@ function checkRedirect()
  * @param string $url
  * @return never-return
  */
+#[NoReturn]
 function redirect(string $url)
 {
     header('Location: ' . $url);
@@ -211,7 +215,7 @@ function route(string $route_name, array $params = []): string
  * @param mixed $default
  * @return mixed
  */
-function config($key = null, $default = null)
+function config(mixed $key = null, mixed $default = null): mixed
 {
     /** @var array $config */
     $config = di('config');

@@ -12,7 +12,7 @@ $this->layout('system::layout/default');
 <form method="post" class="mb-3" action="<?= $data['storeUrl'] ?>">
     <h4><?= __('Registration') ?></h4>
 
-    <?php if ($config['mod_reg'] === 1): ?>
+    <?php if ($data['moderation']): ?>
         <div class="alert alert-warning"><?= __('You can get authorized on the site after confirmation of your registration.') ?></div>
     <?php endif ?>
 

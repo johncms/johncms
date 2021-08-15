@@ -36,6 +36,16 @@ class UserManager
     {
         $this->checkFields($fields);
         $fields['password'] = password_hash($fields['password'], PASSWORD_DEFAULT);
+        if (array_key_exists('email', $fields) && empty($fields['email'])) {
+            $fields['email'] = null;
+        }
+        if (array_key_exists('login', $fields) && empty($fields['login'])) {
+            $fields['login'] = null;
+        }
+        if (array_key_exists('phone', $fields) && empty($fields['phone'])) {
+            $fields['phone'] = null;
+        }
+
         return (new User())->create($fields);
     }
 

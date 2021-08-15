@@ -23,43 +23,53 @@ class RegistrationForm extends AbstractForm
 {
     protected function prepareFormFields(): array
     {
-        return [
-            'login'    => (new InputText())
-                ->setLabel(__('Login'))
-                ->setPlaceholder(__('Enter your login'))
-                ->setNameAndId('login')
-                ->setHelpText(__('Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers.', 3, 50))
-                ->setValue($this->getValue('login'))
-                ->setValidationRules(
-                    [
-                        'NotEmpty',
-                        'StringLength'   => ['min' => 3, 'max' => 50],
-                        'ModelNotExists' => [
-                            'model' => User::class,
-                            'field' => 'login',
-                        ],
-                    ]
-                ),
-            'email'    => (new InputText())
+        $fields = [];
+        $fields['login'] = (new InputText())
+            ->setLabel(__('Login'))
+            ->setPlaceholder(__('Enter your login'))
+            ->setNameAndId('login')
+            ->setHelpText(__('Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers.', 3, 50))
+            ->setValue($this->getValue('login'))
+            ->setValidationRules(
+                [
+                    'NotEmpty',
+                    'StringLength'   => ['min' => 3, 'max' => 50],
+                    'ModelNotExists' => [
+                        'model' => User::class,
+                        'field' => 'login',
+                    ],
+                ]
+            );
+
+        if (config('registration.show_email', true)) {
+            $emailValidator = [
+                'ModelNotExists' => [
+                    'model' => User::class,
+                    'field' => 'email',
+                ],
+            ];
+
+            if (config('registration.email_required', true)) {
+                $emailValidator[] = 'NotEmpty';
+                $emailValidator['EmailAddress'] = [
+                    'allow'          => Hostname::ALLOW_DNS,
+                    'useMxCheck'     => true,
+                    'useDeepMxCheck' => true,
+                ];
+            }
+
+            $confirmation = config('registration.email_confirmation', false);
+
+            $fields['email'] = (new InputText())
                 ->setLabel(__('E-mail'))
                 ->setPlaceholder(__('Enter your e-mail'))
                 ->setNameAndId('email')
-                ->setHelpText(__('Specify an existing e-mail because a confirmation of registration will be sent to it.'))
+                ->setHelpText($confirmation ? __('Specify an existing e-mail because a confirmation of registration will be sent to it.') : '')
                 ->setValue($this->getValue('email'))
-                ->setValidationRules(
-                    [
-                        'NotEmpty',
-                        'ModelNotExists' => [
-                            'model' => User::class,
-                            'field' => 'email',
-                        ],
-                        'EmailAddress'   => [
-                            'allow'          => Hostname::ALLOW_DNS,
-                            'useMxCheck'     => true,
-                            'useDeepMxCheck' => true,
-                        ],
-                    ]
-                ),
+                ->setValidationRules($emailValidator);
+        }
+
+        $fields += [
             'password' => (new InputPassword())
                 ->setLabel(__('Password'))
                 ->setPlaceholder(__('Password'))
@@ -77,5 +87,7 @@ class RegistrationForm extends AbstractForm
                 ->setNameAndId('captcha')
                 ->setValidationRules(['Captcha']),
         ];
+
+        return $fields;
     }
 }

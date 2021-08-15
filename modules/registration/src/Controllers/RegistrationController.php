@@ -54,6 +54,7 @@ class RegistrationController extends BaseController
             'formFields'       => $registrationForm->getFormFields(),
             'validationErrors' => $registrationForm->getValidationErrors(),
             'storeUrl'         => route('registration.store'),
+            'moderation'       => config('registration.moderation', false),
         ];
 
         return $this->render->render('registration::index', ['data' => $data]);
