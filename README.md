@@ -11,7 +11,7 @@ This version is at an early stage of development. Many things may not work or wo
 
 ## System requirements
 
-- PHP 7.4 and higher
+- PHP 8.0 and higher
 - MySQL 5.7
 - PHP configured to use MySQL Native Driver (mysqlnd)
 - .htaccess support
