@@ -16,5 +16,6 @@ return function (Router $router) {
     $router->get('/registration[/]', [RegistrationController::class, 'index'])->setName('registration.index');
     $router->group('/registration', function (RouteGroup $route) {
         $route->post('/store[/]', [RegistrationController::class, 'store'])->setName('registration.store');
+        $route->get('/confirm-email[/]', [RegistrationController::class, 'confirmEmail'])->setName('registration.confirmEmail');
     });
 };

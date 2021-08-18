@@ -13,10 +13,12 @@ namespace Registration\Controllers;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\RedirectResponse;
+use Johncms\Http\Request;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
+use Johncms\Users\Exceptions\RuntimeException;
 use Johncms\Users\User;
-use Johncms\Users\UserManager;
 use Registration\Forms\RegistrationForm;
+use Registration\Services\UserRegistrationService;
 use Throwable;
 
 class RegistrationController extends BaseController
@@ -60,23 +62,41 @@ class RegistrationController extends BaseController
         return $this->render->render('registration::index', ['data' => $data]);
     }
 
-    public function store(UserManager $userManager): RedirectResponse
+    public function store(UserRegistrationService $registrationService): RedirectResponse
     {
         $registrationForm = new RegistrationForm();
         try {
             // Validate the form
             $registrationForm->validate();
-            // Create user
-            $user = $userManager->create($registrationForm->getRequestValues());
-            // Authorize the user
-            $sessionProvider = di(SessionAuthProvider::class);
-            $sessionProvider->store($user);
+            $registrationService->registerUser($registrationForm->getRequestValues());
+
             return (new RedirectResponse(route('homepage.index')));
         } catch (ValidationException $validationException) {
             // Redirect to the registration form if the form is invalid
             return (new RedirectResponse(route('registration.index')))
                 ->withPost()
                 ->withValidationErrors($validationException->getErrors());
+        }
+    }
+
+    public function confirmEmail(UserRegistrationService $registrationService, Request $request): string|RedirectResponse
+    {
+        $userId = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $code = (string) $request->getQuery('code', '');
+        $this->nav_chain->add(__('Registration'), route('registration.index'));
+        try {
+            $confirmUser = (new User())->find($userId);
+            $registrationService->confirmEmail($confirmUser, $code);
+            // Authorize the user
+            $sessionProvider = di(SessionAuthProvider::class);
+            $sessionProvider->store($confirmUser);
+            return (new RedirectResponse(route('homepage.index')));
+        } catch (RuntimeException $exception) {
+            return $this->render->render('system::pages/result', [
+                'title'   => __('Confirmation of registration'),
+                'type'    => 'alert-danger',
+                'message' => $exception->getMessage(),
+            ]);
         }
     }
 }

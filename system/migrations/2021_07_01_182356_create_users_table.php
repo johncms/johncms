@@ -29,12 +29,14 @@ class CreateUsersTable extends Migration
             function (Blueprint $table) {
                 $table->id();
                 $table->timestamps();
+                $table->string('name')->nullable();
                 $table->string('login')->unique()->nullable();
                 $table->string('email')->unique()->nullable();
                 $table->string('phone')->unique()->nullable();
                 $table->string('password');
                 $table->boolean('confirmed')->nullable();
                 $table->boolean('email_confirmed')->nullable();
+                $table->string('confirmation_code')->nullable();
                 $table->tinyInteger('failed_login')->nullable();
                 $table->tinyInteger('gender')->nullable();
                 $table->date('birthday')->nullable();

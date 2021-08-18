@@ -25,12 +25,14 @@ use Johncms\Users\Casts\UserSettings;
  * @property int $id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property string|null $name
  * @property string|null $login
  * @property string|null $email
  * @property string|null $phone
  * @property string $password
  * @property bool $confirmed
  * @property bool $email_confirmed
+ * @property string|null $confirmation_code
  * @property int|null $failed_login
  * @property int|null $gender
  * @property Carbon|null $birthday
@@ -53,12 +55,14 @@ class User extends Model
 
     protected $fillable = [
         'id',
+        'name',
         'login',
         'email',
         'phone',
         'password',
         'confirmed',
         'email_confirmed',
+        'confirmation_code',
         'failed_login',
         'gender',
         'birthday',

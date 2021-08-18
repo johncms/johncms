@@ -16,7 +16,8 @@ return [
         'email'                   => 'no-reply@example.com',
         'flsz'                    => 1000,
         'gzip'                    => 1,
-        'homeurl'                 => 'http://localhost',
+        'homeurl'                 => 'http://localhost', // TODO: delete
+        'home_url'                => 'http://localhost',
         'karma'                   => [
             'karma_points' => 5,
             'karma_time'   => 86400,
