@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5566cc33c7e90fd7c7869a42a67b5925",
+    "content-hash": "08185012cc66e84179c9c046cc6a664c",
     "packages": [
         {
             "name": "aura/autoload",
@@ -1078,67 +1078,6 @@
                 "source": "https://github.com/JamesHeinrich/getID3/tree/master"
             },
             "time": "2020-06-30T18:43:34+00:00"
-        },
-        {
-            "name": "johncms/system",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johncms/system.git",
-                "reference": "6fd2caae0d34b5b442623bf71f8d46c66a272b0d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johncms/system/zipball/6fd2caae0d34b5b442623bf71f8d46c66a272b0d",
-                "reference": "6fd2caae0d34b5b442623bf71f8d46c66a272b0d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-pdo": "*",
-                "php": ">=8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-mockery": "^0.9.0",
-                "psalm/plugin-phpunit": "^0.16.1",
-                "roave/security-advisories": "dev-master",
-                "slevomat/coding-standard": "^7.0",
-                "squizlabs/php_codesniffer": "^3.6",
-                "vimeo/psalm": "^4.9"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Johncms\\System\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "JohnCMS Contributors",
-                    "homepage": "https://github.com/johncms/system/graphs/contributors"
-                }
-            ],
-            "description": "JohnCMS Core Framework",
-            "homepage": "https://github.com/johncms/system",
-            "keywords": [
-                "cms",
-                "core",
-                "johncms"
-            ],
-            "support": {
-                "docs": "https://docs.johncms.com/",
-                "forum": "https://johncms.com/forum/",
-                "issues": "https://github.com/johncms/system/issues",
-                "source": "https://github.com/johncms/system"
-            },
-            "time": "2021-08-19T04:16:40+00:00"
         },
         {
             "name": "laminas/laminas-config-aggregator",
@@ -5932,12 +5871,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "6da216d969efa7e52cc7d0af125b8c8bb9caed25"
+                "reference": "3c3cc12a9f163e589a12b9ea756c5a2dae9c59dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/6da216d969efa7e52cc7d0af125b8c8bb9caed25",
-                "reference": "6da216d969efa7e52cc7d0af125b8c8bb9caed25",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/3c3cc12a9f163e589a12b9ea756c5a2dae9c59dd",
+                "reference": "3c3cc12a9f163e589a12b9ea756c5a2dae9c59dd",
                 "shasum": ""
             },
             "conflict": {
@@ -6219,7 +6158,7 @@
                 "twig/twig": "<1.38|>=2,<2.7",
                 "typo3/cms": ">=6.2,<6.2.30|>=7,<7.6.32|>=8,<8.7.38|>=9,<9.5.29|>=10,<10.4.19|>=11,<11.3.2",
                 "typo3/cms-backend": ">=7,<=7.6.50|>=8,<=8.7.39|>=9,<=9.5.24|>=10,<=10.4.13|>=11,<=11.1",
-                "typo3/cms-core": ">=6.2,<=6.2.56|>=7,<7.6.52|>=8,<8.7.41|>=9,<9.5.29|>=10,<10.4.19|>=11,<11.3.2",
+                "typo3/cms-core": ">=6.2,<=6.2.56|>=7,<=7.6.52|>=8,<=8.7.41|>=9,<9.5.29|>=10,<10.4.19|>=11,<11.3.2",
                 "typo3/cms-form": ">=8,<=8.7.39|>=9,<=9.5.24|>=10,<=10.4.13|>=11,<=11.1",
                 "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.12|>=3.1,<3.1.10|>=3.2,<3.2.13|>=3.3,<3.3.13|>=4,<4.0.6",
                 "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<2.3.99|>=3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<3.3.23|>=4,<4.0.17|>=4.1,<4.1.16|>=4.2,<4.2.12|>=4.3,<4.3.3",
@@ -6306,7 +6245,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-11T16:04:32+00:00"
+            "time": "2021-08-19T16:07:21+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -7594,7 +7533,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "johncms/system": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

@@ -46,7 +46,6 @@
         "imangazaliev/didom": "^1.17",
         "intervention/image": "^2.6",
         "james-heinrich/getid3": "^1.9",
-        "johncms/system": "dev-develop",
         "laminas/laminas-config-aggregator": "^1.5",
         "laminas/laminas-httphandlerrunner": "^1.4",
         "laminas/laminas-mail": "^2.14",
