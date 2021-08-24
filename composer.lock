@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08185012cc66e84179c9c046cc6a664c",
+    "content-hash": "a8b1b838be21e20d15fd41eadfb38192",
     "packages": [
         {
             "name": "aura/autoload",
@@ -1078,6 +1078,99 @@
                 "source": "https://github.com/JamesHeinrich/getID3/tree/master"
             },
             "time": "2020-06-30T18:43:34+00:00"
+        },
+        {
+            "name": "johncms/ckeditor-media-embed",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johncms/ckeditor-media-embed.git",
+                "reference": "89a67f6e5d9f7bb266f4e96d798246f2abe80c5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johncms/ckeditor-media-embed/zipball/89a67f6e5d9f7bb266f4e96d798246f2abe80c5e",
+                "reference": "89a67f6e5d9f7bb266f4e96d798246f2abe80c5e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "imangazaliev/didom": "^1.16",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5",
+                "psalm/plugin-phpunit": "^0.15",
+                "slevomat/coding-standard": "^6.4",
+                "squizlabs/php_codesniffer": "3.*",
+                "vimeo/psalm": "^4.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Simba77\\EmbedMedia\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maksim Masalov",
+                    "email": "simba7@inbox.ru"
+                }
+            ],
+            "description": "The library replaces the semantic output of the CKEditor 5 with the html code of the content preview",
+            "homepage": "https://github.com/simba77/ckeditor-media-embed",
+            "support": {
+                "issues": "https://github.com/johncms/ckeditor-media-embed/issues",
+                "source": "https://github.com/johncms/ckeditor-media-embed/tree/1.1.2"
+            },
+            "time": "2021-07-05T14:51:22+00:00"
+        },
+        {
+            "name": "johncms/johncms-pagination",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johncms/johncms-pagination.git",
+                "reference": "bc3a80609f80ff67aa6d75c3780456b5770be0dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johncms/johncms-pagination/zipball/bc3a80609f80ff67aa6d75c3780456b5770be0dd",
+                "reference": "bc3a80609f80ff67aa6d75c3780456b5770be0dd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Pagination\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The JohnCMS Pagination package.",
+            "homepage": "https://johncms.com",
+            "support": {
+                "issues": "https://github.com/johncms/johncms-pagination/issues",
+                "source": "https://github.com/johncms/johncms-pagination/tree/2.0.1"
+            },
+            "time": "2021-07-27T19:43:09+00:00"
         },
         {
             "name": "laminas/laminas-config-aggregator",
@@ -2719,99 +2812,6 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
-        },
-        {
-            "name": "simba77/ckeditor-media-embed",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/simba77/ckeditor-media-embed.git",
-                "reference": "89a67f6e5d9f7bb266f4e96d798246f2abe80c5e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/simba77/ckeditor-media-embed/zipball/89a67f6e5d9f7bb266f4e96d798246f2abe80c5e",
-                "reference": "89a67f6e5d9f7bb266f4e96d798246f2abe80c5e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-libxml": "*",
-                "imangazaliev/didom": "^1.16",
-                "php": "^7.3|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-phpunit": "^0.15",
-                "slevomat/coding-standard": "^6.4",
-                "squizlabs/php_codesniffer": "3.*",
-                "vimeo/psalm": "^4.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Simba77\\EmbedMedia\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maksim Masalov",
-                    "email": "simba7@inbox.ru"
-                }
-            ],
-            "description": "The library replaces the semantic output of the CKEditor 5 with the html code of the content preview",
-            "homepage": "https://github.com/simba77/ckeditor-media-embed",
-            "support": {
-                "issues": "https://github.com/simba77/ckeditor-media-embed/issues",
-                "source": "https://github.com/simba77/ckeditor-media-embed/tree/1.1.2"
-            },
-            "time": "2021-07-05T14:51:22+00:00"
-        },
-        {
-            "name": "simba77/johncms-pagination",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/simba77/johncms-pagination.git",
-                "reference": "bc3a80609f80ff67aa6d75c3780456b5770be0dd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/simba77/johncms-pagination/zipball/bc3a80609f80ff67aa6d75c3780456b5770be0dd",
-                "reference": "bc3a80609f80ff67aa6d75c3780456b5770be0dd",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^7.2 || ^8.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Pagination\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The JohnCMS Pagination package.",
-            "homepage": "https://johncms.com",
-            "support": {
-                "issues": "https://github.com/simba77/johncms-pagination/issues",
-                "source": "https://github.com/simba77/johncms-pagination/tree/2.0.1"
-            },
-            "time": "2021-07-27T19:43:09+00:00"
         },
         {
             "name": "symfony/console",
@@ -7549,5 +7549,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
