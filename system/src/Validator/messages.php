@@ -74,4 +74,10 @@ return [
         'isEmpty'         => d__('system', 'Value is required and can\'t be empty'),
         'notEmptyInvalid' => d__('system', 'Invalid type given. String, integer, float, boolean or array expected'),
     ],
+
+    'Regex' => [
+        'regexInvalid'  => d__('system', 'Invalid type given. String, integer or float expected'),
+        'regexNotMatch' => d__('system', "The input does not match against pattern '%pattern%'"),
+        'regexErrorous' => d__('system', "There was an internal error while using the pattern '%pattern%'"),
+    ],
 ];

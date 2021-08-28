@@ -33,6 +33,7 @@ class RegistrationForm extends AbstractForm
             ->setValidationRules(
                 [
                     'NotEmpty',
+                    'Regex'          => ['pattern' => '/^[A-Za-z0-9_]+$/'],
                     'StringLength'   => ['min' => 3, 'max' => 50],
                     'ModelNotExists' => [
                         'model' => User::class,
