@@ -45,6 +45,9 @@ class RegistrationController extends BaseController
             'validationErrors' => $registrationForm->getValidationErrors(),
             'storeUrl'         => route('registration.store'),
             'moderation'       => config('registration.moderation', false),
+            'tosUrl'           => config('johncms.terms_of_service_url', ''),
+            'privacyUrl'       => config('johncms.privacy_policy_url', ''),
+            'cookieUrl'        => config('johncms.cookie_policy_url', ''),
         ];
 
         return $this->render->render('registration::index', ['data' => $data]);

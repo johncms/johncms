@@ -28,5 +28,9 @@ $this->layout('system::layout/default');
         ]
     ); ?>
 
+    <div class="mb-3">
+        <?= __('By signing up, you agree to the <a href="%s">Terms of Service</a> and <a href="%s">Privacy Policy</a>, including <a href="%s">Cookie Use</a>.', $data['tosUrl'], $data['privacyUrl'], $data['cookieUrl']) ?>
+    </div>
+
     <button type="submit" name="submit" class="btn btn-primary"><?= __('Registration') ?></button>
 </form>
