@@ -21,20 +21,40 @@ use Johncms\Users\UserManager;
 
 class UserRegistrationService
 {
-    public function registerUser(array $fields)
+    protected bool $emailConfirmation = false;
+    protected bool $moderation = false;
+
+    public function __construct()
+    {
+        $this->moderation = config('registration.moderation', false);
+        $this->emailConfirmation = config('registration.email_confirmation', false);
+    }
+
+    public function moderation(): bool
+    {
+        return $this->moderation;
+    }
+
+    public function emailConfirmation(): bool
+    {
+        return $this->emailConfirmation;
+    }
+
+    public function registerUser(array $fields): User
     {
         $userManager = di(UserManager::class);
 
-        $fields['confirmed'] = (! config('registration.moderation', false));
-        $fields['email_confirmed'] = (! config('registration.email_confirmation', false));
-        if (! $fields['email_confirmed']) {
+        $fields['confirmed'] = (! $this->moderation);
+        $fields['email_confirmed'] = (! $this->emailConfirmation);
+
+        if ($this->emailConfirmation) {
             $fields['confirmation_code'] = uniqid('email_', true);
         }
 
         // Create user
         $user = $userManager->create($fields);
 
-        if (! $fields['email_confirmed']) {
+        if ($this->emailConfirmation) {
             $this->sendConfirmationEmail($user);
         }
 
@@ -43,6 +63,8 @@ class UserRegistrationService
             $sessionProvider = di(SessionAuthProvider::class);
             $sessionProvider->store($user);
         }
+
+        return $user;
     }
 
     protected function sendConfirmationEmail(User $user)
@@ -72,7 +94,7 @@ class UserRegistrationService
 
     public function confirmEmail(User $confirmUser, string $code): void
     {
-        if ($confirmUser !== null && ! $confirmUser->email_confirmed && $confirmUser->confirmation_code === $code) {
+        if (! $confirmUser->email_confirmed && $confirmUser->confirmation_code === $code) {
             $confirmUser->email_confirmed = true;
             $confirmUser->confirmation_code = null;
             $confirmUser->save();

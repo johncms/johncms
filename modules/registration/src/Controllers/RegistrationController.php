@@ -33,13 +33,7 @@ class RegistrationController extends BaseController
             redirect(route('homepage.index'));
         }
         parent::__construct();
-    }
 
-    /**
-     * @throws Throwable
-     */
-    public function index(): string
-    {
         $this->render->addData(
             [
                 'title'       => __('Registration'),
@@ -49,7 +43,13 @@ class RegistrationController extends BaseController
             ]
         );
         $this->nav_chain->add(__('Registration'), route('registration.index'));
+    }
 
+    /**
+     * @throws Throwable
+     */
+    public function index(): string
+    {
         $registrationForm = new RegistrationForm();
 
         $data = [
@@ -62,15 +62,22 @@ class RegistrationController extends BaseController
         return $this->render->render('registration::index', ['data' => $data]);
     }
 
-    public function store(UserRegistrationService $registrationService): RedirectResponse
+    /**
+     * @throws Throwable
+     */
+    public function store(UserRegistrationService $registrationService): string|RedirectResponse
     {
         $registrationForm = new RegistrationForm();
         try {
             // Validate the form
             $registrationForm->validate();
-            $registrationService->registerUser($registrationForm->getRequestValues());
+            $user = $registrationService->registerUser($registrationForm->getRequestValues());
 
-            return (new RedirectResponse(route('homepage.index')));
+            return $this->render->render('registration::registration_result', [
+                'moderation'         => $registrationService->moderation(),
+                'email_confirmation' => $registrationService->emailConfirmation(),
+                'user'               => $user,
+            ]);
         } catch (ValidationException $validationException) {
             // Redirect to the registration form if the form is invalid
             return (new RedirectResponse(route('registration.index')))
@@ -79,13 +86,16 @@ class RegistrationController extends BaseController
         }
     }
 
+    /**
+     * @throws Throwable
+     */
     public function confirmEmail(UserRegistrationService $registrationService, Request $request): string|RedirectResponse
     {
         $userId = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
         $code = (string) $request->getQuery('code', '');
         $this->nav_chain->add(__('Registration'), route('registration.index'));
         try {
-            $confirmUser = (new User())->find($userId);
+            $confirmUser = (new User())->findOrFail($userId);
             $registrationService->confirmEmail($confirmUser, $code);
             // Authorize the user
             $sessionProvider = di(SessionAuthProvider::class);
