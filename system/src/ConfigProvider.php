@@ -29,6 +29,7 @@ use Johncms\Middlewares\SessionMiddleware;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\View\Extension\{Avatar};
 use Johncms\View\Extension\Assets;
+use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
 use Johncms\View\RenderEngineFactory;
 use PDO;
@@ -71,6 +72,7 @@ class ConfigProvider
                 CacheInterface::class           => Cache::class,
                 MediaEmbed::class               => MediaEmbed::class,
                 Session::class                  => Session::class,
+                MetaTagManager::class           => MetaTagManager::class,
             ],
         ];
     }

@@ -1,9 +1,11 @@
 <?php
 /**
+ * @var Mobicms\Render\Template\Template $this
  * @var string $locale
- * @var Johncms\System\Users\User $user
+ * @var Johncms\Users\User $user
  * @var Johncms\Counters $counters
  * @var Johncms\Ads $ads
+ * @var Johncms\View\MetaTagManager $metaTags
  */
 
 $counters = $container->get('counters');
@@ -23,17 +25,17 @@ $ads_array = $ads->getAds();
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <?= $this->section('meta', '') ?>
-    <?php if (! empty($keywords)): ?>
-        <meta name="keywords" content="<?= $this->e($keywords) ?>">
+    <?php if (! empty($metaTags->getKeywords())): ?>
+        <meta name="keywords" content="<?= $this->e($metaTags->getKeywords()) ?>">
     <?php endif ?>
-    <?php if (! empty($description)): ?>
-        <meta name="description" content="<?= $this->e($description) ?>">
+    <?php if (! empty($metaTags->getDescription())): ?>
+        <meta name="description" content="<?= $this->e($metaTags->getDescription()) ?>">
     <?php endif ?>
-    <?php if (! empty($canonical)): ?>
-        <link rel="canonical" href="<?= $canonical ?>">
+    <?php if (! empty($metaTags->getCanonical())): ?>
+        <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
-    <?php if($locale === 'ar'): ?>
+    <?php if ($locale === 'ar'): ?>
         <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
     <?php else: ?>
         <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
@@ -41,8 +43,7 @@ $ads_array = $ads->getAds();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
-    <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
-    <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
+    <title><?= $this->e($metaTags->getTitle()) ?></title>
 </head>
 <body>
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
@@ -98,8 +99,8 @@ $ads_array = $ads->getAds();
                 </div>
             </nav>
             <div class="container-fluid flex-grow-1">
-                <?php if (! empty($page_title)): ?>
-                    <h1 class="mb-0"><?= $this->e($page_title) ?></h1>
+                <?php if (! empty($metaTags->getPageTitle())): ?>
+                    <h1 class="mb-0"><?= $this->e($metaTags->getPageTitle()) ?></h1>
                 <?php endif ?>
                 <?= $this->fetch('system::app/breadcrumbs') ?>
                 <?php if (! empty($ads_array['content_header'])): ?>

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Users;
 
+use Johncms\Cache;
 use Johncms\Users\Role;
 use Johncms\Users\User;
 use Johncms\Users\UserManager;
@@ -65,6 +66,8 @@ class UserRoleCheckerTest extends AbstractTestCase
     {
         // Test create
         $created_user = $this->userManager->create($this->userFields);
+        $cache = di(Cache::class);
+        $cache->clear();
         $this->assertFalse($created_user->hasAnyRole());
         $this->assertFalse($created_user->isAdmin());
 
