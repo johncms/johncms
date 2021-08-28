@@ -14,6 +14,7 @@ namespace Johncms\Controller;
 
 use Johncms\i18n\Translator;
 use Johncms\NavChain;
+use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
 
 class BaseController extends AbstractController
@@ -21,6 +22,7 @@ class BaseController extends AbstractController
     protected Render $render;
     protected Translator $translator;
     protected NavChain $nav_chain;
+    protected MetaTagManager $metaTagManager;
 
     /** @var string The module name */
     protected string $module_name = '';
@@ -30,6 +32,7 @@ class BaseController extends AbstractController
         $this->render = di(Render::class);
         $this->translator = di(Translator::class);
         $this->nav_chain = di(NavChain::class);
+        $this->metaTagManager = di(MetaTagManager::class);
 
         if (! empty($this->module_name)) {
             // Register Namespace for module templates

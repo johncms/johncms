@@ -6,13 +6,14 @@
  * @var string $page_title
  * @var string $back_url
  * @var string $back_url_name
+ * @var Johncms\View\MetaTagManager $metaTags
  */
 
 $this->layout(
     'system::layout/default',
     [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
+        'title'      => $title ?? $metaTags->getTitle(),
+        'page_title' => $page_title ?? $metaTags->getPageTitle(),
     ]
 );
 

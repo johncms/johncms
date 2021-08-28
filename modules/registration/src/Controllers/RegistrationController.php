@@ -29,15 +29,7 @@ class RegistrationController extends BaseController
     public function __construct()
     {
         parent::__construct();
-
-        $this->render->addData(
-            [
-                'title'       => __('Registration'),
-                'page_title'  => __('Registration'),
-                'keywords'    => __('Registration'),
-                'description' => __('Registration'),
-            ]
-        );
+        $this->metaTagManager->setAll(__('Registration'));
         $this->nav_chain->add(__('Registration'), route('registration.index'));
     }
 
@@ -89,6 +81,9 @@ class RegistrationController extends BaseController
     {
         $userId = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
         $code = (string) $request->getQuery('code', '');
+
+        $this->metaTagManager->setAll(__('Confirmation of registration'));
+
         try {
             $confirmUser = (new User())->findOrFail($userId);
             $registrationService->confirmEmail($confirmUser, $code);
@@ -96,19 +91,14 @@ class RegistrationController extends BaseController
             $sessionProvider = di(SessionAuthProvider::class);
             $sessionProvider->store($confirmUser);
 
-            return $this->render->render('registration::email_confirmed', [
-                'title' => __('Confirmation of registration'),
-                'user'  => $confirmUser,
-            ]);
+            return $this->render->render('registration::email_confirmed', ['user' => $confirmUser]);
         } catch (RuntimeException $exception) {
             return $this->render->render('system::pages/result', [
-                'title'   => __('Confirmation of registration'),
                 'type'    => 'alert-danger',
                 'message' => $exception->getMessage(),
             ]);
         } catch (ModelNotFoundException) {
             return $this->render->render('system::pages/result', [
-                'title'   => __('Confirmation of registration'),
                 'type'    => 'alert-danger',
                 'message' => __("The user wasn't found"),
             ]);
