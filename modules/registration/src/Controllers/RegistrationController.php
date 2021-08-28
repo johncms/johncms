@@ -10,6 +10,7 @@
 
 namespace Registration\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\RedirectResponse;
@@ -89,23 +90,32 @@ class RegistrationController extends BaseController
     /**
      * @throws Throwable
      */
-    public function confirmEmail(UserRegistrationService $registrationService, Request $request): string|RedirectResponse
+    public function confirmEmail(UserRegistrationService $registrationService, Request $request): string
     {
         $userId = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
         $code = (string) $request->getQuery('code', '');
-        $this->nav_chain->add(__('Registration'), route('registration.index'));
         try {
             $confirmUser = (new User())->findOrFail($userId);
             $registrationService->confirmEmail($confirmUser, $code);
             // Authorize the user
             $sessionProvider = di(SessionAuthProvider::class);
             $sessionProvider->store($confirmUser);
-            return (new RedirectResponse(route('homepage.index')));
+
+            return $this->render->render('registration::email_confirmed', [
+                'title' => __('Confirmation of registration'),
+                'user'  => $confirmUser,
+            ]);
         } catch (RuntimeException $exception) {
             return $this->render->render('system::pages/result', [
                 'title'   => __('Confirmation of registration'),
                 'type'    => 'alert-danger',
                 'message' => $exception->getMessage(),
+            ]);
+        } catch (ModelNotFoundException) {
+            return $this->render->render('system::pages/result', [
+                'title'   => __('Confirmation of registration'),
+                'type'    => 'alert-danger',
+                'message' => __("The user wasn't found"),
             ]);
         }
     }
