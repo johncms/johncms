@@ -11,11 +11,26 @@
 use League\Route\RouteGroup;
 use League\Route\Router;
 use Registration\Controllers\RegistrationController;
+use Registration\Middlewares\RegistrationClosedMiddleware;
+use Registration\Middlewares\UnauthorizedUserMiddleware;
 
+/**
+ * @psalm-suppress UndefinedInterfaceMethod
+ */
 return function (Router $router) {
-    $router->get('/registration[/]', [RegistrationController::class, 'index'])->setName('registration.index');
+    $router->get('/registration[/]', [RegistrationController::class, 'index'])
+        ->lazyMiddlewares([UnauthorizedUserMiddleware::class, RegistrationClosedMiddleware::class])
+        ->setName('registration.index');
+
     $router->group('/registration', function (RouteGroup $route) {
-        $route->post('/store[/]', [RegistrationController::class, 'store'])->setName('registration.store');
-        $route->get('/confirm-email[/]', [RegistrationController::class, 'confirmEmail'])->setName('registration.confirmEmail');
-    });
+        $route->post('/store[/]', [RegistrationController::class, 'store'])
+            ->lazyMiddleware(RegistrationClosedMiddleware::class)
+            ->setName('registration.store');
+
+        $route->get('/confirm-email[/]', [RegistrationController::class, 'confirmEmail'])
+            ->lazyMiddleware(RegistrationClosedMiddleware::class)
+            ->setName('registration.confirmEmail');
+
+        $route->get('/closed[/]', [RegistrationController::class, 'registrationClosed'])->setName('registration.closed');
+    })->lazyMiddleware(UnauthorizedUserMiddleware::class);
 };

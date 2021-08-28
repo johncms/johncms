@@ -28,11 +28,6 @@ class RegistrationController extends BaseController
 
     public function __construct()
     {
-        // If the user is authorized, we redirect him to the homepage
-        $user = di(User::class);
-        if ($user !== null) {
-            redirect(route('homepage.index'));
-        }
         parent::__construct();
 
         $this->render->addData(
@@ -118,5 +113,19 @@ class RegistrationController extends BaseController
                 'message' => __("The user wasn't found"),
             ]);
         }
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function registrationClosed(): string
+    {
+        if (! config('registration.closed')) {
+            redirect(route('registration.index'));
+        }
+        return $this->render->render('system::pages/result', [
+            'type'    => 'alert-danger',
+            'message' => __('Registration is temporarily closed'),
+        ]);
     }
 }
