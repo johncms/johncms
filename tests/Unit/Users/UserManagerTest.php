@@ -12,7 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Users;
 
+use Johncms\Users\Exceptions\EmailIsNotConfirmedException;
+use Johncms\Users\Exceptions\IncorrectPasswordException;
 use Johncms\Users\Exceptions\RuntimeException;
+use Johncms\Users\Exceptions\UserIsNotConfirmedException;
+use Johncms\Users\Exceptions\UserNotFoundException;
 use Johncms\Users\User;
 use Johncms\Users\UserManager;
 use Tests\AbstractTestCase;
@@ -93,5 +97,80 @@ class UserManagerTest extends AbstractTestCase
             $missedPasswordFieldExceptionMessage = $runtimeException->getMessage();
         }
         $this->assertEquals('The password is not specified.', $missedPasswordFieldExceptionMessage ?? null);
+    }
+
+    public function testCheckCredentialsUserNotFoundException()
+    {
+        $this->expectException(UserNotFoundException::class);
+
+        $userFields = [
+            'login'    => $this->faker->userName(),
+            'email'    => $this->faker->email(),
+            'phone'    => $this->faker->phoneNumber(),
+            'password' => $this->faker->password(),
+        ];
+        $this->userManager->create($userFields);
+        $incorrectUsername = $userFields['login'] . '1111';
+        $this->userManager->checkCredentials($incorrectUsername, $userFields['password']);
+    }
+
+    public function testCheckCredentialsUserIsNotConfirmedException()
+    {
+        $this->expectException(UserIsNotConfirmedException::class);
+
+        $userFields = [
+            'login'    => $this->faker->userName(),
+            'email'    => $this->faker->email(),
+            'phone'    => $this->faker->phoneNumber(),
+            'password' => $this->faker->password(),
+        ];
+        $this->userManager->create($userFields);
+        $this->userManager->checkCredentials($userFields['login'], $userFields['password']);
+    }
+
+    public function testCheckCredentialsEmailIsNotConfirmedException()
+    {
+        $this->expectException(EmailIsNotConfirmedException::class);
+
+        $userFields = [
+            'login'     => $this->faker->userName(),
+            'email'     => $this->faker->email(),
+            'phone'     => $this->faker->phoneNumber(),
+            'password'  => $this->faker->password(),
+            'confirmed' => true,
+        ];
+        $this->userManager->create($userFields);
+        $this->userManager->checkCredentials($userFields['login'], $userFields['password']);
+    }
+
+    public function testCheckCredentialsIncorrectPasswordException()
+    {
+        $this->expectException(IncorrectPasswordException::class);
+
+        $userFields = [
+            'login'           => $this->faker->userName(),
+            'email'           => $this->faker->email(),
+            'phone'           => $this->faker->phoneNumber(),
+            'password'        => $this->faker->password(),
+            'confirmed'       => true,
+            'email_confirmed' => true,
+        ];
+        $this->userManager->create($userFields);
+        $this->userManager->checkCredentials($userFields['login'], $userFields['password'] . '123');
+    }
+
+    public function testCheckCredentials()
+    {
+        $userFields = [
+            'login'           => $this->faker->userName(),
+            'email'           => $this->faker->email(),
+            'phone'           => $this->faker->phoneNumber(),
+            'password'        => $this->faker->password(),
+            'confirmed'       => true,
+            'email_confirmed' => true,
+        ];
+        $createdUser = $this->userManager->create($userFields);
+        $user = $this->userManager->checkCredentials($userFields['login'], $userFields['password']);
+        $this->assertEquals($createdUser->id, $user->id);
     }
 }

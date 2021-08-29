@@ -12,7 +12,11 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Johncms\Users\Exceptions\EmailIsNotConfirmedException;
+use Johncms\Users\Exceptions\IncorrectPasswordException;
 use Johncms\Users\Exceptions\RuntimeException;
+use Johncms\Users\Exceptions\UserIsNotConfirmedException;
+use Johncms\Users\Exceptions\UserNotFoundException;
 use Psr\Container\ContainerInterface;
 
 class UserManager
@@ -89,5 +93,32 @@ class UserManager
         ];
         $config = $this->container->get('config')['johncms']['users'] ?? [];
         return array_merge($default, $config);
+    }
+
+    public function checkCredentials(string $username, string $password): User
+    {
+        $user = (new User())
+            ->where('login', $username)
+            ->orWhere('email', $username)
+            ->orWhere('phone', $username)
+            ->first();
+
+        if (! $user) {
+            throw new UserNotFoundException(__('The user "%s" was not found', $username));
+        }
+
+        if (! $user->confirmed) {
+            throw new UserIsNotConfirmedException(__('The user is not confirmed'));
+        }
+
+        if (! $user->email_confirmed) {
+            throw new EmailIsNotConfirmedException(__("The user's email is not verified"));
+        }
+
+        if (! password_verify($password, $user->password)) {
+            throw new IncorrectPasswordException(__('Incorrect password'));
+        }
+
+        return $user;
     }
 }
