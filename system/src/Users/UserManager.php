@@ -116,7 +116,14 @@ class UserManager
         }
 
         if (! password_verify($password, $user->password)) {
+            $user->failed_login += 1;
+            $user->save();
             throw new IncorrectPasswordException(__('Incorrect password'));
+        }
+
+        if ($user->failed_login) {
+            $user->failed_login = null;
+            $user->save();
         }
 
         return $user;
