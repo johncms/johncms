@@ -1286,27 +1286,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/johncms/contacts.git",
-                "reference": "a75ca1caab774c00950cf495ad86d1e2f6c117b1"
+                "reference": "58f1412ade16e0f2de07ef8737f1ef1f627fc94d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johncms/contacts/zipball/a75ca1caab774c00950cf495ad86d1e2f6c117b1",
-                "reference": "a75ca1caab774c00950cf495ad86d1e2f6c117b1",
+                "url": "https://api.github.com/repos/johncms/contacts/zipball/58f1412ade16e0f2de07ef8737f1ef1f627fc94d",
+                "reference": "58f1412ade16e0f2de07ef8737f1ef1f627fc94d",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "v1.11.0",
                 "php": "^8.0"
             },
             "default-branch": true,
             "type": "johncms-module",
-            "extra": {
-                "installer-paths": {
-                    "modules/{$name}/": [
-                        "type:johncms-module"
-                    ]
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Johncms\\Contacts\\": "src/"
@@ -1328,7 +1320,7 @@
                 "issues": "https://github.com/johncms/contacts/issues",
                 "source": "https://github.com/johncms/contacts/tree/master"
             },
-            "time": "2021-09-01T21:25:49+00:00"
+            "time": "2021-09-01T22:23:29+00:00"
         },
         {
             "name": "johncms/johncms-pagination",
