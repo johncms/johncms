@@ -57,7 +57,9 @@
         "mobicms/render": "^3.0",
         "nikic/fast-route": "^1.3",
         "johncms/ckeditor-media-embed": "^1.1",
-        "johncms/johncms-pagination": "^2.0"
+        "johncms/johncms-pagination": "^2.0",
+        "oomphinc/composer-installers-extender": "^2.0",
+        "johncms/contacts": "9999999-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.15",
@@ -98,5 +100,15 @@
         "translate": "translate",
         "translate-scan": "scan",
         "test": "phpunit --colors=always"
+    },
+    "extra": {
+        "installer-types": [
+            "johncms-module"
+        ],
+        "installer-paths": {
+            "modules/{$vendor}/{$name}/": [
+                "type:johncms-module"
+            ]
+        }
     }
 }
