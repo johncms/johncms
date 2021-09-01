@@ -2,161 +2,161 @@ msgid ""
 msgstr ""
 "X-Domain: news\n"
 
-#: modules/news/Article.php:52
+#: modules/news/src/Article.php:52
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:41
-#: modules/news/Controllers/Admin/AdminArticleController.php:44
-#: modules/news/Controllers/Admin/AdminArticleController.php:45
-#: modules/news/Controllers/Admin/AdminController.php:35
-#: modules/news/Controllers/Admin/AdminController.php:36
-#: modules/news/Controllers/Admin/AdminController.php:40
-#: modules/news/Controllers/Admin/AdminSectionController.php:35
-#: modules/news/Controllers/Admin/AdminSectionController.php:38
-#: modules/news/Controllers/Admin/AdminSectionController.php:39
-#: modules/news/Controllers/ArticleController.php:34
-#: modules/news/Controllers/SearchController.php:29
-#: modules/news/Controllers/SectionController.php:34
-#: modules/news/MetaTagsManager.php:38
-#: modules/news/MetaTagsManager.php:39
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:41
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:44
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:45
+#: modules/news/src/Controllers/Admin/AdminController.php:35
+#: modules/news/src/Controllers/Admin/AdminController.php:36
+#: modules/news/src/Controllers/Admin/AdminController.php:40
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:35
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:38
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:39
+#: modules/news/src/Controllers/ArticleController.php:34
+#: modules/news/src/Controllers/SearchController.php:29
+#: modules/news/src/Controllers/SectionController.php:34
+#: modules/news/src/MetaTagsManager.php:38
+#: modules/news/src/MetaTagsManager.php:39
 msgid "News"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:49
-#: modules/news/Controllers/Admin/AdminController.php:56
-#: modules/news/Controllers/Admin/AdminSectionController.php:43
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:49
+#: modules/news/src/Controllers/Admin/AdminController.php:56
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:43
 msgid "Section list"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:64
-#: modules/news/Controllers/Admin/AdminArticleController.php:65
-#: modules/news/Controllers/Admin/AdminArticleController.php:82
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:64
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:65
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:82
 #: modules/news/templates/admin/sections.phtml:39
 msgid "Add article"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:111
-#: modules/news/Controllers/Admin/AdminArticleController.php:213
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:111
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:213
 msgid "The article name cannot be empty"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:141
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:141
 msgid "The article was created successfully"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:145
-#: modules/news/Controllers/Admin/AdminArticleController.php:244
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:145
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:244
 msgid "An article with this code already exists"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:166
-#: modules/news/Controllers/Admin/AdminArticleController.php:167
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:166
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:167
 msgid "Edit article"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:240
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:240
 msgid "The article was updated successfully"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:293
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:293
 msgid "The article was successfully deleted"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminArticleController.php:319
-#: modules/news/Controllers/CommentsController.php:223
+#: modules/news/src/Controllers/Admin/AdminArticleController.php:319
+#: modules/news/src/Controllers/CommentsController.php:223
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminController.php:105
-#: modules/news/Controllers/Admin/AdminController.php:106
+#: modules/news/src/Controllers/Admin/AdminController.php:105
+#: modules/news/src/Controllers/Admin/AdminController.php:106
 #: modules/news/templates/admin/index.phtml:34
 msgid "Settings"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminController.php:147
+#: modules/news/src/Controllers/Admin/AdminController.php:147
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:58
-#: modules/news/Controllers/Admin/AdminSectionController.php:59
-#: modules/news/Controllers/Admin/AdminSectionController.php:76
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:58
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:59
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:76
 msgid "Create section"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:98
-#: modules/news/Controllers/Admin/AdminSectionController.php:180
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:98
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:180
 msgid "The section name cannot be empty"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:124
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:124
 msgid "The section was created successfully"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:128
-#: modules/news/Controllers/Admin/AdminSectionController.php:203
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:128
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:203
 msgid "A section with this code already exists"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:146
-#: modules/news/Controllers/Admin/AdminSectionController.php:149
-#: modules/news/Controllers/Admin/AdminSectionController.php:150
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:146
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:149
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:150
 msgid "Edit section"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:199
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:199
 msgid "The section was updated successfully"
 msgstr ""
 
-#: modules/news/Controllers/Admin/AdminSectionController.php:248
+#: modules/news/src/Controllers/Admin/AdminSectionController.php:248
 msgid "The section was successfully deleted"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:52
+#: modules/news/src/Controllers/CommentsController.php:52
 msgid "Bad Request"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:137
+#: modules/news/src/Controllers/CommentsController.php:137
 msgid "You have a ban!"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:142
+#: modules/news/src/Controllers/CommentsController.php:142
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:166
+#: modules/news/src/Controllers/CommentsController.php:166
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:169
+#: modules/news/src/Controllers/CommentsController.php:169
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:198
+#: modules/news/src/Controllers/CommentsController.php:198
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/news/Controllers/CommentsController.php:205
+#: modules/news/src/Controllers/CommentsController.php:205
 msgid "Access denied"
 msgstr ""
 
-#: modules/news/Controllers/SearchController.php:40
+#: modules/news/src/Controllers/SearchController.php:40
 msgid "Search"
 msgstr ""
 
-#: modules/news/Controllers/SearchController.php:78
+#: modules/news/src/Controllers/SearchController.php:78
 msgid "Search by tags"
 msgstr ""
 
-#: modules/news/Controllers/VoteController.php:36
+#: modules/news/src/Controllers/VoteController.php:36
 msgid "The user is not authorized"
 msgstr ""
 
-#: modules/news/Controllers/VoteController.php:52
+#: modules/news/src/Controllers/VoteController.php:52
 msgid "Your vote is accepted"
 msgstr ""
 
-#: modules/news/Section.php:77
+#: modules/news/src/Section.php:77
 msgid "The requested section was not found."
 msgstr ""
 

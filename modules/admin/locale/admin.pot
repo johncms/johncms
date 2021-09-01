@@ -2,50 +2,6 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
-#: modules/admin/Controllers/BaseAdminController.php:46
-#: modules/admin/index.php:57
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/ip_whois.phtml:8
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
-msgstr ""
-
-#: modules/admin/Controllers/System/SystemCheckController.php:26
-#: modules/admin/Controllers/System/SystemCheckController.php:27
-#: modules/admin/Controllers/System/SystemCheckController.php:31
-#: modules/admin/templates/sidebar-admin-menu.phtml:233
-msgid "System check"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:34
-#: modules/admin/Controllers/Users/UsersController.php:35
-#: modules/admin/templates/users/captcha.phtml:4
-#: modules/admin/templates/users/captcha.phtml:5
-#: modules/admin/templates/users/login.phtml:4
-#: modules/admin/templates/users/login.phtml:5
-#: modules/admin/templates/users/login.phtml:45
-msgid "Login"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:50
-msgid "You have not entered login"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:54
-msgid "You have not entered password"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:72
-msgid "The security code is not correct"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:116
-#: modules/admin/Controllers/Users/UsersController.php:120
-msgid "Authorization failed"
-msgstr ""
-
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
@@ -846,6 +802,50 @@ msgstr ""
 
 #: modules/admin/includes/usr_del.php:44
 msgid "User does not exists"
+msgstr ""
+
+#: modules/admin/index.php:57
+#: modules/admin/src/Controllers/BaseAdminController.php:46
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/ip_whois.phtml:8
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
+#: modules/admin/src/Controllers/System/SystemCheckController.php:26
+#: modules/admin/src/Controllers/System/SystemCheckController.php:27
+#: modules/admin/src/Controllers/System/SystemCheckController.php:31
+#: modules/admin/templates/sidebar-admin-menu.phtml:233
+msgid "System check"
+msgstr ""
+
+#: modules/admin/src/Controllers/Users/UsersController.php:34
+#: modules/admin/src/Controllers/Users/UsersController.php:35
+#: modules/admin/templates/users/captcha.phtml:4
+#: modules/admin/templates/users/captcha.phtml:5
+#: modules/admin/templates/users/login.phtml:4
+#: modules/admin/templates/users/login.phtml:5
+#: modules/admin/templates/users/login.phtml:45
+msgid "Login"
+msgstr ""
+
+#: modules/admin/src/Controllers/Users/UsersController.php:50
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/admin/src/Controllers/Users/UsersController.php:54
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/admin/src/Controllers/Users/UsersController.php:72
+msgid "The security code is not correct"
+msgstr ""
+
+#: modules/admin/src/Controllers/Users/UsersController.php:116
+#: modules/admin/src/Controllers/Users/UsersController.php:120
+msgid "Authorization failed"
 msgstr ""
 
 #: modules/admin/templates/access.phtml:36

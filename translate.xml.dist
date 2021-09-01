@@ -7,7 +7,6 @@
         <name>system</name>
         <target>system/locale</target>
         <sourceDir>modules/language</sourceDir>
-        <sourceDir>modules/login</sourceDir>
         <sourceDir>modules/notifications</sourceDir>
         <sourceDir>modules/redirect</sourceDir>
         <sourceDir>system/src</sourceDir>
@@ -24,6 +23,13 @@
         <name>admin</name>
         <target>modules/admin/locale</target>
         <sourceDir>modules/admin</sourceDir>
+    </domain>
+
+    <!-- Registration module -->
+    <domain>
+        <name>auth</name>
+        <target>modules/auth/locale</target>
+        <sourceDir>modules/auth</sourceDir>
     </domain>
 
     <!-- Album module -->
@@ -108,13 +114,6 @@
         <name>profile</name>
         <target>modules/profile/locale</target>
         <sourceDir>modules/profile</sourceDir>
-    </domain>
-
-    <!-- Registration module -->
-    <domain>
-        <name>registration</name>
-        <target>modules/registration/locale</target>
-        <sourceDir>modules/registration</sourceDir>
     </domain>
 
     <!-- Notifications module -->

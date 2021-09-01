@@ -74,14 +74,6 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/index.php:68
-#: modules/login/templates/captcha.phtml:4
-#: modules/login/templates/captcha.phtml:5
-#: modules/login/templates/confirm.phtml:10
-#: modules/login/templates/confirm.phtml:11
-#: modules/login/templates/login.phtml:4
-#: modules/login/templates/login.phtml:5
-#: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
 msgstr ""
@@ -123,90 +115,6 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:30
 msgid "Apply"
-msgstr ""
-
-#: modules/login/index.php:53
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
-msgid "Personal"
-msgstr ""
-
-#: modules/login/index.php:54
-#: modules/login/templates/logout.phtml:4
-#: modules/login/templates/logout.phtml:5
-#: modules/login/templates/logout.phtml:11
-msgid "Logout"
-msgstr ""
-
-#: modules/login/index.php:78
-msgid "You have not entered login"
-msgstr ""
-
-#: modules/login/index.php:82
-msgid "You have not entered password"
-msgstr ""
-
-#: modules/login/index.php:100
-#: system/src/Validator/messages.php:17
-msgid "The security code is not correct"
-msgstr ""
-
-#: modules/login/index.php:150
-#: modules/login/index.php:154
-msgid "Authorization failed"
-msgstr ""
-
-#: modules/login/templates/captcha.phtml:10
-#: modules/login/templates/captcha.phtml:19
-msgid "Verification code"
-msgstr ""
-
-#: modules/login/templates/captcha.phtml:12
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/login/templates/captcha.phtml:28
-msgid "Continue"
-msgstr ""
-
-#: modules/login/templates/confirm.phtml:20
-msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
-
-#: modules/login/templates/confirm.phtml:28
-msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
-
-#: modules/login/templates/login.phtml:10
-msgid "Authorization"
-msgstr ""
-
-#: modules/login/templates/login.phtml:15
-#: modules/login/templates/login.phtml:23
-msgid "Username"
-msgstr ""
-
-#: modules/login/templates/login.phtml:27
-#: modules/login/templates/login.phtml:35
-msgid "Password"
-msgstr ""
-
-#: modules/login/templates/login.phtml:39
-msgid "Forgot password?"
-msgstr ""
-
-#: modules/login/templates/login.phtml:41
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
-msgid "Registration"
-msgstr ""
-
-#: modules/login/templates/logout.phtml:9
-msgid "Are you sure you want to leave the site?"
-msgstr ""
-
-#: modules/login/templates/logout.phtml:12
-#: modules/notifications/templates/settings.phtml:50
-#: themes/default/templates/system/pages/comments_delete.phtml:26
-msgid "Cancel"
 msgstr ""
 
 #: modules/notifications/includes/clear.php:23
@@ -277,6 +185,11 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: modules/notifications/templates/settings.phtml:50
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+msgid "Cancel"
+msgstr ""
+
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
 msgstr ""
@@ -316,15 +229,24 @@ msgstr ""
 #: system/src/Comments.php:322
 #: system/src/Comments.php:342
 #: themes/default/templates/system/pages/comments_list.phtml:156
-#: themes/default/templates/system/pages/result.phtml:33
+#: themes/default/templates/system/pages/result.phtml:34
 msgid "Back"
 msgstr ""
 
-#: system/helpers.php:68
+#: system/helpers.php:67
+#: system/helpers.php:94
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
-#: system/src-legacy/Bbcode.php:155
+#: system/helpers.php:89
+msgid "Unfortunately, you do not have access to the requested page."
+msgstr ""
+
+#: system/helpers.php:99
+msgid "The page is outdated or an attempt to fake the request was prevented."
+msgstr ""
+
+#: system/src-legacy/Bbcode.php:153
 msgid "Added"
 msgstr ""
 
@@ -490,11 +412,11 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:164
+#: system/src/Counters.php:170
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:170
+#: system/src/Counters.php:176
 msgid "Last activity"
 msgstr ""
 
@@ -502,38 +424,59 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: system/src/UserProperties.php:69
-#: system/src/Users/UserMutators.php:61
+#: system/src/UserProperties.php:75
+#: system/src/Users/UserMutators.php:60
 msgid "Forum moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:70
-#: system/src/Users/UserMutators.php:62
+#: system/src/UserProperties.php:76
+#: system/src/Users/UserMutators.php:61
 msgid "Download moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:71
-#: system/src/Users/UserMutators.php:63
+#: system/src/UserProperties.php:77
+#: system/src/Users/UserMutators.php:62
 msgid "Library moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:72
-#: system/src/Users/UserMutators.php:64
+#: system/src/UserProperties.php:78
+#: system/src/Users/UserMutators.php:63
 msgid "Super moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:73
-#: system/src/Users/UserMutators.php:65
+#: system/src/UserProperties.php:79
+#: system/src/Users/UserMutators.php:64
 msgid "Administrator"
 msgstr ""
 
-#: system/src/UserProperties.php:74
-#: system/src/Users/UserMutators.php:66
+#: system/src/UserProperties.php:80
+#: system/src/Users/UserMutators.php:65
 msgid "Supervisor"
+msgstr ""
+
+#: system/src/Users/UserManager.php:107
+#, php-format
+msgid "The user \"%s\" was not found"
+msgstr ""
+
+#: system/src/Users/UserManager.php:111
+msgid "The user is not confirmed"
+msgstr ""
+
+#: system/src/Users/UserManager.php:115
+msgid "The user's email is not verified"
+msgstr ""
+
+#: system/src/Users/UserManager.php:121
+msgid "Incorrect password"
 msgstr ""
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
+msgstr ""
+
+#: system/src/Validator/messages.php:17
+msgid "The security code is not correct"
 msgstr ""
 
 #: system/src/Validator/messages.php:21
@@ -658,6 +601,18 @@ msgstr ""
 msgid "Invalid type given. String, integer, float, boolean or array expected"
 msgstr ""
 
+#: system/src/Validator/messages.php:79
+msgid "Invalid type given. String, integer or float expected"
+msgstr ""
+
+#: system/src/Validator/messages.php:80
+msgid "The input does not match against pattern '%pattern%'"
+msgstr ""
+
+#: system/src/Validator/messages.php:81
+msgid "There was an internal error while using the pattern '%pattern%'"
+msgstr ""
+
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
 msgstr ""
@@ -698,8 +653,16 @@ msgstr ""
 msgid "Log In"
 msgstr ""
 
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+msgid "Personal"
+msgstr ""
+
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
+msgid "Registration"
 msgstr ""
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115

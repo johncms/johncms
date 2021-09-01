@@ -46,7 +46,7 @@ msgid "You have not entered text"
 msgstr ""
 
 #: modules/library/includes/addnew.php:112
-#: modules/library/includes/moder.php:79
+#: modules/library/includes/moder.php:78
 msgid "Photo uploading error"
 msgstr ""
 
@@ -120,15 +120,15 @@ msgstr ""
 msgid "Repeat"
 msgstr ""
 
-#: modules/library/includes/moder.php:147
+#: modules/library/includes/moder.php:146
 msgid "The ROOT"
 msgstr ""
 
-#: modules/library/includes/moder.php:161
+#: modules/library/includes/moder.php:160
 msgid "Edit Section"
 msgstr ""
 
-#: modules/library/includes/moder.php:161
+#: modules/library/includes/moder.php:160
 msgid "Edit Article"
 msgstr ""
 

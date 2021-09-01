@@ -2,36 +2,36 @@ msgid ""
 msgstr ""
 "X-Domain: guestbook\n"
 
-#: modules/guestbook/Controllers/GuestbookController.php:45
+#: modules/guestbook/src/Controllers/GuestbookController.php:45
 msgid "Guestbook"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:45
+#: modules/guestbook/src/Controllers/GuestbookController.php:45
 msgid "Admin Club"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:56
+#: modules/guestbook/src/Controllers/GuestbookController.php:56
 msgid "Guestbook is closed"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:76
+#: modules/guestbook/src/Controllers/GuestbookController.php:76
 msgid "Your message was added successfully"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:171
+#: modules/guestbook/src/Controllers/GuestbookController.php:171
 msgid "The message was deleted"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:191
+#: modules/guestbook/src/Controllers/GuestbookController.php:191
 #: modules/guestbook/templates/edit.phtml:3
 msgid "Edit message"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:226
+#: modules/guestbook/src/Controllers/GuestbookController.php:226
 msgid "The message was saved"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:256
+#: modules/guestbook/src/Controllers/GuestbookController.php:256
 #: modules/guestbook/templates/index.phtml:178
 #: modules/guestbook/templates/index.phtml:190
 #: modules/guestbook/templates/reply.phtml:11
@@ -39,23 +39,23 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:291
+#: modules/guestbook/src/Controllers/GuestbookController.php:291
 msgid "Your reply to the message was saved"
 msgstr ""
 
-#: modules/guestbook/Controllers/GuestbookController.php:319
+#: modules/guestbook/src/Controllers/GuestbookController.php:319
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/guestbook/Services/GuestbookService.php:219
+#: modules/guestbook/src/Services/GuestbookService.php:219
 msgid "All messages older than 1 day were deleted"
 msgstr ""
 
-#: modules/guestbook/Services/GuestbookService.php:235
+#: modules/guestbook/src/Services/GuestbookService.php:235
 msgid "Full clearing is finished"
 msgstr ""
 
-#: modules/guestbook/Services/GuestbookService.php:251
+#: modules/guestbook/src/Services/GuestbookService.php:251
 msgid "All messages older than 1 week were deleted"
 msgstr ""
 

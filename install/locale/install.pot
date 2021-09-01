@@ -2,30 +2,30 @@ msgid ""
 msgstr ""
 "X-Domain: install\n"
 
-#: install/index.php:62
+#: install/index.php:57
 #: install/steps/step_1.php:23
 msgid "Preparing for installation"
 msgstr ""
 
-#: install/index.php:67
+#: install/index.php:62
 #: install/steps/step_2.php:20
 #: install/steps/step_2.php:21
 msgid "Checking parameters"
 msgstr ""
 
-#: install/index.php:72
+#: install/index.php:67
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
 msgstr ""
 
-#: install/index.php:77
+#: install/index.php:72
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
 msgstr ""
 
-#: install/index.php:82
+#: install/index.php:77
 msgid "Completion"
 msgstr ""
 

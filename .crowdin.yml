@@ -1,6 +1,8 @@
 files:
   - source: /modules/admin/locale/admin.pot
     translation: /modules/admin/locale/%two_letters_code%.po
+  - source: /modules/auth/locale/auth.pot
+    translation: /modules/auth/locale/%two_letters_code%.po
   - source: /modules/album/locale/album.pot
     translation: /modules/album/locale/%two_letters_code%.po
   - source: /modules/community/locale/community.pot
@@ -25,8 +27,6 @@ files:
     translation: /modules/online/locale/%two_letters_code%.po
   - source: /modules/profile/locale/profile.pot
     translation: /modules/profile/locale/%two_letters_code%.po
-  - source: /modules/registration/locale/registration.pot
-    translation: /modules/registration/locale/%two_letters_code%.po
   - source: /modules/notifications/locale/notifications.pot
     translation: /modules/notifications/locale/%two_letters_code%.po
   - source: /system/locale/system.pot
