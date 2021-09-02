@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Auth\Middlewares;
+namespace Johncms\Auth\Middlewares;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

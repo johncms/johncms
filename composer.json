@@ -59,7 +59,8 @@
         "johncms/ckeditor-media-embed": "^1.1",
         "johncms/johncms-pagination": "^2.0",
         "oomphinc/composer-installers-extender": "^2.0",
-        "johncms/contacts": "9999999-dev"
+        "johncms/homepage": "dev-develop",
+        "johncms/auth": "dev-develop"
     },
     "require-dev": {
         "fakerphp/faker": "^1.15",
@@ -101,6 +102,16 @@
         "translate-scan": "scan",
         "test": "phpunit --colors=always"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "modules/johncms/homepage"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/auth"
+        }
+    ],
     "extra": {
         "installer-types": [
             "johncms-module"

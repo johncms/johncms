@@ -20,7 +20,6 @@
             <directory name="modules/forum"/>
             <directory name="modules/guestbook"/>
             <directory name="modules/help"/>
-            <directory name="modules/homepage"/>
             <directory name="modules/language"/>
             <directory name="modules/library"/>
             <directory name="modules/mail"/>

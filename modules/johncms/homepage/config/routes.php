@@ -8,15 +8,6 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Homepage\Install;
-
-class Installer extends \Johncms\Modules\Installer
-{
-    public function install(): void
-    {
-    }
-
-    public function uninstall(): void
-    {
-    }
-}
+return function (\League\Route\Router $router) {
+    $router->get('/', [\Johncms\Homepage\Controllers\HomepageController::class, 'index'])->setName('homepage.index');
+};

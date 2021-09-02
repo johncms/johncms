@@ -8,7 +8,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Homepage\Controllers;
+namespace Johncms\Homepage\Controllers;
 
 use Johncms\Controller\BaseController;
 use Johncms\Counters;
@@ -16,7 +16,7 @@ use News\Models\NewsArticle;
 
 class HomepageController extends BaseController
 {
-    protected string $module_name = 'homepage';
+    protected string $module_name = 'johncms/homepage';
 
     public function index(): string
     {

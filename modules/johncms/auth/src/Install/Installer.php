@@ -8,7 +8,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Auth\Install;
+namespace Johncms\Auth\Install;
 
 class Installer extends \Johncms\Modules\Installer
 {

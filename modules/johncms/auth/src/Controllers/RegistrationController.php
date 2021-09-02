@@ -8,11 +8,13 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Auth\Controllers;
+declare(strict_types=1);
 
-use Auth\Forms\RegistrationForm;
-use Auth\Services\UserRegistrationService;
+namespace Johncms\Auth\Controllers;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Auth\Forms\RegistrationForm;
+use Johncms\Auth\Services\UserRegistrationService;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\RedirectResponse;
@@ -24,7 +26,7 @@ use Throwable;
 
 class RegistrationController extends BaseController
 {
-    protected string $module_name = 'auth';
+    protected string $module_name = 'johncms/auth';
 
     public function __construct()
     {

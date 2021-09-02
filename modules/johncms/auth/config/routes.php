@@ -8,10 +8,10 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Auth\Controllers\LoginController;
-use Auth\Controllers\RegistrationController;
-use Auth\Middlewares\RegistrationClosedMiddleware;
-use Auth\Middlewares\UnauthorizedUserMiddleware;
+use Johncms\Auth\Controllers\LoginController;
+use Johncms\Auth\Controllers\RegistrationController;
+use Johncms\Auth\Middlewares\RegistrationClosedMiddleware;
+use Johncms\Auth\Middlewares\UnauthorizedUserMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 

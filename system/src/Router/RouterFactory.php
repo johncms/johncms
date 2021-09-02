@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
-use Johncms\Modules\Modules;
 use Johncms\Router\Strategy\ApplicationStrategy;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
@@ -50,12 +49,9 @@ class RouterFactory
 
     public function collectRoutes(Router $router): void
     {
-        $modules = di(Modules::class)->getInstalled();
-        foreach ($modules as $module) {
-            $router_config = MODULES_PATH . $module . '/config/routes.php';
-            if (file_exists($router_config)) {
-                (require $router_config)($router);
-            }
+        $routerConfigs = glob(MODULES_PATH . '*/*/config/routes.php');
+        foreach ($routerConfigs as $routerConfig) {
+            (require $routerConfig)($router);
         }
     }
 

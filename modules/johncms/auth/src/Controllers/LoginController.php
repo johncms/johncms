@@ -8,9 +8,9 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Auth\Controllers;
+namespace Johncms\Auth\Controllers;
 
-use Auth\Forms\LoginForm;
+use Johncms\Auth\Forms\LoginForm;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\RedirectResponse;
@@ -21,7 +21,7 @@ use Throwable;
 
 class LoginController extends BaseController
 {
-    protected string $module_name = 'auth';
+    protected string $module_name = 'johncms/auth';
 
     public function __construct()
     {

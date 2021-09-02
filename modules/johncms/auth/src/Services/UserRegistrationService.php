@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Auth\Services;
+namespace Johncms\Auth\Services;
 
 use Johncms\i18n\Translator;
 use Johncms\Mail\EmailMessage;

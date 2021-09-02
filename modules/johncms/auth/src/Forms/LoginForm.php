@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Auth\Forms;
+namespace Johncms\Auth\Forms;
 
 use Johncms\Forms\AbstractForm;
 use Johncms\Forms\Inputs\Captcha;

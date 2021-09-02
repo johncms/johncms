@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "279f7f9a78403dc2356ecbacbb6533e5",
+    "content-hash": "936126d4620225b538bf7ab93443c3c1",
     "packages": [
         {
             "name": "aura/autoload",
@@ -1230,6 +1230,38 @@
             "time": "2020-06-30T18:43:34+00:00"
         },
         {
+            "name": "johncms/auth",
+            "version": "dev-develop",
+            "dist": {
+                "type": "path",
+                "url": "modules/johncms/auth",
+                "reference": "424d71699a950f813491bcb4f8482d7929345e7d"
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "johncms-module",
+            "autoload": {
+                "psr-4": {
+                    "Johncms\\Auth\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "JohnCMS Contributors",
+                    "homepage": "https://github.com/johncms/johncms/graphs/contributors"
+                }
+            ],
+            "description": "Auth module",
+            "homepage": "https://johncms.com",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "johncms/ckeditor-media-embed",
             "version": "1.1.2",
             "source": {
@@ -1281,46 +1313,36 @@
             "time": "2021-07-05T14:51:22+00:00"
         },
         {
-            "name": "johncms/contacts",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johncms/contacts.git",
-                "reference": "58f1412ade16e0f2de07ef8737f1ef1f627fc94d"
-            },
+            "name": "johncms/homepage",
+            "version": "dev-develop",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johncms/contacts/zipball/58f1412ade16e0f2de07ef8737f1ef1f627fc94d",
-                "reference": "58f1412ade16e0f2de07ef8737f1ef1f627fc94d",
-                "shasum": ""
+                "type": "path",
+                "url": "modules/johncms/homepage",
+                "reference": "2ab2aac847a3732eca54fde91099955ab5c9a874"
             },
             "require": {
                 "php": "^8.0"
             },
-            "default-branch": true,
             "type": "johncms-module",
             "autoload": {
                 "psr-4": {
-                    "Johncms\\Contacts\\": "src/"
+                    "Johncms\\Homepage\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "Maksim Masalov",
-                    "email": "simba7@inbox.ru"
+                    "name": "JohnCMS Contributors",
+                    "homepage": "https://github.com/johncms/johncms/graphs/contributors"
                 }
             ],
-            "description": "description",
+            "description": "Homepage module",
             "homepage": "https://johncms.com",
-            "support": {
-                "issues": "https://github.com/johncms/contacts/issues",
-                "source": "https://github.com/johncms/contacts/tree/master"
-            },
-            "time": "2021-09-01T22:23:29+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "johncms/johncms-pagination",
@@ -7794,7 +7816,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "johncms/contacts": 20,
+        "johncms/homepage": 20,
+        "johncms/auth": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
