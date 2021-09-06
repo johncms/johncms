@@ -26,6 +26,7 @@ use Johncms\i18n\TranslatorServiceFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
+use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\View\Extension\{Avatar};
 use Johncms\View\Extension\Assets;
@@ -97,6 +98,7 @@ class ConfigProvider
     {
         return [
             SessionAuthProvider::class,
+            CookiesAuthProvider::class,
         ];
     }
 }

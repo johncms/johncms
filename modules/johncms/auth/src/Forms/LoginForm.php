@@ -14,6 +14,7 @@ namespace Johncms\Auth\Forms;
 
 use Johncms\Forms\AbstractForm;
 use Johncms\Forms\Inputs\Captcha;
+use Johncms\Forms\Inputs\Checkbox;
 use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Users\User;
@@ -35,6 +36,12 @@ class LoginForm extends AbstractForm
             ->setPlaceholder(__('Password'))
             ->setNameAndId('password')
             ->setValidationRules(['NotEmpty']);
+
+        $fields['remember'] = (new Checkbox())
+            ->setLabel(__('Remember me'))
+            ->setNameAndId('remember')
+            ->setValue('yes')
+            ->setChecked(! empty($this->getValue('remember', true)));
 
         if ($this->needCaptcha()) {
             $fields['captcha'] = (new Captcha())

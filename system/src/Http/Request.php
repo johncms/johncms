@@ -134,4 +134,14 @@ class Request extends ServerRequest
 
         return false;
     }
+
+    public function userAgent(): ?string
+    {
+        return $this->getServer('HTTP_USER_AGENT');
+    }
+
+    public function ip(): ?string
+    {
+        return $this->getServer('REMOTE_ADDR');
+    }
 }

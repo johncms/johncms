@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Johncms\Users\Casts\UserSettings;
 
 /**
@@ -38,6 +39,8 @@ use Johncms\Users\Casts\UserSettings;
  * @property Carbon|null $birthday
  * @property Carbon|null $last_visit
  * @property UserConfig $settings
+ *
+ * @property StoredAuth[] $storedAuth
  *
  * @method Builder online() - Выбрать пользователей онлайн
  */
@@ -140,5 +143,10 @@ class User extends Model
     public function isAdmin(): bool
     {
         return $this->userRoleChecker->hasRole('admin');
+    }
+
+    public function storedAuth(): HasMany
+    {
+        return $this->hasMany(StoredAuth::class, 'user_id', 'id');
     }
 }

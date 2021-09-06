@@ -15,6 +15,7 @@ use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\RedirectResponse;
 use Johncms\Http\Session;
+use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\Users\UserManager;
 use Throwable;
@@ -48,8 +49,12 @@ class LoginController extends BaseController
         return $this->render->render('auth::login_form', ['data' => $data]);
     }
 
-    public function authorize(UserManager $userManager, Session $session, SessionAuthProvider $sessionAuthProvider): RedirectResponse
-    {
+    public function authorize(
+        UserManager $userManager,
+        Session $session,
+        SessionAuthProvider $sessionAuthProvider,
+        CookiesAuthProvider $cookiesAuthProvider
+    ): RedirectResponse {
         $registrationForm = new LoginForm();
         try {
             // Validate the form
@@ -59,6 +64,9 @@ class LoginController extends BaseController
             try {
                 // Try to check credentials and authorize the user
                 $user = $userManager->checkCredentials($values['login'], $values['password']);
+                if ($values['remember']) {
+                    $cookiesAuthProvider->store($user);
+                }
                 $sessionAuthProvider->store($user);
                 return (new RedirectResponse(route('homepage.index')));
             } catch (Throwable $exception) {
