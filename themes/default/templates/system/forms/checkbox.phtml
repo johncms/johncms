@@ -1,0 +1,25 @@
+<?php
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var Johncms\Forms\Inputs\Checkbox $field
+ */
+
+?>
+<div class="form-group">
+    <input type="hidden" name="<?= $field->name ?>" value="">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox"
+               name="<?= $field->name ?>"
+               value="<?= $this->e($field->value ?? '') ?>"
+               class="custom-control-input"
+               id="<?= $field->id ?>"
+            <?= $field->checked ? 'checked' : '' ?>>
+        <label class="custom-control-label" for="<?= $field->id ?>"><?= $field->label ?></label>
+        <?php if (isset($errors[$field->name])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
+        <?php endif ?>
+        <?php if ($field->helpText): ?>
+            <div class="text-muted small"><?= $field->helpText ?></div>
+        <?php endif; ?>
+    </div>
+</div>

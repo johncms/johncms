@@ -28,6 +28,9 @@ if (! empty($fields)) {
             case 'captcha':
                 echo $this->fetch('system::forms/captcha', ['field' => $field, 'errors' => $errors]);
                 break;
+            case 'checkbox':
+                echo $this->fetch('system::forms/checkbox', ['field' => $field, 'errors' => $errors]);
+                break;
         }
     }
 }
