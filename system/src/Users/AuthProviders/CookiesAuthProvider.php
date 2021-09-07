@@ -82,8 +82,12 @@ class CookiesAuthProvider implements AuthProviderInterface
 
     public function forget(): void
     {
-        setcookie(self::COOKIE_USER_FIELD, '', ['expires' => time() - 86400]);
-        setcookie(self::COOKIE_TOKEN_FIELD, '', ['expires' => time() - 86400]);
+        $cookieParams = [
+            'expires' => time() - 86400,
+            'path'    => '/',
+        ];
+        setcookie(self::COOKIE_USER_FIELD, '', $cookieParams);
+        setcookie(self::COOKIE_TOKEN_FIELD, '', $cookieParams);
         (new StoredAuth())->where('user_id', $this->userId)->where('token', $this->token)->delete();
     }
 
