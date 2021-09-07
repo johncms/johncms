@@ -30,14 +30,13 @@ class Migration
     public function __construct()
     {
         $this->filesystem = new Filesystem();
-        $connection = Manager::connection();
-        $resolver = new ConnectionResolver(['default' => $connection]);
-        $resolver->setDefaultConnection('default');
-        $db_repository = new DatabaseMigrationRepository($resolver, 'migrations');
+        $manager = new Manager();
+        $dbManager = $manager->getDatabaseManager();
+        $db_repository = new DatabaseMigrationRepository($dbManager, 'migrations');
         if (! $db_repository->repositoryExists()) {
             $db_repository->createRepository();
         }
-        $this->migrator = new Migrator($db_repository, $resolver, new Filesystem());
+        $this->migrator = new Migrator($db_repository, $dbManager, new Filesystem());
     }
 
     /**
