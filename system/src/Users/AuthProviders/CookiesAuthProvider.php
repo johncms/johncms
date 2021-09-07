@@ -63,12 +63,14 @@ class CookiesAuthProvider implements AuthProviderInterface
     public function store(User $user): void
     {
         $token = Str::random(100);
-        $cookieParams = [
-            'expires' => time() + (86400 * 365 * 5),
-            'path'    => '/',
-        ];
-        setcookie(self::COOKIE_USER_FIELD, (string) $user->id, $cookieParams);
-        setcookie(self::COOKIE_TOKEN_FIELD, $token, $cookieParams);
+        if (! headers_sent()) {
+            $cookieParams = [
+                'expires' => time() + (86400 * 365 * 5),
+                'path'    => '/',
+            ];
+            setcookie(self::COOKIE_USER_FIELD, (string) $user->id, $cookieParams);
+            setcookie(self::COOKIE_TOKEN_FIELD, $token, $cookieParams);
+        }
 
         (new StoredAuth())->create(
             [
@@ -82,17 +84,19 @@ class CookiesAuthProvider implements AuthProviderInterface
 
     public function forget(): void
     {
-        $cookieParams = [
-            'expires' => time() - 86400,
-            'path'    => '/',
-        ];
-        setcookie(self::COOKIE_USER_FIELD, '', $cookieParams);
-        setcookie(self::COOKIE_TOKEN_FIELD, '', $cookieParams);
+        if (! headers_sent()) {
+            $cookieParams = [
+                'expires' => time() - 86400,
+                'path'    => '/',
+            ];
+            setcookie(self::COOKIE_USER_FIELD, '', $cookieParams);
+            setcookie(self::COOKIE_TOKEN_FIELD, '', $cookieParams);
+        }
         (new StoredAuth())->where('user_id', $this->userId)->where('token', $this->token)->delete();
     }
 
     public function forgetAll(User $user): void
     {
-        (new StoredAuth())->where('user_id', $user)->delete();
+        (new StoredAuth())->where('user_id', $user->id)->delete();
     }
 }
