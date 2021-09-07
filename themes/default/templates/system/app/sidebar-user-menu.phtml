@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/login">
+                    <a href="<?= route('logout.index') ?>">
                         <svg class="icon text-info">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-out"/>
                         </svg>
@@ -64,7 +64,7 @@
             <?php else: ?>
                 <!-- Выпадающее меню для гостей -->
                 <li>
-                    <a href="/login/">
+                    <a href="<?= route('login.index') ?>">
                         <svg class="icon text-info">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-in"/>
                         </svg>
@@ -72,7 +72,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/registration/">
+                    <a href="<?= route('registration.index') ?>">
                         <svg class="icon text-info">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                         </svg>

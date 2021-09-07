@@ -92,7 +92,9 @@ class CookiesAuthProvider implements AuthProviderInterface
             setcookie(self::COOKIE_USER_FIELD, '', $cookieParams);
             setcookie(self::COOKIE_TOKEN_FIELD, '', $cookieParams);
         }
-        (new StoredAuth())->where('user_id', $this->userId)->where('token', $this->token)->delete();
+        if ($this->userId && $this->token) {
+            (new StoredAuth())->where('user_id', $this->userId)->where('token', $this->token)->delete();
+        }
     }
 
     public function forgetAll(User $user): void
