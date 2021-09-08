@@ -14,12 +14,8 @@ namespace Johncms\Users;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Class Role
- *
- * @package Johncms\Users
  * @mixin Builder
  * @psalm-suppress PropertyNotSetInConstructor
  *
@@ -27,9 +23,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $display_name
  * @property string $description
  */
-class Role extends Model
+class Permission extends Model
 {
-    protected $table = 'roles';
+    protected $table = 'permissions';
     public $timestamps = false;
 
     protected $fillable = [
@@ -37,9 +33,4 @@ class Role extends Model
         'display_name',
         'description',
     ];
-
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(Permission::class, 'permission_role', 'role_id', 'permission_id');
-    }
 }

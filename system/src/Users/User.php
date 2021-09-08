@@ -81,12 +81,14 @@ class User extends Model
     ];
 
     protected UserRoleChecker $userRoleChecker;
+    protected UserPermissionChecker $userPermissionChecker;
 
     public function __construct(array $attributes = [])
     {
         $this->setUpModel();
         parent::__construct($attributes);
         $this->userRoleChecker = new UserRoleChecker($this);
+        $this->userPermissionChecker = new UserPermissionChecker($this);
     }
 
     private function setUpModel(): void
@@ -143,6 +145,11 @@ class User extends Model
     public function isAdmin(): bool
     {
         return $this->userRoleChecker->hasRole('admin');
+    }
+
+    public function hasPermission(array|string $permissions): bool
+    {
+        return $this->userPermissionChecker->hasPermission($permissions);
     }
 
     public function storedAuth(): HasMany

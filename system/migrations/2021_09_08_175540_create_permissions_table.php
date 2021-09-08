@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateRolesTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +15,7 @@ class CreateRolesTable extends Migration
     {
         $schema = Capsule::schema();
         $schema->create(
-            'roles',
+            'permissions',
             function (Blueprint $table) {
                 $table->integerIncrements('id');
                 $table->string('name')->unique();
@@ -36,6 +34,6 @@ class CreateRolesTable extends Migration
     public function down()
     {
         $schema = Capsule::schema();
-        $schema->dropIfExists('roles');
+        $schema->dropIfExists('permissions');
     }
 }
