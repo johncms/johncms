@@ -24,7 +24,7 @@ class UserRegistrationService
     protected bool $emailConfirmation = false;
     protected bool $moderation = false;
 
-    public function __construct()
+    public function __construct(protected Translator $translator)
     {
         $this->moderation = config('registration.moderation', false);
         $this->emailConfirmation = config('registration.email_confirmation', false);
@@ -49,6 +49,10 @@ class UserRegistrationService
 
         if ($this->emailConfirmation) {
             $fields['confirmation_code'] = uniqid('email_', true);
+        }
+
+        if (empty($fields['settings']['lang'])) {
+            $fields['settings']['lang'] = $this->translator->getLocale();
         }
 
         // Create user
