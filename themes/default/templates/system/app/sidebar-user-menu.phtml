@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div>
-                <?= ($user ? $user->name : d__('system', 'Log In')) ?>
+                <?= ($user ? $user->displayName() : d__('system', 'Log In')) ?>
             </div>
         </div>
         <div>

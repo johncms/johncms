@@ -149,4 +149,9 @@ class User extends Model
     {
         return $this->hasMany(StoredAuth::class, 'user_id', 'id');
     }
+
+    public function displayName(): string
+    {
+        return $this->name ?? $this->login ?? $this->email ?? $this->phone ?? '';
+    }
 }
