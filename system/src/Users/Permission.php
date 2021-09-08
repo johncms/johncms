@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin Builder
  * @psalm-suppress PropertyNotSetInConstructor
  *
+ * @property int $id
  * @property string $name
  * @property string $display_name
  * @property string $description

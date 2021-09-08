@@ -127,6 +127,11 @@ class User extends Model
         return $this->userRoleChecker;
     }
 
+    public function getPermissionChecker(): UserPermissionChecker
+    {
+        return $this->userPermissionChecker;
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'role_user');

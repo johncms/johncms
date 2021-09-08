@@ -14,6 +14,7 @@ namespace Tests;
 
 use Faker\Factory;
 use Faker\Generator;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Application;
 use Johncms\Container\ContainerFactory;
 use Johncms\Database\Migration;
@@ -33,6 +34,12 @@ abstract class AbstractTestCase extends TestCase
     {
         $migrations = new Migration();
         $migrations->run();
+    }
+
+    public function dropTables()
+    {
+        $schema = Capsule::schema();
+        $schema->dropAllTables();
     }
 
     public static function setUpBeforeClass(): void

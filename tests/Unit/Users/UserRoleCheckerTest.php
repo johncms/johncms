@@ -26,6 +26,7 @@ class UserRoleCheckerTest extends AbstractTestCase
 
     protected function setUp(): void
     {
+        $this->dropTables();
         $this->runMigrations();
         $this->userManager = di(UserManager::class);
         $this->userFields = [
