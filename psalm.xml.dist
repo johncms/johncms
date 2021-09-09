@@ -23,7 +23,6 @@
             <directory name="modules/language"/>
             <directory name="modules/library"/>
             <directory name="modules/mail"/>
-            <directory name="modules/news"/>
             <directory name="modules/notifications"/>
             <directory name="modules/online"/>
             <directory name="modules/profile"/>

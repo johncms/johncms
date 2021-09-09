@@ -12,7 +12,7 @@ namespace Johncms\Homepage\Controllers;
 
 use Johncms\Controller\BaseController;
 use Johncms\Counters;
-use News\Models\NewsArticle;
+use Johncms\News\Models\NewsArticle;
 
 class HomepageController extends BaseController
 {

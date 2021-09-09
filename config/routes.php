@@ -15,14 +15,6 @@ use Admin\Controllers\Users\UsersController;
 use FastRoute\RouteCollector;
 use Guestbook\Controllers\GuestbookController;
 use Johncms\System\Users\User;
-use News\Controllers\Admin\AdminArticleController;
-use News\Controllers\Admin\AdminController;
-use News\Controllers\Admin\AdminSectionController;
-use News\Controllers\ArticleController;
-use News\Controllers\CommentsController;
-use News\Controllers\SearchController;
-use News\Controllers\SectionController;
-use News\Controllers\VoteController;
 
 return static function (RouteCollector $map, User $user) {
     $map->get('/', [Homepage\Controllers\HomepageController::class, 'index']);                                // Home Page
@@ -53,32 +45,6 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/login[/]', 'modules/login/index.php');                          // Login / Logout
     $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                            // Personal Messages
 
-    $map->addRoute(['GET', 'POST'], '/news/search/', [SearchController::class, 'index']);
-    $map->addRoute(['GET', 'POST'], '/news/search_tags/', [SearchController::class, 'byTags']);
-    $map->addRoute(['GET', 'POST'], '/news/add_vote/{article_id:\d+}/{type_vote:\d}/', [VoteController::class, 'add']);
-    $map->addRoute(['GET', 'POST'], '/news/comments/{article_id:\d+}/', [CommentsController::class, 'index']);
-    $map->addRoute(['GET', 'POST'], '/news/comments/add/{article_id:\d+}/', [CommentsController::class, 'add']);
-    $map->addRoute(['GET', 'POST'], '/news/comments/del/', [CommentsController::class, 'del']);
-    if ($user->isValid() && empty($user->ban)) {
-        $map->addRoute(['GET', 'POST'], '/news/comments/upload_file[/]', [CommentsController::class, 'loadFile']);
-    }
-
-    if ($user->rights >= 9 && $user->isValid()) {
-        $map->addRoute(['GET', 'POST'], '/admin/news/', [AdminController::class, 'index']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/content/[{section_id:\d+}[/]]', [AdminController::class, 'section']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/settings/', [AdminController::class, 'settings']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/edit_article/{article_id:\d+}[/]', [AdminArticleController::class, 'edit']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/add_article/[{section_id:\d+}[/]]', [AdminArticleController::class, 'add']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/del_article/{article_id:\d+}[/]', [AdminArticleController::class, 'del']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/add_section/[{section_id:\d+}[/]]', [AdminSectionController::class, 'add']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/edit_section/{section_id:\d+}[/]', [AdminSectionController::class, 'edit']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/del_section/{section_id:\d+}[/]', [AdminSectionController::class, 'del']);
-        $map->addRoute(['GET', 'POST'], '/admin/news/upload_file[/]', [AdminArticleController::class, 'loadFile']);
-    }
-
-    $map->addRoute(['GET', 'POST'], '/news/[{category:[\w/+-]+}]', [SectionController::class, 'index']);
-    $map->addRoute(['GET', 'POST'], '/news/{category:[\w/+-]+}/{article_code:[\w.+-]+}.html', [ArticleController::class, 'index']);
-    $map->addRoute(['GET', 'POST'], '/news/{article_code:[\w.+-]+}.html', [ArticleController::class, 'index']);
 
     $map->addRoute(['GET', 'POST'], '/online/[{action}/]', 'modules/online/index.php');               // Online site activity
     $map->addRoute(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php');                   // Restore Password

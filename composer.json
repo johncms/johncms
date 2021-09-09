@@ -110,6 +110,10 @@
         {
             "type": "path",
             "url": "modules/johncms/auth"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/news"
         }
     ],
     "extra": {
