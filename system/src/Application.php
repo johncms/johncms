@@ -32,7 +32,6 @@ class Application
     public function run(): Application
     {
         di(PDO::class);
-        (new Modules())->registerAutoloader();
         $this->runModuleProviders();
         $this->setupTranslator();
         return $this;

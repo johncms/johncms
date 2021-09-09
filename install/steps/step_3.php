@@ -83,7 +83,6 @@ if ($request->getMethod() === 'POST') {
 
             // Installing modules
             $modules = new Modules();
-            $modules->registerAutoloader();
             $installed_modules = $modules->getInstalled();
             foreach ($installed_modules as $module) {
                 (new ModuleInstaller($module))->install();

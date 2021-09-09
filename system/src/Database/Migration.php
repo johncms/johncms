@@ -19,7 +19,6 @@ use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
-use Johncms\Modules\Modules;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Migration
@@ -68,13 +67,8 @@ class Migration
         $paths = [
             $this->getModuleMigrationsPath('system'),
         ];
-
-        $modules = di(Modules::class)->getInstalled();
-        foreach ($modules as $module) {
-            $paths[] = $this->getModuleMigrationsPath($module);
-        }
-
-        return $paths;
+        $moduleMigrationPaths = glob(MODULES_PATH . '*/*/migrations', GLOB_ONLYDIR);
+        return array_merge($paths, $moduleMigrationPaths);
     }
 
     public function setMigratorOutput(OutputInterface $output): void
