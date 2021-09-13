@@ -15,7 +15,7 @@ use Library\Utils;
 
 $res = $db->query('SELECT * FROM `library_texts` WHERE `id` = ' . $id)->fetch();
 
-if (! $res['premod']) {
+if (! $res['premod'] && ! $adm) {
     Utils::redir404();
 } else {
 // Счетчик прочтений
