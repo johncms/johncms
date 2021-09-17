@@ -30,7 +30,7 @@ use League\Flysystem\FilesystemException;
 
 class AdminArticleController extends BaseAdminController
 {
-    protected $module_name = 'news';
+    protected string $moduleName = 'news';
 
     protected $config;
 

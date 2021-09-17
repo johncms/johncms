@@ -19,7 +19,7 @@ use Johncms\News\Section;
 
 class ArticleController extends BaseController
 {
-    protected string $module_name = 'johncms/news';
+    protected string $moduleName = 'johncms/news';
 
     /** @var array */
     protected $config;

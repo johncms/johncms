@@ -14,14 +14,9 @@ namespace Johncms;
 
 class NavChain
 {
-    /** @var array */
-    private $items = [];
-
-    /** @var bool */
-    private $show_home_page = true;
-
-    /** @var bool */
-    private $last_is_active = true;
+    private array $items = [];
+    private bool $showHomePage = true;
+    private bool $lastIsActive = true;
 
     public function __invoke(): self
     {
@@ -33,7 +28,7 @@ class NavChain
      *
      * @param string $name
      * @param string $url
-     * @return mixed|void
+     * @return void
      */
     public function add(string $name, string $url = '')
     {
@@ -50,24 +45,24 @@ class NavChain
      */
     public function getAll(): array
     {
-        $all_items = $this->items;
+        $allItems = $this->items;
 
         // Добавляем главную страницу в навигационную цепочку
-        if ($this->show_home_page) {
-            $home_page_item = [
+        if ($this->showHomePage) {
+            $homePageItem = [
                 'name' => d__('system', 'Home'),
                 'url'  => '/',
             ];
-            $all_items = array_merge([$home_page_item], $all_items);
+            $allItems = array_merge([$homePageItem], $allItems);
         }
 
         // Помечаем последний элемент активным
-        if ($this->last_is_active && ! empty($all_items)) {
-            $last_key = array_key_last($all_items);
-            $all_items[$last_key]['active'] = true;
+        if ($this->lastIsActive && ! empty($allItems)) {
+            $lastKey = array_key_last($allItems);
+            $allItems[$lastKey]['active'] = true;
         }
 
-        return $all_items;
+        return $allItems;
     }
 
     /**
@@ -78,7 +73,7 @@ class NavChain
      */
     public function showHomePage(bool $value): void
     {
-        $this->show_home_page = $value;
+        $this->showHomePage = $value;
     }
 
     /**
@@ -89,6 +84,6 @@ class NavChain
      */
     public function lastIsActive(bool $value): void
     {
-        $this->last_is_active = $value;
+        $this->lastIsActive = $value;
     }
 }

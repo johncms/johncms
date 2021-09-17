@@ -16,7 +16,7 @@ use Johncms\News\Models\NewsArticle;
 
 class HomepageController extends BaseController
 {
-    protected string $module_name = 'johncms/homepage';
+    protected string $moduleName = 'johncms/homepage';
 
     public function index(): string
     {

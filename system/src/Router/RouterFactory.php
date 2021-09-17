@@ -19,21 +19,23 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\SimpleCache\CacheInterface;
+use RuntimeException;
+use Throwable;
 
 class RouterFactory
 {
-    protected CachedRouter $cached_router;
-    protected ServerRequestInterface $server_request;
+    protected CachedRouter $cachedRouter;
+    protected ServerRequestInterface $serverRequest;
 
     public function __construct(
-        ServerRequestInterface $server_request,
-        ResponseFactoryInterface $response_factory,
+        ServerRequestInterface $serverRequest,
+        ResponseFactoryInterface $responseFactory,
         CacheInterface $cache
     ) {
-        $this->server_request = $server_request;
-        $this->cached_router = new CachedRouter(
-            function (Router $router) use ($response_factory) {
-                $strategy = (new ApplicationStrategy($response_factory));
+        $this->serverRequest = $serverRequest;
+        $this->cachedRouter = new CachedRouter(
+            function (Router $router) use ($responseFactory) {
+                $strategy = (new ApplicationStrategy($responseFactory));
                 $router->setStrategy($strategy);
 
                 // Set global middleware
@@ -55,21 +57,24 @@ class RouterFactory
         }
     }
 
-    /** @noinspection PhpRedundantCatchClauseInspection */
+    /**
+     * @noinspection PhpRedundantCatchClauseInspection
+     * @throws Throwable
+     */
     public function dispatch(): ResponseInterface
     {
         try {
-            return $this->cached_router->dispatch($this->server_request);
-        } catch (NotFoundException $exception) {
-            pageNotFound();
+            return $this->cachedRouter->dispatch($this->serverRequest);
+        } catch (NotFoundException) {
+            return status_page(404);
         }
     }
 
     public function getRouter(): Router
     {
-        $router = $this->cached_router->getRouter();
+        $router = $this->cachedRouter->getRouter();
         if ($router === null) {
-            throw new \RuntimeException('The router is not configured yet');
+            throw new RuntimeException('The router is not configured yet');
         }
         return $router;
     }

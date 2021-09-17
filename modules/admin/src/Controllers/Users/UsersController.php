@@ -21,7 +21,7 @@ use Mobicms\Captcha\Image;
 
 class UsersController extends BaseAdminController
 {
-    protected $module_name = 'admin';
+    protected string $moduleName = 'admin';
 
     public function login(User $user, Request $request): string
     {

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+/** @deprecated */
 abstract class AbstractUserProperties
 {
     /** @var int Идентификатор пользователя */

@@ -93,12 +93,12 @@ class User extends Model
 
     private function setUpModel(): void
     {
-        $model_config = config('johncms.user_model', []);
+        $modelConfig = config('johncms.user_model', []);
 
-        $casts = $model_config['casts'] ?? [];
-        $fillable = $model_config['fillable'] ?? [];
-        $attributes = $model_config['attributes'] ?? [];
-        $dates = $model_config['dates'] ?? [];
+        $casts = $modelConfig['casts'] ?? [];
+        $fillable = $modelConfig['fillable'] ?? [];
+        $attributes = $modelConfig['attributes'] ?? [];
+        $dates = $modelConfig['dates'] ?? [];
 
         $this->casts = array_merge($this->casts, $casts);
         $this->fillable = array_merge($this->fillable, $fillable);

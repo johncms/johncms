@@ -50,11 +50,7 @@ class ApplicationStrategy extends AbstractStrategy
                 ServerRequestInterface $request,
                 RequestHandlerInterface $handler
             ): ResponseInterface {
-                try {
-                    return $handler->handle($request);
-                } catch (Throwable $e) {
-                    throw $e;
-                }
+                return $handler->handle($request);
             }
         };
     }
@@ -76,32 +72,31 @@ class ApplicationStrategy extends AbstractStrategy
     }
 
     /**
-     * @param mixed $response_content
+     * @param mixed $responseContent
      * @return ResponseInterface
-     * @noinspection PhpIncompatibleReturnTypeInspection
      */
-    protected function prepareResponse($response_content): ResponseInterface
+    protected function prepareResponse(mixed $responseContent): ResponseInterface
     {
-        if (is_string($response_content)) {
+        if (is_string($responseContent)) {
             $response = new Response();
-            $response->getBody()->write($response_content);
+            $response->getBody()->write($responseContent);
             return $response;
-        } elseif ($response_content === null) {
+        } elseif ($responseContent === null) {
             return new Response(204);
-        } elseif ($this->isJsonSerializable($response_content)) {
+        } elseif ($this->isJsonSerializable($responseContent)) {
             $response = new Response();
-            $response->getBody()->write(json_encode($response_content));
+            $response->getBody()->write(json_encode($responseContent));
             return $response->withAddedHeader('content-type', 'application/json');
         }
 
-        return $response_content;
+        return $responseContent;
     }
 
     /**
      * @param mixed $response
      * @return bool
      */
-    protected function isJsonSerializable($response): bool
+    protected function isJsonSerializable(mixed $response): bool
     {
         if ($response instanceof ResponseInterface) {
             return false;

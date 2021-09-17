@@ -30,7 +30,7 @@ use League\Flysystem\FilesystemException;
 
 class GuestbookController extends BaseController
 {
-    protected string $module_name = 'guestbook';
+    protected string $moduleName = 'guestbook';
 
     /** @var string */
     protected $page_title = '';

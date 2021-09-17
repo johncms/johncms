@@ -17,7 +17,7 @@ use Johncms\Checker\SystemChecker;
 
 class SystemCheckController extends BaseAdminController
 {
-    protected $module_name = 'admin';
+    protected string $moduleName = 'admin';
 
     public function index(SystemChecker $checker): string
     {

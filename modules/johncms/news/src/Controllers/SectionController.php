@@ -20,7 +20,7 @@ use Throwable;
 
 class SectionController extends BaseController
 {
-    protected string $module_name = 'johncms/news';
+    protected string $moduleName = 'johncms/news';
     protected array $config;
     protected NewsMetaManager $newsMetaManager;
 

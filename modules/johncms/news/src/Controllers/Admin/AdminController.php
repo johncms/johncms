@@ -21,7 +21,7 @@ use Johncms\News\Utils\Helpers;
 
 class AdminController extends BaseAdminController
 {
-    protected $module_name = 'news';
+    protected string $moduleName = 'news';
 
     protected $config;
 

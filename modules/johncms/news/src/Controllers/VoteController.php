@@ -20,7 +20,7 @@ use Johncms\Users\User;
 
 class VoteController extends BaseController
 {
-    protected string $module_name = 'johncms/news';
+    protected string $moduleName = 'johncms/news';
 
     /**
      * Add vote

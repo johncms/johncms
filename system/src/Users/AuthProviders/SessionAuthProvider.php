@@ -28,14 +28,14 @@ class SessionAuthProvider implements AuthProviderInterface
 
     public function authenticate(): ?User
     {
-        $session_data = $this->session->get(self::AUTH_SESSION_ID);
-        if (empty($session_data['user_id']) || empty($session_data['user_password'])) {
+        $sessionData = $this->session->get(self::AUTH_SESSION_ID);
+        if (empty($sessionData['user_id']) || empty($sessionData['user_password'])) {
             return null;
         }
 
         /** @var User|null $user */
-        $user = (new User())->find($session_data['user_id']);
-        if ($user === null || $user->password !== $session_data['user_password']) {
+        $user = (new User())->find($sessionData['user_id']);
+        if ($user === null || $user->password !== $sessionData['user_password']) {
             $this->forget();
             return null;
         }

@@ -46,25 +46,25 @@ class ParametersInjector
                     'type'  => $type !== null ? $type->getName() : '',
                 ];
             }
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
         }
         return $parameters;
     }
 
-    public function injectParameters(object $class, string $action_name, array $param_values): array
+    public function injectParameters(object $class, string $actionName, array $paramValues): array
     {
-        $parameters = $this->getMethodParameters($class, $action_name);
-        $injected_parameters = [];
+        $parameters = $this->getMethodParameters($class, $actionName);
+        $injectedParameters = [];
         foreach ($parameters as $parameter) {
             if ($parameter['class'] !== null) {
-                $injected_parameters[$parameter['name']] = $this->container->get($parameter['class']);
-            } elseif (array_key_exists($parameter['name'], $param_values)) {
-                $injected_parameters[$parameter['name']] = $this->castValue($parameter['type'], $param_values[$parameter['name']]);
+                $injectedParameters[$parameter['name']] = $this->container->get($parameter['class']);
+            } elseif (array_key_exists($parameter['name'], $paramValues)) {
+                $injectedParameters[$parameter['name']] = $this->castValue($parameter['type'], $paramValues[$parameter['name']]);
             } else {
-                $injected_parameters[$parameter['name']] = $this->castValue($parameter['type'], $parameter['value']);
+                $injectedParameters[$parameter['name']] = $this->castValue($parameter['type'], $parameter['value']);
             }
         }
-        return $injected_parameters;
+        return $injectedParameters;
     }
 
     /**
@@ -72,19 +72,14 @@ class ParametersInjector
      * @param mixed $value
      * @return bool|float|int|string
      */
-    private function castValue(string $type, $value)
+    private function castValue(string $type, mixed $value): float|bool|int|string
     {
-        switch ($type) {
-            case 'int':
-                return (int) $value;
-            case 'float':
-                return (float) $value;
-            case 'string':
-                return (string) $value;
-            case 'bool':
-                return (bool) $value;
-            default:
-                return $value;
-        }
+        return match ($type) {
+            'int' => (int) $value,
+            'float' => (float) $value,
+            'string' => (string) $value,
+            'bool' => (bool) $value,
+            default => $value,
+        };
     }
 }

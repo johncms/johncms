@@ -25,7 +25,7 @@ class BaseController extends AbstractController
     protected MetaTagManager $metaTagManager;
 
     /** @var string The module name */
-    protected string $module_name = '';
+    protected string $moduleName = '';
 
     public function __construct()
     {
@@ -34,12 +34,12 @@ class BaseController extends AbstractController
         $this->navChain = di(NavChain::class);
         $this->metaTagManager = di(MetaTagManager::class);
 
-        if (! empty($this->module_name)) {
+        if (! empty($this->moduleName)) {
             // Register Namespace for module templates
-            $this->render->addFolder(basename($this->module_name), MODULES_PATH . $this->module_name . '/templates/');
+            $this->render->addFolder(basename($this->moduleName), MODULES_PATH . $this->moduleName . '/templates/');
 
             // Register the module languages domain and folder
-            $this->translator->addTranslationDomain(basename($this->module_name), MODULES_PATH . $this->module_name . '/locale');
+            $this->translator->addTranslationDomain(basename($this->moduleName), MODULES_PATH . $this->moduleName . '/locale');
         }
     }
 }

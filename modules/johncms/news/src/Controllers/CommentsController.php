@@ -35,7 +35,7 @@ use League\Flysystem\FilesystemException;
 
 class CommentsController extends BaseController
 {
-    protected string $module_name = 'johncms/news';
+    protected string $moduleName = 'johncms/news';
 
     /**
      * The list of comments

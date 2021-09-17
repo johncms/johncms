@@ -18,7 +18,7 @@ use Johncms\News\Models\NewsArticle;
 
 class SearchController extends BaseController
 {
-    protected string $module_name = 'johncms/news';
+    protected string $moduleName = 'johncms/news';
 
     protected $config;
 

@@ -18,7 +18,7 @@ use Throwable;
 
 class LogoutController extends BaseController
 {
-    protected string $module_name = 'johncms/auth';
+    protected string $moduleName = 'johncms/auth';
 
     public function __construct()
     {

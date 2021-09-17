@@ -16,7 +16,7 @@ use Psr\Container\ContainerInterface;
 
 class UserFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): ?User
     {
         $auth = $container->get(Authentication::class);
         return $auth->authenticate();
