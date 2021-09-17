@@ -26,7 +26,7 @@ class SearchController extends BaseController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
+        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -38,7 +38,7 @@ class SearchController extends BaseController
     public function index(Request $request): string
     {
         $page_title = __('Search');
-        $this->nav_chain->add($page_title, '');
+        $this->navChain->add($page_title, '');
         $this->render->addData(
             [
                 'title'       => $page_title,
@@ -76,7 +76,7 @@ class SearchController extends BaseController
     public function byTags(Request $request): string
     {
         $page_title = __('Search by tags');
-        $this->nav_chain->add($page_title, '');
+        $this->navChain->add($page_title, '');
         $this->render->addData(
             [
                 'title'       => $page_title,

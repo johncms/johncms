@@ -38,7 +38,7 @@ class AdminArticleController extends BaseAdminController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/admin/news/');
+        $this->navChain->add(__('News'), '/admin/news/');
         $this->render->addData(
             [
                 'title'       => __('News'),
@@ -46,7 +46,7 @@ class AdminArticleController extends BaseAdminController
                 'module_menu' => ['news' => true],
             ]
         );
-        $this->nav_chain->add(__('Section list'), '/admin/news/content/');
+        $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
 
     /**
@@ -73,13 +73,13 @@ class AdminArticleController extends BaseAdminController
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name, '/admin/news/content/' . $current_section->id);
+                $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
         }
 
-        $this->nav_chain->add(__('Add article'));
+        $this->navChain->add(__('Add article'));
 
         $data = [
             'action_url' => '/admin/news/add_article/' . $section_id,
@@ -175,7 +175,7 @@ class AdminArticleController extends BaseAdminController
         }
 
         Helpers::buildAdminBreadcrumbs($article->parentSection);
-        $this->nav_chain->add($article->name);
+        $this->navChain->add($article->name);
 
         if (! empty($article->getRawOriginal('active_from'))) {
             $active_from = Carbon::parse($article->getRawOriginal('active_from'))->format('d.m.Y H:i');

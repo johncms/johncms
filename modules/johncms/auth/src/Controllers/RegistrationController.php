@@ -32,7 +32,7 @@ class RegistrationController extends BaseController
     {
         parent::__construct();
         $this->metaTagManager->setAll(__('Registration'));
-        $this->nav_chain->add(__('Registration'), route('registration.index'));
+        $this->navChain->add(__('Registration'), route('registration.index'));
     }
 
     /**

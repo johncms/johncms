@@ -43,6 +43,6 @@ class BaseAdminController extends BaseController
                 'system::app/sidebar-admin-menu',
             ]
         );
-        $this->nav_chain->add(d__('admin', 'Admin Panel'), '/admin/');
+        $this->navChain->add(d__('admin', 'Admin Panel'), '/admin/');
     }
 }

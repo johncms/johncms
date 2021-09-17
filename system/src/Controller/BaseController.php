@@ -21,7 +21,7 @@ class BaseController extends AbstractController
 {
     protected Render $render;
     protected Translator $translator;
-    protected NavChain $nav_chain;
+    protected NavChain $navChain;
     protected MetaTagManager $metaTagManager;
 
     /** @var string The module name */
@@ -31,7 +31,7 @@ class BaseController extends AbstractController
     {
         $this->render = di(Render::class);
         $this->translator = di(Translator::class);
-        $this->nav_chain = di(NavChain::class);
+        $this->navChain = di(NavChain::class);
         $this->metaTagManager = di(MetaTagManager::class);
 
         if (! empty($this->module_name)) {

@@ -28,7 +28,7 @@ class LoginController extends BaseController
     {
         parent::__construct();
         $this->metaTagManager->setAll(__('Login'));
-        $this->nav_chain->add(__('Login'), route('login.index'));
+        $this->navChain->add(__('Login'), route('login.index'));
     }
 
     /**

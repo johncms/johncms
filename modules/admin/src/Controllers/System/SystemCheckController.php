@@ -28,7 +28,7 @@ class SystemCheckController extends BaseAdminController
                 'sys_menu'   => ['system_check' => true],
             ]
         );
-        $this->nav_chain->add(__('System check'));
+        $this->navChain->add(__('System check'));
 
         $check_extensions = $checker->checkExtensions();
         $recommendations = $checker->recommendations();

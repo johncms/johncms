@@ -14,41 +14,33 @@ namespace Johncms\News;
 
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSection;
+use Johncms\View\MetaTagManager;
 
-class MetaTagsManager
+class NewsMetaManager
 {
-    /** @var string */
-    protected $title;
-
-    /** @var string */
-    protected $page_title;
-
-    /** @var string */
-    protected $keywords;
-
-    /** @var string */
-    protected $description;
-
-    /** @var array */
-    protected $config;
+    protected string $title;
+    protected string $pageTitle;
+    protected string $keywords;
+    protected string $description;
+    protected array $config;
 
     public function __construct()
     {
         $this->config = di('config')['news'] ?? [];
-        $this->title = $this->config['title'] ? $this->config['title'] : __('News');
-        $this->page_title = $this->config['title'] ? $this->config['title'] : __('News');
+        $this->title = $this->config['title'] ?: __('News');
+        $this->pageTitle = $this->config['title'] ?: __('News');
         $this->keywords = $this->config['meta_keywords'] ?? '';
         $this->description = $this->config['meta_description'] ?? '';
     }
 
-    public function setForSection(?NewsSection $section): MetaTagsManager
+    public function forSection(?NewsSection $section): NewsMetaManager
     {
         if ($section === null) {
             return $this;
         }
 
         $this->title = $section->getRawOriginal('name');
-        $this->page_title = $section->getRawOriginal('name');
+        $this->pageTitle = $section->getRawOriginal('name');
         if (! empty($this->config['section_title'])) {
             $this->title = str_replace('#section_name#', $section->getRawOriginal('name'), $this->config['section_title']);
         }
@@ -68,13 +60,13 @@ class MetaTagsManager
         return $this;
     }
 
-    public function setForArticle(?NewsArticle $article): MetaTagsManager
+    public function forArticle(?NewsArticle $article): NewsMetaManager
     {
         if ($article === null) {
             return $this;
         }
 
-        $this->page_title = $article->getRawOriginal('name');
+        $this->pageTitle = $article->getRawOriginal('name');
         if (empty($article->page_title)) {
             $this->title = str_replace('#article_name#', $article->getRawOriginal('name'), $this->config['article_title']);
         } else {
@@ -96,11 +88,20 @@ class MetaTagsManager
         return $this;
     }
 
+    public function set()
+    {
+        $metaTagsManager = di(MetaTagManager::class);
+        $metaTagsManager->setTitle($this->title);
+        $metaTagsManager->setPageTitle($this->pageTitle);
+        $metaTagsManager->setKeywords($this->keywords);
+        $metaTagsManager->setDescription($this->description);
+    }
+
     public function toArray(): array
     {
         return [
             'title'       => $this->title,
-            'page_title'  => $this->page_title,
+            'page_title'  => $this->pageTitle,
             'keywords'    => $this->keywords,
             'description' => $this->description,
         ];

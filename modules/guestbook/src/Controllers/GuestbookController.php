@@ -43,7 +43,7 @@ class GuestbookController extends BaseController
         parent::__construct();
         $guestbook = di(GuestbookService::class);
         $this->page_title = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
-        $this->nav_chain->add($this->page_title, $this->base_url);
+        $this->navChain->add($this->page_title, $this->base_url);
 
         $config = di('config')['johncms'];
         $user = di(User::class);

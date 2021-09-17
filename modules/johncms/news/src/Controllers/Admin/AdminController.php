@@ -37,7 +37,7 @@ class AdminController extends BaseAdminController
                 'module_menu' => ['news' => true],
             ]
         );
-        $this->nav_chain->add(__('News'), '/admin/news/');
+        $this->navChain->add(__('News'), '/admin/news/');
     }
 
     public function index(): void
@@ -54,7 +54,7 @@ class AdminController extends BaseAdminController
     public function section(int $section_id = 0): string
     {
         $title = __('Section list');
-        $this->nav_chain->add($title, '/admin/news/content/');
+        $this->navChain->add($title, '/admin/news/content/');
 
         if (! empty($section_id)) {
             try {
@@ -62,7 +62,7 @@ class AdminController extends BaseAdminController
                 $title = $current_section->name;
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name);
+                $this->navChain->add($current_section->name);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
@@ -114,7 +114,7 @@ class AdminController extends BaseAdminController
                 'page_title' => $data['page_title'],
             ]
         );
-        $this->nav_chain->add($data['page_title']);
+        $this->navChain->add($data['page_title']);
 
         if ($request->getMethod() === 'POST') {
             $config = [

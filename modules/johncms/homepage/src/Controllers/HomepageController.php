@@ -21,7 +21,7 @@ class HomepageController extends BaseController
     public function index(): string
     {
         define('_IS_HOMEPAGE', 1);
-        $this->nav_chain->showHomePage(false);
+        $this->navChain->showHomePage(false);
 
         $config = di('config')['johncms'];
         $news_config = di('config')['news'];

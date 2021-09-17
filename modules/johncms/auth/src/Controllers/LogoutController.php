@@ -24,7 +24,7 @@ class LogoutController extends BaseController
     {
         parent::__construct();
         $this->metaTagManager->setAll(__('Logout'));
-        $this->nav_chain->add(__('Logout'), route('logout.index'));
+        $this->navChain->add(__('Logout'), route('logout.index'));
     }
 
     /**

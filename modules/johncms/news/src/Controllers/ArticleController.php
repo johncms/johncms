@@ -14,7 +14,7 @@ namespace Johncms\News\Controllers;
 
 use Johncms\Controller\BaseController;
 use Johncms\News\Article;
-use Johncms\News\MetaTagsManager;
+use Johncms\News\NewsMetaManager;
 use Johncms\News\Section;
 
 class ArticleController extends BaseController
@@ -24,15 +24,15 @@ class ArticleController extends BaseController
     /** @var array */
     protected $config;
 
-    /** @var MetaTagsManager */
+    /** @var NewsMetaManager */
     protected $meta_tags;
 
     public function __construct()
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->meta_tags = new MetaTagsManager();
+        $this->navChain->add(__('News'), '/news/');
+        $this->meta_tags = new NewsMetaManager();
     }
 
     /**
@@ -48,7 +48,7 @@ class ArticleController extends BaseController
     {
         $section->checkPath($category);
         $current_article = $article->getArticle($article_code);
-        $this->render->addData($this->meta_tags->setForArticle($current_article)->toArray());
+        $this->render->addData($this->meta_tags->forArticle($current_article)->toArray());
         return $this->render->render(
             'news::public/article',
             [

@@ -11,14 +11,14 @@
 
 $this->layout('system::layout/default');
 ?>
-<?php if ($user->rights >= 9): ?>
+<?php if ($user->hasRole('admin')): ?>
     <div class="mb-3 mt-n1">
-        <a href="/admin/news/" class="btn btn-outline-danger btn-sm"><?= __('Admin panel') ?></a>
+        <a href="<?= route('news.admin.index') ?>" class="btn btn-outline-danger btn-sm"><?= __('Admin panel') ?></a>
     </div>
 <?php endif ?>
 
 <div class="mb-3">
-    <form action="/news/search/" method="get" class="search-in-nav news-search mb-3" style="max-width: 500px;">
+    <form action="<?= route('news.search') ?>" method="get" class="search-in-nav news-search mb-3" style="max-width: 500px;">
         <div class="input-with-inner-btn">
             <input name="query" type="text" minlength="4" placeholder="<?= __('Search query') ?>" class="form-control pr-5 border-radius-12">
             <button type="submit" name="submit" value="1" class="btn icon-button">

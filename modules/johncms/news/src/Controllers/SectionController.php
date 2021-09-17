@@ -14,25 +14,22 @@ namespace Johncms\News\Controllers;
 
 use Johncms\Controller\BaseController;
 use Johncms\News\Article;
-use Johncms\News\MetaTagsManager;
+use Johncms\News\NewsMetaManager;
 use Johncms\News\Section;
+use Throwable;
 
 class SectionController extends BaseController
 {
     protected string $module_name = 'johncms/news';
-
-    /** @var array */
-    protected $config;
-
-    /** @var MetaTagsManager */
-    protected $meta_tags;
+    protected array $config;
+    protected NewsMetaManager $newsMetaManager;
 
     public function __construct()
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->meta_tags = new MetaTagsManager();
+        $this->navChain->add(__('News'), route('news.section'));
+        $this->newsMetaManager = new NewsMetaManager();
     }
 
     /**
@@ -42,18 +39,20 @@ class SectionController extends BaseController
      * @param Section $section
      * @param string $category
      * @return string
+     * @throws Throwable
      */
     public function index(Article $article, Section $section, string $category = ''): string
     {
         $section->checkPath($category);
         $current_section = $section->getLastSection();
-        $this->render->addData($this->meta_tags->setForSection($current_section)->toArray());
+        $this->newsMetaManager->forSection($current_section)->set();
+
         return $this->render->render(
             'news::public/index',
             [
+                'current_section' => $current_section,
                 'sections'        => $section->getSections($current_section->id ?? 0),
                 'articles'        => $article->getArticles($section->getCachedSubsections($current_section)),
-                'current_section' => $current_section,
             ]
         );
     }

@@ -32,7 +32,7 @@ class AdminSectionController extends BaseAdminController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->nav_chain->add(__('News'), '/admin/news/');
+        $this->navChain->add(__('News'), '/admin/news/');
         $this->render->addData(
             [
                 'title'       => __('News'),
@@ -40,7 +40,7 @@ class AdminSectionController extends BaseAdminController
                 'module_menu' => ['news' => true],
             ]
         );
-        $this->nav_chain->add(__('Section list'), '/admin/news/content/');
+        $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
 
     /**
@@ -67,13 +67,13 @@ class AdminSectionController extends BaseAdminController
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name, '/admin/news/content/' . $current_section->id);
+                $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
         }
 
-        $this->nav_chain->add(__('Create section'));
+        $this->navChain->add(__('Create section'));
 
         $data = [
             'action_url' => '/admin/news/add_section/' . $section_id,
@@ -143,7 +143,7 @@ class AdminSectionController extends BaseAdminController
      */
     public function edit(int $section_id, Request $request): string
     {
-        $this->nav_chain->add(__('Edit section'));
+        $this->navChain->add(__('Edit section'));
         $this->render->addData(
             [
                 'title'      => __('Edit section'),
