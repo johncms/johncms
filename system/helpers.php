@@ -205,7 +205,8 @@ function redirect(string $url)
 function route(string $route_name, array $params = []): string
 {
     $router = di(RouterFactory::class);
-    return $router->getRouter()->getNamedRoute($route_name)->getPath($params);
+    $route = $router->getRouter()->getNamedRoute($route_name)->getPath($params);
+    return str_replace('//', '/', $route);
 }
 
 /**

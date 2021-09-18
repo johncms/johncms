@@ -7,10 +7,10 @@ namespace Johncms\View;
 class MetaTagManager
 {
     protected string $title = '';
-    protected ?string $pageTitle = null;
+    protected string $pageTitle = '';
     protected string $description = '';
     protected string $keywords = '';
-    protected ?string $canonical = null;
+    protected string $canonical = '';
 
     public function __construct()
     {
@@ -26,27 +26,27 @@ class MetaTagManager
 
     public function getTitle(): string
     {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     public function getDescription(): string
     {
-        return $this->description;
+        return htmlspecialchars($this->description);
     }
 
     public function getPageTitle(): ?string
     {
-        return $this->pageTitle;
+        return htmlspecialchars($this->pageTitle);
     }
 
     public function getKeywords(): string
     {
-        return $this->keywords;
+        return htmlspecialchars($this->keywords);
     }
 
-    public function getCanonical(): ?string
+    public function getCanonical(): string
     {
-        return $this->canonical;
+        return htmlspecialchars($this->canonical);
     }
 
     /**

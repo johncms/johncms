@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\News\Controllers\Admin;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseAdminController;
+use Johncms\Http\RedirectResponse;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\News\Models\NewsArticle;
@@ -31,14 +31,8 @@ class AdminController extends BaseAdminController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-
-        $this->render->addData(
-            [
-                'title'       => __('News'),
-                'page_title'  => __('News'),
-                'module_menu' => ['news' => true],
-            ]
-        );
+        $this->metaTagManager->setAll(__('News'));
+        $this->render->addData(['module_menu' => ['news' => true]]);
         $this->navChain->add(__('News'), route('news.admin.index'));
     }
 
@@ -53,6 +47,7 @@ class AdminController extends BaseAdminController
     /**
      * List of sections and articles
      *
+     * @param Session $session
      * @param int $section_id
      * @return string
      * @throws Throwable
@@ -60,39 +55,23 @@ class AdminController extends BaseAdminController
     public function section(Session $session, int $section_id = 0): string
     {
         $title = __('Section list');
-        $this->navChain->add($title, '/admin/news/content/');
+        $this->navChain->add($title, route('news.admin.section'));
 
         if (! empty($section_id)) {
-            try {
-                $current_section = (new NewsSection())->findOrFail($section_id);
-                $title = $current_section->name;
-                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
-                // Adding the current section to the navigation chain
-                $this->navChain->add($current_section->name);
-            } catch (ModelNotFoundException $exception) {
-                pageNotFound();
-            }
+            $current_section = (new NewsSection())->findOrFail($section_id);
+            $title = $current_section->name;
+            Helpers::buildAdminBreadcrumbs($current_section->parentSection);
+            // Adding the current section to the navigation chain
+            $this->navChain->add($current_section->name);
         }
 
         $data = [];
         $data['messages'] = $session->getFlash('success_message');
-
-        if (empty($section_id)) {
-            $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderByDesc('id')->paginate();
-        } else {
-            $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderByDesc('id')->paginate();
-        }
-
+        $data['sections'] = (new NewsSection())->where('parent', $section_id)->orWhereNull('parent')->get();
+        $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orWhereNull('section_id')->orderByDesc('id')->paginate();
         $data['current_section'] = $section_id;
 
-        $this->render->addData(
-            [
-                'title'      => $title,
-                'page_title' => $title,
-            ]
-        );
+        $this->metaTagManager->setAll($title);
         return $this->render->render('news::admin/sections', ['data' => $data]);
     }
 
@@ -100,16 +79,17 @@ class AdminController extends BaseAdminController
      * Module settings page.
      *
      * @param Request $request
-     * @return string
+     * @param Session $session
+     * @return RedirectResponse|string
      * @throws Throwable
      */
-    public function settings(Request $request): string
+    public function settings(Request $request, Session $session): RedirectResponse|string
     {
         $data = [
             'title'       => __('Settings'),
             'page_title'  => __('Settings'),
-            'back_url'    => '/admin/news/',
-            'form_action' => '/admin/news/settings/',
+            'back_url'    => route('news.admin.index'),
+            'form_action' => route('news.admin.settingsStore'),
             'message'     => '',
         ];
         $this->render->addData(
@@ -148,15 +128,11 @@ class AdminController extends BaseAdminController
                 opcache_reset();
             }
 
-            $_SESSION['message'] = __('Settings saved!');
-            header('Location: /admin/news/settings/');
-            exit;
+            $session->flash('message', __('Settings saved!'));
+            return new RedirectResponse(route('news.admin.settingsStore'));
         }
 
-        if (! empty($_SESSION['message'])) {
-            $data['message'] = htmlspecialchars($_SESSION['message']);
-            unset($_SESSION['message']);
-        }
+        $data['message'] = $session->getFlash('message');
 
         // Стандартные настройки
         $default_settings = [

@@ -26,10 +26,10 @@ $ads_array = $ads->getAds();
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <?= $this->section('meta', '') ?>
     <?php if (! empty($metaTags->getKeywords())): ?>
-        <meta name="keywords" content="<?= $this->e($metaTags->getKeywords()) ?>">
+        <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">
     <?php endif ?>
     <?php if (! empty($metaTags->getDescription())): ?>
-        <meta name="description" content="<?= $this->e($metaTags->getDescription()) ?>">
+        <meta name="description" content="<?= $metaTags->getDescription() ?>">
     <?php endif ?>
     <?php if (! empty($metaTags->getCanonical())): ?>
         <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
@@ -43,7 +43,7 @@ $ads_array = $ads->getAds();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
-    <title><?= $this->e($metaTags->getTitle()) ?></title>
+    <title><?= $metaTags->getTitle() ?></title>
 </head>
 <body>
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
@@ -100,7 +100,7 @@ $ads_array = $ads->getAds();
             </nav>
             <div class="container-fluid flex-grow-1">
                 <?php if (! empty($metaTags->getPageTitle())): ?>
-                    <h1 class="mb-0"><?= $this->e($metaTags->getPageTitle()) ?></h1>
+                    <h1 class="mb-0"><?= $metaTags->getPageTitle() ?></h1>
                 <?php endif ?>
                 <?= $this->fetch('system::app/breadcrumbs') ?>
                 <?php if (! empty($ads_array['content_header'])): ?>

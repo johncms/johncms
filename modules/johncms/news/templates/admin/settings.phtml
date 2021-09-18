@@ -22,11 +22,12 @@ $this->layout('system::layout/default');
         'system::app/alert',
         [
             'alert_type' => 'alert-success',
-            'alert'      => $data['message'],
+            'alert'      => $this->e($data['message']),
         ]
     ) ?>
 <?php endif; ?>
 <form action="<?= $data['form_action'] ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <h4 class="mt-3 font-weight-bold"><?= __('Home page settings') ?></h4>
 
     <div class="custom-control custom-checkbox mb-1">

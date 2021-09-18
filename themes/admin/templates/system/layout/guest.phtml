@@ -19,10 +19,10 @@
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <?= $this->section('meta', '') ?>
     <?php if (! empty($metaTags->getKeywords())): ?>
-        <meta name="keywords" content="<?= $this->e($metaTags->getKeywords()) ?>">
+        <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">
     <?php endif ?>
     <?php if (! empty($metaTags->getDescription())): ?>
-        <meta name="description" content="<?= $this->e($metaTags->getDescription()) ?>">
+        <meta name="description" content="<?= $metaTags->getDescription() ?>">
     <?php endif ?>
     <?php if (! empty($metaTags->getCanonical())): ?>
         <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
-    <title><?= $this->e($metaTags->getTitle()) ?></title>
+    <title><?= $metaTags->getTitle() ?></title>
 </head>
 <body>
 <div class="wrapper bg-light">

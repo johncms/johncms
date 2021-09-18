@@ -33,8 +33,8 @@ class NavChain
     public function add(string $name, string $url = '')
     {
         $this->items[] = [
-            'name' => $name,
-            'url'  => $url,
+            'name' => htmlspecialchars($name),
+            'url'  => htmlspecialchars($url),
         ];
     }
 

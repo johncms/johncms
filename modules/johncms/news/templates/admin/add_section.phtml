@@ -3,6 +3,7 @@
  * @var array $data
  * @var string $page_title
  * @var string $csrf_token
+ * @var \Johncms\View\MetaTagManager $metaTags
  */
 
 $this->layout('system::layout/default');
@@ -20,7 +21,7 @@ $this->layout('system::layout/default');
     </div>
 <?php endif ?>
 
-<h4 class="card-title"><?= $page_title ?></h4>
+<h4 class="card-title"><?= $metaTags->getPageTitle() ?></h4>
 <form action="<?= $data['action_url'] ?>" method="post">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="form-group">

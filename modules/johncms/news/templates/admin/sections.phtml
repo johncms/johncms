@@ -8,13 +8,7 @@
  * @noinspection PhpFullyQualifiedNameUsageInspection
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title' => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 
 /** @var \Johncms\News\Models\NewsSection $sections */
 $sections = $data['sections'];

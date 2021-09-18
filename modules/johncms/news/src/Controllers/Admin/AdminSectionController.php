@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\News\Controllers\Admin;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Johncms\Controller\BaseAdminController;
 use Johncms\Http\RedirectResponse;
@@ -33,15 +34,10 @@ class AdminSectionController extends BaseAdminController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
+        $this->metaTagManager->setAll(__('News'));
+        $this->render->addData(['module_menu' => ['news' => true]]);
         $this->navChain->add(__('News'), route('news.admin.index'));
-        $this->render->addData(
-            [
-                'title'       => __('News'),
-                'page_title'  => __('News'),
-                'module_menu' => ['news' => true],
-            ]
-        );
-        $this->navChain->add(__('Section list'), '/admin/news/content/');
+        $this->navChain->add(__('Section list'), route('news.admin.section'));
     }
 
     /**
@@ -56,27 +52,19 @@ class AdminSectionController extends BaseAdminController
      */
     public function add(Request $request, Section $section_service, Session $session, int $section_id = 0): ResponseInterface|string
     {
-        $this->render->addData(
-            [
-                'title'      => __('Create section'),
-                'page_title' => __('Create section'),
-            ]
-        );
-
+        $this->metaTagManager->setAll(__('Create section'));
         if (! empty($section_id)) {
-            $current_section = (new NewsSection())->findOrFail($section_id);
-
-            Helpers::buildAdminBreadcrumbs($current_section->parentSection);
+            $currentSection = (new NewsSection())->findOrFail($section_id);
+            Helpers::buildAdminBreadcrumbs($currentSection->parentSection);
 
             // Adding the current section to the navigation chain
-            $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
+            $this->navChain->add($currentSection->name, route('news.admin.section', ['section_id' => $currentSection->id]));
         }
-
         $this->navChain->add(__('Create section'));
 
         $data = [
-            'action_url' => '/admin/news/add_section/' . $section_id,
-            'back_url'   => '/admin/news/content/' . $section_id,
+            'action_url' => route('news.admin.sections.add_store', ['section_id' => $section_id]),
+            'back_url'   => route('news.admin.section', ['section_id' => $section_id]),
             'section_id' => $section_id,
             'fields'     => [
                 'parent'      => $section_id,
@@ -105,24 +93,21 @@ class AdminSectionController extends BaseAdminController
             }
 
             if (empty($errors)) {
-                if (! empty($section_id)) {
-                    $check = (new NewsSection())
-                        ->where('code', $data['fields']['code'])
-                        ->where('parent', $section_id)
-                        ->first();
-                } else {
-                    $check = (new NewsSection())
-                        ->where('code', $data['fields']['code'])
-                        ->whereNull('parent')
-                        ->first();
-                }
+                $check = (new NewsSection())
+                    ->where('code', $data['fields']['code'])
+                    ->when(empty($section_id), function (Builder $builder) {
+                        return $builder->whereNull('parent')->orWhere('parent', 0);
+                    })
+                    ->when(! empty($section_id), function (Builder $builder) use ($section_id) {
+                        return $builder->where('parent', $section_id);
+                    })
+                    ->first();
 
                 if (! $check) {
                     (new NewsSection())->create($data['fields']);
                     $section_service->clearCache();
                     $session->flash('success_message', __('The section was created successfully'));
-                    header('Location: /admin/news/content/' . $section_id);
-                    exit;
+                    return new RedirectResponse(route('news.admin.section', ['section_id' => $section_id]));
                 }
                 $errors[] = __('A section with this code already exists');
             }
@@ -139,25 +124,19 @@ class AdminSectionController extends BaseAdminController
      * @param int $section_id
      * @param Request $request
      * @param Session $session
-     * @return string
+     * @return RedirectResponse|string
      * @throws Throwable
      */
-    public function edit(int $section_id, Request $request, Session $session): string
+    public function edit(int $section_id, Request $request, Session $session): RedirectResponse|string
     {
-        $this->navChain->add(__('Edit section'));
-        $this->render->addData(
-            [
-                'title'      => __('Edit section'),
-                'page_title' => __('Edit section'),
-            ]
-        );
-
+        $this->metaTagManager->setAll(__('Edit section'));
         $section = (new NewsSection())->findOrFail($section_id);
         Helpers::buildAdminBreadcrumbs($section->parentSection);
+        $this->navChain->add(__('Edit section'));
 
         $data = [
-            'action_url' => '/admin/news/edit_section/' . $section_id,
-            'back_url'   => '/admin/news/content/' . $section->parent,
+            'action_url' => route('news.admin.sections.edit_store', ['section_id' => $section_id]),
+            'back_url'   => route('news.admin.section', ['section_id' => $section->parent]),
             'section_id' => $section_id,
             'fields'     => [
                 'name'        => $request->getPost('name', $section->name),
@@ -194,8 +173,7 @@ class AdminSectionController extends BaseAdminController
                 if (! $check) {
                     $section->update($data['fields']);
                     $session->flash('success_message', __('The section was updated successfully'));
-                    header('Location: /admin/news/content/' . $section->parent);
-                    exit;
+                    return new RedirectResponse(route('news.admin.section', ['section_id' => $section->parent]));
                 }
                 $errors[] = __('A section with this code already exists');
             }

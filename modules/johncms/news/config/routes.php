@@ -47,7 +47,8 @@ return function (Router $router) {
     $router->group('/admin/news', function (RouteGroup $route) {
         $route->get('/', [AdminController::class, 'index'])->setName('news.admin.index');
         $route->get('/content/[{section_id:number}[/]]', [AdminController::class, 'section'])->setName('news.admin.section');
-        $route->get('/settings/', [AdminController::class, 'settings'])->setName('news.admin.settings');
+        $route->get('/settings[/]', [AdminController::class, 'settings'])->setName('news.admin.settings');
+        $route->post('/settings[/]', [AdminController::class, 'settings'])->setName('news.admin.settingsStore');
 
         // Articles
         $route->get('/edit_article/{article_id:number}[/]', [AdminArticleController::class, 'edit'])->setName('news.admin.article.edit');
