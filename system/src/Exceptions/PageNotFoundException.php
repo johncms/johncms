@@ -17,10 +17,10 @@ use RuntimeException;
 class PageNotFoundException extends RuntimeException
 {
     /** @var string */
-    protected $title = 'ERROR: 404 Not Found';
+    protected string $title = 'ERROR: 404 Not Found';
 
     /** @var string */
-    protected $template = 'system::error/404';
+    protected string $template = 'system::error/404';
 
     public function setTitle(string $title): PageNotFoundException
     {
