@@ -12,18 +12,19 @@ declare(strict_types=1);
 
 namespace Johncms\News\Controllers\Admin;
 
-use Admin\Controllers\BaseAdminController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Controller\BaseAdminController;
 use Johncms\Http\Request;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSection;
 use Johncms\News\Utils\Helpers;
+use Throwable;
 
 class AdminController extends BaseAdminController
 {
-    protected string $moduleName = 'news';
+    protected string $moduleName = 'johncms/news';
 
-    protected $config;
+    protected array $config;
 
     public function __construct()
     {
@@ -37,9 +38,12 @@ class AdminController extends BaseAdminController
                 'module_menu' => ['news' => true],
             ]
         );
-        $this->navChain->add(__('News'), '/admin/news/');
+        $this->navChain->add(__('News'), route('news.admin.index'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function index(): void
     {
         echo $this->render->render('news::admin/index');
@@ -50,6 +54,7 @@ class AdminController extends BaseAdminController
      *
      * @param int $section_id
      * @return string
+     * @throws Throwable
      */
     public function section(int $section_id = 0): string
     {
@@ -96,8 +101,9 @@ class AdminController extends BaseAdminController
     /**
      * Module settings page.
      *
-     * @param \Johncms\Http\Request $request
+     * @param Request $request
      * @return string
+     * @throws Throwable
      */
     public function settings(Request $request): string
     {

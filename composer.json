@@ -60,7 +60,9 @@
         "johncms/johncms-pagination": "^2.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "johncms/homepage": "dev-develop",
-        "johncms/auth": "dev-develop"
+        "johncms/auth": "dev-develop",
+        "johncms/admin": "dev-develop",
+        "johncms/news": "dev-develop"
     },
     "require-dev": {
         "fakerphp/faker": "^1.15",
@@ -114,6 +116,10 @@
         {
             "type": "path",
             "url": "modules/johncms/news"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/admin"
         }
     ],
     "extra": {

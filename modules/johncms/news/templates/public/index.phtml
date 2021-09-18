@@ -11,7 +11,7 @@
 
 $this->layout('system::layout/default');
 ?>
-<?php if ($user->hasRole('admin')): ?>
+<?php if ($user?->hasRole('admin')): ?>
     <div class="mb-3 mt-n1">
         <a href="<?= route('news.admin.index') ?>" class="btn btn-outline-danger btn-sm"><?= __('Admin panel') ?></a>
     </div>

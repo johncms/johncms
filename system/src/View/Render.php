@@ -27,10 +27,9 @@ class Render extends Engine
     {
         $this->addPath($directory, $name);
 
-        if ($this->theme !== 'default') {
+        if ($this->theme !== 'default' && $this->theme !== 'admin') {
             $themePath = realpath(THEMES_PATH . $this->theme . '/templates/' . $name);
-
-            if (false !== $themePath) {
+            if ($themePath !== false) {
                 $this->addPath($themePath, $name);
             }
         }

@@ -28,7 +28,8 @@ use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
-use Johncms\View\Extension\{Avatar};
+use Johncms\View\AdminRenderEngineFactory;
+use Johncms\View\Extension\{AdminAssets, Avatar};
 use Johncms\View\Extension\Assets;
 use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
@@ -60,11 +61,13 @@ class ConfigProvider
             ],
 
             'factories' => [
+                AdminAssets::class              => AdminAssets::class,
                 Assets::class                   => Assets::class,
                 Avatar::class                   => Avatar::class,
                 Environment::class              => Environment::class,
                 PDO::class                      => PdoFactory::class,
                 Render::class                   => RenderEngineFactory::class,
+                AdminRenderEngineFactory::class => AdminRenderEngineFactory::class,
                 ServerRequestInterface::class   => RequestFactory::class,
                 Translator::class               => TranslatorServiceFactory::class,
                 Users\User::class               => Users\UserFactory::class,

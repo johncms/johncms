@@ -80,7 +80,7 @@ $analytics = $counters->counters();
                         </div>
                         <div>
                             <?php
-                            if ($user->isValid()): ?>
+                            if ($user): ?>
                                 <a href="/notifications/" class="icon_with_badge mr-2">
                                     <svg class="icon icon_messages">
                                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>

@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\News\Controllers\Admin;
 
-use Admin\Controllers\BaseAdminController;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Johncms\Controller\BaseAdminController;
 use Johncms\Http\Request;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSection;
@@ -24,7 +24,7 @@ use Johncms\News\Utils\Helpers;
 
 class AdminSectionController extends BaseAdminController
 {
-    protected string $moduleName = 'news';
+    protected string $moduleName = 'johncms/news';
 
     protected $config;
 
@@ -32,7 +32,7 @@ class AdminSectionController extends BaseAdminController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->navChain->add(__('News'), '/admin/news/');
+        $this->navChain->add(__('News'), route('news.admin.index'));
         $this->render->addData(
             [
                 'title'       => __('News'),

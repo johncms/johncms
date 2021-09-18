@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Johncms\News\Controllers\Admin;
 
-use Admin\Controllers\BaseAdminController;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Johncms\Controller\BaseAdminController;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Request;
@@ -30,7 +30,7 @@ use League\Flysystem\FilesystemException;
 
 class AdminArticleController extends BaseAdminController
 {
-    protected string $moduleName = 'news';
+    protected string $moduleName = 'johncms/news';
 
     protected $config;
 
@@ -38,7 +38,7 @@ class AdminArticleController extends BaseAdminController
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->navChain->add(__('News'), '/admin/news/');
+        $this->navChain->add(__('News'), route('news.admin.index'));
         $this->render->addData(
             [
                 'title'       => __('News'),
