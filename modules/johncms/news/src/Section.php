@@ -17,23 +17,24 @@ use Illuminate\Support\Collection;
 use Johncms\Cache;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\NavChain;
+use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSection;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class Section
 {
     /** @var NavChain */
-    protected $nav_chain;
+    protected NavChain $navChain;
 
     /** @var Cache $cache */
-    protected $cache;
+    protected Cache $cache;
 
     /** @var NewsSection[] */
-    protected $path = [];
+    protected array $path = [];
 
     public function __construct()
     {
-        $this->nav_chain = di(NavChain::class);
+        $this->navChain = di(NavChain::class);
         $this->cache = di(Cache::class);
     }
 
@@ -70,9 +71,9 @@ class Section
                 $this->path[] = $check;
                 $parent = $check->id;
                 if ($set_nav_chain) {
-                    $this->nav_chain->add($check->name, $check->url);
+                    $this->navChain->add($check->name, $check->url);
                 }
-            } catch (ModelNotFoundException $exception) {
+            } catch (ModelNotFoundException) {
                 throw new PageNotFoundException(__('The requested section was not found.'));
             }
         }
@@ -133,7 +134,7 @@ class Section
             if (empty($ids) || ! array_key_exists($section->id, $ids)) {
                 try {
                     $this->cache->delete('news_subsections');
-                } catch (InvalidArgumentException $exception) {
+                } catch (InvalidArgumentException) {
                 }
                 $ids = $this->cache->rememberForever(
                     'news_subsections',
@@ -167,7 +168,7 @@ class Section
         if (empty($paths) || ! array_key_exists($section_id, $paths)) {
             try {
                 $this->cache->delete('news_section_paths');
-            } catch (InvalidArgumentException $e) {
+            } catch (InvalidArgumentException) {
             }
             $paths = $this->cache->rememberForever(
                 'news_section_paths',
@@ -217,7 +218,24 @@ class Section
         try {
             $this->cache->delete('news_subsections');
             $this->cache->delete('news_section_paths');
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
         }
+    }
+
+    /**
+     * Delete the section and all subsections with articles
+     *
+     * @param NewsSection $section
+     */
+    public function delete(NewsSection $section): void
+    {
+        $children_sections = $this->getCachedSubsections($section);
+
+        // Delete articles
+        (new NewsArticle())->whereIn('section_id', $children_sections)->delete();
+        // Delete subsections
+        (new NewsSection())->whereIn('id', $children_sections)->delete();
+
+        $this->clearCache();
     }
 }

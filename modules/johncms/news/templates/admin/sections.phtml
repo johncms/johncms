@@ -11,7 +11,7 @@
 $this->layout(
     'system::layout/default',
     [
-        'title'      => $title,
+        'title' => $title,
         'page_title' => $page_title,
     ]
 );
@@ -23,13 +23,13 @@ $sections = $data['sections'];
 $articles = $data['articles'];
 
 ?>
-<?php if (! empty($data['messages'])): ?>
+<?php if ($data['messages']): ?>
     <div>
         <?= $this->fetch(
             'system::app/alert',
             [
                 'alert_type' => 'alert-success',
-                'alert'      => $data['messages'],
+                'alert'      => $this->e($data['messages']),
             ]
         ) ?>
     </div>

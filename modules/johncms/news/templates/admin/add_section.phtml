@@ -1,4 +1,12 @@
-<?php $this->layout('system::layout/default') ?>
+<?php
+/**
+ * @var array $data
+ * @var string $page_title
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+?>
 
 <?php if (! empty($data['errors'])): ?>
     <div>
@@ -14,6 +22,7 @@
 
 <h4 class="card-title"><?= $page_title ?></h4>
 <form action="<?= $data['action_url'] ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="form-group">
         <label for="title"><?= __('Section name') ?></label>
         <input type="text"

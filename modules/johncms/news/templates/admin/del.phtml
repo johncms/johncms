@@ -1,11 +1,12 @@
 <?php
 /**
- * @var $data
+ * @var array $data
+ * @var string $csrf_token
  */
 
 ?>
-
 <form action="<?= $data['action_url'] ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="modal-header align-items-center">
         <h4 class="modal-title">
             <?= __('Confirm the action') ?>
@@ -15,7 +16,6 @@
         </button>
     </div>
     <div class="modal-body">
-        <input type="hidden" name="delete_token" value="<?= $data['delete_token'] ?>">
         <?php if (! empty($data['section'])): ?>
             <div><?= __('Section:') ?> <b><?= $data['section']->name ?></b></div>
         <?php endif; ?>

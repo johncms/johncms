@@ -15,6 +15,7 @@ namespace Johncms\News\Controllers\Admin;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseAdminController;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSection;
 use Johncms\News\Utils\Helpers;
@@ -56,7 +57,7 @@ class AdminController extends BaseAdminController
      * @return string
      * @throws Throwable
      */
-    public function section(int $section_id = 0): string
+    public function section(Session $session, int $section_id = 0): string
     {
         $title = __('Section list');
         $this->navChain->add($title, '/admin/news/content/');
@@ -74,10 +75,7 @@ class AdminController extends BaseAdminController
         }
 
         $data = [];
-        if (! empty($_SESSION['success_message'])) {
-            $data['messages'] = htmlspecialchars($_SESSION['success_message']);
-            unset($_SESSION['success_message']);
-        }
+        $data['messages'] = $session->getFlash('success_message');
 
         if (empty($section_id)) {
             $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();

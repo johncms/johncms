@@ -56,8 +56,13 @@ return function (Router $router) {
 
         // Sections
         $route->get('/add_section/[{section_id:number}[/]]', [AdminSectionController::class, 'add'])->setName('news.admin.sections.add');
+        $route->post('/add_section/[{section_id:number}[/]]', [AdminSectionController::class, 'add'])->setName('news.admin.sections.add_store');
         $route->get('/edit_section/{section_id:number}[/]', [AdminSectionController::class, 'edit'])->setName('news.admin.sections.edit');
+        $route->post('/edit_section/{section_id:number}[/]', [AdminSectionController::class, 'edit'])->setName('news.admin.sections.edit_store');
         $route->get('/del_section/{section_id:number}[/]', [AdminSectionController::class, 'del'])->setName('news.admin.sections.del');
+        $route->post('/del_section/{section_id:number}[/]', [AdminSectionController::class, 'del'])->setName('news.admin.sections.del_store');
+
+        // File uploader
         $route->post('/upload_file[/]', [AdminSectionController::class, 'loadFile'])->setName('news.admin.sections.loadFile');
     })->middleware(new AuthMiddleware(['admin']));
 };
