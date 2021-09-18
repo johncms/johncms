@@ -31,8 +31,8 @@ class MetaTagManagerTest extends TestCase
         $this->assertEquals('title', $metaTags->getTitle());
         $this->assertEquals('description', $metaTags->getDescription());
         $this->assertEquals('keywords', $metaTags->getKeywords());
-        $this->assertNull($metaTags->getCanonical());
-        $this->assertNull($metaTags->getPageTitle());
+        $this->assertEquals('', $metaTags->getCanonical());
+        $this->assertEquals('', $metaTags->getPageTitle());
     }
 
     public function testCustomValues()
