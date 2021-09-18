@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2801d8ca5e13620d00a8a3ded5ad08a9",
+    "content-hash": "30f103183f2ec6aa2712383b7a82089f",
     "packages": [
         {
             "name": "aura/autoload",
@@ -1421,6 +1421,38 @@
                 "source": "https://github.com/johncms/johncms-pagination/tree/2.0.1"
             },
             "time": "2021-07-27T19:43:09+00:00"
+        },
+        {
+            "name": "johncms/language",
+            "version": "dev-develop",
+            "dist": {
+                "type": "path",
+                "url": "modules/johncms/language",
+                "reference": "e4664cf61764ed16b8dfe9b4d814b29ed63d0ea4"
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "johncms-module",
+            "autoload": {
+                "psr-4": {
+                    "Johncms\\Language\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "JohnCMS Contributors",
+                    "homepage": "https://github.com/johncms/johncms/graphs/contributors"
+                }
+            ],
+            "description": "Language module",
+            "homepage": "https://johncms.com",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "johncms/news",
@@ -7891,6 +7923,7 @@
         "johncms/auth": 20,
         "johncms/admin": 20,
         "johncms/news": 20,
+        "johncms/language": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

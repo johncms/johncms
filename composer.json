@@ -62,7 +62,8 @@
         "johncms/homepage": "dev-develop",
         "johncms/auth": "dev-develop",
         "johncms/admin": "dev-develop",
-        "johncms/news": "dev-develop"
+        "johncms/news": "dev-develop",
+        "johncms/language": "dev-develop"
     },
     "require-dev": {
         "fakerphp/faker": "^1.15",
@@ -120,6 +121,10 @@
         {
             "type": "path",
             "url": "modules/johncms/admin"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/language"
         }
     ],
     "extra": {
