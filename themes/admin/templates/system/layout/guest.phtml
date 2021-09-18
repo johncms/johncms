@@ -2,6 +2,8 @@
 /**
  * @var string $locale
  * @var Johncms\Counters $counters
+ *
+ * @var Johncms\View\MetaTagManager $metaTags
  */
 
 ?>
@@ -16,6 +18,15 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <?= $this->section('meta', '') ?>
+    <?php if (! empty($metaTags->getKeywords())): ?>
+        <meta name="keywords" content="<?= $this->e($metaTags->getKeywords()) ?>">
+    <?php endif ?>
+    <?php if (! empty($metaTags->getDescription())): ?>
+        <meta name="description" content="<?= $this->e($metaTags->getDescription()) ?>">
+    <?php endif ?>
+    <?php if (! empty($metaTags->getCanonical())): ?>
+        <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
+    <?php endif ?>
     <meta name="theme-color" content="#586776">
     <?php if ($locale === 'ar'): ?>
         <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
@@ -25,7 +36,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
-    <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
+    <title><?= $this->e($metaTags->getTitle()) ?></title>
 </head>
 <body>
 <div class="wrapper bg-light">

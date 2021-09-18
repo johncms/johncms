@@ -38,6 +38,7 @@ class AdminRenderEngineFactory
                 'user'       => $container->get(User::class),
                 'tools'      => $container->get(Tools::class),
                 'csrf_token' => $container->get(Csrf::class)->getToken(),
+                'metaTags'   => $container->get(MetaTagManager::class),
             ]
         );
 
