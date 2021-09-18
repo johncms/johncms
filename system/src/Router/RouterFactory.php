@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Router\Strategy\ApplicationStrategy;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
@@ -67,6 +68,8 @@ class RouterFactory
             return $this->cachedRouter->dispatch($this->serverRequest);
         } catch (NotFoundException) {
             return status_page(404);
+        } catch (ModelNotFoundException $exception) {
+            return status_page(404, message: $exception->getMessage());
         }
     }
 
