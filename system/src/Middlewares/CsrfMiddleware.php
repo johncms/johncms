@@ -43,7 +43,8 @@ class CsrfMiddleware implements MiddlewareInterface
         $csrf = di(Csrf::class);
         $request_token = $request->getPost('csrf_token');
         if (! $request_token) {
-            $request_token = $request->getHeader('X-CSRF-Token');
+            $tokenHeader = $request->getHeader('X-CSRF-Token');
+            $request_token = ! empty($tokenHeader[0]) ? $tokenHeader[0] : '';
         }
 
         return $csrf->getToken() === $request_token;
