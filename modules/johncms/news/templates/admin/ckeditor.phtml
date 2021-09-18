@@ -7,6 +7,7 @@
  * @var string $locale
  * @var string $id
  * @var string $name
+ * @var string $csrf_token
  */
 if (isset($load_scripts) && $load_scripts !== false) {
     if ($locale !== 'en') {
@@ -24,12 +25,13 @@ if (isset($load_scripts) && $load_scripts !== false) {
 <div class="vue_app">
     <ckeditor-input-component
         :class="'p-no-margin'"
-        upload_url="/admin/news/upload_file/"
+        upload_url="<?= route('news.admin.sections.loadFile') ?>"
         name="<?= $name ?>"
         language="<?= $locale ?>"
         errors="<?= $errors ?>"
         id="<?= $id ?>"
         label="<?= $label ?>"
         value="<?= $value ?>"
+        csrf_token="<?= $csrf_token ?>"
     ></ckeditor-input-component>
 </div>

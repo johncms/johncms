@@ -47,6 +47,10 @@ export default {
             type: String,
             default: ''
         },
+        csrf_token: {
+            type: String,
+            default: ''
+        },
     },
     data()
     {
@@ -62,6 +66,9 @@ export default {
             simpleUpload: {
                 uploadUrl: this.upload_url,
                 withCredentials: false,
+                headers: {
+                    'X-CSRF-Token': this.csrf_token,
+                },
                 savedCallback: function (file) {
                     self.attached_files.push(file);
                 },

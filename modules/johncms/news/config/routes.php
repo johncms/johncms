@@ -52,8 +52,11 @@ return function (Router $router) {
 
         // Articles
         $route->get('/edit_article/{article_id:number}[/]', [AdminArticleController::class, 'edit'])->setName('news.admin.article.edit');
+        $route->post('/edit_article/{article_id:number}[/]', [AdminArticleController::class, 'edit'])->setName('news.admin.article.editStore');
         $route->get('/add_article/[{section_id:number}[/]]', [AdminArticleController::class, 'add'])->setName('news.admin.article.add');
+        $route->post('/add_article/[{section_id:number}[/]]', [AdminArticleController::class, 'add'])->setName('news.admin.article.addStore');
         $route->get('/del_article/{article_id:number}[/]', [AdminArticleController::class, 'del'])->setName('news.admin.article.del');
+        $route->post('/del_article/{article_id:number}[/]', [AdminArticleController::class, 'del'])->setName('news.admin.article.delStore');
 
         // Sections
         $route->get('/add_section/[{section_id:number}[/]]', [AdminSectionController::class, 'add'])->setName('news.admin.sections.add');
@@ -64,6 +67,6 @@ return function (Router $router) {
         $route->post('/del_section/{section_id:number}[/]', [AdminSectionController::class, 'del'])->setName('news.admin.sections.del_store');
 
         // File uploader
-        $route->post('/upload_file[/]', [AdminSectionController::class, 'loadFile'])->setName('news.admin.sections.loadFile');
+        $route->post('/upload_file[/]', [AdminArticleController::class, 'loadFile'])->setName('news.admin.sections.loadFile');
     })->middleware(new AuthMiddleware(['admin']));
 };

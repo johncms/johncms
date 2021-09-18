@@ -15,38 +15,35 @@ namespace Johncms\News\Controllers\Admin;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\Controller\BaseAdminController;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Http\RedirectResponse;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSearchIndex;
 use Johncms\News\Models\NewsSection;
 use Johncms\News\Utils\Helpers;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
+use Throwable;
 
 class AdminArticleController extends BaseAdminController
 {
     protected string $moduleName = 'johncms/news';
 
-    protected $config;
+    protected array $config;
 
     public function __construct()
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
         $this->navChain->add(__('News'), route('news.admin.index'));
-        $this->render->addData(
-            [
-                'title'       => __('News'),
-                'page_title'  => __('News'),
-                'module_menu' => ['news' => true],
-            ]
-        );
-        $this->navChain->add(__('Section list'), '/admin/news/content/');
+        $this->metaTagManager->setAll(__('News'));
+        $this->render->addData(['module_menu' => ['news' => true]]);
+        $this->navChain->add(__('Section list'), route('news.admin.section'));
     }
 
     /**
@@ -54,36 +51,29 @@ class AdminArticleController extends BaseAdminController
      *
      * @param Request $request
      * @param User $user
+     * @param Session $session
      * @param int $section_id
-     * @return string
+     * @return RedirectResponse|string
+     * @throws Throwable
      */
-    public function add(Request $request, User $user, int $section_id = 0): string
+    public function add(Request $request, User $user, Session $session, int $section_id = 0): RedirectResponse|string
     {
-        $this->render->addData(
-            [
-                'title'      => __('Add article'),
-                'page_title' => __('Add article'),
-            ]
-        );
+        $this->metaTagManager->setAll(__('Add article'));
 
         if (! empty($section_id)) {
-            try {
-                $current_section = (new NewsSection())->findOrFail($section_id);
+            $current_section = (new NewsSection())->findOrFail($section_id);
 
-                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
+            Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
-                // Adding the current section to the navigation chain
-                $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
-            } catch (ModelNotFoundException $exception) {
-                pageNotFound();
-            }
+            // Adding the current section to the navigation chain
+            $this->navChain->add($current_section->name, route('news.admin.section', ['section_id' => $current_section->id]));
         }
 
         $this->navChain->add(__('Add article'));
 
         $data = [
-            'action_url' => '/admin/news/add_article/' . $section_id,
-            'back_url'   => '/admin/news/content/' . $section_id,
+            'action_url' => route('news.admin.article.addStore', ['section_id' => $section_id]),
+            'back_url'   => route('news.admin.section', ['section_id' => $section_id]),
             'section_id' => $section_id,
             'fields'     => [
                 'active'       => (int) $request->getPost('active', 1),
@@ -138,9 +128,8 @@ class AdminArticleController extends BaseAdminController
                             'text'       => $search_text,
                         ]
                     );
-                    $_SESSION['success_message'] = __('The article was created successfully');
-                    header('Location: /admin/news/content/' . $section_id);
-                    exit;
+                    $session->flash('success_message', __('The article was created successfully'));
+                    return new RedirectResponse(route('news.admin.section', ['section_id' => $section_id]));
                 }
                 $errors[] = __('An article with this code already exists');
             }
@@ -157,22 +146,15 @@ class AdminArticleController extends BaseAdminController
      * @param int $article_id
      * @param Request $request
      * @param User $user
-     * @return string
+     * @param Session $session
+     * @return RedirectResponse|string
+     * @throws Throwable
      */
-    public function edit(int $article_id, Request $request, User $user): string
+    public function edit(int $article_id, Request $request, User $user, Session $session): RedirectResponse|string
     {
-        $this->render->addData(
-            [
-                'title'      => __('Edit article'),
-                'page_title' => __('Edit article'),
-            ]
-        );
+        $this->metaTagManager->setAll(__('Edit article'));
 
-        try {
-            $article = (new NewsArticle())->findOrFail($article_id);
-        } catch (ModelNotFoundException $exception) {
-            pageNotFound();
-        }
+        $article = (new NewsArticle())->findOrFail($article_id);
 
         Helpers::buildAdminBreadcrumbs($article->parentSection);
         $this->navChain->add($article->name);
@@ -185,8 +167,8 @@ class AdminArticleController extends BaseAdminController
         }
 
         $data = [
-            'action_url' => '/admin/news/edit_article/' . $article->id . '/',
-            'back_url'   => '/admin/news/content/' . $article->section_id . '/',
+            'action_url' => route('news.admin.article.editStore', ['article_id' => $article->id]),
+            'back_url'   => route('news.admin.section', ['section_id' => $article->section_id]),
             'article_id' => $article_id,
             'fields'     => [
                 'active'       => (int) $request->getPost('active', $article->active),
@@ -237,9 +219,8 @@ class AdminArticleController extends BaseAdminController
                         ['article_id' => $article->id],
                         ['text' => $search_text]
                     );
-                    $_SESSION['success_message'] = __('The article was updated successfully');
-                    header('Location: /admin/news/content/' . $article->section_id . '/');
-                    exit;
+                    $session->flash('success_message', __('The article was updated successfully'));
+                    return new RedirectResponse(route('news.admin.section', ['section_id' => $article->section_id]));
                 }
                 $errors[] = __('An article with this code already exists');
             }
@@ -256,85 +237,70 @@ class AdminArticleController extends BaseAdminController
      * @param int $article_id
      * @param Request $request
      * @param FileStorage $storage
+     * @param Session $session
+     * @return RedirectResponse|string
+     * @throws Throwable
      */
-    public function del(int $article_id, Request $request, FileStorage $storage): void
+    public function del(int $article_id, Request $request, FileStorage $storage, Session $session): RedirectResponse|string
     {
         $data = [];
         // Get the section to delete
-        try {
-            $article = (new NewsArticle())->findOrFail($article_id);
-        } catch (ModelNotFoundException $exception) {
-            exit($exception->getMessage());
-        }
-
-        $post = $request->getParsedBody();
+        $article = (new NewsArticle())->findOrFail($article_id);
 
         // Checking the data and deleting the section
-        if (
-            isset($post['delete_token'], $_SESSION['delete_token']) &&
-            $_SESSION['delete_token'] === $post['delete_token'] &&
-            $request->getMethod() === 'POST'
-        ) {
+        if ($request->getMethod() === 'POST') {
             // Delete article
             try {
                 if (! empty($article->attached_files)) {
                     foreach ($article->attached_files as $attached_file) {
                         try {
                             $storage->delete($attached_file);
-                        } catch (Exception | FilesystemException $exception) {
+                        } catch (Exception | FilesystemException) {
                         }
                     }
                 }
                 $article->delete();
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 exit($exception->getMessage());
             }
 
-            $_SESSION['success_message'] = __('The article was successfully deleted');
-            header('Location: /admin/news/content/' . $article->section_id);
-            exit;
+            $session->flash('success_message', __('The article was successfully deleted'));
+            return new RedirectResponse(route('news.admin.section', ['section_id' => $article->section_id]));
         }
 
         $data['article'] = $article;
+        $data['action_url'] = route('news.admin.article.delStore', ['article_id' => $article_id]);
 
-        // Generate the token
-        $data['delete_token'] = uniqid('', true);
-        $_SESSION['delete_token'] = $data['delete_token'];
-
-        $data['action_url'] = '/admin/news/del_article/' . $article_id;
-
-        echo $this->render->render('news::admin/del', ['data' => $data]);
+        return $this->render->render('news::admin/del', ['data' => $data]);
     }
 
-    public function loadFile(Request $request): string
+    public function loadFile(Request $request): array|string
     {
         try {
             /** @var UploadedFile[] $files */
             $files = $request->getUploadedFiles();
             $file_info = new FileInfo($files['upload']->getClientFilename());
             if (! $file_info->isImage()) {
-                return json_encode(
-                    [
-                        'error' => [
-                            'message' => __('Only images are allowed'),
-                        ],
-                    ]
-                );
+                return [
+                    'error' => [
+                        'message' => __('Only images are allowed'),
+                    ],
+                ];
             }
 
             $file = (new FileStorage())->saveFromRequest('upload', 'news');
-            $file_array = [
+            return [
                 'id'       => $file->id,
                 'name'     => $file->name,
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];
-            header('Content-Type: application/json');
-            return json_encode($file_array);
         } catch (FilesystemException | Exception $e) {
-            http_response_code(500);
-            header('Content-Type: application/json');
-            return json_encode(['errors' => $e->getMessage()]);
+            return [
+                'error' => [
+                    'message' => $e->getMessage(),
+                ],
+            ];
         }
     }
 }
