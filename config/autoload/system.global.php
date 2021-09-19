@@ -12,8 +12,11 @@ return [
         'meta_keywords'    => 'johncms',
         'meta_description' => 'Powered by JohnCMS http://johncms.com',
 
-        'email'         => 'no-reply@example.com',
-        'copyright'     => 'JohnCMS',
+        'email'     => 'no-reply@example.com',
+        'copyright' => 'JohnCMS',
+
+        'timezone'      => 'UTC',
+        'language'      => 'en',
 
         // User model settings
         'user_model'    => [

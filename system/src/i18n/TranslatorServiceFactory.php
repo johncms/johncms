@@ -33,9 +33,9 @@ class TranslatorServiceFactory
         $translator->setLocale(
             $this->determineLocale(
                 $userLng,
-                $config['johncms']['lng'] ?? 'en',
+                $config['johncms']['language'] ?? 'en',
                 $config['johncms']['lng_list'] ?? [],
-                $request->getPost('setlng')
+                $request->getPost('setLng')
             )
         );
 

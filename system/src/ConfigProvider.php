@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use Johncms\Console\Commands\ClearCacheCommand;
 use Johncms\Console\Commands\MakeMigrationCommand;
 use Johncms\Console\Commands\MigrateCommand;
@@ -27,6 +29,7 @@ use Johncms\i18n\TranslatorServiceFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
+use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\View\AdminRenderEngineFactory;
@@ -42,6 +45,8 @@ use Psr\SimpleCache\CacheInterface;
 
 class ConfigProvider
 {
+    #[Pure]
+    #[ArrayShape(['dependencies' => "\string[][]", 'middleware' => "string[]", 'providers' => "array", 'commands' => "string[]", 'auth_providers' => "string[]"])]
     public function __invoke(): array
     {
         return [
@@ -53,6 +58,7 @@ class ConfigProvider
         ];
     }
 
+    #[ArrayShape(['aliases' => "string[]", 'factories' => "string[]"])]
     private function getDependencies(): array
     {
         return [
@@ -78,6 +84,7 @@ class ConfigProvider
                 MediaEmbed::class               => MediaEmbed::class,
                 Session::class                  => Session::class,
                 MetaTagManager::class           => MetaTagManager::class,
+                SiteSettings::class             => SiteSettings::class,
             ],
         ];
     }
