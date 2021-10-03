@@ -13,14 +13,13 @@ declare(strict_types=1);
 namespace Johncms\News;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Johncms\Exceptions\PageNotFoundException;
+use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\News\Models\NewsArticle;
 
 class Article
 {
-    /** @var NavChain */
-    protected $nav_chain;
+    protected NavChain $nav_chain;
 
     public function __construct()
     {
@@ -47,15 +46,17 @@ class Article
         $article = (new NewsArticle())
             ->withSum('votes', 'vote')
             ->where('code', $article_code)
-            ->first();
-        if ($article === null) {
-            throw new PageNotFoundException(__('The requested article was not found.'));
-        }
+            ->firstOrFail();
+
+        $session = di(Session::class);
+
         // Фиксируем количество просмотров
-        if (empty($_SESSION['news_viewed_articles']) || ! in_array($article->id, $_SESSION['news_viewed_articles'], true)) {
+        if (! in_array($article->id, (array) $session->get('news_viewed_articles', []), true)) {
             ++$article->view_count;
             $article->save();
-            $_SESSION['news_viewed_articles'][] = $article->id;
+            $viewed_articles = $session->get('news_viewed_articles', []);
+            $viewed_articles[] = $article->id;
+            $session->set('news_viewed_articles', $viewed_articles);
         }
         $this->nav_chain->add($article->name, $article->url);
         return $article;

@@ -37,7 +37,7 @@ $author = $article->author;
             <likes-component
                 :article_id="<?= $article->id ?>"
                 :rating="<?= $article->rating ?>"
-                :can_vote="<?= $user->isValid() ? 'true' : 'false' ?>"
+                :can_vote="<?= ($user ? 'true' : 'false') ?>"
                 :voted="<?= $article->current_vote ?>"
             ></likes-component>
         </div>
@@ -74,13 +74,13 @@ $author = $article->author;
         <comments-component
             upload_url="/news/comments/upload_file/"
             :article_id="<?= $article->id ?>"
-            :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"
+            :can_write="<?= ($user && empty($user->ban) ? 'true' : 'false') ?>"
             :i18n='<?= json_encode($messages) ?>'
             language="<?= $locale ?>"
         ></comments-component>
     </div>
 
-    <?php if (! $user->isValid()): ?>
+    <?php if (! $user): ?>
         <div class="d-flex">
             <div class="alert alert-warning">
                 <?= __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.') ?>

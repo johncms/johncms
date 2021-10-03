@@ -23,10 +23,8 @@ use Psr\SimpleCache\InvalidArgumentException;
 
 class Section
 {
-    /** @var NavChain */
     protected NavChain $navChain;
 
-    /** @var Cache $cache */
     protected Cache $cache;
 
     /** @var NewsSection[] */

@@ -243,9 +243,8 @@ class NewsArticle extends Model
      */
     public function getCurrentVoteAttribute(): int
     {
-        /** @var User $user */
         $user = di(User::class);
-        if (! $user->isValid()) {
+        if (! $user) {
             return 0;
         }
 

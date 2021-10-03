@@ -21,11 +21,9 @@ class ArticleController extends BaseController
 {
     protected string $moduleName = 'johncms/news';
 
-    /** @var array */
-    protected $config;
+    protected array $config;
 
-    /** @var NewsMetaManager */
-    protected $meta_tags;
+    protected NewsMetaManager $meta_tags;
 
     public function __construct()
     {
@@ -43,16 +41,17 @@ class ArticleController extends BaseController
      * @param string $article_code
      * @param string $category
      * @return string
+     * @throws \Throwable
      */
     public function index(Section $section, Article $article, string $article_code, string $category = ''): string
     {
         $section->checkPath($category);
         $current_article = $article->getArticle($article_code);
-        $this->render->addData($this->meta_tags->forArticle($current_article)->toArray());
+        $this->meta_tags->forArticle($current_article)->set();
         return $this->render->render(
             'news::public/article',
             [
-                'article'         => $current_article,
+                'article' => $current_article,
                 'current_section' => $section->getLastSection(),
             ]
         );
