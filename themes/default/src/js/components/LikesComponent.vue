@@ -63,7 +63,7 @@ export default {
         setVote(type)
         {
             this.loading = true;
-            axios.get(this.set_vote_url + this.article_id + '/' + type + '/')
+            axios.post(this.set_vote_url + this.article_id + '/' + type + '/')
                     .then(response => {
                         this.rating = response.data.rating;
                         this.voted = response.data.voted;
