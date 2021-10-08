@@ -15,7 +15,7 @@ namespace Forum\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Johncms\Casts\SpecialChars;
+use Johncms\Database\Eloquent\Casts\SpecialChars;
 use Johncms\Users\User;
 
 /**

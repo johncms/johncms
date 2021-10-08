@@ -13,7 +13,7 @@ namespace Johncms\Auth\Controllers;
 use Johncms\Auth\Forms\LoginForm;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
-use Johncms\Http\RedirectResponse;
+use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Http;
+namespace Johncms\Http\Response;
 
 use GuzzleHttp\Psr7\Response;
 

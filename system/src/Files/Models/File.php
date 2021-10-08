@@ -15,7 +15,7 @@ namespace Johncms\Files\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Johncms\Casts\DateHuman;
+use Johncms\Database\Eloquent\Casts\DateHuman;
 
 /**
  * Class File

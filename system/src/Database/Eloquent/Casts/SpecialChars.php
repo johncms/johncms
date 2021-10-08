@@ -10,25 +10,25 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Casts;
+namespace Johncms\Database\Eloquent\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class Ip implements CastsAttributes
+class SpecialChars implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
      * @param Model $model
      * @param string $key
-     * @param int $value
+     * @param mixed $value
      * @param array $attributes
      * @return string
      */
     public function get($model, $key, $value, $attributes): string
     {
-        return ! empty($value) ? long2ip($value) : '';
+        return htmlspecialchars((string) $value);
     }
 
     /**
@@ -36,12 +36,12 @@ class Ip implements CastsAttributes
      *
      * @param Model $model
      * @param string $key
-     * @param string $value
+     * @param $value
      * @param array $attributes
-     * @return int
+     * @return string
      */
-    public function set($model, $key, $value, $attributes): int
+    public function set($model, $key, $value, $attributes): string
     {
-        return ! empty($value) && filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? ip2long($value) : 0;
+        return $value;
     }
 }

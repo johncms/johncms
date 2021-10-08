@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Johncms\Casts\FormattedDate;
-use Johncms\Casts\SpecialChars;
+use Johncms\Database\Eloquent\Casts\FormattedDate;
+use Johncms\Database\Eloquent\Casts\SpecialChars;
 use Johncms\News\Section;
 
 /**

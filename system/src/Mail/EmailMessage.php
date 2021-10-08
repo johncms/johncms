@@ -14,7 +14,7 @@ namespace Johncms\Mail;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Casts\DateHuman;
+use Johncms\Database\Eloquent\Casts\DateHuman;
 
 /**
  * Class EmailMessage

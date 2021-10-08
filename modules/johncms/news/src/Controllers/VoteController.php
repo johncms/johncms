@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\News\Controllers;
 
 use Johncms\Controller\BaseController;
-use Johncms\Http\JsonResponse;
+use Johncms\Http\Response\JsonResponse;
 use Johncms\News\Models\NewsArticle;
 use Johncms\Users\User;
 use Psr\Http\Message\ResponseInterface;

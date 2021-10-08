@@ -19,10 +19,12 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Johncms\Controller\BaseController;
+use Johncms\Exceptions\PageNotFoundException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\Response\JsonResponse;
 use Johncms\Media\MediaEmbed;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsComments;
@@ -32,6 +34,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\View\Extension\Avatar;
 use League\Flysystem\FilesystemException;
+use Psr\Http\Message\ResponseInterface;
 
 class CommentsController extends BaseController
 {
@@ -43,13 +46,13 @@ class CommentsController extends BaseController
      * @param int $article_id
      * @param Avatar $avatar
      * @param Tools $tools
-     * @param User $current_user
+     * @param User|null $current_user
+     * @return array
      */
-    public function index(int $article_id, Avatar $avatar, Tools $tools, User $current_user): void
+    public function index(int $article_id, Avatar $avatar, Tools $tools, ?User $current_user = null): array
     {
         if ($article_id === 0) {
-            http_response_code(400);
-            Helpers::returnJson(['error' => __('Bad Request')]);
+            throw new PageNotFoundException();
         }
 
         /** @var LengthAwarePaginator $comments */
@@ -58,7 +61,7 @@ class CommentsController extends BaseController
         $purifier = di(HTMLPurifier::class);
         $embed = di(MediaEmbed::class);
 
-        $array = [
+        return [
             'current_page'   => $comments->currentPage(),
             'data'           => $comments->getItems()->map(
                 static function (NewsComments $comment) use ($avatar, $tools, $current_user, $purifier, $embed) {
@@ -121,55 +124,46 @@ class CommentsController extends BaseController
             'to'             => $comments->lastItem(),
             'total'          => $comments->total(),
         ];
-
-        Helpers::returnJson($array);
     }
 
-    public function add(int $article_id, Request $request, User $user, Environment $env): void
+    public function add(int $article_id, Request $request, Environment $env, ?User $user = null): ResponseInterface
     {
         $post_body = $request->getBody();
         if ($post_body) {
             $post_body = json_decode($post_body->getContents(), true);
         }
 
-        if (! empty($user->ban)) {
-            http_response_code(403);
-            Helpers::returnJson(['message' => __('You have a ban!')]);
+        if (! empty($user?->ban)) {
+            return new JsonResponse(['message' => __('You have a ban!')], 403);
         }
 
-        if (! $user->isValid()) {
-            http_response_code(403);
-            Helpers::returnJson(['message' => __('You are not logged in')]);
+        if (! $user) {
+            return new JsonResponse(['message' => __('You are not logged in')], 403);
         }
 
-        try {
-            $article = (new NewsArticle())->findOrFail($article_id);
-            $comment = trim($post_body['comment']);
-            if (! empty($comment)) {
-                $attached_files = array_map('intval', (array) ($post_body['attached_files'] ?? []));
-                (new NewsComments())->create(
-                    [
-                        'article_id'     => $article->id,
-                        'user_id'        => $user->id,
-                        'text'           => $comment,
-                        'user_data'      => [
-                            'user_agent'   => $env->getUserAgent(),
-                            'ip'           => $env->getIp(false),
-                            'ip_via_proxy' => $env->getIpViaProxy(false),
-                        ],
-                        'created_at'     => Carbon::now()->format('Y-m-d H:i:s'),
-                        'attached_files' => $attached_files,
-                    ]
-                );
+        $article = (new NewsArticle())->findOrFail($article_id);
+        $comment = trim($post_body['comment']);
+        if (! empty($comment)) {
+            $attached_files = array_map('intval', (array) ($post_body['attached_files'] ?? []));
+            (new NewsComments())->create(
+                [
+                    'article_id'     => $article->id,
+                    'user_id'        => $user->id,
+                    'text'           => $comment,
+                    'user_data'      => [
+                        'user_agent'   => $env->getUserAgent(),
+                        'ip'           => $env->getIp(false),
+                        'ip_via_proxy' => $env->getIpViaProxy(false),
+                    ],
+                    'created_at'     => Carbon::now()->format('Y-m-d H:i:s'),
+                    'attached_files' => $attached_files,
+                ]
+            );
 
-                $last_page = (new NewsComments())->where('article_id', $article->id)->paginate($user->config->kmess)->lastPage();
-                Helpers::returnJson(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
-            } else {
-                http_response_code(422);
-                Helpers::returnJson(['message' => __('Enter the comment text')]);
-            }
-        } catch (ModelNotFoundException $exception) {
-            Helpers::returnJson(['message' => $exception->getMessage()]);
+            $last_page = (new NewsComments())->where('article_id', $article->id)->paginate($user->config->kmess)->lastPage();
+            return new JsonResponse(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
+        } else {
+            return new JsonResponse(['message' => __('Enter the comment text')], 422);
         }
     }
 
@@ -184,7 +178,8 @@ class CommentsController extends BaseController
 
         try {
             $post = (new NewsComments())->findOrFail($comment_id);
-            if ($user->rights >= 6 || $user->id === $post->user_id) {
+            // TODO: Replace to check permission
+            if ($user->hasRole('admin') || $user->id === $post->user_id) {
                 try {
                     if (! empty($post->attached_files)) {
                         foreach ($post->attached_files as $attached_file) {

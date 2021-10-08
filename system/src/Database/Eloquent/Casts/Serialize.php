@@ -10,34 +10,31 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Casts;
+namespace Johncms\Database\Eloquent\Casts;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\i18n\Translator;
 
-class DateHuman implements CastsAttributes
+class Serialize implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
      * @param Model $model
      * @param string $key
-     * @param int $value
+     * @param mixed $value
      * @param array $attributes
-     * @return Carbon|int
+     * @return array
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, $key, $value, $attributes): array
     {
         if (! empty($value)) {
-            $translator = di(Translator::class);
-            return Carbon::parse($value)
-                ->locale($translator->getLocale())
-                ->diffForHumans(['join' => false, 'parts' => 2]);
+            $unserialized = unserialize($value, ['allowed_classes' => false]);
+            if (is_array($unserialized)) {
+                return $unserialized;
+            }
         }
-
-        return $value;
+        return [];
     }
 
     /**
@@ -45,12 +42,12 @@ class DateHuman implements CastsAttributes
      *
      * @param Model $model
      * @param string $key
-     * @param $value
+     * @param array $value
      * @param array $attributes
-     * @return string|null
+     * @return string
      */
-    public function set($model, $key, $value, $attributes)
+    public function set($model, $key, $value, $attributes): string
     {
-        return $value;
+        return serialize($value);
     }
 }

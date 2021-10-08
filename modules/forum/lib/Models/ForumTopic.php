@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Johncms\Casts\Serialize;
+use Johncms\Database\Eloquent\Casts\Serialize;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 

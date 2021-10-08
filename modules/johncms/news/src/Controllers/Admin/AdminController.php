@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Johncms\News\Controllers\Admin;
 
 use Johncms\Controller\BaseAdminController;
-use Johncms\Http\RedirectResponse;
 use Johncms\Http\Request;
+use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsSection;
@@ -80,7 +80,7 @@ class AdminController extends BaseAdminController
      *
      * @param Request $request
      * @param Session $session
-     * @return RedirectResponse|string
+     * @return \Johncms\Http\Response\RedirectResponse|string
      * @throws Throwable
      */
     public function settings(Request $request, Session $session): RedirectResponse|string

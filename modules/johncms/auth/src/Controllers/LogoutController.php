@@ -11,7 +11,7 @@
 namespace Johncms\Auth\Controllers;
 
 use Johncms\Controller\BaseController;
-use Johncms\Http\RedirectResponse;
+use Johncms\Http\Response\RedirectResponse;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Throwable;

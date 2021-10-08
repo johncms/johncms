@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Casts;
+namespace Johncms\Database\Eloquent\Casts;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Johncms\Settings\SiteSettings;
+
+use function di;
 
 class FormattedDate implements CastsAttributes
 {

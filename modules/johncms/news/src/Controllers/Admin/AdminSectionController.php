@@ -15,8 +15,8 @@ namespace Johncms\News\Controllers\Admin;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Johncms\Controller\BaseAdminController;
-use Johncms\Http\RedirectResponse;
 use Johncms\Http\Request;
+use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\News\Models\NewsSection;
 use Johncms\News\Section;
@@ -124,7 +124,7 @@ class AdminSectionController extends BaseAdminController
      * @param int $section_id
      * @param Request $request
      * @param Session $session
-     * @return RedirectResponse|string
+     * @return \Johncms\Http\Response\RedirectResponse|string
      * @throws Throwable
      */
     public function edit(int $section_id, Request $request, Session $session): RedirectResponse|string

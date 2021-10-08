@@ -10,13 +10,15 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Casts;
+namespace Johncms\Database\Eloquent\Casts;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\i18n\Translator;
 use Johncms\Users\User;
+
+use function di;
 
 class TimeToDate implements CastsAttributes
 {

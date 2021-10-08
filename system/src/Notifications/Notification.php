@@ -15,7 +15,7 @@ namespace Johncms\Notifications;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Johncms\Casts\DateHuman;
+use Johncms\Database\Eloquent\Casts\DateHuman;
 use Johncms\Users\User;
 
 /**

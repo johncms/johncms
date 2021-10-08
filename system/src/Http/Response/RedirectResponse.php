@@ -10,9 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Http;
+namespace Johncms\Http\Response;
 
 use GuzzleHttp\Psr7\Response;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Validator\Validator;
 
 class RedirectResponse extends Response
