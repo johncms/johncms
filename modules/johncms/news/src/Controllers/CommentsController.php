@@ -93,7 +93,7 @@ class CommentsController extends BaseController
 
                     $message['can_quote'] = false;
                     $message['can_reply'] = false;
-                    if ($current_user->id !== $user->id && $current_user->isValid()) {
+                    if ($current_user?->id !== $user->id) {
                         $message['can_quote'] = true;
                         $message['can_reply'] = true;
                     }

@@ -15,18 +15,19 @@ namespace Johncms\News\Controllers;
 use Johncms\Controller\BaseController;
 use Johncms\Http\Request;
 use Johncms\News\Models\NewsArticle;
+use Throwable;
 
 class SearchController extends BaseController
 {
     protected string $moduleName = 'johncms/news';
 
-    protected $config;
+    protected array $config;
 
     public function __construct()
     {
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
-        $this->navChain->add(__('News'), '/news/');
+        $this->navChain->add(__('News'), route('news.section'));
     }
 
     /**
@@ -34,19 +35,13 @@ class SearchController extends BaseController
      *
      * @param Request $request
      * @return string
+     * @throws Throwable
      */
     public function index(Request $request): string
     {
-        $page_title = __('Search');
-        $this->navChain->add($page_title, '');
-        $this->render->addData(
-            [
-                'title'       => $page_title,
-                'page_title'  => $page_title,
-                'keywords'    => $this->config['meta_keywords'] ?? '',
-                'description' => $this->config['meta_description'] ?? '',
-            ]
-        );
+        $pageTitle = __('Search');
+        $this->navChain->add($pageTitle, '');
+        $this->metaTagManager->setAll($pageTitle);
 
         $query = $request->getQuery('query');
         if (! empty($query)) {
@@ -72,19 +67,13 @@ class SearchController extends BaseController
      *
      * @param Request $request
      * @return string
+     * @throws Throwable
      */
     public function byTags(Request $request): string
     {
-        $page_title = __('Search by tags');
-        $this->navChain->add($page_title, '');
-        $this->render->addData(
-            [
-                'title'       => $page_title,
-                'page_title'  => $page_title,
-                'keywords'    => $this->config['meta_keywords'],
-                'description' => $this->config['meta_description'],
-            ]
-        );
+        $pageTitle = __('Search by tags');
+        $this->navChain->add($pageTitle, '');
+        $this->metaTagManager->setAll($pageTitle);
 
         $query = $request->getQuery('tag');
         if (! empty($query)) {

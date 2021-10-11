@@ -29,8 +29,8 @@ return function (Router $router) {
     $router->addPatternMatcher('sectionPath', '[\w/+-]+');
 
     $router->group('/news', function (RouteGroup $route) {
-        $route->get('/search/', [SearchController::class, 'index'])->setName('news.search');
-        $route->get('/search_tags/', [SearchController::class, 'byTags'])->setName('news.searchByTags');
+        $route->get('/search[/]', [SearchController::class, 'index'])->setName('news.search');
+        $route->get('/search_tags[/]', [SearchController::class, 'byTags'])->setName('news.searchByTags');
         $route->post('/add_vote/{article_id:number}/{type_vote:number}/', [VoteController::class, 'add'])->setName('news.addVote');
         $route->get('/comments/{article_id:number}/', [CommentsController::class, 'index'])->setName('news.comments');
         $route->post('/comments/add/{article_id:number}/', [CommentsController::class, 'add'])->setName('news.comments.add');
