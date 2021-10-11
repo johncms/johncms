@@ -137,11 +137,16 @@ class Request extends ServerRequest
 
     public function userAgent(): ?string
     {
-        return $this->getServer('HTTP_USER_AGENT');
+        return $this->getServer('HTTP_USER_AGENT', '', FILTER_SANITIZE_STRING);
     }
 
     public function ip(): ?string
     {
-        return $this->getServer('REMOTE_ADDR');
+        return $this->getServer('REMOTE_ADDR', '127.0.0.1', FILTER_VALIDATE_IP);
+    }
+
+    public function ipViaProxy(): ?string
+    {
+        return $this->getServer('HTTP_X_FORWARDED_FOR', '127.0.0.1', FILTER_VALIDATE_IP);
     }
 }

@@ -128,6 +128,10 @@ export default {
         upload_url: {
             type: String,
             default: ''
+        },
+        csrf_token: {
+            type: String,
+            default: ''
         }
     },
     data()
@@ -149,6 +153,9 @@ export default {
         let config = {
             simpleUpload: {
                 uploadUrl: this.upload_url,
+                headers: {
+                    'X-CSRF-Token': this.csrf_token,
+                },
                 withCredentials: false,
                 savedCallback: function (file) {
                     self.attached_files.push(file.id);

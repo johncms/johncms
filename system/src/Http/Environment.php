@@ -14,6 +14,10 @@ namespace Johncms\Http;
 
 use Psr\Container\ContainerInterface;
 
+/**
+ * @deprecated
+ * @see Request
+ */
 class Environment
 {
     /** @var null|int */

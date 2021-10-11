@@ -15,20 +15,17 @@ namespace Johncms\News\Controllers;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Response\JsonResponse;
 use Johncms\Media\MediaEmbed;
 use Johncms\News\Models\NewsArticle;
 use Johncms\News\Models\NewsComments;
-use Johncms\News\Utils\Helpers;
 use Johncms\Security\HTMLPurifier;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -126,7 +123,7 @@ class CommentsController extends BaseController
         ];
     }
 
-    public function add(int $article_id, Request $request, Environment $env, ?User $user = null): ResponseInterface
+    public function add(int $article_id, Request $request, ?User $user = null): ResponseInterface
     {
         $post_body = $request->getBody();
         if ($post_body) {
@@ -151,9 +148,9 @@ class CommentsController extends BaseController
                     'user_id'        => $user->id,
                     'text'           => $comment,
                     'user_data'      => [
-                        'user_agent'   => $env->getUserAgent(),
-                        'ip'           => $env->getIp(false),
-                        'ip_via_proxy' => $env->getIpViaProxy(false),
+                        'user_agent'   => $request->userAgent(),
+                        'ip'           => $request->ip(),
+                        'ip_via_proxy' => $request->ipViaProxy(),
                     ],
                     'created_at'     => Carbon::now()->format('Y-m-d H:i:s'),
                     'attached_files' => $attached_files,
@@ -167,7 +164,7 @@ class CommentsController extends BaseController
         }
     }
 
-    public function del(Request $request, User $user, FileStorage $storage): void
+    public function del(Request $request, User $user, FileStorage $storage): array|JsonResponse
     {
         $post_body = $request->getBody();
         if ($post_body) {
@@ -176,64 +173,53 @@ class CommentsController extends BaseController
 
         $comment_id = $post_body['comment_id'] ?? 0;
 
-        try {
-            $post = (new NewsComments())->findOrFail($comment_id);
-            // TODO: Replace to check permission
-            if ($user->hasRole('admin') || $user->id === $post->user_id) {
-                try {
-                    if (! empty($post->attached_files)) {
-                        foreach ($post->attached_files as $attached_file) {
-                            try {
-                                $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
-                            }
+        $post = (new NewsComments())->findOrFail($comment_id);
+        // TODO: Replace to check permission
+        if ($user->hasRole('admin') || $user->id === $post->user_id) {
+            try {
+                if (! empty($post->attached_files)) {
+                    foreach ($post->attached_files as $attached_file) {
+                        try {
+                            $storage->delete($attached_file);
+                        } catch (Exception | FilesystemException) {
                         }
                     }
-                    $post->forceDelete();
-                    Helpers::returnJson(['message' => __('The comment was deleted successfully')]);
-                } catch (\Exception $e) {
-                    http_response_code(500);
-                    Helpers::returnJson(['message' => $e->getMessage()]);
                 }
-            } else {
-                http_response_code(403);
-                Helpers::returnJson(['message' => __('Access denied')]);
+                $post->forceDelete();
+                return ['message' => __('The comment was deleted successfully')];
+            } catch (Exception $e) {
+                return new JsonResponse(['message' => $e->getMessage()], 500);
             }
-        } catch (ModelNotFoundException $exception) {
-            http_response_code(404);
-            Helpers::returnJson(['message' => $exception->getMessage()]);
         }
+        return new JsonResponse(['message' => __('Access denied')], 403);
     }
 
-    public function loadFile(Request $request): string
+    public function loadFile(Request $request): array|JsonResponse
     {
         try {
             /** @var UploadedFile[] $files */
             $files = $request->getUploadedFiles();
             $file_info = new FileInfo($files['upload']->getClientFilename());
             if (! $file_info->isImage()) {
-                return json_encode(
+                return new JsonResponse(
                     [
                         'error' => [
                             'message' => __('Only images are allowed'),
                         ],
-                    ]
+                    ],
+                    500
                 );
             }
 
             $file = (new FileStorage())->saveFromRequest('upload', 'news_comments');
-            $file_array = [
+            return [
                 'id'       => $file->id,
                 'name'     => $file->name,
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];
-            header('Content-Type: application/json');
-            return json_encode($file_array);
         } catch (FilesystemException | Exception $e) {
-            http_response_code(500);
-            header('Content-Type: application/json');
-            return json_encode(['errors' => $e->getMessage()]);
+            return new JsonResponse(['errors' => $e->getMessage()], 500);
         }
     }
 }

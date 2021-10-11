@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @var string $csrf_token
  * @var \Johncms\News\Models\NewsArticle $article
  * @var \Johncms\News\Models\NewsSection $current_section
  */
@@ -77,6 +78,7 @@ $author = $article->author;
             :can_write="<?= ($user && empty($user->ban) ? 'true' : 'false') ?>"
             :i18n='<?= json_encode($messages) ?>'
             language="<?= $locale ?>"
+            csrf_token="<?= $csrf_token ?>"
         ></comments-component>
     </div>
 
