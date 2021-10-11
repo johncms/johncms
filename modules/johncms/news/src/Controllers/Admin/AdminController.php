@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\News\Controllers\Admin;
 
+use Illuminate\Database\Eloquent\Builder;
 use Johncms\Controller\BaseAdminController;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
@@ -67,8 +68,23 @@ class AdminController extends BaseAdminController
 
         $data = [];
         $data['messages'] = $session->getFlash('success_message');
-        $data['sections'] = (new NewsSection())->where('parent', $section_id)->orWhereNull('parent')->get();
-        $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orWhereNull('section_id')->orderByDesc('id')->paginate();
+        $data['sections'] = (new NewsSection())
+            ->when(! empty($section_id), function (Builder $builder) use ($section_id) {
+                return $builder->where('parent', $section_id);
+            })
+            ->when(empty($section_id), function (Builder $builder) {
+                return $builder->where('parent', 0)->orWhereNull('parent');
+            })
+            ->get();
+        $data['articles'] = (new NewsArticle())
+            ->when(! empty($section_id), function (Builder $builder) use ($section_id) {
+                return $builder->where('section_id', $section_id);
+            })
+            ->when(empty($section_id), function (Builder $builder) {
+                return $builder->where('section_id', 0)->orWhereNull('section_id');
+            })
+            ->orderByDesc('id')
+            ->paginate();
         $data['current_section'] = $section_id;
 
         $this->metaTagManager->setAll($title);
