@@ -43,42 +43,6 @@ class Counters
     }
 
     /**
-     * Счетчик Фотоальбомов пользователей
-     *
-     * @return string
-     * @deprecated use albumCounters
-     * TODO: содержимое albumCounters перенести в этот метод после проверки на использование
-     */
-    public function album()
-    {
-        $file = CACHE_PATH . 'count-albums.cache';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $album = $res['album'];
-            $photo = $res['photo'];
-            $new = $res['new'];
-            $new_adm = $res['new_adm'];
-        } else {
-            $album = $this->db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-            $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
-            $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
-            file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
-        }
-
-        $newcount = 0;
-        if ($this->user->rights >= 6 && $new_adm) {
-            $newcount = $new_adm;
-        } elseif ($new) {
-            $newcount = $new;
-        }
-
-        return $album . '&#160;/&#160;' . $photo .
-            ($newcount ? '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/album/?act=top">+' . $newcount . '</a></span>' : '');
-    }
-
-    /**
      * Счетчик загруз центра
      *
      * @return string
@@ -433,42 +397,6 @@ class Counters
     }
 
     /**
-     * Счетчик Фотоальбомов пользователей
-     *
-     * @return array
-     */
-    public function albumCounters(): array
-    {
-        $file = CACHE_PATH . 'counters-albums.cache';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $album = $res['album'];
-            $photo = $res['photo'];
-            $new = $res['new'];
-            $new_adm = $res['new_adm'];
-        } else {
-            $album = $this->db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-            $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
-            $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
-            file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
-        }
-
-        if ($this->user?->isAdmin() && $new_adm) {
-            $newcount = $new_adm;
-        } elseif ($new) {
-            $newcount = $new;
-        }
-
-        return [
-            'album' => $album,
-            'photo' => $photo,
-            'new'   => $newcount ?? 0,
-        ];
-    }
-
-    /**
      * Счетчик всех новостей
      *
      * @deprecated
@@ -518,8 +446,6 @@ class Counters
                             AND `cms_mail`.`delete`!='" . $this->user->id . "'
                             AND `cms_contact`.`ban`!='1'"
         )->fetchColumn();
-
-        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id . '\' AND `unread_comments` = 1')->fetchColumn();
 
         // Временный костыль для обратной совместимости
         $default = ['show_forum_unread' => false];

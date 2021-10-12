@@ -28,8 +28,8 @@ class HomepageController extends BaseController
         $this->render->addData(
             [
                 'title'       => $config['meta_title'] ?? '',
-                'keywords'    => $config['meta_key'],
-                'description' => $config['meta_desc'],
+                'keywords'    => $config['meta_key'] ?? '',
+                'description' => $config['meta_desc'] ?? '',
             ]
         );
 

@@ -13,7 +13,6 @@ $guestbook_counters = $counters->guestbookCounters();
 $downloads_counters = $counters->downloadsCounters();
 $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
-$album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
@@ -100,17 +99,6 @@ $ads_array = $ads->getAds();
                 <span class="flex-grow-1"><?= d__('system', 'Users') ?></span>
                 <?php if ($users_counters['new'] > 0): ?>
                     <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($users_counters['new']) ?></span>
-                <?php endif ?>
-            </a>
-        </li>
-        <li>
-            <a href="/album/">
-                <svg class="icon">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#picasa"/>
-                </svg>
-                <span class="flex-grow-1"><?= d__('system', 'Photo Albums') ?></span>
-                <?php if ($album_counters['new'] > 0): ?>
-                    <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($album_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
