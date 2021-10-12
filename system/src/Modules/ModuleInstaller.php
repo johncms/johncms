@@ -8,15 +8,16 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 namespace Johncms\Modules;
+
+use Illuminate\Support\Str;
 
 class ModuleInstaller
 {
-    /** @var string */
-    private $module_name;
-
-    /** @var Installer */
-    protected $installer;
+    private string $module_name;
+    protected Installer $installer;
 
     public function __construct(string $module_name)
     {
@@ -42,6 +43,9 @@ class ModuleInstaller
 
     protected function getInstallerClassName(): string
     {
-        return '\\' . ucfirst($this->module_name) . '\Install\Installer';
+        $namespace = Str::of($this->module_name)->explode('/')->map(function ($val) {
+            return ucfirst($val);
+        })->toArray();
+        return '\\' . implode('\\', $namespace) . '\Install\Installer';
     }
 }

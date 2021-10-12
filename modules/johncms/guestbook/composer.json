@@ -1,0 +1,22 @@
+{
+    "name": "johncms/guestbook",
+    "description": "Guestbook module",
+    "minimum-stability": "dev",
+    "homepage": "https://johncms.com",
+    "license": "MIT",
+    "type": "johncms-module",
+    "authors": [
+        {
+            "name": "JohnCMS Contributors",
+            "homepage": "https://github.com/johncms/johncms/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Johncms\\Guestbook\\": "src/"
+        }
+    }
+}

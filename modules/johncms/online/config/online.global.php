@@ -8,15 +8,9 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms\Language\Install;
-
-class Installer extends \Johncms\Modules\Installer
-{
-    public function install(): void
-    {
-    }
-
-    public function uninstall(): void
-    {
-    }
-}
+return [
+    'providers'  => [],
+    'middleware' => [
+        \Johncms\Online\Middleware\UserStatMiddleware::class,
+    ],
+];

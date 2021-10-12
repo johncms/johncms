@@ -62,7 +62,18 @@
         "johncms/auth": "dev-develop",
         "johncms/admin": "dev-develop",
         "johncms/news": "dev-develop",
-        "johncms/language": "dev-develop"
+        "johncms/language": "dev-develop",
+        "johncms/library": "dev-develop",
+        "johncms/community": "dev-develop",
+        "johncms/downloads": "dev-develop",
+        "johncms/forum": "dev-develop",
+        "johncms/guestbook": "dev-develop",
+        "johncms/help": "dev-develop",
+        "johncms/mail": "dev-develop",
+        "johncms/notifications": "dev-develop",
+        "johncms/online": "dev-develop",
+        "johncms/profile": "dev-develop",
+        "johncms/redirect": "dev-develop"
     },
     "require-dev": {
         "fakerphp/faker": "^1.15",
@@ -125,6 +136,50 @@
         {
             "type": "path",
             "url": "modules/johncms/language"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/community"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/downloads"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/forum"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/guestbook"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/help"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/library"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/mail"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/notifications"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/online"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/profile"
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/redirect"
         }
     ],
     "extra": {
