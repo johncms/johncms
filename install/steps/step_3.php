@@ -82,6 +82,7 @@ if ($request->getMethod() === 'POST') {
         ) {
             Database::createTables($version_info['error']);
 
+            di(PDO::class);
             // Installing modules
             $modules = new Modules();
             $installed_modules = $modules->getInstalled();

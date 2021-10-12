@@ -15,6 +15,7 @@ use Johncms\Http\Request;
 use Johncms\i18n\Translator;
 use Johncms\Install\Database;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
+use Johncms\Users\Role;
 use Johncms\Users\UserManager;
 use Johncms\Validator\Validator;
 use Johncms\View\Render;
@@ -45,7 +46,7 @@ $errors = [];
 if ($request->getMethod() === 'POST') {
     // Настройки валидатора
     $rules = [
-        'home_url'        => [
+        'home_url'       => [
             'NotEmpty',
         ],
         'email'          => [
@@ -94,6 +95,10 @@ if ($request->getMethod() === 'POST') {
                     ],
                 ]
             );
+
+            // Attach the admin role to the user
+            $adminRole = (new Role())->where('name', 'admin')->first();
+            $createdUser->roles()->attach($adminRole->id);
 
             // Authorize the user
             $sessionProvider = di(SessionAuthProvider::class);
