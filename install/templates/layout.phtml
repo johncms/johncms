@@ -12,7 +12,7 @@
  */
 ?>
 <!DOCTYPE html>
-<html lang="<?= $locale ?>">
+<html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,11 @@
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#586776">
-    <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <?php if ($locale === 'ar'): ?>
+        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
+    <?php else: ?>
+        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <?php endif; ?>
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
     <title><?= (isset($title) ? $this->e($title) : 'JohnCMS') ?></title>

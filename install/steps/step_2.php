@@ -11,11 +11,12 @@
 declare(strict_types=1);
 
 use Johncms\Http\Request;
+use Johncms\View\Render;
 
-/** @var \Johncms\Http\Request $request */
 $request = di(Request::class);
+$render = di(Render::class);
 
-$view->addData(
+$render->addData(
     [
         'title'      => __('Checking parameters'),
         'page_title' => __('Checking parameters'),
@@ -26,8 +27,8 @@ $check_extensions = [
     [
         'name'        => __('PHP version'),
         'value'       => PHP_VERSION,
-        'error'       => (PHP_VERSION_ID < 70300),
-        'description' => __('The PHP version must be at least %s', '7.3'),
+        'error'       => (PHP_VERSION_ID < 80000),
+        'description' => __('The PHP version must be at least %s', '8.0'),
     ],
     [
         'name'        => 'PDO',
@@ -100,4 +101,4 @@ $data = [
     'folder_right_errors' => $folder_right_errors,
 ];
 
-echo $view->render('install::step_2', ['data' => $data]);
+echo $render->render('install::step_2', ['data' => $data]);

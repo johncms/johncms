@@ -15,17 +15,17 @@ $errors = $data['errors'] ?? [];
 
 <form action="/install/?step=4" method="post" class="mb-3">
     <div class="form-group">
-        <label for="homeurl"><?= __('Site address') ?></label>
+        <label for="home_url"><?= __('Site address') ?></label>
         <input type="text"
-               class="form-control <?= (isset($errors['homeurl']) ? 'is-invalid' : '') ?>"
-               name="homeurl"
-               id="homeurl"
+               class="form-control <?= (isset($errors['home_url']) ? 'is-invalid' : '') ?>"
+               name="home_url"
+               id="home_url"
                required
-               value="<?= $fields['homeurl'] ?>"
+               value="<?= $fields['home_url'] ?>"
                placeholder="<?= __('Site address') ?>"
         >
-        <?php if (isset($errors['homeurl'])): ?>
-            <div class="invalid-feedback"><?= implode('<br>', $errors['homeurl']) ?></div>
+        <?php if (isset($errors['home_url'])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors['home_url']) ?></div>
         <?php endif ?>
     </div>
     <div class="form-group">

@@ -10,11 +10,15 @@
 
 declare(strict_types=1);
 
-$view->addData(
+use Johncms\View\Render;
+
+$render = di(Render::class);
+
+$render->addData(
     [
         'title'      => __('Complete the installation'),
         'page_title' => __('Complete the installation'),
     ]
 );
 
-echo $view->render('install::step_5');
+echo $render->render('install::step_5');

@@ -10,15 +10,16 @@
 
 declare(strict_types=1);
 
-use Admin\Languages\Languages;
+use Johncms\Admin\Languages\Languages;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\View\Render;
 
-module_lib_loader('admin');
-
-/** @var Request $request */
 $request = di(Request::class);
+$render = di(Render::class);
+$session = di(Session::class);
 
-$view->addData(
+$render->addData(
     [
         'title'      => __('Preparing for installation'),
         'page_title' => 'JohnCMS ' . CMS_VERSION,
@@ -31,7 +32,7 @@ $lng_list = Languages::getLngList();
 
 // If the user is changing language
 if (! empty($request_locale) && array_key_exists($request_locale, $lng_list)) {
-    $_SESSION['lng'] = $request_locale;
+    $session->set('lng', $request_locale);
     header('Location: /install/');
     exit;
 }
@@ -40,4 +41,4 @@ $data = [
     'lng_list' => $lng_list,
 ];
 
-echo $view->render('install::step_1', ['data' => $data]);
+echo $render->render('install::step_1', ['data' => $data]);

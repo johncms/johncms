@@ -11,16 +11,17 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Install\Database;
 use Johncms\Checker\DBChecker;
 use Johncms\Http\Request;
+use Johncms\Install\Database;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
+use Johncms\View\Render;
 
-/** @var Request $request */
 $request = di(Request::class);
+$render = di(Render::class);
 
-$view->addData(
+$render->addData(
     [
         'title'      => __('Database'),
         'page_title' => __('Database'),
@@ -131,4 +132,4 @@ $data = [
     'db_version_error'   => $db_version_error ?? false,
 ];
 
-echo $view->render('install::step_3', ['data' => $data]);
+echo $render->render('install::step_3', ['data' => $data]);

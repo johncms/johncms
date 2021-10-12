@@ -10,10 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Install;
+namespace Johncms\Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Johncms\Database\Migration;
 
 class Database
 {
@@ -162,66 +163,6 @@ class Database
             }
         );
 
-        // Пользователи
-        $schema->create(
-            'users',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('name', 100)->default('');
-                $table->string('name_lat', 100)->default('')->index('name_lat');
-                $table->string('password')->default('');
-                $table->tinyInteger('rights')->unsigned()->default(0);
-                $table->tinyInteger('failed_login')->unsigned()->default(0);
-                $table->string('imname')->default('');
-                $table->string('sex', 5)->default('');
-                $table->integer('komm')->unsigned()->default(0);
-                $table->integer('postforum')->unsigned()->default(0);
-                $table->integer('postguest')->unsigned()->default(0);
-                $table->integer('yearofbirth')->unsigned()->default(0);
-                $table->integer('datereg')->unsigned()->default(0);
-                $table->integer('lastdate')->unsigned()->default(0)->index('lastdate');
-                $table->string('mail')->default('');
-                $table->integer('icq')->unsigned()->default(0);
-                $table->string('skype')->default('');
-                $table->string('jabber')->default('');
-                $table->string('www')->default('');
-                $table->text('about')->nullable();
-                $table->string('live')->default('');
-                $table->string('mibile')->default('');
-                $table->string('status')->default('');
-                $table->bigInteger('ip')->default(0);
-                $table->bigInteger('ip_via_proxy')->default(0);
-                $table->text('browser');
-                $table->boolean('preg')->default(0);
-                $table->string('regadm')->default('');
-                $table->boolean('mailvis')->default(0);
-                $table->integer('dayb')->default(0);
-                $table->integer('monthb')->default(0);
-                $table->integer('sestime')->unsigned()->default(0);
-                $table->integer('total_on_site')->unsigned()->default(0);
-                $table->integer('lastpost')->unsigned()->default(0);
-                $table->string('rest_code')->default('');
-                $table->integer('rest_time')->unsigned()->default(0);
-                $table->integer('movings')->unsigned()->default(0);
-                $table->text('place')->nullable();
-                $table->text('set_user')->nullable();
-                $table->text('set_forum')->nullable();
-                $table->text('set_mail')->nullable();
-                $table->integer('karma_plus')->default(0);
-                $table->integer('karma_minus')->default(0);
-                $table->integer('karma_time')->unsigned()->default(0);
-                $table->boolean('karma_off')->default(0);
-                $table->integer('comm_count')->unsigned()->default(0);
-                $table->integer('comm_old')->unsigned()->default(0);
-                $table->text('smileys')->nullable();
-                $table->text('notification_settings')->nullable();
-                $table->boolean('email_confirmed')->nullable();
-                $table->string('confirmation_code')->nullable();
-                $table->string('new_email')->nullable();
-                $table->text('admin_notes')->nullable();
-            }
-        );
-
         // Email
         $schema->create(
             'email_messages',
@@ -235,6 +176,10 @@ class Database
                 $table->timestamps();
             }
         );
+
+        // Run migrations
+        $migrations = new Migration();
+        $migrations->run();
     }
 
     public static function installDemo(): void

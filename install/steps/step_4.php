@@ -10,20 +10,22 @@
 
 declare(strict_types=1);
 
-use Admin\Languages\Languages;
-use Install\Database;
+use Johncms\Admin\Languages\Languages;
 use Johncms\Http\Request;
-use Johncms\Users\User;
+use Johncms\i18n\Translator;
+use Johncms\Install\Database;
+use Johncms\Users\AuthProviders\SessionAuthProvider;
+use Johncms\Users\UserManager;
 use Johncms\Validator\Validator;
+use Johncms\View\Render;
 
-module_lib_loader('admin');
-
-/** @var Request $request */
 $request = di(Request::class);
+$render = di(Render::class);
+$translator = di(Translator::class);
 
 di(PDO::class);
 
-$view->addData(
+$render->addData(
     [
         'title'      => __('Setting'),
         'page_title' => __('Setting'),
@@ -31,7 +33,7 @@ $view->addData(
 );
 
 $fields = [
-    'homeurl'        => $request->getPost('homeurl', ($request->isHttps() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'], FILTER_SANITIZE_URL),
+    'home_url'       => $request->getPost('home_url', ($request->isHttps() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'], FILTER_SANITIZE_URL),
     'email'          => $request->getPost('email'),
     'admin_login'    => $request->getPost('admin_login', 'admin', FILTER_SANITIZE_STRING),
     'admin_password' => $request->getPost('admin_password', '', FILTER_SANITIZE_SPECIAL_CHARS),
@@ -43,7 +45,7 @@ $errors = [];
 if ($request->getMethod() === 'POST') {
     // Настройки валидатора
     $rules = [
-        'homeurl'        => [
+        'home_url'        => [
             'NotEmpty',
         ],
         'email'          => [
@@ -67,9 +69,9 @@ if ($request->getMethod() === 'POST') {
         $config = di('config')['johncms'];
 
         // Изменяем некоторые параметры
-        $config['homeurl'] = $fields['homeurl'];
+        $config['home_url'] = $fields['home_url'];
         $config['email'] = $fields['email'];
-        $config['lng'] = $translator->getLocale();
+        $config['language'] = $translator->getLocale();
         $config['lng_list'] = Languages::getLngList();
 
         $system_settings = [
@@ -79,33 +81,23 @@ if ($request->getMethod() === 'POST') {
 
         if (file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
             // Регистрируем пользователя
-            $user = (new User())->create(
+            $userManager = di(UserManager::class);
+            $createdUser = $userManager->create(
                 [
-                    'name'            => $fields['admin_login'],
-                    'name_lat'        => mb_strtolower($fields['admin_login']),
-                    'password'        => md5(md5($fields['admin_password'])),
-                    'mail'            => $fields['email'],
-                    'www'             => $fields['homeurl'],
-                    'datereg'         => time(),
-                    'lastdate'        => time(),
-                    'rights'          => 9,
-                    'ip'              => ip2long($_SERVER['REMOTE_ADDR']),
-                    'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
-                    'preg'            => 1,
-                    'email_confirmed' => 1,
-                    'sex'             => 'm',
-                    'about'           => '',
-                    'set_user'        => [],
-                    'set_forum'       => [],
-                    'set_mail'        => [],
-                    'smileys'         => [],
+                    'login'           => $fields['admin_login'],
+                    'password'        => $fields['admin_password'],
+                    'email'           => $fields['email'],
+                    'confirmed'       => true,
+                    'email_confirmed' => true,
+                    'settings'        => [
+                        'lang' => $translator->getLocale(),
+                    ],
                 ]
             );
-            // Устанавливаем сессию и COOKIE c данными администратора
-            $_SESSION['uid'] = $user->id;
-            $_SESSION['ups'] = md5($fields['admin_password']);
-            setcookie('cuid', (string) $user->id, time() + 3600 * 24 * 365, '/');
-            setcookie('cups', md5($fields['admin_password']), time() + 3600 * 24 * 365, '/');
+
+            // Authorize the user
+            $sessionProvider = di(SessionAuthProvider::class);
+            $sessionProvider->store($createdUser);
 
             if (! empty($fields['install_demo'])) {
                 Database::installDemo();
@@ -127,4 +119,4 @@ $data = [
     'next_step_disabled' => false,
 ];
 
-echo $view->render('install::step_4', ['data' => $data]);
+echo $render->render('install::step_4', ['data' => $data]);

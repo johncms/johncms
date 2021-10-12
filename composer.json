@@ -36,7 +36,6 @@
         "ext-pdo": "*",
         "ext-simplexml": "*",
         "ext-zip": "*",
-        "aura/autoload": "^2.0",
         "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",
         "guzzlehttp/psr7": "^1.8",
@@ -81,7 +80,8 @@
         ],
         "psr-4": {
             "Johncms\\": "system/src/",
-            "Johncms\\System\\Legacy\\": "system/src-legacy/"
+            "Johncms\\System\\Legacy\\": "system/src-legacy/",
+            "Johncms\\Install\\": "install/src/"
         }
     },
     "autoload-dev": {
