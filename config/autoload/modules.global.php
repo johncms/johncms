@@ -11,7 +11,6 @@
 return [
     'modules' => [
         'installed_modules' => [
-            'album',
             'community',
             'downloads',
             'forum',
@@ -26,7 +25,6 @@ return [
             'online',
             'profile',
             'redirect',
-            'rss',
         ],
         'system_modules'    => [
             'admin',
