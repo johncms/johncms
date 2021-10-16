@@ -23,7 +23,7 @@ return [
             'johncms/news',
             'johncms/notifications',
             'johncms/online',
-            'johncms/profile',
+            'johncms/personal',
             'johncms/redirect',
         ],
         'system_modules'    => [

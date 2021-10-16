@@ -72,7 +72,7 @@
         "johncms/mail": "dev-develop",
         "johncms/notifications": "dev-develop",
         "johncms/online": "dev-develop",
-        "johncms/profile": "dev-develop",
+        "johncms/personal": "dev-develop",
         "johncms/redirect": "dev-develop"
     },
     "require-dev": {
@@ -175,7 +175,7 @@
         },
         {
             "type": "path",
-            "url": "modules/johncms/profile"
+            "url": "modules/johncms/personal"
         },
         {
             "type": "path",

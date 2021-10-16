@@ -1,5 +1,5 @@
 {
-    "name": "johncms/profile",
+    "name": "johncms/personal",
     "description": "Profile module",
     "minimum-stability": "dev",
     "homepage": "https://johncms.com",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Johncms\\Profile\\": "src/"
+            "Johncms\\Personal\\": "src/"
         }
     }
 }

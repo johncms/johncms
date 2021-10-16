@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Profile\Install;
+namespace Johncms\Personal\Install;
 
 class Installer extends \Johncms\Modules\Installer
 {

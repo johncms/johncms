@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7a55439818df8a4bc22db13ada30335",
+    "content-hash": "c35e62a711e4fb8a78cdd40dc8e500b2",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1757,12 +1757,12 @@
             }
         },
         {
-            "name": "johncms/profile",
+            "name": "johncms/personal",
             "version": "dev-develop",
             "dist": {
                 "type": "path",
-                "url": "modules/johncms/profile",
-                "reference": "5467f76d40846bebf82ab603c70cc1c5b9350087"
+                "url": "modules/johncms/personal",
+                "reference": "f3d3c0510372a6f92a46bfc72895ef2a943ad65e"
             },
             "require": {
                 "php": "^8.0"
@@ -1770,7 +1770,7 @@
             "type": "johncms-module",
             "autoload": {
                 "psr-4": {
-                    "Johncms\\Profile\\": "src/"
+                    "Johncms\\Personal\\": "src/"
                 }
             },
             "license": [
@@ -7882,6 +7882,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
@@ -8272,7 +8273,7 @@
         "johncms/mail": 20,
         "johncms/notifications": 20,
         "johncms/online": 20,
-        "johncms/profile": 20,
+        "johncms/personal": 20,
         "johncms/redirect": 20,
         "roave/security-advisories": 20
     },
