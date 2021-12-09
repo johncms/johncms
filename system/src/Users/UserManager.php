@@ -66,6 +66,10 @@ class UserManager
             $fields['password'] = password_hash($fields['password'], PASSWORD_DEFAULT);
         }
 
+        if (empty($fields['birthday'])) {
+            $fields['birthday'] = null;
+        }
+
         /** @var User $user */
         $user = (new User())->find($user_id);
         if ($user === null) {
