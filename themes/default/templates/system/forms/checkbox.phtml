@@ -11,10 +11,10 @@
         <input type="checkbox"
                name="<?= $field->name ?>"
                value="<?= $this->e($field->value ?? '') ?>"
-               class="custom-control-input"
+               class="form-check-input"
                id="<?= $field->id ?>"
             <?= $field->checked ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="<?= $field->id ?>"><?= $field->label ?></label>
+        <label class="form-check-label" for="<?= $field->id ?>"><?= $field->label ?></label>
         <?php if (isset($errors[$field->name])): ?>
             <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
         <?php endif ?>

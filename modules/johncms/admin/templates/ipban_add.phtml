@@ -41,16 +41,16 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 
     <h3><?= __('Ban type') ?></h3>
     <div class="custom-control custom-radio">
-        <input type="radio" id="term1" name="term" value="1" class="custom-control-input" checked="checked">
-        <label class="custom-control-label" for="term1"><?= __('Block') ?></label>
+        <input type="radio" id="term1" name="term" value="1" class="form-check-input" checked="checked">
+        <label class="form-check-label" for="term1"><?= __('Block') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="term3" name="term" value="3" class="custom-control-input">
-        <label class="custom-control-label" for="term3"><?= __('Registration') ?></label>
+        <input type="radio" id="term3" name="term" value="3" class="form-check-input">
+        <label class="form-check-label" for="term3"><?= __('Registration') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="term2" name="term" value="2" class="custom-control-input">
-        <label class="custom-control-label" for="term2"><?= __('Redirect') ?></label>
+        <input type="radio" id="term2" name="term" value="2" class="form-check-input">
+        <label class="form-check-label" for="term2"><?= __('Redirect') ?></label>
     </div>
 
     <div class="form-group mt-2">
@@ -66,9 +66,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 
     <div class="alert alert-info">
         <b><?= __('Example:') ?></b><br>
-        <div><span class="font-weight-bold">10.5.7.1</span> &mdash; <?= __('Ban one address') ?></div>
-        <div><span class="font-weight-bold">10.5.7.1-10.5.7.100</span> &mdash; <?= __('Ban range of address') ?></div>
-        <div><span class="font-weight-bold">10.5.*.*</span> &mdash; <?= __('Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') ?></div>
+        <div><span class="fw-bold">10.5.7.1</span> &mdash; <?= __('Ban one address') ?></div>
+        <div><span class="fw-bold">10.5.7.1-10.5.7.100</span> &mdash; <?= __('Ban range of address') ?></div>
+        <div><span class="fw-bold">10.5.*.*</span> &mdash; <?= __('Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') ?></div>
     </div>
 
     <div class="mt-3">

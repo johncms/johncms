@@ -15,7 +15,7 @@
 
 <div class="user-row">
     <div class="d-flex align-items-start">
-        <div class="user-avatar mr-2 mr-md-4">
+        <div class="user-avatar me-2 me-md-4">
             <div class="avatar-image rounded-circle overflow-hidden">
                 <img src="<?= $this->avatar($item->id) ?>" class="img-fluid" alt=".">
             </div>
@@ -24,9 +24,9 @@
         <div class="overflow-auto flex-grow-1">
             <div class="user-name">
                 <?php if ($user->id !== $item->id): ?>
-                    <a href="<?= $item->profile_url ?>" class="user-login mr-2"><?= $item->name ?></a>
+                    <a href="<?= $item->profile_url ?>" class="user-login me-2"><?= $item->name ?></a>
                 <?php else: ?>
-                    <a class="user-login mr-2"><?= $item->name ?></a>
+                    <a class="user-login me-2"><?= $item->name ?></a>
                 <?php endif; ?>
                 <span class="text-muted"><?= $item->display_date ?></span>
             </div>
@@ -41,7 +41,7 @@
         <div class="post-footer d-flex justify-content-between border-top pt-2 mt-2">
             <div class="post-user-info d-flex overflow-hidden small align-items-center">
                 <?php if ($user->rights): ?>
-                    <div class="user-ip mr-2">
+                    <div class="user-ip me-2">
                         <a href="<?= $item->search_ip_url ?>"><?= $item->ip ?></a>
                         <?php if (! empty($item->ip_via_proxy)): ?>
                             / <a href="<?= $item->search_ip_via_proxy_url ?>"><?= $item->ip_via_proxy ?></a>

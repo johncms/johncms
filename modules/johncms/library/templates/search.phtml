@@ -30,8 +30,8 @@ $this->layout(
     </div>
     <div class="form-group">
         <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= $search_t ?>>
-            <label class="custom-control-label" for="search_t"><?= __('Search in titles Articles') ?></label>
+            <input type="checkbox" class="form-check-input" name="t" value="1" id="search_t" <?= $search_t ?>>
+            <label class="form-check-label" for="search_t"><?= __('Search in titles Articles') ?></label>
         </div>
     </div>
     <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
@@ -42,7 +42,7 @@ $this->layout(
             <a href="?id=<?= $search['id'] ?>" class="card-title h3"><?= $search['name'] ?></a>
             <div class="post-body"><?= $search['text'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
-                <div class="mr-2">
+                <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $search['author'] ?> (<?= $search['time'] ?>)
                 </div>
                 <div>

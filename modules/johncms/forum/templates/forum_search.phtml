@@ -35,8 +35,8 @@ $this->layout(
     </div>
     <div class="form-group">
         <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= ($search_t ? 'checked="checked"' : '') ?>>
-            <label class="custom-control-label" for="search_t"><?= __('Search in the topic names') ?></label>
+            <input type="checkbox" class="form-check-input" name="t" value="1" id="search_t" <?= ($search_t ? 'checked="checked"' : '') ?>>
+            <label class="form-check-label" for="search_t"><?= __('Search in the topic names') ?></label>
         </div>
     </div>
     <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
@@ -56,8 +56,8 @@ $this->layout(
             </div>
         </div>
         <div class="small pt-2 text-muted">
-            <?= __('Author') ?>: <a href="/profile/?user=<?= $result['user_id'] ?>" class="mr-2"><?= $result['user_name'] ?></a>
-            <span class="mr-2"><?= $result['formatted_date'] ?></span>
+            <?= __('Author') ?>: <a href="/profile/?user=<?= $result['user_id'] ?>" class="me-2"><?= $result['user_name'] ?></a>
+            <span class="me-2"><?= $result['formatted_date'] ?></span>
             <?php if (! empty($result['post_url'])): ?>
                 <a href="<?= $result['post_url'] ?>"><?= __('Go to Message') ?></a>
             <?php endif; ?>

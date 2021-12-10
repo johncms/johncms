@@ -44,12 +44,12 @@ $this->layout(
     <h3><?= __('Who can write you?') ?></h3>
 
     <div class="custom-control custom-radio">
-        <input type="radio" id="access1" name="access" value="0" class="custom-control-input" <?= (! $data['set_mail_user']['access'] ? 'checked="checked"' : '') ?>>
-        <label class="custom-control-label" for="access1"><?= __('All can write') ?></label>
+        <input type="radio" id="access1" name="access" value="0" class="form-check-input" <?= (! $data['set_mail_user']['access'] ? 'checked="checked"' : '') ?>>
+        <label class="form-check-label" for="access1"><?= __('All can write') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="access2" name="access" value="1" class="custom-control-input" <?= ($data['set_mail_user']['access'] === 1 ? 'checked="checked"' : '') ?>>
-        <label class="custom-control-label" for="access2"><?= __('Only my contacts') ?></label>
+        <input type="radio" id="access2" name="access" value="1" class="form-check-input" <?= ($data['set_mail_user']['access'] === 1 ? 'checked="checked"' : '') ?>>
+        <label class="form-check-label" for="access2"><?= __('Only my contacts') ?></label>
     </div>
 
     <div class="mt-3">

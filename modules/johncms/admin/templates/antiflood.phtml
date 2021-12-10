@@ -37,21 +37,21 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     <h3><?= __('Operation mode') ?></h3>
 
     <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" name="mode" value="3" id="mode3" <?= $data['set_af']['mode'] === 3 ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="mode3"><?= __('Day') ?></label>
+        <input type="radio" class="form-check-input" name="mode" value="3" id="mode3" <?= $data['set_af']['mode'] === 3 ? 'checked' : '' ?>>
+        <label class="form-check-label" for="mode3"><?= __('Day') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" name="mode" value="4" id="mode4" <?= $data['set_af']['mode'] === 4 ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="mode4"><?= __('Night') ?></label>
+        <input type="radio" class="form-check-input" name="mode" value="4" id="mode4" <?= $data['set_af']['mode'] === 4 ? 'checked' : '' ?>>
+        <label class="form-check-label" for="mode4"><?= __('Night') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" name="mode" value="2" id="mode2" <?= $data['set_af']['mode'] === 2 ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="mode2"><?= __('Day / Night') ?></label>
+        <input type="radio" class="form-check-input" name="mode" value="2" id="mode2" <?= $data['set_af']['mode'] === 2 ? 'checked' : '' ?>>
+        <label class="form-check-label" for="mode2"><?= __('Day / Night') ?></label>
         <div class="text-muted small"><?= __('Automatic change from day to night mode, according to specified time set') ?></div>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" name="mode" value="1" id="mode1" <?= $data['set_af']['mode'] === 1 ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="mode1"><?= __('Adaptive') ?></label>
+        <input type="radio" class="form-check-input" name="mode" value="1" id="mode1" <?= $data['set_af']['mode'] === 1 ? 'checked' : '' ?>>
+        <label class="form-check-label" for="mode1"><?= __('Adaptive') ?></label>
         <div class="text-muted small"><?= __('If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;') ?></div>
     </div>
 

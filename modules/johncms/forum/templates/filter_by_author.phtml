@@ -43,11 +43,11 @@ $this->layout(
                     <?php foreach ($list as $item): ?>
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="users[]" value="<?= $item['user_id'] ?>"
+                                <input class="form-check-input" type="checkbox" name="users[]" value="<?= $item['user_id'] ?>"
                                        id="user_<?= $item['user_id'] ?>">
-                                <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
+                                <label class="form-check-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
                             </div>
-                            <div class="badge badge-pill badge-secondary"><?= $item['count'] ?></div>
+                            <div class="badge rounded-pill badge-secondary"><?= $item['count'] ?></div>
                         </div>
                     <?php endforeach; ?>
                 </div>

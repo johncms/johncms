@@ -30,12 +30,6 @@ $cyan: #68B3C8;
 $brown: #66615B;
 $dark_brown: #7d4e3c;
 
-$theme-colors: (
-        "orange": $orange,
-        "dark-brown": $dark_brown,
-        "yellow-light": $yellow-light,
-);
-
 // Color system
 
 $white: #fff !default;
@@ -59,6 +53,19 @@ $danger: $orange !default;
 $light: $gray-100 !default;
 $dark: $gray-800 !default;
 
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger,
+        "light": $light,
+        "dark": $dark,
+        "orange": $orange,
+        "dark-brown": $dark_brown,
+        "yellow-light": $yellow-light,
+);
 
 // Размеры шрифтов
 $line-height-base: 1.5 !default;

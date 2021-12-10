@@ -39,9 +39,9 @@ $this->layout(
         <?php foreach ($curators_list as $item): ?>
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" type="checkbox" name="users[<?= $item['user_id'] ?>]" value="<?= $item['user_name'] ?>"
+                    <input class="form-check-input" type="checkbox" name="users[<?= $item['user_id'] ?>]" value="<?= $item['user_name'] ?>"
                            id="user_<?= $item['user_id'] ?>" <?= $item['checked'] ? ' checked="checked"' : '' ?>>
-                    <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
+                    <label class="form-check-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
                 </div>
             </div>
         <?php endforeach; ?>

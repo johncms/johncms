@@ -17,8 +17,8 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             <legend><?= __('Default language') ?></legend>
             <?php foreach ($config['lng_list'] as $key => $val): ?>
                 <div class="custom-control custom-radio mb-2">
-                    <input type="radio" id="<?= $key ?>" name="lng" class="custom-control-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="<?= $key ?>">
+                    <input type="radio" id="<?= $key ?>" name="lng" class="form-check-input" value="<?= $key ?>" <?= ($key == $config['lng'] ? ' checked="checked"' : '') ?>>
+                    <label class="form-check-label" for="<?= $key ?>">
                         <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($key) . '.svg') ?>" alt=".">
                         <?= $val['name'] ?>
                     </label>

@@ -36,20 +36,20 @@ $cls = ['', '', '', ''];
         <h3><?= __('Forum') ?></h3>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="forum" value="2" id="forum2" <?= $conf['mod_forum'] === 2 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="forum2"><?= __('Access is allowed') ?></label>
+                <input type="radio" class="form-check-input" name="forum" value="2" id="forum2" <?= $conf['mod_forum'] === 2 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="forum2"><?= __('Access is allowed') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="forum" value="1" id="forum1" <?= $conf['mod_forum'] === 1 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="forum1"><?= __('Only for authorized') ?></label>
+                <input type="radio" class="form-check-input" name="forum" value="1" id="forum1" <?= $conf['mod_forum'] === 1 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="forum1"><?= __('Only for authorized') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="forum" value="3" id="forum3" <?= $conf['mod_forum'] === 3 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="forum3"><?= __('Read only') ?></label>
+                <input type="radio" class="form-check-input" name="forum" value="3" id="forum3" <?= $conf['mod_forum'] === 3 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="forum3"><?= __('Read only') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="forum" value="0" id="forum0" <?= ! $conf['mod_forum'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="forum0"><?= __('Access denied') ?></label>
+                <input type="radio" class="form-check-input" name="forum" value="0" id="forum0" <?= ! $conf['mod_forum'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="forum0"><?= __('Access denied') ?></label>
             </div>
         </div>
     </div>
@@ -58,16 +58,16 @@ $cls = ['', '', '', ''];
         <h3><?= __('Guestbook') ?></h3>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="guest" value="2" id="guest2" <?= $conf['mod_guest'] === 2 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="guest2"><?= __('Access is allowed') ?></label>
+                <input type="radio" class="form-check-input" name="guest" value="2" id="guest2" <?= $conf['mod_guest'] === 2 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="guest2"><?= __('Access is allowed') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="guest" value="1" id="guest1" <?= $conf['mod_guest'] === 1 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="guest1"><?= __('Only for authorized') ?></label>
+                <input type="radio" class="form-check-input" name="guest" value="1" id="guest1" <?= $conf['mod_guest'] === 1 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="guest1"><?= __('Only for authorized') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="guest" value="0" id="guest" <?= ! $conf['mod_guest'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="guest"><?= __('Access denied') ?></label>
+                <input type="radio" class="form-check-input" name="guest" value="0" id="guest" <?= ! $conf['mod_guest'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="guest"><?= __('Access denied') ?></label>
             </div>
         </div>
     </div>
@@ -76,21 +76,21 @@ $cls = ['', '', '', ''];
         <h3><?= __('Library') ?></h3>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="lib" value="2" id="lib2" <?= $conf['mod_lib'] === 2 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="lib2"><?= __('Access is allowed') ?></label>
+                <input type="radio" class="form-check-input" name="lib" value="2" id="lib2" <?= $conf['mod_lib'] === 2 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="lib2"><?= __('Access is allowed') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="lib" value="1" id="lib1" <?= $conf['mod_lib'] === 1 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="lib1"><?= __('Only for authorized') ?></label>
+                <input type="radio" class="form-check-input" name="lib" value="1" id="lib1" <?= $conf['mod_lib'] === 1 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="lib1"><?= __('Only for authorized') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="lib" value="0" id="lib" <?= ! $conf['mod_lib'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="lib"><?= __('Access denied') ?></label>
+                <input type="radio" class="form-check-input" name="lib" value="0" id="lib" <?= ! $conf['mod_lib'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="lib"><?= __('Access denied') ?></label>
             </div>
 
             <div class="custom-control custom-checkbox mt-2">
-                <input type="checkbox" class="custom-control-input" name="libcomm" value="1" id="libcomm" <?= $conf['mod_lib_comm'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="libcomm"><?= __('Comments') ?></label>
+                <input type="checkbox" class="form-check-input" name="libcomm" value="1" id="libcomm" <?= $conf['mod_lib_comm'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="libcomm"><?= __('Comments') ?></label>
             </div>
         </div>
     </div>
@@ -99,21 +99,21 @@ $cls = ['', '', '', ''];
         <h3><?= __('Downloads') ?></h3>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="down" value="2" id="down2" <?= $conf['mod_down'] === 2 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="down2"><?= __('Access is allowed') ?></label>
+                <input type="radio" class="form-check-input" name="down" value="2" id="down2" <?= $conf['mod_down'] === 2 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="down2"><?= __('Access is allowed') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="down" value="1" id="down1" <?= $conf['mod_down'] === 1 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="down1"><?= __('Only for authorized') ?></label>
+                <input type="radio" class="form-check-input" name="down" value="1" id="down1" <?= $conf['mod_down'] === 1 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="down1"><?= __('Only for authorized') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="down" value="0" id="down" <?= ! $conf['mod_down'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="down"><?= __('Access denied') ?></label>
+                <input type="radio" class="form-check-input" name="down" value="0" id="down" <?= ! $conf['mod_down'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="down"><?= __('Access denied') ?></label>
             </div>
 
             <div class="custom-control custom-checkbox mt-2">
-                <input type="checkbox" class="custom-control-input" name="downcomm" value="1" id="downcomm" <?= $conf['mod_down_comm'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="downcomm"><?= __('Comments') ?></label>
+                <input type="checkbox" class="form-check-input" name="downcomm" value="1" id="downcomm" <?= $conf['mod_down_comm'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="downcomm"><?= __('Comments') ?></label>
             </div>
         </div>
     </div>
@@ -122,12 +122,12 @@ $cls = ['', '', '', ''];
         <h3><?= __('Community') ?></h3>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="active" value="1" id="active1" <?= $conf['active'] === 1 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="active1"><?= __('Access is allowed') ?></label>
+                <input type="radio" class="form-check-input" name="active" value="1" id="active1" <?= $conf['active'] === 1 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="active1"><?= __('Access is allowed') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="active" value="0" id="active" <?= ! $conf['active'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="active"><?= __('Only for authorized') ?></label>
+                <input type="radio" class="form-check-input" name="active" value="0" id="active" <?= ! $conf['active'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="active"><?= __('Only for authorized') ?></label>
             </div>
         </div>
     </div>
@@ -136,16 +136,16 @@ $cls = ['', '', '', ''];
         <h3><?= __('Registration') ?></h3>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="reg" value="2" id="reg2" <?= $conf['mod_reg'] === 2 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="reg2"><?= __('Access is allowed') ?></label>
+                <input type="radio" class="form-check-input" name="reg" value="2" id="reg2" <?= $conf['mod_reg'] === 2 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="reg2"><?= __('Access is allowed') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="reg" value="1" id="reg1" <?= $conf['mod_reg'] === 1 ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="reg1"><?= __('With moderation') ?></label>
+                <input type="radio" class="form-check-input" name="reg" value="1" id="reg1" <?= $conf['mod_reg'] === 1 ? 'checked' : '' ?>>
+                <label class="form-check-label" for="reg1"><?= __('With moderation') ?></label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" name="reg" value="0" id="reg" <?= ! $conf['mod_reg'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="reg"><?= __('Access denied') ?></label>
+                <input type="radio" class="form-check-input" name="reg" value="0" id="reg" <?= ! $conf['mod_reg'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="reg"><?= __('Access denied') ?></label>
             </div>
         </div>
     </div>

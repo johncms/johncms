@@ -46,8 +46,8 @@ $this->layout(
     </div>
     <?php if ($user->rights === 9): ?>
         <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="user_down" value="1" id="user_down" <?= $folder_params['user_down'] ? 'checked' : '' ?>>
-            <label class="custom-control-label" for="user_down"><?= __('Allow users to upload files') ?></label>
+            <input type="checkbox" class="form-check-input" name="user_down" value="1" id="user_down" <?= $folder_params['user_down'] ? 'checked' : '' ?>>
+            <label class="form-check-label" for="user_down"><?= __('Allow users to upload files') ?></label>
         </div>
         <div class="form-group">
             <label for="format"><?= __('Allowed extensions') ?></label>

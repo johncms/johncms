@@ -40,14 +40,14 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                     <?php endif; ?>
                     <?php if (! empty($data['activity']['comm_count'])): ?>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="comments" value="1" id="comments" checked>
-                            <label class="custom-control-label" for="comments"><?= __('Comments') ?> (<?= $data['activity']['comm_count'] ?>)</label>
+                            <input type="checkbox" class="form-check-input" name="comments" value="1" id="comments" checked>
+                            <label class="form-check-label" for="comments"><?= __('Comments') ?> (<?= $data['activity']['comm_count'] ?>)</label>
                         </div>
                     <?php endif ?>
                     <?php if (! empty($data['activity']['comm_count'])): ?>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="forum" value="1" id="forum" checked>
-                            <label class="custom-control-label" for="forum">
+                            <input type="checkbox" class="form-check-input" name="forum" value="1" id="forum" checked>
+                            <label class="form-check-label" for="forum">
                                 <?= __('Forum') ?> (<?= $data['activity']['forumt_count'] ?>&nbsp;/&nbsp;<?= $data['activity']['forump_count'] ?>)
                             </label>
                         </div>

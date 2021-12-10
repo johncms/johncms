@@ -15,8 +15,8 @@
         <?php foreach ($data['lng_list'] as $key => $val): ?>
             <div class="col">
                 <div class="custom-control custom-radio mb-2">
-                    <input type="radio" id="lang_<?= $key ?>" name="lang" class="custom-control-input" value="<?= $key ?>" <?= ($key == $locale ? ' checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="lang_<?= $key ?>">
+                    <input type="radio" id="lang_<?= $key ?>" name="lang" class="form-check-input" value="<?= $key ?>" <?= ($key == $locale ? ' checked="checked"' : '') ?>>
+                    <label class="form-check-label" for="lang_<?= $key ?>">
                         <img src="<?= $this->asset('images/flags/' . strtolower($key) . '.svg') ?>" class="icon icon-flag" alt=".">
                         <?= $val['name'] ?>
                     </label>

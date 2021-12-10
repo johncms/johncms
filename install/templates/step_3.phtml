@@ -7,7 +7,7 @@ $errors = $data['errors'] ?? [];
 
 ?>
 
-<h4 class="mb-2 mt-3 font-weight-bold"><?= __('Database connection settings') ?></h4>
+<h4 class="mb-2 mt-3 fw-bold"><?= __('Database connection settings') ?></h4>
 
 <?php if (! empty($errors['unknown'])): ?>
     <div class="alert alert-danger"><?= implode('<br>', $errors['unknown']) ?></div>

@@ -16,6 +16,7 @@ $sidebar_width: 15rem;
         color: #55514c;
         opacity: 0.8;
         transition: opacity 0.2s;
+        text-decoration: none;
 
         &:hover {
             opacity: 1;
@@ -93,6 +94,10 @@ $sidebar_width: 15rem;
         height: 17px;
         width: 17px;
         margin: -3px 0 0 0;
+    }
+
+    .btn-link {
+        text-decoration: none;
     }
 }
 

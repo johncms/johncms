@@ -31,13 +31,13 @@ $this->layout(
         </div>
         <div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="hide_topic" name="del" checked="checked" value="1" class="custom-control-input">
-                <label class="custom-control-label" for="hide_topic"><?= __('Hide') ?></label>
+                <input type="radio" id="hide_topic" name="del" checked="checked" value="1" class="form-check-input">
+                <label class="form-check-label" for="hide_topic"><?= __('Hide') ?></label>
             </div>
             <?php if ($user->rights == 9): ?>
                 <div class="custom-control custom-radio">
-                    <input type="radio" id="del_topic" name="del" value="2" class="custom-control-input">
-                    <label class="custom-control-label" for="del_topic"><?= __('Delete') ?></label>
+                    <input type="radio" id="del_topic" name="del" value="2" class="form-check-input">
+                    <label class="form-check-label" for="del_topic"><?= __('Delete') ?></label>
                 </div>
             <?php endif; ?>
         </div>

@@ -36,17 +36,17 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <input type="text" id="flsz" name="flsz" class="form-control  col-sm-2" value="<?= (int) ($sysconf['flsz']) ?>"/>
             </div>
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="gz" value="1" id="gz" <?= ($sysconf['gzip'] ? 'checked="checked"' : '') ?>>
-                <label class="custom-control-label" for="gz"><?= __('Gzip compression') ?></label>
+                <input type="checkbox" class="form-check-input" name="gz" value="1" id="gz" <?= ($sysconf['gzip'] ? 'checked="checked"' : '') ?>>
+                <label class="form-check-label" for="gz"><?= __('Gzip compression') ?></label>
             </div>
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="user_email_required" value="1"
+                <input type="checkbox" class="form-check-input" name="user_email_required" value="1"
                        id="user_email_required" <?= ($sysconf['user_email_required'] ? 'checked="checked"' : '') ?>>
-                <label class="custom-control-label" for="user_email_required"><?= __('E-mail is required for registration') ?></label>
+                <label class="form-check-label" for="user_email_required"><?= __('E-mail is required for registration') ?></label>
             </div>
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="user_email_confirmation" value="1" id="user_email_confirmation" <?= ($sysconf['user_email_confirmation'] ? 'checked="checked"' : '') ?>>
-                <label class="custom-control-label" for="user_email_confirmation"><?= __('Request a confirmation email to activate the user\'s account.') ?></label>
+                <input type="checkbox" class="form-check-input" name="user_email_confirmation" value="1" id="user_email_confirmation" <?= ($sysconf['user_email_confirmation'] ? 'checked="checked"' : '') ?>>
+                <label class="form-check-label" for="user_email_confirmation"><?= __('Request a confirmation email to activate the user\'s account.') ?></label>
             </div>
         </fieldset>
         <fieldset class="mt-3">

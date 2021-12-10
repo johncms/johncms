@@ -26,7 +26,7 @@ $this->layout(
 
 <div class="alert alert-danger">
     <?php if ($posts == 1): ?>
-        <div class="font-weight-bold">
+        <div class="fw-bold">
             <?= __('WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too') ?>
         </div>
     <?php endif; ?>
@@ -34,9 +34,9 @@ $this->layout(
         <?= __('Do you really want to delete?') ?>
     </div>
     <div>
-        <a href="/forum/?act=editpost&amp;do=delete&amp;id=<?= $id ?>" class="mr-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
+        <a href="/forum/?act=editpost&amp;do=delete&amp;id=<?= $id ?>" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
         <?php if ($user->rights == 9): ?>
-            <a href="/forum/?act=editpost&amp;do=delete&amp;hide&amp;id=<?= $id ?>" class="mr-2 btn btn-primary btn-sm"><?= __('Hide') ?></a>
+            <a href="/forum/?act=editpost&amp;do=delete&amp;hide&amp;id=<?= $id ?>" class="me-2 btn btn-primary btn-sm"><?= __('Hide') ?></a>
         <?php endif; ?>
         <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
     </div>

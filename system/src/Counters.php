@@ -131,7 +131,7 @@ class Counters
             )->fetchColumn();
 
             if ($mod) {
-                return $total ? '<a href="?act=new" class="pr-2">' . d__('system', 'Unread') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '';
+                return $total ? '<a href="?act=new" class="pe-2">' . d__('system', 'Unread') . '</a><span class="badge rounded-pill bg-danger me-3">' . $total . '</span>' : '';
             }
 
             return $total;

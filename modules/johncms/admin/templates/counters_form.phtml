@@ -55,25 +55,25 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 
     <h3><?= __('Display mode') ?></h3>
     <div class="custom-control custom-radio">
-        <input type="radio" id="mode1" name="mode" value="1" class="custom-control-input"
+        <input type="radio" id="mode1" name="mode" value="1" class="form-check-input"
             <?= ($data['mode'] === 0 || $data['mode'] === 1 ? 'checked="checked" ' : '') ?>>
-        <label class="custom-control-label" for="mode1"><?= __('Default') ?></label>
+        <label class="form-check-label" for="mode1"><?= __('Default') ?></label>
     </div>
     <div class="small text-muted">
         <?= __('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') ?>
     </div>
 
     <div class="custom-control custom-radio">
-        <input type="radio" id="term3" name="mode" value="2" class="custom-control-input" <?= ($data['mode'] === 2 ? 'checked="checked" ' : '') ?>>
-        <label class="custom-control-label" for="term3"><?= __('Option 1') ?></label>
+        <input type="radio" id="term3" name="mode" value="2" class="form-check-input" <?= ($data['mode'] === 2 ? 'checked="checked" ' : '') ?>>
+        <label class="form-check-label" for="term3"><?= __('Option 1') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="term2" name="mode" value="3" class="custom-control-input" <?= ($data['mode'] === 3 ? 'checked="checked" ' : '') ?>>
-        <label class="custom-control-label" for="term2"><?= __('Option 2') ?></label>
+        <input type="radio" id="term2" name="mode" value="3" class="form-check-input" <?= ($data['mode'] === 3 ? 'checked="checked" ' : '') ?>>
+        <label class="form-check-label" for="term2"><?= __('Option 2') ?></label>
     </div>
 
     <div class="alert alert-info mb-3 mt-3">
-        <div class="font-weight-bold"><?= __('WARNING!') ?></div>
+        <div class="fw-bold"><?= __('WARNING!') ?></div>
         <div><?= __('Make sure you have correctly entered the code. It must meet the standard of XML') ?></div>
         <div><?= __('If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') ?></div>
     </div>

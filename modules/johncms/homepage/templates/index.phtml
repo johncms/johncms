@@ -8,24 +8,24 @@
 $this->layout('system::layout/default');
 ?>
 <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
-    <h1 class="display-4 font-weight-bold">JohnCMS <?= CMS_VERSION ?></h1>
+    <h1 class="display-4 fw-bold">JohnCMS <?= CMS_VERSION ?></h1>
     <p class="lead">
         <?= __('Free, Open Source content management system') ?>
     </p>
     <hr class="my-sm-3 my-md-4 full-mobile-width">
-    <a class="btn btn-success btn-lg mr-1" href="https://johncms.com/downloads/">
+    <a class="btn btn-success btn-lg me-1" href="https://johncms.com/downloads/">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
         </svg>
         <span class="hide-xs"><?= __('Download') ?></span>
     </a>
-    <a class="btn btn-primary btn-lg mr-1" href="https://docs.johncms.com/">
+    <a class="btn btn-primary btn-lg me-1" href="https://docs.johncms.com/">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book-open"/>
         </svg>
         <span class="hide-xs"><?= __('Documentation') ?></span>
     </a>
-    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon mr-1" target="_blank" rel="nofollow">
+    <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon me-1" target="_blank" rel="nofollow">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#github"/>
         </svg>
@@ -47,7 +47,7 @@ $this->layout('system::layout/default');
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                         </svg>
                         <?php if ($data['counters']['news']['new'] > 0): ?>
-                            <span class="badge badge-pill badge-danger ml-3 mt-1"><?= $tools->formatNumber($data['counters']['news']['new']) ?></span>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['news']['new']) ?></span>
                         <?php endif ?>
                     </div>
                     <div class="mt-2 tile_name"><?= __('News') ?></div>
@@ -62,7 +62,7 @@ $this->layout('system::layout/default');
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                         </svg>
                         <?php if ($data['counters']['forum']['new_messages'] > 0): ?>
-                            <span class="badge badge-pill badge-danger ml-3 mt-1"><?= $tools->formatNumber($data['counters']['forum']['new_messages']) ?></span>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['forum']['new_messages']) ?></span>
                         <?php endif ?>
                     </div>
                     <div class="mt-2 tile_name"><?= d__('system', 'Forum') ?></div>
@@ -77,7 +77,7 @@ $this->layout('system::layout/default');
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
                         </svg>
                         <?php if ($data['counters']['guestbook']['guestbook'] > 0): ?>
-                            <span class="badge badge-pill badge-danger ml-3 mt-1"><?= $tools->formatNumber($data['counters']['guestbook']['guestbook']) ?></span>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['guestbook']['guestbook']) ?></span>
                         <?php endif ?>
                     </div>
                     <div class="mt-2 tile_name"><?= d__('system', 'Guestbook') ?></div>
@@ -92,7 +92,7 @@ $this->layout('system::layout/default');
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
                         </svg>
                         <?php if ($data['counters']['downloads']['new'] > 0): ?>
-                            <span class="badge badge-pill badge-danger ml-3 mt-1"><?= $tools->formatNumber($data['counters']['downloads']['new']) ?></span>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['downloads']['new']) ?></span>
                         <?php endif ?>
                     </div>
                     <div class="mt-2 tile_name"><?= d__('system', 'Downloads') ?></div>
@@ -107,7 +107,7 @@ $this->layout('system::layout/default');
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#text"/>
                         </svg>
                         <?php if ($data['counters']['library']['new'] > 0): ?>
-                            <span class="badge badge-pill badge-danger ml-3 mt-1"><?= $tools->formatNumber($data['counters']['library']['new']) ?></span>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['library']['new']) ?></span>
                         <?php endif ?>
                     </div>
                     <div class="mt-2 tile_name"><?= d__('system', 'Library') ?></div>
@@ -122,7 +122,7 @@ $this->layout('system::layout/default');
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                         </svg>
                         <?php if ($data['counters']['users']['new'] > 0): ?>
-                            <span class="badge badge-pill badge-danger ml-3 mt-1"><?= $tools->formatNumber($data['counters']['users']['new']) ?></span>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['users']['new']) ?></span>
                         <?php endif ?>
                     </div>
                     <div class="mt-2 tile_name"><?= d__('system', 'Users') ?></div>
@@ -134,20 +134,20 @@ $this->layout('system::layout/default');
 
 <?php if (! empty($data['news']) && $data['news']->count() > 0): ?>
     <div class="mb-n3">
-        <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
+        <h2 class="h1 fw-bold mt-4 mb-2"><?= __('News') ?></h2>
         <div class="row row-cols-1">
             <?php foreach ($data['news'] as $news_item): ?>
                 <?php /** @var Johncms\News\Models\NewsArticle $news_item */ ?>
                 <div class="col mb-3">
-                    <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
+                    <a class="h4 fw-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
                     <?php if (! empty($news_item->preview_text_safe)): ?>
                         <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
                     <?php endif; ?>
                     <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
-                        <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
+                        <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
                         </svg> <?= (int) $news_item->votes_sum_vote ?>,
-                        <svg class="icon ml-2" style="width: 13px;">
+                        <svg class="icon ms-2" style="width: 13px;">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                         </svg> <?= $news_item->comments_count ?>
                     </div>
@@ -158,9 +158,9 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 
-<h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Features') ?></h2>
-<dl class="ml-4">
-    <dt class="h3 font-weight-bold">
+<h2 class="h1 fw-bold mt-4 mb-4"><?= __('Features') ?></h2>
+<dl class="ms-4">
+    <dt class="h3 fw-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
@@ -170,7 +170,7 @@ $this->layout('system::layout/default');
         <?= __('Your site will appear equally well on both computers and mobile devices.') ?>
     </dd>
 
-    <dt class="h3 font-weight-bold">
+    <dt class="h3 fw-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
@@ -180,7 +180,7 @@ $this->layout('system::layout/default');
         <?= __('Using templates, you can completely change the style of your site so that it becomes unique and not like the others.') ?>
     </dd>
 
-    <dt class="h3 font-weight-bold">
+    <dt class="h3 fw-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
@@ -190,7 +190,7 @@ $this->layout('system::layout/default');
         <?= __('When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.') ?>
     </dd>
 
-    <dt class="h3 font-weight-bold">
+    <dt class="h3 fw-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
@@ -202,7 +202,7 @@ $this->layout('system::layout/default');
         ) ?>
     </dd>
 
-    <dt class="h3 font-weight-bold">
+    <dt class="h3 fw-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>
@@ -213,10 +213,10 @@ $this->layout('system::layout/default');
     </dd>
 </dl>
 
-<h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Free License') ?></h2>
+<h2 class="h1 fw-bold mt-4 mb-4"><?= __('Free License') ?></h2>
 
-<dl class="ml-4">
-    <dt class="h3 font-weight-bold">
+<dl class="ms-4">
+    <dt class="h3 fw-bold">
         <svg class="icon">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#check"/>
         </svg>

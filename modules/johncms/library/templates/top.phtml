@@ -36,14 +36,14 @@ $this->layout(
             <a href="?id=<?= $top['id'] ?>" class="post-title"><?= $top['name'] ?></a>
             <div class="post-body"><?= $top['announce'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
-                <div class="mr-2">
+                <div class="me-2">
                     <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $top['cat_id'] ?>"><?= $top['cat_name'] ?></a>
                 </div>
-                <div class="mr-2">
+                <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $top['who'] ?>
                 </div>
-                <div class="d-flex align-items-center mr-1">
-                    <span class="pr-1"><?= __('Rating:') ?></span><?= $top['ratingView'] ?>
+                <div class="d-flex align-items-center me-1">
+                    <span class="pe-1"><?= __('Rating:') ?></span><?= $top['ratingView'] ?>
                 </div>
                 <div>
                     <?php if ($top['comments']) : ?>

@@ -228,8 +228,8 @@ $errors = $data['errors'];
             </div>
             <div class="custom-control custom-checkbox">
                 <input type="hidden" name="mailvis" value="0">
-                <input type="checkbox" class="custom-control-input" name="mailvis" value="1" id="mailvis" <?= $data['form_data']['mailvis'] ? 'checked' : '' ?>>
-                <label class="custom-control-label" for="mailvis"><?= __('Show in Profile') ?></label>
+                <input type="checkbox" class="form-check-input" name="mailvis" value="1" id="mailvis" <?= $data['form_data']['mailvis'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="mailvis"><?= __('Show in Profile') ?></label>
             </div>
             <div class="small text-muted"><?= __('Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.') ?></div>
 
@@ -271,8 +271,8 @@ $errors = $data['errors'];
 
                 <div class="custom-control custom-checkbox">
                     <input type="hidden" name="karma_off" value="0">
-                    <input type="checkbox" class="custom-control-input" name="karma_off" value="1" id="karma_off" <?= $data['form_data']['karma_off'] ? 'checked' : '' ?>>
-                    <label class="custom-control-label" for="karma_off"><?= __('Prohibit Karma') ?></label>
+                    <input type="checkbox" class="form-check-input" name="karma_off" value="1" id="karma_off" <?= $data['form_data']['karma_off'] ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="karma_off"><?= __('Prohibit Karma') ?></label>
                 </div>
                 <div class="mt-2 mb-3">
                     <a href="?act=password&amp;user=<?= $data['user']['id'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Change Password') ?></a>
@@ -283,45 +283,45 @@ $errors = $data['errors'];
 
                 <h3><?= __('Select gender') ?></h3>
                 <div class="custom-control custom-radio">
-                    <input type="radio" id="m" name="sex" value="m" class="custom-control-input" <?= ($data['form_data']['sex'] === 'm' ? 'checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="m"><?= __('Man') ?></label>
+                    <input type="radio" id="m" name="sex" value="m" class="form-check-input" <?= ($data['form_data']['sex'] === 'm' ? 'checked="checked"' : '') ?>>
+                    <label class="form-check-label" for="m"><?= __('Man') ?></label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" id="zh" name="sex" value="zh" class="custom-control-input" <?= ($data['form_data']['sex'] === 'zh' ? 'checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="zh"><?= __('Woman') ?></label>
+                    <input type="radio" id="zh" name="sex" value="zh" class="form-check-input" <?= ($data['form_data']['sex'] === 'zh' ? 'checked="checked"' : '') ?>>
+                    <label class="form-check-label" for="zh"><?= __('Woman') ?></label>
                 </div>
 
                 <?php if ($data['user']['id'] !== $user->id): ?>
                     <h3 class="mt-3"><?= __('Position on the Site') ?></h3>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="user" name="rights" value="0" class="custom-control-input" <?= (! $data['form_data']['rights'] ? 'checked="checked"' : '') ?>>
-                        <label class="custom-control-label" for="user"><?= __('User') ?></label>
+                        <input type="radio" id="user" name="rights" value="0" class="form-check-input" <?= (! $data['form_data']['rights'] ? 'checked="checked"' : '') ?>>
+                        <label class="form-check-label" for="user"><?= __('User') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="fmod" name="rights" value="3" class="custom-control-input" <?= ($data['form_data']['rights'] === 3 ? 'checked="checked"' : '') ?>>
-                        <label class="custom-control-label" for="fmod"><?= __('Forum Moderator') ?></label>
+                        <input type="radio" id="fmod" name="rights" value="3" class="form-check-input" <?= ($data['form_data']['rights'] === 3 ? 'checked="checked"' : '') ?>>
+                        <label class="form-check-label" for="fmod"><?= __('Forum Moderator') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="dmod" name="rights" value="4" class="custom-control-input" <?= ($data['form_data']['rights'] === 4 ? 'checked="checked"' : '') ?>>
-                        <label class="custom-control-label" for="dmod"><?= __('Download Moderator') ?></label>
+                        <input type="radio" id="dmod" name="rights" value="4" class="form-check-input" <?= ($data['form_data']['rights'] === 4 ? 'checked="checked"' : '') ?>>
+                        <label class="form-check-label" for="dmod"><?= __('Download Moderator') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="lmod" name="rights" value="5" class="custom-control-input" <?= ($data['form_data']['rights'] === 5 ? 'checked="checked"' : '') ?>>
-                        <label class="custom-control-label" for="lmod"><?= __('Library Moderator') ?></label>
+                        <input type="radio" id="lmod" name="rights" value="5" class="form-check-input" <?= ($data['form_data']['rights'] === 5 ? 'checked="checked"' : '') ?>>
+                        <label class="form-check-label" for="lmod"><?= __('Library Moderator') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="smod" name="rights" value="6" class="custom-control-input" <?= ($data['form_data']['rights'] === 6 ? 'checked="checked"' : '') ?>>
-                        <label class="custom-control-label" for="smod"><?= __('Super Moderator') ?></label>
+                        <input type="radio" id="smod" name="rights" value="6" class="form-check-input" <?= ($data['form_data']['rights'] === 6 ? 'checked="checked"' : '') ?>>
+                        <label class="form-check-label" for="smod"><?= __('Super Moderator') ?></label>
                     </div>
 
                     <?php if ($user->rights === 9): ?>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="adm" name="rights" value="7" class="custom-control-input" <?= ($data['form_data']['rights'] === 7 ? 'checked="checked"' : '') ?>>
-                            <label class="custom-control-label" for="adm"><?= __('Administrator') ?></label>
+                            <input type="radio" id="adm" name="rights" value="7" class="form-check-input" <?= ($data['form_data']['rights'] === 7 ? 'checked="checked"' : '') ?>>
+                            <label class="form-check-label" for="adm"><?= __('Administrator') ?></label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="sv" name="rights" value="9" class="custom-control-input" <?= ($data['form_data']['rights'] === 9 ? 'checked="checked"' : '') ?>>
-                            <label class="custom-control-label" for="sv"><?= __('Supervisor') ?></label>
+                            <input type="radio" id="sv" name="rights" value="9" class="form-check-input" <?= ($data['form_data']['rights'] === 9 ? 'checked="checked"' : '') ?>>
+                            <label class="form-check-label" for="sv"><?= __('Supervisor') ?></label>
                         </div>
                     <?php endif; ?>
                 <?php endif; ?>

@@ -34,8 +34,8 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
         <h3><?= __('Select section') ?></h3>
         <?php foreach ($data['sections'] as $sections): ?>
             <div class="custom-control custom-radio">
-                <input type="radio" id="sect_<?= $sections['id'] ?>" name="subcat" value="<?= $sections['id'] ?>" class="custom-control-input">
-                <label class="custom-control-label" for="sect_<?= $sections['id'] ?>"><?= $this->e($sections['name']) ?></label>
+                <input type="radio" id="sect_<?= $sections['id'] ?>" name="subcat" value="<?= $sections['id'] ?>" class="form-check-input">
+                <label class="form-check-label" for="sect_<?= $sections['id'] ?>"><?= $this->e($sections['name']) ?></label>
             </div>
         <?php endforeach; ?>
         <h3 class="mt-3"><?= __('Other category') ?></h3>

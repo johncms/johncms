@@ -33,32 +33,32 @@ $this->layout(
     <h4><?= __('Ban type') ?></h4>
     <?php if ($user->rights >= 6): ?>
         <div class="custom-control custom-radio">
-            <input type="radio" id="full" name="term" value="1" class="custom-control-input" checked="checked">
-            <label class="custom-control-label" for="full"><?= __('Full block') ?></label>
+            <input type="radio" id="full" name="term" value="1" class="form-check-input" checked="checked">
+            <label class="form-check-label" for="full"><?= __('Full block') ?></label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="private" name="term" value="3" class="custom-control-input">
-            <label class="custom-control-label" for="private"><?= __('Private messages') ?></label>
+            <input type="radio" id="private" name="term" value="3" class="form-check-input">
+            <label class="form-check-label" for="private"><?= __('Private messages') ?></label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="comments" name="term" value="10" class="custom-control-input">
-            <label class="custom-control-label" for="comments"><?= __('Comments') ?></label>
+            <input type="radio" id="comments" name="term" value="10" class="form-check-input">
+            <label class="form-check-label" for="comments"><?= __('Comments') ?></label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="guestbook" name="term" value="13" class="custom-control-input">
-            <label class="custom-control-label" for="guestbook"><?= __('Guestbook') ?></label>
+            <input type="radio" id="guestbook" name="term" value="13" class="form-check-input">
+            <label class="form-check-label" for="guestbook"><?= __('Guestbook') ?></label>
         </div>
     <?php endif ?>
     <?php if ($user->rights === 3 || $user->rights >= 6): ?>
         <div class="custom-control custom-radio">
-            <input type="radio" id="forum" name="term" value="11" class="custom-control-input" <?= ($user->rights === 3 ? 'checked="checked"' : '') ?>>
-            <label class="custom-control-label" for="forum"><?= __('Forum') ?></label>
+            <input type="radio" id="forum" name="term" value="11" class="form-check-input" <?= ($user->rights === 3 ? 'checked="checked"' : '') ?>>
+            <label class="form-check-label" for="forum"><?= __('Forum') ?></label>
         </div>
     <?php endif ?>
     <?php if ($user->rights === 5 || $user->rights >= 6): ?>
         <div class="custom-control custom-radio">
-            <input type="radio" id="library" name="term" value="15" class="custom-control-input">
-            <label class="custom-control-label" for="library"><?= __('Library') ?></label>
+            <input type="radio" id="library" name="term" value="15" class="form-check-input">
+            <label class="form-check-label" for="library"><?= __('Library') ?></label>
         </div>
     <?php endif ?>
 
@@ -68,23 +68,23 @@ $this->layout(
         <input type="text" name="timeval" value="12" class="form-control" id="time">
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="minutes" name="time" value="1" class="custom-control-input">
-        <label class="custom-control-label" for="minutes"><?= __('Minutes (60 max.)') ?></label>
+        <input type="radio" id="minutes" name="time" value="1" class="form-check-input">
+        <label class="form-check-label" for="minutes"><?= __('Minutes (60 max.)') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="hours" name="time" value="2" class="custom-control-input" checked="checked">
-        <label class="custom-control-label" for="hours"><?= __('Hours (24 max.)') ?></label>
+        <input type="radio" id="hours" name="time" value="2" class="form-check-input" checked="checked">
+        <label class="form-check-label" for="hours"><?= __('Hours (24 max.)') ?></label>
     </div>
     <?php if ($user->rights >= 6): ?>
         <div class="custom-control custom-radio">
-            <input type="radio" id="days" name="time" value="3" class="custom-control-input" checked="checked">
-            <label class="custom-control-label" for="days"><?= __('Days (30 max.)') ?></label>
+            <input type="radio" id="days" name="time" value="3" class="form-check-input" checked="checked">
+            <label class="form-check-label" for="days"><?= __('Days (30 max.)') ?></label>
         </div>
     <?php endif ?>
     <?php if ($user->rights >= 7): ?>
         <div class="custom-control custom-radio">
-            <input type="radio" id="till_cancel" name="time" value="4" class="custom-control-input">
-            <label class="custom-control-label" for="till_cancel"><?= __('Till cancel') ?></label>
+            <input type="radio" id="till_cancel" name="time" value="4" class="form-check-input">
+            <label class="form-check-label" for="till_cancel"><?= __('Till cancel') ?></label>
         </div>
     <?php endif ?>
 

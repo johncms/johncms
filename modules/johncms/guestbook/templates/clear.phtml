@@ -4,27 +4,27 @@
         <h4 class="modal-title">
             <?= __('Clear guestbook') ?>
         </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span class="icon">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <p><?= __('Clearing parameters') ?></p>
         <div class="custom-control custom-radio">
-            <input type="radio" id="week" name="cl" value="0" class="custom-control-input" checked>
-            <label class="custom-control-label" for="week"><?= __('Older than 1 week') ?></label>
+            <input type="radio" id="week" name="cl" value="0" class="form-check-input" checked>
+            <label class="form-check-label" for="week"><?= __('Older than 1 week') ?></label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="day" name="cl" value="1" class="custom-control-input">
-            <label class="custom-control-label" for="day"><?= __('Older than 1 day') ?></label>
+            <input type="radio" id="day" name="cl" value="1" class="form-check-input">
+            <label class="form-check-label" for="day"><?= __('Older than 1 day') ?></label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="all" name="cl" value="2" class="custom-control-input">
-            <label class="custom-control-label" for="all"><?= __('Clear all') ?></label>
+            <input type="radio" id="all" name="cl" value="2" class="form-check-input">
+            <label class="form-check-label" for="all"><?= __('Clear all') ?></label>
         </div>
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary"><?= __('Clear') ?></button>
-        <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-outline-primary ml-2"><?= __('Cancel') ?></button>
+        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-primary ms-2"><?= __('Cancel') ?></button>
     </div>
 </form>

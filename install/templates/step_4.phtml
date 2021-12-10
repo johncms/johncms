@@ -7,7 +7,7 @@ $errors = $data['errors'] ?? [];
 
 ?>
 
-<h4 class="mb-2 mt-3 font-weight-bold"><?= __('Website settings') ?></h4>
+<h4 class="mb-2 mt-3 fw-bold"><?= __('Website settings') ?></h4>
 
 <?php if (! empty($errors['unknown'])): ?>
     <div class="alert alert-danger"><?= implode('<br>', $errors['unknown']) ?></div>
@@ -43,7 +43,7 @@ $errors = $data['errors'] ?? [];
         <?php endif ?>
     </div>
 
-    <h4 class="mb-2 mt-4 font-weight-bold"><?= __('Administrator data') ?></h4>
+    <h4 class="mb-2 mt-4 fw-bold"><?= __('Administrator data') ?></h4>
     <div class="form-group">
         <label for="admin_login"><?= __('Admin login') ?></label>
         <input type="text"
@@ -71,10 +71,10 @@ $errors = $data['errors'] ?? [];
             <div class="invalid-feedback"><?= implode('<br>', $errors['admin_password']) ?></div>
         <?php endif ?>
     </div>
-    <h4 class="mb-2 mt-4 font-weight-bold"><?= __('Additionally') ?></h4>
+    <h4 class="mb-2 mt-4 fw-bold"><?= __('Additionally') ?></h4>
     <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" name="install_demo" value="1" id="install_demo" <?= ! empty($fields['install_demo']) ? 'checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="install_demo"><?= __('Install demo data') ?></label>
+        <input type="checkbox" class="form-check-input" name="install_demo" value="1" id="install_demo" <?= ! empty($fields['install_demo']) ? 'checked="checked"' : '' ?>>
+        <label class="form-check-label" for="install_demo"><?= __('Install demo data') ?></label>
     </div>
 
     <div class="mt-3">

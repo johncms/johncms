@@ -93,12 +93,12 @@ $this->layout(
                 <h3><?= __('Select action') ?></h3>
                 <form action="?act=del&amp;type=dir&amp;id=<?= $id ?>" method="post">
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="type1" name="mode" value="delmove" class="custom-control-input" checked="checked">
-                        <label class="custom-control-label" for="type1"><?= __('Delete with movement') ?></label>
+                        <input type="radio" id="type1" name="mode" value="delmove" class="form-check-input" checked="checked">
+                        <label class="form-check-label" for="type1"><?= __('Delete with movement') ?></label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="type2" name="mode" value="delall" class="custom-control-input">
-                        <label class="custom-control-label" for="type2"><?= __('Delete all Sections and Articles') ?></label>
+                        <input type="radio" id="type2" name="mode" value="delall" class="form-check-input">
+                        <label class="form-check-label" for="type2"><?= __('Delete all Sections and Articles') ?></label>
                     </div>
                     <div class="mt-2">
                         <input type="submit" name="submit" value="<?= __('Do') ?>" class="btn btn-danger">

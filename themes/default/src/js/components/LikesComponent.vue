@@ -2,7 +2,7 @@
     <div class="position-relative">
         <div class="d-flex justify-content-center position-absolute w-100 vote-preloader" v-if="loading">
             <div class="spinner-border text-secondary" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
         <button class="btn btn-light btn-sm" @click="setVote(1)" :class="voted > 0 ? 'liked' : ''" :disabled="voted > 0 || !can_vote">
@@ -10,9 +10,9 @@
                 <use xlink:href="/themes/default/assets/icons/sprite.svg#like"/>
             </svg>
         </button>
-        <span :class="rating_color" class="ml-2 mr-2 font-weight-bold">{{ rating > 0 ? '+' : '' }}{{ rating }}</span>
+        <span :class="rating_color" class="ms-2 me-2 fw-bold">{{ rating > 0 ? '+' : '' }}{{ rating }}</span>
         <button class="btn btn-light btn-sm" @click="setVote(0)" :class="voted < 0 ? 'disliked' : ''" :disabled="voted < 0 || !can_vote">
-            <svg class="icon download-button-icon mr-1">
+            <svg class="icon download-button-icon me-1">
                 <use xlink:href="/themes/default/assets/icons/sprite.svg#dislike"/>
             </svg>
         </button>
