@@ -58,3 +58,47 @@
         }
     }
 }
+
+.personal-profile {
+    display: flex;
+}
+
+.personal-profile-photo {
+
+}
+
+.profile-photo-upload-btn {
+    border: 1px dashed var(--border-color);
+    width: 160px;
+    height: 160px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-photo-btn {
+    .add-photo-icon {
+        background: var(--bs-primary);
+        color: var(--primary-bg-text-color);
+        font-size: 34px;
+        font-weight: 200;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        margin: 0 auto 10px auto;
+        justify-content: center;
+    }
+}
+
+.profile-info-row {
+    padding: 2px 0;
+    .profile-info-name {
+        color: var(--bs-secondary);
+    }
+    .profile-info-value {
+        font-weight: 600;
+    }
+}

@@ -106,3 +106,17 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
 $btn-border-radius: .25rem;
 $btn-border-radius-lg: .3rem;
 $btn-border-radius-sm: .2rem;
+
+
+:root {
+    --bs-primary: #66615B;
+    --bs-secondary: #918d88;
+    --bs-success: #42A084;
+    --bs-info: #68B3C8;
+    --bs-warning: #F3BB45;
+    --bs-danger: #EB5E28;
+
+    --primary-bg-text-color: #fff;
+
+    --border-color: #66615B;
+}
