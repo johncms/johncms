@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Aura\Autoload\Loader;
+use Carbon\Carbon;
 use JetBrains\PhpStorm\NoReturn;
 use Johncms\Container\ContainerFactory;
 use Johncms\Http\ResponseFactory;
@@ -22,7 +22,7 @@ use Psr\Http\Message\ResponseInterface;
  * @param string $service
  * @return mixed
  */
-function di(string $service)
+function di(string $service): mixed
 {
     return ContainerFactory::getContainer()->get($service);
 }
@@ -43,8 +43,10 @@ function pathToUrl(string $path): string
  * @param string $title
  * @param string $message
  * @return never-return
+ * @throws Throwable
  * @deprecated use the status_page() function
  */
+#[NoReturn]
 function pageNotFound(
     string $template = 'system::error/404',
     string $title = 'ERROR: 404 Not Found',
@@ -159,20 +161,6 @@ function format_size(int $bytes): string
     return number_format($bytes / 1099511627776, 2) . ' TB';
 }
 
-/**
- * Registering an autoloader for the module
- *
- * @param $module_name
- * @param string $dir
- * @deprecated Use the module's root directory as the folder for the namespace.
- */
-function module_lib_loader($module_name, $dir = 'lib')
-{
-    $loader = new Loader();
-    $loader->register();
-    $loader->addPrefix(ucfirst($module_name), ROOT_PATH . 'modules/' . $module_name . '/' . $dir);
-}
-
 function checkRedirect()
 {
     /** @var array<string, string> $redirects */
@@ -221,4 +209,33 @@ function config(mixed $key = null, mixed $default = null): mixed
     /** @var array $config */
     $config = di('config');
     return \Illuminate\Support\Arr::get($config, $key, $default);
+}
+
+/**
+ * Format the date to the desired format
+ *
+ * @param $date                - source date
+ * @param bool $withoutTime    - show only date
+ * @param bool $withoutSeconds - show date and time without seconds
+ * @return string
+ */
+function format_date(mixed $date, bool $withoutTime = false, bool $withoutSeconds = false): string
+{
+    if (empty($date)) {
+        return '';
+    }
+    try {
+        $date_object = Carbon::make($date);
+        if ($date_object) {
+            if ($withoutTime) {
+                return $date_object->format('d.m.Y');
+            } elseif ($withoutSeconds) {
+                return $date_object->format('d.m.Y H:i');
+            }
+            return $date_object->format('d.m.Y H:i:s');
+        }
+    } catch (Throwable) {
+    }
+
+    return '';
 }
