@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Johncms\Database\Eloquent\Casts\SpecialChars;
 use Johncms\Users\Casts\UserSettings;
 
 /**
@@ -53,6 +54,10 @@ class User extends Model
     protected $casts = [
         'confirmed'       => 'bool',
         'email_confirmed' => 'bool',
+        'name'            => SpecialChars::class,
+        'login'           => SpecialChars::class,
+        'email'           => SpecialChars::class,
+        'phone'           => SpecialChars::class,
         'settings'        => UserSettings::class,
     ];
 
@@ -162,8 +167,47 @@ class User extends Model
         return $this->hasMany(StoredAuth::class, 'user_id', 'id');
     }
 
+    public function getRoleNames(): string
+    {
+        $roles = (array) $this->userRoleChecker->getUserRoles();
+        if (empty($roles)) {
+            return d__('system', 'User');
+        }
+        return implode(', ', array_column($roles, 'display_name'));
+    }
+
     public function displayName(): string
     {
-        return $this->name ?? $this->login ?? $this->email ?? $this->phone ?? '';
+        if ($this->name) {
+            return $this->name;
+        } elseif ($this->login) {
+            return $this->login;
+        } elseif ($this->email) {
+            return $this->email;
+        } elseif ($this->phone) {
+            return $this->phone;
+        }
+        return '';
+    }
+
+    public function isOnline(): bool
+    {
+        return $this->last_visit && Carbon::now()->subMinutes(5)->lessThan($this->last_visit);
+    }
+
+    public function getLastSeen(): string
+    {
+        if ($this->isOnline()) {
+            return d__('system', 'Online');
+        }
+        return format_date($this->last_visit);
+    }
+
+    public function getAge(): ?int
+    {
+        if ($this->birthday) {
+            return Carbon::now()->diffInYears($this->birthday);
+        }
+        return null;
     }
 }

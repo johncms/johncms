@@ -18,7 +18,9 @@ use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\Personal\Forms\ProfileForm;
 use Johncms\Users\Exceptions\RuntimeException;
+use Johncms\Users\User;
 use Johncms\Users\UserManager;
+use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 class ProfileController extends BaseController
@@ -36,11 +38,21 @@ class ProfileController extends BaseController
     /**
      * @throws Throwable
      */
-    public function index(): string
+    public function index(User $user, int $id = 0): string|ResponseInterface
     {
+        if (! $user->isAdmin() && $id !== $user?->id) {
+            return status_page(403);
+        }
+        $userData = $user;
+        if ($id && $id !== $user?->id) {
+            $userData = User::query()->find($id);
+        }
+
         return $this->render->render('personal::profile/index', [
             'data' => [
-                'backButton' => route('personal.index'),
+                'editProfileUrl' => route('personal.profile.edit', ['id' => $userData->id]),
+                'userData'       => $userData,
+                'backButton'     => route('personal.index'),
             ],
         ]);
     }
