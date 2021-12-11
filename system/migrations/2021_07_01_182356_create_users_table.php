@@ -42,6 +42,7 @@ class CreateUsersTable extends Migration
                 $table->date('birthday')->nullable();
                 $table->timestamp('last_visit')->nullable();
                 $table->json('settings')->nullable();
+                $table->json('additional_fields')->nullable();
             }
         );
     }

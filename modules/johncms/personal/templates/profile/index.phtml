@@ -61,6 +61,12 @@ $this->layout('system::layout/default');
 <div class="mb-3">
     <div class="fs-4 fw-bold"><?= __('General Information') ?></div>
     <div>
+        <?php if ($userData->additional_fields->status): ?>
+            <div class="profile-info-row row">
+                <div class="profile-info-name col-12 col-md-3"><?= __('Status') ?></div>
+                <div class="profile-info-value col-12 col-md-9"><?= $userData->additional_fields->status ?></div>
+            </div>
+        <?php endif; ?>
         <?php if ($userData->birthday): ?>
             <div class="profile-info-row row">
                 <div class="profile-info-name col-12 col-md-3"><?= __('Birthday') ?></div>
@@ -91,24 +97,35 @@ $this->layout('system::layout/default');
                 </div>
             </div>
         <?php endif; ?>
-        <div class="profile-info-row row">
-            <div class="profile-info-name col-12 col-md-3"><?= __('Telegram') ?></div>
-            <div class="profile-info-value col-12 col-md-9">
-                <a href="https://t.me/johncms_official">@johncms_official</a>
+        <?php if ($userData->additional_fields->telegram): ?>
+            <div class="profile-info-row row">
+                <div class="profile-info-name col-12 col-md-3"><?= __('Telegram') ?></div>
+                <div class="profile-info-value col-12 col-md-9">
+                    <a href="tg://resolve?domain=<?= $userData->additional_fields->telegram ?>"><?= $userData->additional_fields->telegram ?></a>
+                </div>
             </div>
-        </div>
-        <div class="profile-info-row row">
-            <div class="profile-info-name col-12 col-md-3"><?= __('Website') ?></div>
-            <div class="profile-info-value col-12 col-md-9">
-                <a href="https://johncms.com">johncms.com</a>
+        <?php endif; ?>
+        <?php if ($userData->additional_fields->whatsapp): ?>
+            <div class="profile-info-row row">
+                <div class="profile-info-name col-12 col-md-3"><?= __('WhatsApp') ?></div>
+                <div class="profile-info-value col-12 col-md-9">
+                    <a href="https://wa.me/<?= $userData->additional_fields->whatsapp ?>"><?= $userData->additional_fields->whatsapp ?></a>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
+        <?php if ($userData->additional_fields->website): ?>
+            <div class="profile-info-row row">
+                <div class="profile-info-name col-12 col-md-3"><?= __('Website') ?></div>
+                <div class="profile-info-value col-12 col-md-9">
+                    <a href="https://<?= $userData->additional_fields->website ?>"><?= $userData->additional_fields->website ?></a>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
-<div class="mb-3">
-    <div class="fs-4 fw-bold"><?= __('About') ?></div>
-    <div class="text-dark">
-        If you need responsive nav variations, consider using a series of flexbox utilities. While more verbose, these utilities offer greater customization across responsive breakpoints. In the example below, our nav will be stacked on the
-        lowest breakpoint, then adapt to a horizontal layout that fills the available width starting from the small breakpoint.
+<?php if ($userData->additional_fields->about): ?>
+    <div class="mb-3">
+        <div class="fs-4 fw-bold"><?= __('About') ?></div>
+        <div class="text-dark"><?= $userData->additional_fields->about ?></div>
     </div>
-</div>
+<?php endif; ?>

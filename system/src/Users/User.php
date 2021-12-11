@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Johncms\Database\Eloquent\Casts\SpecialChars;
+use Johncms\Users\Casts\AdditionalFieldsCast;
 use Johncms\Users\Casts\UserSettings;
 
 /**
@@ -52,13 +53,14 @@ class User extends Model
     protected $table = 'users';
 
     protected $casts = [
-        'confirmed'       => 'bool',
-        'email_confirmed' => 'bool',
-        'name'            => SpecialChars::class,
-        'login'           => SpecialChars::class,
-        'email'           => SpecialChars::class,
-        'phone'           => SpecialChars::class,
-        'settings'        => UserSettings::class,
+        'confirmed'         => 'bool',
+        'email_confirmed'   => 'bool',
+        'name'              => SpecialChars::class,
+        'login'             => SpecialChars::class,
+        'email'             => SpecialChars::class,
+        'phone'             => SpecialChars::class,
+        'settings'          => UserSettings::class,
+        'additional_fields' => AdditionalFieldsCast::class,
     ];
 
     protected $fillable = [
