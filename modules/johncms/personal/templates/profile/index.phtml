@@ -12,9 +12,11 @@ $this->layout('system::layout/default');
 ?>
 
 <ul class="nav bg-light mb-4 border-radius-5">
-    <li class="nav-item">
-        <a class="nav-link text-danger" href="<?= $data['editProfileUrl'] ?>">Edit profile</a>
-    </li>
+    <?php if ($data['canEdit']): ?>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="<?= $data['editProfileUrl'] ?>">Edit profile</a>
+        </li>
+    <?php endif; ?>
     <li class="nav-item">
         <a class="nav-link" href="#">Write</a>
     </li>

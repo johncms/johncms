@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Personal\Controllers;
 
 use Johncms\Controller\BaseController;
+use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
@@ -38,19 +39,22 @@ class ProfileController extends BaseController
     /**
      * @throws Throwable
      */
-    public function index(User $user, int $id = 0): string|ResponseInterface
+    public function index(?User $user, int $id = 0): string|ResponseInterface
     {
-        if (! $user->isAdmin() && $id !== $user?->id) {
-            return status_page(403);
-        }
         $userData = $user;
         if ($id && $id !== $user?->id) {
             $userData = User::query()->find($id);
+            if ($userData === null) {
+                throw new PageNotFoundException(__('The user was not found'));
+            }
+        } elseif (! $id) {
+            $id = $user?->id;
         }
 
         return $this->render->render('personal::profile/index', [
             'data' => [
-                'editProfileUrl' => route('personal.profile.edit', ['id' => $userData->id]),
+                'canEdit'        => ($id === $user?->id),
+                'editProfileUrl' => route('personal.profile.edit', ['id' => $id]),
                 'userData'       => $userData,
                 'backButton'     => route('personal.index'),
             ],
@@ -60,8 +64,11 @@ class ProfileController extends BaseController
     /**
      * @throws Throwable
      */
-    public function edit(int $id, Session $session): string
+    public function edit(?User $user, int $id, Session $session): string|ResponseInterface
     {
+        if (! $user || $user->id !== $id) {
+            return status_page(403);
+        }
         $profileForm = new ProfileForm($id);
         return $this->render->render('personal::profile/edit', [
             'data' => [
@@ -75,8 +82,14 @@ class ProfileController extends BaseController
         ]);
     }
 
-    public function store(int $id, UserManager $userManager, Session $session): RedirectResponse
+    /**
+     * @throws Throwable
+     */
+    public function store(?User $user, int $id, UserManager $userManager, Session $session): ResponseInterface|RedirectResponse
     {
+        if (! $user || $user->id !== $id) {
+            return status_page(403);
+        }
         $profileForm = new ProfileForm($id);
         try {
             // Validate the form
