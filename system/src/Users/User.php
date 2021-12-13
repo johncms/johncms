@@ -212,4 +212,13 @@ class User extends Model
         }
         return null;
     }
+
+    public function getGenderName(): string
+    {
+        return match ($this->gender) {
+            1 => d__('system', 'Male'),
+            2 => d__('system', 'Female'),
+            default => d__('system', 'Not specified'),
+        };
+    }
 }

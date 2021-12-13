@@ -75,7 +75,7 @@ $this->layout('system::layout/default');
         <?php endif; ?>
         <div class="profile-info-row row">
             <div class="profile-info-name col-12 col-md-3"><?= __('Gender') ?></div>
-            <div class="profile-info-value col-12 col-md-9">male</div>
+            <div class="profile-info-value col-12 col-md-9"><?= $userData->getGenderName() ?></div>
         </div>
     </div>
 </div>
