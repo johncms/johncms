@@ -78,6 +78,7 @@ class User extends Model
         'birthday',
         'last_visit',
         'settings',
+        'additional_fields'
     ];
 
     protected $attributes = [];

@@ -23,7 +23,11 @@ class AdditionalFields
     public function __construct(array $settings = [])
     {
         foreach ($settings as $key => $value) {
-            $this->$key = htmlspecialchars($value);
+            if (is_string($value)) {
+                $this->$key = htmlspecialchars($value);
+            } else {
+                $this->$key = $value;
+            }
         }
     }
 }

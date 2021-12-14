@@ -75,6 +75,12 @@ class UserManager
         if ($user === null) {
             throw new RuntimeException(sprintf('The user with id %s was not found', $user_id));
         }
+
+        if (array_key_exists('additional_fields', $fields)) {
+            $additionalFields = (array) $user->additional_fields;
+            $fields['additional_fields'] = array_merge($additionalFields, $fields['additional_fields']);
+        }
+
         $user->update($fields);
         return $user;
     }

@@ -7,6 +7,8 @@ namespace Johncms\Personal\Forms;
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Forms\AbstractForm;
 use Johncms\Forms\Inputs\InputText;
+use Johncms\Forms\Inputs\Select;
+use Johncms\Forms\Inputs\Textarea;
 use Johncms\Users\User;
 use Laminas\Validator\Hostname;
 
@@ -28,6 +30,17 @@ class ProfileForm extends AbstractForm
     protected function prepareFormFields(): array
     {
         $fields = [];
+
+        $fields['name'] = (new InputText())
+            ->setLabel(__('Name'))
+            ->setPlaceholder(__('Name'))
+            ->setNameAndId('name')
+            ->setValue($this->getValue('name'));
+
+        $fields['status'] = (new InputText())
+            ->setLabel(__('Status'))
+            ->setNameAndId('additional_fields_status')
+            ->setValue($this->getValue('additional_fields_status'));
 
         if (config('registration.show_email', true)) {
             $emailValidator = [
@@ -70,8 +83,8 @@ class ProfileForm extends AbstractForm
             ->setValidationRules(
                 [
                     'ModelNotExists' => [
-                        'model' => User::class,
-                        'field' => 'phone',
+                        'model'   => User::class,
+                        'field'   => 'phone',
                         'exclude' => function ($query) {
                             return $query->when($this->userData?->id, function (Builder $query) {
                                 $query->where('phone', '!=', '')->where('id', '!=', $this->userData->id);
@@ -81,10 +94,56 @@ class ProfileForm extends AbstractForm
                 ]
             );
 
+        $fields['telegram'] = (new InputText())
+            ->setLabel(__('Telegram'))
+            ->setPlaceholder(__('Telegram'))
+            ->setNameAndId('additional_fields_telegram')
+            ->setValue($this->getValue('additional_fields_telegram'));
+
+        $fields['whatsapp'] = (new InputText())
+            ->setLabel(__('WhatsApp'))
+            ->setPlaceholder(__('WhatsApp'))
+            ->setNameAndId('additional_fields_whatsapp')
+            ->setValue($this->getValue('additional_fields_whatsapp'));
+
         $fields['birthday'] = (new InputText())
             ->setLabel(__('Birthday'))
             ->setNameAndId('birthday')
             ->setValue($this->getValue('birthday'));
+
+        $fields['gender'] = (new Select())
+            ->setOptions(
+                [
+                    [
+                        'value' => 0,
+                        'name'  => d__('system', 'Not specified'),
+                    ],
+                    [
+                        'value' => 1,
+                        'name'  => d__('system', 'Male'),
+                    ],
+                    [
+                        'value' => 2,
+                        'name'  => d__('system', 'Female'),
+                    ],
+                ]
+            )
+            ->setLabel(__('Gender'))
+            ->setNameAndId('gender')
+            ->setValue($this->getValue('gender'));
+
+        $fields['website'] = (new InputText())
+            ->setLabel(__('Website'))
+            ->setPlaceholder(__('Website'))
+            ->setNameAndId('additional_fields_website')
+            ->setValue($this->getValue('additional_fields_website'));
+
+        $fields['about'] = (new Textarea())
+            ->setLabel(__('About'))
+            ->setPlaceholder(__('About'))
+            ->setNameAndId('additional_fields_about')
+            ->setValue($this->getValue('additional_fields_about'));
+
 
         return $fields;
     }
@@ -92,8 +151,28 @@ class ProfileForm extends AbstractForm
     public function getValue(string $fieldName, mixed $default = null)
     {
         if ($this->userData) {
+            // Additional fields
+            if (str_contains($fieldName, 'additional_fields_')) {
+                $field = substr($fieldName, 18); // 18 - length of "additional_fields_"
+                return parent::getValue($fieldName, $this->userData?->additional_fields?->$field);
+            }
+            // Base fields
             return parent::getValue($fieldName, $this->userData?->$fieldName);
         }
         return parent::getValue($fieldName, $default);
+    }
+
+    public function getRequestValues(): array
+    {
+        $requestValues = parent::getRequestValues();
+        $modifiedValues = [];
+        foreach ($requestValues as $key => $requestValue) {
+            if (str_contains($key, 'additional_fields_')) {
+                $modifiedValues['additional_fields'][substr($key, 18)] = $requestValue;
+            } else {
+                $modifiedValues[$key] = $requestValue;
+            }
+        }
+        return $modifiedValues;
     }
 }
