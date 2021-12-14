@@ -16,17 +16,22 @@ This version is at an early stage of development. Many things may not work or wo
 - PHP configured to use MySQL Native Driver (mysqlnd)
 - .htaccess support
 
-## Installation from the repository
+## Installation
 
-1. You need to install [Composer](https://getcomposer.org/) on your computer.
-2. Clone or download and unpack the repository to the root directory your site.
-2. Run the command to install dependencies
+**To install the general availability version**, go to the [**project website**](https://johncms.com/downloads) and download the latest available distributive.
+Then follow the installation instructions that came with it.
 
+**To install the developer version**, you must have a [Composer](https://getcomposer.org) dependency manager
+and [GIT](https://git-scm.com/) version control system.
+1. Clone or download this repository on local workstation.
+2. Assign the repository folder as Apache virtual host, or move contents to the previously created virtual host folder.
+3. Create MySQL Database.
+4. Open the console in the virtual host folder and install the dependencies using the command
 ```bash
 composer install
 ```
-
-5. Open the url in your browser (replace your.site to your hostname): http://your.site/install and follow the instructions in the installer.
+5. Open the url in your browser (replace your.site to your virtualhost name): http://your.site/install and follow the instructions in the installer.
+6. **This is all done**. If you go to the address of your virtual host from the browser, you should see a working site with demo data.
 
 ## Problems and solutions
 
