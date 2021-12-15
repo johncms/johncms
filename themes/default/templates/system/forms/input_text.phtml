@@ -5,8 +5,8 @@
  */
 
 ?>
-<div class="form-group">
-    <label for="name"><?= $field->label ?></label>
+<div class="mb-2">
+    <label for="name" class="form-label"><?= $field->label ?></label>
     <input type="<?= $field->type ?>"
            class="form-control <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
            name="<?= $field->name ?>"
@@ -19,6 +19,6 @@
         <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
     <?php endif ?>
     <?php if ($field->helpText): ?>
-        <div class="text-muted small"><?= $field->helpText ?></div>
+        <div class="text-muted fz-small"><?= $field->helpText ?></div>
     <?php endif; ?>
 </div>

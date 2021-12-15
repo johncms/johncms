@@ -5,7 +5,7 @@
  */
 
 ?>
-<div class="form-group">
+<div class="form-check mb-2">
     <input type="hidden" name="<?= $field->name ?>" value="">
     <div class="custom-control custom-checkbox">
         <input type="checkbox"
@@ -19,7 +19,7 @@
             <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
         <?php endif ?>
         <?php if ($field->helpText): ?>
-            <div class="text-muted small"><?= $field->helpText ?></div>
+            <div class="text-muted fz-small"><?= $field->helpText ?></div>
         <?php endif; ?>
     </div>
 </div>

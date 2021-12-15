@@ -14,6 +14,6 @@ namespace Johncms\Forms\Inputs;
 
 class Textarea extends AbstractInput
 {
-    public string $type = 'text';
+    public string $type = 'textarea';
     public int $rows = 3;
 }

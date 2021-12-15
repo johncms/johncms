@@ -15,7 +15,7 @@ $input-font-size: 1rem;
 
 //$fa-font-path: '/assets/fonts';
 
-// Цвета
+// Color system
 $blue: #2f75be;
 $indigo: #6574cd;
 $purple: #9561e2;
@@ -29,8 +29,6 @@ $teal: #918d88;
 $cyan: #68B3C8;
 $brown: #66615B;
 $dark_brown: #7d4e3c;
-
-// Color system
 
 $white: #fff !default;
 $gray-100: #f4f3ef !default;
@@ -67,7 +65,7 @@ $theme-colors: (
         "yellow-light": $yellow-light,
 );
 
-// Размеры шрифтов
+// Fonts
 $line-height-base: 1.5 !default;
 
 $h1-font-size: $font-size-base * 1.85;
@@ -83,7 +81,7 @@ $border-radius-lg: .3rem !default;
 $border-radius-sm: .2rem !default;
 
 
-// Настройки хлебных крошек
+// Breadcrumbs
 $breadcrumb-padding-y: 0;
 $breadcrumb-padding-x: 0;
 $breadcrumb-item-padding: .5rem;
@@ -106,6 +104,11 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
 $btn-border-radius: .25rem;
 $btn-border-radius-lg: .3rem;
 $btn-border-radius-sm: .2rem;
+
+// Forms
+$form-label-margin-bottom: 0.1rem;
+$input-bg: #f9f9f9;
+
 
 
 :root {

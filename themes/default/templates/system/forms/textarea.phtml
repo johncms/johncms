@@ -5,8 +5,8 @@
  */
 
 ?>
-<div class="form-group">
-    <label for="about"><?= $field->label ?></label>
+<div class="mb-2">
+    <label for="about" class="form-label"><?= $field->label ?></label>
     <textarea class="form-control <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
               name="<?= $field->name ?>"
               id="<?= $field->id ?>"
