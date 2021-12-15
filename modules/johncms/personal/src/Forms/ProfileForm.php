@@ -6,6 +6,7 @@ namespace Johncms\Personal\Forms;
 
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Forms\AbstractForm;
+use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
 use Johncms\Forms\Inputs\Textarea;
@@ -109,7 +110,7 @@ class ProfileForm extends AbstractForm
         $fields['birthday'] = (new InputText())
             ->setLabel(__('Birthday'))
             ->setNameAndId('birthday')
-            ->setValue($this->getValue('birthday'));
+            ->setValue(format_date($this->getValue('birthday'), true));
 
         $fields['gender'] = (new Select())
             ->setOptions(
@@ -144,6 +145,11 @@ class ProfileForm extends AbstractForm
             ->setNameAndId('additional_fields_about')
             ->setValue($this->getValue('additional_fields_about'));
 
+        $fields['password'] = (new InputPassword())
+            ->setLabel(__('New password'))
+            ->setPlaceholder(__('New password'))
+            ->setHelpText(__('If you want to change your password, fill in this field'))
+            ->setNameAndId('password');
 
         return $fields;
     }

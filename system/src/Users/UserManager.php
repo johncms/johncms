@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Carbon\Carbon;
 use Johncms\Users\Exceptions\EmailIsNotConfirmedException;
 use Johncms\Users\Exceptions\IncorrectPasswordException;
 use Johncms\Users\Exceptions\RuntimeException;
@@ -66,8 +67,10 @@ class UserManager
             $fields['password'] = password_hash($fields['password'], PASSWORD_DEFAULT);
         }
 
-        if (empty($fields['birthday'])) {
+        if (array_key_exists('birthday', $fields) && empty($fields['birthday'])) {
             $fields['birthday'] = null;
+        } else {
+            $fields['birthday'] = Carbon::parse($fields['birthday']);
         }
 
         /** @var User $user */
