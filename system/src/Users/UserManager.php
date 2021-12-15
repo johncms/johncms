@@ -69,7 +69,7 @@ class UserManager
 
         if (array_key_exists('birthday', $fields) && empty($fields['birthday'])) {
             $fields['birthday'] = null;
-        } else {
+        } elseif (array_key_exists('birthday', $fields)) {
             $fields['birthday'] = Carbon::parse($fields['birthday']);
         }
 
