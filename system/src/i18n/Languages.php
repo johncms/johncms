@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Admin\Languages;
+namespace Johncms\i18n;
 
 use ZipArchive;
 
@@ -23,17 +23,17 @@ class Languages
      */
     public static function getLngList(): array
     {
-        $lng_list = [];
+        $lngList = [];
         foreach (glob(ROOT_PATH . 'system/locale/*.ini') as $val) {
             $iso = pathinfo($val, PATHINFO_FILENAME);
             $lang_data = parse_ini_file($val);
-            $lng_list[$iso] = [
+            $lngList[$iso] = [
                 'name'    => ! empty($lang_data['name']) ? $lang_data['name'] : $iso,
                 'version' => ! empty($lang_data['version']) ? (float) $lang_data['version'] : 1,
             ];
         }
 
-        return $lng_list;
+        return $lngList;
     }
 
     /**

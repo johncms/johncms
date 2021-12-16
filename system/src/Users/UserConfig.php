@@ -23,10 +23,28 @@ class UserConfig
 
     public string $timezone = 'UTC';
 
+    public ?string $theme = null;
+
     public function __construct(array $settings = [])
     {
         foreach ($settings as $key => $value) {
-            $this->$key = $value;
+            $this->$key = $this->castValue(gettype($this->$key), $value);
         }
+    }
+
+    /**
+     * @param string $type
+     * @param mixed $value
+     * @return bool|float|int|string
+     */
+    private function castValue(string $type, mixed $value): float|bool|int|string
+    {
+        return match ($type) {
+            'int', 'integer' => (int) $value,
+            'float' => (float) $value,
+            'string' => (string) $value,
+            'bool', 'boolean' => (bool) $value,
+            default => $value,
+        };
     }
 }

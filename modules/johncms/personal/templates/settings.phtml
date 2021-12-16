@@ -1,120 +1,26 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
-/**
- * @var $title
- * @var $page_title
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $title,
-    ]
-);
-
-$userConfig = $user->config;
-
+$this->layout('system::layout/default');
 ?>
 
-<div class="buttons mb-2">
-    <?php foreach ($data['buttons'] as $button): ?>
-        <a href="<?= $button['url'] ?>" class="btn btn-outline-primary mb-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
-    <?php endforeach; ?>
-</div>
-
-<?php if (! empty($data['success_message'])): ?>
+<form method="post" class="mb-3" action="<?= $data['storeUrl'] ?>">
+    <?php if (! empty($data['success'])): ?>
+        <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-success', 'alert' => $data['success']]) ?>
+    <?php endif ?>
+    <?php if (! empty($data['errors'])): ?>
+        <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-danger', 'alert' => $data['errors']]) ?>
+    <?php endif ?>
     <?= $this->fetch(
-        'system::app/alert',
+        'system::forms/simple_form',
         [
-            'alert_type' => 'alert-success',
-            'alert'      => $data['success_message'],
+            'fields' => $data['formFields'],
+            'errors' => $data['validationErrors'],
         ]
-    ) ?>
-<?php endif; ?>
-<form action="<?= $data['form_action'] ?>" method="post">
-    <h3><?= __('Time settings') ?></h3>
-    <div class="form-group">
-        <label for="timeshift"><?= __('Shift of time') ?> (+-12)</label>
-        <input type="text"
-               class="form-control"
-               name="timeshift"
-               id="timeshift"
-               size="2"
-               maxlength="3"
-               value="<?= $userConfig->timeshift ?>"
-               placeholder="<?= __('Shift of time') ?>"
-        >
-        <div class="small text-muted">
-            <?= __('System time') ?>: <?= $data['system_time'] ?>
-        </div>
-    </div>
-
-    <h3><?= __('System Functions') ?></h3>
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="form-check-input" name="directUrl" value="1" id="directUrl" <?= $userConfig->directUrl ? 'checked' : '' ?>>
-        <label class="form-check-label" for="directUrl"><?= __('Direct URL') ?></label>
-    </div>
-    <div class="custom-control custom-checkbox mb-3">
-        <input type="checkbox" class="form-check-input" name="youtube" value="1" id="youtube" <?= $userConfig->youtube ? 'checked' : '' ?>>
-        <label class="form-check-label" for="youtube"><?= __('Youtube Player') ?></label>
-    </div>
-
-    <h3><?= __('Text entering') ?></h3>
-    <div class="form-group">
-        <label for="fieldHeight"><?= __('Height of field') ?> (1-9)</label>
-        <input type="text"
-               class="form-control"
-               name="fieldHeight"
-               id="fieldHeight"
-               maxlength="1"
-               value="<?= $userConfig->fieldHeight ?>"
-               placeholder="<?= __('Height of field') ?>"
-        >
-    </div>
-
-    <h3><?= __('Appearance') ?></h3>
-    <div class="form-group">
-        <label for="kmess"><?= __('Size of Lists') ?> (5-99)</label>
-        <input type="text"
-               class="form-control"
-               name="kmess"
-               id="kmess"
-               maxlength="2"
-               value="<?= $userConfig->kmess ?>"
-               placeholder="<?= __('Size of Lists') ?>"
-        >
-    </div>
-
-    <?php if (! empty($data['lng_list'])): ?>
-        <h3><?= __('Select Language') ?></h3>
-        <div class="form-group">
-            <label for="iso"><?= __('Select Language') ?></label>
-            <select class="form-control" id="iso" name="iso">
-                <?php foreach ($data['lng_list'] as $key => $lang): ?>
-                    <option value="<?= $key ?>"
-                        <?= ($key === $data['user_lng'] || ($key === $config['lng'] && empty($data['user_lng']))) ? 'selected' : '' ?>
-                    ><?= $lang['name'] ?><?= ($key === $config['lng'] ? ' (' . __('Site Default') . ')' : '') ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    <?php endif; ?>
-    <div class="d-flex flex-wrap justify-content-between">
-        <div class="mb-1 me-1">
-            <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
-            <a href="?act=office" class="btn btn-secondary"><?= __('Cancel') ?></a>
-        </div>
-        <div>
-            <a href="?act=settings&amp;reset" class="btn btn-danger"><?= __('Reset Settings') ?></a>
-        </div>
-    </div>
+    ); ?>
+    <button type="submit" name="submit" class="btn btn-primary"><?= __('Save') ?></button>
+    <a href="<?= $data['backButton'] ?>" class="btn btn-outline-secondary"><?= __('Back') ?></a>
 </form>

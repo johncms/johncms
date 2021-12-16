@@ -84,6 +84,11 @@ class UserManager
             $fields['additional_fields'] = array_merge($additionalFields, $fields['additional_fields']);
         }
 
+        if (array_key_exists('settings', $fields)) {
+            $settings = (array) $user->settings;
+            $fields['settings'] = array_merge($settings, $fields['settings']);
+        }
+
         $user->update($fields);
         return $user;
     }
