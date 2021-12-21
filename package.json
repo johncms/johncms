@@ -49,6 +49,7 @@
         "lodash": "^4.17.21",
         "popper.js": "^2.0.0-next.4",
         "swiper": "^6.6.2",
-        "vue": "^2.6.14"
+        "vue": "^2.6.14",
+        "vue-image-crop-upload": "^3.0.3"
     }
 }

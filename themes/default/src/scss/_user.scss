@@ -75,6 +75,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-size: cover !important;
+    position: relative;
 }
 
 .add-photo-btn {
@@ -93,11 +95,29 @@
     }
 }
 
+.change-photo-btn {
+    background: #fff;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 5px 0 rgb(50 50 50 / 75%);
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    color: #76716b;
+    padding: 6px;
+}
+
 .profile-info-row {
     padding: 2px 0;
+
     .profile-info-name {
         color: var(--bs-secondary);
     }
+
     .profile-info-value {
         font-weight: 600;
     }

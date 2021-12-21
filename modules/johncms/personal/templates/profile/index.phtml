@@ -35,16 +35,13 @@ $this->layout('system::layout/default');
     </li>
 </ul>
 
-<div class="personal-profile">
-    <div class="personal-profile-photo">
-        <div class="profile-photo-upload-btn">
-            <div class="text-center add-photo-btn">
-                <div class="add-photo-icon">+</div>
-                <div class="add-photo-text"><?= __('Add photo') ?></div>
-            </div>
+<div class="personal-profile flex-wrap">
+    <div class="personal-profile-photo col-12 col-md-auto flex-grow-0">
+        <div class="vue_app d-flex justify-content-center">
+            <avatar-uploader></avatar-uploader>
         </div>
     </div>
-    <div class="profile-details ps-md-4">
+    <div class="profile-details col-12 col-md-9 flex-grow-1 ps-md-4 text-center mt-3 mt-md-0 text-md-start">
         <div class="h3 fw-bold mb-2"><?= $userData->displayName() ?></div>
         <div class="fz-normal">
             <div class="text-secondary"><?= __('Login:') ?> <?= $userData->login ?></div>
