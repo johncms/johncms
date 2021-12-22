@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-use Johncms\Admin\Languages\Languages;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\i18n\Languages;
 use Johncms\View\Render;
 
 $request = di(Request::class);

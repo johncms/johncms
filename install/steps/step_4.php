@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Johncms\Admin\Languages\Languages;
 use Johncms\Http\Request;
+use Johncms\i18n\Languages;
 use Johncms\i18n\Translator;
 use Johncms\Install\Database;
 use Johncms\Users\AuthProviders\SessionAuthProvider;

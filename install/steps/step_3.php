@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Checker\DBChecker;
+use Johncms\Config;
 use Johncms\Http\Request;
 use Johncms\Install\Database;
 use Johncms\Modules\ModuleInstaller;
@@ -81,6 +82,9 @@ if ($request->getMethod() === 'POST') {
             file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)
         ) {
             Database::createTables($version_info['error']);
+            // reread configs
+            $container = \Johncms\Container\ContainerFactory::getContainer();
+            $container->instance('config', (new Config())());
 
             di(PDO::class);
             // Installing modules
