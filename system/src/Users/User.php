@@ -17,7 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\SpecialChars;
+use Johncms\Files\Models\File;
 use Johncms\Users\Casts\AdditionalFieldsCast;
 use Johncms\Users\Casts\UserSettings;
 
@@ -78,7 +80,8 @@ class User extends Model
         'birthday',
         'last_visit',
         'settings',
-        'additional_fields'
+        'additional_fields',
+        'avatar_id',
     ];
 
     protected $attributes = [];
@@ -221,5 +224,10 @@ class User extends Model
             2 => d__('system', 'Female'),
             default => d__('system', 'Not specified'),
         };
+    }
+
+    public function avatar(): HasOne
+    {
+        return $this->hasOne(File::class, 'id', 'avatar_id');
     }
 }
