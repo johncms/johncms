@@ -230,4 +230,9 @@ class User extends Model
     {
         return $this->hasOne(File::class, 'id', 'avatar_id');
     }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar?->url;
+    }
 }

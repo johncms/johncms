@@ -3,6 +3,7 @@
         <div class="profile-photo-upload-btn cursor-pointer has-photo"
              data-bs-toggle="modal"
              data-bs-target="#uploadAvatar"
+             :class="{'border-0': imgUrl}"
              :style="'background: url('+ imgUrl +')'">
             <div class="text-center add-photo-btn" v-if="!imgUrl">
                 <div class="add-photo-icon">+</div>
