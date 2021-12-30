@@ -38,12 +38,20 @@ $this->layout('system::layout/default');
 <div class="personal-profile flex-wrap">
     <div class="personal-profile-photo col-12 col-md-auto flex-grow-0">
         <div class="vue_app d-flex justify-content-center">
-            <avatar-uploader
-                upload-url="<?= route('personal.profile.avatarUpload') ?>"
-                delete-url="<?= route('personal.profile.avatarDelete') ?>"
-                token="<?= $csrf_token ?>"
-                current-avatar="<?= $userData->avatar_url ?>"
-            ></avatar-uploader>
+            <?php if ($data['canEdit']): ?>
+                <avatar-uploader
+                    upload-url="<?= route('personal.profile.avatarUpload') ?>"
+                    delete-url="<?= route('personal.profile.avatarDelete') ?>"
+                    token="<?= $csrf_token ?>"
+                    current-avatar="<?= $userData->avatar_url ?>"
+                ></avatar-uploader>
+            <?php else: ?>
+                <div class="profile-photo-upload-btn <?= $userData->avatar_url ? 'border-0' : '' ?>" style="background: url('<?= $userData->avatar_url ?>')">
+                    <?php if (! $userData->avatar_url): ?>
+                        <span class="text-secondary"><?= __('No photo') ?></span>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     <div class="profile-details col-12 col-md-9 flex-grow-1 ps-md-4 text-center mt-3 mt-md-0 text-md-start">
