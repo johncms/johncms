@@ -40,6 +40,7 @@ $this->layout('system::layout/default');
         <div class="vue_app d-flex justify-content-center">
             <avatar-uploader
                 upload-url="<?= route('personal.profile.avatarUpload') ?>"
+                delete-url="<?= route('personal.profile.avatarDelete') ?>"
                 token="<?= $csrf_token ?>"
                 current-avatar="<?= $userData->avatar_url ?>"
             ></avatar-uploader>

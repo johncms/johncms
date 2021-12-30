@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="position-relative">
         <div class="profile-photo-upload-btn cursor-pointer has-photo"
              data-bs-toggle="modal"
              data-bs-target="#uploadAvatar"
@@ -16,6 +16,10 @@
                 </svg>
             </div>
         </div>
+        <form :action="deleteUrl" method="post" v-if="imgUrl">
+            <input type="hidden" name="csrf_token" :value="token">
+            <button type="submit" class="btn btn-link delete-photo-btn text-decoration-none cursor-pointer" v-if="deleteUrl">&times;</button>
+        </form>
         <avatar-uploader-bs-modal
                 modal-id="uploadAvatar"
                 field="avatar"
@@ -50,6 +54,10 @@ export default {
             type: String,
             'default': ''
         },
+        deleteUrl: {
+            type: String,
+            'default': ''
+        },
         token: {
             type: String,
             'default': ''
@@ -81,7 +89,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

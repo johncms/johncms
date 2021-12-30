@@ -25,6 +25,7 @@ use Johncms\Personal\Forms\ProfileForm;
 use Johncms\Users\Exceptions\RuntimeException;
 use Johncms\Users\User;
 use Johncms\Users\UserManager;
+use League\Flysystem\FilesystemException;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -143,5 +144,14 @@ class ProfileController extends BaseController
                 ],
             ];
         }
+    }
+
+    /**
+     * @throws FilesystemException
+     */
+    public function avatarDelete(User $user, UserManager $userManager): RedirectResponse
+    {
+        $userManager->update($user->id, ['avatar_id' => null]);
+        return new RedirectResponse(route('personal.profile'));
     }
 }

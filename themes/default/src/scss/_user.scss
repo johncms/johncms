@@ -111,6 +111,27 @@
     padding: 6px;
 }
 
+.delete-photo-btn {
+    background: #fff;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 5px 0 rgb(50 50 50 / 75%);
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    padding: 6px;
+    font-size: 22px;
+    color: var(--bs-danger);
+
+    &:hover {
+        color: var(--bs-danger) !important;
+    }
+}
+
 .profile-info-row {
     padding: 2px 0;
 
