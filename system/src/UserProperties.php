@@ -22,7 +22,6 @@ use Johncms\Users\User;
  */
 class UserProperties
 {
-
     /** @var User */
     public $current_user;
 
