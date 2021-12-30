@@ -14,6 +14,8 @@ use Johncms\Http\Request;
 use Johncms\Install\Install;
 use Johncms\View\Render;
 
+ini_set('max_execution_time', '600');
+
 require '../system/vendor/autoload.php';
 
 $request = di(Request::class);
