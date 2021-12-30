@@ -96,7 +96,7 @@ class RegistrationController extends BaseController
             $sessionProvider = di(SessionAuthProvider::class);
             $sessionProvider->store($confirmUser);
 
-            return $this->render->render('registration::email_confirmed', ['user' => $confirmUser]);
+            return $this->render->render('auth::email_confirmed', ['user' => $confirmUser]);
         } catch (RuntimeException $exception) {
             return $this->render->render('system::pages/result', [
                 'type'    => 'alert-danger',
