@@ -21,6 +21,7 @@ return function (Router $router) {
         $route->get('/profile[/[{id:number}[/]]]', [ProfileController::class, 'index'])->setName('personal.profile');
         $route->get('/profile/edit/{id:number}[/]', [ProfileController::class, 'edit'])->setName('personal.profile.edit');
         $route->post('/profile/store/{id:number}[/]', [ProfileController::class, 'store'])->setName('personal.profile.store');
+        $route->post('/profile/avatar/upload[/]', [ProfileController::class, 'avatarUpload'])->setName('personal.profile.avatarUpload');
 
         $route->get('/settings[/]', [SettingsController::class, 'index'])->setName('personal.settings');
         $route->post('/settings/store[/]', [SettingsController::class, 'store'])->setName('personal.settings.store');

@@ -12,9 +12,13 @@ declare(strict_types=1);
 
 namespace Johncms\Personal\Controllers;
 
+use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Exceptions\ValidationException;
+use Johncms\FileInfo;
+use Johncms\Files\FileStorage;
+use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\Personal\Forms\ProfileForm;
@@ -107,6 +111,37 @@ class ProfileController extends BaseController
             return (new RedirectResponse(route('personal.profile.edit', ['id' => $id])))
                 ->withPost()
                 ->withValidationErrors($validationException->getErrors());
+        }
+    }
+
+    public function avatarUpload(Request $request, User $user, UserManager $userManager, FileStorage $fileStorage): array
+    {
+        try {
+            /** @var UploadedFile[] $files */
+            $files = $request->getUploadedFiles();
+            $file_info = new FileInfo($files['avatar']->getClientFilename());
+            if (! $file_info->isImage()) {
+                return [
+                    'error' => [
+                        'message' => __('Only images are allowed'),
+                    ],
+                ];
+            }
+
+            $file = $fileStorage->saveFromRequest('avatar', 'users/avatar');
+            $userManager->update($user->id, ['avatar_id' => $file->id]);
+            return [
+                'id'       => $file->id,
+                'name'     => $file->name,
+                'uploaded' => 1,
+                'url'      => $file->url,
+            ];
+        } catch (Throwable $e) {
+            return [
+                'error' => [
+                    'message' => $e->getMessage(),
+                ],
+            ];
         }
     }
 }

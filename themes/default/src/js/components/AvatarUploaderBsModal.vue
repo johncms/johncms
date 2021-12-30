@@ -115,10 +115,10 @@
                                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" :style="progressStyle"></div>
                                     </div>
                                 </div>
-                                <div class="vicp-error" v-show="hasError">
+                                <div class="alert alert-danger" v-show="hasError">
                                     <i class="vicp-icon2"></i> {{ errorMsg }}
                                 </div>
-                                <div class="vicp-success" v-show="loading === 2">
+                                <div class="alert alert-success" v-show="loading === 2">
                                     <i class="vicp-icon3"></i> {{ lang.success }}
                                 </div>
                             </div>
@@ -920,19 +920,15 @@ export default {
             }).then(
                     // 上传成功
                     function (resData) {
-                        if (that.value) {
-                            that.loading = 2;
-                            that.$emit('crop-upload-success', resData, field, ki);
-                        }
+                        that.loading = 2;
+                        that.$emit('crop-upload-success', resData, field, ki);
                     },
                     // 上传失败
                     function (sts) {
-                        if (that.value) {
-                            that.loading = 3;
-                            that.hasError = true;
-                            that.errorMsg = lang.fail;
-                            that.$emit('crop-upload-fail', sts, field, ki);
-                        }
+                        that.loading = 3;
+                        that.hasError = true;
+                        that.errorMsg = lang.fail;
+                        that.$emit('crop-upload-fail', sts, field, ki);
                     }
             );
         }

@@ -17,14 +17,12 @@
         </div>
         <avatar-uploader-bs-modal
                 modal-id="uploadAvatar"
-                field="img"
+                field="avatar"
                 @crop-success="cropSuccess"
-                @crop-upload-success="cropUploadSuccess"
-                @crop-upload-fail="cropUploadFail"
                 v-model="show"
                 :width="300"
                 :height="300"
-                url="/upload"
+                :url="uploadUrl"
                 :params="params"
                 :headers="headers"
                 :langType="langType"
@@ -46,14 +44,21 @@ export default {
         currentAvatar: {
             type: String,
             'default': ''
+        },
+        uploadUrl: {
+            type: String,
+            'default': ''
+        },
+        token: {
+            type: String,
+            'default': ''
         }
     },
     data() {
         return {
             show: false,
             params: {
-                token: '123456798',
-                name: 'avatar'
+                csrf_token: this.token
             },
             headers: {},
             imgUrl: this.currentAvatar
@@ -72,28 +77,6 @@ export default {
         cropSuccess(imgDataUrl, field) {
             this.imgUrl = imgDataUrl;
         },
-        /**
-         * upload success
-         *
-         * [param] jsonData  server api return data, already json encode
-         * [param] field
-         */
-        cropUploadSuccess(jsonData, field) {
-            console.log('-------- upload success --------');
-            console.log(jsonData);
-            console.log('field: ' + field);
-        },
-        /**
-         * upload fail
-         *
-         * [param] status    server api return error status, like 500
-         * [param] field
-         */
-        cropUploadFail(status, field) {
-            console.log('-------- upload fail --------');
-            console.log(status);
-            console.log('field: ' + field);
-        }
     }
 }
 </script>

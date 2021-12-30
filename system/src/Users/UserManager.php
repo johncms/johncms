@@ -13,11 +13,13 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Carbon\Carbon;
+use Johncms\Files\FileStorage;
 use Johncms\Users\Exceptions\EmailIsNotConfirmedException;
 use Johncms\Users\Exceptions\IncorrectPasswordException;
 use Johncms\Users\Exceptions\RuntimeException;
 use Johncms\Users\Exceptions\UserIsNotConfirmedException;
 use Johncms\Users\Exceptions\UserNotFoundException;
+use League\Flysystem\FilesystemException;
 use Psr\Container\ContainerInterface;
 
 class UserManager
@@ -60,6 +62,7 @@ class UserManager
      * @param int $user_id
      * @param array $fields
      * @return User
+     * @throws FilesystemException
      */
     public function update(int $user_id, array $fields): User
     {
@@ -87,6 +90,10 @@ class UserManager
         if (array_key_exists('settings', $fields)) {
             $settings = (array) $user->settings;
             $fields['settings'] = array_merge($settings, $fields['settings']);
+        }
+
+        if (array_key_exists('avatar_id', $fields)) {
+            $this->replaceAvatar($user, $fields);
         }
 
         $user->update($fields);
@@ -145,5 +152,16 @@ class UserManager
         }
 
         return $user;
+    }
+
+    /**
+     * @throws FilesystemException
+     */
+    protected function replaceAvatar(User $user, array $fields)
+    {
+        if (! empty($user->avatar_id) && $fields['avatar_id'] !== $user->avatar_id) {
+            $fileStorage = di(FileStorage::class);
+            $fileStorage->delete($user->avatar_id);
+        }
     }
 }
