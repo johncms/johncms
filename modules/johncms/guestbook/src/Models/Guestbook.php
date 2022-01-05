@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Models;
+namespace Johncms\Guestbook\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -124,7 +124,7 @@ class Guestbook extends Model
     public function getIsOnlineAttribute(): bool
     {
         if ($this->user_id && $this->user !== null) {
-            return $this->user->is_online;
+            return $this->user->isOnline();
         }
         return false;
     }

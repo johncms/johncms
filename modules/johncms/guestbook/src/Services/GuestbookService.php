@@ -10,16 +10,17 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Services;
+namespace Johncms\Guestbook\Services;
 
 use Exception;
-use Guestbook\Models\Guestbook;
-use Guestbook\Resources\PostResource;
-use Guestbook\Resources\ResourceCollection;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Files\FileStorage;
+use Johncms\Guestbook\Models\Guestbook;
+use Johncms\Guestbook\Resources\PostResource;
+use Johncms\Guestbook\Resources\ResourceCollection;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Settings\SiteSettings;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use League\Flysystem\FilesystemException;
@@ -34,6 +35,8 @@ class GuestbookService
     /** @var array */
     protected $config;
 
+    protected SiteSettings $siteSettings;
+
     /** @var array */
     protected $guest_access = [];
 
@@ -41,6 +44,7 @@ class GuestbookService
     {
         $this->user = di(User::class);
         $this->config = di('config')['johncms'];
+        $this->siteSettings = di(SiteSettings::class);
 
         // Here you can (separated by commas) add the ID of those users who are not in the administration.
         // But who are allowed to read and write in the admin club
@@ -59,7 +63,7 @@ class GuestbookService
             ->with('user')
             ->where('adm', $admin_club)
             ->orderByDesc('time')
-            ->paginate($this->user->config->kmess);
+            ->paginate($this->siteSettings->getPerPage());
 
         $posts = new ResourceCollection($messages, PostResource::class);
 
@@ -96,7 +100,7 @@ class GuestbookService
      */
     public function canWrite(): bool
     {
-        return ($this->user->isValid() || $this->config['mod_guest'] === 2) && ! isset($this->user->ban['1']) && ! isset($this->user->ban['13']);
+        return ($this->user || $this->config['mod_guest'] === 2) && ! isset($this->user->ban['1']) && ! isset($this->user->ban['13']);
     }
 
     /**

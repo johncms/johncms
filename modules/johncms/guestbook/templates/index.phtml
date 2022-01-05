@@ -26,7 +26,7 @@
             <?php endif ?>
             <form name="form" action="/guestbook/" method="post">
                 <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
-                <?php if (! $user->isValid()): ?>
+                <?php if (! $user): ?>
                     <div class="form-group">
                         <label for="name"><?= __('Name') ?></label>
                         <input type="text"
@@ -52,7 +52,7 @@
                     ]
                 ) ?>
 
-                <?php if (! $user->isValid()): ?>
+                <?php if (! $user): ?>
                     <img alt="<?= __('Verification code') ?>" src="<?= $data['captcha'] ?>">
                     <div class="form-group">
                         <label for="code"><?= __('Symbols on the picture') ?></label>
@@ -80,7 +80,7 @@
     </div>
 <?php else: ?>
     <!-- Гостевая только для зарегистрированных -->
-    <?php if (! $user->isValid()): ?>
+    <?php if (! $user): ?>
         <?= $this->fetch(
             'system::app/alert',
             [

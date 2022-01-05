@@ -8,7 +8,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Guestbook\Controllers\GuestbookController;
+use Johncms\Guestbook\Controllers\GuestbookController;
 use League\Route\RouteGroup;
 use League\Route\Router;
 

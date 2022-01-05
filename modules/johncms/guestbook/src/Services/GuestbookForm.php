@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Services;
+namespace Johncms\Guestbook\Services;
 
-use Guestbook\Models\Guestbook;
+use Johncms\Guestbook\Models\Guestbook;
 use Johncms\Http\Request;
 use Johncms\Users\User;
 

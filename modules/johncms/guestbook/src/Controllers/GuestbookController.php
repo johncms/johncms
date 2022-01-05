@@ -10,40 +10,40 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Controllers;
+namespace Johncms\Guestbook\Controllers;
 
 use Exception;
-use Guestbook\Models\Guestbook;
-use Guestbook\Services\GuestbookForm;
-use Guestbook\Services\GuestbookService;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Guestbook\Models\Guestbook;
+use Johncms\Guestbook\Services\GuestbookForm;
+use Johncms\Guestbook\Services\GuestbookService;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use League\Flysystem\FilesystemException;
+use Throwable;
 
 class GuestbookController extends BaseController
 {
-    protected string $moduleName = 'guestbook';
+    protected string $moduleName = 'johncms/guestbook';
+    protected string $base_url = '/guestbook/';
 
-    /** @var string */
-    protected $page_title = '';
-
-    /** @var string */
-    protected $base_url = '/guestbook/';
-
+    /**
+     * @throws Throwable
+     */
     public function __construct()
     {
         parent::__construct();
         $guestbook = di(GuestbookService::class);
-        $this->page_title = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
-        $this->navChain->add($this->page_title, $this->base_url);
+        $pageTitle = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
+        $this->navChain->add($pageTitle, $this->base_url);
+        $this->metaTagManager->setAll($pageTitle);
 
         $config = di('config')['johncms'];
         $user = di(User::class);
@@ -52,7 +52,7 @@ class GuestbookController extends BaseController
             echo $this->render->render(
                 'system::pages/result',
                 [
-                    'title'    => $this->page_title,
+                    'title'    => $pageTitle,
                     'message'  => __('Guestbook is closed'),
                     'type'     => 'alert-danger',
                     'back_url' => '/',
@@ -64,8 +64,6 @@ class GuestbookController extends BaseController
 
     public function index(GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
     {
-        $this->render->addData(['title' => $this->page_title, 'page_title' => $this->page_title]);
-
         $flash_errors = $session->getFlash('errors');
         $errors = $flash_errors ?? [];
 
