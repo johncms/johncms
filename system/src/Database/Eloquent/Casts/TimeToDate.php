@@ -16,7 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\i18n\Translator;
-use Johncms\Users\User;
+use Johncms\Settings\SiteSettings;
 
 use function di;
 
@@ -34,13 +34,10 @@ class TimeToDate implements CastsAttributes
     public function get($model, $key, $value, $attributes)
     {
         if (! empty($value)) {
-            /** @var User $user */
-            $user = di(User::class);
-            /** @var Translator $translator */
             $translator = di(Translator::class);
-            $config = di('config')['johncms'];
+            $siteSettings = di(SiteSettings::class);
 
-            return Carbon::createFromTimestamp($value, ($user->set_user->timeshift + $config['timeshift']))
+            return Carbon::createFromTimestamp($value, $siteSettings->getTimezone())
                 ->locale($translator->getLocale())
                 ->calendar(
                     null,
