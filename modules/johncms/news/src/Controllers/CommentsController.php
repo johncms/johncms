@@ -125,11 +125,6 @@ class CommentsController extends BaseController
 
     public function add(int $article_id, Request $request, ?User $user = null): ResponseInterface
     {
-        $post_body = $request->getBody();
-        if ($post_body) {
-            $post_body = json_decode($post_body->getContents(), true);
-        }
-
         if (! empty($user?->ban)) {
             return new JsonResponse(['message' => __('You have a ban!')], 403);
         }
@@ -139,9 +134,9 @@ class CommentsController extends BaseController
         }
 
         $article = (new NewsArticle())->findOrFail($article_id);
-        $comment = trim($post_body['comment']);
+        $comment = $request->getJson('comment');
         if (! empty($comment)) {
-            $attached_files = array_map('intval', (array) ($post_body['attached_files'] ?? []));
+            $attached_files = array_map('intval', (array) $request->getJson('attached_files', []));
             (new NewsComments())->create(
                 [
                     'article_id'     => $article->id,
@@ -157,7 +152,7 @@ class CommentsController extends BaseController
                 ]
             );
 
-            $last_page = (new NewsComments())->where('article_id', $article->id)->paginate($user->config->kmess)->lastPage();
+            $last_page = (new NewsComments())->where('article_id', $article->id)->paginate($user->settings->perPage)->lastPage();
             return new JsonResponse(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
         } else {
             return new JsonResponse(['message' => __('Enter the comment text')], 422);
@@ -166,12 +161,7 @@ class CommentsController extends BaseController
 
     public function del(Request $request, User $user, FileStorage $storage): array|JsonResponse
     {
-        $post_body = $request->getBody();
-        if ($post_body) {
-            $post_body = json_decode($post_body->getContents(), true);
-        }
-
-        $comment_id = $post_body['comment_id'] ?? 0;
+        $comment_id = $request->getJson('comment_id', 0, FILTER_VALIDATE_INT);
 
         $post = (new NewsComments())->findOrFail($comment_id);
         // TODO: Replace to check permission
