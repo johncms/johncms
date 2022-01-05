@@ -17,6 +17,7 @@ return [
 
         'timezone'      => 'UTC',
         'language'      => 'en',
+        'perPage'       => 10,
 
         // User model settings
         'user_model'    => [

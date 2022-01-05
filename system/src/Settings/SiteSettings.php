@@ -7,7 +7,9 @@ namespace Johncms\Settings;
 use JetBrains\PhpStorm\Pure;
 use Johncms\i18n\Translator;
 use Johncms\Users\User;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class SiteSettings
 {
@@ -15,6 +17,10 @@ class SiteSettings
     protected array $config;
     protected Translator $translator;
 
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->config = $container->get('config')['johncms'];
@@ -30,6 +36,11 @@ class SiteSettings
     public function getTimezone(): string
     {
         return $this->user?->settings->timezone ?? $this->config['timezone'];
+    }
+
+    public function getPerPage(): int
+    {
+        return (int) $this->user?->settings->perPage ?? $this->config['perPage'];
     }
 
     #[Pure]
