@@ -19,6 +19,8 @@ class Request extends ServerRequest
 {
     public const POST_SESSION_KEY = '_POST';
 
+    protected array|null $json = null;
+
     /**
      * Return a ServerRequest populated with superglobals:
      * $_GET
@@ -48,7 +50,17 @@ class Request extends ServerRequest
             ->withCookieParams($_COOKIE)
             ->withQueryParams($_GET)
             ->withParsedBody($post)
-            ->withUploadedFiles(self::normalizeFiles($_FILES));
+            ->withUploadedFiles(self::normalizeFiles($_FILES))
+            ->withJson();
+    }
+
+    protected function withJson(): static
+    {
+        $body = $this->getBody();
+        if ($body) {
+            $this->json = json_decode($body->getContents(), true);
+        }
+        return $this;
     }
 
     public function getQuery(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
@@ -59,6 +71,14 @@ class Request extends ServerRequest
     public function getPost(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
     {
         return $this->filterVar($name, $this->getParsedBody(), $filter, $options) ?? $default;
+    }
+
+    public function getJson(string $name = '', mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
+    {
+        if (empty($name)) {
+            return $this->json ?? [];
+        }
+        return $this->filterVar($name, $this->json ?? [], $filter, $options) ?? $default;
     }
 
     public function getCookie(string $name, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = 0): mixed
