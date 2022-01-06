@@ -31,14 +31,9 @@ class ModuleInstaller
         }
     }
 
-    public function install(): void
+    public function getInstaller(): Installer
     {
-        $this->installer->install();
-    }
-
-    public function uninstall(): void
-    {
-        $this->installer->uninstall();
+        return $this->installer;
     }
 
     protected function getInstallerClassName(): string

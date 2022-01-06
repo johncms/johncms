@@ -91,7 +91,12 @@ if ($request->getMethod() === 'POST') {
             $modules = new Modules();
             $installed_modules = $modules->getInstalled();
             foreach ($installed_modules as $module) {
-                (new ModuleInstaller($module))->install();
+                (new ModuleInstaller($module))->getInstaller()->install();
+            }
+
+            // Run the after install scripts
+            foreach ($installed_modules as $module) {
+                (new ModuleInstaller($module))->getInstaller()->afterInstall();
             }
 
             header('Location: /install/?step=4');

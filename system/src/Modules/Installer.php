@@ -10,13 +10,9 @@
 
 namespace Johncms\Modules;
 
-/**
- * @psalm-consistent-constructor
- */
 abstract class Installer
 {
-    /** @var string */
-    protected $module_name = '';
+    protected string $module_name;
 
     public function __construct(string $module_name)
     {
@@ -26,4 +22,8 @@ abstract class Installer
     abstract public function install(): void;
 
     abstract public function uninstall(): void;
+
+    public function afterInstall(): void
+    {
+    }
 }
