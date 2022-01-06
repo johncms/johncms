@@ -33,5 +33,6 @@ class Permission extends Model
         'name',
         'display_name',
         'description',
+        'module_name',
     ];
 }

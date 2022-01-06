@@ -14,12 +14,15 @@ namespace Johncms\Guestbook\Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Johncms\Users\Permission;
+use Johncms\Users\Role;
 
 class Installer extends \Johncms\Modules\Installer
 {
     public function install(): void
     {
         $this->createTables();
+        $this->createPermissions();
     }
 
     public function uninstall(): void
@@ -50,5 +53,42 @@ class Installer extends \Johncms\Modules\Installer
                 $table->longText('attached_files')->nullable();
             }
         );
+    }
+
+    private function createPermissions()
+    {
+        $permissions = [
+            [
+                'name'         => 'guestbook_admin_club',
+                'display_name' => __('Access to the admin club'),
+                'module_name'  => $this->module_name,
+            ],
+            [
+                'name'         => 'guestbook_delete_posts',
+                'display_name' => __('Access to delete the guestbook posts'),
+                'module_name'  => $this->module_name,
+            ],
+            [
+                'name'         => 'guestbook_clear',
+                'display_name' => __('Access to clear the guestbook'),
+                'module_name'  => $this->module_name,
+            ],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::query()->create($permission);
+        }
+    }
+
+    public function afterInstall(): void
+    {
+        $permissions = Permission::query()->where('module_name', $this->module_name)->get()->pluck('id');
+
+        $adminRole = Role::query()->where('name', 'admin')->first();
+        $moderatorRole = Role::query()->where('name', 'moderator')->first();
+
+        // Attach permissions to roles
+        $adminRole->permissions()->sync($permissions);
+        $moderatorRole->permissions()->sync($permissions);
     }
 }
