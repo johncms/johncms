@@ -46,9 +46,9 @@
                 <?= $this->fetch(
                     'guestbook::ckeditor',
                     [
-                        'label'  => __('Message'),
+                        'label' => __('Message'),
                         'errors' => implode(', ', $data['errors']['message'] ?? []),
-                        'value'  => $this->e($data['form_data']['message']),
+                        'value' => $this->e($data['form_data']['message']),
                     ]
                 ) ?>
 
@@ -186,7 +186,7 @@
                                 </svg>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <?php if ($post['meta']['reply_url']): ?>
+                                <?php if (isset($post['meta']['reply_url'])): ?>
                                     <a href="<?= $post['meta']['reply_url'] ?>" class="dropdown-item"><?= __('Reply') ?></a>
                                 <?php endif; ?>
                                 <a href="<?= $post['meta']['edit_url'] ?>" class="dropdown-item"><?= __('Edit') ?></a>

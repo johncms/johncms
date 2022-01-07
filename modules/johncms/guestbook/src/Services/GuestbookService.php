@@ -20,6 +20,7 @@ use Johncms\Guestbook\Resources\PostResource;
 use Johncms\Guestbook\Resources\ResourceCollection;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -29,26 +30,17 @@ use Mobicms\Captcha\Image;
 
 class GuestbookService
 {
-    /** @var User */
-    protected $user;
-
-    /** @var array */
-    protected $config;
-
+    protected ?User $user;
+    protected array $config;
     protected SiteSettings $siteSettings;
-
-    /** @var array */
-    protected $guest_access = [];
+    protected Session $session;
 
     public function __construct()
     {
         $this->user = di(User::class);
         $this->config = di('config')['johncms'];
         $this->siteSettings = di(SiteSettings::class);
-
-        // Here you can (separated by commas) add the ID of those users who are not in the administration.
-        // But who are allowed to read and write in the admin club
-        $this->guest_access = [];
+        $this->session = di(Session::class);
     }
 
     /**
@@ -58,7 +50,7 @@ class GuestbookService
      */
     public function getPosts(): array
     {
-        $admin_club = (isset($_SESSION['ga']) && ($this->user->rights >= 1 || in_array($this->user->id, $this->guest_access)));
+        $admin_club = ($this->session->has('ga') && $this->user?->hasPermission('guestbook_admin_club'));
         $messages = (new Guestbook())
             ->with('user')
             ->where('adm', $admin_club)
@@ -80,7 +72,7 @@ class GuestbookService
      */
     public function isGuestbook(): bool
     {
-        return ! isset($_SESSION['ga']);
+        return ! $this->session->has('ga');
     }
 
     /**
@@ -90,7 +82,7 @@ class GuestbookService
      */
     public function canClear(): bool
     {
-        return $this->user->rights >= 7;
+        return (bool) $this->user?->hasPermission('guestbook_clear');
     }
 
     /**
@@ -121,7 +113,7 @@ class GuestbookService
     public function getCaptcha(): string
     {
         try {
-            if ($this->canWrite() && ! $this->user->isValid()) {
+            if ($this->canWrite() && ! $this->user) {
                 $code = (new Code())->generate();
                 $_SESSION['code'] = $code;
                 return (new Image($code))->generate();
@@ -185,11 +177,11 @@ class GuestbookService
     public function switchGuestbookType(): void
     {
         $request = di(Request::class);
-        if ($this->user->rights >= 1 || in_array($this->user->id, $this->guest_access)) {
+        if ($this->user?->hasPermission('') >= 1) {
             if ($request->getQuery('do', '') === 'set') {
-                $_SESSION['ga'] = 1;
+                $this->session->set('ga', 1);
             } else {
-                unset($_SESSION['ga']);
+                $this->session->remove('ga');
             }
         }
     }
@@ -202,7 +194,7 @@ class GuestbookService
      */
     public function clear(int $period = 0): string
     {
-        $adm = ! $this->isGuestbook() ? 1 : 0;
+        $adm = $this->isGuestbook() ? 0 : 1;
         $storage = di(FileStorage::class);
         switch ($period) {
             case '1':

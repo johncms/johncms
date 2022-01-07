@@ -46,6 +46,8 @@ use Johncms\Users\Casts\UserSettings;
  *
  * @property StoredAuth[] $storedAuth
  *
+ * @property string $profile_url
+ *
  * @method Builder online() - Выбрать пользователей онлайн
  */
 class User extends Model
@@ -238,5 +240,10 @@ class User extends Model
     public function getAvatarUrlAttribute(): ?string
     {
         return $this->avatar?->url;
+    }
+
+    public function getProfileUrlAttribute(): ?string
+    {
+        return route('personal.profile', ['id' => $this->id]);
     }
 }

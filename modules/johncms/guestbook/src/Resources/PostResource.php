@@ -50,9 +50,8 @@ class PostResource extends BaseResource
             $user = [
                 'id'          => $user_model->id,
                 'profile_url' => $user_model->profile_url,
-                'rights_name' => $user_model->rights_name,
-                'rights'      => $user_model->rights,
-                'status'      => $user_model->status,
+                'rights_name' => $user_model->getRoleNames(),
+                'status'      => $user_model->additional_fields->status,
             ];
         }
 
@@ -61,20 +60,20 @@ class PostResource extends BaseResource
 
     protected function getMeta(): array
     {
-        $current_user = di(User::class);
-        if ($current_user->rights > 0) {
+        $currentUser = di(User::class);
+        if ($currentUser?->hasAnyRole()) {
             $meta = [
                 'ip'            => $this->model->ip,
                 'search_ip_url' => '/admin/search_ip/?ip=' . $this->model->ip,
                 'user_agent'    => $this->model->browser,
             ];
 
-            if ($this->model->user === null || $current_user->rights >= $this->model->user->rights) {
+            if ($currentUser?->hasPermission('guestbook_delete_posts')) {
                 $meta['can_manage'] = true;
                 $meta['edit_url'] = '/guestbook/edit?id=' . $this->model->id;
                 $meta['delete_url'] = '/guestbook/delpost?id=' . $this->model->id;
 
-                if ($current_user->rights >= 6) {
+                if ($currentUser->rights >= 6) {
                     $meta['reply_url'] = '/guestbook/otvet?id=' . $this->model->id;
                 }
             }
