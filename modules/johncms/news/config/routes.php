@@ -8,7 +8,6 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Middlewares\AuthMiddleware;
 use Johncms\News\Controllers\Admin\AdminArticleController;
 use Johncms\News\Controllers\Admin\AdminController;
 use Johncms\News\Controllers\Admin\AdminSectionController;
@@ -18,6 +17,7 @@ use Johncms\News\Controllers\SearchController;
 use Johncms\News\Controllers\SectionController;
 use Johncms\News\Controllers\VoteController;
 use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
+use Johncms\Users\Middlewares\HasRoleMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 
@@ -68,5 +68,5 @@ return function (Router $router) {
 
         // File uploader
         $route->post('/upload_file[/]', [AdminArticleController::class, 'loadFile'])->setName('news.admin.sections.loadFile');
-    })->middleware(new AuthMiddleware(['admin']));
+    })->middleware(new HasRoleMiddleware('admin'));
 };

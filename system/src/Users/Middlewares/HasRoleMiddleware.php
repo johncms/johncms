@@ -21,7 +21,7 @@ use Throwable;
 
 class HasRoleMiddleware implements MiddlewareInterface
 {
-    public function __construct(protected array $roles = [])
+    public function __construct(protected array | string $roles = [])
     {
     }
 

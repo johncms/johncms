@@ -21,7 +21,7 @@ use Throwable;
 
 class HasPermissionMiddleware implements MiddlewareInterface
 {
-    public function __construct(protected array $permissions = [])
+    public function __construct(protected array | string $permissions = [])
     {
     }
 
