@@ -91,15 +91,13 @@ class User extends Model
         'last_visit',
     ];
 
-    protected UserRoleChecker $userRoleChecker;
-    protected UserPermissionChecker $userPermissionChecker;
+    protected ?UserRoleChecker $userRoleChecker = null;
+    protected ?UserPermissionChecker $userPermissionChecker = null;
 
     public function __construct(array $attributes = [])
     {
         $this->setUpModel();
         parent::__construct($attributes);
-        $this->userRoleChecker = new UserRoleChecker($this);
-        $this->userPermissionChecker = new UserPermissionChecker($this);
     }
 
     private function setUpModel(): void
@@ -135,11 +133,17 @@ class User extends Model
 
     public function getRoleChecker(): UserRoleChecker
     {
+        if ($this->userRoleChecker === null) {
+            $this->userRoleChecker = new UserRoleChecker($this);
+        }
         return $this->userRoleChecker;
     }
 
     public function getPermissionChecker(): UserPermissionChecker
     {
+        if ($this->userPermissionChecker === null) {
+            $this->userPermissionChecker = new UserPermissionChecker($this);
+        }
         return $this->userPermissionChecker;
     }
 
@@ -148,24 +152,24 @@ class User extends Model
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public function hasRole(array|string $roles): bool
+    public function hasRole(array | string $roles): bool
     {
-        return $this->userRoleChecker->hasRole($roles);
+        return $this->getRoleChecker()->hasRole($roles);
     }
 
     public function hasAnyRole(): bool
     {
-        return $this->userRoleChecker->hasAnyRole();
+        return $this->getRoleChecker()->hasAnyRole();
     }
 
     public function isAdmin(): bool
     {
-        return $this->userRoleChecker->hasRole('admin');
+        return $this->getRoleChecker()->hasRole('admin');
     }
 
-    public function hasPermission(array|string $permissions): bool
+    public function hasPermission(array | string $permissions): bool
     {
-        return $this->userPermissionChecker->hasPermission($permissions);
+        return $this->getPermissionChecker()->hasPermission($permissions);
     }
 
     public function storedAuth(): HasMany
@@ -175,7 +179,7 @@ class User extends Model
 
     public function getRoleNames(): string
     {
-        $roles = (array) $this->userRoleChecker->getUserRoles();
+        $roles = (array) $this->getRoleChecker()->getUserRoles();
         if (empty($roles)) {
             return d__('system', 'User');
         }
