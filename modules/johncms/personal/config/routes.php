@@ -8,10 +8,10 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Auth\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Personal\Controllers\PersonalController;
 use Johncms\Personal\Controllers\ProfileController;
 use Johncms\Personal\Controllers\SettingsController;
+use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 

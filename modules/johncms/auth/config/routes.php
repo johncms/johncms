@@ -11,9 +11,9 @@
 use Johncms\Auth\Controllers\LoginController;
 use Johncms\Auth\Controllers\LogoutController;
 use Johncms\Auth\Controllers\RegistrationController;
-use Johncms\Auth\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Auth\Middlewares\RegistrationClosedMiddleware;
-use Johncms\Auth\Middlewares\UnauthorizedUserMiddleware;
+use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
+use Johncms\Users\Middlewares\UnauthorizedUserMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 

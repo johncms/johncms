@@ -10,26 +10,32 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Auth\Middlewares;
+namespace Johncms\Users\Middlewares;
 
 use Johncms\Users\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 
-class UnauthorizedUserMiddleware implements MiddlewareInterface
+class HasPermissionMiddleware implements MiddlewareInterface
 {
+    public function __construct(protected array $permissions = [])
+    {
+    }
+
     /**
      * @inheritDoc
+     * @throws Throwable
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // If the user is authorized, we redirect him to the homepage
         $user = di(User::class);
-        if ($user !== null) {
-            redirect(route('homepage.index'));
+        if (! $user?->hasPermission($this->permissions)) {
+            return status_page(403);
         }
+
         return $handler->handle($request);
     }
 }

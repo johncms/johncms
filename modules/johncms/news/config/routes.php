@@ -8,7 +8,6 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Auth\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Middlewares\AuthMiddleware;
 use Johncms\News\Controllers\Admin\AdminArticleController;
 use Johncms\News\Controllers\Admin\AdminController;
@@ -18,6 +17,7 @@ use Johncms\News\Controllers\CommentsController;
 use Johncms\News\Controllers\SearchController;
 use Johncms\News\Controllers\SectionController;
 use Johncms\News\Controllers\VoteController;
+use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 

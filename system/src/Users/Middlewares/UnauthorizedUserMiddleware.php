@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Auth\Middlewares;
+namespace Johncms\Users\Middlewares;
 
 use Johncms\Users\User;
 use Psr\Http\Message\ResponseInterface;
@@ -18,7 +18,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class AuthorizedUserMiddleware implements MiddlewareInterface
+use function di;
+use function redirect;
+
+class UnauthorizedUserMiddleware implements MiddlewareInterface
 {
     /**
      * @inheritDoc
@@ -27,7 +30,7 @@ class AuthorizedUserMiddleware implements MiddlewareInterface
     {
         // If the user is authorized, we redirect him to the homepage
         $user = di(User::class);
-        if ($user === null) {
+        if ($user !== null) {
             redirect(route('homepage.index'));
         }
         return $handler->handle($request);

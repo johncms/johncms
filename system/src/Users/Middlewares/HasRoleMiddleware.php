@@ -10,35 +10,32 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Middlewares;
+namespace Johncms\Users\Middlewares;
 
 use Johncms\Users\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 
-/**
- * @deprecated Use AuthorizedUserMiddleware or HasRoleMiddleware
- */
-class AuthMiddleware implements MiddlewareInterface
+class HasRoleMiddleware implements MiddlewareInterface
 {
-    protected array $roles;
-
-    public function __construct(array $roles = [])
+    public function __construct(protected array $roles = [])
     {
-        $this->roles = $roles;
     }
 
     /**
      * @inheritDoc
+     * @throws Throwable
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $user = di(User::class);
-        if ((empty($this->roles) && $user !== null) || (! empty($this->roles) && $user?->hasRole($this->roles))) {
-            return $handler->handle($request);
+        if (! $user?->hasRole($this->roles)) {
+            return status_page(403);
         }
-        return status_page(403);
+
+        return $handler->handle($request);
     }
 }
