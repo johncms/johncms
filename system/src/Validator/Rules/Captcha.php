@@ -26,6 +26,7 @@ class Captcha extends AbstractValidator
 
     public function isValid($value): bool
     {
+        $value = (string) $value;
         $this->setValue($value);
         $isValid = true;
         $code = di(Session::class)->get(Captcha::SESSION_FIELD);
