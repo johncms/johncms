@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\SpecialChars;
 use Johncms\Files\Models\File;
+use Johncms\Users\Ban\UserBanChecker;
 use Johncms\Users\Casts\AdditionalFieldsCast;
 use Johncms\Users\Casts\UserSettings;
 

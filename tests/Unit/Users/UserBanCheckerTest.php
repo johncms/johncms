@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Users;
 
 use Carbon\Carbon;
+use Johncms\Users\Ban\UserBan;
 use Johncms\Users\User;
-use Johncms\Users\UserBan;
 use Johncms\Users\UserManager;
 use Tests\AbstractTestCase;
 
@@ -32,7 +32,7 @@ class UserBanCheckerTest extends AbstractTestCase
 
     /**
      * @covers \Johncms\Users\User::hasBan
-     * @covers \Johncms\Users\UserBanChecker::hasBan
+     * @covers \Johncms\Users\Ban\UserBanChecker::hasBan
      * @covers \Johncms\Users\User::getUserBanChecker
      */
     public function testHasBan()

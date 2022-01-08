@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Users;
+namespace Johncms\Users\Ban;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;

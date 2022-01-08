@@ -10,7 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Users;
+namespace Johncms\Users\Ban;
+
+use Johncms\Users\User;
 
 class UserBanChecker
 {
