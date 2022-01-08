@@ -18,11 +18,8 @@ use Johncms\Users\User;
 
 class GuestbookForm
 {
-    /** @var Request */
-    protected $request;
-
-    /** @var User */
-    protected $user;
+    protected Request $request;
+    protected ?User $user;
 
     public function __construct()
     {
@@ -67,10 +64,9 @@ class GuestbookForm
                 ],
             ],
             'csrf_token' => [
-                'Csrf',
                 'Flood',
                 'Ban' => [
-                    'bans' => [1, 13],
+                    'bans' => ['full', 'guestbook_write'],
                 ],
             ],
         ];

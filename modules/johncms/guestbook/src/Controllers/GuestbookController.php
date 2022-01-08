@@ -113,10 +113,11 @@ class GuestbookController extends BaseController
     /**
      * Cleaning the guestbook
      *
-     * @param \Johncms\Http\Request $request
+     * @param Request $request
      * @param GuestbookService $guestbook
-     * @param \Johncms\Http\Session $session
+     * @param Session $session
      * @return string
+     * @throws Throwable
      */
     public function clean(Request $request, GuestbookService $guestbook, Session $session): string
     {
@@ -141,9 +142,10 @@ class GuestbookController extends BaseController
      * Cleaning the guestbook
      *
      * @param Request $request
-     * @param \Johncms\Http\Session $session
+     * @param Session $session
      * @param FileStorage $storage
      * @return string
+     * @throws Throwable
      */
     public function delete(Request $request, Session $session, FileStorage $storage): string
     {
@@ -178,9 +180,10 @@ class GuestbookController extends BaseController
      * The edit message page
      *
      * @param User $user
-     * @param \Johncms\Http\Request $request
-     * @param \Johncms\Http\Session $session
+     * @param Request $request
+     * @param Session $session
      * @return string
+     * @throws Throwable
      */
     public function edit(User $user, Request $request, Session $session): string
     {
@@ -243,8 +246,8 @@ class GuestbookController extends BaseController
      * The reply to message page
      *
      * @param User $user
-     * @param \Johncms\Http\Request $request
-     * @param \Johncms\Http\Session $session
+     * @param Request $request
+     * @param Session $session
      * @return string
      */
     public function reply(User $user, Request $request, Session $session): string
@@ -304,8 +307,18 @@ class GuestbookController extends BaseController
         );
     }
 
-    public function loadFile(Request $request): string
+    public function loadFile(Request $request, User $user): string
     {
+        if ($user->hasBan(['full', 'guestbook_write', 'guestbook_upload_photos'])) {
+            return json_encode(
+                [
+                    'error' => [
+                        'message' => __('You have a ban'),
+                    ],
+                ]
+            );
+        }
+
         try {
             /** @var UploadedFile[] $files */
             $files = $request->getUploadedFiles();

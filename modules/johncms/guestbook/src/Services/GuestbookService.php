@@ -91,7 +91,7 @@ class GuestbookService
      */
     public function canWrite(): bool
     {
-        return ($this->user || $this->config['mod_guest'] === 2) && ! isset($this->user->ban['1']) && ! isset($this->user->ban['13']);
+        return ($this->user || $this->config['mod_guest'] === 2) && ! $this->user?->hasBan(['full', 'guestbook_write']);
     }
 
     /**
@@ -114,7 +114,7 @@ class GuestbookService
         try {
             if ($this->canWrite() && ! $this->user) {
                 $code = (new Code())->generate();
-                $_SESSION['code'] = $code;
+                $this->session->set('code', $code);
                 return (new Image($code))->generate();
             }
         } catch (Exception) {
@@ -165,7 +165,7 @@ class GuestbookService
             throw ValidationException::withErrors($validator->getErrors());
         }
 
-        unset($_SESSION['code']);
+        $this->session->remove('code');
 
         return $message;
     }
@@ -204,7 +204,7 @@ class GuestbookService
                         foreach ($message->attached_files as $attached_file) {
                             try {
                                 $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
+                            } catch (Exception | FilesystemException) {
                             }
                         }
                     }

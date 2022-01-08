@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Validator;
 
 use Illuminate\Support\Arr;
+use Johncms\Validator\Rules\Ban;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\Flood;
 use Johncms\Validator\Rules\ModelExists;
@@ -117,6 +118,7 @@ class Validator
         'ModelNotExists'   => ModelNotExists::class,
         'Flood'            => Flood::class,
         'Captcha'          => Captcha::class,
+        'Ban'              => Ban::class,
     ];
 
     private array $errors = [];
