@@ -75,7 +75,7 @@ class GuestbookForm
             ],
         ];
 
-        if (! $this->user->isValid()) {
+        if (! $this->user) {
             $rules['name'] = [
                 'NotEmpty',
                 'StringLength' => ['min' => 3, 'max' => 25],

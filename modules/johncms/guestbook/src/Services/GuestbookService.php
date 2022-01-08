@@ -18,7 +18,6 @@ use Johncms\Files\FileStorage;
 use Johncms\Guestbook\Models\Guestbook;
 use Johncms\Guestbook\Resources\PostResource;
 use Johncms\Guestbook\Resources\ResourceCollection;
-use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Settings\SiteSettings;
@@ -118,7 +117,7 @@ class GuestbookService
                 $_SESSION['code'] = $code;
                 return (new Image($code))->generate();
             }
-        } catch (Exception $exception) {
+        } catch (Exception) {
         }
 
         return '';
@@ -132,7 +131,7 @@ class GuestbookService
     public function create(): Guestbook
     {
         $form = di(GuestbookForm::class);
-        $env = di(Environment::class);
+        $request = di(Request::class);
         $fields = $form->getFormData();
         $validation_rules = $form->getValidationRules();
 
@@ -142,16 +141,16 @@ class GuestbookService
                 [
                     'adm'            => ! $this->isGuestbook(),
                     'time'           => time(),
-                    'user_id'        => $this->user->id ?? 0,
-                    'name'           => $this->user->isValid() ? $this->user->name : $fields['name'],
+                    'user_id'        => $this->user?->id ?? 0,
+                    'name'           => $this->user?->name ?? $fields['name'],
                     'text'           => $fields['message'],
-                    'ip'             => $env->getIp(false),
-                    'browser'        => $env->getUserAgent(),
+                    'ip'             => $request->getIp(),
+                    'browser'        => $request->getUserAgent(),
                     'otvet'          => '',
                     'attached_files' => $fields['attached_files'],
                 ]
             );
-            if ($this->user->isValid()) {
+            /*if ($this->user) {
                 $post_guest = $this->user->postguest + 1;
                 (new User())
                     ->where('id', $this->user->id)
@@ -161,7 +160,7 @@ class GuestbookService
                             'lastpost'  => time(),
                         ]
                     );
-            }
+            }*/
         } else {
             throw ValidationException::withErrors($validator->getErrors());
         }
@@ -177,7 +176,7 @@ class GuestbookService
     public function switchGuestbookType(): void
     {
         $request = di(Request::class);
-        if ($this->user?->hasPermission('') >= 1) {
+        if ($this->user?->hasPermission('guestbook_admin_club')) {
             if ($request->getQuery('do', '') === 'set') {
                 $this->session->set('ga', 1);
             } else {
@@ -222,7 +221,7 @@ class GuestbookService
                         foreach ($message->attached_files as $attached_file) {
                             try {
                                 $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
+                            } catch (Exception | FilesystemException) {
                             }
                         }
                     }
@@ -238,7 +237,7 @@ class GuestbookService
                         foreach ($message->attached_files as $attached_file) {
                             try {
                                 $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
+                            } catch (Exception | FilesystemException) {
                             }
                         }
                     }

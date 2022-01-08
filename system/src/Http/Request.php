@@ -155,17 +155,17 @@ class Request extends ServerRequest
         return false;
     }
 
-    public function userAgent(): ?string
+    public function getUserAgent(): ?string
     {
         return $this->getServer('HTTP_USER_AGENT', '', FILTER_SANITIZE_STRING);
     }
 
-    public function ip(): ?string
+    public function getIp(): ?string
     {
         return $this->getServer('REMOTE_ADDR', '127.0.0.1', FILTER_VALIDATE_IP);
     }
 
-    public function ipViaProxy(): ?string
+    public function getIpViaProxy(): ?string
     {
         return $this->getServer('HTTP_X_FORWARDED_FOR', '127.0.0.1', FILTER_VALIDATE_IP);
     }

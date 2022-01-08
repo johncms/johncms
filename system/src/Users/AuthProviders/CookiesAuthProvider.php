@@ -76,8 +76,8 @@ class CookiesAuthProvider implements AuthProviderInterface
             [
                 'user_id' => $user->id,
                 'token' => $token,
-                'ip' => $this->request->ip(),
-                'user_agent' => $this->request->userAgent(),
+                'ip' => $this->request->getIp(),
+                'user_agent' => $this->request->getUserAgent(),
             ]
         );
     }

@@ -143,9 +143,9 @@ class CommentsController extends BaseController
                     'user_id'        => $user->id,
                     'text'           => $comment,
                     'user_data'      => [
-                        'user_agent'   => $request->userAgent(),
-                        'ip'           => $request->ip(),
-                        'ip_via_proxy' => $request->ipViaProxy(),
+                        'user_agent'   => $request->getUserAgent(),
+                        'ip'           => $request->getIp(),
+                        'ip_via_proxy' => $request->getIpViaProxy(),
                     ],
                     'created_at'     => Carbon::now()->format('Y-m-d H:i:s'),
                     'attached_files' => $attached_files,
