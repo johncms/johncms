@@ -32,6 +32,7 @@ use Johncms\Middlewares\SessionMiddleware;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
+use Johncms\Users\Ban\SystemBanTypes;
 use Johncms\View\AdminRenderEngineFactory;
 use Johncms\View\Extension\{AdminAssets, Avatar};
 use Johncms\View\Extension\Assets;
@@ -46,7 +47,6 @@ use Psr\SimpleCache\CacheInterface;
 class ConfigProvider
 {
     #[Pure]
-    #[ArrayShape(['dependencies' => "\string[][]", 'middleware' => "string[]", 'providers' => "array", 'commands' => "string[]", 'auth_providers' => "string[]"])]
     public function __invoke(): array
     {
         return [
@@ -55,6 +55,11 @@ class ConfigProvider
             'providers'      => [],
             'commands'       => $this->getCommands(),
             'auth_providers' => $this->getAuthProviders(),
+            'bans'           => [
+                'ban_types' => [
+                    SystemBanTypes::class,
+                ],
+            ],
         ];
     }
 
