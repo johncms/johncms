@@ -95,6 +95,7 @@ class User extends Model
 
     protected ?UserRoleChecker $userRoleChecker = null;
     protected ?UserPermissionChecker $userPermissionChecker = null;
+    protected ?UserBanChecker $userBanChecker = null;
 
     public function __construct(array $attributes = [])
     {
@@ -147,6 +148,19 @@ class User extends Model
             $this->userPermissionChecker = new UserPermissionChecker($this);
         }
         return $this->userPermissionChecker;
+    }
+
+    public function getUserBanChecker(): UserBanChecker
+    {
+        if ($this->userBanChecker === null) {
+            $this->userBanChecker = new UserBanChecker($this);
+        }
+        return $this->userBanChecker;
+    }
+
+    public function hasBan(array | string $bans): bool
+    {
+        return $this->getUserBanChecker()->hasBan($bans);
     }
 
     public function roles(): BelongsToMany
