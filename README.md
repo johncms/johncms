@@ -38,3 +38,4 @@ composer install
 When you get updates from the repository, you need to follow the changes of some files.
 
 - If composer.json has been changed, you need to run the command `composer install`.
+- After updating or after changing routes, run the command `php johncms cache:clear`.
