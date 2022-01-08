@@ -92,11 +92,11 @@ class Tools
         }
 
         // Для Администрации задаем лимит в 4 секунды
-        if ($this->user->rights > 0) {
+        if ($this->user?->hasAnyRole()) {
             $limit = 4;
         }
 
-        $flood = $this->user->lastpost + $limit - time();
+        $flood = $this->user?->lastpost + $limit - time();
 
         return $flood > 0 ? $flood : false;
     }

@@ -59,7 +59,7 @@ class GuestbookForm
                     'model'   => Guestbook::class,
                     'field'   => 'text',
                     'exclude' => function ($query) {
-                        $query->where('user_id', $this->user->id)->where('time', '>', (time() - 600));
+                        $query->where('user_id', $this->user?->id)->where('time', '>', (time() - 600));
                     },
                 ],
             ],

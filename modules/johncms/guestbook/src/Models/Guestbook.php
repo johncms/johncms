@@ -111,7 +111,7 @@ class Guestbook extends Model
     {
         $post = $this->purifier->purify($this->text);
         $post = $this->media->embedMedia($post);
-        return $this->tools->smilies($post, ($this->user !== null && $this->user->rights >= 1));
+        return $this->tools->smilies($post, ($this->user?->hasAnyRole()));
     }
 
     public function getReplyTextAttribute(): string

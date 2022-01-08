@@ -31,7 +31,7 @@ class Ban extends AbstractValidator
         $isValid = true;
 
         $user = di(User::class);
-        if ($user->hasBan($this->bans)) {
+        if ($user?->hasBan($this->bans)) {
             $this->error(self::BAN);
             $isValid = false;
         }
