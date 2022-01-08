@@ -72,10 +72,7 @@ class PostResource extends BaseResource
                 $meta['can_manage'] = true;
                 $meta['edit_url'] = '/guestbook/edit?id=' . $this->model->id;
                 $meta['delete_url'] = '/guestbook/delpost?id=' . $this->model->id;
-
-                if ($currentUser->rights >= 6) {
-                    $meta['reply_url'] = '/guestbook/otvet?id=' . $this->model->id;
-                }
+                $meta['reply_url'] = '/guestbook/otvet?id=' . $this->model->id;
             }
         }
 

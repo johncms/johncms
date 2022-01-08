@@ -4,6 +4,7 @@
  * @var string $value
  * @var string $errors
  * @var string $locale
+ * @var string $csrf_token
  */
 
 if ($locale !== 'en') {
@@ -23,5 +24,6 @@ if ($locale !== 'en') {
         id="message2"
         label="<?= $label ?>"
         value="<?= $value ?>"
+        csrf_token="<?= $csrf_token ?>"
     ></ckeditor-input-component>
 </div>
