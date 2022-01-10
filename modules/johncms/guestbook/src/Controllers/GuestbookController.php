@@ -14,7 +14,7 @@ namespace Johncms\Guestbook\Controllers;
 
 use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use JetBrains\PhpStorm\NoReturn;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\FileInfo;
@@ -32,7 +32,7 @@ use Throwable;
 class GuestbookController extends BaseController
 {
     protected string $moduleName = 'johncms/guestbook';
-    protected string $base_url = '/guestbook/';
+    protected string $baseUrl;
 
     /**
      * @throws Throwable
@@ -40,15 +40,16 @@ class GuestbookController extends BaseController
     public function __construct()
     {
         parent::__construct();
+        $this->baseUrl = route('guestbook.index');
         $guestbook = di(GuestbookService::class);
         $pageTitle = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
-        $this->navChain->add($pageTitle, $this->base_url);
+        $this->navChain->add($pageTitle, $this->baseUrl);
         $this->metaTagManager->setAll($pageTitle);
 
         $config = di('config')['johncms'];
         $user = di(User::class);
         // If the guest is closed, display a message and close access (except for Admins)
-        if (! $config['mod_guest'] && $user->rights < 7) {
+        if (! $config['mod_guest'] && $user?->hasAnyRole()) {
             echo $this->render->render(
                 'system::pages/result',
                 [
@@ -62,17 +63,19 @@ class GuestbookController extends BaseController
         }
     }
 
+    /**
+     * @throws Throwable
+     */
     public function index(GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
     {
-        $flash_errors = $session->getFlash('errors');
-        $errors = $flash_errors ?? [];
+        $errors = $session->getFlash('errors') ?? [];
 
         // If the form was sent using POST method, then try to create the new post.
         if ($request->getMethod() === 'POST' && $guestbook->canWrite()) {
             try {
                 $guestbook->create();
                 $session->flash('message', __('Your message was added successfully'));
-                redirect($this->base_url);
+                redirect($this->baseUrl);
             } catch (ValidationException $exception) {
                 $errors = $exception->getErrors();
             }
@@ -94,6 +97,9 @@ class GuestbookController extends BaseController
                     'captcha'      => $guestbook->getCaptcha(),
                     'posts'        => $posts['posts'],
                     'pagination'   => $posts['pagination'],
+                    'actionUrl'    => $this->baseUrl,
+                    'cleanUrl'     => route('guestbook.clean'),
+                    'uploadUrl'    => route('guestbook.uploadFile'),
                 ],
             ]
         );
@@ -104,10 +110,11 @@ class GuestbookController extends BaseController
      *
      * @param GuestbookService $guestbook
      */
+    #[NoReturn]
     public function switchGuestbookType(GuestbookService $guestbook): void
     {
         $guestbook->switchGuestbookType();
-        redirect($this->base_url);
+        redirect($this->baseUrl);
     }
 
     /**
@@ -125,17 +132,19 @@ class GuestbookController extends BaseController
             $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
             if (! $validator->isValid()) {
                 $session->flash('errors', $validator->getErrors());
-                redirect($this->base_url);
+                redirect($this->baseUrl);
             }
             // We clean the Guest, according to the specified parameters
             $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
             $message = $guestbook->clear($period);
             // Set result message
             $session->flash('message', $message);
-            redirect($this->base_url);
+            redirect($this->baseUrl);
         }
         // Request cleaning options
-        return $this->render->render('guestbook::clear');
+        return $this->render->render('guestbook::clear', [
+            'actionUrl' => route('guestbook.clean.store'),
+        ]);
     }
 
     /**
@@ -144,25 +153,25 @@ class GuestbookController extends BaseController
      * @param Request $request
      * @param Session $session
      * @param FileStorage $storage
+     * @param int $id
      * @return string
      * @throws Throwable
      */
-    public function delete(Request $request, Session $session, FileStorage $storage): string
+    public function delete(Request $request, Session $session, FileStorage $storage, int $id): string
     {
         if ($request->getMethod() === 'POST') {
             $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
             if (! $validator->isValid()) {
                 $session->flash('errors', $validator->getErrors());
-                redirect($this->base_url);
+                redirect($this->baseUrl);
             }
             // We clean the Guest, according to the specified parameters
-            $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
             $post = (new Guestbook())->find($id);
             if (! empty($post->attached_files)) {
                 foreach ($post->attached_files as $attached_file) {
                     try {
                         $storage->delete($attached_file);
-                    } catch (Exception | FilesystemException $exception) {
+                    } catch (Exception | FilesystemException) {
                     }
                 }
             }
@@ -170,10 +179,13 @@ class GuestbookController extends BaseController
             // Set result message
             $session->flash('message', __('The message was deleted'));
         } else {
-            return $this->render->render('guestbook::confirm_delete', ['id' => $request->getQuery('id')]);
+            return $this->render->render('guestbook::confirm_delete', [
+                'id'        => $id,
+                'actionUrl' => route('guestbook.delete.store', ['id' => $id]),
+            ]);
         }
 
-        redirect($this->base_url);
+        redirect($this->baseUrl);
     }
 
     /**
@@ -182,21 +194,15 @@ class GuestbookController extends BaseController
      * @param User $user
      * @param Request $request
      * @param Session $session
+     * @param int $id
      * @return string
      * @throws Throwable
      */
-    public function edit(User $user, Request $request, Session $session): string
+    public function edit(User $user, Request $request, Session $session, int $id): string
     {
-        $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
         $errors = [];
         $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
-
-        try {
-            $message = (new Guestbook())->findOrFail($id);
-        } catch (ModelNotFoundException $exception) {
-            pageNotFound();
-        }
-
+        $message = (new Guestbook())->findOrFail($id);
         $form_data = [
             'message'        => $request->getPost('message', $message->text),
             'csrf_token'     => $request->getPost('csrf_token', ''),
@@ -225,7 +231,7 @@ class GuestbookController extends BaseController
                     ]
                 );
                 $session->flash('message', __('The message was saved'));
-                redirect($this->base_url);
+                redirect($this->baseUrl);
             }
 
             $errors = $validator->getErrors();
@@ -234,10 +240,13 @@ class GuestbookController extends BaseController
         return $this->render->render(
             'guestbook::edit',
             [
-                'id'      => $id,
-                'message' => $message,
-                'text'    => htmlspecialchars($form_data['message']),
-                'errors'  => $errors,
+                'id'        => $id,
+                'message'   => $message,
+                'text'      => htmlspecialchars($form_data['message']),
+                'errors'    => $errors,
+                'actionUrl' => route('guestbook.edit.store', ['id' => $id]),
+                'backUrl'   => $this->baseUrl,
+                'uploadUrl' => route('guestbook.uploadFile'),
             ]
         );
     }
@@ -248,20 +257,15 @@ class GuestbookController extends BaseController
      * @param User $user
      * @param Request $request
      * @param Session $session
+     * @param int $id
      * @return string
+     * @throws Throwable
      */
-    public function reply(User $user, Request $request, Session $session): string
+    public function reply(User $user, Request $request, Session $session, int $id): string
     {
-        $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
-        $errors = [];
         $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
 
-        try {
-            $message = (new Guestbook())->findOrFail($id);
-        } catch (ModelNotFoundException $exception) {
-            pageNotFound();
-        }
-
+        $message = (new Guestbook())->findOrFail($id);
         $form_data = [
             'message'        => $request->getPost('message', $message->otvet),
             'csrf_token'     => $request->getPost('csrf_token', ''),
@@ -290,7 +294,7 @@ class GuestbookController extends BaseController
                     ]
                 );
                 $session->flash('message', __('Your reply to the message was saved'));
-                redirect($this->base_url);
+                redirect($this->baseUrl);
             }
 
             $errors = $validator->getErrors();
@@ -301,8 +305,11 @@ class GuestbookController extends BaseController
             [
                 'id'         => $id,
                 'message'    => $message,
-                'errors'     => $errors,
+                'errors'     => $errors ?? [],
                 'reply_text' => htmlspecialchars($message->reply_text),
+                'actionUrl'  => route('guestbook.reply.store', ['id' => $id]),
+                'backUrl'    => $this->baseUrl,
+                'uploadUrl'  => route('guestbook.uploadFile'),
             ]
         );
     }

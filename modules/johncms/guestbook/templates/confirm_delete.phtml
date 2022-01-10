@@ -1,6 +1,5 @@
-<form action="/guestbook/delpost" method="post">
+<form action="<?= $actionUrl ?>" method="post">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
-    <input type="hidden" name="id" value="<?= $id ?>">
     <div class="modal-header align-items-center">
         <h4 class="modal-title">
             <?= __('Delete message') ?>

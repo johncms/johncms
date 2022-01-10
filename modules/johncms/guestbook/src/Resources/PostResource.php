@@ -70,9 +70,9 @@ class PostResource extends BaseResource
 
             if ($currentUser?->hasPermission('guestbook_delete_posts')) {
                 $meta['can_manage'] = true;
-                $meta['edit_url'] = '/guestbook/edit?id=' . $this->model->id;
-                $meta['delete_url'] = '/guestbook/delpost?id=' . $this->model->id;
-                $meta['reply_url'] = '/guestbook/otvet?id=' . $this->model->id;
+                $meta['edit_url'] = route('guestbook.edit', ['id' => $this->model->id]);
+                $meta['delete_url'] = route('guestbook.delete', ['id' => $this->model->id]);
+                $meta['reply_url'] = route('guestbook.reply', ['id' => $this->model->id]);
             }
         }
 

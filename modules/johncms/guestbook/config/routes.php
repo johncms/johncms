@@ -26,33 +26,37 @@ return function (Router $router) {
         function (RouteGroup $router) {
             $router->get('/ga[/]', [GuestbookController::class, 'switchGuestbookType'])->setName('guestbook.switch_type');
 
-            $router->post('/upload_file/', [GuestbookController::class, 'loadFile'])
+            $router->post('/upload_file', [GuestbookController::class, 'loadFile'])
                 ->lazyMiddleware(AuthorizedUserMiddleware::class)
-                ->setName('guestbook.upload_file');
+                ->setName('guestbook.uploadFile');
 
-            $router->get('/edit[/]', [GuestbookController::class, 'edit'])
+            $router->get('/edit/{id:number}', [GuestbookController::class, 'edit'])
                 ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'))
                 ->setName('guestbook.edit');
-            $router->post('/edit[/]', [GuestbookController::class, 'edit'])
-                ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'));
+            $router->post('/edit/{id:number}', [GuestbookController::class, 'edit'])
+                ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'))
+                ->setName('guestbook.edit.store');
 
-            $router->get('/delpost[/]', [GuestbookController::class, 'delete'])
+            $router->get('/delpost/{id:number}', [GuestbookController::class, 'delete'])
                 ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'))
                 ->setName('guestbook.delete');
-            $router->post('/delpost[/]', [GuestbookController::class, 'delete'])
-                ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'));
+            $router->post('/delpost/{id:number}', [GuestbookController::class, 'delete'])
+                ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'))
+                ->setName('guestbook.delete.store');
 
-            $router->get('/otvet[/]', [GuestbookController::class, 'reply'])
+            $router->get('/reply/{id:number}', [GuestbookController::class, 'reply'])
                 ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'))
                 ->setName('guestbook.reply');
-            $router->post('/otvet[/]', [GuestbookController::class, 'reply'])
-                ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'));
+            $router->post('/reply/{id:number}', [GuestbookController::class, 'reply'])
+                ->middleware(new HasPermissionMiddleware('guestbook_delete_posts'))
+                ->setName('guestbook.reply.store');
 
-            $router->get('/clean[/]', [GuestbookController::class, 'clean'])
+            $router->get('/clean', [GuestbookController::class, 'clean'])
                 ->middleware(new HasPermissionMiddleware('guestbook_clear'))
                 ->setName('guestbook.clean');
-            $router->post('/clean[/]', [GuestbookController::class, 'clean'])
-                ->middleware(new HasPermissionMiddleware('guestbook_clear'));
+            $router->post('/clean', [GuestbookController::class, 'clean'])
+                ->middleware(new HasPermissionMiddleware('guestbook_clear'))
+                ->setName('guestbook.clean.store');
         }
     );
 };

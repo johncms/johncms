@@ -5,6 +5,7 @@
  * @var string $errors
  * @var string $locale
  * @var string $csrf_token
+ * @var string $uploadUrl
  */
 
 if ($locale !== 'en') {
@@ -17,7 +18,7 @@ if ($locale !== 'en') {
 <script src="<?= $this->asset('ckeditor5/ckeditor.js', true) ?>"></script>
 <div class="vue_app">
     <ckeditor-input-component
-        upload_url="/guestbook/upload_file/"
+        upload_url="<?= $uploadUrl ?>"
         name="message"
         language="<?= $locale ?>"
         errors="<?= $errors ?>"

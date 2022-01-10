@@ -24,7 +24,7 @@
             <?php if (! empty($data['errors']['csrf_token'])): ?>
                 <div class="alert alert-danger"><?= implode(', ', $data['errors']['csrf_token']) ?></div>
             <?php endif ?>
-            <form name="form" action="/guestbook/" method="post">
+            <form name="form" action="<?= $data['actionUrl'] ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
                 <?php if (! $user): ?>
                     <div class="mb-2">
@@ -46,15 +46,16 @@
                 <?= $this->fetch(
                     'guestbook::ckeditor',
                     [
-                        'label' => __('Message'),
-                        'errors' => implode(', ', $data['errors']['message'] ?? []),
-                        'value' => $this->e($data['form_data']['message']),
+                        'label'     => __('Message'),
+                        'errors'    => implode(', ', $data['errors']['message'] ?? []),
+                        'value'     => $this->e($data['form_data']['message']),
+                        'uploadUrl' => $data['uploadUrl'],
                     ]
                 ) ?>
 
                 <?php if (! $user): ?>
                     <img alt="<?= __('Verification code') ?>" src="<?= $data['captcha'] ?>">
-                    <div class="mb-2">
+                    <div>
                         <label for="code" class="form-label"><?= __('Symbols on the picture') ?></label>
                         <input type="text"
                                class="form-control <?= (isset($data['errors']['code']) ? 'is-invalid' : '') ?>"
@@ -74,7 +75,7 @@
                     </div>
                 <?php endif; ?>
 
-                <input type="submit" class="btn btn-primary" name="submit" value="<?= __('Write') ?>"/>
+                <input type="submit" class="btn btn-primary mt-2" name="submit" value="<?= __('Write') ?>"/>
             </form>
         </div>
     </div>
@@ -205,7 +206,7 @@
 <?php endif; ?>
 <?php if ($data['can_clear']): ?>
     <div class="d-flex mt-4 pb-2">
-        <button type="button" class="btn btn-danger" data-url="/guestbook/clean" data-bs-toggle="modal" data-bs-target=".ajax_modal"><?= __('Clear') ?></button>
+        <button type="button" class="btn btn-danger" data-url="<?= $data['cleanUrl'] ?>" data-bs-toggle="modal" data-bs-target=".ajax_modal"><?= __('Clear') ?></button>
     </div>
 <?php endif ?>
 <?php $this->push('scripts') ?>
