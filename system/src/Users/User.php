@@ -252,6 +252,11 @@ class User extends Model
         return $this->hasOne(File::class, 'id', 'avatar_id');
     }
 
+    public function activity(): HasOne
+    {
+        return $this->hasOne(UserActivity::class, 'user_id', 'id');
+    }
+
     public function getAvatarUrlAttribute(): ?string
     {
         return $this->avatar?->url;

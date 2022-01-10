@@ -164,4 +164,29 @@ class UserManager
             $fileStorage->delete($user->avatar_id);
         }
     }
+
+    /**
+     * Update user activity
+     *
+     * @param User $user
+     * @param array<string, mixed> $fields
+     * @param bool $updateLastPostTime
+     * @return bool
+     */
+    public function updateActivity(User $user, array $fields = [], bool $updateLastPostTime = true): bool
+    {
+        $activity = $user->activity;
+        if (! $activity) {
+            $activity = new UserActivity();
+            $activity->user_id = $user->id;
+        }
+
+        if ($updateLastPostTime) {
+            $activity->last_post = Carbon::now();
+        }
+        foreach ($fields as $key => $field) {
+            $activity->$key = $field;
+        }
+        return $activity->save();
+    }
 }
