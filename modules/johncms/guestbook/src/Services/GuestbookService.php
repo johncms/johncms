@@ -22,6 +22,7 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\User;
+use Johncms\Users\UserManager;
 use Johncms\Validator\Validator;
 use League\Flysystem\FilesystemException;
 use Mobicms\Captcha\Code;
@@ -150,17 +151,11 @@ class GuestbookService
                     'attached_files' => $fields['attached_files'],
                 ]
             );
-            /*if ($this->user) {
-                $post_guest = $this->user->postguest + 1;
-                (new User())
-                    ->where('id', $this->user->id)
-                    ->update(
-                        [
-                            'postguest' => $post_guest,
-                            'lastpost'  => time(),
-                        ]
-                    );
-            }*/
+            if ($this->user) {
+                // Update user activity
+                $userManager = di(UserManager::class);
+                $userManager->incrementActivity($this->user, 'guestbook_posts');
+            }
         } else {
             throw ValidationException::withErrors($validator->getErrors());
         }
