@@ -189,4 +189,20 @@ class UserManager
         }
         return $activity->save();
     }
+
+    /**
+     * Increase the value in a specific column of the user_activity table
+     */
+    public function incrementActivity(User $user, string $column): bool
+    {
+        $activity = $user->activity;
+        if (! $activity) {
+            $activity = new UserActivity();
+            $activity->user_id = $user->id;
+            $activity->$column = 0;
+        }
+        $activity->last_post = Carbon::now();
+        $activity->$column += 1;
+        return $activity->save();
+    }
 }
