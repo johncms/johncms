@@ -73,7 +73,8 @@
         "johncms/notifications": "dev-develop",
         "johncms/online": "dev-develop",
         "johncms/personal": "dev-develop",
-        "johncms/redirect": "dev-develop"
+        "johncms/redirect": "dev-develop",
+        "maximebf/debugbar": "^1.17"
     },
     "require-dev": {
         "fakerphp/faker": "^1.15",

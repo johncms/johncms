@@ -12,12 +12,14 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use DebugBar\StandardDebugBar;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Johncms\Console\Commands\ClearCacheCommand;
 use Johncms\Console\Commands\MakeMigrationCommand;
 use Johncms\Console\Commands\MigrateCommand;
 use Johncms\Database\PdoFactory;
+use Johncms\Debug\DebugBar;
 use Johncms\Files\Filesystem;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -90,6 +92,7 @@ class ConfigProvider
                 Session::class                  => Session::class,
                 MetaTagManager::class           => MetaTagManager::class,
                 SiteSettings::class             => SiteSettings::class,
+                StandardDebugBar::class         => DebugBar::class,
             ],
         ];
     }

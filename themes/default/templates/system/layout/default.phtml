@@ -13,6 +13,12 @@ $notifications = $counters->notifications();
 $analytics = $counters->counters();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
+
+$debug = (($user?->isAdmin() && DEBUG) || DEBUG_FOR_ALL);
+if ($debug) {
+    $debugBar = di(\DebugBar\StandardDebugBar::class);
+    $debugRenderer = $debugBar->getJavascriptRenderer();
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
@@ -44,6 +50,7 @@ $ads_array = $ads->getAds();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
+    <?php if ($debug): echo $debugRenderer->renderHead(); endif; ?>
     <title><?= $metaTags->getTitle() ?></title>
 </head>
 <body>
@@ -166,7 +173,6 @@ $ads_array = $ads->getAds();
                     <div>
                         &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
                     </div>
-                    <?= $this->fetch('system::app/debug') ?>
                 </div>
             </div>
         </div>
@@ -192,5 +198,6 @@ $ads_array = $ads->getAds();
     ?>
 <?php endif; ?>
 <?= $this->section('scripts', '') ?>
+<?php if ($debug): echo $debugRenderer->render(); endif; ?>
 </body>
 </html>
