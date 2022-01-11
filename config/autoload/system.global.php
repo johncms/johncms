@@ -15,12 +15,12 @@ return [
         'email'     => 'no-reply@example.com',
         'copyright' => 'JohnCMS',
 
-        'timezone'      => 'UTC',
-        'language'      => 'en',
-        'perPage'       => 10,
+        'timezone'   => 'UTC',
+        'language'   => 'en',
+        'perPage'    => 10,
 
         // User model settings
-        'user_model'    => [
+        'user_model' => [
             'casts'      => [],
             'fillable'   => [],
             'attributes' => [],
@@ -28,20 +28,21 @@ return [
         ],
 
         // Settings for users
-        'users'         => [
+        'users'      => [
             'login_field' => 'login', // login|phone|email - the field which using for authorization.
+        ],
+
+        'antiflood'     => [
+            'mode'     => 2,
+            'day'      => 10,
+            'night'    => 30,
+            'day_from' => 10,
+            'day_to'   => 22,
         ],
 
 
         // need to clean
         'active'        => 1,
-        'antiflood'     => [
-            'mode'    => 2,
-            'day'     => 10,
-            'night'   => 30,
-            'dayfrom' => 10,
-            'dayto'   => 22,
-        ],
         'clean_time'    => 0,
         'flsz'          => 1000,
         'gzip'          => 1,

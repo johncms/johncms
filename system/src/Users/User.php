@@ -266,4 +266,9 @@ class User extends Model
     {
         return route('personal.profile', ['id' => $this->id]);
     }
+
+    public function scopeOnline(Builder $query): Builder
+    {
+        return $query->where('last_visit', '>', Carbon::now()->subMinutes(5));
+    }
 }

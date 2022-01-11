@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Validator\Rules;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Security\AntiFlood;
 use Laminas\Validator\AbstractValidator;
 
 class Flood extends AbstractValidator
@@ -27,12 +27,10 @@ class Flood extends AbstractValidator
     {
         $this->setValue($value);
         $isValid = true;
-
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        $flood_check = $tools->antiflood();
-        if ($flood_check) {
-            $this->error(self::FLOOD, $flood_check);
+        $antiFlood = di(AntiFlood::class);
+        $floodCheck = $antiFlood->check();
+        if ($floodCheck) {
+            $this->error(self::FLOOD, $floodCheck);
             $isValid = false;
         }
 
