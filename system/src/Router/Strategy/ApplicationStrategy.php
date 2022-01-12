@@ -14,12 +14,12 @@ namespace Johncms\Router\Strategy;
 
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Container\Container;
+use Johncms\Container\ContainerFactory;
 use Johncms\Router\ParametersInjector;
 use JsonSerializable;
 use League\Route\Http\Exception\{MethodNotAllowedException, NotFoundException};
 use League\Route\Route;
 use League\Route\Strategy\AbstractStrategy;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\{ResponseFactoryInterface, ResponseInterface, ServerRequestInterface};
 use Psr\Http\Server\{MiddlewareInterface, RequestHandlerInterface};
 use Throwable;
@@ -57,7 +57,10 @@ class ApplicationStrategy extends AbstractStrategy
 
     public function invokeRouteCallable(Route $route, ServerRequestInterface $request): ResponseInterface
     {
-        $controller = $route->getCallable($this->getContainer());
+        $container = $this->getContainer();
+        // Set current route to container
+        $container->instance('route', $route);
+        $controller = $route->getCallable($container);
 
         $params = [];
         if (is_array($controller) && is_object($controller[0]) && ! empty($controller[1])) {
@@ -124,8 +127,8 @@ class ApplicationStrategy extends AbstractStrategy
         };
     }
 
-    public function getContainer(): ContainerInterface
+    public function getContainer(): Container
     {
-        return Container::getInstance();
+        return ContainerFactory::getContainer();
     }
 }

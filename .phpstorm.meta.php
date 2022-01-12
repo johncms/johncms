@@ -8,6 +8,7 @@ namespace PHPSTORM_META {
             [
                 ''         => '@',
                 'config'   => 'array',
+                'route'    => \League\Route\Route::class,
                 'counters' => \Johncms\Counters::class,
             ]
         )
@@ -18,6 +19,7 @@ namespace PHPSTORM_META {
             [
                 ''         => '@',
                 'config'   => 'array',
+                'route'    => \League\Route\Route::class,
                 'counters' => \Johncms\Counters::class,
             ]
         )
