@@ -14,11 +14,14 @@ namespace Johncms;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Container\Container;
+use Johncms\Debug\DebugBar;
 use Johncms\i18n\Translator;
-use Johncms\Modules\Modules;
 use Johncms\Router\RouterFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use PDO;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Throwable;
 
 class Application
 {
@@ -58,10 +61,20 @@ class Application
         TranslatorFunctions::register($translator);
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws Throwable
+     */
     public function handleRequest(): void
     {
         $this->container->bind(RouterFactory::class, RouterFactory::class, true);
         $router = $this->container->get(RouterFactory::class);
+        if (DEBUG || DEBUG_FOR_ALL) {
+            $debugBar = di(DebugBar::class);
+            $debugBar->addBootingTime();
+            $debugBar->startApplicationMeasure();
+        }
         (new SapiEmitter())->emit($router->dispatch());
     }
 }

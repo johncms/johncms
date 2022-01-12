@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use DebugBar\StandardDebugBar;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Johncms\Console\Commands\ClearCacheCommand;
@@ -92,7 +91,7 @@ class ConfigProvider
                 Session::class                  => Session::class,
                 MetaTagManager::class           => MetaTagManager::class,
                 SiteSettings::class             => SiteSettings::class,
-                StandardDebugBar::class         => DebugBar::class,
+                DebugBar::class                 => DebugBar::class,
             ],
         ];
     }

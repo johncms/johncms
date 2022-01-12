@@ -16,7 +16,7 @@ $ads_array = $ads->getAds();
 
 $debug = (($user?->isAdmin() && DEBUG) || DEBUG_FOR_ALL);
 if ($debug) {
-    $debugBar = di(\DebugBar\StandardDebugBar::class);
+    $debugBar = di(\Johncms\Debug\DebugBar::class);
     $debugRenderer = $debugBar->getJavascriptRenderer();
 }
 ?>
@@ -53,7 +53,7 @@ if ($debug) {
     <?php if ($debug): echo $debugRenderer->renderHead(); endif; ?>
     <title><?= $metaTags->getTitle() ?></title>
 </head>
-<body>
+<body class="<?= $debug ? 'pb-4' : '' ?>">
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
     <div class="page_layout justify-content-end d-flex w-100">
         <div class="sidebar">
