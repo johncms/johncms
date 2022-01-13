@@ -12,6 +12,7 @@ const LOG_PATH = DATA_PATH . 'logs' . DS;
 const THEMES_PATH = ROOT_PATH . 'themes' . DS;
 const MODULES_PATH = ROOT_PATH . 'modules' . DS;
 const CMS_VERSION = '10';
+const EXPLAIN_SQL_QUERIES = false;
 
 const USE_CRON = false;
 

@@ -31,9 +31,12 @@ class DebugBar extends \DebugBar\DebugBar
         $this->addCollector(new ExceptionsCollector());
         $this->addCollector(new RouteDataCollector());
 
-        $queryCollector = new QueryCollector($this->getTimeCollector());
+        $queryCollector = new QueryCollector(timeCollector: $this->getTimeCollector());
         $queryCollector->setDataFormatter(new QueryFormatter());
         $queryCollector->setRenderSqlWithParams(true);
+        if (EXPLAIN_SQL_QUERIES) {
+            $queryCollector->setExplainQuery(true);
+        }
         $this->addCollector($queryCollector);
 
         $this->getJavascriptRenderer('/themes/default/assets/debugbar');

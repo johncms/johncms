@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Debug\Collectors;
 
 use DebugBar\DataCollector\PDO\PDOCollector;
-use DebugBar\DataCollector\TimeDataCollector;
 use Exception;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Connection;
@@ -24,12 +23,9 @@ class QueryCollector extends PDOCollector
     protected array $explainTypes = ['SELECT', 'INSERT', 'UPDATE', 'DELETE'];
     protected bool $showCopyButton = true;
 
-    /**
-     * @param TimeDataCollector|null $timeCollector
-     */
-    public function __construct(TimeDataCollector $timeCollector = null)
+    public function setExplainQuery(bool $enabled = true)
     {
-        $this->timeCollector = $timeCollector;
+        $this->explainQuery = $enabled;
     }
 
     /**
@@ -163,7 +159,6 @@ class QueryCollector extends PDOCollector
                 'type'         => $query['type'],
                 'params'       => [],
                 'bindings'     => $query['bindings'],
-                'hints'        => $query['hints'],
                 'show_copy'    => $query['show_copy'],
                 'backtrace'    => [],
                 'duration'     => $query['time'],
