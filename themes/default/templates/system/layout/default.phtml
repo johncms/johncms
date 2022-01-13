@@ -50,7 +50,11 @@ if ($debug) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
-    <?php if ($debug): echo $debugRenderer->renderHead(); endif; ?>
+    <?php if ($debug): ?>
+        <?= $debugRenderer->renderHead(); ?>
+        <link rel="stylesheet" href="<?= $this->asset('debugbar/custom.css', true) ?>">
+        <script src="<?= $this->asset('debugbar/queryWidget.js', true) ?>"></script>
+    <?php endif; ?>
     <title><?= $metaTags->getTitle() ?></title>
 </head>
 <body class="<?= $debug ? 'pb-4' : '' ?>">

@@ -1,0 +1,23 @@
+.phpdebugbar-widgets-sqlqueries .phpdebugbar-widgets-params th {
+    padding: 5px;
+}
+
+.phpdebugbar-widgets-sqlqueries .phpdebugbar-widgets-params td {
+    padding: 5px;
+}
+
+.phpdebugbar-widgets-sqlqueries .phpdebugbar-widgets-table-list {
+    text-align: left !important;
+}
+
+.phpdebugbar-text-muted {
+    color: #afafaf;
+}
+
+a.phpdebugbar-tab span.phpdebugbar-badge.phpdebugbar-visible {
+    display: inline-block;
+}
+
+.phpdebugbar-widgets-sql {
+    line-height: 1.4;
+}

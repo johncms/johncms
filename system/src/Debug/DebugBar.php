@@ -13,6 +13,7 @@ use DebugBar\DataCollector\PhpInfoCollector;
 use DebugBar\DataCollector\RequestDataCollector;
 use DebugBar\DataCollector\TimeDataCollector;
 use DebugBar\DebugBarException;
+use Johncms\Debug\Collectors\QueryCollector;
 use Johncms\Debug\Collectors\RouteDataCollector;
 
 class DebugBar extends \DebugBar\DebugBar
@@ -29,6 +30,11 @@ class DebugBar extends \DebugBar\DebugBar
         $this->addCollector(new MemoryCollector());
         $this->addCollector(new ExceptionsCollector());
         $this->addCollector(new RouteDataCollector());
+
+        $queryCollector = new QueryCollector($this->getTimeCollector());
+        $queryCollector->setDataFormatter(new QueryFormatter());
+        $queryCollector->setRenderSqlWithParams(true);
+        $this->addCollector($queryCollector);
 
         $this->getJavascriptRenderer('/themes/default/assets/debugbar');
         $this->addCollector(new ConfigCollector(config()));
