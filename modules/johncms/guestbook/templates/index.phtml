@@ -102,14 +102,10 @@
                 <div class="post-user">
                     <?php if (! empty($post['user']) && ! empty($post['user']['profile_url'])): ?>
                         <a href="<?= $post['user']['profile_url'] ?>">
-                            <div class="avatar">
-                                <img src="<?= $this->avatar($post['user']['id'] ?? 0) ?>" class="img-fluid" alt=".">
-                            </div>
+                            <?= $this->avatar($post['user']['avatar_url'], $post['name']) ?>
                         </a>
                     <?php else: ?>
-                        <div class="avatar">
-                            <img src="<?= $this->avatar($post['user']['id'] ?? 0) ?>" class="img-fluid" alt=".">
-                        </div>
+                        <?= $this->avatar('', $post['name']) ?>
                     <?php endif; ?>
                     <span class="user-status <?= $post['is_online'] ? 'online' : 'offline' ?> shadow"></span>
                     <?php if (! empty($post['user']['rights_name'])): ?>

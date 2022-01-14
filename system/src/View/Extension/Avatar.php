@@ -15,33 +15,51 @@ namespace Johncms\View\Extension;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
 use Psr\Container\ContainerInterface;
+use Throwable;
 
 class Avatar implements ExtensionInterface
 {
-    /** @var Assets */
-    private $assets;
+    private ?Engine $engine = null;
 
     public function __invoke(ContainerInterface $container): self
     {
-        $this->assets = $container->get(Assets::class);
         return $this;
     }
 
     public function register(Engine $engine): void
     {
+        $this->engine = $engine;
         $engine->registerFunction('avatar', [$this, 'getUserAvatar']);
     }
 
-    public function getUserAvatar(int $userId): string
+    /**
+     * @throws Throwable
+     */
+    public function getUserAvatar(?string $avatarUrl = '', ?string $userName = ''): string
     {
-        if ($userId > 0) {
-            $avatar = UPLOAD_PATH . 'users/avatar/' . $userId . '.png';
-            if (file_exists($avatar)) {
-                return $this->assets->urlFromPath($avatar, ROOT_PATH) .
-                    '?v=' . filemtime($avatar);
-            }
-        }
+        $firstSymbols = ! empty($userName) ? $this->getFirstSymbols($userName) : '';
+        return $this->engine->render('system::app/avatar', [
+            'avatar_url'    => $avatarUrl,
+            'username'      => $userName,
+            'first_symbols' => $firstSymbols,
+            'color'         => $this->getColor($userName),
+        ]);
+    }
 
-        return $this->assets->url('icons/user.svg');
+    private function getFirstSymbols(string $username): string
+    {
+        $return = '';
+        $name = explode(' ', $username);
+        $return .= mb_substr($name[0], 0, 1);
+        if (! empty($name[1])) {
+            $return .= mb_substr($name[1], 0, 1);
+        }
+        return $return;
+    }
+
+    private function getColor(?string $userName = ''): string
+    {
+        $colors = config('johncms.avatar_colors');
+        return $colors[(mb_strlen((string) $userName) % count($colors))] ?? $colors[0];
     }
 }

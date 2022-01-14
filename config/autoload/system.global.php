@@ -32,12 +32,33 @@ return [
             'login_field' => 'login', // login|phone|email - the field which using for authorization.
         ],
 
-        'antiflood'     => [
+        'antiflood' => [
             'mode'     => 2,
             'day'      => 10,
             'night'    => 30,
             'day_from' => 10,
             'day_to'   => 22,
+        ],
+
+        'avatar_colors' => [
+            '#3F51B5',
+            '#009688',
+            '#9C27B0',
+            '#F44336',
+            '#FF4081',
+            '#673AB7',
+            '#2196F3',
+            '#03A9F4',
+            '#00BCD4',
+            '#4CAF50',
+            '#8BC34A',
+            '#CDDC39',
+            '#FFC107',
+            '#FF9800',
+            '#FF5722',
+            '#795548',
+            '#9E9E9E',
+            '#607D8B',
         ],
 
 

@@ -50,6 +50,7 @@ class PostResource extends BaseResource
             $user = [
                 'id'          => $user_model->id,
                 'profile_url' => $user_model->profile_url,
+                'avatar_url'  => $user_model->avatar_url,
                 'rights_name' => $user_model->getRoleNames(),
                 'status'      => $user_model->additional_fields->status,
             ];
