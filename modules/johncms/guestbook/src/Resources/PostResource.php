@@ -45,14 +45,14 @@ class PostResource extends BaseResource
 
     protected function getUser(): array
     {
-        $user_model = $this->model->user;
-        if ($user_model !== null) {
+        $userModel = $this->model->user;
+        if ($userModel !== null) {
             $user = [
-                'id'          => $user_model->id,
-                'profile_url' => $user_model->profile_url,
-                'avatar_url'  => $user_model->avatar_url,
-                'rights_name' => $user_model->getRoleNames(),
-                'status'      => $user_model->additional_fields->status,
+                'id'          => $userModel->id,
+                'profile_url' => $userModel->profile_url,
+                'avatar_url'  => $userModel->avatar_url,
+                'rights_name' => $userModel->hasAnyRole() ? $userModel->getRoleNames() : '',
+                'status'      => $userModel->additional_fields->status,
             ];
         }
 
