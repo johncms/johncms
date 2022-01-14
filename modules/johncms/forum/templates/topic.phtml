@@ -211,8 +211,8 @@ $this->layout('system::layout/default');
                     <?php if (! empty($message->user_data->rights_name)): ?>
                         <div class="post-of-user"
                              data-bs-toggle="tooltip"
-                             data-placement="top"
-                             data-html="true"
+                             data-bs-placement="top"
+                             data-bs-html="true"
                              title="<?= $message->user_data->rights_name ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -230,15 +230,15 @@ $this->layout('system::layout/default');
                         <a href="<?= $message->url ?>"
                            class="post-meta d-inline me-2"
                            data-bs-toggle="tooltip"
-                           data-placement="top"
+                           data-bs-placement="top"
                            title="<?= __('Link to post') ?>">
                             <?= $message->post_time ?>
                         </a>
                         <?php if (! empty($message->edit_count)): ?>
                             <div class="post-meta d-inline me-2"
                                  data-bs-toggle="tooltip"
-                                 data-placement="top"
-                                 data-html="true"
+                                 data-bs-placement="top"
+                                 data-bs-html="true"
                                  title="<?= __('Edited:') ?> <?= $message->editor_name ?> <br> (<?= $message->edit_time ?>) [<?= $message->edit_count ?>]">
                                 <?= __('Edited') ?>
                             </div>
@@ -247,14 +247,14 @@ $this->layout('system::layout/default');
                             <?php if (! empty($message->deleted)): ?>
                                 <div class="d-inline me-2 badge bg-danger"
                                      data-bs-toggle="tooltip"
-                                     data-placement="top"
+                                     data-bs-placement="top"
                                      title="<?= __('Post deleted:') ?> <?= $message->deleted_by ?>">
                                     <?= __('Deleted') ?>
                                 </div>
                             <?php elseif (! empty($message->deleted_by)): ?>
                                 <div class="post-meta d-inline me-2"
                                      data-bs-toggle="tooltip"
-                                     data-placement="top"
+                                     data-bs-placement="top"
                                      title="<?= __('Post restored by:') ?> <?= $message->deleted_by ?>">
                                     <?= __('Restored') ?>
                                 </div>

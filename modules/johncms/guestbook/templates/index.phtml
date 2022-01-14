@@ -115,8 +115,8 @@
                     <?php if (! empty($post['user']['rights_name'])): ?>
                         <div class="post-of-user"
                              data-bs-toggle="tooltip"
-                             data-placement="top"
-                             data-html="true"
+                             data-bs-placement="top"
+                             data-bs-html="true"
                              title="<?= $post['user']['rights_name'] ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -137,8 +137,8 @@
                         <?php if (! empty($post['edit_count'])): ?>
                             <div class="post-meta d-inline me-2"
                                  data-bs-toggle="tooltip"
-                                 data-placement="top"
-                                 data-html="true"
+                                 data-bs-placement="top"
+                                 data-bs-html="true"
                                  title="<?= __('Edited:') ?> <?= $post['edited_by'] ?> <br> (<?= $post['edited_at'] ?>) [<?= $post['edit_count'] ?>]">
                                 <?= __('Edited') ?>
                             </div>

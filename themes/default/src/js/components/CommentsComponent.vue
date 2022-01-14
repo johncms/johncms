@@ -14,8 +14,8 @@
                     <div v-if="message.user.rights_name"
                          class="post-of-user"
                          data-bs-toggle="tooltip"
-                         data-placement="top"
-                         data-html="true"
+                         data-bs-placement="top"
+                         data-bs-html="true"
                          :title="message.user.rights_name">
                         <svg class="icon-post">
                             <use xlink:href="/themes/default/assets/icons/sprite.svg?#check"/>
@@ -28,7 +28,7 @@
                         <div class="user-name d-inline me-2" v-if="!message.user.profile_url">{{ message.user.user_name }}</div>
                         <span class="post-meta d-inline me-2"
                               data-bs-toggle="tooltip"
-                              data-placement="top"
+                              data-bs-placement="top"
                               title="Link to post">
                             {{ message.created_at }}
                         </span>

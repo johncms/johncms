@@ -14,8 +14,13 @@ try {
     if (token) {
         window.axios.defaults.headers.common['X-CSRF-Token'] = token.content;
     }
-    var _ = require('lodash');
-    require('bootstrap');
+    const _ = require('lodash');
+    const bootstrap = require('bootstrap');
+
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
 } catch (e) {
 }
 
