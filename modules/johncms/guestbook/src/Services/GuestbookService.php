@@ -52,7 +52,7 @@ class GuestbookService
     {
         $admin_club = ($this->session->has('ga') && $this->user?->hasPermission('guestbook_admin_club'));
         $messages = (new Guestbook())
-            ->with('user')
+            ->with('user', 'user.avatar')
             ->where('adm', $admin_club)
             ->orderByDesc('time')
             ->paginate($this->siteSettings->getPerPage());
