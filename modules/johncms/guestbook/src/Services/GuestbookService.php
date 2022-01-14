@@ -143,7 +143,7 @@ class GuestbookService
                     'adm'            => ! $this->isGuestbook(),
                     'time'           => time(),
                     'user_id'        => $this->user?->id ?? 0,
-                    'name'           => $this->user?->name ?? $fields['name'],
+                    'name'           => $this->user?->displayName() ?? $fields['name'],
                     'text'           => $fields['message'],
                     'ip'             => $request->getIp(),
                     'browser'        => $request->getUserAgent(),
