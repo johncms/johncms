@@ -123,9 +123,7 @@
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
                         <?php if (! empty($post['user']) && ! empty($post['user']['profile_url'])): ?>
-                            <a href="<?= $post['user']['profile_url'] ?>">
-                                <div class="user-name d-inline me-2"><?= $post['name'] ?></div>
-                            </a>
+                            <a href="<?= $post['user']['profile_url'] ?>" class="user-name d-inline me-2"><?= $post['name'] ?></a>
                         <?php else: ?>
                             <div class="user-name d-inline me-2"><?= ! empty($post['user']) ? $post['name'] : (__('Guest') . ': ' . $post['name']) ?></div>
                         <?php endif; ?>
