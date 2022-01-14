@@ -8,7 +8,7 @@ use Johncms\Users\User;
 
 class AntiFlood
 {
-    public function __construct(protected User $user)
+    public function __construct(protected ?User $user = null)
     {
     }
 
