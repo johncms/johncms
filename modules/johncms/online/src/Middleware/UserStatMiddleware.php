@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Online\Middleware;
 
-use Johncms\Users\UserStat;
+use Johncms\Online\Online;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -25,7 +25,7 @@ class UserStatMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        new UserStat();
+        di(Online::class)->updateOnline();
         return $handler->handle($request);
     }
 }

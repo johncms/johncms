@@ -14,6 +14,9 @@ namespace Johncms\Users;
 
 use Johncms\Http\Environment;
 
+/**
+ * @deprecated Use the online module classes
+ */
 class UserStat
 {
     /**

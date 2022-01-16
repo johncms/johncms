@@ -42,7 +42,6 @@ use Johncms\Users\Casts\UserSettings;
  * @property int|null $failed_login
  * @property int|null $gender
  * @property Carbon|null $birthday
- * @property Carbon|null $last_visit
  * @property UserConfig $settings
  *
  * @property StoredAuth[] $storedAuth
@@ -81,7 +80,6 @@ class User extends Model
         'failed_login',
         'gender',
         'birthday',
-        'last_visit',
         'settings',
         'additional_fields',
         'avatar_id',
@@ -91,7 +89,6 @@ class User extends Model
 
     protected $dates = [
         'birthday',
-        'last_visit',
     ];
 
     protected ?UserRoleChecker $userRoleChecker = null;
@@ -219,7 +216,7 @@ class User extends Model
 
     public function isOnline(): bool
     {
-        return $this->last_visit && Carbon::now()->subMinutes(5)->lessThan($this->last_visit);
+        return $this->activity?->last_visit && Carbon::now()->subMinutes(5)->lessThan($this->activity?->last_visit);
     }
 
     public function getLastSeen(): string
@@ -270,5 +267,10 @@ class User extends Model
     public function scopeOnline(Builder $query): Builder
     {
         return $query->where('last_visit', '>', Carbon::now()->subMinutes(5));
+    }
+
+    public function updateActivity(array $fields = []): UserActivity
+    {
+        return UserActivity::query()->updateOrCreate(['user_id' => $this->id], $fields);
     }
 }
