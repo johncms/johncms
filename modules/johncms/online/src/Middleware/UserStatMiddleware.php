@@ -25,7 +25,8 @@ class UserStatMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $response = $handler->handle($request);
         di(Online::class)->updateOnline();
-        return $handler->handle($request);
+        return $response;
     }
 }

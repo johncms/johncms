@@ -37,6 +37,6 @@ class UserActivity extends Model
     ];
 
     protected $casts = [
-        'route' => 'array',
+        'route_params' => 'array',
     ];
 }
