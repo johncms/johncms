@@ -95,7 +95,7 @@ class QueryCollector extends PDOCollector
                 if (! is_int($binding) && ! is_float($binding)) {
                     if ($pdo) {
                         try {
-                            $binding = $pdo->quote($binding);
+                            $binding = $binding !== null ? $pdo->quote($binding) : 'null';
                         } catch (Exception) {
                             $binding = $this->emulateQuote($binding);
                         }
