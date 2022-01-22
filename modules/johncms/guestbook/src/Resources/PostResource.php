@@ -17,28 +17,25 @@ use Johncms\Http\Resources\AbstractResource;
 use Johncms\Users\User;
 
 /**
- * Class PostResource
- *
- * @package Guestbook\Resources
- * @property Guestbook $model
+ * @mixin Guestbook
  */
 class PostResource extends AbstractResource
 {
     public function toArray(): array
     {
         return [
-            'id'           => $this->model->id,
-            'name'         => $this->model->name,
-            'is_online'    => $this->model->is_online,
-            'created_at'   => $this->model->time,
-            'edit_count'   => $this->model->edit_count,
-            'edited_by'    => $this->model->edit_who,
-            'edited_at'    => $this->model->edit_time,
-            'text'         => $this->model->post_text,
-            'reply_text'   => $this->model->reply_text,
-            'reply_author' => $this->model->admin,
-            'replied_at'   => $this->model->otime,
-            'user_id'      => $this->model->user_id,
+            'id'           => $this->id,
+            'name'         => $this->name,
+            'is_online'    => $this->is_online,
+            'created_at'   => $this->time,
+            'edit_count'   => $this->edit_count,
+            'edited_by'    => $this->edit_who,
+            'edited_at'    => $this->edit_time,
+            'text'         => $this->post_text,
+            'reply_text'   => $this->reply_text,
+            'reply_author' => $this->admin,
+            'replied_at'   => $this->otime,
+            'user_id'      => $this->user_id,
             'user'         => $this->getUser(),
             'meta'         => $this->getMeta(),
         ];
@@ -46,7 +43,7 @@ class PostResource extends AbstractResource
 
     protected function getUser(): array
     {
-        $userModel = $this->model->user;
+        $userModel = $this->user;
         if ($userModel !== null) {
             $user = [
                 'id'          => $userModel->id,
@@ -65,16 +62,16 @@ class PostResource extends AbstractResource
         $currentUser = di(User::class);
         if ($currentUser?->hasAnyRole()) {
             $meta = [
-                'ip'            => $this->model->ip,
-                'search_ip_url' => '/admin/search_ip/?ip=' . $this->model->ip,
-                'user_agent'    => $this->model->browser,
+                'ip'            => $this->ip,
+                'search_ip_url' => '/admin/search_ip/?ip=' . $this->ip,
+                'user_agent'    => $this->browser,
             ];
 
             if ($currentUser?->hasPermission('guestbook_delete_posts')) {
                 $meta['can_manage'] = true;
-                $meta['edit_url'] = route('guestbook.edit', ['id' => $this->model->id]);
-                $meta['delete_url'] = route('guestbook.delete', ['id' => $this->model->id]);
-                $meta['reply_url'] = route('guestbook.reply', ['id' => $this->model->id]);
+                $meta['edit_url'] = route('guestbook.edit', ['id' => $this->id]);
+                $meta['delete_url'] = route('guestbook.delete', ['id' => $this->id]);
+                $meta['reply_url'] = route('guestbook.reply', ['id' => $this->id]);
             }
         }
 

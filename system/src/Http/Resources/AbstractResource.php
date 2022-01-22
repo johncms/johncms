@@ -13,6 +13,11 @@ abstract class AbstractResource
         $this->model = $model;
     }
 
+    public function __get(string $name)
+    {
+        return $this->model?->$name ?? null;
+    }
+
     public static function createFromCollection(mixed $collection): ResourceCollection
     {
         return new ResourceCollection($collection, static::class);
