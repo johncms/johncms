@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Guestbook\Resources;
 
 use Johncms\Guestbook\Models\Guestbook;
+use Johncms\Http\Resources\AbstractResource;
 use Johncms\Users\User;
 
 /**
@@ -21,7 +22,7 @@ use Johncms\Users\User;
  * @package Guestbook\Resources
  * @property Guestbook $model
  */
-class PostResource extends BaseResource
+class PostResource extends AbstractResource
 {
     public function toArray(): array
     {

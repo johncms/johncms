@@ -17,7 +17,6 @@ use Johncms\Exceptions\ValidationException;
 use Johncms\Files\FileStorage;
 use Johncms\Guestbook\Models\Guestbook;
 use Johncms\Guestbook\Resources\PostResource;
-use Johncms\Guestbook\Resources\ResourceCollection;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Settings\SiteSettings;
@@ -57,7 +56,7 @@ class GuestbookService
             ->orderByDesc('time')
             ->paginate($this->siteSettings->getPerPage());
 
-        $posts = new ResourceCollection($messages, PostResource::class);
+        $posts = PostResource::createFromCollection($messages);
 
         return [
             'posts'      => $posts->toArray(),
