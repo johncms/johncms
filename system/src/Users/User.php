@@ -266,7 +266,9 @@ class User extends Model
 
     public function scopeOnline(Builder $query): Builder
     {
-        return $query->where('last_visit', '>', Carbon::now()->subMinutes(5));
+        return $query->whereHas('activity', function (Builder $builder) {
+            return $builder->where('last_visit', '>=', Carbon::now()->subMinutes(5));
+        });
     }
 
     public function updateActivity(array $fields = []): UserActivity

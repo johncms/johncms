@@ -44,7 +44,7 @@ class ResourceCollection
      * @return array
      * @psalm-suppress MissingClosureParamType, MissingClosureReturnType, InvalidStringClass
      */
-    protected function prepare(): array
+    public function getItems(): array
     {
         return $this->collection->map(
             function ($value) {
@@ -56,7 +56,7 @@ class ResourceCollection
     public function paginate(): array
     {
         return [
-            'data'           => $this->prepare(),
+            'data'           => $this->getItems(),
             'current_page'   => $this->original->currentPage(),
             'first_page_url' => $this->original->url(1),
             'from'           => $this->original->firstItem(),
@@ -76,6 +76,6 @@ class ResourceCollection
         if ($this->original instanceof LengthAwarePaginator) {
             return $this->paginate();
         }
-        return $this->prepare();
+        return $this->getItems();
     }
 }

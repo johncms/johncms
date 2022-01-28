@@ -20,6 +20,7 @@ class UserActivity extends Model
 {
     protected $table = 'user_activity';
     public $timestamps = false;
+    protected static $unguarded = true;
 
     protected $primaryKey = 'user_id';
 
@@ -34,6 +35,7 @@ class UserActivity extends Model
     protected $dates = [
         'last_post',
         'last_visit',
+        'session_started',
     ];
 
     protected $casts = [
