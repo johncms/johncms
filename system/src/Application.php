@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Carbon\Carbon;
 use Gettext\TranslatorFunctions;
 use Illuminate\Container\Container;
 use Johncms\Debug\DebugBar;
@@ -59,6 +60,7 @@ class Application
         $translator->defaultDomain('system');
         // Register language helpers
         TranslatorFunctions::register($translator);
+        Carbon::setLocale($translator->getLocale());
     }
 
     /**
