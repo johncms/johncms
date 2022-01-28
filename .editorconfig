@@ -224,5 +224,5 @@ ij_php_while_on_new_line = false
 ij_php_parameters_attributes_wrap = normal
 ij_php_attributes_wrap = split_into_lines
 
-[{*.yml,*.yaml}]
+[{*.yml,*.yaml,*.scss,*.js,*.vue,*.ts}]
 indent_size = 2
