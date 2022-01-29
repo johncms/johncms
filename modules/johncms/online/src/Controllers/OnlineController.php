@@ -12,12 +12,19 @@ class OnlineController extends BaseController
 {
     protected string $moduleName = 'johncms/online';
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->metaTagManager->setAll(__('Who is online?'));
+        $this->navChain->add(__('Who is online?'));
+    }
+
     /**
      * Authorized online users
      */
     public function index(): string
     {
-        $users = User::query()->online()->paginate();
+        $users = User::query()->with('activity')->online()->paginate();
         $userResource = UserResource::createFromCollection($users);
         return $this->render->render('online::users', [
             'data' => [
