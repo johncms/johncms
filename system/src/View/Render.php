@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\View;
 
+use Illuminate\Support\Arr;
 use Mobicms\Render\Engine;
+use Throwable;
 
 class Render extends Engine
 {
@@ -35,5 +37,19 @@ class Render extends Engine
         }
 
         return $this;
+    }
+
+    /**
+     * We catch exceptions here to avoid doing this in controllers.
+     */
+    public function render(string $name, array $params = []): string
+    {
+        try {
+            return parent::render($name, $params);
+        } catch (Throwable $exception) {
+            $errorFile = Arr::where($exception->getTrace(), fn($item) => $item['class'] === static::class);
+            $error = $errorFile[array_key_first($errorFile)];
+            die($exception->getMessage() . ' <br>File: ' . $error['file'] . '<br>Line: ' . $error['line']);
+        }
     }
 }
