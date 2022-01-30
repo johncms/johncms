@@ -24,7 +24,13 @@
                 <span class="text-muted"><?= $item['time'] ?></span>
             </div>
             <?php if (! empty($item['place_name'])): ?>
-                <div><?= $item['place_name'] ?></div>
+                <div>
+                    <?php if (empty($item['place_url'])): ?>
+                        <?= $item['place_name'] ?>
+                    <?php else: ?>
+                        <a href="<?= $item['place_url'] ?>"><?= $item['place_name'] ?></a>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
         </div>
     </div>

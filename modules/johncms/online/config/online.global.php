@@ -9,8 +9,13 @@
  */
 
 return [
-    'providers'  => [],
-    'middleware' => [
+    'providers'    => [],
+    'middleware'   => [
         \Johncms\Online\Middleware\UserStatMiddleware::class,
+    ],
+    'dependencies' => [
+        'factories' => [
+            \Johncms\Online\Places::class => \Johncms\Online\Places::class,
+        ],
     ],
 ];
