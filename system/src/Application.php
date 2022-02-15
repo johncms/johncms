@@ -15,6 +15,8 @@ namespace Johncms;
 use Carbon\Carbon;
 use Gettext\TranslatorFunctions;
 use Illuminate\Container\Container;
+use Illuminate\Database\Capsule\Manager;
+use Illuminate\Support\Facades\DB;
 use Johncms\Debug\DebugBar;
 use Johncms\i18n\Translator;
 use Johncms\Router\RouterFactory;
@@ -35,10 +37,17 @@ class Application
 
     public function run(): Application
     {
-        di(PDO::class);
+        $this->setupDatabase();
         $this->runModuleProviders();
         $this->setupTranslator();
         return $this;
+    }
+
+    private function setupDatabase()
+    {
+        di(PDO::class);
+        $connection = Manager::connection();
+        DB::swap($connection);
     }
 
     private function runModuleProviders(): void
