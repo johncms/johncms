@@ -7,6 +7,8 @@ namespace Johncms\Online\Controllers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Controller\BaseController;
+use Johncms\Online\Models\GuestSession;
+use Johncms\Online\Resources\GuestResource;
 use Johncms\Online\Resources\UserResource;
 use Johncms\Users\User;
 
@@ -57,7 +59,16 @@ class OnlineController extends BaseController
 
     public function guests(): string
     {
-        return '';
+        $guests = GuestSession::query()->online()->paginate();
+        $userResource = GuestResource::createFromCollection($guests);
+        return $this->render->render('online::users', [
+            'data' => [
+                'users'      => $userResource->getItems(),
+                'pagination' => $guests->render(),
+                'total'      => $guests->total(),
+                'filters'    => [],
+            ],
+        ]);
     }
 
     public function ipActivity(): string

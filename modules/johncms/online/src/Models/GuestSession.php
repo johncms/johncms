@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Online\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class GuestSession extends Model
@@ -28,4 +30,9 @@ class GuestSession extends Model
     protected $casts = [
         'route_params' => 'array',
     ];
+
+    public function scopeOnline(Builder $query): Builder
+    {
+        return $query->where('updated_at', '>=', Carbon::now()->subMinutes(5));
+    }
 }
