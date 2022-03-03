@@ -1,0 +1,30 @@
+#!/bin/bash
+
+composer install
+chmod 777 data/cache/
+chmod 777 upload/downloads/files/
+chmod 777 upload/downloads/screen/
+chmod 777 upload/forum/attach/
+chmod 777 upload/forum/topics/
+chmod 777 upload/library/
+chmod 777 upload/library/tmp
+chmod 777 upload/library/images
+chmod 777 upload/library/images/big
+chmod 777 upload/library/images/orig
+chmod 777 upload/library/images/small
+chmod 777 upload/users/album/
+chmod 777 upload/users/avatar/
+chmod 777 upload/users/photo/
+chmod 777 upload/mail/
+chmod 777 config/autoload/
+
+#chmod -R 777 your_directory_name
+
+#php bin/console do:da:cr --no-interaction --env=$env --if-not-exists
+#php bin/console do:mi:mi --no-interaction --env=$env
+#php bin/console do:fi:lo --no-interaction --env=$env
+#php bin/console assets:install public --symlink
+#php bin/console lexik:translations:import --env=$env
+#php bin/phpcs --config-set installed_paths vendor/escapestudios/symfony2-coding-standard
+#npm install
+#npm run gulp-dev
