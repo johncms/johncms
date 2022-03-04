@@ -8,7 +8,6 @@
 /phpcs.xml
 /translate.xml
 /system/vendor
-/docker-configs/logs/*
 /mix-manifest.json
 
 # Data folder ignores
@@ -44,3 +43,5 @@
 !/upload/library/images/orig/.gitkeep
 /upload/library/images/small/*
 !/upload/library/images/small/.gitkeep
+docker-configs/logs/nginx/error.log
+docker-configs/logs/nginx/access.log
