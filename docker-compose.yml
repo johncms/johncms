@@ -8,7 +8,9 @@ services:
       - ./docker-configs/logs/nginx/:/var/log/nginx/
    # restart: unless-stopped
     ports:
-      - "127.0.0.1:80:80"
+      - "80:80"
+    depends_on:
+      - php
   php:
     build: ./docker-configs/php
     volumes:
@@ -16,25 +18,24 @@ services:
      # - ./docker-configs/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - mysql
-    links:
-      - "mysql:localhost"
   mysql:
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password
-  #  restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: qwerty
     volumes:
+      - dbdata:/var/lib/mysql
+   # volumes:
     #  - ./docker-configs/mysql/import:/docker-entrypoint-initdb.d
     #  - ./docker-configs/mysql/config:/etc/mysql/conf/conf.d
-      - ./docker-configs/logs/mysql/:/var/log/mysql
+    #  - ./docker-configs/logs/mysql/:/var/log/mysql
     ports:
-      - "127.0.0.1:3306:3306"
+      - "3306:3306"
   adminer:
     image: adminer
-    restart: always
     ports:
-      - 127.0.0.1:8080:8080
+      - "8080:8080"
     depends_on:
       - mysql
-    
+volumes:
+  dbdata:
