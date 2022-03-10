@@ -17,6 +17,7 @@ chmod 777 upload/users/avatar/
 chmod 777 upload/users/photo/
 chmod 777 upload/mail/
 chmod 777 config/autoload/
+chmod 777 system/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
 
 #chmod -R 777 your_directory_name
 

@@ -27,6 +27,9 @@ $request = di(ServerRequestInterface::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
+d($res_down);
+$md5t = md5_file($res_down['dir'] . '/' . $res_down['name']);
+d($md5t);
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo $view->render(
         'system::pages/result',
@@ -65,15 +68,26 @@ if ($request->getMethod() === 'POST') {
     $post = $request->getParsedBody();
     $name = isset($post['text']) ? trim($post['text']) : null;
     $desc = isset($post['desc']) ? trim($post['desc']) : null;
+    $mirrors = isset($post['mirrors']) ? trim($post['mirrors']) : null;
+	$price = isset($post['price']) ? trim($post['price']) : 0;
+	$vendor = isset($post['vendor']) ? trim($post['vendor']) : null;
+	$filename = isset($post['filename']) ? trim($post['filename']) : null;
+	$tag = isset($post['tag']) ? trim($post['tag']) : null;
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
 
     if ($name_link && $name) {
+        rename(($res_down['dir'] . '/' . $res_down['name']), ($res_down['dir'] . '/' . $filename));
         $stmt = $db->prepare(
             '
             UPDATE `download__files` SET
             `rus_name` = ?,
             `text`     = ?,
-            `about`    = ?
+            `about`    = ?,
+			`mirrors`	= ?,
+            `price`		= ?,
+            `vendor`	= ?,
+            `name`		= ?,
+            `tag` 		= ?
             WHERE `id` = ?
         '
         );
@@ -83,6 +97,11 @@ if ($request->getMethod() === 'POST') {
                 $name,
                 $name_link,
                 $desc,
+                $mirrors,
+				$price,
+				$vendor,
+				$filename,
+				$tag,
                 $id,
             ]
         );
@@ -116,8 +135,13 @@ if ($request->getMethod() === 'POST') {
 } else {
     $file_data = [
         'text'      => htmlspecialchars($res_down['rus_name']),
+        'price'     => ($res_down['price']),
+		'vendor'    => ($res_down['vendor']),
+		'filename'  => htmlspecialchars($res_down['name']),
+		'tag'  		=> ($res_down['tag']),
         'name_link' => htmlspecialchars($res_down['text']),
         'desc'      => htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8'),
+        'mirrors'   => ($res_down['mirrors']),
     ];
     echo $view->render(
         'downloads::edit_file_form',
