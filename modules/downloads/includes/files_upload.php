@@ -48,6 +48,10 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $name = isset($post['text']) ? trim($post['text']) : null;
                 $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
                 $text = isset($post['opis']) ? trim($post['opis']) : null;
+                $vendor = isset($post['vendor']) ? trim($post['vendor']) : null;
+				$tag = isset($post['tag']) ? trim($post['tag']) : null;
+				$mirrors = isset($post['mirrors']) ? trim($post['mirrors']) : null;
+				$price = isset($post['price']) ? trim($post['price']) : null;
 
                 /** @var GuzzleHttp\Psr7\UploadedFile $file */
                 $file = $files['fail'];
@@ -78,6 +82,33 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
                 }
 
+/////////////////////////
+$md5 = md5_file($_FILES["fail"]["tmp_name"]);
+$sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
+$stmt = $db->prepare('SELECT * FROM download__files WHERE md5 = :md5');
+$stmt->execute(['md5' => $md5]);
+$md5_check = $stmt->fetch();
+$stmt = $db->prepare('SELECT * FROM download__files WHERE sha1 = :sha1');
+$stmt->execute(['sha1' => $sha1]);
+$sha1_check = $stmt->fetch();
+$stmt = $db->prepare('SELECT * FROM download__more WHERE md5 = :md5');
+$stmt->execute(['md5' => $md5]);
+$md5_check2 = $stmt->fetch();
+$stmt = $db->prepare('SELECT * FROM download__more WHERE sha1 = :sha1');
+$stmt->execute(['sha1' => $sha1]);
+$sha1_check2 = $stmt->fetch();
+
+if (!empty($md5_check)) {
+    $error[] = '<div class="rmenu">Такой файл уже есть! <br> Загрузка: <b>' . $md5_check['rus_name'] .'</b><br> Файл: <b>' . $md5_check['name']  . '</b><br> Название ссылки: <b>' . $md5_check['text'] .'</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $md5_check['id'] . '">Перейти к файлу</a></button></div>';
+    } else if (!empty($sha1_check)) {
+    $error[] = '<div class="rmenu">Такой файл уже есть! <br> Загрузка: <b>' . $sha1_check['rus_name'] .'</b><br> Файл: <b>' . $sha1_check['name']  . '</b><br> Название ссылки: <b>' . $sha1_check['text'] .'</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $sha1_check['id'] . '">Перейти к файлу</a></button></div>';
+    } else 	if (!empty($md5_check2)) {
+    $error[] = '<div class="rmenu">Такой файл уже есть! Он находится среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . $md5_check2['rus_name'] .'</b><br> Имя файла: <b>' . $md5_check2['name']  . '</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $md5_check2['refid'] . '">Перейти к загрузке</a></button></div>';
+    } else if (!empty($sha1_check2)) {
+    $error[] = '<div class="rmenu">Такой файл уже есть! Он находится среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . $sha1_check2['rus_name'] .'</b><br> Имя файла: <b>' . $sha1_check2['name']  . '</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $sha1_check2['refid'] . '">Перейти к загрузке</a></button></div>';
+    }
+/////////////////////
+
                 if ($error) {
                     echo $view->render(
                         'system::pages/result',
@@ -105,8 +136,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                         $stmt = $db->prepare(
                             "
                             INSERT INTO `download__files`
-                            (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`, `desc`)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '')
+                            (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`, `desc`, `md5`, `sha1`, `updated`, `vendor`, `tag`, `mirrors`, `price`)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '', ?, ?, ?, ?, ?, ?, ?)
                         "
                         );
 
@@ -121,6 +152,13 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                                 $type,
                                 $user->id,
                                 $text,
+                                $md5,
+								$sha1,
+								time(),
+								$vendor,
+								$tag,
+								$mirrors,
+								$price,
                             ]
                         );
                         $file_id = $db->lastInsertId();
