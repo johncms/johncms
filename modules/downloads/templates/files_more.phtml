@@ -34,7 +34,7 @@ $this->layout(
                     <h5 class="font-weight-bold mb-1"><?= $file['rus_name'] ?></h5>
                     <small class="text-muted"><?= $file['display_date'] ?></small>
                 </div>
-                <p class="mb-1"><?= $file['name'] ?> (<?= $file['display_size'] ?>)</p>
+                <p class="mb-1"><?= $file['name'] ?> (<?= $file['display_size'] ?>) | Price: <?= $file['price'] ?></p>
                 <div>
                     <a href="<?= $file['edit_url'] ?>" class="btn btn-primary btn-sm"><?= __('Edit') ?></a>
                     <a href="<?= $file['delete_url'] ?>" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
