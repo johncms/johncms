@@ -57,6 +57,8 @@ $nav_chain->add(__('Additional files'));
 if ($edit) {
     // Изменяем файл
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
+    $filename = isset($post['filename']) ? trim($post['filename']) : null;
+	$price = isset($post['price']) ? trim($post['price']) : null;
     $req_file_more = $db->query("SELECT `rus_name` FROM `download__more` WHERE `id` = '${edit}' LIMIT 1");
 
     /** @noinspection NotOptimalIfConditionsInspection */
@@ -64,7 +66,9 @@ if ($edit) {
         $stmt = $db->prepare(
             '
             UPDATE `download__more` SET
-            `rus_name` = ?
+            `rus_name` = ?,
+			`name` 		= ?,
+			`price` 	= ?
             WHERE `id` = ?
         '
         );
@@ -73,9 +77,11 @@ if ($edit) {
             [
                 $name_link,
                 $edit,
+                $filename,
+				$price,
             ]
         );
-
+        rename(($res_down['dir'] . '/' . $res_file_more['name']), ($res_down['dir'] . '/' . $filename));
         header('Location: ?act=files_more&id=' . $id);
     } else {
         $res_file_more = $req_file_more->fetch();
@@ -87,6 +93,8 @@ if ($edit) {
                 'id'         => $id,
                 'urls'       => $urls,
                 'file_name'  => htmlspecialchars($res_file_more['rus_name']),
+                'filename'   => ($res_file_more['name']),
+				'price'      => ($res_file_more['price']),
                 'action_url' => '?act=files_more&amp;id=' . $id . '&amp;edit=' . $edit,
                 'back_url'   => '?act=files_more&amp;id=' . $id,
             ]
@@ -127,6 +135,7 @@ if ($edit) {
     // Выгружаем файл
     $error = [];
     $link_file = isset($post['link_file']) ? str_replace('./', '_', trim($post['link_file'])) : null;
+    $price = isset($post['price']) ? trim($post['price']) : 0;
     $do_file = false;
 
     $files = $request->getUploadedFiles();
@@ -162,6 +171,8 @@ if ($edit) {
             exit;
         }
     } elseif ($uploaded_file !== null) {
+        $md5 = md5_file($_FILES["fail"]["tmp_name"]);
+		$sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
         $do_file = true;
         $fname = $uploaded_file->getClientFilename();
         $fsize = $uploaded_file->getSize();
@@ -192,6 +203,39 @@ if ($edit) {
             $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $defaultExt);
         }
 
+        /////////////////////////
+				d($link_file);
+				
+				//d($files);
+				//d($uploaded_file);
+				//$md52 = md5_file($link_file);
+				//d($md52);
+				$md5 = md5_file($_FILES["fail"]["tmp_name"]);
+				$sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
+				$stmt = $db->prepare('SELECT * FROM download__files WHERE md5 = :md5');
+				$stmt->execute(['md5' => $md5]);
+				$md5_check = $stmt->fetch();
+				$stmt = $db->prepare('SELECT * FROM download__files WHERE sha1 = :sha1');
+				$stmt->execute(['sha1' => $sha1]);
+				$sha1_check = $stmt->fetch();
+				$stmt = $db->prepare('SELECT * FROM download__more WHERE md5 = :md5');
+				$stmt->execute(['md5' => $md5]);
+				$md5_check2 = $stmt->fetch();
+				$stmt = $db->prepare('SELECT * FROM download__more WHERE sha1 = :sha1');
+				$stmt->execute(['sha1' => $sha1]);
+				$sha1_check2 = $stmt->fetch();
+				
+				if (!empty($md5_check)) {
+					$error[] = '<div class="rmenu">Такой файл уже есть! <br> Загрузка: <b>' . $md5_check['rus_name'] .'</b><br> Файл: <b>' . $md5_check['name']  . '</b><br> Название ссылки: <b>' . $md5_check['text'] .'</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $md5_check['id'] . '">Перейти к файлу</a></button></div>';
+					} else if (!empty($sha1_check)) {
+					$error[] = '<div class="rmenu">Такой файл уже есть! <br> Загрузка: <b>' . $sha1_check['rus_name'] .'</b><br> Файл: <b>' . $sha1_check['name']  . '</b><br> Название ссылки: <b>' . $sha1_check['text'] .'</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $sha1_check['id'] . '">Перейти к файлу</a></button></div>';
+					} else 	if (!empty($md5_check2)) {
+					$error[] = '<div class="rmenu">Такой файл уже есть! Он находится среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . $md5_check2['rus_name'] .'</b><br> Имя файла: <b>' . $md5_check2['name']  . '</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $md5_check2['refid'] . '">Перейти к загрузке</a></button></div>';
+					} else if (!empty($sha1_check2)) {
+					$error[] = '<div class="rmenu">Такой файл уже есть! Он находится среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . $sha1_check2['rus_name'] .'</b><br> Имя файла: <b>' . $sha1_check2['name']  . '</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $sha1_check2['refid'] . '">Перейти к загрузке</a></button></div>';
+					}
+/////////////////////
+
         if (empty($error)) {
             $newFile = 'file' . $id . '_' . $fname;
 
@@ -213,8 +257,8 @@ if ($edit) {
                 $stmt = $db->prepare(
                     '
                       INSERT INTO `download__more`
-                      (`refid`, `time`, `name`, `rus_name`, `size`)
-                      VALUES (?, ?, ?, ?, ?)
+                      (`refid`, `time`, `name`, `rus_name`, `size`, `md5`, `sha1`, `updated`, `user_id`, `price`)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     '
                 );
 
@@ -225,6 +269,11 @@ if ($edit) {
                         $fname,
                         $name_link,
                         (int) $fsize,
+                        $md5,
+						$sha1,
+						time(),
+						$user->id,
+						$price,
                     ]
                 );
                 echo $view->render(
