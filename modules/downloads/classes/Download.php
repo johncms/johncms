@@ -79,7 +79,7 @@ class Download // phpcs:ignore
         $file['preview_text'] = '';
         if ($res_down['about']) {
             $about = html_entity_decode(strip_tags($tools->checkout($res_down['about'], 0, 1)));
-            $file['preview_text'] = htmlentities(mb_strimwidth($about, 0, 94, '...'));
+            $file['preview_text'] = htmlentities(mb_strimwidth($about, 0, 124, '...'));
         }
 
         $file['comments_url'] = '';
