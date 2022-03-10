@@ -45,3 +45,4 @@
 !/upload/library/images/small/.gitkeep
 docker-configs/logs/nginx/error.log
 docker-configs/logs/nginx/access.log
+upload/downloads/screen/*
