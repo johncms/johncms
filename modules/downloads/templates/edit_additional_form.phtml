@@ -31,6 +31,16 @@ $this->layout(
         <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
                name="name_link" value="<?= $file_name ?>" maxlength="200" required>
     </div>
+    <div class="form-group">
+    <label for="price"><?= __('Price') ?></label>
+        <input type="text" class="form-control" id="price" placeholder="<?= __('Link to download file') ?>"
+               name="price" value="<?= $price ?>" maxlength="10" required>
+    </div>
+    <div class="form-group">
+        <label for="filename"><?= __('File Name') ?></label>
+        <input type="text" class="form-control" id="filename" placeholder="<?= __('File Name') ?>"
+               name="filename" value="<?= $filename ?>" maxlength="100" required>
+    </div>
 
     <div class="mt-3">
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>

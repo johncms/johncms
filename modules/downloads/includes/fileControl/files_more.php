@@ -59,7 +59,7 @@ if ($edit) {
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
     $filename = isset($post['filename']) ? trim($post['filename']) : null;
 	$price = isset($post['price']) ? trim($post['price']) : null;
-    $req_file_more = $db->query("SELECT `rus_name` FROM `download__more` WHERE `id` = '${edit}' LIMIT 1");
+    $req_file_more = $db->query("SELECT * FROM `download__more` WHERE `id` = '${edit}' LIMIT 1");
 
     /** @noinspection NotOptimalIfConditionsInspection */
     if ($name_link && $request->getMethod() === 'POST' && $req_file_more->rowCount()) {
@@ -76,9 +76,9 @@ if ($edit) {
         $stmt->execute(
             [
                 $name_link,
-                $edit,
                 $filename,
 				$price,
+                $edit,
             ]
         );
         rename(($res_down['dir'] . '/' . $res_file_more['name']), ($res_down['dir'] . '/' . $filename));

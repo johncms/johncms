@@ -69,8 +69,8 @@ $this->layout(
 
     <div class="form-group">
         <label for="name_link"><?= __('Link to download file') ?></label>
-        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
-               name="name_link" value="<?= __('Download the additional file') ?>" maxlength="200" required>
+        <textarea class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
+               name="name_link" value="<?= __('Download the additional file') ?>" maxlength="65000" cols="24" rows="4" required></textarea>
     </div>
 
     <div class="alert alert-warning mt-3">
