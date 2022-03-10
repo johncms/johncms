@@ -68,6 +68,13 @@ $this->layout(
     </div>
 
     <div class="form-group">
+    <label for="price"><?= __('Price') ?></label>
+        <input type="text" class="form-control" id="price" placeholder="<?= __('Price') ?>"
+               name="price" value="" maxlength="10">
+        <div class="text-muted small"><?= __('max. 10 characters') ?></div>
+    </div>
+
+    <div class="form-group">
         <label for="name_link"><?= __('Link to download file') ?></label>
         <textarea class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
                name="name_link" value="<?= __('Download the additional file') ?>" maxlength="65000" cols="24" rows="4" required></textarea>
