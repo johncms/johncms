@@ -25,6 +25,8 @@ if ($id === 2) {
     $title = __('Most Commented');
 } elseif ($id === 1) {
     $title = __('Most Downloaded');
+} elseif ($id === 3) {
+    $title = __('New Files');
 } else {
     $title = __('Popular Files');
 }
@@ -39,6 +41,12 @@ if ($config['mod_down_comm'] || $user->rights >= 7) {
         'active' => false,
     ];
 }
+
+$buttons['new'] = [
+    'name'   => __('New Files'),
+    'url'    => '?act=top_files&amp;id=3',
+    'active' => false,
+];
 
 $buttons['pop'] = [
     'name'   => __('Popular Files'),
@@ -58,13 +66,26 @@ if ($id === 2 && ($config['mod_down_comm'] || $user->rights >= 7)) {
 } elseif ($id === 1) {
     $buttons['most_downloaded']['active'] = true;
     $sql = '`field`';
+} elseif ($id === 3) {
+    $buttons['new']['active'] = true;
+    $sql = '`updated`';
 } else {
     $buttons['pop']['active'] = true;
     $sql = '`rate`';
 }
 
+$catid = isset($_GET['catid']) ? rawurldecode(trim($_GET['catid'])) : null;
+if ($catid){
+$catinfo = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catid'")->fetch();
+$catdir = $catinfo['dir'];
+$catname = $catinfo['rus_name'];
+} else {
+	$catdir = '/';
+	$catname = null;
+}
+
 // Выводим список
-$req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 ORDER BY ${sql} DESC LIMIT " . $set_down['top']);
+$req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 AND dir LIKE '%".$catdir."%' ORDER BY ${sql} DESC LIMIT " . $set_down['top']);
 $files = [];
 while ($res_down = $req_down->fetch()) {
     $files[] = Download::displayFile($res_down);
@@ -77,6 +98,8 @@ echo $view->render(
         'page_title' => $title,
         'files'      => $files ?? [],
         'urls'       => $urls,
+        'catid'      => $catid,
+		'catname'    => $catname,
         'buttons'    => $buttons,
     ]
 );

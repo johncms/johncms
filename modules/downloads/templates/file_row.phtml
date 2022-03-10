@@ -18,7 +18,7 @@
         <div class="d-flex align-items-center">
             <span class="mr-2"><img src="<?= $file['icon'] ?>" alt="icon"></span>
             <a href="<?= $file['detail_url'] ?>" class="text-dark-brown"><?= $file['rus_name'] ?></a>
-            <span class="badge badge-pill badge-light border ml-3"><?= $file['field'] ?></span>
+            <span class="badge badge-pill badge-light border ml-3"><?= date('d.m.y', $file['updated']); ?></span>
         </div>
     </div>
     <?php if (! empty($file['preview_text'])): ?>

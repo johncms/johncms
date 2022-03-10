@@ -38,9 +38,34 @@ $this->layout(
                name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="200" required>
     </div>
     <div class="form-group">
+    <label for="price"><?= __('Price') ?></label>
+        <input type="text" class="form-control" id="price" placeholder="<?= __('Link to download file') ?>"
+               name="price" value="<?= $file_data['price'] ?>" maxlength="10" required>
+    </div>
+	<div class="form-group">
+        <label for="vendor"><?= __('Vendor') ?></label>
+        <input type="text" class="form-control" id="vendor" placeholder="<?= __('Vendor') ?>"
+               name="vendor" value="<?= $file_data['vendor'] ?>" maxlength="30" required>
+    </div>
+    <div class="form-group">
         <label for="desc"><?= __('Description') ?></label>
         <div><?= $bbcode ?></div>
         <textarea id="desc" class="form-control" maxlength="65000" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
+        </div>
+    <div class="form-group">
+        <label for="mirrors"><?= __('Mirrors') ?></label>
+        <div><?= $bbcode ?></div>
+        <textarea id="mirrors" class="form-control" maxlength="65000" name="mirrors" cols="24" rows="4"><?= $file_data['mirrors'] ?></textarea>
+    </div>
+	<div class="form-group">
+        <label for="tag"><?= __('Tags') ?></label>
+        <input type="text" class="form-control" id="tag" placeholder="<?= __('Taggs') ?>"
+               name="tag" value="<?= $file_data['tag'] ?>" maxlength="90" required>
+    </div>
+	<div class="form-group">
+        <label for="filename"><?= __('File Name') ?></label>
+        <input type="text" class="form-control" id="filename" placeholder="<?= __('File Name') ?>"
+               name="filename" value="<?= $file_data['filename'] ?>" maxlength="100" required>
     </div>
     <?php if (! empty($audio_tags)): ?>
         <div>

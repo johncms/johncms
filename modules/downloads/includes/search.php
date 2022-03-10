@@ -24,6 +24,7 @@ $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 // Поиск файлов
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
+$catid = isset($_GET['catid']) ? rawurldecode(trim($_GET['catid'])) : null;
 $search = $search_post ?: $search_get;
 
 $nav_chain->add(__('Search'));
@@ -33,6 +34,19 @@ $error = false;
 
 if ((! empty($search) && mb_strlen($search) < 2) || mb_strlen($search) > 64) {
     $error = __('Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters.');
+}
+
+if ($catid) {
+	$catdir = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catid'")->fetch();
+	$stmt = $db->prepare('SELECT * FROM download__category WHERE id = :catid');
+	$stmt->execute(['catid' => $catid]);
+	$catinfo = $stmt->fetch();
+	$catname = '' . $catinfo['rus_name'] . '';
+	$catdir = '' . $catinfo['dir'] . '';
+
+} else {
+	$catdir = '/';
+	$catname = null;
 }
 
 $total = 0;
@@ -45,9 +59,9 @@ if ($search && empty($error)) {
     $search_db = $db->quote($search_db);
     $sql = ($id ? '`about`' : '`rus_name`') . ' LIKE ' . $search_db;
 
-    $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND ${sql}")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND dir LIKE '%".$catdir."%' AND ${sql}")->fetchColumn();
     if ($total) {
-        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND ${sql} ORDER BY `rus_name` LIMIT ${start}, " . $user->config->kmess);
+        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2' AND dir LIKE '%".$catdir."%' AND ${sql} ORDER BY `rus_name` LIMIT ${start}, " . $user->config->kmess);
         $files = [];
         while ($res_down = $req_down->fetch()) {
             $files[] = Download::displayFile($res_down);
@@ -87,6 +101,8 @@ echo $view->render(
         'search_query'    => htmlspecialchars($search),
         'id'              => $id,
         'urls'            => $urls,
+        'catid'           => $catid,
+		'catname'         => $catname,
         'show_empty_info' => ! empty($search),
     ]
 );

@@ -44,6 +44,27 @@ $this->layout(
     </div>
 
     <div class="form-group">
+    <label for="price"><?= __('Price') ?></label>
+        <input type="text" class="form-control" id="price" placeholder="<?= __('Price') ?>"
+               name="price" value="" maxlength="10">
+        <div class="text-muted small"><?= __('max. 10 characters') ?></div>
+    </div>
+	
+	<div class="form-group">
+        <label for="vendor"><?= __('Vendor') ?></label>
+        <input type="text" class="form-control" id="vendor" placeholder="<?= __('Vendor') ?>"
+               name="vendor" value="" maxlength="30">
+        <div class="text-muted small"><?= __('max. 30 characters') ?></div>
+    </div>
+	
+	<div class="form-group">
+        <label for="tag"><?= __('Tags') ?></label>
+        <input type="text" class="form-control" id="tag" placeholder="<?= __('Tags') ?>"
+               name="tag" value="" maxlength="90">
+        <div class="text-muted small"><?= __('max. 90 characters') ?></div>
+    </div>
+
+    <div class="form-group">
         <label for="text"><?= __('File Name') ?></label>
         <input type="text" class="form-control" id="text" placeholder="<?= __('File Name') ?>"
                name="text" value="" maxlength="200">
@@ -67,6 +88,12 @@ $this->layout(
         <label for="desc"><?= __('Description') ?></label>
         <div><?= $bbcode ?></div>
         <textarea id="desc" class="form-control" maxlength="65000" name="opis" cols="24" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="mirrors"><?= __('Mirrors') ?></label>
+        <div><?= $bbcode ?></div>
+        <textarea id="mirrors" class="form-control" maxlength="65000" name="mirrors" cols="24" rows="4"></textarea>
     </div>
 
     <div class="alert alert-warning mt-3">

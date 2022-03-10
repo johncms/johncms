@@ -33,10 +33,35 @@ $this->layout(
         <?= __('Downloads are closed') ?>
     </div>
 <?php endif; ?>
+    <div class="mb-3 mt-n1">
+	
+        <?php if (! empty($urls['new'])): ?>
+            <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1">
+                <?= __('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
+            </a>
+        <?php endif; ?>
+	<?php if (!empty($catid)): ?>
+        <a href="?act=search&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+        <a href="?act=top_files&amp;id=1&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Most Downloaded') ?></a>
+        <a href="?act=top_files&amp;id=0&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Popular Files') ?></a>
+	<?php else: ?>
+		<a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+        <a href="?act=top_files&amp;id=1" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Most Downloaded') ?></a>
+        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Popular Files') ?></a>
+	<?php endif; ?>
+    </div>
+	<?php if (!empty($catid)): ?>
+    <form action="?act=search&catid=<?= $catid ?>" method="post" class="mb-3">
+	<?php else: ?>
+	<form action="?act=search" method="post" class="mb-3">
+	<?php endif; ?>
 
-<form action="?act=search" method="post" class="mb-3">
     <div class="form-group">
-        <label for="search_query"><?= __('Search query') ?></label>
+        <label for="search_query"><?= __('Search query') ?> 
+		<?php if (!empty($catid)): ?>
+		-> <a href="<?= $urls['downloads'] ?>?id=<?= $catid ?>"><b><?= $catname ?></b></a>
+		<?php endif; ?>
+		</label>
         <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
                name="search" value="<?= $search_query ?>" maxlength="64" minlength="2" required>
     </div>

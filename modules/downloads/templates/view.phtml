@@ -92,8 +92,17 @@ $this->layout(
 
 <div class="text-muted mt-2 mb-3 border-bottom pb-2">
     <div><?= __('File name:') ?> <?= $file['name'] ?></div>
-    <div><?= __('Uploaded by:') ?> <?= $file['upload_user']['name'] ?></div>
+	<div><?= __('Vendor:') ?> <a href="?act=search&amp;vendor=<?= $file['vendor'] ?>"><?= $file['vendor'] ?></a></div>
+	<div><?= __('Tags:') ?> <?= $file['tag'] ?></div>
+	<div><?= __('Features:') ?> Online: <?= $file['online'] ?> | 3D: <?= $file['3d'] ?> | BT: <?= $file['bluetooth'] ?></div>
+	<div><?= __('Uploaded:') ?> <?= date('d.m.y H:m', $file['time']); ?></div>
+	<div><?= __('Updated:') ?> <?= date('d.m.y H:m', $file['updated']); ?></div>
+    <div><?= __('Uploaded by:') ?> <a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></div>
     <div><?= __('Downloads:') ?> <?= $file['field'] ?></div>
+	<div><?= __('Price:') ?> <?= $file['price'] ?></div>
+	<div><?= __('Mirrors:') ?> <?= $file['mirrors'] ?></div>
+	<div><?= __('MD5:') ?> <?= $file['md5'] ?></div>
+	<div><?= __('SHA-1:') ?> <?= $file['sha1'] ?></div>
     <div><?= __('Rating:') ?>
         <?php if ($file['can_vote']): ?>
             <a href="?act=view&amp;id=<?= $id ?>&amp;plus" class="btn btn-sm btn-light">

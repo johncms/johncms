@@ -33,18 +33,30 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<?php if (empty($id)): ?>
+<?php //if (empty($id)): ?>
     <div class="mb-3 mt-n1">
         <?php if (! empty($urls['new'])): ?>
             <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1">
                 <?= __('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
             </a>
         <?php endif; ?>
-        <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
-        <a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Top Files') ?></a>
-        <a href="?act=top_users" class="btn btn-outline-primary btn-sm mt-1"><?= __('Top Users') ?></a>
+		<?php if (! empty($id)): ?>
+                    <a href="?act=search&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+					<a href="?act=top_files&amp;id=3&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('New Files') ?></a>
+					<a href="?act=top_files&amp;id=1&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Most Downloaded') ?></a>
+					<a href="?act=top_files&amp;id=0&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Popular Files') ?></a>
+		<?php else: ?>
+					<a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+					<a href="?act=top_files&amp;id=3" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('New Files') ?></a>
+					<a href="?act=top_files&amp;id=1" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Most Downloaded') ?></a>
+					<a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Popular Files') ?></a>
+        <?php endif; ?>
+        
+        
+        
+		
     </div>
-<?php endif; ?>
+<?php //*//endif; <a href="?act=top_users" class="btn btn-outline-primary btn-sm mt-1"><?= __('Top Users')</a> ?>
 
 <?php foreach ($categories as $category): ?>
     <div class="forum-section">
