@@ -138,6 +138,10 @@ class Download // phpcs:ignore
             'size'        => self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))),
             'is_new'      => $array['res']['time'] > $old,
             'upload_date' => $tools->displayDate((int) $array['res']['time']),
+            'extension'   => strtoupper($array['format']),
+            'price'       => $array['res']['price'],
+            'uploader_id'    => $array['uploader_id'],
+            'uploader_name'  => $array['uploader_name'],
         ];
 
         return $out;

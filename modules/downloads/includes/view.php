@@ -253,6 +253,8 @@ $file_data['main_file'] = Download::downloadLlink(
     [
         'format' => $extension,
         'res'    => $res_down,
+        'uploader_id'    => $foundUser['id'],
+        'uploader_name'  => $foundUser['name'],
     ]
 );
 
@@ -270,6 +272,8 @@ if ($total_files_more) {
                 'format' => pathinfo($res_file_more['name'], PATHINFO_EXTENSION),
                 'res'    => $res_file_more,
                 'more'   => $res_file_more['id'],
+                'uploader_id'    => $res_file_more['user_id'],
+                'uploader_name'  => $res_file_more['user_name'],
             ]
         );
     }

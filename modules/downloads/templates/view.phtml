@@ -97,9 +97,8 @@ $this->layout(
 	<div><?= __('Features:') ?> Online: <?= $file['online'] ?> | 3D: <?= $file['3d'] ?> | BT: <?= $file['bluetooth'] ?></div>
 	<div><?= __('Uploaded:') ?> <?= date('d.m.y H:m', $file['time']); ?></div>
 	<div><?= __('Updated:') ?> <?= date('d.m.y H:m', $file['updated']); ?></div>
-    <div><?= __('Uploaded by:') ?> <a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></div>
+    <div><?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b></div>
     <div><?= __('Downloads:') ?> <?= $file['field'] ?></div>
-	<div><?= __('Price:') ?> <?= $file['price'] ?></div>
 	<div><?= __('Mirrors:') ?> <?= $file['mirrors'] ?></div>
 	<div><?= __('MD5:') ?> <?= $file['md5'] ?></div>
 	<div><?= __('SHA-1:') ?> <?= $file['sha1'] ?></div>
@@ -122,18 +121,20 @@ $this->layout(
     </div>
 </div>
 <div class="mb-1">
+    <?= $file['main_file']['name'] ?></br>
     <svg class="icon download-button-icon mr-1 mt-n1">
         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
     </svg>
-    <a href="<?= $file['main_file']['url'] ?>"><?= $file['main_file']['name'] ?></a> (<?= $file['main_file']['size'] ?>)
+    <a href="<?= $file['main_file']['url'] ?>"><?= $file['main_file']['extension'] ?></a> [<?= $file['main_file']['size'] ?>] by <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b> | Price: <?= $file['main_file']['price'] ?>
 </div>
 <?php if (! empty($file['additional_files'])): ?>
     <?php foreach ($file['additional_files'] as $additional_file): ?>
         <div class="mb-1">
+            <?= $additional_file['name'] ?></br>
             <svg class="icon download-button-icon mr-1 mt-n1">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
             </svg>
-            <a href="<?= $additional_file['url'] ?>"><?= $additional_file['name'] ?></a> (<?= $additional_file['size'] ?>)
+            <a href="<?= $additional_file['url'] ?>"><?= $additional_file['extension'] ?></a> [<?= $additional_file['size'] ?>] by <b><a href="/profile/?user=<?= $additional_file['uploader_id'] ?>"><?= $additional_file['uploader_name'] ?></a></b> | Price: <?= $additional_file['price'] ?>
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
