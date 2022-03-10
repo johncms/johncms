@@ -88,13 +88,13 @@ class Installer extends \Johncms\Modules\Installer
                 $table->text('desc');
                 $table->integer('comm_count')->unsigned()->default(0)->index('comm_count');
                 $table->integer('updated')->unsigned()->default(0)->index('updated');
-                $table->text('tag');
+                $table->string('tag')->nullable();
                 $table->text('jadkey')->nullable();
                 $table->integer('online')->unsigned()->default(0);
                 $table->integer('3d')->unsigned()->default(0);
                 $table->integer('bluetooth')->unsigned()->default(0);
-                $table->text('vendor');
-                $table->text('mirrors');
+                $table->string('vendor')->default('unknown');
+                $table->text('mirrors')->nullable();
                 $table->string('md5')->nullable()->index('md5');
                 $table->string('sha1')->nullable()->index('sha1');
                 $table->integer('price')->unsigned()->default(0);
@@ -114,7 +114,7 @@ class Installer extends \Johncms\Modules\Installer
                 $table->integer('updated')->unsigned()->default(0)->index('updated');
                 $table->text('jadkey')->nullable();
                 $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->text('user_name');
+                $table->string('user_name', 100)->nullable();
                 $table->string('md5')->nullable()->index('md5');
                 $table->string('sha1')->nullable()->index('sha1');
                 $table->integer('price')->unsigned()->default(0);

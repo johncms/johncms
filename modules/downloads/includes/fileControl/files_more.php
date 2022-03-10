@@ -257,8 +257,8 @@ if ($edit) {
                 $stmt = $db->prepare(
                     '
                       INSERT INTO `download__more`
-                      (`refid`, `time`, `name`, `rus_name`, `size`, `md5`, `sha1`, `updated`, `user_id`, `price`)
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                      (`refid`, `time`, `name`, `rus_name`, `size`, `md5`, `sha1`, `updated`, `user_id`, `user_name`, `price`)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     '
                 );
 
@@ -273,6 +273,7 @@ if ($edit) {
 						$sha1,
 						time(),
 						$user->id,
+                        $user->name,
 						$price,
                     ]
                 );
