@@ -130,7 +130,7 @@ $this->layout(
 <?php if (! empty($file['additional_files'])): ?>
     <?php foreach ($file['additional_files'] as $additional_file): ?>
         <div class="mb-1">
-            <?= $additional_file['name'] ?></br>
+            <?= nl2br($additional_file['name']) ?></br>
             <svg class="icon download-button-icon mr-1 mt-n1">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
             </svg>
