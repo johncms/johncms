@@ -125,7 +125,7 @@ $this->layout(
     <svg class="icon download-button-icon mr-1 mt-n1">
         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
     </svg>
-    <a href="<?= $file['main_file']['url'] ?>"><?= $file['main_file']['extension'] ?></a> [<?= $file['main_file']['size'] ?>] by <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b> | Price: <?= $file['main_file']['price'] ?>
+    <a href="<?= $file['main_file']['url'] ?>"><?= $file['main_file']['extension'] ?></a> [<?= $file['main_file']['size'] ?>] <?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b> | Price: <?= $file['main_file']['price'] ?>
 </div>
 <?php if (! empty($file['additional_files'])): ?>
     <?php foreach ($file['additional_files'] as $additional_file): ?>
@@ -134,7 +134,7 @@ $this->layout(
             <svg class="icon download-button-icon mr-1 mt-n1">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
             </svg>
-            <a href="<?= $additional_file['url'] ?>"><?= $additional_file['extension'] ?></a> [<?= $additional_file['size'] ?>] by <b><a href="/profile/?user=<?= $additional_file['uploader_id'] ?>"><?= $additional_file['uploader_name'] ?></a></b> | Price: <?= $additional_file['price'] ?>
+            <a href="<?= $additional_file['url'] ?>"><?= $additional_file['extension'] ?></a> [<?= $additional_file['size'] ?>] <?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $additional_file['uploader_id'] ?>"><?= $additional_file['uploader_name'] ?></a></b> | Price: <?= $additional_file['price'] ?>
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
