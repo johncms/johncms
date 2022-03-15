@@ -363,7 +363,7 @@ class Counters
         } else {
             $old = time() - (3 * 24 * 3600);
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
+            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `updated` > '${old}'")->fetchColumn();
 
             file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
         }
