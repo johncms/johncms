@@ -80,20 +80,22 @@ if ($request->getMethod() === 'POST') {
         $stmt = $db->prepare(
             '
             UPDATE `download__files` SET
-            `rus_name` = ?,
-            `text`     = ?,
-            `about`    = ?,
-			`mirrors`	= ?,
-            `price`		= ?,
-            `vendor`	= ?,
-            `name`		= ?,
-            `tag` 		= ?
-            WHERE `id` = ?
+            `name`      = ?,
+            `rus_name`  = ?,
+            `text`      = ?,
+            `about`     = ?,
+			`mirrors`   = ?,
+            `price`     = ?,
+            `vendor`    = ?,
+            `name`      = ?,
+            `tag`       = ?
+            WHERE `id`  = ?
         '
         );
 
         $stmt->execute(
             [
+                $filename,
                 $name,
                 $name_link,
                 $desc,

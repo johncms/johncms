@@ -60,7 +60,7 @@ if ($edit) {
     $filename = isset($post['filename']) ? trim($post['filename']) : null;
 	$price = isset($post['price']) ? trim($post['price']) : null;
     $req_file_more = $db->query("SELECT * FROM `download__more` WHERE `id` = '${edit}' LIMIT 1");
-
+    $res_file_more = $req_file_more->fetch();
     /** @noinspection NotOptimalIfConditionsInspection */
     if ($name_link && $request->getMethod() === 'POST' && $req_file_more->rowCount()) {
         $stmt = $db->prepare(
@@ -84,7 +84,6 @@ if ($edit) {
         rename(($res_down['dir'] . '/' . $res_file_more['name']), ($res_down['dir'] . '/' . $filename));
         header('Location: ?act=files_more&id=' . $id);
     } else {
-        $res_file_more = $req_file_more->fetch();
         echo $view->render(
             'downloads::edit_additional_form',
             [
