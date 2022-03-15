@@ -55,11 +55,13 @@ $total = 0;
 // Выводим результаты поиска
 if ($search && empty($error)) {
     // Подготавливаем данные для запроса
-    $search = preg_replace("/[^\w\x7F-\xFF\s]/", ' ', $search);
+    d($search);
+    $search = preg_replace("/[^\w\-\.\_\x7F-\xFF\s]/", ' ', $search);
+    d($search);
     $search_db = strtr($search, ['_' => '\\_', '%' => '\\%', '*' => '%']);
     $search_db = '%' . $search_db . '%';
     $search_db = $db->quote($search_db);
-
+    d($search_db);
     if ($stag) {
         $sql = ($stag ? '`tag`' : '`rus_name`') . ' LIKE ' . $search_db;
     } elseif ($sven) {
