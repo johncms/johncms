@@ -121,20 +121,24 @@ $this->layout(
     </div>
 </div>
 <div class="mb-1">
-    <?= nl2br($file['main_file']['name']) ?></br>
-    <svg class="icon download-button-icon mr-1 mt-n1">
-        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
-    </svg>
-    <a href="<?= $file['main_file']['url'] ?>"><?= $file['main_file']['extension'] ?></a> [<?= $file['main_file']['size'] ?>] <?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b> <?= $file['main_file']['upload_date'] ?> | Price: <?= $file['main_file']['price'] ?>
+    <?= nl2br($file['main_file']['name']) ?>
+    <div class="small">    
+        <svg class="icon download-button-icon mr-1 mt-n1">
+            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+        </svg>
+        <a href="<?= $file['main_file']['url'] ?>"><?= $file['main_file']['extension'] ?></a> [<?= $file['main_file']['size'] ?>] <?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b> <?= $file['main_file']['upload_date'] ?> | Price: <?= $file['main_file']['price'] ?>
+    </div>
 </div>
 <?php if (! empty($file['additional_files'])): ?>
     <?php foreach ($file['additional_files'] as $additional_file): ?>
         <div class="mb-1">
-            <?= nl2br($additional_file['name']) ?></br>
-            <svg class="icon download-button-icon mr-1 mt-n1">
-                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
-            </svg>
-            <a href="<?= $additional_file['url'] ?>"><?= $additional_file['extension'] ?></a> [<?= $additional_file['size'] ?>] <?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $additional_file['uploader_id'] ?>"><?= $additional_file['uploader_name'] ?></a></b> <?= $additional_file['upload_date'] ?> | Price: <?= $additional_file['price'] ?>
+            <?= nl2br($additional_file['name']) ?>
+            <div class="small">
+                <svg class="icon download-button-icon mr-1 mt-n1">
+                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+                </svg>
+                <a href="<?= $additional_file['url'] ?>"><?= $additional_file['extension'] ?></a> [<?= $additional_file['size'] ?>] <?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $additional_file['uploader_id'] ?>"><?= $additional_file['uploader_name'] ?></a></b> <?= $additional_file['upload_date'] ?> | Price: <?= $additional_file['price'] ?>
+            </div>
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
