@@ -46,12 +46,12 @@ if ($id) {
     $sql_down = ' AND `dir` LIKE \'' . ($res_down_cat['dir']) . '%\' ';
 }
 
-$total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down}")->fetchColumn();
+$total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `updated` > ${old} ${sql_down}")->fetchColumn();
 // Выводим список
 $files = [];
 if ($total) {
     $i = 0;
-    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down} ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `updated` > ${old} ${sql_down} ORDER BY `updated` DESC LIMIT ${start}, " . $user->config->kmess);
     while ($res_down = $req_down->fetch()) {
         $files[] = Download::displayFile($res_down);
     }
