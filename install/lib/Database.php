@@ -219,6 +219,11 @@ class Database
                 $table->string('confirmation_code')->nullable();
                 $table->string('new_email')->nullable();
                 $table->text('admin_notes')->nullable();
+                $table->integer('coins')->default(0);
+                $table->integer('exp')->default(0);
+                $table->integer('lvl')->default(0);
+                $table->integer('hp')->default(0);
+                $table->integer('mp')->default(0);
             }
         );
 
