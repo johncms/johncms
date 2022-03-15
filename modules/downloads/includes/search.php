@@ -20,6 +20,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
+$stag = isset($_REQUEST['stag']) ? abs((int) ($_REQUEST['stag'])) : 0;
+$sven = isset($_REQUEST['sven']) ? abs((int) ($_REQUEST['sven'])) : 0;
 
 // Поиск файлов
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
@@ -57,7 +59,14 @@ if ($search && empty($error)) {
     $search_db = strtr($search, ['_' => '\\_', '%' => '\\%', '*' => '%']);
     $search_db = '%' . $search_db . '%';
     $search_db = $db->quote($search_db);
-    $sql = ($id ? '`about`' : '`rus_name`') . ' LIKE ' . $search_db;
+
+    if ($stag) {
+        $sql = ($stag ? '`tag`' : '`rus_name`') . ' LIKE ' . $search_db;
+    } elseif ($sven) {
+        $sql = ($sven ? '`vendor`' : '`rus_name`') . ' LIKE ' . $search_db;
+    } else {
+        $sql = ($id ? '`about`' : '`rus_name`') . ' LIKE ' . $search_db;
+    }
 
     $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND dir LIKE '%".$catdir."%' AND ${sql}")->fetchColumn();
     if ($total) {
@@ -87,6 +96,8 @@ $pagination_url = http_build_query(
         'act' => 'search',
         'search' => $search,
         'id' => $id,
+        'stag' => $stag,
+        'sven' => $sven,
     ]
 );
 
@@ -100,6 +111,8 @@ echo $view->render(
         'total'           => $total,
         'search_query'    => htmlspecialchars($search),
         'id'              => $id,
+        'stag'            => $stag,
+        'sven'            => $sven,
         'urls'            => $urls,
         'catid'           => $catid,
 		'catname'         => $catname,

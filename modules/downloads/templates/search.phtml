@@ -71,6 +71,18 @@ $this->layout(
             <label class="custom-control-label" for="search_t"><?= __('Search in description') ?></label>
         </div>
     </div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="stag" value="1" id="search_tag" <?= ($stag ? 'checked="checked"' : '') ?>>
+            <label class="custom-control-label" for="search_tag"><?= __('Search in tag') ?></label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="sven" value="1" id="search_vendor" <?= ($sven ? 'checked="checked"' : '') ?>>
+            <label class="custom-control-label" for="search_vendor"><?= __('Search in vendor') ?></label>
+        </div>
+    </div>
     <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
 </form>
 

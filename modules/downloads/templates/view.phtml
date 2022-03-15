@@ -92,8 +92,11 @@ $this->layout(
 
 <div class="text-muted mt-2 mb-3 border-bottom pb-2">
     <div><?= __('File name:') ?> <?= $file['name'] ?></div>
-	<div><?= __('Vendor:') ?> <a href="?act=search&amp;vendor=<?= $file['vendor'] ?>"><?= $file['vendor'] ?></a></div>
-	<div><?= __('Tags:') ?> <?= $file['tag'] ?></div>
+	<div><?= __('Vendor:') ?> <a href="?act=search&amp;search=<?= $file['vendor'] ?>&amp;sven=1"><?= $file['vendor'] ?></a></div>
+	<div><?= __('Tags:') ?> <?php foreach ($file['tags'] as $tag): ?>
+        <a href="?act=search&amp;search=<?= $tag ?>&amp;stag=1"><?= $tag ?></a>
+        <?php endforeach; ?>
+    </div>
 	<div><?= __('Features:') ?> Online: <?= $file['online'] ?> | 3D: <?= $file['3d'] ?> | BT: <?= $file['bluetooth'] ?></div>
 	<div><?= __('Uploaded:') ?> <?= date('d.m.y H:m', $file['time']); ?></div>
 	<div><?= __('Updated:') ?> <?= date('d.m.y H:m', $file['updated']); ?></div>

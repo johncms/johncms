@@ -75,6 +75,7 @@ $text_info = '';
 $screen = Screen::getScreens($id);
 $file_data['file_type'] = 'other';
 $file_data['screenshots'] = $screen;
+$file_data['tags'] = explode(',', $file_data['tag']);
 $file_properties = [];
 switch ($extension) {
     case 'mp3':
