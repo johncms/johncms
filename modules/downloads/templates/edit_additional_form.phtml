@@ -30,8 +30,8 @@ $this->layout(
 <form name="file_edit_form" action="<?= $action_url ?>" method="post">
     <div class="form-group">
         <label for="name_link"><?= __('Link to download file') ?></label>
-        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
-               name="name_link" value="<?= $file_name ?>" maxlength="200" required>
+        <textarea class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
+               name="name_link" value="<?= $file_name ?>" maxlength="65000" cols="24" rows="4" required><?= $file_name ?></textarea>
     </div>
     <div class="form-group">
     <label for="price"><?= __('Price') ?></label>

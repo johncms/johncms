@@ -34,8 +34,8 @@ $this->layout(
     </div>
     <div class="form-group">
         <label for="name_link"><?= __('Link to download file') ?></label>
-        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
-               name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="200" required>
+        <textarea class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
+               name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="65000" cols="24" rows="4" required><?= $file_data['name_link'] ?></textarea>
     </div>
     <div class="form-group">
     <label for="price"><?= __('Price') ?></label>
