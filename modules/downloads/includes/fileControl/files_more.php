@@ -277,6 +277,22 @@ if ($edit) {
 						$price,
                     ]
                 );
+
+                $stmt = $db->prepare(
+                    '
+                    UPDATE `download__files` SET
+                    `updated`  = ?
+                    WHERE `id` = ?
+                '
+                );
+        
+                $stmt->execute(
+                    [
+                        time(),                        
+                        $id,
+                    ]
+                );
+
                 echo $view->render(
                     'system::pages/result',
                     [
