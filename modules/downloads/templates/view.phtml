@@ -98,8 +98,8 @@ $this->layout(
         <?php endforeach; ?>
     </div>
 	<div><?= __('Features:') ?> Online: <?= $file['online'] ?> | 3D: <?= $file['3d'] ?> | BT: <?= $file['bluetooth'] ?></div>
-	<div><?= __('Uploaded:') ?> <?= date('d.m.y H:m', $file['time']); ?></div>
-	<div><?= __('Updated:') ?> <?= date('d.m.y H:m', $file['updated']); ?></div>
+	<div><?= __('Uploaded:') ?> <?= $file['main_file']['upload_date'] ?></div>
+	<div><?= __('Updated:') ?> <?= $file['main_file']['update_date'] ?></div>
     <div><?= __('Uploaded by:') ?> <b><a href="/profile/?user=<?= $file['upload_user']['id'] ?>"><?= $file['upload_user']['name'] ?></a></b></div>
     <div><?= __('Downloads:') ?> <?= $file['field'] ?></div>
 	<div><?= __('Mirrors:') ?> <?= $file['mirrors'] ?></div>

@@ -67,7 +67,7 @@ class Download // phpcs:ignore
         $file['detail_url'] = '?act=view&amp;id=' . $res_down['id'];
         $file['filtered_name'] = htmlspecialchars($res_down['rus_name']);
 
-        $file['is_new'] = ($res_down['time'] > $old);
+        $file['is_new'] = ($res_down['updated'] > $old);
 
         $file['rating'] = [];
         if ($rate) {
@@ -136,8 +136,9 @@ class Download // phpcs:ignore
             'url'         => '?act=load_file&amp;id=' . $id . $morelink,
             'name'        => $array['res']['text'],
             'size'        => self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))),
-            'is_new'      => $array['res']['time'] > $old,
+            'is_new'      => $array['res']['updated'] > $old,
             'upload_date' => $tools->displayDate((int) $array['res']['time']),
+            'update_date' => $tools->displayDate((int) $array['res']['updated']),
             'extension'   => strtoupper($array['format']),
             'price'       => $array['res']['price'],
             'uploader_id'    => $array['uploader_id'],

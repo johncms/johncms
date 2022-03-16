@@ -208,7 +208,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $new_url = $url . '?act=new_files&amp;id=' . $id;
         }
     } else {
-        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old}")->fetchColumn();
+        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `updated` > ${old}")->fetchColumn();
 
         if ($total_new) {
             $new_url = $url . '?act=new_files';
