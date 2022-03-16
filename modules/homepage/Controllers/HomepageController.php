@@ -25,6 +25,7 @@ class HomepageController extends BaseController
 
         $config = di('config')['johncms'];
         $news_config = di('config')['news'];
+        $homepage_config = di('config')['homepage'];
         $this->render->addData(
             [
                 'title'       => $config['meta_title'] ?? '',
@@ -32,6 +33,27 @@ class HomepageController extends BaseController
                 'description' => $config['meta_desc'],
             ]
         );
+
+        $connection = \Illuminate\Database\Capsule\Manager::connection();
+
+        if($homepage_config['last_themes'] > 0){
+        	$themes = $connection->table('forum_topic')
+	            // ->select('name', 'id', 'last_post_date')
+	            ->orderByDesc('last_post_date')
+	            ->paginate($homepage_config['last_themes']);
+        }
+        if($homepage_config['last_files'] > 0){
+	        $files = $connection->table('download__files')
+	            // ->select('name', 'id', 'last_post_date')
+	            ->orderByDesc('time')
+	            ->paginate($homepage_config['last_files']);
+        }
+        if($homepage_config['last_lib'] > 0){
+	        $articles = $connection->table('library_texts')
+	            // ->select('name', 'id', 'last_post_date')
+	            ->orderByDesc('time')
+	            ->paginate($homepage_config['last_lib']);
+        }
 
         $data = [];
         if ($news_config['homepage_show']) {
@@ -42,6 +64,9 @@ class HomepageController extends BaseController
             }
             $news = $news->limit($news_config['homepage_quantity'])->orderByDesc('active_from')->orderByDesc('id')->get();
         }
+        if(isset($themes)) $data['themes'] = $themes ?? [];
+        if(isset($files)) $data['files'] = $files ?? [];
+        if(isset($articles)) $data['articles'] = $articles ?? [];
 
         $data['news'] = $news ?? [];
         // TODO: Если приживется, объединить со счетчиками в меню для избежания лишних запросов
@@ -58,5 +83,8 @@ class HomepageController extends BaseController
         $data['counters'] = $count;
 
         return $this->render->render('homepage::index', ['data' => $data]);
+        if(isset($themes)) { return $this->render->render('homepage::index', ['themes' => $themes]); }
+        if(isset($files)) { return $this->render->render('homepage::index', ['files' => $files]); }
+        if(isset($articles)) { return $this->render->render('homepage::index', ['articles' => $articles]); }
     }
 }

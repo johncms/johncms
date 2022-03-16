@@ -87,6 +87,7 @@ $actions = [
     'userlist',
     'usr_clean',
     'usr_del',
+    'homepage',
 ];
 
 $view->addData(

@@ -6,6 +6,7 @@
  */
 
 $this->layout('system::layout/default');
+$homepage_config = di('config')['homepage'];
 ?>
 <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
     <h1 class="display-4 font-weight-bold">JohnCMS <?= CMS_VERSION ?></h1>
@@ -134,31 +135,113 @@ $this->layout('system::layout/default');
 
 <?php if (! empty($data['news']) && $data['news']->count() > 0): ?>
     <div class="mb-n3">
-        <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
-        <div class="row row-cols-1">
-            <?php foreach ($data['news'] as $news_item): ?>
-                <?php /** @var News\Models\NewsArticle $news_item */ ?>
-                <div class="col mb-3">
-                    <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
-                    <?php if (! empty($news_item->preview_text_safe)): ?>
-                        <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
-                    <?php endif; ?>
-                    <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
-                        <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
-                        </svg> <?= (int) $news_item->votes_sum_vote ?>,
-                        <a href="<?= $news_item->url ?>#article-comments">
-                            <svg class="icon ml-2" style="width: 13px;">
-                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
-                            </svg> <?= $news_item->comments_count ?>
-                        </a>
-                    </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h2 class="h1 font-weight-bold mt-4 mb-2"><?= __('News') ?></h2>
+                <div class="row row-cols-1">
+                    <?php foreach ($data['news'] as $news_item): ?>
+                        <?php /** @var News\Models\NewsArticle $news_item */ ?>
+                        <div class="col mb-3">
+                            <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
+                            <?php if (! empty($news_item->preview_text_safe)): ?>
+                                <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
+                            <?php endif; ?>
+                            <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
+                                <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
+                                </svg> <?= (int) $news_item->votes_sum_vote ?>,
+                                <a href="<?= $news_item->url ?>#article-comments">
+                                    <svg class="icon ml-2" style="width: 13px;">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                                    </svg> <?= $news_item->comments_count ?>
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
+            </div>
+
+            <?php if ($homepage_config['last_themes'] > 0): ?>
+            <div class="col-12 col-md-6">
+                <h2 class="h1 font-weight-bold mt-4 mb-2"><?= d__('system', 'Forum') ?></h2>
+                <div class="row row-cols-1">
+                    <?php foreach ($data['themes'] as $themes_item): ?>
+                        <?php /** @var News\Models\NewsArticle $news_item */ ?>
+                        <div class="col mb-3">
+                            <a class="h4 font-weight-bold" href="/forum/?type=topic&id=<?= $themes_item->id ?>"><?= $themes_item->name ?></a>
+                            <?php if (! empty($news_item->preview_text_safe)): ?>
+                                <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
+                            <?php endif; ?>
+                            <div class="text-muted small pt-1">
+                            <a href="/profile/?user=<?= $themes_item->last_post_author ?>"><?= $themes_item->last_post_author_name ?></a> | 
+                                <?= $tools->displayDate($themes_item->last_post_date) ?>,
+                                <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"/>
+                                </svg> <?= (int) $themes_item->view_count ?>,
+                                    <svg class="icon ml-2" style="width: 13px;">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                                    </svg> <?= (int) $themes_item->post_count ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+            <?php if ($homepage_config['last_files'] > 0): ?>
+            <div class="col-12 col-md-6">
+                <h2 class="h1 font-weight-bold mt-4 mb-2"><?= d__('system', 'Downloads') ?></h2>
+                <div class="row row-cols-1">
+                    <?php foreach ($data['files'] as $files_item): ?>
+                        <?php /** @var News\Models\NewsArticle $news_item */ ?>
+                        <div class="col mb-3">
+                            <a class="h4 font-weight-bold" href="/downloads/?act=view&id=<?= $files_item->id; ?>"><?= $files_item->rus_name ?></a>
+                            <?php if (! empty($files_item->about)): ?>
+                                <div class="mb-n3 mt-1"><p><?= $files_item->about ?></p></div>
+                            <?php endif; ?>
+                            <div class="text-muted small pt-1">
+                            <a href="/profile/?user=<?= $files_item->user_id ?>">UserID <?= $files_item->user_id ?></a> | 
+                                <?= $tools->displayDate($files_item->updated) ?>,
+                                <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
+                                </svg> <?= (int) $files_item->field ?>,
+                                    <svg class="icon ml-2" style="width: 13px;">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#info"/>
+                                    </svg> <?= (int) $files_item->price ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+            <?php if ($homepage_config['last_lib'] > 0): ?>
+            <div class="col-12 col-md-6">
+                <h2 class="h1 font-weight-bold mt-4 mb-2"><?= d__('system', 'Library') ?></h2>
+                <div class="row row-cols-1">
+                    <?php foreach ($data['articles'] as $articles_item): ?>
+                        <?php /** @var News\Models\NewsArticle $news_item */ ?>
+                        <div class="col mb-3">
+                            <a class="h4 font-weight-bold" href="/downloads/?act=view&id=<?= $articles_item->id; ?>"><?= $articles_item->name ?></a>
+                            <?php if (! empty($articles_item->announce)): ?>
+                                <div class="mb-n3 mt-1"><p><?= $articles_item->announce ?></p></div>
+                            <?php endif; ?>
+                            <div class="text-muted small pt-1">
+                            <a href="/profile/?user=<?= $articles_item->uploader_id ?>"><?= $articles_item->uploader ?></a> | 
+                                <?= $tools->displayDate($articles_item->time) ?>,
+                                <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
+                                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"/>
+                                </svg> <?= (int) $articles_item->count_views ?>,
+                                    <svg class="icon ml-2" style="width: 13px;">
+                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                                    </svg> <?= (int) $articles_item->comm_count ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>
-
 
 <h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Features') ?></h2>
 <dl class="ml-4">

@@ -383,7 +383,7 @@ class Counters
     {
         $file = CACHE_PATH . 'counters-library.cache';
 
-        if (file_exists($file) && filemtime($file) > (time() - 3200)) {
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = json_decode(file_get_contents($file), true);
             $total = $res['total'];
             $new = $res['new'];
