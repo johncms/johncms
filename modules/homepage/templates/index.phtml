@@ -221,7 +221,7 @@ $homepage_config = di('config')['homepage'];
                     <?php foreach ($data['articles'] as $articles_item): ?>
                         <?php /** @var News\Models\NewsArticle $news_item */ ?>
                         <div class="col mb-3">
-                            <a class="h4 font-weight-bold" href="/downloads/?act=view&id=<?= $articles_item->id; ?>"><?= $articles_item->name ?></a>
+                            <a class="h4 font-weight-bold" href="/library/?id=<?= $articles_item->id; ?>"><?= $articles_item->name ?></a>
                             <?php if (! empty($articles_item->announce)): ?>
                                 <div class="mb-n3 mt-1"><p><?= $articles_item->announce ?></p></div>
                             <?php endif; ?>
