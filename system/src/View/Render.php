@@ -14,7 +14,6 @@ namespace Johncms\View;
 
 use Illuminate\Support\Arr;
 use Mobicms\Render\Engine;
-use Throwable;
 
 class Render extends Engine
 {
@@ -46,9 +45,9 @@ class Render extends Engine
     {
         try {
             return parent::render($name, $params);
-        } catch (Throwable $exception) {
-            $errorFile = Arr::where($exception->getTrace(), fn($item) => $item['class'] === static::class);
-            $error = $errorFile[array_key_first($errorFile)];
+        } catch (\InvalidArgumentException $exception) {
+            $errorFile = Arr::where($exception->getTrace(), fn($item) => (isset($item['class']) && $item['class'] === static::class));
+            $error = $errorFile[array_key_last($errorFile)];
             die($exception->getMessage() . ' <br>File: ' . $error['file'] . '<br>Line: ' . $error['line']);
         }
     }
