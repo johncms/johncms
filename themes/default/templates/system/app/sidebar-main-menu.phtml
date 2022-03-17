@@ -152,7 +152,8 @@ $ads_array = $ads->getAds();
             <svg class="icon sidebar_online">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
             </svg>
-            <?= $container->get('counters')->online() ?>
+            <?php $onlineCounter = di(\Johncms\Online\OnlineCounter::class); ?>
+            <?= $onlineCounter->getUsers() . ' / ' . $onlineCounter->getGuests() ?>
         </a>
     </div>
 
