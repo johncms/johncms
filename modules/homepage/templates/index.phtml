@@ -145,9 +145,11 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
                             <?php if (! empty($news_item->preview_text_safe)): ?>
-                                <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
+                                <div class="mb-n3 mt-1"><?= mb_strimwidth($news_item->preview_text_safe, 0, 100, '...'); ?></div>
                             <?php endif; ?>
-                            <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
+                            <div class="text-muted small pt-1">
+                            <a href="/profile/?user=<?= $files_item->user_id ?>"><?= $tools->getUser($news_item->created_by)->name ?></a> | 
+                            <?= $news_item->display_date ?>,
                                 <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
                                 </svg> <?= (int) $news_item->votes_sum_vote ?>,
@@ -162,7 +164,7 @@ $homepage_config = di('config')['homepage'];
                 </div>
             </div>
         <?php endif; ?>
-        <?php if ($homepage_config['last_themes'] > 0): ?>
+        <?php if ($homepage_config['last_themes'] > 0 && $data['themes']->count() > 0): ?>
             <div class="col-12 col-md-6">
                 <h2 class="h1 font-weight-bold mt-4 mb-2"><?= d__('system', 'Forum') ?></h2>
                 <div class="row row-cols-1">
@@ -170,9 +172,6 @@ $homepage_config = di('config')['homepage'];
                         <?php /** @var News\Models\NewsArticle $news_item */ ?>
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/forum/?type=topic&id=<?= $themes_item->id ?>"><?= $themes_item->name ?></a>
-                            <?php if (! empty($news_item->preview_text_safe)): ?>
-                                <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
-                            <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $themes_item->last_post_author ?>"><?= $themes_item->last_post_author_name ?></a> | 
                                 <?= $tools->displayDate($themes_item->last_post_date) ?>,
@@ -188,7 +187,7 @@ $homepage_config = di('config')['homepage'];
                 </div>
             </div>
         <?php endif; ?>
-        <?php if ($homepage_config['last_files'] > 0): ?>
+        <?php if ($homepage_config['last_files'] > 0 && $data['files']->count() > 0): ?>
             <div class="col-12 col-md-6">
                 <h2 class="h1 font-weight-bold mt-4 mb-2"><?= d__('system', 'Downloads') ?></h2>
                 <div class="row row-cols-1">
@@ -197,10 +196,10 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/downloads/?act=view&id=<?= $files_item->id; ?>"><?= $files_item->rus_name ?></a>
                             <?php if (! empty($files_item->about)): ?>
-                                <div class="mb-n3 mt-1"><p><?= $files_item->about ?></p></div>
+                                <div class="mb-n3 mt-1"><p><?= htmlentities(mb_strimwidth($files_item->about, 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
-                            <a href="/profile/?user=<?= $files_item->user_id ?>">UserID <?= $files_item->user_id ?></a> | 
+                            <a href="/profile/?user=<?= $files_item->user_id ?>"><?= $tools->getUser($files_item->user_id)->name ?></a> | 
                                 <?= $tools->displayDate($files_item->updated) ?>,
                                 <svg class="icon ml-1" style="width: 13px; margin-top: -3px;">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
@@ -214,7 +213,7 @@ $homepage_config = di('config')['homepage'];
                 </div>
             </div>
         <?php endif; ?>
-        <?php if ($homepage_config['last_lib'] > 0): ?>
+        <?php if ($homepage_config['last_lib'] > 0 && $data['articles']->count() > 0): ?>
             <div class="col-12 col-md-6">
                 <h2 class="h1 font-weight-bold mt-4 mb-2"><?= d__('system', 'Library') ?></h2>
                 <div class="row row-cols-1">
@@ -223,7 +222,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/library/?id=<?= $articles_item->id; ?>"><?= $articles_item->name ?></a>
                             <?php if (! empty($articles_item->announce)): ?>
-                                <div class="mb-n3 mt-1"><p><?= $articles_item->announce ?></p></div>
+                                <div class="mb-n3 mt-1"><p><?= htmlentities(mb_strimwidth($articles_item->announce, 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $articles_item->uploader_id ?>"><?= $articles_item->uploader ?></a> | 
