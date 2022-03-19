@@ -46,3 +46,4 @@
 docker-configs/logs/nginx/error.log
 docker-configs/logs/nginx/access.log
 upload/downloads/screen/*
+upload/guestbook/*
