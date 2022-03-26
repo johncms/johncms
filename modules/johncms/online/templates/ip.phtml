@@ -14,19 +14,9 @@
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-<div class="mb-2">
-    <?php foreach ($data['filters'] as $tab): ?>
-        <a href="<?= $tab['url'] ?>" class="btn btn-outline-secondary mb-1 <?= ($tab['active'] ? 'active' : '') ?>"><?= $tab['name'] ?></a>
-    <?php endforeach; ?>
-</div>
+<?= $this->fetch('online::tabs') ?>
 <!-- List of Users -->
 <?php if ($data['total'] > 0): ?>
     <div class="row">

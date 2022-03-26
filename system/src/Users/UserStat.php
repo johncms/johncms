@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
-use Johncms\Http\Environment;
+use Johncms\Http\IpLogger;
 
 /**
  * @deprecated Use the online module classes
@@ -25,7 +25,7 @@ class UserStat
     private $db;
 
     /**
-     * @var Environment
+     * @var IpLogger
      */
     private $env;
 
@@ -42,7 +42,7 @@ class UserStat
     public function __construct()
     {
         $this->db = di(\PDO::class);
-        $this->env = di(Environment::class);
+        $this->env = di(IpLogger::class);
         $this->user = di(User::class);
         $this->config = di('config');
 

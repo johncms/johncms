@@ -147,8 +147,8 @@ if ($request->getPost('submit', null)) {
             ]
         );
 
-        /** @var \Johncms\Http\Environment $env */
-        $env = di(\Johncms\Http\Environment::class);
+        /** @var \Johncms\Http\IpLogger $env */
+        $env = di(\Johncms\Http\IpLogger::class);
 
         $message = (new ForumMessage())->create(
             [

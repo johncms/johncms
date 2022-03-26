@@ -168,8 +168,8 @@ switch ($mod) {
 
             // Проверяем, не попадает ли IP администратора в диапазон
 
-            /** @var \Johncms\Http\Environment $env */
-            $env = di(\Johncms\Http\Environment::class);
+            /** @var \Johncms\Http\IpLogger $env */
+            $env = di(\Johncms\Http\IpLogger::class);
 
             if (($env->getIp() >= $ip1 && $env->getIp() <= $ip2) || ($env->getIpViaProxy() >= $ip1 && $env->getIpViaProxy() <= $ip2)) {
                 $error = __('Ban impossible. Your own IP address in the range');

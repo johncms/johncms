@@ -42,7 +42,7 @@ if ($set_karma['on']) {
                     $error[] = __('It is forbidden to vote for administration');
                 }
 
-                if ($user_data['ip'] === di(\Johncms\Http\Environment::class)->getIp()) {
+                if ($user_data['ip'] === di(\Johncms\Http\IpLogger::class)->getIp()) {
                     $error[] = __('Cheating karma is forbidden');
                 }
 

@@ -20,7 +20,7 @@ use Johncms\Console\Commands\MigrateCommand;
 use Johncms\Database\PdoFactory;
 use Johncms\Debug\DebugBar;
 use Johncms\Files\Filesystem;
-use Johncms\Http\Environment;
+use Johncms\Http\IpLogger;
 use Johncms\Http\Request;
 use Johncms\Http\RequestFactory;
 use Johncms\Http\ResponseFactory;
@@ -77,7 +77,7 @@ class ConfigProvider
                 AdminAssets::class              => AdminAssets::class,
                 Assets::class                   => Assets::class,
                 Avatar::class                   => Avatar::class,
-                Environment::class              => Environment::class,
+                IpLogger::class                 => IpLogger::class,
                 PDO::class                      => PdoFactory::class,
                 Render::class                   => RenderEngineFactory::class,
                 AdminRenderEngineFactory::class => AdminRenderEngineFactory::class,

@@ -10,8 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\Http\Environment;
-use Psr\Container\ContainerInterface;
+use Johncms\Http\IpLogger;
 
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
@@ -40,15 +39,10 @@ if (DEBUG) {
     ini_set('log_errors', 'Off');
 }
 
-/** @var ContainerInterface $container */
-// $container = Johncms\System\Container\Factory::getContainer();
-
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');
     header('X-CMS-Version: ' . CMS_VERSION);
-
-    /** @var \Johncms\Http\Environment $env */
-    // $env = di(Environment::class);
+    di(IpLogger::class);
 
     /** @var PDO $db */
     //$db = $container->get(PDO::class);

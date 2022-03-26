@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\Container\ContainerFactory;
-use Johncms\Http\Environment;
+use Johncms\Http\IpLogger;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -514,8 +514,8 @@ class Comments
         /** @var ContainerInterface $container */
         $container = ContainerFactory::getContainer();
 
-        /** @var Environment $env */
-        $env = $container->get(Environment::class);
+        /** @var IpLogger $env */
+        $env = $container->get(IpLogger::class);
 
         // Формируем атрибуты сообщения
         $attributes = [

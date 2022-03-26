@@ -221,8 +221,8 @@ switch ($post_type) {
                     )->execute([$newpost, time()]);
                 } else {
                     $update = false;
-                    /** @var \Johncms\Http\Environment $env */
-                    $env = di(\Johncms\Http\Environment::class);
+                    /** @var \Johncms\Http\IpLogger $env */
+                    $env = di(\Johncms\Http\IpLogger::class);
 
                     // Добавляем сообщение в базу
                     $db->prepare(
@@ -484,8 +484,8 @@ switch ($post_type) {
 
             unset($_SESSION['token']);
 
-            /** @var \Johncms\Http\Environment $env */
-            $env = di(\Johncms\Http\Environment::class);
+            /** @var \Johncms\Http\IpLogger $env */
+            $env = di(\Johncms\Http\IpLogger::class);
 
             // Добавляем сообщение в базу
             $db->prepare(
