@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Forum\Models;
+namespace Johncms\Forum\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;

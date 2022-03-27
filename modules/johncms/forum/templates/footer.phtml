@@ -17,7 +17,7 @@
 <div class="d-flex mt-2 pt-3 pb-3 align-items-center">
     <?php if (! empty($online)): ?>
         <div class="pe-3 d-flex align-items-center">
-            <?php if ($user->isValid()): ?>
+            <?php if ($user): ?>
                 <a href="<?= $who_url ?>" class="pe-1"><?= $who_name ?></a>
             <?php else: ?>
                 <span class="pe-1"><?= $who_name ?></span>

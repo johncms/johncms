@@ -10,13 +10,13 @@
 
 declare(strict_types=1);
 
-use Forum\Models\ForumFile;
-use Forum\Models\ForumMessage;
-use Forum\Models\ForumTopic;
-use Forum\Models\ForumUnread;
-use Forum\Models\ForumVote;
-use Forum\Models\ForumVoteUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Forum\Models\ForumFile;
+use Johncms\Forum\Models\ForumMessage;
+use Johncms\Forum\Models\ForumTopic;
+use Johncms\Forum\Models\ForumUnread;
+use Johncms\Forum\Models\ForumVote;
+use Johncms\Forum\Models\ForumVoteUser;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

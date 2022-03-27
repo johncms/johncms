@@ -609,10 +609,8 @@ class Tools
     }
 
     /**
-     * Форматирует числа в сокращенный формат
-     *
-     * @param $number
-     * @return int|string
+     * @deprecated
+     * @see \Johncms\Utility\Numbers::formatNumber()
      */
     public function formatNumber($number)
     {

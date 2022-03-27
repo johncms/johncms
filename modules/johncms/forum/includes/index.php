@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-use Forum\Models\ForumFile;
-use Forum\Models\ForumSection;
 use Johncms\Counters;
+use Johncms\Forum\Models\ForumFile;
+use Johncms\Forum\Models\ForumSection;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\GuestSession;

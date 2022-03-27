@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Forum\Models\ForumTopic;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

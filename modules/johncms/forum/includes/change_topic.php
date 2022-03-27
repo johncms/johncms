@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Forum\ForumUtils;
-use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Forum\Models\ForumTopic;
 use Johncms\Http\Request;
 use Johncms\Validator\Validator;
 

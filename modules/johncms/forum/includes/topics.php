@@ -11,10 +11,10 @@
 declare(strict_types=1);
 
 use Forum\ForumUtils;
-use Forum\Models\ForumSection;
-use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Counters;
+use Johncms\Forum\Models\ForumSection;
+use Johncms\Forum\Models\ForumTopic;
 use Johncms\Http\Request;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;

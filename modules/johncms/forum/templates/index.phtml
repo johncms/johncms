@@ -15,17 +15,11 @@
  * @var $online
  * @var $files_count
  * @var $unread_count
- * @var \Forum\Models\ForumSection $section
- * @var \Forum\Models\ForumSection $subsection
+ * @var \Johncms\Forum\Models\ForumSection $section
+ * @var \Johncms\Forum\Models\ForumSection $subsection
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?= $this->fetch(

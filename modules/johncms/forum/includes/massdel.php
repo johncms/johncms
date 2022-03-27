@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Forum\Models\ForumMessage;
+use Johncms\Forum\Models\ForumMessage;
 use Johncms\System\Legacy\Tools;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

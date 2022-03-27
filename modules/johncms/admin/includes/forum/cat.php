@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Forum\Models\ForumSection;
+use Johncms\Forum\Models\ForumSection;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 

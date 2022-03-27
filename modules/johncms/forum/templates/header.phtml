@@ -24,7 +24,7 @@
 
 <div class="border-top full-mobile-width border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
     <div class="me-auto d-flex pt-2 pb-2 flex-shrink-0">
-        <?php if ($user->isValid()): ?>
+        <?php if ($user): ?>
             <?php if (! empty($unread_count)): ?>
                 <div class="d-flex align-items-center pe-2">
                     <a href="?act=new" class="pe-2 d-flex">
