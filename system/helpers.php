@@ -225,7 +225,11 @@ function format_date(mixed $date, bool $withoutTime = false, bool $withoutSecond
         return '';
     }
     try {
-        $date_object = Carbon::make($date);
+        if (is_integer($date)) {
+            $date_object = Carbon::createFromTimestamp($date);
+        } else {
+            $date_object = Carbon::make($date);
+        }
         if ($date_object) {
             if ($withoutTime) {
                 return $date_object->format('d.m.Y');
