@@ -27,7 +27,7 @@
         <?php if ($user): ?>
             <?php if (! empty($unread_count)): ?>
                 <div class="d-flex align-items-center pe-2">
-                    <a href="?act=new" class="pe-2 d-flex">
+                    <a href="<?= route('forum.unread') ?>" class="pe-2 d-flex">
                         <span class="d-none d-sm-inline"><?= __('Unread') ?></span>
                         <div class="icon_with_badge">
                             <svg class="icon d-sm-none">

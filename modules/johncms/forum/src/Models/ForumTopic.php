@@ -159,21 +159,20 @@ class ForumTopic extends Model
      *
      * @return void
      */
-    protected static function boot(): void
+/*    protected static function boot(): void
     {
         parent::boot();
 
         static::addGlobalScope(
             'access',
             static function (Builder $builder) {
-                /** @var User $user */
                 $user = di(User::class);
                 if ($user->rights < 7) {
                     $builder->where('deleted', '!=', 1)->orWhereNull('deleted');
                 }
             }
         );
-    }
+    }*/
 
     /**
      * Добавляем в выборку количество непрочитанных сообщений с момента последнего прочтения темы.

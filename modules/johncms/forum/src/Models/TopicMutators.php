@@ -84,7 +84,8 @@ trait TopicMutators
      */
     public function getLastPageUrlAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
+        // TODO: Change it
+        /*if ($this->current_user->rights >= 7) {
             $page = ceil($this->mod_post_count / $this->current_user->set_user->kmess);
         } else {
             $page = ceil($this->post_count / $this->current_user->set_user->kmess);
@@ -92,7 +93,7 @@ trait TopicMutators
 
         if ($page > 1) {
             return '/forum/?type=topic&id=' . $this->id . '&page=' . $page;
-        }
+        }*/
 
         return '';
     }
