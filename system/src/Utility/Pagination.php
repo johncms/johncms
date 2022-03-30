@@ -23,16 +23,12 @@ class Pagination
         $this->total = $total;
         $this->pageParamName = $pageParamName;
         $this->request = di(Request::class);
-        if (! $perPage) {
-            $this->perPage = di(SiteSettings::class)->getPerPage();
-        } else {
-            $this->perPage = $perPage;
-        }
+        $this->setPerPage($perPage);
         $this->setCurrentPage($currentPage);
         $this->pagination = new \Compolomus\Pagination\Pagination($this->currentPage, $this->perPage, $this->total, 2);
     }
 
-    public function setCurrentPage(?int $currentPage = null): static
+    private function setCurrentPage(?int $currentPage = null): void
     {
         if ($currentPage) {
             $this->currentPage = $currentPage;
@@ -42,7 +38,15 @@ class Pagination
                 $this->currentPage = 1;
             }
         }
-        return $this;
+    }
+
+    private function setPerPage(?int $perPage): void
+    {
+        if (! $perPage) {
+            $this->perPage = di(SiteSettings::class)->getPerPage();
+        } else {
+            $this->perPage = $perPage;
+        }
     }
 
     private function buildUrl(int $page): string
