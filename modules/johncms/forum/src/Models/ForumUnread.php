@@ -46,7 +46,7 @@ class ForumUnread extends Model
      *
      * @var string
      */
-    protected $table = 'cms_forum_rdm';
+    protected $table = 'forum_read';
 
     public $timestamps = false;
 

@@ -35,8 +35,8 @@ class ForumCounters
         if ($this->user) {
             $total = DB::selectOne(
                 "SELECT COUNT(*) as cnt FROM `forum_topic`
-                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
-                WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
+                LEFT JOIN `forum_read` ON `forum_topic`.`id` = `forum_read`.`topic_id` AND `forum_read`.`user_id` = '" . $this->user->id . "'
+                WHERE (`forum_read`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `forum_read`.`time`)
                 " . ($this->user->hasAnyRole() >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)')
             );
             return $total->cnt;
