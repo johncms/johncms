@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Utility;
 
-use JetBrains\PhpStorm\Pure;
 use Johncms\Http\Request;
 use Johncms\Settings\SiteSettings;
 use Johncms\View\Render;
@@ -42,11 +41,7 @@ class Pagination
 
     private function setPerPage(?int $perPage): void
     {
-        if (! $perPage) {
-            $this->perPage = di(SiteSettings::class)->getPerPage();
-        } else {
-            $this->perPage = $perPage;
-        }
+        $this->perPage = $perPage ?? di(SiteSettings::class)->getPerPage();
     }
 
     private function buildUrl(int $page): string
@@ -54,13 +49,16 @@ class Pagination
         return $this->request->getQueryString(additionalParams: [$this->pageParamName => $page]);
     }
 
-    #[Pure]
     public function getOffset(): int
     {
         return $this->pagination->getOffset();
     }
 
-    #[Pure]
+    public function getTotalPages(): int
+    {
+        return $this->pagination->getTotalPages();
+    }
+
     public function getLimit(): int
     {
         $limit = $this->pagination->getLimit();
@@ -69,14 +67,40 @@ class Pagination
 
     public function getPages(): array
     {
+        if ($this->getTotalPages() < 2) {
+            return [];
+        }
+
         $items = $this->pagination->get();
-        return array_map(function ($item) {
+        $items = array_map(function ($item) {
             return [
                 'active' => $item === $this->currentPage,
                 'name'   => $item,
                 'url'    => is_numeric($item) ? $this->buildUrl($item) : '',
             ];
         }, $items);
+
+        $prev = $this->pagination->getPreviousPage();
+        $prevPage = [];
+        if ($prev) {
+            $prevPage[] = [
+                'active' => false,
+                'name'   => '&lt;&lt;',
+                'url'    => $this->buildUrl($prev),
+            ];
+        }
+
+        $next = $this->pagination->getNextPage();
+        $nextPage = [];
+        if ($next) {
+            $nextPage[] = [
+                'active' => false,
+                'name'   => '&gt;&gt;',
+                'url'    => $this->buildUrl($next),
+            ];
+        }
+
+        return [...$prevPage, ...$items, ...$nextPage];
     }
 
     public function render(): string
