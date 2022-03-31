@@ -32,8 +32,12 @@ abstract class AbstractTestCase extends TestCase
 
     public function runMigrations()
     {
-        $migrations = new Migration();
-        $migrations->run();
+        // Temporary fix for multiple simultaneous run
+        try {
+            $migrations = new Migration();
+            $migrations->run();
+        } catch (\Throwable) {
+        }
     }
 
     public function dropTables()
