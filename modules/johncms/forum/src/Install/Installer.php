@@ -12,13 +12,49 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Install;
 
+use Johncms\Users\Permission;
+use Johncms\Users\Role;
+
 class Installer extends \Johncms\Modules\Installer
 {
     public function install(): void
     {
+        $this->createPermissions();
     }
 
     public function uninstall(): void
     {
+    }
+
+    private function createPermissions()
+    {
+        $permissions = [
+            [
+                'name'         => 'forum_manage_posts',
+                'display_name' => __('Access to forum message management'),
+                'module_name'  => $this->module_name,
+            ],
+            [
+                'name'         => 'forum_manage_topics',
+                'display_name' => __('Access to forum topic management'),
+                'module_name'  => $this->module_name,
+            ],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::query()->create($permission);
+        }
+    }
+
+    public function afterInstall(): void
+    {
+        $permissions = Permission::query()->where('module_name', $this->module_name)->get()->pluck('id');
+
+        $adminRole = Role::query()->where('name', 'admin')->first();
+        $moderatorRole = Role::query()->where('name', 'moderator')->first();
+
+        // Attach permissions to roles
+        $adminRole->permissions()->sync($permissions);
+        $moderatorRole->permissions()->sync($permissions);
     }
 }
