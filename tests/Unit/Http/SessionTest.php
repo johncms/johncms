@@ -35,6 +35,13 @@ class SessionTest extends TestCase
         $this->assertTrue($this->session->has('has_test'));
         $this->session->remove('has_test');
         $this->assertFalse($this->session->has('has_test'));
+
+        $this->session->set('has_test', 'value');
+        $this->session->set('has_test2', 'value');
+        // Remove multiple keys
+        $this->session->remove(['has_test', 'has_test2']);
+        $this->assertFalse($this->session->has('has_test'));
+        $this->assertFalse($this->session->has('has_test2'));
     }
 
     /**

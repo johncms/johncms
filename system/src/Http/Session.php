@@ -84,10 +84,10 @@ class Session
     }
 
     /**
-     * @param string $key
+     * @param array|string $key
      * @psalm-suppress NullReference
      */
-    public function remove(string $key): void
+    public function remove(array|string $key): void
     {
         Arr::forget($_SESSION, $key);
     }
