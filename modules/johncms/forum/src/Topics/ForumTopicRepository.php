@@ -40,4 +40,15 @@ class ForumTopicRepository
             })
             ->orderBy('last_post_date');
     }
+
+    public function getTopics(?int $sectionId = null): ?Builder
+    {
+        return ForumTopic::query()
+            ->read()
+            ->when($sectionId, function (Builder $builder) use ($sectionId) {
+                return $builder->where('section_id', '=', $sectionId);
+            })
+            ->orderByDesc('pinned')
+            ->orderByDesc('last_post_date');
+    }
 }

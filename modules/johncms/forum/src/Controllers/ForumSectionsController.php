@@ -10,7 +10,10 @@ use Johncms\Forum\ForumCounters;
 use Johncms\Forum\ForumUtils;
 use Johncms\Forum\Models\ForumFile;
 use Johncms\Forum\Models\ForumSection;
+use Johncms\Forum\Topics\ForumTopicRepository;
+use Johncms\Forum\Topics\Resources\TopicResource;
 use Johncms\Http\Session;
+use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 
 class ForumSectionsController extends BaseForumController
@@ -46,7 +49,7 @@ class ForumSectionsController extends BaseForumController
         );
     }
 
-    public function section(int $id, Session $session, ForumCounters $forumCounters): string
+    public function section(int $id, Session $session, ForumCounters $forumCounters, ForumTopicRepository $topicRepository, ?User $user): string
     {
         $forumSettings = config('forum.settings');
         try {
@@ -69,26 +72,57 @@ class ForumSectionsController extends BaseForumController
         $this->metaTagManager->setKeywords($currentSection->calculated_meta_keywords);
         $this->metaTagManager->setDescription($currentSection->calculated_meta_description);
 
-        // List of forum sections
-        $sections = (new ForumSection())
-            ->withCount(['subsections', 'topics'])
-            ->where('parent', '=', $id)
-            ->orderBy('sort')
-            ->get();
+        $templateBaseData = [
+            'id'           => $currentSection->id,
+            'online'       => [
+                'users'  => $forumCounters->onlineUsers(),
+                'guests' => $forumCounters->onlineGuests(),
+            ],
+            'files_count'  => $forumSettings['file_counters'] ? Numbers::formatNumber($currentSection->category_files_count) : 0,
+            'unread_count' => Numbers::formatNumber($forumCounters->unreadMessages()),
+        ];
 
-        return $this->render->render(
-            'forum::section',
-            [
-                'id'           => $currentSection->id,
-                'sections'     => $sections,
-                'online'       => [
-                    'users'  => $forumCounters->onlineUsers(),
-                    'guests' => $forumCounters->onlineGuests(),
-                ],
-                'total'        => $sections->count(),
-                'files_count'  => $forumSettings['file_counters'] ? Numbers::formatNumber($currentSection->category_files_count) : 0,
-                'unread_count' => Numbers::formatNumber($forumCounters->unreadMessages()),
-            ]
-        );
+        // If the section contains topics, then show a list of topics
+        if ($currentSection->section_type) {
+            $topics = $topicRepository->getTopics($id)->paginate();
+            $resource = TopicResource::createFromCollection($topics);
+
+            // Access to create topics
+            $createAccess = false;
+            if (($user && ! $user->hasBan(['forum_read_only', 'forum_create_topics'])) || $user?->hasAnyRole()) {
+                $createAccess = true;
+            }
+
+            return $this->render->render(
+                'forum::topics',
+                array_merge(
+                    $templateBaseData,
+                    [
+                        'pagination'    => $topics->render(),
+                        'create_access' => $createAccess,
+                        'topics'        => $resource->getItems(),
+                        'total'         => $topics->total(),
+                    ]
+                )
+            );
+        } else {
+            // List of forum sections
+            $sections = (new ForumSection())
+                ->withCount(['subsections', 'topics'])
+                ->where('parent', '=', $id)
+                ->orderBy('sort')
+                ->get();
+
+            return $this->render->render(
+                'forum::section',
+                array_merge(
+                    $templateBaseData,
+                    [
+                        'sections' => $sections,
+                        'total'    => $sections->count(),
+                    ]
+                )
+            );
+        }
     }
 }

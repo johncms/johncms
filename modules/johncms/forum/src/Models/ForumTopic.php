@@ -182,14 +182,13 @@ class ForumTopic extends Model
      */
     public function scopeRead(Builder $query): Builder
     {
-        /** @var User $user */
         $user = di(User::class);
-        if ($user->is_valid) {
+        if ($user) {
             return $query->selectSub(
                 (new ForumUnread())
                     ->selectRaw('count(*)')
-                    ->whereRaw('cms_forum_rdm.time >= forum_topic.last_post_date')
-                    ->whereRaw('cms_forum_rdm.topic_id = forum_topic.id')
+                    ->whereRaw('forum_read.time >= forum_topic.last_post_date')
+                    ->whereRaw('forum_read.topic_id = forum_topic.id')
                     ->where('user_id', '=', $user->id),
                 'read'
             )

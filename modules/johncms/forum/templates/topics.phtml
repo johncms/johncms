@@ -15,8 +15,7 @@
  * @var $unread_count
  * @var $create_access
  * @var $pagination
- * @var \Johncms\Forum\Models\ForumTopic $topics
- * @var \Johncms\Forum\Models\ForumTopic $topic
+ * @var array $topics
  */
 
 $this->layout('system::layout/default');
@@ -55,28 +54,28 @@ $this->layout('system::layout/default');
             <div class="d-flex align-items-center w-100">
                 <?php if ($topic['has_icons']): ?>
                     <div class="topic-icons d-flex align-items-center">
-                        <?php if ($topic->pinned): ?>
+                        <?php if ($topic['pinned']): ?>
                             <div class="me-1" title="<?= __('Pinned topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pin"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
-                        <?php if ($topic->has_poll): ?>
+                        <?php if ($topic['has_poll']): ?>
                             <div class="me-1" title="<?= __('Topic has poll') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#bar-chart"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
-                        <?php if ($topic->closed): ?>
+                        <?php if ($topic['closed']): ?>
                             <div class="me-1" title="<?= __('Closed topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#lock"/>
                                 </svg>
                             </div>
                         <?php endif; ?>
-                        <?php if ($topic->deleted): ?>
+                        <?php if ($topic['deleted']): ?>
                             <div class="me-1" title="<?= __('Deleted topic') ?>">
                                 <svg class="icon">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#x"/>
@@ -85,25 +84,25 @@ $this->layout('system::layout/default');
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
-                <a href="<?= $topic->url ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $topic->name ?></a>
-                <?php if ($topic->deleted): ?>
+                <a href="<?= $topic['url'] ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $topic['name'] ?></a>
+                <?php if ($topic['deleted']): ?>
                     <div class="ms-3">
                         <span class="badge bg-danger"><?= __('Deleted topic') ?></span>
                     </div>
                 <?php else: ?>
-                    <?php if (! empty($topic->last_page_url)): ?>
-                        <a href="<?= $topic->last_page_url ?>" title="<?= __('Last page') ?>">
-                            <span class="badge rounded-pill <?= $topic->unread ? 'bg-danger' : 'badge-light border' ?> ms-3"><?= $topic->show_posts_count ?></span>
+                    <?php if (! empty($topic['last_page_url'])): ?>
+                        <a href="<?= $topic['last_page_url'] ?>" title="<?= __('Last page') ?>">
+                            <span class="badge rounded-pill <?= $topic['unread'] ? 'bg-danger' : 'bg-light border' ?> ms-3"><?= $topic['post_count'] ?></span>
                         </a>
                     <?php else: ?>
-                        <span class="badge rounded-pill <?= $topic->unread ? 'bg-danger' : 'badge-light border' ?> ms-3"><?= $topic->show_posts_count ?></span>
+                        <span class="badge rounded-pill <?= $topic['unread'] ? 'bg-danger' : 'bg-light border' ?> ms-3"><?= $topic['post_count'] ?></span>
                     <?php endif ?>
                 <?php endif; ?>
             </div>
         </div>
         <div class="small pt-2 text-muted">
-            <?= __('Author') ?>: <?= $topic->user_name ?>,
-            <?= __('Last post') ?>: <?= $topic->show_last_post_date ?>, <?= $topic->show_last_author ?>
+            <?= __('Author') ?>: <?= $topic['user_name'] ?>,
+            <?= __('Last post') ?>: <?= $topic['last_post_date'] ?>, <?= $topic['last_post_author'] ?>
         </div>
     </div>
 <?php endforeach; ?>
