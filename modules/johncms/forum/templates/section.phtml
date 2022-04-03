@@ -18,13 +18,7 @@
  * @var $unread_count
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?= $this->fetch(
@@ -52,7 +46,7 @@ $this->layout(
         <div class="section-header">
             <div class="d-flex align-items-center">
                 <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
-                <span class="badge rounded-pill badge-light border ms-3"><?= ($section->section_type === 1 ? $section->topics_count : $section->subsections_count) ?></span>
+                <span class="badge rounded-pill bg-light text-primary border ms-3"><?= ($section->section_type === 1 ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
         </div>
         <?php if (! empty($section->description)): ?>

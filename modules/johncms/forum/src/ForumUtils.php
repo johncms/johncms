@@ -50,8 +50,9 @@ class ForumUtils
 
     /**
      * Page not found
+     * @return no-return
      */
-    public static function notFound(): void
+    public static function notFound()
     {
         checkRedirect();
         $view = di(Render::class);
