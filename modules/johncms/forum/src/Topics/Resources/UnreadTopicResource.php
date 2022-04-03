@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Topics\Resources;
 
+use Illuminate\Support\Str;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Http\Resources\AbstractResource;
 use Johncms\Users\User;
 
 /**
  * @mixin ForumTopic
+ * @property null|string $forum_name
+ * @property null|int $forum_id
+ * @property null|string $section_name
  */
 class UnreadTopicResource extends AbstractResource
 {
@@ -29,9 +33,18 @@ class UnreadTopicResource extends AbstractResource
             'has_icons'        => $this->has_icons,
             'url'              => $this->url,
             'last_page_url'    => $this->last_page_url,
-            'forum_url'        => $this->last_page_url, // TODO: Change url
-            'section_url'      => $this->last_page_url, // TODO: Change url
+            'forum_url'        => $this->buildSectionUrl($this->forum_id, $this->forum_name),
+            'forum_name'       => $this->forum_name,
+            'section_url'      => $this->buildSectionUrl($this->section_id, $this->section_name),
             'section_name'     => $this->section_name ?? '',
         ];
+    }
+
+    private function buildSectionUrl(int $id, string $name): string
+    {
+        return route('forum.section', [
+            'id'          => $id,
+            'sectionName' => Str::slug($name),
+        ]);
     }
 }

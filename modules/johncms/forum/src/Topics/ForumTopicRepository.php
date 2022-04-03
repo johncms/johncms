@@ -25,7 +25,7 @@ class ForumTopicRepository
         }
 
         return ForumTopic::query()
-            ->select(['*', 'sect.name as section_name', 'forum.name as forum_name'])
+            ->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
             ->leftJoin('forum_read as rdm', function (JoinClause $joinClause) {
                 return $joinClause->on('id', '=', 'rdm.topic_id')
                     ->where('rdm.user_id', $this->user->id);
