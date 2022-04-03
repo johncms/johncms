@@ -14,42 +14,62 @@ namespace Johncms\Forum;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Forum\Models\ForumMessage;
+use Johncms\Forum\Models\ForumSection;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Http\Request;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\View\Render;
 
 class ForumUtils
 {
+    private NavChain $navChain;
+
+    public function __construct(NavChain $navChain)
+    {
+        $this->navChain = $navChain;
+    }
+
     /**
      * Building breadcrumbs
      *
      * @param int $parent
-     * @param string $current_item_name
-     * @param string $current_item_url
+     * @param string $currentItemName
+     * @param string $currentItemUrl
      */
-    public static function buildBreadcrumbs(int $parent = 0, string $current_item_name = '', string $current_item_url = ''): void
+    public function buildBreadcrumbs(int $parent = 0, string $currentItemName = '', string $currentItemUrl = ''): void
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        /** @var NavChain $nav_chain */
-        $nav_chain = di(NavChain::class);
-
-        $tree = [];
-        $tools->getSections($tree, $parent);
-        foreach ($tree as $item) {
-            $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] === 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
+        if ($parent) {
+            $chain = $this->getSectionsChain($parent);
+            foreach ($chain as $section) {
+                $this->navChain->add($section->name, $section->url);
+            }
         }
 
-        if (! empty($current_item_name)) {
-            $nav_chain->add($current_item_name, $current_item_url);
+        if (! empty($currentItemName)) {
+            $this->navChain->add($currentItemName, $currentItemUrl);
         }
     }
 
     /**
+     * @param int $sectionId
+     * @param array $sections
+     * @return ForumSection[]
+     */
+    public function getSectionsChain(int $sectionId, array &$sections = []): array
+    {
+        $section = ForumSection::query()->find($sectionId);
+        $sections[] = $section;
+        if ($section->parent) {
+            $this->getSectionsChain($section->parent, $sections);
+        }
+        krsort($sections);
+        return $sections;
+    }
+
+    /**
      * Page not found
+     *
      * @return no-return
      */
     public static function notFound()

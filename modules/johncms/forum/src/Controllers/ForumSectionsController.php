@@ -49,8 +49,14 @@ class ForumSectionsController extends BaseForumController
         );
     }
 
-    public function section(int $id, Session $session, ForumCounters $forumCounters, ForumTopicRepository $topicRepository, ?User $user): string
-    {
+    public function section(
+        int $id,
+        Session $session,
+        ForumCounters $forumCounters,
+        ForumTopicRepository $topicRepository,
+        ?User $user,
+        ForumUtils $forumUtils,
+    ): string {
         $forumSettings = config('forum.settings');
         try {
             $currentSection = ForumSection::query()
@@ -65,7 +71,7 @@ class ForumSectionsController extends BaseForumController
         $session->remove(['fsort_id', 'fsort_users']);
 
         // Build breadcrumbs
-        ForumUtils::buildBreadcrumbs($currentSection->parent, $currentSection->name);
+        $forumUtils->buildBreadcrumbs($currentSection->parent, $currentSection->name);
 
         $this->metaTagManager->setTitle($currentSection->name);
         $this->metaTagManager->setPageTitle($currentSection->name);
