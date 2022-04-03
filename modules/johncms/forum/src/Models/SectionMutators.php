@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Models;
 
+use Illuminate\Support\Str;
+
 /**
  * Trait SectionMutators
  *
@@ -28,13 +30,10 @@ trait SectionMutators
      */
     public function getUrlAttribute(): string
     {
-        if (empty($this->parent)) {
-            $type = ! empty($this->section_type) ? 'type=topics&' : '';
-        } else {
-            $type = ! empty($this->section_type) ? 'type=topics&' : 'type=section&';
-        }
-
-        return '/forum/?' . $type . 'id=' . $this->id;
+        return route('forum.section', [
+            'id'          => $this->id,
+            'sectionName' => Str::slug($this->name),
+        ]);
     }
 
     /**
@@ -48,8 +47,7 @@ trait SectionMutators
             return $this->meta_description;
         }
 
-        $config = di('config')['forum']['settings'];
-        $template = $config['section_description'] ?? '';
+        $template = config('forum.settings.section_description', '');
         return trim(
             str_replace(
                 [
@@ -76,8 +74,7 @@ trait SectionMutators
             return $this->meta_keywords;
         }
 
-        $config = di('config')['forum']['settings'];
-        $template = $config['section_keywords'] ?? '';
+        $template = config('forum.settings.section_keywords', '');
         return trim(
             str_replace(
                 [
