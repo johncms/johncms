@@ -188,13 +188,15 @@ function redirect(string $url)
  *
  * @param string $route_name
  * @param array $params
+ * @param array $queryParams
  * @return string
  */
-function route(string $route_name, array $params = []): string
+function route(string $route_name, array $params = [], array $queryParams = []): string
 {
     $router = di(RouterFactory::class);
     $route = $router->getRouter()->getNamedRoute($route_name)->getPath($params);
-    return str_replace('//', '/', $route);
+    $queryString = http_build_query($queryParams);
+    return str_replace('//', '/', $route) . (! empty($queryString) ? '?' . $queryString : '');
 }
 
 /**

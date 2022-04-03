@@ -12,8 +12,11 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Models;
 
+use Illuminate\Support\Str;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utility\Numbers;
+use Johncms\Utility\Pagination;
 
 /**
  * Trait TopicMutators
@@ -29,93 +32,85 @@ use Johncms\Users\User;
 trait TopicMutators
 {
     /**
-     * Ссылка на страницу просмотра топика
+     * Topic url
      *
      * @return string
      */
     public function getUrlAttribute(): string
     {
-        return '/forum/?type=topic&id=' . $this->id;
+        return route('forum.topic', ['id' => $this->id, 'topicName' => Str::slug($this->name)]);
     }
 
     /**
-     * Поличество постов для отображения
+     * The number of posts to display
      *
      * @return string
      */
     public function getShowPostsCountAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
-            return (string) $this->tools->formatNumber($this->mod_post_count);
+        if ($this->current_user?->hasAnyRole()) {
+            return (string) Numbers::formatNumber($this->mod_post_count);
         }
-        return (string) $this->tools->formatNumber($this->post_count);
+        return (string) Numbers::formatNumber($this->post_count);
     }
 
     /**
-     * Автор поста для отображения
+     * The name of the author to display
      *
      * @return string
      */
     public function getShowLastAuthorAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
+        if ($this->current_user?->hasAnyRole()) {
             return $this->mod_last_post_author_name;
         }
         return $this->last_post_author_name;
     }
 
     /**
-     * Дата последнего поста для отображения
+     * The date of the last post to display
      *
      * @return string
      */
     public function getShowLastPostDateAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
-            return $this->tools->displayDate($this->mod_last_post_date);
+        if ($this->current_user?->hasAnyRole()) {
+            return format_date($this->mod_last_post_date);
         }
-        return $this->tools->displayDate($this->last_post_date);
+        return format_date($this->last_post_date);
     }
 
     /**
-     * Ссылка на последнюю страницу топика
+     * Url to the last page of the topic
      *
      * @return string
      */
     public function getLastPageUrlAttribute(): string
     {
-        // TODO: Change it
-        /*if ($this->current_user->rights >= 7) {
-            $page = ceil($this->mod_post_count / $this->current_user->set_user->kmess);
-        } else {
-            $page = ceil($this->post_count / $this->current_user->set_user->kmess);
+        $total = $this->current_user?->hasAnyRole() ? $this->mod_post_count : $this->post_count;
+        $pagination = new Pagination($total);
+        $lastPage = $pagination->getTotalPages();
+        $query = [];
+        if ($lastPage > 1) {
+            $query['page'] = $lastPage;
         }
 
-        if ($page > 1) {
-            return '/forum/?type=topic&id=' . $this->id . '&page=' . $page;
-        }*/
-
-        return '';
+        return route('forum.topic', ['id' => $this->id, 'topicName' => Str::slug($this->name)], $query);
     }
 
-    /**
-     * Ссылка на последнюю страницу топика
-     *
-     * @return bool
-     */
     public function getHasIconsAttribute(): bool
     {
         return ($this->pinned || $this->has_poll || $this->closed || $this->deleted);
     }
 
     /**
-     * Признак непрочитанного топика
+     * The mark of an unread topic
      *
      * @return bool
      */
     public function getUnreadAttribute(): bool
     {
-        return $this->read !== null && $this->read === 0;
+        return $this->read === 0;
     }
 
     /**
@@ -125,7 +120,7 @@ trait TopicMutators
      */
     public function getFormattedViewCountAttribute(): string
     {
-        return (string) $this->tools->formatNumber($this->view_count);
+        return (string) Numbers::formatNumber($this->view_count);
     }
 
     /**
