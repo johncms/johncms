@@ -157,26 +157,6 @@ class ForumMessage extends Model
     }
 
     /**
-     * Adding user data to the query
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeUsers(Builder $query): Builder
-    {
-        return $query->leftJoin('users', 'forum_messages.user_id', '=', 'users.id')
-            ->addSelect(
-                [
-                    'forum_messages.*',
-                    'users.rights',
-                    'users.lastdate',
-                    'users.status',
-                    'users.datereg',
-                ]
-            );
-    }
-
-    /**
      * Relationship to the parent topic
      *
      * @return HasOne

@@ -42,7 +42,7 @@ use Johncms\Users\User;
  */
 class ForumFile extends Model
 {
-    protected $table = 'cms_forum_files';
+    protected $table = 'forum_files';
 
     public $timestamps = false;
 

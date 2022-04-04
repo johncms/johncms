@@ -156,7 +156,7 @@ class User extends Model
         return $this->userBanChecker;
     }
 
-    public function hasBan(array | string $bans): bool
+    public function hasBan(array|string $bans): bool
     {
         return $this->getUserBanChecker()->hasBan($bans);
     }
@@ -166,7 +166,7 @@ class User extends Model
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public function hasRole(array | string $roles): bool
+    public function hasRole(array|string $roles): bool
     {
         return $this->getRoleChecker()->hasRole($roles);
     }
@@ -181,7 +181,7 @@ class User extends Model
         return $this->getRoleChecker()->hasRole('admin');
     }
 
-    public function hasPermission(array | string $permissions): bool
+    public function hasPermission(array|string $permissions): bool
     {
         return $this->getPermissionChecker()->hasPermission($permissions);
     }
@@ -191,7 +191,17 @@ class User extends Model
         return $this->hasMany(StoredAuth::class, 'user_id', 'id');
     }
 
+    /** @deprecated use role_names attribute */
     public function getRoleNames(): string
+    {
+        $roles = (array) $this->getRoleChecker()->getUserRoles();
+        if (empty($roles)) {
+            return d__('system', 'User');
+        }
+        return implode(', ', array_column($roles, 'display_name'));
+    }
+
+    public function getRoleNamesAttribute(): string
     {
         $roles = (array) $this->getRoleChecker()->getUserRoles();
         if (empty($roles)) {
@@ -214,14 +224,20 @@ class User extends Model
         return '';
     }
 
+    /** @deprecated use is_online property */
     public function isOnline(): bool
+    {
+        return $this->activity?->last_visit && Carbon::now()->subMinutes(5)->lessThan($this->activity?->last_visit);
+    }
+
+    public function getIsOnlineAttribute(): bool
     {
         return $this->activity?->last_visit && Carbon::now()->subMinutes(5)->lessThan($this->activity?->last_visit);
     }
 
     public function getLastSeen(): string
     {
-        if ($this->isOnline()) {
+        if ($this->is_online) {
             return d__('system', 'Online');
         }
         return format_date($this->last_visit);

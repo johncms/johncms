@@ -2,19 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Forum\Topics\Resources;
+namespace Johncms\Forum\Resources;
 
-use Illuminate\Support\Str;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Http\Resources\AbstractResource;
 
 /**
  * @mixin ForumTopic
- * @property null|string $forum_name
- * @property null|int $forum_id
- * @property null|string $section_name
  */
-class UnreadTopicResource extends AbstractResource
+class TopicResource extends AbstractResource
 {
     public function toArray(): array
     {
@@ -31,18 +27,7 @@ class UnreadTopicResource extends AbstractResource
             'has_icons'        => $this->has_icons,
             'url'              => $this->url,
             'last_page_url'    => $this->last_page_url,
-            'forum_url'        => $this->buildSectionUrl($this->forum_id, $this->forum_name),
-            'forum_name'       => $this->forum_name,
-            'section_url'      => $this->buildSectionUrl($this->section_id, $this->section_name),
-            'section_name'     => $this->section_name ?? '',
+            'unread'           => $this->unread,
         ];
-    }
-
-    private function buildSectionUrl(int $id, string $name): string
-    {
-        return route('forum.section', [
-            'id'          => $id,
-            'sectionName' => Str::slug($name),
-        ]);
     }
 }

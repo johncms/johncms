@@ -78,7 +78,7 @@ trait MessageMutators
      */
     public function getPostTimeAttribute(): string
     {
-        return $this->tools->displayDate($this->date);
+        return format_date($this->date);
     }
 
     /**

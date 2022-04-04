@@ -135,7 +135,7 @@ $this->layout('system::layout/default');
     </form>
 <?php endif; ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center mt-1 mb-3 pagination-no-padding">
-    <?php if ($total > $user->config->kmess): ?>
+    <?php if ($total): ?>
         <?= $pagination ?>
     <?php endif ?>
     <div class="text-muted forum-view-counter">
@@ -193,27 +193,25 @@ $this->layout('system::layout/default');
     <?php endif; ?>
 
     <?php foreach ($messages as $message): ?>
-        <div class="new_post-item border-bottom shadow mb-2" id="post_<?= $message->id ?>">
+        <div class="new_post-item border-bottom shadow mb-2" id="post_<?= $message['id'] ?>">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
-                    <?php if (! empty($message->user_profile_link)): ?>
-                        <a href="<?= $message->user_profile_link ?>">
-                            <div class="avatar">
-                                <img src="<?= $this->avatar($message->user_id) ?>" class="img-fluid" alt=".">
-                            </div>
+                    <?php if (! empty($message['user']['profile_url'])): ?>
+                        <a href="<?= $message['user']['profile_url'] ?>">
+                            <?= $this->avatar($message['user']['avatar_url'], $message['user']['name']) ?>
                         </a>
                     <?php else: ?>
                         <div class="avatar">
-                            <img src="<?= $this->avatar($message->user_id) ?>" class="img-fluid" alt=".">
+                            <?= $this->avatar($message['user']['avatar_url'], $message['user']['name']) ?>
                         </div>
                     <?php endif; ?>
-                    <span class="user-status <?= $message->user_data->is_online ? 'online' : 'offline' ?> shadow"></span>
-                    <?php if (! empty($message->user_data->rights_name)): ?>
+                    <span class="user-status <?= $message['user']['is_online'] ? 'online' : 'offline' ?> shadow"></span>
+                    <?php if (! empty($message['user']['role_names'])): ?>
                         <div class="post-of-user"
                              data-bs-toggle="tooltip"
                              data-bs-placement="top"
                              data-bs-html="true"
-                             title="<?= $message->user_data->rights_name ?>">
+                             title="<?= $message['user']['role_names'] ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
                             </svg>
@@ -222,48 +220,48 @@ $this->layout('system::layout/default');
                 </div>
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
-                        <?php if (! empty($message->user_profile_link)): ?>
-                            <a href="<?= $message->user_profile_link ?>"><span class="user-name d-inline me-2"><?= $message->user_data->name ?></span></a>
+                        <?php if (! empty($message['user']['profile_url'])): ?>
+                            <a href="<?= $message['user']['profile_url'] ?>"><span class="user-name d-inline me-2"><?= $message['user']['name'] ?></span></a>
                         <?php else: ?>
-                            <div class="user-name d-inline me-2"><?= $message->user_name ?></div>
+                            <div class="user-name d-inline me-2"><?= $message['user']['name'] ?></div>
                         <?php endif; ?>
-                        <a href="<?= $message->url ?>"
+                        <a href="<?= $message['url'] ?>"
                            class="post-meta d-inline me-2"
                            data-bs-toggle="tooltip"
                            data-bs-placement="top"
                            title="<?= __('Link to post') ?>">
-                            <?= $message->post_time ?>
+                            <?= $message['post_time'] ?>
                         </a>
-                        <?php if (! empty($message->edit_count)): ?>
+                        <?php if (! empty($message['meta']['edit_count'])): ?>
                             <div class="post-meta d-inline me-2"
                                  data-bs-toggle="tooltip"
                                  data-bs-placement="top"
                                  data-bs-html="true"
-                                 title="<?= __('Edited:') ?> <?= $message->editor_name ?> <br> (<?= $message->edit_time ?>) [<?= $message->edit_count ?>]">
+                                 title="<?= __('Edited:') ?> <?= $message['meta']['editor_name'] ?> <br> (<?= $message['meta']['edit_time'] ?>) [<?= $message['meta']['edit_count'] ?>]">
                                 <?= __('Edited') ?>
                             </div>
                         <?php endif; ?>
-                        <?php if ($message->can_edit): ?>
-                            <?php if (! empty($message->deleted)): ?>
+                        <?php if ($message['can_edit']): ?>
+                            <?php if (! empty($message['meta']['deleted'])): ?>
                                 <div class="d-inline me-2 badge bg-danger"
                                      data-bs-toggle="tooltip"
                                      data-bs-placement="top"
-                                     title="<?= __('Post deleted:') ?> <?= $message->deleted_by ?>">
+                                     title="<?= __('Post deleted:') ?> <?= $message['meta']['deleted_by'] ?>">
                                     <?= __('Deleted') ?>
                                 </div>
-                            <?php elseif (! empty($message->deleted_by)): ?>
+                            <?php elseif (! empty($message['meta']['restored_by'])): ?>
                                 <div class="post-meta d-inline me-2"
                                      data-bs-toggle="tooltip"
                                      data-bs-placement="top"
-                                     title="<?= __('Post restored by:') ?> <?= $message->deleted_by ?>">
+                                     title="<?= __('Post restored by:') ?> <?= $message['meta']['restored_by'] ?>">
                                     <?= __('Restored') ?>
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
-                    <?php if (! empty($message->user_data->status)): ?>
+                    <?php if (! empty($message['user']['status'])): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="fw-bold"><?= $message->user_data->status ?></span>
+                            <span class="fw-bold"><?= $message['user']['status'] ?></span>
                         </div>
                     <?php endif ?>
                 </div>
@@ -276,9 +274,9 @@ $this->layout('system::layout/default');
                 <?php endif; ?>
             </div>
             <div class="post-body">
-                <?= $message->post_text ?>
+                <?= $message['text'] ?>
             </div>
-            <?php if ($message->files->count() > 0): ?>
+            <?php if ($message['files'] && $message->files->count() > 0): ?>
                 <!-- Files block -->
                 <div class="pb-1">
                     <div class="fw-bold pb-1"><?= __('Attached files') ?>:</div>
@@ -349,7 +347,7 @@ $this->layout('system::layout/default');
                             <a href="<?= $message->quote_url ?>"><?= __('Quote') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?php if ($message->can_edit): ?>
+                    <?php if ($message['can_edit']): ?>
                         <div class="dropdown ms-3">
                             <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
@@ -445,7 +443,7 @@ $this->layout('system::layout/default');
 <div>
     <div><?= __('Total') ?>: <?= $total ?></div>
     <!-- Page switching -->
-    <?php if ($total > $user->config->kmess): ?>
+    <?php if ($total): ?>
         <div class="mt-1"><?= $pagination ?></div>
     <?php endif ?>
 </div>
