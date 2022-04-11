@@ -11,7 +11,7 @@ use Johncms\Forum\ForumUtils;
 use Johncms\Forum\Models\ForumFile;
 use Johncms\Forum\Models\ForumSection;
 use Johncms\Forum\Resources\TopicResource;
-use Johncms\Forum\Topics\ForumTopicRepository;
+use Johncms\Forum\Topics\ForumTopicService;
 use Johncms\Http\Session;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
@@ -53,7 +53,7 @@ class ForumSectionsController extends BaseForumController
         int $id,
         Session $session,
         ForumCounters $forumCounters,
-        ForumTopicRepository $topicRepository,
+        ForumTopicService $topicRepository,
         ?User $user,
         ForumUtils $forumUtils,
     ): string {

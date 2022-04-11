@@ -11,11 +11,9 @@ use Johncms\Forum\ForumUtils;
 use Johncms\Forum\Messages\ForumMessagesService;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Forum\Models\ForumTopic;
-use Johncms\Forum\Models\ForumUnread;
 use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Resources\MessageResource;
-use Johncms\Http\Request;
-use Johncms\Http\Session;
+use Johncms\Forum\Topics\ForumTopicService;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 
@@ -27,11 +25,10 @@ class ForumTopicsController extends BaseForumController
     public function showTopic(
         int $id,
         ForumMessagesService $forumMessagesService,
+        ForumTopicService $forumTopicService,
         ForumUtils $forumUtils,
-        Request $request,
         ?User $user,
-        ForumCounters $forumCounters,
-        Session $session
+        ForumCounters $forumCounters
     ): string {
         $forumSettings = di('config')['forum']['settings'];
 
@@ -54,16 +51,17 @@ class ForumTopicsController extends BaseForumController
             ForumUtils::notFound();
         }
 
-        $this->metaTagManager->setTitle($currentTopic->name);
-        $this->metaTagManager->setPageTitle($currentTopic->name);
-
         // Build breadcrumbs
         $forumUtils->buildBreadcrumbs($currentTopic->section_id, $currentTopic->name);
+        $forumUtils->setMetaForTopic($currentTopic);
+
+        // Increasing the number of views
+        $forumTopicService->markAsViewed($currentTopic);
 
         $access = 0;
         if ($user) {
             // Mark the topic as read
-            ForumUnread::query()->updateOrInsert(['topic_id' => $id, 'user_id' => $user->id], ['time' => time()]);
+            $forumTopicService->markAsRead($id, $user->id);
 
             // TODO: Change it
             $online = [
@@ -74,16 +72,6 @@ class ForumTopicsController extends BaseForumController
             $currentSection = $currentTopic->section;
             $access = $currentSection->access;
         }
-
-        // Increasing the number of views
-        if (empty($session->get('viewed_topics')) || ! in_array($currentTopic->id, $session->get('viewed_topics', []))) {
-            $currentTopic->update(['view_count' => $currentTopic->view_count + 1]);
-            $_SESSION['viewed_topics'][] = $currentTopic->id;
-        }
-
-
-        // Счетчик постов темы
-        // $total = $message->total();
 
         $poll_data = [];
         if ($currentTopic->has_poll) {
@@ -147,31 +135,6 @@ class ForumTopicsController extends BaseForumController
             }
         }
 
-        // Список кураторов
-        $curators_array = [];
-        if (! empty($currentTopic->curators)) {
-            foreach ($currentTopic->curators as $key => $value) {
-                $curators_array[] = '<a href="/profile/?user=' . $key . '">' . $value . '</a>';
-            }
-        }
-
-        // Setting the canonical URL
-        $page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
-        $canonical = config('johncms.homeurl') . $currentTopic->url;
-        if ($page > 1) {
-            $canonical .= '&page=' . $page;
-        }
-
-        $this->render->addData(
-            [
-                'canonical'   => $canonical,
-                'title'       => htmlspecialchars_decode($currentTopic->name),
-                'page_title'  => htmlspecialchars_decode($currentTopic->name),
-                'keywords'    => $currentTopic->calculated_meta_keywords,
-                'description' => $currentTopic->calculated_meta_description,
-            ]
-        );
-
         $topicMessages = $forumMessagesService->getTopicMessages($id);
         $messages = MessageResource::createFromCollection($topicMessages);
 
@@ -181,7 +144,7 @@ class ForumTopicsController extends BaseForumController
                 'first_post'       => $first_message,
                 'topic'            => $currentTopic,
                 'topic_vote'       => $topic_vote ?? null,
-                'curators_array'   => $curators_array,
+                'curators_array'   => ! empty($currentTopic->curators) ? $currentTopic->curators : [],
                 'view_count'       => $currentTopic->view_count,
                 'pagination'       => $topicMessages->render(),
                 'start'            => $start,

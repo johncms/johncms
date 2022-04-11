@@ -45,7 +45,7 @@ class MessageResource extends AbstractResource
         return [
             'edit_count'   => $this->edit_count,
             'edit_time'    => format_date($this->edit_time),
-            'editor_name'  => format_date($this->editor_name),
+            'editor_name'  => $this->editor_name,
             'deleted'      => $this->deleted,
             'deleted_by'   => $this->deleted_by,
             'restored_by'  => (empty($this->deleted) && ! empty($this->deleted_by)) ? $this->deleted_by : '',

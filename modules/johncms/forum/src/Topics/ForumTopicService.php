@@ -7,13 +7,15 @@ namespace Johncms\Forum\Topics;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Johncms\Forum\Models\ForumTopic;
+use Johncms\Forum\Models\ForumUnread;
+use Johncms\Http\Session;
 use Johncms\Users\User;
 
-class ForumTopicRepository
+class ForumTopicService
 {
     public ?User $user;
 
-    public function __construct(User $user)
+    public function __construct(?User $user)
     {
         $this->user = $user;
     }
@@ -50,5 +52,28 @@ class ForumTopicRepository
             })
             ->orderByDesc('pinned')
             ->orderByDesc('last_post_date');
+    }
+
+    /**
+     * Marking a topic as read for a specific user
+     */
+    public function markAsRead(int $topicId, int $userId, ?int $time = null): void
+    {
+        ForumUnread::query()->updateOrInsert(['topic_id' => $topicId, 'user_id' => $userId], ['time' => $time ?? time()]);
+    }
+
+    /**
+     * Increase view counter and mark topic as viewed for current user's session
+     */
+    public function markAsViewed(ForumTopic $forumTopic): void
+    {
+        $session = di(Session::class);
+        // Increasing the number of views
+        if (empty($session->get('viewed_topics')) || ! in_array($forumTopic->id, $session->get('viewed_topics', []))) {
+            $forumTopic->update(['view_count' => $forumTopic->view_count + 1]);
+            $viewed = $session->get('viewed_topics', []);
+            $viewed[] = $forumTopic->id;
+            $session->set('viewed_topics', $viewed);
+        }
     }
 }

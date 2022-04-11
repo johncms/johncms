@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Forum\Controllers;
 
 use Johncms\Forum\Resources\UnreadTopicResource;
-use Johncms\Forum\Topics\ForumTopicRepository;
+use Johncms\Forum\Topics\ForumTopicService;
 
 class LatestTopicsController extends BaseForumController
 {
-    public function unread(ForumTopicRepository $topicRepository): string
+    public function unread(ForumTopicService $topicRepository): string
     {
         $this->metaTagManager->setAll(__('Unread'));
         $this->navChain->add(__('Unread'));

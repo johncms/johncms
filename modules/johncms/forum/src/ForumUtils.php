@@ -19,6 +19,7 @@ use Johncms\Forum\Models\ForumTopic;
 use Johncms\Http\Request;
 use Johncms\NavChain;
 use Johncms\Users\User;
+use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
 
 class ForumUtils
@@ -49,6 +50,27 @@ class ForumUtils
         if (! empty($currentItemName)) {
             $this->navChain->add($currentItemName, $currentItemUrl);
         }
+    }
+
+    /**
+     * Set meta tags for the topic
+     */
+    public function setMetaForTopic(ForumTopic $topic): void
+    {
+        $request = di(Request::class);
+        $metaTagManager = di(MetaTagManager::class);
+        $metaTagManager->setTitle($topic->name);
+        $metaTagManager->setPageTitle($topic->name);
+        $metaTagManager->setDescription($topic->calculated_meta_description);
+        $metaTagManager->setKeywords($topic->calculated_meta_keywords);
+
+        // Setting the canonical URL
+        $page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
+        $canonical = config('johncms.homeurl') . $topic->url;
+        if ($page > 1) {
+            $canonical .= '?page=' . $page;
+        }
+        $metaTagManager->setCanonical($canonical);
     }
 
     /**
