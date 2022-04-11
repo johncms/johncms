@@ -392,7 +392,7 @@ class Counters
 
         return [
             'total' => $total,
-            'new'   => $new,
+            'new'   => $new ?? 0,
         ];
     }
 
