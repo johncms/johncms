@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Forum\ForumCounters;
 use Johncms\Forum\ForumUtils;
+use Johncms\Forum\Messages\ForumMessagesService;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumUnread;
 use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Resources\MessageResource;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 
@@ -21,9 +24,16 @@ class ForumTopicsController extends BaseForumController
     /**
      * Show topic
      */
-    public function showTopic(int $id, ForumUtils $forumUtils, Request $request, User $user, ForumCounters $forumCounters): string
-    {
-        $forum_settings = di('config')['forum']['settings'];
+    public function showTopic(
+        int $id,
+        ForumMessagesService $forumMessagesService,
+        ForumUtils $forumUtils,
+        Request $request,
+        ?User $user,
+        ForumCounters $forumCounters,
+        Session $session
+    ): string {
+        $forumSettings = di('config')['forum']['settings'];
 
         $set_forum = [
             'farea'    => 0,
@@ -35,22 +45,25 @@ class ForumTopicsController extends BaseForumController
 
         // Getting data for the current topic
         try {
-            $current_topic = (new ForumTopic());
-            if ($forum_settings['file_counters']) {
-                $current_topic = $current_topic->withCount('files');
-            }
-            $current_topic = $current_topic->findOrFail($id);
+            $currentTopic = ForumTopic::query()
+                ->when($forumSettings['file_counters'], function (Builder $builder) {
+                    return $builder->withCount('files');
+                })
+                ->findOrFail($id);
         } catch (ModelNotFoundException) {
             ForumUtils::notFound();
         }
 
+        $this->metaTagManager->setTitle($currentTopic->name);
+        $this->metaTagManager->setPageTitle($currentTopic->name);
+
         // Build breadcrumbs
-        $forumUtils->buildBreadcrumbs($current_topic->section_id, $current_topic->name);
+        $forumUtils->buildBreadcrumbs($currentTopic->section_id, $currentTopic->name);
 
         $access = 0;
         if ($user) {
             // Mark the topic as read
-            (new ForumUnread())->updateOrInsert(['topic_id' => $id, 'user_id' => $user->id], ['time' => time()]);
+            ForumUnread::query()->updateOrInsert(['topic_id' => $id, 'user_id' => $user->id], ['time' => time()]);
 
             // TODO: Change it
             $online = [
@@ -58,43 +71,22 @@ class ForumTopicsController extends BaseForumController
                 'guests' => $forumCounters->onlineGuests(),
             ];
 
-            $current_section = $current_topic->section;
-            $access = $current_section->access;
+            $currentSection = $currentTopic->section;
+            $access = $currentSection->access;
         }
 
         // Increasing the number of views
-        if (empty($_SESSION['viewed_topics']) || ! in_array($current_topic->id, $_SESSION['viewed_topics'])) {
-            $current_topic->update(['view_count' => $current_topic->view_count + 1]);
-            $_SESSION['viewed_topics'][] = $current_topic->id;
+        if (empty($session->get('viewed_topics')) || ! in_array($currentTopic->id, $session->get('viewed_topics', []))) {
+            $currentTopic->update(['view_count' => $currentTopic->view_count + 1]);
+            $_SESSION['viewed_topics'][] = $currentTopic->id;
         }
 
-        // Задаем правила сортировки (новые внизу / вверху)
-        $order = $set_forum['upfp'] ? 'DESC' : 'ASC';
-
-        $filter_by_users = [];
-        $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] === $id ? 1 : 0;
-        if ($filter && ! empty($_SESSION['fsort_users'])) {
-            $filter_by_users = unserialize($_SESSION['fsort_users'], ['allowed_classes' => false]);
-        }
-
-        // List of messages
-        $message = (new ForumMessage())
-            ->with('files')
-            ->where('topic_id', '=', $id);
-
-        // Filter by users
-        if (! empty($filter_by_users)) {
-            $message->whereIn('user_id', $filter_by_users);
-        }
-
-        $message = $message->orderBy('id', $order)
-            ->paginate();
 
         // Счетчик постов темы
-        $total = $message->total();
+        // $total = $message->total();
 
         $poll_data = [];
-        if ($current_topic->has_poll) {
+        if ($currentTopic->has_poll) {
             $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
             $topic_vote = (new ForumVote())
                 ->voteUser()
@@ -102,7 +94,7 @@ class ForumTopicsController extends BaseForumController
                 ->where('topic', '=', $id)
                 ->first();
 
-            $poll_data['show_form'] = (! $current_topic->closed && ! isset($_GET['vote_result']) && $user->is_valid && $topic_vote->vote_user !== 1);
+            $poll_data['show_form'] = (! $currentTopic->closed && ! isset($_GET['vote_result']) && $user->is_valid && $topic_vote->vote_user !== 1);
             $poll_data['results'] = [];
 
             $color_classes = di('config')['forum']['answer_colors'];
@@ -130,7 +122,7 @@ class ForumTopicsController extends BaseForumController
 
         // Получаем данные о кураторах темы
         $curator = false;
-        if ($user->rights < 6 && $user->rights !== 3 && array_key_exists($user->id, $current_topic->curators) && $user->is_valid) {
+        if ($user->rights < 6 && $user->rights !== 3 && array_key_exists($user->id, $currentTopic->curators) && $user->is_valid) {
             $curator = true;
         }
 
@@ -145,45 +137,9 @@ class ForumTopicsController extends BaseForumController
                 ->first();
         }
 
-        $messages = MessageResource::createFromCollection($message);
-
-        $i = 1;
-        /*        $messages = $message->getItems()->map(
-                    static function (ForumMessage $message) use ($user, $curator, $set_forum, $access, &$i, $start, $total) {
-                        if (
-                            (($user->rights === 3 || $user->rights >= 6 || $curator) && $user->rights >= $message->rights)
-                            || ($i === 1 && $access === 2 && $message->user_id === $user->id)
-                            || ($message->user_id === $user->id && ! $set_forum['upfp'] && ($start + $i) === $total && $message->date > time() - 300)
-                            || ($message->user_id === $user->id && $set_forum['upfp'] && $start === 0 && $i === 1 && $message->date > time() - 300)
-                        ) {
-                            $message->can_edit = true;
-                        }
-
-                        if ($user->id !== $message->user_id && $user->is_valid) {
-                            $message->reply_url = '/forum/?act=say&type=reply&amp;id=' . $message->id . '&start=' . $start;
-                            $message->quote_url = '/forum/?act=say&type=reply&amp;id=' . $message->id . '&start=' . $start . '&cyt';
-                        }
-
-                        $i++;
-                        return $message;
-                    }
-                );
-
-                if ($user) {
-                    // Помечаем уведомления прочитанными
-                    $post_ids = $messages->pluck('id')->all();
-
-                    $notifications = (new Notification())
-                        ->where('module', '=', 'forum')
-                        ->where('event_type', '=', 'new_message')
-                        ->whereNull('read_at')
-                        ->whereIn('entity_id', $post_ids)
-                        ->update(['read_at' => Carbon::now()]);
-                }
-        */
         // Нижнее поле "Написать"
         $write_access = false;
-        if (($user && ! $current_topic->closed && config('johncms.mod_forum') !== 3 && $access !== 4) || ($user->rights >= 7)) {
+        if (($user && ! $currentTopic->closed && config('johncms.mod_forum') !== 3 && $access !== 4) || ($user->rights >= 7)) {
             $write_access = true;
             if ($set_forum['farea']) {
                 $token = mt_rand(1000, 100000);
@@ -193,15 +149,15 @@ class ForumTopicsController extends BaseForumController
 
         // Список кураторов
         $curators_array = [];
-        if (! empty($current_topic->curators)) {
-            foreach ($current_topic->curators as $key => $value) {
+        if (! empty($currentTopic->curators)) {
+            foreach ($currentTopic->curators as $key => $value) {
                 $curators_array[] = '<a href="/profile/?user=' . $key . '">' . $value . '</a>';
             }
         }
 
         // Setting the canonical URL
         $page = $request->getQuery('page', 0, FILTER_VALIDATE_INT);
-        $canonical = config('johncms.homeurl') . $current_topic->url;
+        $canonical = config('johncms.homeurl') . $currentTopic->url;
         if ($page > 1) {
             $canonical .= '&page=' . $page;
         }
@@ -209,22 +165,25 @@ class ForumTopicsController extends BaseForumController
         $this->render->addData(
             [
                 'canonical'   => $canonical,
-                'title'       => htmlspecialchars_decode($current_topic->name),
-                'page_title'  => htmlspecialchars_decode($current_topic->name),
-                'keywords'    => $current_topic->calculated_meta_keywords,
-                'description' => $current_topic->calculated_meta_description,
+                'title'       => htmlspecialchars_decode($currentTopic->name),
+                'page_title'  => htmlspecialchars_decode($currentTopic->name),
+                'keywords'    => $currentTopic->calculated_meta_keywords,
+                'description' => $currentTopic->calculated_meta_description,
             ]
         );
+
+        $topicMessages = $forumMessagesService->getTopicMessages($id);
+        $messages = MessageResource::createFromCollection($topicMessages);
 
         return $this->render->render(
             'forum::topic',
             [
                 'first_post'       => $first_message,
-                'topic'            => $current_topic,
+                'topic'            => $currentTopic,
                 'topic_vote'       => $topic_vote ?? null,
                 'curators_array'   => $curators_array,
-                'view_count'       => $current_topic->view_count,
-                'pagination'       => $message->render(),
+                'view_count'       => $currentTopic->view_count,
+                'pagination'       => $topicMessages->render(),
                 'start'            => $start,
                 'id'               => $id,
                 'token'            => $token ?? null,
@@ -233,10 +192,10 @@ class ForumTopicsController extends BaseForumController
                 'write_access'     => $write_access,
                 'messages'         => $messages->getItems() ?? [],
                 'online'           => $online ?? [],
-                'total'            => $total,
-                'files_count'      => $forum_settings['file_counters'] ? Numbers::formatNumber($current_topic->files_count) : 0,
+                'total'            => $topicMessages->total(),
+                'files_count'      => $forumSettings['file_counters'] ? Numbers::formatNumber($currentTopic->files_count) : 0,
                 'unread_count'     => Numbers::formatNumber($forumCounters->unreadMessages()),
-                'filter_by_author' => $filter,
+                'filter_by_author' => $filter ?? 0,
                 'poll_data'        => $poll_data,
             ]
         );

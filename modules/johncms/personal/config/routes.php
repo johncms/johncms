@@ -27,4 +27,10 @@ return function (Router $router) {
         $route->get('/settings[/]', [SettingsController::class, 'index'])->setName('personal.settings');
         $route->post('/settings/store[/]', [SettingsController::class, 'store'])->setName('personal.settings.store');
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
+
+    $router->get('/personal/{id:number}[/]', [PersonalController::class, 'index'])->setName('personal.index');
+
+
+    // Профиль пользователя
+
 };
