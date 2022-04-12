@@ -39,39 +39,6 @@ trait MessageMutators
     }
 
     /**
-     * Link to the post editing page.
-     *
-     * @return string
-     */
-    public function getEditUrlAttribute(): string
-    {
-        return '/forum/?act=editpost&amp;id=' . $this->id;
-    }
-
-    /**
-     * Link to the post deleting page.
-     *
-     * @return string
-     */
-    public function getDeleteUrlAttribute(): string
-    {
-        return '/forum/?act=editpost&amp;do=del&amp;id=' . $this->id;
-    }
-
-    /**
-     * Link to the post restoring page.
-     *
-     * @return string
-     */
-    public function getRestoreUrlAttribute(): string
-    {
-        if ($this->current_user->rights >= 7 && $this->deleted) {
-            return '/forum/?act=editpost&amp;do=restore&amp;id=' . $this->id;
-        }
-        return '';
-    }
-
-    /**
      * Formatted date
      *
      * @return string

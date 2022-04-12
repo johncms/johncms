@@ -77,10 +77,6 @@ class ForumMessage extends Model
 
     public $timestamps = false;
 
-    public $can_edit = false;
-    public $reply_url = '';
-    public $quote_url = '';
-
     protected $casts = [
         'pinned'       => 'bool',
         'deleted'      => 'bool',

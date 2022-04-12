@@ -7,6 +7,7 @@ namespace Johncms\Forum\Controllers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Forum\ForumCounters;
+use Johncms\Forum\ForumPermissions;
 use Johncms\Forum\ForumUtils;
 use Johncms\Forum\Messages\ForumMessagesService;
 use Johncms\Forum\Models\ForumMessage;
@@ -160,6 +161,10 @@ class ForumTopicsController extends BaseForumController
                 'unread_count'     => Numbers::formatNumber($forumCounters->unreadMessages()),
                 'filter_by_author' => $filter ?? 0,
                 'poll_data'        => $poll_data,
+                'permissions'      => [
+                    'canManagePosts' => $user?->hasPermission(ForumPermissions::MANAGE_POSTS),
+                    'canManageTopic' => $user?->hasPermission(ForumPermissions::MANAGE_TOPICS),
+                ],
             ]
         );
     }

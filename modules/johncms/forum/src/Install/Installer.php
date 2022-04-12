@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Install;
 
+use Johncms\Forum\ForumPermissions;
 use Johncms\Users\Permission;
 use Johncms\Users\Role;
 
@@ -30,12 +31,12 @@ class Installer extends \Johncms\Modules\Installer
     {
         $permissions = [
             [
-                'name'         => 'forum_manage_posts',
+                'name'         => ForumPermissions::MANAGE_POSTS,
                 'display_name' => __('Access to forum message management'),
                 'module_name'  => $this->module_name,
             ],
             [
-                'name'         => 'forum_manage_topics',
+                'name'         => ForumPermissions::MANAGE_TOPICS,
                 'display_name' => __('Access to forum topic management'),
                 'module_name'  => $this->module_name,
             ],

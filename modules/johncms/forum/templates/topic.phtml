@@ -188,7 +188,7 @@ $this->layout('system::layout/default');
     <div class="border-bottom full-mobile-width mt-4 mb-3"></div>
 <?php endif; ?>
 
-<?php if ($user->rights === 3 || $user->rights >= 6): ?>
+<?php if ($permissions['canManagePosts']): ?>
 <form action="?act=massdel" method="post">
     <?php endif; ?>
 
@@ -322,29 +322,29 @@ $this->layout('system::layout/default');
             <?php endif; ?>
             <div class="post-footer d-flex justify-content-between mt-2">
                 <div class="overflow-hidden">
-                    <?php if ($user->rights): ?>
+                    <?php if ($user?->hasAnyRole()): ?>
                         <div class="post-meta d-flex">
                             <div class="user-ip me-2">
-                                <a href="<?= $message->user_data->search_ip_url ?>"><?= $message->user_data->ip ?></a>
-                                <?php if (! empty($message->user_data->ip_via_proxy)): ?>
-                                    / <a href="<?= $message->user_data->search_ip_via_proxy_url ?>"><?= $message->user_data->ip_via_proxy ?></a>
+                                <a href="<?= $message['meta']['search_ip_url'] ?>"><?= $message['meta']['ip'] ?></a>
+                                <?php if (! empty($message['meta']['ip_via_proxy'])): ?>
+                                    / <a href="<?= $message['meta']['search_ip_via_proxy_url'] ?>"><?= $message['meta']['ip_via_proxy'] ?></a>
                                 <?php endif; ?>
                             </div>
                             <div class="useragent">
-                                <span><?= $message->user_data->browser ?></span>
+                                <span><?= $message['meta']['user_agent'] ?></span>
                             </div>
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="d-flex">
-                    <?php if (! empty($message->reply_url)): ?>
+                    <?php if ($message['reply_url']): ?>
                         <div class="ms-3">
-                            <a href="<?= $message->reply_url ?>"><?= __('Reply') ?></a>
+                            <a href="<?= $message['reply_url'] ?>"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?php if (! empty($message->quote_url)): ?>
+                    <?php if ($message['quote_url']): ?>
                         <div class="ms-3">
-                            <a href="<?= $message->quote_url ?>"><?= __('Quote') ?></a>
+                            <a href="<?= $message['quote_url'] ?>"><?= __('Quote') ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if ($message['can_edit']): ?>
@@ -355,10 +355,10 @@ $this->layout('system::layout/default');
                                 </svg>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="<?= $message->edit_url ?>" class="ms-2"><?= __('Edit') ?></a>
-                                <a class="dropdown-item" href="<?= $message->delete_url ?>" class="ms-2"><?= __('Delete') ?></a>
-                                <?php if (! empty($message->restore_url)): ?>
-                                    <a class="dropdown-item" href="<?= $message->restore_url ?>" class="ms-2"><?= __('Restore') ?></a>
+                                <a class="dropdown-item" href="<?= $message['edit_url'] ?>" class="ms-2"><?= __('Edit') ?></a>
+                                <a class="dropdown-item" href="<?= $message['delete_url'] ?>" class="ms-2"><?= __('Delete') ?></a>
+                                <?php if ($message['restore_url']): ?>
+                                    <a class="dropdown-item" href="<?= $message['restore_url'] ?>" class="ms-2"><?= __('Restore') ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -368,49 +368,46 @@ $this->layout('system::layout/default');
         </div>
     <?php endforeach; ?>
 
-    <?php if ($user->rights === 3 || $user->rights >= 6): ?>
+    <?php if ($permissions['canManagePosts']): ?>
     <div class="d-flex align-items-center mt-3 mb-3">
         <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm me-1"><?= __('Delete selected') ?></button>
-
-        <div class="dropdown">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <?= __('Actions with topic') ?>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="actions">
-                <?php if ($topic_vote): ?>
-                    <a class="dropdown-item" href="/forum/?act=editvote&amp;id=<?= $id ?>"><?= __('Edit Poll') ?></a>
-                    <a class="dropdown-item" href="/forum/?act=delvote&amp;id=<?= $id ?>"><?= __('Delete Poll') ?></a>
-                <?php else: ?>
-                    <a class="dropdown-item" href="/forum/?act=addvote&amp;id=<?= $id ?>"><?= __('Add Poll') ?></a>
-                <?php endif; ?>
-
-                <?php if ($user->rights >= 7): ?>
+        <?php if ($permissions['canManageTopic']): ?>
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= __('Actions with topic') ?>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="actions">
+                    <?php if ($topic_vote): ?>
+                        <a class="dropdown-item" href="/forum/?act=editvote&amp;id=<?= $id ?>"><?= __('Edit Poll') ?></a>
+                        <a class="dropdown-item" href="/forum/?act=delvote&amp;id=<?= $id ?>"><?= __('Delete Poll') ?></a>
+                    <?php else: ?>
+                        <a class="dropdown-item" href="/forum/?act=addvote&amp;id=<?= $id ?>"><?= __('Add Poll') ?></a>
+                    <?php endif; ?>
                     <a class="dropdown-item" href="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Curators of the Topic') ?></a>
-                <?php endif; ?>
+                    <a class="dropdown-item" href="/forum/?act=change_topic&amp;id=<?= $id ?>"><?= __('Change the topic') ?></a>
 
-                <a class="dropdown-item" href="/forum/?act=change_topic&amp;id=<?= $id ?>"><?= __('Change the topic') ?></a>
+                    <?php if ($topic->closed): ?>
+                        <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>"><?= __('Open Topic') ?></a>
+                    <?php else: ?>
+                        <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>&amp;closed"><?= __('Close Topic') ?></a>
+                    <?php endif; ?>
 
-                <?php if ($topic->closed): ?>
-                    <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>"><?= __('Open Topic') ?></a>
-                <?php else: ?>
-                    <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>&amp;closed"><?= __('Close Topic') ?></a>
-                <?php endif; ?>
+                    <?php if ($topic->deleted): ?>
+                        <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= __('Restore Topic') ?></a>
+                    <?php endif; ?>
 
-                <?php if ($topic->deleted): ?>
-                    <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= __('Restore Topic') ?></a>
-                <?php endif; ?>
+                    <a class="dropdown-item" href="/forum/?act=deltema&amp;id=<?= $id ?>"><?= __('Delete Topic') ?></a>
 
-                <a class="dropdown-item" href="/forum/?act=deltema&amp;id=<?= $id ?>"><?= __('Delete Topic') ?></a>
+                    <?php if ($topic->pinned): ?>
+                        <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>"><?= __('Unfix Topic') ?></a>
+                    <?php else: ?>
+                        <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>&amp;vip"><?= __('Pin Topic') ?></a>
+                    <?php endif; ?>
 
-                <?php if ($topic->pinned): ?>
-                    <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>"><?= __('Unfix Topic') ?></a>
-                <?php else: ?>
-                    <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>&amp;vip"><?= __('Pin Topic') ?></a>
-                <?php endif; ?>
-
-                <a class="dropdown-item" href="/forum/?act=per&amp;id=<?= $id ?>"><?= __('Move Topic') ?></a>
+                    <a class="dropdown-item" href="/forum/?act=per&amp;id=<?= $id ?>"><?= __('Move Topic') ?></a>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </form>
 <?php endif; ?>
