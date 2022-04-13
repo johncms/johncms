@@ -72,7 +72,18 @@ class MessageResource extends AbstractResource
 
     private function getFiles(): array
     {
-        return [];
+        $files = [];
+        foreach ($this->files as $file) {
+            $files[] = [
+                'preview'         => $file->file_preview,
+                'url'             => $file->file_url,
+                'name'            => $file->filename,
+                'downloads_count' => $file->dlcount,
+                'size'            => $file->file_size,
+                'delete_url'      => $this->canEdit() ? $file->delete_url : null,
+            ];
+        }
+        return $files;
     }
 
     private function canEdit(): bool
