@@ -12,4 +12,7 @@ return function (Router $router) {
     // Sections, topic
     $router->get('/forum/{sectionName:slug}-{id:number}[/]', [ForumSectionsController::class, 'section'])->setName('forum.section');
     $router->get('/forum/t/{topicName:slug}-{id:number}[/]', [ForumTopicsController::class, 'showTopic'])->setName('forum.topic');
+
+    // Write message
+    $router->get('/forum/add-message/{topicId:number}[/]', [ForumTopicsController::class, 'addMessage'])->setName('forum.addMessage');
 };

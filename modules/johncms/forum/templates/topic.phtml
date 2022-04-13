@@ -432,7 +432,7 @@ $this->layout('system::layout/default');
                 <?php endif; ?>
             </div>
         <?php else: ?>
-            <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
+            <a href="<?= route('forum.addMessage', ['topicId' => $id]) ?>" class="btn btn-primary"><?= __('Write') ?></a>
         <?php endif; ?>
     </form>
 <?php endif; ?>

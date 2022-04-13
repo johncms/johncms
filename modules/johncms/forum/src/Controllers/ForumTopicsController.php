@@ -15,6 +15,7 @@ use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Resources\MessageResource;
 use Johncms\Forum\Topics\ForumTopicService;
+use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 
@@ -165,6 +166,229 @@ class ForumTopicsController extends BaseForumController
                     'canManagePosts' => $user?->hasPermission(ForumPermissions::MANAGE_POSTS),
                     'canManageTopic' => $user?->hasPermission(ForumPermissions::MANAGE_TOPICS),
                 ],
+            ]
+        );
+    }
+
+    public function addMessage(int $topicId, ?User $user, Tools $tools)
+    {
+        $set_forum = [
+            'farea'    => 0,
+            'upfp'     => 0,
+            'preview'  => 1,
+            'postclip' => 1,
+            'postcut'  => 2,
+        ];
+
+        $currentTopic = ForumTopic::query()->findOrFail($topicId);
+        // Добавление простого сообщения
+        if (($currentTopic->deleted || $currentTopic->closed) && ! $user?->hasAnyRole()) {
+            // Проверка, закрыта ли тема
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('New message'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You cannot write in a closed topic'),
+                    'back_url'      => '/forum/?type=topic&amp;id=' . $topicId,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+        //Обрабатываем ссылки
+        $msg = preg_replace_callback(
+            '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            '\Johncms\Forum\ForumUtils::forumLink',
+            $msg
+        );
+
+        if (
+            isset($_POST['submit'])
+            && ! empty($_POST['msg'])
+            && isset($_POST['token'], $_SESSION['token'])
+            && $_POST['token'] == $_SESSION['token']
+        ) {
+            // Проверяем на минимальную длину
+            if (mb_strlen($msg) < 4) {
+                echo $view->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Text is too short'),
+                        'back_url'      => '/forum/?type=topic&amp;id=' . $id,
+                        'back_url_name' => __('Back'),
+                    ]
+                );
+                exit;
+            }
+
+            // Проверяем, не повторяется ли сообщение?
+            $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user->id . "' ORDER BY `date` DESC");
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+                if ($msg == $res['text']) {
+                    echo $view->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Message already exists'),
+                            'back_url'      => '/forum/?type=topic&amp;id=' . $id . '&amp;start=' . $start,
+                            'back_url_name' => __('Back'),
+                        ]
+                    );
+                    exit;
+                }
+            }
+
+            // Удаляем фильтр, если он был
+            if (isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $id) {
+                unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+            }
+
+            unset($_SESSION['token']);
+
+            // Проверяем, было ли последнее сообщение от того же автора?
+            $req = $db->query(
+                'SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum_messages`
+            WHERE `topic_id` = ' . $id . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . '
+            ORDER BY `date` DESC LIMIT 1'
+            );
+
+            $update = false;
+            if ($req->rowCount()) {
+                $update = true;
+
+                $check_files = false;
+                // Если пост текущего пользователя, то проверяем наличие у него файлов
+                if ($res['user_id'] == $user->id) {
+                    $check_files = $db->query('SELECT id FROM cms_forum_files WHERE post = ' . $res['id'])->rowCount();
+                }
+
+                $res = $req->fetch();
+                if (
+                    ! isset($_POST['addfiles']) &&
+                    $res['date'] + 3600 < strtotime('+ 1 hour') &&
+                    $res['strlen'] + strlen($msg) < 65536 &&
+                    $res['user_id'] == $user->id &&
+                    empty($check_files)
+                ) {
+                    $newpost = $res['text'];
+
+                    if (strpos($newpost, '[timestamp]') === false) {
+                        $newpost = '[timestamp]' . date('d.m.Y H:i', $res['date']) . '[/timestamp]' . PHP_EOL . $newpost;
+                    }
+
+                    $newpost .= PHP_EOL . PHP_EOL . '[timestamp]' . date('d.m.Y H:i', time()) . '[/timestamp]' . PHP_EOL . $msg;
+
+                    // Обновляем пост
+                    $db->prepare(
+                        'UPDATE `forum_messages` SET
+                      `text` = ?,
+                      `date` = ?
+                      WHERE `id` = ' . $res['id']
+                    )->execute([$newpost, time()]);
+                } else {
+                    $update = false;
+                    /** @var \Johncms\Http\IpLogger $env */
+                    $env = di(\Johncms\Http\IpLogger::class);
+
+                    // Добавляем сообщение в базу
+                    $db->prepare(
+                        '
+                      INSERT INTO `forum_messages` SET
+                      `topic_id` = ?,
+                      `date` = ?,
+                      `user_id` = ?,
+                      `user_name` = ?,
+                      `ip` = ?,
+                      `ip_via_proxy` = ?,
+                      `user_agent` = ?,
+                      `text` = ?
+                    '
+                    )->execute(
+                        [
+                            $id,
+                            time(),
+                            $user->id,
+                            $user->name,
+                            $env->getIp(),
+                            $env->getIpViaProxy(),
+                            $env->getUserAgent(),
+                            $msg,
+                        ]
+                    );
+
+                    $fadd = $db->lastInsertId();
+                }
+            }
+
+            $cnt_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
+            $cnt_all_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${id}'")->fetchColumn();
+
+            // Пересчитываем топик
+            $tools->recountForumTopic($id);
+
+            // Обновляем статистику юзера
+            $db->exec(
+                "UPDATE `users` SET
+                `postforum`='" . ($user->postforum + 1) . "',
+                `lastpost` = '" . time() . "'
+                WHERE `id` = '" . $user->id . "'
+            "
+            );
+
+            // Вычисляем, на какую страницу попадает добавляемый пост
+            if ($user->rights >= 7) {
+                $page = $set_forum['upfp'] ? 1 : ceil($cnt_all_messages / $user->config->kmess);
+            } else {
+                $page = $set_forum['upfp'] ? 1 : ceil($cnt_messages / $user->config->kmess);
+            }
+
+            if (isset($_POST['addfiles'])) {
+                $db->query(
+                    "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
+                VALUES ('${id}', '" . $user->id . "', '" . time() . "')
+                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
+                );
+                if ($update) {
+                    header('Location: ?type=topic&id=' . $res['id'] . '&act=addfile');
+                } else {
+                    header('Location: ?type=topic&id=' . $fadd . '&act=addfile');
+                }
+            } else {
+                header('Location: ?type=topic&id=' . $id . '&page=' . $page);
+            }
+            exit;
+        }
+        $msg_pre = $tools->checkout($msg, 1, 1);
+        $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
+        $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
+
+        $token = mt_rand(1000, 100000);
+        $_SESSION['token'] = $token;
+
+        return $this->render->render(
+            'forum::reply_message',
+            [
+                'title'             => __('New message'),
+                'page_title'        => __('New message'),
+                'id'                => $topicId,
+                'bbcode'            => di(\Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
+                'token'             => $token,
+                'topic'             => $currentTopic,
+                'form_action'       => '?act=say&amp;type=post&amp;id=' . $topicId . '&amp;start=',
+                'add_file'          => isset($_POST['addfiles']),
+                'msg'               => (empty($_POST['msg']) ? '' : $tools->checkout($msg, 0, 0)),
+                'settings_forum'    => $set_forum,
+                'show_post_preview' => ($msg && ! isset($_POST['submit'])),
+                'back_url'          => $currentTopic->url,
+                'preview_message'   => $msg_pre,
+                'is_new_message'    => true,
             ]
         );
     }

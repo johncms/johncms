@@ -86,7 +86,7 @@ $this->layout(
     <div class="form-group">
         <label for="msg"><?= __('Message') ?></label>
         <div><?= $bbcode ?></div>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
+        <textarea name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
     </div>
     <div class="custom-control custom-checkbox mb-3">
         <input type="checkbox" class="form-check-input" name="addfiles" value="1" id="addfiles" <?= $add_file ? 'checked="checked"' : '' ?>>

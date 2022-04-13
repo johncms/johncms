@@ -189,4 +189,46 @@ class ForumUtils
 
         return '/forum/?type=topic&id=' . $topic_id . ($page > 1 ? '&page=' . $page : '');
     }
+
+    // Вспомогательная Функция обработки ссылок форума
+    public static function forumLink($m)
+    {
+        global $db, $config;
+
+        if (! isset($m[3])) {
+            return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
+        }
+        $p = parse_url($m[3]);
+
+        if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
+            $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
+            $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+                $name = strtr(
+                    $res['name'],
+                    [
+                        '&quot;' => '',
+                        '&amp;'  => '',
+                        '&lt;'   => '',
+                        '&gt;'   => '',
+                        '&#039;' => '',
+                        '['      => '',
+                        ']'      => '',
+                    ]
+                );
+
+                if (mb_strlen($name) > 40) {
+                    $name = mb_substr($name, 0, 40) . '...';
+                }
+
+                return '[url=' . $m[3] . ']' . $name . '[/url]';
+            }
+
+            return $m[3];
+        }
+
+        return $m[3];
+    }
 }
