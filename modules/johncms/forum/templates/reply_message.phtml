@@ -54,7 +54,7 @@ $this->layout(
 <?php endif; ?>
 
 <form name="message_form" action="<?= $form_action ?>" method="post">
-    <input type="hidden" name="token" value="<?= $token ?>">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="h4"><?= __('Topic') ?>: <?= $topic['name'] ?></div>
     <?php if (! $is_new_message): ?>
         <?php if ($is_quote): ?>

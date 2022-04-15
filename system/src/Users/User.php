@@ -224,6 +224,20 @@ class User extends Model
         return '';
     }
 
+    public function getDisplayNameAttribute(): string
+    {
+        if ($this->name) {
+            return $this->name;
+        } elseif ($this->login) {
+            return $this->login;
+        } elseif ($this->email) {
+            return $this->email;
+        } elseif ($this->phone) {
+            return $this->phone;
+        }
+        return '';
+    }
+
     /** @deprecated use is_online property */
     public function isOnline(): bool
     {

@@ -181,4 +181,12 @@ class ForumMessage extends Model
     {
         return $this->hasMany(ForumFile::class, 'post', 'id');
     }
+
+    /**
+     * Only not deleted messages
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query->where('deleted', '!=', 1)->orWhereNull('deleted');
+    }
 }

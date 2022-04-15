@@ -3,6 +3,7 @@
 use Johncms\Forum\Controllers\ForumSectionsController;
 use Johncms\Forum\Controllers\ForumTopicsController;
 use Johncms\Forum\Controllers\LatestTopicsController;
+use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
 use League\Route\Router;
 
 return function (Router $router) {
@@ -14,5 +15,6 @@ return function (Router $router) {
     $router->get('/forum/t/{topicName:slug}-{id:number}[/]', [ForumTopicsController::class, 'showTopic'])->setName('forum.topic');
 
     // Write message
-    $router->get('/forum/add-message/{topicId:number}[/]', [ForumTopicsController::class, 'addMessage'])->setName('forum.addMessage');
+    $router->get('/forum/add-message/{topicId:number}[/]', [ForumTopicsController::class, 'addMessage'])->lazyMiddleware(AuthorizedUserMiddleware::class)->setName('forum.addMessage');
+    $router->post('/forum/add-message/{topicId:number}[/]', [ForumTopicsController::class, 'addMessage'])->lazyMiddleware(AuthorizedUserMiddleware::class);
 };

@@ -147,10 +147,8 @@ class Bbcode
         $var = preg_replace_callback(
             '#\[timestamp\](.+?)\[\/timestamp\]#s',
             function ($matches) {
-                $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
-
                 if (($out = strtotime($matches[1])) !== false) {
-                    return '<small class="gray">' . d__('system', 'Added') . ': ' . date('d.m.Y / H:i', $out + $shift) . '</small>'; // phpcs:ignore
+                    return '<small class="gray">' . d__('system', 'Added') . ': ' . format_date($out) . '</small>'; // phpcs:ignore
                 }
 
                 return $matches[1];
