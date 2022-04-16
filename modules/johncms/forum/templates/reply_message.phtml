@@ -23,13 +23,7 @@
  * @var $topic
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?php if ($show_post_preview): ?>

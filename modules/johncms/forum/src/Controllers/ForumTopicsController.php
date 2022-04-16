@@ -18,8 +18,10 @@ use Johncms\Forum\Resources\MessageResource;
 use Johncms\Forum\Topics\ForumTopicService;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
+use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Users\UserManager;
 use Johncms\Utility\Numbers;
 use Psr\Http\Message\ResponseInterface;
 
@@ -156,7 +158,7 @@ class ForumTopicsController extends BaseForumController
                 'start'            => $start,
                 'id'               => $id,
                 'token'            => $token ?? null,
-                'bbcode'           => di(\Johncms\System\Legacy\Bbcode::class)->buttons('new_message', 'msg'),
+                'bbcode'           => di(Bbcode::class)->buttons('new_message', 'msg'),
                 'settings_forum'   => $set_forum,
                 'write_access'     => $write_access,
                 'messages'         => $messages->getItems() ?? [],
@@ -174,7 +176,7 @@ class ForumTopicsController extends BaseForumController
         );
     }
 
-    public function addMessage(int $topicId, User $user, Tools $tools, Request $request): string|ResponseInterface
+    public function addMessage(int $topicId, User $user, Tools $tools, Request $request, ForumUtils $forumUtils, ForumTopicService $topicService): string|ResponseInterface
     {
         $set_forum = [
             'farea'    => 0,
@@ -184,7 +186,12 @@ class ForumTopicsController extends BaseForumController
             'postcut'  => 2,
         ];
 
+        $this->metaTagManager->setAll(__('New message'));
         $currentTopic = ForumTopic::query()->findOrFail($topicId);
+
+        $forumUtils->buildBreadcrumbs($currentTopic->section_id, $currentTopic->name, $currentTopic->url);
+        $this->navChain->add(__('New message'));
+
         // Добавление простого сообщения
         if (($currentTopic->deleted || $currentTopic->closed) && ! $user->hasAnyRole()) {
             // Проверка, закрыта ли тема
@@ -194,13 +201,13 @@ class ForumTopicsController extends BaseForumController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => __('You cannot write in a closed topic'),
-                    'back_url'      => '/forum/?type=topic&amp;id=' . $topicId,
+                    'back_url'      => $currentTopic->url,
                     'back_url_name' => __('Back'),
                 ]
             );
         }
 
-        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+        $msg = trim($request->getPost('msg', ''));
         //Обрабатываем ссылки
         $msg = preg_replace_callback(
             '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
@@ -217,7 +224,7 @@ class ForumTopicsController extends BaseForumController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Text is too short'),
-                        'back_url'      => '/forum/?type=topic&amp;id=' . $topicId,
+                        'back_url'      => $currentTopic->url,
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -225,6 +232,7 @@ class ForumTopicsController extends BaseForumController
 
             // Проверяем, не повторяется ли сообщение?
             $previousMessage = ForumMessage::query()
+                ->withCount('files')
                 ->where('user_id', $user->id)
                 ->when(! $user->hasPermission(ForumPermissions::MANAGE_POSTS), function (Builder $builder) {
                     return $builder->visible();
@@ -239,7 +247,7 @@ class ForumTopicsController extends BaseForumController
                             'title'         => __('New message'),
                             'type'          => 'alert-danger',
                             'message'       => __('Message already exists'),
-                            'back_url'      => '/forum/?type=topic&amp;id=' . $topicId . '&amp;start=',
+                            'back_url'      => $currentTopic->last_page_url,
                             'back_url_name' => __('Back'),
                         ]
                     );
@@ -258,7 +266,6 @@ class ForumTopicsController extends BaseForumController
                 if (
                     ! isset($_POST['addfiles']) &&
                     $previousMessage->date + 3600 < strtotime('+ 1 hour') &&
-                    $previousMessage->user_id == $user->id &&
                     empty($previousMessage->files_count)
                 ) {
                     $newText = $previousMessage->text;
@@ -271,7 +278,6 @@ class ForumTopicsController extends BaseForumController
                     $previousMessage->update(['text' => $newText, 'date' => time()]);
                 } else {
                     $update = false;
-
                     // Insert the message to database
                     $createdMessage = ForumMessage::query()->create(
                         [
@@ -291,26 +297,14 @@ class ForumTopicsController extends BaseForumController
             // Пересчитываем топик
             $tools->recountForumTopic($topicId);
 
-            // Обновляем статистику юзера
-            // TODO: Statistic
-            /*$db->exec(
-                "UPDATE `users` SET
-                `postforum`='" . ($user->postforum + 1) . "',
-                `lastpost` = '" . time() . "'
-                WHERE `id` = '" . $user->id . "'
-            "
-            );*/
+            // Update user activity
+            $userManager = di(UserManager::class);
+            $userManager->incrementActivity($user, 'forum_posts');
 
-            if (isset($_POST['addfiles'])) {
-                DB::statement(
-                    "INSERT INTO `forum_read` (topic_id,  user_id, `time`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)",
-                    [$topicId, $user->id, time()]
-                );
-                if ($update) {
-                    return new RedirectResponse('?type=topic&id=' . $previousMessage->id . '&act=addfile');
-                } else {
-                    return new RedirectResponse('?type=topic&id=' . ($createdMessage?->id ?? 0) . '&act=addfile');
-                }
+            if ($request->getPost('addfiles')) {
+                $topicService->markAsRead($topicId, $user->id);
+                $messageId = $update ? $previousMessage->id : ($createdMessage?->id ?? 0);
+                return new RedirectResponse('?type=topic&id=' . $messageId . '&act=addfile');
             } else {
                 return new RedirectResponse($currentTopic->last_page_url);
             }
@@ -322,12 +316,10 @@ class ForumTopicsController extends BaseForumController
         return $this->render->render(
             'forum::reply_message',
             [
-                'title'             => __('New message'),
-                'page_title'        => __('New message'),
                 'id'                => $topicId,
-                'bbcode'            => di(\Johncms\System\Legacy\Bbcode::class)->buttons('message_form', 'msg'),
+                'bbcode'            => di(Bbcode::class)->buttons('message_form', 'msg'),
                 'topic'             => $currentTopic,
-                'form_action'       => route('forum.addMessage', ['topicId' => $topicId]), //'?act=say&amp;type=post&amp;id=' . $topicId . '&amp;start=',
+                'form_action'       => route('forum.addMessage', ['topicId' => $topicId]),
                 'add_file'          => isset($_POST['addfiles']),
                 'msg'               => (empty($_POST['msg']) ? '' : $tools->checkout($msg, 0, 0)),
                 'settings_forum'    => $set_forum,
