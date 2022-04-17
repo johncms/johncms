@@ -36,9 +36,8 @@ class ForumMessagesController extends BaseForumController
         $forumUtils->buildBreadcrumbs($currentTopic->section_id, $currentTopic->name, $currentTopic->url);
         $this->navChain->add(__('New message'));
 
-        // Добавление простого сообщения
+        // Check if the topic is closed or deleted
         if (($currentTopic->deleted || $currentTopic->closed) && ! $user->hasAnyRole()) {
-            // Проверка, закрыта ли тема
             return $this->render->render(
                 'system::pages/result',
                 [
@@ -52,7 +51,7 @@ class ForumMessagesController extends BaseForumController
         }
 
         $msg = trim($request->getPost('msg', ''));
-        //Обрабатываем ссылки
+        // Replace links to forum topics with their names
         $msg = preg_replace_callback(
             '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
             '\Johncms\Forum\ForumUtils::forumLink',
@@ -60,7 +59,7 @@ class ForumMessagesController extends BaseForumController
         );
 
         if (isset($_POST['submit']) && ! empty($_POST['msg'])) {
-            // Проверяем на минимальную длину
+            // Check min length of the message
             if (mb_strlen($msg) < 4) {
                 return $this->render->render(
                     'system::pages/result',
@@ -74,7 +73,7 @@ class ForumMessagesController extends BaseForumController
                 );
             }
 
-            // Проверяем, не повторяется ли сообщение?
+            // Find a duplicate of the message
             $previousMessage = ForumMessage::query()
                 ->withCount('files')
                 ->where('user_id', $user->id)
@@ -153,24 +152,19 @@ class ForumMessagesController extends BaseForumController
                 return new RedirectResponse($currentTopic->last_page_url);
             }
         }
-        $msg_pre = $tools->checkout($msg, 1, 1);
-        $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-        $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
 
         return $this->render->render(
             'forum::reply_message',
             [
-                'id'                => $topicId,
-                'bbcode'            => di(Bbcode::class)->buttons('message_form', 'msg'),
-                'topic'             => $currentTopic,
-                'form_action'       => route('forum.addMessage', ['topicId' => $topicId]),
-                'add_file'          => isset($_POST['addfiles']),
-                'msg'               => (empty($_POST['msg']) ? '' : $tools->checkout($msg, 0, 0)),
-                'settings_forum'    => $set_forum,
-                'show_post_preview' => ($msg && ! isset($_POST['submit'])),
-                'back_url'          => $currentTopic->url,
-                'preview_message'   => $msg_pre,
-                'is_new_message'    => true,
+                'id'             => $topicId,
+                'bbcode'         => di(Bbcode::class)->buttons('message_form', 'msg'),
+                'topic'          => $currentTopic,
+                'form_action'    => route('forum.addMessage', ['topicId' => $topicId]),
+                'add_file'       => isset($_POST['addfiles']),
+                'msg'            => (empty($_POST['msg']) ? '' : $tools->checkout($msg, 0, 0)),
+                'settings_forum' => $set_forum,
+                'back_url'       => $currentTopic->url,
+                'is_new_message' => true,
             ]
         );
     }
