@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\Serialize;
+use Johncms\Settings\SiteSettings;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
@@ -152,6 +153,7 @@ class ForumTopic extends Model
         parent::__construct($attributes);
         $this->current_user = di(User::class);
         $this->tools = di(Tools::class);
+        $this->perPage = di(SiteSettings::class)->getPerPage();
     }
 
     /**

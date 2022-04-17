@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\Ip;
 use Johncms\Database\Eloquent\Casts\TimeToDate;
+use Johncms\Settings\SiteSettings;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
@@ -129,6 +130,7 @@ class ForumMessage extends Model
         parent::__construct($attributes);
         $this->current_user = di(User::class);
         $this->tools = di(Tools::class);
+        $this->perPage = di(SiteSettings::class)->getPerPage();
     }
 
     /**
