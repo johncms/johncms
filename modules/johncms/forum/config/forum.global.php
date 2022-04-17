@@ -14,6 +14,7 @@ return [
     'forum' => [
         'settings'      => [
             'file_counters' => false,
+            'max_file_size' => 10000,
 
             'topic_keywords'      => '',
             'topic_description'   => '',
