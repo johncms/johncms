@@ -43,5 +43,6 @@ jobs:
             cd /var/www/html/stage9
             git clone git@github.com:Chifth/johncms.git -b 9.x
             cd johncms
+            composer install
+            npm install
             mkdir testing
-
