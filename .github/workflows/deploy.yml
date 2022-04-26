@@ -10,10 +10,14 @@ on:
 
 jobs:
   deploy:
-    name: Capistrano Deploy to Server
+    name: Deploy to Server
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
       - name: Install SSH key to Server
         uses: shimataro/ssh-key-action@v2
         with:
@@ -27,14 +31,5 @@ jobs:
               ForwardAgent yes
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_STAGE }}
-
-      - uses: actions/checkout@v2
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-        run: |
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/github-actions
-          bundle exec cap production deploy
+      - name: Install NPM dependencies
+        run: npm install
