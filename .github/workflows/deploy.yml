@@ -31,6 +31,7 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_STAGE }}
       - name: Install NPM dependencies
         run: npm install
+      - name: Deploy
         uses: appleboy/ssh-action@main
         with:
           host: ${{ secrets.SSH_HOST_STAGE }}
