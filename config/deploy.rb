@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.1.2'
+#lock '3.1.2'
 
 set :application, 'stage9.oldfag.top'
 set :repo_url, 'git@github.com:Chifth/johncms.git'
@@ -41,7 +41,7 @@ set :branch, "stage9"
 #set :linked_dirs,           [fetch(:log_path), fetch(:web_path) + "/files"]
 
 # Dirs that need to be writable by the HTTP Server (i.e. cache, log dirs)
-set :file_permissions_paths,         [fetch(:log_path), fetch(:cache_path)]
+#set :file_permissions_paths,         [fetch(:log_path), fetch(:cache_path)]
 
 # Name used by the Web Server (i.e. www-data for Apache)
 set :file_permissions_users, ['www-data']
@@ -62,13 +62,13 @@ set :use_set_permissions,   false
 #set :symfony_console_flags, "--no-debug"
 
 # Assets install path
-set :assets_install_path,   fetch(:web_path)
+#set :assets_install_path,   fetch(:web_path)
 
 # Assets install flags
-set :assets_install_flags,  '--symlink'
+#set :assets_install_flags,  '--symlink'
 
 # Assetic dump flags
-set :assetic_dump_flags,  ''
+#set :assetic_dump_flags,  ''
 
 #fetch(:default_env).merge!(symfony_env: fetch(:symfony_env))
 

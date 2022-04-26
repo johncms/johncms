@@ -21,6 +21,6 @@ server '129.146.46.39', user: 'ubuntu', roles: %w{app db web}
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-set :deploy_to, '/var/www/stage9.oldfag.top'
+set :deploy_to, '/var/www/html/stage9.oldfag.top'
 
 SSHKit.config.command_map[:composer] = "php #{shared_path.join("composer.phar")}"
