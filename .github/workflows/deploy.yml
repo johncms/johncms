@@ -15,8 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Dependencies
-        run: composer update
 
       - name: Install SSH key to Server
         uses: shimataro/ssh-key-action@v2
