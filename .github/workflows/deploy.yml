@@ -31,3 +31,11 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_STAGE }}
       - name: Install NPM dependencies
         run: npm install
+        uses: appleboy/ssh-action@main
+        with:
+          host: ${{ secrets.SSH_HOST_STAGE }}
+          key: ${{ secrets.SSH_KEY_STAGE }}
+          username: ${{ secrets.SSH_USERNAME_STAGE }}
+          script: |
+            cd /var/www/html/
+            mkdir testing
