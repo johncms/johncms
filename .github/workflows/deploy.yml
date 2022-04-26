@@ -27,7 +27,8 @@ jobs:
               ForwardAgent yes
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_STAGE }}
-
+        
+      - name: "Checkout repository"
       - uses: actions/checkout@v2
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
