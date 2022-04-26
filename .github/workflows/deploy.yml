@@ -32,7 +32,7 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
       - name: Deploy
-        uses: appleboy/ssh-action@main
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST_STAGE }}
           key: ${{ secrets.SSH_KEY_STAGE }}
