@@ -20,11 +20,11 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY_STAGE }}
-          name: github-actions
+          name: id_rsa
           known_hosts: 'random-placeholder-value-replaced-by-keyscan-below'
           config: |
             host stage.oldfag.top
-              IdentityFile ~/.ssh/github-actions
+              IdentityFile ~/.ssh/id_rsa
               IdentitiesOnly yes
               ForwardAgent yes
       - name: Adding Known Hosts
