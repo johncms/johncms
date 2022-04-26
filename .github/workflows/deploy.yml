@@ -37,12 +37,15 @@ jobs:
           key: ${{ secrets.SSH_KEY_STAGE }}
           username: ${{ secrets.SSH_USERNAME_STAGE }}
           script: |
-            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
-            rm -Rf /var/www/html/*
+            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
+            sudo rm -Rf /var/www/html/*
             mkdir /var/www/html/stage9
             cd /var/www/html/stage9
-            git clone git@github.com:Chifth/johncms.git -b 9.x
+            git clone git@github.com:Chifth/johncms.git -b stage9
             cd johncms
             composer install
             npm install
             mkdir testing
+            sudo chown -Rf www-data:www-data /var/www/html/*
+            sudo cp /var/www/html/stage9/johncms/docker-configs/php.ini /etc/php/7.4/fpm/php.ini
+            sudo cp /var/www/html/stage9/johncms/config/deploy/nginx.conf /etc/nginx/sites-available/stage.oldfag.top
