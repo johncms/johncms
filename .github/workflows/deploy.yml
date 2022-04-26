@@ -21,7 +21,7 @@ jobs:
           name: github-actions
           known_hosts: 'random-placeholder-value-replaced-by-keyscan-below'
           config: |
-            host stage9.oldfag.top
+            host stage.oldfag.top
               IdentityFile ~/.ssh/github-actions
               IdentitiesOnly yes
               ForwardAgent yes
@@ -32,11 +32,10 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: 3.1.2
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Deploy to production
         run: |
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/github-actions
-          bundle exec cap production deploy
