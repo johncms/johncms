@@ -29,8 +29,7 @@ jobs:
               ForwardAgent yes
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_STAGE }}
-      - name: Install NPM dependencies
-        run: npm install
+
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -38,5 +37,9 @@ jobs:
           key: ${{ secrets.SSH_KEY_STAGE }}
           username: ${{ secrets.SSH_USERNAME_STAGE }}
           script: |
-            cd /var/www/html/
-            mkdir testing
+            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
+            rm -Rf /var/www/html/*
+            mkdir /var/www/html/stage9
+            cd /var/www/html/stage9
+            git clone git@github.com:Chifth/johncms.git -b stage9
+            cd johncms
