@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 #lock '3.1.2'
 
-set :application, 'stage9.oldfag.top'
+set :application, 'stage9'
 set :repo_url, 'git@github.com:Chifth/johncms.git'
 
 set :composer_install_flags, '--no-dev --optimize-autoloader'
