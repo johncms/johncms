@@ -7,7 +7,11 @@ on:
 #  # Manually deploy branch
 #  workflow_dispatch:
 #    branches: [ main ] sudo chown -Rf www-data:www-data /home/www/html/*
-
+#https://habr.com/ru/post/564750/ https://habr.com/ru/post/136735/
+# sendmail problem sudo apt-get install php-mail
+# sudo apt-get install sendmail
+# sudo sendmailconfig
+# sendmail_path = "/usr/sbin/sendmail -t -f noreply@site.ru -i"
 jobs:
   deploy:
     name: Deploy to Server
@@ -37,17 +41,20 @@ jobs:
           key: ${{ secrets.SSH_KEY_STAGE }}
           username: ${{ secrets.SSH_USERNAME_STAGE }}
           script: |
-            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
+            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer php-mail sndmail nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
             sudo rm -Rf /var/www/html/*
             sudo rm -Rf /home/ubuntu/*
             git clone git@github.com:Chifth/johncms.git -b stage9
             cd johncms
             composer install
+            sudo unzip config/deploy/populate.zip -d "."
+            sudo chown -Rf ubuntu:ubuntu upload/
             sudo chmod 777 data/cache/
             sudo chmod 777 upload/downloads/files/
             sudo chmod 777 upload/downloads/screen/
             sudo chmod 777 upload/forum/attach/
             sudo chmod 777 upload/forum/topics/
+            sudo chmod 777 upload/guestbook/
             sudo chmod 777 upload/library/
             sudo chmod 777 upload/library/tmp
             sudo chmod 777 upload/library/images
@@ -59,6 +66,11 @@ jobs:
             sudo chmod 777 upload/users/photo/
             sudo chmod 777 upload/mail/
             sudo chmod 777 config/autoload/
+            sudo chmod 777 system/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
+            sudo cp config/deploy/database.local.php config/autoload/database.local.php
+            sudo cp config/deploy/homepage.local.php config/autoload/homepage.local.php
+            sudo cp config/deploy/system.local.php config/autoload/system.local.php
+            sudo chown -Rf www-data:www-data config/autoload/
             sudo cp docker-configs/php.ini /etc/php/7.4/fpm/php.ini
             sudo cp config/deploy/nginx.conf /etc/nginx/sites-available/stage.oldfag.top
             sudo mysql -e "drop database johncms;"
