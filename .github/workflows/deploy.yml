@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSH_KEY_STAGE }}
           username: ${{ secrets.SSH_USERNAME_STAGE }}
           script: |
-            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer php-mail sndmail nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
+            sudo apt update && sudo apt upgrade -y && sudo apt install -y composer php-mail sendmail nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
             sudo rm -Rf /var/www/html/*
             sudo rm -Rf /home/ubuntu/*
             git clone git@github.com:Chifth/johncms.git -b stage9
