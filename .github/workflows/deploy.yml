@@ -40,20 +40,18 @@ jobs:
             sudo apt update && sudo apt upgrade -y && sudo apt install -y composer nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
             sudo rm -Rf /var/www/html/*
             sudo rm -Rf /home/ubuntu/*
-            mkdir /home/ubuntu/site/stage9
-            cd /home/ubuntu/site/stage9
             git clone git@github.com:Chifth/johncms.git -b stage9
             cd johncms
             composer install
             npm install
             mkdir testing
             sudo chmod 777 
-            sudo cp /home/ubuntu/site/stage9/johncms/docker-configs/php.ini /etc/php/7.4/fpm/php.ini
-            sudo cp /home/ubuntu/site/stage9/johncms/config/deploy/nginx.conf /etc/nginx/sites-available/stage.oldfag.top
+            sudo cp johncms/docker-configs/php.ini /etc/php/7.4/fpm/php.ini
+            sudo cp johncms/config/deploy/nginx.conf /etc/nginx/sites-available/stage.oldfag.top
             sudo mysql -e "drop database test;"
             sudo mysql -e "create database test;"
             sudo mysql -e "CREATE USER 'testing'@'%' IDENTIFIED BY '${{ secrets.MYSQL_USER_PASS }}';"
             sudo mysql -e "ALTER USER 'testing'@'%' IDENTIFIED WITH mysql_native_password BY '${{ secrets.MYSQL_USER_PASS }}';"
             sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'testing'@'%';"
-            sudo mysql test < /home/ubuntu/site/stage9/johncms/config/deploy/john.sql
+            sudo mysql test < johncms/config/deploy/john.sql
             sudo service nginx restart
