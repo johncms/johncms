@@ -48,7 +48,6 @@ jobs:
             cd johncms
             composer install
             sudo unzip config/deploy/populate.zip -d "."
-            sudo chown -Rf ubuntu:ubuntu upload/
             sudo chmod 777 data/cache/
             sudo chmod 777 upload/downloads/files/
             sudo chmod 777 upload/downloads/screen/
@@ -71,7 +70,7 @@ jobs:
             sudo cp config/deploy/database.local.php config/autoload/database.local.php
             sudo cp config/deploy/homepage.local.php config/autoload/homepage.local.php
             sudo cp config/deploy/system.local.php config/autoload/system.local.php
-            sudo chown -Rf www-data:www-data config/autoload/
+            sudo chown -Rf www-data:www-data *
             sudo cp docker-configs/php.ini /etc/php/7.4/fpm/php.ini
             sudo cp config/deploy/nginx.conf /etc/nginx/sites-available/stage.oldfag.top
             sudo mysql -e "drop database johncms;"
