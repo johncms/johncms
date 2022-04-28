@@ -56,15 +56,16 @@ jobs:
             sudo chmod 777 upload/forum/topics/
             sudo chmod 777 upload/guestbook/
             sudo chmod 777 upload/library/
-            sudo chmod 777 upload/library/tmp
-            sudo chmod 777 upload/library/images
-            sudo chmod 777 upload/library/images/big
-            sudo chmod 777 upload/library/images/orig
-            sudo chmod 777 upload/library/images/small
+            sudo chmod 777 upload/library/tmp/
+            sudo chmod 777 upload/library/images/
+            sudo chmod 777 upload/library/images/big/
+            sudo chmod 777 upload/library/images/orig/
+            sudo chmod 777 upload/library/images/small/
             sudo chmod 777 upload/users/album/
             sudo chmod 777 upload/users/avatar/
             sudo chmod 777 upload/users/photo/
             sudo chmod 777 upload/mail/
+            sudo chmod 777 upload/tmp/
             sudo chmod 777 config/autoload/
             sudo chmod 777 system/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
             sudo cp config/deploy/database.local.php config/autoload/database.local.php
