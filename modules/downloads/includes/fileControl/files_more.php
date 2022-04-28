@@ -202,13 +202,6 @@ if ($edit) {
             $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $defaultExt);
         }
 
-        /////////////////////////
-        d($link_file);
-
-        //d($files);
-        //d($uploaded_file);
-        //$md52 = md5_file($link_file);
-        //d($md52);
         $md5 = md5_file($_FILES["fail"]["tmp_name"]);
         $sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
         $stmt = $db->prepare('SELECT * FROM download__files WHERE md5 = :md5');
@@ -247,7 +240,6 @@ if ($edit) {
             $sha1_check2['name']  . '</b><button><a href="?act=view&amp;id=' .
             $sha1_check2['refid'] . '">Перейти к загрузке</a></button>';
         }
-        /////////////////////
 
         if (empty($error)) {
             $newFile = 'file' . $id . '_' . $fname;

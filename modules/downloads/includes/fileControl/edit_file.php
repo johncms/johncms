@@ -27,9 +27,7 @@ $request = di(ServerRequestInterface::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
-d($res_down);
 $md5t = md5_file($res_down['dir'] . '/' . $res_down['name']);
-d($md5t);
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo $view->render(
         'system::pages/result',

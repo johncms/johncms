@@ -82,7 +82,6 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
                 }
 
-                /////////////////////////
                 $md5 = md5_file($_FILES["fail"]["tmp_name"]);
                 $sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
                 $stmt = $db->prepare('SELECT * FROM download__files WHERE md5 = :md5');
@@ -121,7 +120,6 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $sha1_check2['name']  . '</b><button><a href="?act=view&amp;id=' .
                     $sha1_check2['refid'] . '">Перейти к загрузке</a></button>';
                 }
-                /////////////////////
 
                 if ($error) {
                     echo $view->render(
