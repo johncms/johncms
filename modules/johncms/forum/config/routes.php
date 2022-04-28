@@ -25,5 +25,8 @@ return function (Router $router) {
         // Add file
         $route->get('/add-file/{messageId:number}[/]', [ForumFilesController::class, 'addFile'])->setName('forum.addFile');
         $route->post('/add-file/{messageId:number}[/]', [ForumFilesController::class, 'addFile']);
+
+        $route->get('/create-topic/{sectionId:number}[/]', [ForumTopicsController::class, 'newTopic'])->setName('forum.newTopic');
+        $route->post('/create-topic/{sectionId:number}[/]', [ForumTopicsController::class, 'newTopic']);
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
 };

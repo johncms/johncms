@@ -42,9 +42,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 <?php if ($create_access): ?>
     <div class="mb-3">
-        <form action="?act=nt&amp;id=<?= $id ?>" method="post">
-            <button type="submit" class="btn btn-primary"><?= __('New Topic') ?></button>
-        </form>
+        <a href="<?= $createTopicUrl ?>" class="btn btn-primary"><?= __('New Topic') ?></a>
     </div>
 <?php endif; ?>
 

@@ -6,8 +6,13 @@ namespace Johncms\Forum\Ban;
 
 use Johncms\Users\Ban\BanTypesInterface;
 
-class BanTypes implements BanTypesInterface
+class ForumBans implements BanTypesInterface
 {
+    public const READ_ONLY = 'forum_read_only';
+    public const ADD_MESSAGE = 'forum_add_messages';
+    public const UPLOAD_PHOTOS = 'forum_upload_photos';
+    public const CREATE_TOPICS = 'forum_create_topics';
+
     /**
      * @inheritDoc
      */
@@ -15,19 +20,19 @@ class BanTypes implements BanTypesInterface
     {
         return [
             [
-                'name'        => 'forum_read_only',
+                'name'        => self::READ_ONLY,
                 'displayName' => d__('forum', 'Can\'t write anything'),
             ],
             [
-                'name'        => 'forum_add_messages',
+                'name'        => self::ADD_MESSAGE,
                 'displayName' => d__('forum', 'Add forum posts'),
             ],
             [
-                'name'        => 'forum_upload_photos',
+                'name'        => self::UPLOAD_PHOTOS,
                 'displayName' => d__('forum', 'Upload photos on the forum'),
             ],
             [
-                'name'        => 'forum_create_topics',
+                'name'        => self::CREATE_TOPICS,
                 'displayName' => d__('forum', 'Create topics on the forum'),
             ],
         ];

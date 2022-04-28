@@ -104,10 +104,11 @@ class ForumSectionsController extends BaseForumController
                 array_merge(
                     $templateBaseData,
                     [
-                        'pagination'    => $topics->render(),
-                        'create_access' => $createAccess,
-                        'topics'        => $resource->getItems(),
-                        'total'         => $topics->total(),
+                        'pagination'     => $topics->render(),
+                        'create_access'  => $createAccess,
+                        'createTopicUrl' => route('forum.newTopic', ['sectionId' => $id]),
+                        'topics'         => $resource->getItems(),
+                        'total'          => $topics->total(),
                     ]
                 )
             );
