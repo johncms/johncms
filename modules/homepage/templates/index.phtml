@@ -8,6 +8,7 @@
 $this->layout('system::layout/default');
 $homepage_config = di('config')['homepage'];
 ?>
+<?php if ($homepage_config['show_demo'] > 0 ): ?>
 <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
     <h1 class="display-4 font-weight-bold">JohnCMS <?= CMS_VERSION ?></h1>
     <p class="lead">
@@ -37,6 +38,7 @@ $homepage_config = di('config')['homepage'];
         </svg>
     </a>
 </div>
+<?php endif; ?>
 
 <div class="d-block d-md-none mobile_tiles">
     <div class="row">
@@ -242,6 +244,7 @@ $homepage_config = di('config')['homepage'];
     </div>
 </div>
 
+<?php if ($homepage_config['show_demo'] > 0 ): ?>
 <h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Features') ?></h2>
 <dl class="ml-4">
     <dt class="h3 font-weight-bold">
@@ -310,3 +313,4 @@ $homepage_config = di('config')['homepage'];
         <?= __('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') ?>
     </dd>
 </dl>
+<?php endif; ?>
