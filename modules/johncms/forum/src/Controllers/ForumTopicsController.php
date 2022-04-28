@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Exceptions\ValidationException;
 use Johncms\Forum\Ban\ForumBans;
+use Johncms\Forum\Forms\CreateTopicForm;
 use Johncms\Forum\ForumCounters;
 use Johncms\Forum\ForumPermissions;
 use Johncms\Forum\ForumUtils;
@@ -18,12 +19,11 @@ use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Resources\MessageResource;
 use Johncms\Forum\Topics\ForumTopicService;
-use Johncms\Http\Request;
+use Johncms\Http\Response\RedirectResponse;
+use Johncms\Http\Session;
 use Johncms\System\Legacy\Bbcode;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
-use Johncms\Validator\Validator;
 
 class ForumTopicsController extends BaseForumController
 {
@@ -179,17 +179,9 @@ class ForumTopicsController extends BaseForumController
     /**
      * Topic creation page
      */
-    public function newTopic(int $sectionId, User $user, Request $request, Tools $tools, ForumUtils $forumUtils)
+    public function newTopic(int $sectionId, User $user, ForumUtils $forumUtils, Session $session)
     {
-        $set_forum = [
-            'farea'    => 0,
-            'upfp'     => 0,
-            'preview'  => 1,
-            'postclip' => 1,
-            'postcut'  => 2,
-        ];
-
-        $current_section = ForumSection::query()->where('section_type', 1)->where('id', $sectionId)->firstOrFail();
+        $currentSection = ForumSection::query()->where('section_type', 1)->where('id', $sectionId)->firstOrFail();
 
         // Check access
         if (
@@ -203,139 +195,85 @@ class ForumTopicsController extends BaseForumController
                 [
                     'type'          => 'alert-danger',
                     'message'       => __('Access forbidden'),
-                    'back_url'      => $current_section->url,
+                    'back_url'      => $currentSection->url,
                     'back_url_name' => __('Go to Section'),
                 ]
             );
         }
 
-        $data = [
-            'name'       => $request->getPost('th', '', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]),
-            'message'    => ForumUtils::topicLink($request->getPost('msg', '')),
-            'csrf_token' => $request->getPost('csrf_token', ''),
-            'add_files'  => (int) $request->getPost('addfiles', 0),
+        $form = new CreateTopicForm();
+        $form->setSectionId($sectionId);
+
+        $formData = [
+            'formFields'       => $form->getFormFields(),
+            'storeUrl'         => route('forum.storeTopic', ['sectionId' => $sectionId]),
+            'validationErrors' => $form->getValidationErrors(),
+            'errors'           => $session->getFlash('errors'),
         ];
 
-        if ($user->hasAnyRole()) {
-            $data['meta_keywords'] = $request->getPost('meta_keywords', null, FILTER_SANITIZE_STRING);
-            $data['meta_description'] = $request->getPost('meta_description', null, FILTER_SANITIZE_STRING);
-        }
-
-        $errors = [];
-        if ($request->getPost('submit')) {
-            $rules = [
-                'name'       => [
-                    'NotEmpty',
-                    'StringLength'   => ['min' => 3, 'max' => 200],
-                    'ModelNotExists' => [
-                        'model'   => ForumTopic::class,
-                        'field'   => 'name',
-                        'exclude' => static function ($query) use ($id) {
-                            $query->where('section_id', $id);
-                        },
-                    ],
-                ],
-                'message'    => [
-                    'NotEmpty',
-                    'StringLength'   => ['min' => 4],
-                    'ModelNotExists' => [
-                        'model'   => ForumMessage::class,
-                        'field'   => 'text',
-                        'exclude' => static function ($query) use ($user) {
-                            $query->where('user_id', $user->id);
-                        },
-                    ],
-                ],
-                'csrf_token' => ['Csrf'],
-            ];
-
-            $validator = new Validator($data, $rules);
-
-            if ($validator->isValid()) {
-                $topic = (new ForumTopic())->create(
-                    [
-                        'section_id'       => $current_section->id,
-                        'created_at'       => Carbon::now(),
-                        'user_id'          => $user->id,
-                        'user_name'        => $user->name,
-                        'name'             => $data['name'],
-                        'meta_keywords'    => $data['meta_keywords'] ?? null,
-                        'meta_description' => $data['meta_description'] ?? null,
-                        'last_post_date'   => time(),
-                        'post_count'       => 0,
-                        'curators'         => $current_section->access === 1 ? [$user->id => $user->name] : [],
-                    ]
-                );
-
-                /** @var \Johncms\Http\IpLogger $env */
-                $env = di(\Johncms\Http\IpLogger::class);
-
-                $message = (new ForumMessage())->create(
-                    [
-                        'topic_id'     => $topic->id,
-                        'date'         => time(),
-                        'user_id'      => $user->id,
-                        'user_name'    => $user->name,
-                        'ip'           => $env->getIp(false),
-                        'ip_via_proxy' => $env->getIpViaProxy(false),
-                        'user_agent'   => $env->getUserAgent(),
-                        'text'         => $data['message'],
-                    ]
-                );
-
-                // Пересчитаем топик
-                $tools->recountForumTopic($topic->id);
-
-                // Записываем счетчик постов юзера
-                $user->update(
-                    [
-                        'postforum' => ($user->postforum + 1),
-                        'lastpost'  => time(),
-                    ]
-                );
-
-                (new ForumUnread())->create(
-                    [
-                        'topic_id' => $topic->id,
-                        'user_id'  => $user->id,
-                        'time'     => time(),
-                    ]
-                );
-
-                if ($data['add_files'] === 1) {
-                    header("Location: ?id=" . $message->id . "&act=addfile");
-                } else {
-                    header("Location: " . htmlspecialchars_decode($topic->url));
-                }
-                exit;
-            }
-
-            $errors = $validator->getErrors();
-        }
-
-        $msg_pre = $tools->checkout($data['message'], 1, 1);
-        $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-        $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-
-        $forumUtils->buildBreadcrumbs($current_section->parent, $current_section->name, $current_section->url);
+        $forumUtils->buildBreadcrumbs($currentSection->parent, $currentSection->name, $currentSection->url);
         $this->navChain->add(__('New Topic'));
         $this->metaTagManager->setAll(__('New Topic'));
 
         return $this->render->render(
             'forum::new_topic',
             [
-                'settings_forum'    => $set_forum,
-                'id'                => $sectionId,
-                'th'                => $data['name'],
-                'add_files'         => ($data['add_files'] === 1),
-                'msg'               => $tools->checkout($data['message'], 0, 0),
-                'bbcode'            => di(\Johncms\System\Legacy\Bbcode::class)->buttons('new_topic', 'msg'),
-                'back_url'          => $current_section->url,
-                'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $request->getPost('submit', null),
-                'preview_message'   => $msg_pre,
-                'errors'            => $errors,
-                'data'              => $data,
+                'id'       => $sectionId,
+                'back_url' => $currentSection->url,
+                'data'     => $formData,
             ]
         );
+    }
+
+    public function storeTopic(int $sectionId, ForumTopicService $topicService, User $user)
+    {
+        $currentSection = ForumSection::query()->where('section_type', 1)->where('id', $sectionId)->firstOrFail();
+
+        // Check access
+        if (
+            ! $user
+            || $user->hasBan([ForumBans::CREATE_TOPICS, ForumBans::READ_ONLY])
+            || (! $user->hasAnyRole() && config('johncms.mod_forum') === 3)
+        ) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access forbidden'),
+                    'back_url'      => $currentSection->url,
+                    'back_url_name' => __('Go to Section'),
+                ]
+            );
+        }
+
+        $registrationForm = new CreateTopicForm();
+        $registrationForm->setSectionId($sectionId);
+        try {
+            // Validate the form
+            $registrationForm->validate();
+            $values = $registrationForm->getRequestValues();
+
+            // Create the topic
+            $created = $topicService->createTopic($currentSection, $user, [
+                'name'             => $values['name'],
+                'message'          => $values['message'],
+                'meta_keywords'    => $values['meta_keywords'],
+                'meta_description' => $values['meta_description'],
+            ]);
+
+            // If we need to add a file, then we redirect to the add file page
+            if (! empty($values['add_file'])) {
+                $url = route('forum.addFile', ['messageId' => $created['message']->id]);
+            } else {
+                $url = $created['topic']->url;
+            }
+            return new RedirectResponse($url);
+        } catch (ValidationException $validationException) {
+            // Redirect if the form is not valid
+            return (new RedirectResponse(route('forum.newTopic', ['sectionId' => $sectionId])))
+                ->withPost()
+                ->withValidationErrors($validationException->getErrors());
+        }
     }
 }

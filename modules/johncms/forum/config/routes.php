@@ -27,6 +27,6 @@ return function (Router $router) {
         $route->post('/add-file/{messageId:number}[/]', [ForumFilesController::class, 'addFile']);
 
         $route->get('/create-topic/{sectionId:number}[/]', [ForumTopicsController::class, 'newTopic'])->setName('forum.newTopic');
-        $route->post('/create-topic/{sectionId:number}[/]', [ForumTopicsController::class, 'newTopic']);
+        $route->post('/create-topic-store/{sectionId:number}[/]', [ForumTopicsController::class, 'storeTopic'])->setName('forum.storeTopic');
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
 };

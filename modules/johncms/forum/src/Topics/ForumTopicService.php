@@ -4,20 +4,28 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Topics;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
+use Johncms\Forum\Models\ForumMessage;
+use Johncms\Forum\Models\ForumSection;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumUnread;
+use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Users\UserManager;
 
 class ForumTopicService
 {
     public ?User $user;
+    public Request $request;
 
-    public function __construct(?User $user)
+    public function __construct(?User $user, Request $request)
     {
         $this->user = $user;
+        $this->request = $request;
     }
 
     public function getUnread(): ?Builder
@@ -75,5 +83,62 @@ class ForumTopicService
             $viewed[] = $forumTopic->id;
             $session->set('viewed_topics', $viewed);
         }
+    }
+
+    /**
+     * @param ForumSection $forumSection
+     * @param User $user
+     * @param array{
+     *     name: string,
+     *     message: string,
+     *     meta_keywords: string | null,
+     *     meta_description: string | null
+     * } $fields
+     * @return array{topic: ForumTopic, message: ForumMessage}
+     */
+    public function createTopic(ForumSection $forumSection, User $user, array $fields): array
+    {
+        $topic = ForumTopic::query()->create(
+            [
+                'section_id'       => $forumSection->id,
+                'created_at'       => Carbon::now(),
+                'user_id'          => $this->user->id,
+                'user_name'        => $this->user->display_name,
+                'name'             => $fields['name'],
+                'meta_keywords'    => $fields['meta_keywords'] ?? null,
+                'meta_description' => $fields['meta_description'] ?? null,
+                'last_post_date'   => time(),
+                'post_count'       => 0,
+                'curators'         => $forumSection->access === 1 ? [$this->user->id => $this->user->display_name] : [],
+            ]
+        );
+
+        $message = (new ForumMessage())->create(
+            [
+                'topic_id'     => $topic->id,
+                'date'         => time(),
+                'user_id'      => $this->user->id,
+                'user_name'    => $this->user->display_name,
+                'ip'           => ip2long($this->request->getIp() ?? ''),
+                'ip_via_proxy' => ip2long($this->request->getIpViaProxy() ?? ''),
+                'user_agent'   => $this->request->getUserAgent(),
+                'text'         => $fields['message'],
+            ]
+        );
+
+        // TODO: Replace it
+        $tools = di(Tools::class);
+        $tools->recountForumTopic($topic->id);
+
+        // Update user activity
+        $userManager = di(UserManager::class);
+        $userManager->incrementActivity($user, 'forum_posts');
+
+        $this->markAsRead($topic->id, $user->id);
+
+        return [
+            'topic'   => $topic,
+            'message' => $message,
+        ];
     }
 }
