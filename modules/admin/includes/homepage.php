@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
     if (function_exists('opcache_reset')) {
         opcache_reset();
     }
-    
+
     header('location: /admin/homepage/');
 }
 

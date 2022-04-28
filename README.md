@@ -1,4 +1,4 @@
-# [JohnCMS test](https://johncms.com)
+# [JohnCMS](https://johncms.com)
 
 [![GitHub](https://img.shields.io/github/license/johncms/johncms?color=blue)](https://github.com/johncms/johncms/blob/develop/LICENSE)
 [![Source Code](http://img.shields.io/badge/source-johncms/johncms-blue.svg)](https://github.com/johncms/johncms)
