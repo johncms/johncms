@@ -147,7 +147,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
                             <?php if (! empty($news_item->preview_text_safe)): ?>
-                                <div class="mb-n3 mt-1"><?= mb_strimwidth($news_item->preview_text_safe, 0, 100, '...'); ?></div>
+                                <div class="mb-n3 mt-1"><?= strip_tags(mb_strimwidth($news_item->preview_text_safe, 0, 100, '...')); ?></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $files_item->user_id ?>"><?= $tools->getUser($news_item->created_by)->name ?></a> | 
@@ -198,7 +198,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/downloads/?act=view&id=<?= $files_item->id; ?>"><?= $files_item->rus_name ?></a>
                             <?php if (! empty($files_item->about)): ?>
-                                <div class="mb-n3 mt-1"><p><?= mb_strimwidth($files_item->about, 0, 100, '...'); ?></p></div>
+                                <div class="mb-n3 mt-1"><p><?= strip_tags(mb_strimwidth($files_item->about, 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $files_item->user_id ?>"><?= $tools->getUser($files_item->user_id)->name ?></a> | 
@@ -224,7 +224,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/library/?id=<?= $articles_item->id; ?>"><?= $articles_item->name ?></a>
                             <?php if (! empty($articles_item->announce)): ?>
-                                <div class="mb-n3 mt-1"><p><?= mb_strimwidth($articles_item->announce, 0, 100, '...'); ?></p></div>
+                                <div class="mb-n3 mt-1"><p><?= strip_tags(mb_strimwidth($articles_item->announce, 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $articles_item->uploader_id ?>"><?= $articles_item->uploader ?></a> | 
