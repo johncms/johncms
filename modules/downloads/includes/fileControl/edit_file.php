@@ -30,7 +30,7 @@ $res_down = $req_down->fetch();
 d($res_down);
 $md5t = md5_file($res_down['dir'] . '/' . $res_down['name']);
 d($md5t);
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
+if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo $view->render(
         'system::pages/result',
         [
@@ -52,9 +52,9 @@ if (in_array($extension, $audio_files, true)) {
     $getID3->encoding = 'cp1251';
     $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
 
-    if (! empty($getid['tags']['id3v2'])) {
+    if (!empty($getid['tags']['id3v2'])) {
         $tagsArray = $getid['tags']['id3v2'];
-    } elseif (! empty($getid['tags']['id3v1'])) {
+    } elseif (!empty($getid['tags']['id3v1'])) {
         $tagsArray = $getid['tags']['id3v1'];
     }
 
@@ -69,10 +69,10 @@ if ($request->getMethod() === 'POST') {
     $name = isset($post['text']) ? trim($post['text']) : null;
     $desc = isset($post['desc']) ? trim($post['desc']) : null;
     $mirrors = isset($post['mirrors']) ? trim($post['mirrors']) : null;
-	$price = isset($post['price']) ? trim($post['price']) : 0;
-	$vendor = isset($post['vendor']) ? trim($post['vendor']) : null;
-	$filename = isset($post['filename']) ? trim($post['filename']) : null;
-	$tag = isset($post['tag']) ? trim($post['tag']) : null;
+    $price = isset($post['price']) ? trim($post['price']) : 0;
+    $vendor = isset($post['vendor']) ? trim($post['vendor']) : null;
+    $filename = isset($post['filename']) ? trim($post['filename']) : null;
+    $tag = isset($post['tag']) ? trim($post['tag']) : null;
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
 
     if ($name_link && $name) {
@@ -100,15 +100,15 @@ if ($request->getMethod() === 'POST') {
                 $name_link,
                 $desc,
                 $mirrors,
-				$price,
-				$vendor,
-				$filename,
-				$tag,
+                $price,
+                $vendor,
+                $filename,
+                $tag,
                 $id,
             ]
         );
 
-        if (! empty($audio_tags) && ! empty($post['audio'])) {
+        if (!empty($audio_tags) && !empty($post['audio'])) {
             $save_tags = [];
             foreach ($audio_tags as $key => $tag) {
                 $save_tags[$key][0] = Download::mp3tagsOut($post['audio'][$key] ?? '', 1);
@@ -138,9 +138,9 @@ if ($request->getMethod() === 'POST') {
     $file_data = [
         'text'      => htmlspecialchars($res_down['rus_name']),
         'price'     => ($res_down['price']),
-		'vendor'    => ($res_down['vendor']),
-		'filename'  => htmlspecialchars($res_down['name']),
-		'tag'  		=> ($res_down['tag']),
+        'vendor'    => ($res_down['vendor']),
+        'filename'  => htmlspecialchars($res_down['name']),
+        'tag'          => ($res_down['tag']),
         'name_link' => htmlspecialchars($res_down['text']),
         'desc'      => htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8'),
         'mirrors'   => ($res_down['mirrors']),

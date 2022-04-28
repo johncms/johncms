@@ -1,101 +1,101 @@
 <?php
 
-return array (
-  'johncms' => 
-  array (
+return [
+  'johncms' =>
+  [
     'active' => 1,
-    'antiflood' => 
-    array (
+    'antiflood' =>
+    [
       'mode' => 2,
       'day' => 10,
       'night' => 30,
       'dayfrom' => 10,
       'dayto' => 22,
-    ),
+    ],
     'clean_time' => 0,
     'copyright' => 'JohnCMS',
     'email' => 'chifth@gmail.com',
     'flsz' => 1000,
     'gzip' => 1,
     'homeurl' => 'http://stage.oldfag.top',
-    'karma' => 
-    array (
+    'karma' =>
+    [
       'karma_points' => 5,
       'karma_time' => 86400,
       'forum' => 10,
       'time' => 0,
       'on' => 1,
       'adm' => 0,
-    ),
+    ],
     'lng' => 'ru',
-    'lng_list' => 
-    array (
-      'en' => 
-      array (
+    'lng_list' =>
+    [
+      'en' =>
+      [
         'name' => 'English',
         'version' => 1.0,
-      ),
-      'ar' => 
-      array (
+      ],
+      'ar' =>
+      [
         'name' => 'Arabic',
         'version' => 1.0,
-      ),
-      'az' => 
-      array (
+      ],
+      'az' =>
+      [
         'name' => 'Azərbaycan dili',
         'version' => 1.0,
-      ),
-      'id' => 
-      array (
+      ],
+      'id' =>
+      [
         'name' => 'Indonesia',
         'version' => 1.0,
-      ),
-      'kk' => 
-      array (
+      ],
+      'kk' =>
+      [
         'name' => 'Қазақ тілі',
         'version' => 1.0,
-      ),
-      'ky' => 
-      array (
+      ],
+      'ky' =>
+      [
         'name' => 'Кыргыз тили',
         'version' => 1.0,
-      ),
-      'lt' => 
-      array (
+      ],
+      'lt' =>
+      [
         'name' => 'Lietuvos',
         'version' => 1.0,
-      ),
-      'pl' => 
-      array (
+      ],
+      'pl' =>
+      [
         'name' => 'Polski',
         'version' => 1.0,
-      ),
-      'ro' => 
-      array (
+      ],
+      'ro' =>
+      [
         'name' => 'Romana',
         'version' => 1.0,
-      ),
-      'ru' => 
-      array (
+      ],
+      'ru' =>
+      [
         'name' => 'Русский',
         'version' => 1.0,
-      ),
-      'uk' => 
-      array (
+      ],
+      'uk' =>
+      [
         'name' => 'Українська',
         'version' => 1.0,
-      ),
-      'uz' => 
-      array (
+      ],
+      'uz' =>
+      [
         'name' => 'O\'zbek tili',
         'version' => 1.0,
-      ),
-      'vi' => 
-      array (
+      ],
+      'vi' =>
+      [
         'name' => 'Việt Nam',
         'version' => 1.0,
-      ),
-    ),
+      ],
+    ],
     'mod_reg' => 2,
     'mod_forum' => 2,
     'mod_guest' => 2,
@@ -110,5 +110,5 @@ return array (
     'meta_title' => 'JohnCMS',
     'user_email_required' => 0,
     'user_email_confirmation' => 0,
-  ),
-);
+  ],
+];

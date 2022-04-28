@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['homepage' => $homepage_config], true) . ";\n";
 
-    if (! file_put_contents(CONFIG_PATH . 'autoload/homepage.local.php', $configFile)) {
+    if (!file_put_contents(CONFIG_PATH . 'autoload/homepage.local.php', $configFile)) {
         echo 'ERROR: Can not write homepage.local.php</body></html>';
         exit;
     }
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
         opcache_reset();
     }
     
-        header('location: /admin/homepage/');
+    header('location: /admin/homepage/');
 }
 
 
