@@ -99,26 +99,26 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $sha1_check2 = $stmt->fetch();
 
                 if (!empty($md5_check)) {
-                    $error[] = 'Такой файл уже есть! <br> Загрузка: <b>' . 
-                    $md5_check['rus_name'] . '</b><br> Файл: <b>' . 
-                    $md5_check['name']  . '</b><br> Название ссылки: <b>' . 
-                    $md5_check['text'] . '</b><button><a href="?act=view&amp;id=' . 
+                    $error[] = 'Такой файл уже есть! <br> Загрузка: <b>' .
+                    $md5_check['rus_name'] . '</b><br> Файл: <b>' .
+                    $md5_check['name']  . '</b><br> Название ссылки: <b>' .
+                    $md5_check['text'] . '</b><button><a href="?act=view&amp;id=' .
                     $md5_check['id'] . '">Перейти к файлу</a></button>';
                 } elseif (!empty($sha1_check)) {
-                    $error[] = 'Такой файл уже есть! <br> Загрузка: <b>' . 
-                    $sha1_check['rus_name'] . '</b><br> Файл: <b>' . 
-                    $sha1_check['name']  . '</b><br> Название ссылки: <b>' . 
-                    $sha1_check['text'] . '</b><button><a href="?act=view&amp;id=' . 
+                    $error[] = 'Такой файл уже есть! <br> Загрузка: <b>' .
+                    $sha1_check['rus_name'] . '</b><br> Файл: <b>' .
+                    $sha1_check['name']  . '</b><br> Название ссылки: <b>' .
+                    $sha1_check['text'] . '</b><button><a href="?act=view&amp;id=' .
                     $sha1_check['id'] . '">Перейти к файлу</a></button>';
                 } elseif (!empty($md5_check2)) {
-                    $error[] = 'Такой файл уже есть среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . 
-                    $md5_check2['rus_name'] . '</b><br> Имя файла: <b>' . 
-                    $md5_check2['name']  . '</b><button><a href="?act=view&amp;id=' . 
+                    $error[] = 'Такой файл уже есть среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' .
+                    $md5_check2['rus_name'] . '</b><br> Имя файла: <b>' .
+                    $md5_check2['name']  . '</b><button><a href="?act=view&amp;id=' .
                     $md5_check2['refid'] . '">Перейти к загрузке</a></button>';
                 } elseif (!empty($sha1_check2)) {
-                    $error[] = 'Такой файл уже есть среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . 
-                    $sha1_check2['rus_name'] . '</b><br> Имя файла: <b>' . 
-                    $sha1_check2['name']  . '</b><button><a href="?act=view&amp;id=' . 
+                    $error[] = 'Такой файл уже есть среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' .
+                    $sha1_check2['rus_name'] . '</b><br> Имя файла: <b>' .
+                    $sha1_check2['name']  . '</b><button><a href="?act=view&amp;id=' .
                     $sha1_check2['refid'] . '">Перейти к загрузке</a></button>';
                 }
                 /////////////////////
