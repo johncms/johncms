@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
     $homepage_config['last_themes'] = $request->getPost('last_themes', 0, FILTER_VALIDATE_INT);
     $homepage_config['last_files'] = $request->getPost('last_files', 0, FILTER_VALIDATE_INT);
     $homepage_config['last_lib'] = $request->getPost('last_lib', 0, FILTER_VALIDATE_INT);
-    $homepage_config['show_demo'] = $request->getPost('last_lib', 0, FILTER_VALIDATE_INT);
+    $homepage_config['show_demo'] = $request->getPost('show_demo', 0, FILTER_VALIDATE_INT);
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['homepage' => $homepage_config], true) . ";\n";
 
