@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ForumVoteUser extends Model
 {
-    protected $table = 'cms_forum_vote_users';
+    protected $table = 'forum_vote_users';
 
     public $timestamps = false;
 

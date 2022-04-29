@@ -396,7 +396,7 @@ $this->layout('system::layout/default');
                         <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= __('Restore Topic') ?></a>
                     <?php endif; ?>
 
-                    <a class="dropdown-item" href="/forum/?act=deltema&amp;id=<?= $id ?>"><?= __('Delete Topic') ?></a>
+                    <a class="dropdown-item" href="<?= route('forum.deleteTopic', ['topicId' => $id]) ?>"><?= __('Delete Topic') ?></a>
 
                     <?php if ($topic->pinned): ?>
                         <a class="dropdown-item" href="/forum/?act=vip&amp;id=<?= $id ?>"><?= __('Unfix Topic') ?></a>

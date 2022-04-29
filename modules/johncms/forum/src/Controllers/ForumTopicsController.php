@@ -13,17 +13,23 @@ use Johncms\Forum\ForumCounters;
 use Johncms\Forum\ForumPermissions;
 use Johncms\Forum\ForumUtils;
 use Johncms\Forum\Messages\ForumMessagesService;
+use Johncms\Forum\Models\ForumFile;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Forum\Models\ForumSection;
 use Johncms\Forum\Models\ForumTopic;
+use Johncms\Forum\Models\ForumUnread;
 use Johncms\Forum\Models\ForumVote;
+use Johncms\Forum\Models\ForumVoteUser;
 use Johncms\Forum\Resources\MessageResource;
 use Johncms\Forum\Topics\ForumTopicService;
+use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
+use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 class ForumTopicsController extends BaseForumController
 {
@@ -275,5 +281,57 @@ class ForumTopicsController extends BaseForumController
                 ->withPost()
                 ->withValidationErrors($validationException->getErrors());
         }
+    }
+
+    /**
+     * The topic delete page
+     */
+    public function deleteTopic(int $topicId, User $user): string
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $this->metaTagManager->setAll(__('Delete Topic'));
+        return $this->render->render(
+            'forum::delete_topic',
+            [
+                'completeDelete' => $user->hasPermission(ForumPermissions::COMPLETE_DELETE_TOPIC),
+                'id'             => $topicId,
+                'back_url'       => $topic->url,
+            ]
+        );
+    }
+
+    /**
+     * Delete confirmation
+     */
+    public function confirmDelete(int $topicId, User $user, Request $request): ResponseInterface
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $completeDelete = $request->getPost('completeDelete', 0, FILTER_VALIDATE_INT);
+        if ($completeDelete === 1 && $user->hasPermission(ForumPermissions::COMPLETE_DELETE_TOPIC)) {
+            // Удаляем топик
+            $files = ForumFile::query()->where('topic', $topicId)->get();
+            if ($files->count() > 0) {
+                foreach ($files as $file) {
+                    unlink(UPLOAD_PATH . 'forum/attach/' . $file->filename);
+                    $file->delete();
+                }
+            }
+
+            try {
+                $topic->delete();
+                (new ForumMessage())->where('topic_id', $topicId)->delete();
+                (new ForumVote())->where('topic', $topicId)->delete();
+                (new ForumVoteUser())->where('topic', $topicId)->delete();
+                (new ForumUnread())->where('topic_id', $topicId)->delete();
+            } catch (Throwable $e) {
+                exit($e->getMessage());
+            }
+        } else {
+            // Скрываем топик
+            $topic->update(['deleted' => true, 'deleted_by' => $user->name]);
+            (new ForumFile())->where('topic', $topicId)->update(['del' => 1]);
+        }
+
+        return new RedirectResponse($topic->section->url);
     }
 }

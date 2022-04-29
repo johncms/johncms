@@ -5,7 +5,9 @@ use Johncms\Forum\Controllers\ForumMessagesController;
 use Johncms\Forum\Controllers\ForumSectionsController;
 use Johncms\Forum\Controllers\ForumTopicsController;
 use Johncms\Forum\Controllers\LatestTopicsController;
+use Johncms\Forum\ForumPermissions;
 use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
+use Johncms\Users\Middlewares\HasPermissionMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 
@@ -28,5 +30,13 @@ return function (Router $router) {
 
         $route->get('/create-topic/{sectionId:number}[/]', [ForumTopicsController::class, 'newTopic'])->setName('forum.newTopic');
         $route->post('/create-topic-store/{sectionId:number}[/]', [ForumTopicsController::class, 'storeTopic'])->setName('forum.storeTopic');
+
+        // Delete topic
+        $route->get('/delete-topic/{topicId:number}[/]', [ForumTopicsController::class, 'deleteTopic'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.deleteTopic');
+        $route->post('/delete-topic-confirm/{topicId:number}[/]', [ForumTopicsController::class, 'confirmDelete'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.confirmDelete');
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
 };

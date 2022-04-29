@@ -38,7 +38,7 @@ use Johncms\Users\User;
  */
 class ForumVote extends Model
 {
-    protected $table = 'cms_forum_vote';
+    protected $table = 'forum_vote';
 
     public $timestamps = false;
 

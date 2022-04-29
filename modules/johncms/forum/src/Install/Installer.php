@@ -40,6 +40,16 @@ class Installer extends \Johncms\Modules\Installer
                 'display_name' => __('Access to forum topic management'),
                 'module_name'  => $this->module_name,
             ],
+            [
+                'name'         => ForumPermissions::MANAGE_TOPICS,
+                'display_name' => __('Access to forum topic management'),
+                'module_name'  => $this->module_name,
+            ],
+            [
+                'name'         => ForumPermissions::COMPLETE_DELETE_TOPIC,
+                'display_name' => __('Access to the complete removal of the topic'),
+                'module_name'  => $this->module_name,
+            ],
         ];
 
         foreach ($permissions as $permission) {
