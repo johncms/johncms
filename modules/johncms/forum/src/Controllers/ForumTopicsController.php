@@ -258,8 +258,8 @@ class ForumTopicsController extends BaseForumController
             $created = $topicService->createTopic($currentSection, $user, [
                 'name'             => $values['name'],
                 'message'          => $values['message'],
-                'meta_keywords'    => $values['meta_keywords'],
-                'meta_description' => $values['meta_description'],
+                'meta_keywords'    => $values['meta_keywords'] ?? null,
+                'meta_description' => $values['meta_description'] ?? null,
             ]);
 
             // If we need to add a file, then we redirect to the add file page
