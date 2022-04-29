@@ -7,6 +7,6 @@ return [
     'db_port' => 3306,
     'db_name' => 'johncms',
     'db_user' => 'root',
-    'db_pass' => '',
+    'db_pass' => 'qwerty',
   ],
 ];
