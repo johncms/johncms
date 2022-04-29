@@ -74,6 +74,7 @@ $folders = [
     'upload/downloads/screen/',
     'upload/forum/attach/',
     'upload/forum/topics/',
+    'upload/guestbook/',
     'upload/library/',
     'upload/library/tmp',
     'upload/library/images',
@@ -84,7 +85,9 @@ $folders = [
     'upload/users/avatar/',
     'upload/users/photo/',
     'upload/mail/',
+    'upload/tmp/',
     'config/autoload/',
+    'system/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer/',
 ];
 
 $folder_right_errors = [];

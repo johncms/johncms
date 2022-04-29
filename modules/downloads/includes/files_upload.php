@@ -39,7 +39,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
             $load_cat = $res['dir'];
             $files = $request->getUploadedFiles();
 
-            if (! empty($files) && ! empty($files['fail'])) {
+            if (!empty($files) && !empty($files['fail'])) {
                 $error = [];
                 // Request fields
                 $post = $request->getParsedBody();
@@ -49,9 +49,9 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
                 $text = isset($post['opis']) ? trim($post['opis']) : null;
                 $vendor = isset($post['vendor']) ? trim($post['vendor']) : null;
-				$tag = isset($post['tag']) ? trim($post['tag']) : null;
-				$mirrors = isset($post['mirrors']) ? trim($post['mirrors']) : null;
-				$price = isset($post['price']) ? trim($post['price']) : null;
+                $tag = isset($post['tag']) ? trim($post['tag']) : null;
+                $mirrors = isset($post['mirrors']) ? trim($post['mirrors']) : null;
+                $price = isset($post['price']) ? trim($post['price']) : null;
 
                 /** @var GuzzleHttp\Psr7\UploadedFile $file */
                 $file = $files['fail'];
@@ -60,7 +60,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $file_name = new FileInfo($fname);
                 $ext = strtolower($file_name->getExtension());
 
-                if (! empty($new_file)) {
+                if (!empty($new_file)) {
                     $file_name = new FileInfo($new_file . '.' . $ext);
                 }
 
@@ -78,36 +78,48 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = __('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
                 }
 
-                if (! in_array($ext, $al_ext, true)) {
+                if (!in_array($ext, $al_ext, true)) {
                     $error[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
                 }
 
-/////////////////////////
-$md5 = md5_file($_FILES["fail"]["tmp_name"]);
-$sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
-$stmt = $db->prepare('SELECT * FROM download__files WHERE md5 = :md5');
-$stmt->execute(['md5' => $md5]);
-$md5_check = $stmt->fetch();
-$stmt = $db->prepare('SELECT * FROM download__files WHERE sha1 = :sha1');
-$stmt->execute(['sha1' => $sha1]);
-$sha1_check = $stmt->fetch();
-$stmt = $db->prepare('SELECT * FROM download__more WHERE md5 = :md5');
-$stmt->execute(['md5' => $md5]);
-$md5_check2 = $stmt->fetch();
-$stmt = $db->prepare('SELECT * FROM download__more WHERE sha1 = :sha1');
-$stmt->execute(['sha1' => $sha1]);
-$sha1_check2 = $stmt->fetch();
+                $md5 = md5_file($_FILES["fail"]["tmp_name"]);
+                $sha1 = sha1_file($_FILES["fail"]["tmp_name"]);
+                $stmt = $db->prepare('SELECT * FROM download__files WHERE md5 = :md5');
+                $stmt->execute(['md5' => $md5]);
+                $md5_check = $stmt->fetch();
+                $stmt = $db->prepare('SELECT * FROM download__files WHERE sha1 = :sha1');
+                $stmt->execute(['sha1' => $sha1]);
+                $sha1_check = $stmt->fetch();
+                $stmt = $db->prepare('SELECT * FROM download__more WHERE md5 = :md5');
+                $stmt->execute(['md5' => $md5]);
+                $md5_check2 = $stmt->fetch();
+                $stmt = $db->prepare('SELECT * FROM download__more WHERE sha1 = :sha1');
+                $stmt->execute(['sha1' => $sha1]);
+                $sha1_check2 = $stmt->fetch();
 
-if (!empty($md5_check)) {
-    $error[] = '<div class="rmenu">Такой файл уже есть! <br> Загрузка: <b>' . $md5_check['rus_name'] .'</b><br> Файл: <b>' . $md5_check['name']  . '</b><br> Название ссылки: <b>' . $md5_check['text'] .'</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $md5_check['id'] . '">Перейти к файлу</a></button></div>';
-    } else if (!empty($sha1_check)) {
-    $error[] = '<div class="rmenu">Такой файл уже есть! <br> Загрузка: <b>' . $sha1_check['rus_name'] .'</b><br> Файл: <b>' . $sha1_check['name']  . '</b><br> Название ссылки: <b>' . $sha1_check['text'] .'</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $sha1_check['id'] . '">Перейти к файлу</a></button></div>';
-    } else 	if (!empty($md5_check2)) {
-    $error[] = '<div class="rmenu">Такой файл уже есть! Он находится среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . $md5_check2['rus_name'] .'</b><br> Имя файла: <b>' . $md5_check2['name']  . '</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $md5_check2['refid'] . '">Перейти к загрузке</a></button></div>';
-    } else if (!empty($sha1_check2)) {
-    $error[] = '<div class="rmenu">Такой файл уже есть! Он находится среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' . $sha1_check2['rus_name'] .'</b><br> Имя файла: <b>' . $sha1_check2['name']  . '</b></div><div class="phdr"><button><a href="?act=view&amp;id=' . $sha1_check2['refid'] . '">Перейти к загрузке</a></button></div>';
-    }
-/////////////////////
+                if (!empty($md5_check)) {
+                    $error[] = 'Такой файл уже есть! <br> Загрузка: <b>' .
+                    $md5_check['rus_name'] . '</b><br> Файл: <b>' .
+                    $md5_check['name']  . '</b><br> Название ссылки: <b>' .
+                    $md5_check['text'] . '</b><button><a href="?act=view&amp;id=' .
+                    $md5_check['id'] . '">Перейти к файлу</a></button>';
+                } elseif (!empty($sha1_check)) {
+                    $error[] = 'Такой файл уже есть! <br> Загрузка: <b>' .
+                    $sha1_check['rus_name'] . '</b><br> Файл: <b>' .
+                    $sha1_check['name']  . '</b><br> Название ссылки: <b>' .
+                    $sha1_check['text'] . '</b><button><a href="?act=view&amp;id=' .
+                    $sha1_check['id'] . '">Перейти к файлу</a></button>';
+                } elseif (!empty($md5_check2)) {
+                    $error[] = 'Такой файл уже есть среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' .
+                    $md5_check2['rus_name'] . '</b><br> Имя файла: <b>' .
+                    $md5_check2['name']  . '</b><button><a href="?act=view&amp;id=' .
+                    $md5_check2['refid'] . '">Перейти к загрузке</a></button>';
+                } elseif (!empty($sha1_check2)) {
+                    $error[] = 'Такой файл уже есть среди дополнительных файлов к загрузке.<br> Имя ссылки: <b>' .
+                    $sha1_check2['rus_name'] . '</b><br> Имя файла: <b>' .
+                    $sha1_check2['name']  . '</b><button><a href="?act=view&amp;id=' .
+                    $sha1_check2['refid'] . '">Перейти к загрузке</a></button>';
+                }
 
                 if ($error) {
                     echo $view->render(
@@ -153,12 +165,12 @@ if (!empty($md5_check)) {
                                 $user->id,
                                 $text,
                                 $md5,
-								$sha1,
-								time(),
-								$vendor,
-								$tag,
-								$mirrors,
-								$price,
+                                $sha1,
+                                time(),
+                                $vendor,
+                                $tag,
+                                $mirrors,
+                                $price,
                             ]
                         );
                         $file_id = $db->lastInsertId();
@@ -195,7 +207,7 @@ if (!empty($md5_check)) {
                         }
 
                         $urls['view_file_url'] = '';
-                        if (! $set_down['mod'] || $user->rights > 6 || $user->rights === 4) {
+                        if (!$set_down['mod'] || $user->rights > 6 || $user->rights === 4) {
                             $urls['view_file_url'] = '?act=view&amp;id=' . $file_id;
                             $dirid = $id;
                             $sql = '';

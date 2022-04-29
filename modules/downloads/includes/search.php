@@ -34,21 +34,20 @@ $nav_chain->add(__('Search'));
 // Проверяем на коректность ввода
 $error = false;
 
-if ((! empty($search) && mb_strlen($search) < 2) || mb_strlen($search) > 64) {
+if ((!empty($search) && mb_strlen($search) < 2) || mb_strlen($search) > 64) {
     $error = __('Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters.');
 }
 
 if ($catid) {
-	$catdir = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catid'")->fetch();
-	$stmt = $db->prepare('SELECT * FROM download__category WHERE id = :catid');
-	$stmt->execute(['catid' => $catid]);
-	$catinfo = $stmt->fetch();
-	$catname = '' . $catinfo['rus_name'] . '';
-	$catdir = '' . $catinfo['dir'] . '';
-
+    $catdir = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catid'")->fetch();
+    $stmt = $db->prepare('SELECT * FROM download__category WHERE id = :catid');
+    $stmt->execute(['catid' => $catid]);
+    $catinfo = $stmt->fetch();
+    $catname = '' . $catinfo['rus_name'] . '';
+    $catdir = '' . $catinfo['dir'] . '';
 } else {
-	$catdir = '/';
-	$catname = null;
+    $catdir = '/';
+    $catname = null;
 }
 
 $total = 0;
@@ -67,9 +66,9 @@ if ($search && empty($error)) {
         $sql = ($id ? '`about`' : '`rus_name`') . ' LIKE ' . $search_db;
     }
 
-    $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND dir LIKE '%".$catdir."%' AND ${sql}")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND dir LIKE '%" . $catdir . "%' AND ${sql}")->fetchColumn();
     if ($total) {
-        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2' AND dir LIKE '%".$catdir."%' AND ${sql} ORDER BY `rus_name` LIMIT ${start}, " . $user->config->kmess);
+        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2' AND dir LIKE '%" . $catdir . "%' AND ${sql} ORDER BY `rus_name` LIMIT ${start}, " . $user->config->kmess);
         $files = [];
         while ($res_down = $req_down->fetch()) {
             $files[] = Download::displayFile($res_down);
@@ -114,7 +113,7 @@ echo $view->render(
         'sven'            => $sven,
         'urls'            => $urls,
         'catid'           => $catid,
-		'catname'         => $catname,
-        'show_empty_info' => ! empty($search),
+        'catname'         => $catname,
+        'show_empty_info' => !empty($search),
     ]
 );

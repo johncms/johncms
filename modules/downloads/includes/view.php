@@ -25,7 +25,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
+if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     http_response_code(404);
     echo $view->render(
         'system::pages/result',
@@ -75,10 +75,10 @@ $text_info = '';
 $screen = Screen::getScreens($id);
 $file_data['file_type'] = 'other';
 $file_data['screenshots'] = $screen;
-if($file_data['tag'] != null){
-$file_data['tags'] = explode(',', $file_data['tag']);}
-else {
-$file_data['tags'] = [];
+if ($file_data['tag'] != null) {
+    $file_data['tags'] = explode(',', $file_data['tag']);
+} else {
+    $file_data['tags'] = [];
 }
 $file_properties = [];
 switch ($extension) {
@@ -90,9 +90,9 @@ switch ($extension) {
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
         $mp3info = true;
 
-        if (! empty($getid['tags']['id3v2'])) {
+        if (!empty($getid['tags']['id3v2'])) {
             $tagsArray = $getid['tags']['id3v2'];
-        } elseif (! empty($getid['tags']['id3v1'])) {
+        } elseif (!empty($getid['tags']['id3v1'])) {
             $tagsArray = $getid['tags']['id3v1'];
         } else {
             $mp3info = false;
@@ -160,7 +160,7 @@ switch ($extension) {
         $getID3 = new getID3();
         $getID3->encoding = 'cp1251';
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
-        if (! empty($getid['video'])) {
+        if (!empty($getid['video'])) {
             if (isset($getid['video']['fourcc_lookup'])) {
                 $file_properties[] = [
                     'name'  => __('Codec'),
@@ -225,11 +225,11 @@ $file_data['upload_user'] = $foundUser;
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
-$file_rate[0] = ! empty($file_rate[0]) ? (int) $file_rate[0] : 0;
-$file_rate[1] = ! empty($file_rate[1]) ? (int) $file_rate[1] : 0;
+$file_rate[0] = !empty($file_rate[0]) ? (int) $file_rate[0] : 0;
+$file_rate[1] = !empty($file_rate[1]) ? (int) $file_rate[1] : 0;
 
 $session_index = 'rate_file_' . $id;
-if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION[$session_index]) && $user->isValid()) {
+if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION[$session_index]) && $user->isValid()) {
     if (isset($_GET['plus'])) {
         ++$file_rate[0];
     } else {
@@ -242,7 +242,7 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION[$sessio
 }
 
 $file_data['can_vote'] = false;
-if (! isset($_SESSION[$session_index]) && $user->isValid()) {
+if (!isset($_SESSION[$session_index]) && $user->isValid()) {
     $file_data['can_vote'] = true;
 }
 
@@ -288,7 +288,7 @@ if ($total_files_more) {
 if ($user->isValid()) {
     $bookmark = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = ' . $id . '  AND `user_id` = ' . $user->id)->fetchColumn();
 
-    if (isset($_GET['addBookmark']) && ! $bookmark) {
+    if (isset($_GET['addBookmark']) && !$bookmark) {
         $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id` = " . $user->id);
         $bookmark = 1;
     } elseif (isset($_GET['delBookmark']) && $bookmark) {

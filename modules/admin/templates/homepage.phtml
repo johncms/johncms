@@ -32,6 +32,10 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <label for="last_lib">Сколько выводить свежих статей</label>
                 <input type="text" id="last_lib" name="last_lib" class="form-control  col-sm-2" value="<?= (int) ($homepage_config['last_lib']) ?>"/>
             </div>
+            <div class="form-group">
+                <label for="show_demo">Отображать рекламную информацию о движке?</label>
+                <input type="text" id="show_demo" name="show_demo" class="form-control  col-sm-2" value="<?= (int) ($homepage_config['show_demo']) ?>"/>
+            </div>
         </fieldset>
         <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="<?= __('Save') ?>"/>
     </form>

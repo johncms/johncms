@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 trait SectionRelations
 {
-
     /**
      * Relation to subsections
      */

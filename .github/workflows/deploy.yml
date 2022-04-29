@@ -1,0 +1,83 @@
+name: Deploy To Server
+
+on:
+  # Deploy on merge to main
+  push:
+    branches: [ stage9 ]
+#  # Manually deploy branch
+#  workflow_dispatch:
+#    branches: [ main ] sudo chown -Rf www-data:www-data /home/www/html/*
+#https://habr.com/ru/post/564750/ https://habr.com/ru/post/136735/
+# sendmail problem sudo apt-get install php-mail
+# sudo apt-get install sendmail
+# sudo sendmailconfig
+# sendmail_path = "/usr/sbin/sendmail -t -f noreply@site.ru -i"
+#             sudo apt update && sudo apt upgrade -y && sudo apt install -y composer php-mail sendmail nginx mysql-server npm php7.4 php7.4-fpm php7.4-dev php7.4-cli php7.4-gd php7.4-mysql php7.4-opcache php7.4-xml php7.4-xmlrpc php7.4-zip
+jobs:
+  deploy:
+    name: Deploy to Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install SSH key to Server
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY_STAGE }}
+          name: github-actions
+          known_hosts: 'random-placeholder-value-replaced-by-keyscan-below'
+          config: |
+            host stage.oldfag.top
+              IdentityFile ~/.ssh/github-actions
+              IdentitiesOnly yes
+              ForwardAgent yes
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST_STAGE }}
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_STAGE }}
+          key: ${{ secrets.SSH_KEY_STAGE }}
+          username: ${{ secrets.SSH_USERNAME_STAGE }}
+          script: |
+            sudo rm -Rf /var/www/html/*
+            sudo rm -Rf /home/ubuntu/*
+            git clone git@github.com:Chifth/johncms.git -b stage9
+            cd johncms
+            composer install
+            sudo unzip config/deploy/populate.zip -d "."
+            sudo chmod 777 data/cache/
+            sudo chmod 777 upload/downloads/files/
+            sudo chmod 777 upload/downloads/screen/
+            sudo chmod 777 upload/forum/attach/
+            sudo chmod 777 upload/forum/topics/
+            sudo chmod 777 upload/guestbook/
+            sudo chmod 777 upload/library/
+            sudo chmod 777 upload/library/tmp/
+            sudo chmod 777 upload/library/images/
+            sudo chmod 777 upload/library/images/big/
+            sudo chmod 777 upload/library/images/orig/
+            sudo chmod 777 upload/library/images/small/
+            sudo chmod 777 upload/users/album/
+            sudo chmod 777 upload/users/avatar/
+            sudo chmod 777 upload/users/photo/
+            sudo chmod 777 upload/mail/
+            sudo chmod 777 upload/tmp/
+            sudo chmod 777 config/autoload/
+            sudo chmod 777 system/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
+            sudo cp config/deploy/database.local.php config/autoload/database.local.php
+            sudo cp config/deploy/homepage.local.php config/autoload/homepage.local.php
+            sudo cp config/deploy/system.local.php config/autoload/system.local.php
+            sudo chown -Rf www-data:www-data *
+            sudo cp docker-configs/php.ini /etc/php/7.4/fpm/php.ini
+            sudo cp config/deploy/nginx.conf /etc/nginx/sites-available/stage.oldfag.top
+            sudo mysql -e "drop database johncms;"
+            sudo mysql -e "create database johncms;"
+            sudo mysql -e "DROP USER 'john'@'%';"
+            sudo mysql -e "CREATE USER 'john'@'%' IDENTIFIED BY '${{ secrets.MYSQL_USER_PASS }}';"
+            sudo mysql -e "ALTER USER 'john'@'%' IDENTIFIED WITH mysql_native_password BY '${{ secrets.MYSQL_USER_PASS }}';"
+            sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'john'@'%';"
+            sudo mysql johncms < config/deploy/john.sql
+            sudo service nginx restart

@@ -8,6 +8,7 @@
 $this->layout('system::layout/default');
 $homepage_config = di('config')['homepage'];
 ?>
+<?php if ($homepage_config['show_demo'] > 0 ): ?>
 <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
     <h1 class="display-4 font-weight-bold">JohnCMS <?= CMS_VERSION ?></h1>
     <p class="lead">
@@ -37,6 +38,7 @@ $homepage_config = di('config')['homepage'];
         </svg>
     </a>
 </div>
+<?php endif; ?>
 
 <div class="d-block d-md-none mobile_tiles">
     <div class="row">
@@ -145,7 +147,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
                             <?php if (! empty($news_item->preview_text_safe)): ?>
-                                <div class="mb-n3 mt-1"><?= mb_strimwidth($news_item->preview_text_safe, 0, 100, '...'); ?></div>
+                                <div class="mb-n3 mt-1"><p><?= htmlentities(mb_strimwidth((html_entity_decode(strip_tags($news_item->preview_text_safe))), 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $files_item->user_id ?>"><?= $tools->getUser($news_item->created_by)->name ?></a> | 
@@ -196,7 +198,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/downloads/?act=view&id=<?= $files_item->id; ?>"><?= $files_item->rus_name ?></a>
                             <?php if (! empty($files_item->about)): ?>
-                                <div class="mb-n3 mt-1"><p><?= htmlentities(mb_strimwidth($files_item->about, 0, 100, '...')); ?></p></div>
+                                <div class="mb-n3 mt-1"><p><?= htmlentities(mb_strimwidth((html_entity_decode(strip_tags($tools->checkout($files_item->about, 0, 1)))), 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $files_item->user_id ?>"><?= $tools->getUser($files_item->user_id)->name ?></a> | 
@@ -222,7 +224,7 @@ $homepage_config = di('config')['homepage'];
                         <div class="col mb-3">
                             <a class="h4 font-weight-bold" href="/library/?id=<?= $articles_item->id; ?>"><?= $articles_item->name ?></a>
                             <?php if (! empty($articles_item->announce)): ?>
-                                <div class="mb-n3 mt-1"><p><?= htmlentities(mb_strimwidth($articles_item->announce, 0, 100, '...')); ?></p></div>
+                                <div class="mb-n3 mt-1"><p><?= strip_tags(mb_strimwidth($articles_item->announce, 0, 100, '...')); ?></p></div>
                             <?php endif; ?>
                             <div class="text-muted small pt-1">
                             <a href="/profile/?user=<?= $articles_item->uploader_id ?>"><?= $articles_item->uploader ?></a> | 
@@ -242,6 +244,7 @@ $homepage_config = di('config')['homepage'];
     </div>
 </div>
 
+<?php if ($homepage_config['show_demo'] > 0 ): ?>
 <h2 class="h1 font-weight-bold mt-4 mb-4"><?= __('Features') ?></h2>
 <dl class="ml-4">
     <dt class="h3 font-weight-bold">
@@ -310,3 +313,4 @@ $homepage_config = di('config')['homepage'];
         <?= __('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') ?>
     </dd>
 </dl>
+<?php endif; ?>

@@ -23,8 +23,12 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: qwerty
+      MYSQL_DATABASE: johncms
+      MYSQL_ALLOW_EMPTY_PASSWORD: yay
     volumes:
       - dbdata:/var/lib/mysql
+      - .:/var/www/html
+      - ./config/deploy/john.sql:/docker-entrypoint-initdb.d/john.sql
    # volumes:
     #  - ./docker-configs/mysql/import:/docker-entrypoint-initdb.d
     #  - ./docker-configs/mysql/config:/etc/mysql/conf/conf.d

@@ -18,6 +18,11 @@ chmod 777 upload/users/photo/
 chmod 777 upload/mail/
 chmod 777 config/autoload/
 chmod 777 system/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
+rm -Rf upload/
+unzip config/deploy/populate.zip -d .
+cp docker-configs/database.local.php config/autoload/database.local.php
+cp docker-configs/homepage.local.php config/autoload/homepage.local.php
+cp docker-configs/system.local.php config/autoload/system.local.php
 
 #chmod -R 777 your_directory_name
 

@@ -75,17 +75,17 @@ if ($id === 2 && ($config['mod_down_comm'] || $user->rights >= 7)) {
 }
 
 $catid = isset($_GET['catid']) ? rawurldecode(trim($_GET['catid'])) : null;
-if ($catid){
-$catinfo = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catid'")->fetch();
-$catdir = $catinfo['dir'];
-$catname = $catinfo['rus_name'];
+if ($catid) {
+    $catinfo = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catid'")->fetch();
+    $catdir = $catinfo['dir'];
+    $catname = $catinfo['rus_name'];
 } else {
-	$catdir = '/';
-	$catname = null;
+    $catdir = '/';
+    $catname = null;
 }
 
 // Выводим список
-$req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 AND dir LIKE '%".$catdir."%' ORDER BY ${sql} DESC LIMIT " . $set_down['top']);
+$req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 AND dir LIKE '%" . $catdir . "%' ORDER BY ${sql} DESC LIMIT " . $set_down['top']);
 $files = [];
 while ($res_down = $req_down->fetch()) {
     $files[] = Download::displayFile($res_down);
@@ -99,7 +99,7 @@ echo $view->render(
         'files'      => $files ?? [],
         'urls'       => $urls,
         'catid'      => $catid,
-		'catname'    => $catname,
+        'catname'    => $catname,
         'buttons'    => $buttons,
     ]
 );
