@@ -48,7 +48,7 @@ class ForumTopicService
             ->where(function (Builder $builder) {
                 return $builder->whereNull('rdm.topic_id')->orWhere('last_post_date', '>', 'rdm.time');
             })
-            ->orderBy('last_post_date');
+            ->orderByDesc('last_post_date');
     }
 
     public function getTopics(?int $sectionId = null): ?Builder
