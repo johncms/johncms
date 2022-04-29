@@ -38,19 +38,16 @@ class HomepageController extends BaseController
 
         if ($homepage_config['last_themes'] > 0) {
             $themes = $connection->table('forum_topic')
-                // ->select('name', 'id', 'last_post_date')
                 ->orderByDesc('last_post_date')
                 ->paginate($homepage_config['last_themes']);
         }
         if ($homepage_config['last_files'] > 0) {
             $files = $connection->table('download__files')
-                // ->select('name', 'id', 'last_post_date')
                 ->orderByDesc('time')
                 ->paginate($homepage_config['last_files']);
         }
         if ($homepage_config['last_lib'] > 0) {
             $articles = $connection->table('library_texts')
-                // ->select('name', 'id', 'last_post_date')
                 ->orderByDesc('time')
                 ->paginate($homepage_config['last_lib']);
         }
