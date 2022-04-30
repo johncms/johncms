@@ -7,6 +7,7 @@ namespace Johncms\Forum\Controllers;
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Forum\ForumPermissions;
 use Johncms\Forum\ForumUtils;
+use Johncms\Forum\Messages\ForumMessagesService;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Topics\ForumTopicService;
@@ -167,5 +168,39 @@ class ForumMessagesController extends BaseForumController
                 'is_new_message' => true,
             ]
         );
+    }
+
+    public function deleteMessage(int $id, User $user): string
+    {
+        $this->metaTagManager->setAll(__('Delete Message'));
+        $message = ForumMessage::query()->findOrFail($id);
+        $countMessages = ForumMessage::query()->where('topic_id', $message->topic_id)->count();
+        return $this->render->render(
+            'forum::delete_post',
+            [
+                'id'            => $id,
+                'actionUrl'     => route('forum.confirmDeletePost', ['id' => $id]),
+                'countMessages' => $countMessages,
+                'backUrl'       => $message->topic->url,
+                'canHide'       => $user->hasPermission(ForumPermissions::MANAGE_POSTS),
+            ]
+        );
+    }
+
+    public function confirmDelete(int $id, User $user, Request $request, ForumMessagesService $messagesService): ResponseInterface
+    {
+        $actionType = $request->getPost('type', 'delete');
+        $message = ForumMessage::query()->findOrFail($id);
+        if ($actionType === 'delete' && ! $user->hasPermission(ForumPermissions::MANAGE_POSTS)) {
+            $actionType = 'hide';
+        }
+
+        if ($actionType === 'delete') {
+            $messagesService->delete($message);
+        } elseif ($actionType === 'hide') {
+            $messagesService->hide($message);
+        }
+
+        return new RedirectResponse($message->topic->url);
     }
 }

@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Johncms\Forum\Messages;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Http\Session;
+use Johncms\Users\User;
 
 class ForumMessagesService
 {
     protected Session $session;
+    protected ?User $user;
 
     protected array $config;
 
-    public function __construct(Session $session)
+    public function __construct(Session $session, ?User $user)
     {
+        $this->user = $user;
         $this->session = $session;
         $this->config = [
             'farea'    => 0,
@@ -48,5 +52,44 @@ class ForumMessagesService
             $filterByUsers = unserialize($sortUsers, ['allowed_classes' => false]);
         }
         return $filterByUsers ?? [];
+    }
+
+    public function delete(int|ForumMessage $message): void
+    {
+        if (is_int($message)) {
+            $message = ForumMessage::query()->find($message);
+        }
+
+        DB::transaction(function () use ($message) {
+            $files = $message->files;
+            foreach ($files as $file) {
+                unlink(UPLOAD_PATH . 'forum/attach/' . $file->filename);
+                $file->delete();
+            }
+            $message->delete();
+        });
+    }
+
+    public function hide(int|ForumMessage $message): void
+    {
+        if (is_int($message)) {
+            $message = ForumMessage::query()->find($message);
+        }
+
+        $countMessages = ForumMessage::query()->where('topic_id', $message->topic_id)->count();
+        DB::transaction(function () use ($message, $countMessages) {
+            $files = $message->files;
+            foreach ($files as $file) {
+                $file->update(['del' => 1]);
+            }
+            if ($countMessages === 1) {
+                // If the last post of the topic then hide topic
+                $topic = $message->topic;
+                $topic->update(['deleted' => true, 'deleted_by' => $this->user?->display_name]);
+            } else {
+                // else hide the post
+                $message->update(['deleted' => true, 'deleted_by' => $this->user?->display_name]);
+            }
+        });
     }
 }

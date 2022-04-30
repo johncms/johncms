@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\Ip;
 use Johncms\Database\Eloquent\Casts\TimeToDate;
+use Johncms\Forum\ForumPermissions;
 use Johncms\Settings\SiteSettings;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -147,7 +148,7 @@ class ForumMessage extends Model
             static function (Builder $builder) {
                 /** @var User $user */
                 $user = di(User::class);
-                if ($user->rights < 7) {
+                if (! $user->hasPermission(ForumPermissions::MANAGE_POSTS)) {
                     $builder->where('deleted', '!=', 1)->orWhereNull('deleted');
                 }
             }

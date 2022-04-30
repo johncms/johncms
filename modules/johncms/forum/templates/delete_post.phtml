@@ -1,46 +1,36 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var $csrf_token
+ * @var $actionUrl
+ * @var $canHide
+ * @var $backUrl
+ * @var $countMessages
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $back_url
- * @var $posts
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-danger">
-    <?php if ($posts == 1): ?>
+    <?php if ($countMessages === 1): ?>
         <div class="fw-bold">
             <?= __('WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too') ?>
         </div>
     <?php endif; ?>
-    <div class="pb-2">
-        <?= __('Do you really want to delete?') ?>
-    </div>
-    <div>
-        <a href="/forum/?act=editpost&amp;do=delete&amp;id=<?= $id ?>" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
-        <?php if ($user->rights == 9): ?>
-            <a href="/forum/?act=editpost&amp;do=delete&amp;hide&amp;id=<?= $id ?>" class="me-2 btn btn-primary btn-sm"><?= __('Hide') ?></a>
+    <form action="<?= $actionUrl ?>" method="post">
+        <div class="pb-2">
+            <?= __('Do you really want to delete?') ?>
+        </div>
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+        <button type="submit" name="type" value="delete" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></button>
+        <?php if ($canHide): ?>
+            <button type="submit" name="type" value="hide" class="me-2 btn btn-primary btn-sm"><?= __('Hide') ?></button>
         <?php endif; ?>
-        <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
-    </div>
-    <div class="mt-2 text-muted small">
-        <?= __('After deleting, one point will be subtracted from the counter of forum posts') ?>
-    </div>
+    </form>
+</div>
+<div class="mt-2">
+    <a href="<?= $backUrl ?>"><?= __('Cancel') ?></a>
+</div>
+<div class="mt-2 text-muted small">
+    <?= __('After deleting, one point will be subtracted from the counter of forum posts') ?>
 </div>

@@ -35,7 +35,7 @@ class MessageResource extends AbstractResource
 
             // Author or moderator actions
             'edit_url'    => $canEdit ? '/forum/?act=editpost&amp;id=' . $this->id : null,
-            'delete_url'  => $canEdit ? '/forum/?act=editpost&amp;do=del&amp;id=' . $this->id : null,
+            'delete_url'  => $canEdit ? route('forum.deletePost', ['id' => $this->id]) : null,
             'restore_url' => ($this->deleted && $currentUser?->hasPermission(ForumPermissions::MANAGE_POSTS)) ? '/forum/?act=editpost&amp;do=restore&amp;id=' . $this->id : null,
         ];
     }

@@ -38,5 +38,9 @@ return function (Router $router) {
         $route->post('/delete-topic-confirm/{topicId:number}[/]', [ForumTopicsController::class, 'confirmDelete'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.confirmDelete');
+
+        // Delete message
+        $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'deleteMessage'])->setName('forum.deletePost');
+        $route->post('/delete-post-confirm/{id:number}[/]', [ForumMessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
 };
