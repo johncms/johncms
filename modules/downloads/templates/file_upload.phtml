@@ -27,54 +27,10 @@ $this->layout(
 
 <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
-            <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
-        </div>
-        <div class="text-muted mb-3 small">
-            <?= __('Max. Size') ?>: <?= $config['flsz'] ?> kb.
-        </div>
-    </div>
-
-    <div class="form-group">
         <label for="new_file"><?= __('Save as') ?></label>
-        <input type="text" class="form-control" id="new_file" placeholder="<?= __('Save as') ?>"
-               name="new_file" value="" maxlength="100">
+        <input type="text" class="form-control" id="new_file" placeholder="Galaxy on Fire 2 - Supernova"
+               name="new_file" value="" maxlength="100" required>
         <div class="text-muted small"><?= __('max. 100 characters') ?></div>
-    </div>
-
-    <div class="form-group">
-    <label for="price"><?= __('Price') ?></label>
-        <input type="text" class="form-control" id="price" placeholder="<?= __('Price') ?>"
-               name="price" value="" maxlength="3" required integer>
-        <div class="text-muted small"><?= __('max. 10 characters') ?></div>
-    </div>
-	
-	<div class="form-group">
-        <label for="vendor"><?= __('Vendor') ?> or Unknown</label>
-        <input type="text" class="form-control" id="vendor" placeholder="<?= __('Vendor') ?>"
-               name="vendor" value="" maxlength="30" required>
-        <div class="text-muted small"><?= __('max. 30 characters') ?></div>
-    </div>
-	
-	<div class="form-group">
-        <label for="tag"><?= __('Tags') ?></label>
-        <input type="text" class="form-control" id="tag" placeholder="<?= __('Tags') ?>"
-               name="tag" value="" maxlength="90">
-        <div class="text-muted small"><?= __('max. 90 characters') ?></div>
-    </div>
-
-    <div class="form-group">
-        <label for="text"><?= __('File Name') ?></label>
-        <input type="text" class="form-control" id="text" placeholder="<?= __('File Name') ?>"
-               name="text" value="" maxlength="200">
-        <div class="text-muted small"><?= __('max. 200 characters') ?></div>
-    </div>
-
-    <div class="form-group">
-        <label for="name_link"><?= __('Link to download file') ?></label>
-        <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
-               name="name_link" value="<?= __('Download') ?>" maxlength="200" required>
     </div>
 
     <div class="form-group">
@@ -87,13 +43,55 @@ $this->layout(
     <div class="form-group">
         <label for="desc"><?= __('Description') ?></label>
         <div><?= $bbcode ?></div>
-        <textarea id="desc" class="form-control" maxlength="65000" name="opis" cols="24" rows="4"></textarea>
+        <textarea placeholder="Describe yourself here..." id="desc" class="form-control" maxlength="65000" name="opis" cols="24" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+    <label for="price"><?= __('Price') ?></label>
+        <input type="number" class="form-control" id="price" placeholder="0"
+               name="price" value="" maxlength="3" required>
+        <div class="text-muted small"><?= __('max. 10 characters') ?></div>
+    </div>
+	
+	<div class="form-group">
+        <label for="vendor"><?= __('Vendor') ?></label>
+        <input type="text" class="form-control" id="vendor" placeholder="Fishlabs"
+               name="vendor" value="" maxlength="30" required>
+        <div class="text-muted small"><?= __('max. 30 characters') ?></div>
+    </div>
+	
+	<div class="form-group">
+        <label for="tag"><?= __('Tags') ?></label>
+        <input type="text" class="form-control" id="tag" placeholder="java, RPG, simulator, fly,"
+               name="tag" value="" maxlength="90" required>
+        <div class="text-muted small"><?= __('max. 90 characters') ?></div>
+    </div>
+
+    <div class="form-group">
+        <label for="text"><?= __('File Name') ?></label>
+        <input type="text" class="form-control" id="text" placeholder="GalaxyOnFire2-Supernova-240x320-S60v5-Rus-v2.7"
+               name="text" value="" maxlength="200" required>
+        <div class="text-muted small"><?= __('max. 200 characters') ?></div>
+    </div>
+
+    <div class="form-group">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
+            <label class="custom-file-label" for="fail"><?= __('Choose file') ?></label>
+        </div>
+        <div class="text-muted mb-3 small">
+            <?= __('Max. Size') ?>: <?= $config['flsz'] ?> kb.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="name_link"><?= __('Link to download file') ?></label>
+        <textarea placeholder="240x320: S60v2-S60v5 Rus v.2.7 MOD Money by Motya" id="name_link" class="form-control" maxlength="65000" name="name_link" cols="24" rows="4"></textarea>
     </div>
 
     <div class="form-group">
         <label for="mirrors"><?= __('Mirrors') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea id="mirrors" class="form-control" maxlength="65000" name="mirrors" cols="24" rows="4"></textarea>
+        <textarea placeholder="https://sefan.ru/loads/?l=games/240x320/sis/Galaxy_on_Fire_2.zip, https://namobilu.com/java-game/34-galaxy-on-fire-2-valkyrie" id="mirrors" class="form-control" maxlength="65000" name="mirrors" cols="24" rows="4"></textarea>
     </div>
 
     <div class="alert alert-warning mt-3">
