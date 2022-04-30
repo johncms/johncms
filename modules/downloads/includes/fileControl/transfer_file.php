@@ -43,7 +43,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
 
 $do = isset($get['do']) ? trim($get['do']) : '';
 
-if ($user->rights > 6) {
+if ($user->rights === 4 || $user->rights > 6) {
     $catId = isset($get['catId']) ? (int) ($get['catId']) : 0;
 
     if ($catId) {
