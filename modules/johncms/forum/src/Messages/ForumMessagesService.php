@@ -54,7 +54,7 @@ class ForumMessagesService
         return $filterByUsers ?? [];
     }
 
-    public function delete(int|ForumMessage $message): void
+    public function delete(int | ForumMessage $message): void
     {
         if (is_int($message)) {
             $message = ForumMessage::query()->find($message);
@@ -70,7 +70,7 @@ class ForumMessagesService
         });
     }
 
-    public function hide(int|ForumMessage $message): void
+    public function hide(int | ForumMessage $message): void
     {
         if (is_int($message)) {
             $message = ForumMessage::query()->find($message);
