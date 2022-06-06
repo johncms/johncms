@@ -157,26 +157,6 @@ class ForumTopic extends Model
     }
 
     /**
-     * Добавляем глобальные ограничения
-     *
-     * @return void
-     */
-/*    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::addGlobalScope(
-            'access',
-            static function (Builder $builder) {
-                $user = di(User::class);
-                if ($user->rights < 7) {
-                    $builder->where('deleted', '!=', 1)->orWhereNull('deleted');
-                }
-            }
-        );
-    }*/
-
-    /**
      * Добавляем в выборку количество непрочитанных сообщений с момента последнего прочтения темы.
      *
      * @param Builder $query
@@ -197,6 +177,11 @@ class ForumTopic extends Model
                 ->addSelect('forum_topic.*');
         }
         return $query;
+    }
+
+    public function scopeWithoutDeleted(Builder $query): Builder
+    {
+        return $query->where('deleted', '!=', 1)->orWhereNull('deleted');
     }
 
     /**

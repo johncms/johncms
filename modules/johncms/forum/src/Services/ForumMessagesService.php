@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Forum\Messages;
+namespace Johncms\Forum\Services;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -85,7 +85,8 @@ class ForumMessagesService
             if ($countMessages === 1) {
                 // If the last post of the topic then hide topic
                 $topic = $message->topic;
-                $topic->update(['deleted' => true, 'deleted_by' => $this->user?->display_name]);
+                $topicService = di(ForumTopicService::class);
+                $topicService->hide($topic);
             } else {
                 // else hide the post
                 $message->update(['deleted' => true, 'deleted_by' => $this->user?->display_name]);

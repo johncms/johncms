@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Forum\Controllers;
 
 use Johncms\Forum\Resources\UnreadTopicResource;
-use Johncms\Forum\Topics\ForumTopicService;
+use Johncms\Forum\Services\ForumTopicService;
 
 class LatestTopicsController extends BaseForumController
 {

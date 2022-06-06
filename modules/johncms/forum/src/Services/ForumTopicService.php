@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Forum\Topics;
+namespace Johncms\Forum\Services;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
+use Johncms\Forum\ForumPermissions;
+use Johncms\Forum\Models\ForumFile;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Forum\Models\ForumSection;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumUnread;
+use Johncms\Forum\Models\ForumVote;
+use Johncms\Forum\Models\ForumVoteUser;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\System\Legacy\Tools;
@@ -42,7 +47,7 @@ class ForumTopicService
             })
             ->leftJoin('forum_sections as sect', 'sect.id', '=', 'section_id')
             ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
-            ->when(! $this->user?->hasAnyRole(), function (Builder $builder) {
+            ->when(! $this->user->hasAnyRole(), function (Builder $builder) {
                 return $builder->where('deleted', '<>', 1)->orWhereNull('deleted');
             })
             ->where(function (Builder $builder) {
@@ -55,6 +60,10 @@ class ForumTopicService
     {
         return ForumTopic::query()
             ->read()
+            ->when(! $this->user?->hasPermission(ForumPermissions::MANAGE_TOPICS), function (Builder $builder) {
+                /** @var ForumTopic $builder */
+                return $builder->withoutDeleted();
+            })
             ->when($sectionId, function (Builder $builder) use ($sectionId) {
                 return $builder->where('section_id', '=', $sectionId);
             })
@@ -140,5 +149,45 @@ class ForumTopicService
             'topic'   => $topic,
             'message' => $message,
         ];
+    }
+
+    /**
+     * Completely delete the topic and all related data
+     */
+    public function delete(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+
+        DB::transaction(function () use ($topic) {
+            $files = ForumFile::query()->where('topic', $topic->id)->get();
+            if ($files->count() > 0) {
+                foreach ($files as $file) {
+                    unlink(UPLOAD_PATH . 'forum/attach/' . $file->filename);
+                    $file->delete();
+                }
+            }
+
+            $topic->delete();
+            (new ForumMessage())->where('topic_id', $topic->id)->delete();
+            (new ForumVote())->where('topic', $topic->id)->delete();
+            (new ForumVoteUser())->where('topic', $topic->id)->delete();
+            (new ForumUnread())->where('topic_id', $topic->id)->delete();
+        });
+    }
+
+    /**
+     * Mark the topic as hidden
+     */
+    public function hide(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        DB::transaction(function () use ($topic) {
+            $topic->update(['deleted' => true, 'deleted_by' => $this->user?->display_name]);
+            (new ForumFile())->where('topic', $topic->id)->update(['del' => 1]);
+        });
     }
 }
