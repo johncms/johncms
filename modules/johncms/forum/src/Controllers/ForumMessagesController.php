@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ForumMessagesController extends BaseForumController
 {
-    public function addMessage(int $topicId, User $user, Tools $tools, Request $request, ForumUtils $forumUtils, ForumTopicService $topicService): string|ResponseInterface
+    public function addMessage(int $topicId, User $user, Tools $tools, Request $request, ForumUtils $forumUtils, ForumTopicService $topicService): string | ResponseInterface
     {
         $set_forum = [
             'farea'    => 0,
@@ -199,6 +199,10 @@ class ForumMessagesController extends BaseForumController
             $messagesService->delete($message);
         } elseif ($actionType === 'hide') {
             $messagesService->hide($message);
+        }
+
+        if ($message->topic->deleted && ! $user->hasPermission(ForumPermissions::MANAGE_POSTS)) {
+            return new RedirectResponse($message->topic->section->url);
         }
 
         return new RedirectResponse($message->topic->url);

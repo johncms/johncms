@@ -92,8 +92,7 @@ class MessageResource extends AbstractResource
         if (
             ($user->hasPermission(['forum_manage_posts', 'forum_manage_topics'])/* || $curator*/)
             //|| ($i === 1 && $access === 2 && $message->user_id === $user->id)
-            //|| ($message->user_id === $user->id && ! $set_forum['upfp'] && ($start + $i) === $total && $message->date > time() - 300)
-            //|| ($message->user_id === $user->id && $set_forum['upfp'] && $start === 0 && $i === 1 && $message->date > time() - 300)
+            || $this->user_id === $user->id
         ) {
             return true;
         }
