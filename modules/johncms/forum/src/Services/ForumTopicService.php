@@ -152,6 +152,18 @@ class ForumTopicService
     }
 
     /**
+     * Update the topic fields
+     */
+    public function update(int | ForumTopic $topic, array $fields): ForumTopic
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        $topic->update($fields);
+        return $topic;
+    }
+
+    /**
      * Completely delete the topic and all related data
      */
     public function delete(int | ForumTopic $topic): void

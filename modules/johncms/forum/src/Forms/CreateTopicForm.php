@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Forms;
 
+use Illuminate\Database\Eloquent\Builder;
 use Johncms\Forms\AbstractForm;
 use Johncms\Forms\Inputs\Checkbox;
 use Johncms\Forms\Inputs\InputText;
@@ -37,25 +38,30 @@ class CreateTopicForm extends AbstractForm
                     'ModelNotExists' => [
                         'model'   => ForumTopic::class,
                         'field'   => 'name',
-                        'exclude' => function ($query) {
-                            $query->where('section_id', $this->sectionId);
+                        'exclude' => function (Builder $query) {
+                            $query->where('section_id', $this->sectionId)
+                                ->when($this->hasValues(), function (Builder $builder) {
+                                    return $builder->where('id', '!=', $this->getValue('id'));
+                                });
                         },
                     ],
                 ]
             );
 
-        $fields['message'] = (new Textarea())
-            ->setLabel(__('Message'))
-            ->setPlaceholder(__('Enter a message'))
-            ->setNameAndId('message')
-            ->setValue($this->getValue('message'))
-            ->setValidationRules(['NotEmpty']);
+        if (! $this->hasValues()) {
+            $fields['message'] = (new Textarea())
+                ->setLabel(__('Message'))
+                ->setPlaceholder(__('Enter a message'))
+                ->setNameAndId('message')
+                ->setValue($this->getValue('message'))
+                ->setValidationRules(['NotEmpty']);
 
-        $fields['add_file'] = (new Checkbox())
-            ->setLabel(__('Add File'))
-            ->setNameAndId('add_file')
-            ->setValue('yes')
-            ->setChecked(! empty($this->getValue('add_file')));
+            $fields['add_file'] = (new Checkbox())
+                ->setLabel(__('Add File'))
+                ->setNameAndId('add_file')
+                ->setValue('yes')
+                ->setChecked(! empty($this->getValue('add_file')));
+        }
 
         // Meta tags
         if ($user->hasAnyRole()) {

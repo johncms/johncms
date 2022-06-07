@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Forms;
 
+use Illuminate\Support\Arr;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Forms\Inputs\AbstractInput;
 use Johncms\Http\Request;
@@ -23,14 +24,26 @@ abstract class AbstractForm
     /** @var AbstractInput[] */
     protected array $formFields = [];
 
+    /** @var array Current field values */
+    protected array $values = [];
+
     protected ?array $requestValues = null;
 
     protected Request $request;
 
-    public function __construct()
+    public function __construct(array $values = [])
     {
+        $this->values = $values;
         $this->request = di(Request::class);
         $this->formFields = $this->prepareFormFields();
+    }
+
+    /**
+     * Check if there are values in the form. Can be used to determine if this is edit form.
+     */
+    public function hasValues(): bool
+    {
+        return ! empty($this->values);
     }
 
     /**
@@ -40,9 +53,9 @@ abstract class AbstractForm
      */
     abstract protected function prepareFormFields(): array;
 
-    public function getValue(string $fieldName, mixed $default = null)
+    public function getValue(string $fieldName, mixed $default = null): mixed
     {
-        return $this->request->getPost($fieldName, $default);
+        return $this->request->getPost($fieldName, Arr::get($this->values, $fieldName, $default));
     }
 
     public function getValidationErrors(): array

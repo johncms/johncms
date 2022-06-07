@@ -31,6 +31,9 @@ return function (Router $router) {
         $route->get('/create-topic/{sectionId:number}[/]', [ForumTopicsController::class, 'create'])->setName('forum.newTopic');
         $route->post('/create-topic-store/{sectionId:number}[/]', [ForumTopicsController::class, 'store'])->setName('forum.storeTopic');
 
+        $route->get('/edit-topic/{topicId:number}[/]', [ForumTopicsController::class, 'edit'])->setName('forum.editTopic');
+        $route->post('/edit-topic-store/{topicId:number}[/]', [ForumTopicsController::class, 'changeTopic'])->setName('forum.changeTopic');
+
         // Delete topic
         $route->get('/delete-topic/{topicId:number}[/]', [ForumTopicsController::class, 'delete'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))

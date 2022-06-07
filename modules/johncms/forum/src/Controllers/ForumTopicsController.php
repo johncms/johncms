@@ -224,7 +224,6 @@ class ForumTopicsController extends BaseForumController
         return $this->render->render(
             'forum::new_topic',
             [
-                'id'       => $sectionId,
                 'back_url' => $currentSection->url,
                 'data'     => $formData,
             ]
@@ -278,6 +277,60 @@ class ForumTopicsController extends BaseForumController
         } catch (ValidationException $validationException) {
             // Redirect if the form is not valid
             return (new RedirectResponse(route('forum.newTopic', ['sectionId' => $sectionId])))
+                ->withPost()
+                ->withValidationErrors($validationException->getErrors());
+        }
+    }
+
+    /**
+     * The topic edit page
+     */
+    public function edit(int $topicId, ForumUtils $forumUtils, Session $session): string
+    {
+        $topic = ForumTopic::query()->where('id', $topicId)->firstOrFail();
+
+        $form = new CreateTopicForm($topic->toArray());
+        $form->setSectionId($topic->section_id);
+
+        $formData = [
+            'formFields'       => $form->getFormFields(),
+            'storeUrl'         => route('forum.changeTopic', ['topicId' => $topic->id]),
+            'validationErrors' => $form->getValidationErrors(),
+            'errors'           => $session->getFlash('errors'),
+        ];
+
+        $forumUtils->buildBreadcrumbs($topic->section->parent, $topic->section->name, $topic->section->url);
+        $this->navChain->add($topic->name);
+        $this->metaTagManager->setAll(__('Edit Topic'));
+
+        return $this->render->render(
+            'forum::new_topic',
+            [
+                'back_url' => $topic->url,
+                'data'     => $formData,
+            ]
+        );
+    }
+
+    /**
+     * Store the topic changes
+     */
+    public function changeTopic(int $topicId, ForumTopicService $topicService): RedirectResponse
+    {
+        $topic = ForumTopic::query()->where('id', $topicId)->firstOrFail();
+        $form = new CreateTopicForm($topic->toArray());
+        $form->setSectionId($topic->section_id);
+        try {
+            // Validate the form
+            $form->validate();
+            $values = $form->getRequestValues();
+
+            // Update the topic
+            $topic = $topicService->update($topic, $values);
+            return new RedirectResponse($topic->url);
+        } catch (ValidationException $validationException) {
+            // Redirect if the form is not valid
+            return (new RedirectResponse(route('forum.editTopic', ['topicId' => $topic->id])))
                 ->withPost()
                 ->withValidationErrors($validationException->getErrors());
         }

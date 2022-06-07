@@ -384,7 +384,7 @@ $this->layout('system::layout/default');
                         <a class="dropdown-item" href="/forum/?act=addvote&amp;id=<?= $id ?>"><?= __('Add Poll') ?></a>
                     <?php endif; ?>
                     <a class="dropdown-item" href="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Curators of the Topic') ?></a>
-                    <a class="dropdown-item" href="/forum/?act=change_topic&amp;id=<?= $id ?>"><?= __('Change the topic') ?></a>
+                    <a class="dropdown-item" href="<?= route('forum.editTopic', ['topicId' => $id]) ?>"><?= __('Change the topic') ?></a>
 
                     <?php if ($topic->closed): ?>
                         <a class="dropdown-item" href="/forum/?act=close&amp;id=<?= $id ?>"><?= __('Open Topic') ?></a>
