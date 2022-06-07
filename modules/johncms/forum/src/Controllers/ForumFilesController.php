@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ForumFilesController extends BaseForumController
 {
-    public function addFile(int $messageId, Request $request, User $user): string|ResponseInterface
+    public function add(int $messageId, Request $request, User $user): string|ResponseInterface
     {
         $extensions = new Collection(config('forum.extensions'));
         $maxFileSize = config('forum.settings.max_file_size', 10240);

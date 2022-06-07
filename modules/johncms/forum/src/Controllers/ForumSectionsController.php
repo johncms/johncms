@@ -49,7 +49,7 @@ class ForumSectionsController extends BaseForumController
         );
     }
 
-    public function section(
+    public function show(
         int $id,
         Session $session,
         ForumCounters $forumCounters,

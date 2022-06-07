@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ForumMessagesController extends BaseForumController
 {
-    public function addMessage(int $topicId, User $user, Tools $tools, Request $request, ForumUtils $forumUtils, ForumTopicService $topicService): string | ResponseInterface
+    public function create(int $topicId, User $user, Tools $tools, Request $request, ForumUtils $forumUtils, ForumTopicService $topicService): string | ResponseInterface
     {
         $set_forum = [
             'farea'    => 0,
@@ -170,7 +170,7 @@ class ForumMessagesController extends BaseForumController
         );
     }
 
-    public function deleteMessage(int $id, User $user): string
+    public function delete(int $id, User $user): string
     {
         $this->metaTagManager->setAll(__('Delete Message'));
         $message = ForumMessage::query()->findOrFail($id);

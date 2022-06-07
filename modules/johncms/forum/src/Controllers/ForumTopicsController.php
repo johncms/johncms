@@ -26,14 +26,13 @@ use Johncms\System\Legacy\Bbcode;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
 
 class ForumTopicsController extends BaseForumController
 {
     /**
      * Show topic
      */
-    public function showTopic(
+    public function show(
         int $id,
         ForumMessagesService $forumMessagesService,
         ForumTopicService $forumTopicService,
@@ -186,7 +185,7 @@ class ForumTopicsController extends BaseForumController
     /**
      * Topic creation page
      */
-    public function newTopic(int $sectionId, User $user, ForumUtils $forumUtils, Session $session)
+    public function create(int $sectionId, User $user, ForumUtils $forumUtils, Session $session): string
     {
         $currentSection = ForumSection::query()->where('section_type', 1)->where('id', $sectionId)->firstOrFail();
 
@@ -232,7 +231,7 @@ class ForumTopicsController extends BaseForumController
         );
     }
 
-    public function storeTopic(int $sectionId, ForumTopicService $topicService, User $user)
+    public function store(int $sectionId, ForumTopicService $topicService, User $user)
     {
         $currentSection = ForumSection::query()->where('section_type', 1)->where('id', $sectionId)->firstOrFail();
 
@@ -287,7 +286,7 @@ class ForumTopicsController extends BaseForumController
     /**
      * The topic delete page
      */
-    public function deleteTopic(int $topicId, User $user): string
+    public function delete(int $topicId, User $user): string
     {
         $topic = ForumTopic::query()->findOrFail($topicId);
         $this->metaTagManager->setAll(__('Delete Topic'));
