@@ -393,7 +393,7 @@ $this->layout('system::layout/default');
                     <?php endif; ?>
 
                     <?php if ($topic->deleted): ?>
-                        <a class="dropdown-item" href="/forum/?act=restore&amp;id=<?= $id ?>"><?= __('Restore Topic') ?></a>
+                        <a class="dropdown-item" href="<?= route('forum.restoreTopic', ['topicId' => $id]) ?>"><?= __('Restore Topic') ?></a>
                     <?php endif; ?>
 
                     <a class="dropdown-item" href="<?= route('forum.deleteTopic', ['topicId' => $id]) ?>"><?= __('Delete Topic') ?></a>

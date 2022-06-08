@@ -372,6 +372,16 @@ class ForumTopicsController extends BaseForumController
     }
 
     /**
+     * Restore the topic
+     */
+    public function restore(int $topicId, ForumTopicService $topicService): RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $topicService->restore($topic);
+        return new RedirectResponse($topic->url);
+    }
+
+    /**
      * Close the topic
      */
     public function close(int $topicId, ForumTopicService $topicService): RedirectResponse

@@ -204,6 +204,17 @@ class ForumTopicService
     }
 
     /**
+     * Restore the topic
+     */
+    public function restore(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        $topic->update(['deleted' => null, 'deleted_by' => $this->user?->display_name]);
+    }
+
+    /**
      * Mark the topic as closed
      */
     public function close(int | ForumTopic $topic): void

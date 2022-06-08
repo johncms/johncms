@@ -42,6 +42,10 @@ return function (Router $router) {
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.confirmDelete');
 
+        $route->get('/restore-topic/{topicId:number}[/]', [ForumTopicsController::class, 'restore'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.restoreTopic');
+
         $route->get('/close-topic/{topicId:number}[/]', [ForumTopicsController::class, 'close'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.closeTopic');
