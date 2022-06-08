@@ -42,6 +42,14 @@ return function (Router $router) {
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.confirmDelete');
 
+        $route->get('/close-topic/{topicId:number}[/]', [ForumTopicsController::class, 'close'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.closeTopic');
+
+        $route->get('/open-topic/{topicId:number}[/]', [ForumTopicsController::class, 'open'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.openTopic');
+
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [ForumMessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');

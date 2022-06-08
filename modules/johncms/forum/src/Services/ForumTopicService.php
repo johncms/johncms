@@ -202,4 +202,26 @@ class ForumTopicService
             (new ForumFile())->where('topic', $topic->id)->update(['del' => 1]);
         });
     }
+
+    /**
+     * Mark the topic as closed
+     */
+    public function close(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        $topic->update(['closed' => true, 'closed_by' => $this->user->display_name]);
+    }
+
+    /**
+     * Open the topic
+     */
+    public function open(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        $topic->update(['closed' => null, 'closed_by' => null]);
+    }
 }

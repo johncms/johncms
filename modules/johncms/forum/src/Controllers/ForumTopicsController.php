@@ -317,7 +317,7 @@ class ForumTopicsController extends BaseForumController
      */
     public function changeTopic(int $topicId, ForumTopicService $topicService): RedirectResponse
     {
-        $topic = ForumTopic::query()->where('id', $topicId)->firstOrFail();
+        $topic = ForumTopic::query()->findOrFail($topicId);
         $form = new CreateTopicForm($topic->toArray());
         $form->setSectionId($topic->section_id);
         try {
@@ -369,5 +369,25 @@ class ForumTopicsController extends BaseForumController
         }
 
         return new RedirectResponse($topic->section->url);
+    }
+
+    /**
+     * Close the topic
+     */
+    public function close(int $topicId, ForumTopicService $topicService): RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $topicService->close($topic);
+        return new RedirectResponse($topic->url);
+    }
+
+    /**
+     * Open the topic
+     */
+    public function open(int $topicId, ForumTopicService $topicService): RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $topicService->open($topic);
+        return new RedirectResponse($topic->url);
     }
 }
