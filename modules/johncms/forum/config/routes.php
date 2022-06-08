@@ -62,6 +62,13 @@ return function (Router $router) {
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.unpinTopic');
 
+        $route->get('/move-topic/{topicId:number}[/]', [ForumTopicsController::class, 'move'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.moveTopic');
+        $route->post('/move-topic/{topicId:number}[/]', [ForumTopicsController::class, 'confirmMove'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.confirmMoveTopic');
+
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [ForumMessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');

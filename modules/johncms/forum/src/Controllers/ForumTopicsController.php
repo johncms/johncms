@@ -18,6 +18,7 @@ use Johncms\Forum\Models\ForumSection;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Resources\MessageResource;
+use Johncms\Forum\Services\ForumSectionService;
 use Johncms\Forum\Services\ForumTopicService;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
@@ -418,6 +419,28 @@ class ForumTopicsController extends BaseForumController
     {
         $topic = ForumTopic::query()->findOrFail($topicId);
         $topicService->unpin($topic);
+        return new RedirectResponse($topic->url);
+    }
+
+    public function move(int $topicId, ForumSectionService $sectionService): string
+    {
+        $sections = $sectionService->getTree();
+        $topic = ForumTopic::query()->findOrFail($topicId);
+
+        return $this->render->render('forum::move_topic', [
+            'sections'  => $sections,
+            'topic'     => $topic,
+            'actionUrl' => route('forum.confirmMoveTopic', ['topicId' => $topicId]),
+        ]);
+    }
+
+    public function confirmMove(int $topicId, ForumTopicService $topicService, Request $request): RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $newSection = $request->getPost('section');
+        if ($newSection) {
+            $topicService->update($topic, ['section_id' => $newSection]);
+        }
         return new RedirectResponse($topic->url);
     }
 }
