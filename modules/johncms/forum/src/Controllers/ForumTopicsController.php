@@ -390,4 +390,24 @@ class ForumTopicsController extends BaseForumController
         $topicService->open($topic);
         return new RedirectResponse($topic->url);
     }
+
+    /**
+     * Open the topic
+     */
+    public function pin(int $topicId, ForumTopicService $topicService): RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $topicService->pin($topic);
+        return new RedirectResponse($topic->url);
+    }
+
+    /**
+     * Open the topic
+     */
+    public function unpin(int $topicId, ForumTopicService $topicService): RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $topicService->unpin($topic);
+        return new RedirectResponse($topic->url);
+    }
 }

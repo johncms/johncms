@@ -224,4 +224,20 @@ class ForumTopicService
         }
         $topic->update(['closed' => null, 'closed_by' => null]);
     }
+
+    public function pin(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        $topic->update(['pinned' => true]);
+    }
+
+    public function unpin(int | ForumTopic $topic): void
+    {
+        if (is_int($topic)) {
+            $topic = ForumTopic::query()->findOrFail($topic);
+        }
+        $topic->update(['pinned' => null]);
+    }
 }

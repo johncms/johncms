@@ -50,6 +50,14 @@ return function (Router $router) {
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.openTopic');
 
+        $route->get('/pin-topic/{topicId:number}[/]', [ForumTopicsController::class, 'pin'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.pinTopic');
+
+        $route->get('/unpin-topic/{topicId:number}[/]', [ForumTopicsController::class, 'unpin'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.unpinTopic');
+
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [ForumMessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');
