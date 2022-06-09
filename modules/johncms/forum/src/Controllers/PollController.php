@@ -149,4 +149,35 @@ class PollController extends BaseForumController
             ]
         );
     }
+
+    public function delete(int $topicId, Request $request): string
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+
+        if ($request->getPost('confirm', 0) === 'yes') {
+            (new ForumVote())->where('topic', $topicId)->delete();
+            (new ForumVoteUser())->where('topic', $topicId)->delete();
+            (new ForumTopic())->where('id', $topicId)->update(['has_poll' => null]);
+
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Delete Poll'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Poll deleted'),
+                    'back_url'      => $topic->last_page_url,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        return $this->render->render(
+            'forum::delete_poll',
+            [
+                'actionUrl' => route('forum.deletePoll', ['topicId' => $topicId]),
+                'id'        => $topicId,
+                'back_url'  => $topic->last_page_url,
+            ]
+        );
+    }
 }

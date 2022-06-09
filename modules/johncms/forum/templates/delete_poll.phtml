@@ -1,26 +1,12 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
-/**
  * @var $title
  * @var $page_title
  * @var $back_url
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-danger">
@@ -28,8 +14,13 @@ $this->layout(
         <?= __('Do you really want to delete a poll?') ?>
     </div>
     <div>
-        <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
-        <a href="<?= $back_url ?>" class="me-2 btn btn-primary btn-sm"><?= __('Cancel') ?></a>
+        <form action="" method="post">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+            <input type="hidden" name="confirm" value="yes">
+
+            <button type="submit" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></button>
+            <a href="<?= $back_url ?>" class="me-2 btn btn-primary btn-sm"><?= __('Cancel') ?></a>
+        </form>
     </div>
 </div>
 
