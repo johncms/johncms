@@ -19,7 +19,7 @@ class Request extends ServerRequest
 {
     public const POST_SESSION_KEY = '_POST';
 
-    protected array|null $json = null;
+    protected array | null $json = null;
 
     /**
      * Return a ServerRequest populated with superglobals:
@@ -91,7 +91,7 @@ class Request extends ServerRequest
         return $this->filterVar($name, $this->getServerParams(), $filter, $options) ?? $default;
     }
 
-    private function filterVar(int|string $key, mixed $var, int $filter, mixed $options): mixed
+    private function filterVar(int | string $key, mixed $var, int $filter, mixed $options): mixed
     {
         if (is_array($var) && isset($var[$key])) {
             if (is_array($var[$key])) {
@@ -166,5 +166,10 @@ class Request extends ServerRequest
     public function getIpViaProxy(): ?string
     {
         return $this->getServer('HTTP_X_FORWARDED_FOR', '127.0.0.1', FILTER_VALIDATE_IP);
+    }
+
+    public function isPost(): bool
+    {
+        return $this->getMethod() === 'POST';
     }
 }

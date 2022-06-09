@@ -5,6 +5,7 @@ use Johncms\Forum\Controllers\ForumMessagesController;
 use Johncms\Forum\Controllers\ForumSectionsController;
 use Johncms\Forum\Controllers\ForumTopicsController;
 use Johncms\Forum\Controllers\LatestTopicsController;
+use Johncms\Forum\Controllers\PollController;
 use Johncms\Forum\ForumPermissions;
 use Johncms\Users\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Users\Middlewares\HasPermissionMiddleware;
@@ -68,6 +69,12 @@ return function (Router $router) {
         $route->post('/move-topic/{topicId:number}[/]', [ForumTopicsController::class, 'confirmMove'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.confirmMoveTopic');
+
+        $route->get('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.addPoll');
+        $route->post('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
 
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'delete'])->setName('forum.deletePost');

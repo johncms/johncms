@@ -1,31 +1,17 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
-/**
- * @var $title
- * @var $page_title
  * @var $poll_name
  * @var $back_url
  * @var $count_vote
  * @var $votes
+ * @var $actionUrl
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-<form name="new_topic" action="/forum/?act=addvote&amp;id=<?= $id ?>" method="post">
+<form name="new_topic" action="<?= $actionUrl ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <input type="hidden" name="count_vote" value="<?= $count_vote ?>">
     <div class="form-group">
         <label for="name_vote"><?= __('Poll') ?></label>
