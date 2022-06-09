@@ -123,6 +123,7 @@ class ForumTopicsController extends BaseForumController
 
             $poll_data['resultsUrl'] = $request->getQueryString([], ['vote_result' => 1]);
             $poll_data['returnVoteUrl'] = $request->getQueryString(['vote_result']);
+            $poll_data['voteUrl'] = route('forum.vote', ['topicId' => $currentTopic->id]);
             $poll_data['clip'] = $clip_forum;
         }
 

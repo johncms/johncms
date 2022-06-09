@@ -76,6 +76,8 @@ return function (Router $router) {
         $route->post('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
 
+        $route->post('/vote/{topicId:number}[/]', [PollController::class, 'vote'])->setName('forum.vote');
+
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [ForumMessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');

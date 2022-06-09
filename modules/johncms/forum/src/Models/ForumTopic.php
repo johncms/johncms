@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\Serialize;
+use Johncms\Forum\ForumPermissions;
 use Johncms\Settings\SiteSettings;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -182,6 +183,15 @@ class ForumTopic extends Model
     public function scopeWithoutDeleted(Builder $query): Builder
     {
         return $query->where('deleted', '!=', 1)->orWhereNull('deleted');
+    }
+
+    public function scopeWithoutDeletedForUsers(Builder $query): Builder
+    {
+        $user = di(User::class);
+        if (! $user?->hasPermission(ForumPermissions::MANAGE_TOPICS)) {
+            return $query->withoutDeleted();
+        }
+        return $query;
     }
 
     /**

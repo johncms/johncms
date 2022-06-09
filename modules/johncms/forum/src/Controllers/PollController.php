@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Controllers;
 
+use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumVote;
+use Johncms\Forum\Models\ForumVoteUser;
 use Johncms\Forum\Services\ForumTopicService;
 use Johncms\Http\Request;
+use Johncms\Users\User;
 
 class PollController extends BaseForumController
 {
@@ -111,6 +114,38 @@ class PollController extends BaseForumController
                 'count_vote' => $count_vote,
                 'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
                 'votes'      => $votes,
+            ]
+        );
+    }
+
+    public function vote(int $topicId, User $user, Request $request): string
+    {
+        $topic = ForumTopic::query()->withoutDeletedForUsers()->findOrFail($topicId);
+        $voteId = $request->getPost('vote', 0, FILTER_VALIDATE_INT);
+
+        // Check if exists the given option
+        $vote = ForumVote::query()->where('type', 2)->where('id', $voteId)->where('topic', $topicId)->firstOrFail();
+
+        $voteUser = ForumVoteUser::query()->where('user', $user->id)->where('topic', $topicId)->count();
+        if ($voteUser > 0) {
+            throw new PageNotFoundException();
+        }
+
+        ForumVoteUser::query()->create(['topic' => $topicId, 'user' => $user->id, 'vote' => $voteId]);
+        $vote->increment('count');
+
+        $baseVote = ForumVote::query()->where('type', 1)->where('topic', $topicId)->first();
+        $baseVote->increment('count');
+
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'         => __('Forum'),
+                'page_title'    => __('Forum'),
+                'type'          => 'alert-success',
+                'message'       => __('Vote accepted'),
+                'back_url'      => $topic->last_page_url,
+                'back_url_name' => __('Back'),
             ]
         );
     }

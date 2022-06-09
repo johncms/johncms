@@ -65,7 +65,8 @@ $this->layout('system::layout/default');
     <!-- Poll block -->
     <div class="h3"><?= $topic_vote->name ?></div>
     <?php if ($poll_data['show_form']): ?>
-        <form action="/forum/?act=vote&amp;id=<?= $id ?>" method="post" class="mb-3">
+        <form action="<?= $poll_data['voteUrl'] ?>" method="post" class="mb-3">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
             <?php foreach ($poll_data['results'] as $item): ?>
                 <div class="custom-control custom-radio">
                     <input type="radio" id="vote_<?= $item['id'] ?>" name="vote" value="<?= $item['id'] ?>" required class="form-check-input">
