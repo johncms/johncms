@@ -68,15 +68,15 @@ class ForumVote extends Model
     {
         /** @var User $user */
         $user = di(User::class);
-        if ($user->is_valid) {
+        if ($user) {
             return $query->selectSub(
                 (new ForumVoteUser())
                     ->selectRaw('count(*)')
-                    ->whereRaw('cms_forum_vote_users.topic = cms_forum_vote.topic')
+                    ->whereRaw('forum_vote_users.topic = forum_vote.topic')
                     ->where('user', '=', $user->id),
                 'vote_user'
             )
-                ->addSelect('cms_forum_vote.*');
+                ->addSelect('forum_vote.*');
         }
         return $query;
     }

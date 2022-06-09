@@ -55,7 +55,7 @@ $this->layout('system::layout/default');
     <div class="alert alert-danger">
         <?= __('Topic deleted by') ?> <b><?= $topic->deleted_by ?></b>
     </div>
-<?php elseif (! empty($topic->deleted_by) && $user->rights >= 7): ?>
+<?php elseif (! empty($topic->deleted_by) && $user?->hasPermission(\Johncms\Forum\ForumPermissions::MANAGE_TOPICS)): ?>
     <div class="alert alert-success">
         <?= __('Undelete topic') ?> <b><?= $topic->deleted_by ?></b>
     </div>
@@ -74,7 +74,7 @@ $this->layout('system::layout/default');
             <?php endforeach; ?>
             <div class="mt-2">
                 <button type="submit" name="submit" value="1" class="btn btn-success btn-sm"><?= __('Vote') ?></button>
-                <a class="btn btn-outline-secondary btn-sm" href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;vote_result<?= $poll_data['clip'] ?>"><?= __('Results') ?></a>
+                <a class="btn btn-outline-secondary btn-sm" href="<?= $poll_data['resultsUrl'] ?>"><?= __('Results') ?></a>
             </div>
         </form>
     <?php else: ?>
@@ -95,15 +95,15 @@ $this->layout('system::layout/default');
         <div class="mb-3">
             <div>
                 <?= __('Total votes') ?>:
-                <?php if ($user->rights > 6): ?>
+                <?php if ($user?->hasAnyRole()): ?>
                     <a href="?act=users&amp;id=<?= $id ?>"><?= $topic_vote->count ?></a>
                 <?php else: ?>
                     <?= $topic_vote->count ?>
                 <?php endif; ?>
             </div>
-            <?php if ($topic_vote->vote_user !== 1 && $user->isValid()): ?>
+            <?php if ($topic_vote->vote_user !== 1 && $user): ?>
                 <div>
-                    <a href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start . $poll_data['clip'] ?>"><?= __('Vote') ?></a>
+                    <a href="<?= $poll_data['returnVoteUrl'] ?>"><?= __('Vote') ?></a>
                 </div>
             <?php endif; ?>
         </div>

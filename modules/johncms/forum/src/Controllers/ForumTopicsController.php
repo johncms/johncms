@@ -39,7 +39,8 @@ class ForumTopicsController extends BaseForumController
         ForumTopicService $forumTopicService,
         ForumUtils $forumUtils,
         ?User $user,
-        ForumCounters $forumCounters
+        ForumCounters $forumCounters,
+        Request $request
     ): string {
         $forumSettings = di('config')['forum']['settings'];
 
@@ -97,7 +98,7 @@ class ForumTopicsController extends BaseForumController
                 ->where('topic', '=', $id)
                 ->first();
 
-            $poll_data['show_form'] = (! $currentTopic->closed && ! isset($_GET['vote_result']) && $user->is_valid && $topic_vote->vote_user !== 1);
+            $poll_data['show_form'] = (! $currentTopic->closed && ! isset($_GET['vote_result']) && $user && $topic_vote->vote_user !== 1);
             $poll_data['results'] = [];
 
             $color_classes = di('config')['forum']['answer_colors'];
@@ -120,6 +121,8 @@ class ForumTopicsController extends BaseForumController
                 $poll_data['results'][] = $vote;
             }
 
+            $poll_data['resultsUrl'] = $request->getQueryString([], ['vote_result' => 1]);
+            $poll_data['returnVoteUrl'] = $request->getQueryString(['vote_result']);
             $poll_data['clip'] = $clip_forum;
         }
 
