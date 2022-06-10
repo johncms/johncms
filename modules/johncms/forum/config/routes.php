@@ -1,5 +1,6 @@
 <?php
 
+use Johncms\Forum\Controllers\CuratorsController;
 use Johncms\Forum\Controllers\ForumFilesController;
 use Johncms\Forum\Controllers\ForumMessagesController;
 use Johncms\Forum\Controllers\ForumSectionsController;
@@ -86,6 +87,12 @@ return function (Router $router) {
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.deletePoll');
         $route->post('/delete-poll/{topicId:number}[/]', [PollController::class, 'delete'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
+
+        $route->get('/curators/{topicId:number}[/]', [CuratorsController::class, 'index'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.curators');
+        $route->post('/curators/{topicId:number}[/]', [CuratorsController::class, 'index'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
 
         $route->post('/vote/{topicId:number}[/]', [PollController::class, 'vote'])->setName('forum.vote');
