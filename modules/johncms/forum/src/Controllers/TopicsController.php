@@ -28,7 +28,7 @@ use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 use Psr\Http\Message\ResponseInterface;
 
-class ForumTopicsController extends BaseForumController
+class TopicsController extends BaseForumController
 {
     /**
      * Show topic

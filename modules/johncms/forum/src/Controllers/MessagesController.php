@@ -19,7 +19,7 @@ use Johncms\Users\User;
 use Johncms\Users\UserManager;
 use Psr\Http\Message\ResponseInterface;
 
-class ForumMessagesController extends BaseForumController
+class MessagesController extends BaseForumController
 {
     public function create(int $topicId, User $user, Tools $tools, Request $request, ForumUtils $forumUtils, ForumTopicService $topicService): string | ResponseInterface
     {
@@ -103,14 +103,24 @@ class ForumMessagesController extends BaseForumController
                 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
             }
 
-            // Проверяем, было ли последнее сообщение от того же автора?
+            // Check the previous message
+            $previousMessage = ForumMessage::query()
+                ->withCount('files')
+                ->where('topic_id', $topicId)
+                ->when(! $user->hasPermission(ForumPermissions::MANAGE_POSTS), function (Builder $builder) {
+                    return $builder->visible();
+                })
+                ->orderByDesc('date')
+                ->first();
+
             $update = false;
             if ($previousMessage) {
                 $update = true;
                 if (
-                    ! isset($_POST['addfiles']) &&
-                    $previousMessage->date + 3600 < strtotime('+ 1 hour') &&
-                    empty($previousMessage->files_count)
+                    ! isset($_POST['addfiles'])
+                    && $previousMessage->date + 3600 < (time() + 3600)
+                    && $previousMessage->user_id === $user->id
+                    && empty($previousMessage->files_count)
                 ) {
                     $newText = $previousMessage->text;
                     if (! str_contains($newText, '[timestamp]')) {

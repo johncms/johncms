@@ -12,7 +12,7 @@ use Johncms\Http\Request;
 use Johncms\Users\User;
 use Psr\Http\Message\ResponseInterface;
 
-class ForumFilesController extends BaseForumController
+class FilesController extends BaseForumController
 {
     public function add(int $messageId, Request $request, User $user): string|ResponseInterface
     {

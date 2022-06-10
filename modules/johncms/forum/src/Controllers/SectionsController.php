@@ -16,7 +16,7 @@ use Johncms\Http\Session;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 
-class ForumSectionsController extends BaseForumController
+class SectionsController extends BaseForumController
 {
     public function index(Session $session, ForumCounters $forumCounters): string
     {
