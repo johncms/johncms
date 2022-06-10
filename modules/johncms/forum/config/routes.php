@@ -76,6 +76,12 @@ return function (Router $router) {
         $route->post('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
 
+        $route->get('/edit-poll/{topicId:number}[/]', [PollController::class, 'edit'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.editPoll');
+        $route->post('/edit-poll/{topicId:number}[/]', [PollController::class, 'edit'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
+
         $route->get('/delete-poll/{topicId:number}[/]', [PollController::class, 'delete'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
             ->setName('forum.deletePoll');

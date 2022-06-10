@@ -10,6 +10,7 @@ use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Models\ForumVoteUser;
 use Johncms\Forum\Services\ForumTopicService;
 use Johncms\Http\Request;
+use Johncms\Http\Response\RedirectResponse;
 use Johncms\Users\User;
 
 class PollController extends BaseForumController
@@ -114,6 +115,130 @@ class PollController extends BaseForumController
                 'count_vote' => $count_vote,
                 'poll_name'  => htmlentities($_POST['name_vote'] ?? '', ENT_QUOTES, 'UTF-8'),
                 'votes'      => $votes,
+            ]
+        );
+    }
+
+    public function edit(int $topicId, User $user, Request $request): RedirectResponse | string
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $poll = ForumVote::query()->where('type', 1)->where('topic', $topicId)->firstOrFail();
+        $pollAnswers = ForumVote::query()->where('type', 2)->where('topic', $topicId)->get();
+        $pollAnswersCount = $pollAnswers->count();
+
+        if (isset($_GET['delvote']) && ! empty($_GET['vote'])) {
+            $vote = $request->getQuery('vote', 0, FILTER_VALIDATE_INT);
+            $deleteVote = ForumVote::query()->where('type', 2)->where('topic', $topicId)->where('id', $vote)->first();
+
+            if ($pollAnswersCount <= 2) {
+                return new RedirectResponse(route('forum.editPoll', ['topicId' => $topicId]));
+            }
+
+            if ($deleteVote) {
+                if (isset($_GET['yes'])) {
+                    ForumVote::query()->where('id', $vote)->delete();
+                    $countus = ForumVoteUser::query()->where('vote', $vote)->where('topic', $topicId)->count();
+                    $topic_vote = ForumVote::query()->where('type', 1)->where('topic', $topicId)->first();
+                    $totalCount = $topic_vote->count - $countus;
+                    $topic_vote->update(['count' => $totalCount]);
+                    ForumVoteUser::query()->where('vote', $vote)->delete();
+                    return new RedirectResponse(route('forum.editPoll', ['topicId' => $topicId]));
+                } else {
+                    return $this->render->render(
+                        'forum::delete_answer',
+                        [
+                            'title'      => __('Delete Answer'),
+                            'page_title' => __('Delete Answer'),
+                            'id'         => $topicId,
+                            'delete_url' => $request->getQueryString([], ['vote' => $vote, 'delvote' => 1, 'yes' => 1]),
+                            'back_url'   => route('forum.editPoll', ['topicId' => $topicId]),
+                        ]
+                    );
+                }
+            } else {
+                return new RedirectResponse(route('forum.editPoll', ['topicId' => $topicId]));
+            }
+        }
+
+        if (isset($_POST['submit'])) {
+            $vote_name = mb_substr(trim($_POST['name_vote']), 0, 250);
+            if (! empty($vote_name)) {
+                $poll->update(['name' => $vote_name]);
+            }
+
+            foreach ($pollAnswers as $pollAnswer) {
+                if (! empty($_POST[$pollAnswer->id . 'vote'])) {
+                    $text = mb_substr(trim($_POST[$pollAnswer->id . 'vote']), 0, 250);
+                    $pollAnswer->update(['name' => $text]);
+                }
+            }
+
+            for ($vote = $pollAnswersCount; $vote < 20; $vote++) {
+                if (! empty($_POST[$vote])) {
+                    $text = mb_substr(trim($_POST[$vote]), 0, 250);
+                    ForumVote::query()->create(['name' => $text, 'type' => 2, 'topic' => $topicId]);
+                }
+            }
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Edit Poll'),
+                    'page_title'    => __('Edit Poll'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Poll changed'),
+                    'back_url'      => $topic->last_page_url,
+                    'back_url_name' => __('Continue'),
+                ]
+            );
+        }
+
+        $answers = [];
+        $i = 0;
+        foreach ($pollAnswers as $pollAnswer) {
+            $answers[] = [
+                'input_name'  => $pollAnswer->id . 'vote',
+                'input_label' => __('Answer') . ' ' . ($i + 1),
+                'input_value' => $pollAnswer->name,
+                'delete_url'  => $pollAnswersCount > 2 ? $request->getQueryString([], ['vote' => $pollAnswer->id, 'delvote' => 1]) : '',
+            ];
+            ++$i;
+        }
+
+        $count_vote = isset($_POST['count_vote']) ? (int) $_POST['count_vote'] : $pollAnswersCount;
+        if ($pollAnswersCount < 20) {
+            if (isset($_POST['plus'])) {
+                ++$count_vote;
+            } elseif (isset($_POST['minus'])) {
+                --$count_vote;
+            }
+
+            if (empty($count_vote)) {
+                $count_vote = $pollAnswersCount;
+            } elseif ($count_vote > 20) {
+                $count_vote = 20;
+            }
+
+            for ($vote = $i; $vote < $count_vote; $vote++) {
+                $answers[] = [
+                    'input_name'  => $vote,
+                    'input_label' => __('Answer') . ' ' . ($vote + 1),
+                    'input_value' => htmlentities($_POST[$vote] ?? '', ENT_QUOTES, 'UTF-8'),
+                ];
+            }
+        }
+
+        return $this->render->render(
+            'forum::edit_poll',
+            [
+                'title'      => __('Edit Poll'),
+                'page_title' => __('Edit Poll'),
+                'id'         => $topicId,
+                'back_url'   => $topic->last_page_url,
+                'saved_vote' => $pollAnswersCount,
+                'count_vote' => $count_vote,
+                'poll_name'  => $poll->name,
+                'votes'      => $answers,
+                'actionUrl'  => route('forum.editPoll', ['topicId' => $topicId]),
             ]
         );
     }
