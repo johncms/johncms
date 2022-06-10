@@ -8,6 +8,7 @@ use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Models\ForumVote;
 use Johncms\Forum\Models\ForumVoteUser;
+use Johncms\Forum\Resources\VoteUserResource;
 use Johncms\Forum\Services\ForumTopicService;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
@@ -119,7 +120,7 @@ class PollController extends BaseForumController
         );
     }
 
-    public function edit(int $topicId, User $user, Request $request): RedirectResponse | string
+    public function edit(int $topicId, Request $request): RedirectResponse | string
     {
         $topic = ForumTopic::query()->findOrFail($topicId);
         $poll = ForumVote::query()->where('type', 1)->where('topic', $topicId)->firstOrFail();
@@ -302,6 +303,29 @@ class PollController extends BaseForumController
                 'actionUrl' => route('forum.deletePoll', ['topicId' => $topicId]),
                 'id'        => $topicId,
                 'back_url'  => $topic->last_page_url,
+            ]
+        );
+    }
+
+    public function users(int $topicId): string
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $poll = ForumVote::query()->where('type', 1)->where('topic', $topicId)->firstOrFail();
+        $users = ForumVoteUser::query()->where('topic', $topicId)->with('userData', 'userData.activity')->paginate();
+        $userResource = VoteUserResource::createFromCollection($users);
+
+        $this->metaTagManager->setAll(__('Who voted in the poll'));
+
+        return $this->render->render(
+            'forum::voted_users',
+            [
+                'empty_message' => __('No one has voted in this poll yet'),
+                'poll_name'     => $poll->name,
+                'items'         => $userResource->getItems(),
+                'pagination'    => $users->render(),
+                'total'         => $users->total(),
+                'id'            => $topicId,
+                'backUrl'       => $topic->last_page_url,
             ]
         );
     }

@@ -20,13 +20,7 @@
  * @var $poll_name
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <h3><?= $poll_name ?></h3>
@@ -43,14 +37,10 @@ $this->layout(
     <div class="mb-n2 pt-1">
         <div><?= __('Total') ?>: <?= $total ?></div>
         <!-- Page switching -->
-        <?php if ($total > $user->config->kmess): ?>
-            <div class="mt-1"><?= $pagination ?></div>
-        <?php endif ?>
+        <div class="mt-1"><?= $pagination ?></div>
     </div>
 <?php endif ?>
 
-<?php if (! empty($id)): ?>
-    <div class="mt-3">
-        <a href="/forum/?type=topic&id=<?= $id ?>"><?= __('Go to Topic') ?></a>
-    </div>
-<?php endif; ?>
+<div class="mt-3">
+    <a href="<?= $backUrl ?>"><?= __('Go to Topic') ?></a>
+</div>

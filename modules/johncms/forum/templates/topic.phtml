@@ -97,7 +97,7 @@ $this->layout('system::layout/default');
             <div>
                 <?= __('Total votes') ?>:
                 <?php if ($user?->hasAnyRole()): ?>
-                    <a href="?act=users&amp;id=<?= $id ?>"><?= $topic_vote->count ?></a>
+                    <a href="<?= route('forum.voteUsers', ['topicId' => $id]) ?>"><?= $topic_vote->count ?></a>
                 <?php else: ?>
                     <?= $topic_vote->count ?>
                 <?php endif; ?>

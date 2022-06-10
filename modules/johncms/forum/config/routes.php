@@ -90,6 +90,8 @@ return function (Router $router) {
 
         $route->post('/vote/{topicId:number}[/]', [PollController::class, 'vote'])->setName('forum.vote');
 
+        $route->get('/vote-users/{topicId:number}[/]', [PollController::class, 'users'])->setName('forum.voteUsers');
+
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [ForumMessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [ForumMessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');

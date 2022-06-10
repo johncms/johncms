@@ -14,6 +14,8 @@ namespace Johncms\Forum\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\Users\User;
 
 /**
  * Class ForumVoteUser
@@ -37,4 +39,9 @@ class ForumVoteUser extends Model
         'topic',
         'vote',
     ];
+
+    public function userData(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user');
+    }
 }
