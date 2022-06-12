@@ -30,6 +30,8 @@ class RenderEngineFactory
         $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
         $engine->loadExtension($container->get(Assets::class));
         $engine->loadExtension($container->get(Avatar::class));
+        $csrfToken = $container->get(Csrf::class)->getToken();
+
         $engine->addData(
             [
                 'container'  => $container,
@@ -37,7 +39,8 @@ class RenderEngineFactory
                 'locale'     => $container->get(Translator::class)->getLocale(),
                 'user'       => $container->get(User::class),
                 'tools'      => $container->get(Tools::class),
-                'csrf_token' => $container->get(Csrf::class)->getToken(),
+                'csrf_token' => $csrfToken,
+                'csrf_input' => '<input type="hidden" name="csrf_token" value="' . $csrfToken . '">',
                 'metaTags'   => $container->get(MetaTagManager::class),
             ]
         );

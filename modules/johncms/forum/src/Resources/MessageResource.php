@@ -34,7 +34,7 @@ class MessageResource extends AbstractResource
             'quote_url'   => ($currentUser && $currentUser->id != $this->user_id) ? '/forum/?act=say&type=reply&amp;id=' . $this->id . '&start=&cyt' : null,
 
             // Author or moderator actions
-            'edit_url'    => $canEdit ? '/forum/?act=editpost&amp;id=' . $this->id : null,
+            'edit_url'    => $canEdit ? route('forum.editMessage', ['id' => $this->id]) : null,
             'delete_url'  => $canEdit ? route('forum.deletePost', ['id' => $this->id]) : null,
             'restore_url' => ($this->deleted && $currentUser?->hasPermission(ForumPermissions::MANAGE_POSTS)) ? '/forum/?act=editpost&amp;do=restore&amp;id=' . $this->id : null,
         ];

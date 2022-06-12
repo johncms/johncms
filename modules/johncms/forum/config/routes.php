@@ -26,6 +26,9 @@ return function (Router $router) {
         $route->get('/add-message/{topicId:number}[/]', [MessagesController::class, 'create'])->setName('forum.addMessage');
         $route->post('/add-message/{topicId:number}[/]', [MessagesController::class, 'create']);
 
+        $route->get('/edit-post/{id:number}[/]', [MessagesController::class, 'edit'])->setName('forum.editMessage');
+        $route->post('/edit-post/{id:number}[/]', [MessagesController::class, 'edit']);
+
         // Add file
         $route->get('/add-file/{messageId:number}[/]', [FilesController::class, 'add'])->setName('forum.addFile');
         $route->post('/add-file/{messageId:number}[/]', [FilesController::class, 'add']);

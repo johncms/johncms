@@ -217,4 +217,86 @@ class MessagesController extends BaseForumController
 
         return new RedirectResponse($message->topic->url);
     }
+
+    public function edit(int $id, Tools $tools, User $user): RedirectResponse | string
+    {
+        $error = false;
+        $message = ForumMessage::query()->findOrFail($id);
+        $topic = $message->topic;
+
+        if (! $user->hasPermission(ForumPermissions::MANAGE_POSTS) && ! array_key_exists($user->id, $topic->curators)) {
+            if ($message->user_id != $user->id) {
+                $error = __('You are trying to change another\'s post') . '<br /><a href="' . $topic->last_page_url . '">' . __('Back') . '</a>';
+            }
+            if (! $error) {
+                $section = $topic->section;
+                $allow = (int) $section->access;
+                $check = true;
+                if ($allow == 2) {
+                    $firstMessage = ForumMessage::query()->where('topic_id', $topic->id)->orderBy('id')->first();
+                    if ($firstMessage->user_id == $user->id && $firstMessage->id == $id) {
+                        $check = false;
+                    }
+                }
+
+                if ($check && $message->date < time() - 3600) {
+                    $error = __('You cannot edit your posts after %s minutes', 60) . '<br /><a href="' . $topic->last_page_url . '">' . __('Back') . '</a>';
+                }
+            }
+        }
+
+        if ($error) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Error'),
+                    'type'    => 'alert-danger',
+                    'message' => $error,
+                ]
+            );
+        }
+
+        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+
+        if (isset($_POST['submit'])) {
+            if (empty($_POST['msg'])) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You have not entered the message'),
+                        'back_url'      => route('forum.editMessage', ['id' => $id]),
+                        'back_url_name' => __('Repeat'),
+                    ]
+                );
+            }
+
+            $message->update(
+                [
+                    'text'        => $msg,
+                    'edit_time'   => time(),
+                    'editor_name' => $user->display_name,
+                    'edit_count'  => $message->edit_count + 1,
+                ]
+            );
+
+            return new RedirectResponse($topic->last_page_url);
+        }
+
+        $message = (empty($_POST['msg']) ? htmlentities($message->text, ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg']));
+
+        $this->metaTagManager->setAll(__('Edit Message'));
+
+        return $this->render->render(
+            'forum::edit_post',
+            [
+                'id'        => $id,
+                'bbcode'    => di(\Johncms\System\Legacy\Bbcode::class)->buttons('edit_post', 'msg'),
+                'msg'       => $message,
+                'back_url'  => $topic->last_page_url,
+                'actionUrl' => route('forum.editMessage', ['id' => $id]),
+            ]
+        );
+    }
 }
