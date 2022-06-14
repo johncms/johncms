@@ -6,6 +6,7 @@ namespace Johncms\Forum\Controllers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Forum\Ban\ForumBans;
 use Johncms\Forum\Forms\CreateTopicForm;
@@ -156,6 +157,8 @@ class TopicsController extends BaseForumController
 
         $topicMessages = $forumMessagesService->getTopicMessages($id);
         $messages = MessageResource::createFromCollection($topicMessages);
+
+        $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] === $id ? 1 : 0;
 
         return $this->render->render(
             'forum::topic',
@@ -446,5 +449,74 @@ class TopicsController extends BaseForumController
             $topicService->update($topic, ['section_id' => $newSection]);
         }
         return new RedirectResponse($topic->url);
+    }
+
+    public function filter(int $topicId, Request $request): string | RedirectResponse
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+        $action = $request->getQuery('action');
+        $this->metaTagManager->setAll(__('Filter by author'));
+
+        switch ($action) {
+            case 'unset':
+                // Удаляем фильтр
+                unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+                return new RedirectResponse($topic->last_page_url);
+
+            case 'set':
+                $users = $_POST['users'] ?? '';
+                if (empty($_POST['users'])) {
+                    return $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Filter by author'),
+                            'page_title'    => __('Filter by author'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('You have not selected any author'),
+                            'back_url'      => route('forum.filter', ['topicId' => $topicId]),
+                            'back_url_name' => __('Back'),
+                        ]
+                    );
+                }
+
+                $array = [];
+
+                foreach ($users as $val) {
+                    $array[] = (int) $val;
+                }
+
+                $_SESSION['fsort_id'] = $topicId;
+                $_SESSION['fsort_users'] = serialize($array);
+                return new RedirectResponse($topic->url);
+
+            default:
+                $list = [];
+                $users = ForumMessage::query()
+                    ->select('user_id', 'user_name', DB::raw('count(`user_id`) as count'))
+                    ->where('topic_id', $topicId)
+                    ->groupBy('user_id', 'user_name')
+                    ->orderBy('user_name')
+                    ->get();
+                foreach ($users as $user) {
+                    $list[] = [
+                        'user_id'   => $user->user_id,
+                        'user_name' => $user->user_name,
+                        'count'     => $user->count,
+                    ];
+                }
+        }
+
+        return $this->render->render(
+            'forum::filter_by_author',
+            [
+                'id'        => $topicId,
+                'actionUrl' => route('forum.filter', ['topicId' => $topicId], ['action' => 'set']),
+                'back_url'  => $topic->last_page_url,
+                'total'     => $users->count(),
+                'list'      => $list ?? [],
+                'topic'     => $topic ?? [],
+                'saved'     => $saved ?? false,
+            ]
+        );
     }
 }

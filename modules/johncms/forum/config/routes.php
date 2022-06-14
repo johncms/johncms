@@ -42,6 +42,9 @@ return function (Router $router) {
         $route->get('/edit-topic/{topicId:number}[/]', [TopicsController::class, 'edit'])->setName('forum.editTopic');
         $route->post('/edit-topic-store/{topicId:number}[/]', [TopicsController::class, 'changeTopic'])->setName('forum.changeTopic');
 
+        $route->get('/filter/{topicId:number}[/]', [TopicsController::class, 'filter'])->setName('forum.filter');
+        $route->post('/filter/{topicId:number}[/]', [TopicsController::class, 'filter']);
+
         // Delete topic
         $route->get('/delete-topic/{topicId:number}[/]', [TopicsController::class, 'delete'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))

@@ -41,7 +41,7 @@ $this->layout('system::layout/default');
         <div>
             <?= __('Filter by author is activated') ?>
         </div>
-        <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= __('Cancel Filter') ?></a>
+        <a href="<?= route('forum.filter', ['topicId' => $id], ['action' => 'unset']) ?>"><?= __('Cancel Filter') ?></a>
     </div>
 <?php endif; ?>
 
@@ -453,9 +453,9 @@ $this->layout('system::layout/default');
 <div>
     <div>
         <?php if ($filter_by_author): ?>
-            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= __('Cancel Filter') ?></a>
+            <a href="<?= route('forum.filter', ['topicId' => $id], ['action' => 'unset']) ?>"><?= __('Cancel Filter') ?></a>
         <?php else: ?>
-            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Filter by author') ?></a>
+            <a href="<?= route('forum.filter', ['topicId' => $id]) ?>"><?= __('Filter by author') ?></a>
         <?php endif; ?>
     </div>
     <div>
