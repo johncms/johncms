@@ -128,8 +128,8 @@ class ForumTopicService
                 'date'         => time(),
                 'user_id'      => $this->user->id,
                 'user_name'    => $this->user->display_name,
-                'ip'           => ip2long($this->request->getIp() ?? ''),
-                'ip_via_proxy' => ip2long($this->request->getIpViaProxy() ?? ''),
+                'ip'           => $this->request->getIp(),
+                'ip_via_proxy' => $this->request->getIpViaProxy(),
                 'user_agent'   => $this->request->getUserAgent(),
                 'text'         => $fields['message'],
             ]

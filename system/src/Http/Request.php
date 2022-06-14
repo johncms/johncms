@@ -165,7 +165,8 @@ class Request extends ServerRequest
 
     public function getIpViaProxy(): ?string
     {
-        return $this->getServer('HTTP_X_FORWARDED_FOR', '127.0.0.1', FILTER_VALIDATE_IP);
+        $ip = $this->getServer('HTTP_X_FORWARDED_FOR', '127.0.0.1', FILTER_VALIDATE_IP);
+        return $ip !== '127.0.0.1' ? $ip : null;
     }
 
     public function isPost(): bool

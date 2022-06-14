@@ -140,8 +140,8 @@ class MessagesController extends BaseForumController
                             'date'         => time(),
                             'user_id'      => $user->id,
                             'user_name'    => $user->display_name,
-                            'ip'           => ip2long($request->getIp()),
-                            'ip_via_proxy' => ip2long($request->getIpViaProxy()),
+                            'ip'           => $request->getIp(),
+                            'ip_via_proxy' => $request->getIpViaProxy(),
                             'user_agent'   => $request->getUserAgent(),
                             'text'         => $msg,
                         ]
@@ -397,8 +397,8 @@ class MessagesController extends BaseForumController
                     'date'         => time(),
                     'user_id'      => $user->id,
                     'user_name'    => $user->display_name,
-                    'ip'           => ip2long($request->getIp()),
-                    'ip_via_proxy' => ip2long($request->getIpViaProxy()),
+                    'ip'           => $request->getIp(),
+                    'ip_via_proxy' => $request->getIpViaProxy(),
                     'user_agent'   => $request->getUserAgent(),
                     'text'         => $msg,
                 ]
