@@ -13,6 +13,7 @@ use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Services\ForumTopicService;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
+use Johncms\Notifications\Notification;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -292,10 +293,173 @@ class MessagesController extends BaseForumController
             'forum::edit_post',
             [
                 'id'        => $id,
-                'bbcode'    => di(\Johncms\System\Legacy\Bbcode::class)->buttons('edit_post', 'msg'),
+                'bbcode'    => di(Bbcode::class)->buttons('edit_post', 'msg'),
                 'msg'       => $message,
                 'back_url'  => $topic->last_page_url,
                 'actionUrl' => route('forum.editMessage', ['id' => $id]),
+            ]
+        );
+    }
+
+    public function reply(int $id, User $user, Request $request, Tools $tools): RedirectResponse | string
+    {
+        $message = ForumMessage::query()->findOrFail($id);
+        $topic = $message->topic;
+        $isQuote = $request->getQuery('quote', false);
+
+        if (($topic->deleted || $topic->closed) && ! $user->hasPermission(ForumPermissions::MANAGE_POSTS)) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('New message'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You cannot write in a closed topic'),
+                    'back_url'      => $topic->last_page_url,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        if ($message->user_id === $user->id) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('New message'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You can not reply to your own message'),
+                    'back_url'      => $topic->last_page_url,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+        $txt = isset($_POST['txt']) ? (int) ($_POST['txt']) : false;
+
+        $msg = preg_replace_callback(
+            '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            '\Johncms\Forum\ForumUtils::forumLink',
+            $msg
+        );
+
+        if ($request->isPost()) {
+            if (empty($_POST['msg'])) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You have not entered the message'),
+                        'back_url'      => route('forum.reply', ['id' => $id], ['quote' => $request->getQuery('quote')]),
+                        'back_url_name' => __('Repeat'),
+                    ]
+                );
+            }
+
+            // Проверяем на минимальную длину
+            if (mb_strlen($msg) < 4) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Text is too short'),
+                        'back_url'      => route('forum.reply', ['id' => $id], ['quote' => $request->getQuery('quote')]),
+                        'back_url_name' => __('Back'),
+                    ]
+                );
+            }
+
+            // Check if the message is not repeated
+            $repeatMessage = ForumMessage::query()->where('user_id', $user->id)->orderByDesc('date')->first();
+            if ($repeatMessage) {
+                if ($msg == $repeatMessage->text) {
+                    return $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Message already exists'),
+                            'back_url'      => $repeatMessage->topic->last_page_url,
+                            'back_url_name' => __('Back'),
+                        ]
+                    );
+                }
+            }
+
+            if (isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] == $repeatMessage->topic_id) {
+                unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+            }
+
+            $createdMessage = ForumMessage::query()->create(
+                [
+                    'topic_id'     => $message->topic_id,
+                    'date'         => time(),
+                    'user_id'      => $user->id,
+                    'user_name'    => $user->display_name,
+                    'ip'           => ip2long($request->getIp()),
+                    'ip_via_proxy' => ip2long($request->getIpViaProxy()),
+                    'user_agent'   => $request->getUserAgent(),
+                    'text'         => $msg,
+                ]
+            );
+
+            // Update user activity
+            $userManager = di(UserManager::class);
+            $userManager->incrementActivity($user, 'forum_posts');
+
+            $tools->recountForumTopic($message->topic_id);
+
+            // Добавляем уведомление об ответе
+            $preview_message = strip_tags($tools->checkout(trim($_POST['msg']), 1, 1));
+            $preview_message = strlen($preview_message) > 200 ? mb_substr($preview_message, 0, 200) . '...' : $preview_message;
+            $preview_message = $tools->smilies($preview_message, $user->hasAnyRole());
+            (new Notification())->create(
+                [
+                    'module'     => 'forum',
+                    'event_type' => 'new_message',
+                    'user_id'    => $message->user_id,
+                    'sender_id'  => $user->id,
+                    'entity_id'  => $createdMessage->id,
+                    'fields'     => [
+                        'topic_name'       => htmlspecialchars($topic->name),
+                        'user_name'        => htmlspecialchars($user->name),
+                        'topic_url'        => $topic->last_page_url,
+                        'reply_to_message' => '/forum/?act=show_post&id=' . $message->id,
+                        'message'          => $preview_message,
+                        'post_id'          => $createdMessage->id,
+                        'topic_id'         => $topic->id,
+                    ],
+                ]
+            );
+
+            if (isset($_POST['addfiles'])) {
+                return new RedirectResponse(route('forum.addFile', ['messageId' => $createdMessage->id]));
+            }
+            return new RedirectResponse($topic->last_page_url);
+        } else {
+            $msg = $message->user_name . ', ';
+            if ($isQuote) {
+                $tp = date('d.m.Y H:i', $message->date);
+                $msg = '[quote][url=' . $message->user->profile_url . ']' . $message->user_name . '[/url]'
+                    . ' ([time]' . $tp . "[/time])\n" . $tools->checkout($message->text, 1, 2) . '[/quote]' . "\r\n\r\n";
+            }
+        }
+
+        $this->metaTagManager->setTitle(__('Reply to message'));
+
+        return $this->render->render(
+            'forum::reply_message',
+            [
+                'id'          => $id,
+                'bbcode'      => di(Bbcode::class)->buttons('message_form', 'msg'),
+                'topicName'   => $topic->name,
+                'form_action' => route('forum.reply', ['id' => $id], ['quote' => $request->getQuery('quote')]),
+                'txt'         => $txt ?? null,
+                'is_quote'    => isset($_GET['cyt']),
+                'add_file'    => isset($_POST['addfiles']),
+                'msg'         => $request->isPost() ? $tools->checkout($msg) : $msg,
+                'back_url'    => $topic->last_page_url,
             ]
         );
     }

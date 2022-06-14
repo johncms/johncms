@@ -30,8 +30,8 @@ class MessageResource extends AbstractResource
             'files'       => $this->getFiles(),
 
             // User actions
-            'reply_url'   => ($currentUser && $currentUser->id != $this->user_id) ? '/forum/?act=say&type=reply&amp;id=' . $this->id . '&start=' : null,
-            'quote_url'   => ($currentUser && $currentUser->id != $this->user_id) ? '/forum/?act=say&type=reply&amp;id=' . $this->id . '&start=&cyt' : null,
+            'reply_url'   => ($currentUser && $currentUser->id != $this->user_id) ? route('forum.reply', ['id' => $this->id]) : null,
+            'quote_url'   => ($currentUser && $currentUser->id != $this->user_id) ? route('forum.reply', ['id' => $this->id], ['quote' => 1]) : null,
 
             // Author or moderator actions
             'edit_url'    => $canEdit ? route('forum.editMessage', ['id' => $this->id]) : null,

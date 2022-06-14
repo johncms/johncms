@@ -11,16 +11,14 @@
 /**
  * @var $title
  * @var $page_title
- * @var $show_post_preview
- * @var $preview_message
  * @var $back_url
  * @var $msg
  * @var $form_action
  * @var $is_new_message
- * @var $is_quote
- * @var $message
  * @var $add_file
- * @var $topic
+ * @var $topicName
+ * @var $bbcode
+ * @var $csrf_token
  */
 
 $this->layout('system::layout/default');
@@ -28,34 +26,7 @@ $this->layout('system::layout/default');
 
 <form name="message_form" action="<?= $form_action ?>" method="post">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
-    <div class="h4"><?= __('Topic') ?>: <?= $topic['name'] ?></div>
-    <?php if (! $is_new_message): ?>
-        <?php if ($is_quote): ?>
-            <div>
-                <?= $message['user_name'] ?> (<a href="?act=show_post&amp;id=<?= $message['id'] ?>"><?= $message['time_formatted'] ?></a>)
-            </div>
-            <div class="form-group">
-                <label for="quote"><?= __('Quote') ?></label>
-                <textarea rows="<?= $user->config->fieldHeight ?>" name="citata" id="quote" required class="form-control"><?= $quote_msg ?></textarea>
-                <div class="text-muted small"><?= __('Only allowed 200 characters, other text will be cropped.') ?></div>
-            </div>
-        <?php else: ?>
-            <h4><?= __('Appeal') ?></h4>
-            <div class="custom-control custom-radio mb-1">
-                <input type="radio" class="form-check-input" name="txt" value="0" id="txt_0" <?= ! $txt ? 'checked="checked"' : '' ?>>
-                <label class="form-check-label" for="txt_0"><b><?= $message['user_name'] ?></b>,</label>
-            </div>
-            <div class="custom-control custom-radio mb-1">
-                <input type="radio" class="form-check-input" name="txt" value="2" id="txt_1" <?= $txt == 2 ? 'checked="checked"' : '' ?>>
-                <label class="form-check-label" for="txt_1"><b><?= $message['user_name'] ?></b>, <?= __('I am glad to answer you') ?></label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" class="form-check-input" name="txt" value="3" id="txt_2" <?= $txt == 3 ? 'checked="checked"' : '' ?>>
-                <label class="form-check-label" for="txt_2"><b><?= $message['user_name'] ?></b>, <?= __('respond to Your message') ?> </label>
-                (<a href="?act=show_post&amp;id=<?= $message['id'] ?>"><?= $message['time_formatted'] ?></a>)
-            </div>
-        <?php endif; ?>
-    <?php endif; ?>
+    <div class="h4"><?= __('Topic') ?>: <?= $topicName ?></div>
     <div class="form-group">
         <label for="msg"><?= __('Message') ?></label>
         <div><?= $bbcode ?></div>

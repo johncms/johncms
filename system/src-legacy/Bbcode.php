@@ -133,7 +133,7 @@ class Bbcode
         $var = preg_replace_callback(
             '#\[time\](.+?)\[\/time\]#s',
             function ($matches) {
-                $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
+                $shift = ($this->config['timeshift'] + 0) * 3600;
 
                 if (($out = strtotime($matches[1])) !== false) {
                     return date('d.m.Y / H:i', $out + $shift);
