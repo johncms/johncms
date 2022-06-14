@@ -70,6 +70,21 @@ class ForumMessagesService
         });
     }
 
+    public function restore(int | ForumMessage $message): void
+    {
+        if (is_int($message)) {
+            $message = ForumMessage::query()->find($message);
+        }
+
+        DB::transaction(function () use ($message) {
+            $files = $message->files;
+            foreach ($files as $file) {
+                $file->update(['del' => 0]);
+            }
+            $message->update(['deleted' => null, 'deleted_by' => $this->user?->display_name]);
+        });
+    }
+
     public function hide(int | ForumMessage $message): void
     {
         if (is_int($message)) {

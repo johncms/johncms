@@ -219,6 +219,14 @@ class MessagesController extends BaseForumController
         return new RedirectResponse($message->topic->url);
     }
 
+    public function restore(int $id, Tools $tools, ForumMessagesService $messagesService): RedirectResponse
+    {
+        $message = ForumMessage::query()->findOrFail($id);
+        $messagesService->restore($message);
+        $tools->recountForumTopic($message->topic_id);
+        return new RedirectResponse($message->topic->last_page_url);
+    }
+
     public function edit(int $id, Tools $tools, User $user): RedirectResponse | string
     {
         $error = false;

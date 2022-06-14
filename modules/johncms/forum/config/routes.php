@@ -114,5 +114,7 @@ return function (Router $router) {
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [MessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [MessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');
+
+        $route->get('/restore-post/{id:number}[/]', [MessagesController::class, 'restore'])->setName('forum.restorePost');
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
 };
