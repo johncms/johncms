@@ -45,6 +45,9 @@ return function (Router $router) {
         $route->get('/filter/{topicId:number}[/]', [TopicsController::class, 'filter'])->setName('forum.filter');
         $route->post('/filter/{topicId:number}[/]', [TopicsController::class, 'filter']);
 
+        $route->get('/mass-delete/{topicId:number}[/]', [TopicsController::class, 'massDelete'])->setName('forum.massDelete');
+        $route->post('/mass-delete/{topicId:number}[/]', [TopicsController::class, 'massDelete']);
+
         // Delete topic
         $route->get('/delete-topic/{topicId:number}[/]', [TopicsController::class, 'delete'])
             ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))

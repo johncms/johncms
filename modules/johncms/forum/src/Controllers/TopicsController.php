@@ -25,6 +25,7 @@ use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
 use Johncms\Http\Session;
 use Johncms\System\Legacy\Bbcode;
+use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\Utility\Numbers;
 use Psr\Http\Message\ResponseInterface;
@@ -516,6 +517,61 @@ class TopicsController extends BaseForumController
                 'list'      => $list ?? [],
                 'topic'     => $topic ?? [],
                 'saved'     => $saved ?? false,
+            ]
+        );
+    }
+
+    public function massDelete(int $topicId, User $user): string
+    {
+        $topic = ForumTopic::query()->findOrFail($topicId);
+
+        if (isset($_GET['yes'])) {
+            $dc = $_SESSION['dc'];
+
+            if (! empty($dc)) {
+                ForumMessage::query()->whereIn('id', $dc)->update(['deleted' => true, 'deleted_by' => $user->display_name]);
+                $tools = di(Tools::class);
+                $tools->recountForumTopic($topicId);
+            }
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Delete posts'),
+                    'page_title'    => __('Delete posts'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Marked posts are deleted'),
+                    'back_url'      => $topic->last_page_url,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+        if (empty($_POST['delch'])) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Delete posts'),
+                    'page_title'    => __('Delete posts'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You did not choose something to delete'),
+                    'back_url'      => htmlspecialchars(getenv('HTTP_REFERER')),
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        foreach ($_POST['delch'] as $v) {
+            $dc[] = (int) $v;
+        }
+
+        $_SESSION['dc'] = $dc;
+        $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
+        return $this->render->render(
+            'forum::mass_delete',
+            [
+                'title'      => __('Delete posts'),
+                'page_title' => __('Delete posts'),
+                'topicId'    => $topicId,
+                'back_url'   => htmlspecialchars(getenv('HTTP_REFERER')),
             ]
         );
     }

@@ -190,7 +190,8 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if ($permissions['canManagePosts']): ?>
-<form action="?act=massdel" method="post">
+<form action="<?= route('forum.massDelete', ['topicId' => $id]) ?>" method="post">
+    <?= $csrf_input ?>
     <?php endif; ?>
 
     <?php foreach ($messages as $message): ?>

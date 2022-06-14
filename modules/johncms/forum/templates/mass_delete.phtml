@@ -13,15 +13,10 @@
  * @var $page_title
  * @var $back_url
  * @var $posts
+ * @var $topicId
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-danger">
@@ -29,7 +24,7 @@ $this->layout(
         <?= __('Do you really want to delete?') ?>
     </div>
     <div>
-        <a href="/forum/?act=massdel&amp;yes" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
+        <a href="<?= route('forum.massDelete', ['topicId' => $topicId], ['yes' => 1]) ?>" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
         <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
     </div>
 </div>
