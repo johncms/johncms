@@ -459,9 +459,6 @@ $this->layout('system::layout/default');
             <a href="<?= route('forum.filter', ['topicId' => $id]) ?>"><?= __('Filter by author') ?></a>
         <?php endif; ?>
     </div>
-    <div>
-        <a href="?act=tema&amp;id=<?= $id ?>"><?= __('Download Topic') ?></a>
-    </div>
 </div>
 
 <?php $this->push('scripts') ?>

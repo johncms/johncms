@@ -3,6 +3,7 @@
 use Johncms\Forum\Controllers\CuratorsController;
 use Johncms\Forum\Controllers\FilesController;
 use Johncms\Forum\Controllers\MessagesController;
+use Johncms\Forum\Controllers\SearchController;
 use Johncms\Forum\Controllers\SectionsController;
 use Johncms\Forum\Controllers\TopicsController;
 use Johncms\Forum\Controllers\LatestTopicsController;
@@ -116,5 +117,8 @@ return function (Router $router) {
         $route->post('/delete-post-confirm/{id:number}[/]', [MessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');
 
         $route->get('/restore-post/{id:number}[/]', [MessagesController::class, 'restore'])->setName('forum.restorePost');
+
+        $route->get('/search[/]', [SearchController::class, 'index'])->setName('forum.search');
+        $route->post('/search[/]', [SearchController::class, 'index']);
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
 };

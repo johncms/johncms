@@ -231,4 +231,15 @@ class ForumUtils
 
         return $m[3];
     }
+
+    public static function replaceKeywords($search, $text)
+    {
+        $search = str_replace('*', '', $search);
+
+        return mb_strlen($search) < 3 ? $text : preg_replace(
+            '|(' . preg_quote($search, '/') . ')|siu',
+            '<span style="background-color: #FFFF33">$1</span>',
+            $text
+        );
+    }
 }

@@ -17,16 +17,11 @@
  * @var $unread_count
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
-<form action="/forum/?act=search" method="post">
+<form action="<?= route('forum.search') ?>" method="post">
+    <?= $csrf_input ?>
     <div class="form-group">
         <label for="search_query"><?= __('Search query') ?></label>
         <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
@@ -73,19 +68,9 @@ $this->layout(
     <div>
         <div class="my-2"><?= __('Total') ?>: <?= $total ?></div>
         <!-- Page switching -->
-        <?php if ($total > $user->config->kmess): ?>
-            <div><?= $pagination ?></div>
-        <?php endif ?>
+        <div><?= $pagination ?></div>
     </div>
 <?php endif; ?>
-<?php if (! empty($search_history)): ?>
-    <div class="mb-2 alert alert-secondary">
-        <div class="h5"><?= __('Search History') ?></div>
-        <div><?= implode(' / ', $search_history) ?></div>
-        <div class="mt-1">
-            <a href="<?= $history_reset_url ?>"><?= __('Clear history') ?></a>
-        </div>
-    </div>
-<?php endif; ?>
+
 <a href="/forum/" class="mb-2"><?= __('Forum') ?></a>
 

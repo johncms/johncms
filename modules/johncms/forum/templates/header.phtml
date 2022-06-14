@@ -69,7 +69,8 @@
             </a>
         </div>
     </div>
-    <form class="form-inline search-in-nav mb-0" action="?act=search" method="post">
+    <form class="form-inline search-in-nav mb-0" action="<?= route('forum.search') ?>" method="post">
+        <?= $csrf_input ?>
         <div class="input-with-inner-btn">
             <input class="form-control pe-5 border-radius-12" name="search" type="search" minlength="4" placeholder="<?= __('Search') ?>">
             <button class="btn icon-button" type="submit" name="submit" value="1">
