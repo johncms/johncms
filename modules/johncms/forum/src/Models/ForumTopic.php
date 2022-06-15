@@ -196,20 +196,29 @@ class ForumTopic extends Model
     }
 
     /**
+     * Scope for unread, latest, period pages
+     */
+    public function scopeForLatest(Builder $builder)
+    {
+        $user = di(User::class);
+        return $builder->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
+            ->leftJoin('forum_sections as sect', 'sect.id', '=', 'forum_topic.section_id')
+            ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
+            ->when(! $user?->hasAnyRole(), function (Builder $builder) {
+                return $builder->where(fn($builder) => $builder->where('forum_topic.deleted', '<>', 1)->orWhereNull('forum_topic.deleted'));
+            });
+    }
+
+    /**
      * Unread messages
      */
     public function scopeUnread(Builder $builder)
     {
         $user = di(User::class);
-        return $builder->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
+        return $builder->forLatest()
             ->leftJoin('forum_read as rdm', function (JoinClause $joinClause) use ($user) {
-                return $joinClause->on('id', '=', 'rdm.topic_id')
+                return $joinClause->on('forum_topic.id', '=', 'rdm.topic_id')
                     ->where('rdm.user_id', $user->id);
-            })
-            ->leftJoin('forum_sections as sect', 'sect.id', '=', 'forum_topic.section_id')
-            ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
-            ->when(! $user->hasAnyRole(), function (Builder $builder) {
-                return $builder->where(fn($builder) => $builder->where('forum_topic.deleted', '<>', 1)->orWhereNull('forum_topic.deleted'));
             })
             ->where(function (Builder $builder) {
                 return $builder->whereNull('rdm.topic_id')->orWhereRaw('`forum_topic`.`last_post_date` > `rdm`.`time`');
@@ -221,14 +230,7 @@ class ForumTopic extends Model
      */
     public function scopePeriod(Builder $builder, int $period)
     {
-        $user = di(User::class);
-        return $builder->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
-            ->leftJoin('forum_sections as sect', 'sect.id', '=', 'forum_topic.section_id')
-            ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
-            ->when(! $user->hasAnyRole(), function (Builder $builder) {
-                return $builder->where(fn($builder) => $builder->where('forum_topic.deleted', '<>', 1)->orWhereNull('forum_topic.deleted'));
-            })
-            ->where('forum_topic.last_post_date', '>', $period);
+        return $builder->forLatest()->where('forum_topic.last_post_date', '>', $period);
     }
 
     /**

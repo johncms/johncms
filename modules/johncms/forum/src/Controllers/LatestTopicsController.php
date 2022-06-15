@@ -85,4 +85,24 @@ class LatestTopicsController extends BaseForumController
             ]
         );
     }
+
+    public function latest(): string
+    {
+        $this->metaTagManager->setAll(__('Last Activity'));
+        $this->navChain->add(__('Last Activity'));
+        $topics = ForumTopic::query()->forLatest()->orderByDesc('forum_topic.last_post_date')->paginate();
+        $resource = UnreadTopicResource::createFromCollection($topics);
+
+        return $this->render->render(
+            'forum::new_topics',
+            [
+                'topics'        => $resource->getItems(),
+                'pagination'    => $topics->render(),
+                'empty_message' => __('The list is empty'),
+                'total'         => $topics->total(),
+                'show_period'   => false,
+                'mark_as_read'  => null,
+            ]
+        );
+    }
 }

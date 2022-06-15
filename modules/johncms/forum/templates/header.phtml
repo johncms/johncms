@@ -49,7 +49,7 @@
             </div>
         <?php else: ?>
             <div class="pe-3">
-                <a href="?act=new">
+                <a href="<?= route('forum.latest') ?>">
                     <span class="d-none d-sm-inline"><?= __('Last activity') ?></span>
                     <svg class="icon d-sm-none">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#calendar"/>
