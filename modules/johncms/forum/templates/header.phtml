@@ -40,7 +40,7 @@
                 </div>
             <?php endif; ?>
             <div class="pe-3">
-                <a href="?act=new&amp;do=period">
+                <a href="<?= route('forum.period') ?>">
                     <span class="d-none d-sm-inline"><?= __('Show for Period') ?></span>
                     <svg class="icon d-sm-none">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#calendar"/>

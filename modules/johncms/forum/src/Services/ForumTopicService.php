@@ -33,29 +33,6 @@ class ForumTopicService
         $this->request = $request;
     }
 
-    public function getUnread(): ?Builder
-    {
-        if (! $this->user) {
-            return null;
-        }
-
-        return ForumTopic::query()
-            ->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
-            ->leftJoin('forum_read as rdm', function (JoinClause $joinClause) {
-                return $joinClause->on('id', '=', 'rdm.topic_id')
-                    ->where('rdm.user_id', $this->user->id);
-            })
-            ->leftJoin('forum_sections as sect', 'sect.id', '=', 'section_id')
-            ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
-            ->when(! $this->user->hasAnyRole(), function (Builder $builder) {
-                return $builder->where('deleted', '<>', 1)->orWhereNull('deleted');
-            })
-            ->where(function (Builder $builder) {
-                return $builder->whereNull('rdm.topic_id')->orWhere('last_post_date', '>', 'rdm.time');
-            })
-            ->orderByDesc('last_post_date');
-    }
-
     public function getTopics(?int $sectionId = null): ?Builder
     {
         return ForumTopic::query()

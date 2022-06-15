@@ -37,7 +37,7 @@ class ForumCounters
                 "SELECT COUNT(*) as cnt FROM `forum_topic`
                 LEFT JOIN `forum_read` ON `forum_topic`.`id` = `forum_read`.`topic_id` AND `forum_read`.`user_id` = '" . $this->user->id . "'
                 WHERE (`forum_read`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `forum_read`.`time`)
-                " . ($this->user->hasAnyRole() >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)')
+                " . ($this->user->hasAnyRole() ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)')
             );
             return $total->cnt;
         }

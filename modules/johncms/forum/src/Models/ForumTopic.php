@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\JoinClause;
 use Johncms\Database\Eloquent\Casts\Serialize;
 use Johncms\Forum\ForumPermissions;
 use Johncms\Settings\SiteSettings;
@@ -192,6 +193,42 @@ class ForumTopic extends Model
             return $query->withoutDeleted();
         }
         return $query;
+    }
+
+    /**
+     * Unread messages
+     */
+    public function scopeUnread(Builder $builder)
+    {
+        $user = di(User::class);
+        return $builder->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
+            ->leftJoin('forum_read as rdm', function (JoinClause $joinClause) use ($user) {
+                return $joinClause->on('id', '=', 'rdm.topic_id')
+                    ->where('rdm.user_id', $user->id);
+            })
+            ->leftJoin('forum_sections as sect', 'sect.id', '=', 'forum_topic.section_id')
+            ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
+            ->when(! $user->hasAnyRole(), function (Builder $builder) {
+                return $builder->where(fn($builder) => $builder->where('forum_topic.deleted', '<>', 1)->orWhereNull('forum_topic.deleted'));
+            })
+            ->where(function (Builder $builder) {
+                return $builder->whereNull('rdm.topic_id')->orWhereRaw('`forum_topic`.`last_post_date` > `rdm`.`time`');
+            });
+    }
+
+    /**
+     * Latest topics for period
+     */
+    public function scopePeriod(Builder $builder, int $period)
+    {
+        $user = di(User::class);
+        return $builder->select(['sect.name as section_name', 'forum.name as forum_name', 'forum.id as forum_id', 'forum_topic.*'])
+            ->leftJoin('forum_sections as sect', 'sect.id', '=', 'forum_topic.section_id')
+            ->leftJoin('forum_sections as forum', 'forum.id', '=', 'sect.parent')
+            ->when(! $user->hasAnyRole(), function (Builder $builder) {
+                return $builder->where(fn($builder) => $builder->where('forum_topic.deleted', '<>', 1)->orWhereNull('forum_topic.deleted'));
+            })
+            ->where('forum_topic.last_post_date', '>', $period);
     }
 
     /**

@@ -21,21 +21,18 @@
  * @var $is_unread
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if (! empty($show_period)): ?>
     <div class="row">
-        <form action="?act=new&amp;do=period" method="post" class="col-md-4">
+        <form action="<?= route('forum.period') ?>" method="get" class="col-md-4">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" maxlength="3" name="vr" placeholder="<?= __('Period') ?>" aria-label="<?= __('Period') ?>">
+                <input type="text" class="form-control" maxlength="3" name="period"
+                       value="<?= $current_period ?>"
+                       placeholder="<?= __('Period') ?>"
+                       aria-label="<?= __('Period') ?>">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit" name="submit" value="1"><?= __('Show period') ?></button>
+                    <button class="btn btn-outline-secondary" type="submit"><?= __('Show period') ?></button>
                 </div>
             </div>
         </form>
