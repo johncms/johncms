@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Forum\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Johncms\Forum\Models\ForumTopic;
 use Johncms\Forum\Resources\UnreadTopicResource;
 use Johncms\Http\Request;
+use Johncms\Users\User;
 
 class LatestTopicsController extends BaseForumController
 {
@@ -25,7 +27,7 @@ class LatestTopicsController extends BaseForumController
                 'empty_message' => __('The list is empty'),
                 'total'         => $topics->total(),
                 'show_period'   => false,
-                'mark_as_read'  => '?act=new&amp;do=reset',
+                'mark_as_read'  => route('forum.markAsRead'),
             ]
         );
     }
@@ -48,6 +50,38 @@ class LatestTopicsController extends BaseForumController
                 'empty_message'  => __('The list is empty'),
                 'total'          => $topics->total(),
                 'show_period'    => true,
+            ]
+        );
+    }
+
+    public function markAsRead(User $user): string
+    {
+        $unread = DB::select(
+            "SELECT `forum_topic`.`id`, `forum_topic`.`last_post_date`
+            FROM `forum_topic` LEFT JOIN `forum_read` ON `forum_topic`.`id` = `forum_read`.`topic_id` AND `forum_read`.`user_id` = '" . $user->id . "'
+            WHERE `forum_topic`.`last_post_date` > `forum_read`.`time` OR `forum_read`.`topic_id` IS NULL"
+        );
+
+        $values = [];
+        foreach ($unread as $item) {
+            $values[] = '(' . $item->id . ', ' . $user->id . ', ' . $item->last_post_date . ')';
+        }
+
+        if (! empty($values)) {
+            DB::statement(
+                'INSERT INTO forum_read (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
+                    ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)'
+            );
+        }
+
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'         => __('Unread'),
+                'type'          => 'alert-success',
+                'message'       => __('All topics marked as read'),
+                'back_url'      => '/forum/',
+                'back_url_name' => __('Forum'),
             ]
         );
     }

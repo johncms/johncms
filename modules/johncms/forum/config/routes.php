@@ -18,6 +18,7 @@ return function (Router $router) {
     $router->get('/forum[/]', [SectionsController::class, 'index'])->setName('forum.index');
     $router->get('/forum/unread[/]', [LatestTopicsController::class, 'unread'])->setName('forum.unread');
     $router->get('/forum/period[/]', [LatestTopicsController::class, 'period'])->setName('forum.period');
+    $router->get('/forum/mark-as-read[/]', [LatestTopicsController::class, 'markAsRead'])->setName('forum.markAsRead');
 
     // Sections, topic
     $router->get('/forum/{sectionName:slug}-{id:number}[/]', [SectionsController::class, 'show'])->setName('forum.section');
