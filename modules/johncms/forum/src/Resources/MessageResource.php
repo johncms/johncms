@@ -90,9 +90,9 @@ class MessageResource extends AbstractResource
     {
         $user = di(User::class);
         if (
-            ($user->hasPermission(['forum_manage_posts', 'forum_manage_topics'])/* || $curator*/)
+            ($user?->hasPermission(['forum_manage_posts', 'forum_manage_topics'])/* || $curator*/)
             //|| ($i === 1 && $access === 2 && $message->user_id === $user->id)
-            || $this->user_id === $user->id
+            || $this->user_id === $user?->id
         ) {
             return true;
         }

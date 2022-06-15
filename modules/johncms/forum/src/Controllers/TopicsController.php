@@ -131,7 +131,7 @@ class TopicsController extends BaseForumController
 
         // Получаем данные о кураторах темы
         $curator = false;
-        if ($user->rights < 6 && $user->rights !== 3 && array_key_exists($user->id, $currentTopic->curators) && $user->is_valid) {
+        if (array_key_exists($user?->id, $currentTopic->curators)) {
             $curator = true;
         }
 
@@ -148,7 +148,7 @@ class TopicsController extends BaseForumController
 
         // Нижнее поле "Написать"
         $write_access = false;
-        if (($user && ! $currentTopic->closed && config('johncms.mod_forum') !== 3 && $access !== 4) || ($user->rights >= 7)) {
+        if (($user && ! $currentTopic->closed && config('johncms.mod_forum') !== 3 && $access !== 4)) {
             $write_access = true;
             if ($set_forum['farea']) {
                 $token = mt_rand(1000, 100000);

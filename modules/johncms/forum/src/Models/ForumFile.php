@@ -15,6 +15,7 @@ namespace Johncms\Forum\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\FileInfo;
+use Johncms\Forum\ForumPermissions;
 use Johncms\Users\User;
 
 /**
@@ -81,7 +82,7 @@ class ForumFile extends Model
             static function (Builder $builder) {
                 /** @var User $user */
                 $user = di(User::class);
-                if ($user->rights < 7) {
+                if ($user?->hasPermission(ForumPermissions::MANAGE_POSTS)) {
                     $builder->where('del', '!=', 1);
                 }
             }

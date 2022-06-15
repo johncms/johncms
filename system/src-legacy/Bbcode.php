@@ -52,7 +52,7 @@ class Bbcode
         $config = $container->get('config');
         $this->config = $config['johncms'];
         $this->user = $container->get(User::class);
-        $this->userConfig = $this->user->config;
+        $this->userConfig = $this->user?->config;
 
         $globalcnf = $container->get('config');
         $this->tags = $globalcnf['bbcode'] ?? [];

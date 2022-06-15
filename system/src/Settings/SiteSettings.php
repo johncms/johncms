@@ -40,7 +40,7 @@ class SiteSettings
 
     public function getPerPage(): int
     {
-        return (int) $this->user?->settings->perPage ?? $this->config['perPage'];
+        return (int) ($this->user?->settings->perPage ?? $this->config['perPage']);
     }
 
     #[Pure]

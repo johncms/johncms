@@ -148,7 +148,7 @@ class ForumMessage extends Model
             static function (Builder $builder) {
                 /** @var User $user */
                 $user = di(User::class);
-                if (! $user->hasPermission(ForumPermissions::MANAGE_POSTS)) {
+                if (! $user?->hasPermission(ForumPermissions::MANAGE_POSTS)) {
                     $builder->where('deleted', '!=', 1)->orWhereNull('deleted');
                 }
             }
