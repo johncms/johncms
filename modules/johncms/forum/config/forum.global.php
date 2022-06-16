@@ -15,6 +15,7 @@ return [
         'settings'      => [
             'file_counters' => false,
             'max_file_size' => 10000,
+            'rules_url'     => '/help/rules/',
 
             'topic_keywords'      => '',
             'topic_description'   => '',
