@@ -43,7 +43,7 @@ class Online
         ];
 
         $ipViaProxy = $this->request->getIpViaProxy();
-        if ($ipViaProxy !== '127.0.0.1') {
+        if ($ipViaProxy) {
             $fields['ip_via_proxy'] = $ipViaProxy;
         }
 
@@ -74,7 +74,7 @@ class Online
         ];
 
         $ipViaProxy = $this->request->getIpViaProxy();
-        if ($ipViaProxy !== '127.0.0.1') {
+        if ($ipViaProxy) {
             $fields['ip_via_proxy'] = $ipViaProxy;
         }
 

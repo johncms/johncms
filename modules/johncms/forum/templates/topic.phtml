@@ -476,7 +476,7 @@ $this->layout('system::layout/default');
     'forum::footer',
     [
         'online'   => $online,
-        'who_url'  => '/forum/?act=who&id=' . $id,
+        'who_url'  => route('forum.onlineUsers', [], ['topic' => 1, 'id' => di('route')->getVars()['id']]),
         'who_name' => __('Who is here'),
     ]
 ) ?>

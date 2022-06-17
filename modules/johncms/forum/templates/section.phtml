@@ -19,6 +19,7 @@
  */
 
 $this->layout('system::layout/default');
+$route = di('route');
 ?>
 
 <?= $this->fetch(
@@ -58,7 +59,7 @@ $this->layout('system::layout/default');
     'forum::footer',
     [
         'online'   => $online,
-        'who_url'  => '/forum/?act=who',
+        'who_url'  => route('forum.onlineUsers', [], ['section' => 1, 'id' => $route->getVars()['id']]),
         'who_name' => __('Who in Forum'),
     ]
 ) ?>

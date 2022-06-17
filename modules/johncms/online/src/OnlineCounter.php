@@ -46,7 +46,7 @@ class OnlineCounter
             ->count();
     }
 
-    private function buildCondition(Builder $builder, string $routeName, array $routeParams = [], int $compareType = OnlineCounter::COMPARE_STRICT): Builder
+    public function buildCondition(Builder $builder, string $routeName, array $routeParams = [], int $compareType = OnlineCounter::COMPARE_STRICT): Builder
     {
         switch ($compareType) {
             case self::COMPARE_STRICT:

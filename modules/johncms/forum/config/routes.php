@@ -3,6 +3,7 @@
 use Johncms\Forum\Controllers\CuratorsController;
 use Johncms\Forum\Controllers\FilesController;
 use Johncms\Forum\Controllers\MessagesController;
+use Johncms\Forum\Controllers\OnlineController;
 use Johncms\Forum\Controllers\SearchController;
 use Johncms\Forum\Controllers\SectionsController;
 use Johncms\Forum\Controllers\TopicsController;
@@ -20,6 +21,9 @@ return function (Router $router) {
     $router->get('/forum/period[/]', [LatestTopicsController::class, 'period'])->setName('forum.period');
     $router->get('/forum/mark-as-read[/]', [LatestTopicsController::class, 'markAsRead'])->setName('forum.markAsRead');
     $router->get('/forum/latest[/]', [LatestTopicsController::class, 'latest'])->setName('forum.latest');
+
+    $router->get('/forum/online/users[/]', [OnlineController::class, 'allUsers'])->setName('forum.onlineUsers');
+    $router->get('/forum/online/guests[/]', [OnlineController::class, 'allGuests'])->setName('forum.onlineGuests');
 
     // Sections, topic
     $router->get('/forum/{sectionName:slug}-{id:number}[/]', [SectionsController::class, 'show'])->setName('forum.section');
