@@ -81,10 +81,9 @@ class TopicsController extends BaseForumController
             // Mark the topic as read
             $forumTopicService->markAsRead($id, $user->id);
 
-            // TODO: Change it
             $online = [
-                'users'  => $forumCounters->onlineUsers(),
-                'guests' => $forumCounters->onlineGuests(),
+                'users'  => $forumCounters->onlineUsers(true),
+                'guests' => $forumCounters->onlineGuests(true),
             ];
 
             $currentSection = $currentTopic->section;

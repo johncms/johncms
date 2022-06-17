@@ -81,8 +81,8 @@ class SectionsController extends BaseForumController
         $templateBaseData = [
             'id'           => $currentSection->id,
             'online'       => [
-                'users'  => $forumCounters->onlineUsers(),
-                'guests' => $forumCounters->onlineGuests(),
+                'users'  => $forumCounters->onlineUsers(true),
+                'guests' => $forumCounters->onlineGuests(true),
             ],
             'files_count'  => $forumSettings['file_counters'] ? Numbers::formatNumber($currentSection->category_files_count) : 0,
             'unread_count' => Numbers::formatNumber($forumCounters->unreadMessages()),

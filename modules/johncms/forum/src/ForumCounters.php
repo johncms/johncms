@@ -7,27 +7,46 @@ namespace Johncms\Forum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Johncms\Online\Models\GuestSession;
+use Johncms\Online\OnlineCounter;
 use Johncms\Users\User;
 
 class ForumCounters
 {
     private ?User $user;
+    private OnlineCounter $onlineCounter;
 
-    public function __construct(?User $user)
+    public function __construct(?User $user, OnlineCounter $onlineCounter)
     {
         $this->user = $user;
+        $this->onlineCounter = $onlineCounter;
     }
 
-    public function onlineUsers(): int
+    public function onlineUsers(bool $forCurrentPage = false): int
     {
-        return (new User())->online()->whereHas('activity', function (Builder $builder) {
-            return $builder->where('route', 'like', 'forum.%');
-        })->count();
+        if ($forCurrentPage) {
+            $route = di('route');
+            $params = $route->getVars();
+            $routeParams = [];
+            if (array_key_exists('id', $params)) {
+                $routeParams['id'] = $params['id'];
+            }
+            return $this->onlineCounter->getUsersForRoute($route->getName(), $routeParams);
+        }
+        return $this->onlineCounter->getUsersForRoute('forum', compareType: OnlineCounter::COMPARE_STARTS_WITH);
     }
 
-    public function onlineGuests(): int
+    public function onlineGuests(bool $forCurrentPage = false): int
     {
-        return (new GuestSession())->online()->where('route', 'like', 'forum.%')->count();
+        if ($forCurrentPage) {
+            $route = di('route');
+            $params = $route->getVars();
+            $routeParams = [];
+            if (array_key_exists('id', $params)) {
+                $routeParams['id'] = $params['id'];
+            }
+            return $this->onlineCounter->getGuestsForRoute($route->getName(), $routeParams);
+        }
+        return $this->onlineCounter->getGuestsForRoute('forum', compareType: OnlineCounter::COMPARE_STARTS_WITH);
     }
 
     public function unreadMessages(): int
