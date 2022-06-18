@@ -437,7 +437,7 @@ class TopicsController extends BaseForumController
         return $this->render->render('forum::move_topic', [
             'sections'  => $sections,
             'topic'     => $topic,
-            'actionUrl' => route('forum.confirmMoveTopic', ['topicId' => $topicId]),
+            'actionUrl' => route('forum.moveTopic', ['topicId' => $topicId]),
         ]);
     }
 

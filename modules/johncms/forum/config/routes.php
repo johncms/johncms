@@ -17,19 +17,26 @@ use League\Route\Router;
 
 return function (Router $router) {
     $router->get('/forum[/]', [SectionsController::class, 'index'])->setName('forum.index');
-    $router->get('/forum/unread[/]', [LatestTopicsController::class, 'unread'])->setName('forum.unread');
-    $router->get('/forum/period[/]', [LatestTopicsController::class, 'period'])->setName('forum.period');
-    $router->get('/forum/mark-as-read[/]', [LatestTopicsController::class, 'markAsRead'])->setName('forum.markAsRead');
     $router->get('/forum/latest[/]', [LatestTopicsController::class, 'latest'])->setName('forum.latest');
-
-    $router->get('/forum/online/users[/]', [OnlineController::class, 'allUsers'])->setName('forum.onlineUsers');
-    $router->get('/forum/online/guests[/]', [OnlineController::class, 'allGuests'])->setName('forum.onlineGuests');
 
     // Sections, topic
     $router->get('/forum/{sectionName:slug}-{id:number}[/]', [SectionsController::class, 'show'])->setName('forum.section');
     $router->get('/forum/t/{topicName:slug}-{id:number}[/]', [TopicsController::class, 'show'])->setName('forum.topic');
 
+    $router->get('/forum/search[/]', [SearchController::class, 'index'])->setName('forum.search');
+    $router->post('/forum/search[/]', [SearchController::class, 'index']);
+
+    $router->get('/forum/filter/{topicId:number}[/]', [TopicsController::class, 'filter'])->setName('forum.filter');
+    $router->post('/forum/filter/{topicId:number}[/]', [TopicsController::class, 'filter']);
+
     $router->group('/forum', function (RouteGroup $route) {
+        $route->get('/unread[/]', [LatestTopicsController::class, 'unread'])->setName('forum.unread');
+        $route->get('/period[/]', [LatestTopicsController::class, 'period'])->setName('forum.period');
+        $route->get('/mark-as-read[/]', [LatestTopicsController::class, 'markAsRead'])->setName('forum.markAsRead');
+
+        $route->get('/online/users[/]', [OnlineController::class, 'allUsers'])->setName('forum.onlineUsers');
+        $route->get('/online/guests[/]', [OnlineController::class, 'allGuests'])->setName('forum.onlineGuests');
+
         // Write message
         $route->get('/add-message/{topicId:number}[/]', [MessagesController::class, 'create'])->setName('forum.addMessage');
         $route->post('/add-message/{topicId:number}[/]', [MessagesController::class, 'create']);
@@ -47,85 +54,55 @@ return function (Router $router) {
         $route->get('/create-topic/{sectionId:number}[/]', [TopicsController::class, 'create'])->setName('forum.newTopic');
         $route->post('/create-topic-store/{sectionId:number}[/]', [TopicsController::class, 'store'])->setName('forum.storeTopic');
 
-        $route->get('/edit-topic/{topicId:number}[/]', [TopicsController::class, 'edit'])->setName('forum.editTopic');
-        $route->post('/edit-topic-store/{topicId:number}[/]', [TopicsController::class, 'changeTopic'])->setName('forum.changeTopic');
-
-        $route->get('/filter/{topicId:number}[/]', [TopicsController::class, 'filter'])->setName('forum.filter');
-        $route->post('/filter/{topicId:number}[/]', [TopicsController::class, 'filter']);
-
-        $route->get('/mass-delete/{topicId:number}[/]', [TopicsController::class, 'massDelete'])->setName('forum.massDelete');
-        $route->post('/mass-delete/{topicId:number}[/]', [TopicsController::class, 'massDelete']);
-
-        // Delete topic
-        $route->get('/delete-topic/{topicId:number}[/]', [TopicsController::class, 'delete'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.deleteTopic');
-        $route->post('/delete-topic-confirm/{topicId:number}[/]', [TopicsController::class, 'confirmDelete'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.confirmDelete');
-
-        $route->get('/restore-topic/{topicId:number}[/]', [TopicsController::class, 'restore'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.restoreTopic');
-
-        $route->get('/close-topic/{topicId:number}[/]', [TopicsController::class, 'close'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.closeTopic');
-
-        $route->get('/open-topic/{topicId:number}[/]', [TopicsController::class, 'open'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.openTopic');
-
-        $route->get('/pin-topic/{topicId:number}[/]', [TopicsController::class, 'pin'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.pinTopic');
-
-        $route->get('/unpin-topic/{topicId:number}[/]', [TopicsController::class, 'unpin'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.unpinTopic');
-
-        $route->get('/move-topic/{topicId:number}[/]', [TopicsController::class, 'move'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.moveTopic');
-        $route->post('/move-topic/{topicId:number}[/]', [TopicsController::class, 'confirmMove'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.confirmMoveTopic');
-
-        $route->get('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.addPoll');
-        $route->post('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
-
-        $route->get('/edit-poll/{topicId:number}[/]', [PollController::class, 'edit'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.editPoll');
-        $route->post('/edit-poll/{topicId:number}[/]', [PollController::class, 'edit'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
-
-        $route->get('/delete-poll/{topicId:number}[/]', [PollController::class, 'delete'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.deletePoll');
-        $route->post('/delete-poll/{topicId:number}[/]', [PollController::class, 'delete'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
-
-        $route->get('/curators/{topicId:number}[/]', [CuratorsController::class, 'index'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
-            ->setName('forum.curators');
-        $route->post('/curators/{topicId:number}[/]', [CuratorsController::class, 'index'])
-            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
+        $route->get('/mass-delete/{topicId:number}[/]', [TopicsController::class, 'massDelete'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_POSTS))
+            ->setName('forum.massDelete');
+        $route->post('/mass-delete/{topicId:number}[/]', [TopicsController::class, 'massDelete'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_POSTS));
 
         $route->post('/vote/{topicId:number}[/]', [PollController::class, 'vote'])->setName('forum.vote');
 
-        $route->get('/vote-users/{topicId:number}[/]', [PollController::class, 'users'])->setName('forum.voteUsers');
+        $route->get('/vote-users/{topicId:number}[/]', [PollController::class, 'users'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS))
+            ->setName('forum.voteUsers');
 
         // Delete message
         $route->get('/delete-post/{id:number}[/]', [MessagesController::class, 'delete'])->setName('forum.deletePost');
         $route->post('/delete-post-confirm/{id:number}[/]', [MessagesController::class, 'confirmDelete'])->setName('forum.confirmDeletePost');
 
-        $route->get('/restore-post/{id:number}[/]', [MessagesController::class, 'restore'])->setName('forum.restorePost');
-
-        $route->get('/search[/]', [SearchController::class, 'index'])->setName('forum.search');
-        $route->post('/search[/]', [SearchController::class, 'index']);
+        $route->get('/restore-post/{id:number}[/]', [MessagesController::class, 'restore'])
+            ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_POSTS))
+            ->setName('forum.restorePost');
     })->lazyMiddleware(AuthorizedUserMiddleware::class);
+
+    $router->group('/forum/topic', function (RouteGroup $route) {
+        $route->get('/edit/{topicId:number}[/]', [TopicsController::class, 'edit'])->setName('forum.editTopic');
+        $route->post('/edit-store/{topicId:number}[/]', [TopicsController::class, 'changeTopic'])->setName('forum.changeTopic');
+
+        // Delete topic
+        $route->get('/delete/{topicId:number}[/]', [TopicsController::class, 'delete'])->setName('forum.deleteTopic');
+        $route->post('/delete-confirm/{topicId:number}[/]', [TopicsController::class, 'confirmDelete'])->setName('forum.confirmDelete');
+
+        $route->get('/restore/{topicId:number}[/]', [TopicsController::class, 'restore'])->setName('forum.restoreTopic');
+        $route->get('/close/{topicId:number}[/]', [TopicsController::class, 'close'])->setName('forum.closeTopic');
+        $route->get('/open/{topicId:number}[/]', [TopicsController::class, 'open'])->setName('forum.openTopic');
+        $route->get('/pin/{topicId:number}[/]', [TopicsController::class, 'pin'])->setName('forum.pinTopic');
+        $route->get('/unpin/{topicId:number}[/]', [TopicsController::class, 'unpin'])->setName('forum.unpinTopic');
+
+        $route->get('/move/{topicId:number}[/]', [TopicsController::class, 'move'])->setName('forum.moveTopic');
+        $route->post('/move/{topicId:number}[/]', [TopicsController::class, 'confirmMove']);
+
+        $route->get('/add-poll/{topicId:number}[/]', [PollController::class, 'add'])->setName('forum.addPoll');
+        $route->post('/add-poll/{topicId:number}[/]', [PollController::class, 'add']);
+
+        $route->get('/edit-poll/{topicId:number}[/]', [PollController::class, 'edit'])->setName('forum.editPoll');
+        $route->post('/edit-poll/{topicId:number}[/]', [PollController::class, 'edit']);
+
+        $route->get('/delete-poll/{topicId:number}[/]', [PollController::class, 'delete'])->setName('forum.deletePoll');
+        $route->post('/delete-poll/{topicId:number}[/]', [PollController::class, 'delete']);
+
+        $route->get('/curators/{topicId:number}[/]', [CuratorsController::class, 'index'])->setName('forum.curators');
+        $route->post('/curators/{topicId:number}[/]', [CuratorsController::class, 'index']);
+    })
+        ->middleware(new HasPermissionMiddleware(ForumPermissions::MANAGE_TOPICS));
 };
