@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Johncms\System\Legacy;
 
 use Carbon\Carbon;
+use JetBrains\PhpStorm\Deprecated;
 use Johncms\i18n\Translator;
 use Johncms\Users\User;
-use Johncms\Users\UserConfig;
 use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 use Psr\Container\ContainerInterface;
@@ -608,10 +608,10 @@ class Tools
         );
     }
 
-    /**
-     * @deprecated
-     * @see \Johncms\Utility\Numbers::formatNumber()
-     */
+    #[Deprecated(
+        reason: 'use \Johncms\Utility\Numbers::formatNumber() instead',
+        replacement: '\Johncms\Utility\Numbers::formatNumber(%parameter0%)'
+    )]
     public function formatNumber($number)
     {
         $prefixes = 'KMGTPEZY';
