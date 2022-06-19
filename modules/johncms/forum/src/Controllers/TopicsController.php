@@ -128,31 +128,19 @@ class TopicsController extends BaseForumController
             $poll_data['clip'] = $clip_forum;
         }
 
-        // Получаем данные о кураторах темы
-        $curator = false;
-        if (array_key_exists($user?->id, $currentTopic->curators)) {
-            $curator = true;
-        }
-
         // Fixed first post
         $first_message = null;
         $start = 0;
-        if (isset($_GET['clip']) || ($set_forum['postclip'] === 2 && ($set_forum['upfp'] ? $start < (ceil($total - $user->set_user->kmess)) : $start > 0))) {
+        if (isset($_GET['clip']) || ($set_forum['postclip'] === 2 && $request->getQuery('page', 1, FILTER_VALIDATE_INT) > 1)) {
             $first_message = (new ForumMessage())
-                ->users()
                 ->where('topic_id', '=', $id)
                 ->orderBy('id')
                 ->first();
         }
 
-        // Нижнее поле "Написать"
         $write_access = false;
         if (($user && ! $currentTopic->closed && config('johncms.mod_forum') !== 3 && $access !== 4)) {
             $write_access = true;
-            if ($set_forum['farea']) {
-                $token = mt_rand(1000, 100000);
-                $_SESSION['token'] = $token;
-            }
         }
 
         $topicMessages = $forumMessagesService->getTopicMessages($id);
