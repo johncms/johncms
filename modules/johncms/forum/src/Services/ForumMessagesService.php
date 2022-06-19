@@ -37,6 +37,7 @@ class ForumMessagesService
         return ForumMessage::query()
             ->with('files')
             ->where('topic_id', '=', $topicId)
+            ->with('topic', 'user', 'user.activity')
             ->when(! empty($filterByUsers), function (Builder $builder) use ($filterByUsers) {
                 return $builder->whereIn('user_id', $filterByUsers);
             })

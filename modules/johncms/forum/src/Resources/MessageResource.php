@@ -89,10 +89,14 @@ class MessageResource extends AbstractResource
     private function canEdit(): bool
     {
         $user = di(User::class);
+        $curators = $this->topic->curators;
         if (
-            ($user?->hasPermission(['forum_manage_posts', 'forum_manage_topics'])/* || $curator*/)
-            //|| ($i === 1 && $access === 2 && $message->user_id === $user->id)
-            || $this->user_id === $user?->id
+            $user?->hasPermission(['forum_manage_posts', 'forum_manage_topics'])
+            || (
+                $this->user_id === $user?->id
+                && $this->date > time() - 3600
+            )
+            || array_key_exists($user?->id, $curators)
         ) {
             return true;
         }
