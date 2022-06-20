@@ -13,6 +13,7 @@ use DebugBar\DataCollector\PhpInfoCollector;
 use DebugBar\DataCollector\RequestDataCollector;
 use DebugBar\DataCollector\TimeDataCollector;
 use DebugBar\DebugBarException;
+use DebugBar\Storage\FileStorage;
 use Johncms\Debug\Collectors\QueryCollector;
 use Johncms\Debug\Collectors\RouteDataCollector;
 
@@ -39,8 +40,13 @@ class DebugBar extends \DebugBar\DebugBar
         }
         $this->addCollector($queryCollector);
 
-        $this->getJavascriptRenderer('/themes/default/assets/debugbar');
+        $jsRenderer = $this->getJavascriptRenderer('/themes/default/assets/debugbar');
+        $jsRenderer->setOpenHandlerUrl(config('johncms.debug_bar_url'));
+
         $this->addCollector(new ConfigCollector(config()));
+
+        // Save data to file
+        $this->setStorage(new FileStorage(DATA_PATH . 'debugbar'));
     }
 
     public function __invoke(): DebugBar

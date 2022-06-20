@@ -173,4 +173,10 @@ class Request extends ServerRequest
     {
         return $this->getMethod() === 'POST';
     }
+
+    public function isXmlHttpRequest(): bool
+    {
+        $header = $this->getHeader('X-Requested-With')[0] ?? '';
+        return $header == 'XMLHttpRequest';
+    }
 }

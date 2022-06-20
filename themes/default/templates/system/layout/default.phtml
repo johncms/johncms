@@ -13,12 +13,6 @@ $notifications = $counters->notifications();
 $analytics = $counters->counters();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
-
-$debug = (($user?->isAdmin() && DEBUG) || DEBUG_FOR_ALL);
-if ($debug) {
-    $debugBar = di(\Johncms\Debug\DebugBar::class);
-    $debugRenderer = $debugBar->getJavascriptRenderer();
-}
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
@@ -50,14 +44,9 @@ if ($debug) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
-    <?php if ($debug): ?>
-        <?= $debugRenderer->renderHead(); ?>
-        <link rel="stylesheet" href="<?= $this->asset('debugbar/custom.css', true) ?>">
-        <script src="<?= $this->asset('debugbar/queryWidget.js', true) ?>"></script>
-    <?php endif; ?>
     <title><?= $metaTags->getTitle() ?></title>
 </head>
-<body class="<?= $debug ? 'pb-4' : '' ?>">
+<body>
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
     <div class="page_layout justify-content-end d-flex w-100">
         <div class="sidebar">
@@ -202,6 +191,5 @@ if ($debug) {
     ?>
 <?php endif; ?>
 <?= $this->section('scripts', '') ?>
-<?php if ($debug): echo $debugRenderer->render(); endif; ?>
 </body>
 </html>

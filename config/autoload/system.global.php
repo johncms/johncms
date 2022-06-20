@@ -7,6 +7,7 @@ return [
         'terms_of_service_url' => '/info/tos',
         'privacy_policy_url'   => '/info/policy',
         'cookie_policy_url'    => '/info/cookie',
+        'debug_bar_url'        => '/_debugbar/open/',
 
         'meta_title'       => 'JohnCMS',
         'meta_keywords'    => 'johncms',

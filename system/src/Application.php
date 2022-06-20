@@ -18,8 +18,10 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Support\Facades\DB;
 use Johncms\Debug\DebugBar;
+use Johncms\Http\Request;
 use Johncms\i18n\Translator;
 use Johncms\Router\RouterFactory;
+use Johncms\Users\User;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use PDO;
 use Psr\Container\ContainerExceptionInterface;
@@ -81,11 +83,31 @@ class Application
     {
         $this->container->bind(RouterFactory::class, RouterFactory::class, true);
         $router = $this->container->get(RouterFactory::class);
-        if (DEBUG || DEBUG_FOR_ALL) {
+
+        $request = di(Request::class);
+        $debug = (DEBUG_FOR_ALL || (DEBUG && di(User::class)?->isAdmin())) && ! str_starts_with($request->getUri()->getPath(), '/_debugbar/');
+
+        // Initialize the debugbar if necessary
+        if ($debug) {
             $debugBar = di(DebugBar::class);
             $debugBar->addBootingTime();
             $debugBar->startApplicationMeasure();
+            header('phpdebugbar-id: ' . $debugBar->getCurrentRequestId());
+            $getJavascriptRenderer = $debugBar->getJavascriptRenderer();
+            $getJavascriptRenderer->setBindAjaxHandlerToXHR();
+            $getJavascriptRenderer->addAssets(['/themes/default/assets/debugbar/custom.css'], ['/themes/default/assets/debugbar/queryWidget.js']);
         }
+
+        // Handle request
         (new SapiEmitter())->emit($router->dispatch());
+
+        // Collect data for debugbar and render html
+        if ($debug) {
+            if ($request->isXmlHttpRequest()) {
+                $debugBar->stackData();
+            } else {
+                $getJavascriptRenderer->renderOnShutdownWithHead();
+            }
+        }
     }
 }
