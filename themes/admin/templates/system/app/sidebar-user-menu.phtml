@@ -16,11 +16,11 @@
                     <div class="sidebar__notifications badge bg-danger rounded-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
                 <div class="user_photo border rounded-circle me-2 overflow-hidden">
-                    <img src="<?= $this->avatar($user->id ?? 0) ?>" class="img-fluid" alt=".">
+                    <?= $this->avatar($user?->avatar_url, $user?->displayName() ?? d__('system', 'Log In')) ?>
                 </div>
             </div>
             <div>
-                <?= ($user->id ? $user->name : d__('system', 'Log In')) ?>
+                <?= ($user ? $user->displayName() : d__('system', 'Log In')) ?>
             </div>
         </div>
         <div>

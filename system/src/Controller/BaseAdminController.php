@@ -53,9 +53,6 @@ class BaseAdminController extends AbstractController
                 'countusers' => 0, // $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
                 'countadm'   => 0, // $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
                 'bantotal'   => 0, // $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
-            ],
-            [
-                'system::app/sidebar-admin-menu',
             ]
         );
         $this->navChain->add(d__('admin', 'Admin Panel'), '/admin/');

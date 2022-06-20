@@ -16,7 +16,7 @@ $guestbook_counters = $counters->guestbookCounters();
 $downloads_counters = $counters->downloadsCounters();
 $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
-$album_counters = $counters->albumCounters();
+$album_counters = 0;
 $news_counters = $counters->news();
 ?>
 <div style="background-color: #bd0719; height: 5px">&nbsp;</div>
@@ -154,7 +154,7 @@ $news_counters = $counters->news();
                 </a>
             </li>
             <li class="<?= isset($module_menu['news']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/news/">
+                <a href="<?= $config['homeurl'] ?>/admin/news">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
                     </svg>
