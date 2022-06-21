@@ -37,12 +37,9 @@ class AdminController extends BaseAdminController
         $this->navChain->add(__('News'), route('news.admin.index'));
     }
 
-    /**
-     * @throws Throwable
-     */
-    public function index(): void
+    public function index(): string
     {
-        echo $this->render->render('news::admin/index');
+        return $this->render->render('news::admin/index');
     }
 
     /**
@@ -99,7 +96,7 @@ class AdminController extends BaseAdminController
      * @return \Johncms\Http\Response\RedirectResponse|string
      * @throws Throwable
      */
-    public function settings(Request $request, Session $session): RedirectResponse|string
+    public function settings(Request $request, Session $session): RedirectResponse | string
     {
         $data = [
             'title'       => __('Settings'),
