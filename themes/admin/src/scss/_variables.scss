@@ -59,6 +59,19 @@ $danger: $orange !default;
 $light: $gray-100 !default;
 $dark: $gray-800 !default;
 
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+  "orange": $orange,
+  "dark-brown": $dark_brown,
+  "yellow-light": $yellow-light,
+);
 
 // Размеры шрифтов
 $line-height-base: 1.5 !default;
