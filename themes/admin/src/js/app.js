@@ -35,7 +35,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 const vue_apps = document.querySelectorAll('.vue_app');
 vue_apps.forEach(function (el) {
-    new Vue({
-        el: el,
-    });
+  new Vue({
+    el: el,
+  });
 });
