@@ -6,7 +6,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-import Swiper from 'swiper/swiper-bundle';
+import Swiper from 'swiper';
 
 const swiperSlider = new Swiper('.screenshots', {
   slidesPerView: 1,

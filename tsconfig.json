@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noImplicitThis": false,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "themes/default/src/js/*",
+      ],
+    }
+  },
+  "include": [
+    "themes/default/src/js/**/*",
+    "themes/admin/src/js/**/*",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
