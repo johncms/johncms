@@ -2,7 +2,7 @@
   <div class="mt-4">
     <h3 class="fw-bold">{{ __('comments') }} <span class="text-success" v-if="messages.total > 0">{{ messages.total }}</span></h3>
     <div v-if="messages.data && messages.data.length < 1" class="alert alert-info">{{ __('empty_list') }}</div>
-    <div class="new_post-item" v-for="message in messages.data">
+    <div class="new_post-item" v-for="(message, index) in messages.data" :key="index">
       <div class="new_post-header d-flex justify-content-between">
         <div class="post-user">
           <a :href="message.user.profile_url" v-if="message.user.profile_url">
@@ -99,6 +99,13 @@
 </template>
 
 <script>
+import axios from "axios";
+import _ from 'lodash';
+import $ from 'jquery';
+
+/* globals editor */
+/* globals ClassicEditor */
+
 export default {
   name: "CommentsComponent",
   props: {
@@ -149,7 +156,6 @@ export default {
   {
     this.getComments();
 
-    const self = this;
     let config = {
       simpleUpload: {
         uploadUrl: this.upload_url,
@@ -157,8 +163,8 @@ export default {
           'X-CSRF-Token': this.csrf_token,
         },
         withCredentials: false,
-        savedCallback: function (file) {
-          self.attached_files.push(file.id);
+        savedCallback: (file) => {
+          this.attached_files.push(file.id);
         },
       },
       language: this.language
@@ -171,9 +177,6 @@ export default {
         editor.model.document.on('change:data', () => {
           this.comment_text = editor.getData();
         });
-      })
-      .catch(error => {
-        console.error(error);
       });
 
   },
@@ -256,7 +259,7 @@ export default {
       axios.post('/news/comments/del/', {
         comment_id: comment_id
       })
-        .then(response => {
+        .then(() => {
           this.getComments(this.messages.current_page);
         })
         .catch(error => {

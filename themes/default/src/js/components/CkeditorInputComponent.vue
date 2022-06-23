@@ -5,13 +5,14 @@
       <textarea :name="name" :id="id" class="form-control" :class="classes + (errors ? 'is-invalid' : '')" v-model="model_value"></textarea>
       <div class="invalid-feedback d-block" v-if="errors">{{ errors }}</div>
     </div>
-    <div v-for="file in attached_files">
+    <div v-for="(file, index) in attached_files" :key="index">
       <input type="hidden" name="attached_files[]" v-model="file.id">
     </div>
   </div>
 </template>
 
 <script>
+/* global ClassicEditor */
 export default {
   name: "CkeditorInputComponent",
   props: {
@@ -61,7 +62,6 @@ export default {
   },
   mounted()
   {
-    const self = this;
     let config = {
       simpleUpload: {
         uploadUrl: this.upload_url,
@@ -70,8 +70,8 @@ export default {
           'X-Requested-With': 'XMLHttpRequest',
         },
         withCredentials: false,
-        savedCallback: function (file) {
-          self.attached_files.push(file);
+        savedCallback: (file) => {
+          this.attached_files.push(file);
         },
       },
       language: this.language
@@ -81,9 +81,6 @@ export default {
       .create(document.querySelector('#' + this.id), config)
       .then(editor => {
         window.editor = editor;
-      })
-      .catch(error => {
-        console.error(error);
       });
   }
 }

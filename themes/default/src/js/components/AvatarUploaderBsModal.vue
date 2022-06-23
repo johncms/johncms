@@ -102,7 +102,7 @@
                 </div>
               </div>
               <div class="vicp-operate mt-3">
-                <a @click="setStep(1)" class="btn btn-outline-secondary">{{ lang.btn.back }}</a>
+                <a @click="setStep(1)" class="btn btn-outline-secondary me-2">{{ lang.btn.back }}</a>
                 <a class="vicp-operate-btn btn btn-primary" @click="prepareUpload">{{ lang.btn.save }}</a>
               </div>
             </div>
@@ -123,7 +123,7 @@
                 </div>
               </div>
               <div class="vicp-operate mt-3">
-                <a @click="setStep(2)" class="btn btn-outline-secondary">{{ lang.btn.back }}</a>
+                <a @click="setStep(2)" class="btn btn-outline-secondary me-2">{{ lang.btn.back }}</a>
                 <button type="button" data-bs-dismiss="modal" class="btn btn-primary">{{ lang.btn.close }}</button>
               </div>
             </div>
@@ -136,7 +136,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
+/* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable no-prototype-builtins */
+'use strict';
 import language from 'vue-image-crop-upload/utils/language.js';
 import mimes from 'vue-image-crop-upload/utils/mimes.js';
 import data2blob from 'vue-image-crop-upload/utils/data2blob.js';
@@ -158,7 +161,8 @@ export default {
       'default': '0'
     },
     // 显示该控件与否
-    value: {
+    modelValue: {
+      type: Boolean,
       'default': true
     },
     // 上传地址
@@ -169,12 +173,12 @@ export default {
     // 其他要上传文件附带的数据，对象格式
     params: {
       type: Object,
-      'default': null
+      'default': () => null
     },
     //Add custom headers
     headers: {
       type: Object,
-      'default': null
+      'default': () => null
     },
     // 剪裁图片的宽
     width: {
@@ -189,7 +193,7 @@ export default {
     // 不显示旋转功能
     noRotate: {
       type: Boolean,
-      default: false
+      default: true
     },
     // 不预览圆形图片
     noCircle: {
@@ -214,7 +218,7 @@ export default {
     // 语言包
     langExt: {
       type: Object,
-      'default': null
+      'default': () => null
     },
     // 图片上传格式
     imgFormat: {
@@ -238,27 +242,34 @@ export default {
     initialImgUrl: {
       type: String,
       'default': ''
+    },
+    allowImgFormat: {
+      type: Array,
+      'default': () => [
+        'gif',
+        'jpg',
+        'png'
+      ]
     }
   },
-  data() {
+
+  data()
+  {
     let that = this,
       {
         imgFormat,
+        allowImgFormat,
         langType,
         langExt,
         width,
         height
       } = that,
       isSupported = true,
-      allowImgFormat = [
-        'jpg',
-        'png'
-      ],
       tempImgFormat = allowImgFormat.indexOf(imgFormat) === -1 ? 'jpg' : imgFormat,
       lang = language[langType] ? language[langType] : language['en'],
       mime = mimes[tempImgFormat];
     // 规范图片格式
-    that.imgFormat = tempImgFormat;
+    // that.imgFormat = tempImgFormat;
 
     if (langExt) {
       Object.assign(lang, langExt);
@@ -337,9 +348,11 @@ export default {
       }
     }
   },
+
   computed: {
     // 进度条样式
-    progressStyle() {
+    progressStyle()
+    {
       let {
         progress
       } = this;
@@ -348,7 +361,8 @@ export default {
       }
     },
     // 原图样式
-    sourceImgStyle() {
+    sourceImgStyle()
+    {
       let {
           scale,
           sourceImgMasking
@@ -363,7 +377,8 @@ export default {
       }
     },
     // 原图蒙版属性
-    sourceImgMasking() {
+    sourceImgMasking()
+    {
       let {
           width,
           height,
@@ -396,7 +411,8 @@ export default {
       };
     },
     // 原图遮罩样式
-    sourceImgShadeStyle() {
+    sourceImgShadeStyle()
+    {
       let {
           sourceImgMasking,
           sourceImgContainer
@@ -410,10 +426,9 @@ export default {
         height: h + 'px'
       };
     },
-    previewStyle() {
+    previewStyle()
+    {
       let {
-          width,
-          height,
           ratio,
           previewContainer
         } = this,
@@ -433,28 +448,55 @@ export default {
       };
     }
   },
+
   watch: {
-    value(newValue) {
+    modelValue(newValue)
+    {
       if (newValue && this.loading != 1) {
         this.reset();
       }
     }
   },
+
+  created()
+  {
+    // 绑定按键esc隐藏此插件事件
+    document.addEventListener('keyup', this.handleEscClose)
+  },
+
+  beforeUnmount()
+  {
+    document.removeEventListener('keyup', this.handleEscClose)
+  },
+
+  mounted()
+  {
+    if (this.sourceImgUrl) {
+      this.startCrop();
+    }
+  },
+
   methods: {
-    // 点击波纹效果
-    ripple(e) {
+    handleEscClose(e)
+    {
+      if (this.modelValue && (e.key == 'Escape' || e.keyCode == 27)) {
+        this.off();
+      }
     },
+
     // 关闭控件
-    off() {
+    off()
+    {
       setTimeout(() => {
-        this.$emit('input', false);
+        this.$emit('update:modelValue', false);
         if (this.step == 3 && this.loading == 2) {
           this.setStep(1);
         }
       }, 200);
     },
     // 设置步骤
-    setStep(no) {
+    setStep(no)
+    {
       // 延时是为了显示动画效果呢，哈哈哈
       setTimeout(() => {
         this.step = no;
@@ -463,11 +505,13 @@ export default {
 
     /* 图片选择区域函数绑定
      ---------------------------------------------------------------*/
-    preventDefault(e) {
+    preventDefault(e)
+    {
       e.preventDefault();
       return false;
     },
-    handleClick(e) {
+    handleClick(e)
+    {
       if (this.loading !== 1) {
         if (e.target !== this.$refs.fileinput) {
           e.preventDefault();
@@ -477,7 +521,8 @@ export default {
         }
       }
     },
-    handleChange(e) {
+    handleChange(e)
+    {
       e.preventDefault();
       if (this.loading !== 1) {
         let files = e.target.files || e.dataTransfer.files;
@@ -490,7 +535,8 @@ export default {
     /* ---------------------------------------------------------------*/
 
     // 检测选择的文件是否合适
-    checkFile(file) {
+    checkFile(file)
+    {
       let that = this,
         {
           lang,
@@ -512,7 +558,8 @@ export default {
       return true;
     },
     // 重置控件
-    reset() {
+    reset()
+    {
       let that = this;
       that.loading = 0;
       that.hasError = false;
@@ -520,18 +567,20 @@ export default {
       that.progress = 0;
     },
     // 设置图片源
-    setSourceImg(file) {
+    setSourceImg(file)
+    {
       this.$emit('src-file-set', file.name, file.type, file.size);
       let that = this,
         fr = new FileReader();
-      fr.onload = function (e) {
+      fr.onload = function () {
         that.sourceImgUrl = fr.result;
         that.startCrop();
       }
       fr.readAsDataURL(file);
     },
     // 剪裁前准备工作
-    startCrop() {
+    startCrop()
+    {
       let that = this,
         {
           width,
@@ -584,7 +633,8 @@ export default {
       };
     },
     // 鼠标按下图片准备移动
-    imgStartMove(e) {
+    imgStartMove(e)
+    {
       e.preventDefault();
       // 支持触摸事件，则鼠标事件无效
       if (this.isSupportTouch && !e.targetTouches) {
@@ -603,7 +653,8 @@ export default {
       simd.on = true;
     },
     // 鼠标按下状态下移动，图片移动
-    imgMove(e) {
+    imgMove(e)
+    {
       e.preventDefault();
       // 支持触摸事件，则鼠标事件无效
       if (this.isSupportTouch && !e.targetTouches) {
@@ -645,7 +696,8 @@ export default {
       scale.y = rY;
     },
     // 顺时针旋转图片
-    rotateImg(e) {
+    rotateImg()
+    {
       let {
           sourceImg,
           scale: {
@@ -673,7 +725,8 @@ export default {
       this.sourceImgUrl = imgUrl;
       this.startCrop();
     },
-    handleMouseWheel(e) {
+    handleMouseWheel(e)
+    {
       e = e || window.event;
       let {scale} = this;
       if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
@@ -693,14 +746,16 @@ export default {
       }
     },
     // 按钮按下开始放大
-    startZoomAdd(e) {
+    startZoomAdd()
+    {
       let that = this,
         {
           scale
         } = that;
       scale.zoomAddOn = true;
 
-      function zoom() {
+      function zoom()
+      {
         if (scale.zoomAddOn) {
           let range = scale.range >= 100 ? 100 : ++scale.range;
           that.zoomImg(range);
@@ -713,18 +768,21 @@ export default {
       zoom();
     },
     // 按钮松开或移开取消放大
-    endZoomAdd(e) {
+    endZoomAdd()
+    {
       this.scale.zoomAddOn = false;
     },
     // 按钮按下开始缩小
-    startZoomSub(e) {
+    startZoomSub()
+    {
       let that = this,
         {
           scale
         } = that;
       scale.zoomSubOn = true;
 
-      function zoom() {
+      function zoom()
+      {
         if (scale.zoomSubOn) {
           let range = scale.range <= 0 ? 0 : --scale.range;
           that.zoomImg(range);
@@ -737,21 +795,23 @@ export default {
       zoom();
     },
     // 按钮松开或移开取消缩小
-    endZoomSub(e) {
+    endZoomSub()
+    {
       let {
         scale
       } = this;
       scale.zoomSubOn = false;
     },
-    zoomChange(e) {
+    zoomChange(e)
+    {
       this.zoomImg(e.target.value);
     },
     // 缩放原图
-    zoomImg(newRange) {
+    zoomImg(newRange)
+    {
       let that = this,
         {
           sourceImgMasking,
-          sourceImgMouseDown,
           scale
         } = this,
         {
@@ -762,8 +822,7 @@ export default {
           width,
           height,
           x,
-          y,
-          range
+          y
         } = scale,
         sim = sourceImgMasking,
         // 蒙版宽高
@@ -803,7 +862,8 @@ export default {
       }, 300);
     },
     // 生成需求图片
-    createImg(e) {
+    createImg(e)
+    {
       let that = this,
         {
           imgFormat,
@@ -841,7 +901,8 @@ export default {
       ctx.drawImage(sourceImg, x / scale, y / scale, width / scale, height / scale);
       that.createImgUrl = canvas.toDataURL(mime);
     },
-    prepareUpload() {
+    prepareUpload()
+    {
       let {
         url,
         createImgUrl,
@@ -856,7 +917,8 @@ export default {
       }
     },
     // 上传图片
-    upload() {
+    upload()
+    {
       let that = this,
         {
           lang,
@@ -921,7 +983,7 @@ export default {
         // 上传成功
         function (resData) {
           that.loading = 2;
-          that.$emit('crop-upload-success', resData, field, ki);
+          that.$emit('crop-upload-success', resData.url, field, ki);
         },
         // 上传失败
         function (sts) {
@@ -933,23 +995,6 @@ export default {
       );
     }
   },
-  handleEscClose(e) {
-    if (this.value && (e.key == 'Escape' || e.keyCode == 27)) {
-      this.off();
-    }
-  },
-  created() {
-    // 绑定按键esc隐藏此插件事件
-    document.addEventListener('keyup', this.handleEscClose)
-  },
-  beforeDestroy() {
-    document.removeEventListener('keyup', this.handleEscClose)
-  },
-  mounted() {
-    if (this.sourceImgUrl) {
-      this.startCrop();
-    }
-  }
 }
 
 </script>

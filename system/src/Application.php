@@ -99,11 +99,13 @@ class Application
         }
 
         // Handle request
-        (new SapiEmitter())->emit($router->dispatch());
+        $response = $router->dispatch();
+        (new SapiEmitter())->emit($response);
 
         // Collect data for debugbar and render html
         if ($debug) {
-            if ($request->isXmlHttpRequest()) {
+            $contentType = $response->getHeader('content-type')[0] ?? 'text/html';
+            if ($request->isXmlHttpRequest() || $contentType === 'application/json') {
                 $debugBar->stackData();
             } else {
                 $getJavascriptRenderer->renderOnShutdownWithHead();

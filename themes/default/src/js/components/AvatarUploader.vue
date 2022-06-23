@@ -23,7 +23,7 @@
     <avatar-uploader-bs-modal
       modal-id="uploadAvatar"
       field="avatar"
-      @crop-success="cropSuccess"
+      @crop-upload-success="cropSuccess"
       v-model="show"
       :width="300"
       :height="300"
@@ -83,7 +83,7 @@ export default {
      * [param] imgDataUrl
      * [param] field
      */
-    cropSuccess(imgDataUrl, field) {
+    cropSuccess(imgDataUrl: any) {
       this.imgUrl = imgDataUrl;
     },
   }
