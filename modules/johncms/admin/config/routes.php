@@ -1,11 +1,14 @@
 <?php
 
-use Johncms\Admin\Controllers\Users\UsersController;
+use Johncms\Admin\AdminPermissions;
+use Johncms\Admin\Controllers\Users\AuthController;
 use Johncms\Admin\Controllers\DashboardController;
 use Johncms\Admin\Controllers\System\DebugBarController;
+use Johncms\Admin\Controllers\Users\UsersController;
 use Johncms\Admin\Middlewares\AdminAuthorizedUserMiddleware;
 use Johncms\Admin\Middlewares\AdminUnauthorizedUserMiddleware;
 use Johncms\Users\Middlewares\HasAnyRoleMiddleware;
+use Johncms\Users\Middlewares\HasPermissionMiddleware;
 use League\Route\RouteGroup;
 use League\Route\Router;
 
@@ -21,9 +24,14 @@ return function (Router $router) {
 
     $router->group('/admin', function (RouteGroup $routeGroup) {
         // Login routes
-        $routeGroup->get('/login[/]', [UsersController::class, 'index'])
+        $routeGroup->get('/login[/]', [AuthController::class, 'index'])
             ->setName('admin.login');
-        $routeGroup->post('/login/authorize[/]', [UsersController::class, 'authorize'])
+        $routeGroup->post('/login/authorize[/]', [AuthController::class, 'authorize'])
             ->setName('admin.authorize');
     })->lazyMiddleware(AdminUnauthorizedUserMiddleware::class);
+
+    $router->group('/admin/users', function (RouteGroup $routeGroup) {
+        $routeGroup->get('[/]', [UsersController::class, 'index'])->setName('admin.users');
+        $routeGroup->get('/list[/]', [UsersController::class, 'userList'])->setName('admin.userList');
+    })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 };

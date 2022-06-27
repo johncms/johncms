@@ -1,0 +1,12 @@
+{
+  "userList": {
+    "name": "Имя",
+    "login": "Логин",
+    "email": "E-mail",
+    "phone": "Телефон",
+    "createdAt": "Зарегистрирован",
+    "updatedAt": "Изменен",
+    "edit": "Изменить",
+    "delete": "Удалить"
+  }
+}

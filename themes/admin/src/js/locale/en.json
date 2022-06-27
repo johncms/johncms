@@ -1,0 +1,12 @@
+{
+  "userList": {
+    "name": "Name",
+    "login": "Login",
+    "email": "E-mail",
+    "phone": "Phone Number",
+    "createdAt": "Registration Date",
+    "updatedAt": "Modified",
+    "edit": "Edit",
+    "delete": "Delete"
+  }
+}

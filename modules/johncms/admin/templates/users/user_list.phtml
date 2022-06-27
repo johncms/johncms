@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var array $data
+ */
+$this->layout('system::layout/default');
+?>
+<div class="vue_app">
+    <user-list list-url="<?= route('admin.userList') ?>"></user-list>
+</div>

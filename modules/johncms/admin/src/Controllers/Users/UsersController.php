@@ -12,61 +12,24 @@ declare(strict_types=1);
 
 namespace Johncms\Admin\Controllers\Users;
 
-use Johncms\Admin\Forms\LoginForm;
+use Johncms\Admin\Resources\Users\UserResource;
 use Johncms\Controller\BaseAdminController;
-use Johncms\Exceptions\ValidationException;
-use Johncms\Http\Response\RedirectResponse;
-use Johncms\Http\Session;
-use Johncms\Users\AuthProviders\CookiesAuthProvider;
-use Johncms\Users\AuthProviders\SessionAuthProvider;
-use Johncms\Users\UserManager;
-use Throwable;
+use Johncms\Users\User;
 
 class UsersController extends BaseAdminController
 {
     protected string $moduleName = 'johncms/admin';
 
-    public function index(Session $session): string
+    public function index(): string
     {
-        $registrationForm = new LoginForm();
-        $data = [
-            'formFields'       => $registrationForm->getFormFields(),
-            'validationErrors' => $registrationForm->getValidationErrors(),
-            'storeUrl'         => route('admin.authorize'),
-            'authError'        => $session->getFlash('authError'),
-        ];
-        return $this->render->render('admin::users/login_form', ['data' => $data]);
+        $this->metaTagManager->setAll(__('List of Users'));
+        return $this->render->render('admin::users/user_list');
     }
 
-    public function authorize(
-        UserManager $userManager,
-        Session $session,
-        SessionAuthProvider $sessionAuthProvider,
-        CookiesAuthProvider $cookiesAuthProvider
-    ): RedirectResponse {
-        $loginForm = new LoginForm();
-        try {
-            // Validate the form
-            $loginForm->validate();
-            $values = $loginForm->getRequestValues();
-
-            try {
-                // Try to check credentials and authorize the user
-                $user = $userManager->checkCredentials($values['login'], $values['password']);
-                if ($values['remember']) {
-                    $cookiesAuthProvider->store($user);
-                }
-                $sessionAuthProvider->store($user);
-                return (new RedirectResponse(route('admin.dashboard')));
-            } catch (Throwable $exception) {
-                $session->flash('authError', $exception->getMessage());
-                return (new RedirectResponse(route('admin.login')))->withPost();
-            }
-        } catch (ValidationException $validationException) {
-            // Redirect to the login form if the form is invalid
-            return (new RedirectResponse(route('admin.login')))
-                ->withPost()
-                ->withValidationErrors($validationException->getErrors());
-        }
+    public function userList(): array
+    {
+        $users = User::query()->paginate();
+        $resource = UserResource::createFromCollection($users);
+        return $resource->toArray();
     }
 }

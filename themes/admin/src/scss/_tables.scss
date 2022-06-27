@@ -15,6 +15,8 @@ $bp-lg: 75em;
   width: 100%;
   margin-bottom: 1.5em;
   border-spacing: 0;
+  border-radius: 0.5rem;
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgb(229, 231, 235) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
 
   @media (min-width: $bp-sm1) {
     font-size: .9em;
@@ -37,6 +39,7 @@ $bp-lg: 75em;
     height: 1px;
     width: 1px;
     overflow: hidden;
+    border-bottom: 1px solid $border-color;
 
     @media (min-width: $bp-sm1) {
       position: relative;
@@ -52,7 +55,7 @@ $bp-lg: 75em;
       border-color: $border-color;
       border-bottom: 2px solid $border-color;
       font-weight: 700;
-      border-top: 1px solid $border-color;
+      border-top: none;
       padding: .75rem;
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -60,6 +63,13 @@ $bp-lg: 75em;
 
       &:first-of-type {
         text-align: left;
+        border-top-left-radius: 0.5rem;
+        overflow: hidden;
+      }
+
+      &:last-of-type {
+        border-top-right-radius: 0.5rem;
+        overflow: hidden;
       }
 
       @media (max-width: $bp-lg) {
@@ -86,13 +96,19 @@ $bp-lg: 75em;
       // Undo display: block
       display: table-row;
     }
+
+    &:last-of-type {
+      td, th {
+        border-bottom: 0;
+      }
+    }
   }
 
   th,
   td {
     padding: .5em;
     vertical-align: middle;
-    border-top: 1px solid $border-color;
+    border-top: 0;
 
     @media (min-width: $bp-sm) {
       padding: .75em .5em;
@@ -109,7 +125,7 @@ $bp-lg: 75em;
     }
 
     @media (min-width: $bp-lg) {
-      padding: 1em 0.9rem;
+      padding: 0.7em 0.5rem;
     }
   }
 
@@ -144,7 +160,7 @@ $bp-lg: 75em;
       @media (min-width: $bp-sm1) {
         // Undo display: block
         display: table-row;
-        border-width: 1px;
+        border-width: 0;
       }
 
       &:last-of-type {

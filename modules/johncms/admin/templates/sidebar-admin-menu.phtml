@@ -43,27 +43,8 @@ $news_counters = $counters->news();
     <div id="collapseUsers" class="collapse<?= isset($usr_menu) ? ' show' : '' ?>" data-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
-            <li class="<?= isset($usr_menu['search_ip']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/search_ip/">
-                    <svg class="icon text-info">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>
-                    </svg>
-                    <span class="flex-grow-1 text-info"><?= __('Search') ?></span>
-                </a>
-            </li>
-            <?php if ($regtotal): ?>
-                <li class="<?= isset($usr_menu['reg']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/reg/">
-                        <svg class="icon">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
-                        </svg>
-                        <span class="flex-grow-1"><?= __('On registration') ?></span>
-                        <span class="badge rounded-pill bg-danger"><?= $tools->formatNumber($regtotal) ?></span>
-                    </a>
-                </li>
-            <?php endif ?>
             <li class="<?= isset($usr_menu['userlist']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/userlist/">
+                <a href="<?= route('admin.users') ?>">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                     </svg>
@@ -71,24 +52,7 @@ $news_counters = $counters->news();
                     <span class="badge rounded-pill badge-light"><?= $tools->formatNumber($countusers) ?></span>
                 </a>
             </li>
-            <li class="<?= isset($usr_menu['adminlist']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/adminlist/">
-                    <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
-                    </svg>
-                    <span class="flex-grow-1"><?= __('Administration') ?></span>
-                    <span class="badge rounded-pill badge-light"><?= $tools->formatNumber($countadm) ?></span>
-                </a>
-            </li>
-            <li class="<?= isset($usr_menu['ban_panel']) ? 'active' : '' ?>">
-                <a href="<?= $config['homeurl'] ?>/admin/ban_panel/">
-                    <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
-                    </svg>
-                    <span class="flex-grow-1"><?= __('Ban Panel') ?></span>
-                    <span class="badge rounded-pill badge-light"><?= $tools->formatNumber($bantotal) ?></span>
-                </a>
-            </li>
+
             <?php if ($user->rights === 9): ?>
                 <li class="<?= isset($usr_menu['usr_clean']) ? 'active' : '' ?>">
                     <a href="<?= $config['homeurl'] ?>/admin/usr_clean/">
