@@ -21,14 +21,14 @@ This version is at an early stage of development. Many things may not work or wo
 **To install the general availability version**, go to the [**project website**](https://johncms.com/downloads) and download the latest available distributive.
 Then follow the installation instructions that came with it.
 
-**To install the developer version**, you must have a [Composer](https://getcomposer.org) dependency manager
+**To install the developer version**, you must have a [Composer](https://getcomposer.org) dependency manager, [NodeJS](https://nodejs.org/en/)
 and [GIT](https://git-scm.com/) version control system.
 1. Clone or download this repository on local workstation.
 2. Assign the repository folder as Apache virtual host, or move contents to the previously created virtual host folder.
 3. Create MySQL Database.
 4. Open the console in the virtual host folder and install the dependencies using the command
 ```bash
-composer install
+make cms-install
 ```
 5. Open the url in your browser (replace your.site to your virtualhost name): http://your.site/install and follow the instructions in the installer.
 6. **This is all done**. If you go to the address of your virtual host from the browser, you should see a working site with demo data.
@@ -39,3 +39,8 @@ When you get updates from the repository, you need to follow the changes of some
 
 - If composer.json has been changed, you need to run the command `composer install`.
 - After updating or after changing routes, run the command `php johncms cache:clear`.
+
+Also, after performing the update, you can run the following command:
+```bash
+make cms-update
+```
