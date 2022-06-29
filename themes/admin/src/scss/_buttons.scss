@@ -4,7 +4,7 @@
 
 .btn-outline-info {
   &:hover {
-    color: $white;
+    color: var(--bs-white);
   }
 }
 
@@ -43,4 +43,16 @@
 
 .btn-secondary {
   --bs-btn-color: var(--bs-white);
+}
+
+.btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  padding-right: var(--btn-with-icon-right-padding, 20px);
+
+  ion-icon {
+    min-width: var(--btn-icon-size, 18px);
+    font-size: var(--btn-icon-size, 18px);
+    margin-right: var(--btn-icon-right-margin, 7px);
+  }
 }

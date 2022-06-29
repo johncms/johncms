@@ -1,5 +1,27 @@
 <template>
   <div>
+    <div class="filter users-filter mb-3">
+      <div class="h4">{{ $t('userList.filterTitle') }}</div>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <input-text
+            name="name"
+            autocomplete="off"
+            v-model="filter.name"
+            @update:modelValue="getData()"
+            :placeholder="$t('userList.searchPlaceholder')"
+          ></input-text>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <a href="" class="btn btn-primary btn-with-icon">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <span>{{ $t('userList.create') }}</span>
+      </a>
+    </div>
     <table class="table responsive-table" v-if="!loading && users.data">
       <thead>
       <tr>
@@ -15,6 +37,9 @@
       </thead>
       <tbody>
       <!-- List of articles -->
+      <tr v-if="users.data.length === 0">
+        <td colspan="8" class="text-center">{{ $t('userList.emptyList') }}</td>
+      </tr>
       <tr v-for="(user, index) in users.data" :key="index">
         <th scope="row" style="width: 40px;" class="border-end-0">
           <div class="dropdown">
@@ -39,20 +64,27 @@
       </tr>
       </tbody>
     </table>
+    <vue-pagination :data="users" @pagination-change-page="getData" class="mt-3"></vue-pagination>
   </div>
 </template>
 
 <script lang="ts">
 import axios from "axios";
+import InputText from "../../components/Forms/InputText.vue";
+import VuePagination from "../../components/Pagination/VuePagination.vue";
 
 export default {
   name: "UserList",
+  components: {VuePagination, InputText},
   props: {
     listUrl: String,
   },
   data() {
     return {
       loading: true,
+      filter: {
+        name: '',
+      },
       users: {}
     };
   },
@@ -60,9 +92,14 @@ export default {
     this.getData();
   },
   methods: {
-    getData() {
+    getData(page = 1) {
       this.loading = true;
-      axios.get(this.listUrl)
+      axios.get(this.listUrl, {
+        params: {
+          page: page,
+          ...this.filter
+        }
+      })
         .then((response) => {
           this.users = response.data;
         })

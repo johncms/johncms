@@ -1,3 +1,10 @@
+// CSS variables
+:root {
+  --btn-icon-size: 18px;
+  --btn-icon-right-margin: 7px;
+  --btn-with-icon-right-padding: 20px;
+}
+
 // Body
 $body-bg: #ffffff;
 
@@ -109,6 +116,6 @@ $box-shadow: 0 6px 10px -4px rgba(0, 0, 0, .15);
 $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
 
 
-$btn-border-radius: .25rem;
+$btn-border-radius: 1.5rem;
 $btn-border-radius-lg: .3rem;
 $btn-border-radius-sm: .2rem;
