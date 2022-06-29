@@ -27,7 +27,7 @@
 import _ from "lodash";
 
 export default {
-  name: "InputText",
+  name: "InputTextComponent",
   props: {
     modelValue: String,
     label: {

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Johncms\Admin\Resources\Users\UserResource;
 use Johncms\Controller\BaseAdminController;
 use Johncms\Http\Request;
+use Johncms\Users\Role;
 use Johncms\Users\User;
 
 class UsersController extends BaseAdminController
@@ -25,18 +26,25 @@ class UsersController extends BaseAdminController
     public function index(): string
     {
         $this->metaTagManager->setAll(__('List of Users'));
-        return $this->render->render('admin::users/user_list');
+        $roles = Role::query()->get();
+        return $this->render->render('admin::users/user_list', ['roles' => $roles->toJson()]);
     }
 
     public function userList(Request $request): array
     {
         $name = $request->getQuery('name');
+        $role = $request->getQuery('role');
         $users = User::query()
             ->when(! empty($name), function (Builder $builder) use ($name) {
                 return $builder->where('name', 'like', '%' . $name . '%')
                     ->orWhere('login', 'like', '%' . $name . '%')
                     ->orWhere('email', 'like', '%' . $name . '%')
                     ->orWhere('phone', 'like', '%' . $name . '%');
+            })
+            ->when(! empty($role), function (Builder $builder) use ($role) {
+                return $builder->whereHas('roles', function (Builder $builder) use ($role) {
+                    return $builder->where('id', $role);
+                });
             })
             ->paginate();
         $resource = UserResource::createFromCollection($users);

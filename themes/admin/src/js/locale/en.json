@@ -12,6 +12,12 @@
     "filterTitle": "Filter",
     "searchPlaceholder": "Search...",
     "create": "Create",
-    "emptyList": "The List is Empty"
+    "emptyList": "The List is Empty",
+    "filterRoleSelect": "Select Role"
+  },
+  "form": {
+    "select": {
+      "nothingText": "Nothing is Selected"
+    }
   }
 }

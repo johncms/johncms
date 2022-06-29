@@ -4,15 +4,23 @@
       <div class="h4">{{ $t('userList.filterTitle') }}</div>
       <div class="row">
         <div class="col-12 col-md-3">
-          <input-text
+          <input-text-component
             name="name"
             autocomplete="off"
             v-model="filter.name"
             @update:modelValue="getData()"
             :placeholder="$t('userList.searchPlaceholder')"
-          ></input-text>
+          ></input-text-component>
         </div>
-        <div class="col"></div>
+        <div class="col-12 col-md-3">
+          <select-component
+            :options="roles"
+            :default-nothing-text="$t('userList.filterRoleSelect')"
+            v-model="filter.role"
+            :display-name="'display_name'"
+            @update:modelValue="getData()"
+          ></select-component>
+        </div>
       </div>
     </div>
 
@@ -70,20 +78,23 @@
 
 <script lang="ts">
 import axios from "axios";
-import InputText from "../../components/Forms/InputText.vue";
+import InputTextComponent from "../../components/Forms/InputTextComponent.vue";
 import VuePagination from "../../components/Pagination/VuePagination.vue";
+import SelectComponent from "../../components/Forms/SelectComponent.vue";
 
 export default {
   name: "UserList",
-  components: {VuePagination, InputText},
+  components: {SelectComponent, VuePagination, InputTextComponent},
   props: {
     listUrl: String,
+    roles: {},
   },
   data() {
     return {
       loading: true,
       filter: {
         name: '',
+        role: '',
       },
       users: {}
     };
