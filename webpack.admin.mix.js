@@ -17,7 +17,13 @@ mix.webpackConfig({
 
 mix.ts('themes/admin/src/js/app.ts', 'themes/admin/assets/js')
   .disableSuccessNotifications()
-  .vue({version: 3})
+  .vue({
+    options: {
+      compilerOptions: {
+        isCustomElement: (tag) => ['ion-icon'].includes(tag),
+      },
+    },
+  })
   .eslint()
   .sass('themes/admin/src/scss/app.scss', 'themes/admin/assets/css')
   .options({
