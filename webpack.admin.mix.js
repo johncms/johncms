@@ -10,7 +10,8 @@ mix.webpackConfig({
     },
   },
   plugins: [
-    new WebpackRTLPlugin()
+    mix.inProduction() ? new WebpackRTLPlugin() : () => {
+    }
   ]
 });
 
@@ -24,11 +25,11 @@ mix.ts('themes/admin/src/js/app.ts', 'themes/admin/assets/js')
     manifest: false
   });
 
-mix.sourceMaps(false, 'source-map');
+//mix.sourceMaps(false, 'source-map');
 mix.extract();
 
-if (!mix.inProduction()) {
+/*if (!mix.inProduction()) {
   mix.webpackConfig({
     devtool: 'inline-source-map'
   })
-}
+}*/
