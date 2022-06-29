@@ -34,12 +34,15 @@ class UsersController extends BaseAdminController
     {
         $name = $request->getQuery('name');
         $role = $request->getQuery('role');
+
         $users = User::query()
             ->when(! empty($name), function (Builder $builder) use ($name) {
-                return $builder->where('name', 'like', '%' . $name . '%')
-                    ->orWhere('login', 'like', '%' . $name . '%')
-                    ->orWhere('email', 'like', '%' . $name . '%')
-                    ->orWhere('phone', 'like', '%' . $name . '%');
+                return $builder->where(function (Builder $builder) use ($name) {
+                    return $builder->where('name', 'like', '%' . $name . '%')
+                        ->orWhere('login', 'like', '%' . $name . '%')
+                        ->orWhere('email', 'like', '%' . $name . '%')
+                        ->orWhere('phone', 'like', '%' . $name . '%');
+                });
             })
             ->when(! empty($role), function (Builder $builder) use ($role) {
                 return $builder->whereHas('roles', function (Builder $builder) use ($role) {
