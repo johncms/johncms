@@ -2,7 +2,7 @@
   <div>
     <div class="filter users-filter mb-3">
       <div class="h4">{{ $t('userList.filterTitle') }}</div>
-      <div class="row">
+      <div class="row mb-2">
         <div class="col-12 col-md-3">
           <input-text-component
             name="name"
@@ -20,6 +20,24 @@
             :display-name="'display_name'"
             @update:modelValue="getData()"
           ></select-component>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-auto">
+          <checkbox-component
+            name="unconfirmed"
+            label="Unconfirmed"
+            v-model="filter.unconfirmed"
+            @update:modelValue="getData()"
+          ></checkbox-component>
+        </div>
+        <div class="col-auto">
+          <checkbox-component
+            name="has_ban"
+            label="Has ban"
+            v-model="filter.hasBan"
+            @update:modelValue="getData()"
+          ></checkbox-component>
         </div>
       </div>
     </div>
@@ -81,10 +99,11 @@ import axios from "axios";
 import InputTextComponent from "../../components/Forms/InputTextComponent.vue";
 import VuePagination from "../../components/Pagination/VuePagination.vue";
 import SelectComponent from "../../components/Forms/SelectComponent.vue";
+import CheckboxComponent from "../../components/Forms/CheckboxComponent.vue";
 
 export default {
   name: "UserList",
-  components: {SelectComponent, VuePagination, InputTextComponent},
+  components: {CheckboxComponent, SelectComponent, VuePagination, InputTextComponent},
   props: {
     listUrl: String,
     roles: {},
@@ -95,6 +114,8 @@ export default {
       filter: {
         name: '',
         role: '',
+        unconfirmed: false,
+        hasBan: false,
       },
       users: {}
     };

@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Database\Eloquent\Casts\SpecialChars;
 use Johncms\Files\Models\File;
+use Johncms\Users\Ban\UserBan;
 use Johncms\Users\Ban\UserBanChecker;
 use Johncms\Users\Casts\AdditionalFieldsCast;
 use Johncms\Users\Casts\UserSettings;
@@ -118,18 +119,28 @@ class User extends Model
 
     /**
      * Only approved users
-     *
-     * @return $this
      */
-    public function approved(): self
+    public function scopeApproved(Builder $query): Builder
     {
-        $this->where('confirmed', '=', 1);
-        $config = di('config')['johncms'];
-        if (! empty($config['user_email_confirmation'])) {
-            $this->where('email_confirmed', '=', 1);
+        $query->where('confirmed', '=', 1);
+        if (config('registration.email_confirmation', false)) {
+            $query->where('email_confirmed', '=', 1);
         }
 
-        return $this;
+        return $query;
+    }
+
+    /**
+     * Only approved users
+     */
+    public function scopeUnconfirmed(Builder $query): Builder
+    {
+        $query->whereNull('confirmed');
+        if (config('registration.email_confirmation', false)) {
+            $query->orWhereNull('email_confirmed');
+        }
+
+        return $query;
     }
 
     public function getRoleChecker(): UserRoleChecker
@@ -156,7 +167,7 @@ class User extends Model
         return $this->userBanChecker;
     }
 
-    public function hasBan(array|string $bans): bool
+    public function hasBan(array | string $bans): bool
     {
         return $this->getUserBanChecker()->hasBan($bans);
     }
@@ -166,7 +177,12 @@ class User extends Model
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public function hasRole(array|string $roles): bool
+    public function bans(): HasMany
+    {
+        return $this->hasMany(UserBan::class, 'user_id', 'id');
+    }
+
+    public function hasRole(array | string $roles): bool
     {
         return $this->getRoleChecker()->hasRole($roles);
     }
@@ -181,7 +197,7 @@ class User extends Model
         return $this->getRoleChecker()->hasRole('admin');
     }
 
-    public function hasPermission(array|string $permissions): bool
+    public function hasPermission(array | string $permissions): bool
     {
         return $this->getPermissionChecker()->hasPermission($permissions);
     }

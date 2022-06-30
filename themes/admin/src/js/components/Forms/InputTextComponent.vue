@@ -1,23 +1,22 @@
 <!--suppress CssUnusedSymbol -->
 <template>
-  <div class="form-input" :class="disabled ? 'disabled' : ''">
+  <div class="form-input" :class="[disabled ? 'disabled' : '']">
     <label v-if="label" :for="elementId">{{ label }}</label>
-    <div>
-      <input
-        :type="type"
-        :name="name"
-        :id="elementId"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        v-model="value"
-        :required="required"
-        :readonly="readonly"
-        :enterkeyhint="enterKeyHint"
-        @input="updateModelValue"
-        :pattern="type === 'number' ? '[0-9]*' : null"
-        :autocomplete="autocomplete !== '' ? autocomplete : null"
-        class="form-control">
-    </div>
+    <input
+      :class="[hasError ? 'is-invalid' : '']"
+      :type="type"
+      :name="name"
+      :id="elementId"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      v-model="value"
+      :required="required"
+      :readonly="readonly"
+      :enterkeyhint="enterKeyHint"
+      @input="updateModelValue"
+      :pattern="type === 'number' ? '[0-9]*' : null"
+      :autocomplete="autocomplete !== '' ? autocomplete : null"
+      class="form-control">
     <div class="invalid-feedback" v-if="hasError">{{ error }}</div>
     <div class="fz-x-small text-secondary opacity-75" v-if="help">{{ help }}</div>
   </div>

@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div
-      class="form-group"
-      :class="[hasError ? 'is-invalid' : '']"
-    >
+    <div class="form-group">
       <label v-if="label" :for="id" v-text="label"></label>
       <select
         class="form-control"
+        :class="[hasError ? 'is-invalid' : '']"
         @change="change"
         :multiple="multiple"
         :name="name"
@@ -16,8 +14,8 @@
         <option v-if="defaultNothing" value="">{{ defaultNothingText ?? $t('form.select.nothingText') }}</option>
         <option v-for="(option, index) in options" :value="option.id" v-text="getName(option)" :key="index"></option>
       </select>
+      <span class="invalid-feedback mt-n3" v-if="hasError" v-text="error"></span>
     </div>
-    <span class="invalid-feedback mt-n3" v-if="hasError" v-text="error"></span>
   </div>
 </template>
 

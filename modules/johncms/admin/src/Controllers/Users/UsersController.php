@@ -34,6 +34,8 @@ class UsersController extends BaseAdminController
     {
         $name = $request->getQuery('name');
         $role = $request->getQuery('role');
+        $unconfirmed = $request->getQuery('unconfirmed');
+        $hasBan = $request->getQuery('hasBan');
 
         $users = User::query()
             ->when(! empty($name), function (Builder $builder) use ($name) {
@@ -47,6 +49,14 @@ class UsersController extends BaseAdminController
             ->when(! empty($role), function (Builder $builder) use ($role) {
                 return $builder->whereHas('roles', function (Builder $builder) use ($role) {
                     return $builder->where('id', $role);
+                });
+            })
+            ->when($unconfirmed === 'true', function (Builder $builder) {
+                return $builder->unconfirmed();
+            })
+            ->when($hasBan === 'true', function (Builder $builder) use ($role) {
+                return $builder->whereHas('bans', function (Builder $builder) {
+                    return $builder->active();
                 });
             })
             ->paginate();
