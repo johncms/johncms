@@ -7,6 +7,19 @@
     "createdAt": "Зарегистрирован",
     "updatedAt": "Изменен",
     "edit": "Изменить",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "listOfUsersTitle": "Список пользователей",
+    "filterTitle": "Фильтр",
+    "searchPlaceholder": "Поиск...",
+    "create": "Создать",
+    "emptyList": "Список пуст",
+    "filterRoleSelect": "Выберите роль",
+    "unconfirmedFilter": "Неподтвержденные",
+    "hasBanFilter": "Есть бан"
+  },
+  "form": {
+    "select": {
+      "nothingText": "Nothing is Selected"
+    }
   }
 }

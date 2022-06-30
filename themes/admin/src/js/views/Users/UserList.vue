@@ -26,7 +26,7 @@
         <div class="col-auto">
           <checkbox-component
             name="unconfirmed"
-            label="Unconfirmed"
+            :label="$t('userList.unconfirmedFilter')"
             v-model="filter.unconfirmed"
             @update:modelValue="getData()"
           ></checkbox-component>
@@ -34,7 +34,7 @@
         <div class="col-auto">
           <checkbox-component
             name="has_ban"
-            label="Has ban"
+            :label="$t('userList.hasBanFilter')"
             v-model="filter.hasBan"
             @update:modelValue="getData()"
           ></checkbox-component>
