@@ -33,5 +33,7 @@ return function (Router $router) {
     $router->group('/admin/users', function (RouteGroup $routeGroup) {
         $routeGroup->get('[/]', [UsersController::class, 'index'])->setName('admin.users');
         $routeGroup->get('/list[/]', [UsersController::class, 'userList'])->setName('admin.userList');
+        $routeGroup->get('/create[/]', [UsersController::class, 'create'])->setName('admin.createUser');
+        $routeGroup->post('/store[/]', [UsersController::class, 'store'])->setName('admin.storeUser');
     })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 };

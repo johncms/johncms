@@ -7,5 +7,9 @@
 $this->layout('system::layout/default');
 ?>
 <div class="vue_app">
-    <user-list :roles="<?= $this->e($roles) ?>" list-url="<?= route('admin.userList') ?>"></user-list>
+    <user-list
+        :roles="<?= $this->e($data['roles']) ?>"
+        create-user-url="<?= $data['createUserUrl'] ?>"
+        list-url="<?= route('admin.userList') ?>"
+    ></user-list>
 </div>

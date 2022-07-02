@@ -3,7 +3,7 @@
     <div class="form-group">
       <label v-if="label" :for="id" v-text="label"></label>
       <select
-        class="form-control"
+        class="form-select"
         :class="[hasError ? 'is-invalid' : '']"
         @change="change"
         :multiple="multiple"

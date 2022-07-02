@@ -154,7 +154,7 @@ class ProfileForm extends AbstractForm
         return $fields;
     }
 
-    public function getValue(string $fieldName, mixed $default = null)
+    public function getValue(string $fieldName, mixed $default = null): mixed
     {
         if ($this->userData) {
             // Additional fields

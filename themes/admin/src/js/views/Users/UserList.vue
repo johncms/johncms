@@ -43,7 +43,7 @@
     </div>
 
     <div class="mb-3">
-      <a href="" class="btn btn-primary btn-with-icon">
+      <a :href="createUserUrl" class="btn btn-primary btn-with-icon">
         <ion-icon name="add-circle-outline"></ion-icon>
         <span>{{ $t('userList.create') }}</span>
       </a>
@@ -106,6 +106,7 @@ export default {
   components: {CheckboxComponent, SelectComponent, VuePagination, InputTextComponent},
   props: {
     listUrl: String,
+    createUserUrl: String,
     roles: {},
   },
   data() {
