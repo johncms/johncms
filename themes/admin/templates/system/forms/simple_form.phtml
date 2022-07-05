@@ -19,6 +19,9 @@ if (! empty($fields)) {
             case 'hidden':
                 echo $this->fetch('system::forms/input_hidden', ['field' => $field, 'errors' => $errors]);
                 break;
+            case 'file':
+                echo $this->fetch('system::forms/input_file', ['field' => $field, 'errors' => $errors]);
+                break;
             case 'select':
                 echo $this->fetch('system::forms/select', ['field' => $field, 'errors' => $errors]);
                 break;

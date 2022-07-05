@@ -102,7 +102,11 @@ abstract class AbstractForm
             if (str_ends_with($fieldName, '[]')) {
                 $fieldName = mb_substr($fieldName, 0, mb_strlen($fieldName) - 2);
             }
-            $this->requestValues[$fieldName] = $this->request->getPost($fieldName);
+            if ($formField->type === 'file') {
+                $this->requestValues[$fieldName] = $this->request->getUploadedFiles()[$fieldName] ?? [];
+            } else {
+                $this->requestValues[$fieldName] = $this->request->getPost($fieldName);
+            }
         }
         return $this->requestValues;
     }
