@@ -98,7 +98,11 @@ abstract class AbstractForm
 
         $this->requestValues = [];
         foreach ($this->formFields as $formField) {
-            $this->requestValues[$formField->name] = $this->request->getPost($formField->name);
+            $fieldName = $formField->name;
+            if (str_ends_with($fieldName, '[]')) {
+                $fieldName = mb_substr($fieldName, 0, mb_strlen($fieldName) - 2);
+            }
+            $this->requestValues[$fieldName] = $this->request->getPost($fieldName);
         }
         return $this->requestValues;
     }

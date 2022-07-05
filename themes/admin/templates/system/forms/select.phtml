@@ -6,8 +6,13 @@
 
 ?>
 <div class="mb-2">
-    <label for="gender" class="form-label"><?= $field->label ?></label>
-    <select id="<?= $field->id ?>" name="<?= $field->name ?>" class="form-select <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>">
+    <label for="<?= $field->id ?>" class="form-label"><?= $field->label ?></label>
+    <select
+        id="<?= $field->id ?>"
+        name="<?= $field->name ?>"
+        <?= ($field->multiple ? 'multiple' : '') ?>
+        class="form-select <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
+    >
         <?php foreach ($field->options as $option): ?>
             <option value="<?= $option['value'] ?>" <?= $option['value'] === $field->value ? 'selected' : '' ?>><?= $option['name'] ?></option>
         <?php endforeach; ?>

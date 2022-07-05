@@ -53,7 +53,18 @@ class UserManager
             $fields['phone'] = null;
         }
 
-        return (new User())->create($fields);
+        if (array_key_exists('birthday', $fields) && empty($fields['birthday'])) {
+            $fields['birthday'] = null;
+        } elseif (array_key_exists('birthday', $fields)) {
+            $fields['birthday'] = Carbon::parse($fields['birthday']);
+        }
+
+        $user = (new User())->create($fields);
+        if (array_key_exists('roles', $fields)) {
+            $user->roles()->sync($fields['roles']);
+        }
+
+        return $user;
     }
 
     /**

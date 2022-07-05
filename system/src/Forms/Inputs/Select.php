@@ -18,9 +18,17 @@ class Select extends AbstractInput
 
     public array $options = [];
 
+    public bool $multiple = false;
+
     public function setOptions(array $options): Select
     {
         $this->options = $options;
+        return $this;
+    }
+
+    public function multiple(): Select
+    {
+        $this->multiple = true;
         return $this;
     }
 }

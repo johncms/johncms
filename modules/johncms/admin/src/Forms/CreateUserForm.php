@@ -17,6 +17,7 @@ use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
 use Johncms\Forms\Inputs\Textarea;
+use Johncms\Users\Role;
 use Johncms\Users\User;
 use Laminas\Validator\Hostname;
 
@@ -55,6 +56,14 @@ class CreateUserForm extends AbstractForm
                     'StringLength' => ['min' => 6],
                 ]
             );
+
+        $fields['roles'] = (new Select())
+            ->setOptions($this->getRoles())
+            ->setLabel(__('Role'))
+            ->setId('roles')
+            ->setName('roles[]')
+            ->multiple()
+            ->setValue($this->getValue('roles'));
 
         $emailValidator = [
             'ModelNotExists' => [
@@ -154,5 +163,19 @@ class CreateUserForm extends AbstractForm
             ->setValue($this->getValue('additional_fields_about'));
 
         return $fields;
+    }
+
+    private function getRoles(): array
+    {
+        $roles = Role::query()->get()->map(function (Role $role) {
+            return ['name' => $role->display_name, 'value' => $role->id];
+        })->toArray();
+        return [
+            [
+                'name'  => __('User'),
+                'value' => 0,
+            ],
+            ...$roles,
+        ];
     }
 }

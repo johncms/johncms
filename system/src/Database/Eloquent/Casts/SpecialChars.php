@@ -38,9 +38,9 @@ class SpecialChars implements CastsAttributes
      * @param string $key
      * @param $value
      * @param array $attributes
-     * @return string
+     * @return null | string
      */
-    public function set($model, $key, $value, $attributes): string
+    public function set($model, $key, $value, $attributes): ?string
     {
         return $value;
     }
