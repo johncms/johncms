@@ -16,6 +16,7 @@ use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Files\Exceptions\BadRequest;
 use Johncms\Files\Exceptions\FileNotFound;
+use Johncms\Files\Exceptions\FileUploadException;
 use Johncms\Http\Request;
 use League\Flysystem\FilesystemException;
 
@@ -24,47 +25,59 @@ class FileStorage
     /**
      * Saving files from the request
      *
-     * @param string $field_name
-     * @param string $working_dir
+     * @param string $fieldName
+     * @param string $workingDir
      * @param bool $multiple
      * @return Models\File|Models\File[]
      * @throws FilesystemException
      */
-    public function saveFromRequest(string $field_name, string $working_dir, bool $multiple = false)
+    public function saveFromRequest(string $fieldName, string $workingDir, bool $multiple = false): Models\File | array
     {
-        $request_files = di(Request::class)->getUploadedFiles();
-        if (! array_key_exists($field_name, $request_files)) {
-            throw new BadRequest(sprintf('There is no file field named "%s" in the request', $field_name));
+        $requestFiles = di(Request::class)->getUploadedFiles();
+        if (! array_key_exists($fieldName, $requestFiles)) {
+            throw new BadRequest(sprintf('There is no file field named "%s" in the request', $fieldName));
         }
 
         if ($multiple) {
-            if (! is_array($request_files[$field_name])) {
+            if (! is_array($requestFiles[$fieldName])) {
                 throw new BadRequest('Multiple fields are expected');
             }
-            $uploaded_files = $request_files[$field_name];
+            $uploadedFiles = $requestFiles[$fieldName];
         } else {
-            $uploaded_files = [$request_files[$field_name]];
+            $uploadedFiles = [$requestFiles[$fieldName]];
         }
 
         $saved_files = [];
-        /** @var UploadedFile $uploaded_file */
-        foreach ($uploaded_files as $uploaded_file) {
-            if ($uploaded_file->getError() !== 0) {
+        /** @var UploadedFile $uploadedFile */
+        foreach ($uploadedFiles as $uploadedFile) {
+            if ($uploadedFile->getError() !== 0) {
                 continue;
             }
-
-            $tmp_file = $this->makeTmpName();
-            $uploaded_file->moveTo($tmp_file);
-
-            $saved_files[] = (new File($tmp_file))
-                ->setFileName($uploaded_file->getClientFilename() ?? 'untitled_file')
-                ->setParentDir($working_dir)
-                ->save();
-
-            unlink($tmp_file);
+            $saved_files[] = $this->saveUploadedFile($uploadedFile, $workingDir);
         }
 
         return $multiple ? $saved_files : $saved_files[0];
+    }
+
+    /**
+     * @throws FilesystemException
+     */
+    public function saveUploadedFile(UploadedFile $uploadedFile, string $workingDir): Models\File
+    {
+        if ($uploadedFile->getError() !== 0) {
+            throw new FileUploadException('File upload error');
+        }
+
+        $tmpName = $this->makeTmpName();
+        $uploadedFile->moveTo($tmpName);
+
+        $savedFile = (new File($tmpName))
+            ->setFileName($uploadedFile->getClientFilename() ?? 'untitled_file')
+            ->setParentDir($workingDir)
+            ->save();
+
+        unlink($tmpName);
+        return $savedFile;
     }
 
     /**

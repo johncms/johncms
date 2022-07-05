@@ -168,7 +168,7 @@ class UserManager
     /**
      * @throws FilesystemException
      */
-    protected function replaceAvatar(User $user, array $fields)
+    protected function replaceAvatar(User $user, array $fields): void
     {
         if (! empty($user->avatar_id) && $fields['avatar_id'] !== $user->avatar_id) {
             $fileStorage = di(FileStorage::class);

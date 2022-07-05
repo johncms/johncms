@@ -17,6 +17,7 @@ use Johncms\Admin\Forms\CreateUserForm;
 use Johncms\Admin\Resources\Users\UserResource;
 use Johncms\Controller\BaseAdminController;
 use Johncms\Exceptions\ValidationException;
+use Johncms\Files\FileStorage;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
 use Johncms\Users\Role;
@@ -90,12 +91,20 @@ class UsersController extends BaseAdminController
     /**
      * @throws Throwable
      */
-    public function store(UserManager $userManager, CreateUserForm $createUserForm): string | RedirectResponse
+    public function store(UserManager $userManager, CreateUserForm $createUserForm, FileStorage $fileStorage): string | RedirectResponse
     {
         try {
             // Validate the form
             $createUserForm->validate();
             $fields = $createUserForm->getRequestValues();
+            if (! empty($fields['avatar'])) {
+                try {
+                    $fields['avatar_id'] = $fileStorage->saveUploadedFile($fields['avatar'], 'users/avatar')->id;
+                    unset($fields['avatar']);
+                } catch (Throwable) {
+                }
+            }
+
             $fields['confirmed'] = true;
             $fields['email_confirmed'] = true;
             $userManager->create($fields);

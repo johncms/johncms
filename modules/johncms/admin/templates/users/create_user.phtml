@@ -9,7 +9,7 @@
 
 $this->layout('system::layout/default');
 ?>
-<form method="post" class="mb-3 mw-750px" action="<?= $data['storeUrl'] ?>">
+<form method="post" class="mb-3 mw-750px" action="<?= $data['storeUrl'] ?>" enctype="multipart/form-data">
     <?= $this->fetch(
         'system::forms/simple_form',
         [

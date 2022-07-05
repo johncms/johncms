@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Admin\Forms;
 
 use Johncms\Forms\AbstractForm;
+use Johncms\Forms\Inputs\InputFile;
 use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
@@ -87,6 +88,21 @@ class CreateUserForm extends AbstractForm
             ->setNameAndId('email')
             ->setValue($this->getValue('email'))
             ->setValidationRules($emailValidator);
+
+        $fields['avatar'] = (new InputFile())
+            ->setLabel(__('Avatar'))
+            ->setPlaceholder(__('Select Avatar'))
+            ->setNameAndId('avatar')
+            ->setValidationRules(
+                [
+                    'Optional',
+                    'IsImage' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                    ],
+                ]
+            );
 
         $fields['name'] = (new InputText())
             ->setLabel(__('Name'))
