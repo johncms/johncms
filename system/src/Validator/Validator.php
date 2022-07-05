@@ -119,6 +119,7 @@ class Validator
         'Flood'            => Flood::class,
         'Captcha'          => Captcha::class,
         'Ban'              => Ban::class,
+        'Optional'         => 'Optional',
     ];
 
     private array $errors = [];
@@ -149,12 +150,19 @@ class Validator
     {
         foreach ($rules as $field => $rule) {
             $value = Arr::get($data, $field, null);
+
+            // If this is an optional field and it is empty then skip validation.
+            if (in_array('Optional', $rule) && empty($value)) {
+                continue;
+            }
+
             if (! empty($rule)) {
                 $validator_chain = new ValidatorChain();
                 foreach ($rule as $name => $options) {
                     if (
                         (is_array($options) && ! array_key_exists($name, $this->rules)) ||
-                        (! is_array($options) && ! array_key_exists($options, $this->rules))
+                        (! is_array($options) && ! array_key_exists($options, $this->rules)) ||
+                        $options === 'Optional'
                     ) {
                         continue;
                     }
