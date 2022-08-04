@@ -216,4 +216,15 @@ class UserManager
         $activity->$column += 1;
         return $activity->save();
     }
+
+    /**
+     * Delete the user
+     */
+    public function delete(int | User $user): bool | null
+    {
+        if (is_numeric($user)) {
+            $user = User::query()->findOrFail($user);
+        }
+        return $user->delete();
+    }
 }

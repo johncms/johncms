@@ -100,7 +100,8 @@ class Request extends ServerRequest
                     $result[$k] = $this->filterVar($k, $var[$key], $filter, $options);
                 }
             } else {
-                $result = filter_var(trim($var[$key]), $filter, $options);
+                $value = is_string($var[$key]) ? trim($var[$key]) : $var[$key];
+                $result = filter_var($value, $filter, $options);
             }
 
             if (false !== $result) {

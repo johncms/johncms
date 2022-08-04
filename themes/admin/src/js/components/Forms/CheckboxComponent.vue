@@ -22,7 +22,7 @@
 export default {
   name: "CheckboxComponent",
   props: {
-    modelValue: String,
+    modelValue: [String, Boolean],
     label: {
       type: String,
       default: '',

@@ -22,6 +22,7 @@ $analytics = $counters->counters();
     <meta name="MobileOptimized" content="width">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
+    <meta name="csrf-token" content="<?= $csrf_token ?>">
     <?= $this->section('meta', '') ?>
     <?php if (! empty($metaTags->getKeywords())): ?>
         <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">

@@ -10,6 +10,7 @@ $this->layout('system::layout/default');
     <user-list
         :roles="<?= $this->e($data['roles']) ?>"
         create-user-url="<?= $data['createUserUrl'] ?>"
+        delete-user-url="<?= $data['deleteUserUrl'] ?>"
         list-url="<?= route('admin.userList') ?>"
     ></user-list>
 </div>

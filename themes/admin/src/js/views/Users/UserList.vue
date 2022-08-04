@@ -76,7 +76,7 @@
             </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" :href="user.editUrl">{{ $t('userList.edit') }}</a>
-              <a class="dropdown-item" :data-url="user.deleteUrl" data-bs-toggle="modal" data-bs-target=".ajax_modal">{{ $t('userList.delete') }}</a>
+              <a class="dropdown-item" @click="openConfirmModal(user)">{{ $t('userList.delete') }}</a>
             </div>
           </div>
         </th>
@@ -92,6 +92,11 @@
     </table>
     <vue-pagination :data="users" @pagination-change-page="getData" class="mt-3"></vue-pagination>
   </div>
+
+  <confirm-modal :title="$t('userList.deleteConfirmTitle')" confirm-button-color="danger" @onConfirm="confirmDeletion" ref="deleteConfirmationModal">
+    <span v-html="$t('userList.deleteConfirmText', {id: confirmUserDeletion?.id ?? null})"></span>
+  </confirm-modal>
+
 </template>
 
 <script lang="ts">
@@ -100,13 +105,15 @@ import InputTextComponent from "../../components/Forms/InputTextComponent.vue";
 import VuePagination from "../../components/Pagination/VuePagination.vue";
 import SelectComponent from "../../components/Forms/SelectComponent.vue";
 import CheckboxComponent from "../../components/Forms/CheckboxComponent.vue";
+import ConfirmModal from "../../components/Modals/ConfirmModal.vue";
 
 export default {
   name: "UserList",
-  components: {CheckboxComponent, SelectComponent, VuePagination, InputTextComponent},
+  components: {ConfirmModal, CheckboxComponent, SelectComponent, VuePagination, InputTextComponent},
   props: {
     listUrl: String,
     createUserUrl: String,
+    deleteUserUrl: String,
     roles: {},
   },
   data() {
@@ -118,6 +125,7 @@ export default {
         unconfirmed: false,
         hasBan: false,
       },
+      confirmUserDeletion: null,
       users: {}
     };
   },
@@ -125,6 +133,14 @@ export default {
     this.getData();
   },
   methods: {
+    openConfirmModal(user: any) {
+      this.confirmUserDeletion = user;
+      this.$refs.deleteConfirmationModal.openModal();
+    },
+    confirmDeletion() {
+      this.deleteUser(this.confirmUserDeletion.id);
+      this.$refs.deleteConfirmationModal.setLoading(true);
+    },
     getData(page = 1) {
       this.loading = true;
       axios.get(this.listUrl, {
@@ -141,6 +157,22 @@ export default {
         })
         .finally(() => {
           this.loading = false;
+        })
+    },
+
+    deleteUser(id: number) {
+      axios.post(this.deleteUserUrl, {
+        id: id
+      })
+        .then(() => {
+          this.$refs.deleteConfirmationModal.closeModal();
+        })
+        .catch(() => {
+          console.log('error');
+        })
+        .finally(() => {
+          this.$refs.deleteConfirmationModal.setLoading(false);
+          this.getData();
         })
     }
   }

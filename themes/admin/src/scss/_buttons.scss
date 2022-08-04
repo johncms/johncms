@@ -2,6 +2,10 @@
   --bs-btn-color: var(--bs-white);
 }
 
+.btn-danger {
+  --bs-btn-color: var(--bs-white);
+}
+
 .btn-outline-info {
   &:hover {
     color: var(--bs-white);

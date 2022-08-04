@@ -37,6 +37,7 @@ class UsersController extends BaseAdminController
             'data' => [
                 'roles'         => $roles->toJson(),
                 'createUserUrl' => route('admin.createUser'),
+                'deleteUserUrl' => route('admin.deleteUser'),
             ],
         ]);
     }
@@ -115,5 +116,11 @@ class UsersController extends BaseAdminController
                 ->withPost()
                 ->withValidationErrors($validationException->getErrors());
         }
+    }
+
+    public function delete(UserManager $userManager, Request $request): array
+    {
+        $userId = $request->getJson('id', 0, FILTER_VALIDATE_INT);
+        return ['deleteResult' => $userManager->delete($userId)];
     }
 }

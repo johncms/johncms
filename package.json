@@ -29,6 +29,7 @@
     "production": "mix --production"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.1.13",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "@vue/eslint-config-typescript": "^10.0.0",

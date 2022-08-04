@@ -35,5 +35,6 @@ return function (Router $router) {
         $routeGroup->get('/list[/]', [UsersController::class, 'userList'])->setName('admin.userList');
         $routeGroup->get('/create[/]', [UsersController::class, 'create'])->setName('admin.createUser');
         $routeGroup->post('/store[/]', [UsersController::class, 'store'])->setName('admin.storeUser');
+        $routeGroup->post('/delete[/]', [UsersController::class, 'delete'])->setName('admin.deleteUser');
     })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 };
