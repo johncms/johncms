@@ -22,7 +22,7 @@ class NavChain
     {
         return $this;
     }
-    
+
     /**
      * Добавление нескольких элементов в навигационную цепочку
      *
@@ -34,11 +34,11 @@ class NavChain
         foreach ($array as $item) {
             $this->items[] = [
                 'name' => $item[0],
-                'url'  => isset($item[1]) ? :'' ,
+                'url'  => isset($item[1]) ? : '' ,
             ];
         }
     }
-    
+
     /**
      * Добавление элемента в навигационную цепочку
      *
