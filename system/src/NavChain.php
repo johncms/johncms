@@ -24,6 +24,22 @@ class NavChain
     }
 
     /**
+     * Добавление нескольких элементов в навигационную цепочку
+     *
+     * @param array $array
+     * @return mixed|void
+     */
+    public function addList(array $array)
+    {
+        foreach ($array as $item) {
+            $this->items[] = [
+                'name' => $item[0],
+                'url'  => isset($item[1]) ? : '' ,
+            ];
+        }
+    }
+
+    /**
      * Добавление элемента в навигационную цепочку
      *
      * @param string $name
