@@ -15,6 +15,7 @@ namespace Johncms\Files;
 use InvalidArgumentException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
+use League\Flysystem\Visibility;
 use RuntimeException;
 
 /**
@@ -61,14 +62,15 @@ class Filesystem
                     PortableVisibilityConverter::fromArray(
                         [
                             'file' => [
-                                'public'  => 0640,
-                                'private' => 0640,
+                                'public'  => 0644,
+                                'private' => 0600,
                             ],
                             'dir'  => [
                                 'public'  => 0755,
-                                'private' => 0755,
+                                'private' => 0700,
                             ],
-                        ]
+                        ],
+                        Visibility::PUBLIC
                     )
                 );
                 break;
