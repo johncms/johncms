@@ -52,6 +52,18 @@ $data['buttons'] = [
     ],
 ];
 
+$data['themes'] = [
+    'auto'  => [
+        'name' => __('Auto'),
+    ],
+    'light' => [
+        'name' => __('Light'),
+    ],
+    'dark'  => [
+        'name' => __('Dark'),
+    ],
+];
+
 // Пользовательские настройки
 switch ($mod) {
     case 'mail':
@@ -148,6 +160,7 @@ switch ($mod) {
             $set_user['youtube'] = isset($_POST['youtube']);
             $set_user['fieldHeight'] = isset($_POST['fieldHeight']) ? abs((int) ($_POST['fieldHeight'])) : 3;
             $set_user['kmess'] = isset($_POST['kmess']) ? abs((int) ($_POST['kmess'])) : 10;
+            $set_user['skin'] = (isset($_POST['skin']) && array_key_exists($_POST['skin'], $data['themes'])) ? $_POST['skin'] : 'auto';
 
             if ($set_user['timeshift'] < -12) {
                 $set_user['timeshift'] = -12;
