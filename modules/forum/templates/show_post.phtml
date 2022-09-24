@@ -35,9 +35,9 @@ $this->layout('system::layout/default');
             <span class="user-status <?= $post['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
             <?php if (! empty($post['user_rights_name'])): ?>
                 <div class="post-of-user"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     data-html="true"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="top"
+                     data-bs-html="true"
                      title="<?= $post['user_rights_name'] ?>">
                     <svg class="icon-post">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -48,16 +48,16 @@ $this->layout('system::layout/default');
         <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
             <div class="w-100">
                 <?php if (! empty($post['user_profile_link'])): ?>
-                    <a href="<?= $post['user_profile_link'] ?>"><span class="user-name d-inline mr-2"><?= $post['user_name'] ?></span></a>
+                    <a href="<?= $post['user_profile_link'] ?>"><span class="user-name d-inline me-2"><?= $post['user_name'] ?></span></a>
                 <?php else: ?>
-                    <div class="user-name d-inline mr-2"><?= $post['user_name'] ?></div>
+                    <div class="user-name d-inline me-2"><?= $post['user_name'] ?></div>
                 <?php endif; ?>
-                <span class="post-meta d-inline mr-2"><?= $post['post_time'] ?></span>
+                <span class="post-meta d-inline me-2"><?= $post['post_time'] ?></span>
                 <?php if (! empty($post['edit_count'])): ?>
-                    <div class="post-meta d-inline mr-2"
-                         data-toggle="tooltip"
-                         data-placement="top"
-                         data-html="true"
+                    <div class="post-meta d-inline me-2"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         data-bs-html="true"
                          title="<?= __('Edited:') ?> <?= $post['editor_name'] ?> <br> (<?= $post['edit_time'] ?>) [<?= $post['edit_count'] ?>]">
                         <?= __('Edited') ?>
                     </div>
@@ -65,7 +65,7 @@ $this->layout('system::layout/default');
             </div>
             <?php if (! empty($post['status'])): ?>
                 <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                    <span class="font-weight-bold"><?= $post['status'] ?></span>
+                    <span class="fw-bold"><?= $post['status'] ?></span>
                 </div>
             <?php endif ?>
         </div>
@@ -76,10 +76,10 @@ $this->layout('system::layout/default');
     <?php if (! empty($post['files'])): ?>
         <!-- Files block -->
         <div class="mt-3 pb-1">
-            <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
+            <div class="fw-bold pb-1"><?= __('Attached files') ?>:</div>
             <div class="d-flex flex-wrap image-gallery">
                 <?php foreach ($post['files'] as $file): ?>
-                    <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                    <div class="attached-file pe-3 d-flex flex-column justify-content-between">
                         <div class="d-flex justify-content-center align-items-center">
                             <?php if (! empty($file['file_preview'])): ?>
                                 <a href="<?= $file['file_url'] ?>" class="gallery-item" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
@@ -95,7 +95,7 @@ $this->layout('system::layout/default');
                         </div>
                         <div class="pt-1">
                             <div class="text-muted small d-flex flex-wrap justify-content-center">
-                                <div class="text-nowrap pr-1">
+                                <div class="text-nowrap pe-1">
                                     <svg class="icon downloads-icon">
                                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
                                     </svg>
@@ -116,7 +116,7 @@ $this->layout('system::layout/default');
         <div class="overflow-hidden">
             <?php if ($user->rights): ?>
                 <div class="post-meta d-flex">
-                    <div class="user-ip mr-2">
+                    <div class="user-ip me-2">
                         <a href="<?= $post['search_ip_url'] ?>"><?= $post['ip'] ?></a>
                         <?php if (! empty($post['ip_via_proxy'])): ?>
                             / <a href="<?= $post['search_ip_via_proxy_url'] ?>"><?= $post['ip_via_proxy'] ?></a>
@@ -130,12 +130,12 @@ $this->layout('system::layout/default');
         </div>
         <div class="d-flex">
             <?php if (! empty($post['reply_url'])): ?>
-                <div class="ml-3">
+                <div class="ms-3">
                     <a href="<?= $post['reply_url'] ?>"><?= __('Reply') ?></a>
                 </div>
             <?php endif; ?>
             <?php if (! empty($post['quote_url'])): ?>
-                <div class="ml-3">
+                <div class="ms-3">
                     <a href="<?= $post['quote_url'] ?>"><?= __('Quote') ?></a>
                 </div>
             <?php endif; ?>

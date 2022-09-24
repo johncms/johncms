@@ -44,13 +44,13 @@ $this->layout(
     <div class="user-row">
         <div class="post-header d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <div class="badge <?= ($item['type'] > 0 ? 'badge-success' : 'badge-danger') ?> mr-2">
+                <div class="badge <?= ($item['type'] > 0 ? 'badge-success' : 'badge-danger') ?> me-2">
                     <?= ($item['type'] > 0 ? '+' : '-') ?><?= $item['points'] ?>
                 </div>
                 <?php if ($item['user_id'] > 0): ?>
-                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login me-2"><?= $item['name'] ?></a>
                 <?php else: ?>
-                    <b class="user-login mr-2"><?= $item['name'] ?></b>
+                    <b class="user-login me-2"><?= $item['name'] ?></b>
                 <?php endif; ?>
                 <span class="post-date"><?= $item['display_date'] ?></span>
             </div>

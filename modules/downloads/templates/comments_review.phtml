@@ -47,13 +47,13 @@ $this->layout(
                 </div>
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
-                        <a href="/profile/?user=<?= $item['user_id'] ?>"><span class="user-name d-inline mr-2"><?= $item['name'] ?></span></a>
-                        <span class="post-meta d-inline mr-2"><?= $item['created'] ?></span>
+                        <a href="/profile/?user=<?= $item['user_id'] ?>"><span class="user-name d-inline me-2"><?= $item['name'] ?></span></a>
+                        <span class="post-meta d-inline me-2"><?= $item['created'] ?></span>
                         <?php if (! empty($item['edit_count'])): ?>
-                            <div class="post-meta d-inline mr-2"
-                                 data-toggle="tooltip"
-                                 data-placement="top"
-                                 data-html="true"
+                            <div class="post-meta d-inline me-2"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-html="true"
                                  title="<?= __('Edited:') ?> <?= $item['editor_name'] ?> <br> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]">
                                 <?= __('Edited') ?>
                             </div>
@@ -72,7 +72,7 @@ $this->layout(
             </div>
             <div class="small">
                 <?php if (! empty($item['file_url'])): ?>
-                    <a href="<?= $item['file_url'] ?>" class="mr-2"><?= $item['rus_name'] ?></a>
+                    <a href="<?= $item['file_url'] ?>" class="me-2"><?= $item['rus_name'] ?></a>
                 <?php endif; ?>
                 <?php if (! empty($item['comments_url'])): ?>
                     <a href="<?= $item['comments_url'] ?>"><?= __('Comments') ?></a>
@@ -84,7 +84,7 @@ $this->layout(
                     <div class="overflow-hidden">
                         <?php if ($user->rights): ?>
                             <div class="post-meta d-flex">
-                                <div class="user-ip mr-2">
+                                <div class="user-ip me-2">
                                     <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
                                     <?php if (! empty($item['ip_via_proxy'])): ?>
                                         / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
@@ -98,8 +98,8 @@ $this->layout(
                     </div>
                     <div class="d-flex">
                         <?php if (! empty($item['edit_url']) || ! empty($item['delete_url'])): ?>
-                            <div class="dropdown ml-3">
-                                <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown ms-3">
+                                <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <svg class="icon text-primary">
                                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?1#more_horizontal"/>
                                     </svg>

@@ -36,12 +36,12 @@ $this->layout(
     <div class="shadow post-item post-item mb-2" id="first_post_block">
         <div class="post-header d-flex justify-content-between border-bottom pb-1">
             <div class="d-flex align-items-center">
-                <a class="user-login mr-2"><?= $user->name ?></a>
+                <a class="user-login me-2"><?= $user->name ?></a>
                 <span class="post-date"><?= $tools->displayDate(time()) ?></span>
             </div>
         </div>
         <div class="post-body d-flex align-items-start pt-3 pb-3">
-            <div class="user-avatar mr-2 mr-md-4">
+            <div class="user-avatar me-2 me-md-4">
                 <div class="avatar-image rounded-circle overflow-hidden">
                     <img src="<?= $this->avatar($user->id) ?>" class="img-fluid" alt=".">
                 </div>
@@ -99,6 +99,6 @@ $this->layout(
         <?php endif; ?>
     </div>
     <div class="mt-3">
-        <a href="/help/?act=smileys" class="pr-2"><?= __('Smilies') ?></a> <a href="<?= $back_url ?>"><?= __('Back') ?></a>
+        <a href="/help/?act=smileys" class="pe-2"><?= __('Smilies') ?></a> <a href="<?= $back_url ?>"><?= __('Back') ?></a>
     </div>
 </form>

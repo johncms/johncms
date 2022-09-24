@@ -36,9 +36,9 @@ $this->layout(
                 <span class="user-status <?= $message_author->is_online ? 'online' : 'offline' ?> shadow"></span>
                 <?php if (! empty($message_author->rights_name)): ?>
                     <div class="post-of-user"
-                         data-toggle="tooltip"
-                         data-placement="top"
-                         data-html="true"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         data-bs-html="true"
                          title="<?= $message_author->rights_name ?>">
                         <svg class="icon-post">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -48,12 +48,12 @@ $this->layout(
             </div>
             <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                 <div class="w-100">
-                    <div class="user-name d-inline mr-2"><?= $message_author->name ?></div>
+                    <div class="user-name d-inline me-2"><?= $message_author->name ?></div>
                     <span class="post-meta"><?= $tools->displayDate(time()) ?></span>
                 </div>
                 <?php if (! empty($message_author->status)): ?>
                     <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                        <span class="font-weight-bold"><?= $message_author->status ?></span>
+                        <span class="fw-bold"><?= $message_author->status ?></span>
                     </div>
                 <?php endif ?>
             </div>
@@ -77,7 +77,7 @@ $this->layout(
         <?php endif; ?>
     </div>
     <div class="mt-3">
-        <a href="/help/?act=smileys" class="pr-2"><?= __('Smilies') ?></a> <a href="<?= $back_url ?>"><?= __('Back') ?></a>
+        <a href="/help/?act=smileys" class="pe-2"><?= __('Smilies') ?></a> <a href="<?= $back_url ?>"><?= __('Back') ?></a>
     </div>
 </form>
 

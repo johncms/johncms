@@ -20,7 +20,7 @@ $this->layout('system::layout/default');
 <div class="mb-3">
     <form action="/news/search/" method="get" class="search-in-nav news-search mb-3" style="max-width: 500px;">
         <div class="input-with-inner-btn">
-            <input name="query" type="text" minlength="4" placeholder="<?= __('Search query') ?>" class="form-control pr-5 border-radius-12">
+            <input name="query" type="text" minlength="4" placeholder="<?= __('Search query') ?>" class="form-control pe-5 border-radius-12">
             <button type="submit" name="submit" value="1" class="btn icon-button">
                 <svg class="icon">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"></use>
@@ -31,7 +31,7 @@ $this->layout('system::layout/default');
     <?php if ($sections->count() > 0): ?>
         <nav class="nav">
             <?php foreach ($sections as $section): ?>
-                <a class="nav-link pl-0" href="<?= $section->url ?>"><?= $section->name ?></a>
+                <a class="nav-link ps-0" href="<?= $section->url ?>"><?= $section->name ?></a>
             <?php endforeach; ?>
         </nav>
     <?php endif; ?>
@@ -47,26 +47,26 @@ $this->layout('system::layout/default');
                 <?php endif ?>
                 <div class="d-flex">
                     <div class="text-muted forum-view-counter">
-                        <svg class="icon download-button-icon mt-n1 mr-1">
+                        <svg class="icon download-button-icon mt-n1 me-1">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
                         </svg>
                         <?php if ($article->rating > 0): ?>
-                            <span class="text-success font-weight-bold"><?= $article->rating ?></span>
+                            <span class="text-success fw-bold"><?= $article->rating ?></span>
                         <?php elseif ($article->rating < 0): ?>
-                            <span class="text-danger font-weight-bold"><?= $article->rating ?></span>
+                            <span class="text-danger fw-bold"><?= $article->rating ?></span>
                         <?php else: ?>
-                            <span class="font-weight-bold"><?= $article->rating ?></span>
+                            <span class="fw-bold"><?= $article->rating ?></span>
                         <?php endif; ?>
                     </div>
-                    <div class="text-muted forum-view-counter ml-3">
-                        <svg class="icon download-button-icon mt-n1 mr-1">
+                    <div class="text-muted forum-view-counter ms-3">
+                        <svg class="icon download-button-icon mt-n1 me-1">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"/>
                         </svg>
                         <?= (int) $article->view_count ?>
                     </div>
-                    <div class="text-muted forum-view-counter ml-3">
+                    <div class="text-muted forum-view-counter ms-3">
                         <a href="<?= $article->url ?>#article-comments">
-                            <svg class="icon download-button-icon mr-1">
+                            <svg class="icon download-button-icon me-1">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                             </svg>
                             <?= $article->comments_count ?>

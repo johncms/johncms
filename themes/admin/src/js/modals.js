@@ -7,7 +7,7 @@
  */
 
 function getSpinner() {
-    return '<div class="text-center p-5"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>';
+    return '<div class="text-center p-5"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
 }
 
 $(function () {

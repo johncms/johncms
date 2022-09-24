@@ -27,15 +27,15 @@ $this->layout(
 ?>
 
 <?php if (! empty($screens)): ?>
-    <div class="h4 font-weight-bold"><?= __('Current screenshots') ?></div>
+    <div class="h4 fw-bold"><?= __('Current screenshots') ?></div>
     <div class="mt-3 mb-4">
         <?php foreach ($screens as $file): ?>
             <div class="media align-items-end mb-3 border-bottom pb-3">
                 <a href="<?= $file['url'] ?>" title="<?= $file['file_name'] ?>" data-source="<?= $file['url'] ?>" class="image-preview">
-                    <img src="<?= $file['url'] ?>" class="mr-3" style="width: 64px;" alt="<?= $file['file_name'] ?>">
+                    <img src="<?= $file['url'] ?>" class="me-3" style="width: 64px;" alt="<?= $file['file_name'] ?>">
                 </a>
                 <div class="media-body">
-                    <h5 class="font-weight-bold mt-0"><?= $file['file_name'] ?></h5>
+                    <h5 class="fw-bold mt-0"><?= $file['file_name'] ?></h5>
                     <form action="?act=edit_screen&amp;id=<?= $id ?>&amp;do=<?= $file['file_name'] ?>" method="post">
                         <input type="hidden" name="delete_token" value="<?= $delete_token ?>">
                         <button type="submit" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
@@ -46,7 +46,7 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div class="h4 font-weight-bold"><?= __('Add screenshot') ?></div>
+<div class="h4 fw-bold"><?= __('Add screenshot') ?></div>
 <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <div class="custom-file">

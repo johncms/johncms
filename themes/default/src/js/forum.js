@@ -54,7 +54,7 @@ $(function () {
             }
         }
     });
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-bs-toggle="tooltip"]').tooltip();
 });
 
 $(".custom-file-input").on("change", function () {

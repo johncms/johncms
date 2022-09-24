@@ -113,10 +113,10 @@
                     <span class="user-status <?= $post['is_online'] ? 'online' : 'offline' ?> shadow"></span>
                     <?php if (! empty($post['user']['rights_name'])): ?>
                         <div class="post-of-user"
-                             data-toggle="tooltip"
-                             data-placement="top"
-                             data-html="true"
-                             title="<?= $post['user']['rights_name'] ?>">
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
+                             data-bs-title="<?= $post['user']['rights_name'] ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
                             </svg>
@@ -127,25 +127,25 @@
                     <div class="w-100">
                         <?php if (! empty($post['user']) && ! empty($post['user']['profile_url'])): ?>
                             <a href="<?= $post['user']['profile_url'] ?>">
-                                <div class="user-name d-inline mr-2"><?= $post['name'] ?></div>
+                                <div class="user-name d-inline me-2"><?= $post['name'] ?></div>
                             </a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= ! empty($post['user']) ? $post['name'] : (__('Guest') . ': ' . $post['name']) ?></div>
+                            <div class="user-name d-inline me-2"><?= ! empty($post['user']) ? $post['name'] : (__('Guest') . ': ' . $post['name']) ?></div>
                         <?php endif; ?>
-                        <span class="post-meta d-inline mr-2"><?= $post['created_at'] ?></span>
+                        <span class="post-meta d-inline me-2"><?= $post['created_at'] ?></span>
                         <?php if (! empty($post['edit_count'])): ?>
-                            <div class="post-meta d-inline mr-2"
-                                 data-toggle="tooltip"
-                                 data-placement="top"
-                                 data-html="true"
-                                 title="<?= __('Edited:') ?> <?= $post['edited_by'] ?> <br> (<?= $post['edited_at'] ?>) [<?= $post['edit_count'] ?>]">
+                            <div class="post-meta d-inline me-2"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-html="true"
+                                 data-bs-title="<?= __('Edited:') ?> <?= $post['edited_by'] ?> <br> (<?= $post['edited_at'] ?>) [<?= $post['edit_count'] ?>]">
                                 <?= __('Edited') ?>
                             </div>
                         <?php endif; ?>
                     </div>
                     <?php if (! empty($post['user']) && ! empty($post['user']['status'])): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="font-weight-bold"><?= $post['user']['status'] ?></span>
+                            <span class="fw-bold"><?= $post['user']['status'] ?></span>
                         </div>
                     <?php endif ?>
                 </div>
@@ -163,7 +163,7 @@
                 <div class="overflow-hidden">
                     <?php if ($post['meta']): ?>
                         <div class="post-meta d-flex">
-                            <div class="user-ip mr-2">
+                            <div class="user-ip me-2">
                                 <a href="<?= $post['meta']['search_ip_url'] ?>"><?= $post['meta']['ip'] ?></a>
                             </div>
                             <div class="useragent">
@@ -174,13 +174,13 @@
                 </div>
                 <div class="d-flex">
                     <?php if ($data['can_write'] && $post['user_id'] !== $user->id): ?>
-                        <div class="ml-3">
+                        <div class="ms-3">
                             <a href="#" onclick="reply_to_post('<?= $post['name'] ?>')"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if (! empty($post['meta']['can_manage'])): ?>
-                        <div class="dropdown ml-3">
-                            <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown ms-3">
+                            <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?1#more_horizontal"/>
                                 </svg>
@@ -190,7 +190,7 @@
                                     <a href="<?= $post['meta']['reply_url'] ?>" class="dropdown-item"><?= __('Reply') ?></a>
                                 <?php endif; ?>
                                 <a href="<?= $post['meta']['edit_url'] ?>" class="dropdown-item"><?= __('Edit') ?></a>
-                                <a href="#" data-url="<?= $post['meta']['delete_url'] ?>" data-toggle="modal" data-target=".ajax_modal" class="dropdown-item"><?= __('Delete') ?></a>
+                                <a href="#" data-url="<?= $post['meta']['delete_url'] ?>" data-bs-toggle="modal" data-bs-target=".ajax_modal" class="dropdown-item"><?= __('Delete') ?></a>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -205,7 +205,7 @@
 <?php endif; ?>
 <?php if ($data['can_clear']): ?>
     <div class="d-flex mt-4 pb-2">
-        <button type="button" class="btn btn-danger" data-url="/guestbook/clean" data-toggle="modal" data-target=".ajax_modal"><?= __('Clear') ?></button>
+        <button type="button" class="btn btn-danger" data-url="/guestbook/clean" data-bs-toggle="modal" data-bs-target=".ajax_modal"><?= __('Clear') ?></button>
     </div>
 <?php endif ?>
 <?php $this->push('scripts') ?>

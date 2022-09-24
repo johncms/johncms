@@ -56,8 +56,8 @@ $this->layout(
             </div>
         </div>
         <div class="small pt-2 text-muted">
-            <?= __('Author') ?>: <a href="/profile/?user=<?= $result['user_id'] ?>" class="mr-2"><?= $result['user_name'] ?></a>
-            <span class="mr-2"><?= $result['formatted_date'] ?></span>
+            <?= __('Author') ?>: <a href="/profile/?user=<?= $result['user_id'] ?>" class="me-2"><?= $result['user_name'] ?></a>
+            <span class="me-2"><?= $result['formatted_date'] ?></span>
             <?php if (! empty($result['post_url'])): ?>
                 <a href="<?= $result['post_url'] ?>"><?= __('Go to Message') ?></a>
             <?php endif; ?>

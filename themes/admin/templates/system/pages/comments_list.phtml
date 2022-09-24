@@ -56,9 +56,9 @@ $this->layout(
                     <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
                     <?php if (! empty($item['user_rights_name'])): ?>
                         <div class="post-of-user"
-                             data-toggle="tooltip"
-                             data-placement="top"
-                             data-html="true"
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
                              title="<?= $item['user_rights_name'] ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -70,17 +70,17 @@ $this->layout(
                     <div class="w-100">
                         <?php if (! empty($item['user_profile_link'])): ?>
                             <a href="<?= $item['user_profile_link'] ?>">
-                                <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
+                                <div class="user-name d-inline me-2"><?= $item['name'] ?></div>
                             </a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= $item['name'] ?></div>
+                            <div class="user-name d-inline me-2"><?= $item['name'] ?></div>
                         <?php endif; ?>
-                        <span class="post-meta d-inline mr-2"><?= $item['created'] ?></span>
+                        <span class="post-meta d-inline me-2"><?= $item['created'] ?></span>
                         <?php if (! empty($item['edit_count'])): ?>
-                            <div class="post-meta d-inline mr-2"
-                                 data-toggle="tooltip"
-                                 data-placement="top"
-                                 data-html="true"
+                            <div class="post-meta d-inline me-2"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-html="true"
                                  title="<?= __('Edited:') ?> <?= $item['editor_name'] ?> <br> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]">
                                 <?= __('Edited') ?>
                             </div>
@@ -88,7 +88,7 @@ $this->layout(
                     </div>
                     <?php if (! empty($item['status'])): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="font-weight-bold"><?= $item['status'] ?></span>
+                            <span class="fw-bold"><?= $item['status'] ?></span>
                         </div>
                     <?php endif ?>
                 </div>
@@ -106,7 +106,7 @@ $this->layout(
                 <div class="overflow-hidden">
                     <?php if ($user->rights): ?>
                         <div class="post-meta d-flex">
-                            <div class="user-ip mr-2">
+                            <div class="user-ip me-2">
                                 <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
                                 <?php if (! empty($item['ip_via_proxy'])): ?>
                                     / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
@@ -120,13 +120,13 @@ $this->layout(
                 </div>
                 <div class="d-flex">
                     <?php if (! empty($item['reply_url'])): ?>
-                        <div class="ml-3">
+                        <div class="ms-3">
                             <a href="<?= $item['reply_url'] ?>"><?= d__('system', 'Reply') ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if ($item['has_edit']): ?>
-                        <div class="dropdown ml-3">
-                            <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown ms-3">
+                            <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#more_horizontal"/>
                                 </svg>

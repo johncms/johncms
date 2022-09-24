@@ -23,14 +23,14 @@ $news_counters = $counters->news();
 
 <div class="accordion flex-grow-1" id="accordionAdmin">
     <!-- Users Button -->
-    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false">
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false">
         <div class="nav__vertical pt-2 pb-2 text-danger d-flex align-items-center">
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
             </svg>
             <span class="flex-grow-1"><?= __('Users') ?></span>
             <?php if ($regtotal): ?>
-                <div class="badge badge-danger badge-pill ml-2">+&nbsp;<?= $regtotal ?></div>
+                <div class="badge badge-danger badge-pill ms-2">+&nbsp;<?= $regtotal ?></div>
             <?php endif ?>
         </div>
         <div>
@@ -120,7 +120,7 @@ $news_counters = $counters->news();
     <div class="border-bottom"></div>
 
     <!-- Modules Button -->
-    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseModules" aria-expanded="false">
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseModules" aria-expanded="false">
         <div class="nav__vertical pt-2 pb-2 text-danger">
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shopping-cart"/>
@@ -184,7 +184,7 @@ $news_counters = $counters->news();
     <div class="border-bottom"></div>
 
     <!-- System Button -->
-    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseSystem" aria-expanded="false">
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSystem" aria-expanded="false">
         <div class="nav__vertical pt-2 pb-2 text-danger">
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
@@ -238,7 +238,7 @@ $news_counters = $counters->news();
     <div class="border-bottom"></div>
 
     <!-- Security Button -->
-    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="false">
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSecurity" aria-expanded="false">
         <div class="nav__vertical pt-2 pb-2 text-danger">
             <svg class="icon">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#shield"/>
@@ -297,7 +297,7 @@ $news_counters = $counters->news();
 
     <?php if (count($config['lng_list']) > 1): ?>
         <div class="mt-1">
-            <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
+            <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
                 <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
                 <?= $config['lng_list'][$locale]['name'] ?>
             </button>

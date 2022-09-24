@@ -22,7 +22,7 @@ $ads_array = $ads->getAds();
 <!-- Меню -->
 <div class="flex-grow-1">
     <?php if (! empty($ads_array['before_menu'])): ?>
-        <div class="pl-4 pr-3 pt-3">
+        <div class="ps-4 pe-3 pt-3">
             <?php foreach ($ads_array['before_menu'] as $item): ?>
                 <div><?= $item ?></div>
             <?php endforeach; ?>
@@ -153,7 +153,7 @@ $ads_array = $ads->getAds();
 </div>
 <div class="sidebar__footer">
     <?php if (! empty($ads_array['after_menu'])): ?>
-        <div class="pr-3 pt-2 mb-2">
+        <div class="pe-3 pt-2 mb-2">
             <?php foreach ($ads_array['after_menu'] as $item): ?>
                 <div><?= $item ?></div>
             <?php endforeach; ?>
@@ -170,7 +170,7 @@ $ads_array = $ads->getAds();
 
     <?php if (count($config['lng_list']) > 1): ?>
         <div class="mt-1">
-            <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
+            <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
                 <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
                 <?= $config['lng_list'][$locale]['name'] ?>
             </button>

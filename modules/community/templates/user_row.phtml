@@ -30,9 +30,9 @@
             <span class="user-status <?= $item->is_online ? 'online' : 'offline' ?> shadow"></span>
             <?php if (! empty($item->rights_name)): ?>
                 <div class="post-of-user"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     data-html="true"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="top"
+                     data-bs-html="true"
                      title="<?= $item->rights_name ?>">
                     <svg class="icon-post">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -43,14 +43,14 @@
         <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
             <div class="w-100">
                 <?php if ($item->id !== $user->id): ?>
-                    <a href="<?= $item->profile_url ?>"><span class="user-name d-inline mr-2"><?= $item->name ?></span></a>
+                    <a href="<?= $item->profile_url ?>"><span class="user-name d-inline me-2"><?= $item->name ?></span></a>
                 <?php else: ?>
-                    <div class="user-name d-inline mr-2"><?= $item->name ?></div>
+                    <div class="user-name d-inline me-2"><?= $item->name ?></div>
                 <?php endif; ?>
             </div>
             <?php if (! empty($item->status)): ?>
                 <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                    <span class="font-weight-bold"><?= $item->status ?></span>
+                    <span class="fw-bold"><?= $item->status ?></span>
                 </div>
             <?php endif ?>
         </div>
@@ -72,7 +72,7 @@
         <div class="overflow-hidden">
             <?php if ($user->rights): ?>
                 <div class="post-meta d-flex">
-                    <div class="user-ip mr-2">
+                    <div class="user-ip me-2">
                         <a href="<?= $item->search_ip_url ?>"><?= $item->ip ?></a>
                         <?php if (! empty($item->ip_via_proxy)): ?>
                             / <a href="<?= $item->search_ip_via_proxy_url ?>"><?= $item->ip_via_proxy ?></a>

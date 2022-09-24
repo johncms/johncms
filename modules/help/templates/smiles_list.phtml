@@ -50,12 +50,12 @@ $this->layout(
             <div class="list-group">
                 <?php foreach ($data['items'] as $item): ?>
                     <div class="list-group-item d-flex align-items-center">
-                        <div class="custom-control custom-checkbox align-items-center mr-2">
+                        <div class="custom-control custom-checkbox align-items-center me-2">
                             <input type="checkbox" class="custom-control-input" name="add_sm[]"
                                    value="<?= $item['lat_smile'] ?>" id="check_<?= $item['lat_smile'] ?>" <?= ! $item['can_add'] ? 'disabled' : '' ?>>
                             <label class="custom-control-label" for="check_<?= $item['lat_smile'] ?>"></label>
                         </div>
-                        <div class="mr-3">
+                        <div class="me-3">
                             <img src="<?= $item['picture'] ?>" alt="<?= $item['smile'] ?>">
                         </div>
                         <div>

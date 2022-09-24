@@ -34,9 +34,9 @@ $this->layout('system::layout/default');
                 <span class="user-status <?= $user->is_online ? 'online' : 'offline' ?> shadow"></span>
                 <?php if (! empty($user->rights_name)): ?>
                     <div class="post-of-user"
-                         data-toggle="tooltip"
-                         data-placement="top"
-                         data-html="true"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         data-bs-html="true"
                          title="<?= $user->rights_name ?>">
                         <svg class="icon-post">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -46,12 +46,12 @@ $this->layout('system::layout/default');
             </div>
             <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                 <div class="w-100">
-                    <div class="user-name d-inline mr-2"><?= $user->name ?></div>
-                    <div class="post-meta d-inline mr-2"><?= $tools->displayDate(time()) ?></div>
+                    <div class="user-name d-inline me-2"><?= $user->name ?></div>
+                    <div class="post-meta d-inline me-2"><?= $tools->displayDate(time()) ?></div>
                 </div>
                 <?php if (! empty($user->status)): ?>
                     <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                        <span class="font-weight-bold"><?= $user->status ?></span>
+                        <span class="fw-bold"><?= $user->status ?></span>
                     </div>
                 <?php endif ?>
             </div>

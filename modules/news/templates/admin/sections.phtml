@@ -43,8 +43,8 @@ $articles = $data['articles'];
 <table class="table table-bordered responsive-table">
     <thead>
     <tr>
-        <th scope="col" style="width: 58px;" class="border-right-0"></th>
-        <th scope="col" class="border-left-0">#</th>
+        <th scope="col" style="width: 58px;" class="border-end-0"></th>
+        <th scope="col" class="border-start-0">#</th>
         <th scope="col"><?= __('Name') ?></th>
         <th scope="col"><?= __('Code') ?></th>
         <th scope="col"><?= __('Type') ?></th>
@@ -58,20 +58,20 @@ $articles = $data['articles'];
             <!-- List of sections -->
             <?php /** @var \News\Models\NewsSection $section */ ?>
             <tr>
-                <th scope="row" style="width: 58px;" class="border-right-0">
+                <th scope="row" style="width: 58px;" class="border-end-0">
                     <div class="dropdown">
-                        <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg class="menu-icon">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#menu"/>
                             </svg>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/admin/news/edit_section/<?= $section->id ?>/"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" data-url="/admin/news/del_section/<?= $section->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" data-url="/admin/news/del_section/<?= $section->id ?>/" data-bs-toggle="modal" data-bs-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>
-                <th scope="row" class="border-left-0">
+                <th scope="row" class="border-start-0">
                     <a href="/admin/news/content/<?= $section->id ?>/"><?= $section->id ?></a>
                 </th>
                 <th scope="row"><a href="/admin/news/content/<?= $section->id ?>/"><?= $section->name ?></a></th>
@@ -85,20 +85,20 @@ $articles = $data['articles'];
             <!-- List of articles -->
             <?php /** @var \News\Models\NewsArticle $article */ ?>
             <tr>
-                <th scope="row" style="width: 40px;" class="border-right-0">
+                <th scope="row" style="width: 40px;" class="border-end-0">
                     <div class="dropdown">
-                        <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg class="menu-icon">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#menu"/>
                             </svg>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/admin/news/edit_article/<?= $article->id ?>/"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" data-url="/admin/news/del_article/<?= $article->id ?>/" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" data-url="/admin/news/del_article/<?= $article->id ?>/" data-bs-toggle="modal" data-bs-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>
-                <th scope="row" class="border-left-0"><a href="/admin/news//edit_article/<?= $article->id ?>/"><?= $article->id ?></a></th>
+                <th scope="row" class="border-start-0"><a href="/admin/news//edit_article/<?= $article->id ?>/"><?= $article->id ?></a></th>
                 <td data-title="<?= __('Name') ?>"><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->name ?></a></td>
                 <td data-title="<?= __('Code') ?>"><a href="/admin/news/edit_article/<?= $article->id ?>/"><?= $article->code ?></a></td>
                 <td data-title="<?= __('Type') ?>"><?= __('Article') ?></td>
@@ -108,7 +108,7 @@ $articles = $data['articles'];
         <?php endforeach; ?>
     <?php else: ?>
         <tr>
-            <td colspan="7" class="text-center font-weight-bold"><?= __('The list is empty') ?></td>
+            <td colspan="7" class="text-center fw-bold"><?= __('The list is empty') ?></td>
         </tr>
     <?php endif; ?>
     </tbody>

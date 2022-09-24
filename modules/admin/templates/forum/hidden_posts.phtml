@@ -37,9 +37,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             <div class="post-header d-flex justify-content-between border-bottom pb-1">
                 <div class="d-flex align-items-end">
                     <?php if (! empty($item['user_profile_link'])): ?>
-                        <a href="<?= $item['user_profile_link'] ?>" class="user-login mr-2"><?= $item['user_name'] ?></a>
+                        <a href="<?= $item['user_profile_link'] ?>" class="user-login me-2"><?= $item['user_name'] ?></a>
                     <?php else: ?>
-                        <a class="user-login mr-2"><?= $item['user_name'] ?></a>
+                        <a class="user-login me-2"><?= $item['user_name'] ?></a>
                     <?php endif; ?>
                     <span class="post-date"><?= $item['display_date'] ?></span>
                 </div>
@@ -50,7 +50,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 </div>
             </div>
             <div class="post-body d-flex align-items-start pt-3 pb-3">
-                <div class="user-avatar mr-2 mr-md-4">
+                <div class="user-avatar me-2 me-md-4">
                     <div class="avatar-image rounded-circle overflow-hidden">
                         <img src="<?= $this->avatar($item['id']) ?>" class="img-fluid" alt=".">
                     </div>
@@ -58,7 +58,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 </div>
                 <div class="overflow-auto flex-grow-1">
                     <div class="mb-2 d-flex align-items-center">
-                        <span class="mr-1"><?= __('Topic:') ?></span>
+                        <span class="me-1"><?= __('Topic:') ?></span>
                         <a href="<?= $item['topic_url'] ?>"><?= $item['topic_name'] ?></a>
                     </div>
                     <?= $item['formatted_text'] ?>
@@ -67,7 +67,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             <div class="post-footer d-flex justify-content-between border-top pt-2">
                 <div class="post-user-info d-flex overflow-hidden small align-items-center">
                     <?php if ($user->rights >= $item['rights']): ?>
-                        <div class="user-ip mr-2">
+                        <div class="user-ip me-2">
                             <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
                             <?php if (! empty($item['ip_via_proxy'])): ?>
                                 / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
@@ -80,7 +80,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                     <?php endif; ?>
                 </div>
                 <div class="text-nowrap post-actions">
-                    <span class="text-muted pr-2 flex-grow-1">
+                    <span class="text-muted pe-2 flex-grow-1">
                         <?php if (! empty($item['edit_count'])): ?>
                             <?= __('Edited:') ?> <?= $item['editor_name'] ?> (<?= $item['edit_time'] ?>) [<?= $item['edit_count'] ?>]
                         <?php endif; ?>
@@ -92,9 +92,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                         <?php endif; ?>
                     </span>
                     <?php if (! empty($item['buttons'])): ?>
-                        <span class="pr-1"><?= __('Filter:') ?></span>
+                        <span class="pe-1"><?= __('Filter:') ?></span>
                         <?php foreach ($item['buttons'] as $button): ?>
-                            <a href="<?= $button['url'] ?>" class="btn btn-secondary btn-sm mr-1"><?= $button['name'] ?></a>
+                            <a href="<?= $button['url'] ?>" class="btn btn-secondary btn-sm me-1"><?= $button['name'] ?></a>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>

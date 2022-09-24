@@ -23,7 +23,7 @@ $this->layout(
 );
 ?>
 <?php if ($page === 1 && $cover) : ?>
-    <a href="../upload/library/images/orig/<?= $res['id'] ?>.png" class="float-lg-left pr-3">
+    <a href="../upload/library/images/orig/<?= $res['id'] ?>.png" class="float-lg-left pe-3">
         <img src="../upload/library/images/big/<?= $res['id'] ?>.png" alt="screen" class="img-thumbnail">
     </a>
 <?php endif; ?>
@@ -37,7 +37,7 @@ $this->layout(
 <?php endif ?>
 
 <div class="pt-3 border-top">
-    <span class="mr-2">
+    <span class="me-2">
         <?= __('Download file') ?>
     </span>
     <a href="?act=download&amp;type=txt&amp;id=<?= $res['id'] ?>" class="btn btn-outline-secondary btn-sm">txt</a>

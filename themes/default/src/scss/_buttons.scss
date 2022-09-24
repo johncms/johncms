@@ -2,10 +2,26 @@
     color: $white;
 }
 
+.btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+}
+
 .btn-outline-info {
     &:hover {
         color: $white;
     }
+}
+
+.btn-outline-secondary {
+    --bs-btn-active-color: #fff;
+    --bs-btn-hover-color: #fff;
+}
+
+.btn-danger {
+  --bs-btn-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-hover-color: #fff;
 }
 
 .btn-lg-icon {
