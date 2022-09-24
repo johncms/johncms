@@ -57,16 +57,18 @@
 }
 
 .list-group.with_counters {
-    .list-group-item {
-        display: flex;
-        align-items: center;
-        padding: 0;
-    }
-    .link {
-        padding: .75rem 1.25rem;
-        flex-grow: 1;
-    }
-    .counter {
-        margin: .75rem 1.25rem;
-    }
+  .list-group-item {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+
+  .link {
+    padding: .75rem 1.25rem;
+    flex-grow: 1;
+  }
+
+  .counter {
+    margin: .75rem 1.25rem;
+  }
 }
