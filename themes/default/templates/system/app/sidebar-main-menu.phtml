@@ -17,6 +17,12 @@ $album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
+$theme = di(\Johncms\System\View\Theme::class);
+$request = di(\Johncms\System\Http\Request::class);
+if ($request->getQuery('setTheme')) {
+    $setTheme = $request->getQuery('setTheme', 'auto', FILTER_SANITIZE_STRING);
+    $theme->setTheme($setTheme);
+}
 
 ?>
 <!-- Меню -->
@@ -168,12 +174,22 @@ $ads_array = $ads->getAds();
         </a>
     </div>
 
-    <?php if (count($config['lng_list']) > 1): ?>
-        <div class="mt-1">
-            <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
-                <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
-                <?= $config['lng_list'][$locale]['name'] ?>
-            </button>
+    <div class="d-flex justify-content-between align-items-center">
+        <?php if (count($config['lng_list']) > 1): ?>
+            <div class="mt-1">
+                <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
+                    <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
+                    <?= $config['lng_list'][$locale]['name'] ?>
+                </button>
+            </div>
+        <?php endif ?>
+        <div>
+            <a href="?setTheme=<?= $theme->getCurrentTheme() === 'dark' ? 'light' : 'dark' ?>">
+                <svg class="icon">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#<?= $theme->getCurrentTheme() === 'dark' ? 'sun' : 'moon' ?>"/>
+                </svg>
+            </a>
         </div>
-    <?php endif ?>
+    </div>
+
 </div>

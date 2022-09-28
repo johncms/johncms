@@ -2,4 +2,5 @@ User-agent: *
 Disallow: /admin/
 Disallow: /download/arctemp/
 Disallow: /files/forum/attach/
+Disallow: /*setTheme=
 Allow: /

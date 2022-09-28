@@ -25,7 +25,8 @@ use Johncms\System\{Database\PdoFactory,
     Users\User,
     Users\UserFactory,
     View\Render,
-    View\RenderEngineFactory
+    View\RenderEngineFactory,
+    View\Theme
 };
 use Johncms\System\View\Extension\{Assets, Avatar};
 use PDO;
@@ -61,6 +62,7 @@ class ConfigProvider
                 Cache::class          => Cache::class,
                 Filesystem::class     => Filesystem::class,
                 MediaEmbed::class     => MediaEmbed::class,
+                Theme::class          => Theme::class,
             ],
 
             'invokables' => [],
