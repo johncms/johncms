@@ -18,8 +18,19 @@
   --bs-btn-hover-color: #fff;
 }
 
+.btn-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-hover-color: #fff;
+}
+
 .btn-danger {
   --bs-btn-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-hover-color: #fff;
+}
+
+.btn-outline-danger {
   --bs-btn-active-color: #fff;
   --bs-btn-hover-color: #fff;
 }

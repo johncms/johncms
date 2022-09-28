@@ -17,6 +17,7 @@ $sidebar_width: 16rem;
     color: #55514c;
     opacity: 0.8;
     transition: opacity 0.2s;
+    text-decoration: none;
 
     &:hover {
       opacity: 1;
@@ -104,6 +105,10 @@ $sidebar_width: 16rem;
   justify-content: space-between;
   align-items: center;
   padding: 0.7rem 1rem;
+
+  &:hover, &:focus {
+    color: var(--bs-primary);
+  }
 
   .sidebar_user_avatar {
     .user_photo {

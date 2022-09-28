@@ -108,6 +108,10 @@ $sidebar_width: 15rem;
   align-items: center;
   padding: 0.7rem 0.7rem 0.7rem 0;
 
+  &:hover, &:focus {
+    color: var(--bs-primary);
+  }
+
   .sidebar_user_avatar {
     .user_photo {
       width: 40px;
