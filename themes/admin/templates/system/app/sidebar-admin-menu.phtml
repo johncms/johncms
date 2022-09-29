@@ -30,7 +30,7 @@ $news_counters = $counters->news();
             </svg>
             <span class="flex-grow-1"><?= d__('admin', 'Users') ?></span>
             <?php if ($regtotal): ?>
-                <div class="badge badge-danger badge-pill ms-2">+&nbsp;<?= $regtotal ?></div>
+                <div class="badge bg-danger badge-pill ms-2">+&nbsp;<?= $regtotal ?></div>
             <?php endif ?>
         </div>
         <div>
@@ -58,7 +58,7 @@ $news_counters = $counters->news();
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#help-circle"/>
                         </svg>
                         <span class="flex-grow-1"><?= d__('admin', 'On registration') ?></span>
-                        <span class="badge badge-pill badge-danger"><?= $tools->formatNumber($regtotal) ?></span>
+                        <span class="badge badge-pill bg-danger"><?= $tools->formatNumber($regtotal) ?></span>
                     </a>
                 </li>
             <?php endif ?>

@@ -11,6 +11,12 @@ $notifications = $counters->notifications();
 $analytics = $counters->counters();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
+$theme = di(\Johncms\System\View\Theme::class);
+$request = di(\Johncms\System\Http\Request::class);
+if ($request->getQuery('setTheme')) {
+    $setTheme = $request->getQuery('setTheme', 'auto', FILTER_SANITIZE_STRING);
+    $theme->setTheme($setTheme);
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
@@ -44,7 +50,7 @@ $ads_array = $ads->getAds();
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
     <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
 </head>
-<body>
+<body class="<?= $theme->getCurrentTheme() ?>">
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
     <div class="page_layout justify-content-end d-flex w-100">
         <div class="sidebar">
@@ -83,7 +89,7 @@ $ads_array = $ads->getAds();
                                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
                                     </svg>
                                     <?php if (! empty($notifications['all'])): ?>
-                                        <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
+                                        <span class="badge bg-danger badge-pill"><?= $notifications['all'] ?></span>
                                     <?php endif ?>
                                 </a>
                             <?php else: ?>
