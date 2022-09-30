@@ -37,7 +37,7 @@ $this->layout(
         <div class="section-header d-flex justify-content-between <?= (empty($album['description']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a class="user-login me-2" href="<?= $album['album_url'] ?>"><?= $album['name'] ?></a>
-                <span class="badge badge-pill badge-light border ms-3"><?= $album['count_photos'] ?></span>
+                <span class="badge rounded-pill text-bg-light border ms-3"><?= $album['count_photos'] ?></span>
             </div>
         </div>
         <?php if (! empty($album['description'])): ?>

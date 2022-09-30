@@ -33,7 +33,7 @@
                             <svg class="icon d-sm-none">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                             </svg>
-                            <span class="badge badge-pill badge-danger d-sm-none"><?= $unread_count ?></span>
+                            <span class="badge rounded-pill badge-danger d-sm-none"><?= $unread_count ?></span>
                             <span class="d-none d-sm-inline text-danger fw-bold ps-1">+<?= $unread_count ?></span>
                         </div>
                     </a>
@@ -63,7 +63,7 @@
                 <span class="icon_with_badge me-sm-3">
                     <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/></svg>
                     <?php if ($files_count > 0): ?>
-                        <span class="badge badge-pill badge-success"><?= $files_count ?></span>
+                        <span class="badge rounded-pill badge-success"><?= $files_count ?></span>
                     <?php endif ?>
                 </span>
             </a>

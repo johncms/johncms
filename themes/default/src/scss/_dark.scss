@@ -11,6 +11,15 @@
   --bs-list-group-color: #fff;
 }
 
+.post-item {
+  background: #2c2c2c;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.forum-section {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
 hr {
   border-color: rgba(255, 255, 255, 0.1);
   opacity: 1;
@@ -39,9 +48,15 @@ hr {
 
 // Modals
 .modal-content {
-  --bs-modal-bg: rgba(33, 33, 33, 0.98);
+  --bs-modal-bg: rgb(33, 33, 33);
 }
 
+.dropdown-menu {
+  --bs-dropdown-bg: rgb(52, 52, 52);
+  --bs-dropdown-link-color: #fff;
+  --bs-dropdown-link-hover-bg: #515151;
+  --bs-dropdown-link-hover-color: #fff;
+}
 
 // Inputs
 label {

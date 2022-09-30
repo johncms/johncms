@@ -93,10 +93,10 @@ $this->layout('system::layout/default');
                 <?php else: ?>
                     <?php if (! empty($topic->last_page_url)): ?>
                         <a href="<?= $topic->last_page_url ?>" title="<?= __('Last page') ?>">
-                            <span class="badge badge-pill <?= $topic->unread ? 'badge-danger' : 'badge-light border' ?> ms-3"><?= $topic->show_posts_count ?></span>
+                            <span class="badge rounded-pill <?= $topic->unread ? 'badge-danger' : 'text-bg-light border' ?> ms-3"><?= $topic->show_posts_count ?></span>
                         </a>
                     <?php else: ?>
-                        <span class="badge badge-pill <?= $topic->unread ? 'badge-danger' : 'badge-light border' ?> ms-3"><?= $topic->show_posts_count ?></span>
+                        <span class="badge rounded-pill <?= $topic->unread ? 'badge-danger' : 'text-bg-light border' ?> ms-3"><?= $topic->show_posts_count ?></span>
                     <?php endif ?>
                 <?php endif; ?>
             </div>

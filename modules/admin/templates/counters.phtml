@@ -49,9 +49,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             <a href="?mod=view&amp;id=<?= $item['id'] ?>" class="h3"><?= $item['name'] ?></a>
             <div>
                 <?php if ($item['switch'] === 1): ?>
-                    <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
+                    <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge rounded-pill badge-success"><?= __('On') ?></a>
                 <?php else: ?>
-                    <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
+                    <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge rounded-pill badge-danger"><?= __('Off') ?></a>
                 <?php endif; ?>
             </div>
         </div>

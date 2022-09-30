@@ -39,16 +39,16 @@ $counters = $data['counters'] ?? [];
         <div class="list-group">
             <a href="./users/" class="list-group-item d-flex justify-content-between align-items-center">
                 <?= __('Users') ?>
-                <span class="badge badge-light badge-pill"><?= $counters['usersCount'] ?></span>
+                <span class="badge text-bg-light rounded-pill"><?= $counters['usersCount'] ?></span>
             </a>
             <a href="./administration/" class="list-group-item d-flex justify-content-between align-items-center">
                 <?= __('Administration') ?>
-                <span class="badge badge-light badge-pill"><?= $counters['adminCount'] ?></span>
+                <span class="badge text-bg-light rounded-pill"><?= $counters['adminCount'] ?></span>
             </a>
             <?php if (! empty($counters['birthDays'])): ?>
                 <a href="./birthdays/" class="list-group-item d-flex justify-content-between align-items-center">
                     <?= __('Birthdays') ?>
-                    <span class="badge badge-light badge-pill"><?= $counters['birthDays'] ?></span>
+                    <span class="badge text-bg-light rounded-pill"><?= $counters['birthDays'] ?></span>
                 </a>
             <?php endif ?>
             <a href="./top/" class="list-group-item d-flex justify-content-between align-items-center">

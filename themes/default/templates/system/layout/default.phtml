@@ -89,7 +89,7 @@ if ($request->getQuery('setTheme')) {
                                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
                                     </svg>
                                     <?php if (! empty($notifications['all'])): ?>
-                                        <span class="badge bg-danger badge-pill"><?= $notifications['all'] ?></span>
+                                        <span class="badge bg-danger rounded-pill"><?= $notifications['all'] ?></span>
                                     <?php endif ?>
                                 </a>
                             <?php else: ?>

@@ -37,7 +37,7 @@ $this->layout(
     <div class="mb-3 mt-n1">
         <?php if (! empty($urls['new'])): ?>
             <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm me-1 mt-1">
-                <?= __('New Files') ?> <span class="badge badge-secondary badge-pill ms-1"><?= $total_new ?></span>
+                <?= __('New Files') ?> <span class="badge text-bg-secondary rounded-pill ms-1"><?= $total_new ?></span>
             </a>
         <?php endif; ?>
         <a href="?act=search" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Search') ?></a>
@@ -51,7 +51,7 @@ $this->layout(
         <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $category['url'] ?>" class="text-dark-brown"><?= $category['rus_name'] ?></a>
-                <span class="badge badge-pill badge-light border ms-3"><?= $category['total'] ?></span>
+                <span class="badge rounded-pill text-bg-light border ms-3"><?= $category['total'] ?></span>
             </div>
         </div>
         <?php if (! empty($category['desc']) || ! empty($category['field'])): ?>

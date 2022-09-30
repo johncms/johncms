@@ -13,7 +13,7 @@
         <div class="sidebar_user_avatar d-flex align-items-center">
             <div class="position-relative">
                 <?php if (! empty($notifications['all'])): ?>
-                    <div class="sidebar__notifications badge bg-danger badge-pill"><?= $notifications['all'] ?></div>
+                    <div class="sidebar__notifications badge bg-danger rounded-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
                 <div class="user_photo border rounded-circle me-2 overflow-hidden">
                     <img src="<?= $this->avatar($user->id ?? 0) ?>" class="img-fluid" alt=".">
@@ -40,7 +40,7 @@
                         </svg>
                         <span class="flex-grow-1 text-info"><?= d__('system', 'Notifications') ?></span>
                         <?php if (! empty($notifications['all'])): ?>
-                            <span class="badge bg-danger badge-pill"><?= $notifications['all'] ?></span>
+                            <span class="badge bg-danger rounded-pill"><?= $notifications['all'] ?></span>
                             </span>
                         <?php endif ?>
                     </a>
@@ -78,7 +78,7 @@
                         </svg>
                         <span class="flex-grow-1 text-info"><?= d__('system', 'Registration') ?></span>
                         <?php if (! empty($notifications['all'])): ?>
-                            <span class="badge bg-danger badge-pill"><?= $notifications['all'] ?></span>
+                            <span class="badge bg-danger rounded-pill"><?= $notifications['all'] ?></span>
                             </span>
                         <?php endif ?>
                     </a>

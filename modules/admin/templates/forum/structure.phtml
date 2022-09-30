@@ -40,7 +40,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <span class="text-muted me-1">[<?= $item['sort'] ?>]</span>
                 <a href="<?= $item['list_url'] ?>"><?= $item['name'] ?></a>
                 <?php if (! empty($item['counter'])): ?>
-                    <span class="badge badge-pill badge-light border ms-2"><?= $item['counter'] ?></span>
+                    <span class="badge rounded-pill text-bg-light border ms-2"><?= $item['counter'] ?></span>
                 <?php endif; ?>
             </div>
             <div>
