@@ -75,7 +75,8 @@
         "johncms/personal": "dev-develop",
         "johncms/redirect": "dev-develop",
         "maximebf/debugbar": "^1.18",
-        "compolomus/pagination": "^1.2"
+        "compolomus/pagination": "^1.2",
+        "monolog/monolog": "^2.8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19",

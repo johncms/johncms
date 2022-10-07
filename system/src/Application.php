@@ -14,27 +14,27 @@ namespace Johncms;
 
 use Carbon\Carbon;
 use Gettext\TranslatorFunctions;
-use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Support\Facades\DB;
 use Johncms\Debug\DebugBar;
 use Johncms\Http\Request;
 use Johncms\i18n\Translator;
+use Johncms\Log\ExceptionHandlers;
 use Johncms\Router\RouterFactory;
 use Johncms\Users\User;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use PDO;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Throwable;
 
 class Application
 {
-    private Container $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        private ContainerInterface $container
+    ) {
+        $container->get(ExceptionHandlers::class)->registerHandlers();
     }
 
     public function run(): Application
@@ -45,7 +45,7 @@ class Application
         return $this;
     }
 
-    private function setupDatabase()
+    private function setupDatabase(): void
     {
         di(PDO::class);
         $connection = Manager::connection();

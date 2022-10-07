@@ -27,6 +27,8 @@ use Johncms\Http\ResponseFactory;
 use Johncms\Http\Session;
 use Johncms\i18n\Translator;
 use Johncms\i18n\TranslatorServiceFactory;
+use Johncms\Log\ExceptionHandlers;
+use Johncms\Log\Logger;
 use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
@@ -43,6 +45,7 @@ use Johncms\View\RenderEngineFactory;
 use PDO;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
 class ConfigProvider
@@ -92,6 +95,8 @@ class ConfigProvider
                 MetaTagManager::class           => MetaTagManager::class,
                 SiteSettings::class             => SiteSettings::class,
                 DebugBar::class                 => DebugBar::class,
+                LoggerInterface::class          => Logger::class,
+                ExceptionHandlers::class        => ExceptionHandlers::class,
             ],
         ];
     }
