@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Validator;
 
+use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Support\Arr;
 use Johncms\Validator\Rules\Ban;
 use Johncms\Validator\Rules\Captcha;
@@ -64,6 +65,7 @@ use Laminas\Validator\Timezone;
 use Laminas\Validator\Uri;
 use Laminas\Validator\Uuid;
 use Laminas\Validator\ValidatorChain;
+use Psr\Http\Message\UploadedFileInterface;
 
 class Validator
 {
@@ -151,8 +153,8 @@ class Validator
         foreach ($rules as $field => $rule) {
             $value = Arr::get($data, $field, null);
 
-            // If this is an optional field and it is empty then skip validation.
-            if (in_array('Optional', $rule) && empty($value)) {
+            // If this is an optional field, and it is empty then skip validation.
+            if ($this->isEmptyOptional($rule, $value)) {
                 continue;
             }
 
@@ -188,6 +190,19 @@ class Validator
                 }
             }
         }
+    }
+
+    private function isEmptyOptional(mixed $rule, mixed $value): bool
+    {
+        if (in_array('Optional', $rule)) {
+            return empty($value)
+                || (
+                    is_object($value)
+                    && is_subclass_of($value, UploadedFileInterface::class)
+                    && $value->getError() === UPLOAD_ERR_NO_FILE
+                );
+        }
+        return false;
     }
 
     /**
