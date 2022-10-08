@@ -21,6 +21,8 @@ use Johncms\Users\Exceptions\UserIsNotConfirmedException;
 use Johncms\Users\Exceptions\UserNotFoundException;
 use League\Flysystem\FilesystemException;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Throwable;
 
 class UserManager
 {
@@ -225,6 +227,16 @@ class UserManager
         if (is_numeric($user)) {
             $user = User::query()->findOrFail($user);
         }
+
+        $avatarId = $user->avatar_id;
+        if (! empty($avatarId)) {
+            try {
+                $this->container->get(FileStorage::class)->delete($avatarId);
+            } catch (Throwable $throwable) {
+                $this->container->get(LoggerInterface::class)->warning($throwable->getMessage(), $throwable->getTrace());
+            }
+        }
+
         return $user->delete();
     }
 }
