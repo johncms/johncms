@@ -47,11 +47,11 @@ class HomepageController extends BaseController
         // TODO: Если приживется, объединить со счетчиками в меню для избежания лишних запросов
         /** @var Counters $counters */
         $counters = di('counters');
-        //$count['forum'] = $counters->forumCounters();
+        $count['forum'] = $counters->forumCounters();
         $count['guestbook'] = $counters->guestbookCounters();
         $count['downloads'] = $counters->downloadsCounters();
         $count['library'] = $counters->libraryCounters();
-        //$count['users'] = $counters->usersCounters();
+        $count['users'] = $counters->usersCounters();
         $count['news'] = [
             'new' => $news_new_count ?? 0,
         ];
