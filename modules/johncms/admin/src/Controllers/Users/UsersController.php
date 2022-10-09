@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Admin\Controllers\Users;
 
 use Illuminate\Database\Eloquent\Builder;
-use Johncms\Admin\Forms\CreateUserForm;
+use Johncms\Admin\Forms\UserForm;
 use Johncms\Admin\Resources\Users\UserResource;
 use Johncms\Controller\BaseAdminController;
 use Johncms\Exceptions\ValidationException;
@@ -79,9 +79,9 @@ class UsersController extends BaseAdminController
 
     public function create(): string
     {
-        $userForm = new CreateUserForm();
+        $userForm = new UserForm();
         $this->metaTagManager->setAll(__('Create User'));
-        return $this->render->render('admin::users/create_user', [
+        return $this->render->render('admin::users/user_form', [
             'data' => [
                 'formFields'       => $userForm->getFormFields(),
                 'validationErrors' => $userForm->getValidationErrors(),
@@ -94,9 +94,9 @@ class UsersController extends BaseAdminController
     public function edit(int $id): string
     {
         $user = User::query()->findOrFail($id);
-        $userForm = new CreateUserForm($user);
+        $userForm = new UserForm($user);
         $this->metaTagManager->setAll(__('Edit User'));
-        return $this->render->render('admin::users/create_user', [
+        return $this->render->render('admin::users/user_form', [
             'data' => [
                 'formFields'       => $userForm->getFormFields(),
                 'validationErrors' => $userForm->getValidationErrors(),
@@ -113,7 +113,7 @@ class UsersController extends BaseAdminController
     {
         $userId = (int) $request->getPost('id', 0);
         $user = User::query()->findOrFail($userId);
-        $userForm = new CreateUserForm($user);
+        $userForm = new UserForm($user);
         try {
             // Validate the form
             $userForm->validate();

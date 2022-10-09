@@ -24,7 +24,7 @@ use Johncms\Users\Role;
 use Johncms\Users\User;
 use Laminas\Validator\Hostname;
 
-class CreateUserForm extends AbstractForm
+class UserForm extends AbstractForm
 {
     public function __construct(
         private ?User $user = null
