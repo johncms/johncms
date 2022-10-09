@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Downloads\Download;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\NavChain;
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -14,7 +14,7 @@ namespace Johncms\Forum\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\Forum\ForumPermissions;
 use Johncms\Users\User;
 
@@ -35,7 +35,7 @@ use Johncms\Users\User;
  * @property int $dlcount
  * @property bool $del
  *
- * @property FileInfo|null $file_attrs
+ * @property \Johncms\Files\FileInfo|null $file_attrs
  * @property string $file_url
  * @property string $delete_url
  * @property string $file_preview
@@ -47,7 +47,7 @@ class ForumFile extends Model
 
     public $timestamps = false;
 
-    /** @var null|FileInfo */
+    /** @var null|\Johncms\Files\FileInfo */
     public $file_info = null;
 
     protected $fillable = [

@@ -17,7 +17,7 @@ use GuzzleHttp\Psr7\UploadedFile;
 use JetBrains\PhpStorm\NoReturn;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Guestbook\Models\Guestbook;
 use Johncms\Guestbook\Services\GuestbookForm;

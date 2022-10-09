@@ -103,8 +103,7 @@ class FileStorage
      */
     public function delete(int $id): void
     {
-        /** @var \Johncms\Files\Models\File|null $file */
-        $file = (new \Johncms\Files\Models\File())->find($id);
+        $file = \Johncms\Files\Models\File::query()->find($id);
         if ($file === null) {
             throw new FileNotFound(sprintf('File #%s not found', $id));
         }

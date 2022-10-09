@@ -12,74 +12,61 @@ declare(strict_types=1);
 
 namespace Johncms\Files;
 
-use Johncms\FileInfo;
 use League\Flysystem\FilesystemException;
+use RuntimeException;
 
 class File
 {
-    /** @var string */
-    protected $source_file;
+    protected string $sourceFile;
+    protected string $storage = 'local';
+    protected string $md5 = '';
+    protected string $sha1 = '';
+    protected string $fileName = '';
+    protected FileInfo $fileInfo;
+    protected string $parentDir = '';
 
-    /** @var string */
-    protected $storage = 'local';
-
-    /** @var string */
-    protected $md5 = '';
-
-    /** @var string */
-    protected $sha1 = '';
-
-    /** @var string */
-    protected $file_name = '';
-
-    /** @var FileInfo */
-    protected $file_info;
-
-    /** @var string */
-    protected $parent_dir = '';
-
-    public function __construct(string $source_file)
+    public function __construct(string $sourceFile)
     {
-        if (! file_exists($source_file)) {
-            throw new \RuntimeException(sprintf('File "%s" not found.', $source_file));
+        if (! file_exists($sourceFile)) {
+            throw new RuntimeException(sprintf('File "%s" not found.', $sourceFile));
         }
-        $this->source_file = $source_file;
-        $this->file_info = new FileInfo($source_file);
+        $this->sourceFile = $sourceFile;
+        $this->fileInfo = new FileInfo($sourceFile);
     }
 
     /**
      * Sets the storage where the file will be saved.
      *
-     * @param string $storage_name
+     * @param string $storageName
      * @return $this
      */
-    public function setStorage(string $storage_name): self
+    public function setStorage(string $storageName): self
     {
-        $this->storage = $storage_name;
+        $this->storage = $storageName;
         return $this;
     }
 
     /**
      * Sets the name of the file to be saved in the database.
      *
-     * @param string $file_name
+     * @param string $fileName
      * @return $this
      */
-    public function setFileName(string $file_name): self
+    public function setFileName(string $fileName): self
     {
-        $this->file_name = $file_name;
+        $this->fileName = $fileName;
         return $this;
     }
 
     /**
      * Sets the parent directory for saving.
      *
-     * @param string $parent_dir
+     * @param string $parentDir
      * @return $this
      */
-    public function setParentDir(string $parent_dir): self
+    public function setParentDir(string $parentDir): self
     {
-        $this->parent_dir = $parent_dir;
+        $this->parentDir = $parentDir;
         return $this;
     }
 
@@ -94,7 +81,7 @@ class File
             return $this->md5;
         }
 
-        $this->md5 = $this->file_info->getMd5();
+        $this->md5 = $this->fileInfo->getMd5();
 
         return $this->md5;
     }
@@ -108,8 +95,7 @@ class File
     {
         $hash = $this->getHash();
 
-        $path = '';
-        $path .= mb_substr($hash, 0, 2);
+        $path = mb_substr($hash, 0, 2);
         $path .= '/' . mb_substr($hash, 2, 2);
         $path .= '/' . mb_substr($hash, 4, 2);
 
@@ -124,31 +110,31 @@ class File
      */
     public function getSavePath(): string
     {
-        $file_path_base = ! empty($this->parent_dir) ? $this->parent_dir . '/' : '';
+        $filePathBase = ! empty($this->parentDir) ? $this->parentDir . '/' : '';
 
-        $file_path = $file_path_base . $this->getStoragePath() . '/' . $this->getHash();
+        $filePath = $filePathBase . $this->getStoragePath() . '/' . $this->getHash();
 
-        $extension = mb_strtolower($this->file_info->getExtension());
+        $extension = mb_strtolower($this->fileInfo->getExtension());
         if (empty($extension)) {
-            $extension = mb_strtolower(pathinfo($this->file_name, PATHINFO_EXTENSION));
+            $extension = mb_strtolower(pathinfo($this->fileName, PATHINFO_EXTENSION));
         }
 
         if (! empty($extension)) {
-            $file_path .= '.' . $extension;
+            $filePath .= '.' . $extension;
         }
 
-        $file_storage = di(Filesystem::class)->storage($this->storage);
+        $fileStorage = di(Filesystem::class)->storage($this->storage);
 
         $i = 1;
-        while ($file_storage->fileExists($file_path)) {
-            $file_path = $file_path_base . $this->getStoragePath() . '/' . $this->getHash() . '_' . $i;
+        while ($fileStorage->fileExists($filePath)) {
+            $filePath = $filePathBase . $this->getStoragePath() . '/' . $this->getHash() . '_' . $i;
             if (! empty($extension)) {
-                $file_path .= '.' . $extension;
+                $filePath .= '.' . $extension;
             }
             $i++;
         }
 
-        return $file_path;
+        return $filePath;
     }
 
     /**
@@ -162,17 +148,17 @@ class File
     {
         $path = $this->getSavePath();
 
-        $file_storage = di(Filesystem::class)->storage($this->storage);
-        $file_storage->writeStream($path, fopen($this->source_file, 'rb'));
+        $fileStorage = di(Filesystem::class)->storage($this->storage);
+        $fileStorage->writeStream($path, fopen($this->sourceFile, 'rb'));
 
-        return (new Models\File())->create(
+        return Models\File::query()->create(
             [
                 'storage' => 'local',
-                'name'    => $this->file_name ?: $this->file_info->getCleanName(),
+                'name'    => $this->fileName ?: $this->fileInfo->getCleanName(),
                 'path'    => $path,
-                'size'    => $this->file_info->getSize(),
+                'size'    => $this->fileInfo->getSize(),
                 'md5'     => $this->getHash(),
-                'sha1'    => $this->file_info->getSha1(),
+                'sha1'    => $this->fileInfo->getSha1(),
             ]
         );
     }

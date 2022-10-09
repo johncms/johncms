@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Johncms\FileInfo;
 use Intervention\Image\ImageManager;
+use Johncms\Files\FileInfo;
 use Johncms\NavChain;
 use Psr\Http\Message\ServerRequestInterface;
 

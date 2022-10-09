@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Johncms\Database\Eloquent\Casts\DateHuman;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 
 /**
  * Class File

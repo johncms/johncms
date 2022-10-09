@@ -22,10 +22,9 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 class Filesystem
 {
     /** @var \League\Flysystem\Filesystem[] */
-    protected $storages = [];
+    protected array $storages = [];
 
-    /** @var array */
-    protected $config;
+    protected array $config;
 
     public function __construct()
     {

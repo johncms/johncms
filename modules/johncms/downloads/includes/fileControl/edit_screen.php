@@ -11,8 +11,8 @@
 declare(strict_types=1);
 
 use Downloads\Screen;
-use Johncms\FileInfo;
 use Intervention\Image\ImageManager;
+use Johncms\Files\FileInfo;
 use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');

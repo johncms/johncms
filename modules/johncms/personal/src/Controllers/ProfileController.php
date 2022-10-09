@@ -16,7 +16,7 @@ use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Exceptions\ValidationException;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;

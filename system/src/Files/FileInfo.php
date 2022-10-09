@@ -10,10 +10,13 @@
 
 declare(strict_types=1);
 
-namespace Johncms;
+namespace Johncms\Files;
 
-use Johncms\System\Legacy\Tools;
+use Illuminate\Support\Str;
 use SplFileInfo;
+
+use function mb_strtolower;
+use function mb_substr;
 
 class FileInfo extends SplFileInfo
 {
@@ -30,9 +33,9 @@ class FileInfo extends SplFileInfo
     /**
      * Get cleared file name
      *
-     * @return string|string[]|null
+     * @return string
      */
-    public function getCleanName()
+    public function getCleanName(): string
     {
         $name = $this->sanitizeName($this->getNameWithoutExtension());
         $name = mb_substr($name, 0, 150);
@@ -63,14 +66,10 @@ class FileInfo extends SplFileInfo
      */
     public function sanitizeName(string $name): string
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        $name = $tools->rusLat($name, false);
-
+        $name = Str::ascii($name);
         $name = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $name);
         $name = trim($name, '_');
-        $name = preg_replace('/-{2,}/', '_', $name);
-        return $name;
+        return preg_replace('/-{2,}/', '_', $name);
     }
 
     /**

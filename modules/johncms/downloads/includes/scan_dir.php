@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

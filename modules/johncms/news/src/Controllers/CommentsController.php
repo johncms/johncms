@@ -19,7 +19,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\PageNotFoundException;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Request;
 use Johncms\Http\Response\JsonResponse;

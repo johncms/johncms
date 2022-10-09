@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Forum\Controllers;
 
 use Illuminate\Support\Collection;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\Forum\Models\ForumFile;
 use Johncms\Forum\Models\ForumMessage;
 use Johncms\Http\Request;

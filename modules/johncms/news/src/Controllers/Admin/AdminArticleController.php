@@ -17,7 +17,7 @@ use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Support\Str;
 use Johncms\Controller\BaseAdminController;
-use Johncms\FileInfo;
+use Johncms\Files\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
