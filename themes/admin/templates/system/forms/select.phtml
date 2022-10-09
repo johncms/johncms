@@ -14,7 +14,10 @@
         class="form-select <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
     >
         <?php foreach ($field->options as $option): ?>
-            <option value="<?= $option['value'] ?>" <?= $option['value'] === $field->value ? 'selected' : '' ?>><?= $option['name'] ?></option>
+            <option
+                value="<?= $option['value'] ?>"
+                <?= (is_array($field->value) ? in_array($option['value'], $field->value) : $option['value'] === $field->value) ? 'selected' : '' ?>
+            ><?= $option['name'] ?></option>
         <?php endforeach; ?>
     </select>
     <?php if (isset($errors[$field->name])): ?>
