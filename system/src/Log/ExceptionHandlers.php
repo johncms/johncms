@@ -69,7 +69,7 @@ class ExceptionHandlers
     public function handleShutdown(): void
     {
         $lastError = error_get_last();
-        if (is_array($lastError)) {
+        if (is_array($lastError) && (error_reporting() & $lastError['type'])) {
             $this->handleAppException(new ErrorException($lastError['message'], 0, $lastError['type'], $lastError['file'], $lastError['line']));
         }
     }
