@@ -115,6 +115,7 @@ class UserForm extends AbstractForm
             ->setLabel(__('Avatar'))
             ->setPlaceholder(__('Select Avatar'))
             ->setNameAndId('avatar')
+            ->setCurrentFile($this->getCurrentAvatar())
             ->setValidationRules(
                 [
                     'Optional',
@@ -245,6 +246,12 @@ class UserForm extends AbstractForm
     {
         $requestValues = parent::getRequestValues();
         $modifiedValues = [];
+
+        $delAvatar = $this->request->getPost('delete_avatar');
+        if ($delAvatar) {
+            $modifiedValues['delete_avatar'] = true;
+        }
+
         foreach ($requestValues as $key => $requestValue) {
             if (str_contains($key, 'additional_fields_')) {
                 $modifiedValues['additional_fields'][substr($key, 18)] = $requestValue;
@@ -253,5 +260,21 @@ class UserForm extends AbstractForm
             }
         }
         return $modifiedValues;
+    }
+
+    private function getCurrentAvatar(): array
+    {
+        $avatar = $this->user?->avatar;
+        if ($avatar) {
+            return [
+                'id'           => $avatar->id,
+                'name'         => $avatar->name,
+                'url'          => $avatar->url,
+                'isImage'      => $avatar->is_image,
+                'delInputName' => 'delete_avatar',
+            ];
+        }
+
+        return [];
     }
 }

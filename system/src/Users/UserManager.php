@@ -105,6 +105,10 @@ class UserManager
             $fields['settings'] = array_merge($settings, $fields['settings']);
         }
 
+        if (array_key_exists('delete_avatar', $fields) && ! array_key_exists('avatar_id', $fields)) {
+            $fields['avatar_id'] = null;
+        }
+
         if (array_key_exists('avatar_id', $fields)) {
             $this->replaceAvatar($user, $fields);
         }

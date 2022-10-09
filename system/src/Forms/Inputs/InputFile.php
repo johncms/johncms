@@ -15,4 +15,13 @@ namespace Johncms\Forms\Inputs;
 class InputFile extends AbstractInput
 {
     public string $type = 'file';
+
+    /** @var array{id: int, name: string, url: string, isImage: bool, delInputName: string} */
+    public array $currentFile = [];
+
+    public function setCurrentFile(array $file): static
+    {
+        $this->currentFile = $file;
+        return $this;
+    }
 }

@@ -13,9 +13,11 @@ declare(strict_types=1);
 namespace Johncms\Files\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Johncms\Database\Eloquent\Casts\DateHuman;
+use Johncms\FileInfo;
 
 /**
  * Class File
@@ -53,8 +55,17 @@ class File extends Model
         'sha1',
     ];
 
-    public function getUrlAttribute(): string
+    public function url(): Attribute
     {
-        return Str::after(realpath(UPLOAD_PATH . $this->path), realpath(ROOT_PATH));
+        return Attribute::make(
+            get: fn() => Str::after(realpath(UPLOAD_PATH . $this->path), realpath(ROOT_PATH)),
+        );
+    }
+
+    protected function isImage(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => (new FileInfo($this->name))->isImage(),
+        );
     }
 }
