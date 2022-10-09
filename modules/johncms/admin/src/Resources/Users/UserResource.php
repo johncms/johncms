@@ -25,7 +25,7 @@ class UserResource extends AbstractResource
             'updatedAt'  => format_date($this->updated_at),
             'profileUrl' => $this->profile_url,
             'avatarUrl'  => $this->avatar_url,
-            'editUrl'    => '',
+            'editUrl'    => route('admin.editUser', ['id' => $this->id]),
             'deleteUrl'  => '',
         ];
     }

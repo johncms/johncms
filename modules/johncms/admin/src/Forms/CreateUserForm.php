@@ -12,8 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Admin\Forms;
 
+use Illuminate\Database\Eloquent\Builder;
 use Johncms\Forms\AbstractForm;
 use Johncms\Forms\Inputs\InputFile;
+use Johncms\Forms\Inputs\InputHidden;
 use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
@@ -24,9 +26,19 @@ use Laminas\Validator\Hostname;
 
 class CreateUserForm extends AbstractForm
 {
+    public function __construct(
+        private ?User $user = null
+    ) {
+        parent::__construct();
+    }
+
     protected function prepareFormFields(): array
     {
         $fields = [];
+
+        $fields['id'] = (new InputHidden())
+            ->setNameAndId('id')
+            ->setValue($this->getValue('id'));
 
         $fields['login'] = (new InputText())
             ->setLabel(__('Login'))
@@ -40,8 +52,13 @@ class CreateUserForm extends AbstractForm
                     'Regex'          => ['pattern' => '/^[A-Za-z0-9_]+$/'],
                     'StringLength'   => ['min' => 3, 'max' => 150],
                     'ModelNotExists' => [
-                        'model' => User::class,
-                        'field' => 'login',
+                        'model'   => User::class,
+                        'field'   => 'login',
+                        'exclude' => function ($query) {
+                            return $query->when($this->user?->id, function (Builder $query) {
+                                $query->where('login', '!=', '')->where('id', '!=', $this->user->id);
+                            });
+                        },
                     ],
                 ]
             );
@@ -53,7 +70,7 @@ class CreateUserForm extends AbstractForm
             ->setHelpText(__('Min. %s characters.', 6))
             ->setValidationRules(
                 [
-                    'NotEmpty',
+                    $this->user?->id ? 'Optional' : 'NotEmpty',
                     'StringLength' => ['min' => 6],
                 ]
             );
@@ -68,8 +85,13 @@ class CreateUserForm extends AbstractForm
 
         $emailValidator = [
             'ModelNotExists' => [
-                'model' => User::class,
-                'field' => 'email',
+                'model'   => User::class,
+                'field'   => 'email',
+                'exclude' => function ($query) {
+                    return $query->when($this->user?->id, function (Builder $query) {
+                        $query->where('email', '!=', '')->where('id', '!=', $this->user->id);
+                    });
+                },
             ],
         ];
 
@@ -108,6 +130,7 @@ class CreateUserForm extends AbstractForm
             ->setLabel(__('Name'))
             ->setPlaceholder(__('Enter Name'))
             ->setNameAndId('name')
+            ->setValue($this->getValue('name'))
             ->setValidationRules(
                 [
                     'StringLength' => ['max' => 250],
@@ -122,8 +145,13 @@ class CreateUserForm extends AbstractForm
             ->setValidationRules(
                 [
                     'ModelNotExists' => [
-                        'model' => User::class,
-                        'field' => 'phone',
+                        'model'   => User::class,
+                        'field'   => 'phone',
+                        'exclude' => function ($query) {
+                            return $query->when($this->user?->id, function (Builder $query) {
+                                $query->where('phone', '!=', '')->where('id', '!=', $this->user->id);
+                            });
+                        },
                     ],
                 ]
             );
@@ -193,5 +221,37 @@ class CreateUserForm extends AbstractForm
             ],
             ...$roles,
         ];
+    }
+
+    public function getValue(string $fieldName, mixed $default = null): mixed
+    {
+        if ($this->user) {
+            if ($fieldName === 'roles') {
+                return $this->user->roles->pluck('id')->toArray();
+            }
+            // Additional fields
+            if (str_contains($fieldName, 'additional_fields_')) {
+                $field = substr($fieldName, 18); // 18 - length of "additional_fields_"
+                return parent::getValue($fieldName, $this->user->additional_fields?->$field);
+            }
+            // Base fields
+            return parent::getValue($fieldName, $this->user->$fieldName);
+        }
+
+        return parent::getValue($fieldName, $default);
+    }
+
+    public function getRequestValues(): array
+    {
+        $requestValues = parent::getRequestValues();
+        $modifiedValues = [];
+        foreach ($requestValues as $key => $requestValue) {
+            if (str_contains($key, 'additional_fields_')) {
+                $modifiedValues['additional_fields'][substr($key, 18)] = $requestValue;
+            } else {
+                $modifiedValues[$key] = $requestValue;
+            }
+        }
+        return $modifiedValues;
     }
 }

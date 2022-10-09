@@ -109,6 +109,10 @@ class UserManager
             $this->replaceAvatar($user, $fields);
         }
 
+        if (array_key_exists('roles', $fields)) {
+            $user->roles()->sync($fields['roles']);
+        }
+
         $user->update($fields);
         return $user;
     }

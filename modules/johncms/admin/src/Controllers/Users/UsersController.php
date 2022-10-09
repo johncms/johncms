@@ -23,6 +23,7 @@ use Johncms\Http\Response\RedirectResponse;
 use Johncms\Users\Role;
 use Johncms\Users\User;
 use Johncms\Users\UserManager;
+use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
 class UsersController extends BaseAdminController
@@ -76,13 +77,29 @@ class UsersController extends BaseAdminController
         return $resource->toArray();
     }
 
-    public function create(CreateUserForm $createUserForm): string
+    public function create(): string
     {
+        $userForm = new CreateUserForm();
         $this->metaTagManager->setAll(__('Create User'));
         return $this->render->render('admin::users/create_user', [
             'data' => [
-                'formFields'       => $createUserForm->getFormFields(),
-                'validationErrors' => $createUserForm->getValidationErrors(),
+                'formFields'       => $userForm->getFormFields(),
+                'validationErrors' => $userForm->getValidationErrors(),
+                'storeUrl'         => route('admin.storeUser'),
+                'backUrl'          => route('admin.users'),
+            ],
+        ]);
+    }
+
+    public function edit(int $id): string
+    {
+        $user = User::query()->findOrFail($id);
+        $userForm = new CreateUserForm($user);
+        $this->metaTagManager->setAll(__('Edit User'));
+        return $this->render->render('admin::users/create_user', [
+            'data' => [
+                'formFields'       => $userForm->getFormFields(),
+                'validationErrors' => $userForm->getValidationErrors(),
                 'storeUrl'         => route('admin.storeUser'),
                 'backUrl'          => route('admin.users'),
             ],
@@ -92,13 +109,20 @@ class UsersController extends BaseAdminController
     /**
      * @throws Throwable
      */
-    public function store(UserManager $userManager, CreateUserForm $createUserForm, FileStorage $fileStorage): string | RedirectResponse
+    public function store(UserManager $userManager, FileStorage $fileStorage, Request $request): string | RedirectResponse
     {
+        $userId = (int) $request->getPost('id', 0);
+        $user = User::query()->findOrFail($userId);
+        $userForm = new CreateUserForm($user);
         try {
             // Validate the form
-            $createUserForm->validate();
-            $fields = $createUserForm->getRequestValues();
-            if (! empty($fields['avatar'])) {
+            $userForm->validate();
+            $fields = $userForm->getRequestValues();
+            if (
+                is_object($fields['avatar'])
+                && is_subclass_of($fields['avatar'], UploadedFileInterface::class)
+                && $fields['avatar']->getError() === UPLOAD_ERR_OK
+            ) {
                 try {
                     $fields['avatar_id'] = $fileStorage->saveUploadedFile($fields['avatar'], 'users/avatar')->id;
                     unset($fields['avatar']);
@@ -108,11 +132,22 @@ class UsersController extends BaseAdminController
 
             $fields['confirmed'] = true;
             $fields['email_confirmed'] = true;
-            $userManager->create($fields);
+
+            if ($userId) {
+                $userManager->update($userId, $fields);
+            } else {
+                $userManager->create($fields);
+            }
+
             return (new RedirectResponse(route('admin.users')));
         } catch (ValidationException $validationException) {
             // Redirect to the registration form if the form is invalid
-            return (new RedirectResponse(route('admin.createUser')))
+            if (! empty($userId)) {
+                $redirectUrl = route('admin.editUser', ['id' => $userId]);
+            } else {
+                $redirectUrl = route('admin.createUser');
+            }
+            return (new RedirectResponse($redirectUrl))
                 ->withPost()
                 ->withValidationErrors($validationException->getErrors());
         }
