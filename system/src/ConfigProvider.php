@@ -17,6 +17,7 @@ use JetBrains\PhpStorm\Pure;
 use Johncms\Console\Commands\ClearCacheCommand;
 use Johncms\Console\Commands\MakeMigrationCommand;
 use Johncms\Console\Commands\MigrateCommand;
+use Johncms\Database\DatabaseServiceProvider;
 use Johncms\Database\PdoFactory;
 use Johncms\Debug\DebugBar;
 use Johncms\Files\Filesystem;
@@ -27,6 +28,7 @@ use Johncms\Http\ResponseFactory;
 use Johncms\Http\Session;
 use Johncms\i18n\Translator;
 use Johncms\i18n\TranslatorServiceFactory;
+use Johncms\i18n\TranslatorServiceProvider;
 use Johncms\Log\ExceptionHandlers;
 use Johncms\Log\Logger;
 use Johncms\Media\MediaEmbed;
@@ -56,7 +58,10 @@ class ConfigProvider
         return [
             'dependencies'   => $this->getDependencies(),
             'middleware'     => $this->getMiddlewares(),
-            'providers'      => [],
+            'providers'      => [
+                DatabaseServiceProvider::class,
+                TranslatorServiceProvider::class,
+            ],
             'commands'       => $this->getCommands(),
             'auth_providers' => $this->getAuthProviders(),
             'bans'           => [

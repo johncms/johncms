@@ -12,18 +12,12 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Carbon\Carbon;
-use Gettext\TranslatorFunctions;
-use Illuminate\Database\Capsule\Manager;
-use Illuminate\Support\Facades\DB;
 use Johncms\Debug\DebugBar;
 use Johncms\Http\Request;
-use Johncms\i18n\Translator;
 use Johncms\Log\ExceptionHandlers;
 use Johncms\Router\RouterFactory;
 use Johncms\Users\User;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
-use PDO;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -39,17 +33,8 @@ class Application
 
     public function run(): Application
     {
-        $this->setupDatabase();
         $this->runModuleProviders();
-        $this->setupTranslator();
         return $this;
-    }
-
-    private function setupDatabase(): void
-    {
-        di(PDO::class);
-        $connection = Manager::connection();
-        DB::swap($connection);
     }
 
     private function runModuleProviders(): void
@@ -61,17 +46,6 @@ class Application
             $moduleProviders = $this->container->get($provider);
             $moduleProviders->register();
         }
-    }
-
-    private function setupTranslator(): void
-    {
-        // Register the system languages domain and folder
-        $translator = di(Translator::class);
-        $translator->addTranslationDomain('system', __DIR__ . '/../locale');
-        $translator->defaultDomain('system');
-        // Register language helpers
-        TranslatorFunctions::register($translator);
-        Carbon::setLocale($translator->getLocale());
     }
 
     /**
