@@ -44,7 +44,7 @@ $this->layout(
     <div class="user-row card shadow border-0 mb-2">
         <div class="card-body">
             <div class="d-flex align-items-start">
-                <div class="user-avatar mr-2 mr-md-4">
+                <div class="user-avatar me-2 me-md-4">
                     <div class="avatar-image rounded-circle overflow-hidden">
                         <img src="<?= $this->avatar($item['id']) ?>" class="img-fluid" alt=".">
                     </div>
@@ -53,9 +53,9 @@ $this->layout(
                 <div class="overflow-auto flex-grow-1">
                     <div class="user-name">
                         <?php if (! empty($item['id'])): ?>
-                            <a href="/profile/?user=<?= $item['id'] ?>" class="user-login mr-2"><?= $item['name'] ?></a>
+                            <a href="/profile/?user=<?= $item['id'] ?>" class="user-login me-2"><?= $item['name'] ?></a>
                         <?php else: ?>
-                            <a class="user-login mr-2"><?= $item['name'] ?></a>
+                            <a class="user-login me-2"><?= $item['name'] ?></a>
                         <?php endif; ?>
                     </div>
                     <div class="small">

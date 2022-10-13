@@ -4,7 +4,7 @@
     $query_log = $connection->getQueryLog();
     ?>
     <div class="position-absolute small text-nowrap" style="bottom: -13px; right: 0;">
-        <a href="#" data-toggle="modal" data-target=".query_log_modal">SQL: <?= count($query_log) ?></a>, <?= format_size(memory_get_usage()) ?>, <?= round(microtime(true) - START_TIME, 2) ?> sec.
+        <a href="#" data-bs-toggle="modal" data-bs-target=".query_log_modal">SQL: <?= count($query_log) ?></a>, <?= format_size(memory_get_usage()) ?>, <?= round(microtime(true) - START_TIME, 2) ?> sec.
     </div>
     <?php if (! empty($query_log)): ?>
         <div class="modal fade query_log_modal" tabindex="-1" role="dialog" aria-hidden="true">

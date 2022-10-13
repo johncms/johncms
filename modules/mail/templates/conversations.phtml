@@ -45,9 +45,9 @@ $this->layout(
                 <span class="user-status <?= $item['user_is_online'] ? 'online' : 'offline' ?> shadow"></span>
                 <?php if (! empty($item['user_rights_name'])): ?>
                     <div class="post-of-user"
-                         data-toggle="tooltip"
-                         data-placement="top"
-                         data-html="true"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         data-bs-html="true"
                          title="<?= $item['user_rights_name'] ?>">
                         <svg class="icon-post">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -57,8 +57,8 @@ $this->layout(
             </div>
             <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                 <div class="w-100">
-                    <a href="<?= $item['write_url'] ?>"><span class="user-name d-inline mr-2"><?= $item['name'] ?></span></a>
-                    <div class="post-meta d-inline mr-2">
+                    <a href="<?= $item['write_url'] ?>"><span class="user-name d-inline me-2"><?= $item['name'] ?></span></a>
+                    <div class="post-meta d-inline me-2">
                         <?= $item['count_message'] ?> <?= n__('message', 'messages', $item['count_message']) ?>,
                     </div>
                     <div class="post-meta d-inline text-nowrap">
@@ -67,7 +67,7 @@ $this->layout(
                 </div>
                 <?php if (! empty($item['status'])): ?>
                     <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                        <span class="font-weight-bold"><?= $item['status'] ?></span>
+                        <span class="fw-bold"><?= $item['status'] ?></span>
                     </div>
                 <?php endif ?>
             </div>
@@ -81,7 +81,7 @@ $this->layout(
                 </div>
                 <div class="d-flex flex-wrap">
                     <?php foreach ($item['buttons'] as $button): ?>
-                        <div class="ml-2">
+                        <div class="ms-2">
                             <a href="<?= $button['url'] ?>"><?= $button['name'] ?></a>
                         </div>
                     <?php endforeach; ?>

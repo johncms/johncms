@@ -36,11 +36,11 @@ $counters = $data['counters'] ?? [];
     </div>
     <div class="list-group-item">
         <a href="/album/?act=list" class="link"><?= __('Photo Album') ?></a>
-        <span class="counter badge badge-light badge-pill"><?= $counters['total_photo'] ?></span>
+        <span class="counter badge text-bg-light rounded-pill"><?= $counters['total_photo'] ?></span>
     </div>
     <div class="list-group-item">
         <a href="?act=guestbook" class="link"><?= __('Guestbook') ?></a>
-        <span class="counter badge badge-light badge-pill"><?= $user->comm_count ?></span>
+        <span class="counter badge text-bg-light rounded-pill"><?= $user->comm_count ?></span>
     </div>
 </div>
 
@@ -49,21 +49,21 @@ $counters = $data['counters'] ?? [];
 <div class="list-group with_counters">
     <div class="list-group-item">
         <a href="/mail/?act=input" class="link"><?= __('Received') ?></a>
-        <span class="counter badge badge-pill <?= ($counters['new_messages'] > 0 ? 'badge-danger' : 'badge-light') ?>">
+        <span class="counter badge rounded-pill <?= ($counters['new_messages'] > 0 ? 'badge-danger' : 'text-bg-light') ?>">
                     <?= $counters['inbox'] ?>
                     <?= ($counters['new_messages'] > 0 ? ' / +' . $counters['new_messages'] : '') ?>
                 </span>
     </div>
     <div class="list-group-item">
         <a href="/mail/?act=output" class="link"><?= __('Sent') ?></a>
-        <span class="counter badge badge-pill <?= ($counters['unread_sent'] > 0 ? 'badge-danger' : 'badge-light') ?>">
+        <span class="counter badge rounded-pill <?= ($counters['unread_sent'] > 0 ? 'badge-danger' : 'text-bg-light') ?>">
                     <?= $counters['outbox'] ?>
                     <?= ($counters['unread_sent'] > 0 ? ' / +' . $counters['unread_sent'] : '') ?>
                 </span>
     </div>
     <div class="list-group-item">
         <a href="/mail/?act=files" class="link"><?= __('Files') ?></a>
-        <span class="counter badge badge-pill badge-light"><?= $counters['files'] ?></span>
+        <span class="counter badge rounded-pill text-bg-light"><?= $counters['files'] ?></span>
     </div>
 </div>
 
@@ -72,11 +72,11 @@ $counters = $data['counters'] ?? [];
 <div class="list-group with_counters">
     <div class="list-group-item">
         <a href="/mail/" class="link"><?= __('Contacts') ?></a>
-        <span class="counter badge badge-pill badge-light"><?= $counters['contacts'] ?></span>
+        <span class="counter badge rounded-pill text-bg-light"><?= $counters['contacts'] ?></span>
     </div>
     <div class="list-group-item">
         <a href="/mail/?act=ignor" class="link"><?= __('Blocked') ?></a>
-        <span class="counter badge badge-pill badge-light"><?= $counters['blocked_contacts'] ?></span>
+        <span class="counter badge rounded-pill text-bg-light"><?= $counters['blocked_contacts'] ?></span>
     </div>
 </div>
 

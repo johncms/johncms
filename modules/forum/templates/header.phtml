@@ -23,23 +23,23 @@
 <?php endif; ?>
 
 <div class="border-top full-mobile-width border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
-    <div class="mr-auto d-flex pt-2 pb-2 flex-shrink-0">
+    <div class="me-auto d-flex pt-2 pb-2 flex-shrink-0">
         <?php if ($user->isValid()): ?>
             <?php if (! empty($unread_count)): ?>
-                <div class="d-flex align-items-center pr-2">
-                    <a href="?act=new" class="pr-2 d-flex">
+                <div class="d-flex align-items-center pe-2">
+                    <a href="?act=new" class="pe-2 d-flex">
                         <span class="d-none d-sm-inline"><?= __('Unread') ?></span>
                         <div class="icon_with_badge">
                             <svg class="icon d-sm-none">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
                             </svg>
-                            <span class="badge badge-pill badge-danger d-sm-none"><?= $unread_count ?></span>
-                            <span class="d-none d-sm-inline text-danger font-weight-bold pl-1">+<?= $unread_count ?></span>
+                            <span class="badge rounded-pill badge-danger d-sm-none"><?= $unread_count ?></span>
+                            <span class="d-none d-sm-inline text-danger fw-bold ps-1">+<?= $unread_count ?></span>
                         </div>
                     </a>
                 </div>
             <?php endif; ?>
-            <div class="pr-3">
+            <div class="pe-3">
                 <a href="?act=new&amp;do=period">
                     <span class="d-none d-sm-inline"><?= __('Show for Period') ?></span>
                     <svg class="icon d-sm-none">
@@ -48,7 +48,7 @@
                 </a>
             </div>
         <?php else: ?>
-            <div class="pr-3">
+            <div class="pe-3">
                 <a href="?act=new">
                     <span class="d-none d-sm-inline"><?= __('Last activity') ?></span>
                     <svg class="icon d-sm-none">
@@ -58,12 +58,12 @@
             </div>
         <?php endif; ?>
         <div class="d-flex align-items-center">
-            <a href="<?= $files_url ?>" class="pr-2">
+            <a href="<?= $files_url ?>" class="pe-2">
                 <span class="d-none d-sm-inline"><?= $files_name ?></span>
-                <span class="icon_with_badge mr-sm-3">
+                <span class="icon_with_badge me-sm-3">
                     <svg class="icon d-sm-none"><use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/></svg>
                     <?php if ($files_count > 0): ?>
-                        <span class="badge badge-pill badge-success"><?= $files_count ?></span>
+                        <span class="badge rounded-pill badge-success"><?= $files_count ?></span>
                     <?php endif ?>
                 </span>
             </a>
@@ -71,7 +71,7 @@
     </div>
     <form class="form-inline search-in-nav mb-0" action="?act=search" method="post">
         <div class="input-with-inner-btn">
-            <input class="form-control pr-5 border-radius-12" name="search" type="search" minlength="4" placeholder="<?= __('Search') ?>">
+            <input class="form-control pe-5 border-radius-12" name="search" type="search" minlength="4" placeholder="<?= __('Search') ?>">
             <button class="btn icon-button" type="submit" name="submit" value="1">
                 <svg class="icon">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#search"/>

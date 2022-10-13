@@ -36,12 +36,12 @@ $this->layout(
             <div class="card-body">
                 <a href="?id=<?= $premod['id'] ?>" class="card-title h3"><?= $premod['name'] ?></a>
                 <div class="text-muted small d-flex align-items-center flex-wrap mt-1">
-                    <div class="mr-2">
+                    <div class="me-2">
                         <span><?= __('Author:') ?></span><?= $premod['who'] ?>
                     </div>
                 </div>
                 <div class="mt-2">
-                    <a href="?act=premod&amp;yes&amp;id=<?= $premod['id'] ?>" class="pr-2"><?= __('Approve') ?></a>
+                    <a href="?act=premod&amp;yes&amp;id=<?= $premod['id'] ?>" class="pe-2"><?= __('Approve') ?></a>
                     <a href="?act=del&amp;type=article&amp;id=<?= $premod['id'] ?>"><?= __('Delete') ?></a>
                 </div>
             </div>

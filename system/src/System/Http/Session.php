@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\System\Http;
 
+use Illuminate\Support\Arr;
+
 class Session
 {
     protected const FLASH_PREFIX = '_flash_';
@@ -34,5 +36,40 @@ class Session
         $value = $_SESSION[self::FLASH_PREFIX . $key] ?? null;
         unset($_SESSION[self::FLASH_PREFIX . $key]);
         return $value;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed|null $default
+     * @return mixed
+     * @psalm-suppress NullReference
+     */
+    public function get(string $key, $default = null)
+    {
+        return Arr::get($_SESSION, $key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @psalm-suppress NullReference
+     */
+    public function set(string $key, $value): void
+    {
+        Arr::set($_SESSION, $key, $value);
+    }
+
+    public function has(string $key): bool
+    {
+        return Arr::has($_SESSION, $key);
+    }
+
+    /**
+     * @param array|string $key
+     * @psalm-suppress NullReference
+     */
+    public function remove($key): void
+    {
+        Arr::forget($_SESSION, $key);
     }
 }

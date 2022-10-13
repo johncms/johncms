@@ -17,12 +17,13 @@ $album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
+$theme = di(\Johncms\System\View\Theme::class);
 
 ?>
 <!-- Меню -->
 <div class="flex-grow-1">
     <?php if (! empty($ads_array['before_menu'])): ?>
-        <div class="pl-4 pr-3 pt-3">
+        <div class="ps-4 pe-3 pt-3">
             <?php foreach ($ads_array['before_menu'] as $item): ?>
                 <div><?= $item ?></div>
             <?php endforeach; ?>
@@ -36,7 +37,7 @@ $ads_array = $ads->getAds();
                 </svg>
                 <span class="flex-grow-1"><?= d__('system', 'News archive') ?></span>
                 <?php if ($news_counters['new'] > 0): ?>
-                    <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($news_counters['new']) ?></span>
+                    <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($news_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
@@ -48,7 +49,7 @@ $ads_array = $ads->getAds();
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Forum') ?></span>
                     <?php if ($forum_counters['new_messages'] > 0): ?>
-                        <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($forum_counters['new_messages']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($forum_counters['new_messages']) ?></span>
                     <?php endif; ?>
                 </a>
             </li>
@@ -61,7 +62,7 @@ $ads_array = $ads->getAds();
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Guestbook') ?></span>
                     <?php if ($guestbook_counters['guestbook'] > 0): ?>
-                        <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($guestbook_counters['guestbook']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($guestbook_counters['guestbook']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
@@ -74,7 +75,7 @@ $ads_array = $ads->getAds();
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Downloads') ?></span>
                     <?php if ($downloads_counters['new'] > 0): ?>
-                        <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($downloads_counters['new']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($downloads_counters['new']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
@@ -87,7 +88,7 @@ $ads_array = $ads->getAds();
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Library') ?></span>
                     <?php if ($library_counters['new'] > 0): ?>
-                        <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($library_counters['new']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($library_counters['new']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
@@ -99,7 +100,7 @@ $ads_array = $ads->getAds();
                 </svg>
                 <span class="flex-grow-1"><?= d__('system', 'Users') ?></span>
                 <?php if ($users_counters['new'] > 0): ?>
-                    <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($users_counters['new']) ?></span>
+                    <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($users_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
@@ -110,7 +111,7 @@ $ads_array = $ads->getAds();
                 </svg>
                 <span class="flex-grow-1"><?= d__('system', 'Photo Albums') ?></span>
                 <?php if ($album_counters['new'] > 0): ?>
-                    <span class="badge badge-pill badge-danger">+ <?= $tools->formatNumber($album_counters['new']) ?></span>
+                    <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($album_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
@@ -141,7 +142,7 @@ $ads_array = $ads->getAds();
                     </svg>
                     <span class="flex-grow-1 text-danger"><?= d__('system', 'Admin Chat') ?></span>
                     <?php if ($guestbook_counters['admin_club'] > 0): ?>
-                        <span class="badge badge-pill badge-danger">
+                        <span class="badge rounded-pill bg-danger">
                                 <?= $tools->formatNumber($guestbook_counters['admin_club']) ?>
                             </span>
                     <?php endif ?>
@@ -153,7 +154,7 @@ $ads_array = $ads->getAds();
 </div>
 <div class="sidebar__footer">
     <?php if (! empty($ads_array['after_menu'])): ?>
-        <div class="pr-3 pt-2 mb-2">
+        <div class="pe-3 pt-2 mb-2">
             <?php foreach ($ads_array['after_menu'] as $item): ?>
                 <div><?= $item ?></div>
             <?php endforeach; ?>
@@ -168,12 +169,22 @@ $ads_array = $ads->getAds();
         </a>
     </div>
 
-    <?php if (count($config['lng_list']) > 1): ?>
-        <div class="mt-1">
-            <button class="btn btn-link pl-0" data-url="/language/" data-toggle="modal" data-target=".ajax_modal">
-                <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
-                <?= $config['lng_list'][$locale]['name'] ?>
-            </button>
+    <div class="d-flex justify-content-between align-items-center">
+        <?php if (count($config['lng_list']) > 1): ?>
+            <div class="mt-1">
+                <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
+                    <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($locale) . '.svg') ?>" alt="<?= $locale ?>">
+                    <?= $config['lng_list'][$locale]['name'] ?>
+                </button>
+            </div>
+        <?php endif ?>
+        <div>
+            <a href="?setTheme=<?= $theme->getCurrentTheme() === 'dark' ? 'light' : 'dark' ?>">
+                <svg class="icon">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#<?= $theme->getCurrentTheme() === 'dark' ? 'sun' : 'moon' ?>"/>
+                </svg>
+            </a>
         </div>
-    <?php endif ?>
+    </div>
+
 </div>

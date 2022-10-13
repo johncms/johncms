@@ -10,14 +10,14 @@ $this->layout('system::layout/default', ['title' => d__('system', 'Welcome')])
 
 
 <div class="jumbotron shadow bg-white mt-3">
-    <h1 class="display-4 font-weight-bold">EXAMPLE</h1>
+    <h1 class="display-4 fw-bold">EXAMPLE</h1>
     <p class="lead">
         Вы смотрите тему оформления "example"
     </p>
 </div>
 
 
-<h1 class="font-weight-bold mt-5">Как писать свои темы?</h1>
+<h1 class="fw-bold mt-5">Как писать свои темы?</h1>
 
 <p>
     Данное руководство предназначено для верстальщиков / дизайнеров, которые хотят создать свою собственную тему оформления.<br>
@@ -37,7 +37,7 @@ $this->layout('system::layout/default', ['title' => d__('system', 'Welcome')])
     </p>
 </div>
 
-<h2 class="font-weight-bold mt-5">Общие понятия</h2>
+<h2 class="fw-bold mt-5">Общие понятия</h2>
 <ul>
     <li>
         <strong>Темой</strong> будет считаться любая папка, созданная Вами в <code>/themes</code>.<br>
@@ -56,8 +56,8 @@ $this->layout('system::layout/default', ['title' => d__('system', 'Welcome')])
     </li>
 </ul>
 
-<h2 class="font-weight-bold mt-4">Создаем свою тему</h2>
-<div class="ml-4">
+<h2 class="fw-bold mt-4">Создаем свою тему</h2>
+<div class="ms-4">
     <p>
         Учиться лучше всего на практике, поэтому давайте создадим свою первую несложную тему оформления.
         Начнем с задачи, которая изначально возникнет практически у всех, кто установит себе JohnCMS: мы будем менять Главную страницу сайта и логотип.
@@ -96,14 +96,14 @@ $this->layout('system::layout/default', ['title' => d__('system', 'Welcome')])
             Теперь для нашего сайта применена тема "lesson" и все, что мы будем в ней делать, сразу же будет видно.
         </li>
         <li>
-            <span class="badge badge-success">На заметку</span> <span class="badge badge-secondary">Откуда?</span>
+            <span class="badge badge-success">На заметку</span> <span class="badge text-bg-secondary">Откуда?</span>
             Чтоб поменять Главную страницу сайта, мы должны отредактировать ее шаблон, который находится в модуле <code>/modules/homepage</code>.<br>
             В папке с модулем есть папка <code>/templates</code> а в ней лежит файл <code>index.phtml</code> - это и есть Главная страница, этот файл нам и нужен.<br>
             Из предупреждения выше мы знаем, что <u>менять шаблон в самом модуле нельзя</u>, поэтому мы <u>должны в начале скопировать файл шаблона в свою тему</u>, а уж потом его менять.
             Не переместить, а именно скопировать, оригинал файла должен остаться на своем месте
         </li>
         <li>
-            <span class="badge badge-success">На заметку</span> <span class="badge badge-secondary">Куда?</span>
+            <span class="badge badge-success">На заметку</span> <span class="badge text-bg-secondary">Куда?</span>
             <code>/themes/lesson</code> - это папка с нашей темой, которую мы создали выше.
             Мы должны скопировать сюда файл <code>index.phtml</code> из модуля homepage.
             Для шаблонов в папке с нашей темой должна быть подпапка <code>templates</code>.<br>

@@ -30,14 +30,14 @@ $this->layout(
 <?php endif; ?>
 <div class="mb-2 mt-n2">
     <?php if (! empty($new)): ?>
-        <a href="?act=new" class="btn btn-outline-primary btn-sm mr-1 mt-1">
-            <?= __('New Articles') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $new ?></span>
+        <a href="?act=new" class="btn btn-outline-primary btn-sm me-1 mt-1">
+            <?= __('New Articles') ?> <span class="badge text-bg-secondary rounded-pill ms-1"><?= $new ?></span>
         </a>
     <?php endif; ?>
-    <a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
-    <?php /* <a href="?act=tagcloud" class="btn btn-outline-primary btn-sm mr-1"><?= __('Tag Cloud') ?></a> */ ?>
-    <a href="?act=top" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Rating articles') ?></a>
-    <a href="?act=lastcom" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Latest comments') ?></a>
+    <a href="?act=search" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Search') ?></a>
+    <?php /* <a href="?act=tagcloud" class="btn btn-outline-primary btn-sm me-1"><?= __('Tag Cloud') ?></a> */ ?>
+    <a href="?act=top" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Rating articles') ?></a>
+    <a href="?act=lastcom" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Latest comments') ?></a>
 </div>
 
 <?php if ($total) : ?>
@@ -47,7 +47,7 @@ $this->layout(
             <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
                 <div class="d-flex align-items-center">
                     <a href="?do=dir&amp;id=<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
-                    <span class="badge badge-pill badge-light border ml-3"><?= $main['libCounter'] ?></span>
+                    <span class="badge rounded-pill text-bg-light border ms-3"><?= $main['libCounter'] ?></span>
                 </div>
             </div>
             <?php if (! empty($main['description'])): ?>

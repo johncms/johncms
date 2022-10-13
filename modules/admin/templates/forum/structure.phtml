@@ -37,10 +37,10 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     <div class="new_post-item without_avatar">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <span class="text-muted mr-1">[<?= $item['sort'] ?>]</span>
+                <span class="text-muted me-1">[<?= $item['sort'] ?>]</span>
                 <a href="<?= $item['list_url'] ?>"><?= $item['name'] ?></a>
                 <?php if (! empty($item['counter'])): ?>
-                    <span class="badge badge-pill badge-light border ml-2"><?= $item['counter'] ?></span>
+                    <span class="badge rounded-pill text-bg-light border ms-2"><?= $item['counter'] ?></span>
                 <?php endif; ?>
             </div>
             <div>
@@ -52,7 +52,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
         <?php endif; ?>
         <div class="mt-2">
             <a href="<?= $item['edit_url'] ?>" class=""><?= __('Edit') ?></a>
-            <a href="<?= $item['delete_url'] ?>" class="text-danger ml-2"><?= __('Delete') ?></a>
+            <a href="<?= $item['delete_url'] ?>" class="text-danger ms-2"><?= __('Delete') ?></a>
         </div>
     </div>
 <?php endforeach; ?>

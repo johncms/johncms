@@ -26,7 +26,7 @@ $this->layout(
     <div class="border-top border-bottom mb-3">
         <div class="py-3">
             <a href="<?= $new_url ?>"><?= __('New Files') ?></a>
-            <span class="badge badge-pill badge-danger"><?= $new_count ?></span>
+            <span class="badge rounded-pill badge-danger"><?= $new_count ?></span>
         </div>
     </div>
 <?php endif; ?>
@@ -56,9 +56,9 @@ $this->layout(
                     <span class="user-status <?= (time() <= $file['lastdate'] + 300) ? 'online' : 'offline' ?> shadow"></span>
                     <?php if (! empty($file['user_rights_name'])): ?>
                         <div class="post-of-user"
-                             data-toggle="tooltip"
-                             data-placement="top"
-                             data-html="true"
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
                              title="<?= $file['user_rights_name'] ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -69,21 +69,21 @@ $this->layout(
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
                         <?php if (! empty($file['user_profile_link'])): ?>
-                            <a href="<?= $file['user_profile_link'] ?>"><span class="user-name d-inline mr-2"><?= $file['user_name'] ?></span></a>
+                            <a href="<?= $file['user_profile_link'] ?>"><span class="user-name d-inline me-2"><?= $file['user_name'] ?></span></a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= $file['user_name'] ?></div>
+                            <div class="user-name d-inline me-2"><?= $file['user_name'] ?></div>
                         <?php endif; ?>
                         <a href="<?= $file['post_url'] ?? '' ?>"
-                           class="post-meta d-inline mr-2"
-                           data-toggle="tooltip"
-                           data-placement="top"
+                           class="post-meta d-inline me-2"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="top"
                            title="<?= __('Link to post') ?>">
                             <?= $file['post_time'] ?>
                         </a>
                     </div>
                     <?php if (! empty($file['status'])): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="font-weight-bold"><?= $file['status'] ?></span>
+                            <span class="fw-bold"><?= $file['status'] ?></span>
                         </div>
                     <?php endif ?>
                 </div>
@@ -93,7 +93,7 @@ $this->layout(
             </div>
             <div class="pt-1 pb-1">
                 <div class="d-flex flex-wrap pt-2">
-                    <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                    <div class="attached-file pe-3 d-flex flex-column justify-content-between">
                         <div class="d-flex justify-content-center align-items-center">
                             <?php if (! empty($file['file_preview'])): ?>
                                 <a href="<?= $file['file_url'] ?>" class="image-preview" data-source="<?= $file['file_url'] ?>" title="<?= $file['filename'] ?>">
@@ -109,7 +109,7 @@ $this->layout(
                         </div>
                         <div class="pt-1">
                             <div class="text-muted small d-flex flex-wrap justify-content-center">
-                                <div class="text-nowrap pr-1">
+                                <div class="text-nowrap pe-1">
                                     <svg class="icon downloads-icon">
                                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
                                     </svg>
@@ -126,12 +126,12 @@ $this->layout(
             </div>
             <?php if (! empty($file['post_url']) || ! empty($file['topic_url'])): ?>
                 <div class="post-footer d-flex">
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         <?php if (! empty($file['post_url'])): ?>
-                            <a href="<?= $file['post_url'] ?>" class="ml-2"><?= __('To message') ?></a>
+                            <a href="<?= $file['post_url'] ?>" class="ms-2"><?= __('To message') ?></a>
                         <?php endif; ?>
                         <?php if (! empty($file['topic_url'])): ?>
-                            <a href="<?= $file['topic_url'] ?>" class="ml-2"><?= __('To topic') ?></a>
+                            <a href="<?= $file['topic_url'] ?>" class="ms-2"><?= __('To topic') ?></a>
                         <?php endif; ?>
                     </div>
                 </div>

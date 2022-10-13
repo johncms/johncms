@@ -36,8 +36,8 @@ $this->layout(
     <div class="forum-section mb-2">
         <div class="section-header d-flex justify-content-between <?= (empty($album['description']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
-                <a class="user-login mr-2" href="<?= $album['album_url'] ?>"><?= $album['name'] ?></a>
-                <span class="badge badge-pill badge-light border ml-3"><?= $album['count_photos'] ?></span>
+                <a class="user-login me-2" href="<?= $album['album_url'] ?>"><?= $album['name'] ?></a>
+                <span class="badge rounded-pill text-bg-light border ms-3"><?= $album['count_photos'] ?></span>
             </div>
         </div>
         <?php if (! empty($album['description'])): ?>
@@ -47,10 +47,10 @@ $this->layout(
         <?php endif; ?>
         <?php if (! empty($album['has_edit'])): ?>
             <div class="pt-1 small">
-                <a href="<?= $album['up_url'] ?>" class="mr-2"><?= __('Up') ?></a>
-                <a href="<?= $album['down_url'] ?>" class="mr-2"><?= __('Down') ?></a>
-                <a href="<?= $album['edit_url'] ?>" class="mr-2"><?= __('Edit') ?></a>
-                <a href="<?= $album['delete_url'] ?>" class="mr-2"><?= __('Delete') ?></a>
+                <a href="<?= $album['up_url'] ?>" class="me-2"><?= __('Up') ?></a>
+                <a href="<?= $album['down_url'] ?>" class="me-2"><?= __('Down') ?></a>
+                <a href="<?= $album['edit_url'] ?>" class="me-2"><?= __('Edit') ?></a>
+                <a href="<?= $album['delete_url'] ?>" class="me-2"><?= __('Delete') ?></a>
             </div>
         <?php endif; ?>
     </div>

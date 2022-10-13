@@ -29,7 +29,7 @@ $this->layout(
 <?php elseif (! empty($data['notifications'])): ?>
     <div class="small-full-width list-items overflow-hidden border-top">
         <?php foreach ($data['notifications'] as $notification): ?>
-            <a href="<?= $notification['url'] ?>" class="list-item d-flex border-bottom pl-lg-0">
+            <a href="<?= $notification['url'] ?>" class="list-item d-flex border-bottom ps-lg-0">
                 <div class="flex-grow-1 item-content">
                     <div class="item-name"><?= $notification['name'] ?></div>
                     <?php if (! empty($notification['description'])): ?>
@@ -37,8 +37,8 @@ $this->layout(
                     <?php endif; ?>
                 </div>
                 <?php if (! empty($notification['counter'])): ?>
-                    <div class="icon-right d-flex align-items-center pr-0">
-                        <div class="badge badge-danger badge-pill"><?= $notification['counter'] ?></div>
+                    <div class="icon-right d-flex align-items-center pe-0">
+                        <div class="badge badge-danger rounded-pill"><?= $notification['counter'] ?></div>
                     </div>
                 <?php endif; ?>
                 <div class="icon-right">

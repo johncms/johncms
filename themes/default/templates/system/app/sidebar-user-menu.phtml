@@ -9,13 +9,13 @@
 <!-- Пользователь -->
 <div class="accordion sidebar__user" id="accordion">
     <div class="border-bottom"></div>
-    <a class="nav-link user__link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false">
         <div class="sidebar_user_avatar d-flex align-items-center">
             <div class="position-relative">
                 <?php if (! empty($notifications['all'])): ?>
-                    <div class="sidebar__notifications badge badge-danger badge-pill"><?= $notifications['all'] ?></div>
+                    <div class="sidebar__notifications badge bg-danger rounded-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
-                <div class="user_photo border rounded-circle mr-2 overflow-hidden">
+                <div class="user_photo border rounded-circle me-2 overflow-hidden">
                     <img src="<?= $this->avatar($user->id ?? 0) ?>" class="img-fluid" alt=".">
                 </div>
             </div>
@@ -30,7 +30,7 @@
         </div>
     </a>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-        <ul class="nav nav__vertical pl-2 pt-0">
+        <ul class="nav nav__vertical ps-2 pt-0">
             <!-- Выпадающее меню для пользователей -->
             <?php if ($user->isValid()): ?>
                 <li>
@@ -40,7 +40,7 @@
                         </svg>
                         <span class="flex-grow-1 text-info"><?= d__('system', 'Notifications') ?></span>
                         <?php if (! empty($notifications['all'])): ?>
-                            <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
+                            <span class="badge bg-danger rounded-pill"><?= $notifications['all'] ?></span>
                             </span>
                         <?php endif ?>
                     </a>
@@ -78,7 +78,7 @@
                         </svg>
                         <span class="flex-grow-1 text-info"><?= d__('system', 'Registration') ?></span>
                         <?php if (! empty($notifications['all'])): ?>
-                            <span class="badge badge-danger badge-pill"><?= $notifications['all'] ?></span>
+                            <span class="badge bg-danger rounded-pill"><?= $notifications['all'] ?></span>
                             </span>
                         <?php endif ?>
                     </a>

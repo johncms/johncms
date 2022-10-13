@@ -22,7 +22,7 @@ ij_continuation_indent_size = 4
 ij_php_align_assignments = false
 ij_php_align_class_constants = false
 ij_php_align_group_field_declarations = false
-ij_php_align_inline_comments = false
+ij_php_align_inline_comments = true
 ij_php_align_key_value_pairs = true
 ij_php_align_multiline_array_initializer_expression = false
 ij_php_align_multiline_binary_operation = false
@@ -32,7 +32,7 @@ ij_php_align_multiline_for = true
 ij_php_align_multiline_parameters = false
 ij_php_align_multiline_parameters_in_calls = true
 ij_php_align_multiline_ternary_operation = false
-ij_php_align_phpdoc_comments = false
+ij_php_align_phpdoc_comments = true
 ij_php_align_phpdoc_param_names = false
 ij_php_anonymous_brace_style = end_of_line
 ij_php_api_weight = 28
@@ -194,6 +194,7 @@ ij_php_spaces_around_relational_operators = true
 ij_php_spaces_around_shift_operators = true
 ij_php_spaces_around_unary_operator = false
 ij_php_spaces_around_var_within_brackets = false
+ij_php_spaces_around_pipe_in_union_type = true
 ij_php_spaces_within_array_initializer_braces = false
 ij_php_spaces_within_brackets = false
 ij_php_spaces_within_catch_parentheses = false
@@ -220,6 +221,10 @@ ij_php_variable_naming_style = mixed
 ij_php_version_weight = 28
 ij_php_while_brace_force = always
 ij_php_while_on_new_line = false
+ij_php_parameters_attributes_wrap = normal
+ij_php_attributes_wrap = split_into_lines
 
-[{*.yml,*.yaml}]
+[{*.yml,*.yaml,*.vue,*.ts,*.js,*.css,*.scss,*.json}]
 indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 2

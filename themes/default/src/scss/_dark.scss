@@ -1,0 +1,80 @@
+.content-container {
+  background: rgba(33, 33, 33, 0.98);
+}
+
+.sidebar a {
+  color: #fff;
+}
+
+.list-group {
+  --bs-list-group-bg: #2c2c2c;
+  --bs-list-group-color: #fff;
+}
+
+.post-item {
+  background: #2c2c2c;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.forum-section {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+hr {
+  border-color: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+}
+
+
+// Alerts
+.alert-info {
+  --bs-alert-color: #738ca5;
+  --bs-alert-bg: #1c2d40;
+  --bs-alert-border-color: #21364c;
+}
+
+.alert-danger {
+  --bs-alert-color: #ee8277;
+  --bs-alert-bg: #74261e;
+  --bs-alert-border-color: #8b2e24;
+}
+
+.alert-warning {
+  --bs-alert-color: #f7ba59;
+  --bs-alert-bg: #7a4e09;
+  --bs-alert-border-color: #925e0b;
+}
+
+
+// Modals
+.modal-content {
+  --bs-modal-bg: rgb(33, 33, 33);
+}
+
+.dropdown-menu {
+  --bs-dropdown-bg: rgb(52, 52, 52);
+  --bs-dropdown-link-color: #fff;
+  --bs-dropdown-link-hover-bg: #515151;
+  --bs-dropdown-link-hover-color: #fff;
+}
+
+// Inputs
+label {
+  color: #cecece;
+}
+
+.form-control {
+  background: #222;
+  border: 1px solid #515151;
+  color: #b1b1b1;
+}
+
+
+// User
+.post-user .user-name {
+  color: #fff;
+}
+
+.section-header .section-name {
+  color: #fff;
+}

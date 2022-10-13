@@ -148,22 +148,22 @@ $this->layout('system::layout/default');
 
 <?php if ($first_post): ?>
     <div class="post-item mb-2 first-post" id="first_post_block">
-        <div class="section-header post-header collapsed" data-toggle="collapse" data-target="#first_post" aria-expanded="false" aria-controls="first_post">
+        <div class="section-header post-header collapsed" data-bs-toggle="collapse" data-bs-target="#first_post" aria-expanded="false" aria-controls="first_post">
             <div class="d-flex align-items-center">
-                <div class="topic-icons d-flex align-items-center mr-2">
+                <div class="topic-icons d-flex align-items-center me-2">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pin"/>
                     </svg>
                 </div>
                 <?php if (! empty($first_post->user_profile_link)): ?>
-                    <a href="<?= $first_post->user_profile_link ?>" class="user-login mr-2"><?= $first_post->user_data->name ?></a>
+                    <a href="<?= $first_post->user_profile_link ?>" class="user-login me-2"><?= $first_post->user_data->name ?></a>
                 <?php else: ?>
-                    <a class="user-login mr-2"><?= $first_post->user_data->name ?></a>
+                    <a class="user-login me-2"><?= $first_post->user_data->name ?></a>
                 <?php endif; ?>
                 <span class="post-date"><?= $first_post->post_time ?></span>
             </div>
             <?php if (! empty($first_post->post_preview)): ?>
-                <div class="toggle d-flex align-items-center pr-2">
+                <div class="toggle d-flex align-items-center pe-2">
                     <svg class="icon icon-chevron-bottom text-dark-brown">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
                     </svg>
@@ -210,9 +210,9 @@ $this->layout('system::layout/default');
                     <span class="user-status <?= $message->user_data->is_online ? 'online' : 'offline' ?> shadow"></span>
                     <?php if (! empty($message->user_data->rights_name)): ?>
                         <div class="post-of-user"
-                             data-toggle="tooltip"
-                             data-placement="top"
-                             data-html="true"
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
                              title="<?= $message->user_data->rights_name ?>">
                             <svg class="icon-post">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?4#check"/>
@@ -223,38 +223,38 @@ $this->layout('system::layout/default');
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
                         <?php if (! empty($message->user_profile_link)): ?>
-                            <a href="<?= $message->user_profile_link ?>"><span class="user-name d-inline mr-2"><?= $message->user_data->name ?></span></a>
+                            <a href="<?= $message->user_profile_link ?>"><span class="user-name d-inline me-2"><?= $message->user_data->name ?></span></a>
                         <?php else: ?>
-                            <div class="user-name d-inline mr-2"><?= $message->user_name ?></div>
+                            <div class="user-name d-inline me-2"><?= $message->user_name ?></div>
                         <?php endif; ?>
                         <a href="<?= $message->url ?>"
-                           class="post-meta d-inline mr-2"
-                           data-toggle="tooltip"
-                           data-placement="top"
+                           class="post-meta d-inline me-2"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="top"
                            title="<?= __('Link to post') ?>">
                             <?= $message->post_time ?>
                         </a>
                         <?php if (! empty($message->edit_count)): ?>
-                            <div class="post-meta d-inline mr-2"
-                                 data-toggle="tooltip"
-                                 data-placement="top"
-                                 data-html="true"
+                            <div class="post-meta d-inline me-2"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-html="true"
                                  title="<?= __('Edited:') ?> <?= $message->editor_name ?> <br> (<?= $message->edit_time ?>) [<?= $message->edit_count ?>]">
                                 <?= __('Edited') ?>
                             </div>
                         <?php endif; ?>
                         <?php if ($message->can_edit): ?>
                             <?php if (! empty($message->deleted)): ?>
-                                <div class="d-inline mr-2 badge badge-danger"
-                                     data-toggle="tooltip"
-                                     data-placement="top"
+                                <div class="d-inline me-2 badge badge-danger"
+                                     data-bs-toggle="tooltip"
+                                     data-bs-placement="top"
                                      title="<?= __('Post deleted:') ?> <?= $message->deleted_by ?>">
                                     <?= __('Deleted') ?>
                                 </div>
                             <?php elseif (! empty($message->deleted_by)): ?>
-                                <div class="post-meta d-inline mr-2"
-                                     data-toggle="tooltip"
-                                     data-placement="top"
+                                <div class="post-meta d-inline me-2"
+                                     data-bs-toggle="tooltip"
+                                     data-bs-placement="top"
                                      title="<?= __('Post restored by:') ?> <?= $message->deleted_by ?>">
                                     <?= __('Restored') ?>
                                 </div>
@@ -263,7 +263,7 @@ $this->layout('system::layout/default');
                     </div>
                     <?php if (! empty($message->user_data->status)): ?>
                         <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                            <span class="font-weight-bold"><?= $message->user_data->status ?></span>
+                            <span class="fw-bold"><?= $message->user_data->status ?></span>
                         </div>
                     <?php endif ?>
                 </div>
@@ -281,10 +281,10 @@ $this->layout('system::layout/default');
             <?php if ($message->files->count() > 0): ?>
                 <!-- Files block -->
                 <div class="pb-1">
-                    <div class="font-weight-bold pb-1"><?= __('Attached files') ?>:</div>
+                    <div class="fw-bold pb-1"><?= __('Attached files') ?>:</div>
                     <div class="d-flex flex-wrap image-gallery">
                         <?php foreach ($message->files as $file): ?>
-                            <div class="attached-file pr-3 d-flex flex-column justify-content-between">
+                            <div class="attached-file pe-3 d-flex flex-column justify-content-between">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <?php if (! empty($file->file_preview)): ?>
                                         <a href="<?= $file->file_url ?>" class="gallery-item" data-source="<?= $file->file_url ?>" title="<?= $file->filename ?>">
@@ -300,7 +300,7 @@ $this->layout('system::layout/default');
                                 </div>
                                 <div class="pt-1">
                                     <div class="text-muted small d-flex flex-wrap justify-content-center">
-                                        <div class="text-nowrap pr-1">
+                                        <div class="text-nowrap pe-1">
                                             <svg class="icon downloads-icon">
                                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
                                             </svg>
@@ -326,7 +326,7 @@ $this->layout('system::layout/default');
                 <div class="overflow-hidden">
                     <?php if ($user->rights): ?>
                         <div class="post-meta d-flex">
-                            <div class="user-ip mr-2">
+                            <div class="user-ip me-2">
                                 <a href="<?= $message->user_data->search_ip_url ?>"><?= $message->user_data->ip ?></a>
                                 <?php if (! empty($message->user_data->ip_via_proxy)): ?>
                                     / <a href="<?= $message->user_data->search_ip_via_proxy_url ?>"><?= $message->user_data->ip_via_proxy ?></a>
@@ -340,27 +340,27 @@ $this->layout('system::layout/default');
                 </div>
                 <div class="d-flex">
                     <?php if (! empty($message->reply_url)): ?>
-                        <div class="ml-3">
+                        <div class="ms-3">
                             <a href="<?= $message->reply_url ?>"><?= __('Reply') ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if (! empty($message->quote_url)): ?>
-                        <div class="ml-3">
+                        <div class="ms-3">
                             <a href="<?= $message->quote_url ?>"><?= __('Quote') ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if ($message->can_edit): ?>
-                        <div class="dropdown ml-3">
-                            <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown ms-3">
+                            <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon text-primary">
                                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?1#more_horizontal"/>
                                 </svg>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="<?= $message->edit_url ?>" class="ml-2"><?= __('Edit') ?></a>
-                                <a class="dropdown-item" href="<?= $message->delete_url ?>" class="ml-2"><?= __('Delete') ?></a>
+                                <a class="dropdown-item" href="<?= $message->edit_url ?>" class="ms-2"><?= __('Edit') ?></a>
+                                <a class="dropdown-item" href="<?= $message->delete_url ?>" class="ms-2"><?= __('Delete') ?></a>
                                 <?php if (! empty($message->restore_url)): ?>
-                                    <a class="dropdown-item" href="<?= $message->restore_url ?>" class="ml-2"><?= __('Restore') ?></a>
+                                    <a class="dropdown-item" href="<?= $message->restore_url ?>" class="ms-2"><?= __('Restore') ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -372,10 +372,10 @@ $this->layout('system::layout/default');
 
     <?php if ($user->rights === 3 || $user->rights >= 6): ?>
     <div class="d-flex align-items-center mt-3 mb-3">
-        <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm mr-1"><?= __('Delete selected') ?></button>
+        <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm me-1"><?= __('Delete selected') ?></button>
 
         <div class="dropdown">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?= __('Actions with topic') ?>
             </button>
             <div class="dropdown-menu" aria-labelledby="actions">

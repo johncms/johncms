@@ -1,7 +1,7 @@
 <form action="?id=<?= $id ?>&amp;vote" method="post">
-    <label for="vote" class="pr-2"><?= __('Select a rating:') ?></label>
+    <label for="vote" class="pe-2"><?= __('Select a rating:') ?></label>
     <div class="form-inline">
-        <select name="vote" id="vote" class="form-control mr-2">
+        <select name="vote" id="vote" class="form-control me-2">
             <?php for ($r = 0; $r < 6; $r++) : ?>
                 <option <?= ($r === $userVote ? 'selected ' : '') ?> value="<?= $r ?>"><?= $r ?></option>
             <?php endfor; ?>

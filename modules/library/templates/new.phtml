@@ -28,14 +28,14 @@ $this->layout(
             <a href="?id=<?= $newlist['id'] ?>" class="card-title h3"><?= $newlist['name'] ?></a>
             <div class="post-body"><?= $newlist['announce'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
-                <div class="mr-2">
+                <div class="me-2">
                     <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $newlist['cat_id'] ?>"><?= $newlist['catalog_name'] ?></a>
                 </div>
-                <div class="mr-2">
+                <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $newlist['who'] ?>
                 </div>
-                <div class="d-flex align-items-center mr-1">
-                    <span class="pr-1"><?= __('Rating:') ?></span><?= $newlist['ratingView'] ?>
+                <div class="d-flex align-items-center me-1">
+                    <span class="pe-1"><?= __('Rating:') ?></span><?= $newlist['ratingView'] ?>
                 </div>
                 <div>
                     <?php if ($newlist['comments']) : ?>

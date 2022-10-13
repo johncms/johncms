@@ -26,12 +26,12 @@ $this->layout(
 ?>
 
 <?php if (! empty($additional_files)): ?>
-    <div class="h4 font-weight-bold"><?= __('Current files') ?></div>
+    <div class="h4 fw-bold"><?= __('Current files') ?></div>
     <div class="mt-3 mb-4">
         <?php foreach ($additional_files as $file): ?>
             <div class="border-bottom pb-3 mb-3">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="font-weight-bold mb-1"><?= nl2br($file['rus_name']) ?></h5>
+                    <h5 class="fw-bold mb-1"><?= $file['rus_name'] ?></h5>
                     <small class="text-muted"><?= $file['display_date'] ?></small>
                 </div>
                 <p class="mb-1"><?= $file['name'] ?> (<?= $file['display_size'] ?>) | Price: <?= $file['price'] ?></p>
@@ -44,7 +44,7 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<div class="h4 font-weight-bold"><?= __('Add file') ?></div>
+<div class="h4 fw-bold"><?= __('Add file') ?></div>
 <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <div class="custom-file">

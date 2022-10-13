@@ -36,20 +36,20 @@ $this->layout(
 <?php //if (empty($id)): ?>
     <div class="mb-3 mt-n1">
         <?php if (! empty($urls['new'])): ?>
-            <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1">
-                <?= __('New Files') ?> <span class="badge badge-secondary badge-pill ml-1"><?= $total_new ?></span>
+            <a href="<?= $urls['new'] ?>" class="btn btn-outline-primary btn-sm me-1 mt-1">
+                <?= __('New Files') ?> <span class="badge text-bg-secondary rounded-pill ms-1"><?= $total_new ?></span>
             </a>
         <?php endif; ?>
 		<?php if (! empty($id)): ?>
-                    <a href="?act=search&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
-					<a href="?act=top_files&amp;id=3&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('New Files') ?></a>
-					<a href="?act=top_files&amp;id=1&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Most Downloaded') ?></a>
-					<a href="?act=top_files&amp;id=0&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Popular Files') ?></a>
+                    <a href="?act=search&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Search') ?></a>
+					<a href="?act=top_files&amp;id=3&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('New Files') ?></a>
+					<a href="?act=top_files&amp;id=1&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Most Downloaded') ?></a>
+					<a href="?act=top_files&amp;id=0&amp;catid=<?= $id ?>" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Popular Files') ?></a>
 		<?php else: ?>
 					<a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
-					<a href="?act=top_files&amp;id=3" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('New Files') ?></a>
-					<a href="?act=top_files&amp;id=1" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Most Downloaded') ?></a>
-					<a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Popular Files') ?></a>
+					<a href="?act=top_files&amp;id=3" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('New Files') ?></a>
+					<a href="?act=top_files&amp;id=1" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Most Downloaded') ?></a>
+					<a href="?act=top_files&amp;id=0" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Popular Files') ?></a>
         <?php endif; ?>
         
         
@@ -63,7 +63,7 @@ $this->layout(
         <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
             <div class="d-flex align-items-center">
                 <a href="<?= $category['url'] ?>" class="text-dark-brown"><?= $category['rus_name'] ?></a>
-                <span class="badge badge-pill badge-light border ml-3"><?= $category['total'] ?></span>
+                <span class="badge rounded-pill text-bg-light border ms-3"><?= $category['total'] ?></span>
             </div>
         </div>
         <?php if (! empty($category['desc']) || ! empty($category['field'])): ?>
@@ -79,10 +79,10 @@ $this->layout(
         <?php if ($category['has_edit']): ?>
             <div class="pt-2 small">
                 <?php if ($total_cat > 1): ?>
-                    <a href="<?= $category['up_url'] ?>" class="mr-2"><?= __('Up') ?></a>
-                    <a href="<?= $category['down_url'] ?>" class="mr-2"><?= __('Down') ?></a>
+                    <a href="<?= $category['up_url'] ?>" class="me-2"><?= __('Up') ?></a>
+                    <a href="<?= $category['down_url'] ?>" class="me-2"><?= __('Down') ?></a>
                 <?php endif; ?>
-                <a href="<?= $category['edit_url'] ?>" class="mr-2"><?= __('Edit') ?></a>
+                <a href="<?= $category['edit_url'] ?>" class="me-2"><?= __('Edit') ?></a>
                 <a href="<?= $category['delete_url'] ?>"><?= __('Delete') ?></a>
             </div>
         <?php endif; ?>
@@ -95,13 +95,13 @@ $this->layout(
 
 <?php if (! empty($urls['sort_action'])): ?>
     <form class="form-inline mb-2" method="post" action="<?= $urls['sort_action'] ?>">
-        <label class="my-1 mr-2" for="sort_down"><?= __('Sorting') ?></label>
-        <select class="custom-select my-1 mr-sm-2" name="sort_down" id="sort_down">
+        <label class="my-1 me-2" for="sort_down"><?= __('Sorting') ?></label>
+        <select class="custom-select my-1 me-sm-2" name="sort_down" id="sort_down">
             <option value="0" <?= ! $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= __('by time') ?></option>
             <option value="1" <?= $_SESSION['sort_down'] ? ' selected="selected"' : '' ?>><?= __('by name') ?></option>
         </select>
-        <label for="sort_down2" class="mr-2 d-none d-sm-inline-block">&mdash;</label>
-        <select class="custom-select my-1 mr-sm-2" name="sort_down2" id="sort_down2">
+        <label for="sort_down2" class="me-2 d-none d-sm-inline-block">&mdash;</label>
+        <select class="custom-select my-1 me-sm-2" name="sort_down2" id="sort_down2">
             <option value="0" <?= ! $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= __('descending') ?></option>
             <option value="1" <?= $_SESSION['sort_down2'] ? ' selected="selected"' : '' ?>><?= __('ascending') ?></option>
         </select>
@@ -135,8 +135,8 @@ $this->layout(
     <?php if ($user->rights === 4 || $user->rights >= 6): ?>
         <div class="btn-group">
             <?php if (! empty($id)): ?>
-                <div class="dropdown mr-2">
-                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown me-2">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?= __('Add file') ?>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -146,7 +146,7 @@ $this->layout(
                 </div>
             <?php endif; ?>
             <div class="dropdown">
-                <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?= __('Section actions') ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

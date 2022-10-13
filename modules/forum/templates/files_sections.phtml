@@ -26,7 +26,7 @@ $this->layout(
     <div class="border-top border-bottom mb-3">
         <div class="py-3">
             <a href="<?= $new_url ?>"><?= __('New Files') ?></a>
-            <span class="badge badge-pill badge-danger"><?= $new_count ?></span>
+            <span class="badge rounded-pill badge-danger"><?= $new_count ?></span>
         </div>
     </div>
 <?php endif; ?>
@@ -38,7 +38,7 @@ $this->layout(
                 <div class="section-header border-0 pb-0">
                     <div class="d-flex align-items-center">
                         <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
-                        <span class="badge badge-pill badge-light border ml-3"><?= $section['count'] ?></span>
+                        <span class="badge rounded-pill text-bg-light border ms-3"><?= $section['count'] ?></span>
                     </div>
                 </div>
             </div>

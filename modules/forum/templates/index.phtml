@@ -43,11 +43,11 @@ $this->layout(
         <div class="section-header">
             <div class="d-flex align-items-center">
                 <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
-                <span class="badge badge-pill badge-light ml-3"><?= ($section->section_type ? $section->topics_count : $section->subsections_count) ?></span>
+                <span class="badge rounded-pill text-bg-light ms-3"><?= ($section->section_type ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
             <?php if (! empty($section->subsections_count)): ?>
-                <div class="toggle d-flex flex-grow-1 justify-content-end align-items-center pr-2 collapsed cursor-pointer"
-                     data-toggle="collapse" data-target="#subsections_<?= $section->id ?>" aria-expanded="false" aria-controls="subsections">
+                <div class="toggle d-flex flex-grow-1 justify-content-end align-items-center pe-2 collapsed cursor-pointer"
+                     data-bs-toggle="collapse" data-bs-target="#subsections_<?= $section->id ?>" aria-expanded="false" aria-controls="subsections">
                     <svg class="icon icon-chevron-bottom text-dark-brown">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
                     </svg>
@@ -58,7 +58,7 @@ $this->layout(
             <div class="collapse subsections" id="subsections_<?= $section->id ?>">
                 <div class="pt-2">
                     <?php foreach ($section->subsections as $subsection): ?>
-                        <span class="pr-2">&raquo;</span><a href="<?= $subsection->url ?>" class="text-dark-brown"><?= $subsection->name ?></a><br>
+                        <span class="pe-2">&raquo;</span><a href="<?= $subsection->url ?>" class="text-dark-brown"><?= $subsection->name ?></a><br>
                     <?php endforeach; ?>
                 </div>
             </div>

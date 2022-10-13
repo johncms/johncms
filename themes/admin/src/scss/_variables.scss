@@ -1,5 +1,5 @@
 // Body
-$body-bg: #ffffff;
+$body-bg: #f4f3ef;
 
 // Typography
 $font-family-sans-serif: "Roboto", sans-serif;
@@ -15,7 +15,7 @@ $input-font-size: 1rem;
 
 //$fa-font-path: '/assets/fonts';
 
-// Цвета
+// Color system
 $blue: #2f75be;
 $indigo: #6574cd;
 $purple: #9561e2;
@@ -29,14 +29,6 @@ $teal: #918d88;
 $cyan: #68B3C8;
 $brown: #66615B;
 $dark_brown: #7d4e3c;
-
-$theme-colors: (
-        "orange": $orange,
-        "dark-brown": $dark_brown,
-        "yellow-light": $yellow-light,
-);
-
-// Color system
 
 $white: #fff !default;
 $gray-100: #f4f3ef !default;
@@ -59,8 +51,21 @@ $danger: $orange !default;
 $light: $gray-100 !default;
 $dark: $gray-800 !default;
 
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+  "orange": $orange,
+  "dark-brown": $dark_brown,
+  "yellow-light": $yellow-light,
+);
 
-// Размеры шрифтов
+// Fonts
 $line-height-base: 1.5 !default;
 
 $h1-font-size: $font-size-base * 1.85;
@@ -76,7 +81,7 @@ $border-radius-lg: .3rem !default;
 $border-radius-sm: .2rem !default;
 
 
-// Настройки хлебных крошек
+// Breadcrumbs
 $breadcrumb-padding-y: 0;
 $breadcrumb-padding-x: 0;
 $breadcrumb-item-padding: .5rem;
@@ -86,7 +91,7 @@ $breadcrumb-margin-bottom: 1rem;
 $breadcrumb-bg: none !default;
 $breadcrumb-divider-color: $gray-600;
 $breadcrumb-active-color: $gray-600;
-$breadcrumb-divider: quote("/");
+$breadcrumb-divider: quote("»");
 
 $breadcrumb-border-radius: $border-radius;
 
@@ -99,3 +104,25 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
 $btn-border-radius: .25rem;
 $btn-border-radius-lg: .3rem;
 $btn-border-radius-sm: .2rem;
+
+// Forms
+$form-label-margin-bottom: 0.1rem;
+$input-bg: #f9f9f9;
+
+
+:root {
+  --bs-primary: #66615B;
+  --bs-secondary: #918d88;
+  --bs-success: #42A084;
+  --bs-info: #68B3C8;
+  --bs-warning: #F3BB45;
+  --bs-danger: #EB5E28;
+
+  --primary-bg-text-color: #fff;
+
+  --border-color: #66615B;
+
+  --font-size-normal: 14px;
+  --font-size-small: 12px;
+  --font-size-x-small: 11px;
+}

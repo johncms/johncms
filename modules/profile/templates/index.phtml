@@ -41,18 +41,18 @@ $this->layout(
                     <img src="<?= $this->avatar($data['user']['id']) ?>" class="img-fluid" alt="">
                 </div>
                 <div class="user-status <?= $data['user']['is_online'] ? 'online' : 'offline' ?> shadow"
-                     data-toggle="tooltip" data-placement="top" title="<?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?: __('Online') ?>"></div>
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="<?= __('Last visit') ?>: <?= $data['user']['last_visit'] ?: __('Online') ?>"></div>
             </div>
         </div>
         <div class="text-center">
             <div class="personal-info">
                 <div class="text-muted small"><?= $data['user']['rights_name'] ?></div>
-                <div class="font-weight-bold h2 mb-1"><?= $data['user']['imname'] ?: $data['user']['name'] ?></div>
+                <div class="fw-bold h2 mb-1"><?= $data['user']['imname'] ?: $data['user']['name'] ?></div>
                 <div class="text-muted"><?= $data['user']['name'] ?></div>
                 <?php if ($data['active_ban']): ?>
                     <div class="mt-2 mb-1">
                         <div>
-                            <div class="font-weight-bold h3 mb-0">
+                            <div class="fw-bold h3 mb-0">
                                 <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>" class="text-danger"><?= __('User is banned') ?></a>
                             </div>
                             <div class="text-muted">
@@ -100,7 +100,7 @@ $this->layout(
                         <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;del" class="btn btn-secondary btn-sm mt-2"><?= __('Unblock') ?></a>
                     <?php endif; ?>
                     <?php if (! empty($data['buttons'])): ?>
-                        <button class="btn btn-danger dropdown-toggle btn-sm mt-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-danger dropdown-toggle btn-sm mt-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?= __('Actions') ?>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -116,27 +116,27 @@ $this->layout(
         </div>
         <?php if (! empty($config['karma']['on'])): ?>
             <div class="border-0 mt-4">
-                <h2 class="h3 font-weight-bold text-center mb-4"><?= __('Karma') ?></h2>
+                <h2 class="h3 fw-bold text-center mb-4"><?= __('Karma') ?></h2>
                 <div class="rounded-progress <?= ($data['user']['karma_percent'] < 0) ? 'negative-progress' : '' ?> mx-auto" data-value='<?= $data['user']['karma_percent'] ?>'>
                     <span class="progress-left"><span class="progress-bar border-success"></span></span>
                     <span class="progress-right"><span class="progress-bar border-success"></span></span>
                     <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
-                        <div class="h2 font-weight-bold mb-0"><?= $data['user']['karma_points'] ?></div>
+                        <div class="h2 fw-bold mb-0"><?= $data['user']['karma_points'] ?></div>
                         <?php if (! empty($data['user']['karma_new'])): ?>
                             <div><a href="<?= $data['user']['karma_new_url'] ?>">+ <?= $data['user']['karma_new'] ?> <?= n__('vote', 'votes', $data['user']['karma_new']) ?></a></div>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="row text-center mt-4">
-                    <div class="col-6 border-right">
+                    <div class="col-6 border-end">
                         <a href="<?= $data['user']['positive_url'] ?>">
-                            <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_plus'] ?></div>
+                            <div class="h4 fw-bold mb-0"><?= $data['user']['karma_plus'] ?></div>
                             <span class="small text-gray"><?= __('Positive') ?></span>
                         </a>
                     </div>
                     <div class="col-6">
                         <a href="<?= $data['user']['negative_url'] ?>">
-                            <div class="h4 font-weight-bold mb-0"><?= $data['user']['karma_minus'] ?></div>
+                            <div class="h4 fw-bold mb-0"><?= $data['user']['karma_minus'] ?></div>
                             <span class="small text-gray"><?= __('Negative') ?></span>
                         </a>
                     </div>
@@ -151,7 +151,7 @@ $this->layout(
     </div>
     <div class="col-sm-12 col-md-6">
         <div class="mt-4 mt-md-0">
-            <h2 class="h3 font-weight-bold text-center mb-2"><?= __('Information') ?></h2>
+            <h2 class="h3 fw-bold text-center mb-2"><?= __('Information') ?></h2>
             <?php if (! empty($data['user']['photo'])): ?>
                 <div class="mb-2">
                     <a href="<?= $data['user']['photo']['photo'] ?>" title="<?= __('Photo') ?> "
@@ -162,18 +162,18 @@ $this->layout(
             <?php endif; ?>
             <?php if (! empty($data['user']['status'])): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('Status') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('Status') ?>:</div>
                     <div><?= $data['user']['status'] ?></div>
                 </div>
             <?php endif; ?>
             <?php if (! empty($data['user']['birthday_date'])): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('Birthday') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('Birthday') ?>:</div>
                     <div><?= $data['user']['birthday_date'] ?></div>
                 </div>
             <?php endif; ?>
             <div class="d-flex">
-                <div class="text-muted pr-2"><?= __('Gender') ?>:</div>
+                <div class="text-muted pe-2"><?= __('Gender') ?>:</div>
                 <div>
                     <?php if ($data['user']['sex'] === 'm'): ?>
                         <?= __('Man') ?>
@@ -186,7 +186,7 @@ $this->layout(
             </div>
             <?php if (! empty($data['user']['live'])): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('City, Country') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('City, Country') ?>:</div>
                     <div><?= $data['user']['live'] ?></div>
                 </div>
             <?php endif; ?>
@@ -198,16 +198,16 @@ $this->layout(
         </div>
 
         <div class="mt-4">
-            <h2 class="h3 font-weight-bold text-center mb-2">Контакты</h2>
+            <h2 class="h3 fw-bold text-center mb-2">Контакты</h2>
             <?php if (! empty($data['user']['mibile'])): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('Phone number') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('Phone number') ?>:</div>
                     <div><?= $data['user']['mibile'] ?></div>
                 </div>
             <?php endif; ?>
             <?php if ((! empty($data['user']['mail']) && $data['user']['mailvis']) || $user->rights >= 7 || $data['user']['id'] === $user->id): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('E-mail') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('E-mail') ?>:</div>
                     <div>
                         <?= $data['user']['mail'] ?>
                         <?= ($data['user']['mailvis'] ? '' : '<span class="text-muted"> [' . __('hidden') . ']</span>') ?>
@@ -216,13 +216,13 @@ $this->layout(
             <?php endif; ?>
             <?php if (! empty($data['user']['skype'])): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('Skype') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('Skype') ?>:</div>
                     <div><?= $data['user']['skype'] ?></div>
                 </div>
             <?php endif; ?>
             <?php if (! empty($data['user']['website'])): ?>
                 <div class="d-flex">
-                    <div class="text-muted pr-2"><?= __('Site') ?>:</div>
+                    <div class="text-muted pe-2"><?= __('Site') ?>:</div>
                     <div><?= $data['user']['website'] ?></div>
                 </div>
             <?php endif; ?>
@@ -233,7 +233,7 @@ $this->layout(
 <?php if (! empty($data['user']['admin_notes']) && $user->rights > 0): ?>
     <div class="mt-4">
         <div class="alert alert-warning">
-            <div class="font-weight-bold h4"><?= __('Admin Notes') ?></div>
+            <div class="fw-bold h4"><?= __('Admin Notes') ?></div>
             <div><?= $data['user']['admin_notes'] ?></div>
         </div>
     </div>

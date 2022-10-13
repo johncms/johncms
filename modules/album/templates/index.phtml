@@ -26,7 +26,7 @@ $this->layout(
 <div class="list-group with_counters">
     <div class="list-group-item">
         <a href="./top" class="link"><?= __('New Photos') ?></a>
-        <span class="counter badge badge-light badge-pill"><?= $data['new'] ?></span>
+        <span class="counter badge text-bg-light rounded-pill"><?= $data['new'] ?></span>
     </div>
     <div class="list-group-item">
         <a href="./top?mod=last_comm" class="link"><?= __('New Comments') ?></a>
@@ -38,11 +38,11 @@ $this->layout(
 <div class="list-group with_counters">
     <div class="list-group-item">
         <a href="./users?mod=boys" class="link"><?= __('Guys') ?></a>
-        <span class="counter badge badge-light badge-pill"><?= $data['men'] ?></span>
+        <span class="counter badge text-bg-light rounded-pill"><?= $data['men'] ?></span>
     </div>
     <div class="list-group-item">
         <a href="./users?mod=girls" class="link"><?= __('Girls') ?></a>
-        <span class="counter badge badge-light badge-pill"><?= $data['women'] ?></span>
+        <span class="counter badge text-bg-light rounded-pill"><?= $data['women'] ?></span>
     </div>
     <?php if ($user->isValid()): ?>
         <div class="list-group-item">

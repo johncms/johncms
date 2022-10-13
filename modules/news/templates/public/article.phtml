@@ -32,8 +32,8 @@ $author = $article->author;
     </div>
 
     <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
-        <div class="d-flex align-items-center mr-4 vue_app">
-            <div class="d-flex align-items-center mr-2"><?= __('Rating:') ?></div>
+        <div class="d-flex align-items-center me-4 vue_app">
+            <div class="d-flex align-items-center me-2"><?= __('Rating:') ?></div>
             <likes-component
                 :article_id="<?= $article->id ?>"
                 :rating="<?= $article->rating ?>"
@@ -44,7 +44,7 @@ $author = $article->author;
         <?php if ($article->view_count): ?>
             <div class="d-flex justify-content-end">
                 <div class="text-muted forum-view-counter">
-                    <svg class="icon download-button-icon mt-n1 mr-1">
+                    <svg class="icon download-button-icon mt-n1 me-1">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#eye"></use>
                     </svg>
                     <?= $article->view_count ?>

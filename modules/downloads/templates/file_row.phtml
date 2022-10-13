@@ -16,9 +16,9 @@
 <div class="forum-section post-item mb-2">
     <div class="section-header d-flex justify-content-between <?= (empty($file['preview_text']) ? 'border-0 pb-0' : '') ?>">
         <div class="d-flex align-items-center">
-            <span class="mr-2"><img src="<?= $file['icon'] ?>" alt="icon"></span>
+            <span class="me-2"><img src="<?= $file['icon'] ?>" alt="icon"></span>
             <a href="<?= $file['detail_url'] ?>" class="text-dark-brown"><?= $file['rus_name'] ?></a>
-            <span class="badge badge-pill badge-light border ml-3"><?= date('d.m.y', $file['updated']); ?></span>
+            <span class="badge rounded-pill text-bg-light border ms-3"><?= $file['field'] ?></span>
         </div>
     </div>
     <?php if (! empty($file['preview_text'])): ?>

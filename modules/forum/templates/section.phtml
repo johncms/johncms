@@ -52,7 +52,7 @@ $this->layout(
         <div class="section-header">
             <div class="d-flex align-items-center">
                 <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
-                <span class="badge badge-pill badge-light border ml-3"><?= ($section->section_type === 1 ? $section->topics_count : $section->subsections_count) ?></span>
+                <span class="badge rounded-pill text-bg-light border ms-3"><?= ($section->section_type === 1 ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
         </div>
         <?php if (! empty($section->description)): ?>

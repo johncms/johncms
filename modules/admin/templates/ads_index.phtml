@@ -37,9 +37,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <a href="<?= $item['link'] ?>" class="h3" target="_blank"><?= $item['name'] ?></a>
                 <div>
                     <?php if (! $item['to']): ?>
-                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
+                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge rounded-pill badge-success"><?= __('On') ?></a>
                     <?php else: ?>
-                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
+                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge rounded-pill badge-danger"><?= __('Off') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -53,10 +53,10 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <div><?= __('Style settings') ?>: <?= ! empty($item['styles']) ? $item['styles'] : __('Default') ?></div>
             </div>
             <div>
-                <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Up') ?></a>
-                <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Down') ?></a>
-                <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Edit') ?></a>
-                <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="text-danger mr-2"><?= __('Delete') ?></a>
+                <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Up') ?></a>
+                <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Down') ?></a>
+                <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Edit') ?></a>
+                <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="text-danger me-2"><?= __('Delete') ?></a>
                 <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="text-danger"><?= ($item['to'] ? __('Show') : __('Hide')) ?></a>
             </div>
         </div>

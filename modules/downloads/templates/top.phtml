@@ -33,14 +33,14 @@ $this->layout(
 
 <div class="mb-3 mt-n1">
 	<?php if (! empty($catid)): ?>
-		<a href="?act=search&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+		<a href="?act=search&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Search') ?></a>
 		<?php foreach ($buttons as $button): ?>
-			<a href="<?= $button['url'] ?>&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
+			<a href="<?= $button['url'] ?>&amp;catid=<?= $catid ?>" class="btn btn-outline-primary btn-sm me-1 mt-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
 		<?php endforeach; ?>
 	<?php else: ?>
-		<a href="?act=search" class="btn btn-outline-primary btn-sm mr-1 mt-1"><?= __('Search') ?></a>
+		<a href="?act=search" class="btn btn-outline-primary btn-sm me-1 mt-1"><?= __('Search') ?></a>
 		<?php foreach ($buttons as $button): ?>
-			<a href="<?= $button['url'] ?>" class="btn btn-outline-primary btn-sm mr-1 mt-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
+			<a href="<?= $button['url'] ?>" class="btn btn-outline-primary btn-sm me-1 mt-1 <?= $button['active'] ? 'active' : '' ?>"><?= $button['name'] ?></a>
 		<?php endforeach; ?>
 	<?php endif; ?>
 	

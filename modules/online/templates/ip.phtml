@@ -34,7 +34,7 @@ $this->layout(
             <div class="list-group">
                 <?php foreach ($data['items'] as $item): ?>
                     <div class="list-group-item d-flex align-items-center <?= $item['current_user_ip'] ? 'bg-yellow-light' : '' ?>">
-                        <div class="mr-3">
+                        <div class="me-3">
                             <a href="<?= $item['search_ip'] ?>"><?= $item['ip'] ?></a> [<a href="<?= $item['whois_ip'] ?>"> ? </a>]
                         </div>
                         <div>

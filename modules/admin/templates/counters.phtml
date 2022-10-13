@@ -49,17 +49,17 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             <a href="?mod=view&amp;id=<?= $item['id'] ?>" class="h3"><?= $item['name'] ?></a>
             <div>
                 <?php if ($item['switch'] === 1): ?>
-                    <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-success"><?= __('On') ?></a>
+                    <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge rounded-pill badge-success"><?= __('On') ?></a>
                 <?php else: ?>
-                    <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge badge-pill badge-danger"><?= __('Off') ?></a>
+                    <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge rounded-pill badge-danger"><?= __('Off') ?></a>
                 <?php endif; ?>
             </div>
         </div>
         <div class="mt-2">
-            <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Up') ?></a>
-            <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Down') ?></a>
-            <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="mr-2"><?= __('Edit') ?></a>
-            <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="mr-2 text-danger"><?= __('Delete') ?></a>
+            <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Up') ?></a>
+            <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Down') ?></a>
+            <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Edit') ?></a>
+            <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="me-2 text-danger"><?= __('Delete') ?></a>
         </div>
     </div>
 <?php endforeach; ?>

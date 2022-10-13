@@ -31,10 +31,10 @@ $this->layout(
                 <div class="d-flex align-items-start">
                     <div class="overflow-auto flex-grow-1">
                         <div class="user-name d-flex align-items-center">
-                            <span class="user-login mr-2"><?= $item['ban_type_name'] ?></span>
+                            <span class="user-login me-2"><?= $item['ban_type_name'] ?></span>
                             <span class="text-muted"><?= $item['ban_started'] ?></span>
                             <?php if (! empty($item['remain'])): ?>
-                                <span class="badge badge-danger badge-pill ml-auto"><?= __('Active') ?></span>
+                                <span class="badge badge-danger rounded-pill ms-auto"><?= __('Active') ?></span>
                             <?php endif ?>
                         </div>
                         <div>
