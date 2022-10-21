@@ -55,7 +55,6 @@ class Application
      */
     public function handleRequest(): void
     {
-        $this->container->bind(RouterFactory::class, RouterFactory::class, true);
         $router = $this->container->get(RouterFactory::class);
 
         $request = di(Request::class);

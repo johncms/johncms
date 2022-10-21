@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Router;
 
 use League\Route\Cache\Router;
+use League\Route\Router as MainRouter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -21,16 +22,21 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class CachedRouter extends Router
 {
-    protected ?\League\Route\Router $router = null;
+    protected ?MainRouter $router = null;
 
-    public function getRouter(): ?\League\Route\Router
+    public function getRouter(): ?MainRouter
     {
+        return $this->router;
+    }
+
+    public function buildRouter(ServerRequestInterface $request): MainRouter
+    {
+        $this->router = parent::buildRouter($request);
         return $this->router;
     }
 
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $this->router = $this->buildRouter($request);
         return $this->router->dispatch($request);
     }
 }

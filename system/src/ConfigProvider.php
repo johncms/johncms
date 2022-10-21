@@ -34,6 +34,7 @@ use Johncms\Log\Logger;
 use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
+use Johncms\Router\RouterFactory;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
@@ -102,6 +103,7 @@ class ConfigProvider
                 DebugBar::class                 => DebugBar::class,
                 LoggerInterface::class          => Logger::class,
                 ExceptionHandlers::class        => ExceptionHandlers::class,
+                RouterFactory::class            => RouterFactory::class,
             ],
         ];
     }
