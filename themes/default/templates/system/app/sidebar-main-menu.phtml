@@ -9,6 +9,8 @@
 /** @var \Johncms\Counters $counters */
 
 use Johncms\Utility\Numbers;
+use Johncms\View\Menu\Menu;
+use Johncms\View\Menu\MenuFactory;
 
 $counters = $container->get('counters');
 $guestbook_counters = $counters->guestbookCounters();
@@ -18,6 +20,8 @@ $users_counters = $counters->usersCounters();
 $news_counters = $counters->news();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
+
+$menu = MenuFactory::create(Menu::PUBLIC_SIDEBAR)->getItems();
 
 ?>
 <!-- Меню -->
@@ -30,44 +34,21 @@ $ads_array = $ads->getAds();
         </div>
     <?php endif; ?>
     <ul class="nav nav__vertical">
-        <li>
-            <a href="/news/">
-                <svg class="icon">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#book"/>
-                </svg>
-                <span class="flex-grow-1"><?= d__('system', 'News archive') ?></span>
-                <?php if ($news_counters['new'] > 0): ?>
-                    <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($news_counters['new']) ?></span>
-                <?php endif ?>
-            </a>
-        </li>
-        <?php if ($config['mod_forum'] || $user->rights >= 7): ?>
+        <?php foreach ($menu as $item): ?>
             <li>
-                <a href="/forum/">
+                <a href="<?= $item['url'] ?>">
                     <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
+                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#<?= $item['icon'] ?>"/>
                     </svg>
-                    <span class="flex-grow-1"><?= d__('system', 'Forum') ?></span>
-                    <?php $forumUnread = di(\Johncms\Forum\ForumCounters::class)->unreadMessages(); ?>
-                    <?php if ($forumUnread > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($forumUnread) ?></span>
-                    <?php endif; ?>
-                </a>
-            </li>
-        <?php endif ?>
-        <?php if ($config['mod_guest'] || $user->rights >= 7): ?>
-            <li>
-                <a href="/guestbook/ga">
-                    <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chat"/>
-                    </svg>
-                    <span class="flex-grow-1"><?= d__('system', 'Guestbook') ?></span>
-                    <?php if ($guestbook_counters['guestbook'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($guestbook_counters['guestbook']) ?></span>
+                    <span class="flex-grow-1"><?= $item['name'] ?></span>
+                    <?php if (is_numeric($item['counter']) && $item['counter'] > 0): ?>
+                        <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($item['counter']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
-        <?php endif ?>
+        <?php endforeach; ?>
+
+        <!-- TODO: Move to providers -->
         <?php if ($config['mod_down'] || $user->rights >= 7): ?>
             <li>
                 <a href="/downloads/">
