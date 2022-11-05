@@ -23,5 +23,16 @@ class MenuServiceProvider extends ServiceProvider
                     counter: ['counters', 'guestbookCounters']
                 )
             );
+
+        MenuFactory::create(Menu::PUBLIC_ADMIN)
+            ->add(
+                new MenuItem(
+                    code:    'adminClub',
+                    url:     '/guestbook/ga?do=set',
+                    name:    __('Admin Chat'),
+                    icon:    'forum',
+                    counter: ['counters', 'guestbookCounters']
+                )
+            );
     }
 }

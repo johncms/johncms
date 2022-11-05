@@ -12,6 +12,7 @@ class Menu
     public const ADMIN_USER = 'admin_user';
     public const PUBLIC_SIDEBAR = 'public_sidebar';
     public const PUBLIC_USER = 'public_user';
+    public const PUBLIC_ADMIN = 'public_admin';
 
     /** @var MenuItemInterface[] */
     protected array $items = [];

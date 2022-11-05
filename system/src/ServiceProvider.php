@@ -12,13 +12,13 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Illuminate\Container\Container;
+use Psr\Container\ContainerInterface;
 
 abstract class ServiceProvider
 {
-    protected Container $container;
+    protected ContainerInterface $container;
 
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }

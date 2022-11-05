@@ -6,22 +6,12 @@
  * @var Johncms\Ads $ads
  */
 
-/** @var \Johncms\Counters $counters */
-
 use Johncms\Utility\Numbers;
 use Johncms\View\Menu\Menu;
 use Johncms\View\Menu\MenuFactory;
 
-$counters = $container->get('counters');
-$guestbook_counters = $counters->guestbookCounters();
-$downloads_counters = $counters->downloadsCounters();
-$library_counters = $counters->libraryCounters();
-$users_counters = $counters->usersCounters();
-$news_counters = $counters->news();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
-
-$menu = MenuFactory::create(Menu::PUBLIC_SIDEBAR)->getItems();
 
 ?>
 <!-- Меню -->
@@ -34,6 +24,8 @@ $menu = MenuFactory::create(Menu::PUBLIC_SIDEBAR)->getItems();
         </div>
     <?php endif; ?>
     <ul class="nav nav__vertical">
+        <!-- Menu -->
+        <?php $menu = MenuFactory::create(Menu::PUBLIC_SIDEBAR)->getItems(); ?>
         <?php foreach ($menu as $item): ?>
             <li>
                 <a href="<?= $item['url'] ?>">
@@ -48,77 +40,25 @@ $menu = MenuFactory::create(Menu::PUBLIC_SIDEBAR)->getItems();
             </li>
         <?php endforeach; ?>
 
-        <!-- TODO: Move to providers -->
-        <?php if ($config['mod_down'] || $user->rights >= 7): ?>
-            <li>
-                <a href="/downloads/">
-                    <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
-                    </svg>
-                    <span class="flex-grow-1"><?= d__('system', 'Downloads') ?></span>
-                    <?php if ($downloads_counters['new'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($downloads_counters['new']) ?></span>
-                    <?php endif ?>
-                </a>
-            </li>
-        <?php endif ?>
-        <?php if ($config['mod_lib'] || $user->rights >= 7): ?>
-            <li>
-                <a href="/library/">
-                    <svg class="icon">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#text"/>
-                    </svg>
-                    <span class="flex-grow-1"><?= d__('system', 'Library') ?></span>
-                    <?php if ($library_counters['new'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($library_counters['new']) ?></span>
-                    <?php endif ?>
-                </a>
-            </li>
-        <?php endif ?>
-        <li>
-            <a href="/community/">
-                <svg class="icon">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
-                </svg>
-                <span class="flex-grow-1"><?= d__('system', 'Users') ?></span>
-                <?php if ($users_counters['new'] > 0): ?>
-                    <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($users_counters['new']) ?></span>
-                <?php endif ?>
-            </a>
-        </li>
-        <li>
-            <a href="/help/">
-                <svg class="icon">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#info"/>
-                </svg>
-                <span class="flex-grow-1"><?= d__('system', 'Information, FAQ') ?></span>
-            </a>
-        </li>
         <?php if ($user?->hasAnyRole()): ?>
-            <?php if ($user?->isAdmin()): ?>
+            <!-- Admin Menu -->
+            <?php $adminMenu = MenuFactory::create(Menu::PUBLIC_ADMIN)->getItems(); ?>
+            <li>
+                <div class="border-bottom mt-3 mb-3"></div>
+            </li>
+            <?php foreach ($adminMenu as $item): ?>
                 <li>
-                    <div class="border-bottom mt-3 mb-3"></div>
-                    <a href="/admin/">
-                        <svg class="icon text-danger">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#settings"/>
+                    <a href="<?= $item['url'] ?>" class="text-danger">
+                        <svg class="icon">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#<?= $item['icon'] ?>"/>
                         </svg>
-                        <span class="flex-grow-1 text-danger"><?= d__('system', 'Admin Panel') ?></span>
+                        <span class="flex-grow-1"><?= $item['name'] ?></span>
+                        <?php if (is_numeric($item['counter']) && $item['counter'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger">+ <?= Numbers::formatNumber($item['counter']) ?></span>
+                        <?php endif ?>
                     </a>
                 </li>
-            <?php endif ?>
-            <li>
-                <a href="/guestbook/ga?do=set">
-                    <svg class="icon text-danger">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
-                    </svg>
-                    <span class="flex-grow-1 text-danger"><?= d__('system', 'Admin Chat') ?></span>
-                    <?php if ($guestbook_counters['admin_club'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">
-                                <?= Numbers::formatNumber($guestbook_counters['admin_club']) ?>
-                            </span>
-                    <?php endif ?>
-                </a>
-            </li>
+            <?php endforeach; ?>
         <?php endif ?>
     </ul>
     <div class="border-bottom"></div>
