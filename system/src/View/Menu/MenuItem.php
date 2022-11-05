@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\View\Menu;
 
+use Johncms\Http\Request;
 use RuntimeException;
 
 class MenuItem implements MenuItemInterface
 {
-    protected bool $active = false;
-
     /** @var MenuItemInterface[] */
     protected array $children = [];
+
+    protected Request $request;
 
     public function __construct(
         protected string $code,
@@ -21,6 +22,7 @@ class MenuItem implements MenuItemInterface
         protected string | array $counter = '',
         protected array $attributes = [],
     ) {
+        $this->request = di(Request::class);
     }
 
     private function resolveCounter()
@@ -71,7 +73,7 @@ class MenuItem implements MenuItemInterface
         return $this->code;
     }
 
-    public function getChildren(): array
+    private function getChildren(): array
     {
         $items = [];
         foreach ($this->children as $key => $item) {
@@ -80,10 +82,16 @@ class MenuItem implements MenuItemInterface
         return $items;
     }
 
+    private function isActive(): bool
+    {
+        $currentUrl = $this->request->getUri()->getPath();
+        return str_starts_with(mb_strtolower($currentUrl), mb_strtolower($this->url));
+    }
+
     public function toArray(): array
     {
         return [
-            'active'     => $this->active,
+            'active'     => $this->isActive(),
             'url'        => $this->url,
             'name'       => $this->name,
             'icon'       => $this->icon,

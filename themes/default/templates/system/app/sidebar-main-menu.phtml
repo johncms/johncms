@@ -28,7 +28,7 @@ $ads_array = $ads->getAds();
         <?php $menu = MenuFactory::create(Menu::PUBLIC_SIDEBAR)->getItems(); ?>
         <?php foreach ($menu as $item): ?>
             <li>
-                <a href="<?= $item['url'] ?>">
+                <a href="<?= $item['url'] ?>" class="<?= $item['active'] ? 'opacity-100' : '' ?>">
                     <svg class="icon">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#<?= $item['icon'] ?>"/>
                     </svg>
