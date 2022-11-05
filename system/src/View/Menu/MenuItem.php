@@ -6,11 +6,15 @@ namespace Johncms\View\Menu;
 
 use RuntimeException;
 
-class MenuItem
+class MenuItem implements MenuItemInterface
 {
     protected bool $active = false;
 
+    /** @var MenuItemInterface[] */
+    protected array $children = [];
+
     public function __construct(
+        protected string $code,
         protected string $url = '',
         protected string $name = '',
         protected string $icon = '',
@@ -50,14 +54,42 @@ class MenuItem
         return $callable();
     }
 
+    /**
+     * Add children item
+     */
+    public function add(MenuItemInterface $menuItem): static
+    {
+        $this->children[$menuItem->getCode()] = $menuItem;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getChildren(): array
+    {
+        $items = [];
+        foreach ($this->children as $key => $item) {
+            $items[$key] = $item->toArray();
+        }
+        return $items;
+    }
+
     public function toArray(): array
     {
         return [
+            'active'     => $this->active,
             'url'        => $this->url,
             'name'       => $this->name,
             'icon'       => $this->icon,
             'counter'    => $this->resolveCounter(),
             'attributes' => $this->attributes,
+            'children'   => $this->getChildren(),
         ];
     }
 }
