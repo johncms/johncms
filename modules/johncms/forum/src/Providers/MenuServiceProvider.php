@@ -21,7 +21,8 @@ class MenuServiceProvider extends ServiceProvider
                     url:     route('forum.index'),
                     name:    __('Forum'),
                     icon:    'forum',
-                    counter: [ForumCounters::class, 'unreadMessages']
+                    counter: [ForumCounters::class, 'unreadMessages'],
+                    sort:    20
                 )
             );
     }

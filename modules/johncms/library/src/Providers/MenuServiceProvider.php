@@ -19,7 +19,8 @@ class MenuServiceProvider extends ServiceProvider
                     code: 'library',
                     url:  '/library/',
                     name: __('Library'),
-                    icon: 'text'
+                    icon: 'text',
+                    sort: 50
                 )
             );
     }

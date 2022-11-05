@@ -20,7 +20,8 @@ class MenuServiceProvider extends ServiceProvider
                     url:     route('guestbook.index'),
                     name:    __('Guestbook'),
                     icon:    'chat',
-                    counter: ['counters', 'guestbookCounters']
+                    counter: ['counters', 'guestbookCounters'],
+                    sort:    30
                 )
             );
 

@@ -19,7 +19,8 @@ class MenuServiceProvider extends ServiceProvider
                     code: 'downloads',
                     url:  '/downloads/',
                     name: __('Downloads'),
-                    icon: 'download'
+                    icon: 'download',
+                    sort: 40
                 )
             );
     }

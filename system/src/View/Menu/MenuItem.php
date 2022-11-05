@@ -20,6 +20,7 @@ class MenuItem implements MenuItemInterface
         protected string $name = '',
         protected string $icon = '',
         protected string | array $counter = '',
+        protected int $sort = 100,
         protected array $attributes = [],
     ) {
         $this->request = di(Request::class);
@@ -96,6 +97,7 @@ class MenuItem implements MenuItemInterface
             'name'       => $this->name,
             'icon'       => $this->icon,
             'counter'    => $this->resolveCounter(),
+            'sort'       => $this->sort,
             'attributes' => $this->attributes,
             'children'   => $this->getChildren(),
         ];

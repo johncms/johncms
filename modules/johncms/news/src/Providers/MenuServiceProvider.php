@@ -20,7 +20,8 @@ class MenuServiceProvider extends ServiceProvider
                     url:     route('news.section'),
                     name:    __('News'),
                     icon:    'book',
-                    counter: ['counters', 'news']
+                    counter: ['counters', 'news'],
+                    sort:    10
                 )
             );
     }

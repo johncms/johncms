@@ -32,6 +32,16 @@ class Menu
         return $this;
     }
 
+    private function sortItems(array $items): array
+    {
+        foreach ($items as $key => $item) {
+            if (! empty($item['children'])) {
+                $items[$key]['children'] = $this->sortItems($item['children']);
+            }
+        }
+        return array_order_by($items, 'sort');
+    }
+
     public function getItems(): array
     {
         $items = [];
@@ -49,6 +59,7 @@ class Menu
             $allChildItems = array_replace_recursive($allChildItems, $childItems);
         }
 
-        return array_replace_recursive($items, $allChildItems);
+        $menu = array_replace_recursive($items, $allChildItems);
+        return $this->sortItems($menu);
     }
 }
