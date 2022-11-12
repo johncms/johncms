@@ -21,7 +21,7 @@ class PdoFactory
 {
     public function __invoke(ContainerInterface $container): PDO
     {
-        $config = di('config')['pdo'];
+        $config = $container->get('config')['pdo'];
 
         $capsule = new Capsule();
         $capsule->addConnection(

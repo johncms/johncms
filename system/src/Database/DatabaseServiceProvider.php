@@ -13,7 +13,7 @@ class DatabaseServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        di(PDO::class);
+        $this->container->get(PDO::class);
         $connection = Manager::connection();
         DB::swap($connection);
     }
