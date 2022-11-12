@@ -15,7 +15,7 @@ use Johncms\Checker\DBChecker;
 use Johncms\Config;
 use Johncms\Http\Request;
 use Johncms\Install\Database;
-use Johncms\Modules\ModuleInstaller;
+use Johncms\Modules\ModuleManager;
 use Johncms\Modules\Modules;
 use Johncms\View\Render;
 
@@ -91,12 +91,7 @@ if ($request->getMethod() === 'POST') {
             $modules = new Modules();
             $installed_modules = $modules->getInstalled();
             foreach ($installed_modules as $module) {
-                (new ModuleInstaller($module))->getInstaller()->install();
-            }
-
-            // Run the after install scripts
-            foreach ($installed_modules as $module) {
-                (new ModuleInstaller($module))->getInstaller()->afterInstall();
+                (new ModuleManager($module))->install();
             }
 
             header('Location: /install/?step=4');

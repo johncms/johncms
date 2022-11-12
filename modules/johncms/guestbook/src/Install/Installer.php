@@ -61,17 +61,17 @@ class Installer extends \Johncms\Modules\Installer
             [
                 'name'         => 'guestbook_admin_club',
                 'display_name' => __('Access to the admin club'),
-                'module_name'  => $this->module_name,
+                'module_name'  => $this->moduleName,
             ],
             [
                 'name'         => 'guestbook_delete_posts',
                 'display_name' => __('Access to delete the guestbook posts'),
-                'module_name'  => $this->module_name,
+                'module_name'  => $this->moduleName,
             ],
             [
                 'name'         => 'guestbook_clear',
                 'display_name' => __('Access to clear the guestbook'),
-                'module_name'  => $this->module_name,
+                'module_name'  => $this->moduleName,
             ],
         ];
 
@@ -82,7 +82,7 @@ class Installer extends \Johncms\Modules\Installer
 
     public function afterInstall(): void
     {
-        $permissions = Permission::query()->where('module_name', $this->module_name)->get()->pluck('id');
+        $permissions = Permission::query()->where('module_name', $this->moduleName)->get()->pluck('id');
 
         $adminRole = Role::query()->where('name', 'admin')->first();
         $moderatorRole = Role::query()->where('name', 'moderator')->first();

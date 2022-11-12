@@ -33,17 +33,17 @@ class Installer extends \Johncms\Modules\Installer
             [
                 'name'         => ForumPermissions::MANAGE_POSTS,
                 'display_name' => __('Access to forum message management'),
-                'module_name'  => $this->module_name,
+                'module_name'  => $this->moduleName,
             ],
             [
                 'name'         => ForumPermissions::MANAGE_TOPICS,
                 'display_name' => __('Access to forum topic management'),
-                'module_name'  => $this->module_name,
+                'module_name'  => $this->moduleName,
             ],
             [
                 'name'         => ForumPermissions::COMPLETE_DELETE_TOPIC,
                 'display_name' => __('Access to the complete removal of the topic'),
-                'module_name'  => $this->module_name,
+                'module_name'  => $this->moduleName,
             ],
         ];
 
@@ -54,7 +54,7 @@ class Installer extends \Johncms\Modules\Installer
 
     public function afterInstall(): void
     {
-        $permissions = Permission::query()->where('module_name', $this->module_name)->get()->pluck('id');
+        $permissions = Permission::query()->where('module_name', $this->moduleName)->get()->pluck('id');
 
         $adminRole = Role::query()->where('name', 'admin')->first();
         $moderatorRole = Role::query()->where('name', 'moderator')->first();

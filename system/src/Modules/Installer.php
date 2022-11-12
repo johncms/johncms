@@ -12,11 +12,9 @@ namespace Johncms\Modules;
 
 abstract class Installer
 {
-    protected string $module_name;
-
-    public function __construct(string $module_name)
-    {
-        $this->module_name = $module_name;
+    public function __construct(
+        protected string $moduleName
+    ) {
     }
 
     abstract public function install(): void;
