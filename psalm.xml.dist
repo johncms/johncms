@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <psalm
-        totallyTyped="false"
         findUnusedCode="false"
         resolveFromConfigFile="true"
         errorLevel="5"
@@ -13,21 +12,18 @@
         <directory name="modules"/>
         <directory name="system"/>
         <ignoreFiles>
-            <directory name="modules/admin"/>
-            <directory name="modules/album"/>
-            <directory name="modules/community"/>
-            <directory name="modules/downloads"/>
-            <directory name="modules/forum"/>
-            <directory name="modules/guestbook"/>
-            <directory name="modules/help"/>
-            <directory name="modules/language"/>
-            <directory name="modules/library"/>
-            <directory name="modules/mail"/>
-            <directory name="modules/notifications"/>
-            <directory name="modules/online"/>
-            <directory name="modules/profile"/>
-            <directory name="modules/redirect"/>
-            <directory name="modules/rss"/>
+            <directory name="modules/johncms/admin"/>
+            <directory name="modules/johncms/community"/>
+            <directory name="modules/johncms/downloads"/>
+            <directory name="modules/johncms/forum"/>
+            <directory name="modules/johncms/guestbook"/>
+            <directory name="modules/johncms/help"/>
+            <directory name="modules/johncms/language"/>
+            <directory name="modules/johncms/library"/>
+            <directory name="modules/johncms/mail"/>
+            <directory name="modules/johncms/notifications"/>
+            <directory name="modules/johncms/online"/>
+            <directory name="modules/johncms/redirect"/>
 
             <directory name="system/src-legacy"/>
             <directory name="system/vendor"/>
