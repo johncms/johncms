@@ -12,23 +12,29 @@ class ComposerEventsHandler
 {
     public static function postModuleInstall(PackageEvent $event): void
     {
-        require_once $event->getComposer()->getConfig()->get('vendor-dir') . '/autoload.php';
-        $installedPackage = $event->getOperation()->getPackage()->getPrettyName();
+        // Check if system installed
+        if (is_file(CONFIG_PATH . 'autoload/database.local.php')) {
+            require_once $event->getComposer()->getConfig()->get('vendor-dir') . '/autoload.php';
+            $installedPackage = $event->getOperation()->getPackage()->getPrettyName();
 
-        ComposerEventsHandler::runApp();
-        if (ComposerEventsHandler::isJohnCMSModule($installedPackage)) {
-            (new ModuleManager($installedPackage))->install();
+            ComposerEventsHandler::runApp();
+            if (ComposerEventsHandler::isJohnCMSModule($installedPackage)) {
+                (new ModuleManager($installedPackage))->install();
+            }
         }
     }
 
     public static function preModuleUninstall(PackageEvent $event): void
     {
-        require_once $event->getComposer()->getConfig()->get('vendor-dir') . '/autoload.php';
-        $installedPackage = $event->getOperation()->getPackage()->getPrettyName();
+        // Check if system installed
+        if (is_file(CONFIG_PATH . 'autoload/database.local.php')) {
+            require_once $event->getComposer()->getConfig()->get('vendor-dir') . '/autoload.php';
+            $installedPackage = $event->getOperation()->getPackage()->getPrettyName();
 
-        ComposerEventsHandler::runApp();
-        if (ComposerEventsHandler::isJohnCMSModule($installedPackage)) {
-            (new ModuleManager($installedPackage))->uninstall();
+            ComposerEventsHandler::runApp();
+            if (ComposerEventsHandler::isJohnCMSModule($installedPackage)) {
+                (new ModuleManager($installedPackage))->uninstall();
+            }
         }
     }
 
