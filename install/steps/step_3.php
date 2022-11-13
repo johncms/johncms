@@ -93,6 +93,10 @@ if ($request->getMethod() === 'POST') {
                 (new ModuleManager($module))->install();
             }
 
+            foreach ($installed_modules as $module) {
+                (new ModuleManager($module))->afterInstall();
+            }
+
             header('Location: /install/?step=4');
             exit;
         }

@@ -19,7 +19,9 @@ class ComposerEventsHandler
 
             ComposerEventsHandler::runApp();
             if (ComposerEventsHandler::isJohnCMSModule($installedPackage)) {
-                (new ModuleManager($installedPackage))->install();
+                $moduleManager = new ModuleManager($installedPackage);
+                $moduleManager->install();
+                $moduleManager->afterInstall();
             }
         }
     }

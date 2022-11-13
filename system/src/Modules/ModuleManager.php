@@ -54,6 +54,11 @@ class ModuleManager
         $this->installer?->uninstall();
     }
 
+    public function afterInstall(): void
+    {
+        $this->installer?->afterInstall();
+    }
+
     /**
      * Copy module assets to the default theme directory
      *
