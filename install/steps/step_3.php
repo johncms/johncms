@@ -88,8 +88,7 @@ if ($request->getMethod() === 'POST') {
 
             di(PDO::class);
             // Installing modules
-            $modules = new Modules();
-            $installed_modules = $modules->getInstalled();
+            $installed_modules = Modules::getInstalled();
             foreach ($installed_modules as $module) {
                 (new ModuleManager($module))->install();
             }

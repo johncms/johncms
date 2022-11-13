@@ -10,17 +10,53 @@
 
 namespace Johncms\Modules;
 
+use Composer\InstalledVersions;
+use Illuminate\Support\Str;
+
 class Modules
 {
-    protected array $config;
+    protected static array $installedModules = [];
 
-    public function __construct()
+    /**
+     * Get all installed modules
+     *
+     * @return string[]
+     */
+    public static function getInstalled(): array
     {
-        $this->config = di('config')['modules'] ?? [];
+        if (! empty(self::$installedModules)) {
+            return self::$installedModules;
+        }
+        $modulesDirectories = glob(MODULES_PATH . '*/*', GLOB_ONLYDIR);
+        if ($modulesDirectories) {
+            $moduleNames = array_map(fn($item) => Str::replaceFirst(MODULES_PATH, '', $item), $modulesDirectories);
+            $installedModules = InstalledVersions::getInstalledPackages();
+            return array_intersect($moduleNames, $installedModules);
+        }
+        return [];
     }
 
-    public function getInstalled(): array
+    /**
+     * Required system modules
+     *
+     * @return string[]
+     */
+    public static function getSystemModules(): array
     {
-        return array_merge($this->config['installed_modules'], $this->config['system_modules']);
+        return [
+            'johncms/admin',
+            'johncms/auth',
+        ];
+    }
+
+    /**
+     * Check if a specific module is installed
+     *
+     * @param string $moduleName
+     * @return bool
+     */
+    public static function isInstalled(string $moduleName): bool
+    {
+        return in_array($moduleName, self::getInstalled());
     }
 }
