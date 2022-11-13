@@ -10,33 +10,13 @@
 
 namespace Johncms\Admin\Install;
 
-use Johncms\Users\Role;
-
 class Installer extends \Johncms\Modules\Installer
 {
     public function install(): void
     {
-        $this->createRoles();
     }
 
     public function uninstall(): void
     {
-    }
-
-    private function createRoles()
-    {
-        $role = new Role();
-        $role->create(
-            [
-                'name'         => 'admin',
-                'display_name' => 'Administrator',
-            ]
-        );
-        $role->create(
-            [
-                'name'         => 'moderator',
-                'display_name' => 'Moderator',
-            ]
-        );
     }
 }

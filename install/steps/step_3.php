@@ -56,6 +56,7 @@ if ($request->getMethod() === 'POST') {
         ]
     );
     $capsule->setAsGlobal();
+    $capsule->bootEloquent();
     $connection = $capsule->getConnection();
 
     try {

@@ -60,7 +60,7 @@ class Installer extends \Johncms\Modules\Installer
         $moderatorRole = Role::query()->where('name', 'moderator')->first();
 
         // Attach permissions to roles
-        $adminRole->permissions()->sync($permissions);
-        $moderatorRole->permissions()->sync($permissions);
+        $adminRole->permissions()->syncWithoutDetaching($permissions);
+        $moderatorRole->permissions()->syncWithoutDetaching($permissions);
     }
 }
