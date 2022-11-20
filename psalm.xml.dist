@@ -36,6 +36,7 @@
     </stubs>
 
     <issueHandlers>
+        <DuplicateClass errorLevel="suppress"/>
         <UndefinedClass>
           <errorLevel type="suppress">
             <referencedClass name="*" />

@@ -156,7 +156,7 @@ class Request extends ServerRequest
 
     public function getUserAgent(): ?string
     {
-        return $this->getServer('HTTP_USER_AGENT', '', FILTER_SANITIZE_STRING);
+        return htmlspecialchars($this->getServer('HTTP_USER_AGENT', ''));
     }
 
     public function getIp(): ?string

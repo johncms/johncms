@@ -172,8 +172,8 @@ class AdminArticleController extends BaseAdminController
             'article_id' => $article_id,
             'fields'     => [
                 'active'       => (int) $request->getPost('active', $article->active),
-                'active_from'  => $request->getPost('active_from', $active_from ?? '', FILTER_SANITIZE_STRING),
-                'active_to'    => $request->getPost('active_to', $active_to ?? '', FILTER_SANITIZE_STRING),
+                'active_from'  => $request->getPost('active_from', $active_from ?? ''),
+                'active_to'    => $request->getPost('active_to', $active_to ?? ''),
                 'name'         => $request->getPost('name', $article->name),
                 'page_title'   => $request->getPost('page_title', $article->page_title),
                 'code'         => $request->getPost('code', $article->code),

@@ -25,7 +25,7 @@ if ($user->rights < 9) {
 $title = __('Languages');
 $nav_chain->add($title, '/admin/languages/');
 
-$action = $request->getQuery('action', 'index', FILTER_SANITIZE_STRING);
+$action = $request->getQuery('action', 'index');
 
 $pages = [
     'index'   => 'index.php',

@@ -30,11 +30,11 @@ $render->addData(
 );
 
 $fields = [
-    'db_host'     => $request->getPost('db_host', 'localhost', FILTER_SANITIZE_STRING),
-    'db_port'     => $request->getPost('db_port', 3306, FILTER_VALIDATE_INT),
-    'db_name'     => $request->getPost('db_name', 'johncms', FILTER_SANITIZE_STRING),
-    'db_user'     => $request->getPost('db_user', '', FILTER_SANITIZE_STRING),
-    'db_password' => $request->getPost('db_password', '', FILTER_SANITIZE_SPECIAL_CHARS),
+    'db_host'     => $request->getPost('db_host', 'localhost'),
+    'db_port'     => $request->getPost('db_port', 3306),
+    'db_name'     => $request->getPost('db_name', 'johncms'),
+    'db_user'     => $request->getPost('db_user', ''),
+    'db_password' => $request->getPost('db_password', ''),
 ];
 
 $errors = [];

@@ -12,27 +12,84 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
-use League\Route\Cache\Router;
+use InvalidArgumentException;
+use Laravel\SerializableClosure\Exceptions\PhpVersionNotSupportedException;
+use Laravel\SerializableClosure\SerializableClosure;
 use League\Route\Router as MainRouter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\SimpleCache\CacheInterface;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
-class CachedRouter extends Router
+class CachedRouter
 {
     protected ?MainRouter $router = null;
+
+    protected const CACHE_KEY = 'league/route/cache';
+
+    /**
+     * @var callable
+     */
+    protected $builder;
+
+    /**
+     * @var CacheInterface
+     */
+    protected CacheInterface $cache;
+
+    /**
+     * @var integer
+     */
+    protected int $ttl;
+
+    /**
+     * @var bool
+     */
+    protected bool $cacheEnabled;
+
+    public function __construct(callable $builder, CacheInterface $cache, bool $cacheEnabled = true)
+    {
+        $this->builder = $builder;
+        $this->cache = $cache;
+        $this->cacheEnabled = $cacheEnabled;
+    }
 
     public function getRouter(): ?MainRouter
     {
         return $this->router;
     }
 
+    /**
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws PhpVersionNotSupportedException
+     */
     public function buildRouter(ServerRequestInterface $request): MainRouter
     {
-        $this->router = parent::buildRouter($request);
-        return $this->router;
+        if (true === $this->cacheEnabled && $cache = $this->cache->get(static::CACHE_KEY)) {
+            $router = unserialize($cache, ['allowed_classes' => true])->getClosure()();
+
+            if ($router instanceof MainRouter) {
+                $this->router = $router;
+                return $router;
+            }
+        }
+
+
+        $builder = $this->builder;
+        $router = $builder(new MainRouter());
+
+        if (false === $this->cacheEnabled) {
+            $this->router = $router;
+            return $router;
+        }
+
+        if ($router instanceof MainRouter) {
+            $router->prepareRoutes($request);
+            $this->cache->set(static::CACHE_KEY, serialize(new SerializableClosure(fn() => $router)));
+            $this->router = $router;
+            return $router;
+        }
+
+        throw new InvalidArgumentException('Invalid Router builder provided to cached router');
     }
 
     public function dispatch(ServerRequestInterface $request): ResponseInterface

@@ -23,7 +23,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 $title = __('Forum Management');
 $nav_chain->add($title, '/admin/forum/');
 
-$mod = $request->getQuery('mod', 'index', FILTER_SANITIZE_STRING);
+$mod = $request->getQuery('mod', 'index');
 
 $set_forum = unserialize($user->set_forum, ['allowed_classes' => false]);
 if (! isset($set_forum) || empty($set_forum)) {
