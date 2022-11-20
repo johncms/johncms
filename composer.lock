@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0e224847142a85d35c6896c589e07ff",
+    "content-hash": "0e16bdf17c9971b90775f6d115c9ec5b",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1613,21 +1613,21 @@
         },
         {
             "name": "johncms/johncms-pagination",
-            "version": "2.0.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johncms/johncms-pagination.git",
-                "reference": "bc3a80609f80ff67aa6d75c3780456b5770be0dd"
+                "reference": "abd0c9d0a02f19fabfeb9aeb332764c72d601f00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johncms/johncms-pagination/zipball/bc3a80609f80ff67aa6d75c3780456b5770be0dd",
-                "reference": "bc3a80609f80ff67aa6d75c3780456b5770be0dd",
+                "url": "https://api.github.com/repos/johncms/johncms-pagination/zipball/abd0c9d0a02f19fabfeb9aeb332764c72d601f00",
+                "reference": "abd0c9d0a02f19fabfeb9aeb332764c72d601f00",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.2 || ^8.0"
+                "php": "^8.0"
             },
             "type": "library",
             "autoload": {
@@ -1649,9 +1649,9 @@
             "homepage": "https://johncms.com",
             "support": {
                 "issues": "https://github.com/johncms/johncms-pagination/issues",
-                "source": "https://github.com/johncms/johncms-pagination/tree/2.0.1"
+                "source": "https://github.com/johncms/johncms-pagination/tree/3.0.0"
             },
-            "time": "2021-07-27T19:43:09+00:00"
+            "time": "2022-11-20T20:47:04+00:00"
         },
         {
             "name": "johncms/language",
