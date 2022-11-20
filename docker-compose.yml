@@ -1,0 +1,62 @@
+version: '3'
+services:
+  webserver:
+    build:
+      context: ./docker/general
+      dockerfile: Dockerfile
+    image: simba7/php-fpm-app
+    container_name: ubuntu.${APP_NAME:-johncms}
+    depends_on:
+      - mariadb
+    volumes:
+      - .:/var/www/html
+    ports:
+      - '${NGINX_HTTP_PORT:-8000}:80'
+      - '${NGINX_HTTP_PORT:-8001}:443'
+    networks:
+      - web
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.web-http.rule=Host(`${APP_HOST:-johncms.loc}`)
+      - traefik.http.routers.web-https.rule=Host(`${APP_HOST:-johncms.loc}`)
+      - traefik.http.routers.web-https.tls=true
+  mariadb:
+    image: 'mariadb:10'
+    container_name: mariadb.${APP_NAME:-johncms}
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-johncms}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE:-johncms}'
+      MYSQL_USER: '${DB_USERNAME:-johncms}'
+      MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - './docker/mariadb/data:/var/lib/mysql'
+    networks:
+      - default
+    labels:
+      - traefik.enable=false
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin.${APP_NAME:-johncms}
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=0
+      - PMA_HOST=${DB_HOST:-mariadb}
+      - UPLOAD_LIMIT=1G
+    networks:
+      - web
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.loc`)
+
+networks:
+  web:
+    name: traefik_default
+    external: true

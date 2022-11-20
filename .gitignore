@@ -9,6 +9,7 @@
 /translate.xml
 /system/vendor
 /mix-manifest.json
+/docker/mariadb/data
 
 # Data folder ignores
 /data/debugbar/*
