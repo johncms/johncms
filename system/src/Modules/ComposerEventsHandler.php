@@ -8,8 +8,11 @@ use Composer\Installer\PackageEvent;
 use Johncms\Application;
 use Johncms\Container\ContainerFactory;
 
+/** @noinspection PhpUnused */
+
 class ComposerEventsHandler
 {
+    /** @noinspection PhpUnused */
     public static function postModuleInstall(PackageEvent $event): void
     {
         // Check if system installed
@@ -26,6 +29,7 @@ class ComposerEventsHandler
         }
     }
 
+    /** @noinspection PhpUnused */
     public static function preModuleUninstall(PackageEvent $event): void
     {
         // Check if system installed

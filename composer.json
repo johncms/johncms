@@ -62,27 +62,28 @@
         "johncms/ckeditor-media-embed": "^1.1",
         "johncms/johncms-pagination": "^3.0.0",
         "oomphinc/composer-installers-extender": "^2.0",
-        "johncms/homepage": "dev-develop",
-        "johncms/auth": "dev-develop",
-        "johncms/admin": "dev-develop",
-        "johncms/news": "dev-develop",
-        "johncms/language": "dev-develop",
-        "johncms/library": "dev-develop",
-        "johncms/community": "dev-develop",
-        "johncms/downloads": "dev-develop",
-        "johncms/forum": "dev-develop",
-        "johncms/guestbook": "dev-develop",
-        "johncms/help": "dev-develop",
-        "johncms/mail": "dev-develop",
-        "johncms/notifications": "dev-develop",
-        "johncms/online": "dev-develop",
-        "johncms/personal": "dev-develop",
-        "johncms/redirect": "dev-develop",
+        "johncms/homepage": "^0.0.1",
+        "johncms/auth": "^0.0.1",
+        "johncms/admin": "^0.0.1",
+        "johncms/news": "^0.0.1",
+        "johncms/language": "^0.0.1",
+        "johncms/library": "^0.0.1",
+        "johncms/community": "^0.0.1",
+        "johncms/downloads": "^0.0.1",
+        "johncms/forum": "^0.0.1",
+        "johncms/guestbook": "^0.0.1",
+        "johncms/help": "^0.0.1",
+        "johncms/mail": "^0.0.1",
+        "johncms/notifications": "^0.0.1",
+        "johncms/online": "^0.0.1",
+        "johncms/personal": "^0.0.1",
+        "johncms/redirect": "^0.0.1",
         "maximebf/debugbar": "^1.18",
         "compolomus/pagination": "^1.2",
         "monolog/monolog": "^2.8",
         "symfony/process": "^6.0",
-        "laravel/serializable-closure": "^1.2"
+        "laravel/serializable-closure": "^1.2",
+        "johncms/contacts": "^0.0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19",
@@ -131,67 +132,147 @@
     "repositories": [
         {
             "type": "path",
-            "url": "modules/johncms/homepage"
+            "url": "modules/johncms/homepage",
+            "options": {
+              "versions": {
+                "johncms/homepage": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/auth"
+            "url": "modules/johncms/auth",
+            "options": {
+              "versions": {
+                "johncms/auth": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/news"
+            "url": "modules/johncms/news",
+            "options": {
+              "versions": {
+                "johncms/news": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/admin"
+            "url": "modules/johncms/admin",
+            "options": {
+              "versions": {
+                "johncms/admin": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/language"
+            "url": "modules/johncms/language",
+            "options": {
+              "versions": {
+                "johncms/language": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/community"
+            "url": "modules/johncms/community",
+            "options": {
+              "versions": {
+                "johncms/community": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/downloads"
+            "url": "modules/johncms/downloads",
+            "options": {
+              "versions": {
+                "johncms/downloads": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/forum"
+            "url": "modules/johncms/forum",
+            "options": {
+              "versions": {
+                "johncms/forum": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/guestbook"
+            "url": "modules/johncms/guestbook",
+            "options": {
+              "versions": {
+                "johncms/guestbook": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/help"
+            "url": "modules/johncms/help",
+            "options": {
+              "versions": {
+                "johncms/help": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/library"
+            "url": "modules/johncms/library",
+            "options": {
+              "versions": {
+                "johncms/library": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/mail"
+            "url": "modules/johncms/mail",
+            "options": {
+              "versions": {
+                "johncms/mail": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/notifications"
+            "url": "modules/johncms/notifications",
+            "options": {
+              "versions": {
+                "johncms/notifications": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/online"
+            "url": "modules/johncms/online",
+            "options": {
+              "versions": {
+                "johncms/online": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/personal"
+            "url": "modules/johncms/personal",
+            "options": {
+              "versions": {
+                "johncms/personal": "0.0.1"
+              }
+            }
         },
         {
             "type": "path",
-            "url": "modules/johncms/redirect"
+            "url": "modules/johncms/redirect",
+            "options": {
+              "versions": {
+                "johncms/redirect": "0.0.1"
+              }
+            }
         }
     ],
     "extra": {

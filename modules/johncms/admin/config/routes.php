@@ -41,5 +41,7 @@ return function (Router $router) {
 
     $router->group('/admin/modules', function (RouteGroup $routeGroup) {
         $routeGroup->get('[/]', [ModulesController::class, 'index'])->setName('admin.modules');
+        $routeGroup->get('/add[/]', [ModulesController::class, 'add'])->setName('admin.modules.add');
+        $routeGroup->post('/add[/]', [ModulesController::class, 'add']);
     })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 };

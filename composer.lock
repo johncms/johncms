@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e16bdf17c9971b90775f6d115c9ec5b",
+    "content-hash": "416d442fc8ee53305b906c1448bdd7e3",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1306,11 +1306,11 @@
         },
         {
             "name": "johncms/admin",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/admin",
-                "reference": "73daefea9d38e5f445b03897b087603c355c0a79"
+                "reference": "1d3ad3499744197258534d36fcc42cb36a314437"
             },
             "require": {
                 "php": "^8.0"
@@ -1338,11 +1338,11 @@
         },
         {
             "name": "johncms/auth",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/auth",
-                "reference": "424d71699a950f813491bcb4f8482d7929345e7d"
+                "reference": "be1361168690c219db24482644c720023b1471c2"
             },
             "require": {
                 "php": "^8.0"
@@ -1421,11 +1421,11 @@
         },
         {
             "name": "johncms/community",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/community",
-                "reference": "50cbbe9577987e5d75c189ad78e00682ac6b7fb8"
+                "reference": "598670bccc96b9bd56b7251cfd0e8a4c7bb211f0"
             },
             "require": {
                 "php": "^8.0"
@@ -1452,12 +1452,53 @@
             }
         },
         {
+            "name": "johncms/contacts",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johncms/contacts.git",
+                "reference": "9270224095c6429feea5deb52990fd4e323e3875"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johncms/contacts/zipball/9270224095c6429feea5deb52990fd4e323e3875",
+                "reference": "9270224095c6429feea5deb52990fd4e323e3875",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "johncms-module",
+            "autoload": {
+                "psr-4": {
+                    "Johncms\\Contacts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maksim Masalov",
+                    "email": "simba7@inbox.ru"
+                }
+            ],
+            "description": "description",
+            "homepage": "https://johncms.com",
+            "support": {
+                "issues": "https://github.com/johncms/contacts/issues",
+                "source": "https://github.com/johncms/contacts/tree/0.0.1"
+            },
+            "time": "2022-11-12T18:36:07+00:00"
+        },
+        {
             "name": "johncms/downloads",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/downloads",
-                "reference": "caa2a49c4240863ba361c66e2fa912d0002827cb"
+                "reference": "0257a7100e4283b1c60da196123d020b8f0e75be"
             },
             "require": {
                 "php": "^8.0"
@@ -1485,11 +1526,11 @@
         },
         {
             "name": "johncms/forum",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/forum",
-                "reference": "2d9d6adb356c6a2f91d1c35844eeeed57782b2a3"
+                "reference": "d27103d15208e31821ad3834c4f5e36ce1e91334"
             },
             "require": {
                 "php": "^8.0"
@@ -1517,11 +1558,11 @@
         },
         {
             "name": "johncms/guestbook",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/guestbook",
-                "reference": "35c8784d58501bca4f9daa90352c6cf574c576cc"
+                "reference": "c0059b4c990f5c54cd142f5d3bc56cbf77e63cef"
             },
             "require": {
                 "php": "^8.0"
@@ -1549,11 +1590,11 @@
         },
         {
             "name": "johncms/help",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/help",
-                "reference": "45a556962255aab4d25826ac43a9b87d9fe3c726"
+                "reference": "79bce9e2f0914bea787ab34045f3d9b8cdbe4721"
             },
             "require": {
                 "php": "^8.0"
@@ -1581,11 +1622,11 @@
         },
         {
             "name": "johncms/homepage",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/homepage",
-                "reference": "2ab2aac847a3732eca54fde91099955ab5c9a874"
+                "reference": "1ea09316f0f73926a925b4e22e4a7ad3b21cbcaf"
             },
             "require": {
                 "php": "^8.0"
@@ -1655,11 +1696,11 @@
         },
         {
             "name": "johncms/language",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/language",
-                "reference": "e4664cf61764ed16b8dfe9b4d814b29ed63d0ea4"
+                "reference": "cdd51de62f5f798bb76be4dad184038e51e2fa98"
             },
             "require": {
                 "php": "^8.0"
@@ -1687,11 +1728,11 @@
         },
         {
             "name": "johncms/library",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/library",
-                "reference": "8575bdf827f7cc975b8b9b55dc046a459266329e"
+                "reference": "0145eae2fab526094ef5564cab05cd84a2a917f9"
             },
             "require": {
                 "php": "^8.0"
@@ -1719,11 +1760,11 @@
         },
         {
             "name": "johncms/mail",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/mail",
-                "reference": "cfcd0c6554db47a0936e4b921a15563e454848e5"
+                "reference": "0ae69105cfa590440a38e6cdef6bfba72bd2197b"
             },
             "require": {
                 "php": "^8.0"
@@ -1751,11 +1792,11 @@
         },
         {
             "name": "johncms/news",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/news",
-                "reference": "e09a013ab5f4ce132a7592bb23cc34a513e716eb"
+                "reference": "21e73aa094c811ecce87da26b9e07710dbabaa21"
             },
             "require": {
                 "php": "^8.0"
@@ -1783,11 +1824,11 @@
         },
         {
             "name": "johncms/notifications",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/notifications",
-                "reference": "f1c1380858ba7b3f0ccd153f725561075533f4f6"
+                "reference": "a7acab8f7d0d285cb42ceec12919ea476fb394c4"
             },
             "require": {
                 "php": "^8.0"
@@ -1815,11 +1856,11 @@
         },
         {
             "name": "johncms/online",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/online",
-                "reference": "239ca34c965032ee5af2d3adb34d7c9a1b489e85"
+                "reference": "c5d25d5ac02fa29d1770e2aebf2b192508c5bcda"
             },
             "require": {
                 "php": "^8.0"
@@ -1847,11 +1888,11 @@
         },
         {
             "name": "johncms/personal",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/personal",
-                "reference": "f3d3c0510372a6f92a46bfc72895ef2a943ad65e"
+                "reference": "0135d575493472730b505a5ceaeb6425e67eca84"
             },
             "require": {
                 "php": "^8.0"
@@ -1879,11 +1920,11 @@
         },
         {
             "name": "johncms/redirect",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "dist": {
                 "type": "path",
                 "url": "modules/johncms/redirect",
-                "reference": "050ae8bfde4f88e901c1551f9e5a45d5f4158885"
+                "reference": "9d4a01a6778c48bef346d1b0bda12240fe2d8d33"
             },
             "require": {
                 "php": "^8.0"
@@ -9361,22 +9402,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "johncms/homepage": 20,
-        "johncms/auth": 20,
-        "johncms/admin": 20,
-        "johncms/news": 20,
-        "johncms/language": 20,
-        "johncms/library": 20,
-        "johncms/community": 20,
-        "johncms/downloads": 20,
-        "johncms/forum": 20,
-        "johncms/guestbook": 20,
-        "johncms/help": 20,
-        "johncms/mail": 20,
-        "johncms/notifications": 20,
-        "johncms/online": 20,
-        "johncms/personal": 20,
-        "johncms/redirect": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

@@ -10,6 +10,10 @@ $this->layout('system::layout/default');
 
 ?>
 
+<div class="mb-4">
+    <a href="<?= route('admin.modules.add') ?>" class="btn btn-primary"><?= __('Add') ?></a>
+</div>
+
 <?php foreach ($data['modules'] as $module): ?>
     <div class="border-bottom mb-3 pb-3">
         <h4 class="fw-bolder"><?= $module->name ?></h4>
