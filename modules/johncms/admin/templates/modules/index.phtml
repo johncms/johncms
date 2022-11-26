@@ -30,8 +30,9 @@ $this->layout('system::layout/default');
         </div>
         <?php if (! $module->isSystem): ?>
             <div class="actions">
-                <a href="#" class="btn btn-warning btn-sm"><?= __('Update') ?></a>
-                <a href="#" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+                <a href="#" class="btn btn-warning btn-sm me-1"><?= __('Update') ?></a>
+                <a href="<?= route('admin.modules.delete', queryParams: ['name' => $module->name]) ?>"
+                   class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
             </div>
         <?php endif; ?>
     </div>

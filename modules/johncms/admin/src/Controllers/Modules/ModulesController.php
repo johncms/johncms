@@ -21,6 +21,7 @@ class ModulesController extends BaseAdminController
     public function index(): string
     {
         $this->metaTagManager->setAll(__('List of Modules'));
+        $this->navChain->add(__('List of Modules'));
         return $this->render->render('admin::modules/index', [
             'data' => [
                 'modules' => Modules::getModulesWithMetaData(),
@@ -28,8 +29,14 @@ class ModulesController extends BaseAdminController
         ]);
     }
 
+    /**
+     * Add module page
+     */
     public function add(Request $request, Session $session, AddModuleForm $installModuleForm, ComposerModuleInstaller $moduleInstaller): ResponseInterface | string
     {
+        $this->navChain->add(__('List of Modules'), route('admin.modules'));
+        $this->navChain->add(__('Add Module'));
+
         // If the form is submitted, install the module.
         if ($request->isPost()) {
             try {
@@ -41,8 +48,8 @@ class ModulesController extends BaseAdminController
 
                 return $this->render->render('admin::modules/install_result', [
                     'data' => [
-                        'installResult' => $installResult['success'],
-                        'installLog'    => $installResult['output'],
+                        'result' => $installResult['success'],
+                        'log'    => $installResult['output'],
                     ],
                 ]);
             } catch (ValidationException $validationException) {
@@ -58,7 +65,39 @@ class ModulesController extends BaseAdminController
                 'formFields'       => $installModuleForm->getFormFields(),
                 'validationErrors' => $installModuleForm->getValidationErrors(),
                 'storeUrl'         => route('admin.modules.add'),
-                'authError'        => $session->getFlash('authError'),
+            ],
+        ]);
+    }
+
+    /**
+     * Delete module page
+     */
+    public function delete(Request $request, ComposerModuleInstaller $moduleInstaller): string | RedirectResponse
+    {
+        $this->navChain->add(__('List of Modules'), route('admin.modules'));
+        $this->navChain->add(__('Delete Module'));
+
+        $moduleName = $request->getQuery('name', '');
+        if (empty($moduleName)) {
+            return (new RedirectResponse(route('admin.modules')));
+        }
+
+        if ($request->isPost()) {
+            $result = $moduleInstaller->remove($moduleName);
+
+            return $this->render->render('admin::modules/delete_result', [
+                'data' => [
+                    'result' => $result['success'],
+                    'log'    => $result['output'],
+                ],
+            ]);
+        }
+
+        $this->metaTagManager->setAll(__('Delete Module'));
+        return $this->render->render('admin::modules/delete', [
+            'data' => [
+                'name'     => htmlspecialchars($request->getQuery('name')),
+                'storeUrl' => route('admin.modules.delete', queryParams: ['name' => $moduleName]),
             ],
         ]);
     }

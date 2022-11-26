@@ -27,4 +27,19 @@ class ComposerOutputParser
             true
         );
     }
+
+    /**
+     * Check if a module has been removed
+     */
+    public function moduleRemove(string $moduleName): bool
+    {
+        return Str::containsAll(
+            $this->consoleOutput,
+            [
+                '- Removing ' . $moduleName,
+                'Generating autoload files',
+            ],
+            true
+        );
+    }
 }

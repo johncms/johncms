@@ -24,7 +24,8 @@ $this->layout('system::layout/default');
                 ]
             ); ?>
             <div class="mt-3">
-                <button type="submit" name="submit" class="btn btn-primary"><?= __('Add') ?></button>
+                <button type="submit" name="submit" class="btn btn-primary me-1"><?= __('Add') ?></button>
+                <a href="<?= route('admin.modules') ?>" class="btn btn-outline-secondary"><?= __('Back') ?></a>
             </div>
         </form>
     </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "416d442fc8ee53305b906c1448bdd7e3",
+    "content-hash": "439fc9be736016d14b94d34958c44298",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1450,47 +1450,6 @@
             "transport-options": {
                 "relative": true
             }
-        },
-        {
-            "name": "johncms/contacts",
-            "version": "0.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johncms/contacts.git",
-                "reference": "9270224095c6429feea5deb52990fd4e323e3875"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johncms/contacts/zipball/9270224095c6429feea5deb52990fd4e323e3875",
-                "reference": "9270224095c6429feea5deb52990fd4e323e3875",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "type": "johncms-module",
-            "autoload": {
-                "psr-4": {
-                    "Johncms\\Contacts\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maksim Masalov",
-                    "email": "simba7@inbox.ru"
-                }
-            ],
-            "description": "description",
-            "homepage": "https://johncms.com",
-            "support": {
-                "issues": "https://github.com/johncms/contacts/issues",
-                "source": "https://github.com/johncms/contacts/tree/0.0.1"
-            },
-            "time": "2022-11-12T18:36:07+00:00"
         },
         {
             "name": "johncms/downloads",
