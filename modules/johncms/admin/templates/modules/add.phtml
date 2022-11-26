@@ -12,10 +12,6 @@ $this->layout('system::layout/default');
 <div class="row">
     <div class="col-md-6">
         <form method="post" class="mb-3" action="<?= $data['storeUrl'] ?>">
-            <?php if (! empty($data['authError'])): ?>
-                <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-danger', 'alert' => $data['authError']]) ?>
-            <?php endif ?>
-
             <?= $this->fetch(
                 'system::forms/simple_form',
                 [

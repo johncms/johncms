@@ -9,7 +9,6 @@ use Johncms\Controller\BaseAdminController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Http\Request;
 use Johncms\Http\Response\RedirectResponse;
-use Johncms\Http\Session;
 use Johncms\Modules\ComposerModuleInstaller;
 use Johncms\Modules\Modules;
 use Psr\Http\Message\ResponseInterface;
@@ -32,7 +31,7 @@ class ModulesController extends BaseAdminController
     /**
      * Add module page
      */
-    public function add(Request $request, Session $session, AddModuleForm $installModuleForm, ComposerModuleInstaller $moduleInstaller): ResponseInterface | string
+    public function add(Request $request, AddModuleForm $installModuleForm, ComposerModuleInstaller $moduleInstaller): ResponseInterface | string
     {
         $this->navChain->add(__('List of Modules'), route('admin.modules'));
         $this->navChain->add(__('Add Module'));

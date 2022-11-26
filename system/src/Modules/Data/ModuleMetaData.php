@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Data;
 
+use Composer\Semver\Comparator;
 use Illuminate\Support\Arr;
 use Johncms\Modules\Modules;
 
@@ -16,6 +17,9 @@ class ModuleMetaData
         public string $license,
         public array $authors,
         public bool $isSystem,
+        public ?string $version,
+        public ?string $repoVersion = null,
+        public bool $updateAvailable = false,
     ) {
     }
 
@@ -33,13 +37,22 @@ class ModuleMetaData
             );
         }
 
+        $version = Modules::getModuleVersion($name);
+        $repoVersion = Modules::getRepoModuleVersion($name);
+        if ($repoVersion && $version) {
+            $updateAvailable = Comparator::greaterThan($repoVersion, $version);
+        }
+
         return new self(
-            name:        $name,
-            description: (string) Arr::get($composerConfig, 'description', ''),
-            homepage:    (string) Arr::get($composerConfig, 'homepage', ''),
-            license:     (string) Arr::get($composerConfig, 'license', ''),
-            authors:     $preparedAuthors,
-            isSystem:    in_array($name, Modules::getSystemModules()),
+            name:            $name,
+            description:     (string) Arr::get($composerConfig, 'description', ''),
+            homepage:        (string) Arr::get($composerConfig, 'homepage', ''),
+            license:         (string) Arr::get($composerConfig, 'license', ''),
+            authors:         $preparedAuthors,
+            isSystem:        in_array($name, Modules::getSystemModules()),
+            version:         $version,
+            repoVersion:     $repoVersion,
+            updateAvailable: $updateAvailable ?? false,
         );
     }
 }

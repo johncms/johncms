@@ -11,8 +11,10 @@
 namespace Johncms\Modules;
 
 use Composer\InstalledVersions;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Johncms\Modules\Data\ModuleMetaData;
+use Throwable;
 
 class Modules
 {
@@ -35,6 +37,32 @@ class Modules
             return array_intersect($moduleNames, $installedModules);
         }
         return [];
+    }
+
+    /**
+     * Get module version
+     */
+    public static function getModuleVersion(string $moduleName): ?string
+    {
+        try {
+            return InstalledVersions::getPrettyVersion($moduleName);
+        } catch (Throwable) {
+            return null;
+        }
+    }
+
+    public static function getRepoModuleVersion(string $moduleName)
+    {
+        try {
+            $moduleData = file_get_contents('https://repo.packagist.org/p2/' . $moduleName . '.json');
+            if ($moduleData) {
+                $meta = json_decode($moduleData, true);
+                return Arr::get($meta, 'packages.' . $moduleName . '.0.version');
+            }
+        } catch (Throwable) {
+        }
+
+        return null;
     }
 
     /**
