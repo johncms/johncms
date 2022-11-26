@@ -15,7 +15,7 @@ cms-update:
 	php johncms migrate
 	php johncms cache:clear
 
-run:
+up:
 	docker-compose up -d
 
 rebuild:
