@@ -12,6 +12,7 @@ namespace Johncms\Modules;
 
 use Composer\InstalledVersions;
 use Illuminate\Support\Str;
+use Johncms\Modules\Data\ModuleMetaData;
 
 class Modules
 {
@@ -34,6 +35,34 @@ class Modules
             return array_intersect($moduleNames, $installedModules);
         }
         return [];
+    }
+
+    /**
+     * Get module meta data
+     */
+    public static function getModuleData(string $moduleName): ?ModuleMetaData
+    {
+        $composerJsonPath = MODULES_PATH . $moduleName . '/composer.json';
+        if (is_file($composerJsonPath)) {
+            $composerConfig = file_get_contents($composerJsonPath);
+            return ModuleMetaData::createFromComposerJson(json_decode($composerConfig, true));
+        }
+        return null;
+    }
+
+    /**
+     * Get meta data for all modules
+     *
+     * @return array<string, ModuleMetaData|null>
+     */
+    public static function getModulesWithMetaData(): array
+    {
+        $modules = self::getInstalled();
+        $modulesData = [];
+        foreach ($modules as $module) {
+            $modulesData[$module] = self::getModuleData($module);
+        }
+        return $modulesData;
     }
 
     /**
