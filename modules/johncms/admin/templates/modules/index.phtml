@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @var array $data
+ * @var \Johncms\Modules\Data\ModuleMetaData $module
+ * @var Mobicms\Render\Template\Template $this
+ */
+
+$this->layout('system::layout/default');
+
+?>
+
+<?php foreach ($data['modules'] as $module): ?>
+    <div class="border-bottom mb-3 pb-3">
+        <h4 class="fw-bolder"><?= $module->name ?></h4>
+        <div class="body small pb-2">
+            <?php if (! empty($module->license)): ?>
+                <div><?= __('License:') ?> <?= $module->license ?></div>
+            <?php endif; ?>
+            <?php if (! empty($module->description)): ?>
+                <div><?= __('Description:') ?> <?= $module->description ?></div>
+            <?php endif; ?>
+            <?php if (! empty($module->homepage)): ?>
+                <div><?= __('Homepage:') ?> <?= $module->homepage ?></div>
+            <?php endif; ?>
+        </div>
+        <?php if (! $module->isSystem): ?>
+            <div class="actions">
+                <a href="#" class="btn btn-warning btn-sm"><?= __('Update') ?></a>
+                <a href="#" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endforeach; ?>
+

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Data;
 
 use Illuminate\Support\Arr;
+use Johncms\Modules\Modules;
 
 class ModuleMetaData
 {
@@ -14,11 +15,13 @@ class ModuleMetaData
         public string $homepage,
         public string $license,
         public array $authors,
+        public bool $isSystem,
     ) {
     }
 
     public static function createFromComposerJson(array $composerConfig): ModuleMetaData
     {
+        $name = (string) Arr::get($composerConfig, 'name', '');
         $authors = Arr::get($composerConfig, 'authors', []);
         $preparedAuthors = [];
         foreach ($authors as $author) {
@@ -29,12 +32,14 @@ class ModuleMetaData
                 role:     (string) Arr::get($author, 'role', ''),
             );
         }
+
         return new self(
-            name:        (string) Arr::get($composerConfig, 'name', ''),
+            name:        $name,
             description: (string) Arr::get($composerConfig, 'description', ''),
             homepage:    (string) Arr::get($composerConfig, 'homepage', ''),
             license:     (string) Arr::get($composerConfig, 'license', ''),
             authors:     $preparedAuthors,
+            isSystem:    in_array($name, Modules::getSystemModules()),
         );
     }
 }

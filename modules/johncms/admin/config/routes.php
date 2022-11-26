@@ -4,6 +4,7 @@ use Johncms\Admin\AdminPermissions;
 use Johncms\Admin\Controllers\Users\AuthController;
 use Johncms\Admin\Controllers\DashboardController;
 use Johncms\Admin\Controllers\System\DebugBarController;
+use Johncms\Admin\Controllers\Modules\ModulesController;
 use Johncms\Admin\Controllers\Users\UsersController;
 use Johncms\Admin\Middlewares\AdminAuthorizedUserMiddleware;
 use Johncms\Admin\Middlewares\AdminUnauthorizedUserMiddleware;
@@ -24,10 +25,8 @@ return function (Router $router) {
 
     $router->group('/admin', function (RouteGroup $routeGroup) {
         // Login routes
-        $routeGroup->get('/login[/]', [AuthController::class, 'index'])
-            ->setName('admin.login');
-        $routeGroup->post('/login/authorize[/]', [AuthController::class, 'authorize'])
-            ->setName('admin.authorize');
+        $routeGroup->get('/login[/]', [AuthController::class, 'index'])->setName('admin.login');
+        $routeGroup->post('/login/authorize[/]', [AuthController::class, 'authorize'])->setName('admin.authorize');
     })->lazyMiddleware(AdminUnauthorizedUserMiddleware::class);
 
     $router->group('/admin/users', function (RouteGroup $routeGroup) {
@@ -37,5 +36,10 @@ return function (Router $router) {
         $routeGroup->get('/edit/{id:number}[/]', [UsersController::class, 'edit'])->setName('admin.editUser');
         $routeGroup->post('/store[/]', [UsersController::class, 'store'])->setName('admin.storeUser');
         $routeGroup->post('/delete[/]', [UsersController::class, 'delete'])->setName('admin.deleteUser');
+    })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
+
+
+    $router->group('/admin/modules', function (RouteGroup $routeGroup) {
+        $routeGroup->get('[/]', [ModulesController::class, 'index'])->setName('admin.modules');
     })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 };
