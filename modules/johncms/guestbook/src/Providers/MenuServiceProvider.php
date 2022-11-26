@@ -17,7 +17,7 @@ class MenuServiceProvider extends ServiceProvider
             ->add(
                 new MenuItem(
                     code:    'guestbook',
-                    url:     route('guestbook.index'),
+                    url:     route('guestbook.switch_type'),
                     name:    __('Guestbook'),
                     icon:    'chat',
                     counter: ['counters', 'guestbookCounters'],
@@ -29,7 +29,7 @@ class MenuServiceProvider extends ServiceProvider
             ->add(
                 new MenuItem(
                     code:    'adminClub',
-                    url:     '/guestbook/ga?do=set',
+                    url:     route('guestbook.switch_type', queryParams: ['do' => 'set']),
                     name:    __('Admin Chat'),
                     icon:    'forum',
                     counter: ['counters', 'guestbookCounters']
