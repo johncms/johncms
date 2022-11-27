@@ -58,3 +58,22 @@
     }
   }
 }
+
+.text-avatar {
+  font-size: 25px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar_user_avatar {
+  .text-avatar {
+    font-size: 14px;
+    height: 70px;
+    width: 70px;
+  }
+}

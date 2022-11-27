@@ -1,10 +1,3 @@
-// CSS variables
-:root {
-  --btn-icon-size: 18px;
-  --btn-icon-right-margin: 7px;
-  --btn-with-icon-right-padding: 20px;
-}
-
 // Body
 $body-bg: #ffffff;
 
@@ -119,3 +112,28 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
 $btn-border-radius: 1.5rem;
 $btn-border-radius-lg: .3rem;
 $btn-border-radius-sm: .2rem;
+
+$form-label-margin-bottom: 0.1rem;
+$input-bg: #f9f9f9;
+
+// CSS variables
+:root {
+  --btn-icon-size: 18px;
+  --btn-icon-right-margin: 7px;
+  --btn-with-icon-right-padding: 20px;
+
+  --bs-primary: #66615B;
+  --bs-secondary: #918d88;
+  --bs-success: #42A084;
+  --bs-info: #68B3C8;
+  --bs-warning: #F3BB45;
+  --bs-danger: #EB5E28;
+
+  --primary-bg-text-color: #fff;
+
+  --border-color: #66615B;
+
+  --font-size-normal: 14px;
+  --font-size-small: 12px;
+  --font-size-x-small: 11px;
+}
