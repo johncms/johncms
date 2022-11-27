@@ -23,6 +23,25 @@ class MenuServiceProvider extends ServiceProvider
                     url:  route('admin.users'),
                     name: __('Users'),
                     icon: 'users',
+                    sort: 100,
+                )
+            )
+            ->add(
+                new MenuItem(
+                    code: 'system',
+                    url:  '/admin/system',
+                    name: __('System'),
+                    icon: 'settings',
+                    sort: 200,
+                )
+            )
+            ->addChildren(
+                'system',
+                new MenuItem(
+                    code: 'modules',
+                    url:  route('admin.modules'),
+                    name: __('Modules'),
+                    icon: 'shopping-cart',
                 )
             );
 
