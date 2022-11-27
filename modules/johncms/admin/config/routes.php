@@ -45,5 +45,7 @@ return function (Router $router) {
         $routeGroup->post('/add[/]', [ModulesController::class, 'add']);
         $routeGroup->get('/delete[/]', [ModulesController::class, 'delete'])->setName('admin.modules.delete');
         $routeGroup->post('/delete[/]', [ModulesController::class, 'delete']);
+        $routeGroup->get('/update[/]', [ModulesController::class, 'update'])->setName('admin.modules.update');
+        $routeGroup->post('/update[/]', [ModulesController::class, 'update']);
     })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 };

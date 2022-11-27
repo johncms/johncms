@@ -24,4 +24,8 @@ abstract class Installer
     public function afterInstall(): void
     {
     }
+
+    public function afterUpdate(): void
+    {
+    }
 }

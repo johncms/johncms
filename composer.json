@@ -126,6 +126,7 @@
         "translate-scan": "scan",
         "test": "phpunit --colors=always",
         "post-package-install": "Johncms\\Modules\\ComposerEventsHandler::postModuleInstall",
+        "post-package-update": "Johncms\\Modules\\ComposerEventsHandler::postModuleUpdate",
         "pre-package-uninstall": "Johncms\\Modules\\ComposerEventsHandler::preModuleUninstall"
     },
     "repositories": [

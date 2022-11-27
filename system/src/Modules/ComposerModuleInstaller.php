@@ -35,6 +35,18 @@ class ComposerModuleInstaller
         ];
     }
 
+    /**
+     * @return array{output: string, success: bool}
+     */
+    public function update(string $moduleName): array
+    {
+        $out = $this->executeCommand('require', $moduleName);
+        return [
+            'output'  => $out,
+            'success' => (new ComposerOutputParser($out))->moduleUpdate($moduleName),
+        ];
+    }
+
     private function executeCommand(string $type, string $moduleName): string
     {
         $phpBinaryFinder = new PhpExecutableFinder();

@@ -47,6 +47,12 @@ class ModuleManager
         $this->installer?->install();
     }
 
+    public function update(): void
+    {
+        $this->copyAssets();
+        di(Migration::class)->run($this->module);
+    }
+
     public function uninstall(): void
     {
         $this->deleteAssets();
@@ -57,6 +63,11 @@ class ModuleManager
     public function afterInstall(): void
     {
         $this->installer?->afterInstall();
+    }
+
+    public function afterUpdate(): void
+    {
+        $this->installer?->afterUpdate();
     }
 
     /**

@@ -42,4 +42,19 @@ class ComposerOutputParser
             true
         );
     }
+
+    /**
+     * Check if a module has been updated
+     */
+    public function moduleUpdate(string $moduleName): bool
+    {
+        return Str::containsAll(
+            $this->consoleOutput,
+            [
+                '- Upgrading ' . $moduleName,
+                'Generating autoload files',
+            ],
+            true
+        );
+    }
 }

@@ -100,4 +100,37 @@ class ModulesController extends BaseAdminController
             ],
         ]);
     }
+
+    /**
+     * Delete module page
+     */
+    public function update(Request $request, ComposerModuleInstaller $moduleInstaller): string | RedirectResponse
+    {
+        $this->navChain->add(__('List of Modules'), route('admin.modules'));
+        $this->navChain->add(__('Update Module'));
+
+        $moduleName = $request->getQuery('name', '');
+        if (empty($moduleName)) {
+            return (new RedirectResponse(route('admin.modules')));
+        }
+
+        if ($request->isPost()) {
+            $result = $moduleInstaller->update($moduleName);
+
+            return $this->render->render('admin::modules/update_result', [
+                'data' => [
+                    'result' => $result['success'],
+                    'log'    => $result['output'],
+                ],
+            ]);
+        }
+
+        $this->metaTagManager->setAll(__('Update Module'));
+        return $this->render->render('admin::modules/update', [
+            'data' => [
+                'name'     => htmlspecialchars($request->getQuery('name')),
+                'storeUrl' => route('admin.modules.update', queryParams: ['name' => $moduleName]),
+            ],
+        ]);
+    }
 }

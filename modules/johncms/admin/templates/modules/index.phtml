@@ -34,7 +34,8 @@ $this->layout('system::layout/default');
         <?php if (! $module->isSystem): ?>
             <div class="actions">
                 <?php if ($module->updateAvailable): ?>
-                    <a href="#" class="btn btn-warning btn-sm me-1"><?= __('Update') ?></a>
+                    <a href="<?= route('admin.modules.update', queryParams: ['name' => $module->name]) ?>"
+                       class="btn btn-warning btn-sm me-1"><?= __('Update') ?></a>
                 <?php endif; ?>
                 <a href="<?= route('admin.modules.delete', queryParams: ['name' => $module->name]) ?>"
                    class="btn btn-danger btn-sm"><?= __('Delete') ?></a>

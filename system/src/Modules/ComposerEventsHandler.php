@@ -30,6 +30,23 @@ class ComposerEventsHandler
     }
 
     /** @noinspection PhpUnused */
+    public static function postModuleUpdate(PackageEvent $event): void
+    {
+        // Check if system installed
+        if (is_file(dirname(__DIR__, 3) . '/config/autoload/database.local.php')) {
+            require_once $event->getComposer()->getConfig()->get('vendor-dir') . '/autoload.php';
+            $installedPackage = $event->getOperation()->getTargetPackage()->getPrettyName();
+
+            ComposerEventsHandler::runApp();
+            if (ComposerEventsHandler::isJohnCMSModule($installedPackage)) {
+                $moduleManager = new ModuleManager($installedPackage);
+                $moduleManager->update();
+                $moduleManager->afterUpdate();
+            }
+        }
+    }
+
+    /** @noinspection PhpUnused */
     public static function preModuleUninstall(PackageEvent $event): void
     {
         // Check if system installed
