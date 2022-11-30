@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18
 
 WORKDIR /var/www/html
 
