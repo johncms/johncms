@@ -13,6 +13,7 @@
     "noImplicitThis": false,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "noEmit": true,
     "paths": {
       "@/*": [
         "themes/default/src/js/*",
@@ -21,7 +22,7 @@
   },
   "include": [
     "themes/default/src/js/**/*",
-    "themes/admin/src/js/**/*",
+    //"themes/admin/src/js/**/*",
   ],
   "exclude": [
     "node_modules"
