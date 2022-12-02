@@ -33,6 +33,38 @@ make cms-install
 5. Open the url in your browser (replace your.site to your virtualhost name): http://your.site/install and follow the instructions in the installer.
 6. **This is all done**. If you go to the address of your virtual host from the browser, you should see a working site with demo data.
 
+## Installation in Docker
+**To install the developer version**, you must have a [Docker](https://www.docker.com/) and [GIT](https://git-scm.com/) version control system.
+1. Clone or download this repository on local workstation.
+```bash
+git clone https://github.com/johncms/johncms.git johncms
+cd johncms
+```
+2. Start the container
+```bash
+docker-compose up -d
+```
+3. Open the container console.
+```bash
+docker exec -it $(docker ps -q -f name=ubuntu) bash
+```
+4. Build assets and install dependencies
+```bash
+npm install && composer install && npm run build
+```
+5. Install the system in your browser using the following data
+
+    Open the address http://localhost:8000
+    
+    DB Host: **mariadb**
+
+    DB Name: **johncms**
+    
+    DB User: **johncms**
+    
+    DB Password: **password**
+
+
 ## Problems and solutions
 
 When you get updates from the repository, you need to follow the changes of some files.
