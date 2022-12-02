@@ -4,23 +4,22 @@
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-  window.Popper = require('popper.js').default;
-  window.$ = window.jQuery = require('jquery');
-  window.axios = require('axios');
-  window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+import axios from 'axios'
+import {Tooltip} from "bootstrap";
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
+try {
+  axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   let token = document.head.querySelector('meta[name="csrf-token"]');
   if (token) {
-    window.axios.defaults.headers.common['X-CSRF-Token'] = token.content;
-  } else {
-    console.error('CSRF token not found!');
+    axios.defaults.headers.common['X-CSRF-Token'] = token.content;
   }
 
-  var _ = require('lodash');
-
-  require('bootstrap');
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new Tooltip(tooltipTriggerEl)
+  });
 } catch (e) {
+  console.log(e);
 }
-
-

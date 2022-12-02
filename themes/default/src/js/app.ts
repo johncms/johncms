@@ -1,18 +1,20 @@
 import 'swiper/css/bundle';
 
-require('./bootstrap');
-require('./jquery.magnific-popup');
-require("flatpickr");
-require('./menu');
-require('./prism');
-require('./forum');
-require('./modals');
-require('./slider');
-require('./progress');
-require('./wysibb');
-require('./main');
+import './bootstrap';
+import '../scss/app.scss';
 
-import {createApp, defineAsyncComponent} from 'vue'
+// import './jquery.magnific-popup';
+import 'flatpickr';
+import './menu';
+// import './prism';
+import './forum';
+import './modals';
+import './slider';
+import './progress';
+// import './wysibb';
+import './main';
+
+import {createApp, defineAsyncComponent} from 'vue/dist/vue.esm-bundler'
 
 const app = () => createApp({})
 

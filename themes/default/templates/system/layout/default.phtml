@@ -25,6 +25,16 @@ $ads_array = $ads->getAds();
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="csrf-token" content="<?= $csrf_token ?>">
+
+    <?php
+    // TODO: Move to the separate method
+    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/manifest.json'), true);
+    ?>
+    <script defer src="/public/<?= $manifest['themes/default/src/js/app.ts']['file'] ?>" type="module"></script>
+    <?php foreach ($manifest['themes/default/src/js/app.ts']['css'] as $css) {
+        ?><link rel="stylesheet" href="/public/<?= $css ?>"><?php
+    } ?>
+
     <?= $this->section('meta', '') ?>
     <?php if (! empty($metaTags->getKeywords())): ?>
         <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">
@@ -36,11 +46,6 @@ $ads_array = $ads->getAds();
         <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
-    <?php if ($locale === 'ar'): ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
-    <?php else: ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
-    <?php endif; ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
@@ -176,10 +181,10 @@ $ads_array = $ads->getAds();
         <div class="modal-content"></div>
     </div>
 </div>
-<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
-<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
-<script src="<?= $this->asset('js/app.js', true) ?>"></script>
-<?php if ($locale !== 'en'): ?>
+
+
+
+<?php /* if ($locale !== 'en'): ?>
     <?php
     try { // TODO: improve the asset method for simplify this construction
         ?>
@@ -189,7 +194,7 @@ $ads_array = $ads->getAds();
     } catch (Exception $exception) {
     }
     ?>
-<?php endif; ?>
+<?php endif; */ ?>
 <?= $this->section('scripts', '') ?>
 </body>
 </html>

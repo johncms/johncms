@@ -1,12 +1,16 @@
-require('./bootstrap');
-require('./jquery.magnific-popup');
-require("flatpickr");
-require('./menu');
-require('./prism');
-require('./modals');
-require('./main');
+import './bootstrap';
+import '../scss/app.scss';
 
-import {createApp, defineAsyncComponent} from 'vue'
+// import './jquery.magnific-popup';
+import 'flatpickr';
+import './menu';
+// import './prism';
+import './modals';
+import './main';
+
+
+// @ts-ignore
+import {createApp, defineAsyncComponent} from 'vue/dist/vue.esm-bundler'
 import {createI18n} from 'vue-i18n'
 import en from './locale/en.json';
 import ru from './locale/ru.json';

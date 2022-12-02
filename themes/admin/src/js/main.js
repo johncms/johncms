@@ -38,11 +38,11 @@ $(document).ready(function () {
     $(wysibb_input).wysibb(wysibb_settings);
   }
 
-  $(".flatpickr").flatpickr({
+/*  $(".flatpickr").flatpickr({
     dateFormat: 'd.m.Y',
   });
   $(".flatpickr_time").flatpickr({
     dateFormat: 'd.m.Y H:i',
     enableTime: true,
-  });
+  });*/
 })

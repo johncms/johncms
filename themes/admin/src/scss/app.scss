@@ -1,7 +1,7 @@
 // Variables
 @import 'variables';
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
 // Основные стили шаблона
 @import "base_styles";
 // Анимации
@@ -33,6 +33,6 @@
 @import "pagination";
 
 // Editor
-@import "wbbtheme";
+//@import "wbbtheme";
 
-@import '~flatpickr/dist/flatpickr.css';
+@import 'flatpickr/dist/flatpickr.css';

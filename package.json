@@ -15,44 +15,30 @@
     "url": "https://github.com/johncms/johncms"
   },
   "engines": {
-    "node": ">= 0.12.0"
+    "node": ">= 16"
   },
   "scripts": {
     "dev": "vite",
-    "watch": "vue-tsc && vite build --watch",
+    "watch": "vue-tsc && vite build -m dev --watch",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.13",
-    "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.13.0",
-    "@vue/eslint-config-typescript": "^10.0.0",
-    "eslint": "^8.10.0",
-    "eslint-plugin-vue": "^8.5.0",
-    "eslint-webpack-plugin": "^3.1.1",
-    "laravel-mix": "^6.0.49",
-    "laravel-mix-eslint": "^0.2.0",
-    "postcss": "^8.4.19",
-    "resolve-url-loader": "^5.0.0",
+    "@types/jquery": "^3.5.14",
+    "@vitejs/plugin-vue": "^3.2.0",
     "sass": "^1.52.3",
-    "sass-loader": "^13.0.0",
-    "ts-loader": "^9.2.6",
     "typescript": "^4.5.5",
-    "vue-loader": "^17.0.0",
-    "vue-template-compiler": "^2.6.14",
-    "webpack-rtl-plugin": "^2.0.0",
     "vite": "^3.2.3",
-    "vue-tsc": "^1.0.9",
-    "@vitejs/plugin-vue": "^3.2.0"
+    "vue-tsc": "^1.0.9"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
+    "@rollup/plugin-inject": "^5.0.2",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.3",
-    "cross-env": "^7.0.3",
     "flatpickr": "^4.6.13",
-    "jquery": "^3.6.0",
+    "jquery": "^3.6.1",
     "lodash": "^4.17.21",
     "popper.js": "^2.0.0-next.4",
     "swiper": "^8.2.4",

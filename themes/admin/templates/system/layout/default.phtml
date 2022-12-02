@@ -34,11 +34,16 @@ $analytics = $counters->counters();
         <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
-    <?php if ($locale === 'ar'): ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
-    <?php else: ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
-    <?php endif; ?>
+
+    <?php
+    // TODO: Move to the separate method
+    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/manifest.json'), true);
+    ?>
+    <script defer src="/public/<?= $manifest['themes/admin/src/js/app.ts']['file'] ?>" type="module"></script>
+    <?php foreach ($manifest['themes/admin/src/js/app.ts']['css'] as $css) {
+        ?><link rel="stylesheet" href="/public/<?= $css ?>"><?php
+    } ?>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
@@ -171,22 +176,6 @@ $analytics = $counters->counters();
         <div class="modal-content"></div>
     </div>
 </div>
-<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
-<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
-<script src="<?= $this->asset('js/app.js', true) ?>"></script>
-<?php
-if ($locale !== 'en'): ?>
-    <?php
-    try { // TODO: improve the asset method for simplify this construction
-        ?>
-        <script src="<?= $this->asset('js/flatpickr/' . $locale . '.js') ?>"></script>
-        <script>flatpickr.localize(flatpickr.l10ns.<?= $locale ?>);</script>
-        <?php
-    } catch (Exception $exception) {
-    }
-    ?>
-<?php
-endif; ?>
 <?= $this->section('scripts', '') ?>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

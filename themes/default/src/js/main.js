@@ -6,13 +6,13 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-Prism.manual = true;
+//Prism.manual = true;
 
 $(function () {
   const scroll_button = $('.to-top');
 
   $(".post-body").each(function () {
-    Prism.highlightAllUnder(this);
+    //Prism.highlightAllUnder(this);
   });
 
   if ($(document).height() > $(window).height() && $(this).scrollTop() < 50) {
@@ -44,11 +44,11 @@ $(document).ready(function () {
     $(wysibb_input).wysibb(wysibb_settings);
   }
 
-  $(".flatpickr").flatpickr({
+/*  $(".flatpickr").flatpickr({
     dateFormat: 'd.m.Y',
   });
   $(".flatpickr_time").flatpickr({
     dateFormat: 'd.m.Y H:i',
     enableTime: true,
-  });
+  });*/
 })

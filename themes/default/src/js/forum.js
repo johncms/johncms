@@ -12,7 +12,7 @@ function togglePreview()
 }
 
 $(function () {
-  $('.image-gallery').each(function () {
+/*  $('.image-gallery').each(function () {
     $(this).magnificPopup({
       delegate: '.gallery-item',
       type: 'image',
@@ -37,8 +37,8 @@ $(function () {
         }
       },
     });
-  });
-  $('.image-preview').magnificPopup({
+  });*/
+/*  $('.image-preview').magnificPopup({
     type: 'image',
     image: {
       verticalFit: true,
@@ -53,8 +53,8 @@ $(function () {
         return element.find('img');
       }
     }
-  });
-  $('[data-toggle="tooltip"]').tooltip();
+  });*/
+  // $('[data-toggle="tooltip"]').tooltip();
 });
 
 $(".custom-file-input").on("change", function () {

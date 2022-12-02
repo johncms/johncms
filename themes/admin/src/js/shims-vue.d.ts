@@ -4,5 +4,6 @@ declare module "*.vue" {
   export default component;
 }
 
+declare module 'vue/dist/vue.esm-bundler';
 declare module 'lodash';
 declare module 'bootstrap';
