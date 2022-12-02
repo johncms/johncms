@@ -4,14 +4,12 @@ prepare:
 cms-install:
 	composer install
 	npm install
-	npm run prod
-	npm run prod-admin
+	npm run build
 
 cms-update:
 	composer install
 	npm install
-	npm run prod
-	npm run prod-admin
+	npm run build
 	php johncms migrate
 	php johncms cache:clear
 
