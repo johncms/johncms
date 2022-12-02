@@ -31,8 +31,10 @@
 
 <?php $this->push('scripts') ?>
 <script>
-    $(document).on('change', 'input[name=lang]', function () {
-        document.location.href = '/install/?set_locale=' + $(this).val();
-    })
+    window.addEventListener("load", (event) => {
+        $(document).on('change', 'input[name=lang]', function () {
+            document.location.href = '/install/?set_locale=' + $(this).val();
+        })
+    });
 </script>
 <?php $this->stop(); ?>
