@@ -10,6 +10,7 @@
 /system/vendor
 /mix-manifest.json
 /docker/mariadb/data
+/public/build/*
 
 # Data folder ignores
 /data/debugbar/*

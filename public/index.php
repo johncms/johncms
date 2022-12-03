@@ -15,12 +15,12 @@ use Johncms\Container\ContainerFactory;
 use Johncms\Mail\EmailSender;
 
 // If the system is not installed, redirect to the installer.
-if (! is_file('config/autoload/database.local.php')) {
+if (! is_file('../config/autoload/database.local.php')) {
     header('Location: /install/');
     exit;
 }
 
-require 'system/bootstrap.php';
+require '../system/bootstrap.php';
 
 $container = ContainerFactory::getContainer();
 $application = new Application($container);

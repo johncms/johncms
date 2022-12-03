@@ -6,10 +6,11 @@ export default defineConfig({
   plugins: [
     vue()
   ],
-  base: '/public/',
+  publicDir: false,
+  base: '/build/',
   build: {
     manifest: true,
-    outDir: 'public/',
+    outDir: 'public/build/',
     rollupOptions: {
       input: {
         admin: './themes/admin/src/js/app.ts',
