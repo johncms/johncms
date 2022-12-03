@@ -37,15 +37,15 @@ $analytics = $counters->counters();
 
     <?php
     // TODO: Move to the separate method
-    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/manifest.json'), true);
+    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/build/manifest.json'), true);
     ?>
-    <script defer src="/public/<?= $manifest['themes/admin/src/js/app.ts']['file'] ?>" type="module"></script>
+    <script defer src="/build/<?= $manifest['themes/admin/src/js/app.ts']['file'] ?>" type="module"></script>
     <?php foreach ($manifest['themes/admin/src/js/app.ts']['css'] as $css) {
-        ?><link rel="stylesheet" href="/public/<?= $css ?>"><?php
+        ?><link rel="stylesheet" href="/build/<?= $css ?>"><?php
     } ?>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
-    <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
+    <link rel="shortcut icon" href="/favicon.ico">
     <?= $this->section('styles', '') ?>
     <title><?= $metaTags->getTitle() ?></title>
 </head>

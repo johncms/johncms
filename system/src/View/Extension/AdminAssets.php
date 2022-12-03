@@ -34,8 +34,8 @@ class AdminAssets implements ExtensionInterface
     {
         $url = ltrim($url, '/');
 
-        $file = (string) realpath(THEMES_PATH . 'admin/assets/' . $url);
-        $resultUrl = $this->urlFromPath($file, ROOT_PATH);
+        $file = (string) realpath(ASSETS_PATH . 'admin/' . $url);
+        $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
 
         if (is_file($file)) {
             return $versionStamp

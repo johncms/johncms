@@ -40,8 +40,8 @@ class Assets implements ExtensionInterface
         $url = ltrim($url, '/');
 
         foreach ([$this->config['skindef'], 'default'] as $skin) {
-            $file = (string) realpath(THEMES_PATH . $skin . '/assets/' . $url);
-            $resultUrl = $this->urlFromPath($file, ROOT_PATH);
+            $file = (string) realpath(ASSETS_PATH . $skin . '/' . $url);
+            $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
 
             if (is_file($file)) {
                 return $versionStamp

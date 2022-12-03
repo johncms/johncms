@@ -25,11 +25,11 @@
     <meta name="theme-color" content="#586776">
     <?php
     // TODO: Move to the separate method
-    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/manifest.json'), true);
+    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/build/manifest.json'), true);
     ?>
-    <script defer src="/public/<?= $manifest['themes/default/src/js/app.ts']['file'] ?>" type="module"></script>
+    <script defer src="/build/<?= $manifest['themes/default/src/js/app.ts']['file'] ?>" type="module"></script>
     <?php foreach ($manifest['themes/default/src/js/app.ts']['css'] as $css) {
-        ?><link rel="stylesheet" href="/public/<?= $css ?>"><?php
+        ?><link rel="stylesheet" href="/build/<?= $css ?>"><?php
     } ?>
 
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
