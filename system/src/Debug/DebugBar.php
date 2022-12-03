@@ -40,7 +40,7 @@ class DebugBar extends \DebugBar\DebugBar
         }
         $this->addCollector($queryCollector);
 
-        $jsRenderer = $this->getJavascriptRenderer('/themes/default/assets/debugbar');
+        $jsRenderer = $this->getJavascriptRenderer('/assets/default/debugbar');
         $jsRenderer->setOpenHandlerUrl(config('johncms.debug_bar_url'));
 
         $this->addCollector(new ConfigCollector(config()));

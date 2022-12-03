@@ -68,7 +68,7 @@ class Application
             header('phpdebugbar-id: ' . $debugBar->getCurrentRequestId());
             $getJavascriptRenderer = $debugBar->getJavascriptRenderer();
             $getJavascriptRenderer->setBindAjaxHandlerToXHR();
-            $getJavascriptRenderer->addAssets(['/themes/default/assets/debugbar/custom.css'], ['/themes/default/assets/debugbar/queryWidget.js']);
+            $getJavascriptRenderer->addAssets(['/assets/default/debugbar/custom.css'], ['/assets/default/debugbar/queryWidget.js']);
         }
 
         // Handle request
