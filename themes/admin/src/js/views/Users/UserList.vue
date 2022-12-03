@@ -71,7 +71,7 @@
           <div class="dropdown">
             <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <svg class="menu-icon">
-                <use xlink:href="/themes/admin/assets/icons/sprite.svg#menu"></use>
+                <use xlink:href="/public/assets/admin/icons/sprite.svg#menu"></use>
               </svg>
             </button>
             <div class="dropdown-menu">

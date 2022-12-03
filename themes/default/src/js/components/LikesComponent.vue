@@ -7,13 +7,13 @@
     </div>
     <button class="btn btn-light btn-sm" @click="setVote(1)" :class="isVoted > 0 ? 'liked' : ''" :disabled="isVoted > 0 || !can_vote">
       <svg class="icon download-button-icon mt-n1">
-        <use xlink:href="/themes/default/assets/icons/sprite.svg#like"/>
+        <use xlink:href="/public/assets/default/icons/sprite.svg#like"/>
       </svg>
     </button>
     <span :class="rating_color" class="ms-2 me-2 fw-bold">{{ currentRating > 0 ? '+' : '' }}{{ currentRating }}</span>
     <button class="btn btn-light btn-sm" @click="setVote(0)" :class="isVoted < 0 ? 'disliked' : ''" :disabled="isVoted < 0 || !can_vote">
       <svg class="icon download-button-icon me-1">
-        <use xlink:href="/themes/default/assets/icons/sprite.svg#dislike"/>
+        <use xlink:href="/public/assets/default/icons/sprite.svg#dislike"/>
       </svg>
     </button>
   </div>

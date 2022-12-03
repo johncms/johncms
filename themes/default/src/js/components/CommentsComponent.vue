@@ -18,7 +18,7 @@
                data-bs-html="true"
                :title="message.user.rights_name">
             <svg class="icon-post">
-              <use xlink:href="/themes/default/assets/icons/sprite.svg?#check"/>
+              <use xlink:href="/public/assets/default/icons/sprite.svg?#check"/>
             </svg>
           </div>
         </div>
@@ -60,7 +60,7 @@
           <div class="dropdown ms-3" v-if="message.can_delete">
             <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <svg class="icon text-primary">
-                <use xlink:href="/themes/default/assets/icons/sprite.svg?#more_horizontal"/>
+                <use xlink:href="/public/assets/default/icons/sprite.svg?#more_horizontal"/>
               </svg>
             </div>
             <div class="dropdown-menu dropdown-menu-right">
