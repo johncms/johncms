@@ -30,7 +30,7 @@ class Install
         $session = $this->container->get(Session::class);
         $translator = new Translator();
         $translator->setLocale($session->get('lng', 'en'));
-        $translator->addTranslationDomain('install', ROOT_PATH . 'install/locale');
+        $translator->addTranslationDomain('install', PUBLIC_PATH . 'install/locale');
         $translator->defaultDomain('install');
         TranslatorFunctions::register($translator);
         $this->container->instance(Translator::class, $translator);
@@ -50,7 +50,7 @@ class Install
                 'locale' => $translator->getLocale(),
             ]
         );
-        $view->addFolder('install', ROOT_PATH . 'install/templates/');
+        $view->addFolder('install', PUBLIC_PATH . 'install/templates/');
         $this->container->instance(Render::class, $view);
     }
 }

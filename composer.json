@@ -102,7 +102,7 @@
         "psr-4": {
             "Johncms\\": "system/src/",
             "Johncms\\System\\Legacy\\": "system/src-legacy/",
-            "Johncms\\Install\\": "install/src/"
+            "Johncms\\Install\\": "public/install/src/"
         }
     },
     "autoload-dev": {
