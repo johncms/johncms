@@ -22,6 +22,11 @@ use League\Flysystem\FilesystemException;
 
 class FileStorage
 {
+    public function __construct(
+        protected Filesystem $filesystem
+    ) {
+    }
+
     /**
      * Saving files from the request
      *
@@ -88,7 +93,7 @@ class FileStorage
     protected function makeTmpName(): string
     {
         while (true) {
-            $filename = UPLOAD_PATH . uniqid('uploaded_file_');
+            $filename = TMP_PATH . uniqid('uploaded_file_');
             if (! file_exists($filename)) {
                 break;
             }
@@ -107,7 +112,7 @@ class FileStorage
         if ($file === null) {
             throw new FileNotFound(sprintf('File #%s not found', $id));
         }
-        di(Filesystem::class)->storage($file->storage)->delete($file->path);
+        $this->filesystem->storage($file->storage)->delete($file->path);
         $file->delete();
     }
 }

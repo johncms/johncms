@@ -10,6 +10,7 @@ const DATA_PATH = ROOT_PATH . 'data' . DS;
 const UPLOAD_PATH = PUBLIC_PATH . 'uploads' . DS;
 const CACHE_PATH = DATA_PATH . 'cache' . DS;
 const LOG_PATH = DATA_PATH . 'logs' . DS;
+const TMP_PATH = DATA_PATH . 'tmp' . DS;
 const THEMES_PATH = ROOT_PATH . 'themes' . DS;
 const MODULES_PATH = ROOT_PATH . 'modules' . DS;
 const CMS_VERSION = '10';
