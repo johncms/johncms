@@ -71,20 +71,11 @@ $error_extensions = array_filter(
 
 $folders = [
     'data/cache/',
-    'upload/downloads/files/',
-    'upload/downloads/screen/',
-    'upload/forum/attach/',
-    'upload/forum/topics/',
-    'upload/library/',
-    'upload/library/tmp',
-    'upload/library/images',
-    'upload/library/images/big',
-    'upload/library/images/orig',
-    'upload/library/images/small',
-    'upload/users/album/',
-    'upload/users/avatar/',
-    'upload/users/photo/',
-    'upload/mail/',
+    'data/debugbar/',
+    'data/logs/',
+    'data/tmp/',
+    'public/uploads/',
+    'public/assets/default/',
     'config/autoload/',
 ];
 
