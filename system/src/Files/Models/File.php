@@ -58,7 +58,7 @@ class File extends Model
     public function url(): Attribute
     {
         return Attribute::make(
-            get: fn() => Str::after(realpath(UPLOAD_PATH . $this->path), realpath(ROOT_PATH)),
+            get: fn() => Str::after(realpath(UPLOAD_PATH . $this->path), realpath(PUBLIC_PATH)),
         );
     }
 

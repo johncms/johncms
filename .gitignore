@@ -8,7 +8,6 @@
 /phpcs.xml
 /translate.xml
 /system/vendor
-/mix-manifest.json
 /docker/mariadb/data
 /public/build/*
 
@@ -19,30 +18,7 @@
 /data/logs/*
 !/data/logs/.gitkeep
 
-# Themes folder ignores
-/themes/default/assets/css/app.css.map
-/themes/default/assets/js/app.js.map
-
 # Upload folder ignores
-/upload/downloads/files/*
-!/upload/downloads/files/index.php
-/upload/forum/attach/*
-!/upload/forum/attach/index.php
-/upload/forum/topics/*
-!/upload/forum/topics/index.php
-/upload/mail/*
-!/upload/mail/index.php
-/upload/users/album/*
-!/upload/users/album/index.php
-/upload/users/avatar/*
-!/upload/users/avatar/index.php
-/upload/users/photo/*
-!/upload/users/photo/index.php
-/upload/library/tmp/*
-!/upload/library/tmp/.gitkeep
-/upload/library/images/big/*
-!/upload/library/images/big/.gitkeep
-/upload/library/images/orig/*
-!/upload/library/images/orig/.gitkeep
-/upload/library/images/small/*
-!/upload/library/images/small/.gitkeep
+/public/uploads/*
+!/public/uploads/index.php
+!/public/uploads/.htaccess
