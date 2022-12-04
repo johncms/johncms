@@ -10,37 +10,27 @@
 
 declare(strict_types=1);
 
-namespace Admin\Controllers\System;
+namespace Johncms\Admin\Controllers\System;
 
-use Admin\Controllers\BaseAdminController;
 use Johncms\Checker\SystemChecker;
+use Johncms\Controller\BaseAdminController;
 
 class SystemCheckController extends BaseAdminController
 {
-    protected string $moduleName = 'admin';
+    protected string $moduleName = 'johncms/admin';
 
     public function index(SystemChecker $checker): string
     {
-        $this->render->addData(
-            [
-                'title'      => __('System check'),
-                'page_title' => __('System check'),
-                'sys_menu'   => ['system_check' => true],
-            ]
-        );
+        $this->metaTagManager->setAll(__('System check'));
         $this->navChain->add(__('System check'));
-
-        $check_extensions = $checker->checkExtensions();
-        $recommendations = $checker->recommendations();
-        $database = $checker->checkDatabase();
 
         return $this->render->render(
             'admin::system/system_check',
             [
                 'data' => [
-                    'required_checks' => $check_extensions,
-                    'recommendations' => $recommendations,
-                    'database'        => $database,
+                    'required_checks' => $checker->checkExtensions(),
+                    'recommendations' => $checker->recommendations(),
+                    'database'        => $checker->checkDatabase(),
                 ],
             ]
         );

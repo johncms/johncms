@@ -1,6 +1,7 @@
 <?php
 
 use Johncms\Admin\AdminPermissions;
+use Johncms\Admin\Controllers\System\SystemCheckController;
 use Johncms\Admin\Controllers\Users\AuthController;
 use Johncms\Admin\Controllers\DashboardController;
 use Johncms\Admin\Controllers\System\DebugBarController;
@@ -48,4 +49,6 @@ return function (Router $router) {
         $routeGroup->get('/update[/]', [ModulesController::class, 'update'])->setName('admin.modules.update');
         $routeGroup->post('/update[/]', [ModulesController::class, 'update']);
     })->middleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
+
+    $router->get('/admin/system/check[/]', [SystemCheckController::class, 'index'])->setName('admin.system.check');
 };

@@ -42,6 +42,17 @@ class MenuServiceProvider extends ServiceProvider
                     url:  route('admin.modules'),
                     name: __('Modules'),
                     icon: 'shopping-cart',
+                    sort: 100,
+                )
+            )
+            ->addChildren(
+                'system',
+                new MenuItem(
+                    code: 'systemCheck',
+                    url:  route('admin.system.check'),
+                    name: __('System Check'),
+                    icon: 'check-circle',
+                    sort: 200,
                 )
             );
 
