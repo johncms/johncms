@@ -13,20 +13,19 @@ declare(strict_types=1);
 namespace Johncms\Console\Commands;
 
 use Johncms\Database\Migration;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand('migrate', 'Run or rollback migrations')]
 class MigrateCommand extends Command
 {
-    protected static $defaultName = 'migrate';
-
     protected function configure(): void
     {
-        $this->setDescription('Run or rollback migrations')
-            ->setHelp('The command allows you to run and rollback migrations.')
+        $this->setHelp('The command allows you to run and rollback migrations.')
             ->addOption('pretend', null, InputOption::VALUE_OPTIONAL, 'Show SQL queries without performing migration')
             ->addOption('step', null, InputOption::VALUE_OPTIONAL, 'Force the migrations to be run so they can be rolled back individually. The number of migrations to be reverted when running rollback command')
             ->addArgument('action', InputArgument::OPTIONAL, 'run or rollback', 'run')

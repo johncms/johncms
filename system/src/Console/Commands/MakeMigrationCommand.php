@@ -14,20 +14,19 @@ namespace Johncms\Console\Commands;
 
 use Exception;
 use Johncms\Database\Migration;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('make:migration', 'Creates a new migration')]
 class MakeMigrationCommand extends Command
 {
-    protected static $defaultName = 'make:migration';
-
     protected function configure(): void
     {
-        $this->setDescription('Creates a new migration')
-            ->setHelp('This command allows you to create a migration.')
+        $this->setHelp('This command allows you to create a migration.')
             ->addArgument('module', InputArgument::REQUIRED, 'The module in which the migration will be created.')
             ->addArgument('name', InputArgument::REQUIRED, 'Migration name.')
             ->addArgument('table_name', InputArgument::OPTIONAL, 'The name of the table that will be specified in the migration code.')

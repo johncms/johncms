@@ -13,18 +13,18 @@ declare(strict_types=1);
 namespace Johncms\Console\Commands;
 
 use Johncms\Cache;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand('cache:clear', 'Clear cache')]
 class ClearCacheCommand extends Command
 {
-    protected static $defaultName = 'cache:clear';
-
     protected function configure(): void
     {
-        $this->setDescription('Clear cache')->setHelp('This command allows you to clear the cache.');
+        $this->setHelp('This command allows you to clear the cache.');
     }
 
     /**
