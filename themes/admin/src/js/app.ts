@@ -1,8 +1,5 @@
 import './bootstrap';
 import '../scss/app.scss';
-
-// import './jquery.magnific-popup';
-import 'flatpickr';
 import './menu';
 // import './prism';
 import './modals';

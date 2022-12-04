@@ -3,15 +3,12 @@ import 'swiper/css/bundle';
 import './bootstrap';
 import '../scss/app.scss';
 
-// import './jquery.magnific-popup';
-import 'flatpickr';
 import './menu';
 // import './prism';
 import './forum';
 import './modals';
 import './slider';
 import './progress';
-// import './wysibb';
 import './main';
 
 import {createApp, defineAsyncComponent} from 'vue/dist/vue.esm-bundler'

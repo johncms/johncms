@@ -2,15 +2,11 @@
 @import 'variables';
 // Bootstrap
 @import 'bootstrap';
-// Основные стили шаблона
+
 @import "base_styles";
-// Анимации
 @import "animations";
-// Левое меню
 @import "sidebar";
-// Шапка
 @import "header";
-// Иконки
 @import "icons";
 @import "posts";
 @import "sections";
@@ -19,20 +15,9 @@
 @import "buttons";
 @import "utilites";
 @import "user";
-@import "../css/prism.css";
-@import "../css/magnific-popup.css";
-
+@import "prism";
 @import "slider";
-
 @import "album";
-
 @import "progress";
-
 @import "homepage";
-
 @import "pagination";
-
-// Editor
-// @import "wbbtheme";
-
-@import 'flatpickr/dist/flatpickr.css';
