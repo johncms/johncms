@@ -14,14 +14,14 @@ namespace Johncms\View\Extension;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Johncms\View\ViteAssets;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
 use Psr\Container\ContainerInterface;
 
 class Assets implements ExtensionInterface
 {
-    /** @var array */
-    private $config;
+    private array $config;
 
     public function __invoke(ContainerInterface $container): self
     {
@@ -32,6 +32,7 @@ class Assets implements ExtensionInterface
 
     public function register(Engine $engine): void
     {
+        $engine->registerFunction('viteAssets', [new ViteAssets(), 'viteAssets']);
         $engine->registerFunction('asset', [$this, 'url']);
     }
 

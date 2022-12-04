@@ -14,6 +14,7 @@ namespace Johncms\View\Extension;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Johncms\View\ViteAssets;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
 use Psr\Container\ContainerInterface;
@@ -27,6 +28,7 @@ class AdminAssets implements ExtensionInterface
 
     public function register(Engine $engine): void
     {
+        $engine->registerFunction('viteAssets', [new ViteAssets(), 'viteAssets']);
         $engine->registerFunction('asset', [$this, 'url']);
     }
 

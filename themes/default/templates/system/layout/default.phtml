@@ -26,14 +26,7 @@ $ads_array = $ads->getAds();
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="csrf-token" content="<?= $csrf_token ?>">
 
-    <?php
-    // TODO: Move to the separate method
-    $manifest = json_decode(file_get_contents(ROOT_PATH . 'public/build/manifest.json'), true);
-    ?>
-    <script defer src="/build/<?= $manifest['themes/default/src/js/app.ts']['file'] ?>" type="module"></script>
-    <?php foreach ($manifest['themes/default/src/js/app.ts']['css'] as $css) {
-        ?><link rel="stylesheet" href="/build/<?= $css ?>"><?php
-    } ?>
+    <?= $this->viteAssets('themes/default/src/js/app.ts') ?>
 
     <?= $this->section('meta', '') ?>
     <?php if (! empty($metaTags->getKeywords())): ?>
