@@ -15,16 +15,20 @@ use Psr\Log\LoggerInterface;
 class ModuleManager
 {
     private Filesystem $fileSystem;
-    private string $themesPath;
+    private string $assetsPath;
     private string $modulesPath;
     protected ?Installer $installer = null;
+    protected ?LoggerInterface $logger = null;
+    protected Migration $migration;
 
     public function __construct(
         private string $module
     ) {
         $this->fileSystem = FilesystemFactory::create();
-        $this->themesPath = Str::after(THEMES_PATH, ROOT_PATH);
+        $this->assetsPath = Str::after(ASSETS_PATH, ROOT_PATH) . 'default' . DS;
         $this->modulesPath = Str::after(MODULES_PATH, ROOT_PATH);
+        $this->logger = di(LoggerInterface::class);
+        $this->migration = di(Migration::class);
 
         $className = $this->getInstallerClassName();
         if (class_exists($className) && is_subclass_of($className, Installer::class)) {
@@ -43,20 +47,20 @@ class ModuleManager
     public function install(): void
     {
         $this->copyAssets();
-        di(Migration::class)->run($this->module);
+        $this->migration->run($this->module);
         $this->installer?->install();
     }
 
     public function update(): void
     {
         $this->copyAssets();
-        di(Migration::class)->run($this->module);
+        $this->migration->run($this->module);
     }
 
     public function uninstall(): void
     {
         $this->deleteAssets();
-        di(Migration::class)->rollback($this->module, ['step' => 10000]);
+        $this->migration->rollback($this->module, ['step' => 10000]);
         $this->installer?->uninstall();
     }
 
@@ -77,8 +81,7 @@ class ModuleManager
      */
     private function copyAssets(): void
     {
-        $defaultThemePath = $this->themesPath . 'default' . DS . 'assets' . DS;
-        $moduleAssetsPath = $defaultThemePath . $this->module;
+        $moduleAssetsPath = $this->assetsPath . $this->module;
 
         // Delete old directory if exists
         $this->deleteAssets();
@@ -97,7 +100,7 @@ class ModuleManager
                 }
             }
         } catch (FilesystemException | UnableToDeleteDirectory $exception) {
-            di(LoggerInterface::class)->error($exception->getMessage());
+            $this->logger->error($exception->getMessage());
         }
     }
 
@@ -108,14 +111,13 @@ class ModuleManager
      */
     private function deleteAssets(): void
     {
-        $defaultThemePath = $this->themesPath . 'default' . DS . 'assets' . DS;
-        $moduleAssetsPath = $defaultThemePath . $this->module;
+        $moduleAssetsPath = $this->assetsPath . $this->module;
         try {
             if ($this->fileSystem->directoryExists($moduleAssetsPath)) {
                 $this->fileSystem->deleteDirectory($moduleAssetsPath);
             }
         } catch (FilesystemException | UnableToDeleteDirectory $exception) {
-            di(LoggerInterface::class)->error($exception->getMessage());
+            $this->logger->error($exception->getMessage());
         }
     }
 }
