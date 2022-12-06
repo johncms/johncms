@@ -22,16 +22,11 @@ class CookiesAuthProvider implements AuthProviderInterface
 {
     public const COOKIE_TOKEN_FIELD = 'johncms_auth_token';
     public const COOKIE_USER_FIELD = 'johncms_auth_user';
-
-    public SessionAuthProvider $sessionAuthProvider;
-    public Request $request;
     protected ?int $userId;
     protected ?string $token;
 
-    public function __construct(Request $request, SessionAuthProvider $sessionAuthProvider)
+    public function __construct(public Request $request, public SessionAuthProvider $sessionAuthProvider)
     {
-        $this->sessionAuthProvider = $sessionAuthProvider;
-        $this->request = $request;
         $this->userId = $this->request->getCookie(self::COOKIE_USER_FIELD, null, FILTER_VALIDATE_INT);
         $this->token = $this->request->getCookie(self::COOKIE_TOKEN_FIELD);
     }
@@ -45,9 +40,7 @@ class CookiesAuthProvider implements AuthProviderInterface
         /** @var User|null $user */
         $user = (new User())
             ->where('id', $this->userId)
-            ->whereHas('storedAuth', function (Builder $builder) {
-                return $builder->where('token', $this->token);
-            })
+            ->whereHas('storedAuth', fn(Builder $builder) => $builder->where('token', $this->token))
             ->first();
         if ($user === null) {
             $this->forget();

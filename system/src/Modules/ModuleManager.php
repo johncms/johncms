@@ -38,9 +38,7 @@ class ModuleManager
 
     protected function getInstallerClassName(): string
     {
-        $namespace = Str::of($this->module)->explode('/')->map(function ($val) {
-            return ucfirst($val);
-        })->toArray();
+        $namespace = Str::of($this->module)->explode('/')->map(fn($val) => ucfirst($val))->toArray();
         return '\\' . implode('\\', $namespace) . '\Install\Installer';
     }
 
@@ -76,8 +74,6 @@ class ModuleManager
 
     /**
      * Copy module assets to the default theme directory
-     *
-     * @return void
      */
     private function copyAssets(): void
     {
@@ -106,8 +102,6 @@ class ModuleManager
 
     /**
      * Delete module assets
-     *
-     * @return void
      */
     private function deleteAssets(): void
     {

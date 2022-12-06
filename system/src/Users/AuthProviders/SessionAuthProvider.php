@@ -19,11 +19,8 @@ class SessionAuthProvider implements AuthProviderInterface
 {
     public const AUTH_SESSION_ID = '_johncms_auth';
 
-    public Session $session;
-
-    public function __construct(Session $session)
+    public function __construct(public Session $session)
     {
-        $this->session = $session;
     }
 
     public function authenticate(): ?User

@@ -27,19 +27,14 @@ use Throwable;
 class UserManager
 {
     protected array $config;
-    protected ContainerInterface $container;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
-        $this->container = $container;
         $this->config = $this->getConfig();
     }
 
     /**
      * Create user
-     *
-     * @param array $fields
-     * @return User
      */
     public function create(array $fields): User
     {
@@ -72,9 +67,6 @@ class UserManager
     /**
      * Update user
      *
-     * @param int $user_id
-     * @param array $fields
-     * @return User
      * @throws FilesystemException
      */
     public function update(int $user_id, array $fields): User
@@ -189,10 +181,7 @@ class UserManager
     /**
      * Update user activity
      *
-     * @param User $user
      * @param array<string, mixed> $fields
-     * @param bool $updateLastPostTime
-     * @return bool
      */
     public function updateActivity(User $user, array $fields = [], bool $updateLastPostTime = true): bool
     {

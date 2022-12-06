@@ -16,14 +16,14 @@ date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
 // If there are no dependencies, we stop the script and displays an error
-if (! is_file(__DIR__ . '/vendor/autoload.php')) {
+if (! is_file('../vendor/autoload.php')) {
     die('<h1>ERROR</h1><p>Missing dependencies</p>');
 }
 
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
 
-require __DIR__ . '/vendor/autoload.php';
+require '../vendor/autoload.php';
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 

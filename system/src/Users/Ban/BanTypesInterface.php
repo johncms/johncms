@@ -21,8 +21,6 @@ interface BanTypesInterface
      *          'displayName' => d__('guestbook', 'Upload photos in the guestbook'),
      *      ],
      * ]
-     *
-     * @return array
      */
     public function getTypes(): array;
 }

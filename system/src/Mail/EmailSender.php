@@ -46,7 +46,7 @@ class EmailSender
             $message_body = $view->render($item->template, $item->fields);
 
             // In some cases, using the @ symbol in the sender's name resulted in an error.
-            if (strpos($fields['name_to'], '@') !== false) {
+            if (str_contains($fields['name_to'], '@')) {
                 $fields['name_to'] = null;
             }
 

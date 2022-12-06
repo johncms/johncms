@@ -55,9 +55,6 @@ class GuestSession extends Model
 
     /**
      * Выборка только пользователей онлайн
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeOnline(Builder $query): Builder
     {

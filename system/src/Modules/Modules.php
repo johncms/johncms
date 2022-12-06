@@ -63,7 +63,7 @@ class Modules
         });
 
         if ($moduleData) {
-            $meta = json_decode($moduleData, true);
+            $meta = json_decode($moduleData, true, 512, JSON_THROW_ON_ERROR);
             return Arr::get($meta, 'packages.' . $moduleName . '.0.version');
         }
 
@@ -78,7 +78,7 @@ class Modules
         $composerJsonPath = MODULES_PATH . $moduleName . '/composer.json';
         if (is_file($composerJsonPath)) {
             $composerConfig = file_get_contents($composerJsonPath);
-            return ModuleMetaData::createFromComposerJson(json_decode($composerConfig, true));
+            return ModuleMetaData::createFromComposerJson(json_decode($composerConfig, true, 512, JSON_THROW_ON_ERROR));
         }
         return null;
     }
@@ -113,9 +113,6 @@ class Modules
 
     /**
      * Check if a specific module is installed
-     *
-     * @param string $moduleName
-     * @return bool
      */
     public static function isInstalled(string $moduleName): bool
     {

@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require 'system/vendor/autoload.php';
+require 'vendor/autoload.php';
 
 use Johncms\Application;
 use Johncms\Console\ConsoleApp;

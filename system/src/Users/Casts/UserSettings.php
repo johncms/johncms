@@ -23,16 +23,13 @@ class UserSettings implements CastsAttributes
      * Cast the given value.
      *
      * @param Model $model
-     * @param string $key
      * @param mixed $value
-     * @param array $attributes
-     * @return UserConfig
      */
     public function get($model, string $key, $value, array $attributes): UserConfig
     {
         $settings = [];
         if (! empty($value)) {
-            $settings = json_decode($value, true);
+            $settings = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         }
         return new UserConfig($settings);
     }
@@ -41,13 +38,10 @@ class UserSettings implements CastsAttributes
      * Prepare the given value for storage.
      *
      * @param Model $model
-     * @param string $key
      * @param array $value
-     * @param array $attributes
-     * @return string
      */
     public function set($model, string $key, $value, array $attributes): string
     {
-        return json_encode((new Collection($value))->toArray());
+        return json_encode((new Collection($value))->toArray(), JSON_THROW_ON_ERROR);
     }
 }

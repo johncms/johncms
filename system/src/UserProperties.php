@@ -32,9 +32,6 @@ class UserProperties
 
     /**
      * Метод подготавливает данные пользователя для шаблона
-     *
-     * @param array $user_data
-     * @return array
      */
     public function getFromArray(array $user_data): array
     {
@@ -64,10 +61,6 @@ class UserProperties
         return $data_array;
     }
 
-    /**
-     * @param int $rights
-     * @return string
-     */
     public function getRightsName(int $rights): string
     {
         $user_rights_names = [

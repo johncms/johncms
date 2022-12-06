@@ -45,9 +45,6 @@ class ModelExists extends AbstractValidator
 
     /**
      * Set model parameter
-     *
-     * @param string $value
-     * @return $this
      */
     public function setModel(string $value): ModelExists
     {
@@ -57,9 +54,6 @@ class ModelExists extends AbstractValidator
 
     /**
      * Set field parameter
-     *
-     * @param string $value
-     * @return $this
      */
     public function setField(string $value): ModelExists
     {

@@ -19,37 +19,29 @@ use InvalidArgumentException;
 class ResourceCollection
 {
     protected Collection $collection;
-    protected Collection | LengthAwarePaginator $original;
-    protected string $resource;
 
-    public function __construct(mixed $collection, string $resource)
+    public function __construct(protected mixed $original, protected string $resource)
     {
-        $this->original = $collection;
-        $this->resource = $resource;
-
         if (! is_subclass_of($resource, AbstractResource::class)) {
             throw new InvalidArgumentException(sprintf("The '%s' class must be a subclass of '%s'.", $resource, AbstractResource::class));
         }
 
-        if ($collection instanceof Collection) {
-            $this->collection = $collection;
-        } elseif ($collection instanceof LengthAwarePaginator) {
-            $this->collection = $collection->getItems();
+        if ($original instanceof Collection) {
+            $this->collection = $original;
+        } elseif ($original instanceof LengthAwarePaginator) {
+            $this->collection = $original->getItems();
         } else {
             $this->collection = Collection::make();
         }
     }
 
     /**
-     * @return array
      * @psalm-suppress MissingClosureParamType, MissingClosureReturnType, InvalidStringClass
      */
     public function getItems(): array
     {
         return $this->collection->map(
-            function ($value) {
-                return (new $this->resource($value))->toArray();
-            }
+            fn($value) => (new $this->resource($value))->toArray()
         )->toArray();
     }
 

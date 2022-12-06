@@ -14,44 +14,26 @@ namespace Johncms\Users;
 
 trait GuestSessionMutators
 {
-    /**
-     * @param int $value
-     * @return string
-     */
     public function getIpAttribute(int $value): string
     {
         return long2ip($value);
     }
 
-    /**
-     * @param string $value
-     */
     public function setIpAttribute(string $value): void
     {
         $this->attributes['ip'] = ip2long($value);
     }
 
-    /**
-     * @param int $value
-     * @return string
-     */
     public function getIpViaProxyAttribute(int $value): string
     {
         return ! empty($value) ? long2ip($value) : '';
     }
 
-    /**
-     * @param string $value
-     */
     public function setIpViaProxyAttribute(string $value): void
     {
         $this->attributes['ip_via_proxy'] = ip2long($value);
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public function getBrowserAttribute(string $value): string
     {
         return htmlspecialchars($value);
@@ -59,8 +41,6 @@ trait GuestSessionMutators
 
     /**
      * Определяем пользователь онлайн или нет
-     *
-     * @return bool
      */
     public function getIsOnlineAttribute(): bool
     {
@@ -69,8 +49,6 @@ trait GuestSessionMutators
 
     /**
      * Ссылка на страницу поиска по IP
-     *
-     * @return string
      */
     public function getSearchIpUrlAttribute(): string
     {
@@ -79,8 +57,6 @@ trait GuestSessionMutators
 
     /**
      * Ссылка на страницу поиска по IP за прокси
-     *
-     * @return string
      */
     public function getSearchIpViaProxyUrlAttribute(): string
     {

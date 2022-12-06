@@ -24,29 +24,15 @@ use PDO;
  */
 class Ads
 {
-    /** @var PDO */
-    private $db;
+    /** @var array<string, string[]&mixed[]>|null */
+    private ?array $ads = null;
 
-    /** @var Tools */
-    private $tools;
-
-    /** @var User */
-    private $user;
-
-    /** @var null|array */
-    private $ads;
-
-    public function __construct(PDO $pdo, Tools $tools, ?User $user)
+    public function __construct(private PDO $db, private Tools $tools, private ?User $user)
     {
-        $this->db = $pdo;
-        $this->tools = $tools;
-        $this->user = $user;
     }
 
     /**
      * Получаем доступные объявления
-     *
-     * @return array
      */
     public function getAds(): array
     {
@@ -94,9 +80,6 @@ class Ads
 
     /**
      * Получение места размещения рекламной ссылки
-     *
-     * @param array $item
-     * @return string
      */
     private function getPlace(array $item): string
     {
@@ -115,9 +98,6 @@ class Ads
 
     /**
      * Метод проверяет доступность объявления для показа текущему пользователю в текущем месте
-     *
-     * @param array $item
-     * @return bool
      */
     private function checkAccess(array $item): bool
     {

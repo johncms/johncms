@@ -52,7 +52,6 @@ class MetaTagManager
     /**
      * This method sets the following tags: title, pageTitle, description, keywords
      *
-     * @param string $value
      * @return $this
      */
     public function setAll(string $value): self

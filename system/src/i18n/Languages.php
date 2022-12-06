@@ -18,8 +18,6 @@ class Languages
 {
     /**
      * Gets installed languages in the system
-     *
-     * @return array
      */
     public static function getLngList(): array
     {
@@ -76,9 +74,6 @@ class Languages
 
     /**
      * Check access to language files.
-     *
-     * @param string $language
-     * @return bool
      */
     public static function checkAccessToFiles(string $language): bool
     {
@@ -97,8 +92,6 @@ class Languages
 
     /**
      * Getting a list of available languages
-     *
-     * @return array
      */
     public static function getAvailableLanguages(): array
     {
@@ -106,7 +99,7 @@ class Languages
         $all_languages = [];
         $updates = file_get_contents($updates_url);
         if (! empty($updates)) {
-            $all_languages = json_decode($updates, true);
+            $all_languages = json_decode($updates, true, 512, JSON_THROW_ON_ERROR);
         }
 
         return $all_languages;

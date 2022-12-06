@@ -10,17 +10,13 @@ use Johncms\View\Render;
 
 class Pagination
 {
-    private int $total;
-    private string $pageParamName;
     private int $perPage;
     private int $currentPage;
     private Request $request;
     private \Compolomus\Pagination\Pagination $pagination;
 
-    public function __construct(int $total, ?int $perPage = null, string $pageParamName = 'page', ?int $currentPage = null)
+    public function __construct(private int $total, ?int $perPage = null, private string $pageParamName = 'page', ?int $currentPage = null)
     {
-        $this->total = $total;
-        $this->pageParamName = $pageParamName;
         $this->request = di(Request::class);
         $this->setPerPage($perPage);
         $this->setCurrentPage($currentPage);
@@ -72,13 +68,11 @@ class Pagination
         }
 
         $items = $this->pagination->get();
-        $items = array_map(function ($item) {
-            return [
-                'active' => $item === $this->currentPage,
-                'name'   => $item,
-                'url'    => is_numeric($item) ? $this->buildUrl($item) : '',
-            ];
-        }, $items);
+        $items = array_map(fn($item) => [
+            'active' => $item === $this->currentPage,
+            'name'   => $item,
+            'url'    => is_numeric($item) ? $this->buildUrl($item) : '',
+        ], $items);
 
         $prev = $this->pagination->getPreviousPage();
         $prevPage = [];

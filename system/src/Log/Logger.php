@@ -24,10 +24,8 @@ class Logger
     {
         $defaultLogger = config('logging.default', 'file');
         $handlers = config('logging.handlers');
-        switch ($defaultLogger) {
-            case 'file':
-            default:
-                return new RotatingFileHandler($handlers['file']['path'], $handlers['file']['days']);
-        }
+        return match ($defaultLogger) {
+            default => new RotatingFileHandler($handlers['file']['path'], $handlers['file']['days']),
+        };
     }
 }

@@ -21,8 +21,7 @@ use Laminas\Mime\Part as MimePart;
 
 class MailFactory extends Message
 {
-    /** @var TransportInterface */
-    private $transport;
+    private ?\Laminas\Mail\Transport\TransportInterface $transport = null;
 
     public function __invoke(ContainerInterface $container): Message
     {

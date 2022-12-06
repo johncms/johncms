@@ -24,16 +24,14 @@ abstract class AbstractForm
     /** @var AbstractInput[] */
     protected array $formFields = [];
 
-    /** @var array Current field values */
-    protected array $values = [];
-
     protected ?array $requestValues = null;
 
     protected Request $request;
 
-    public function __construct(array $values = [])
-    {
-        $this->values = $values;
+    /** @param array $values Current field values */
+    public function __construct(
+        protected array $values = []
+    ) {
         $this->request = di(Request::class);
         $this->formFields = $this->prepareFormFields();
     }

@@ -23,16 +23,13 @@ class AdditionalFieldsCast implements CastsAttributes
      * Cast the given value.
      *
      * @param Model $model
-     * @param string $key
      * @param mixed $value
-     * @param array $attributes
-     * @return AdditionalFields
      */
     public function get($model, string $key, $value, array $attributes): AdditionalFields
     {
         $settings = [];
         if (! empty($value)) {
-            $settings = json_decode($value, true);
+            $settings = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         }
         return new AdditionalFields($settings);
     }
@@ -41,13 +38,10 @@ class AdditionalFieldsCast implements CastsAttributes
      * Prepare the given value for storage.
      *
      * @param Model $model
-     * @param string $key
      * @param array $value
-     * @param array $attributes
-     * @return string
      */
     public function set($model, string $key, $value, array $attributes): string
     {
-        return json_encode((new Collection($value))->toArray());
+        return json_encode((new Collection($value))->toArray(), JSON_THROW_ON_ERROR);
     }
 }

@@ -37,7 +37,6 @@ class File
     /**
      * Sets the storage where the file will be saved.
      *
-     * @param string $storageName
      * @return $this
      */
     public function setStorage(string $storageName): self
@@ -49,7 +48,6 @@ class File
     /**
      * Sets the name of the file to be saved in the database.
      *
-     * @param string $fileName
      * @return $this
      */
     public function setFileName(string $fileName): self
@@ -61,7 +59,6 @@ class File
     /**
      * Sets the parent directory for saving.
      *
-     * @param string $parentDir
      * @return $this
      */
     public function setParentDir(string $parentDir): self
@@ -72,8 +69,6 @@ class File
 
     /**
      * Getting the hash of the file.
-     *
-     * @return string
      */
     public function getHash(): string
     {
@@ -88,8 +83,6 @@ class File
 
     /**
      * Gets the directory for saving the file.
-     *
-     * @return string
      */
     public function getStoragePath(): string
     {
@@ -105,7 +98,6 @@ class File
     /**
      * Gets the path to the file to save
      *
-     * @return string
      * @throws FilesystemException
      */
     public function getSavePath(): string
@@ -140,7 +132,6 @@ class File
     /**
      * Saves the file and registers it in the database.
      *
-     * @return Models\File
      * @throws FilesystemException
      * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType
      */

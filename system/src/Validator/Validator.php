@@ -128,25 +128,16 @@ class Validator
 
     private array $messages;
 
-    private array $data;
-
-    private array $rule_settings;
-
     private bool $breakChainOnFailure = true;
 
-    public function __construct(array $data, array $rules, array $messages = [])
+    public function __construct(private array $data, private array $rule_settings, array $messages = [])
     {
         $default_messages = require __DIR__ . '/messages.php';
         $this->messages = array_merge_recursive($default_messages, $messages);
-        $this->data = $data;
-        $this->rule_settings = $rules;
     }
 
     /**
      * Processing of validation rules
-     *
-     * @param array $data
-     * @param array $rules
      */
     private function validate(array $data, array $rules): void
     {
@@ -207,9 +198,6 @@ class Validator
 
     /**
      * Replace or add a custom rule
-     *
-     * @param string $name
-     * @param string $class
      */
     public function addRule(string $name, string $class): void
     {
@@ -218,8 +206,6 @@ class Validator
 
     /**
      * The result of validation
-     *
-     * @return bool
      */
     public function isValid(): bool
     {
@@ -229,8 +215,6 @@ class Validator
 
     /**
      * Validation errors
-     *
-     * @return array
      */
     public function getErrors(): array
     {
@@ -239,8 +223,6 @@ class Validator
 
     /**
      * Break the chain on failure
-     *
-     * @param bool $value
      */
     public function setBreakChainOnFailure(bool $value): void
     {

@@ -18,17 +18,11 @@ use ReflectionMethod;
 
 class ParametersInjector
 {
-    protected ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     /**
-     * @param object $class
-     * @param string $action_name
-     * @return array
      * @psalm-suppress UndefinedMethod
      */
     private function getMethodParameters(object $class, string $action_name): array
@@ -67,11 +61,6 @@ class ParametersInjector
         return $injectedParameters;
     }
 
-    /**
-     * @param string $type
-     * @param mixed $value
-     * @return bool|float|int|string
-     */
     private function castValue(string $type, mixed $value): float|bool|int|string
     {
         return match ($type) {

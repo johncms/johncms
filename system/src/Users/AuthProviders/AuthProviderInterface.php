@@ -18,15 +18,11 @@ interface AuthProviderInterface
 {
     /**
      * This method should check stored data and authenticate user if possible.
-     *
-     * @return User|null
      */
     public function authenticate(): ?User;
 
     /**
      * This method should save the user's data to work in the authentication method
-     *
-     * @param User $user
      */
     public function store(User $user): void;
 

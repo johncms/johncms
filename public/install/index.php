@@ -16,7 +16,7 @@ use Johncms\View\Render;
 
 ini_set('max_execution_time', '600');
 
-require '../../system/vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 $request = di(Request::class);
 

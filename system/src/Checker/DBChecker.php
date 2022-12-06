@@ -34,8 +34,6 @@ class DBChecker
 
     /**
      * Getting information about the database server.
-     *
-     * @return array
      */
     public function versionInfo(): array
     {
@@ -71,8 +69,6 @@ class DBChecker
 
     /**
      * Checking whether the correct types are returned from the database.
-     *
-     * @return bool
      */
     public function checkMysqlnd(): bool
     {

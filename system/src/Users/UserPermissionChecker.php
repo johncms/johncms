@@ -37,7 +37,7 @@ class UserPermissionChecker
             /** @var Role[] $roles */
             $roles = $this->user->roles()->get();
             foreach ($roles as $role) {
-                $permissions = array_merge($permissions, $role->permissions()->get()->pluck('name')->toArray());
+                $permissions = [...$permissions, ...$role->permissions()->get()->pluck('name')->toArray()];
             }
             return $permissions;
         });

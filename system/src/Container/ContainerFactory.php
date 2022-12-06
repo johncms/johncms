@@ -36,9 +36,7 @@ class ContainerFactory
                 $container->bind(
                     $abstract,
                     /** @psalm-return mixed */
-                    function (ContainerInterface $container) use ($concrete) {
-                        return (new $concrete($container))($container);
-                    },
+                    fn(ContainerInterface $container) => (new $concrete($container))($container),
                     true
                 );
             }

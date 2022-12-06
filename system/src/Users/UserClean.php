@@ -16,14 +16,8 @@ use PDO;
 
 class UserClean
 {
-    /**
-     * @var PDO
-     */
-    private $db;
-
-    public function __construct(PDO $db)
+    public function __construct(private PDO $db)
     {
-        $this->db = $db;
     }
 
     public function removeUser(int $cleanId): void
@@ -40,7 +34,6 @@ class UserClean
      * Удаляем пользовательские альбомы
      *
      * @param $cleanId
-     * @return void
      */
     public function removeAlbum(int $cleanId): void
     {
@@ -72,7 +65,6 @@ class UserClean
      * Удаляем почту и контакты
      *
      * @param $cleanId
-     * @return void
      */
     public function removeMail(int $cleanId): void
     {
@@ -100,7 +92,6 @@ class UserClean
      * Удаляем Карму
      *
      * @param $cleanId
-     * @return void
      */
     public function removeKarma(int $cleanId): void
     {
@@ -125,7 +116,6 @@ class UserClean
      * Удаляем личную гостевую
      *
      * @param $cleanId
-     * @return void
      */
     public function removeGuestbook(int $cleanId): void
     {
@@ -136,7 +126,6 @@ class UserClean
      * Удаляем все комментарии пользователя
      *
      * @param $cleanId
-     * @return void
      */
     public function cleanComments(int $cleanId): void
     {

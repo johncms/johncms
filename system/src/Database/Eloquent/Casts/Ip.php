@@ -24,7 +24,6 @@ class Ip implements CastsAttributes
      * @param string $key
      * @param int $value
      * @param array $attributes
-     * @return string
      */
     public function get($model, $key, $value, $attributes): string
     {
@@ -38,7 +37,6 @@ class Ip implements CastsAttributes
      * @param string $key
      * @param string $value
      * @param array $attributes
-     * @return int
      */
     public function set($model, $key, $value, $attributes): int
     {

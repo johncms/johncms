@@ -40,9 +40,6 @@ class UserBan extends Model
 
     /**
      * Only active bans
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeActive(Builder $query): Builder
     {

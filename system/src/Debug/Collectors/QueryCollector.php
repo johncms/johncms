@@ -41,8 +41,6 @@ class QueryCollector extends PDOCollector
 
     /**
      * Show or hide copy button next to the queries
-     *
-     * @param boolean $enabled
      */
     public function setShowCopyButton(bool $enabled = true)
     {
@@ -51,8 +49,6 @@ class QueryCollector extends PDOCollector
 
     /**
      * Enable/disable the shaded duration background on queries
-     *
-     * @param bool $enabled
      */
     public function setDurationBackground(bool $enabled)
     {
@@ -124,9 +120,6 @@ class QueryCollector extends PDOCollector
 
     /**
      * Mimic mysql_real_escape_string
-     *
-     * @param string $value
-     * @return string
      */
     protected function emulateQuote(string $value): string
     {
@@ -172,9 +165,7 @@ class QueryCollector extends PDOCollector
                 $explainer = trim(
                     implode(
                         "\n",
-                        array_map(function ($explain) {
-                            return $explain->{'QUERY PLAN'};
-                        }, $query['explain'])
+                        array_map(fn($explain) => $explain->{'QUERY PLAN'}, $query['explain'])
                     )
                 );
 
@@ -219,9 +210,7 @@ class QueryCollector extends PDOCollector
             }
         }
 
-        $nb_statements = array_filter($queries, function ($query) {
-            return $query['type'] === 'query';
-        });
+        $nb_statements = array_filter($queries, fn($query) => $query['type'] === 'query');
 
         return [
             'nb_statements'            => count($nb_statements),

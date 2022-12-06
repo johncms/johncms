@@ -16,8 +16,7 @@ use Gettext\Translator as Gettext;
 
 class Translator extends Gettext
 {
-    /** @var string */
-    private $locale = 'ru';
+    private string $locale = 'ru';
 
     public function addTranslationDomain(string $domain, string $localesPath, bool $set_default = true): void
     {

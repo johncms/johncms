@@ -26,7 +26,6 @@ class NavChain
     /**
      * Добавление нескольких элементов в навигационную цепочку
      *
-     * @param array $array
      * @return mixed|void
      */
     public function addList(array $array)
@@ -42,8 +41,6 @@ class NavChain
     /**
      * Добавление элемента в навигационную цепочку
      *
-     * @param string $name
-     * @param string $url
      * @return void
      */
     public function add(string $name, string $url = '')
@@ -56,8 +53,6 @@ class NavChain
 
     /**
      * Получение всех элементов навигационной цепочки
-     *
-     * @return array
      */
     public function getAll(): array
     {
@@ -83,9 +78,6 @@ class NavChain
 
     /**
      * Добавлять главную страницу в навигационную цепочку
-     *
-     * @param bool $value
-     * @return void
      */
     public function showHomePage(bool $value): void
     {
@@ -94,9 +86,6 @@ class NavChain
 
     /**
      * Помечать последний элемент активным
-     *
-     * @param bool $value
-     * @return void
      */
     public function lastIsActive(bool $value): void
     {

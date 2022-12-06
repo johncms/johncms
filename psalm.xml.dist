@@ -26,13 +26,12 @@
             <directory name="modules/johncms/redirect"/>
 
             <directory name="system/src-legacy"/>
-            <directory name="system/vendor"/>
             <directory name="tests"/>
         </ignoreFiles>
     </projectFiles>
 
     <stubs>
-        <file name="system/vendor/gettext/translator/src/functions.php"/>
+        <file name="vendor/gettext/translator/src/functions.php"/>
     </stubs>
 
     <issueHandlers>

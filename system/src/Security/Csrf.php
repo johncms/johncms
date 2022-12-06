@@ -34,7 +34,6 @@ class Csrf
     /**
      * Get the generated token
      *
-     * @param string $token_id
      * @return mixed
      */
     public function getToken(string $token_id = self::DEFAULT_TOKEN_ID)
@@ -49,8 +48,6 @@ class Csrf
 
     /**
      * Refresh token
-     *
-     * @param string $token_id
      */
     public function refreshToken(string $token_id = self::DEFAULT_TOKEN_ID): void
     {
@@ -60,8 +57,6 @@ class Csrf
 
     /**
      * Generate token
-     *
-     * @return string
      */
     public function generateToken(): string
     {

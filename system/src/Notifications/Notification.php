@@ -59,8 +59,6 @@ class Notification extends Model
 
     /**
      * Добавляем глобальные ограничения
-     *
-     * @return void
      */
     protected static function boot(): void
     {
@@ -78,9 +76,6 @@ class Notification extends Model
 
     /**
      * Выборка только непрочитанных
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeUnread(Builder $query): Builder
     {
@@ -89,8 +84,6 @@ class Notification extends Model
 
     /**
      * Связь с пользователем
-     *
-     * @return HasOne
      */
     public function user(): HasOne
     {
@@ -99,8 +92,6 @@ class Notification extends Model
 
     /**
      * Связь с пользователем - отправителем
-     *
-     * @return HasOne
      */
     public function sender(): HasOne
     {

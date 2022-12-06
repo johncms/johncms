@@ -78,10 +78,6 @@ class Migration
 
     /**
      * Run migrations
-     *
-     * @param string|null $moduleName
-     * @param array $options
-     * @return array
      */
     public function run(?string $moduleName = null, array $options = []): array
     {
@@ -95,10 +91,6 @@ class Migration
 
     /**
      * Rollback migrations
-     *
-     * @param string|null $moduleName
-     * @param array $options
-     * @return array
      */
     public function rollback(?string $moduleName = null, array $options = []): array
     {

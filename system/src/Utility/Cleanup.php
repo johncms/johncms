@@ -17,20 +17,16 @@ use PDO;
 
 class Cleanup
 {
-    /** @var PDO */
-    private $pdo;
-
     /** @var string */
     private $cacheFile = 'system-cleanup.cache';
 
-    public function __construct(PDO $pdo, int $lifeFime = 86400)
+    public function __construct(private PDO $pdo, int $lifeFime = 86400)
     {
-        $this->pdo = $pdo;
         $cache = CACHE_PATH . $this->cacheFile;
 
         if (! file_exists($cache) || filemtime($cache) < (time() - $lifeFime)) {
             $this->cleanupTable('cms_sessions', 'lastdate', time() - 86400);
-            $this->cleanupTable('cms_users_iphistory', 'time', time() - 7776000);
+            $this->cleanupTable('cms_users_iphistory', 'time', time() - 7_776_000);
 
             // Delete unconfirmed users
             $config = di('config')['johncms'];

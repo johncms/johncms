@@ -17,7 +17,6 @@ use Johncms\NavChain;
 use Johncms\View\AdminRenderEngineFactory;
 use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
-use PDO;
 
 class BaseAdminController extends AbstractController
 {
@@ -46,15 +45,6 @@ class BaseAdminController extends AbstractController
             $this->translator->addTranslationDomain(basename($this->moduleName), MODULES_PATH . $this->moduleName . '/locale');
         }
 
-        $db = di(PDO::class);
-        $this->render->addData(
-            [
-                'regtotal'   => 0, // $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
-                'countusers' => 0, // $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
-                'countadm'   => 0, // $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
-                'bantotal'   => 0, // $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
-            ]
-        );
         $this->navChain->add(d__('admin', 'Admin Panel'), '/admin/');
     }
 }

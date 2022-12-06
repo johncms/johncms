@@ -55,9 +55,6 @@ class EmailMessage extends Model
 
     /**
      * Select only unsent messages.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeUnsent(Builder $query): Builder
     {

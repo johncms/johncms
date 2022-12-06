@@ -67,7 +67,6 @@ class SystemChecker
      * Perform checks
      *
      * @param string[] $checks
-     * @return array
      */
     private function runChecks(array $checks): array
     {

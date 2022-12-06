@@ -60,6 +60,6 @@ class Avatar implements ExtensionInterface
     private function getColor(?string $userName = ''): string
     {
         $colors = config('johncms.avatar_colors');
-        return $colors[(mb_strlen((string) $userName) % count($colors))] ?? $colors[0];
+        return $colors[(mb_strlen((string) $userName) % (is_countable($colors) ? count($colors) : 0))] ?? $colors[0];
     }
 }

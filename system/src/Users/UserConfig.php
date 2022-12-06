@@ -32,11 +32,6 @@ class UserConfig
         }
     }
 
-    /**
-     * @param string $type
-     * @param mixed $value
-     * @return bool|float|int|string
-     */
     private function castValue(string $type, mixed $value): float|bool|int|string
     {
         return match ($type) {

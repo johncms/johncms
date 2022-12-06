@@ -58,9 +58,7 @@ class Session
     }
 
     /**
-     * @param string $key
      * @param mixed|null $default
-     * @return mixed
      * @psalm-suppress NullReference
      */
     public function get(string $key, mixed $default = null): mixed
@@ -69,8 +67,6 @@ class Session
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
      * @psalm-suppress NullReference
      */
     public function set(string $key, mixed $value): void
@@ -84,7 +80,6 @@ class Session
     }
 
     /**
-     * @param array|string $key
      * @psalm-suppress NullReference
      */
     public function remove(array|string $key): void

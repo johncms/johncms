@@ -30,7 +30,7 @@ class ImagesPopup implements EmbedProvider
                 );
             }
             return $document->html();
-        } catch (Exception $exception) {
+        } catch (Exception) {
         }
         return $content;
     }

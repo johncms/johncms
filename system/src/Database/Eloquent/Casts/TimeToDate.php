@@ -26,12 +26,9 @@ class TimeToDate implements CastsAttributes
      * Cast the given value.
      *
      * @param Model $model
-     * @param string $key
      * @param int $value
-     * @param array $attributes
-     * @return Carbon|int
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, string $key, $value, array $attributes): string | int
     {
         if (! empty($value)) {
             $translator = di(Translator::class);

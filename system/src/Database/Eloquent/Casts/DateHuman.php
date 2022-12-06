@@ -28,9 +28,8 @@ class DateHuman implements CastsAttributes
      * @param string $key
      * @param int $value
      * @param array $attributes
-     * @return Carbon|int
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, $key, $value, $attributes): string | int
     {
         if (! empty($value)) {
             $translator = di(Translator::class);

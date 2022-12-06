@@ -24,7 +24,6 @@ class SpecialChars implements CastsAttributes
      * @param string $key
      * @param mixed $value
      * @param array $attributes
-     * @return string
      */
     public function get($model, $key, $value, $attributes): string
     {
@@ -38,7 +37,6 @@ class SpecialChars implements CastsAttributes
      * @param string $key
      * @param $value
      * @param array $attributes
-     * @return null | string
      */
     public function set($model, $key, $value, $attributes): ?string
     {

@@ -30,9 +30,6 @@ class FileStorage
     /**
      * Saving files from the request
      *
-     * @param string $fieldName
-     * @param string $workingDir
-     * @param bool $multiple
      * @return Models\File|Models\File[]
      * @throws FilesystemException
      */
@@ -87,8 +84,6 @@ class FileStorage
 
     /**
      * Generating a temporary file name
-     *
-     * @return string
      */
     protected function makeTmpName(): string
     {
@@ -102,7 +97,6 @@ class FileStorage
     }
 
     /**
-     * @param int $id
      * @throws FilesystemException
      * @throws Exception
      */

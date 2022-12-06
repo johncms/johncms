@@ -22,8 +22,6 @@ class FileInfo extends SplFileInfo
 {
     /**
      * File name without extension
-     *
-     * @return string
      */
     public function getNameWithoutExtension(): string
     {
@@ -32,8 +30,6 @@ class FileInfo extends SplFileInfo
 
     /**
      * Get cleared file name
-     *
-     * @return string
      */
     public function getCleanName(): string
     {
@@ -50,8 +46,6 @@ class FileInfo extends SplFileInfo
 
     /**
      * Get public file path
-     *
-     * @return string
      */
     public function getPublicPath(): string
     {
@@ -60,9 +54,6 @@ class FileInfo extends SplFileInfo
 
     /**
      * Removing special characters from a string
-     *
-     * @param string $name
-     * @return string
      */
     public function sanitizeName(string $name): string
     {
@@ -74,16 +65,12 @@ class FileInfo extends SplFileInfo
 
     /**
      * Removing special characters from a path
-     *
-     * @return string
      */
     public function getCleanPath(): string
     {
         $path_array = explode('/', $this->getPath());
         $path_array = array_map(
-            function ($segment) {
-                return $this->sanitizeName($segment);
-            },
+            fn($segment) => $this->sanitizeName($segment),
             $path_array
         );
 
@@ -100,8 +87,6 @@ class FileInfo extends SplFileInfo
 
     /**
      * Is this file an image or not?
-     *
-     * @return bool
      */
     public function isImage(): bool
     {
@@ -117,8 +102,6 @@ class FileInfo extends SplFileInfo
 
     /**
      * Getting the md5 hash of the file.
-     *
-     * @return string
      */
     public function getMd5(): string
     {
@@ -127,8 +110,6 @@ class FileInfo extends SplFileInfo
 
     /**
      * Getting the sha1 hash of the file.
-     *
-     * @return string
      */
     public function getSha1(): string
     {

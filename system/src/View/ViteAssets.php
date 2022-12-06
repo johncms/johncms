@@ -32,7 +32,7 @@ class ViteAssets
     {
         if (! $this->viteManifest) {
             if (is_file(PUBLIC_PATH . 'build/manifest.json')) {
-                $this->viteManifest = json_decode(file_get_contents(PUBLIC_PATH . 'build/manifest.json'), true);
+                $this->viteManifest = json_decode(file_get_contents(PUBLIC_PATH . 'build/manifest.json'), true, 512, JSON_THROW_ON_ERROR);
             } else {
                 throw new \RuntimeException('manifest.json file not found. Pleas run the "npm run build" command');
             }

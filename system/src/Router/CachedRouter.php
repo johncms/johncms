@@ -32,25 +32,13 @@ class CachedRouter
     protected $builder;
 
     /**
-     * @var CacheInterface
-     */
-    protected CacheInterface $cache;
-
-    /**
      * @var integer
      */
     protected int $ttl;
 
-    /**
-     * @var bool
-     */
-    protected bool $cacheEnabled;
-
-    public function __construct(callable $builder, CacheInterface $cache, bool $cacheEnabled = true)
+    public function __construct(callable $builder, protected CacheInterface $cache, protected bool $cacheEnabled = true)
     {
         $this->builder = $builder;
-        $this->cache = $cache;
-        $this->cacheEnabled = $cacheEnabled;
     }
 
     public function getRouter(): ?MainRouter

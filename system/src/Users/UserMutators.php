@@ -30,9 +30,6 @@ trait UserMutators
 
     /**
      * User agent
-     *
-     * @param string $value
-     * @return string
      */
     public function getBrowserAttribute(string $value): string
     {
@@ -41,8 +38,6 @@ trait UserMutators
 
     /**
      * Определяем пользователь онлайн или нет
-     *
-     * @return bool
      */
     public function getIsOnlineAttribute(): bool
     {
@@ -51,8 +46,6 @@ trait UserMutators
 
     /**
      * Название должности пользователя
-     *
-     * @return string
      */
     public function getRightsNameAttribute(): string
     {
@@ -70,8 +63,6 @@ trait UserMutators
 
     /**
      * Ссылка на страницу профиля пользователя
-     *
-     * @return string
      */
     public function getProfileUrlAttribute(): string
     {
@@ -80,8 +71,6 @@ trait UserMutators
 
     /**
      * Ссылка на страницу поиска по IP
-     *
-     * @return string
      */
     public function getSearchIpUrlAttribute(): string
     {
@@ -90,8 +79,6 @@ trait UserMutators
 
     /**
      * Ссылка на страницу whois IP
-     *
-     * @return string
      */
     public function getWhoisIpUrlAttribute(): string
     {
@@ -100,8 +87,6 @@ trait UserMutators
 
     /**
      * Ссылка на страницу поиска по IP за прокси
-     *
-     * @return string
      */
     public function getSearchIpViaProxyUrlAttribute(): string
     {
@@ -110,8 +95,6 @@ trait UserMutators
 
     /**
      * Ссылка на страницу whois IP за прокси
-     *
-     * @return string
      */
     public function getWhoisIpViaProxyUrlAttribute(): string
     {
@@ -120,8 +103,6 @@ trait UserMutators
 
     /**
      * Проферка валидности пользователя
-     *
-     * @return bool
      */
     public function getIsValidAttribute(): bool
     {
@@ -131,8 +112,6 @@ trait UserMutators
 
     /**
      * Получаем время последнего визита
-     *
-     * @return string
      */
     public function getLastVisitAttribute(): string
     {
@@ -145,8 +124,6 @@ trait UserMutators
 
     /**
      * У пользователя день рождения?
-     *
-     * @return bool
      */
     public function getIsBirthdayAttribute(): bool
     {
@@ -155,8 +132,6 @@ trait UserMutators
 
     /**
      * День рождения пользователя
-     *
-     * @return string
      */
     public function getBirthdayDateAttribute(): string
     {
@@ -165,8 +140,6 @@ trait UserMutators
 
     /**
      * Местоположение пользователя
-     *
-     * @return string
      */
     public function getDisplayPlaceAttribute(): string
     {
@@ -177,8 +150,6 @@ trait UserMutators
 
     /**
      * Обработанное поле О себе.
-     *
-     * @return string
      */
     public function getFormattedAboutAttribute(): string
     {
@@ -189,8 +160,6 @@ trait UserMutators
 
     /**
      * Обработанное поле сайт
-     *
-     * @return string
      */
     public function getWebsiteAttribute(): string
     {
@@ -201,8 +170,6 @@ trait UserMutators
 
     /**
      * Фотография польхователя
-     *
-     * @return array
      */
     public function getPhotoAttribute(): array
     {
@@ -216,8 +183,6 @@ trait UserMutators
 
     /**
      * Получаем баны пользоваетля
-     *
-     * @return array
      */
     public function getBanAttribute(): array
     {
@@ -241,8 +206,6 @@ trait UserMutators
 
     /**
      * User settings
-     *
-     * @return UserConfig
      */
     public function getConfigAttribute(): UserConfig
     {

@@ -6,11 +6,8 @@ namespace Johncms\Http\Resources;
 
 abstract class AbstractResource
 {
-    protected mixed $model;
-
-    public function __construct(mixed $model)
+    public function __construct(protected mixed $model)
     {
-        $this->model = $model;
     }
 
     public function __get(string $name)

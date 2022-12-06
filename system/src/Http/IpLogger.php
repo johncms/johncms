@@ -53,7 +53,6 @@ class IpLogger
 
     /**
      * @param resource $resource
-     * @param array $array
      */
     private function writeIpCache($resource, array $array): void
     {

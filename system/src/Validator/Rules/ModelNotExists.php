@@ -54,9 +54,6 @@ class ModelNotExists extends AbstractValidator
 
     /**
      * Set exclude parameter
-     *
-     * @param mixed $value
-     * @return ModelNotExists
      */
     public function setExclude(mixed $value): ModelNotExists
     {
@@ -66,9 +63,6 @@ class ModelNotExists extends AbstractValidator
 
     /**
      * Set model parameter
-     *
-     * @param string $value
-     * @return ModelNotExists
      */
     public function setModel(string $value): ModelNotExists
     {
@@ -78,9 +72,6 @@ class ModelNotExists extends AbstractValidator
 
     /**
      * Set field parameter
-     *
-     * @param string $value
-     * @return ModelNotExists
      */
     public function setField(string $value): ModelNotExists
     {

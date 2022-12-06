@@ -28,9 +28,6 @@ class ClearCacheCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
      * @psalm-suppress PossiblyInvalidArgument
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

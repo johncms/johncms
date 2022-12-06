@@ -23,28 +23,28 @@ use Psr\Container\ContainerInterface;
 
 class Comments
 {
-    /** @var bool|mixed Таблица комментируемых объектов */
+    /** @var mixed|bool Таблица комментируемых объектов */
     private $object_table;
 
     /** @var string Таблица с комментариями */
     private $comments_table;
 
-    /** @var string Namespace для шаблонов */
+    /** @var mixed|string Namespace для шаблонов */
     private $templates_namespace;
 
     /** @var bool|mixed Идентификатор комментируемого объекта */
     private $sub_id = false;
 
     /** @var bool|int Локальный идентификатор */
-    private $item;
+    private int|bool $item;
 
     /** @var bool|int */
     private $owner = false;
 
     /** @var bool Имеет ли юзер активный бан? */
-    private $ban = false;
+    private bool $ban = false;
 
-    /** @var string URL формируемых ссылок */
+    /** @var string|mixed|null URL формируемых ссылок */
     private $url;
 
     /** @var Render */
@@ -59,13 +59,13 @@ class Comments
     /** @var User */
     private $systemUser;
 
-    /** @var bool Возможность отвечать на комментарий */
+    /** @var mixed|bool Возможность отвечать на комментарий */
     private $access_reply = false;
 
-    /** @var bool Возможность редактировать комментарий */
+    /** @var mixed|bool Возможность редактировать комментарий */
     private $access_edit = false;
 
-    /** @var bool Возможность удалять комментарий */
+    /** @var mixed|bool Возможность удалять комментарий */
     private $access_delete = false;
 
     /** @var int Уровень доступа для Администрации */
@@ -504,12 +504,7 @@ class Comments
         }
     }
 
-    // Добавляем комментарий в базу
-
-    /**
-     * @param false|string $message
-     */
-    private function addComment($message): void
+    private function addComment(false|string $message): void
     {
         /** @var ContainerInterface $container */
         $container = ContainerFactory::getContainer();
@@ -567,7 +562,7 @@ class Comments
                 'reply'      => $reply,
                 'max_length' => $this->max_lenght,
                 'bb_codes'   => di(Bbcode::class)->buttons('form', 'message'),
-                'code'       => rand(1000, 9999),
+                'code'       => random_int(1000, 9999),
             ]
         );
     }
@@ -576,9 +571,8 @@ class Comments
      * Проверка текста сообщения
      *
      * @param bool $rpt_check проверка на повтор сообщений
-     * @return array|bool
      */
-    private function msgCheck(bool $rpt_check = false)
+    private function msgCheck(bool $rpt_check = false): array|bool
     {
         $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
@@ -618,13 +612,7 @@ class Comments
         ];
     }
 
-    // Счетчик комментариев
-
-    /**
-     * @param false|int $update
-     * @return int
-     */
-    private function msgTotal($update = false): int
+    private function msgTotal(false|int $update = false): int
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
 

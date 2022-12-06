@@ -32,9 +32,7 @@ class UserRoleChecker
             return $this->userRoles;
         }
 
-        $this->userRoles = $this->cache->remember($this->cacheId, 60, function () {
-            return $this->user->roles()->get()->toArray();
-        });
+        $this->userRoles = $this->cache->remember($this->cacheId, 60, fn() => $this->user->roles()->get()->toArray());
 
         return $this->userRoles;
     }

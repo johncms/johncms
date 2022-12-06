@@ -28,8 +28,6 @@ class Request extends ServerRequest
      * $_COOKIE
      * $_FILES
      * $_SERVER
-     *
-     * @return ServerRequestInterface
      */
     public static function fromGlobals(): ServerRequestInterface
     {
@@ -57,8 +55,8 @@ class Request extends ServerRequest
     protected function withJson(): static
     {
         $body = $this->getBody();
-        if ($body) {
-            $this->json = json_decode($body->getContents(), true);
+        if (! empty($body->getContents())) {
+            $this->json = json_decode($body->getContents(), true, 512, JSON_THROW_ON_ERROR);
         }
         return $this;
     }
@@ -131,7 +129,6 @@ class Request extends ServerRequest
      * Checking that the site is open over https.
      *
      * @psalm-suppress PossiblyNullArgument
-     * @return bool
      */
     public function isHttps(): bool
     {

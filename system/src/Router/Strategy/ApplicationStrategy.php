@@ -26,11 +26,8 @@ use Throwable;
 
 class ApplicationStrategy extends AbstractStrategy
 {
-    protected ResponseFactoryInterface $responseFactory;
-
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(protected ResponseFactoryInterface $responseFactory)
     {
-        $this->responseFactory = $responseFactory;
     }
 
     public function getMethodNotAllowedDecorator(MethodNotAllowedException $exception): MiddlewareInterface
@@ -74,10 +71,6 @@ class ApplicationStrategy extends AbstractStrategy
         return $this->decorateResponse($response);
     }
 
-    /**
-     * @param mixed $responseContent
-     * @return ResponseInterface
-     */
     protected function prepareResponse(mixed $responseContent): ResponseInterface
     {
         if (is_string($responseContent)) {
@@ -88,17 +81,13 @@ class ApplicationStrategy extends AbstractStrategy
             return new Response(204);
         } elseif ($this->isJsonSerializable($responseContent)) {
             $response = new Response();
-            $response->getBody()->write(json_encode($responseContent));
+            $response->getBody()->write(json_encode($responseContent, JSON_THROW_ON_ERROR));
             return $response->withAddedHeader('content-type', 'application/json');
         }
 
         return $responseContent;
     }
 
-    /**
-     * @param mixed $response
-     * @return bool
-     */
     protected function isJsonSerializable(mixed $response): bool
     {
         if ($response instanceof ResponseInterface) {
@@ -111,11 +100,8 @@ class ApplicationStrategy extends AbstractStrategy
     protected function throwThrowableMiddleware(Throwable $error): MiddlewareInterface
     {
         return new class ($error) implements MiddlewareInterface {
-            protected Throwable $error;
-
-            public function __construct(Throwable $error)
+            public function __construct(protected Throwable $error)
             {
-                $this->error = $error;
             }
 
             public function process(

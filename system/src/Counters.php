@@ -26,20 +26,8 @@ use Psr\Container\ContainerInterface;
  */
 class Counters
 {
-    /** @var PDO */
-    private $db;
-
-    /** @var string */
-    private $homeurl;
-
-    /** @var User */
-    private $user;
-
-    public function __construct(PDO $pdo, Tools $tools, ?User $user = null, string $homeUrl = '')
+    public function __construct(private PDO $db, Tools $tools, private ?User $user = null, private string $homeurl = '')
     {
-        $this->db = $pdo;
-        $this->user = $user;
-        $this->homeurl = $homeUrl;
     }
 
     /**
@@ -54,7 +42,7 @@ class Counters
         $file = CACHE_PATH . 'count-downloads.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $total = $res['total'] ?? 0;
             $new = $res['new'] ?? 0;
             $mod = $res['mod'] ?? 0;
@@ -64,7 +52,7 @@ class Counters
             $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
             $mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         if ($new > 0) {
@@ -93,13 +81,13 @@ class Counters
         $new = '';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $top = $res['top'];
             $msg = $res['msg'];
         } else {
             $top = $this->db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
             $msg = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
-            file_put_contents($file, json_encode(['top' => $top, 'msg' => $msg]), LOCK_EX);
+            file_put_contents($file, json_encode(['top' => $top, 'msg' => $msg], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         if ($this->user && ($new_msg = $this->forumNew()) > 0) {
@@ -116,10 +104,9 @@ class Counters
      * $mod = 1   Выводит ссылки на непрочитанное
      *
      * @param int $mod
-     * @return bool|int|string
      * @deprecated use forumUnreadCount
      */
-    public function forumNew($mod = 0)
+    public function forumNew($mod = 0): bool|int|string
     {
         if ($this->user) {
             $total = $this->db->query(
@@ -174,7 +161,7 @@ class Counters
         $file = CACHE_PATH . 'count-library.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 3200)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $total = $res['total'];
             $new = $res['new'];
             $mod = $res['mod'];
@@ -183,7 +170,7 @@ class Counters
             $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
             $mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
 
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         if ($new) {
@@ -207,7 +194,7 @@ class Counters
         $file = CACHE_PATH . 'count-online.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 10)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $users = $res['users'];
             $guests = $res['guests'];
         } else {
@@ -223,7 +210,6 @@ class Counters
     /**
      * Количество зарегистрированных пользователей
      *
-     * @return string
      * @deprecated use usersCounters
      * TODO: содержимое usersCounters перенести в этот метод после проверки на использование
      */
@@ -258,8 +244,6 @@ class Counters
 
     /**
      * Метод возвращает количество тем, сообщений и непрочитанных сообщений на форуме
-     *
-     * @return array
      */
     public function forumCounters(): array
     {
@@ -267,7 +251,7 @@ class Counters
         $new_messages = 0;
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $topics = $res['topics'];
             $message = $res['messages'];
         } else {
@@ -283,7 +267,7 @@ class Counters
                 WHERE `deleted` != '1'
                 OR deleted IS NULL"
             )->fetchColumn();
-            file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message]), LOCK_EX);
+            file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         if ($this->user && ($new_msg = $this->forumNew()) > 0) {
@@ -301,7 +285,6 @@ class Counters
      * Счетчики гостевой и админклуба
      *
      * @param int $mod
-     * @return array
      */
     public function guestbookCounters($mod = 0): array
     {
@@ -319,15 +302,13 @@ class Counters
 
     /**
      * Счетчики загруз-центра
-     *
-     * @return array
      */
     public function downloadsCounters(): array
     {
         $file = CACHE_PATH . 'counters-downloads.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $total = $res['total'] ?? 0;
             $new = $res['new'] ?? 0;
         } else {
@@ -335,7 +316,7 @@ class Counters
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
             $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
 
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         return [
@@ -346,22 +327,20 @@ class Counters
 
     /**
      * Статистика библиотеки
-     *
-     * @return array
      */
     public function libraryCounters(): array
     {
         $file = CACHE_PATH . 'counters-library.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 3200)) {
-            $res = json_decode(file_get_contents($file), true);
+            $res = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $total = $res['total'];
             $new = $res['new'];
         } else {
             $total = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1')->fetchColumn();
             $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
 
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         return [
@@ -372,22 +351,20 @@ class Counters
 
     /**
      * Количество зарегистрированных пользователей
-     *
-     * @return array
      */
     public function usersCounters(): array
     {
         $file = CACHE_PATH . 'counters-users.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $cache = json_decode(file_get_contents($file), true);
+            $cache = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
             $total = $cache['total'];
             $new = $cache['new'];
         } else {
             $total = (new Users\User())->approved()->count();
             //$new = (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count();
 
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new ?? 0]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new ?? 0], JSON_THROW_ON_ERROR), LOCK_EX);
         }
 
         return [
@@ -400,7 +377,6 @@ class Counters
      * Счетчик всех новостей
      *
      * @deprecated
-     * @return array
      */
     public function news(): array
     {
@@ -412,8 +388,6 @@ class Counters
 
     /**
      * Уведомления
-     *
-     * @return array
      */
     public function notifications(): array
     {
@@ -449,7 +423,7 @@ class Counters
 
         // Временный костыль для обратной совместимости
         $default = ['show_forum_unread' => false];
-        $settings = ! empty($this->user->notification_settings) ? json_decode($this->user->notification_settings, true) : [];
+        $settings = ! empty($this->user->notification_settings) ? json_decode($this->user->notification_settings, true, 512, JSON_THROW_ON_ERROR) : [];
         $notification_settings = array_merge($default, $settings);
         if ($notification_settings['show_forum_unread']) {
             $forum_counters = $this->forumCounters();
@@ -464,8 +438,6 @@ class Counters
 
     /**
      * Метод получает массив счетчиков различных систем аналитики
-     *
-     * @return array
      */
     public function counters(): array
     {
