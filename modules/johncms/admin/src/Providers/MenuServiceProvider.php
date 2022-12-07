@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Admin\Providers;
 
-use Johncms\ServiceProvider;
+use Johncms\AbstractServiceProvider;
 use Johncms\Users\User;
 use Johncms\View\Menu\Menu;
 use Johncms\View\Menu\MenuFactory;
 use Johncms\View\Menu\MenuItem;
 
-class MenuServiceProvider extends ServiceProvider
+final class MenuServiceProvider extends AbstractServiceProvider
 {
     public function register(): void
     {

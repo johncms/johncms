@@ -20,6 +20,9 @@ use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @deprecated
+ */
 class Tools
 {
     /**
@@ -105,11 +108,11 @@ class Tools
      * Обработка текстов перед выводом на экран
      *
      * @param string $str
-     * @param int $br Параметр обработки переносов строк
+     * @param int $br      Параметр обработки переносов строк
      *                     0 - не обрабатывать (по умолчанию)
      *                     1 - обрабатывать
      *                     2 - вместо переносов строки вставляются пробелы
-     * @param int $tags Параметр обработки тэгов
+     * @param int $tags    Параметр обработки тэгов
      *                     0 - не обрабатывать (по умолчанию)
      *                     1 - обрабатывать
      *                     2 - вырезать тэги
@@ -163,7 +166,7 @@ class Tools
      * Сообщения об ошибках
      *
      * @param string|array $error Сообщение об ошибке (или массив с сообщениями)
-     * @param string $link Необязательная ссылка перехода
+     * @param string $link        Необязательная ссылка перехода
      * @return string
      */
     public function displayError($error = '', $link = '')
@@ -585,10 +588,10 @@ class Tools
     {
         $topic_id = (int) $topic_id;
         $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn(); // phpcs:ignore
-        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}'")->fetchColumn(); // phpcs:ignore
+        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}'")->fetchColumn();                                         // phpcs:ignore
 
         $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
-        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
+        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' ORDER BY id DESC LIMIT 1")->fetch();                                         // phpcs:ignore
 
         // Обновляем время топика
         $this->db->exec(

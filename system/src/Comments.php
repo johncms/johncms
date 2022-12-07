@@ -21,6 +21,9 @@ use Johncms\View\Render;
 use PDO;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @deprecated
+ */
 class Comments
 {
     /** @var mixed|bool Таблица комментируемых объектов */
@@ -36,7 +39,7 @@ class Comments
     private $sub_id = false;
 
     /** @var bool|int Локальный идентификатор */
-    private int|bool $item;
+    private int | bool $item;
 
     /** @var bool|int */
     private $owner = false;
@@ -504,7 +507,7 @@ class Comments
         }
     }
 
-    private function addComment(false|string $message): void
+    private function addComment(false | string $message): void
     {
         /** @var ContainerInterface $container */
         $container = ContainerFactory::getContainer();
@@ -572,7 +575,7 @@ class Comments
      *
      * @param bool $rpt_check проверка на повтор сообщений
      */
-    private function msgCheck(bool $rpt_check = false): array|bool
+    private function msgCheck(bool $rpt_check = false): array | bool
     {
         $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
@@ -612,7 +615,7 @@ class Comments
         ];
     }
 
-    private function msgTotal(false|int $update = false): int
+    private function msgTotal(false | int $update = false): int
     {
         $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
 

@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+/**
+ * @deprecated Use Johncms\Online\Models\GuestSession and check if the online module is installed
+ */
 trait GuestSessionMutators
 {
     public function getIpAttribute(int $value): string

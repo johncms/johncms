@@ -26,9 +26,9 @@ class HTMLPurifier
 {
     public function __invoke(ContainerInterface $container): \HTMLPurifier
     {
-        $htmlpurifier_config = di('config')['htmlpurifier'];
+        $htmlPurifierConfig = di('config')['htmlpurifier'];
         $config = HTMLPurifier_Config::createDefault();
-        $config->set('Attr.AllowedClasses', $htmlpurifier_config['allowed_classes']);
+        $config->set('Attr.AllowedClasses', $htmlPurifierConfig['allowed_classes']);
         $config->set('AutoFormat.Linkify', true);
 
         $def = $config->getHTMLDefinition(true);

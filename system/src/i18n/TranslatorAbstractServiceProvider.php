@@ -6,9 +6,9 @@ namespace Johncms\i18n;
 
 use Carbon\Carbon;
 use Gettext\TranslatorFunctions;
-use Johncms\ServiceProvider;
+use Johncms\AbstractServiceProvider;
 
-class TranslatorServiceProvider extends ServiceProvider
+class TranslatorAbstractServiceProvider extends AbstractServiceProvider
 {
     public function register(): void
     {

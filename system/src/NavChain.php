@@ -25,10 +25,8 @@ class NavChain
 
     /**
      * Добавление нескольких элементов в навигационную цепочку
-     *
-     * @return mixed|void
      */
-    public function addList(array $array)
+    public function addList(array $array): void
     {
         foreach ($array as $item) {
             $this->items[] = [
@@ -40,10 +38,8 @@ class NavChain
 
     /**
      * Добавление элемента в навигационную цепочку
-     *
-     * @return void
      */
-    public function add(string $name, string $url = '')
+    public function add(string $name, string $url = ''): void
     {
         $this->items[] = [
             'name' => htmlspecialchars($name),

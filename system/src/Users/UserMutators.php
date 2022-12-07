@@ -16,6 +16,9 @@ use Carbon\Carbon;
 use Johncms\i18n\Translator;
 use Johncms\System\Legacy\Tools;
 
+/**
+ * @deprecated
+ */
 trait UserMutators
 {
     /**

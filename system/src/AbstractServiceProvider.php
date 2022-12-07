@@ -14,7 +14,7 @@ namespace Johncms;
 
 use Psr\Container\ContainerInterface;
 
-abstract class ServiceProvider
+abstract class AbstractServiceProvider
 {
     public function __construct(protected ContainerInterface $container)
     {

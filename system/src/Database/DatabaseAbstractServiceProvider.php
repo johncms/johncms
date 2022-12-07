@@ -6,10 +6,10 @@ namespace Johncms\Database;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Support\Facades\DB;
-use Johncms\ServiceProvider;
+use Johncms\AbstractServiceProvider;
 use PDO;
 
-class DatabaseServiceProvider extends ServiceProvider
+class DatabaseAbstractServiceProvider extends AbstractServiceProvider
 {
     public function register(): void
     {

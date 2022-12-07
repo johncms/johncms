@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class GuestSession
  *
+ * @deprecated Use Johncms\Online\Models\GuestSession and check if the online module is installed
+ *
  * @mixin Builder
  * @property int $session_id
  * @property string $ip

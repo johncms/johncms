@@ -18,6 +18,9 @@ use Johncms\View\Extension\Assets;
 use Johncms\View\Render;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @deprecated
+ */
 class Bbcode
 {
     /** @var Assets */

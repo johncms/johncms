@@ -15,6 +15,9 @@ namespace Johncms\Utility;
 use Johncms\Users\User;
 use PDO;
 
+/**
+ * @deprecated
+ */
 class Cleanup
 {
     /** @var string */

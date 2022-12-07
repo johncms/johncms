@@ -14,6 +14,9 @@ namespace Johncms\Users;
 
 use PDO;
 
+/**
+ * @deprecated
+ */
 class UserClean
 {
     public function __construct(private PDO $db)

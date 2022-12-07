@@ -24,7 +24,7 @@ class CachedRouter
 {
     protected ?MainRouter $router = null;
 
-    protected const CACHE_KEY = 'league/route/cache';
+    protected const CACHE_KEY = 'johncms/route/cache';
 
     /**
      * @var callable

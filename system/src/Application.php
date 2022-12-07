@@ -42,7 +42,7 @@ class Application
         $config = $this->container->get('config');
         $providers = $config['providers'] ?? [];
         foreach ($providers as $provider) {
-            /** @var ServiceProvider $moduleProviders */
+            /** @var AbstractServiceProvider $moduleProviders */
             $moduleProviders = $this->container->get($provider);
             $moduleProviders->register();
         }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Settings;
 
-use JetBrains\PhpStorm\Pure;
 use Johncms\i18n\Translator;
 use Johncms\Users\User;
 use Psr\Container\ContainerExceptionInterface;
@@ -43,7 +42,6 @@ class SiteSettings
         return (int) ($this->user?->settings->perPage ?? $this->config['perPage']);
     }
 
-    #[Pure]
     public function getLanguage(): string
     {
         return $this->translator->getLocale();

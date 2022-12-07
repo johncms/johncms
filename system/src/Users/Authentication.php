@@ -27,7 +27,7 @@ class Authentication
         }
     }
 
-    public function addProvider(string $provider)
+    public function addProvider(string $provider): void
     {
         if (! is_subclass_of($provider, AuthProviderInterface::class)) {
             throw new RuntimeException(sprintf('The class %s must be implementation of %s', $provider, AuthProviderInterface::class));

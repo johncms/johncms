@@ -33,17 +33,15 @@ class Csrf
 
     /**
      * Get the generated token
-     *
-     * @return mixed
      */
-    public function getToken(string $token_id = self::DEFAULT_TOKEN_ID)
+    public function getToken(string $token_id = self::DEFAULT_TOKEN_ID): string
     {
-        $session_key = self::SESSION_NAMESPACE . '.' . $token_id;
-        if (! $this->session->has($session_key)) {
+        $sessionKey = self::SESSION_NAMESPACE . '.' . $token_id;
+        if (! $this->session->has($sessionKey)) {
             $this->refreshToken($token_id);
         }
 
-        return $this->session->get($session_key);
+        return (string) $this->session->get($sessionKey);
     }
 
     /**
@@ -51,8 +49,8 @@ class Csrf
      */
     public function refreshToken(string $token_id = self::DEFAULT_TOKEN_ID): void
     {
-        $session_key = self::SESSION_NAMESPACE . '.' . $token_id;
-        $this->session->set($session_key, $this->generateToken());
+        $sessionKey = self::SESSION_NAMESPACE . '.' . $token_id;
+        $this->session->set($sessionKey, $this->generateToken());
     }
 
     /**
