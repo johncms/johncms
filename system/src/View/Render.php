@@ -12,43 +12,80 @@ declare(strict_types=1);
 
 namespace Johncms\View;
 
-use Illuminate\Support\Arr;
-use Mobicms\Render\Engine;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\View\Engines\CompilerEngine;
+use Illuminate\View\Engines\EngineResolver;
+use Illuminate\View\Factory;
+use Illuminate\View\FileViewFinder;
+use Illuminate\View\ViewFinderInterface;
+use Psr\Container\ContainerInterface;
 
-class Render extends Engine
+class Render
 {
     private string $theme = 'default';
+    private Filesystem $filesystem;
+    private Factory $view;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->filesystem = new Filesystem();
+        $this->view = new Factory($this->getEngineResolver(), $this->getViewFinder(), new Dispatcher($container));
+    }
+
+    private function getEngineResolver(): EngineResolver
+    {
+        $bladeCompiler = new BladeCompiler(
+            files:             $this->filesystem,
+            cachePath:         CACHE_PATH . 'view',
+            basePath:          '',
+            shouldCache:       true,
+            compiledExtension: 'php',
+        );
+
+        $bladeCompilerEngine = new CompilerEngine($bladeCompiler, $this->filesystem);
+        $engineResolver = new EngineResolver();
+        $engineResolver->register('blade', fn() => $bladeCompilerEngine);
+        return $engineResolver;
+    }
+
+    private function getViewFinder(): ViewFinderInterface
+    {
+        $templatePaths = [];
+        if ($this->theme !== 'default') {
+            $templatePaths[] = THEMES_PATH . $this->theme . '/templates';
+        }
+        $templatePaths[] = THEMES_PATH . 'default/templates';
+
+        return new FileViewFinder($this->filesystem, $templatePaths);
+    }
 
     public function setTheme(string $theme): void
     {
         $this->theme = $theme;
     }
 
-    public function addFolder(string $name, string $directory): Engine
+    public function addData(array $data): static
     {
-        $this->addPath($directory, $name);
+        $this->view->share($data);
+        return $this;
+    }
 
-        if ($this->theme !== 'default' && $this->theme !== 'admin') {
-            $themePath = realpath(THEMES_PATH . $this->theme . '/templates/' . $name);
-            if ($themePath !== false) {
-                $this->addPath($themePath, $name);
-            }
-        }
-
+    public function addFolder(string $namespace, string $directory): static
+    {
+        $this->view->addNamespace($namespace, [
+            THEMES_PATH . $this->theme . '/templates/' . $namespace,
+            $directory,
+        ]);
         return $this;
     }
 
     /**
      * We catch exceptions here to avoid doing this in controllers.
      */
-    public function render(string $name, array $params = []): string
+    public function render(string $name, array $data = []): string
     {
-        try {
-            return parent::render($name, $params);
-        } catch (\InvalidArgumentException $exception) {
-            $errorFile = Arr::where($exception->getTrace(), fn($item) => (isset($item['class']) && $item['class'] === static::class));
-            $error = $errorFile[array_key_last($errorFile)];
-            die($exception->getMessage() . ' <br>File: ' . $error['file'] . '<br>Line: ' . $error['line']);
-        }
+        return $this->view->make($name, $data)->render();
     }
 }

@@ -36,7 +36,7 @@ class BaseController extends AbstractController
 
         if (! empty($this->moduleName)) {
             // Register Namespace for module templates
-            $this->render->addFolder(basename($this->moduleName), MODULES_PATH . $this->moduleName . '/templates/');
+            $this->render->addFolder($this->moduleName, MODULES_PATH . $this->moduleName . '/templates/');
 
             // Register the module languages domain and folder
             $this->translator->addTranslationDomain(basename($this->moduleName), MODULES_PATH . $this->moduleName . '/locale');

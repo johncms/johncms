@@ -57,6 +57,6 @@ class HomepageController extends BaseController
         ];
         $data['counters'] = $count;
 
-        return $this->render->render('homepage::index', ['data' => $data]);
+        return $this->render->render('johncms/homepage::index', ['data' => $data]);
     }
 }

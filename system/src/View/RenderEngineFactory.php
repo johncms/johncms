@@ -16,8 +16,6 @@ use Johncms\i18n\Translator;
 use Johncms\Security\Csrf;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
-use Johncms\View\Extension\Assets;
-use Johncms\View\Extension\Avatar;
 use Psr\Container\ContainerInterface;
 
 class RenderEngineFactory
@@ -25,11 +23,10 @@ class RenderEngineFactory
     public function __invoke(ContainerInterface $container): Render
     {
         $config = $container->get('config')['johncms'];
-        $engine = new Render('phtml');
-        $engine->setTheme($config['skindef']);
-        $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
-        $engine->loadExtension($container->get(Assets::class));
-        $engine->loadExtension($container->get(Avatar::class));
+
+        $engine = new Render($container);
+        $engine->setTheme(config('johncms.skindef'));
+        $engine->addFolder('system', THEMES_PATH . 'default/templates/system');
         $csrfToken = $container->get(Csrf::class)->getToken();
 
         $engine->addData(

@@ -20,6 +20,9 @@ use Johncms\View\Extension\AdminAssets;
 use Johncms\View\Extension\Avatar;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @deprecated Use RenderEngineFactory
+ */
 class AdminRenderEngineFactory
 {
     public function __invoke(ContainerInterface $container): Render
