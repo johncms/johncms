@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use Johncms\Container\ContainerFactory;
 use Johncms\Http\ResponseFactory;
@@ -270,4 +271,24 @@ if (! function_exists('array_order_by')) {
         call_user_func_array('array_multisort', $args);
         return array_pop($args);
     }
+}
+
+function asset(string $url, bool $versionStamp = false): string
+{
+    $url = ltrim($url, '/');
+    $defaultTheme = config('johncms.skindef');
+    foreach ([$defaultTheme, 'default'] as $skin) {
+        $file = (string) realpath(ASSETS_PATH . $skin . '/' . $url);
+        $resultUrl = Str::after(realpath($file), realpath(PUBLIC_PATH));
+        if (is_file($file)) {
+            return $versionStamp ? $resultUrl . '?v=' . filemtime($file) : $resultUrl;
+        }
+    }
+
+    throw new InvalidArgumentException('Unable to locate the asset: ' . $url);
+}
+
+function viteAssets(string $url): string
+{
+    return (new \Johncms\View\ViteAssets())->viteAssets($url);
 }
