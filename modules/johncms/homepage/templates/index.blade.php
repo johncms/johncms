@@ -1,7 +1,223 @@
-<div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
-    <h1 class="display-4 fw-bold">JohnCMS {{ CMS_VERSION }}</h1>
-    <p class="lead">
-        {{ __('Free, Open Source content management system') }}
-    </p>
-    <hr class="my-sm-3 my-md-4 full-mobile-width">
-</div>
+@extends('system::layout.default')
+
+@section('content')
+    <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
+        <h1 class="display-4 fw-bold">JohnCMS <?= CMS_VERSION ?></h1>
+        <p class="lead">
+            <?= __('Free, Open Source content management system') ?>
+        </p>
+        <hr class="my-sm-3 my-md-4 full-mobile-width">
+        <a class="btn btn-success btn-lg me-1" href="https://johncms.com/downloads/">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+            </svg>
+            <span class="hide-xs"><?= __('Download') ?></span>
+        </a>
+        <a class="btn btn-primary btn-lg me-1" href="https://docs.johncms.com/">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#book-open"/>
+            </svg>
+            <span class="hide-xs"><?= __('Documentation') ?></span>
+        </a>
+        <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon me-1" target="_blank" rel="nofollow">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#github"/>
+            </svg>
+        </a>
+        <a href="https://translate.johncms.com" title="Translate" class="btn btn-primary btn-lg-icon" target="_blank" rel="nofollow">
+            <svg class="icon">
+                <use xlink:href="<?= asset('icons/sprite.svg', true) ?>#translate"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="d-block d-md-none mobile_tiles">
+        <div class="row">
+            <div class="col-6 col-sm-4 mt-3 tile">
+                <a href="/news/" class="card border text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#book"/>
+                            </svg>
+                            <?php if ($data['counters']['news']['new'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['news']['new']) ?></span>
+                            <?php endif ?>
+                        </div>
+                        <div class="mt-2 tile_name"><?= __('News') ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 mt-3 tile">
+                <a href="/forum/" class="card border text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                            </svg>
+                            <?php if ($data['counters']['forum']['new_messages'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['forum']['new_messages']) ?></span>
+                            <?php endif ?>
+                        </div>
+                        <div class="mt-2 tile_name"><?= d__('system', 'Forum') ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 mt-3 tile">
+                <a href="/guestbook/ga" class="card border text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#chat"/>
+                            </svg>
+                            <?php if ($data['counters']['guestbook']['guestbook'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['guestbook']['guestbook']) ?></span>
+                            <?php endif ?>
+                        </div>
+                        <div class="mt-2 tile_name"><?= d__('system', 'Guestbook') ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 mt-3 tile">
+                <a href="/downloads/" class="card border text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+                            </svg>
+                            <?php if ($data['counters']['downloads']['new'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['downloads']['new']) ?></span>
+                            <?php endif ?>
+                        </div>
+                        <div class="mt-2 tile_name"><?= d__('system', 'Downloads') ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 mt-3 tile">
+                <a href="/library/" class="card border text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#text"/>
+                            </svg>
+                            <?php if ($data['counters']['library']['new'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['library']['new']) ?></span>
+                            <?php endif ?>
+                        </div>
+                        <div class="mt-2 tile_name"><?= d__('system', 'Library') ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 mt-3 tile">
+                <a href="/community/" class="card border text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#users"/>
+                            </svg>
+                            <?php if ($data['counters']['users']['new'] > 0): ?>
+                            <span class="badge rounded-pill bg-danger ms-3 mt-1"><?= $tools->formatNumber($data['counters']['users']['new']) ?></span>
+                            <?php endif ?>
+                        </div>
+                        <div class="mt-2 tile_name"><?= d__('system', 'Users') ?></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <?php if (! empty($data['news']) && $data['news']->count() > 0): ?>
+    <div class="mb-n3">
+        <h2 class="h1 fw-bold mt-4 mb-2"><?= __('News') ?></h2>
+        <div class="row row-cols-1">
+                <?php foreach ($data['news'] as $news_item): ?>
+                <?php /** @var Johncms\News\Models\NewsArticle $news_item */ ?>
+            <div class="col mb-3">
+                <a class="h4 fw-bold" href="<?= $news_item->url ?>"><?= $news_item->name ?></a>
+                    <?php if (! empty($news_item->preview_text_safe)): ?>
+                <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
+                <?php endif; ?>
+                <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
+                    <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
+                    </svg> <?= (int) $news_item->votes_sum_vote ?>,
+                    <svg class="icon ms-2" style="width: 13px;">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                    </svg> <?= $news_item->comments_count ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php endif; ?>
+
+
+    <h2 class="h1 fw-bold mt-4 mb-4"><?= __('Features') ?></h2>
+    <dl class="ms-4">
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            <?= __('Responsive Layout') ?>
+        </dt>
+        <dd class="mb-3">
+            <?= __('Your site will appear equally well on both computers and mobile devices.') ?>
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            <?= __('Template System') ?>
+        </dt>
+        <dd class="mb-3">
+            <?= __('Using templates, you can completely change the style of your site so that it becomes unique and not like the others.') ?>
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            <?= __('High Performance') ?>
+        </dt>
+        <dd class="mb-3">
+            <?= __('When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.') ?>
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            <?= __('Multilingual') ?>
+        </dt>
+        <dd class="mb-3">
+            <?= __(
+                'Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.'
+            ) ?>
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            <?= __('Modularity') ?>
+        </dt>
+        <dd>
+            <?= __('The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers.') ?>
+        </dd>
+    </dl>
+
+    <h2 class="h1 fw-bold mt-4 mb-4"><?= __('Free License') ?></h2>
+
+    <dl class="ms-4">
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            GPL-3
+        </dt>
+        <dd class="mb-3">
+            <?= __('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') ?>
+        </dd>
+    </dl>
+@endsection
