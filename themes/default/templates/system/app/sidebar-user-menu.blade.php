@@ -6,6 +6,7 @@
  */
 
 ?>
+
 <div class="accordion sidebar__user" id="accordion">
     <div class="border-bottom"></div>
     <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false">
@@ -15,7 +16,7 @@
                     <div class="sidebar__notifications badge bg-danger rounded-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
                 <div class="user_photo border rounded-circle me-2 overflow-hidden">
-                    <?php /*= $this->avatar($user?->avatar_url, $user?->displayName() ?? d__('system', 'Log In')) */?>
+                    <x-avatar :avatar-url="$user?->avatar_url" :username="$user?->displayName() ?? d__('system', 'Log In')" />
                 </div>
             </div>
             <div>

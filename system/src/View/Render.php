@@ -20,6 +20,7 @@ use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 use Illuminate\View\ViewFinderInterface;
+use Johncms\View\Components\Avatar;
 use Psr\Container\ContainerInterface;
 
 class Render
@@ -43,6 +44,8 @@ class Render
             shouldCache:       true,
             compiledExtension: 'php',
         );
+
+        $bladeCompiler->component(Avatar::class, 'avatar');
 
         $bladeCompilerEngine = new CompilerEngine($bladeCompiler, $this->filesystem);
         $engineResolver = new EngineResolver();
@@ -79,6 +82,16 @@ class Render
             $directory,
         ]);
         return $this;
+    }
+
+    public function exists(string $view): bool
+    {
+        return $this->view->exists($view);
+    }
+
+    public function addNamespace(string $namespace, $hints): Factory
+    {
+        return $this->view->addNamespace($namespace, $hints);
     }
 
     /**

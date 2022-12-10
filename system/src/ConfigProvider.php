@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
+use Illuminate\Contracts\View\Factory;
 use Johncms\Console\Commands\ClearCacheCommand;
 use Johncms\Console\Commands\MakeMigrationCommand;
 use Johncms\Console\Commands\MigrateCommand;
@@ -53,7 +52,6 @@ use Psr\SimpleCache\CacheInterface;
 
 class ConfigProvider
 {
-    #[Pure]
     public function __invoke(): array
     {
         return [
@@ -73,13 +71,14 @@ class ConfigProvider
         ];
     }
 
-    #[ArrayShape(['aliases' => "string[]", 'factories' => "string[]"])]
     private function getDependencies(): array
     {
         return [
             'aliases' => [
                 Request::class        => ServerRequestInterface::class,
                 RequestFactory::class => ServerRequestInterface::class,
+                Factory::class        => Render::class,
+                'view'                => Render::class,
             ],
 
             'factories' => [
