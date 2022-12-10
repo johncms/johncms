@@ -26,27 +26,27 @@ class MetaTagManager
 
     public function getTitle(): string
     {
-        return htmlspecialchars($this->title);
+        return $this->title;
     }
 
     public function getDescription(): string
     {
-        return htmlspecialchars($this->description);
+        return $this->description;
     }
 
     public function getPageTitle(): ?string
     {
-        return htmlspecialchars($this->pageTitle);
+        return $this->pageTitle;
     }
 
     public function getKeywords(): string
     {
-        return htmlspecialchars($this->keywords);
+        return $this->keywords;
     }
 
     public function getCanonical(): string
     {
-        return htmlspecialchars($this->canonical);
+        return $this->canonical;
     }
 
     /**
