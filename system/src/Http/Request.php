@@ -14,6 +14,7 @@ namespace Johncms\Http;
 
 use GuzzleHttp\Psr7\{CachingStream, LazyOpenStream, ServerRequest};
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
 class Request extends ServerRequest
 {
@@ -56,7 +57,10 @@ class Request extends ServerRequest
     {
         $body = $this->getBody();
         if (! empty($body->getContents())) {
-            $this->json = json_decode($body->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            try {
+                $this->json = json_decode($body->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            } catch (Throwable) {
+            }
         }
         return $this;
     }
