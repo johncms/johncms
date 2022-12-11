@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace Johncms\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Johncms\View\Render;
 
 class Avatar extends AbstractBladeComponent
 {
+    public string $firstSymbol = '';
+    public string $color = '';
+
     public function __construct(
-        protected ?string $avatarUrl = null,
-        protected ?string $username = null
+        public ?string $avatarUrl = null,
+        public ?string $username = null,
+
     ) {
+        $this->firstSymbol = ! empty($this->username) ? $this->getFirstSymbols($this->username) : '';
+        $this->color = $this->getColor($this->username);
     }
 
-    public function render(): string
+    public function render(): View
     {
-        $firstSymbols = ! empty($this->username) ? $this->getFirstSymbols($this->username) : '';
-        return di(Render::class)->render('system::app/avatar', [
-            'avatar_url'    => $this->avatarUrl,
-            'username'      => $this->username,
-            'first_symbols' => $firstSymbols,
-            'color'         => $this->getColor($this->username),
-        ]);
+        return di(Render::class)->make('system::app/avatar');
     }
 
     private function getFirstSymbols(string $username): string

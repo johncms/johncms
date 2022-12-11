@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\View;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -94,11 +95,16 @@ class Render
         return $this->view->addNamespace($namespace, $hints);
     }
 
+    public function make(string $name, array $data = []): View
+    {
+        return $this->view->make($name, $data);
+    }
+
     /**
      * We catch exceptions here to avoid doing this in controllers.
      */
     public function render(string $name, array $data = []): string
     {
-        return $this->view->make($name, $data)->render();
+        return $this->make($name, $data)->render();
     }
 }
