@@ -115,7 +115,7 @@ class AdminSectionController extends BaseAdminController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_section', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/add_section', ['data' => $data]);
     }
 
     /**
@@ -181,7 +181,7 @@ class AdminSectionController extends BaseAdminController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_section', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/add_section', ['data' => $data]);
     }
 
     /**
@@ -206,7 +206,7 @@ class AdminSectionController extends BaseAdminController
             return new RedirectResponse(route('news.admin.section', ['section_id' => $section->parent]));
         }
 
-        return $this->render->render('news::admin/del', [
+        return $this->render->render('johncms/news::admin/del', [
             'data' => [
                 'section'    => $section,
                 'action_url' => route('news.admin.sections.del_store', ['section_id' => $section_id]),

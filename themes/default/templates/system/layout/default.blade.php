@@ -18,7 +18,8 @@ $analytics = $counters->counters();
 
     {!! viteAssets('themes/default/src/js/app.ts') !!}
 
-    @yield('meta', '')
+    @stack('meta')
+    @stack('styles')
 
     @if($metaTags->getKeywords())
         <meta name="keywords" content="{{ $metaTags->getKeywords() }}">
@@ -32,8 +33,6 @@ $analytics = $counters->counters();
     <meta name="theme-color" content="#586776">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="/favicon.ico">
-
-    @yield('styles', '')
 
     <title>{{$metaTags->getTitle()}}</title>
 </head>
@@ -77,7 +76,7 @@ $analytics = $counters->counters();
                                     <svg class="icon icon_messages">
                                         <use xlink:href="{{asset('icons/sprite.svg')}}#messages"/>
                                     </svg>
-                                    @if($notifications['all'])
+                                    @if(! empty($notifications['all']))
                                         <span class="badge bg-danger rounded-pill">{{ $notifications['all'] }}</span>
                                     @endif
                                 </a>
@@ -155,6 +154,6 @@ $analytics = $counters->counters();
         <div class="modal-content"></div>
     </div>
 </div>
-@yield('scripts', '')
+@stack('scripts')
 </body>
 </html>

@@ -54,7 +54,7 @@ class SearchController extends BaseController
         }
 
         return $this->render->render(
-            'news::public/search',
+            'johncms/news::public/search',
             [
                 'query'    => htmlspecialchars($query ?? ''),
                 'articles' => $articles ?? null,
@@ -85,7 +85,7 @@ class SearchController extends BaseController
         }
 
         return $this->render->render(
-            'news::public/search_by_tags',
+            'johncms/news::public/search_by_tags',
             [
                 'query'    => htmlspecialchars($query ?? ''),
                 'articles' => $articles ?? null,

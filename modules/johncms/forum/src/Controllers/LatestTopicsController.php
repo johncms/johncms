@@ -20,7 +20,7 @@ class LatestTopicsController extends BaseForumController
         $resource = UnreadTopicResource::createFromCollection($topics);
 
         return $this->render->render(
-            'forum::new_topics',
+            'johncms/forum::new_topics',
             [
                 'topics'        => $resource->getItems(),
                 'pagination'    => $topics->render(),
@@ -42,7 +42,7 @@ class LatestTopicsController extends BaseForumController
         $resource = UnreadTopicResource::createFromCollection($topics);
 
         return $this->render->render(
-            'forum::new_topics',
+            'johncms/forum::new_topics',
             [
                 'current_period' => $period,
                 'topics'         => $resource->getItems(),
@@ -75,7 +75,7 @@ class LatestTopicsController extends BaseForumController
         }
 
         return $this->render->render(
-            'system::pages/result',
+            'johncms/system::pages/result',
             [
                 'title'         => __('Unread'),
                 'type'          => 'alert-success',
@@ -94,7 +94,7 @@ class LatestTopicsController extends BaseForumController
         $resource = UnreadTopicResource::createFromCollection($topics);
 
         return $this->render->render(
-            'forum::new_topics',
+            'johncms/forum::new_topics',
             [
                 'topics'        => $resource->getItems(),
                 'pagination'    => $topics->render(),

@@ -8,15 +8,15 @@
  */
 
 ?>
-<?php if (! empty($avatar_url)): ?>
+<?php if (! empty($avatarUrl)): ?>
     <div class="avatar">
-        <img src="<?= $avatar_url ?>" class="img-fluid" alt=".">
+        <img src="<?= $avatarUrl ?>" class="img-fluid" alt=".">
     </div>
 <?php else: ?>
     <div class="avatar">
         <div class="text-white text-avatar"
              style="background: <?= $color ?>;"
-        ><?= $first_symbols ?></div>
+        ><?= $firstSymbol ?></div>
     </div>
 <?php endif; ?>
 

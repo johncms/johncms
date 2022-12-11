@@ -22,6 +22,6 @@ class LanguageController extends BaseController
      */
     public function index(): string
     {
-        return $this->render->render('language::index');
+        return $this->render->render('johncms/language::index');
     }
 }

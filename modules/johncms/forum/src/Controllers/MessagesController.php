@@ -166,7 +166,7 @@ class MessagesController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::reply_message',
+            'johncms/forum::reply_message',
             [
                 'id'             => $topicId,
                 'bbcode'         => di(Bbcode::class)->buttons('message_form', 'msg'),
@@ -187,7 +187,7 @@ class MessagesController extends BaseForumController
         $message = ForumMessage::query()->findOrFail($id);
         $countMessages = ForumMessage::query()->where('topic_id', $message->topic_id)->count();
         return $this->render->render(
-            'forum::delete_post',
+            'johncms/forum::delete_post',
             [
                 'id'            => $id,
                 'actionUrl'     => route('forum.confirmDeletePost', ['id' => $id]),
@@ -298,7 +298,7 @@ class MessagesController extends BaseForumController
         $this->metaTagManager->setAll(__('Edit Message'));
 
         return $this->render->render(
-            'forum::edit_post',
+            'johncms/forum::edit_post',
             [
                 'id'        => $id,
                 'bbcode'    => di(Bbcode::class)->buttons('edit_post', 'msg'),
@@ -457,7 +457,7 @@ class MessagesController extends BaseForumController
         $this->metaTagManager->setTitle(__('Reply to message'));
 
         return $this->render->render(
-            'forum::reply_message',
+            'johncms/forum::reply_message',
             [
                 'id'          => $id,
                 'bbcode'      => di(Bbcode::class)->buttons('message_form', 'msg'),

@@ -46,7 +46,7 @@ class LoginController extends BaseController
             'authError'        => $session->getFlash('authError'),
         ];
 
-        return $this->render->render('auth::login_form', ['data' => $data]);
+        return $this->render->render('johncms/auth::login_form', ['data' => $data]);
     }
 
     public function authorize(

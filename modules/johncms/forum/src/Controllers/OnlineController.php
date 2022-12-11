@@ -31,7 +31,7 @@ class OnlineController extends BaseForumController
         $userResource = UserResource::createFromCollection($users);
         $route = di('route');
         return $this->render->render(
-            'forum::online/users',
+            'johncms/forum::online/users',
             [
                 'data' => [
                     'users'      => $userResource->getItems(),
@@ -69,7 +69,7 @@ class OnlineController extends BaseForumController
             ->paginate();
         $userResource = GuestResource::createFromCollection($guests);
         $route = di('route');
-        return $this->render->render('forum::online/users', [
+        return $this->render->render('johncms/forum::online/users', [
             'data' => [
                 'users'      => $userResource->getItems(),
                 'pagination' => $guests->render(),

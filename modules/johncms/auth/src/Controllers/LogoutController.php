@@ -35,7 +35,7 @@ class LogoutController extends BaseController
         $data = [
             'confirmUrl' => route('logout.confirm'),
         ];
-        return $this->render->render('auth::logout_form', ['data' => $data]);
+        return $this->render->render('johncms/auth::logout_form', ['data' => $data]);
     }
 
     public function confirm(SessionAuthProvider $sessionAuthProvider, CookiesAuthProvider $cookiesAuthProvider): RedirectResponse

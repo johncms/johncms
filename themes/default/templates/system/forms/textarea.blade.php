@@ -1,0 +1,18 @@
+<?php
+/**
+ * @var Johncms\Forms\Inputs\Textarea $field
+ */
+
+?>
+<div class="mb-2">
+    <label for="about" class="form-label"><?= $field->label ?></label>
+    <textarea class="form-control <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
+              name="<?= $field->name ?>"
+              id="<?= $field->id ?>"
+              rows="<?= $field->rows ?>"
+              placeholder="<?= $field->placeholder ?>"
+    >{{$field->value ?? '' }}</textarea>
+    <?php if (isset($errors[$field->name])): ?>
+        <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
+    <?php endif ?>
+</div>

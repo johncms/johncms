@@ -52,7 +52,7 @@ class RegistrationController extends BaseController
             'cookieUrl'        => config('johncms.cookie_policy_url', ''),
         ];
 
-        return $this->render->render('auth::index', ['data' => $data]);
+        return $this->render->render('johncms/auth::index', ['data' => $data]);
     }
 
     /**
@@ -66,7 +66,7 @@ class RegistrationController extends BaseController
             $registrationForm->validate();
             $user = $registrationService->registerUser($registrationForm->getRequestValues());
 
-            return $this->render->render('auth::registration_result', [
+            return $this->render->render('johncms/auth::registration_result', [
                 'moderation'         => $registrationService->moderation(),
                 'email_confirmation' => $registrationService->emailConfirmation(),
                 'user'               => $user,
@@ -96,7 +96,7 @@ class RegistrationController extends BaseController
             $sessionProvider = di(SessionAuthProvider::class);
             $sessionProvider->store($confirmUser);
 
-            return $this->render->render('auth::email_confirmed', ['user' => $confirmUser]);
+            return $this->render->render('johncms/auth::email_confirmed', ['user' => $confirmUser]);
         } catch (RuntimeException $exception) {
             return $this->render->render('system::pages/result', [
                 'type'    => 'alert-danger',

@@ -137,7 +137,7 @@ class AdminArticleController extends BaseAdminController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_article', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/add_article', ['data' => $data]);
     }
 
     /**
@@ -228,7 +228,7 @@ class AdminArticleController extends BaseAdminController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_article', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/add_article', ['data' => $data]);
     }
 
     /**
@@ -271,7 +271,7 @@ class AdminArticleController extends BaseAdminController
         $data['article'] = $article;
         $data['action_url'] = route('news.admin.article.delStore', ['article_id' => $article_id]);
 
-        return $this->render->render('news::admin/del', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/del', ['data' => $data]);
     }
 
     public function loadFile(Request $request): array|string

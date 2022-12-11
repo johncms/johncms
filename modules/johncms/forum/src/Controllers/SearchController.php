@@ -101,7 +101,7 @@ class SearchController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::forum_search',
+            'johncms/forum::forum_search',
             [
                 'pagination' => isset($messages) ? $messages->render() : '',
                 'query'      => htmlspecialchars($search),

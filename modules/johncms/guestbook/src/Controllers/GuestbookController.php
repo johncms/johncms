@@ -84,7 +84,7 @@ class GuestbookController extends BaseController
         $posts = $guestbook->getPosts();
 
         return $this->render->render(
-            'guestbook::index',
+            'johncms/guestbook::index',
             [
                 'data' => [
                     'message'      => $session->getFlash('message'),
@@ -142,7 +142,7 @@ class GuestbookController extends BaseController
             redirect($this->baseUrl);
         }
         // Request cleaning options
-        return $this->render->render('guestbook::clear', [
+        return $this->render->render('johncms/guestbook::clear', [
             'actionUrl' => route('guestbook.clean.store'),
         ]);
     }
@@ -179,7 +179,7 @@ class GuestbookController extends BaseController
             // Set result message
             $session->flash('message', __('The message was deleted'));
         } else {
-            return $this->render->render('guestbook::confirm_delete', [
+            return $this->render->render('johncms/guestbook::confirm_delete', [
                 'id'        => $id,
                 'actionUrl' => route('guestbook.delete.store', ['id' => $id]),
             ]);
@@ -238,7 +238,7 @@ class GuestbookController extends BaseController
         }
 
         return $this->render->render(
-            'guestbook::edit',
+            'johncms/guestbook::edit',
             [
                 'id'        => $id,
                 'message'   => $message,
@@ -301,7 +301,7 @@ class GuestbookController extends BaseController
         }
 
         return $this->render->render(
-            'guestbook::reply',
+            'johncms/guestbook::reply',
             [
                 'id'         => $id,
                 'message'    => $message,

@@ -108,7 +108,7 @@ class PollController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::add_poll',
+            'johncms/forum::add_poll',
             [
                 'id'         => $topicId,
                 'actionUrl'  => route('forum.addPoll', ['topicId' => $topicId]),
@@ -146,7 +146,7 @@ class PollController extends BaseForumController
                     return new RedirectResponse(route('forum.editPoll', ['topicId' => $topicId]));
                 } else {
                     return $this->render->render(
-                        'forum::delete_answer',
+                        'johncms/forum::delete_answer',
                         [
                             'title'      => __('Delete Answer'),
                             'page_title' => __('Delete Answer'),
@@ -229,7 +229,7 @@ class PollController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::edit_poll',
+            'johncms/forum::edit_poll',
             [
                 'title'      => __('Edit Poll'),
                 'page_title' => __('Edit Poll'),
@@ -298,7 +298,7 @@ class PollController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::delete_poll',
+            'johncms/forum::delete_poll',
             [
                 'actionUrl' => route('forum.deletePoll', ['topicId' => $topicId]),
                 'id'        => $topicId,
@@ -317,7 +317,7 @@ class PollController extends BaseForumController
         $this->metaTagManager->setAll(__('Who voted in the poll'));
 
         return $this->render->render(
-            'forum::voted_users',
+            'johncms/forum::voted_users',
             [
                 'empty_message' => __('No one has voted in this poll yet'),
                 'poll_name'     => $poll->name,

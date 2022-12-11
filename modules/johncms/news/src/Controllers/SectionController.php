@@ -48,7 +48,7 @@ class SectionController extends BaseController
         $this->newsMetaManager->forSection($current_section)->set();
 
         return $this->render->render(
-            'news::public/index',
+            'johncms/news::public/index',
             [
                 'current_section' => $current_section,
                 'sections'        => $section->getSections($current_section->id ?? 0),

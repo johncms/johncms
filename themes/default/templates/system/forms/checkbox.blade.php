@@ -1,0 +1,24 @@
+<?php
+/**
+ * @var Johncms\Forms\Inputs\Checkbox $field
+ */
+
+?>
+<div class="form-check mb-2">
+    <input type="hidden" name="<?= $field->name ?>" value="">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox"
+               name="<?= $field->name ?>"
+               value="{{$field->value ?? ''}}"
+               class="form-check-input"
+               id="<?= $field->id ?>"
+            <?= $field->checked ? 'checked' : '' ?>>
+        <label class="form-check-label" for="<?= $field->id ?>"><?= $field->label ?></label>
+        <?php if (isset($errors[$field->name])): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
+        <?php endif ?>
+        <?php if ($field->helpText): ?>
+            <div class="text-muted fz-small"><?= $field->helpText ?></div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -53,7 +53,7 @@ class CuratorsController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::curators',
+            'johncms/forum::curators',
             [
                 'title'         => __('Curators'),
                 'page_title'    => __('Curators'),

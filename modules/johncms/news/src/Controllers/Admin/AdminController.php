@@ -39,7 +39,7 @@ class AdminController extends BaseAdminController
 
     public function index(): string
     {
-        return $this->render->render('news::admin/index');
+        return $this->render->render('johncms/news::admin/index');
     }
 
     /**
@@ -85,7 +85,7 @@ class AdminController extends BaseAdminController
         $data['current_section'] = $section_id;
 
         $this->metaTagManager->setAll($title);
-        return $this->render->render('news::admin/sections', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/sections', ['data' => $data]);
     }
 
     /**
@@ -166,6 +166,6 @@ class AdminController extends BaseAdminController
         $data['current_settings'] = array_merge($default_settings, $config);
 
         // Выводим шаблон настроек уведомлений
-        return $this->render->render('news::admin/settings', ['data' => $data]);
+        return $this->render->render('johncms/news::admin/settings', ['data' => $data]);
     }
 }

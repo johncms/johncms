@@ -149,7 +149,7 @@ class TopicsController extends BaseForumController
         $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] === $id ? 1 : 0;
 
         return $this->render->render(
-            'forum::topic',
+            'johncms/forum::topic',
             [
                 'first_post'       => $first_message,
                 'topic'            => $currentTopic,
@@ -218,7 +218,7 @@ class TopicsController extends BaseForumController
         $this->metaTagManager->setAll(__('New Topic'));
 
         return $this->render->render(
-            'forum::new_topic',
+            'johncms/forum::new_topic',
             [
                 'back_url' => $currentSection->url,
                 'data'     => $formData,
@@ -300,7 +300,7 @@ class TopicsController extends BaseForumController
         $this->metaTagManager->setAll(__('Edit Topic'));
 
         return $this->render->render(
-            'forum::new_topic',
+            'johncms/forum::new_topic',
             [
                 'back_url' => $topic->url,
                 'data'     => $formData,
@@ -340,7 +340,7 @@ class TopicsController extends BaseForumController
         $topic = ForumTopic::query()->findOrFail($topicId);
         $this->metaTagManager->setAll(__('Delete Topic'));
         return $this->render->render(
-            'forum::delete_topic',
+            'johncms/forum::delete_topic',
             [
                 'completeDelete' => $user->hasPermission(ForumPermissions::COMPLETE_DELETE_TOPIC),
                 'id'             => $topicId,
@@ -495,7 +495,7 @@ class TopicsController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::filter_by_author',
+            'johncms/forum::filter_by_author',
             [
                 'id'        => $topicId,
                 'actionUrl' => route('forum.filter', ['topicId' => $topicId], ['action' => 'set']),
@@ -553,7 +553,7 @@ class TopicsController extends BaseForumController
         $_SESSION['dc'] = $dc;
         $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
         return $this->render->render(
-            'forum::mass_delete',
+            'johncms/forum::mass_delete',
             [
                 'title'      => __('Delete posts'),
                 'page_title' => __('Delete posts'),

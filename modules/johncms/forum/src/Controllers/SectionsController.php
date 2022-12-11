@@ -36,7 +36,7 @@ class SectionsController extends BaseForumController
         $this->metaTagManager->setDescription($forumSettings['forum_description']);
 
         return $this->render->render(
-            'forum::index',
+            'johncms/forum::index',
             [
                 'sections'     => $sections,
                 'online'       => [
@@ -100,7 +100,7 @@ class SectionsController extends BaseForumController
             }
 
             return $this->render->render(
-                'forum::topics',
+                'johncms/forum::topics',
                 array_merge(
                     $templateBaseData,
                     [
@@ -121,7 +121,7 @@ class SectionsController extends BaseForumController
                 ->get();
 
             return $this->render->render(
-                'forum::section',
+                'johncms/forum::section',
                 array_merge(
                     $templateBaseData,
                     [

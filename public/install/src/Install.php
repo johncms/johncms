@@ -39,12 +39,10 @@ class Install
     private function setupRender(): void
     {
         $translator = $this->container->get(Translator::class);
-        $assets = $this->container->get(Assets::class);
 
-        $view = new Render('phtml');
+        $view = new Render($this->container);
         $view->setTheme('default');
         $view->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
-        $view->loadExtension($assets);
         $view->addData(
             [
                 'locale' => $translator->getLocale(),

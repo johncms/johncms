@@ -33,7 +33,7 @@ class OnlineController extends BaseController
     {
         $users = User::query()->with('activity')->online()->paginate();
         $userResource = UserResource::createFromCollection($users);
-        return $this->render->render('online::users', [
+        return $this->render->render('johncms/online::users', [
             'data' => [
                 'users'      => $userResource->getItems(),
                 'pagination' => $users->render(),
@@ -50,7 +50,7 @@ class OnlineController extends BaseController
                 ->where('last_visit', '>', Carbon::today()->subDays(3));
         })->paginate();
         $userResource = UserResource::createFromCollection($users);
-        return $this->render->render('online::users', [
+        return $this->render->render('johncms/online::users', [
             'data' => [
                 'users'      => $userResource->getItems(),
                 'pagination' => $users->render(),
@@ -64,7 +64,7 @@ class OnlineController extends BaseController
     {
         $guests = GuestSession::query()->online()->paginate();
         $userResource = GuestResource::createFromCollection($guests);
-        return $this->render->render('online::users', [
+        return $this->render->render('johncms/online::users', [
             'data' => [
                 'users'      => $userResource->getItems(),
                 'pagination' => $guests->render(),
@@ -107,6 +107,6 @@ class OnlineController extends BaseController
         $data['total'] = $total;
         $data['items'] = $items ?? [];
 
-        return $this->render->render('online::ip', ['data' => $data]);
+        return $this->render->render('johncms/online::ip', ['data' => $data]);
     }
 }

@@ -143,7 +143,7 @@ class FilesController extends BaseForumController
         }
 
         return $this->render->render(
-            'forum::add_file',
+            'johncms/forum::add_file',
             [
                 'id'            => $messageId,
                 'maxFileSize'   => $maxFileSize,

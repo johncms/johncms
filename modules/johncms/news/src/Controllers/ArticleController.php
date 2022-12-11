@@ -49,7 +49,7 @@ class ArticleController extends BaseController
         $current_article = $article->getArticle($article_code);
         $this->meta_tags->forArticle($current_article)->set();
         return $this->render->render(
-            'news::public/article',
+            'johncms/news::public/article',
             [
                 'article' => $current_article,
                 'current_section' => $section->getLastSection(),
