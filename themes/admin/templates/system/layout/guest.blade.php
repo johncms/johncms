@@ -17,7 +17,7 @@
     <meta name="MobileOptimized" content="width">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
-    <?= $this->section('meta', '') ?>
+    <?= viteAssets('themes/admin/src/js/app.ts') ?>
     <?php if (! empty($metaTags->getKeywords())): ?>
         <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">
     <?php endif ?>
@@ -28,28 +28,21 @@
         <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
-    <?php if ($locale === 'ar'): ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
-    <?php else: ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
-    <?php endif; ?>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
-    <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
-    <?= $this->section('styles', '') ?>
+    <link rel="shortcut icon" href="/favicon.ico">
     <title><?= $metaTags->getTitle() ?></title>
 </head>
 <body>
 <div class="wrapper bg-light">
-    <?= $this->section('content') ?>
+    @yield('content')
 </div>
 <div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content"></div>
     </div>
 </div>
-<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
-<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
-<script src="<?= $this->asset('js/app.js', true) ?>"></script>
-<?= $this->section('scripts', '') ?>
+
+@stack('scripts')
 </body>
 </html>

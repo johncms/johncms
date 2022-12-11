@@ -24,7 +24,7 @@
                 </div>
             <?php endif; ?>
             <div>
-                <a href="<?= $field->currentFile['url'] ?>" target="_blank"><?= $this->e($field->currentFile['name']) ?></a>
+                <a href="<?= $field->currentFile['url'] ?>" target="_blank"><?= e($field->currentFile['name']) ?></a>
             </div>
             <div class="form-check">
                 <input
@@ -41,7 +41,7 @@
            class="form-control <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
            name="<?= $field->name ?>"
            id="<?= $field->id ?>"
-           value="<?= $this->e($field->value ?? '') ?>"
+           value="<?= e($field->value ?? '') ?>"
            placeholder="<?= $field->placeholder ?>"
         <?= $field->readOnly ? 'readonly' : '' ?>
     >

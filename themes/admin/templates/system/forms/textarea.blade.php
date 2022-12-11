@@ -1,6 +1,5 @@
 <?php
 /**
- * @var Mobicms\Render\Template\Template $this
  * @var Johncms\Forms\Inputs\Textarea $field
  */
 
@@ -12,7 +11,7 @@
               id="<?= $field->id ?>"
               rows="<?= $field->rows ?>"
               placeholder="<?= $field->placeholder ?>"
-    ><?= $this->e($field->value ?? '') ?></textarea>
+    >{{$field->value ?? '' }}</textarea>
     <?php if (isset($errors[$field->name])): ?>
         <div class="invalid-feedback"><?= implode('<br>', $errors[$field->name]) ?></div>
     <?php endif ?>

@@ -16,16 +16,16 @@
                     <div class="sidebar__notifications badge bg-danger rounded-pill"><?= $notifications['all'] ?></div>
                 <?php endif ?>
                 <div class="user_photo border rounded-circle me-2 overflow-hidden">
-                    <?= $this->avatar($user?->avatar_url, $user?->displayName()) ?>
+                    <x-avatar :avatar-url="$user?->avatar_url" :username="$user?->displayName()" />
                 </div>
             </div>
             <div>
-                <?= $this->e($user->displayName()) ?>
+                {{$user->displayName()}}
             </div>
         </div>
         <div>
             <svg class="icon icon-chevron-bottom">
-                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#chevron-bottom"/>
+                <use xlink:href="<?= asset('icons/sprite.svg') ?>#chevron-bottom"/>
             </svg>
         </div>
     </a>
@@ -34,7 +34,7 @@
             <li>
                 <a href="/notifications/">
                     <svg class="icon text-info">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
+                        <use xlink:href="<?= asset('icons/sprite.svg') ?>#messages"/>
                     </svg>
                     <span class="flex-grow-1 text-info"><?= d__('system', 'Notifications') ?></span>
                     <?php if (! empty($notifications['all'])): ?>
@@ -46,7 +46,7 @@
             <li>
                 <a href="/profile/?act=office">
                     <svg class="icon text-info">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
+                        <use xlink:href="<?= asset('icons/sprite.svg') ?>#user"/>
                     </svg>
                     <span class="flex-grow-1 text-info"><?= d__('system', 'Personal') ?></span>
                 </a>
@@ -54,7 +54,7 @@
             <li>
                 <a href="/login">
                     <svg class="icon text-info">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-out"/>
+                        <use xlink:href="<?= asset('icons/sprite.svg') ?>#log-out"/>
                     </svg>
                     <span class="flex-grow-1 text-info"><?= d__('system', 'Exit') ?></span>
                 </a>

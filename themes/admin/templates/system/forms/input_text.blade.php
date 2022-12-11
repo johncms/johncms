@@ -1,9 +1,7 @@
 <?php
 /**
- * @var Mobicms\Render\Template\Template $this
  * @var Johncms\Forms\Inputs\InputText $field
  */
-
 ?>
 <div class="mb-2">
     <label for="name" class="form-label"><?= $field->label ?></label>
@@ -11,7 +9,7 @@
            class="form-control <?= (isset($errors[$field->name]) ? 'is-invalid' : '') ?>"
            name="<?= $field->name ?>"
            id="<?= $field->id ?>"
-           value="<?= $this->e($field->value ?? '') ?>"
+           value="{{$field->value ?? ''}}"
            placeholder="<?= $field->placeholder ?>"
         <?= $field->readOnly ? 'readonly' : '' ?>
     >

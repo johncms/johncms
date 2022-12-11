@@ -1,6 +1,5 @@
 <?php
 /**
- * @var Mobicms\Render\Template\Template $this
  * @var Johncms\Forms\Inputs\Checkbox $field
  */
 
@@ -10,7 +9,7 @@
     <div class="custom-control custom-checkbox">
         <input type="checkbox"
                name="<?= $field->name ?>"
-               value="<?= $this->e($field->value ?? '') ?>"
+               value="{{$field->value ?? ''}}"
                class="form-check-input"
                id="<?= $field->id ?>"
             <?= $field->checked ? 'checked' : '' ?>>

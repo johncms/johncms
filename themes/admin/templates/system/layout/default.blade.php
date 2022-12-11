@@ -23,7 +23,7 @@ $analytics = $counters->counters();
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="csrf-token" content="<?= $csrf_token ?>">
-    <?= $this->section('meta', '') ?>
+    @stack('meta')
     <?php if (! empty($metaTags->getKeywords())): ?>
         <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">
     <?php endif ?>
@@ -35,11 +35,11 @@ $analytics = $counters->counters();
     <?php endif ?>
     <meta name="theme-color" content="#586776">
 
-    <?= $this->viteAssets('themes/admin/src/js/app.ts') ?>
+    <?= viteAssets('themes/admin/src/js/app.ts') ?>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="/favicon.ico">
-    <?= $this->section('styles', '') ?>
+    @stack('styles')
     <title><?= $metaTags->getTitle() ?></title>
 </head>
 <body>
@@ -48,12 +48,12 @@ $analytics = $counters->counters();
         <div class="sidebar">
             <div class="sidebar__logo">
                 <a href="/admin/">
-                    <span class="logo__image"><img src="<?= $this->asset('images/logo.svg') ?>" alt="logo" style="width: 70%;" class="img-fluid"></span>
+                    <span class="logo__image"><img src="<?= asset('images/logo.svg') ?>" alt="logo" style="width: 70%;" class="img-fluid"></span>
                 </a>
             </div>
             <div class="sidebar__wrapper d-flex flex-column">
-                <?= $this->section('sidebar-user', $this->fetch('system::app/sidebar-user-menu', ['notifications' => $notifications])) ?>
-                <?= $this->section('sidebar-menu', $this->fetch('system::app/sidebar-admin-menu')) ?>
+                @include('system::app.sidebar-user-menu', ['notifications' => $notifications])
+                @include('system::app/sidebar-main-menu')
             </div>
         </div>
         <div class="content-container content-container-padding d-flex flex-column">
@@ -69,7 +69,7 @@ $analytics = $counters->counters();
                         </div>
                         <div class="logo">
                             <a href="/">
-                                <img src="<?= $this->asset('images/logo_mobile.svg') ?>" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
+                                <img src="<?= asset('images/logo_mobile.svg') ?>" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
                             </a>
                         </div>
                         <div>
@@ -77,7 +77,7 @@ $analytics = $counters->counters();
                             if ($user): ?>
                                 <a href="/notifications/" class="icon_with_badge me-2">
                                     <svg class="icon icon_messages">
-                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
+                                        <use xlink:href="<?= asset('icons/sprite.svg') ?>#messages"/>
                                     </svg>
                                     <?php
                                     if (! empty($notifications['all'])): ?>
@@ -89,7 +89,7 @@ $analytics = $counters->counters();
                             else: ?>
                                 <a href="/login/" class="icon_with_badge">
                                     <svg class="icon ms-n2">
-                                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#log-in"/>
+                                        <use xlink:href="<?= asset('icons/sprite.svg') ?>#log-in"/>
                                     </svg>
                                 </a>
                             <?php
@@ -104,12 +104,15 @@ $analytics = $counters->counters();
                     <h1 class="mb-0"><?= $metaTags->getTitle() ?></h1>
                 <?php
                 endif ?>
-                <?= $this->fetch('system::app/breadcrumbs') ?>
-                <?= $this->section('content') ?>
+
+                @include('system::app/breadcrumbs')
+
+                @yield('content')
+
                 <div class="to-top to-top_hidden">
                     <button class="btn btn__top">
                         <svg class="icon-40">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#top"/>
+                            <use xlink:href="<?= asset('icons/sprite.svg') ?>#top"/>
                         </svg>
                     </button>
                 </div>
@@ -117,7 +120,7 @@ $analytics = $counters->counters();
         </div>
     </div>
     <div class="page_layout container">
-        <?= $this->section('footer_content') ?>
+        @stack('footer_content')
     </div>
     <div class="overlay"></div>
     <div class="page_layout justify-content-end d-flex w-100">
@@ -128,17 +131,17 @@ $analytics = $counters->counters();
                     <div class="ps-1">
                         <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
                             <svg class="icon">
-                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#twitter"/>
+                                <use xlink:href="<?= asset('icons/sprite.svg') ?>#twitter"/>
                             </svg>
                         </a>
                         <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
                             <svg class="icon">
-                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#telegram"/>
+                                <use xlink:href="<?= asset('icons/sprite.svg') ?>#telegram"/>
                             </svg>
                         </a>
                         <a href="https://www.youtube.com/channel/UCIzwmZMHJgnBPEicpU9Itsw" title="YouTube" target="_blank" rel="nofollow" class="me-2 text-muted text-decoration-none">
                             <svg class="icon">
-                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#youtube2"/>
+                                <use xlink:href="<?= asset('icons/sprite.svg') ?>#youtube2"/>
                             </svg>
                         </a>
                     </div>
@@ -169,7 +172,7 @@ $analytics = $counters->counters();
         <div class="modal-content"></div>
     </div>
 </div>
-<?= $this->section('scripts', '') ?>
+@stack('scripts')
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

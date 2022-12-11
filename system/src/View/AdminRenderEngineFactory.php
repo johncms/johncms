@@ -16,23 +16,16 @@ use Johncms\i18n\Translator;
 use Johncms\Security\Csrf;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
-use Johncms\View\Extension\AdminAssets;
-use Johncms\View\Extension\Avatar;
 use Psr\Container\ContainerInterface;
 
-/**
- * @deprecated Use RenderEngineFactory
- */
 class AdminRenderEngineFactory
 {
     public function __invoke(ContainerInterface $container): Render
     {
         $config = $container->get('config')['johncms'];
-        $engine = new Render('phtml');
+        $engine = new Render($container);
         $engine->setTheme('admin');
         $engine->addFolder('system', realpath(THEMES_PATH . 'admin/templates/system'));
-        $engine->loadExtension($container->get(AdminAssets::class));
-        $engine->loadExtension($container->get(Avatar::class));
         $engine->addData(
             [
                 'container'  => $container,
