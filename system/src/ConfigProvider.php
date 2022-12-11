@@ -39,8 +39,6 @@ use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\Users\Ban\SystemBanTypes;
 use Johncms\View\AdminRenderEngineFactory;
-use Johncms\View\Extension\{AdminAssets, Avatar};
-use Johncms\View\Extension\Assets;
 use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
 use Johncms\View\RenderEngineFactory;
@@ -82,9 +80,6 @@ class ConfigProvider
             ],
 
             'factories' => [
-                AdminAssets::class              => AdminAssets::class,
-                Assets::class                   => Assets::class,
-                Avatar::class                   => Avatar::class,
                 IpLogger::class                 => IpLogger::class,
                 PDO::class                      => PdoFactory::class,
                 Render::class                   => RenderEngineFactory::class,

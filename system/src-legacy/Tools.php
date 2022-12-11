@@ -58,7 +58,6 @@ class Tools
     public function __invoke(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->assets = $container->get(Assets::class);
         $config = $container->get('config');
         $this->config = $config['johncms'] ?? [];
         $this->db = $container->get(\PDO::class);

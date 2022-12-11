@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c678d8f6666992abeb76c5b0ab423041",
+    "content-hash": "d39bd038a606e530e26d23e644a61ef7",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -3211,66 +3211,6 @@
                 "source": "https://github.com/mobicms/captcha/tree/3.1.0"
             },
             "time": "2021-07-21T10:01:07+00:00"
-        },
-        {
-            "name": "mobicms/render",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mobicms/render.git",
-                "reference": "8ed17b4a3763a875e6974df3959af193ed2b9d3f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mobicms/render/zipball/8ed17b4a3763a875e6974df3959af193ed2b9d3f",
-                "reference": "8ed17b4a3763a875e6974df3959af193ed2b9d3f",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-phpunit": "^0.15",
-                "slevomat/coding-standard": "^7.0",
-                "squizlabs/php_codesniffer": "^3.6",
-                "vimeo/psalm": "^4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Mobicms\\Render\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jonathan Reinink",
-                    "email": "jonathan@reinink.ca",
-                    "role": "Developer"
-                },
-                {
-                    "name": "mobiCMS Contributors",
-                    "homepage": "https://github.com/mobicms/render/graphs/contributors"
-                }
-            ],
-            "description": "Native PHP template engine",
-            "homepage": "https://github.com/mobicms/render",
-            "keywords": [
-                "mobicms",
-                "render",
-                "templates",
-                "templating",
-                "views"
-            ],
-            "support": {
-                "issues": "https://github.com/mobicms/render/issues",
-                "source": "https://github.com/mobicms/render/tree/3.0.0"
-            },
-            "time": "2021-07-29T19:02:48+00:00"
         },
         {
             "name": "monolog/monolog",

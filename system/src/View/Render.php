@@ -60,7 +60,7 @@ class Render
         if ($this->theme !== 'default') {
             $templatePaths[] = THEMES_PATH . $this->theme . '/templates';
         }
-        //$templatePaths[] = THEMES_PATH . 'default/templates';
+        $templatePaths[] = THEMES_PATH . 'default/templates';
 
         return new FileViewFinder($this->filesystem, $templatePaths);
     }
