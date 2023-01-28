@@ -8,9 +8,7 @@ use Johncms\Console\ConsoleApp;
 use Johncms\Container\ContainerFactory;
 
 $container = ContainerFactory::getContainer();
-
-$application = new Application($container);
-$application->run();
+$container->get(Application::class)->run();
 
 $application = new ConsoleApp();
 try {

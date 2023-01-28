@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\Debug\DebugBar;
-use Johncms\Http\Request;
+use Illuminate\Contracts\Events\Dispatcher;
 use Johncms\Log\ExceptionHandlers;
 use Johncms\Router\RouterFactory;
-use Johncms\Users\User;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -25,10 +23,15 @@ use Throwable;
 
 class Application
 {
+    public const BEFORE_HANDLE_REQUEST_EVENT = 'app.beforeHandleRequest';
+    public const AFTER_HANDLE_REQUEST_EVENT = 'app.afterHandleRequest';
+
     public function __construct(
-        private ContainerInterface $container
+        private ContainerInterface $container,
+        private Dispatcher $events,
+        private ExceptionHandlers $exceptionHandlers
     ) {
-        $container->get(ExceptionHandlers::class)->registerHandlers();
+        $this->exceptionHandlers->registerHandlers();
     }
 
     public function run(): Application
@@ -56,33 +59,13 @@ class Application
     public function handleRequest(): void
     {
         $router = $this->container->get(RouterFactory::class);
-
-        $request = di(Request::class);
-        $debug = (DEBUG_FOR_ALL || (DEBUG && di(User::class)?->isAdmin())) && ! str_starts_with($request->getUri()->getPath(), '/_debugbar/');
-
-        // Initialize the debugbar if necessary
-        if ($debug) {
-            $debugBar = di(DebugBar::class);
-            $debugBar->addBootingTime();
-            $debugBar->startApplicationMeasure();
-            header('phpdebugbar-id: ' . $debugBar->getCurrentRequestId());
-            $getJavascriptRenderer = $debugBar->getJavascriptRenderer();
-            $getJavascriptRenderer->setBindAjaxHandlerToXHR();
-            $getJavascriptRenderer->addAssets(['/assets/default/debugbar/custom.css'], ['/assets/default/debugbar/queryWidget.js']);
-        }
+        $this->events->dispatch(Application::BEFORE_HANDLE_REQUEST_EVENT);
 
         // Handle request
         $response = $router->dispatch();
         (new SapiEmitter())->emit($response);
 
-        // Collect data for debugbar and render html
-        if ($debug) {
-            $contentType = $response->getHeader('content-type')[0] ?? 'text/html';
-            if ($request->isXmlHttpRequest() || $contentType === 'application/json') {
-                $debugBar->stackData();
-            } else {
-                $getJavascriptRenderer->renderOnShutdownWithHead();
-            }
-        }
+        // Dispatch after handle request event
+        $this->events->dispatch(Application::AFTER_HANDLE_REQUEST_EVENT, $response);
     }
 }

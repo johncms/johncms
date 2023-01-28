@@ -20,6 +20,8 @@ use Johncms\Console\Commands\MigrateCommand;
 use Johncms\Database\DatabaseAbstractServiceProvider;
 use Johncms\Database\PdoFactory;
 use Johncms\Debug\DebugBar;
+use Johncms\Debug\DebugServiceProvider;
+use Johncms\Events\DispatcherFactory;
 use Johncms\Files\Filesystem;
 use Johncms\Http\IpLogger;
 use Johncms\Http\Request;
@@ -59,6 +61,7 @@ class ConfigProvider
             'providers'      => [
                 DatabaseAbstractServiceProvider::class,
                 TranslatorAbstractServiceProvider::class,
+                DebugServiceProvider::class,
             ],
             'commands'       => $this->getCommands(),
             'auth_providers' => $this->getAuthProviders(),

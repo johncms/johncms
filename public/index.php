@@ -23,7 +23,7 @@ if (! is_file('../config/autoload/database.local.php')) {
 require '../system/bootstrap.php';
 
 $container = ContainerFactory::getContainer();
-$application = new Application($container);
+$application = $container->get(Application::class);
 $application->run()->handleRequest();
 
 // If cron usage is disabled.
