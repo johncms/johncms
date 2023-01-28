@@ -58,7 +58,6 @@ abstract class AbstractTestCase extends TestCase
         $config['pdo']['db_pass'] = '';
 
         $container->instance('config', $config);
-        $application = new Application($container);
-        $application->run();
+        $container->get(Application::class)->run();
     }
 }
