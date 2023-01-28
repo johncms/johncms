@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\View\Factory;
 use Johncms\Console\Commands\ClearCacheCommand;
 use Johncms\Console\Commands\MakeMigrationCommand;
@@ -98,6 +99,7 @@ class ConfigProvider
                 LoggerInterface::class          => Logger::class,
                 ExceptionHandlers::class        => ExceptionHandlers::class,
                 RouterFactory::class            => RouterFactory::class,
+                Dispatcher::class               => DispatcherFactory::class,
             ],
         ];
     }
