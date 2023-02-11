@@ -17,6 +17,7 @@ use Illuminate\Contracts\View\Factory;
 use Johncms\Console\Commands\ClearCacheCommand;
 use Johncms\Console\Commands\MakeMigrationCommand;
 use Johncms\Console\Commands\MigrateCommand;
+use Johncms\Console\Commands\TranslateGenerateCommand;
 use Johncms\Console\Commands\TranslateScanCommand;
 use Johncms\Database\DatabaseAbstractServiceProvider;
 use Johncms\Database\PdoFactory;
@@ -123,6 +124,7 @@ class ConfigProvider
             MigrateCommand::class,
             ClearCacheCommand::class,
             TranslateScanCommand::class,
+            TranslateGenerateCommand::class,
         ];
     }
 
