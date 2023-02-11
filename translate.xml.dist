@@ -6,127 +6,110 @@
     <domain>
         <name>system</name>
         <target>system/locale</target>
-        <sourceDir>modules/language</sourceDir>
-        <sourceDir>modules/notifications</sourceDir>
-        <sourceDir>modules/redirect</sourceDir>
+        <sourceDir>modules/johncms/language</sourceDir>
+        <sourceDir>modules/johncms/notifications</sourceDir>
+        <sourceDir>modules/johncms/redirect</sourceDir>
         <sourceDir>system/src</sourceDir>
-        <sourceDir>system/src-legacy</sourceDir>
         <sourceDir>themes/default/templates</sourceDir>
+        <sourceDir>themes/admin/templates</sourceDir>
         <sourceFile>system/helpers.php</sourceFile>
-        <sourceFile>system/bootstrap.php</sourceFile>
-        <sourceFile>config/places.global.php</sourceFile>
-        <sourceFile>config/notifications.global.php</sourceFile>
     </domain>
 
     <!-- Admin module -->
     <domain>
         <name>admin</name>
-        <target>modules/admin/locale</target>
-        <sourceDir>modules/admin</sourceDir>
+        <target>modules/johncms/admin/locale</target>
+        <sourceDir>modules/johncms/admin</sourceDir>
     </domain>
 
     <!-- Registration module -->
     <domain>
         <name>auth</name>
-        <target>modules/auth/locale</target>
-        <sourceDir>modules/auth</sourceDir>
-    </domain>
-
-    <!-- Album module -->
-    <domain>
-        <name>album</name>
-        <target>modules/album/locale</target>
-        <sourceDir>modules/album</sourceDir>
+        <target>modules/johncms/auth/locale</target>
+        <sourceDir>modules/johncms/auth</sourceDir>
     </domain>
 
     <!-- Community module -->
     <domain>
         <name>community</name>
-        <target>modules/community/locale</target>
-        <sourceDir>modules/community</sourceDir>
+        <target>modules/johncms/community/locale</target>
+        <sourceDir>modules/johncms/community</sourceDir>
     </domain>
 
     <!-- Downloads module -->
     <domain>
         <name>downloads</name>
-        <target>modules/downloads/locale</target>
-        <sourceDir>modules/downloads</sourceDir>
+        <target>modules/johncms/downloads/locale</target>
+        <sourceDir>modules/johncms/downloads</sourceDir>
     </domain>
 
     <!-- Forum module -->
     <domain>
         <name>forum</name>
-        <target>modules/forum/locale</target>
-        <sourceDir>modules/forum</sourceDir>
+        <target>modules/johncms/forum/locale</target>
+        <sourceDir>modules/johncms/forum</sourceDir>
     </domain>
 
     <!-- Guestbook module -->
     <domain>
         <name>guestbook</name>
-        <target>modules/guestbook/locale</target>
-        <sourceDir>modules/guestbook</sourceDir>
+        <target>modules/johncms/guestbook/locale</target>
+        <sourceDir>modules/johncms/guestbook</sourceDir>
     </domain>
 
     <!-- Help module -->
     <domain>
         <name>help</name>
-        <target>modules/help/locale</target>
-        <sourceDir>modules/help</sourceDir>
+        <target>modules/johncms/help/locale</target>
+        <sourceDir>modules/johncms/help</sourceDir>
     </domain>
 
     <!-- Homepage module -->
     <domain>
         <name>homepage</name>
-        <target>modules/homepage/locale</target>
-        <sourceDir>modules/homepage</sourceDir>
+        <target>modules/johncms/homepage/locale</target>
+        <sourceDir>modules/johncms/homepage</sourceDir>
     </domain>
 
     <!-- Library module -->
     <domain>
         <name>library</name>
-        <target>modules/library/locale</target>
-        <sourceDir>modules/library</sourceDir>
+        <target>modules/johncms/library/locale</target>
+        <sourceDir>modules/johncms/library</sourceDir>
     </domain>
 
     <!-- Mail module -->
     <domain>
         <name>mail</name>
-        <target>modules/mail/locale</target>
-        <sourceDir>modules/mail</sourceDir>
+        <target>modules/johncms/mail/locale</target>
+        <sourceDir>modules/johncms/mail</sourceDir>
     </domain>
 
     <!-- News module -->
     <domain>
         <name>news</name>
-        <target>modules/news/locale</target>
-        <sourceDir>modules/news</sourceDir>
+        <target>modules/johncms/news/locale</target>
+        <sourceDir>modules/johncms/news</sourceDir>
     </domain>
 
     <!-- Online module -->
     <domain>
         <name>online</name>
-        <target>modules/online/locale</target>
-        <sourceDir>modules/online</sourceDir>
+        <target>modules/johncms/online/locale</target>
+        <sourceDir>modules/johncms/online</sourceDir>
     </domain>
 
     <!-- Profile module -->
     <domain>
-        <name>profile</name>
-        <target>modules/profile/locale</target>
-        <sourceDir>modules/profile</sourceDir>
-    </domain>
-
-    <!-- Notifications module -->
-    <domain>
-        <name>notifications</name>
-        <target>modules/notifications/locale</target>
-        <sourceDir>modules/notifications</sourceDir>
+        <name>personal</name>
+        <target>modules/johncms/personal/locale</target>
+        <sourceDir>modules/johncms/personal</sourceDir>
     </domain>
 
     <!-- Installation -->
     <domain>
         <name>install</name>
-        <target>install/locale</target>
-        <sourceDir>install</sourceDir>
+        <target>public/install/locale</target>
+        <sourceDir>public/install</sourceDir>
     </domain>
 </scanRuleset>
