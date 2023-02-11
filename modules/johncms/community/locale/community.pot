@@ -2,146 +2,147 @@ msgid ""
 msgstr ""
 "X-Domain: community\n"
 
-#: modules/community/includes/administration.php:33
-#: modules/community/includes/administration.php:39
-#: modules/community/includes/administration.php:40
-#: modules/community/templates/index.phtml:45
+#: modules/johncms/community/includes/administration.php:33
+#: modules/johncms/community/includes/administration.php:39
+#: modules/johncms/community/includes/administration.php:40
+#: modules/johncms/community/templates/index.phtml:45
 msgid "Administration"
 msgstr ""
 
-#: modules/community/includes/birthdays.php:25
-#: modules/community/includes/birthdays.php:31
-#: modules/community/includes/birthdays.php:32
-#: modules/community/templates/index.phtml:50
+#: modules/johncms/community/includes/birthdays.php:25
+#: modules/johncms/community/includes/birthdays.php:31
+#: modules/johncms/community/includes/birthdays.php:32
+#: modules/johncms/community/templates/index.phtml:50
 msgid "Birthdays"
 msgstr ""
 
-#: modules/community/includes/search.php:23
-#: modules/community/templates/search.phtml:81
-#: modules/community/templates/users.phtml:50
+#: modules/johncms/community/includes/search.php:23
+#: modules/johncms/community/templates/search.phtml:81
+#: modules/johncms/community/templates/users.phtml:50
 msgid "User Search"
 msgstr ""
 
-#: modules/community/includes/search.php:32
-#: modules/community/includes/search.php:36
-#: modules/community/templates/index.phtml:32
+#: modules/johncms/community/includes/search.php:32
+#: modules/johncms/community/includes/search.php:36
+#: modules/johncms/community/templates/index.phtml:32
 msgid "Nickname"
 msgstr ""
 
-#: modules/community/includes/search.php:32
+#: modules/johncms/community/includes/search.php:32
 msgid "Invalid length"
 msgstr ""
 
-#: modules/community/includes/search.php:36
+#: modules/johncms/community/includes/search.php:36
 msgid "Invalid characters"
 msgstr ""
 
-#: modules/community/includes/top.php:21
+#: modules/johncms/community/includes/top.php:21
 msgid "Forum"
 msgstr ""
 
-#: modules/community/includes/top.php:26
+#: modules/johncms/community/includes/top.php:26
 msgid "Guestbook"
 msgstr ""
 
-#: modules/community/includes/top.php:31
+#: modules/johncms/community/includes/top.php:31
 msgid "Comments"
 msgstr ""
 
-#: modules/community/includes/top.php:39
+#: modules/johncms/community/includes/top.php:39
 msgid "Karma"
 msgstr ""
 
-#: modules/community/includes/top.php:50
+#: modules/johncms/community/includes/top.php:50
 msgid "Most active in Guestbook"
 msgstr ""
 
-#: modules/community/includes/top.php:57
+#: modules/johncms/community/includes/top.php:57
 msgid "Most commentators"
 msgstr ""
 
-#: modules/community/includes/top.php:65
+#: modules/johncms/community/includes/top.php:65
 msgid "Best Karma"
 msgstr ""
 
-#: modules/community/includes/top.php:73
+#: modules/johncms/community/includes/top.php:73
 msgid "Most active in Forum"
 msgstr ""
 
-#: modules/community/includes/users.php:28
-#: modules/community/includes/users.php:34
-#: modules/community/includes/users.php:35
+#: modules/johncms/community/includes/users.php:28
+#: modules/johncms/community/includes/users.php:34
+#: modules/johncms/community/includes/users.php:35
 msgid "List of users"
 msgstr ""
 
-#: modules/community/index.php:55
+#: modules/johncms/community/index.php:55
 msgid "Community"
 msgstr ""
 
-#: modules/community/index.php:66
+#: modules/johncms/community/index.php:66
 msgid "For registered users only"
 msgstr ""
 
-#: modules/community/templates/index.phtml:30
-#: modules/community/templates/search.phtml:43
-msgid "Look for the User"
-msgstr ""
-
-#: modules/community/templates/index.phtml:34
-#: modules/community/templates/search.phtml:47
-msgid "Search"
-msgstr ""
-
-#: modules/community/templates/index.phtml:37
-#: modules/community/templates/search.phtml:50
-msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
-
-#: modules/community/templates/index.phtml:41
+#: modules/johncms/community/src/Providers/MenuServiceProvider.php:21
+#: modules/johncms/community/templates/index.phtml:41
 msgid "Users"
 msgstr ""
 
-#: modules/community/templates/index.phtml:55
+#: modules/johncms/community/templates/index.phtml:30
+#: modules/johncms/community/templates/search.phtml:43
+msgid "Look for the User"
+msgstr ""
+
+#: modules/johncms/community/templates/index.phtml:34
+#: modules/johncms/community/templates/search.phtml:47
+msgid "Search"
+msgstr ""
+
+#: modules/johncms/community/templates/index.phtml:37
+#: modules/johncms/community/templates/search.phtml:50
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr ""
+
+#: modules/johncms/community/templates/index.phtml:55
 msgid "Top Activity"
 msgstr ""
 
-#: modules/community/templates/search.phtml:45
+#: modules/johncms/community/templates/search.phtml:45
 msgid "Username"
 msgstr ""
 
-#: modules/community/templates/search.phtml:64
-#: modules/community/templates/top.phtml:40
-#: modules/community/templates/users.phtml:33
+#: modules/johncms/community/templates/search.phtml:64
+#: modules/johncms/community/templates/top.phtml:40
+#: modules/johncms/community/templates/users.phtml:33
 msgid "List is empty"
 msgstr ""
 
-#: modules/community/templates/search.phtml:71
-#: modules/community/templates/users.phtml:40
+#: modules/johncms/community/templates/search.phtml:71
+#: modules/johncms/community/templates/users.phtml:40
 msgid "Total"
 msgstr ""
 
-#: modules/community/templates/search.phtml:84
-#: modules/community/templates/top.phtml:47
-#: modules/community/templates/users.phtml:53
+#: modules/johncms/community/templates/search.phtml:84
+#: modules/johncms/community/templates/top.phtml:47
+#: modules/johncms/community/templates/users.phtml:53
 msgid "Back"
 msgstr ""
 
-#: modules/community/templates/user_row.phtml:61
-#: modules/community/templates/user_row.phtml:67
+#: modules/johncms/community/templates/user_row.phtml:61
+#: modules/johncms/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:63
+#: modules/johncms/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:65
+#: modules/johncms/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:89
+#: modules/johncms/community/templates/user_row.phtml:89
 msgid "Delete"
 msgstr ""

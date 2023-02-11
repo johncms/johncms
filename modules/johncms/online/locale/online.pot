@@ -2,57 +2,57 @@ msgid ""
 msgstr ""
 "X-Domain: online\n"
 
-#: modules/online/includes/guest.php:24
-#: modules/online/includes/history.php:24
-#: modules/online/includes/index.php:25
-#: modules/online/includes/ip.php:21
-msgid "Users"
+#: modules/johncms/online/config/places.php:11
+msgid "Who is Online?"
 msgstr ""
 
-#: modules/online/includes/guest.php:29
-#: modules/online/includes/history.php:29
-#: modules/online/includes/index.php:30
-#: modules/online/includes/ip.php:26
-msgid "History"
+#: modules/johncms/online/config/places.php:12
+msgid "History Online"
 msgstr ""
 
-#: modules/online/includes/guest.php:37
-#: modules/online/includes/history.php:37
-#: modules/online/includes/index.php:38
-#: modules/online/includes/ip.php:34
-msgid "Guests"
+#: modules/johncms/online/config/places.php:13
+msgid "Guests Online"
 msgstr ""
 
-#: modules/online/includes/guest.php:42
-#: modules/online/includes/history.php:42
-#: modules/online/includes/index.php:43
-#: modules/online/includes/ip.php:39
-msgid "IP Activity"
+#: modules/johncms/online/config/places.php:14
+msgid "Ip Activity"
 msgstr ""
 
-#: modules/online/includes/guest.php:61
-msgid "Guest"
-msgstr ""
-
-#: modules/online/includes/index.php:48
+#: modules/johncms/online/src/Controllers/OnlineController.php:25
+#: modules/johncms/online/src/Controllers/OnlineController.php:26
 msgid "Who is online?"
 msgstr ""
 
-#: modules/online/index.php:55
-#: modules/online/index.php:63
-msgid "Online"
+#: modules/johncms/online/src/Places.php:43
+msgid "Somewhere on the site"
 msgstr ""
 
-#: modules/online/index.php:57
-msgid "For registered users only"
+#: modules/johncms/online/src/Resources/GuestResource.php:23
+msgid "Guest"
 msgstr ""
 
-#: modules/online/templates/ip.phtml:51
-#: modules/online/templates/users.phtml:38
+#: modules/johncms/online/src/Tabs.php:23
+msgid "Users"
+msgstr ""
+
+#: modules/johncms/online/src/Tabs.php:28
+msgid "History"
+msgstr ""
+
+#: modules/johncms/online/src/Tabs.php:36
+msgid "Guests"
+msgstr ""
+
+#: modules/johncms/online/src/Tabs.php:41
+msgid "IP Activity"
+msgstr ""
+
+#: modules/johncms/online/templates/ip.blade.php:42
+#: modules/johncms/online/templates/users.blade.php:25
 msgid "List is empty"
 msgstr ""
 
-#: modules/online/templates/ip.phtml:58
-#: modules/online/templates/users.phtml:45
+#: modules/johncms/online/templates/ip.blade.php:49
+#: modules/johncms/online/templates/users.blade.php:34
 msgid "Total"
 msgstr ""

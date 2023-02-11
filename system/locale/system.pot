@@ -2,472 +2,400 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
-#: config/notifications.global.php:20
-#: config/places.global.php:17
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
-msgid "Forum"
-msgstr ""
-
-#: config/notifications.global.php:23
-msgid "New reply on the forum"
-msgstr ""
-
-#: config/notifications.global.php:32
-#, php-format
-msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
-
-#: config/notifications.global.php:39
-msgid "Karma"
-msgstr ""
-
-#: config/notifications.global.php:42
-msgid "New vote in karma"
-msgstr ""
-
-#: config/notifications.global.php:43
-msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
-
-#: config/places.global.php:12
-msgid "On the Homepage"
-msgstr ""
-
-#: config/places.global.php:13
-msgid "Watching the photo album"
-msgstr ""
-
-#: config/places.global.php:14
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:100
-msgid "Users"
-msgstr ""
-
-#: config/places.global.php:15
-msgid "Users List"
-msgstr ""
-
-#: config/places.global.php:16
-#: system/src/Comments.php:170
-#: system/src/Comments.php:206
-#: system/src/Comments.php:239
-#: system/src/Comments.php:265
-#: system/src/Comments.php:306
-#: system/src/Comments.php:338
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:75
-msgid "Downloads"
-msgstr ""
-
-#: config/places.global.php:18
-#: modules/notifications/includes/index.php:90
-#: modules/notifications/includes/index.php:109
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:62
-msgid "Guestbook"
-msgstr ""
-
-#: config/places.global.php:19
-msgid "Reading the FAQ"
-msgstr ""
-
-#: config/places.global.php:20
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:88
-msgid "Library"
-msgstr ""
-
-#: config/places.global.php:21
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
-msgid "Login"
-msgstr ""
-
-#: config/places.global.php:22
-msgid "Personal correspondence"
-msgstr ""
-
-#: config/places.global.php:23
-msgid "Reading the news"
-msgstr ""
-
-#: config/places.global.php:24
-msgid "Profile"
-msgstr ""
-
-#: config/places.global.php:25
-msgid "Redirect on external link to another site"
-msgstr ""
-
-#: config/places.global.php:26
-msgid "Registered on the site"
-msgstr ""
-
-#: config/places.global.php:27
-msgid "List of users"
-msgstr ""
-
-#: config/places.global.php:28
-#: config/places.global.php:29
-#: config/places.global.php:30
-#: config/places.global.php:31
-msgid "Who is online?"
-msgstr ""
-
-#: modules/language/templates/index.phtml:10
+#: modules/johncms/language/templates/index.blade.php:3
 msgid "Select language"
 msgstr ""
 
-#: modules/language/templates/index.phtml:30
+#: modules/johncms/language/templates/index.blade.php:21
 msgid "Apply"
 msgstr ""
 
-#: modules/notifications/includes/clear.php:23
+#: modules/johncms/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/includes/index.php:29
+#: modules/johncms/notifications/includes/index.php:29
 msgid "Users on registration"
 msgstr ""
 
-#: modules/notifications/includes/index.php:39
+#: modules/johncms/notifications/includes/index.php:39
 msgid "Articles on moderation"
 msgstr ""
 
-#: modules/notifications/includes/index.php:49
+#: modules/johncms/notifications/includes/index.php:49
 msgid "Downloads on moderation"
 msgstr ""
 
-#: modules/notifications/includes/index.php:60
+#: modules/johncms/notifications/includes/index.php:60
 msgid "Ban"
 msgstr ""
 
-#: modules/notifications/includes/index.php:70
+#: modules/johncms/notifications/includes/index.php:70
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/includes/index.php:80
+#: modules/johncms/notifications/includes/index.php:80
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/includes/index.php:100
+#: modules/johncms/notifications/includes/index.php:90
+#: modules/johncms/notifications/includes/index.php:109
+msgid "Guestbook"
+msgstr ""
+
+#: modules/johncms/notifications/includes/index.php:100
 msgid "Comments"
 msgstr ""
 
-#: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:80
+#: modules/johncms/notifications/includes/settings.php:18
+#: modules/johncms/notifications/templates/index.phtml:80
 msgid "Settings"
 msgstr ""
 
-#: modules/notifications/includes/settings.php:44
+#: modules/johncms/notifications/includes/settings.php:44
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/notifications/index.php:47
-#: modules/notifications/templates/index.phtml:11
-#: modules/notifications/templates/index.phtml:12
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+#: modules/johncms/notifications/index.php:47
+#: modules/johncms/notifications/templates/index.phtml:11
+#: modules/johncms/notifications/templates/index.phtml:12
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:39
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:41
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:27
+#: modules/johncms/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:67
+#: modules/johncms/notifications/templates/index.phtml:67
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:75
+#: modules/johncms/notifications/templates/index.phtml:75
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:45
+#: modules/johncms/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:49
+#: modules/johncms/notifications/templates/settings.phtml:49
 msgid "Save"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:50
+#: modules/johncms/notifications/templates/settings.phtml:50
+#: themes/admin/templates/system/pages/comments_delete.phtml:26
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
 msgstr ""
 
-#: modules/redirect/index.php:30
+#: modules/johncms/redirect/index.php:30
 msgid "Redirect to an external link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:27
+#: modules/johncms/redirect/templates/index.phtml:27
 msgid "External Link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:28
+#: modules/johncms/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:30
+#: modules/johncms/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:34
+#: modules/johncms/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:36
+#: modules/johncms/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:40
+#: modules/johncms/redirect/templates/index.phtml:40
 msgid "Go to Link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:44
-#: system/src/Comments.php:174
-#: system/src/Comments.php:210
-#: system/src/Comments.php:223
-#: system/src/Comments.php:243
-#: system/src/Comments.php:269
-#: system/src/Comments.php:310
-#: system/src/Comments.php:322
-#: system/src/Comments.php:342
+#: modules/johncms/redirect/templates/index.phtml:44
+#: system/src/Comments.php:177
+#: system/src/Comments.php:213
+#: system/src/Comments.php:226
+#: system/src/Comments.php:246
+#: system/src/Comments.php:272
+#: system/src/Comments.php:313
+#: system/src/Comments.php:325
+#: system/src/Comments.php:345
+#: themes/admin/templates/system/pages/comments_list.phtml:156
+#: themes/admin/templates/system/pages/result.phtml:33
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:34
 msgid "Back"
 msgstr ""
 
-#: system/helpers.php:67
-#: system/helpers.php:94
+#: system/helpers.php:70
+#: system/helpers.php:97
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
-#: system/helpers.php:89
+#: system/helpers.php:92
 msgid "Unfortunately, you do not have access to the requested page."
 msgstr ""
 
-#: system/helpers.php:99
+#: system/helpers.php:102
 msgid "The page is outdated or an attempt to fake the request was prevented."
 msgstr ""
 
-#: system/src-legacy/Bbcode.php:153
-msgid "Added"
-msgstr ""
-
-#: system/src-legacy/Tools.php:171
-msgid "ERROR"
-msgstr ""
-
-#: system/src-legacy/Tools.php:311
-msgid "Somewhere on the site"
-msgstr ""
-
-#: system/src-legacy/Tools.php:502
-msgid "Day"
-msgid_plural "Days"
-msgstr[0] ""
-
-#: system/src/Checker/SystemChecker.php:29
-msgid "PHP version"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:34
-#, php-format
-msgid "The PHP version must be at least %s"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:39
-#: system/src/Checker/SystemChecker.php:47
-#: system/src/Checker/SystemChecker.php:55
-#: system/src/Checker/SystemChecker.php:63
-#: system/src/Checker/SystemChecker.php:71
-#: system/src/Checker/SystemChecker.php:88
-#: system/src/Checker/SystemChecker.php:96
-#: system/src/Checker/SystemChecker.php:122
-msgid "Yes"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:39
-#: system/src/Checker/SystemChecker.php:47
-#: system/src/Checker/SystemChecker.php:55
-#: system/src/Checker/SystemChecker.php:63
-#: system/src/Checker/SystemChecker.php:71
-#: system/src/Checker/SystemChecker.php:88
-#: system/src/Checker/SystemChecker.php:96
-#: system/src/Checker/SystemChecker.php:122
-msgid "No"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:42
-msgid "PHP extension PDO must be installed"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:45
-msgid "Imagick or GD extension"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:50
-msgid "You must install the php extension Imagick or GD"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:53
-msgid "zlib extension"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:58
-msgid "PHP extension zlib must be installed"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:61
-msgid "mbstring extension"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:66
-msgid "PHP extension mbstring must be installed"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:69
-msgid "fileinfo extension"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:74
-msgid "PHP extension fileinfo must be installed"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:86
-msgid "opcache extension"
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:91
-msgid "It is recommended to install the php opcache extension for better performance."
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:99
-msgid "It is recommended to enable the php opcache extension to improve performance."
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:112
+#: system/src/Checker/Checks/DBVersionCheck.php:27
 msgid "Version of the database server"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:117
+#: system/src/Checker/Checks/DBVersionCheck.php:59
 #, php-format
 msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:120
+#: system/src/Checker/Checks/FileInfoCheck.php:17
+msgid "fileinfo extension"
+msgstr ""
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "No"
+msgstr ""
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "Yes"
+msgstr ""
+
+#: system/src/Checker/Checks/FileInfoCheck.php:49
+msgid "PHP extension fileinfo must be installed"
+msgstr ""
+
+#: system/src/Checker/Checks/ImagickCheck.php:17
+msgid "Imagick or GD extension"
+msgstr ""
+
+#: system/src/Checker/Checks/ImagickCheck.php:49
+msgid "You must install the php extension Imagick or GD"
+msgstr ""
+
+#: system/src/Checker/Checks/MbstringCheck.php:17
+msgid "mbstring extension"
+msgstr ""
+
+#: system/src/Checker/Checks/MbstringCheck.php:49
+msgid "PHP extension mbstring must be installed"
+msgstr ""
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:27
 msgid "mysqlnd test"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:125
+#: system/src/Checker/Checks/MySQLNDCheck.php:59
 msgid ""
 "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:159
-#: system/src/Comments.php:228
-#: system/src/Comments.php:229
+#: system/src/Checker/Checks/OpcacheCheck.php:17
+msgid "opcache extension"
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheCheck.php:49
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:49
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr ""
+
+#: system/src/Checker/Checks/PDOCheck.php:50
+msgid "PHP extension PDO must be installed"
+msgstr ""
+
+#: system/src/Checker/Checks/PHPCheck.php:20
+msgid "PHP version"
+msgstr ""
+
+#: system/src/Checker/Checks/PHPCheck.php:52
+#, php-format
+msgid "The PHP version must be at least %s"
+msgstr ""
+
+#: system/src/Checker/Checks/ZlibCheck.php:17
+msgid "zlib extension"
+msgstr ""
+
+#: system/src/Checker/Checks/ZlibCheck.php:49
+msgid "PHP extension zlib must be installed"
+msgstr ""
+
+#: system/src/Comments.php:162
+#: system/src/Comments.php:231
+#: system/src/Comments.php:232
+#: themes/admin/templates/system/pages/comments_list.phtml:124
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:172
+#: system/src/Comments.php:173
+#: system/src/Comments.php:209
+#: system/src/Comments.php:242
+#: system/src/Comments.php:268
+#: system/src/Comments.php:309
+#: system/src/Comments.php:341
+msgid "Downloads"
+msgstr ""
+
+#: system/src/Comments.php:175
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:241
-#: system/src/Comments.php:340
+#: system/src/Comments.php:244
+#: system/src/Comments.php:343
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:253
-#: system/src/Comments.php:327
-#: system/src/Comments.php:328
+#: system/src/Comments.php:256
+#: system/src/Comments.php:330
+#: system/src/Comments.php:331
+#: themes/admin/templates/system/pages/comments_list.phtml:136
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:267
+#: system/src/Comments.php:270
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:352
-#: system/src/Comments.php:392
-#: system/src/Comments.php:393
+#: system/src/Comments.php:355
+#: system/src/Comments.php:395
+#: system/src/Comments.php:396
+#: themes/admin/templates/system/forms/input_file.blade.php:36
+#: themes/admin/templates/system/pages/comments_delete.phtml:24
+#: themes/admin/templates/system/pages/comments_list.phtml:139
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:595
+#: system/src/Comments.php:592
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:601
+#: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:601
+#: system/src/Comments.php:598
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:609
+#: system/src/Comments.php:606
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:170
+#: system/src/Counters.php:121
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:176
+#: system/src/Counters.php:127
 msgid "Last activity"
 msgstr ""
 
-#: system/src/NavChain.php:58
+#: system/src/Modules/ComposerModuleInstaller.php:55
+msgid "PHP binary path:"
+msgstr ""
+
+#: system/src/NavChain.php:60
 msgid "Home"
 msgstr ""
 
-#: system/src/UserProperties.php:75
-#: system/src/Users/UserMutators.php:60
+#: system/src/UserProperties.php:67
+#: system/src/Users/UserMutators.php:56
 msgid "Forum moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:76
-#: system/src/Users/UserMutators.php:61
+#: system/src/UserProperties.php:68
+#: system/src/Users/UserMutators.php:57
 msgid "Download moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:77
-#: system/src/Users/UserMutators.php:62
+#: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:58
 msgid "Library moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:78
-#: system/src/Users/UserMutators.php:63
+#: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:59
 msgid "Super moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:79
-#: system/src/Users/UserMutators.php:64
+#: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:60
 msgid "Administrator"
 msgstr ""
 
-#: system/src/UserProperties.php:80
-#: system/src/Users/UserMutators.php:65
+#: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:61
 msgid "Supervisor"
 msgstr ""
 
-#: system/src/Users/UserManager.php:107
+#: system/src/Users/Ban/SystemBanTypes.php:17
+msgid "Full block"
+msgstr ""
+
+#: system/src/Users/User.php:215
+#: system/src/Users/User.php:224
+msgid "User"
+msgstr ""
+
+#: system/src/Users/User.php:271
+msgid "Online"
+msgstr ""
+
+#: system/src/Users/User.php:287
+msgid "Male"
+msgstr ""
+
+#: system/src/Users/User.php:288
+msgid "Female"
+msgstr ""
+
+#: system/src/Users/User.php:289
+msgid "Not specified"
+msgstr ""
+
+#: system/src/Users/UserManager.php:145
 #, php-format
 msgid "The user \"%s\" was not found"
 msgstr ""
 
-#: system/src/Users/UserManager.php:111
+#: system/src/Users/UserManager.php:149
 msgid "The user is not confirmed"
 msgstr ""
 
-#: system/src/Users/UserManager.php:115
+#: system/src/Users/UserManager.php:153
 msgid "The user's email is not verified"
 msgstr ""
 
-#: system/src/Users/UserManager.php:121
+#: system/src/Users/UserManager.php:159
 msgid "Incorrect password"
 msgstr ""
 
@@ -613,197 +541,178 @@ msgstr ""
 msgid "There was an internal error while using the pattern '%pattern%'"
 msgstr ""
 
-#: themes/default/templates/system/app/debug.phtml:15
-msgid "Sql query log"
-msgstr ""
-
-#: themes/default/templates/system/app/debug.phtml:26
-msgid "Query"
-msgstr ""
-
-#: themes/default/templates/system/app/debug.phtml:27
-msgid "Bindings"
-msgstr ""
-
-#: themes/default/templates/system/app/debug.phtml:28
-msgid "Time"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
-msgid "News archive"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:111
-msgid "Photo Albums"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:122
-msgid "Information, FAQ"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:133
-msgid "Admin Panel"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:142
-msgid "Admin Chat"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
-msgid "Log In"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:51
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:53
 msgid "Personal"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:59
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:61
 msgid "Exit"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
-msgid "Registration"
+#: themes/admin/templates/system/forms/input_file.blade.php:13
+msgid "Current File:"
 msgstr ""
 
-#: themes/default/templates/system/mail/layouts/default.phtml:115
+#: themes/admin/templates/system/mail/layouts/default.phtml:115
+#: themes/default/templates/system/mail/layouts/default.blade.php:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
-msgid "Changing email address"
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:9
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:10
+msgid "Password recovery"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
-#: themes/default/templates/system/mail/templates/registration.phtml:13
-#: themes/default/templates/system/mail/templates/restore_password.phtml:12
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:12
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:13
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:13
+#: themes/default/templates/system/mail/templates/registration.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:14
 #, php-format
 msgid "Hello, %s!"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
-#, php-format
-msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
-msgid "The new email address is:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
-msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
-msgid "Confirm email change"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
-msgid "To continue please click the confirm button"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
-#: themes/default/templates/system/mail/templates/registration.phtml:27
-msgid "Confirm"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
-msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:10
-msgid "Registration on the website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:15
-#, php-format
-msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:18
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
-msgid "Your login:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:19
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
-msgid "Your password:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:19
-msgid "The one you specified when registering"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:22
-#, php-format
-msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:31
-msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:9
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
-msgid "Password recovery"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:14
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:14
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:15
 #, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/restore_password.phtml:17
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:17
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:18
 msgid "In order to recover your password, you must click on the link:"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/restore_password.phtml:22
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:23
 msgid "Restore"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/restore_password.phtml:25
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:25
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:26
 msgid "Link valid for 1 hour"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/restore_password.phtml:27
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:27
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:28
 msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:15
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:16
 #, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:18
+#: themes/default/templates/system/mail/templates/registration.blade.php:18
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:19
+msgid "Your login:"
+msgstr ""
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:19
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:20
+msgid "Your password:"
+msgstr ""
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:23
 msgid "After logging in, you can change your password to new one."
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_delete.phtml:21
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_delete.phtml:25
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_form.phtml:22
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_form.phtml:29
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_list.phtml:39
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_list.phtml:84
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
 msgstr ""
 
+#: themes/admin/templates/system/pages/comments_list.phtml:85
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:23
+msgid "Log In"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:71
+msgid "Login"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:79
+msgid "Registration"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:15
+#, php-format
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:18
+msgid "The new email address is:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:18
+msgid "To continue please click the confirm button"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:23
+#: themes/default/templates/system/mail/templates/registration.blade.php:27
+msgid "Confirm"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:15
+#, php-format
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+msgid "The one you specified when registering"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:22
+#, php-format
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
 msgstr ""

@@ -2,887 +2,888 @@ msgid ""
 msgstr ""
 "X-Domain: downloads\n"
 
-#: modules/downloads/includes/bookmark.php:29
-#: modules/downloads/includes/comments.php:31
-#: modules/downloads/includes/comments.php:49
-#: modules/downloads/includes/comments_review.php:32
-#: modules/downloads/includes/fileControl/delete_file.php:40
-#: modules/downloads/includes/fileControl/edit_file.php:38
-#: modules/downloads/includes/fileControl/edit_screen.php:42
-#: modules/downloads/includes/fileControl/files_more.php:43
-#: modules/downloads/includes/fileControl/transfer_file.php:38
-#: modules/downloads/includes/files_import.php:40
-#: modules/downloads/includes/files_moderation.php:34
-#: modules/downloads/includes/files_moderation.php:46
-#: modules/downloads/includes/files_new.php:39
-#: modules/downloads/includes/files_user.php:38
-#: modules/downloads/includes/files_user.php:42
-#: modules/downloads/includes/folder_add.php:36
-#: modules/downloads/includes/folder_add.php:153
-#: modules/downloads/includes/folder_add.php:154
-#: modules/downloads/includes/folder_delete.php:33
-#: modules/downloads/includes/folder_edit.php:33
-#: modules/downloads/includes/folder_edit.php:139
-#: modules/downloads/includes/folder_edit.php:140
-#: modules/downloads/includes/scan_dir.php:99
-#: modules/downloads/includes/search.php:65
-#: modules/downloads/includes/view.php:37
-#: modules/downloads/includes/view.php:54
-#: modules/downloads/index.php:52
-#: modules/downloads/index.php:88
-#: modules/downloads/index.php:173
-#: modules/downloads/index.php:189
-#: modules/downloads/templates/bookmarks.phtml:54
-#: modules/downloads/templates/comments_review.phtml:131
-#: modules/downloads/templates/files_moderation.phtml:55
-#: modules/downloads/templates/files_user.phtml:52
-#: modules/downloads/templates/index.phtml:158
-#: modules/downloads/templates/new_files.phtml:47
-#: modules/downloads/templates/scan_dir.phtml:67
-#: modules/downloads/templates/search.phtml:81
-#: modules/downloads/templates/top.phtml:53
-#: modules/downloads/templates/top_users.phtml:43
-#: modules/downloads/templates/view.phtml:174
+#: modules/johncms/downloads/includes/bookmark.php:29
+#: modules/johncms/downloads/includes/comments.php:31
+#: modules/johncms/downloads/includes/comments.php:49
+#: modules/johncms/downloads/includes/comments_review.php:32
+#: modules/johncms/downloads/includes/fileControl/delete_file.php:40
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:38
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:42
+#: modules/johncms/downloads/includes/fileControl/files_more.php:43
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:38
+#: modules/johncms/downloads/includes/files_import.php:40
+#: modules/johncms/downloads/includes/files_moderation.php:34
+#: modules/johncms/downloads/includes/files_moderation.php:46
+#: modules/johncms/downloads/includes/files_new.php:39
+#: modules/johncms/downloads/includes/files_user.php:38
+#: modules/johncms/downloads/includes/files_user.php:42
+#: modules/johncms/downloads/includes/folder_add.php:36
+#: modules/johncms/downloads/includes/folder_add.php:153
+#: modules/johncms/downloads/includes/folder_add.php:154
+#: modules/johncms/downloads/includes/folder_delete.php:33
+#: modules/johncms/downloads/includes/folder_edit.php:33
+#: modules/johncms/downloads/includes/folder_edit.php:139
+#: modules/johncms/downloads/includes/folder_edit.php:140
+#: modules/johncms/downloads/includes/scan_dir.php:99
+#: modules/johncms/downloads/includes/search.php:65
+#: modules/johncms/downloads/includes/view.php:37
+#: modules/johncms/downloads/includes/view.php:54
+#: modules/johncms/downloads/index.php:52
+#: modules/johncms/downloads/index.php:88
+#: modules/johncms/downloads/index.php:173
+#: modules/johncms/downloads/index.php:189
+#: modules/johncms/downloads/src/Providers/MenuServiceProvider.php:21
+#: modules/johncms/downloads/templates/bookmarks.phtml:54
+#: modules/johncms/downloads/templates/comments_review.phtml:131
+#: modules/johncms/downloads/templates/files_moderation.phtml:55
+#: modules/johncms/downloads/templates/files_user.phtml:52
+#: modules/johncms/downloads/templates/index.phtml:158
+#: modules/johncms/downloads/templates/new_files.phtml:47
+#: modules/johncms/downloads/templates/scan_dir.phtml:67
+#: modules/johncms/downloads/templates/search.phtml:81
+#: modules/johncms/downloads/templates/top.phtml:53
+#: modules/johncms/downloads/templates/top_users.phtml:43
+#: modules/johncms/downloads/templates/view.phtml:174
 msgid "Downloads"
 msgstr ""
 
-#: modules/downloads/includes/bookmark.php:31
-#: modules/downloads/index.php:81
+#: modules/johncms/downloads/includes/bookmark.php:31
+#: modules/johncms/downloads/index.php:81
 msgid "For registered users only"
 msgstr ""
 
-#: modules/downloads/includes/bookmark.php:37
-#: modules/downloads/includes/bookmark.php:56
-#: modules/downloads/includes/bookmark.php:57
-#: modules/downloads/templates/index.phtml:163
+#: modules/johncms/downloads/includes/bookmark.php:37
+#: modules/johncms/downloads/includes/bookmark.php:56
+#: modules/johncms/downloads/includes/bookmark.php:57
+#: modules/johncms/downloads/templates/index.phtml:163
 msgid "Favorites"
 msgstr ""
 
-#: modules/downloads/includes/comments.php:27
-#: modules/downloads/includes/comments.php:57
-#: modules/downloads/includes/comments.php:60
-#: modules/downloads/includes/comments.php:85
-#: modules/downloads/templates/comments_review.phtml:78
-#: modules/downloads/templates/view.phtml:137
+#: modules/johncms/downloads/includes/comments.php:27
+#: modules/johncms/downloads/includes/comments.php:57
+#: modules/johncms/downloads/includes/comments.php:60
+#: modules/johncms/downloads/includes/comments.php:85
+#: modules/johncms/downloads/templates/comments_review.phtml:78
+#: modules/johncms/downloads/templates/view.phtml:137
 msgid "Comments"
 msgstr ""
 
-#: modules/downloads/includes/comments.php:29
-#: modules/downloads/includes/comments_review.php:28
-#: modules/downloads/includes/comments_review.php:30
-#: modules/downloads/templates/comments_review.phtml:30
+#: modules/johncms/downloads/includes/comments.php:29
+#: modules/johncms/downloads/includes/comments_review.php:28
+#: modules/johncms/downloads/includes/comments_review.php:30
+#: modules/johncms/downloads/templates/comments_review.phtml:30
 msgid "Comments are disabled"
 msgstr ""
 
-#: modules/downloads/includes/comments.php:45
-#: modules/downloads/includes/comments.php:47
-#: modules/downloads/includes/fileControl/delete_file.php:36
-#: modules/downloads/includes/fileControl/delete_file.php:38
-#: modules/downloads/includes/fileControl/edit_file.php:36
-#: modules/downloads/includes/fileControl/edit_screen.php:40
-#: modules/downloads/includes/fileControl/files_more.php:39
-#: modules/downloads/includes/fileControl/files_more.php:41
-#: modules/downloads/includes/fileControl/transfer_file.php:34
-#: modules/downloads/includes/fileControl/transfer_file.php:36
-#: modules/downloads/includes/view.php:33
-#: modules/downloads/includes/view.php:35
+#: modules/johncms/downloads/includes/comments.php:45
+#: modules/johncms/downloads/includes/comments.php:47
+#: modules/johncms/downloads/includes/fileControl/delete_file.php:36
+#: modules/johncms/downloads/includes/fileControl/delete_file.php:38
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:36
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:40
+#: modules/johncms/downloads/includes/fileControl/files_more.php:39
+#: modules/johncms/downloads/includes/fileControl/files_more.php:41
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:34
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:36
+#: modules/johncms/downloads/includes/view.php:33
+#: modules/johncms/downloads/includes/view.php:35
 msgid "File not found"
 msgstr ""
 
-#: modules/downloads/includes/comments_review.php:38
-#: modules/downloads/templates/index.phtml:161
+#: modules/johncms/downloads/includes/comments_review.php:38
+#: modules/johncms/downloads/templates/index.phtml:161
 msgid "Review comments"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_file.php:34
-#: modules/downloads/includes/fileControl/edit_file.php:108
-#: modules/downloads/includes/fileControl/edit_file.php:125
-#: modules/downloads/includes/fileControl/edit_file.php:126
-#: modules/downloads/includes/fileControl/files_more.php:85
-#: modules/downloads/includes/fileControl/files_more.php:115
-#: modules/downloads/templates/view.phtml:149
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:34
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:108
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:125
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:126
+#: modules/johncms/downloads/includes/fileControl/files_more.php:85
+#: modules/johncms/downloads/includes/fileControl/files_more.php:115
+#: modules/johncms/downloads/templates/view.phtml:149
 msgid "Edit File"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_file.php:110
-#: modules/downloads/includes/fileControl/files_more.php:184
-#: modules/downloads/includes/files_import.php:79
-#: modules/downloads/includes/files_upload.php:70
-#: modules/downloads/includes/folder_add.php:54
-#: modules/downloads/includes/folder_edit.php:66
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:110
+#: modules/johncms/downloads/includes/fileControl/files_more.php:184
+#: modules/johncms/downloads/includes/files_import.php:79
+#: modules/johncms/downloads/includes/files_upload.php:70
+#: modules/johncms/downloads/includes/folder_add.php:54
+#: modules/johncms/downloads/includes/folder_edit.php:66
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_file.php:112
-#: modules/downloads/includes/fileControl/edit_screen.php:122
-#: modules/downloads/includes/fileControl/files_more.php:159
-#: modules/downloads/includes/fileControl/files_more.php:256
-#: modules/downloads/includes/files_import.php:105
-#: modules/downloads/includes/files_import.php:206
-#: modules/downloads/includes/files_upload.php:89
-#: modules/downloads/includes/files_upload.php:199
-#: modules/downloads/includes/files_upload.php:212
-#: modules/downloads/includes/folder_add.php:78
-#: modules/downloads/includes/folder_add.php:138
-#: modules/downloads/includes/folder_edit.php:98
+#: modules/johncms/downloads/includes/fileControl/edit_file.php:112
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:122
+#: modules/johncms/downloads/includes/fileControl/files_more.php:159
+#: modules/johncms/downloads/includes/fileControl/files_more.php:256
+#: modules/johncms/downloads/includes/files_import.php:105
+#: modules/johncms/downloads/includes/files_import.php:206
+#: modules/johncms/downloads/includes/files_upload.php:89
+#: modules/johncms/downloads/includes/files_upload.php:199
+#: modules/johncms/downloads/includes/files_upload.php:212
+#: modules/johncms/downloads/includes/folder_add.php:78
+#: modules/johncms/downloads/includes/folder_add.php:138
+#: modules/johncms/downloads/includes/folder_edit.php:98
 msgid "Repeat"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:38
-#: modules/downloads/includes/fileControl/edit_screen.php:107
-#: modules/downloads/includes/fileControl/edit_screen.php:118
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:38
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:107
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:109
-#: modules/downloads/templates/file_import_result.phtml:34
-#: modules/downloads/templates/file_upload_result.phtml:34
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:109
+#: modules/johncms/downloads/templates/file_import_result.phtml:34
+#: modules/johncms/downloads/templates/file_upload_result.phtml:34
 msgid "Screenshot is attached"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:111
-#: modules/downloads/includes/fileControl/files_more.php:237
-#: modules/downloads/includes/fileControl/transfer_file.php:66
-#: modules/downloads/includes/fileControl/transfer_file.php:165
-#: modules/downloads/includes/files_upload.php:238
-#: modules/downloads/includes/files_upload.php:250
-#: modules/downloads/includes/scan_dir.php:81
-#: modules/downloads/includes/scan_dir.php:342
-#: modules/downloads/templates/file_import_result.phtml:44
-#: modules/downloads/templates/view.phtml:171
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:111
+#: modules/johncms/downloads/includes/fileControl/files_more.php:237
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:66
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:165
+#: modules/johncms/downloads/includes/files_upload.php:238
+#: modules/johncms/downloads/includes/files_upload.php:250
+#: modules/johncms/downloads/includes/scan_dir.php:81
+#: modules/johncms/downloads/includes/scan_dir.php:342
+#: modules/johncms/downloads/templates/file_import_result.phtml:44
+#: modules/johncms/downloads/templates/view.phtml:171
 msgid "Back"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/edit_screen.php:120
-#: modules/downloads/templates/file_import_result.phtml:36
-#: modules/downloads/templates/file_upload_result.phtml:36
+#: modules/johncms/downloads/includes/fileControl/edit_screen.php:120
+#: modules/johncms/downloads/templates/file_import_result.phtml:36
+#: modules/johncms/downloads/templates/file_upload_result.phtml:36
 msgid "Screenshot not attached"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:56
+#: modules/johncms/downloads/includes/fileControl/files_more.php:56
 msgid "Additional files"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:138
-#: modules/downloads/includes/fileControl/files_more.php:147
-#: modules/downloads/includes/files_import.php:55
-#: modules/downloads/includes/files_import.php:94
+#: modules/johncms/downloads/includes/fileControl/files_more.php:138
+#: modules/johncms/downloads/includes/fileControl/files_more.php:147
+#: modules/johncms/downloads/includes/files_import.php:55
+#: modules/johncms/downloads/includes/files_import.php:94
 msgid "Invalid Link"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:155
-#: modules/downloads/includes/fileControl/files_more.php:252
-#: modules/downloads/includes/files_import.php:36
-#: modules/downloads/includes/scan_dir.php:95
-#: modules/downloads/includes/search.php:61
+#: modules/johncms/downloads/includes/fileControl/files_more.php:155
+#: modules/johncms/downloads/includes/fileControl/files_more.php:252
+#: modules/johncms/downloads/includes/files_import.php:36
+#: modules/johncms/downloads/includes/scan_dir.php:95
+#: modules/johncms/downloads/includes/search.php:61
 msgid "Error"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:188
-#: modules/downloads/includes/files_upload.php:74
+#: modules/johncms/downloads/includes/fileControl/files_more.php:188
+#: modules/johncms/downloads/includes/files_upload.php:74
 msgid "The weight of the file exceeds"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:192
-#: modules/downloads/includes/files_import.php:83
-#: modules/downloads/includes/files_upload.php:78
+#: modules/johncms/downloads/includes/fileControl/files_more.php:192
+#: modules/johncms/downloads/includes/files_import.php:83
+#: modules/johncms/downloads/includes/files_upload.php:78
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:233
-#: modules/downloads/includes/fileControl/files_more.php:235
-#: modules/downloads/templates/file_import_result.phtml:32
-#: modules/downloads/templates/file_upload_result.phtml:32
+#: modules/johncms/downloads/includes/fileControl/files_more.php:233
+#: modules/johncms/downloads/includes/fileControl/files_more.php:235
+#: modules/johncms/downloads/templates/file_import_result.phtml:32
+#: modules/johncms/downloads/templates/file_upload_result.phtml:32
 msgid "File attached"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/files_more.php:242
-#: modules/downloads/includes/fileControl/files_more.php:245
-#: modules/downloads/includes/files_import.php:204
-#: modules/downloads/includes/files_upload.php:197
-#: modules/downloads/includes/files_upload.php:210
+#: modules/johncms/downloads/includes/fileControl/files_more.php:242
+#: modules/johncms/downloads/includes/fileControl/files_more.php:245
+#: modules/johncms/downloads/includes/files_import.php:204
+#: modules/johncms/downloads/includes/files_upload.php:197
+#: modules/johncms/downloads/includes/files_upload.php:210
 msgid "File not attached"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/transfer_file.php:62
-#: modules/downloads/includes/fileControl/transfer_file.php:119
-#: modules/downloads/includes/fileControl/transfer_file.php:159
-#: modules/downloads/includes/fileControl/transfer_file.php:160
-#: modules/downloads/templates/view.phtml:153
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:62
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:119
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:159
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:160
+#: modules/johncms/downloads/templates/view.phtml:153
 msgid "Move File"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/transfer_file.php:64
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:64
 msgid "This is the current directory"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/transfer_file.php:121
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:121
 msgid "The file has been moved"
 msgstr ""
 
-#: modules/downloads/includes/fileControl/transfer_file.php:123
-#: modules/downloads/templates/index.phtml:147
-#: modules/downloads/templates/scan_dir.phtml:63
+#: modules/johncms/downloads/includes/fileControl/transfer_file.php:123
+#: modules/johncms/downloads/templates/index.phtml:147
+#: modules/johncms/downloads/templates/scan_dir.phtml:63
 msgid "Update counters"
 msgstr ""
 
-#: modules/downloads/includes/files_import.php:38
-#: modules/downloads/includes/files_new.php:37
-#: modules/downloads/includes/files_upload.php:248
-#: modules/downloads/includes/folder_add.php:34
-#: modules/downloads/includes/folder_delete.php:31
-#: modules/downloads/includes/folder_edit.php:31
-#: modules/downloads/includes/scan_dir.php:97
-#: modules/downloads/index.php:187
+#: modules/johncms/downloads/includes/files_import.php:38
+#: modules/johncms/downloads/includes/files_new.php:37
+#: modules/johncms/downloads/includes/files_upload.php:248
+#: modules/johncms/downloads/includes/folder_add.php:34
+#: modules/johncms/downloads/includes/folder_delete.php:31
+#: modules/johncms/downloads/includes/folder_edit.php:31
+#: modules/johncms/downloads/includes/scan_dir.php:97
+#: modules/johncms/downloads/index.php:187
 msgid "The directory does not exist"
 msgstr ""
 
-#: modules/downloads/includes/files_import.php:87
+#: modules/johncms/downloads/includes/files_import.php:87
 msgid "The file name length must not exceed 100 characters"
 msgstr ""
 
-#: modules/downloads/includes/files_import.php:91
+#: modules/johncms/downloads/includes/files_import.php:91
 msgid "The file name contains invalid characters"
 msgstr ""
 
-#: modules/downloads/includes/files_import.php:101
-#: modules/downloads/includes/files_import.php:189
-#: modules/downloads/includes/files_import.php:190
-#: modules/downloads/includes/files_import.php:202
-#: modules/downloads/includes/files_import.php:215
-#: modules/downloads/includes/files_import.php:216
+#: modules/johncms/downloads/includes/files_import.php:101
+#: modules/johncms/downloads/includes/files_import.php:189
+#: modules/johncms/downloads/includes/files_import.php:190
+#: modules/johncms/downloads/includes/files_import.php:202
+#: modules/johncms/downloads/includes/files_import.php:215
+#: modules/johncms/downloads/includes/files_import.php:216
 msgid "File import"
 msgstr ""
 
-#: modules/downloads/includes/files_moderation.php:23
+#: modules/johncms/downloads/includes/files_moderation.php:23
 msgid "Files on moderation"
 msgstr ""
 
-#: modules/downloads/includes/files_moderation.php:32
+#: modules/johncms/downloads/includes/files_moderation.php:32
 msgid "File accepted"
 msgstr ""
 
-#: modules/downloads/includes/files_moderation.php:44
+#: modules/johncms/downloads/includes/files_moderation.php:44
 msgid "All files accepted"
 msgstr ""
 
-#: modules/downloads/includes/files_new.php:23
-#: modules/downloads/templates/index.phtml:40
+#: modules/johncms/downloads/includes/files_new.php:23
+#: modules/johncms/downloads/templates/index.phtml:40
 msgid "New Files"
 msgstr ""
 
-#: modules/downloads/includes/files_top.php:25
-#: modules/downloads/includes/files_top.php:37
+#: modules/johncms/downloads/includes/files_top.php:25
+#: modules/johncms/downloads/includes/files_top.php:37
 msgid "Most Commented"
 msgstr ""
 
-#: modules/downloads/includes/files_top.php:27
-#: modules/downloads/includes/files_top.php:50
+#: modules/johncms/downloads/includes/files_top.php:27
+#: modules/johncms/downloads/includes/files_top.php:50
 msgid "Most Downloaded"
 msgstr ""
 
-#: modules/downloads/includes/files_top.php:29
-#: modules/downloads/includes/files_top.php:44
+#: modules/johncms/downloads/includes/files_top.php:29
+#: modules/johncms/downloads/includes/files_top.php:44
 msgid "Popular Files"
 msgstr ""
 
-#: modules/downloads/includes/files_upload.php:85
-#: modules/downloads/includes/files_upload.php:195
-#: modules/downloads/includes/files_upload.php:208
-#: modules/downloads/includes/files_upload.php:234
-#: modules/downloads/includes/files_upload.php:246
+#: modules/johncms/downloads/includes/files_upload.php:85
+#: modules/johncms/downloads/includes/files_upload.php:195
+#: modules/johncms/downloads/includes/files_upload.php:208
+#: modules/johncms/downloads/includes/files_upload.php:234
+#: modules/johncms/downloads/includes/files_upload.php:246
 msgid "Upload file"
 msgstr ""
 
-#: modules/downloads/includes/files_upload.php:182
-#: modules/downloads/includes/files_upload.php:183
-#: modules/downloads/includes/files_upload.php:220
-#: modules/downloads/includes/files_upload.php:221
-#: modules/downloads/templates/index.phtml:131
-#: modules/downloads/templates/index.phtml:153
+#: modules/johncms/downloads/includes/files_upload.php:182
+#: modules/johncms/downloads/includes/files_upload.php:183
+#: modules/johncms/downloads/includes/files_upload.php:220
+#: modules/johncms/downloads/includes/files_upload.php:221
+#: modules/johncms/downloads/templates/index.phtml:131
+#: modules/johncms/downloads/templates/index.phtml:153
 msgid "Upload File"
 msgstr ""
 
-#: modules/downloads/includes/files_upload.php:236
+#: modules/johncms/downloads/includes/files_upload.php:236
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/downloads/includes/files_user.php:25
-#: modules/downloads/includes/top_users.php:42
+#: modules/johncms/downloads/includes/files_user.php:25
+#: modules/johncms/downloads/includes/top_users.php:42
 msgid "User Files"
 msgstr ""
 
-#: modules/downloads/includes/files_user.php:40
+#: modules/johncms/downloads/includes/files_user.php:40
 msgid "User does not exists"
 msgstr ""
 
-#: modules/downloads/includes/folder_add.php:20
-#: modules/downloads/includes/folder_add.php:32
-#: modules/downloads/includes/folder_add.php:74
-#: modules/downloads/includes/folder_add.php:123
-#: modules/downloads/includes/folder_add.php:134
-#: modules/downloads/includes/folder_edit.php:94
-#: modules/downloads/templates/index.phtml:141
+#: modules/johncms/downloads/includes/folder_add.php:20
+#: modules/johncms/downloads/includes/folder_add.php:32
+#: modules/johncms/downloads/includes/folder_add.php:74
+#: modules/johncms/downloads/includes/folder_add.php:123
+#: modules/johncms/downloads/includes/folder_add.php:134
+#: modules/johncms/downloads/includes/folder_edit.php:94
+#: modules/johncms/downloads/templates/index.phtml:141
 msgid "Create Folder"
 msgstr ""
 
-#: modules/downloads/includes/folder_add.php:58
+#: modules/johncms/downloads/includes/folder_add.php:58
 msgid "Invalid characters"
 msgstr ""
 
-#: modules/downloads/includes/folder_add.php:64
-#: modules/downloads/includes/folder_edit.php:87
-#: modules/downloads/templates/folder_form.phtml:56
+#: modules/johncms/downloads/includes/folder_add.php:64
+#: modules/johncms/downloads/includes/folder_edit.php:87
+#: modules/johncms/downloads/templates/folder_form.phtml:56
 msgid "You can write only the following extensions"
 msgstr ""
 
-#: modules/downloads/includes/folder_add.php:125
+#: modules/johncms/downloads/includes/folder_add.php:125
 msgid "The Folder is created"
 msgstr ""
 
-#: modules/downloads/includes/folder_add.php:127
-#: modules/downloads/templates/file_import_result.phtml:40
-#: modules/downloads/templates/file_upload_result.phtml:46
+#: modules/johncms/downloads/includes/folder_add.php:127
+#: modules/johncms/downloads/templates/file_import_result.phtml:40
+#: modules/johncms/downloads/templates/file_upload_result.phtml:46
 msgid "Continue"
 msgstr ""
 
-#: modules/downloads/includes/folder_add.php:136
+#: modules/johncms/downloads/includes/folder_add.php:136
 msgid "Error creating categories"
 msgstr ""
 
-#: modules/downloads/includes/folder_delete.php:21
-#: modules/downloads/includes/folder_delete.php:29
-#: modules/downloads/includes/folder_delete.php:76
-#: modules/downloads/includes/folder_delete.php:77
-#: modules/downloads/templates/index.phtml:145
+#: modules/johncms/downloads/includes/folder_delete.php:21
+#: modules/johncms/downloads/includes/folder_delete.php:29
+#: modules/johncms/downloads/includes/folder_delete.php:76
+#: modules/johncms/downloads/includes/folder_delete.php:77
+#: modules/johncms/downloads/templates/index.phtml:145
 msgid "Delete Folder"
 msgstr ""
 
-#: modules/downloads/includes/folder_delete.php:31
+#: modules/johncms/downloads/includes/folder_delete.php:31
 msgid "Before removing, delete subdirectories"
 msgstr ""
 
-#: modules/downloads/includes/folder_edit.php:29
+#: modules/johncms/downloads/includes/folder_edit.php:29
 msgid "Edit Folder"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:77
-#: modules/downloads/templates/index.phtml:146
-#: modules/downloads/templates/scan_dir.phtml:60
+#: modules/johncms/downloads/includes/scan_dir.php:77
+#: modules/johncms/downloads/templates/index.phtml:146
+#: modules/johncms/downloads/templates/scan_dir.phtml:60
 msgid "Remove missing files"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:79
+#: modules/johncms/downloads/includes/scan_dir.php:79
 msgid "Database successfully updated"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:226
-#: modules/downloads/templates/file_upload.phtml:56
-#: modules/downloads/templates/import.phtml:53
+#: modules/johncms/downloads/includes/scan_dir.php:226
+#: modules/johncms/downloads/templates/file_upload.phtml:56
+#: modules/johncms/downloads/templates/import.phtml:53
 msgid "Download"
 msgstr ""
 
-#: modules/downloads/includes/scan_dir.php:335
-#: modules/downloads/includes/scan_dir.php:336
+#: modules/johncms/downloads/includes/scan_dir.php:335
+#: modules/johncms/downloads/includes/scan_dir.php:336
 msgid "Update"
 msgstr ""
 
-#: modules/downloads/includes/search.php:29
-#: modules/downloads/templates/index.phtml:43
-#: modules/downloads/templates/search.phtml:49
+#: modules/johncms/downloads/includes/search.php:29
+#: modules/johncms/downloads/templates/index.phtml:43
+#: modules/johncms/downloads/templates/search.phtml:49
 msgid "Search"
 msgstr ""
 
-#: modules/downloads/includes/search.php:35
+#: modules/johncms/downloads/includes/search.php:35
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
 msgstr ""
 
-#: modules/downloads/includes/search.php:82
-#: modules/downloads/includes/search.php:83
+#: modules/johncms/downloads/includes/search.php:82
+#: modules/johncms/downloads/includes/search.php:83
 msgid "Search results"
 msgstr ""
 
-#: modules/downloads/includes/top_users.php:20
-#: modules/downloads/templates/index.phtml:45
+#: modules/johncms/downloads/includes/top_users.php:20
+#: modules/johncms/downloads/templates/index.phtml:45
 msgid "Top Users"
 msgstr ""
 
-#: modules/downloads/includes/view.php:50
-#: modules/downloads/includes/view.php:52
+#: modules/johncms/downloads/includes/view.php:50
+#: modules/johncms/downloads/includes/view.php:52
 msgid "The file is on moderation"
 msgstr ""
 
-#: modules/downloads/includes/view.php:98
+#: modules/johncms/downloads/includes/view.php:98
 msgid "Channels"
 msgstr ""
 
-#: modules/downloads/includes/view.php:102
+#: modules/johncms/downloads/includes/view.php:102
 msgid "Sample rate"
 msgstr ""
 
-#: modules/downloads/includes/view.php:106
-#: modules/downloads/includes/view.php:173
+#: modules/johncms/downloads/includes/view.php:106
+#: modules/johncms/downloads/includes/view.php:173
 msgid "Bitrate"
 msgstr ""
 
-#: modules/downloads/includes/view.php:110
-#: modules/downloads/includes/view.php:179
+#: modules/johncms/downloads/includes/view.php:110
+#: modules/johncms/downloads/includes/view.php:179
 msgid "Duration"
 msgstr ""
 
-#: modules/downloads/includes/view.php:118
-#: modules/downloads/templates/edit_file_form.phtml:53
-#: modules/downloads/templates/edit_file_form.phtml:54
+#: modules/johncms/downloads/includes/view.php:118
+#: modules/johncms/downloads/templates/edit_file_form.phtml:53
+#: modules/johncms/downloads/templates/edit_file_form.phtml:54
 msgid "Artist"
 msgstr ""
 
-#: modules/downloads/includes/view.php:124
-#: modules/downloads/templates/edit_file_form.phtml:58
-#: modules/downloads/templates/edit_file_form.phtml:59
+#: modules/johncms/downloads/includes/view.php:124
+#: modules/johncms/downloads/templates/edit_file_form.phtml:58
+#: modules/johncms/downloads/templates/edit_file_form.phtml:59
 msgid "Title"
 msgstr ""
 
-#: modules/downloads/includes/view.php:130
-#: modules/downloads/templates/edit_file_form.phtml:63
-#: modules/downloads/templates/edit_file_form.phtml:64
+#: modules/johncms/downloads/includes/view.php:130
+#: modules/johncms/downloads/templates/edit_file_form.phtml:63
+#: modules/johncms/downloads/templates/edit_file_form.phtml:64
 msgid "Album"
 msgstr ""
 
-#: modules/downloads/includes/view.php:136
-#: modules/downloads/templates/edit_file_form.phtml:68
-#: modules/downloads/templates/edit_file_form.phtml:69
+#: modules/johncms/downloads/includes/view.php:136
+#: modules/johncms/downloads/templates/edit_file_form.phtml:68
+#: modules/johncms/downloads/templates/edit_file_form.phtml:69
 msgid "Genre"
 msgstr ""
 
-#: modules/downloads/includes/view.php:142
-#: modules/downloads/templates/edit_file_form.phtml:73
-#: modules/downloads/templates/edit_file_form.phtml:74
+#: modules/johncms/downloads/includes/view.php:142
+#: modules/johncms/downloads/templates/edit_file_form.phtml:73
+#: modules/johncms/downloads/templates/edit_file_form.phtml:74
 msgid "Year"
 msgstr ""
 
-#: modules/downloads/includes/view.php:161
+#: modules/johncms/downloads/includes/view.php:161
 msgid "Codec"
 msgstr ""
 
-#: modules/downloads/includes/view.php:167
+#: modules/johncms/downloads/includes/view.php:167
 msgid "Frame rate"
 msgstr ""
 
-#: modules/downloads/includes/view.php:185
+#: modules/johncms/downloads/includes/view.php:185
 msgid "Resolution"
 msgstr ""
 
-#: modules/downloads/index.php:79
-#: modules/downloads/templates/bookmarks.phtml:31
-#: modules/downloads/templates/index.phtml:32
-#: modules/downloads/templates/scan_dir.phtml:30
-#: modules/downloads/templates/search.phtml:33
-#: modules/downloads/templates/top.phtml:30
-#: modules/downloads/templates/top_users.phtml:30
-#: modules/downloads/templates/view.phtml:29
+#: modules/johncms/downloads/index.php:79
+#: modules/johncms/downloads/templates/bookmarks.phtml:31
+#: modules/johncms/downloads/templates/index.phtml:32
+#: modules/johncms/downloads/templates/scan_dir.phtml:30
+#: modules/johncms/downloads/templates/search.phtml:33
+#: modules/johncms/downloads/templates/top.phtml:30
+#: modules/johncms/downloads/templates/top_users.phtml:30
+#: modules/johncms/downloads/templates/view.phtml:29
 msgid "Downloads are closed"
 msgstr ""
 
-#: modules/downloads/index.php:185
+#: modules/johncms/downloads/index.php:185
 msgid "Wrong data"
 msgstr ""
 
-#: modules/downloads/templates/bookmarks.phtml:36
-#: modules/downloads/templates/index.phtml:117
-#: modules/downloads/templates/search.phtml:53
-#: modules/downloads/templates/top.phtml:43
-#: modules/downloads/templates/top_users.phtml:35
+#: modules/johncms/downloads/templates/bookmarks.phtml:36
+#: modules/johncms/downloads/templates/index.phtml:117
+#: modules/johncms/downloads/templates/search.phtml:53
+#: modules/johncms/downloads/templates/top.phtml:43
+#: modules/johncms/downloads/templates/top_users.phtml:35
 msgid "List is empty"
 msgstr ""
 
-#: modules/downloads/templates/bookmarks.phtml:45
-#: modules/downloads/templates/files_moderation.phtml:46
-#: modules/downloads/templates/files_user.phtml:43
-#: modules/downloads/templates/index.phtml:106
-#: modules/downloads/templates/new_files.phtml:38
-#: modules/downloads/templates/search.phtml:62
+#: modules/johncms/downloads/templates/bookmarks.phtml:45
+#: modules/johncms/downloads/templates/files_moderation.phtml:46
+#: modules/johncms/downloads/templates/files_user.phtml:43
+#: modules/johncms/downloads/templates/index.phtml:106
+#: modules/johncms/downloads/templates/new_files.phtml:38
+#: modules/johncms/downloads/templates/search.phtml:62
 msgid "Total"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:36
-#: modules/downloads/templates/files_moderation.phtml:31
-#: modules/downloads/templates/files_user.phtml:32
-#: modules/downloads/templates/move_file.phtml:42
-#: modules/downloads/templates/new_files.phtml:29
+#: modules/johncms/downloads/templates/comments_review.phtml:36
+#: modules/johncms/downloads/templates/files_moderation.phtml:31
+#: modules/johncms/downloads/templates/files_user.phtml:32
+#: modules/johncms/downloads/templates/move_file.phtml:42
+#: modules/johncms/downloads/templates/new_files.phtml:29
 msgid "The list is empty"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:57
+#: modules/johncms/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:58
+#: modules/johncms/downloads/templates/comments_review.phtml:58
 msgid "Edited"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:109
-#: modules/downloads/templates/files_more.phtml:39
-#: modules/downloads/templates/index.phtml:73
+#: modules/johncms/downloads/templates/comments_review.phtml:109
+#: modules/johncms/downloads/templates/files_more.phtml:39
+#: modules/johncms/downloads/templates/index.phtml:73
 msgid "Edit"
 msgstr ""
 
-#: modules/downloads/templates/comments_review.phtml:112
-#: modules/downloads/templates/delete_additional.phtml:35
-#: modules/downloads/templates/delete_file.phtml:35
-#: modules/downloads/templates/edit_screen.phtml:41
-#: modules/downloads/templates/file_row.phtml:32
-#: modules/downloads/templates/files_more.phtml:40
-#: modules/downloads/templates/folder_delete.phtml:33
-#: modules/downloads/templates/index.phtml:74
+#: modules/johncms/downloads/templates/comments_review.phtml:112
+#: modules/johncms/downloads/templates/delete_additional.phtml:35
+#: modules/johncms/downloads/templates/delete_file.phtml:35
+#: modules/johncms/downloads/templates/edit_screen.phtml:41
+#: modules/johncms/downloads/templates/file_row.phtml:32
+#: modules/johncms/downloads/templates/files_more.phtml:40
+#: modules/johncms/downloads/templates/folder_delete.phtml:33
+#: modules/johncms/downloads/templates/index.phtml:74
 msgid "Delete"
 msgstr ""
 
-#: modules/downloads/templates/delete_additional.phtml:30
-#: modules/downloads/templates/delete_file.phtml:30
-#: modules/downloads/templates/folder_delete.phtml:29
+#: modules/johncms/downloads/templates/delete_additional.phtml:30
+#: modules/johncms/downloads/templates/delete_file.phtml:30
+#: modules/johncms/downloads/templates/folder_delete.phtml:29
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/downloads/templates/delete_additional.phtml:36
-#: modules/downloads/templates/delete_file.phtml:36
-#: modules/downloads/templates/edit_additional_form.phtml:37
-#: modules/downloads/templates/edit_file_form.phtml:83
-#: modules/downloads/templates/edit_screen.phtml:63
-#: modules/downloads/templates/file_upload.phtml:78
-#: modules/downloads/templates/file_upload_result.phtml:52
-#: modules/downloads/templates/files_more.phtml:82
-#: modules/downloads/templates/folder_delete.phtml:34
-#: modules/downloads/templates/folder_form.phtml:61
-#: modules/downloads/templates/import.phtml:75
-#: modules/downloads/templates/move_file.phtml:50
-#: modules/downloads/templates/move_file_confirm.phtml:33
+#: modules/johncms/downloads/templates/delete_additional.phtml:36
+#: modules/johncms/downloads/templates/delete_file.phtml:36
+#: modules/johncms/downloads/templates/edit_additional_form.phtml:37
+#: modules/johncms/downloads/templates/edit_file_form.phtml:83
+#: modules/johncms/downloads/templates/edit_screen.phtml:63
+#: modules/johncms/downloads/templates/file_upload.phtml:78
+#: modules/johncms/downloads/templates/file_upload_result.phtml:52
+#: modules/johncms/downloads/templates/files_more.phtml:82
+#: modules/johncms/downloads/templates/folder_delete.phtml:34
+#: modules/johncms/downloads/templates/folder_form.phtml:61
+#: modules/johncms/downloads/templates/import.phtml:75
+#: modules/johncms/downloads/templates/move_file.phtml:50
+#: modules/johncms/downloads/templates/move_file_confirm.phtml:33
 msgid "Cancel"
 msgstr ""
 
-#: modules/downloads/templates/edit_additional_form.phtml:30
-#: modules/downloads/templates/edit_additional_form.phtml:31
-#: modules/downloads/templates/edit_file_form.phtml:36
-#: modules/downloads/templates/edit_file_form.phtml:37
-#: modules/downloads/templates/file_upload.phtml:54
-#: modules/downloads/templates/file_upload.phtml:55
-#: modules/downloads/templates/files_more.phtml:71
-#: modules/downloads/templates/files_more.phtml:72
-#: modules/downloads/templates/import.phtml:51
-#: modules/downloads/templates/import.phtml:52
+#: modules/johncms/downloads/templates/edit_additional_form.phtml:30
+#: modules/johncms/downloads/templates/edit_additional_form.phtml:31
+#: modules/johncms/downloads/templates/edit_file_form.phtml:36
+#: modules/johncms/downloads/templates/edit_file_form.phtml:37
+#: modules/johncms/downloads/templates/file_upload.phtml:54
+#: modules/johncms/downloads/templates/file_upload.phtml:55
+#: modules/johncms/downloads/templates/files_more.phtml:71
+#: modules/johncms/downloads/templates/files_more.phtml:72
+#: modules/johncms/downloads/templates/import.phtml:51
+#: modules/johncms/downloads/templates/import.phtml:52
 msgid "Link to download file"
 msgstr ""
 
-#: modules/downloads/templates/edit_additional_form.phtml:36
-#: modules/downloads/templates/edit_file_form.phtml:82
-#: modules/downloads/templates/edit_screen.phtml:62
-#: modules/downloads/templates/file_upload.phtml:77
-#: modules/downloads/templates/files_more.phtml:81
-#: modules/downloads/templates/folder_form.phtml:60
-#: modules/downloads/templates/import.phtml:74
+#: modules/johncms/downloads/templates/edit_additional_form.phtml:36
+#: modules/johncms/downloads/templates/edit_file_form.phtml:82
+#: modules/johncms/downloads/templates/edit_screen.phtml:62
+#: modules/johncms/downloads/templates/file_upload.phtml:77
+#: modules/johncms/downloads/templates/files_more.phtml:81
+#: modules/johncms/downloads/templates/folder_form.phtml:60
+#: modules/johncms/downloads/templates/import.phtml:74
 msgid "Save"
 msgstr ""
 
-#: modules/downloads/templates/edit_file_form.phtml:31
-#: modules/downloads/templates/edit_file_form.phtml:32
+#: modules/johncms/downloads/templates/edit_file_form.phtml:31
+#: modules/johncms/downloads/templates/edit_file_form.phtml:32
 msgid "Name for display"
 msgstr ""
 
-#: modules/downloads/templates/edit_file_form.phtml:41
-#: modules/downloads/templates/file_upload.phtml:67
-#: modules/downloads/templates/folder_form.phtml:44
-#: modules/downloads/templates/import.phtml:64
+#: modules/johncms/downloads/templates/edit_file_form.phtml:41
+#: modules/johncms/downloads/templates/file_upload.phtml:67
+#: modules/johncms/downloads/templates/folder_form.phtml:44
+#: modules/johncms/downloads/templates/import.phtml:64
 msgid "Description"
 msgstr ""
 
-#: modules/downloads/templates/edit_file_form.phtml:49
+#: modules/johncms/downloads/templates/edit_file_form.phtml:49
 msgid "Edit MP3 Tags"
 msgstr ""
 
-#: modules/downloads/templates/edit_screen.phtml:30
+#: modules/johncms/downloads/templates/edit_screen.phtml:30
 msgid "Current screenshots"
 msgstr ""
 
-#: modules/downloads/templates/edit_screen.phtml:49
+#: modules/johncms/downloads/templates/edit_screen.phtml:49
 msgid "Add screenshot"
 msgstr ""
 
-#: modules/downloads/templates/edit_screen.phtml:54
-#: modules/downloads/templates/file_upload.phtml:32
-#: modules/downloads/templates/files_more.phtml:52
+#: modules/johncms/downloads/templates/edit_screen.phtml:54
+#: modules/johncms/downloads/templates/file_upload.phtml:32
+#: modules/johncms/downloads/templates/files_more.phtml:52
 msgid "Choose file"
 msgstr ""
 
-#: modules/downloads/templates/edit_screen.phtml:57
-#: modules/downloads/templates/file_upload.phtml:35
-#: modules/downloads/templates/files_more.phtml:55
+#: modules/johncms/downloads/templates/edit_screen.phtml:57
+#: modules/johncms/downloads/templates/file_upload.phtml:35
+#: modules/johncms/downloads/templates/files_more.phtml:55
 msgid "Max. Size"
 msgstr ""
 
-#: modules/downloads/templates/file_import_result.phtml:43
+#: modules/johncms/downloads/templates/file_import_result.phtml:43
 msgid "Import more"
 msgstr ""
 
-#: modules/downloads/templates/file_row.phtml:31
+#: modules/johncms/downloads/templates/file_row.phtml:31
 msgid "Accept"
 msgstr ""
 
-#: modules/downloads/templates/file_upload.phtml:40
-#: modules/downloads/templates/file_upload.phtml:41
-#: modules/downloads/templates/files_more.phtml:64
-#: modules/downloads/templates/files_more.phtml:65
-#: modules/downloads/templates/import.phtml:37
-#: modules/downloads/templates/import.phtml:38
+#: modules/johncms/downloads/templates/file_upload.phtml:40
+#: modules/johncms/downloads/templates/file_upload.phtml:41
+#: modules/johncms/downloads/templates/files_more.phtml:64
+#: modules/johncms/downloads/templates/files_more.phtml:65
+#: modules/johncms/downloads/templates/import.phtml:37
+#: modules/johncms/downloads/templates/import.phtml:38
 msgid "Save as"
 msgstr ""
 
-#: modules/downloads/templates/file_upload.phtml:43
-#: modules/downloads/templates/files_more.phtml:67
-#: modules/downloads/templates/import.phtml:40
+#: modules/johncms/downloads/templates/file_upload.phtml:43
+#: modules/johncms/downloads/templates/files_more.phtml:67
+#: modules/johncms/downloads/templates/import.phtml:40
 msgid "max. 100 characters"
 msgstr ""
 
-#: modules/downloads/templates/file_upload.phtml:47
-#: modules/downloads/templates/file_upload.phtml:48
-#: modules/downloads/templates/import.phtml:44
-#: modules/downloads/templates/import.phtml:45
+#: modules/johncms/downloads/templates/file_upload.phtml:47
+#: modules/johncms/downloads/templates/file_upload.phtml:48
+#: modules/johncms/downloads/templates/import.phtml:44
+#: modules/johncms/downloads/templates/import.phtml:45
 msgid "File Name"
 msgstr ""
 
-#: modules/downloads/templates/file_upload.phtml:50
-#: modules/downloads/templates/import.phtml:47
+#: modules/johncms/downloads/templates/file_upload.phtml:50
+#: modules/johncms/downloads/templates/import.phtml:47
 msgid "max. 200 characters"
 msgstr ""
 
-#: modules/downloads/templates/file_upload.phtml:62
-#: modules/downloads/templates/import.phtml:59
+#: modules/johncms/downloads/templates/file_upload.phtml:62
+#: modules/johncms/downloads/templates/import.phtml:59
 msgid "Choose screenshot"
 msgstr ""
 
-#: modules/downloads/templates/file_upload.phtml:73
-#: modules/downloads/templates/files_more.phtml:77
-#: modules/downloads/templates/folder_form.phtml:53
-#: modules/downloads/templates/folder_form.phtml:54
-#: modules/downloads/templates/import.phtml:70
-#: modules/downloads/templates/index.phtml:63
+#: modules/johncms/downloads/templates/file_upload.phtml:73
+#: modules/johncms/downloads/templates/files_more.phtml:77
+#: modules/johncms/downloads/templates/folder_form.phtml:53
+#: modules/johncms/downloads/templates/folder_form.phtml:54
+#: modules/johncms/downloads/templates/import.phtml:70
+#: modules/johncms/downloads/templates/index.phtml:63
 msgid "Allowed extensions"
 msgstr ""
 
-#: modules/downloads/templates/file_upload_result.phtml:42
+#: modules/johncms/downloads/templates/file_upload_result.phtml:42
 msgid "If you pass moderation, it will be added to the Downloads"
 msgstr ""
 
-#: modules/downloads/templates/file_upload_result.phtml:51
+#: modules/johncms/downloads/templates/file_upload_result.phtml:51
 msgid "Upload more"
 msgstr ""
 
-#: modules/downloads/templates/files_moderation.phtml:41
+#: modules/johncms/downloads/templates/files_moderation.phtml:41
 msgid "Accept all files"
 msgstr ""
 
-#: modules/downloads/templates/files_more.phtml:29
+#: modules/johncms/downloads/templates/files_more.phtml:29
 msgid "Current files"
 msgstr ""
 
-#: modules/downloads/templates/files_more.phtml:47
-#: modules/downloads/templates/index.phtml:128
+#: modules/johncms/downloads/templates/files_more.phtml:47
+#: modules/johncms/downloads/templates/index.phtml:128
 msgid "Add file"
 msgstr ""
 
-#: modules/downloads/templates/files_more.phtml:59
+#: modules/johncms/downloads/templates/files_more.phtml:59
 msgid "Or link to it"
 msgstr ""
 
-#: modules/downloads/templates/files_more.phtml:60
-#: modules/downloads/templates/import.phtml:31
-#: modules/downloads/templates/import.phtml:32
+#: modules/johncms/downloads/templates/files_more.phtml:60
+#: modules/johncms/downloads/templates/import.phtml:31
+#: modules/johncms/downloads/templates/import.phtml:32
 msgid "Link to file"
 msgstr ""
 
-#: modules/downloads/templates/files_more.phtml:73
+#: modules/johncms/downloads/templates/files_more.phtml:73
 msgid "Download the additional file"
 msgstr ""
 
-#: modules/downloads/templates/folder_form.phtml:32
-#: modules/downloads/templates/folder_form.phtml:33
+#: modules/johncms/downloads/templates/folder_form.phtml:32
+#: modules/johncms/downloads/templates/folder_form.phtml:33
 msgid "Folder name"
 msgstr ""
 
-#: modules/downloads/templates/folder_form.phtml:35
+#: modules/johncms/downloads/templates/folder_form.phtml:35
 msgid "Only latin characters and numbers"
 msgstr ""
 
-#: modules/downloads/templates/folder_form.phtml:39
-#: modules/downloads/templates/folder_form.phtml:40
+#: modules/johncms/downloads/templates/folder_form.phtml:39
+#: modules/johncms/downloads/templates/folder_form.phtml:40
 msgid "Title to display"
 msgstr ""
 
-#: modules/downloads/templates/folder_form.phtml:50
+#: modules/johncms/downloads/templates/folder_form.phtml:50
 msgid "Allow users to upload files"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:44
+#: modules/johncms/downloads/templates/index.phtml:44
 msgid "Top Files"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:70
+#: modules/johncms/downloads/templates/index.phtml:70
 msgid "Up"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:71
+#: modules/johncms/downloads/templates/index.phtml:71
 msgid "Down"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:81
+#: modules/johncms/downloads/templates/index.phtml:81
 msgid "List of files"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:86
+#: modules/johncms/downloads/templates/index.phtml:86
 msgid "Sorting"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:88
+#: modules/johncms/downloads/templates/index.phtml:88
 msgid "by time"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:89
+#: modules/johncms/downloads/templates/index.phtml:89
 msgid "by name"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:93
+#: modules/johncms/downloads/templates/index.phtml:93
 msgid "descending"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:94
+#: modules/johncms/downloads/templates/index.phtml:94
 msgid "ascending"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:96
+#: modules/johncms/downloads/templates/index.phtml:96
 msgid "Sort"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:132
+#: modules/johncms/downloads/templates/index.phtml:132
 msgid "Import File"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:138
+#: modules/johncms/downloads/templates/index.phtml:138
 msgid "Section actions"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:142
+#: modules/johncms/downloads/templates/index.phtml:142
 msgid "Update Files"
 msgstr ""
 
-#: modules/downloads/templates/index.phtml:144
+#: modules/johncms/downloads/templates/index.phtml:144
 msgid "Change Folder"
 msgstr ""
 
-#: modules/downloads/templates/move_file.phtml:28
+#: modules/johncms/downloads/templates/move_file.phtml:28
 msgid "Select a section to move"
 msgstr ""
 
-#: modules/downloads/templates/move_file.phtml:35
+#: modules/johncms/downloads/templates/move_file.phtml:35
 msgid "Move file to this section"
 msgstr ""
 
-#: modules/downloads/templates/move_file.phtml:46
+#: modules/johncms/downloads/templates/move_file.phtml:46
 msgid "Move file here"
 msgstr ""
 
-#: modules/downloads/templates/move_file_confirm.phtml:29
+#: modules/johncms/downloads/templates/move_file_confirm.phtml:29
 msgid "Are you sure you want to move the file?"
 msgstr ""
 
-#: modules/downloads/templates/move_file_confirm.phtml:32
+#: modules/johncms/downloads/templates/move_file_confirm.phtml:32
 msgid "Move file"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:37
+#: modules/johncms/downloads/templates/scan_dir.phtml:37
 msgid "Current folder"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:40
+#: modules/johncms/downloads/templates/scan_dir.phtml:40
 msgid "Current folder and all subfolders"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:44
-#: modules/downloads/templates/scan_dir.phtml:65
+#: modules/johncms/downloads/templates/scan_dir.phtml:44
+#: modules/johncms/downloads/templates/scan_dir.phtml:65
 msgid "Entire Downloads"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:51
+#: modules/johncms/downloads/templates/scan_dir.phtml:51
 msgid "Added"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:52
+#: modules/johncms/downloads/templates/scan_dir.phtml:52
 msgid "Categories"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:53
+#: modules/johncms/downloads/templates/scan_dir.phtml:53
 msgid "Files"
 msgstr ""
 
-#: modules/downloads/templates/scan_dir.phtml:54
-#: modules/downloads/templates/view.phtml:151
+#: modules/johncms/downloads/templates/scan_dir.phtml:54
+#: modules/johncms/downloads/templates/view.phtml:151
 msgid "Additional Files"
 msgstr ""
 
-#: modules/downloads/templates/search.phtml:39
-#: modules/downloads/templates/search.phtml:40
+#: modules/johncms/downloads/templates/search.phtml:39
+#: modules/johncms/downloads/templates/search.phtml:40
 msgid "Search query"
 msgstr ""
 
-#: modules/downloads/templates/search.phtml:46
+#: modules/johncms/downloads/templates/search.phtml:46
 msgid "Search in description"
 msgstr ""
 
-#: modules/downloads/templates/search.phtml:72
+#: modules/johncms/downloads/templates/search.phtml:72
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max."
 msgstr ""
 
-#: modules/downloads/templates/search.phtml:78
+#: modules/johncms/downloads/templates/search.phtml:78
 msgid "New Search"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:37
+#: modules/johncms/downloads/templates/view.phtml:37
 msgid "Vote accepted"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:49
+#: modules/johncms/downloads/templates/view.phtml:49
 msgid "Screenshot:"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:94
+#: modules/johncms/downloads/templates/view.phtml:94
 msgid "File name:"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:95
+#: modules/johncms/downloads/templates/view.phtml:95
 msgid "Uploaded by:"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:96
+#: modules/johncms/downloads/templates/view.phtml:96
 msgid "Downloads:"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:97
+#: modules/johncms/downloads/templates/view.phtml:97
 msgid "Rating:"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:145
+#: modules/johncms/downloads/templates/view.phtml:145
 msgid "Actions"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:150
+#: modules/johncms/downloads/templates/view.phtml:150
 msgid "Managing Screenshots"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:152
+#: modules/johncms/downloads/templates/view.phtml:152
 msgid "Delete File"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:162
+#: modules/johncms/downloads/templates/view.phtml:162
 msgid "Remove from Favorites"
 msgstr ""
 
-#: modules/downloads/templates/view.phtml:164
+#: modules/johncms/downloads/templates/view.phtml:164
 msgid "Add to Favorites"
 msgstr ""
