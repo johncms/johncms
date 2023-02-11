@@ -26,14 +26,14 @@ class LoginForm extends AbstractForm
         $fields = [];
         $fields['login'] = (new InputText())
             ->setLabel(__('Username'))
-            ->setPlaceholder(__('Enter your username'))
+            ->setPlaceholder(p__('placeholder', 'Enter your username'))
             ->setNameAndId('login')
             ->setValue($this->getValue('login'))
             ->setValidationRules(['NotEmpty']);
 
         $fields['password'] = (new InputPassword())
             ->setLabel(__('Password'))
-            ->setPlaceholder(__('Password'))
+            ->setPlaceholder(p__('placeholder', 'Password'))
             ->setNameAndId('password')
             ->setValidationRules(['NotEmpty']);
 
@@ -46,7 +46,7 @@ class LoginForm extends AbstractForm
         if ($this->needCaptcha()) {
             $fields['captcha'] = (new Captcha())
                 ->setLabel(__('Enter verification code'))
-                ->setPlaceholder(__('Verification code'))
+                ->setPlaceholder(p__('placeholder', 'Verification code'))
                 ->setNameAndId('captcha')
                 ->setValidationRules(['Captcha']);
         }

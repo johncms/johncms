@@ -26,9 +26,17 @@ class RegistrationForm extends AbstractForm
         $fields = [];
         $fields['login'] = (new InputText())
             ->setLabel(__('Login'))
-            ->setPlaceholder(__('Enter your login'))
+            ->setPlaceholder(p__('placeholder', 'Enter your login'))
             ->setNameAndId('login')
-            ->setHelpText(__('Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers.', 3, 50))
+            ->setHelpText(
+                n__(
+                    'Min. %s, Max. %s character. Allowed letters of the latin alphabets and numbers.',
+                    'Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers.',
+                    3,
+                    3,
+                    50
+                )
+            )
             ->setValue($this->getValue('login'))
             ->setValidationRules(
                 [
@@ -63,7 +71,7 @@ class RegistrationForm extends AbstractForm
 
             $fields['email'] = (new InputText())
                 ->setLabel(__('E-mail'))
-                ->setPlaceholder(__('Enter your e-mail'))
+                ->setPlaceholder(p__('placeholder', 'Enter your e-mail'))
                 ->setNameAndId('email')
                 ->setHelpText($confirmation ? __('Specify an existing e-mail because a confirmation of registration will be sent to it.') : '')
                 ->setValue($this->getValue('email'))
@@ -73,9 +81,16 @@ class RegistrationForm extends AbstractForm
         $fields += [
             'password' => (new InputPassword())
                 ->setLabel(__('Password'))
-                ->setPlaceholder(__('Password'))
+                ->setPlaceholder(p__('placeholder', 'Password'))
                 ->setNameAndId('password')
-                ->setHelpText(__('Min. %s characters.', 6))
+                ->setHelpText(
+                    n__(
+                        'Min. %s character.',
+                        'Min. %s characters.',
+                        6,
+                        6
+                    )
+                )
                 ->setValidationRules(
                     [
                         'NotEmpty',
@@ -84,7 +99,7 @@ class RegistrationForm extends AbstractForm
                 ),
             'captcha'  => (new Captcha())
                 ->setLabel(__('Enter verification code'))
-                ->setPlaceholder(__('Verification code'))
+                ->setPlaceholder(p__('placeholder', 'Verification code'))
                 ->setNameAndId('captcha')
                 ->setValidationRules(['Captcha']),
         ];

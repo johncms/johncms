@@ -49,13 +49,18 @@ msgid "Username"
 msgstr ""
 
 #: modules/johncms/auth/src/Forms/LoginForm.php:29
+msgctxt "placeholder"
 msgid "Enter your username"
 msgstr ""
 
 #: modules/johncms/auth/src/Forms/LoginForm.php:35
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:83
+msgid "Password"
+msgstr ""
+
 #: modules/johncms/auth/src/Forms/LoginForm.php:36
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:75
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:76
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:84
+msgctxt "placeholder"
 msgid "Password"
 msgstr ""
 
@@ -64,40 +69,45 @@ msgid "Remember me"
 msgstr ""
 
 #: modules/johncms/auth/src/Forms/LoginForm.php:48
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:86
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:101
 msgid "Enter verification code"
 msgstr ""
 
 #: modules/johncms/auth/src/Forms/LoginForm.php:49
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:87
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:102
+msgctxt "placeholder"
 msgid "Verification code"
 msgstr ""
 
 #: modules/johncms/auth/src/Forms/RegistrationForm.php:29
+msgctxt "placeholder"
 msgid "Enter your login"
 msgstr ""
 
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:31
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:32
 #, php-format
-msgid "Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers."
-msgstr ""
+msgid "Min. %s, Max. %s character. Allowed letters of the latin alphabets and numbers."
+msgid_plural "Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers."
+msgstr[0] ""
 
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:65
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:73
 msgid "E-mail"
 msgstr ""
 
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:66
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:74
+msgctxt "placeholder"
 msgid "Enter your e-mail"
 msgstr ""
 
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:68
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:76
 msgid "Specify an existing e-mail because a confirmation of registration will be sent to it."
 msgstr ""
 
-#: modules/johncms/auth/src/Forms/RegistrationForm.php:78
+#: modules/johncms/auth/src/Forms/RegistrationForm.php:87
 #, php-format
-msgid "Min. %s characters."
-msgstr ""
+msgid "Min. %s character."
+msgid_plural "Min. %s characters."
+msgstr[0] ""
 
 #: modules/johncms/auth/src/Services/UserRegistrationService.php:90
 msgid "Registration on the website"
