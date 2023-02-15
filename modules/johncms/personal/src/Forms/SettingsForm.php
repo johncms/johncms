@@ -10,6 +10,7 @@ use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
 use Johncms\i18n\Languages;
 use Johncms\Users\User;
+use Johncms\Utility\DateTime;
 use Johncms\View\Themes;
 
 class SettingsForm extends AbstractForm
@@ -85,23 +86,9 @@ class SettingsForm extends AbstractForm
         return $themesList;
     }
 
-    // TODO: Change the list of timezones
     private function getTimezones(): array
     {
-        return [
-            [
-                'value' => 'Europe/Moscow',
-                'name'  => d__('system', 'Europe/Moscow'),
-            ],
-            [
-                'value' => 'Europe/Berlin',
-                'name'  => d__('system', 'Europe/Berlin'),
-            ],
-            [
-                'value' => 'America/New_York',
-                'name'  => d__('system', 'America/New_York'),
-            ],
-        ];
+        return DateTime::getTimezones();
     }
 
     private function getLanguages(): array
