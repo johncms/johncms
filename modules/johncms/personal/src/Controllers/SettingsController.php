@@ -40,7 +40,7 @@ class SettingsController extends BaseController
      */
     public function index(SettingsForm $settingsForm, Session $session): string|ResponseInterface
     {
-        return $this->render->render('personal::settings', [
+        return $this->render->render('johncms/personal::settings', [
             'data' => [
                 'formFields'       => $settingsForm->getFormFields(),
                 'validationErrors' => $settingsForm->getValidationErrors(),

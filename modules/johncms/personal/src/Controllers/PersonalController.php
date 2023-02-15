@@ -31,6 +31,6 @@ class PersonalController extends BaseController
      */
     public function index(): string
     {
-        return $this->render->render('personal::index');
+        return $this->render->render('johncms/personal::index');
     }
 }

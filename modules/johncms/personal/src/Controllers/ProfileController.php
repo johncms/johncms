@@ -56,7 +56,7 @@ class ProfileController extends BaseController
             $id = $user?->id;
         }
 
-        return $this->render->render('personal::profile/index', [
+        return $this->render->render('johncms/personal::profile/index', [
             'data' => [
                 'canEdit'        => ($id === $user?->id),
                 'editProfileUrl' => route('personal.profile.edit', ['id' => $id]),
@@ -75,7 +75,7 @@ class ProfileController extends BaseController
             return status_page(403);
         }
         $profileForm = new ProfileForm($id);
-        return $this->render->render('personal::profile/edit', [
+        return $this->render->render('johncms/personal::profile/edit', [
             'data' => [
                 'formFields'       => $profileForm->getFormFields(),
                 'validationErrors' => $profileForm->getValidationErrors(),

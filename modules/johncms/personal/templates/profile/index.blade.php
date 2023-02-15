@@ -1,0 +1,148 @@
+<?php
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var \Johncms\Users\User $userData
+ */
+
+$userData = $data['userData'];
+?>
+@extends('system::layout/default')
+@section('content')
+    <ul class="nav bg-light mb-4 border-radius-5">
+        @if ($data['canEdit'])
+            <li class="nav-item">
+                <a class="nav-link text-danger" href="<?= $data['editProfileUrl'] ?>">Edit profile</a>
+            </li>
+        @endif
+        <li class="nav-item">
+            <a class="nav-link" href="#">Write</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Activity</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Statistic</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Actions</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+                <li><a class="dropdown-item" href="#">Block</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="personal-profile flex-wrap">
+        <div class="personal-profile-photo col-12 col-md-auto flex-grow-0">
+            <div class="vue_app d-flex justify-content-center">
+                @if($data['canEdit'])
+                    <avatar-uploader
+                        upload-url="<?= route('personal.profile.avatarUpload') ?>"
+                        delete-url="<?= route('personal.profile.avatarDelete') ?>"
+                        token="<?= $csrf_token ?>"
+                        current-avatar="<?= $userData->avatar_url ?>"
+                    ></avatar-uploader>
+                @else
+                    <div class="profile-photo-upload-btn <?= $userData->avatar_url ? 'border-0' : '' ?>"
+                         style="background: url('<?= $userData->avatar_url ?>')">
+                        @if(! $userData->avatar_url)
+                            <span class="text-secondary"><?= __('No photo') ?></span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="profile-details col-12 col-md-9 flex-grow-1 ps-md-4 text-center mt-3 mt-md-0 text-md-start">
+            <div class="h3 fw-bold mb-2"><?= $userData->displayName() ?></div>
+            <div class="fz-normal">
+                <div class="text-secondary"><?= __('Login:') ?> <?= $userData->login ?></div>
+                <div class="text-secondary"><?= __('Role:') ?> <?= $userData->getRoleNames() ?></div>
+                <div class="text-secondary"><?= __('Last seen:') ?> <?= $userData->getLastSeen() ? $userData->getLastSeen() : __('No data') ?></div>
+            </div>
+            <div class="mt-2 fz-x-small">
+                <div><?= __('User Agent:') ?> Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML,
+                    like Gecko) Chrome/96.0.4664.93 Safari/537.36
+                </div>
+                <div><?= __('IP:') ?> <a href="#">127.0.0.1</a> [ <a href="#">?</a> ]</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-bottom mt-4 mb-4"></div>
+
+    <div class="mb-3">
+        <div class="fs-4 fw-bold"><?= __('General Information') ?></div>
+        <div>
+            @if($userData->additional_fields->status)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('Status') ?></div>
+                    <div class="profile-info-value col-12 col-md-9"><?= $userData->additional_fields->status ?></div>
+                </div>
+            @endif
+            @if($userData->birthday)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('Birthday') ?></div>
+                    <div class="profile-info-value col-12 col-md-9"><?= format_date($userData->birthday, true) ?> (<?= $userData->getAge() ?> <?= __('y.o.') ?>)
+                    </div>
+                </div>
+            @endif
+            <div class="profile-info-row row">
+                <div class="profile-info-name col-12 col-md-3"><?= __('Gender') ?></div>
+                <div class="profile-info-value col-12 col-md-9"><?= $userData->getGenderName() ?></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="fs-4 fw-bold"><?= __('Contacts') ?></div>
+        <div>
+            @if($userData->phone)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('Phone') ?></div>
+                    <div class="profile-info-value col-12 col-md-9"><?= $userData->phone ?></div>
+                </div>
+            @endif
+            @if($userData->email)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('E-mail') ?></div>
+                    <div class="profile-info-value col-12 col-md-9">
+                        <a href="mailto:mail@example.com"><?= $userData->email ?></a>
+                    </div>
+                </div>
+            @endif
+            @if($userData->additional_fields->telegram)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('Telegram') ?></div>
+                    <div class="profile-info-value col-12 col-md-9">
+                        <a href="tg://resolve?domain=<?= $userData->additional_fields->telegram ?>"><?= $userData->additional_fields->telegram ?></a>
+                    </div>
+                </div>
+            @endif
+            @if($userData->additional_fields->whatsapp)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('WhatsApp') ?></div>
+                    <div class="profile-info-value col-12 col-md-9">
+                        <a href="https://wa.me/<?= $userData->additional_fields->whatsapp ?>"><?= $userData->additional_fields->whatsapp ?></a>
+                    </div>
+                </div>
+            @endif
+            @if($userData->additional_fields->website)
+                <div class="profile-info-row row">
+                    <div class="profile-info-name col-12 col-md-3"><?= __('Website') ?></div>
+                    <div class="profile-info-value col-12 col-md-9">
+                        <a href="https://<?= $userData->additional_fields->website ?>"><?= $userData->additional_fields->website ?></a>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+    @if ($userData->additional_fields->about)
+        <div class="mb-3">
+            <div class="fs-4 fw-bold"><?= __('About') ?></div>
+            <div class="text-dark"><?= $userData->additional_fields->about ?></div>
+        </div>
+    @endif
+
+@endsection
