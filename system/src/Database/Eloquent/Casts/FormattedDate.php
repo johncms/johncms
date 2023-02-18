@@ -4,22 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Database\Eloquent\Casts;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Johncms\Settings\SiteSettings;
-
-use function di;
+use Johncms\Utility\DateTime;
 
 class FormattedDate implements CastsAttributes
 {
     public function get($model, string $key, $value, array $attributes)
     {
         if (! empty($value)) {
-            $settings = di(SiteSettings::class);
-            return Carbon::createFromTimeString($value)
-                ->locale($settings->getLanguage())
-                ->timezone($settings->getTimezone())
-                ->isoFormat('lll');
+            return DateTime::userFormat($value);
         }
 
         return $value;
@@ -28,7 +21,7 @@ class FormattedDate implements CastsAttributes
     public function set($model, string $key, $value, array $attributes): ?string
     {
         if (! empty($value)) {
-            return Carbon::parse($value)->toDateTimeString();
+            return DateTime::prepareForDatabase($value);
         }
 
         return null;

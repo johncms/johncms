@@ -12,13 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Database\Eloquent\Casts;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\i18n\Translator;
-use Johncms\Settings\SiteSettings;
 
-use function di;
+use Johncms\Utility\DateTime;
 
 class TimeToDate implements CastsAttributes
 {
@@ -31,18 +28,7 @@ class TimeToDate implements CastsAttributes
     public function get($model, string $key, $value, array $attributes): string | int
     {
         if (! empty($value)) {
-            $translator = di(Translator::class);
-            $siteSettings = di(SiteSettings::class);
-
-            return Carbon::createFromTimestamp($value, $siteSettings->getTimezone())
-                ->locale($translator->getLocale())
-                ->calendar(
-                    null,
-                    [
-                        'lastWeek' => 'lll',
-                        'sameElse' => 'lll',
-                    ]
-                );
+            return DateTime::userFormat($value);
         }
 
         return $value;
