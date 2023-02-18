@@ -43,6 +43,7 @@ use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
 use Johncms\Users\Ban\SystemBanTypes;
+use Johncms\Utility\SerializerFactory;
 use Johncms\View\AdminRenderEngineFactory;
 use Johncms\View\MetaTagManager;
 use Johncms\View\Render;
@@ -52,6 +53,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ConfigProvider
 {
@@ -105,6 +107,7 @@ class ConfigProvider
                 ExceptionHandlers::class        => ExceptionHandlers::class,
                 RouterFactory::class            => RouterFactory::class,
                 Dispatcher::class               => DispatcherFactory::class,
+                SerializerInterface::class      => SerializerFactory::class,
             ],
         ];
     }
