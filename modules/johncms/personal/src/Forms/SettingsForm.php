@@ -9,6 +9,7 @@ use Johncms\Forms\Inputs\Checkbox;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
 use Johncms\i18n\Languages;
+use Johncms\Settings\SiteSettings;
 use Johncms\Users\User;
 use Johncms\Utility\DateTime;
 use Johncms\View\Themes;
@@ -16,7 +17,8 @@ use Johncms\View\Themes;
 class SettingsForm extends AbstractForm
 {
     public function __construct(
-        protected ?User $userData = null
+        protected SiteSettings $siteSettings,
+        protected ?User $userData = null,
     ) {
         parent::__construct();
     }
@@ -31,13 +33,13 @@ class SettingsForm extends AbstractForm
             ->setOptions($this->getLanguages())
             ->setLabel(__('Language'))
             ->setNameAndId('lang')
-            ->setValue($this->getValue('lang'));
+            ->setValue($this->getValue('lang', $this->siteSettings->getLanguage()));
 
         $fields['timezone'] = (new Select())
             ->setOptions($this->getTimezones())
             ->setLabel(__('Timezone'))
             ->setNameAndId('timezone')
-            ->setValue($this->getValue('timezone'));
+            ->setValue(parent::getValue('timezone', $this->siteSettings->getTimezone()));
 
         $fields['directUrl'] = (new Checkbox())
             ->setLabel(__('Direct links'))
@@ -50,7 +52,7 @@ class SettingsForm extends AbstractForm
             ->setLabel(__('Elements per page'))
             ->setPlaceholder(__('Elements per page'))
             ->setNameAndId('perPage')
-            ->setValue($this->getValue('perPage'));
+            ->setValue(parent::getValue('perPage', $this->siteSettings->getPerPage()));
 
         $fields['theme'] = (new Select())
             ->setOptions($this->getThemesList())
@@ -65,7 +67,9 @@ class SettingsForm extends AbstractForm
     {
         if ($this->userData) {
             // Base fields
-            return parent::getValue($fieldName, $this->userData->settings?->$fieldName);
+            if ($this->userData->settings?->$fieldName !== null) {
+                return parent::getValue($fieldName, $this->userData->settings?->$fieldName);
+            }
         }
         return parent::getValue($fieldName, $default);
     }

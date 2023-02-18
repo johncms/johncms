@@ -17,29 +17,16 @@ class UserConfig
     /** @var bool Allow direct external links */
     public bool $directUrl = false;
 
-    public int $perPage = 10;
+    public ?int $perPage = null;
 
-    public string $lang = 'en';
+    public ?string $lang = null;
 
-    public string $timezone = 'UTC';
+    public ?string $timezone = null;
 
     public ?string $theme = null;
 
-    public function __construct(array $settings = [])
+    public function __set($name, $value)
     {
-        foreach ($settings as $key => $value) {
-            $this->$key = $this->castValue(gettype($this->$key), $value);
-        }
-    }
-
-    private function castValue(string $type, mixed $value): float|bool|int|string
-    {
-        return match ($type) {
-            'int', 'integer' => (int) $value,
-            'float' => (float) $value,
-            'string' => (string) $value,
-            'bool', 'boolean' => (bool) $value,
-            default => $value,
-        };
+        $this->$name = $value;
     }
 }

@@ -14,8 +14,9 @@ namespace Johncms\Users\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Johncms\Users\UserConfig;
+use JsonException;
+use Symfony\Component\Serializer\Serializer;
 
 class UserSettings implements CastsAttributes
 {
@@ -24,6 +25,7 @@ class UserSettings implements CastsAttributes
      *
      * @param Model $model
      * @param mixed $value
+     * @throws JsonException
      */
     public function get($model, string $key, $value, array $attributes): UserConfig
     {
@@ -31,7 +33,10 @@ class UserSettings implements CastsAttributes
         if (! empty($value)) {
             $settings = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         }
-        return new UserConfig($settings);
+
+        $serializer = di(Serializer::class);
+
+        return $serializer->denormalize($settings, UserConfig::class);
     }
 
     /**
@@ -42,6 +47,7 @@ class UserSettings implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes): string
     {
-        return json_encode((new Collection($value))->toArray(), JSON_THROW_ON_ERROR);
+        $serializer = di(Serializer::class);
+        return $serializer->serialize($value, 'json');
     }
 }

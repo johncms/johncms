@@ -11,7 +11,7 @@ return [
 
         'meta_title'       => 'JohnCMS',
         'meta_keywords'    => 'johncms',
-        'meta_description' => 'Powered by JohnCMS http://johncms.com',
+        'meta_description' => 'Powered by JohnCMS https://johncms.com',
 
         'email'     => 'no-reply@example.com',
         'copyright' => 'JohnCMS',
