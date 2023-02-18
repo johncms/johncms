@@ -46,13 +46,14 @@ class DateTime
         if (empty($date)) {
             return '';
         }
+        $siteSettings = di(SiteSettings::class);
         try {
-            $siteSettings = di(SiteSettings::class);
             if (is_integer($date)) {
                 $date_object = Carbon::createFromTimestamp($date, $siteSettings->getTimezone());
             } else {
                 $date_object = Carbon::make($date)->timezone($siteSettings->getTimezone());
             }
+
             if ($date_object) {
                 if ($withoutTime) {
                     return $date_object->format('d.m.Y');
@@ -98,8 +99,12 @@ class DateTime
     /**
      * Format for database
      */
-    public static function prepareForDatabase(mixed $time): string
+    public static function prepareForDatabase(mixed $time, bool $useTimezone = true): string
     {
+        if ($useTimezone) {
+            $siteSettings = di(SiteSettings::class);
+            return Carbon::parse($time, $siteSettings->getTimezone())->setTimezone('UTC')->toDateTimeString();
+        }
         return Carbon::parse($time)->toDateTimeString();
     }
 }
