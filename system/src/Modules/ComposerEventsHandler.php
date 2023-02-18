@@ -64,7 +64,7 @@ class ComposerEventsHandler
     public static function runApp(): void
     {
         $container = ContainerFactory::getContainer();
-        $application = new Application($container);
+        $application = $container->get(Application::class);
         $application->run();
     }
 
