@@ -20,6 +20,7 @@ use JsonSerializable;
 use League\Route\Http\Exception\{MethodNotAllowedException, NotFoundException};
 use League\Route\Route;
 use League\Route\Strategy\AbstractStrategy;
+use ReflectionClass;
 use Psr\Http\Message\{ResponseFactoryInterface, ResponseInterface, ServerRequestInterface};
 use Psr\Http\Server\{MiddlewareInterface, RequestHandlerInterface};
 use Throwable;
@@ -57,6 +58,7 @@ class ApplicationStrategy extends AbstractStrategy
         $container = $this->getContainer();
         // Set current route to container
         $container->instance('route', $route);
+        $this->createControllerInstance($route, $container);
         $controller = $route->getCallable($container);
 
         $params = [];
@@ -116,5 +118,17 @@ class ApplicationStrategy extends AbstractStrategy
     public function getContainer(): Container
     {
         return ContainerFactory::getContainer();
+    }
+
+    private function createControllerInstance(Route $route, Container $container): void
+    {
+        // This is necessary for automatic dependency injection into the controller constructor
+        // Use reflection because the handler property is protected
+        $reflection = new ReflectionClass($route);
+        $property = $reflection->getProperty('handler');
+        $controllerClass = $property->getValue($route)[0];
+
+        // Create controller instance and add to the container
+        $container->instance($controllerClass, $container->make($controllerClass));
     }
 }
