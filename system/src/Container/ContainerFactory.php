@@ -41,6 +41,12 @@ class ContainerFactory
                 );
             }
 
+            // Shared classes
+            $shared = $dependencies['shared'] ?? [];
+            foreach ($shared as $abstract => $concrete) {
+                $container->bind($abstract, $concrete, true);
+            }
+
             // Registering aliases
             $aliases = $dependencies['aliases'] ?? [];
             foreach ($aliases as $alias => $concrete) {

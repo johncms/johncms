@@ -17,7 +17,6 @@ use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Router\Strategy\ApplicationStrategy;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,14 +27,12 @@ use Throwable;
 class RouterFactory
 {
     protected CachedRouter $cachedRouter;
-    protected ServerRequestInterface $serverRequest;
 
-    public function __construct(ContainerInterface $container)
-    {
-        $this->serverRequest = $container->get(ServerRequestInterface::class);
-        $responseFactory = $container->get(ResponseFactoryInterface::class);
-        $cache = $container->get(CacheInterface::class);
-
+    public function __construct(
+        protected ServerRequestInterface $serverRequest,
+        ResponseFactoryInterface $responseFactory,
+        CacheInterface $cache,
+    ) {
         $this->cachedRouter = new CachedRouter(
             function (Router $router) use ($responseFactory) {
                 $strategy = (new ApplicationStrategy($responseFactory));
@@ -52,11 +49,6 @@ class RouterFactory
         );
 
         $this->cachedRouter->buildRouter($this->serverRequest);
-    }
-
-    public function __invoke(): static
-    {
-        return $this;
     }
 
     public function collectRoutes(Router $router): void

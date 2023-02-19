@@ -18,11 +18,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class ResponseFactory implements ResponseFactoryInterface
 {
-    public function __invoke(): ResponseFactory
-    {
-        return $this;
-    }
-
     /**
      * {@inheritDoc}
      */

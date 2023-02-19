@@ -15,10 +15,6 @@ use Illuminate\Cache\Repository;
 use Illuminate\Filesystem\Filesystem;
 
 /**
- * Class Cache
- *
- * @package Johncms
- *
  * @method getPrefix()
  * @method flush()
  * @psalm-suppress PropertyNotSetInConstructor
@@ -28,10 +24,5 @@ class Cache extends Repository
     public function __construct()
     {
         parent::__construct(new FileStore(new Filesystem(), DATA_PATH . 'cache/johncms'));
-    }
-
-    public function __invoke(): Cache
-    {
-        return new self();
     }
 }

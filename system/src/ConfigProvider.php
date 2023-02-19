@@ -89,8 +89,19 @@ class ConfigProvider
                 SerializerInterface::class => Serializer::class,
             ],
 
-            'factories' => [
+            'shared' => [
                 IpLogger::class                 => IpLogger::class,
+                ResponseFactoryInterface::class => ResponseFactory::class,
+                CacheInterface::class           => Cache::class,
+                Session::class                  => Session::class,
+                MetaTagManager::class           => MetaTagManager::class,
+                SiteSettings::class             => SiteSettings::class,
+                DebugBar::class                 => DebugBar::class,
+                ExceptionHandlers::class        => ExceptionHandlers::class,
+                RouterFactory::class            => RouterFactory::class,
+            ],
+
+            'factories' => [
                 PDO::class                      => PdoFactory::class,
                 Render::class                   => RenderEngineFactory::class,
                 AdminRenderEngineFactory::class => AdminRenderEngineFactory::class,
@@ -98,16 +109,8 @@ class ConfigProvider
                 Translator::class               => TranslatorServiceFactory::class,
                 Users\User::class               => Users\UserFactory::class,
                 Filesystem::class               => Filesystem::class,
-                ResponseFactoryInterface::class => ResponseFactory::class,
-                CacheInterface::class           => Cache::class,
                 MediaEmbed::class               => MediaEmbed::class,
-                Session::class                  => Session::class,
-                MetaTagManager::class           => MetaTagManager::class,
-                SiteSettings::class             => SiteSettings::class,
-                DebugBar::class                 => DebugBar::class,
                 LoggerInterface::class          => Logger::class,
-                ExceptionHandlers::class        => ExceptionHandlers::class,
-                RouterFactory::class            => RouterFactory::class,
                 Dispatcher::class               => DispatcherFactory::class,
                 Serializer::class               => SerializerFactory::class,
             ],

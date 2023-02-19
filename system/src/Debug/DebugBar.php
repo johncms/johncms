@@ -49,11 +49,6 @@ class DebugBar extends \DebugBar\DebugBar
         $this->setStorage(new FileStorage(DATA_PATH . 'debugbar'));
     }
 
-    public function __invoke(): DebugBar
-    {
-        return new self();
-    }
-
     /** @noinspection PhpUnhandledExceptionInspection */
     public function getTimeCollector(): TimeDataCollector | DataCollectorInterface
     {

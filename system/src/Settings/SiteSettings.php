@@ -12,24 +12,18 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class SiteSettings
 {
-    protected ?User $user = null;
     protected array $config;
-    protected Translator $translator;
 
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
-    public function __construct(ContainerInterface $container)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        protected Translator $translator,
+        protected ?User $user = null,
+    ) {
         $this->config = $container->get('config')['johncms'];
-        $this->user = $container->get(User::class);
-        $this->translator = $container->get(Translator::class);
-    }
-
-    public function __invoke(): static
-    {
-        return $this;
     }
 
     public function getTimezone(): string

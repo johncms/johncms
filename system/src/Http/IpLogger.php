@@ -4,24 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
-
 class IpLogger
 {
     private array $ipCount = [];
-    private Request $request;
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function __invoke(ContainerInterface $container): static
-    {
-        $this->request = $container->get(Request::class);
+    public function __construct(
+        private Request $request
+    ) {
         $this->ipLog();
-        return $this;
     }
 
     public function getIpLog(): array

@@ -19,11 +19,6 @@ class MetaTagManager
         $this->setKeywords(config('johncms.meta_keywords', ''));
     }
 
-    public function __invoke(): self
-    {
-        return $this;
-    }
-
     public function getTitle(): string
     {
         return $this->title;

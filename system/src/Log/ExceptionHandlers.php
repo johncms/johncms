@@ -6,23 +6,14 @@ namespace Johncms\Log;
 
 use ErrorException;
 use Johncms\Users\User;
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
 class ExceptionHandlers
 {
-    protected LoggerInterface $logger;
-
     public function __construct(
-        ContainerInterface $container
+        protected LoggerInterface $logger
     ) {
-        $this->logger = $container->get(LoggerInterface::class);
-    }
-
-    public function __invoke(): static
-    {
-        return $this;
     }
 
     public function registerHandlers(): void

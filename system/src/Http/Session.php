@@ -20,10 +20,9 @@ class Session
 
     public const SESSION_NAME = 'SESID';
 
-    public function __invoke(): Session
+    public function __construct()
     {
         $this->start();
-        return $this;
     }
 
     public function start(): void
@@ -82,7 +81,7 @@ class Session
     /**
      * @psalm-suppress NullReference
      */
-    public function remove(array|string $key): void
+    public function remove(array | string $key): void
     {
         Arr::forget($_SESSION, $key);
     }
