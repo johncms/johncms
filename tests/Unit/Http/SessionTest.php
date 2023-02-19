@@ -22,7 +22,7 @@ class SessionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->session = (new Session())();
+        $this->session = new Session();
     }
 
     /**

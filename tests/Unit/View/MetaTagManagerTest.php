@@ -25,7 +25,7 @@ class MetaTagManagerTest extends TestCase
 
     public function testDefaults()
     {
-        $metaTags = (new MetaTagManager())();
+        $metaTags = new MetaTagManager();
 
         // Test default values
         $this->assertEquals('title', $metaTags->getTitle());
@@ -37,7 +37,7 @@ class MetaTagManagerTest extends TestCase
 
     public function testCustomValues()
     {
-        $metaTags = (new MetaTagManager())();
+        $metaTags = new MetaTagManager();
 
         $metaTags->setCanonical('https://example.com');
         $this->assertEquals('https://example.com', $metaTags->getCanonical());
