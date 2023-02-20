@@ -35,7 +35,7 @@ class AuthController extends BaseAdminController
             'storeUrl'         => route('admin.authorize'),
             'authError'        => $session->getFlash('authError'),
         ];
-        return $this->render->render('admin::users/login_form', ['data' => $data]);
+        return $this->render->render('johncms/admin::users/login_form', ['data' => $data]);
     }
 
     public function authorize(

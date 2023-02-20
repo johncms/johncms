@@ -34,7 +34,7 @@ class UsersController extends BaseAdminController
     {
         $this->metaTagManager->setAll(__('List of Users'));
         $roles = Role::query()->get();
-        return $this->render->render('admin::users/user_list', [
+        return $this->render->render('johncms/admin::users/user_list', [
             'data' => [
                 'roles'         => $roles->toJson(),
                 'createUserUrl' => route('admin.createUser'),
@@ -81,7 +81,7 @@ class UsersController extends BaseAdminController
     {
         $userForm = new UserForm();
         $this->metaTagManager->setAll(__('Create User'));
-        return $this->render->render('admin::users/user_form', [
+        return $this->render->render('johncms/admin::users/user_form', [
             'data' => [
                 'formFields'       => $userForm->getFormFields(),
                 'validationErrors' => $userForm->getValidationErrors(),
@@ -96,7 +96,7 @@ class UsersController extends BaseAdminController
         $user = User::query()->findOrFail($id);
         $userForm = new UserForm($user);
         $this->metaTagManager->setAll(__('Edit User'));
-        return $this->render->render('admin::users/user_form', [
+        return $this->render->render('johncms/admin::users/user_form', [
             'data' => [
                 'formFields'       => $userForm->getFormFields(),
                 'validationErrors' => $userForm->getValidationErrors(),

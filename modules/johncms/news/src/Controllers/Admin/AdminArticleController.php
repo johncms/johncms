@@ -42,7 +42,6 @@ class AdminArticleController extends BaseAdminController
         $this->config = di('config')['news'] ?? [];
         $this->navChain->add(__('News'), route('news.admin.index'));
         $this->metaTagManager->setAll(__('News'));
-        $this->render->addData(['module_menu' => ['news' => true]]);
         $this->navChain->add(__('Section list'), route('news.admin.section'));
     }
 

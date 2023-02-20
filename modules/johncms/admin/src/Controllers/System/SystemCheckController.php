@@ -25,7 +25,7 @@ class SystemCheckController extends BaseAdminController
         $this->navChain->add(__('System check'));
 
         return $this->render->render(
-            'admin::system/system_check',
+            'johncms/admin::system/system_check',
             [
                 'data' => [
                     'required_checks' => $checker->checkExtensions(),

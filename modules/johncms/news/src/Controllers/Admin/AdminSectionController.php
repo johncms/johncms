@@ -35,7 +35,6 @@ class AdminSectionController extends BaseAdminController
         parent::__construct();
         $this->config = di('config')['news'] ?? [];
         $this->metaTagManager->setAll(__('News'));
-        $this->render->addData(['module_menu' => ['news' => true]]);
         $this->navChain->add(__('News'), route('news.admin.index'));
         $this->navChain->add(__('Section list'), route('news.admin.section'));
     }

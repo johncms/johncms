@@ -19,6 +19,6 @@ class DashboardController extends BaseAdminController
         $data['forum_messages'] = 0; //$db->query('SELECT COUNT(*) FROM `forum_messages` WHERE `date` > ' . (time() - 86400))->fetchColumn();
         $data['registered_users'] = $counters->usersCounters()['new'];
 
-        return $this->render->render('admin::index', ['data' => $data]);
+        return $this->render->render('johncms/admin::index', ['data' => $data]);
     }
 }

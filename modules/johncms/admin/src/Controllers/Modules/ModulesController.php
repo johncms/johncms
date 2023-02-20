@@ -21,7 +21,7 @@ class ModulesController extends BaseAdminController
     {
         $this->metaTagManager->setAll(__('List of Modules'));
         $this->navChain->add(__('List of Modules'));
-        return $this->render->render('admin::modules/index', [
+        return $this->render->render('johncms/admin::modules/index', [
             'data' => [
                 'modules' => Modules::getModulesWithMetaData(),
             ],
@@ -59,7 +59,7 @@ class ModulesController extends BaseAdminController
         }
 
         $this->metaTagManager->setAll(__('Add Module'));
-        return $this->render->render('admin::modules/add', [
+        return $this->render->render('johncms/admin::modules/add', [
             'data' => [
                 'formFields'       => $installModuleForm->getFormFields(),
                 'validationErrors' => $installModuleForm->getValidationErrors(),
@@ -84,7 +84,7 @@ class ModulesController extends BaseAdminController
         if ($request->isPost()) {
             $result = $moduleInstaller->remove($moduleName);
 
-            return $this->render->render('admin::modules/delete_result', [
+            return $this->render->render('johncms/admin::modules/delete_result', [
                 'data' => [
                     'result' => $result['success'],
                     'log'    => $result['output'],
@@ -93,7 +93,7 @@ class ModulesController extends BaseAdminController
         }
 
         $this->metaTagManager->setAll(__('Delete Module'));
-        return $this->render->render('admin::modules/delete', [
+        return $this->render->render('johncms/admin::modules/delete', [
             'data' => [
                 'name'     => htmlspecialchars($request->getQuery('name')),
                 'storeUrl' => route('admin.modules.delete', queryParams: ['name' => $moduleName]),
@@ -117,7 +117,7 @@ class ModulesController extends BaseAdminController
         if ($request->isPost()) {
             $result = $moduleInstaller->update($moduleName);
 
-            return $this->render->render('admin::modules/update_result', [
+            return $this->render->render('johncms/admin::modules/update_result', [
                 'data' => [
                     'result' => $result['success'],
                     'log'    => $result['output'],
@@ -126,7 +126,7 @@ class ModulesController extends BaseAdminController
         }
 
         $this->metaTagManager->setAll(__('Update Module'));
-        return $this->render->render('admin::modules/update', [
+        return $this->render->render('johncms/admin::modules/update', [
             'data' => [
                 'name'     => htmlspecialchars($request->getQuery('name')),
                 'storeUrl' => route('admin.modules.update', queryParams: ['name' => $moduleName]),
