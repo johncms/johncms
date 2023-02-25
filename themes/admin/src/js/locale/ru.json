@@ -8,14 +8,15 @@
     "updatedAt": "Изменен",
     "edit": "Изменить",
     "delete": "Удалить",
-    "listOfUsersTitle": "Список пользователей",
     "filterTitle": "Фильтр",
     "searchPlaceholder": "Поиск...",
     "create": "Создать",
     "emptyList": "Список пуст",
     "filterRoleSelect": "Выберите роль",
     "unconfirmedFilter": "Неподтвержденные",
-    "hasBanFilter": "Есть бан"
+    "hasBanFilter": "Есть бан",
+    "deleteConfirmTitle": "Подтверждение удаления",
+    "deleteConfirmText": "Вы уверены что хотите удалить пользователя <b>#{id}</b>?"
   },
   "form": {
     "select": {

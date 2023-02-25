@@ -21,7 +21,10 @@
     "dev": "vite",
     "watch": "vue-tsc && vite build -m dev --watch",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "i18n-scan": "npx vue-i18n-extract",
+    "i18n-remove": "npx vue-i18n-extract --remove",
+    "i18n-add": "npx vue-i18n-extract --add"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.13",
@@ -31,6 +34,7 @@
     "typescript": "^4.5.5",
     "vite": "^3.2.3",
     "vite-plugin-dev-manifest": "^1.1.1",
+    "vue-i18n-extract": "^2.0.7",
     "vue-tsc": "^1.0.9"
   },
   "dependencies": {
