@@ -1,0 +1,730 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"X-Crowdin-File-ID: 157\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"PO-Revision-Date: 2023-02-25 20:39\n"
+
+#: modules/johncms/language/templates/index.blade.php:3
+msgid "Select language"
+msgstr "Виберіть мову"
+
+#: modules/johncms/language/templates/index.blade.php:21
+msgid "Apply"
+msgstr "Застосувати"
+
+#: modules/johncms/notifications/includes/clear.php:23
+msgid "Notifications are cleared!"
+msgstr "Сповіщення очищено!"
+
+#: modules/johncms/notifications/includes/index.php:29
+msgid "Users on registration"
+msgstr "Користувачі, очікуючі на реєстрацію"
+
+#: modules/johncms/notifications/includes/index.php:39
+msgid "Articles on moderation"
+msgstr "Статті на модерації"
+
+#: modules/johncms/notifications/includes/index.php:49
+msgid "Downloads on moderation"
+msgstr "Завантаження на модерації"
+
+#: modules/johncms/notifications/includes/index.php:60
+msgid "Ban"
+msgstr "Бан"
+
+#: modules/johncms/notifications/includes/index.php:70
+msgid "New forum posts"
+msgstr "Нові повідомлення на форумі"
+
+#: modules/johncms/notifications/includes/index.php:80
+msgid "Mail"
+msgstr "Пошта"
+
+#: modules/johncms/notifications/includes/index.php:90
+#: modules/johncms/notifications/includes/index.php:109
+msgid "Guestbook"
+msgstr "Гостьова книга"
+
+#: modules/johncms/notifications/includes/index.php:100
+msgid "Comments"
+msgstr "Коментарі"
+
+#: modules/johncms/notifications/includes/settings.php:18
+#: modules/johncms/notifications/templates/index.phtml:80
+msgid "Settings"
+msgstr "Налаштування"
+
+#: modules/johncms/notifications/includes/settings.php:44
+msgid "Settings saved!"
+msgstr "Налаштування збережено!"
+
+#: modules/johncms/notifications/index.php:47
+#: modules/johncms/notifications/templates/index.phtml:11
+#: modules/johncms/notifications/templates/index.phtml:12
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:39
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:41
+msgid "Notifications"
+msgstr "Повідомлення"
+
+#: modules/johncms/notifications/templates/index.phtml:27
+msgid "All notifications have already been read"
+msgstr "Всі сповіщення уже переглянуті"
+
+#: modules/johncms/notifications/templates/index.phtml:67
+msgid "Total"
+msgstr "Всього"
+
+#: modules/johncms/notifications/templates/index.phtml:75
+msgid "Clear notifications"
+msgstr "Очистити сповіщення"
+
+#: modules/johncms/notifications/templates/settings.phtml:45
+msgid "Display the number of unread messages in the forum"
+msgstr "Показувати кількість непрочитаних повідомлень на форумі"
+
+#: modules/johncms/notifications/templates/settings.phtml:49
+msgid "Save"
+msgstr "Зберегти"
+
+#: modules/johncms/notifications/templates/settings.phtml:50
+#: themes/admin/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: modules/johncms/redirect/index.php:30
+msgid "Redirect to an external link"
+msgstr "Перенаправлення на зовнішнє посилання"
+
+#: modules/johncms/redirect/templates/index.phtml:27
+msgid "External Link"
+msgstr "Зовнішнє посилання"
+
+#: modules/johncms/redirect/templates/index.phtml:28
+msgid "ATTENTION!"
+msgstr "Увага!"
+
+#: modules/johncms/redirect/templates/index.phtml:30
+msgid "You are going to leave our site and go to an external link"
+msgstr "Ви плануєте покинути наш сайт і перейти за зовнішнім посиланням"
+
+#: modules/johncms/redirect/templates/index.phtml:34
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Адміністрація нашого сайту не несе відповідальності за вміст зовнішніх сайтів"
+
+#: modules/johncms/redirect/templates/index.phtml:36
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Не рекомендуємо вказувати ваші дані, що стосуються %s (логін, гасло), на інших сайтах"
+
+#: modules/johncms/redirect/templates/index.phtml:40
+msgid "Go to Link"
+msgstr "Перейти за посиланням"
+
+#: modules/johncms/redirect/templates/index.phtml:44
+#: system/src/Comments.php:177
+#: system/src/Comments.php:213
+#: system/src/Comments.php:226
+#: system/src/Comments.php:246
+#: system/src/Comments.php:272
+#: system/src/Comments.php:313
+#: system/src/Comments.php:325
+#: system/src/Comments.php:345
+#: themes/admin/templates/system/pages/comments_list.phtml:156
+#: themes/admin/templates/system/pages/result.phtml:33
+#: themes/default/templates/system/pages/comments_list.phtml:156
+#: themes/default/templates/system/pages/result.phtml:34
+msgid "Back"
+msgstr "Повернутись"
+
+#: system/helpers.php:70
+#: system/helpers.php:97
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr "Сторінка яку Ви шукаєте не існує, або була перенесена"
+
+#: system/helpers.php:92
+msgid "Unfortunately, you do not have access to the requested page."
+msgstr "На жаль, у вас немає доступу до потрібної сторінки."
+
+#: system/helpers.php:102
+msgid "The page is outdated or an attempt to fake the request was prevented."
+msgstr ""
+
+#: system/src/Checker/Checks/DBVersionCheck.php:27
+msgid "Version of the database server"
+msgstr "Версія сервера бази даних"
+
+#: system/src/Checker/Checks/DBVersionCheck.php:59
+#, php-format
+msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
+msgstr "Система потребує версію сервера MySQL %s або вище або MariaDB %s або вище."
+
+#: system/src/Checker/Checks/FileInfoCheck.php:17
+msgid "fileinfo extension"
+msgstr "розширення fileinfo"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "No"
+msgstr "Ні"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "Yes"
+msgstr "Так"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:49
+msgid "PHP extension fileinfo must be installed"
+msgstr "Необхідно встановити PHP розширення: fileinfo"
+
+#: system/src/Checker/Checks/ImagickCheck.php:17
+msgid "Imagick or GD extension"
+msgstr "Розширення Imagick або GD"
+
+#: system/src/Checker/Checks/ImagickCheck.php:49
+msgid "You must install the php extension Imagick or GD"
+msgstr "Ви повинні встановити php розширення Imagick або GD"
+
+#: system/src/Checker/Checks/MbstringCheck.php:17
+msgid "mbstring extension"
+msgstr "розширення mbstring"
+
+#: system/src/Checker/Checks/MbstringCheck.php:49
+msgid "PHP extension mbstring must be installed"
+msgstr "Необхідно встановити PHP розширення: mbstring"
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:27
+msgid "mysqlnd test"
+msgstr "тест mysqlnd"
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:59
+msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
+"PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+msgstr "Ми використовуємо strict data type при розробці системи. CMS не буде працювати коректно, якщо драйвер для роботи з базою даних повертає неправильні типи даних.\n"
+"PHP повинен працювати з драйвером за замовчуванням: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+
+#: system/src/Checker/Checks/OpcacheCheck.php:17
+msgid "opcache extension"
+msgstr "розширення opcache"
+
+#: system/src/Checker/Checks/OpcacheCheck.php:49
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr "Рекомендується встановити розширення php opcache для кращої продуктивності."
+
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:49
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr "Рекомендується увімкнути розширення php opcache для підвищення продуктивності."
+
+#: system/src/Checker/Checks/PDOCheck.php:50
+msgid "PHP extension PDO must be installed"
+msgstr "Необхідно встановити PHP розширення: PDO"
+
+#: system/src/Checker/Checks/PHPCheck.php:20
+msgid "PHP version"
+msgstr "Версія PHP"
+
+#: system/src/Checker/Checks/PHPCheck.php:52
+#, php-format
+msgid "The PHP version must be at least %s"
+msgstr "Версія PHP повинна бути не меньше ніж %s"
+
+#: system/src/Checker/Checks/ZlibCheck.php:17
+msgid "zlib extension"
+msgstr "розширення zlib"
+
+#: system/src/Checker/Checks/ZlibCheck.php:49
+msgid "PHP extension zlib must be installed"
+msgstr "Необхідно встановити PHP розширення: zlib"
+
+#: system/src/Comments.php:162
+#: system/src/Comments.php:231
+#: system/src/Comments.php:232
+#: themes/admin/templates/system/pages/comments_list.phtml:124
+#: themes/default/templates/system/pages/comments_list.phtml:124
+msgid "Reply"
+msgstr "Відповісти"
+
+#: system/src/Comments.php:173
+#: system/src/Comments.php:209
+#: system/src/Comments.php:242
+#: system/src/Comments.php:268
+#: system/src/Comments.php:309
+#: system/src/Comments.php:341
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: system/src/Comments.php:175
+msgid "Administrator already replied to this message"
+msgstr "Адміністратор уже відповів на це повідомлення"
+
+#: system/src/Comments.php:244
+#: system/src/Comments.php:343
+msgid "Wrong data"
+msgstr "Хибні дані"
+
+#: system/src/Comments.php:256
+#: system/src/Comments.php:330
+#: system/src/Comments.php:331
+#: themes/admin/templates/system/pages/comments_list.phtml:136
+#: themes/default/templates/system/pages/comments_list.phtml:136
+msgid "Edit"
+msgstr "Редагувати"
+
+#: system/src/Comments.php:270
+msgid "You cannot edit posts of higher administration"
+msgstr "Ви не можете редагувати анкету вищого за посадою"
+
+#: system/src/Comments.php:355
+#: system/src/Comments.php:395
+#: system/src/Comments.php:396
+#: themes/admin/templates/system/forms/input_file.blade.php:36
+#: themes/admin/templates/system/pages/comments_delete.phtml:24
+#: themes/admin/templates/system/pages/comments_list.phtml:139
+#: themes/default/templates/system/pages/comments_delete.phtml:24
+#: themes/default/templates/system/pages/comments_list.phtml:139
+msgid "Delete"
+msgstr "Видалити"
+
+#: system/src/Comments.php:592
+msgid "Text is too short"
+msgstr "Надто короткий текст"
+
+#: system/src/Comments.php:598
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Ви не можете так часто додавати повідомлення.<br>Будь ласка, зачекайте"
+
+#: system/src/Comments.php:598
+msgid "seconds"
+msgstr "секунд"
+
+#: system/src/Comments.php:606
+msgid "Message already exists"
+msgstr "Таке повідомлення уже було"
+
+#: system/src/Counters.php:121
+msgid "Unread"
+msgstr "Непрочитане"
+
+#: system/src/Counters.php:127
+msgid "Last activity"
+msgstr "Крайня активність"
+
+#: system/src/Modules/ComposerModuleInstaller.php:55
+msgid "PHP binary path:"
+msgstr "Шлях до папки з PHP"
+
+#: system/src/NavChain.php:60
+msgid "Home"
+msgstr "Головна"
+
+#: system/src/UserProperties.php:67
+#: system/src/Users/UserMutators.php:56
+msgid "Forum moderator"
+msgstr "Модератор форуму"
+
+#: system/src/UserProperties.php:68
+#: system/src/Users/UserMutators.php:57
+msgid "Download moderator"
+msgstr "Модератор Завантажень"
+
+#: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:58
+msgid "Library moderator"
+msgstr "Модератор Бібліотеки"
+
+#: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:59
+msgid "Super moderator"
+msgstr "Супермодератор"
+
+#: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:60
+msgid "Administrator"
+msgstr "Адміністратор"
+
+#: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:61
+msgid "Supervisor"
+msgstr "Супервізор"
+
+#: system/src/Users/Ban/SystemBanTypes.php:17
+msgid "Full block"
+msgstr "Повний БАН"
+
+#: system/src/Users/User.php:215
+#: system/src/Users/User.php:224
+msgid "User"
+msgstr "Користувач"
+
+#: system/src/Users/User.php:271
+msgid "Online"
+msgstr "Онлайн"
+
+#: system/src/Users/User.php:287
+msgid "Male"
+msgstr "Чоловік"
+
+#: system/src/Users/User.php:288
+msgid "Female"
+msgstr "Жінка"
+
+#: system/src/Users/User.php:289
+msgid "Not specified"
+msgstr "Не вказано"
+
+#: system/src/Users/UserManager.php:145
+#, php-format
+msgid "The user \"%s\" was not found"
+msgstr "Користувача \"%s\" не знайдено"
+
+#: system/src/Users/UserManager.php:149
+msgid "The user is not confirmed"
+msgstr "Користувач не підтверджений"
+
+#: system/src/Users/UserManager.php:153
+msgid "The user's email is not verified"
+msgstr "Email користувача не підтверджений"
+
+#: system/src/Users/UserManager.php:159
+msgid "Incorrect password"
+msgstr "Невірний пароль"
+
+#: system/src/Validator/messages.php:13
+msgid "You have a ban"
+msgstr "Ви маєте бан"
+
+#: system/src/Validator/messages.php:17
+msgid "The security code is not correct"
+msgstr "Код перевірки введено не правильно"
+
+#: system/src/Validator/messages.php:21
+msgid "The form submitted did not originate from the expected site"
+msgstr "Форма, представлена не походить з очікуваного сайту"
+
+#: system/src/Validator/messages.php:25
+#, php-format
+msgid "You cannot add the message so often. Please, wait %value% seconds."
+msgstr "Ви не можете додавати повідомлення так часто. Будь ласка, зачекайте %d секунд."
+
+#: system/src/Validator/messages.php:29
+msgid "A record matching the input was found"
+msgstr "Було знайдено підходящий запис"
+
+#: system/src/Validator/messages.php:33
+msgid "No record matching the input was found"
+msgstr "По вашому запиту нічого не знайдено"
+
+#: system/src/Validator/messages.php:37
+#: system/src/Validator/messages.php:74
+msgid "Value is required and can't be empty"
+msgstr "Поле є обов'язковим і не може бути порожнім"
+
+#: system/src/Validator/messages.php:41
+#, php-format
+msgid "The input is less than %min% characters long"
+msgstr "Введено менше ніж %min% символів"
+
+#: system/src/Validator/messages.php:42
+#, php-format
+msgid "The input is more than %max% characters long"
+msgstr "Введено більше ніж %min% символів"
+
+#: system/src/Validator/messages.php:46
+msgid "The input was not found in the haystack"
+msgstr "Нічого не знайдено"
+
+#: system/src/Validator/messages.php:50
+#: system/src/Validator/messages.php:61
+msgid "Invalid type given. String expected"
+msgstr "Передано некоректний тип. Очікувався рядок"
+
+#: system/src/Validator/messages.php:51
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "Введено неправильну адресу електронної пошти. Використовуйте основний формат логін@поштовий.сайт"
+
+#: system/src/Validator/messages.php:52
+#, php-format
+msgid "'%hostname%' is not a valid hostname for the email address"
+msgstr "Перевірте введену поштову адресу! '%hostname%' не схоже на сервіс електронної пошти"
+
+#: system/src/Validator/messages.php:53
+#, php-format
+msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
+msgstr "'%hostname%' не має дійсного MX або A запису адреси електронної пошти"
+
+#: system/src/Validator/messages.php:54
+#, php-format
+msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
+msgstr "'%hostname%' не належить до загальнодоступного сегменту мережі. Адреса електронної пошти буде недоступна з інтернету!"
+
+#: system/src/Validator/messages.php:55
+#, php-format
+msgid "'%localPart%' can not be matched against dot-atom format"
+msgstr "'%localPart%' не може відповідати формату крапки-атома"
+
+#: system/src/Validator/messages.php:56
+#, php-format
+msgid "'%localPart%' can not be matched against quoted-string format"
+msgstr "'%localPart%' не може бути узгоджено з форматом цитованих рядків"
+
+#: system/src/Validator/messages.php:57
+msgid "'%localPart%' is not a valid local part for the email address"
+msgstr " '%localPart%'  не є дійсною локальною частиною для електронної адреси"
+
+#: system/src/Validator/messages.php:58
+msgid "The input exceeds the allowed length"
+msgstr "Вхід перевищує допустиму довжину"
+
+#: system/src/Validator/messages.php:60
+msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
+msgstr "Здається, що вхід є іменем хоста DNS, але задане позначення пунктодекоду неможливо розшифрувати"
+
+#: system/src/Validator/messages.php:62
+msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
+msgstr "Здається, що вхід є іменем хоста DNS, але містить тире в недійсному місці"
+
+#: system/src/Validator/messages.php:63
+msgid "The input does not match the expected structure for a DNS hostname"
+msgstr "Вхід не відповідає очікуваній структурі для імені хоста DNS"
+
+#: system/src/Validator/messages.php:64
+msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr "Здається, що вхід є іменем хоста DNS, але не може відповідати схемі імені хоста для TLD '%tld%'"
+
+#: system/src/Validator/messages.php:65
+msgid "The input does not appear to be a valid local network name"
+msgstr "Вхід не є дійсним іменем локальної мережі"
+
+#: system/src/Validator/messages.php:66
+msgid "The input does not appear to be a valid URI hostname"
+msgstr "Вхід не є дійсним іменем хоста URI"
+
+#: system/src/Validator/messages.php:67
+msgid "The input appears to be an IP address, but IP addresses are not allowed"
+msgstr "Здається, що вхід є IP-адресою, але IP-адреси заборонені"
+
+#: system/src/Validator/messages.php:68
+msgid "The input appears to be a local network name but local network names are not allowed"
+msgstr "Здається, що вхід є назвою локальної мережі, але імена локальної мережі заборонені"
+
+#: system/src/Validator/messages.php:69
+msgid "The input appears to be a DNS hostname but cannot extract TLD part"
+msgstr "Здається, що вхід є іменем хоста DNS, але не може витягти частину TLD"
+
+#: system/src/Validator/messages.php:70
+msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
+msgstr "Здається, що вхід є іменем хоста DNS, але не може відповідати TLD проти відомого списку"
+
+#: system/src/Validator/messages.php:75
+msgid "Invalid type given. String, integer, float, boolean or array expected"
+msgstr "Наведено неправильний тип. Очікується рядок, ціле число, плаваючий, булевий або масив"
+
+#: system/src/Validator/messages.php:79
+msgid "Invalid type given. String, integer or float expected"
+msgstr "Введено неправильний тип. Це має бути String, Integer або Float"
+
+#: system/src/Validator/messages.php:80
+msgid "The input does not match against pattern '%pattern%'"
+msgstr "Введене значення не відповідає шаблону '%pattern%'"
+
+#: system/src/Validator/messages.php:81
+msgid "There was an internal error while using the pattern '%pattern%'"
+msgstr "Під час використання шаблону '%pattern%' сталася внутрішня помилка"
+
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:51
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:53
+msgid "Personal"
+msgstr "Особисте"
+
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:59
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:61
+msgid "Exit"
+msgstr "Вихід"
+
+#: themes/admin/templates/system/forms/input_file.blade.php:13
+msgid "Current File:"
+msgstr "Поточний файл"
+
+#: themes/admin/templates/system/mail/layouts/default.phtml:115
+#: themes/default/templates/system/mail/layouts/default.blade.php:115
+msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
+msgstr "Електронна пошта генерується автоматично. Будь ласка, не відповідайте на це. <br> Для контакту з нами використовуйте контактну інформацію на нашому веб-сайті."
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:9
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:10
+msgid "Password recovery"
+msgstr "Відновлення паролю"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:12
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:13
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:13
+#: themes/default/templates/system/mail/templates/registration.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:14
+#, php-format
+msgid "Hello, %s!"
+msgstr "Привіт, %s!"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:14
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:15
+#, php-format
+msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
+msgstr "Ви почали процес відновлення паролю на сайті <a href=\"%s\">%s</a>"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:17
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:18
+msgid "In order to recover your password, you must click on the link:"
+msgstr "Для відновлення пароля необхідно натиснути на посилання:"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:23
+msgid "Restore"
+msgstr "Відновити"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:25
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:26
+msgid "Link valid for 1 hour"
+msgstr "Посилання діє протягом 1 години"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:27
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:28
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Якщо ви отримали цей лист помилково, просто проігноруйте цей лист"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:15
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:16
+#, php-format
+msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
+msgstr "Ви змінили свій пароль на веб-сайті <a href=\"%s\">%s</a>"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:18
+#: themes/default/templates/system/mail/templates/registration.blade.php:18
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:19
+msgid "Your login:"
+msgstr "Ваш логін"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:19
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:20
+msgid "Your password:"
+msgstr "Ваш пароль"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:23
+msgid "After logging in, you can change your password to new one."
+msgstr "Після входу ви можете змінити свій пароль на новий."
+
+#: themes/admin/templates/system/pages/comments_delete.phtml:21
+#: themes/default/templates/system/pages/comments_delete.phtml:21
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: themes/admin/templates/system/pages/comments_delete.phtml:25
+#: themes/default/templates/system/pages/comments_delete.phtml:25
+msgid "Clear"
+msgstr "Очистити"
+
+#: themes/admin/templates/system/pages/comments_form.phtml:22
+#: themes/default/templates/system/pages/comments_form.phtml:22
+msgid "Message"
+msgstr "Повідомлення"
+
+#: themes/admin/templates/system/pages/comments_form.phtml:29
+#: themes/default/templates/system/pages/comments_form.phtml:29
+msgid "Send"
+msgstr "Надіслати"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:39
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:84
+#: themes/default/templates/system/pages/comments_list.phtml:84
+msgid "Edited:"
+msgstr "Змінено:"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:85
+#: themes/default/templates/system/pages/comments_list.phtml:85
+msgid "Edited"
+msgstr "Відредаговано"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:23
+msgid "Log In"
+msgstr "Авторизуватись"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:71
+msgid "Login"
+msgstr "Увійти"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:79
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:15
+#, php-format
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr "Ви розпочали процес зміни електронної адреси на веб-сайті <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:18
+msgid "The new email address is:"
+msgstr "Нова адреса електронної пошти:"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr "ви не розпочали процедуру зміни електронної пошти, будь ласка, зв'яжіться з нами будь-яким зручним для вас способом."
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:18
+msgid "To continue please click the confirm button"
+msgstr "Щоб продовжити, натисніть кнопку підтвердження"
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:23
+#: themes/default/templates/system/mail/templates/registration.blade.php:27
+msgid "Confirm"
+msgstr "Підтвердити"
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr "Якщо ви не зареєструвалися на нашому сайті, будь ласка, проігноруйте цей електронний лист."
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:15
+#, php-format
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr "Ви успішно зареєструвалися на веб-сайті <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+msgid "The one you specified when registering"
+msgstr "Той, який ви вказали при реєстрації"
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:22
+#, php-format
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr "Щоб активувати свій аккаунт, підтвердьте свою реєстрацію на сайті %s."
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
+msgstr "Якщо ви не зареєструвалися на нашому сайті, будь ласка, проігноруйте цей електронний лист. У цьому випадку рахунок не буде активовано і автоматично буде видалено."
+
