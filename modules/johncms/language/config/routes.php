@@ -13,4 +13,5 @@ use League\Route\Router;
 
 return function (Router $router) {
     $router->get('/language[/]', [LanguageController::class, 'index'])->setName('language.index');
+    $router->post('/language[/]', [LanguageController::class, 'index']);
 };

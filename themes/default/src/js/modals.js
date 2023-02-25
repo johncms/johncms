@@ -33,6 +33,8 @@ $(function () {
   });
 });
 
+import {Modal} from "bootstrap";
+
 $(document).on('click', '.select_language', function (event) {
   event.preventDefault();
   let select_language_form = $('form[name="select_language"]');
@@ -42,8 +44,8 @@ $(document).on('click', '.select_language', function (event) {
     url: select_language_form.attr('action'),
     dataType: "html",
     data: select_language_form.serialize(),
-    success: function (html) {
-      $('.ajax_modal').modal('hide');
+    success: function () {
+      Modal.getInstance($('.ajax_modal')[0]).hide();
       document.location.href = document.location.href;
     }
   });
