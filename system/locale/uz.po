@@ -1,0 +1,730 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: uz\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"X-Crowdin-File-ID: 157\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Uzbek\n"
+"Language: uz_UZ\n"
+"PO-Revision-Date: 2023-02-25 20:40\n"
+
+#: modules/johncms/language/templates/index.blade.php:3
+msgid "Select language"
+msgstr "Tilni tanlang"
+
+#: modules/johncms/language/templates/index.blade.php:21
+msgid "Apply"
+msgstr "Saqlash"
+
+#: modules/johncms/notifications/includes/clear.php:23
+msgid "Notifications are cleared!"
+msgstr "Ogohlantirishlar tozalandi!"
+
+#: modules/johncms/notifications/includes/index.php:29
+msgid "Users on registration"
+msgstr "Ro‘yxatdan o‘tayotgan foydalanuvchilar"
+
+#: modules/johncms/notifications/includes/index.php:39
+msgid "Articles on moderation"
+msgstr "Tekshiruvdagi maqolalar"
+
+#: modules/johncms/notifications/includes/index.php:49
+msgid "Downloads on moderation"
+msgstr "Tekshiruvdagi yuklamalar"
+
+#: modules/johncms/notifications/includes/index.php:60
+msgid "Ban"
+msgstr "Bloklash"
+
+#: modules/johncms/notifications/includes/index.php:70
+msgid "New forum posts"
+msgstr "Forumdagi yangi xabarlar"
+
+#: modules/johncms/notifications/includes/index.php:80
+msgid "Mail"
+msgstr "Pochta"
+
+#: modules/johncms/notifications/includes/index.php:90
+#: modules/johncms/notifications/includes/index.php:109
+msgid "Guestbook"
+msgstr "Mehmonxona"
+
+#: modules/johncms/notifications/includes/index.php:100
+msgid "Comments"
+msgstr "Fikrlar"
+
+#: modules/johncms/notifications/includes/settings.php:18
+#: modules/johncms/notifications/templates/index.phtml:80
+msgid "Settings"
+msgstr "Sozlovlar"
+
+#: modules/johncms/notifications/includes/settings.php:44
+msgid "Settings saved!"
+msgstr "Sozlamalar saqlandi!"
+
+#: modules/johncms/notifications/index.php:47
+#: modules/johncms/notifications/templates/index.phtml:11
+#: modules/johncms/notifications/templates/index.phtml:12
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:39
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:41
+msgid "Notifications"
+msgstr "Bildirishnoma"
+
+#: modules/johncms/notifications/templates/index.phtml:27
+msgid "All notifications have already been read"
+msgstr "Yangi bildirishnomalar yo‘q"
+
+#: modules/johncms/notifications/templates/index.phtml:67
+msgid "Total"
+msgstr "Jami"
+
+#: modules/johncms/notifications/templates/index.phtml:75
+msgid "Clear notifications"
+msgstr "Bildirishnomani tozalash."
+
+#: modules/johncms/notifications/templates/settings.phtml:45
+msgid "Display the number of unread messages in the forum"
+msgstr "Forumda o'qilmagan xabarlar"
+
+#: modules/johncms/notifications/templates/settings.phtml:49
+msgid "Save"
+msgstr "Saqlash"
+
+#: modules/johncms/notifications/templates/settings.phtml:50
+#: themes/admin/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+#: modules/johncms/redirect/index.php:30
+msgid "Redirect to an external link"
+msgstr "Tashqi manzilga bo‘yicha o‘tish"
+
+#: modules/johncms/redirect/templates/index.phtml:27
+msgid "External Link"
+msgstr "Tashqi manzil"
+
+#: modules/johncms/redirect/templates/index.phtml:28
+msgid "ATTENTION!"
+msgstr "DIQQAT!"
+
+#: modules/johncms/redirect/templates/index.phtml:30
+msgid "You are going to leave our site and go to an external link"
+msgstr "Siz bizning saytni tark etib tashqi manzil bo‘yicha o‘tyapsiz"
+
+#: modules/johncms/redirect/templates/index.phtml:34
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Sayt ma’muriyati tashqi manzildagi ma’lumotlar uchun javob bermaydi"
+
+#: modules/johncms/redirect/templates/index.phtml:36
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Uchinchi tomon saytlarida% s (Login, Password) ga tegishli ma'lumotlaringizni ko'rsatmaslik tavsiya etiladi."
+
+#: modules/johncms/redirect/templates/index.phtml:40
+msgid "Go to Link"
+msgstr "Manzilga o‘tish"
+
+#: modules/johncms/redirect/templates/index.phtml:44
+#: system/src/Comments.php:177
+#: system/src/Comments.php:213
+#: system/src/Comments.php:226
+#: system/src/Comments.php:246
+#: system/src/Comments.php:272
+#: system/src/Comments.php:313
+#: system/src/Comments.php:325
+#: system/src/Comments.php:345
+#: themes/admin/templates/system/pages/comments_list.phtml:156
+#: themes/admin/templates/system/pages/result.phtml:33
+#: themes/default/templates/system/pages/comments_list.phtml:156
+#: themes/default/templates/system/pages/result.phtml:34
+msgid "Back"
+msgstr "Orqaga"
+
+#: system/helpers.php:70
+#: system/helpers.php:97
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr "Siz mavjud bo'lmagan yoki ko'chirilgan narsani qidirmoqdasiz"
+
+#: system/helpers.php:92
+msgid "Unfortunately, you do not have access to the requested page."
+msgstr "Afsuski, so'ralgan sahifaga kirolmaysiz."
+
+#: system/helpers.php:102
+msgid "The page is outdated or an attempt to fake the request was prevented."
+msgstr "Sahifa eskirgan yoki buzib kirishga urinishning oldi olingan"
+
+#: system/src/Checker/Checks/DBVersionCheck.php:27
+msgid "Version of the database server"
+msgstr "Ma'lumotlar omborining versiyasi"
+
+#: system/src/Checker/Checks/DBVersionCheck.php:59
+#, php-format
+msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
+msgstr "Tizim MySQL'ning %s (undan katta) versiyasi   yoki MariaDB'ning %s (undan katta) versiyasini talab qiladi"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:17
+msgid "fileinfo extension"
+msgstr "fileinfo kengaytmasi"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "No"
+msgstr "Yo'q"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "Yes"
+msgstr "Ha"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:49
+msgid "PHP extension fileinfo must be installed"
+msgstr "PHP kengaytmasi fileinfo o'rnatilgan bo'lishi kerak"
+
+#: system/src/Checker/Checks/ImagickCheck.php:17
+msgid "Imagick or GD extension"
+msgstr "Imagick yoki GD kengaytmasi"
+
+#: system/src/Checker/Checks/ImagickCheck.php:49
+msgid "You must install the php extension Imagick or GD"
+msgstr "PHP kengaytmalaridan Imagick yoki GD'ni o'rnatishingiz kerak"
+
+#: system/src/Checker/Checks/MbstringCheck.php:17
+msgid "mbstring extension"
+msgstr "mbstring kengaytmasi"
+
+#: system/src/Checker/Checks/MbstringCheck.php:49
+msgid "PHP extension mbstring must be installed"
+msgstr "PHP kengaytmasi mbstring o'rnatilgan bo'lishi kerak"
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:27
+msgid "mysqlnd test"
+msgstr "mysqlnd testi"
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:59
+msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
+"PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+msgstr "Tizimni ishlab chiqishda biz ma'lumotlar turining qattiq tekshiruvlaridan foydalanamiz. Agar ma'lumotlar ombori bilan ishlash uchun drayver noto'g'ri ma'lumotlar turlarini qaytarsa, CMS to'g'ri ishlamaydi.\n"
+"PHP standart drayver bilan ishlashi kerak: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\"> MySQL uchun drayver (mysqlnd) </a>."
+
+#: system/src/Checker/Checks/OpcacheCheck.php:17
+msgid "opcache extension"
+msgstr "opcache kengaytmasi"
+
+#: system/src/Checker/Checks/OpcacheCheck.php:49
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr "Yaxshiroq ishlashi uchun php opcache kengaytmasini o'rnatish tavsiya qilinadi "
+
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:49
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr "Yaxshi ishlashi uchun php \"opcache\" kengaytmasini yoqish tavsiya qilinadi"
+
+#: system/src/Checker/Checks/PDOCheck.php:50
+msgid "PHP extension PDO must be installed"
+msgstr "PHP kengaytmasi PDO o'rnatilgan bo'lishi kerak"
+
+#: system/src/Checker/Checks/PHPCheck.php:20
+msgid "PHP version"
+msgstr "PHP versiyasi"
+
+#: system/src/Checker/Checks/PHPCheck.php:52
+#, php-format
+msgid "The PHP version must be at least %s"
+msgstr "PHP versiyasi kamida %s bo'lishi kerak"
+
+#: system/src/Checker/Checks/ZlibCheck.php:17
+msgid "zlib extension"
+msgstr "zlib kengaytmasi"
+
+#: system/src/Checker/Checks/ZlibCheck.php:49
+msgid "PHP extension zlib must be installed"
+msgstr "PHP kengaytmasi zlib o'rnatilgan bo'lishi kerak"
+
+#: system/src/Comments.php:162
+#: system/src/Comments.php:231
+#: system/src/Comments.php:232
+#: themes/admin/templates/system/pages/comments_list.phtml:124
+#: themes/default/templates/system/pages/comments_list.phtml:124
+msgid "Reply"
+msgstr "Javob berish"
+
+#: system/src/Comments.php:173
+#: system/src/Comments.php:209
+#: system/src/Comments.php:242
+#: system/src/Comments.php:268
+#: system/src/Comments.php:309
+#: system/src/Comments.php:341
+msgid "Downloads"
+msgstr "Yuklamalar"
+
+#: system/src/Comments.php:175
+msgid "Administrator already replied to this message"
+msgstr "Administrator allaqachon ushbu xabarga javob bergan"
+
+#: system/src/Comments.php:244
+#: system/src/Comments.php:343
+msgid "Wrong data"
+msgstr "Malumotlar to'g'ri emas"
+
+#: system/src/Comments.php:256
+#: system/src/Comments.php:330
+#: system/src/Comments.php:331
+#: themes/admin/templates/system/pages/comments_list.phtml:136
+#: themes/default/templates/system/pages/comments_list.phtml:136
+msgid "Edit"
+msgstr "Tahrirlash"
+
+#: system/src/Comments.php:270
+msgid "You cannot edit posts of higher administration"
+msgstr "Siz o'zingizdan yuqori lavozimdagi foydalanuvchi xabarini tahrirlay olmaysiz"
+
+#: system/src/Comments.php:355
+#: system/src/Comments.php:395
+#: system/src/Comments.php:396
+#: themes/admin/templates/system/forms/input_file.blade.php:36
+#: themes/admin/templates/system/pages/comments_delete.phtml:24
+#: themes/admin/templates/system/pages/comments_list.phtml:139
+#: themes/default/templates/system/pages/comments_delete.phtml:24
+#: themes/default/templates/system/pages/comments_list.phtml:139
+msgid "Delete"
+msgstr "O‘chirish"
+
+#: system/src/Comments.php:592
+msgid "Text is too short"
+msgstr "Matn juda qisqa"
+
+#: system/src/Comments.php:598
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Siz xabarni tez-tez qo'sha olmaysiz <br> Iltimos, kuting"
+
+#: system/src/Comments.php:598
+msgid "seconds"
+msgstr "soniya"
+
+#: system/src/Comments.php:606
+msgid "Message already exists"
+msgstr "Xabar allaqachon mavjud"
+
+#: system/src/Counters.php:121
+msgid "Unread"
+msgstr "O‘qilmagan"
+
+#: system/src/Counters.php:127
+msgid "Last activity"
+msgstr "Oxirgi faollik"
+
+#: system/src/Modules/ComposerModuleInstaller.php:55
+msgid "PHP binary path:"
+msgstr ""
+
+#: system/src/NavChain.php:60
+msgid "Home"
+msgstr "Bosh sahifa"
+
+#: system/src/UserProperties.php:67
+#: system/src/Users/UserMutators.php:56
+msgid "Forum moderator"
+msgstr "Forum moderatori"
+
+#: system/src/UserProperties.php:68
+#: system/src/Users/UserMutators.php:57
+msgid "Download moderator"
+msgstr "Yuklamalar moderatori"
+
+#: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:58
+msgid "Library moderator"
+msgstr "Kutubxona moderatori"
+
+#: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:59
+msgid "Super moderator"
+msgstr "Katta moderator"
+
+#: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:60
+msgid "Administrator"
+msgstr "Administrator"
+
+#: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:61
+msgid "Supervisor"
+msgstr "Sayt yaratuvchisi"
+
+#: system/src/Users/Ban/SystemBanTypes.php:17
+msgid "Full block"
+msgstr ""
+
+#: system/src/Users/User.php:215
+#: system/src/Users/User.php:224
+msgid "User"
+msgstr ""
+
+#: system/src/Users/User.php:271
+msgid "Online"
+msgstr ""
+
+#: system/src/Users/User.php:287
+msgid "Male"
+msgstr ""
+
+#: system/src/Users/User.php:288
+msgid "Female"
+msgstr ""
+
+#: system/src/Users/User.php:289
+msgid "Not specified"
+msgstr ""
+
+#: system/src/Users/UserManager.php:145
+#, php-format
+msgid "The user \"%s\" was not found"
+msgstr "\"%s\" foydalanuvchi topilmadi"
+
+#: system/src/Users/UserManager.php:149
+msgid "The user is not confirmed"
+msgstr "Bu foydalanuvchi tasdiqlashdan o'tmagan"
+
+#: system/src/Users/UserManager.php:153
+msgid "The user's email is not verified"
+msgstr "Foydalanuvchini emaili tasdiqlanmagan"
+
+#: system/src/Users/UserManager.php:159
+msgid "Incorrect password"
+msgstr "Parol xato"
+
+#: system/src/Validator/messages.php:13
+msgid "You have a ban"
+msgstr "Sizda taqiq bor"
+
+#: system/src/Validator/messages.php:17
+msgid "The security code is not correct"
+msgstr "Himoya kodi xato kiritildi"
+
+#: system/src/Validator/messages.php:21
+msgid "The form submitted did not originate from the expected site"
+msgstr "Taqdim etilgan shakl kutilgan saytdan kelib chiqmagan"
+
+#: system/src/Validator/messages.php:25
+#, php-format
+msgid "You cannot add the message so often. Please, wait %value% seconds."
+msgstr "Xabarni juda tez-tez qo'shish mumkin emas. Iltimos, %d soniya kuting."
+
+#: system/src/Validator/messages.php:29
+msgid "A record matching the input was found"
+msgstr "Mos keladigan yozuv topildi"
+
+#: system/src/Validator/messages.php:33
+msgid "No record matching the input was found"
+msgstr "Mos keladigan yozuv topilmadi"
+
+#: system/src/Validator/messages.php:37
+#: system/src/Validator/messages.php:74
+msgid "Value is required and can't be empty"
+msgstr "Bu qiymat bo'sh bo'lishi mumkin emas"
+
+#: system/src/Validator/messages.php:41
+#, php-format
+msgid "The input is less than %min% characters long"
+msgstr "Belgilar soni %min% tadan kam"
+
+#: system/src/Validator/messages.php:42
+#, php-format
+msgid "The input is more than %max% characters long"
+msgstr "Belgilar soni %max% tadan ko'p"
+
+#: system/src/Validator/messages.php:46
+msgid "The input was not found in the haystack"
+msgstr "To'plamdan topilmadi"
+
+#: system/src/Validator/messages.php:50
+#: system/src/Validator/messages.php:61
+msgid "Invalid type given. String expected"
+msgstr "Noto'g'ri ma'lumot turi. Yozuv (string) kelishi kerak"
+
+#: system/src/Validator/messages.php:51
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr ""
+
+#: system/src/Validator/messages.php:52
+#, php-format
+msgid "'%hostname%' is not a valid hostname for the email address"
+msgstr ""
+
+#: system/src/Validator/messages.php:53
+#, php-format
+msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
+msgstr ""
+
+#: system/src/Validator/messages.php:54
+#, php-format
+msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
+msgstr ""
+
+#: system/src/Validator/messages.php:55
+#, php-format
+msgid "'%localPart%' can not be matched against dot-atom format"
+msgstr ""
+
+#: system/src/Validator/messages.php:56
+#, php-format
+msgid "'%localPart%' can not be matched against quoted-string format"
+msgstr ""
+
+#: system/src/Validator/messages.php:57
+msgid "'%localPart%' is not a valid local part for the email address"
+msgstr ""
+
+#: system/src/Validator/messages.php:58
+msgid "The input exceeds the allowed length"
+msgstr ""
+
+#: system/src/Validator/messages.php:60
+msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
+msgstr ""
+
+#: system/src/Validator/messages.php:62
+msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
+msgstr ""
+
+#: system/src/Validator/messages.php:63
+msgid "The input does not match the expected structure for a DNS hostname"
+msgstr ""
+
+#: system/src/Validator/messages.php:64
+msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr ""
+
+#: system/src/Validator/messages.php:65
+msgid "The input does not appear to be a valid local network name"
+msgstr ""
+
+#: system/src/Validator/messages.php:66
+msgid "The input does not appear to be a valid URI hostname"
+msgstr ""
+
+#: system/src/Validator/messages.php:67
+msgid "The input appears to be an IP address, but IP addresses are not allowed"
+msgstr ""
+
+#: system/src/Validator/messages.php:68
+msgid "The input appears to be a local network name but local network names are not allowed"
+msgstr ""
+
+#: system/src/Validator/messages.php:69
+msgid "The input appears to be a DNS hostname but cannot extract TLD part"
+msgstr ""
+
+#: system/src/Validator/messages.php:70
+msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
+msgstr ""
+
+#: system/src/Validator/messages.php:75
+msgid "Invalid type given. String, integer, float, boolean or array expected"
+msgstr ""
+
+#: system/src/Validator/messages.php:79
+msgid "Invalid type given. String, integer or float expected"
+msgstr ""
+
+#: system/src/Validator/messages.php:80
+msgid "The input does not match against pattern '%pattern%'"
+msgstr ""
+
+#: system/src/Validator/messages.php:81
+msgid "There was an internal error while using the pattern '%pattern%'"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:51
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:53
+msgid "Personal"
+msgstr "Shaxsiy"
+
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:59
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:61
+msgid "Exit"
+msgstr "Chiqish"
+
+#: themes/admin/templates/system/forms/input_file.blade.php:13
+msgid "Current File:"
+msgstr ""
+
+#: themes/admin/templates/system/mail/layouts/default.phtml:115
+#: themes/default/templates/system/mail/layouts/default.blade.php:115
+msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
+msgstr ""
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:9
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:10
+msgid "Password recovery"
+msgstr ""
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:12
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:13
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:13
+#: themes/default/templates/system/mail/templates/registration.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:14
+#, php-format
+msgid "Hello, %s!"
+msgstr "Salom, %s!"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:14
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:15
+#, php-format
+msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
+msgstr "Siz parolni tiklash jarayonini <a href=\"%s\">% s </a> veb-saytidan boshlaysiz"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:17
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:18
+msgid "In order to recover your password, you must click on the link:"
+msgstr ""
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:23
+msgid "Restore"
+msgstr "Tiklash"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:25
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:26
+msgid "Link valid for 1 hour"
+msgstr "Haola 1 soat davomida amal qiladi"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:27
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:28
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Kalit: Agar siz ushbu xatni noto'g'ri olsangiz, ushbu xatga e'tibor bermang"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:15
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:16
+#, php-format
+msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
+msgstr "Siz parolingizni <a href=\"%s\">% s </a> veb-saytida o'zgartirdingiz"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:18
+#: themes/default/templates/system/mail/templates/registration.blade.php:18
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:19
+msgid "Your login:"
+msgstr "Sizning loginingiz"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:19
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:20
+msgid "Your password:"
+msgstr "Parolingiz"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:23
+msgid "After logging in, you can change your password to new one."
+msgstr "Kirishdan so'ng siz parolingizni yangisiga o'zgartirishingiz mumkin"
+
+#: themes/admin/templates/system/pages/comments_delete.phtml:21
+#: themes/default/templates/system/pages/comments_delete.phtml:21
+msgid "Do you really want to delete?"
+msgstr "Chindan ham o‘chirmoqchimisiz?"
+
+#: themes/admin/templates/system/pages/comments_delete.phtml:25
+#: themes/default/templates/system/pages/comments_delete.phtml:25
+msgid "Clear"
+msgstr "Tozalash"
+
+#: themes/admin/templates/system/pages/comments_form.phtml:22
+#: themes/default/templates/system/pages/comments_form.phtml:22
+msgid "Message"
+msgstr "Xabar"
+
+#: themes/admin/templates/system/pages/comments_form.phtml:29
+#: themes/default/templates/system/pages/comments_form.phtml:29
+msgid "Send"
+msgstr "Yuborish"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:39
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Ro‘yxat bo‘sh"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:84
+#: themes/default/templates/system/pages/comments_list.phtml:84
+msgid "Edited:"
+msgstr "Tahrirlagan:"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:85
+#: themes/default/templates/system/pages/comments_list.phtml:85
+msgid "Edited"
+msgstr "Tahrirlagan"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:23
+msgid "Log In"
+msgstr "Tizimga Kirish"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:71
+msgid "Login"
+msgstr "Kirish"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:79
+msgid "Registration"
+msgstr "Ro‘yxatdan o‘tish"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:15
+#, php-format
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:18
+msgid "The new email address is:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:18
+msgid "To continue please click the confirm button"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:23
+#: themes/default/templates/system/mail/templates/registration.blade.php:27
+msgid "Confirm"
+msgstr "Tasdiqlash"
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:15
+#, php-format
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+msgid "The one you specified when registering"
+msgstr "Siz ro'yxatdan o'tayotganda ko'rsatganingiz"
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:22
+#, php-format
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
+msgstr ""
+
