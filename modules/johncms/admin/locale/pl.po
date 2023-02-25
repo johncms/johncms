@@ -1,0 +1,2076 @@
+msgid ""
+msgstr ""
+"X-Domain: admin\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: pl\n"
+"X-Crowdin-File: /develop/modules/johncms/admin/locale/admin.pot\n"
+"X-Crowdin-File-ID: 361\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Polish\n"
+"Language: pl_PL\n"
+"PO-Revision-Date: 2023-02-25 20:40\n"
+
+#: modules/johncms/admin/includes/access.php:17
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:109
+msgid "Permissions"
+msgstr ""
+
+#: modules/johncms/admin/includes/adminlist.php:22
+msgid "Administration"
+msgstr ""
+
+#: modules/johncms/admin/includes/adminlist.php:36
+msgid "Supervisors"
+msgstr ""
+
+#: modules/johncms/admin/includes/adminlist.php:56
+msgid "Administrators"
+msgstr ""
+
+#: modules/johncms/admin/includes/adminlist.php:76
+msgid "Super Moderators"
+msgstr ""
+
+#: modules/johncms/admin/includes/adminlist.php:96
+msgid "Moderators"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:21
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:133
+msgid "Advertisement"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:28
+msgid "Edit link"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:28
+#: modules/johncms/admin/templates/ads_index.phtml:85
+msgid "Add link"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:43
+#: modules/johncms/admin/includes/counters.php:91
+#: modules/johncms/admin/includes/counters.php:155
+#: modules/johncms/admin/includes/counters.php:204
+#: modules/johncms/admin/includes/counters.php:279
+#: modules/johncms/admin/includes/counters.php:340
+#: modules/johncms/admin/includes/forum/del.php:65
+#: modules/johncms/admin/includes/forum/del.php:84
+#: modules/johncms/admin/includes/forum/del.php:155
+#: modules/johncms/admin/includes/forum/del.php:174
+#: modules/johncms/admin/includes/reg.php:37
+#: modules/johncms/admin/includes/reg.php:79
+#: modules/johncms/admin/includes/reg.php:146
+#: modules/johncms/admin/includes/usr_del.php:47
+msgid "Wrong data"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:71
+#: modules/johncms/admin/includes/counters.php:230
+#: modules/johncms/admin/includes/counters.php:320
+msgid "The required fields are not filled"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:82
+msgid "This place is occupied"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:88
+msgid "Invalid characters"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:91
+msgid "Color is specified incorrectly"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:199
+msgid "Link successfully changed"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:199
+msgid "Link successfully added"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:201
+#: modules/johncms/admin/includes/antispy.php:228
+#: modules/johncms/admin/includes/counters.php:180
+#: modules/johncms/admin/includes/ipban.php:446
+#: modules/johncms/admin/includes/reg.php:51
+#: modules/johncms/admin/includes/reg.php:66
+#: modules/johncms/admin/includes/reg.php:97
+#: modules/johncms/admin/includes/reg.php:112
+#: modules/johncms/admin/includes/reg.php:137
+#: modules/johncms/admin/includes/usr_clean.php:75
+msgid "Continue"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:278
+#: modules/johncms/admin/includes/ipban.php:452
+#: modules/johncms/admin/includes/reg.php:168
+#: modules/johncms/admin/templates/ads_confirm.phtml:38
+#: modules/johncms/admin/templates/ads_index.phtml:59
+#: modules/johncms/admin/templates/counters.phtml:62
+#: modules/johncms/admin/templates/counters_confirm.phtml:35
+#: modules/johncms/admin/templates/counters_view.phtml:60
+#: modules/johncms/admin/templates/forum/del_confirm.phtml:33
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:58
+#: modules/johncms/admin/templates/forum/structure.phtml:55
+#: modules/johncms/admin/templates/languages/manage.phtml:39
+#: modules/johncms/admin/templates/modules/index.blade.php:31
+#: modules/johncms/admin/templates/user_clean_confirm.phtml:36
+#: modules/johncms/admin/templates/usr_del.phtml:57
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:290
+msgid "Are you sure want to delete link?"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:312
+msgid "Are you sure you want to delete all inactive links?"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:345
+#: modules/johncms/admin/templates/ads_add.phtml:82
+msgid "Before the menu"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:350
+#: modules/johncms/admin/templates/ads_add.phtml:86
+msgid "After the menu"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:355
+#: modules/johncms/admin/templates/ads_add.phtml:90
+msgid "At the top of the page"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:360
+#: modules/johncms/admin/templates/ads_add.phtml:94
+msgid "At the bottom of the page"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:366
+#: modules/johncms/admin/templates/ads_add.phtml:99
+msgid "All pages"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:367
+#: modules/johncms/admin/templates/ads_add.phtml:103
+msgid "Only on Homepage"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:368
+#: modules/johncms/admin/templates/ads_add.phtml:107
+msgid "On all, except Homepage"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:371
+#: modules/johncms/admin/templates/ads_add.phtml:69
+msgid "Everyone"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:372
+#: modules/johncms/admin/templates/ads_add.phtml:73
+msgid "Guests"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:373
+#: modules/johncms/admin/src/Providers/MenuServiceProvider.php:24
+#: modules/johncms/admin/templates/ads_add.phtml:77
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:31
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:51
+msgid "Users"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:395
+#: modules/johncms/admin/includes/ads.php:398
+msgid "hits"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:415
+msgid "Color:"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:418
+#: modules/johncms/admin/templates/ads_add.phtml:112
+msgid "Bold"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:421
+#: modules/johncms/admin/templates/ads_add.phtml:116
+msgid "Italic"
+msgstr ""
+
+#: modules/johncms/admin/includes/ads.php:424
+#: modules/johncms/admin/templates/ads_add.phtml:120
+msgid "Underline"
+msgstr ""
+
+#: modules/johncms/admin/includes/antiflood.php:22
+msgid "Antiflood Settings"
+msgstr ""
+
+#: modules/johncms/admin/includes/antiflood.php:76
+msgid "ERROR: Can not write system.local.php"
+msgstr ""
+
+#: modules/johncms/admin/includes/antiflood.php:82
+#: modules/johncms/admin/includes/karma.php:76
+#: modules/johncms/admin/templates/access.phtml:31
+#: modules/johncms/admin/templates/forum/settings.phtml:14
+#: modules/johncms/admin/templates/settings.phtml:15
+msgid "Settings are saved successfully"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:21
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:227
+msgid "Anti-Spyware"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:31
+#: modules/johncms/admin/includes/counters.php:31
+#: modules/johncms/admin/includes/forum/del.php:208
+#: modules/johncms/admin/includes/forum/settings.php:25
+#: modules/johncms/admin/includes/ipban.php:31
+#: modules/johncms/admin/includes/karma.php:33
+#: modules/johncms/admin/includes/languages.php:22
+#: modules/johncms/admin/includes/languages/index.php:25
+#: modules/johncms/admin/includes/settings.php:24
+#: modules/johncms/admin/includes/usr_del.php:22
+#: modules/johncms/admin/index.php:65
+#: modules/johncms/admin/templates/access.phtml:52
+#: modules/johncms/admin/templates/access.phtml:70
+#: modules/johncms/admin/templates/access.phtml:88
+#: modules/johncms/admin/templates/access.phtml:111
+#: modules/johncms/admin/templates/access.phtml:148
+msgid "Access denied"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:168
+#: modules/johncms/admin/templates/antispy.phtml:30
+msgid "Snapshot scan"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:175
+msgid "Snapshot is not created"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:180
+#: modules/johncms/admin/includes/antispy.php:214
+#: modules/johncms/admin/templates/antispy.phtml:36
+#: modules/johncms/admin/templates/antispy_create_confirm.phtml:37
+msgid "Create snapshot"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:201
+msgid "Excellent!<br>All files are consistent with previously made image."
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:206
+#: modules/johncms/admin/includes/forum/add.php:45
+#: modules/johncms/admin/includes/forum/add.php:119
+#: modules/johncms/admin/includes/forum/del.php:35
+#: modules/johncms/admin/includes/forum/del.php:70
+#: modules/johncms/admin/includes/forum/del.php:89
+#: modules/johncms/admin/includes/forum/del.php:118
+#: modules/johncms/admin/includes/forum/del.php:160
+#: modules/johncms/admin/includes/forum/del.php:179
+#: modules/johncms/admin/includes/forum/del.php:198
+#: modules/johncms/admin/includes/forum/del.php:213
+#: modules/johncms/admin/includes/forum/edit.php:45
+#: modules/johncms/admin/includes/forum/hposts.php:54
+#: modules/johncms/admin/includes/forum/htopics.php:55
+#: modules/johncms/admin/includes/ipban.php:63
+#: modules/johncms/admin/includes/ipban.php:239
+#: modules/johncms/admin/includes/ipban.php:276
+#: modules/johncms/admin/includes/ipban.php:353
+#: modules/johncms/admin/includes/ipban.php:371
+#: modules/johncms/admin/includes/ipban.php:388
+#: modules/johncms/admin/includes/ipban.php:419
+#: modules/johncms/admin/templates/admin_list.phtml:50
+#: modules/johncms/admin/templates/ads_index.phtml:89
+#: modules/johncms/admin/templates/antispy_scan_result.phtml:42
+#: modules/johncms/admin/templates/ban_panel.phtml:68
+#: modules/johncms/admin/templates/counters.phtml:74
+#: modules/johncms/admin/templates/counters_view.phtml:61
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:130
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:126
+#: modules/johncms/admin/templates/forum/index.phtml:46
+#: modules/johncms/admin/templates/forum/structure.phtml:65
+#: modules/johncms/admin/templates/ipban.phtml:83
+#: modules/johncms/admin/templates/ipban_detail.phtml:59
+#: modules/johncms/admin/templates/languages/manage.phtml:51
+#: modules/johncms/admin/templates/modules/add.blade.php:12
+#: modules/johncms/admin/templates/modules/delete.blade.php:12
+#: modules/johncms/admin/templates/modules/delete_result.blade.php:18
+#: modules/johncms/admin/templates/modules/install_result.blade.php:18
+#: modules/johncms/admin/templates/modules/update.blade.php:13
+#: modules/johncms/admin/templates/modules/update_result.blade.php:18
+#: modules/johncms/admin/templates/reg_list.phtml:64
+#: modules/johncms/admin/templates/search_ip.phtml:80
+#: modules/johncms/admin/templates/users/user_form.blade.php:10
+msgid "Back"
+msgstr ""
+
+#: modules/johncms/admin/includes/antispy.php:223
+msgid "Snapshot successfully created"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:24
+msgid "Ban Panel"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:36
+msgid "Amnesty is available for supervisors only"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:41
+#: modules/johncms/admin/includes/ban_panel.php:66
+#: modules/johncms/admin/templates/ban_panel.phtml:62
+msgid "Amnesty"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:54
+msgid "Amnesty has been successful"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:75
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:97
+msgid "Term"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:102
+msgid "Violations"
+msgstr ""
+
+#: modules/johncms/admin/includes/ban_panel.php:133
+msgid "Violations history"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:22
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:142
+msgid "Counters"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:45
+#: modules/johncms/admin/templates/counters_form.phtml:82
+msgid "Viewing"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:59
+msgid "On all pages showing option 1"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:63
+msgid "On all pages showing option 2"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:67
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:175
+msgid "Counter deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:186
+msgid "Delete:"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:187
+#: modules/johncms/admin/includes/forum/del.php:302
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:404
+msgid "Counter successfully changed"
+msgstr ""
+
+#: modules/johncms/admin/includes/counters.php:404
+msgid "Counter successfully added"
+msgstr ""
+
+#: modules/johncms/admin/includes/emoticons.php:21
+msgid "Smilies"
+msgstr ""
+
+#: modules/johncms/admin/includes/emoticons.php:61
+msgid "Smilie cache updated successfully"
+msgstr ""
+
+#: modules/johncms/admin/includes/emoticons.php:61
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:122
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:118
+#: modules/johncms/admin/templates/user_clean_confirm.phtml:31
+#: modules/johncms/admin/templates/userlist.phtml:28
+msgid "Total"
+msgstr ""
+
+#: modules/johncms/admin/includes/emoticons.php:75
+msgid "Error updating cache"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum.php:23
+msgid "Forum Management"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:23
+msgid "Add Section"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:23
+msgid "Add Category"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:40
+#: modules/johncms/admin/includes/forum/del.php:30
+#: modules/johncms/admin/includes/forum/edit.php:40
+msgid "Invalid ID"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:63
+msgid "You have not entered Title"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:67
+#: modules/johncms/admin/templates/ads_add.phtml:47
+#: modules/johncms/admin/templates/ads_add.phtml:48
+#: modules/johncms/admin/templates/counters_add_confirm.phtml:41
+#: modules/johncms/admin/templates/counters_view.phtml:31
+#: modules/johncms/admin/templates/forum/add.phtml:42
+#: modules/johncms/admin/templates/forum/add.phtml:43
+#: modules/johncms/admin/templates/forum/edit.phtml:37
+#: modules/johncms/admin/templates/forum/edit.phtml:38
+#: modules/johncms/admin/templates/settings.phtml:66
+msgid "Title"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:67
+msgid "Invalid length"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/add.php:71
+msgid "Description should be at least 2 characters in length"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/cat.php:24
+#: modules/johncms/admin/templates/forum/index.phtml:41
+msgid "Forum structure"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/cat.php:34
+msgid "List of sections"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/cat.php:52
+msgid "List of categories"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:45
+msgid "Delete section"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:45
+msgid "Delete category"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:111
+#: modules/johncms/admin/includes/forum/del.php:293
+msgid "Category deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:113
+#: modules/johncms/admin/includes/forum/del.php:193
+msgid "All content has been moved to"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:113
+msgid "selected category"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:191
+#: modules/johncms/admin/includes/forum/del.php:293
+msgid "Section deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:193
+msgid "selected section"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:249
+msgid "Section with all contents are removed"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/del.php:254
+#: modules/johncms/admin/includes/forum/del.php:298
+msgid "Go to category"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/edit.php:28
+msgid "Edit Section"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/edit.php:119
+msgid "Please select a valid parent"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/hposts.php:23
+#: modules/johncms/admin/templates/forum/index.phtml:42
+msgid "Hidden posts"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/hposts.php:35
+#: modules/johncms/admin/includes/forum/hposts.php:113
+msgid "by topic"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/hposts.php:39
+#: modules/johncms/admin/includes/forum/hposts.php:117
+#: modules/johncms/admin/includes/forum/htopics.php:34
+#: modules/johncms/admin/includes/forum/htopics.php:108
+msgid "by author"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/hposts.php:49
+#: modules/johncms/admin/includes/forum/htopics.php:50
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/htopics.php:23
+#: modules/johncms/admin/templates/forum/index.phtml:43
+msgid "Hidden topics"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/htopics.php:40
+#: modules/johncms/admin/includes/forum/htopics.php:112
+msgid "by section"
+msgstr ""
+
+#: modules/johncms/admin/includes/forum/settings.php:32
+#: modules/johncms/admin/templates/forum/settings.phtml:7
+msgid "Forum Settings"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:21
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:235
+msgid "Ban by IP"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:43
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:61
+msgid "Add Ban"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:58
+#: modules/johncms/admin/includes/ipban.php:106
+#: modules/johncms/admin/includes/ipban.php:117
+#: modules/johncms/admin/includes/ipban.php:271
+#: modules/johncms/admin/includes/ipban.php:348
+#: modules/johncms/admin/includes/ipban.php:366
+#: modules/johncms/admin/includes/search_ip.php:78
+#: modules/johncms/admin/includes/search_ip.php:85
+msgid "Invalid IP"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:81
+#: modules/johncms/admin/includes/search_ip.php:53
+msgid "First IP is entered incorrectly"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:89
+#: modules/johncms/admin/includes/search_ip.php:61
+msgid "Second IP is entered incorrectly"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:130
+msgid "Address you entered conflicts with other who in the database"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:138
+#: modules/johncms/admin/includes/ipban.php:199
+#: modules/johncms/admin/includes/ipban.php:398
+#: modules/johncms/admin/includes/ipban.php:496
+#: modules/johncms/admin/templates/ads_index.phtml:52
+#: modules/johncms/admin/templates/ipban_add.phtml:53
+msgid "Redirect"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:142
+#: modules/johncms/admin/includes/ipban.php:204
+#: modules/johncms/admin/includes/ipban.php:402
+#: modules/johncms/admin/includes/ipban.php:500
+#: modules/johncms/admin/templates/access.phtml:136
+#: modules/johncms/admin/templates/ipban_add.phtml:49
+msgid "Registration"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:146
+#: modules/johncms/admin/includes/ipban.php:208
+#: modules/johncms/admin/includes/ipban.php:406
+#: modules/johncms/admin/includes/ipban.php:504
+#: modules/johncms/admin/templates/ipban_add.phtml:45
+msgid "Block"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:175
+msgid "Ban impossible. Your own IP address in the range"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:183
+msgid "Ban range address"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:188
+msgid "Ban on the subnet mask"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:193
+msgid "Ban IP address"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:200
+#: modules/johncms/admin/templates/ads_index.phtml:53
+#: modules/johncms/admin/templates/counters_form.phtml:60
+msgid "Default"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:216
+#: modules/johncms/admin/includes/ipban.php:413
+msgid "Not specified"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:314
+msgid "Are you sure you wan to unban all IP?"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:316
+msgid "Perform"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:318
+#: modules/johncms/admin/includes/ipban.php:454
+#: modules/johncms/admin/templates/ads_add.phtml:124
+#: modules/johncms/admin/templates/ads_confirm.phtml:39
+#: modules/johncms/admin/templates/amnesty.phtml:45
+#: modules/johncms/admin/templates/antiflood.phtml:78
+#: modules/johncms/admin/templates/antispy_create_confirm.phtml:38
+#: modules/johncms/admin/templates/counters_add_confirm.phtml:64
+#: modules/johncms/admin/templates/counters_confirm.phtml:36
+#: modules/johncms/admin/templates/counters_form.phtml:83
+#: modules/johncms/admin/templates/forum/add.phtml:85
+#: modules/johncms/admin/templates/forum/del_confirm.phtml:34
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:46
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:60
+#: modules/johncms/admin/templates/forum/edit.phtml:106
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:30
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:30
+#: modules/johncms/admin/templates/ipban_add.phtml:76
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:62
+#: modules/johncms/admin/templates/ipban_search.phtml:40
+#: modules/johncms/admin/templates/karma.phtml:64
+#: modules/johncms/admin/templates/karma_clean_confirm.phtml:35
+#: modules/johncms/admin/templates/user_clean_confirm.phtml:37
+#: modules/johncms/admin/templates/usr_del.phtml:58
+msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:332
+msgid "Ban details"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:383
+msgid "This address not in the database"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:441
+msgid "Ban has been successfully removed"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:450
+msgid "Are you sure you want to remove the ban?"
+msgstr ""
+
+#: modules/johncms/admin/includes/ipban.php:469
+#: modules/johncms/admin/templates/ip_whois.phtml:19
+#: modules/johncms/admin/templates/ipban.phtml:76
+#: modules/johncms/admin/templates/ipban_search.phtml:39
+#: modules/johncms/admin/templates/search_ip.phtml:41
+msgid "Search"
+msgstr ""
+
+#: modules/johncms/admin/includes/karma.php:23
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:78
+msgid "Karma"
+msgstr ""
+
+#: modules/johncms/admin/includes/karma.php:43
+msgid "Karma is cleared"
+msgstr ""
+
+#: modules/johncms/admin/includes/karma.php:45
+msgid "You really want to clear the Karma?"
+msgstr ""
+
+#: modules/johncms/admin/includes/languages.php:25
+#: modules/johncms/admin/includes/languages/index.php:30
+msgid "Languages"
+msgstr ""
+
+#: modules/johncms/admin/includes/languages/delete.php:26
+msgid "The language was successfully deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/languages/install.php:26
+msgid "The language was successfully installed"
+msgstr ""
+
+#: modules/johncms/admin/includes/languages/manage.php:29
+#: modules/johncms/admin/includes/languages/manage.php:30
+#: modules/johncms/admin/includes/languages/manage.php:34
+#: modules/johncms/admin/templates/languages/index.phtml:32
+msgid "Managing languages"
+msgstr ""
+
+#: modules/johncms/admin/includes/languages/update.php:26
+msgid "The language was successfully updated"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:23
+msgid "Registration confirmation"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:49
+#: modules/johncms/admin/includes/reg.php:64
+msgid "Registration is confirmed"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:95
+#: modules/johncms/admin/includes/usr_del.php:116
+msgid "User deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:110
+msgid "All unconfirmed registrations were removed"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:135
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:164
+msgid "Approve"
+msgstr ""
+
+#: modules/johncms/admin/includes/reg.php:172
+msgid "Remove IP"
+msgstr ""
+
+#: modules/johncms/admin/includes/search_ip.php:28
+#: modules/johncms/admin/templates/search_ip.phtml:37
+#: modules/johncms/admin/templates/search_ip.phtml:39
+msgid "Search IP"
+msgstr ""
+
+#: modules/johncms/admin/includes/search_ip.php:34
+msgid "Actual IP"
+msgstr ""
+
+#: modules/johncms/admin/includes/search_ip.php:39
+msgid "IP history"
+msgstr ""
+
+#: modules/johncms/admin/includes/settings.php:31
+#: modules/johncms/admin/templates/settings.phtml:8
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:173
+#: modules/johncms/admin/templates/smilies.phtml:8
+msgid "System Settings"
+msgstr ""
+
+#: modules/johncms/admin/includes/userlist.php:25
+#: modules/johncms/admin/src/Controllers/Users/UsersController.php:35
+#: modules/johncms/admin/templates/userlist.phtml:3
+msgid "List of Users"
+msgstr ""
+
+#: modules/johncms/admin/includes/usr_clean.php:20
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:62
+msgid "Database cleanup"
+msgstr ""
+
+#: modules/johncms/admin/includes/usr_clean.php:73
+msgid "Inactive profiles deleted"
+msgstr ""
+
+#: modules/johncms/admin/includes/usr_del.php:25
+msgid "Delete user"
+msgstr ""
+
+#: modules/johncms/admin/includes/usr_del.php:41
+msgid "You cannot delete higher administration"
+msgstr ""
+
+#: modules/johncms/admin/includes/usr_del.php:44
+msgid "User does not exists"
+msgstr ""
+
+#: modules/johncms/admin/index.php:57
+#: modules/johncms/admin/src/Providers/MenuServiceProvider.php:65
+#: modules/johncms/admin/templates/ip_whois.phtml:8
+#: modules/johncms/admin/templates/settings.phtml:8
+#: modules/johncms/admin/templates/smilies.phtml:8
+#: modules/johncms/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
+#: modules/johncms/admin/migrations/2022_11_13_132508_create_roles_and_permissions.php:34
+msgid "Access to user management"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:22
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:23
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:36
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:76
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:109
+msgid "List of Modules"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:37
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:61
+msgid "Add Module"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:77
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:95
+msgid "Delete Module"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:110
+#: modules/johncms/admin/src/Controllers/Modules/ModulesController.php:128
+msgid "Update Module"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/System/SystemCheckController.php:24
+#: modules/johncms/admin/src/Controllers/System/SystemCheckController.php:25
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:197
+msgid "System check"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/Users/UsersController.php:83
+msgid "Create User"
+msgstr ""
+
+#: modules/johncms/admin/src/Controllers/Users/UsersController.php:98
+msgid "Edit User"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/AddModuleForm.php:24
+msgid "Module Name"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/AddModuleForm.php:25
+msgid "Enter module name"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/AddModuleForm.php:28
+msgid "For example: johncms/contacts"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/LoginForm.php:28
+msgid "Username"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/LoginForm.php:29
+msgid "Enter your username"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/LoginForm.php:35
+#: modules/johncms/admin/src/Forms/LoginForm.php:36
+#: modules/johncms/admin/src/Forms/UserForm.php:67
+#: modules/johncms/admin/src/Forms/UserForm.php:68
+msgid "Password"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/LoginForm.php:41
+msgid "Remember me"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/LoginForm.php:48
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/LoginForm.php:49
+msgid "Verification code"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:44
+msgid "Login"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:45
+msgid "Enter login"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:47
+#, php-format
+msgid "Min. %s, Max. %s characters. Allowed letters of the latin alphabets and numbers."
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:70
+#, php-format
+msgid "Min. %s characters."
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:80
+msgid "Role"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:108
+msgid "E-mail"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:109
+msgid "Enter e-mail"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:115
+msgid "Avatar"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:116
+msgid "Select Avatar"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:131
+#: modules/johncms/admin/templates/counters_form.phtml:42
+#: modules/johncms/admin/templates/counters_form.phtml:43
+msgid "Name"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:132
+msgid "Enter Name"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:142
+#: modules/johncms/admin/src/Forms/UserForm.php:143
+msgid "Phone"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:161
+#: modules/johncms/admin/src/Forms/UserForm.php:162
+msgid "Telegram"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:167
+#: modules/johncms/admin/src/Forms/UserForm.php:168
+msgid "WhatsApp"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:173
+msgid "Birthday"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:194
+msgid "Gender"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:199
+#: modules/johncms/admin/src/Forms/UserForm.php:200
+msgid "Website"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:205
+#: modules/johncms/admin/src/Forms/UserForm.php:206
+msgid "About"
+msgstr ""
+
+#: modules/johncms/admin/src/Forms/UserForm.php:220
+msgid "User"
+msgstr ""
+
+#: modules/johncms/admin/src/Providers/MenuServiceProvider.php:33
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:156
+msgid "System"
+msgstr ""
+
+#: modules/johncms/admin/src/Providers/MenuServiceProvider.php:43
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:92
+msgid "Modules"
+msgstr ""
+
+#: modules/johncms/admin/src/Providers/MenuServiceProvider.php:53
+msgid "System Check"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:36
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:117
+#: modules/johncms/admin/templates/usr_del.phtml:51
+msgid "Forum"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:40
+#: modules/johncms/admin/templates/access.phtml:62
+#: modules/johncms/admin/templates/access.phtml:80
+#: modules/johncms/admin/templates/access.phtml:103
+#: modules/johncms/admin/templates/access.phtml:126
+#: modules/johncms/admin/templates/access.phtml:140
+msgid "Access is allowed"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:44
+#: modules/johncms/admin/templates/access.phtml:66
+#: modules/johncms/admin/templates/access.phtml:84
+#: modules/johncms/admin/templates/access.phtml:107
+#: modules/johncms/admin/templates/access.phtml:130
+msgid "Only for authorized"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:48
+msgid "Read only"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:58
+msgid "Guestbook"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:76
+msgid "Library"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:93
+#: modules/johncms/admin/templates/access.phtml:116
+#: modules/johncms/admin/templates/usr_del.phtml:44
+msgid "Comments"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:99
+msgid "Downloads"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:122
+msgid "Community"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:144
+msgid "With moderation"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:154
+msgid "Administrators always have access to all closed modules and comments"
+msgstr ""
+
+#: modules/johncms/admin/templates/access.phtml:156
+#: modules/johncms/admin/templates/ads_add.phtml:123
+#: modules/johncms/admin/templates/amnesty.phtml:44
+#: modules/johncms/admin/templates/antiflood.phtml:77
+#: modules/johncms/admin/templates/counters_add_confirm.phtml:63
+#: modules/johncms/admin/templates/forum/edit.phtml:105
+#: modules/johncms/admin/templates/forum/settings.phtml:58
+#: modules/johncms/admin/templates/ipban_add.phtml:75
+#: modules/johncms/admin/templates/karma.phtml:63
+#: modules/johncms/admin/templates/languages/index.phtml:28
+#: modules/johncms/admin/templates/settings.phtml:86
+#: modules/johncms/admin/templates/users/user_form.blade.php:9
+msgid "Save"
+msgstr ""
+
+#: modules/johncms/admin/templates/admin_list.phtml:32
+#: modules/johncms/admin/templates/ads_index.phtml:69
+#: modules/johncms/admin/templates/ban_panel.phtml:42
+#: modules/johncms/admin/templates/counters.phtml:42
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:107
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:103
+#: modules/johncms/admin/templates/forum/structure.phtml:32
+#: modules/johncms/admin/templates/ipban.phtml:47
+#: modules/johncms/admin/templates/reg_list.phtml:39
+msgid "The list is empty"
+msgstr ""
+
+#: modules/johncms/admin/templates/admin_list.phtml:46
+#: modules/johncms/admin/templates/ads_index.phtml:80
+#: modules/johncms/admin/templates/ban_panel.phtml:59
+#: modules/johncms/admin/templates/counters.phtml:69
+#: modules/johncms/admin/templates/ipban.phtml:68
+#: modules/johncms/admin/templates/reg_list.phtml:56
+#: modules/johncms/admin/templates/search_ip.phtml:76
+msgid "Total:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:38
+#: modules/johncms/admin/templates/ads_add.phtml:39
+msgid "Link"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:43
+#: modules/johncms/admin/templates/ads_index.phtml:52
+msgid "Direct Link"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:44
+msgid "Click statistics won't be counted, If the direct link is turned on"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:49
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:52
+#: modules/johncms/admin/templates/ads_add.phtml:53
+msgid "Color"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:54
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:57
+#: modules/johncms/admin/templates/ads_add.phtml:58
+msgid "Hits"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:59
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:62
+#: modules/johncms/admin/templates/ads_add.phtml:63
+msgid "Days"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:64
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:66
+#: modules/johncms/admin/templates/ads_index.phtml:49
+#: modules/johncms/admin/templates/ads_index.phtml:60
+msgid "Show"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:79
+msgid "Place"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:96
+msgid "Layout"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_add.phtml:109
+msgid "Styling links"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:40
+#: modules/johncms/admin/templates/counters.phtml:52
+msgid "On"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:42
+#: modules/johncms/admin/templates/counters.phtml:54
+msgid "Off"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:47
+msgid "Start date"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:48
+msgid "Disposition"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:50
+msgid "Agreement"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:51
+msgid "Remains"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:52
+msgid "Link type"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:53
+msgid "Style settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:56
+#: modules/johncms/admin/templates/counters.phtml:59
+msgid "Up"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:57
+#: modules/johncms/admin/templates/counters.phtml:60
+msgid "Down"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:58
+#: modules/johncms/admin/templates/counters.phtml:61
+#: modules/johncms/admin/templates/counters_view.phtml:59
+#: modules/johncms/admin/templates/forum/structure.phtml:54
+msgid "Edit"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:60
+msgid "Hide"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads_index.phtml:86
+msgid "Delete inactive links"
+msgstr ""
+
+#: modules/johncms/admin/templates/amnesty.phtml:32
+msgid "Unban all"
+msgstr ""
+
+#: modules/johncms/admin/templates/amnesty.phtml:36
+msgid "Clear Ban database"
+msgstr ""
+
+#: modules/johncms/admin/templates/amnesty.phtml:40
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:37
+msgid "Operation mode"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:41
+#: modules/johncms/admin/templates/antiflood.phtml:60
+msgid "Day"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:45
+#: modules/johncms/admin/templates/antiflood.phtml:64
+msgid "Night"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:49
+msgid "Day / Night"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:50
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:54
+msgid "Adaptive"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:55
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:58
+msgid "Time limit"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:67
+msgid "Day mode"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:69
+msgid "Beginning of day"
+msgstr ""
+
+#: modules/johncms/admin/templates/antiflood.phtml:73
+msgid "End of day"
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy.phtml:26
+msgid "Scan mode"
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy.phtml:32
+msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy.phtml:38
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy_create_confirm.phtml:29
+msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy_create_confirm.phtml:33
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy_scan_result.phtml:29
+msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
+msgstr ""
+
+#: modules/johncms/admin/templates/antispy_scan_result.phtml:34
+msgid "List of files"
+msgstr ""
+
+#: modules/johncms/admin/templates/ban_panel.phtml:30
+#: modules/johncms/admin/templates/userlist.phtml:10
+msgid "Sort"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters.phtml:71
+#: modules/johncms/admin/templates/forum/add.phtml:84
+#: modules/johncms/admin/templates/forum/structure.phtml:61
+#: modules/johncms/admin/templates/ipban.phtml:74
+#: modules/johncms/admin/templates/modules/add.blade.php:11
+#: modules/johncms/admin/templates/modules/index.blade.php:4
+msgid "Add"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_add_confirm.phtml:44
+#: modules/johncms/admin/templates/counters_form.phtml:46
+#: modules/johncms/admin/templates/counters_form.phtml:68
+#: modules/johncms/admin/templates/counters_view.phtml:42
+msgid "Option 1"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_add_confirm.phtml:47
+#: modules/johncms/admin/templates/counters_form.phtml:51
+#: modules/johncms/admin/templates/counters_form.phtml:72
+#: modules/johncms/admin/templates/counters_view.phtml:45
+msgid "Option 2"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_add_confirm.phtml:59
+msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:48
+msgid "Code for main page"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:53
+msgid "Code for other pages"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:56
+msgid "Display mode"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:63
+msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:76
+msgid "WARNING!"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:77
+msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_form.phtml:78
+msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_view.phtml:34
+msgid "Status:"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_view.phtml:36
+msgid "Enabled"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_view.phtml:38
+msgid "Disabled"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_view.phtml:48
+msgid "Display mode:"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_view.phtml:55
+msgid "Disable"
+msgstr ""
+
+#: modules/johncms/admin/templates/counters_view.phtml:57
+msgid "Enable"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:38
+msgid "Parent section:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:44
+msgid "Min. 2, Max. 30 characters"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:48
+#: modules/johncms/admin/templates/forum/edit.phtml:53
+#: modules/johncms/admin/templates/settings.phtml:74
+#: modules/johncms/admin/templates/system/system_check.blade.php:9
+#: modules/johncms/admin/templates/system/system_check.blade.php:18
+#: modules/johncms/admin/templates/system/system_check.blade.php:31
+#: modules/johncms/admin/templates/system/system_check.blade.php:40
+#: modules/johncms/admin/templates/system/system_check.blade.php:53
+#: modules/johncms/admin/templates/system/system_check.blade.php:62
+msgid "Description"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:50
+#: modules/johncms/admin/templates/forum/edit.phtml:55
+msgid "Optional field"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:50
+#: modules/johncms/admin/templates/forum/edit.phtml:55
+msgid "Min. 2, Max. 500 characters"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:54
+#: modules/johncms/admin/templates/forum/add.phtml:57
+#: modules/johncms/admin/templates/forum/edit.phtml:67
+#: modules/johncms/admin/templates/forum/edit.phtml:70
+msgid "Common access"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:61
+#: modules/johncms/admin/templates/forum/edit.phtml:74
+msgid "Assign the newly created authors as curators"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:65
+#: modules/johncms/admin/templates/forum/edit.phtml:78
+msgid "Allow authors to edit the 1st post"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:69
+#: modules/johncms/admin/templates/forum/edit.phtml:82
+msgid "Only for reading"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:73
+#: modules/johncms/admin/templates/forum/edit.phtml:85
+msgid "Section type"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:76
+#: modules/johncms/admin/templates/forum/edit.phtml:88
+msgid "For subsections"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/add.phtml:80
+#: modules/johncms/admin/templates/forum/edit.phtml:92
+msgid "For topics"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:29
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:35
+#: modules/johncms/admin/templates/forum/edit.phtml:96
+msgid "Category"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:42
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:45
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:51
+msgid "Move"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:51
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:55
+msgid "Complete removal"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:53
+msgid "If you want to destroy all the information, first remove"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move.phtml:54
+msgid "subsections"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:29
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:34
+msgid "Select section"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:41
+msgid "Other category"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:48
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/del_confirm_move_topics.phtml:56
+msgid "WARNING! All the information will be deleted"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/edit.phtml:43
+msgid "Min. 2, Max. 150 characters"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/edit.phtml:47
+#: modules/johncms/admin/templates/forum/edit.phtml:48
+msgid "Order"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/edit.phtml:49
+msgid "Only numbers"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/edit.phtml:59
+msgid "Meta description"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/edit.phtml:63
+msgid "Meta keywords"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:29
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:29
+msgid "Filtered:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:48
+msgid "Go to page"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:61
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:57
+msgid "Topic:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:85
+msgid "Edited:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:89
+msgid "Post deleted:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:91
+msgid "Post restored by:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:95
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:91
+msgid "Filter:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_posts.phtml:115
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:111
+#: modules/johncms/admin/templates/reg_list.phtml:59
+msgid "Delete all"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:61
+msgid "Path:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/hidden_topics.phtml:87
+msgid "Topic deleted:"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:27
+msgid "Statistic"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:29
+msgid "Categories"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:30
+#: modules/johncms/admin/templates/forum/settings.phtml:35
+msgid "Sections"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:31
+#: modules/johncms/admin/templates/forum/settings.phtml:46
+msgid "Topics"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:32
+msgid "Messages"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:33
+msgid "Files"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:34
+msgid "Votes"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/index.phtml:36
+#: modules/johncms/admin/templates/forum/index.phtml:39
+msgid "Settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:19
+msgid "Common settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:22
+msgid "Show file counters"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:26
+msgid "SEO settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:28
+msgid "Forum keywords"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:32
+msgid "Forum description"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:37
+msgid "Section keywords"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:39
+#: modules/johncms/admin/templates/forum/settings.phtml:44
+msgid "Macros available: #name#, #description#"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:42
+msgid "Section description"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:48
+msgid "Topic keywords"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:50
+#: modules/johncms/admin/templates/forum/settings.phtml:55
+msgid "Macros available: #name#"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/settings.phtml:53
+msgid "Topic description"
+msgstr ""
+
+#: modules/johncms/admin/templates/forum/structure.phtml:47
+msgid "View"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.blade.php:3
+msgid "Dashboard"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.blade.php:6
+msgid "Show admin menu"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.blade.php:14
+msgid "registered visitors today"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.blade.php:22
+msgid "users registered today"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.blade.php:30
+msgid "posts on the forum today"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip_whois.phtml:15
+msgid "IP Address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip_whois.phtml:25
+#: modules/johncms/admin/templates/search_ip.phtml:64
+msgid "Search results"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban.phtml:39
+#: modules/johncms/admin/templates/ipban_add.phtml:38
+#: modules/johncms/admin/templates/ipban_add.phtml:39
+#: modules/johncms/admin/templates/ipban_search.phtml:32
+#: modules/johncms/admin/templates/ipban_search.phtml:33
+msgid "IP address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban.phtml:40
+#: modules/johncms/admin/templates/ipban_add.phtml:63
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:47
+msgid "Reason"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban.phtml:77
+msgid "Unban all IP"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:42
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:40
+msgid "Ban type"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:57
+#: modules/johncms/admin/templates/ipban_add.phtml:58
+msgid "Redirect URL"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:59
+msgid "If the ban on Redirect, then specify the URL"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:68
+msgid "Example:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:69
+msgid "Ban one address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:70
+msgid "Ban range of address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add.phtml:71
+msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:37
+msgid "Ban mode"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:44
+msgid "Redirect URL:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_add_confirm.phtml:57
+msgid "Please, check up correctness of the input data"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:33
+msgid "Ban type:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:37
+msgid "Redirect to:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:41
+msgid "Reason:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:44
+msgid "Banned by:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:47
+msgid "Date:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:50
+msgid "Time:"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_detail.phtml:53
+msgid "Delete Ban"
+msgstr ""
+
+#: modules/johncms/admin/templates/ipban_search.phtml:36
+msgid "Enter a single address, mask and range are not allowed"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:39
+msgid "Voices per day"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:43
+msgid "Restriction for vote"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:46
+msgid "Forum posts"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:50
+msgid "General Settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:54
+msgid "Switch module ON"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:59
+msgid "Forbid to vote for the administration"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.phtml:66
+msgid "Clear Karma"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma_clean_confirm.phtml:34
+msgid "Clear"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/index.phtml:12
+msgid "Descriptions have been updated successfully"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/index.phtml:17
+msgid "Default language"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/index.phtml:29
+msgid "Update List"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:24
+msgid "Version:"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:26
+#: modules/johncms/admin/templates/modules/index.blade.php:12
+msgid "New version:"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:29
+msgid "Installed"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:31
+msgid "Not installed"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:36
+msgid "The language files of this language are not writable! "
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:41
+msgid "Install"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages/manage.phtml:44
+#: modules/johncms/admin/templates/modules/index.blade.php:28
+msgid "Update"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/delete.blade.php:8
+#, php-format
+msgid "Are you sure you want to delete the module <b>%s</b>?"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/delete.blade.php:11
+#: modules/johncms/admin/templates/modules/update.blade.php:12
+msgid "Confirm"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/delete_result.blade.php:7
+msgid "The module has been successfully removed"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/delete_result.blade.php:9
+msgid "An error occurred while removing the module. Check the log for details."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/delete_result.blade.php:16
+#: modules/johncms/admin/templates/modules/update_result.blade.php:16
+msgid "Log"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/index.blade.php:15
+msgid "License:"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/index.blade.php:18
+msgid "Description:"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/index.blade.php:21
+msgid "Homepage:"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/install_result.blade.php:7
+msgid "The module has been successfully installed"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/install_result.blade.php:9
+msgid "An error occurred while installing the module. Check the installation log for details."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/install_result.blade.php:16
+msgid "Install Log"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/update.blade.php:8
+#, php-format
+msgid "Are you sure you want to update the module <b>%s</b>?"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/update_result.blade.php:7
+msgid "The module has been successfully updated"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules/update_result.blade.php:9
+msgid "An error occurred while updating the module. Check the log for details."
+msgstr ""
+
+#: modules/johncms/admin/templates/reg_list.phtml:58
+msgid "Confirm all"
+msgstr ""
+
+#: modules/johncms/admin/templates/search_ip.phtml:45
+msgid "Sample queries:"
+msgstr ""
+
+#: modules/johncms/admin/templates/search_ip.phtml:46
+msgid "Search for a single address"
+msgstr ""
+
+#: modules/johncms/admin/templates/search_ip.phtml:47
+msgid "Search a range address (forbidden to use mask symbol *)"
+msgstr ""
+
+#: modules/johncms/admin/templates/search_ip.phtml:48
+msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+msgstr ""
+
+#: modules/johncms/admin/templates/search_ip.phtml:60
+msgid "At your request, nothing found"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:21
+msgid "Common Settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:23
+msgid "Web site address without the slash at the end"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:27
+msgid "Site copyright"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:31
+msgid "Site Email"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:35
+msgid "Max. file size"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:40
+msgid "Gzip compression"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:45
+msgid "E-mail is required for registration"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:49
+msgid "Request a confirmation email to activate the user's account."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:53
+msgid "Time shift"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:59
+msgid "System Time"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:64
+msgid "META tags"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:70
+msgid "Keywords"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.phtml:79
+msgid "Themes"
+msgstr ""
+
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:70
+msgid "Antiflood"
+msgstr ""
+
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:125
+msgid "News"
+msgstr ""
+
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:181
+msgid "Update Smilies"
+msgstr ""
+
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:189
+msgid "Language Settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/sidebar-admin-menu.phtml:210
+msgid "Security"
+msgstr ""
+
+#: modules/johncms/admin/templates/system/system_check.blade.php:3
+msgid "Required parameters"
+msgstr ""
+
+#: modules/johncms/admin/templates/system/system_check.blade.php:7
+#: modules/johncms/admin/templates/system/system_check.blade.php:29
+#: modules/johncms/admin/templates/system/system_check.blade.php:51
+msgid "Check name"
+msgstr ""
+
+#: modules/johncms/admin/templates/system/system_check.blade.php:8
+#: modules/johncms/admin/templates/system/system_check.blade.php:17
+#: modules/johncms/admin/templates/system/system_check.blade.php:30
+#: modules/johncms/admin/templates/system/system_check.blade.php:39
+#: modules/johncms/admin/templates/system/system_check.blade.php:52
+#: modules/johncms/admin/templates/system/system_check.blade.php:61
+msgid "Value"
+msgstr ""
+
+#: modules/johncms/admin/templates/system/system_check.blade.php:25
+msgid "Database"
+msgstr ""
+
+#: modules/johncms/admin/templates/system/system_check.blade.php:47
+msgid "Recommended parameters"
+msgstr ""
+
+#: modules/johncms/admin/templates/user_clean_confirm.phtml:29
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr ""
+
+#: modules/johncms/admin/templates/userlist.phtml:13
+msgid "Nickname"
+msgstr ""
+
+#: modules/johncms/admin/templates/userlist.phtml:22
+msgid "List is empty"
+msgstr ""
+
+#: modules/johncms/admin/templates/users/login_form.blade.php:7
+msgid "Authorization"
+msgstr ""
+
+#: modules/johncms/admin/templates/users/login_form.blade.php:17
+msgid "Log in"
+msgstr ""
+
+#: modules/johncms/admin/templates/usr_del.phtml:31
+msgid "Delete user:"
+msgstr ""
+
+#: modules/johncms/admin/templates/usr_del.phtml:32
+msgid "Are you sure that you want to delete this user?"
+msgstr ""
+
+#: modules/johncms/admin/templates/usr_del.phtml:54
+msgid "All threads and posts created by the user go in the hidden state"
+msgstr ""
+
