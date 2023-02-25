@@ -1,0 +1,730 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /develop/system/locale/system.pot\n"
+"X-Crowdin-File-ID: 157\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"PO-Revision-Date: 2023-02-25 20:39\n"
+
+#: modules/johncms/language/templates/index.blade.php:3
+msgid "Select language"
+msgstr "Chọn ngôn ngữ"
+
+#: modules/johncms/language/templates/index.blade.php:21
+msgid "Apply"
+msgstr "Áp dụng"
+
+#: modules/johncms/notifications/includes/clear.php:23
+msgid "Notifications are cleared!"
+msgstr "Thông báo đã được xóa!"
+
+#: modules/johncms/notifications/includes/index.php:29
+msgid "Users on registration"
+msgstr "Người dùng đăng ký"
+
+#: modules/johncms/notifications/includes/index.php:39
+msgid "Articles on moderation"
+msgstr "Bài viết cần kiểm duyệt"
+
+#: modules/johncms/notifications/includes/index.php:49
+msgid "Downloads on moderation"
+msgstr "Tệp tin cần kiểm duyệt"
+
+#: modules/johncms/notifications/includes/index.php:60
+msgid "Ban"
+msgstr "Cấm"
+
+#: modules/johncms/notifications/includes/index.php:70
+msgid "New forum posts"
+msgstr "Bài đăng mới"
+
+#: modules/johncms/notifications/includes/index.php:80
+msgid "Mail"
+msgstr "Thư"
+
+#: modules/johncms/notifications/includes/index.php:90
+#: modules/johncms/notifications/includes/index.php:109
+msgid "Guestbook"
+msgstr "Phòng trò truyện"
+
+#: modules/johncms/notifications/includes/index.php:100
+msgid "Comments"
+msgstr "Bình luận"
+
+#: modules/johncms/notifications/includes/settings.php:18
+#: modules/johncms/notifications/templates/index.phtml:80
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: modules/johncms/notifications/includes/settings.php:44
+msgid "Settings saved!"
+msgstr "Cài đặt đã được lưu!"
+
+#: modules/johncms/notifications/index.php:47
+#: modules/johncms/notifications/templates/index.phtml:11
+#: modules/johncms/notifications/templates/index.phtml:12
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:39
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:41
+msgid "Notifications"
+msgstr "Thông báo"
+
+#: modules/johncms/notifications/templates/index.phtml:27
+msgid "All notifications have already been read"
+msgstr "Tất cả các thông báo đã được đọc"
+
+#: modules/johncms/notifications/templates/index.phtml:67
+msgid "Total"
+msgstr "Tổng cộng"
+
+#: modules/johncms/notifications/templates/index.phtml:75
+msgid "Clear notifications"
+msgstr "Xóa thông báo"
+
+#: modules/johncms/notifications/templates/settings.phtml:45
+msgid "Display the number of unread messages in the forum"
+msgstr "Hiển thị số tin chưa đọc trong diễn đàn"
+
+#: modules/johncms/notifications/templates/settings.phtml:49
+msgid "Save"
+msgstr "Lưu lại"
+
+#: modules/johncms/notifications/templates/settings.phtml:50
+#: themes/admin/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: modules/johncms/redirect/index.php:30
+msgid "Redirect to an external link"
+msgstr "Chuyển hướng sang một liên kết bên ngoài "
+
+#: modules/johncms/redirect/templates/index.phtml:27
+msgid "External Link"
+msgstr "Liên kết Ngoài"
+
+#: modules/johncms/redirect/templates/index.phtml:28
+msgid "ATTENTION!"
+msgstr "Chú Ý!"
+
+#: modules/johncms/redirect/templates/index.phtml:30
+msgid "You are going to leave our site and go to an external link"
+msgstr "Bạn đang rời bỏ trang web của chúng tôi và đi đến một liên kết bên ngoài"
+
+#: modules/johncms/redirect/templates/index.phtml:34
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Quản lý trang web của chúng tôi không chịu trách nhiệm về nội dung trang bên ngoài"
+
+#: modules/johncms/redirect/templates/index.phtml:36
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Không nên nhập %s (Tài khoản, Mật khẩu), trên các trang thứ ba"
+
+#: modules/johncms/redirect/templates/index.phtml:40
+msgid "Go to Link"
+msgstr "Đi đến liên Kết"
+
+#: modules/johncms/redirect/templates/index.phtml:44
+#: system/src/Comments.php:177
+#: system/src/Comments.php:213
+#: system/src/Comments.php:226
+#: system/src/Comments.php:246
+#: system/src/Comments.php:272
+#: system/src/Comments.php:313
+#: system/src/Comments.php:325
+#: system/src/Comments.php:345
+#: themes/admin/templates/system/pages/comments_list.phtml:156
+#: themes/admin/templates/system/pages/result.phtml:33
+#: themes/default/templates/system/pages/comments_list.phtml:156
+#: themes/default/templates/system/pages/result.phtml:34
+msgid "Back"
+msgstr "Quay lại"
+
+#: system/helpers.php:70
+#: system/helpers.php:97
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr "Bạn đang tìm kiếm một cái gì đó không tồn tại hay đã bị xóa"
+
+#: system/helpers.php:92
+msgid "Unfortunately, you do not have access to the requested page."
+msgstr ""
+
+#: system/helpers.php:102
+msgid "The page is outdated or an attempt to fake the request was prevented."
+msgstr ""
+
+#: system/src/Checker/Checks/DBVersionCheck.php:27
+msgid "Version of the database server"
+msgstr "Phiên bản của máy chủ cơ sở dữ liệu"
+
+#: system/src/Checker/Checks/DBVersionCheck.php:59
+#, php-format
+msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
+msgstr "Hệ thống yêu cầu máy chủ MySQL phiên bản %s trở lên hoặc MariaDB %s trở lên."
+
+#: system/src/Checker/Checks/FileInfoCheck.php:17
+msgid "fileinfo extension"
+msgstr "fileinfo extension"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "No"
+msgstr "Không"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:25
+#: system/src/Checker/Checks/ImagickCheck.php:25
+#: system/src/Checker/Checks/MbstringCheck.php:25
+#: system/src/Checker/Checks/MySQLNDCheck.php:35
+#: system/src/Checker/Checks/OpcacheCheck.php:25
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:25
+#: system/src/Checker/Checks/PDOCheck.php:26
+#: system/src/Checker/Checks/ZlibCheck.php:25
+msgid "Yes"
+msgstr "Có"
+
+#: system/src/Checker/Checks/FileInfoCheck.php:49
+msgid "PHP extension fileinfo must be installed"
+msgstr "Tiện ích PHP fileinfo cần được cài đặt"
+
+#: system/src/Checker/Checks/ImagickCheck.php:17
+msgid "Imagick or GD extension"
+msgstr "Tiện ích Imagick hoặc GD"
+
+#: system/src/Checker/Checks/ImagickCheck.php:49
+msgid "You must install the php extension Imagick or GD"
+msgstr "Bạn cần kích hoạt tiện ích PHP Imagick hoặc GD"
+
+#: system/src/Checker/Checks/MbstringCheck.php:17
+msgid "mbstring extension"
+msgstr "mbstring extension"
+
+#: system/src/Checker/Checks/MbstringCheck.php:49
+msgid "PHP extension mbstring must be installed"
+msgstr "Tiện ích mở rộng PHP mbstring cần được cài đặt"
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:27
+msgid "mysqlnd test"
+msgstr "mysqlnd test"
+
+#: system/src/Checker/Checks/MySQLNDCheck.php:59
+msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
+"PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+msgstr "Chúng tôi sử dụng kiểm tra kiểu dữ liệu nghiêm ngặt khi phát triển hệ thống. CMS sẽ không hoạt động chính xác nếu trình điều khiển làm việc với cơ sở dữ liệu trả về kiểu dữ liệu không chính xác.\n"
+"PHP sẽ hoạt động với trình điều khiển mặc định: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+
+#: system/src/Checker/Checks/OpcacheCheck.php:17
+msgid "opcache extension"
+msgstr "opcache extension"
+
+#: system/src/Checker/Checks/OpcacheCheck.php:49
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr "Bạn nên cài đặt phần mở rộng php opcache để có hiệu suất tốt hơn."
+
+#: system/src/Checker/Checks/OpcacheEnableCheck.php:49
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr "Bạn nên kích hoạt phần mở rộng php opcache để có hiệu suất tốt hơn."
+
+#: system/src/Checker/Checks/PDOCheck.php:50
+msgid "PHP extension PDO must be installed"
+msgstr "Tiện ích mở rộng PDO của PHP phải được cài đặt"
+
+#: system/src/Checker/Checks/PHPCheck.php:20
+msgid "PHP version"
+msgstr "Phiên bản PHP"
+
+#: system/src/Checker/Checks/PHPCheck.php:52
+#, php-format
+msgid "The PHP version must be at least %s"
+msgstr "Phiên bản PHP thấp nhất là %s"
+
+#: system/src/Checker/Checks/ZlibCheck.php:17
+msgid "zlib extension"
+msgstr "zlib extension"
+
+#: system/src/Checker/Checks/ZlibCheck.php:49
+msgid "PHP extension zlib must be installed"
+msgstr "Tiện ích PHP zlib cần được cài đặt"
+
+#: system/src/Comments.php:162
+#: system/src/Comments.php:231
+#: system/src/Comments.php:232
+#: themes/admin/templates/system/pages/comments_list.phtml:124
+#: themes/default/templates/system/pages/comments_list.phtml:124
+msgid "Reply"
+msgstr "Trả lời"
+
+#: system/src/Comments.php:173
+#: system/src/Comments.php:209
+#: system/src/Comments.php:242
+#: system/src/Comments.php:268
+#: system/src/Comments.php:309
+#: system/src/Comments.php:341
+msgid "Downloads"
+msgstr "Tải xuống"
+
+#: system/src/Comments.php:175
+msgid "Administrator already replied to this message"
+msgstr "Quản trị đã trả lời tin nhắn này"
+
+#: system/src/Comments.php:244
+#: system/src/Comments.php:343
+msgid "Wrong data"
+msgstr "Lỗi dữ liệu"
+
+#: system/src/Comments.php:256
+#: system/src/Comments.php:330
+#: system/src/Comments.php:331
+#: themes/admin/templates/system/pages/comments_list.phtml:136
+#: themes/default/templates/system/pages/comments_list.phtml:136
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: system/src/Comments.php:270
+msgid "You cannot edit posts of higher administration"
+msgstr "Bạn không thể chỉnh sửa bài viết của người sử dụng cấp trên"
+
+#: system/src/Comments.php:355
+#: system/src/Comments.php:395
+#: system/src/Comments.php:396
+#: themes/admin/templates/system/forms/input_file.blade.php:36
+#: themes/admin/templates/system/pages/comments_delete.phtml:24
+#: themes/admin/templates/system/pages/comments_list.phtml:139
+#: themes/default/templates/system/pages/comments_delete.phtml:24
+#: themes/default/templates/system/pages/comments_list.phtml:139
+msgid "Delete"
+msgstr "Xóa"
+
+#: system/src/Comments.php:592
+msgid "Text is too short"
+msgstr "Văn bản được nhập quá ngắn"
+
+#: system/src/Comments.php:598
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Bạn không thể thêm những tin nhắn quá nhanh<br>Vui lòng chờ."
+
+#: system/src/Comments.php:598
+msgid "seconds"
+msgstr "giây"
+
+#: system/src/Comments.php:606
+msgid "Message already exists"
+msgstr "Tin nhắn đã tồn tại"
+
+#: system/src/Counters.php:121
+msgid "Unread"
+msgstr "Chưa đọc"
+
+#: system/src/Counters.php:127
+msgid "Last activity"
+msgstr "Hoạt động cuối"
+
+#: system/src/Modules/ComposerModuleInstaller.php:55
+msgid "PHP binary path:"
+msgstr ""
+
+#: system/src/NavChain.php:60
+msgid "Home"
+msgstr "Trang chủ"
+
+#: system/src/UserProperties.php:67
+#: system/src/Users/UserMutators.php:56
+msgid "Forum moderator"
+msgstr "Quản trị diễn đàn"
+
+#: system/src/UserProperties.php:68
+#: system/src/Users/UserMutators.php:57
+msgid "Download moderator"
+msgstr "Quản trị tải lên"
+
+#: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:58
+msgid "Library moderator"
+msgstr "Quản trị thư viện ảnh"
+
+#: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:59
+msgid "Super moderator"
+msgstr "SuperMod"
+
+#: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:60
+msgid "Administrator"
+msgstr "Quản trị viên cấp cao"
+
+#: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:61
+msgid "Supervisor"
+msgstr "Giám sát viên"
+
+#: system/src/Users/Ban/SystemBanTypes.php:17
+msgid "Full block"
+msgstr ""
+
+#: system/src/Users/User.php:215
+#: system/src/Users/User.php:224
+msgid "User"
+msgstr ""
+
+#: system/src/Users/User.php:271
+msgid "Online"
+msgstr ""
+
+#: system/src/Users/User.php:287
+msgid "Male"
+msgstr ""
+
+#: system/src/Users/User.php:288
+msgid "Female"
+msgstr ""
+
+#: system/src/Users/User.php:289
+msgid "Not specified"
+msgstr ""
+
+#: system/src/Users/UserManager.php:145
+#, php-format
+msgid "The user \"%s\" was not found"
+msgstr ""
+
+#: system/src/Users/UserManager.php:149
+msgid "The user is not confirmed"
+msgstr ""
+
+#: system/src/Users/UserManager.php:153
+msgid "The user's email is not verified"
+msgstr ""
+
+#: system/src/Users/UserManager.php:159
+msgid "Incorrect password"
+msgstr ""
+
+#: system/src/Validator/messages.php:13
+msgid "You have a ban"
+msgstr "Tài khoản cuả bạn bị khoá"
+
+#: system/src/Validator/messages.php:17
+msgid "The security code is not correct"
+msgstr "Mã bảo mật không đúng"
+
+#: system/src/Validator/messages.php:21
+msgid "The form submitted did not originate from the expected site"
+msgstr "Các dữ liêụ bạn nhập không có nguồn gốc từ trang web này"
+
+#: system/src/Validator/messages.php:25
+#, php-format
+msgid "You cannot add the message so often. Please, wait %value% seconds."
+msgstr "Bạn không được thêm tin nhắn quá nhanh. Xin vui lòng, chờ %value% giây."
+
+#: system/src/Validator/messages.php:29
+msgid "A record matching the input was found"
+msgstr "Một hồ sơ phù hợp với đầu vào đã được tìm thấy"
+
+#: system/src/Validator/messages.php:33
+msgid "No record matching the input was found"
+msgstr "Không có hồ sơ kết hợp đầu vào đã được tìm thấy"
+
+#: system/src/Validator/messages.php:37
+#: system/src/Validator/messages.php:74
+msgid "Value is required and can't be empty"
+msgstr "Giá trị là bắt buộc, không được để trống"
+
+#: system/src/Validator/messages.php:41
+#, php-format
+msgid "The input is less than %min% characters long"
+msgstr "Đầu vào phải ít hơn %min% kí tự"
+
+#: system/src/Validator/messages.php:42
+#, php-format
+msgid "The input is more than %max% characters long"
+msgstr "Đầu vào phải nhiều hơn %max% kí tự"
+
+#: system/src/Validator/messages.php:46
+msgid "The input was not found in the haystack"
+msgstr "Dữ liệu đầu vào không được tìm thấy trong haystack"
+
+#: system/src/Validator/messages.php:50
+#: system/src/Validator/messages.php:61
+msgid "Invalid type given. String expected"
+msgstr "Không đúng loại dữ liệu. Dữ liệu phải là chuỗi"
+
+#: system/src/Validator/messages.php:51
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "Đầu vào của bạn không phải là một email hợp lệ. Hãy sử dụng theo chuẩn local-part@hostname"
+
+#: system/src/Validator/messages.php:52
+#, php-format
+msgid "'%hostname%' is not a valid hostname for the email address"
+msgstr "'%hostname%' là tên máy chủ không hợp lệ cho địa chỉ email"
+
+#: system/src/Validator/messages.php:53
+#, php-format
+msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
+msgstr "'%hostname%' không xuất hiện để có bất kỳ MX nào hợp lệ hoặc Một hồ sơ cho các địa chỉ email"
+
+#: system/src/Validator/messages.php:54
+#, php-format
+msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
+msgstr "'%hostname%' không phải là một mạng định tuyến. Địa chỉ email này không được công khai trên mạng"
+
+#: system/src/Validator/messages.php:55
+#, php-format
+msgid "'%localPart%' can not be matched against dot-atom format"
+msgstr "'%localPart%' không khớp với dạng dot-atom"
+
+#: system/src/Validator/messages.php:56
+#, php-format
+msgid "'%localPart%' can not be matched against quoted-string format"
+msgstr "'%localPart%' không khớp với dạng quoted-string"
+
+#: system/src/Validator/messages.php:57
+msgid "'%localPart%' is not a valid local part for the email address"
+msgstr "'%localPart%' là một phần không hợp lệ cho địa địa chỉ email"
+
+#: system/src/Validator/messages.php:58
+msgid "The input exceeds the allowed length"
+msgstr "Đầu vào vượt quá mức cho phép dài"
+
+#: system/src/Validator/messages.php:60
+msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
+msgstr "Dữ liệu vừa nhập là một DNS nhưng không thể giải mã punycode"
+
+#: system/src/Validator/messages.php:62
+msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
+msgstr "Dữ liệu vừa nhập là một DNS nhưng dường như nó chứa một dấu gạch ngang ở vị trí không hợp lệ"
+
+#: system/src/Validator/messages.php:63
+msgid "The input does not match the expected structure for a DNS hostname"
+msgstr "Dữ liệu đầu vào không khớp với cấu trúc dự kiến cho tên máy chủ DNS"
+
+#: system/src/Validator/messages.php:64
+msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr "Dữ liễu đầu vào có vẻ là tên máy chủ DNS nhưng không thể khớp với lược đồ tên máy chủ của TLD '% tld%'"
+
+#: system/src/Validator/messages.php:65
+msgid "The input does not appear to be a valid local network name"
+msgstr "Dữ liệu đầu vào dường như không phải là một tên mạng cục bộ hợp lệ"
+
+#: system/src/Validator/messages.php:66
+msgid "The input does not appear to be a valid URI hostname"
+msgstr "Dữ liệu đầu vào dường như không phải là tên máy chủ URI hợp lệ"
+
+#: system/src/Validator/messages.php:67
+msgid "The input appears to be an IP address, but IP addresses are not allowed"
+msgstr "Dữ liệu đầu vào có vẻ là một địa chỉ IP, nhưng địa chỉ IP này không được cấp phép"
+
+#: system/src/Validator/messages.php:68
+msgid "The input appears to be a local network name but local network names are not allowed"
+msgstr "Dữ liệu đầu vào dường như là một tên mạng cục bộ nhưng tên mạng cục bộ này không được phép"
+
+#: system/src/Validator/messages.php:69
+msgid "The input appears to be a DNS hostname but cannot extract TLD part"
+msgstr "Dữ liệu đầu vào có vẻ là tên máy chủ DNS nhưng không thể trích xuất TLD"
+
+#: system/src/Validator/messages.php:70
+msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
+msgstr "Dữ liệu đầu vào dường như là tên máy chủ DNS nhưng không thể khớp TLD với danh sách đã biết"
+
+#: system/src/Validator/messages.php:75
+msgid "Invalid type given. String, integer, float, boolean or array expected"
+msgstr "Kiểu dữ liệu không được phép. Vui lòng dùng chuỗi, số nguyên, số thực, so sánh hoặc mảng."
+
+#: system/src/Validator/messages.php:79
+msgid "Invalid type given. String, integer or float expected"
+msgstr ""
+
+#: system/src/Validator/messages.php:80
+msgid "The input does not match against pattern '%pattern%'"
+msgstr ""
+
+#: system/src/Validator/messages.php:81
+msgid "There was an internal error while using the pattern '%pattern%'"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:51
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:53
+msgid "Personal"
+msgstr "Cá nhân"
+
+#: themes/admin/templates/system/app/sidebar-user-menu.blade.php:59
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:61
+msgid "Exit"
+msgstr "Thoát ra"
+
+#: themes/admin/templates/system/forms/input_file.blade.php:13
+msgid "Current File:"
+msgstr ""
+
+#: themes/admin/templates/system/mail/layouts/default.phtml:115
+#: themes/default/templates/system/mail/layouts/default.blade.php:115
+msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
+msgstr "Email được tạo ra tự động. Xin đừng trả lời nó. <br> Để liên lạc với chúng tôi, sử dụng, các thông tin liên lạc của chúng tôi trên trang web."
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:9
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:10
+msgid "Password recovery"
+msgstr "Khôi phục mật khẩu"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:12
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:13
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:13
+#: themes/default/templates/system/mail/templates/registration.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:13
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:14
+#, php-format
+msgid "Hello, %s!"
+msgstr "Xin chào, %s!"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:14
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:15
+#, php-format
+msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
+msgstr "Bạn bắt đầu quá trình phục hồi mật khẩu trên <a href=\"%s\">%s</a> trang web"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:17
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:18
+msgid "In order to recover your password, you must click on the link:"
+msgstr "Để phục hồi mật khẩu của bạn, bạn phải bấm vào liên kết:"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:23
+msgid "Restore"
+msgstr "Khôi phục"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:25
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:26
+msgid "Link valid for 1 hour"
+msgstr "Liên kết hợp lệ trong 1 giờ"
+
+#: themes/admin/templates/system/mail/templates/restore_password.phtml:27
+#: themes/default/templates/system/mail/templates/restore_password.blade.php:28
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Nếu em nhận được thư này bằng cách sai lầm, chỉ cần bỏ qua lá thư này"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:15
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:16
+#, php-format
+msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
+msgstr "Bạn có thay đổi mật khẩu trên <a href=\"%s\">%s</a> trang web"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:18
+#: themes/default/templates/system/mail/templates/registration.blade.php:18
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:19
+msgid "Your login:"
+msgstr "Tên đăng nhập của bạn:"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:19
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:20
+msgid "Your password:"
+msgstr "Mật khẩu của bạn:"
+
+#: themes/admin/templates/system/mail/templates/restore_password_complete.phtml:22
+#: themes/default/templates/system/mail/templates/restore_password_complete.blade.php:23
+msgid "After logging in, you can change your password to new one."
+msgstr "Sau khi đăng nhập bạn có thể thay đổi mật khẩu để mới."
+
+#: themes/admin/templates/system/pages/comments_delete.phtml:21
+#: themes/default/templates/system/pages/comments_delete.phtml:21
+msgid "Do you really want to delete?"
+msgstr "Bạn có thực sự muốn xóa không?"
+
+#: themes/admin/templates/system/pages/comments_delete.phtml:25
+#: themes/default/templates/system/pages/comments_delete.phtml:25
+msgid "Clear"
+msgstr "Xoá"
+
+#: themes/admin/templates/system/pages/comments_form.phtml:22
+#: themes/default/templates/system/pages/comments_form.phtml:22
+msgid "Message"
+msgstr "Nội dung tin nhắn"
+
+#: themes/admin/templates/system/pages/comments_form.phtml:29
+#: themes/default/templates/system/pages/comments_form.phtml:29
+msgid "Send"
+msgstr "Gửi"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:39
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Danh sách này trống"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:84
+#: themes/default/templates/system/pages/comments_list.phtml:84
+msgid "Edited:"
+msgstr "Chỉnh sửa:"
+
+#: themes/admin/templates/system/pages/comments_list.phtml:85
+#: themes/default/templates/system/pages/comments_list.phtml:85
+msgid "Edited"
+msgstr "Chỉnh sửa"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:23
+msgid "Log In"
+msgstr "Đăng nhập"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:71
+msgid "Login"
+msgstr "Đăng nhập"
+
+#: themes/default/templates/system/app/sidebar-user-menu.blade.php:79
+msgid "Registration"
+msgstr "Đăng ký Thành Viên"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:15
+#, php-format
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr "Bạn đã bắt đầu quá trình thay đổi địa chỉ email trên website <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:18
+msgid "The new email address is:"
+msgstr "Địa chỉ email mới : "
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.blade.php:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr "Nếu bạn đã không bắt đầu quy trình thay đổi email, xin hãy liên lạc với chúng tôi với bất kỳ cách nào thuận tiện cho bạn."
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:18
+msgid "To continue please click the confirm button"
+msgstr "Để có thể tiếp tục vui lòng nhấn nút xác nhận"
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:23
+#: themes/default/templates/system/mail/templates/registration.blade.php:27
+msgid "Confirm"
+msgstr "Confirm"
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.blade.php:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr "Nếu bạn không đăng ký trên trang web của chúng tôi, xin vui lòng bỏ qua email này."
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:15
+#, php-format
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr "Bạn đã thành công đăng ký trên <a href=\"%s\">%s</a> trang web"
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:19
+msgid "The one you specified when registering"
+msgstr "Một trong những bạn chỉ định khi đăng ký"
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:22
+#, php-format
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr "Để kích hoạt tài khoản của bạn, xin vui lòng xác nhận trên %s trang web."
+
+#: themes/default/templates/system/mail/templates/registration.blade.php:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
+msgstr "Nếu bạn không có đăng ký trên trang web của chúng tôi, xin vui lòng bỏ qua email này. Trong trường hợp này, tài khoản sẽ không được kích hoạt và sẽ được tự động đã bị xóa."
+
