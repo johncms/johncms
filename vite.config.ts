@@ -1,10 +1,12 @@
 import {defineConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
+import devManifest from 'vite-plugin-dev-manifest';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue()
+    vue(),
+    devManifest()
   ],
   publicDir: false,
   base: '/build/',
