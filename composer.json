@@ -83,7 +83,8 @@
         "laravel/serializable-closure": "^1.2",
         "illuminate/view": "^9.43",
         "symfony/serializer": "^6.2",
-        "symfony/property-access": "^6.2"
+        "symfony/property-access": "^6.2",
+        "johncms/content": "^0.0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19",
@@ -273,6 +274,15 @@
             "options": {
               "versions": {
                 "johncms/redirect": "0.0.1"
+              }
+            }
+        },
+        {
+            "type": "path",
+            "url": "modules/johncms/content",
+            "options": {
+              "versions": {
+                "johncms/content": "0.0.1"
               }
             }
         }
