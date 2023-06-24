@@ -1,0 +1,1152 @@
+msgid ""
+msgstr ""
+"X-Domain: personal\n"
+
+#: modules/johncms/personal/includes/activity.php:23
+#: modules/johncms/personal/templates/stat.phtml:50
+msgid "Activity"
+msgstr ""
+
+#: modules/johncms/personal/includes/activity.php:25
+#: modules/johncms/personal/includes/edit.php:52
+#: modules/johncms/personal/includes/guestbook.php:15
+#: modules/johncms/personal/includes/images.php:159
+#: modules/johncms/personal/includes/reset.php:20
+#: modules/johncms/personal/src/Controllers/ProfileController.php:41
+#: modules/johncms/personal/templates/office.phtml:32
+msgid "Profile"
+msgstr ""
+
+#: modules/johncms/personal/includes/activity.php:25
+#: modules/johncms/personal/includes/edit.php:52
+#: modules/johncms/personal/includes/images.php:159
+#: modules/johncms/personal/includes/index.php:24
+msgid "My Profile"
+msgstr ""
+
+#: modules/johncms/personal/includes/activity.php:31
+#: modules/johncms/personal/templates/index.phtml:45
+msgid "Messages"
+msgstr ""
+
+#: modules/johncms/personal/includes/activity.php:36
+msgid "Themes"
+msgstr ""
+
+#: modules/johncms/personal/includes/activity.php:41
+#: modules/johncms/personal/includes/ban.php:392
+#: modules/johncms/personal/templates/ban.phtml:45
+#: modules/johncms/personal/templates/stat.phtml:54
+msgid "Comments"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:16
+msgid "Ban the User"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:30
+msgid "You do not have enought rights to ban this user"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:44
+msgid "Reason not specified"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:48
+msgid "There is no required data"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:58
+msgid "You have no rights to ban in this section"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:62
+msgid "Ban already active"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:143
+msgid "System"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:147
+#: modules/johncms/personal/includes/index.php:151
+msgid "Ban"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:158
+msgid "User banned"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:192
+msgid "Ban termination"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:200
+#: modules/johncms/personal/includes/ban.php:258
+#: modules/johncms/personal/includes/ban.php:277
+#: modules/johncms/personal/includes/ban.php:324
+#: modules/johncms/personal/skl.php:141
+msgid "Wrong data"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:212
+msgid "Ban not active"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:223
+msgid "Ban terminated"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:228
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:229
+msgid "Terminate Ban"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:268
+msgid "Delete ban"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:300
+msgid "Ban deleted"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:305
+msgid "Removing ban along with a record in the bans history"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:306
+#: modules/johncms/personal/includes/index.php:145
+#: modules/johncms/personal/templates/edit.phtml:108
+#: modules/johncms/personal/templates/edit.phtml:128
+#: modules/johncms/personal/templates/karma_delete.phtml:33
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:334
+msgid "Violations history"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:344
+msgid "Violations history cleared"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:349
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:350
+msgid "Clear"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:368
+msgid "Violations history can be cleared by Supervisor only"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:377
+msgid "Violations History"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:389
+#: modules/johncms/personal/templates/ban.phtml:37
+msgid "Full block"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:390
+#: modules/johncms/personal/includes/ban.php:391
+#: modules/johncms/personal/templates/ban.phtml:41
+msgid "Private messages"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:393
+#: modules/johncms/personal/includes/settings.php:45
+#: modules/johncms/personal/includes/settings.php:87
+#: modules/johncms/personal/templates/ban.phtml:55
+#: modules/johncms/personal/templates/stat.phtml:52
+msgid "Forum"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:394
+#: modules/johncms/personal/includes/guestbook.php:16
+#: modules/johncms/personal/includes/guestbook.php:28
+#: modules/johncms/personal/templates/ban.phtml:49
+#: modules/johncms/personal/templates/office.phtml:42
+#: modules/johncms/personal/templates/stat.phtml:53
+msgid "Guestbook"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:395
+#: modules/johncms/personal/templates/ban.phtml:61
+msgid "Library"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:405
+#: modules/johncms/personal/templates/ban.phtml:87
+msgid "Till cancel"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:416
+msgid "Cancel Ban"
+msgstr ""
+
+#: modules/johncms/personal/includes/ban.php:422
+msgid "Delete Ban"
+msgstr ""
+
+#: modules/johncms/personal/includes/confirm_new_email.php:19
+#: modules/johncms/personal/includes/confirm_new_email.php:20
+msgid "Email confirmation"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:20
+#: modules/johncms/personal/templates/office.phtml:86
+msgid "Edit Profile"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:35
+#: modules/johncms/personal/includes/images.php:23
+msgid "You cannot edit profile of higher administration"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:47
+#: modules/johncms/personal/includes/ip.php:24
+#: modules/johncms/personal/includes/office.php:24
+#: modules/johncms/personal/includes/password.php:25
+#: modules/johncms/personal/includes/settings.php:31
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:86
+msgid "Avatar is successfully removed"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:93
+msgid "Photo is successfully removed"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:169
+msgid "Confirm email change"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:186
+msgid "The procedure for changing the email address was started"
+msgstr ""
+
+#: modules/johncms/personal/includes/edit.php:196
+msgid "Data saved"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:36
+msgid "Upload Avatar"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:42
+#: modules/johncms/personal/includes/images.php:94
+msgid "The weight of the file exceeds"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:64
+msgid "The avatar is successfully uploaded"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:66
+#: modules/johncms/personal/includes/images.php:135
+#: modules/johncms/personal/includes/karma.php:138
+#: modules/johncms/personal/includes/password.php:83
+#: modules/johncms/personal/templates/restore_password.phtml:43
+msgid "Continue"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:81
+#: modules/johncms/personal/includes/images.php:150
+#: modules/johncms/personal/includes/password.php:94
+msgid "Repeat"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:88
+msgid "Upload Photo"
+msgstr ""
+
+#: modules/johncms/personal/includes/images.php:133
+msgid "The photo is successfully uploaded"
+msgstr ""
+
+#: modules/johncms/personal/includes/index.php:24
+#: modules/johncms/personal/includes/karma.php:20
+#: modules/johncms/personal/index.php:58
+#: modules/johncms/personal/index.php:78
+#: modules/johncms/personal/src/Controllers/ProfileController.php:39
+#: modules/johncms/personal/src/Controllers/SettingsController.php:33
+msgid "User Profile"
+msgstr ""
+
+#: modules/johncms/personal/includes/index.php:94
+#: modules/johncms/personal/templates/stat.phtml:32
+msgid "Pending confirmation"
+msgstr ""
+
+#: modules/johncms/personal/includes/index.php:99
+msgid "E-mail address is not confirmed"
+msgstr ""
+
+#: modules/johncms/personal/includes/index.php:126
+msgid "Add to Contacts"
+msgstr ""
+
+#: modules/johncms/personal/includes/index.php:131
+msgid "Remove from Contacts"
+msgstr ""
+
+#: modules/johncms/personal/includes/index.php:139
+msgid "Edit"
+msgstr ""
+
+#: modules/johncms/personal/includes/ip.php:15
+msgid "IP History"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:17
+#: modules/johncms/personal/includes/karma.php:21
+msgid "Karma"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:42
+msgid "It is forbidden to vote for administration"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:46
+msgid "Cheating karma is forbidden"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:51
+#, php-format
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:52
+msgid "days"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:60
+msgid "You can vote for single user just one time for 24 hours"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:66
+#, php-format
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:77
+#: modules/johncms/personal/includes/karma.php:167
+#: modules/johncms/personal/templates/ban_history.phtml:96
+#: modules/johncms/personal/templates/ip_history.phtml:70
+#: modules/johncms/personal/templates/karma.phtml:86
+#: modules/johncms/personal/templates/profile/edit.phtml:27
+#: modules/johncms/personal/templates/restore_password_result.phtml:19
+#: modules/johncms/personal/templates/settings.phtml:25
+#: modules/johncms/personal/templates/stat.phtml:58
+msgid "Back"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:136
+msgid "You have successfully voted"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:147
+msgid "Vote for"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:165
+msgid "You are not allowed to vote for users"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:201
+msgid "Do you really want to delete comment?"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:234
+msgid "Do you really want to delete all reviews about user?"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:252
+msgid "New responses"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:287
+msgid "All"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:292
+#: modules/johncms/personal/templates/karma_vote.phtml:41
+msgid "Positive"
+msgstr ""
+
+#: modules/johncms/personal/includes/karma.php:297
+#: modules/johncms/personal/templates/karma_vote.phtml:45
+msgid "Negative"
+msgstr ""
+
+#: modules/johncms/personal/includes/office.php:15
+#: modules/johncms/personal/includes/settings.php:22
+msgid "My Account"
+msgstr ""
+
+#: modules/johncms/personal/includes/password.php:15
+#: modules/johncms/personal/includes/password.php:16
+#: modules/johncms/personal/templates/edit.phtml:278
+#: modules/johncms/personal/templates/office.phtml:87
+msgid "Change Password"
+msgstr ""
+
+#: modules/johncms/personal/includes/password.php:43
+#: modules/johncms/personal/includes/password.php:46
+msgid "It is necessary to fill in all fields"
+msgstr ""
+
+#: modules/johncms/personal/includes/password.php:51
+msgid "Old password entered incorrectly"
+msgstr ""
+
+#: modules/johncms/personal/includes/password.php:55
+msgid "The password confirmation you entered is wrong"
+msgstr ""
+
+#: modules/johncms/personal/includes/password.php:59
+msgid "The password must contain at least 3 characters"
+msgstr ""
+
+#: modules/johncms/personal/includes/password.php:81
+msgid "Password successfully changed"
+msgstr ""
+
+#: modules/johncms/personal/includes/reset.php:19
+msgid "Reset user settings"
+msgstr ""
+
+#: modules/johncms/personal/includes/reset.php:36
+#, php-format
+msgid "For user %s default settings were set."
+msgstr ""
+
+#: modules/johncms/personal/includes/settings.php:17
+#: modules/johncms/personal/includes/settings.php:23
+#: modules/johncms/personal/src/Controllers/SettingsController.php:35
+#: modules/johncms/personal/templates/index.phtml:33
+#: modules/johncms/personal/templates/office.phtml:83
+msgid "Settings"
+msgstr ""
+
+#: modules/johncms/personal/includes/settings.php:40
+#: modules/johncms/personal/includes/settings.php:140
+msgid "General setting"
+msgstr ""
+
+#: modules/johncms/personal/includes/settings.php:50
+#: modules/johncms/personal/includes/settings.php:58
+msgid "Mail"
+msgstr ""
+
+#: modules/johncms/personal/includes/settings.php:70
+#: modules/johncms/personal/includes/settings.php:113
+#: modules/johncms/personal/includes/settings.php:195
+#: modules/johncms/personal/src/Controllers/SettingsController.php:65
+msgid "Settings saved successfully"
+msgstr ""
+
+#: modules/johncms/personal/includes/settings.php:123
+#: modules/johncms/personal/includes/settings.php:200
+msgid "Default settings are set"
+msgstr ""
+
+#: modules/johncms/personal/includes/stat.php:16
+#: modules/johncms/personal/includes/stat.php:19
+#: modules/johncms/personal/templates/stat.phtml:26
+msgid "Statistic"
+msgstr ""
+
+#: modules/johncms/personal/index.php:60
+msgid "For registered users only"
+msgstr ""
+
+#: modules/johncms/personal/index.php:80
+msgid "This User does not exists"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:42
+#: modules/johncms/personal/templates/restore_password.phtml:4
+#: modules/johncms/personal/templates/restore_password.phtml:5
+#: modules/johncms/personal/templates/restore_password.phtml:10
+#: modules/johncms/personal/templates/restore_password_result.phtml:4
+#: modules/johncms/personal/templates/restore_password_result.phtml:5
+#: modules/johncms/personal/templates/restore_password_result.phtml:10
+msgid "Restore password"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:70
+msgid "The required fields are not filled"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:72
+msgid "Incorrect code"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:86
+msgid "Invalid Email address"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:90
+msgid "Password can be recovered 1 time per day"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:93
+#: modules/johncms/personal/skl.php:160
+msgid "User does not exists"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:109
+msgid "Password recovery"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:119
+msgid "Check your e-mail for further information"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:151
+msgid "Password recovery is impossible"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:155
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:176
+msgid "Your new password"
+msgstr ""
+
+#: modules/johncms/personal/skl.php:187
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr ""
+
+#: modules/johncms/personal/src/Controllers/PersonalController.php:25
+#: modules/johncms/personal/src/Controllers/PersonalController.php:26
+#: modules/johncms/personal/src/Controllers/ProfileController.php:40
+#: modules/johncms/personal/src/Controllers/SettingsController.php:34
+msgid "Personal account"
+msgstr ""
+
+#: modules/johncms/personal/src/Controllers/ProfileController.php:53
+msgid "The user was not found"
+msgstr ""
+
+#: modules/johncms/personal/src/Controllers/ProfileController.php:104
+msgid "Profile changed successfully"
+msgstr ""
+
+#: modules/johncms/personal/src/Controllers/ProfileController.php:127
+msgid "Only images are allowed"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:36
+#: modules/johncms/personal/src/Forms/ProfileForm.php:37
+msgid "Name"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:42
+#: modules/johncms/personal/templates/edit.phtml:79
+#: modules/johncms/personal/templates/edit.phtml:85
+#: modules/johncms/personal/templates/profile/index.phtml:78
+msgid "Status"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:71
+#: modules/johncms/personal/templates/edit.phtml:211
+#: modules/johncms/personal/templates/edit.phtml:217
+#: modules/johncms/personal/templates/profile/index.phtml:106
+msgid "E-mail"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:72
+msgid "Enter your e-mail address"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:74
+msgid "When changing, the new email address will need to be confirmed."
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:80
+#: modules/johncms/personal/src/Forms/ProfileForm.php:81
+#: modules/johncms/personal/templates/profile/index.phtml:100
+msgid "Phone"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:99
+#: modules/johncms/personal/src/Forms/ProfileForm.php:100
+#: modules/johncms/personal/templates/profile/index.phtml:114
+msgid "Telegram"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:105
+#: modules/johncms/personal/src/Forms/ProfileForm.php:106
+#: modules/johncms/personal/templates/profile/index.phtml:122
+msgid "WhatsApp"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:111
+#: modules/johncms/personal/templates/profile/index.phtml:84
+msgid "Birthday"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:132
+#: modules/johncms/personal/templates/profile/index.phtml:89
+msgid "Gender"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:137
+#: modules/johncms/personal/src/Forms/ProfileForm.php:138
+#: modules/johncms/personal/templates/profile/index.phtml:130
+msgid "Website"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:143
+#: modules/johncms/personal/src/Forms/ProfileForm.php:144
+#: modules/johncms/personal/templates/profile/index.phtml:140
+msgid "About"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:149
+#: modules/johncms/personal/src/Forms/ProfileForm.php:150
+msgid "New password"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/ProfileForm.php:151
+msgid "If you want to change your password, fill in this field"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/SettingsForm.php:31
+msgid "Language"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/SettingsForm.php:37
+msgid "Timezone"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/SettingsForm.php:42
+msgid "Direct links"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/SettingsForm.php:44
+msgid "When this option is enabled, links to other sites will open without an intermediate page."
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/SettingsForm.php:49
+#: modules/johncms/personal/src/Forms/SettingsForm.php:50
+msgid "Elements per page"
+msgstr ""
+
+#: modules/johncms/personal/src/Forms/SettingsForm.php:56
+msgid "Site theme"
+msgstr ""
+
+#: modules/johncms/personal/templates/activity.phtml:37
+#: modules/johncms/personal/templates/ip_history.phtml:46
+#: modules/johncms/personal/templates/karma.phtml:38
+msgid "The list is empty"
+msgstr ""
+
+#: modules/johncms/personal/templates/activity.phtml:53
+#: modules/johncms/personal/templates/ip_history.phtml:66
+#: modules/johncms/personal/templates/karma.phtml:82
+msgid "Total:"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:31
+msgid "Ban:"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:33
+msgid "Ban type"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:65
+msgid "Ban time"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:67
+msgid "Time"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:72
+msgid "Minutes (60 max.)"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:76
+msgid "Hours (24 max.)"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:81
+msgid "Days (30 max.)"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:92
+msgid "Reason"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:98
+msgid "Apply Ban"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban.phtml:99
+#: modules/johncms/personal/templates/ban_cancel.phtml:32
+#: modules/johncms/personal/templates/edit.phtml:333
+#: modules/johncms/personal/templates/forum_settings.phtml:74
+#: modules/johncms/personal/templates/images.phtml:60
+#: modules/johncms/personal/templates/karma_delete.phtml:34
+#: modules/johncms/personal/templates/karma_vote.phtml:66
+#: modules/johncms/personal/templates/mail_settings.phtml:57
+#: modules/johncms/personal/templates/password.phtml:63
+msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:25
+msgid "User:"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:37
+msgid "Active"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:46
+msgid "Blocked by:"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:50
+msgid "Time:"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:54
+msgid "Remains:"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:73
+msgid "List is empty"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:80
+msgid "Total"
+msgstr ""
+
+#: modules/johncms/personal/templates/ban_history.phtml:90
+msgid "Clear history"
+msgstr ""
+
+#: modules/johncms/personal/templates/confirm_new_email.phtml:12
+msgid "User is not found"
+msgstr ""
+
+#: modules/johncms/personal/templates/confirm_new_email.phtml:14
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr ""
+
+#: modules/johncms/personal/templates/confirm_new_email.phtml:16
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:52
+#: modules/johncms/personal/templates/restore_password.phtml:12
+#: modules/johncms/personal/templates/restore_password.phtml:18
+msgid "Username"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:57
+#: modules/johncms/personal/templates/edit.phtml:64
+#: modules/johncms/personal/templates/edit.phtml:75
+msgid "Nickname"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:71
+msgid "Min.2, Max. 20"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:91
+msgid "Max. 50"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:95
+msgid "Avatar"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:103
+#: modules/johncms/personal/templates/edit.phtml:126
+msgid "Upload"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:105
+msgid "Select in Catalog"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:115
+#: modules/johncms/personal/templates/edit.phtml:119
+msgid "Photo"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:133
+msgid "Personal info"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:136
+#: modules/johncms/personal/templates/edit.phtml:142
+msgid "Your name"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:150
+msgid "Date of birth (d.m.y)"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:153
+msgid "Day"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:161
+msgid "Month"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:169
+msgid "Year"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:179
+#: modules/johncms/personal/templates/edit.phtml:185
+msgid "City, Country"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:192
+msgid "About myself"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:196
+#: modules/johncms/personal/templates/office.phtml:70
+#: modules/johncms/personal/templates/office.phtml:74
+#: modules/johncms/personal/templates/profile/index.phtml:96
+msgid "Contacts"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:198
+#: modules/johncms/personal/templates/edit.phtml:204
+msgid "Phone number"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:224
+msgid "The new email address is:"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:225
+msgid "Please check your email and confirm it."
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:232
+msgid "Show in Profile"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:234
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:237
+#: modules/johncms/personal/templates/edit.phtml:243
+msgid "Skype"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:251
+#: modules/johncms/personal/templates/edit.phtml:257
+msgid "Site"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:265
+msgid "Administrative Functions"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:268
+msgid "Admin notes"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:275
+msgid "Prohibit Karma"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:280
+msgid "Reset User options to default"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:284
+msgid "Select gender"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:287
+msgid "Man"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:291
+msgid "Woman"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:295
+msgid "Position on the Site"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:298
+msgid "User"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:302
+msgid "Forum Moderator"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:306
+msgid "Download Moderator"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:310
+msgid "Library Moderator"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:314
+msgid "Super Moderator"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:320
+msgid "Administrator"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:324
+msgid "Supervisor"
+msgstr ""
+
+#: modules/johncms/personal/templates/edit.phtml:332
+#: modules/johncms/personal/templates/forum_settings.phtml:73
+#: modules/johncms/personal/templates/images.phtml:59
+#: modules/johncms/personal/templates/mail_settings.phtml:56
+#: modules/johncms/personal/templates/password.phtml:62
+#: modules/johncms/personal/templates/profile/edit.phtml:26
+#: modules/johncms/personal/templates/settings.phtml:24
+msgid "Save"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:42
+msgid "Basic settings"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:46
+msgid "Inverse sorting"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:50
+msgid "Use the form of a quick answer"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:54
+msgid "Preview of messages"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:57
+msgid "Attach first post"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:61
+msgid "Always"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:65
+msgid "In unread topics"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:69
+msgid "Never"
+msgstr ""
+
+#: modules/johncms/personal/templates/forum_settings.phtml:75
+msgid "Reset Settings"
+msgstr ""
+
+#: modules/johncms/personal/templates/images.phtml:51
+msgid "Choose file"
+msgstr ""
+
+#: modules/johncms/personal/templates/images.phtml:54
+#, php-format
+msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
+msgstr ""
+
+#: modules/johncms/personal/templates/index.phtml:21
+msgid "My profile"
+msgstr ""
+
+#: modules/johncms/personal/templates/ip_history.phtml:38
+msgid "IP address"
+msgstr ""
+
+#: modules/johncms/personal/templates/ip_history.phtml:39
+msgid "Date"
+msgstr ""
+
+#: modules/johncms/personal/templates/karma.phtml:71
+msgid "Reset Karma"
+msgstr ""
+
+#: modules/johncms/personal/templates/karma_vote.phtml:38
+msgid "Type of vote"
+msgstr ""
+
+#: modules/johncms/personal/templates/karma_vote.phtml:49
+msgid "Votes quantity"
+msgstr ""
+
+#: modules/johncms/personal/templates/karma_vote.phtml:58
+msgid "Comment"
+msgstr ""
+
+#: modules/johncms/personal/templates/karma_vote.phtml:60
+msgid "Min. 2, Max. 500 characters"
+msgstr ""
+
+#: modules/johncms/personal/templates/karma_vote.phtml:65
+msgid "Vote"
+msgstr ""
+
+#: modules/johncms/personal/templates/mail_settings.phtml:44
+msgid "Who can write you?"
+msgstr ""
+
+#: modules/johncms/personal/templates/mail_settings.phtml:48
+msgid "All can write"
+msgstr ""
+
+#: modules/johncms/personal/templates/mail_settings.phtml:52
+msgid "Only my contacts"
+msgstr ""
+
+#: modules/johncms/personal/templates/message_row.phtml:29
+msgid "To message"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:28
+msgid "My Pages"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:35
+msgid "Statistics"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:38
+msgid "Photo Album"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:47
+msgid "My Mailbox"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:51
+msgid "Received"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:58
+msgid "Sent"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:65
+msgid "Files"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:78
+msgid "Blocked"
+msgstr ""
+
+#: modules/johncms/personal/templates/office.phtml:88
+msgid "System Settings"
+msgstr ""
+
+#: modules/johncms/personal/templates/password.phtml:30
+#: modules/johncms/personal/templates/password.phtml:36
+msgid "Enter old password"
+msgstr ""
+
+#: modules/johncms/personal/templates/password.phtml:42
+#: modules/johncms/personal/templates/password.phtml:48
+msgid "Enter new password"
+msgstr ""
+
+#: modules/johncms/personal/templates/password.phtml:52
+#: modules/johncms/personal/templates/password.phtml:58
+msgid "Repeat password"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:51
+msgid "No photo"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:60
+msgid "Login:"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:61
+msgid "Role:"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:62
+msgid "Last seen:"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:62
+msgid "No data"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:65
+msgid "User Agent:"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:66
+msgid "IP:"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:74
+msgid "General Information"
+msgstr ""
+
+#: modules/johncms/personal/templates/profile/index.phtml:85
+msgid "y.o."
+msgstr ""
+
+#: modules/johncms/personal/templates/restore_password.phtml:22
+#: modules/johncms/personal/templates/restore_password.phtml:28
+msgid "Your E-mail"
+msgstr ""
+
+#: modules/johncms/personal/templates/restore_password.phtml:31
+#: modules/johncms/personal/templates/restore_password.phtml:40
+msgid "Verification code"
+msgstr ""
+
+#: modules/johncms/personal/templates/restore_password.phtml:33
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/johncms/personal/templates/restore_password.phtml:46
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr ""
+
+#: modules/johncms/personal/templates/stat.phtml:34
+msgid "Registration confirmed"
+msgstr ""
+
+#: modules/johncms/personal/templates/stat.phtml:36
+msgid "Free registration"
+msgstr ""
+
+#: modules/johncms/personal/templates/stat.phtml:41
+msgid "Registered"
+msgstr ""
+
+#: modules/johncms/personal/templates/stat.phtml:45
+msgid "Last visit"
+msgstr ""
