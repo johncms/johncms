@@ -17,7 +17,7 @@ final class MenuServiceProvider extends AbstractServiceProvider
             ->add(
                 new MenuItem(
                     code: 'community',
-                    url:  '/community/',
+                    url:  route('community.index'),
                     name: __('Users'),
                     icon: 'users'
                 )
