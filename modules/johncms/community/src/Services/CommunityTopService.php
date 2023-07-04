@@ -56,7 +56,7 @@ class CommunityTopService
             ->orderBy('comment_count', 'desc')->paginate();
     }
 
-    public function karmaTop()
+    public function karmaTop(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $this->metaTagManager->setAll(__('Best Karma'));
         $this->navChain->add(__('Best Karma'));
