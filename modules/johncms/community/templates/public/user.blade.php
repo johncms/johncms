@@ -1,7 +1,7 @@
 <div class="new_post-item">
     <div class="new_post-header d-flex justify-content-between">
         <div class="post-user">
-            @if($user->id !== $currentUser->id)
+            @if($user->id !== $currentUser?->id)
                 <a href="{{ route('personal.profile', ['id' => $user->id]) }}">
                     <div class="user_photo border rounded-circle overflow-hidden">
                         <x-avatar :avatar-url="$user->avatar_url" :username="$user->displayName()"/>
@@ -27,7 +27,7 @@
         </div>
         <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
             <div class="w-100">
-                @if($user->id !== $currentUser->id)
+                @if($user->id !== $currentUser?->id)
                     <a href="{{ route('personal.profile', ['id' => $user->id]) }}"><span
                             class="user-name d-inline me-2">{{ $user->displayName() }}</span></a>
                 @else
@@ -56,7 +56,7 @@
     <?php endif; ?>
     <div class="post-footer d-flex justify-content-between">
         <div class="overflow-hidden">
-            @if ($currentUser->isAdmin())
+            @if ($currentUser?->isAdmin())
                 <div class="post-meta d-flex">
                     <div class="user-ip me-2">
                         <a href="#">{{ $user->activity->ip }}</a>
@@ -70,10 +70,5 @@
                 </div>
             @endif
         </div>
-        <!--        <div class="d-flex">
-            <?php if (!empty($item['delete_url'])): ?>
-            <a href="<?= $item['delete_url'] ?>"><?= __('Delete') ?></a>
-            <?php endif; ?>
-        </div>-->
     </div>
 </div>
