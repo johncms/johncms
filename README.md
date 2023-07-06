@@ -11,10 +11,10 @@ This version is at an early stage of development. Many things may not work or wo
 
 ## System requirements
 
-- PHP 8.0 and higher
+- PHP 8.1 and higher
 - MySQL 5.7
 - PHP configured to use MySQL Native Driver (mysqlnd)
-- .htaccess support
+- .htaccess support or any server configured to forward requests to **/public/index.php**
 
 ## Installation
 
@@ -28,7 +28,7 @@ and [GIT](https://git-scm.com/) version control system.
 3. Create MySQL Database.
 4. Open the console in the virtual host folder and install the dependencies using the command
 ```bash
-make cms-install
+npm install && composer install && npm run build
 ```
 5. Open the url in your browser (replace your.site to your virtualhost name): http://your.site/install and follow the instructions in the installer.
 6. **This is all done**. If you go to the address of your virtual host from the browser, you should see a working site with demo data.

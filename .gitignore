@@ -7,6 +7,7 @@
 /node_modules
 /phpcs.xml
 /translate.xml
+/docker-compose.override.yml
 /vendor
 /docker/mariadb/data
 /public/build/*
