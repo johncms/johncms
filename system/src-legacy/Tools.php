@@ -329,7 +329,7 @@ class Tools
         $user = [];
 
         if ($id > 0) {
-            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
+            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
                 $user = $req->fetch();
@@ -357,7 +357,7 @@ class Tools
         if (null === $user_id || $id != $user_id) {
             $user_id = $id;
             $req = $this->db->query(
-                "SELECT * FROM `cms_contact` WHERE `user_id` = '${id}' AND `from_id` = " . $this->user->id
+                "SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . $this->user->id
             );
 
             if ($req->rowCount()) {
@@ -586,11 +586,11 @@ class Tools
     public function recountForumTopic($topic_id)
     {
         $topic_id = (int) $topic_id;
-        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn(); // phpcs:ignore
-        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}'")->fetchColumn();                                         // phpcs:ignore
+        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn(); // phpcs:ignore
+        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id'")->fetchColumn();                                         // phpcs:ignore
 
-        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
-        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' ORDER BY id DESC LIMIT 1")->fetch();                                         // phpcs:ignore
+        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
+        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' ORDER BY id DESC LIMIT 1")->fetch();                                         // phpcs:ignore
 
         // Обновляем время топика
         $this->db->exec(
