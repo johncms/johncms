@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8bc84d3deac7d629962b903bad6e77b8",
+    "content-hash": "b03c71bede4beebfd971ab846c6156a8",
     "packages": [
         {
             "name": "brick/math",
@@ -1505,25 +1505,25 @@
         },
         {
             "name": "imangazaliev/didom",
-            "version": "1.18",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Imangazaliev/DiDOM.git",
-                "reference": "346db1ea94a0f6ead225c2358af770bf33659cf7"
+                "reference": "50fa6595d14f22c0c984efed5c818485cf548136"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Imangazaliev/DiDOM/zipball/346db1ea94a0f6ead225c2358af770bf33659cf7",
-                "reference": "346db1ea94a0f6ead225c2358af770bf33659cf7",
+                "url": "https://api.github.com/repos/Imangazaliev/DiDOM/zipball/50fa6595d14f22c0c984efed5c818485cf548136",
+                "reference": "50fa6595d14f22c0c984efed5c818485cf548136",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-iconv": "*",
-                "php": ">=5.4"
+                "php": ">=7.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8"
+                "phpunit/phpunit": "^8.5"
             },
             "type": "library",
             "autoload": {
@@ -1551,9 +1551,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Imangazaliev/DiDOM/issues",
-                "source": "https://github.com/Imangazaliev/DiDOM/tree/1.18"
+                "source": "https://github.com/Imangazaliev/DiDOM/tree/2.0.1"
             },
-            "time": "2021-07-27T18:50:53+00:00"
+            "time": "2023-03-05T03:23:48+00:00"
         },
         {
             "name": "intervention/image",
@@ -1772,22 +1772,22 @@
         },
         {
             "name": "johncms/ckeditor-media-embed",
-            "version": "1.1.3",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johncms/ckeditor-media-embed.git",
-                "reference": "e08534a05661499022a0af59569edbd697a0c971"
+                "reference": "accfc010b46a05a4a598b8de3e58d0887c361559"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johncms/ckeditor-media-embed/zipball/e08534a05661499022a0af59569edbd697a0c971",
-                "reference": "e08534a05661499022a0af59569edbd697a0c971",
+                "url": "https://api.github.com/repos/johncms/ckeditor-media-embed/zipball/accfc010b46a05a4a598b8de3e58d0887c361559",
+                "reference": "accfc010b46a05a4a598b8de3e58d0887c361559",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
-                "imangazaliev/didom": "^1.16",
+                "imangazaliev/didom": "^2.0",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
@@ -1817,9 +1817,9 @@
             "homepage": "https://github.com/johncms/ckeditor-media-embed",
             "support": {
                 "issues": "https://github.com/johncms/ckeditor-media-embed/issues",
-                "source": "https://github.com/johncms/ckeditor-media-embed/tree/1.1.3"
+                "source": "https://github.com/johncms/ckeditor-media-embed/tree/1.2.0"
             },
-            "time": "2021-09-09T08:10:24+00:00"
+            "time": "2023-12-17T10:42:27+00:00"
         },
         {
             "name": "johncms/community",
