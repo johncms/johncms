@@ -9,7 +9,7 @@
 /translate.xml
 /docker-compose.override.yml
 /vendor
-/docker/mariadb/data
+/.docker/mariadb/data
 /public/build/*
 
 # Data folder ignores

@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  webserver:
+  nginx:
     networks:
       - web
     labels:
@@ -9,8 +9,9 @@ services:
       - traefik.http.routers.web-https.rule=Host(`${APP_HOST:-johncms.loc}`)
       - traefik.http.routers.web-https.tls=true
   mariadb:
-    networks:
-      - web
+    labels:
+      - traefik.enable=false
+  ofelia:
     labels:
       - traefik.enable=false
 

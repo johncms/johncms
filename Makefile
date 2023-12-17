@@ -23,4 +23,4 @@ stop:
 	docker-compose stop
 
 shell:
-	docker exec -it $$(docker ps -q -f name=ubuntu) bash
+	docker exec -it $$(docker ps -q -f name=php-fpm.johncms) sh

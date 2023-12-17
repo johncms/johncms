@@ -1,31 +1,55 @@
 version: '3.8'
 services:
-  webserver:
-    build: ./docker/general
-    container_name: ubuntu.${APP_NAME:-johncms}
+  nginx:
+    build: .docker/nginx
+    container_name: nginx.${APP_NAMESPACE:-johncms}
+    depends_on:
+      - php-fpm
+    volumes:
+      - .:/app
+      - ./.docker/nginx/vhost:/etc/nginx/conf.d
+    ports:
+      - '${NGINX_HTTP_PORT:-}:80'
+      - '${NGINX_HTTPS_PORT:-}:443'
+    networks:
+      - default
+  php-fpm:
+    build: .docker/php-fpm
+    container_name: php-fpm.${APP_NAMESPACE:-johncms}
     depends_on:
       - mariadb
     volumes:
-      - .:/var/www/html
-    ports:
-      - '${NGINX_HTTP_PORT:-8000}:80'
-      - '${NGINX_HTTP_PORT:-8001}:443'
-    networks:
-      - default
+      - .:/app
+      - ./.docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+    labels:
+      traefik.enable: "false"
+      ofelia.enabled: "true"
+      ofelia.job-exec.php-cli.schedule: "@every 1m"
+      ofelia.job-exec.php-cli.user: www-data
+      ofelia.job-exec.php-cli.command: "php /app/system/cron.php"
   mariadb:
     image: 'mariadb:10'
-    container_name: mariadb.${APP_NAME:-johncms}
+    container_name: mariadb.${APP_NAMESPACE:-johncms}
     ports:
       - '${FORWARD_DB_PORT:-}:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-johncms}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-rootpassword}'
       MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: '${DB_DATABASE:-johncms}'
-      MYSQL_USER: '${DB_USERNAME:-johncms}'
-      MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
+      MYSQL_DATABASE: '${DB_DATABASE:-johncms_db}'
+      MYSQL_USER: '${DB_USERNAME:-johncms_db_user}'
+      MYSQL_PASSWORD: '${DB_PASSWORD:-johncms_db_password}'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
-      - './docker/mariadb/data:/var/lib/mysql'
-    networks:
-      - default
-
+      - './.docker/mariadb/data:/var/lib/mysql'
+    labels:
+      - traefik.enable=false
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ofelia.${APP_NAMESPACE:-johncms}
+    depends_on:
+      - php-fpm
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - traefik.enable=false
