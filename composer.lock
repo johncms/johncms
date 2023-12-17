@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b03c71bede4beebfd971ab846c6156a8",
+    "content-hash": "6b4060490c63c052a50840539d15df5c",
     "packages": [
         {
             "name": "brick/math",
@@ -1772,23 +1772,23 @@
         },
         {
             "name": "johncms/ckeditor-media-embed",
-            "version": "1.2.0",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johncms/ckeditor-media-embed.git",
-                "reference": "accfc010b46a05a4a598b8de3e58d0887c361559"
+                "reference": "0033e2a36903fc3a2ddb8b7fb69b822fb6a8390e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johncms/ckeditor-media-embed/zipball/accfc010b46a05a4a598b8de3e58d0887c361559",
-                "reference": "accfc010b46a05a4a598b8de3e58d0887c361559",
+                "url": "https://api.github.com/repos/johncms/ckeditor-media-embed/zipball/0033e2a36903fc3a2ddb8b7fb69b822fb6a8390e",
+                "reference": "0033e2a36903fc3a2ddb8b7fb69b822fb6a8390e",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "imangazaliev/didom": "^2.0",
-                "php": "^7.3|^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
@@ -1817,9 +1817,9 @@
             "homepage": "https://github.com/johncms/ckeditor-media-embed",
             "support": {
                 "issues": "https://github.com/johncms/ckeditor-media-embed/issues",
-                "source": "https://github.com/johncms/ckeditor-media-embed/tree/1.2.0"
+                "source": "https://github.com/johncms/ckeditor-media-embed/tree/2.0"
             },
-            "time": "2023-12-17T10:42:27+00:00"
+            "time": "2023-12-17T10:53:37+00:00"
         },
         {
             "name": "johncms/community",
