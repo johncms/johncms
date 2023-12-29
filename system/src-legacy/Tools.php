@@ -605,14 +605,14 @@ class Tools
             `mod_last_post_author` = '" . $mod_last_post['user_id'] . "',
             `mod_last_post_author_name` = '" . $mod_last_post['user_name'] . "',
             `mod_last_message_id` = '" . $mod_last_post['id'] . "'
-            WHERE `id` = '${topic_id}'
+            WHERE `id` = '" . $topic_id . "'
         "
         );
     }
 
     #[Deprecated(
         reason: 'use \Johncms\Utility\Numbers::formatNumber() instead',
-        replacement: '\Johncms\Utility\Numbers::formatNumber(%parameter0%)'
+        replacement: '\Johncms\Utility\Numbers::formatNumber(%parameter0 %)'
     )]
     public function formatNumber($number)
     {
@@ -640,7 +640,7 @@ class Tools
      */
     public function getSections(array &$items, $parent): array
     {
-        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
+        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '" . $parent . "'")->fetch();
         if ($res != false) {
             $items[] = $res;
             return $this->getSections($items, $res['parent']);
@@ -651,7 +651,7 @@ class Tools
 
     public function getSectionsTree(array &$section_tree, $parent = 0, $mark = ''): array
     {
-        $req = $this->db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${parent}' ORDER BY `sort` ASC");
+        $req = $this->db->query("SELECT * FROM `forum_sections` WHERE `parent` = '" . $parent . "' ORDER BY `sort` ASC");
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 $section_tree[] = [
