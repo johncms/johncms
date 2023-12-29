@@ -11,6 +11,9 @@ services:
   mariadb:
     labels:
       - traefik.enable=false
+    networks:
+      - default
+      - web
   ofelia:
     labels:
       - traefik.enable=false
