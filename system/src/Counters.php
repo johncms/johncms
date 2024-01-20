@@ -49,7 +49,7 @@ class Counters
         } else {
             $old = time() - (3 * 24 * 3600);
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
+            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
             $mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
             file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod], JSON_THROW_ON_ERROR), LOCK_EX);
@@ -314,7 +314,7 @@ class Counters
         } else {
             $old = time() - (3 * 24 * 3600);
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
+            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
 
             file_put_contents($file, json_encode(['total' => $total, 'new' => $new], JSON_THROW_ON_ERROR), LOCK_EX);
         }
