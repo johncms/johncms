@@ -69,6 +69,9 @@ abstract class AbstractForm
 
     public function validate(): void
     {
+        if (empty($this->formFields)) {
+            $this->buildForm();
+        }
         $rules = $this->collectValidationRules();
         $values = $this->getRequestValues();
         $validator = new Validator($values, $rules);
