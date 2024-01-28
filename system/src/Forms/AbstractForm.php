@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Forms;
@@ -23,16 +15,21 @@ abstract class AbstractForm
 {
     /** @var AbstractInput[] */
     protected array $formFields = [];
-
     protected ?array $requestValues = null;
 
-    protected Request $request;
-
-    /** @param array $values Current field values */
     public function __construct(
+        protected Request $request,
         protected array $values = []
     ) {
-        $this->request = di(Request::class);
+    }
+
+    public function setValues(array $values): void
+    {
+        $this->values = $values;
+    }
+
+    public function buildForm(): void
+    {
         $this->formFields = $this->prepareFormFields();
     }
 
@@ -64,6 +61,9 @@ abstract class AbstractForm
 
     public function getFormFields(): array
     {
+        if (empty($this->formFields)) {
+            $this->buildForm();
+        }
         return $this->formFields;
     }
 
