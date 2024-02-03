@@ -85,7 +85,8 @@
         "laravel/serializable-closure": "^1.2",
         "symfony/serializer": "^6.2",
         "symfony/property-access": "^6.2",
-        "johncms/content": "^0.0.1"
+        "johncms/content": "^0.0.1",
+        "symfony/routing": "^7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19",
