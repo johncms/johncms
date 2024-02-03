@@ -15,7 +15,6 @@ class Avatar extends AbstractBladeComponent
     public function __construct(
         public ?string $avatarUrl = null,
         public ?string $username = null,
-
     ) {
         $this->firstSymbol = ! empty($this->username) ? $this->getFirstSymbols($this->username) : '';
         $this->color = $this->getColor($this->username);
