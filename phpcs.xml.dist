@@ -13,10 +13,10 @@
     <exclude-pattern>/modules/*/locale/*.lng.php</exclude-pattern>
     <exclude-pattern>/modules/*/migrations/*</exclude-pattern>
     <exclude-pattern>/system/migrations/*</exclude-pattern>
-    <exclude-pattern>*.js</exclude-pattern>
-    <exclude-pattern>*.ts</exclude-pattern>
-    <exclude-pattern>*.vue</exclude-pattern>
-    <exclude-pattern>*.blade.php</exclude-pattern>
+    <exclude-pattern>*\.js</exclude-pattern>
+    <exclude-pattern>*\.ts</exclude-pattern>
+    <exclude-pattern>*\.vue</exclude-pattern>
+    <exclude-pattern>*\.blade\.php</exclude-pattern>
 
     <!-- inherit rules from: -->
     <rule ref="PSR12"/>
