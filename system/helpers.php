@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use Johncms\Container\ContainerFactory;
 use Johncms\Http\ResponseFactory;
-use Johncms\Router\RouterFactory;
+use Johncms\Router\Router;
 use Johncms\View\Render;
 use Psr\Http\Message\ResponseInterface;
 
@@ -187,17 +187,17 @@ function redirect(string $url)
 /**
  * Build url by route name
  *
- * @param string $route_name
+ * @param string $routeName
  * @param array $params
  * @param array $queryParams
  * @return string
  */
-function route(string $route_name, array $params = [], array $queryParams = []): string
+function route(string $routeName, array $params = [], array $queryParams = []): string
 {
-    $router = di(RouterFactory::class);
-    $route = $router->getRouter()->getNamedRoute($route_name)->getPath($params);
+    $router = di(Router::class);
+    $url = $router->getUrlGenerator()->generate($routeName, $params);
     $queryString = http_build_query($queryParams);
-    return str_replace('//', '/', $route) . (! empty($queryString) ? '?' . $queryString : '');
+    return str_replace('//', '/', $url) . (! empty($queryString) ? '?' . $queryString : '');
 }
 
 /**
