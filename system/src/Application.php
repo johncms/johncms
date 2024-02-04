@@ -14,7 +14,7 @@ namespace Johncms;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Johncms\Log\ExceptionHandlers;
-use Johncms\Router\RouterFactory;
+use Johncms\Router\Router;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -58,11 +58,10 @@ class Application
      */
     public function handleRequest(): void
     {
-        $router = $this->container->get(RouterFactory::class);
+        $router = $this->container->get(Router::class);
         $this->events->dispatch(Application::BEFORE_HANDLE_REQUEST_EVENT);
 
-        // Handle request
-        $response = $router->dispatch();
+        $response = $router->handleRequest();
         (new SapiEmitter())->emit($response);
 
         // Dispatch after handle request event

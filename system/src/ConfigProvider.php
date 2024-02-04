@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms;
@@ -38,7 +30,7 @@ use Johncms\Log\Logger;
 use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
-use Johncms\Router\RouterFactory;
+use Johncms\Router\Router;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
@@ -98,7 +90,7 @@ class ConfigProvider
                 SiteSettings::class             => SiteSettings::class,
                 DebugBar::class                 => DebugBar::class,
                 ExceptionHandlers::class        => ExceptionHandlers::class,
-                RouterFactory::class            => RouterFactory::class,
+                Router::class                   => Router::class,
             ],
 
             'factories' => [
