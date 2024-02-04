@@ -11,7 +11,7 @@
     @endif
 
     <div class="mb-3">
-        <a href="{{ route('content.admin.createContentType') }}" class="btn btn-primary">Create Type</a>
+        <a href="{{ route('content.admin.type.create') }}" class="btn btn-primary">Create Type</a>
     </div>
 
     <div>
@@ -20,8 +20,8 @@
             <tr>
                 <th scope="col" style="width: 58px;" class="border-end-0"></th>
                 <th scope="col" class="border-start-0" style="max-width: 1px;">#</th>
-                <th scope="col"><?= __('Name') ?></th>
-                <th scope="col"><?= __('Code') ?></th>
+                <th scope="col">{{ __('Name') }}</th>
+                <th scope="col">{{ __('Code') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -35,28 +35,28 @@
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/admin/news/edit_article//"><?= __('Edit') ?></a>
+                                <a class="dropdown-item" href="{{ $contentType['editUrl'] }}">{{ __('Edit') }}</a>
                                 <a class="dropdown-item"
-                                   data-url="{{ route('content.admin.delete', ['id' => $contentType['id']]) }}"
+                                   data-url="{{ $contentType['deleteUrl'] }}"
                                    data-bs-toggle="modal"
                                    data-bs-target=".ajax_modal"
-                                ><?= __('Delete') ?></a>
+                                >{{ __('Delete') }}</a>
                             </div>
                         </div>
                     </th>
                     <th scope="row" class="border-start-0">
-                        <a href="/admin/news//edit_article//">{{ $contentType['id'] }}</a>
+                        <a href="{{ $contentType['url'] }}">{{ $contentType['id'] }}</a>
                     </th>
-                    <td data-title="<?= __('Name') ?>">
-                        <a href="/admin/news/edit_article//">{{ $contentType['name'] }}</a>
+                    <td data-title="{{ __('Name') }}">
+                        <a href="{{ $contentType['url'] }}">{{ $contentType['name'] }}</a>
                     </td>
-                    <td data-title="<?= __('Code') ?>">
-                        <a href="/admin/news/edit_article//">{{ $contentType['code'] }}</a>
+                    <td data-title="{{ __('Code') }}">
+                        <a href="{{ $contentType['url'] }}">{{ $contentType['code'] }}</a>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="text-center fw-bold"><?= __('The list is empty') ?></td>
+                    <td colspan="7" class="text-center fw-bold">{{ __('The list is empty') }}</td>
                 </tr>
             @endforelse
             </tbody>
