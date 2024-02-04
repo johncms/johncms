@@ -12,7 +12,7 @@ class UrlMatcher extends RedirectableUrlMatcher implements RedirectableUrlMatche
     public function redirect(string $path, string $route, ?string $scheme = null): array
     {
         return [
-            'redirect' => [
+            '_redirect' => [
                 'path'   => $path,
                 'route'  => $route,
                 'scheme' => $scheme,
