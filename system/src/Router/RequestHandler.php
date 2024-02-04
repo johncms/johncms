@@ -11,19 +11,23 @@ use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Response\RedirectResponse;
 use JsonException;
 use JsonSerializable;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Throwable;
 
-class RequestHandler implements RequestHandlerInterface
+class RequestHandler implements RequestHandlerInterface, MiddlewareInterface
 {
     public function __construct(
         private readonly UrlMatcherInterface $urlMatcher,
         private readonly Container $container,
         private readonly ParametersInjector $parametersInjector,
+        private readonly MiddlewareDispatcher $middlewareDispatcher,
     ) {
     }
 
@@ -37,6 +41,12 @@ class RequestHandler implements RequestHandlerInterface
             $routeData = $this->urlMatcher->match($request->getUri()->getPath());
             // Set route data to the container
             $this->container->instance('route', $routeData);
+
+            foreach ($routeData['_middlewares'] as $middleware) {
+                $this->middlewareDispatcher->addMiddleware($middleware);
+            }
+
+            $this->middlewareDispatcher->addMiddleware($this);
         } catch (ResourceNotFoundException) {
             return status_page(404);
         } catch (ModelNotFoundException $exception) {
@@ -45,6 +55,17 @@ class RequestHandler implements RequestHandlerInterface
             return status_page(404, template: $exception->getTemplate(), title: $exception->getTitle(), message: $exception->getMessage());
         }
 
+        return $this->middlewareDispatcher->handle($request);
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws JsonException
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $routeData = $this->container->get('route');
         if ($redirect = $this->handleRedirect($request, $routeData)) {
             return $redirect;
         }

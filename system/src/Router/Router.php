@@ -24,6 +24,7 @@ final class Router
         private readonly Request $request,
         private readonly Container $container,
         private readonly ParametersInjector $parametersInjector,
+        private readonly MiddlewareDispatcher $middlewareDispatcher,
     ) {
     }
 
@@ -43,7 +44,12 @@ final class Router
      */
     public function handleRequest(): ResponseInterface
     {
-        $requestHandler = new RequestHandler($this->getUrlMatcher(), $this->container, $this->parametersInjector);
+        $requestHandler = new RequestHandler(
+            $this->getUrlMatcher(),
+            $this->container,
+            $this->parametersInjector,
+            $this->middlewareDispatcher
+        );
         return $requestHandler->handle($this->request);
     }
 
