@@ -1,24 +1,15 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 use Johncms\Community\Controllers\CommunityController;
-use League\Route\RouteGroup;
-use League\Route\Router;
+use Johncms\Router\RouteCollection;
 
-/**
- * @psalm-suppress UndefinedInterfaceMethod
- */
-return function (Router $router) {
-    $router->addPatternMatcher('topType', '[a-z]+');
+return function (RouteCollection $router) {
+    // TODO: Add patterns
+    // $router->addPatternMatcher('topType', '[a-z]+');
 
-    $router->group('/community', function (RouteGroup $route) {
+    $router->group('/community', function (RouteCollection $route) {
         $route->get('/', [CommunityController::class, 'index'])->setName('community.index');
         $route->get('/users', [CommunityController::class, 'users'])->setName('community.users');
         $route->get('/administration', [CommunityController::class, 'administration'])->setName('community.administration');

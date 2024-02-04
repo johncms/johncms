@@ -1,17 +1,11 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 use Johncms\Language\Controllers\LanguageController;
-use League\Route\Router;
+use Johncms\Router\RouteCollection;
 
-return function (Router $router) {
+return function (RouteCollection $router) {
     $router->get('/language[/]', [LanguageController::class, 'index'])->setName('language.index');
     $router->post('/language[/]', [LanguageController::class, 'index']);
 };
