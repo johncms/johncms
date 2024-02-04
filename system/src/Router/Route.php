@@ -12,6 +12,8 @@ final class Route
     private ?string $name = null;
     private array $middlewares = [];
     private int $priority = 0;
+    private array $defaults = [];
+    private array $requirements = [];
 
     public function __construct(array | string $method, string $path, mixed $handler)
     {
@@ -60,13 +62,30 @@ final class Route
         return $this;
     }
 
+    public function setDefaults(array $defaults): Route
+    {
+        $this->defaults = $defaults;
+        return $this;
+    }
+
+    public function setRequirements(array $requirements): Route
+    {
+        $this->requirements = $requirements;
+        return $this;
+    }
+
     public function compile(): \Symfony\Component\Routing\Route
     {
-        $compiledRoute = new \Symfony\Component\Routing\Route($this->path, [
-            '_controller'  => $this->handler,
-            '_middlewares' => $this->middlewares,
-            '_name'        => $this->name,
-        ]);
+        $compiledRoute = new \Symfony\Component\Routing\Route(
+            $this->path,
+            [
+                '_controller'  => $this->handler,
+                '_middlewares' => $this->middlewares,
+                '_name'        => $this->name,
+                ...$this->defaults,
+            ],
+            $this->requirements
+        );
         $compiledRoute->setMethods($this->method);
 
         return $compiledRoute;
