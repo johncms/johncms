@@ -18,36 +18,36 @@ return function (RouteCollection $router) {
 
     // Dashboard
     // TODO: Add middleware to check rights
-    $router->get('/admin', [DashboardController::class, 'index'])
+    $router->get('/admin/', [DashboardController::class, 'index'])
         ->setName('admin.dashboard')
         ->addMiddleware(AdminAuthorizedUserMiddleware::class)
         ->addMiddleware(HasAnyRoleMiddleware::class);
 
-    $router->group('/admin', function (RouteCollection $routeGroup) {
+    $router->group('/admin/', function (RouteCollection $routeGroup) {
         // Login routes
-        $routeGroup->get('/login[/]', [AuthController::class, 'index'])->setName('admin.login');
-        $routeGroup->post('/login/authorize[/]', [AuthController::class, 'authorize'])->setName('admin.authorize');
+        $routeGroup->get('/login/', [AuthController::class, 'index'])->setName('admin.login');
+        $routeGroup->post('/login/authorize/', [AuthController::class, 'authorize'])->setName('admin.authorize');
     })->addMiddleware(AdminUnauthorizedUserMiddleware::class);
 
     $router->group('/admin/users', function (RouteCollection $routeGroup) {
-        $routeGroup->get('[/]', [UsersController::class, 'index'])->setName('admin.users');
-        $routeGroup->get('/list[/]', [UsersController::class, 'userList'])->setName('admin.userList');
-        $routeGroup->get('/create[/]', [UsersController::class, 'create'])->setName('admin.createUser');
-        $routeGroup->get('/edit/{id:number}[/]', [UsersController::class, 'edit'])->setName('admin.editUser');
-        $routeGroup->post('/store[/]', [UsersController::class, 'store'])->setName('admin.storeUser');
-        $routeGroup->post('/delete[/]', [UsersController::class, 'delete'])->setName('admin.deleteUser');
+        $routeGroup->get('/', [UsersController::class, 'index'])->setName('admin.users');
+        $routeGroup->get('/list/', [UsersController::class, 'userList'])->setName('admin.userList');
+        $routeGroup->get('/create/', [UsersController::class, 'create'])->setName('admin.createUser');
+        $routeGroup->get('/edit/{id}/', [UsersController::class, 'edit'])->setName('admin.editUser');
+        $routeGroup->post('/store/', [UsersController::class, 'store'])->setName('admin.storeUser');
+        $routeGroup->post('/delete/', [UsersController::class, 'delete'])->setName('admin.deleteUser');
     })->addMiddleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 
 
     $router->group('/admin/system/modules', function (RouteCollection $routeGroup) {
-        $routeGroup->get('[/]', [ModulesController::class, 'index'])->setName('admin.modules');
-        $routeGroup->get('/add[/]', [ModulesController::class, 'add'])->setName('admin.modules.add');
-        $routeGroup->post('/add[/]', [ModulesController::class, 'add']);
-        $routeGroup->get('/delete[/]', [ModulesController::class, 'delete'])->setName('admin.modules.delete');
-        $routeGroup->post('/delete[/]', [ModulesController::class, 'delete']);
-        $routeGroup->get('/update[/]', [ModulesController::class, 'update'])->setName('admin.modules.update');
-        $routeGroup->post('/update[/]', [ModulesController::class, 'update']);
+        $routeGroup->get('/', [ModulesController::class, 'index'])->setName('admin.modules');
+        $routeGroup->get('/add/', [ModulesController::class, 'add'])->setName('admin.modules.add');
+        $routeGroup->post('/add/', [ModulesController::class, 'add']);
+        $routeGroup->get('/delete/', [ModulesController::class, 'delete'])->setName('admin.modules.delete');
+        $routeGroup->post('/delete/', [ModulesController::class, 'delete']);
+        $routeGroup->get('/update/', [ModulesController::class, 'update'])->setName('admin.modules.update');
+        $routeGroup->post('/update/', [ModulesController::class, 'update']);
     })->addMiddleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 
-    $router->get('/admin/system/check[/]', [SystemCheckController::class, 'index'])->setName('admin.system.check');
+    $router->get('/admin/system/check/', [SystemCheckController::class, 'index'])->setName('admin.system.check');
 };
