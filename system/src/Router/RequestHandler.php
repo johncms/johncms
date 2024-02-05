@@ -47,6 +47,7 @@ class RequestHandler implements RequestHandlerInterface, MiddlewareInterface
             }
 
             $this->middlewareDispatcher->addMiddleware($this);
+            return $this->middlewareDispatcher->handle($request);
         } catch (ResourceNotFoundException) {
             return status_page(404);
         } catch (ModelNotFoundException $exception) {
@@ -54,8 +55,6 @@ class RequestHandler implements RequestHandlerInterface, MiddlewareInterface
         } catch (PageNotFoundException $exception) {
             return status_page(404, template: $exception->getTemplate(), title: $exception->getTitle(), message: $exception->getMessage());
         }
-
-        return $this->middlewareDispatcher->handle($request);
     }
 
     /**
