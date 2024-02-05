@@ -33,7 +33,7 @@ return function (RouteCollection $router) {
         $routeGroup->get('/', [UsersController::class, 'index'])->setName('admin.users');
         $routeGroup->get('/list/', [UsersController::class, 'userList'])->setName('admin.userList');
         $routeGroup->get('/create/', [UsersController::class, 'create'])->setName('admin.createUser');
-        $routeGroup->get('/edit/{id}/', [UsersController::class, 'edit'])->setName('admin.editUser');
+        $routeGroup->get('/edit/{id:number}/', [UsersController::class, 'edit'])->setName('admin.editUser');
         $routeGroup->post('/store/', [UsersController::class, 'store'])->setName('admin.storeUser');
         $routeGroup->post('/delete/', [UsersController::class, 'delete'])->setName('admin.deleteUser');
     })->addMiddleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));

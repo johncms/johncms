@@ -12,7 +12,7 @@ return function (RouteCollection $router) {
     $router->get('/personal/', [PersonalController::class, 'index'])->addMiddleware([AuthorizedUserMiddleware::class])->setName('personal.index');
     $router->group('/personal', function (RouteCollection $route) {
         // TODO: Change optional parameters
-        $route->get('/profile/[{id:number}/]', [ProfileController::class, 'index'])->setName('personal.profile');
+        $route->get('/profile/{id:number?}', [ProfileController::class, 'index'])->setName('personal.profile');
         $route->get('/profile/edit/{id:number}/', [ProfileController::class, 'edit'])->setName('personal.profile.edit');
         $route->post('/profile/store/{id:number}/', [ProfileController::class, 'store'])->setName('personal.profile.store');
         $route->post('/profile/avatar/upload/', [ProfileController::class, 'avatarUpload'])->setName('personal.profile.avatarUpload');
