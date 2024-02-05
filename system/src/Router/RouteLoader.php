@@ -6,14 +6,18 @@ namespace Johncms\Router;
 
 class RouteLoader
 {
+    public function __construct(
+        private RouteCollection $routeCollection
+    ) {
+    }
+
     public function load(): RouteCollection
     {
-        $routeCollection = new RouteCollection();
         $routerConfigs = glob(MODULES_PATH . '*/*/config/routes.php');
         foreach ($routerConfigs as $routerConfig) {
-            (require $routerConfig)($routeCollection);
+            (require $routerConfig)($this->routeCollection);
         }
 
-        return $routeCollection;
+        return $this->routeCollection;
     }
 }

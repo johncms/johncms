@@ -14,12 +14,14 @@ final class Route
     private int $priority = 0;
     private array $defaults = [];
     private array $requirements = [];
+    private readonly ?RouteRequirements $routeRequirements;
 
-    public function __construct(array | string $method, string $path, mixed $handler)
+    public function __construct(array | string $method, string $path, mixed $handler, RouteRequirements $routeRequirements = null)
     {
         $this->method = $method;
         $this->path = $path;
         $this->handler = $handler;
+        $this->routeRequirements = $routeRequirements;
     }
 
     public function setName(string $name): Route
@@ -77,7 +79,7 @@ final class Route
     public function compile(): \Symfony\Component\Routing\Route
     {
         $compiledRoute = new \Symfony\Component\Routing\Route(
-            $this->path,
+            $this->routeRequirements?->replaceTemplates($this->path) ?? $this->path,
             [
                 '_controller'  => $this->handler,
                 '_middlewares' => $this->middlewares,

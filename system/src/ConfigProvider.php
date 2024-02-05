@@ -31,6 +31,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
 use Johncms\Router\Router;
+use Johncms\Router\RouteRequirements;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
@@ -91,6 +92,7 @@ class ConfigProvider
                 DebugBar::class                 => DebugBar::class,
                 ExceptionHandlers::class        => ExceptionHandlers::class,
                 Router::class                   => Router::class,
+                RouteRequirements::class        => RouteRequirements::class,
             ],
 
             'factories' => [

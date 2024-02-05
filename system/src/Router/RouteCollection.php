@@ -17,9 +17,14 @@ final class RouteCollection
     /** @var list<RouteCollection> */
     private array $groups = [];
 
+    public function __construct(
+        private readonly RouteRequirements $routeRequirements
+    ) {
+    }
+
     public function map(string | array $method, string $path, mixed $handler): Route
     {
-        $route = new Route($method, $path, $handler);
+        $route = new Route($method, $path, $handler, $this->routeRequirements);
         $this->routeCollection[] = $route;
         return $route;
     }
@@ -79,7 +84,7 @@ final class RouteCollection
 
     public function group(string $prefix, callable $group): RouteCollection
     {
-        $collection = new RouteCollection();
+        $collection = new RouteCollection($this->routeRequirements);
         ($group)($collection);
         $collection->setPrefix($prefix);
         $this->groups[] = $collection;
