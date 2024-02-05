@@ -18,7 +18,7 @@ final class RouteCollection
     private array $groups = [];
 
     public function __construct(
-        private readonly RouteRequirements $routeRequirements
+        private readonly ?RouteRequirements $routeRequirements = null
     ) {
     }
 
