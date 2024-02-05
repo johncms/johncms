@@ -16,10 +16,10 @@ class RouteRequirements
     private function setDefaultPresets(): void
     {
         $this->presets += [
-            'number'   => '\d+',
-            'word'     => '[a-zA-Z]+',
-            'slug'     => '[\w.+-]+',
-            'slugPath' => '[\w/+-]+',
+            'number' => '\d+',
+            'word'   => '[a-zA-Z]+',
+            'slug'   => '[\w.+-]+',
+            'path'   => '[\w/+-]+',
         ];
     }
 

@@ -16,7 +16,7 @@ class RouteRequirementsTest extends TestCase
             '/forum/{name:word}'                                             => '/forum/{name<[a-zA-Z]+>}',
             '/forum/{topic:slug}'                                            => '/forum/{topic<[\w.+-]+>}',
             '/forum/{page:number?}'                                          => '/forum/{page<\d+>?}',
-            '/{slug:slugPath}'                                               => '/{slug<[\w/+-]+>}',
+            '/{slug:path}'                                                   => '/{slug<[\w/+-]+>}',
             '/forum/{name:word}/{subName:word}/{topic:slug?}/{page:number?}' => '/forum/{name<[a-zA-Z]+>}/{subName<[a-zA-Z]+>}/{topic<[\w.+-]+>?}/{page<\d+>?}',
         ];
 
