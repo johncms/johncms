@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Router;
 
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Response\RedirectResponse;

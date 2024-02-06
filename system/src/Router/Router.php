@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Johncms\Http\Request;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;

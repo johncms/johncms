@@ -29,6 +29,7 @@ class ContainerFactory
             $dependencies = $config['dependencies'];
             $container->instance('config', $config);
             $container->bind(ContainerInterface::class, fn() => $container, true);
+            $container->bind(\Illuminate\Contracts\Container\Container::class, fn() => $container, true);
 
             // Registering of factories
             $factories = $dependencies['factories'] ?? [];
