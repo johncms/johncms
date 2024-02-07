@@ -41,12 +41,9 @@ return function (RouteCollection $router) {
 
     $router->group('/admin/system/modules', function (RouteCollection $routeGroup) {
         $routeGroup->get('/', [ModulesController::class, 'index'])->setName('admin.modules');
-        $routeGroup->get('/add/', [ModulesController::class, 'add'])->setName('admin.modules.add');
-        $routeGroup->post('/add/', [ModulesController::class, 'add']);
-        $routeGroup->get('/delete/', [ModulesController::class, 'delete'])->setName('admin.modules.delete');
-        $routeGroup->post('/delete/', [ModulesController::class, 'delete']);
-        $routeGroup->get('/update/', [ModulesController::class, 'update'])->setName('admin.modules.update');
-        $routeGroup->post('/update/', [ModulesController::class, 'update']);
+        $routeGroup->map(['GET', 'POST'], '/add/', [ModulesController::class, 'add'])->setName('admin.modules.add');
+        $routeGroup->map(['GET', 'POST'], '/delete/', [ModulesController::class, 'delete'])->setName('admin.modules.delete');
+        $routeGroup->map(['GET', 'POST'], '/update/', [ModulesController::class, 'update'])->setName('admin.modules.update');
     })->addMiddleware(new HasPermissionMiddleware(AdminPermissions::USER_MANAGEMENT));
 
     $router->get('/admin/system/check/', [SystemCheckController::class, 'index'])->setName('admin.system.check');
