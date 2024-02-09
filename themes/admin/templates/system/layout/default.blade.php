@@ -11,9 +11,8 @@
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
 $analytics = $counters->counters();
-?>
-<!DOCTYPE html>
-<html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
+?><!DOCTYPE html>
+<html lang="{{ $locale }}" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,15 +23,15 @@ $analytics = $counters->counters();
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="csrf-token" content="<?= $csrf_token ?>">
     @stack('meta')
-    <?php if (! empty($metaTags->getKeywords())): ?>
+    @if (! empty($metaTags->getKeywords()))
         <meta name="keywords" content="<?= $metaTags->getKeywords() ?>">
-    <?php endif ?>
-    <?php if (! empty($metaTags->getDescription())): ?>
+    @endif
+    @if (! empty($metaTags->getDescription()))
         <meta name="description" content="<?= $metaTags->getDescription() ?>">
-    <?php endif ?>
-    <?php if (! empty($metaTags->getCanonical())): ?>
+    @endif
+    @if (! empty($metaTags->getCanonical()))
         <link rel="canonical" href="<?= $metaTags->getCanonical() ?>">
-    <?php endif ?>
+    @endif
     <meta name="theme-color" content="#586776">
 
     <?= viteAssets('themes/admin/src/js/app.ts') ?>
@@ -40,7 +39,7 @@ $analytics = $counters->counters();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="/favicon.ico">
     @stack('styles')
-    <title><?= $metaTags->getTitle() ?></title>
+    <title>{{ $metaTags->getTitle() }}</title>
 </head>
 <body>
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
@@ -73,37 +72,30 @@ $analytics = $counters->counters();
                             </a>
                         </div>
                         <div>
-                            <?php
-                            if ($user): ?>
+                            @if ($user)
                                 <a href="/notifications/" class="icon_with_badge me-2">
                                     <svg class="icon icon_messages">
                                         <use xlink:href="<?= asset('icons/sprite.svg') ?>#messages"/>
                                     </svg>
-                                    <?php
-                                    if (! empty($notifications['all'])): ?>
+                                    @if (! empty($notifications['all']))
                                         <span class="badge bg-danger rounded-pill"><?= $notifications['all'] ?></span>
-                                    <?php
-                                    endif ?>
+                                    @endif
                                 </a>
-                            <?php
-                            else: ?>
+                            @else
                                 <a href="/login/" class="icon_with_badge">
                                     <svg class="icon ms-n2">
                                         <use xlink:href="<?= asset('icons/sprite.svg') ?>#log-in"/>
                                     </svg>
                                 </a>
-                            <?php
-                            endif ?>
+                            @endif
                         </div>
                     </div>
                 </div>
             </nav>
             <div class="container-fluid flex-grow-1">
-                <?php
-                if (! empty($metaTags->getTitle())): ?>
-                    <h1 class="mb-0"><?= $metaTags->getTitle() ?></h1>
-                <?php
-                endif ?>
+                @if (! empty($metaTags->getTitle()))
+                    <h1 class="mb-0">{{ $metaTags->getTitle() }}</h1>
+                @endif
 
                 @include('system::app/breadcrumbs')
 
@@ -146,18 +138,14 @@ $analytics = $counters->counters();
                         </a>
                     </div>
                     <div class="flex-shrink-1 d-flex position-relative">
-                        <?php
-                        if (! empty($analytics)): ?>
+                        @if (! empty($analytics))
                             <!-- Counters -->
                             <div class="me-2 d-flex">
-                                <?php
-                                foreach ($analytics as $counter): ?>
+                                @foreach ($analytics as $counter)
                                     <div><?= $counter ?></div>
-                                <?php
-                                endforeach; ?>
+                                @endforeach
                             </div>
-                        <?php
-                        endif; ?>
+                        @endif
                         <div>
                             &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
                         </div>
