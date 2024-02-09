@@ -32,6 +32,7 @@ use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
 use Johncms\Router\Router;
 use Johncms\Router\RouteRequirements;
+use Johncms\Security\HTMLPurifier;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
 use Johncms\Users\AuthProviders\SessionAuthProvider;
@@ -107,6 +108,7 @@ class ConfigProvider
                 LoggerInterface::class          => Logger::class,
                 Dispatcher::class               => DispatcherFactory::class,
                 Serializer::class               => SerializerFactory::class,
+                \HTMLPurifier::class            => HTMLPurifier::class,
             ],
         ];
     }
