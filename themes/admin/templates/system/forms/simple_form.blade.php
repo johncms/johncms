@@ -20,6 +20,10 @@
                 @include('system::forms/textarea', ['field' => $field, 'errors' => $errors])
                 @break
 
+            @case('ckeditor')
+                @include('system::forms/ckeditor', ['field' => $field, 'errors' => $errors])
+                @break
+
             @case('captcha')
                 @include('system::forms/captcha', ['field' => $field, 'errors' => $errors])
                 @break
