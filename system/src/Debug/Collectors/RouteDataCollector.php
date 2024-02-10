@@ -6,7 +6,6 @@ namespace Johncms\Debug\Collectors;
 
 use DebugBar\DataCollector\DataCollector;
 use DebugBar\DataCollector\Renderable;
-use ReflectionClass;
 use Throwable;
 
 class RouteDataCollector extends DataCollector implements Renderable
@@ -17,18 +16,11 @@ class RouteDataCollector extends DataCollector implements Renderable
             $route = di('route');
             $formatter = $this->getDataFormatter();
 
-            $reflection = new ReflectionClass($route);
-            $handler = $reflection->getProperty('handler');
-            $handler->setAccessible(true);
-            $controller = $handler->getValue($route);
-
             return [
-                'Route name'  => $route->getName(),
-                'Method'      => $route->getMethod(),
-                'Path'        => $route->getPath($route->getVars()),
-                'Vars'        => $formatter->formatVar($route->getVars()),
-                'Controller'  => (is_array($controller) && count($controller) === 2 ? implode('::', $controller) : $formatter->formatVar($controller)),
-                'Middlewares' => $formatter->formatVar($route->getMiddlewareStack()),
+                'Route name'  => $route['_name'],
+                'Vars'        => $formatter->formatVar($route),
+                'Controller'  => (is_array($route['_controller']) && count($route['_controller']) === 2 ? implode('::', $route['_controller']) : $formatter->formatVar($route['_controller'])),
+                'Middlewares' => $formatter->formatVar($route['_middlewares']),
             ];
         } catch (Throwable) {
             return [];
