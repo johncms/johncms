@@ -6,7 +6,7 @@
       <div class="invalid-feedback d-block" v-if="errors">{{ errors }}</div>
     </div>
     <div v-for="(file, index) in attached_files" :key="index">
-      <input type="hidden" name="attached_files[]" v-model="file.id">
+      <input type="hidden" :name="filesInputName" v-model="file.id">
     </div>
   </div>
 </template>
@@ -23,6 +23,10 @@ export default {
     id: {
       type: String,
       default: ''
+    },
+    filesInputName: {
+      type: String,
+      default: 'attached_files[]'
     },
     name: {
       type: String,

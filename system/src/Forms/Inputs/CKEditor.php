@@ -16,4 +16,17 @@ class CKEditor extends AbstractInput
 {
     public string $type = 'ckeditor';
     public string $uploadUrl = '';
+    public string $filesInputName = 'attached_files[]';
+
+    public function setUploadUrl(string $uploadUrl): static
+    {
+        $this->uploadUrl = $uploadUrl;
+        return $this;
+    }
+
+    public function setFilesInputName(string $filesInputName): static
+    {
+        $this->filesInputName = $filesInputName;
+        return $this;
+    }
 }
