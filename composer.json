@@ -48,7 +48,7 @@
         "illuminate/filesystem": "^v10.9.0",
         "illuminate/view": "^v10.9.0",
         "imangazaliev/didom": "^2.0",
-        "intervention/image": "^2.7.2",
+        "intervention/image": "^3.3",
         "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.7.0",
         "laminas/laminas-httphandlerrunner": "^2.1.0",

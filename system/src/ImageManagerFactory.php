@@ -18,6 +18,9 @@ class ImageManagerFactory
 {
     public function __invoke(): ImageManager
     {
-        return new ImageManager(['driver' => (extension_loaded('imagick') ? 'imagick' : 'gd')]);
+        if (extension_loaded('imagick')) {
+            return new ImageManager(new \Intervention\Image\Drivers\Imagick\Driver());
+        }
+        return new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
     }
 }
