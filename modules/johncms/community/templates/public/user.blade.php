@@ -59,7 +59,7 @@
             @if ($currentUser?->isAdmin())
                 <div class="post-meta d-flex">
                     <div class="user-ip me-2">
-                        <a href="#">{{ $user->activity->ip }}</a>
+                        <a href="#">{{ $user->activity?->ip }}</a>
                         @if (! empty($user->activity->ip_via_proxy))
                             / <a href="#">{{ $user->activity->ip_via_proxy }}</a>
                         @endif

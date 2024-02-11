@@ -11,7 +11,7 @@ return function (RouteCollection $router) {
         $route->get('/users/', [CommunityController::class, 'users'])->setName('community.users');
         $route->get('/administration/', [CommunityController::class, 'administration'])->setName('community.administration');
         $route->get('/birthdays/', [CommunityController::class, 'birthdays'])->setName('community.birthdays');
-        $route->get('/top/{topType:word?}', [CommunityController::class, 'top'])->setName('community.top');
+        $route->get('/top/{type:word?}', [CommunityController::class, 'top'])->setDefaults(['type' => 'forum'])->setName('community.top');
         $route->get('/search/', [CommunityController::class, 'search'])->setName('community.search');
     });
 };

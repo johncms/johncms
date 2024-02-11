@@ -34,8 +34,8 @@
         </div>
     @endif
 
-    <div class="btn-group btn-group-sm mt-2">
-        <a class="btn btn-primary btn-sm" href="{{ route('community.search') }}"><?= __('User Search') ?></a>
-        <a class="btn btn-secondary btn-sm" href="{{ route('community.index') }}"><?= __('Back') ?></a>
+    <div class="mt-2">
+        <a href="{{ route('community.search') }}"><?= __('User Search') ?></a><br>
+        <a href="{{ route('community.index') }}"><?= __('Back') ?></a>
     </div>
 @endsection
