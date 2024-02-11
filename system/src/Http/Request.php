@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
-use GuzzleHttp\Psr7\{CachingStream, LazyOpenStream, ServerRequest};
+use GuzzleHttp\Psr7\CachingStream;
+use GuzzleHttp\Psr7\LazyOpenStream;
+use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
@@ -37,7 +39,7 @@ class Request extends ServerRequest
         $uri = self::getUriFromGlobals();
         $body = new CachingStream(new LazyOpenStream('php://input', 'r+'));
         $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? str_replace('HTTP/', '', $_SERVER['SERVER_PROTOCOL']) : '1.1';
-        $serverRequest = new self($method, $uri, /** @scrutinizer ignore-type */ $headers, $body, $protocol, $_SERVER);
+        $serverRequest = new self($method, $uri, $headers, $body, $protocol, $_SERVER);
 
         $post = $_POST;
         $sessionPost = di(Session::class)->getFlash(Request::POST_SESSION_KEY);
