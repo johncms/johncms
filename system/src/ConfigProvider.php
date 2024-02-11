@@ -32,6 +32,7 @@ use Johncms\Middlewares\CsrfMiddleware;
 use Johncms\Middlewares\SessionMiddleware;
 use Johncms\Router\Router;
 use Johncms\Router\RouteRequirements;
+use Johncms\Router\RouterFactory;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Settings\SiteSettings;
 use Johncms\Users\AuthProviders\CookiesAuthProvider;
@@ -92,7 +93,6 @@ class ConfigProvider
                 SiteSettings::class             => SiteSettings::class,
                 DebugBar::class                 => DebugBar::class,
                 ExceptionHandlers::class        => ExceptionHandlers::class,
-                Router::class                   => Router::class,
                 RouteRequirements::class        => RouteRequirements::class,
             ],
 
@@ -109,6 +109,7 @@ class ConfigProvider
                 Dispatcher::class               => DispatcherFactory::class,
                 Serializer::class               => SerializerFactory::class,
                 \HTMLPurifier::class            => HTMLPurifier::class,
+                Router::class                   => RouterFactory::class,
             ],
         ];
     }
