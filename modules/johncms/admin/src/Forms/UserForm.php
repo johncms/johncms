@@ -20,6 +20,7 @@ use Johncms\Forms\Inputs\InputPassword;
 use Johncms\Forms\Inputs\InputText;
 use Johncms\Forms\Inputs\Select;
 use Johncms\Forms\Inputs\Textarea;
+use Johncms\Http\Request;
 use Johncms\Users\Role;
 use Johncms\Users\User;
 use Laminas\Validator\Hostname;
@@ -29,7 +30,8 @@ class UserForm extends AbstractForm
     public function __construct(
         private ?User $user = null
     ) {
-        parent::__construct();
+        $request = di(Request::class);
+        parent::__construct($request);
     }
 
     protected function prepareFormFields(): array

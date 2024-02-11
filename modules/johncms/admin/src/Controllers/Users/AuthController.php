@@ -26,12 +26,11 @@ class AuthController extends BaseAdminController
 {
     protected string $moduleName = 'johncms/admin';
 
-    public function index(Session $session): string
+    public function index(Session $session, LoginForm $loginForm): string
     {
-        $registrationForm = new LoginForm();
         $data = [
-            'formFields'       => $registrationForm->getFormFields(),
-            'validationErrors' => $registrationForm->getValidationErrors(),
+            'formFields'       => $loginForm->getFormFields(),
+            'validationErrors' => $loginForm->getValidationErrors(),
             'storeUrl'         => route('admin.authorize'),
             'authError'        => $session->getFlash('authError'),
         ];
@@ -42,9 +41,9 @@ class AuthController extends BaseAdminController
         UserManager $userManager,
         Session $session,
         SessionAuthProvider $sessionAuthProvider,
-        CookiesAuthProvider $cookiesAuthProvider
+        CookiesAuthProvider $cookiesAuthProvider,
+        LoginForm $loginForm
     ): RedirectResponse {
-        $loginForm = new LoginForm();
         try {
             // Validate the form
             $loginForm->validate();
