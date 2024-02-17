@@ -160,8 +160,30 @@ $analytics = $counters->counters();
         <div class="modal-content"></div>
     </div>
 </div>
+
 @stack('scripts')
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+@if ($locale !== 'en')
+    @php
+        try {
+    @endphp
+    <script src="{{ asset('js/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('js/flatpickr/lang/' . $locale . '.js') }}"></script>
+    <script>
+        flatpickr('.flatpickr', {
+            dateFormat: 'd.m.Y',
+            locale: "{{ $locale }}"
+        });
+        flatpickr('.flatpickr_time', {
+            dateFormat: 'd.m.Y H:i',
+            enableTime: true,
+            locale: "{{ $locale }}"
+        });
+    </script>
+    @php
+        } catch (Throwable) {}
+    @endphp
+@endif
 </body>
 </html>

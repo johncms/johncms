@@ -277,7 +277,7 @@ function asset(string $url, bool $versionStamp = false): string
 {
     $url = ltrim($url, '/');
     $defaultTheme = config('johncms.skindef');
-    foreach ([$defaultTheme, 'default'] as $skin) {
+    foreach ([$defaultTheme, 'default', 'admin'] as $skin) {
         $file = (string) realpath(ASSETS_PATH . $skin . '/' . $url);
         $resultUrl = Str::after(realpath($file), realpath(PUBLIC_PATH));
         if (is_file($file)) {

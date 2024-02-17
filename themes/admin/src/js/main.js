@@ -1,11 +1,3 @@
-/*
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 $(function () {
   const scroll_button = $('.to-top');
 
@@ -32,9 +24,3 @@ $(function () {
     }
   });
 });
-
-$(document).ready(function () {
-  if (typeof wysibb_input != "undefined") {
-    $(wysibb_input).wysibb(wysibb_settings);
-  }
-})

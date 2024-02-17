@@ -8,6 +8,10 @@
                 @include('system::forms/input_text', ['field' => $field, 'errors' => $errors])
                 @break
 
+            @case('date')
+                @include('system::forms/input_date', ['field' => $field, 'errors' => $errors])
+                @break
+
             @case('hidden')
                 @include('system::forms/input_hidden', ['field' => $field, 'errors' => $errors])
                 @break
