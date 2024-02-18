@@ -44,6 +44,8 @@ use Johncms\Users\Casts\UserSettings;
  * @property int|null $gender
  * @property Carbon|null $birthday
  * @property UserConfig $settings
+ * @property string|null $restore_password_code
+ * @property Carbon|null $restore_password_date
  *
  * @property StoredAuth[] $storedAuth
  *
@@ -66,6 +68,7 @@ class User extends Model
         'phone'             => SpecialChars::class,
         'settings'          => UserSettings::class,
         'additional_fields' => AdditionalFieldsCast::class,
+        'birthday'          => 'date',
     ];
 
     protected $fillable = [
@@ -84,13 +87,11 @@ class User extends Model
         'settings',
         'additional_fields',
         'avatar_id',
+        'restore_password_code',
+        'restore_password_date',
     ];
 
     protected $attributes = [];
-
-    protected $dates = [
-        'birthday',
-    ];
 
     protected ?UserRoleChecker $userRoleChecker = null;
     protected ?UserPermissionChecker $userPermissionChecker = null;
@@ -109,12 +110,10 @@ class User extends Model
         $casts = $modelConfig['casts'] ?? [];
         $fillable = $modelConfig['fillable'] ?? [];
         $attributes = $modelConfig['attributes'] ?? [];
-        $dates = $modelConfig['dates'] ?? [];
 
         $this->casts = array_merge($this->casts, $casts);
         $this->fillable = array_merge($this->fillable, $fillable);
         $this->attributes = array_merge($this->attributes, $attributes);
-        $this->dates = array_merge($this->dates, $dates);
     }
 
     /**

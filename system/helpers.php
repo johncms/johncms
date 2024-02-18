@@ -192,12 +192,14 @@ function redirect(string $url)
  * @param array $queryParams
  * @return string
  */
-function route(string $routeName, array $params = [], array $queryParams = []): string
+function route(string $routeName, array $params = [], array $queryParams = [], bool $withHost = false): string
 {
     $router = di(Router::class);
     $url = $router->getUrlGenerator()->generate($routeName, $params);
     $queryString = http_build_query($queryParams);
-    return str_replace('//', '/', $url) . (! empty($queryString) ? '?' . $queryString : '');
+    $url = str_replace('//', '/', $url) . (! empty($queryString) ? '?' . $queryString : '');
+
+    return ($withHost ? rtrim(config('johncms.home_url', ''), '/') : '') . $url;
 }
 
 /**
