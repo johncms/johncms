@@ -134,7 +134,7 @@ body {
       --bs-danger: #e74c3c;
       --bs-dark-brown-rgb: #fff;
 
-      --bs-body-bg: #181818;
+      --bs-body-bg: #0c0c0c;
       --bs-body-color: #fff;
       --bs-white-rgb: rgba(33, 33, 33, 0.98);
 
@@ -144,10 +144,12 @@ body {
       --bs-border-color: rgba(255, 255, 255, 0.1);
 
       // CKEditor
-      --ck-custom-background: hsl(270, 1%, 29%);
-      --ck-custom-foreground: hsl(255, 3%, 18%);
+      --ck-custom-background: hsl(0, 0%, 16%);
+      --ck-custom-foreground: hsl(0, 0%, 10%);
       --ck-custom-border: hsl(300, 1%, 22%);
-      --ck-custom-white: hsl(0, 0%, 100%);
+      --ck-custom-white: hsl(0, 0%, 52%);
+
+      --ck-color-base-background: hsl(0, 0%, 24%);
 
       --ck-color-base-foreground: var(--ck-custom-background);
       --ck-color-focus-border: hsl(208, 90%, 62%);
@@ -214,8 +216,9 @@ body {
 
       --ck-color-link-default: hsl(190, 100%, 75%);
 
-      --ck-color-base-background: hsl(0, 0%, 24%);
       --ck-color-base-border: var(--bs-border-color);
+
+      --ck-color-labeled-field-label-background: var(--ck-custom-background);
 
       @import "dark";
     }
@@ -226,7 +229,7 @@ body {
     --bs-danger: #e74c3c;
     --bs-dark-brown-rgb: #fff;
 
-    --bs-body-bg: #181818;
+    --bs-body-bg: #0c0c0c;
     --bs-body-color: #fff;
     --bs-white-rgb: rgba(33, 33, 33, 0.98);
 
@@ -236,10 +239,12 @@ body {
     --bs-border-color: rgba(255, 255, 255, 0.1);
 
     // CKEditor
-    --ck-custom-background: hsl(270, 1%, 29%);
-    --ck-custom-foreground: hsl(255, 3%, 18%);
+    --ck-custom-background: hsl(0, 0%, 16%);
+    --ck-custom-foreground: hsl(0, 0%, 10%);
     --ck-custom-border: hsl(300, 1%, 22%);
-    --ck-custom-white: hsl(0, 0%, 100%);
+    --ck-custom-white: hsl(0, 0%, 52%);
+
+    --ck-color-base-background: hsl(0, 0%, 24%);
 
     --ck-color-base-foreground: var(--ck-custom-background);
     --ck-color-focus-border: hsl(208, 90%, 62%);
@@ -306,8 +311,9 @@ body {
 
     --ck-color-link-default: hsl(190, 100%, 75%);
 
-    --ck-color-base-background: hsl(0, 0%, 24%);
     --ck-color-base-border: var(--bs-border-color);
+
+    --ck-color-labeled-field-label-background: var(--ck-custom-background);
 
 
     @import "dark";
