@@ -1,0 +1,36 @@
+# Production environment override
+services:
+  nginx:
+    build:
+      context: .docker/nginx
+      target: nginx_prod
+    hostname: ${APP_HOST}
+    environment:
+      - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+      - APP_HOST=${APP_HOST}
+      - NGINX_SERVER_NAME=${NGINX_SERVER_NAME}
+    volumes:
+      - .:/app
+      - ./.docker/certbot/www:/var/www/certbot/:ro
+      - ./.docker/certbot/conf/:/etc/nginx/ssl/:ro
+
+  mariadb:
+    ports: !override
+      - '127.0.0.1:${FORWARD_DB_PORT:-}:3306' # Disables external access to the container. Remove if not needed.
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./.docker/certbot/www/:/var/www/certbot/:rw
+      - ./.docker/certbot/conf/:/etc/letsencrypt/:rw
+
+  php-fpm:
+    build:
+      target: php_prod
+    volumes:
+      - .:/app
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.php-cli.schedule: "@every 1m"
+      ofelia.job-exec.php-cli.user: www-data
+      ofelia.job-exec.php-cli.command: "php /app/system/cron.php"

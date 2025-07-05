@@ -1,0 +1,2 @@
+conf/live/*
+!conf/live/test-app.loc

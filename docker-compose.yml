@@ -1,0 +1,83 @@
+services:
+  nginx:
+    restart: unless-stopped
+    container_name: ${COMPOSE_PROJECT_NAME}.nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - '${NGINX_HTTP_PORT:-}:80'
+      - '${NGINX_HTTPS_PORT:-}:443'
+    networks:
+      - app_network
+    volumes:
+      - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  php-fpm:
+    build:
+      context: .docker/php-fpm
+      args:
+        USER_ID: ${USER_ID:-1000}
+    restart: unless-stopped
+    container_name: ${COMPOSE_PROJECT_NAME}.php-fpm
+    depends_on:
+      - mariadb
+    networks:
+      - app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mariadb:
+    restart: unless-stopped
+    container_name: ${COMPOSE_PROJECT_NAME}.mariadb
+    image: 'mariadb:11'
+    ports:
+      - '${FORWARD_DB_PORT:-}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-rootpassword}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE:-dbname}'
+      MYSQL_USER: '${DB_USERNAME:-dbuser}'
+      MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - 'database_data:/var/lib/mysql'
+    networks:
+      - app_network
+    labels:
+      - traefik.enable=false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ofelia:
+    restart: unless-stopped
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - php-fpm
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - traefik.enable=false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  database_data:
+  redis_data:
+
+networks:
+  app_network:

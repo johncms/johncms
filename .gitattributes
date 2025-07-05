@@ -1,3 +1,5 @@
+* text=auto eol=lf
+
 *.css   text eol=lf
 *.html  text eol=lf
 *.js    text eol=lf
@@ -10,3 +12,6 @@
 *.svg   text eol=lf
 *.txt   text eol=lf
 *.yml   text eol=lf
+
+composer.lock text eol=lf merge=ours
+package-lock.json text eol=lf merge=ours
