@@ -190,6 +190,11 @@ $sidebar_width: 15rem;
   .navbar-toggler {
     padding-left: 0;
     height: 28px !important;
+    border: none;
+
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   .sidebar {
