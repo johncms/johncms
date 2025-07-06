@@ -178,7 +178,7 @@
 
 .new_post-item {
   min-height: 95px;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--border-color);
   padding: 15px 0 15px 85px;
 
   .post-body {

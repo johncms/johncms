@@ -92,3 +92,46 @@ label {
 .like-btn {
   --bs-btn-color: #898989;
 }
+
+.pagination {
+  --bs-pagination-color: #d0d0d0;
+  --bs-pagination-bg: #1c1c1c;
+  --bs-pagination-border-color: #2c2c2c;
+
+  --bs-pagination-hover-color: #fff;
+  --bs-pagination-hover-bg: #333333;
+  --bs-pagination-hover-border-color: #3d3d3d;
+
+  --bs-pagination-focus-color: #fff;
+  --bs-pagination-focus-bg: #2a2a2a;
+  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-active-bg: #66615b;
+  --bs-pagination-active-border-color: #66615b;
+
+  --bs-pagination-disabled-color: #6c757d;
+  --bs-pagination-disabled-bg: rgb(41, 41, 41);
+  --bs-pagination-disabled-border-color: #2a2a2a;
+}
+
+.post-user {
+  a {
+    --bs-link-color: #b8b8b8;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .user-name {
+    color: #b8b8b8;
+  }
+}
+
+.new_post-item {
+  .post-title {
+    color: #dddddd;
+  }
+}
