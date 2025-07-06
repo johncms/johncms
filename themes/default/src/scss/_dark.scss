@@ -27,6 +27,12 @@ hr {
 
 
 // Alerts
+.alert-success {
+  --bs-alert-color: #b2f7e0;
+  --bs-alert-bg: #20483e;
+  --bs-alert-border-color: #337d68;
+}
+
 .alert-info {
   --bs-alert-color: #738ca5;
   --bs-alert-bg: #1c2d40;
@@ -81,4 +87,8 @@ label {
 
 .card {
   --bs-card-bg: #1e1e1e;
+}
+
+.like-btn {
+  --bs-btn-color: #898989;
 }

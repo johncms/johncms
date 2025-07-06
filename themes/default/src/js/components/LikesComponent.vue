@@ -5,13 +5,13 @@
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    <button class="btn btn-light btn-sm" @click="setVote(1)" :class="voted > 0 ? 'liked' : ''" :disabled="voted > 0 || !can_vote">
+    <button class="btn like-btn btn-sm" @click="setVote(1)" :class="voted > 0 ? 'liked' : ''" :disabled="voted > 0 || !can_vote">
       <svg class="icon download-button-icon mt-n1">
         <use xlink:href="/themes/default/assets/icons/sprite.svg#like"/>
       </svg>
     </button>
     <span :class="rating_color" class="ms-2 me-2 fw-bold">{{ rating > 0 ? '+' : '' }}{{ rating }}</span>
-    <button class="btn btn-light btn-sm" @click="setVote(0)" :class="voted < 0 ? 'disliked' : ''" :disabled="voted < 0 || !can_vote">
+    <button class="btn like-btn btn-sm" @click="setVote(0)" :class="voted < 0 ? 'disliked' : ''" :disabled="voted < 0 || !can_vote">
       <svg class="icon download-button-icon me-1">
         <use xlink:href="/themes/default/assets/icons/sprite.svg#dislike"/>
       </svg>
