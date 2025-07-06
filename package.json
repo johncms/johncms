@@ -40,7 +40,7 @@
     },
     "dependencies": {
         "axios": "^1.10.0",
-        "bootstrap": "^5.2.1",
+        "bootstrap": "^5.3.7",
         "cross-env": "^6.0",
         "flatpickr": "^4.6",
         "jquery": "^3.6.0",

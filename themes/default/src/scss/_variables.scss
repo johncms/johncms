@@ -132,9 +132,14 @@ $input-bg: #f9f9f9;
   --bs-danger: #e74c3c;
   --bs-dark-brown-rgb: #fff;
 
+  --bs-secondary-color: rgb(126 126 126) !important;
+
   --bs-body-bg: #0c0c0c;
   --bs-body-color: #fff;
   --bs-white-rgb: rgba(33, 33, 33, 0.98);
+
+  --bs-link-color-rgb: 205, 205, 205;
+  --bs-link-hover-color-rgb: 225, 225, 225;
 
   --bs-link-color: #fff;
   --bs-link-hover-color: #d0d0d0;
