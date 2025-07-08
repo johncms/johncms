@@ -143,7 +143,7 @@ $this->layout('system::layout/default');
                     <?php if (! empty($news_item->preview_text_safe)): ?>
                         <div class="mb-n3 mt-1"><?= $news_item->preview_text_safe ?></div>
                     <?php endif; ?>
-                    <div class="text-muted small pt-1"><?= $news_item->display_date ?>,
+                    <div class="text-muted small pt-1 link-no-underline"><?= $news_item->display_date ?>,
                         <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#rating"/>
                         </svg> <?= (int) $news_item->votes_sum_vote ?>,

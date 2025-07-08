@@ -64,7 +64,7 @@ $this->layout('system::layout/default');
                         </svg>
                         <?= (int) $article->view_count ?>
                     </div>
-                    <div class="text-muted forum-view-counter ms-3">
+                    <div class="text-muted forum-view-counter ms-3 link-no-underline">
                         <a href="<?= $article->url ?>#article-comments">
                             <svg class="icon download-button-icon me-1">
                                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>

@@ -47,7 +47,7 @@ $this->layout(
             <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
                 <div class="d-flex align-items-center">
                     <a href="?do=dir&amp;id=<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
-                    <span class="badge rounded-pill text-bg-light border ms-3"><?= $main['libCounter'] ?></span>
+                    <span class="badge rounded-pill counter-badge border ms-3"><?= $main['libCounter'] ?></span>
                 </div>
             </div>
             <?php if (! empty($main['description'])): ?>
