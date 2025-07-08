@@ -43,7 +43,11 @@
 }
 
 .btn__top {
-  padding: 0;
+  --bs-btn-bg: #515151;
+  --bs-btn-hover-bg: #919191;
+  --bs-btn-border-radius: 50%;
+  --bs-btn-padding-x: 5px;
+  --bs-btn-padding-y: 5px;
 
   &:focus {
     box-shadow: none;

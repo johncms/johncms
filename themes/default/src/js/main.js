@@ -9,33 +9,36 @@
 Prism.manual = true;
 
 $(function () {
-  const scroll_button = $('.to-top');
-
   $(".post-body").each(function () {
     Prism.highlightAllUnder(this);
   });
 
-  if ($(document).height() > $(window).height() && $(this).scrollTop() < 50) {
-    scroll_button.addClass('to-bottom').removeClass('to-top_hidden');
+  const scrollButton = document.querySelector(".to-top");
+
+  function updateButtonState() {
+    const scrollTop = window.scrollY;
+    const scrollable = document.documentElement.scrollHeight > window.innerHeight;
+
+    if (scrollable && scrollTop < 50) {
+      scrollButton.classList.add("to-bottom");
+      scrollButton.classList.remove("to-top_hidden", "to-header");
+    } else if (scrollTop >= 50) {
+      scrollButton.classList.remove("to-bottom", "to-top_hidden");
+      scrollButton.classList.add("to-header");
+    }
   }
 
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 50) {
-      scroll_button.removeClass('to-bottom');
-      scroll_button.addClass('to-header');
-    } else {
-      scroll_button.addClass('to-bottom');
-      scroll_button.removeClass('to-header');
-    }
-  });
+  window.addEventListener("scroll", updateButtonState);
+  window.addEventListener("load", updateButtonState);  // важно: после полной загрузки
+  document.addEventListener("DOMContentLoaded", updateButtonState);
 
-  $(".to-top").click(function (event) {
-    event.preventDefault();
-    if ($(this).hasClass('to-header')) {
-      $('body,html').animate({scrollTop: 0}, 800);
-    } else {
-      $('body,html').animate({scrollTop: $(document).height()}, 800);
-    }
+  document.querySelectorAll('.to-top').forEach(button => {
+    button.addEventListener('click', function (e) {
+      e.preventDefault();
+      const isToHeader = this.classList.contains('to-header');
+      const scrollTarget = isToHeader ? 0 : document.body.scrollHeight;
+      window.scrollTo({top: scrollTarget, behavior: 'smooth'});
+    });
   });
 });
 

@@ -40,7 +40,7 @@ if ($request->getQuery('setTheme')) {
         <link rel="canonical" href="<?= $canonical ?>">
     <?php endif ?>
     <meta name="theme-color" content="#586776">
-    <?php if($locale === 'ar'): ?>
+    <?php if ($locale === 'ar'): ?>
         <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
     <?php else: ?>
         <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
@@ -120,8 +120,8 @@ if ($request->getQuery('setTheme')) {
 
                 <div class="to-top to-top_hidden">
                     <button class="btn btn__top">
-                        <svg class="icon-40">
-                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#top"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/>
                         </svg>
                     </button>
                 </div>

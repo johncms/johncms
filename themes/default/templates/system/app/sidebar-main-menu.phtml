@@ -181,7 +181,7 @@ $theme = di(\Johncms\System\View\Theme::class);
         <div>
             <a href="?setTheme=<?= $theme->getCurrentTheme() === 'dark' ? 'light' : 'dark' ?>" title="<?= $theme->getCurrentTheme() === 'dark' ? d__('system', 'Set Light Theme') : d__('system', 'Set Dark Theme') ?>">
                 <svg class="icon">
-                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?v1#<?= $theme->getCurrentTheme() === 'dark' ? 'sun' : 'moon' ?>"/>
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg', true) ?>#<?= $theme->getCurrentTheme() === 'dark' ? 'sun' : 'moon' ?>"/>
                 </svg>
             </a>
         </div>
