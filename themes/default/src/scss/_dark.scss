@@ -148,3 +148,9 @@ label {
   background: #0c0c0c;
   border-right: 1px solid var(--bs-border-color);
 }
+
+.btn__top {
+  --bs-btn-bg: #515151;
+  --bs-btn-color: #e8e8e8;
+  --bs-btn-hover-bg: #919191;
+}
