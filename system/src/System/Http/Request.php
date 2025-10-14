@@ -132,12 +132,14 @@ class Request extends ServerRequest
      * @param array $remove_params
      * @return string
      */
-    public function getQueryString(array $remove_params = []): string
+    public function getQueryString(array $remove_params = [], array $add_params = []): string
     {
         $query_params = $this->getQueryParams();
         if (! empty($remove_params)) {
             $query_params = array_diff_key($query_params, array_flip($remove_params));
         }
+
+        $query_params = array_merge($query_params, $add_params);
         $str = http_build_query($query_params);
 
         return $this->getUri()->getPath() . (! empty($str) ? '?' . $str : '');
