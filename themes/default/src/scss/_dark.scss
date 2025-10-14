@@ -163,3 +163,8 @@ label {
 blockquote {
   background-color: rgb(48, 48, 48);
 }
+
+.tooltip {
+  --bs-tooltip-bg: #343434;
+  --bs-tooltip-color: #fff;
+}
