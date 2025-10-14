@@ -96,7 +96,7 @@ $this->layout(
     <div><?= __('Downloads:') ?> <?= $file['field'] ?></div>
     <div><?= __('Rating:') ?>
         <?php if ($file['can_vote']): ?>
-            <a href="?act=view&amp;id=<?= $id ?>&amp;plus" class="btn btn-sm btn-light">
+            <a href="?act=view&amp;id=<?= $id ?>&amp;plus" class="btn btn-sm btn-like">
                 <svg class="icon download-button-icon me-1 mt-n1">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"/>
                 </svg>
@@ -104,7 +104,7 @@ $this->layout(
         <?php endif; ?>
         <span><?= implode(' / ', $file['rate']) ?></span>
         <?php if ($file['can_vote']): ?>
-            <a href="?act=view&amp;id=<?= $id ?>&amp;minus" class="btn btn-sm btn-light">
+            <a href="?act=view&amp;id=<?= $id ?>&amp;minus" class="btn btn-sm btn-dislike">
                 <svg class="icon download-button-icon me-1 mt-n1">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"/>
                 </svg>
