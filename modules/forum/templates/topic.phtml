@@ -245,7 +245,7 @@ $this->layout('system::layout/default');
                         <?php endif; ?>
                         <?php if ($message->can_edit): ?>
                             <?php if (! empty($message->deleted)): ?>
-                                <div class="d-inline me-2 badge badge-danger"
+                                <div class="d-inline me-2 badge bg-danger"
                                      data-bs-toggle="tooltip"
                                      data-bs-placement="top"
                                      title="<?= __('Post deleted:') ?> <?= $message->deleted_by ?>">

@@ -44,7 +44,7 @@ $this->layout(
     <div class="user-row">
         <div class="post-header d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <div class="badge <?= ($item['type'] > 0 ? 'badge-success' : 'badge-danger') ?> me-2">
+                <div class="badge <?= ($item['type'] > 0 ? 'bg-success' : 'bg-danger') ?> me-2">
                     <?= ($item['type'] > 0 ? '+' : '-') ?><?= $item['points'] ?>
                 </div>
                 <?php if ($item['user_id'] > 0): ?>

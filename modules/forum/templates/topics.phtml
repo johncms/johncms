@@ -88,15 +88,15 @@ $this->layout('system::layout/default');
                 <a href="<?= $topic->url ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $topic->name ?></a>
                 <?php if ($topic->deleted): ?>
                     <div class="ms-3">
-                        <span class="badge badge-danger"><?= __('Deleted topic') ?></span>
+                        <span class="badge bg-danger"><?= __('Deleted topic') ?></span>
                     </div>
                 <?php else: ?>
                     <?php if (! empty($topic->last_page_url)): ?>
                         <a href="<?= $topic->last_page_url ?>" title="<?= __('Last page') ?>">
-                            <span class="badge rounded-pill <?= $topic->unread ? 'badge-danger' : 'counter-badge' ?> ms-3"><?= $topic->show_posts_count ?></span>
+                            <span class="badge rounded-pill <?= $topic->unread ? 'bg-danger' : 'counter-badge' ?> ms-3"><?= $topic->show_posts_count ?></span>
                         </a>
                     <?php else: ?>
-                        <span class="badge rounded-pill <?= $topic->unread ? 'badge-danger' : 'counter-badge' ?> ms-3"><?= $topic->show_posts_count ?></span>
+                        <span class="badge rounded-pill <?= $topic->unread ? 'bg-danger' : 'counter-badge' ?> ms-3"><?= $topic->show_posts_count ?></span>
                     <?php endif ?>
                 <?php endif; ?>
             </div>
