@@ -14,5 +14,4 @@ namespace Johncms\Files\Exceptions;
 
 class FileNotFound extends \RuntimeException
 {
-
 }

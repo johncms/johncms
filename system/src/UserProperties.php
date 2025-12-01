@@ -16,7 +16,6 @@ use Johncms\System\Users\User;
 
 class UserProperties
 {
-
     /** @var User */
     public $current_user;
 

@@ -17,7 +17,6 @@ use SplFileInfo;
 
 class FileInfo extends SplFileInfo
 {
-
     /**
      * File name without extension
      *
