@@ -22,6 +22,7 @@ use Psr\Container\ContainerInterface;
  * @package Johncms\System\Users
  * @deprecated use Johncms\Users\UserFactory
  */
+#[\AllowDynamicProperties]
 class UserFactory
 {
     /**
@@ -49,8 +50,8 @@ class UserFactory
     protected function getUserData()
     {
         /** @psalm-suppress PossiblyNullArgument */
-        $userPassword = md5($this->request->getCookie('cups', '', FILTER_SANITIZE_STRING));
-        $userId = (int) $this->request->getCookie('cuid', 0, FILTER_SANITIZE_NUMBER_INT);
+        $userPassword = md5((string) $this->request->getCookie('cups', ''));
+        $userId = (int) $this->request->getCookie('cuid', 0);
 
         if ($userId && $userPassword) {
             return $this->authentification($userId, $userPassword);

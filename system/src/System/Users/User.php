@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
+#[\AllowDynamicProperties]
 class User extends AbstractUserProperties
 {
     public function __construct(array $properties = [])

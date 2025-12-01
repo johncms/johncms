@@ -59,9 +59,9 @@ class Environment
             return $this->ipViaProxy;
         }
 
-        $httpString = $this->request->getServer('HTTP_X_FORWARDED_FOR', '', FILTER_SANITIZE_STRING);
+        $httpString = (string) $this->request->getServer('HTTP_X_FORWARDED_FOR', '');
         return $this->ipViaProxy = (
-        ! empty($httpString) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $httpString, $vars)
+        ! empty($httpString) && preg_match_all('#\d{1,3}(?:\.\d{1,3}){3}#', $httpString, $vars)
             ? $this->extractIpFromString($vars, $return_long)
             : 0
         );
