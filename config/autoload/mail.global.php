@@ -10,8 +10,6 @@
 
 declare(strict_types=1);
 
-use Laminas\Mail\Transport\File as FileTransport;
-
 return [
     'mail' => [
         // Default transport (can be sendmail, smtp, file or memory)
@@ -30,7 +28,7 @@ return [
             ],
             'file' => [
                 'path'     => DATA_PATH . 'mail/',
-                'callback' => static function (FileTransport $transport) {
+                'callback' => static function () {
                     return 'Message_' . microtime(true) . '_' . mt_rand() . '.txt';
                 },
             ],

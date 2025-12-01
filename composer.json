@@ -1,6 +1,7 @@
 {
     "name": "johncms/johncms",
     "description": "Content Management System",
+    "version": "9.7.0",
     "homepage": "https://johncms.com",
     "license": "GPL-3.0-only",
     "keywords": [
@@ -29,7 +30,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^8.0",
         "ext-dom": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -41,24 +42,25 @@
         "aura/autoload": "^2.0",
         "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",
-        "guzzlehttp/psr7": "^1.8",
+        "guzzlehttp/psr7": "^2.8",
         "illuminate/cache": "^8.37",
         "illuminate/database": "^8.37",
         "illuminate/filesystem": "^8.37",
-        "imangazaliev/didom": "^1.16",
+        "imangazaliev/didom": "^2.0.1",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
+        "johncms/johncms-pagination": "^2.0.1",
         "laminas/laminas-config-aggregator": "^1.5",
-        "laminas/laminas-mail": "^2.14",
         "laminas/laminas-servicemanager": "^3.6",
         "laminas/laminas-uri": "^2.8",
         "laminas/laminas-validator": "^2.14",
         "league/flysystem": "^2.0",
-        "mobicms/captcha": "^2.0",
+        "mobicms/captcha": "^4.0",
         "mobicms/render": "^2.0",
+        "monolog/monolog": "^3.9",
         "nikic/fast-route": "^1.3",
         "simba77/ckeditor-media-embed": "^1.1",
-        "simba77/johncms-pagination": "^1.1"
+        "symfony/mailer": "^8.0"
     },
     "require-dev": {
         "gettext/gettext": "^5.5",

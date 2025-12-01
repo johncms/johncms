@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Gettext\TranslatorFunctions;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class EmailSender
 {
@@ -24,8 +26,11 @@ class EmailSender
         /** @var Render $view */
         $view = di(Render::class);
 
-        /** @var MailFactory $mail */
-        $mail = di(MailFactory::class);
+        /** @var MailFactory $mailFactory */
+        $mailFactory = di(MailFactory::class);
+
+        /** @var LoggerInterface $logger */
+        $logger = di(LoggerInterface::class);
 
         $email = (new EmailMessage())->unsent()->orderBy('priority')->limit($message_count)->get();
 
@@ -46,16 +51,33 @@ class EmailSender
             $message_body = $view->render($item->template, $item->fields);
 
             // In some cases, using the @ symbol in the sender's name resulted in an error.
-            if (strpos($fields['name_to'], '@') !== false) {
+            if (str_contains($fields['name_to'], '@')) {
                 $fields['name_to'] = null;
             }
 
-            $mail->setTo($fields['email_to'], $fields['name_to'] ?? null);
-            if (! empty($fields['subject'])) {
-                $mail->setSubject($fields['subject']);
+            $email = $mailFactory->createEmail();
+
+            if ($fields['name_to']) {
+                $email->to(sprintf('%s <%s>', $fields['name_to'], $fields['email_to']));
+            } else {
+                $email->to($fields['email_to']);
             }
-            $mail->setHtmlBody($message_body);
-            $mail->send();
+
+            if (! empty($fields['subject'])) {
+                $email->subject($fields['subject']);
+            }
+
+            $email->html($message_body);
+
+            try {
+                $mailFactory->send($email);
+            } catch (TransportExceptionInterface $e) {
+                $logger->error(
+                    sprintf('[EmailSender] Failed to send email to %s', $fields['email_to']),
+                    ['exception' => $e]
+                );
+            }
+
             $item->update(['sent_at' => Carbon::now()]);
         }
     }

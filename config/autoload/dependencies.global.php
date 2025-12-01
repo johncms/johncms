@@ -24,15 +24,16 @@ use Johncms\System\Legacy\Tools;
 return [
     'dependencies' => [
         'factories' => [
-            Bbcode::class       => Bbcode::class,
-            NavChain::class     => NavChain::class,
-            ImageManager::class => ImageManagerFactory::class,
-            Ads::class          => AdsFactory::class,
-            Tools::class        => Tools::class,
-            Csrf::class         => Csrf::class,
-            'counters'          => Johncms\CountersFactory::class,
-            MailFactory::class  => MailFactory::class,
-            HTMLPurifier::class => HTMLPurifier::class,
+            Bbcode::class                   => Bbcode::class,
+            NavChain::class                 => NavChain::class,
+            ImageManager::class             => ImageManagerFactory::class,
+            Ads::class                      => AdsFactory::class,
+            Tools::class                    => Tools::class,
+            Csrf::class                     => Csrf::class,
+            'counters'                      => Johncms\CountersFactory::class,
+            MailFactory::class              => MailFactory::class,
+            HTMLPurifier::class             => HTMLPurifier::class,
+            \Psr\Log\LoggerInterface::class => \Johncms\Logs\LoggerFactory::class,
         ],
     ],
 ];
