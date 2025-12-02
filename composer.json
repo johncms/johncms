@@ -93,5 +93,16 @@
         "psalm-fix": "psalm --alter --issues=MissingReturnType,MissingParamType",
         "translate": "translate",
         "translate-scan": "scan"
+    },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "system/third-party/johncms-pagination",
+      "options": {
+        "versions": {
+          "johncms/johncms-pagination": "2.0.1"
+        }
+      }
     }
+  ]
 }
