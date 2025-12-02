@@ -70,9 +70,9 @@ if ($user->isValid()) {
     $error = [];
     $captcha = false;
     $display_form = 1;
-    $user_login = $request->getPost('n', null, FILTER_SANITIZE_STRING);
-    $user_pass = $request->getPost('p', null, FILTER_SANITIZE_STRING);
-    $captchaCode = $request->getPost('code', null, FILTER_SANITIZE_STRING);
+    $user_login = htmlspecialchars((string) $request->getPost('n'));
+    $user_pass = htmlspecialchars((string) $request->getPost('p'));
+    $captchaCode = htmlspecialchars((string) $request->getPost('code'));
 
     if (empty($user_login)) {
         $error[] = __('You have not entered login');

@@ -53,16 +53,16 @@ module_lib_loader('forum');
 $section = (new ForumSection())->find($id);
 if ($section) {
     $form_data = [
-        'name'         => $request->getPost('name', $section->name, FILTER_SANITIZE_STRING),
-        'description'  => $request->getPost('description', $section->description, FILTER_SANITIZE_STRING),
+        'name'         => $request->getPost('name', $section->name),
+        'description'  => $request->getPost('description', $section->description),
         'sort'         => $request->getPost('sort', $section->sort ?? 100, FILTER_VALIDATE_INT),
         'section_type' => $request->getPost('section_type', $section->section_type ?? 0, FILTER_VALIDATE_INT),
         'parent'       => $request->getPost('parent', $section->parent ?? 0, FILTER_VALIDATE_INT),
         'access'       => $request->getPost('access', $section->access ?? 0, FILTER_VALIDATE_INT),
         'csrf_token'   => $request->getPost('csrf_token'),
 
-        'meta_description' => $request->getPost('meta_description', $section->meta_description ?? '', FILTER_SANITIZE_STRING),
-        'meta_keywords'    => $request->getPost('meta_keywords', $section->meta_keywords ?? '', FILTER_SANITIZE_STRING),
+        'meta_description' => $request->getPost('meta_description', $section->meta_description ?? ''),
+        'meta_keywords'    => $request->getPost('meta_keywords', $section->meta_keywords ?? ''),
     ];
 
     if ($request->getMethod() === 'POST') {

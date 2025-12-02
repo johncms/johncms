@@ -43,8 +43,8 @@ $view->addFolder('help', __DIR__ . '/templates/');
 di(Translator::class)->addTranslationDomain('help', __DIR__ . '/locale');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
-$act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$act = (string) $request->getQuery('act', '');
+$mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {

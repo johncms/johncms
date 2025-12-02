@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  */
 
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$mod = (string) $request->getQuery('mod', '');
 
 $title = __('List of users');
 $nav_chain->add($title);

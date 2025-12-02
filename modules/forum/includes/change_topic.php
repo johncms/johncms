@@ -51,9 +51,9 @@ try {
 }
 
 $form_data = [
-    'name'             => $request->getPost('name', $current_topic->name, FILTER_SANITIZE_STRING),
-    'meta_keywords'    => $request->getPost('meta_keywords', $current_topic->meta_keywords, FILTER_SANITIZE_STRING),
-    'meta_description' => $request->getPost('meta_description', $current_topic->meta_description, FILTER_SANITIZE_STRING),
+    'name'             => $request->getPost('name', $current_topic->name),
+    'meta_keywords'    => $request->getPost('meta_keywords', $current_topic->meta_keywords),
+    'meta_description' => $request->getPost('meta_description', $current_topic->meta_description),
     'csrf_token'       => $request->getPost('csrf_token', ''),
 ];
 

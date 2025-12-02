@@ -51,8 +51,8 @@ module_lib_loader('admin');
 
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = $route['action'] ?? 'index';
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
-$do = $request->getQuery('do', '', FILTER_SANITIZE_STRING);
+$mod = trim(htmlspecialchars((string) $request->getQuery('mod', '')));
+$do = trim(htmlspecialchars((string) $request->getQuery('do', '')));
 
 $nav_chain->add(__('Admin Panel'), '/admin/');
 
@@ -91,10 +91,10 @@ $actions = [
 
 $view->addData(
     [
-        'regtotal'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
+        'regtotal' => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),
         'countusers' => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='1'")->fetchColumn(),
-        'countadm'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
-        'bantotal'   => $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
+        'countadm' => $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn(),
+        'bantotal' => $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn(),
     ],
     [
         'admin::sidebar-admin-menu',

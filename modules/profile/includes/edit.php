@@ -58,9 +58,9 @@ $data['back_url'] = '?user=' . $user_data->id;
 $form_data = [
     'imname'      => $request->getPost('imname', $user_data->imname, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
     'live'        => $request->getPost('live', $user_data->live, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-    'dayb'        => $request->getPost('dayb', $user_data->dayb, FILTER_SANITIZE_STRING),
-    'monthb'      => $request->getPost('monthb', $user_data->monthb, FILTER_SANITIZE_STRING),
-    'yearofbirth' => $request->getPost('yearofbirth', $user_data->yearofbirth, FILTER_SANITIZE_STRING),
+    'dayb'        => htmlspecialchars((string) $request->getPost('dayb', $user_data->dayb)),
+    'monthb'      => htmlspecialchars((string) $request->getPost('monthb', $user_data->monthb)),
+    'yearofbirth' => htmlspecialchars((string) $request->getPost('yearofbirth', $user_data->yearofbirth)),
     'about'       => $request->getPost('about', $user_data->about, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
     'mibile'      => $request->getPost('mibile', $user_data->mibile, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
     'mail'        => $request->getPost('mail', $user_data->mail, FILTER_SANITIZE_FULL_SPECIAL_CHARS),

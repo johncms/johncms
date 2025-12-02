@@ -53,7 +53,7 @@ function passgen($length)
 }
 
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
-$act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
+$act = htmlspecialchars((string) $request->getQuery('act', ''));
 
 switch ($act) {
     case 'sent':
@@ -133,7 +133,7 @@ switch ($act) {
 
     case 'set':
         // Устанавливаем новый пароль
-        $code = trim($request->getQuery('code', '', FILTER_SANITIZE_STRING));
+        $code = trim(htmlspecialchars((string) $request->getQuery('code', '')));
         $error = false;
         $type = 'error';
 

@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $config = di('config')['johncms'];
 
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$mod = (string) $request->getQuery('mod', '');
 
 $user_right = ($user->rights >= 6 ? '' : ' AND (files.`access` = 4 OR files.`user_id` = ' . $user->id . ')');
 

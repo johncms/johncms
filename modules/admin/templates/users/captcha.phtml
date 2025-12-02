@@ -28,8 +28,8 @@
                 <?php if ($id): ?>
                     <input type="hidden" name="id" value="<?= $id ?>"/>
                 <?php endif ?>
-                <input type="hidden" name="n" value="<?= $user_login ?>"/>
-                <input type="hidden" name="p" value="<?= $user_pass ?>"/>
+                <input type="hidden" name="n" value="<?= $this->e($user_login) ?>"/>
+                <input type="hidden" name="p" value="<?= $this->e($user_pass) ?>"/>
                 <input type="hidden" name="mem" value="<?= $remember ?? '' ?>"/>
                 <input type="submit" name="login" value="<?= __('Continue') ?>" class="btn btn-primary"/>
             </form>

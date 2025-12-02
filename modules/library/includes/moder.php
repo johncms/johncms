@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
             $fields_adm = [
                 'count_views' => $request->getPost('count_views', 0, FILTER_VALIDATE_INT),
                 'premod'      => $request->getPost('premod', 0, FILTER_VALIDATE_INT),
-                'comments'    => $request->getPost('comments', '', FILTER_SANITIZE_STRING),
+                'comments'    => htmlspecialchars((string) $request->getPost('comments', '')),
             ];
             $fields += $fields_adm;
         }

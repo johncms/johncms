@@ -53,8 +53,8 @@ $view->addFolder('library', __DIR__ . '/templates/');
 $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
-$act = $request->getQuery('act', '', FILTER_SANITIZE_STRING);
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$act = htmlspecialchars((string) $request->getQuery('act', ''));
+$mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $adm = ($user->rights > 4);

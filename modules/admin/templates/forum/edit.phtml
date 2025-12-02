@@ -35,7 +35,7 @@ $errors = $data['errors'];
     <?php endif ?>
     <div class="form-group">
         <label for="name"><?= __('Title') ?></label>
-        <input type="text" name="name" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="name" value="<?= $data['item']['name'] ?>" placeholder="<?= __('Title') ?>"
+        <input type="text" name="name" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="name" value="<?= $this->e($data['item']['name']) ?>" placeholder="<?= __('Title') ?>"
                required>
         <?php if (! empty($errors['name'])): ?>
             <div class="invalid-feedback d-block"><?= implode(', ', $errors['name']) ?></div>
@@ -51,7 +51,7 @@ $errors = $data['errors'];
 
     <div class="form-group">
         <label for="description"><?= __('Description') ?></label>
-        <textarea class="form-control" rows="2" name="description" id="description"><?= $data['item']['description'] ?></textarea>
+        <textarea class="form-control" rows="2" name="description" id="description"><?= $this->e($data['item']['description']) ?></textarea>
         <div class="small text-muted"><?= __('Optional field') ?><br><?= __('Min. 2, Max. 500 characters') ?></div>
     </div>
 

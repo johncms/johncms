@@ -21,7 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Http\Request $request
  */
 
-$mod = trim($request->getQuery('mod', '', FILTER_SANITIZE_STRING));
+$mod = trim((string) $request->getQuery('mod', ''));
 $referer = $request->getHeader('Referer')[0] ?? './';
 $ref = filter_var($referer, FILTER_SANITIZE_URL);
 

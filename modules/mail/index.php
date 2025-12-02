@@ -45,8 +45,8 @@ di(Translator::class)->addTranslationDomain('mail', __DIR__ . '/locale');
 $view->addFolder('mail', __DIR__ . '/templates/');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
-$act = $request->getQuery('act', 'index', FILTER_SANITIZE_STRING);
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$act = htmlspecialchars((string) $request->getQuery('act', 'index'));
+$mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);

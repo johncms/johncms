@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 use Library\Hashtags;
 use Library\Rating;
 
-$sort = $request->getQuery('sort', 'read', FILTER_SANITIZE_STRING);
+$sort = htmlspecialchars((string) $request->getQuery('sort', 'read'));
 
 $title = __('Rating articles');
 $nav_chain->add($title);

@@ -32,19 +32,19 @@ $nav_chain->add(__('System Settings'));
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы
-    $config['skindef'] = $request->getPost('skindef', 'default', FILTER_SANITIZE_STRING);
-    $config['email'] = $request->getPost('madm', 'example@example.com', FILTER_SANITIZE_STRING);
+    $config['skindef'] = $request->getPost('skindef', 'default');
+    $config['email'] = $request->getPost('madm', 'example@example.com');
     $config['timeshift'] = $request->getPost('timeshift', 0, FILTER_VALIDATE_INT);
-    $config['copyright'] = $request->getPost('copyright', 'JohnCMS', FILTER_SANITIZE_STRING);
+    $config['copyright'] = $request->getPost('copyright', 'JohnCMS');
 
-    $current_host = 'https://' . $request->getServer('HTTP_HOST', '', FILTER_SANITIZE_STRING);
-    $config['homeurl'] = rtrim($request->getPost('homeurl', $current_host, FILTER_SANITIZE_STRING), '/');
+    $current_host = 'https://' . $request->getServer('HTTP_HOST', '');
+    $config['homeurl'] = rtrim($request->getPost('homeurl', $current_host), '/');
 
     $config['flsz'] = $request->getPost('flsz', 0, FILTER_VALIDATE_INT);
     $config['gzip'] = $request->getPost('gz', 0, FILTER_VALIDATE_INT);
-    $config['meta_title'] = $request->getPost('meta_title', 'johncms', FILTER_SANITIZE_STRING);
-    $config['meta_key'] = $request->getPost('meta_key', 'johncms', FILTER_SANITIZE_STRING);
-    $config['meta_desc'] = $request->getPost('meta_desc', 'johncms', FILTER_SANITIZE_STRING);
+    $config['meta_title'] = $request->getPost('meta_title', 'johncms');
+    $config['meta_key'] = $request->getPost('meta_key', 'johncms');
+    $config['meta_desc'] = $request->getPost('meta_desc', 'johncms');
     $config['user_email_required'] = $request->getPost('user_email_required', 0, FILTER_VALIDATE_INT);
     $config['user_email_confirmation'] = $request->getPost('user_email_confirmation', 0, FILTER_VALIDATE_INT);
 

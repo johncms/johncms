@@ -58,7 +58,7 @@ $nav_chain->add($title, '/album/');
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $act = $route['action'] ?? 'index';
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 $al = $request->getQuery('al', null, FILTER_SANITIZE_NUMBER_INT);
 $img = $request->getQuery('img', null, FILTER_SANITIZE_NUMBER_INT);
 

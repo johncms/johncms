@@ -42,9 +42,9 @@ class UsersController extends BaseAdminController
         $error = [];
         $captcha = false;
         $display_form = 1;
-        $user_login = $request->getPost('n', null, FILTER_SANITIZE_STRING);
-        $user_pass = $request->getPost('p', null, FILTER_SANITIZE_STRING);
-        $captchaCode = $request->getPost('code', null, FILTER_SANITIZE_STRING);
+        $user_login = trim((string) $request->getPost('n', ''));
+        $user_pass  = trim((string) $request->getPost('p', ''));
+        $captchaCode = trim((string) $request->getPost('code', ''));
 
         if (empty($user_login)) {
             $error[] = __('You have not entered login');

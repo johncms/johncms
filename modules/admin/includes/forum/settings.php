@@ -35,12 +35,12 @@ if ($request->getMethod() === 'POST') {
     // Save forum settings
     $settings = [
         'file_counters'       => $request->getPost('file_counters', false, FILTER_VALIDATE_INT),
-        'topic_keywords'      => $request->getPost('topic_keywords', '', FILTER_SANITIZE_STRING),
-        'topic_description'   => $request->getPost('topic_description', '', FILTER_SANITIZE_STRING),
-        'section_keywords'    => $request->getPost('section_keywords', '', FILTER_SANITIZE_STRING),
-        'section_description' => $request->getPost('section_description', '', FILTER_SANITIZE_STRING),
-        'forum_keywords'      => $request->getPost('forum_keywords', '', FILTER_SANITIZE_STRING),
-        'forum_description'   => $request->getPost('forum_description', '', FILTER_SANITIZE_STRING),
+        'topic_keywords'      => $request->getPost('topic_keywords', ''),
+        'topic_description'   => $request->getPost('topic_description', ''),
+        'section_keywords'    => $request->getPost('section_keywords', ''),
+        'section_description' => $request->getPost('section_description', ''),
+        'forum_keywords'      => $request->getPost('forum_keywords', ''),
+        'forum_description'   => $request->getPost('forum_description', ''),
     ];
     $forum_config['settings'] = $settings;
 

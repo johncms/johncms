@@ -65,8 +65,8 @@ if (! $user->is_valid) {
 
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $user_id = $request->getQuery('user', $user->id, FILTER_SANITIZE_NUMBER_INT);
-$act = $request->getQuery('act', 'index', FILTER_SANITIZE_STRING);
-$mod = $request->getQuery('mod', '', FILTER_SANITIZE_STRING);
+$act = htmlspecialchars((string) $request->getQuery('act', 'index'));
+$mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 
 /** @var User $user_data Получаем данные пользователя */
 $user_data = $user_id !== $user->id ? (new User())->find($user_id) : $user;

@@ -72,12 +72,12 @@ if (! $config['mod_reg'] || $user->isValid()) {
 }
 
 $fields = [
-    'name'     => $request->getPost('name', '', FILTER_SANITIZE_STRING),
-    'name_lat' => Str::slug($request->getPost('name', '', FILTER_SANITIZE_STRING), '_'),
+    'name'     => htmlspecialchars((string) $request->getPost('name', '')),
+    'name_lat' => Str::slug($request->getPost('name', ''), '_'),
     'password' => $request->getPost('password', ''),
     'sex'      => $request->getPost('sex', ''),
-    'imname'   => $request->getPost('imname', '', FILTER_SANITIZE_STRING),
-    'about'    => $request->getPost('about', '', FILTER_SANITIZE_STRING),
+    'imname'   => htmlspecialchars((string) $request->getPost('imname', '')),
+    'about'    => htmlspecialchars((string) $request->getPost('about', '')),
     'captcha'  => $request->getPost('captcha', null),
     'email'    => $request->getPost('email', ''),
 ];
