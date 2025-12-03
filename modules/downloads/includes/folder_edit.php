@@ -46,7 +46,7 @@ if (isset($_GET['up'])) {
 }
 
 if (isset($_GET['up']) || isset($_GET['down'])) {
-    $req_two = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $res['refid'] . "' AND `sort` ${val} '" . $res['sort'] . "' ORDER BY `sort` ${order} LIMIT 1");
+    $req_two = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $res['refid'] . "' AND `sort` $val '" . $res['sort'] . "' ORDER BY `sort` $order LIMIT 1");
 
     if ($req_two->rowCount()) {
         $res_two = $req_two->fetch();

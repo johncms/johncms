@@ -50,7 +50,7 @@ switch ($mod) {
     case 'comments':
         // Список сообщений в Гостевой
         $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
-        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->set_user->kmess);
+        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT $start, " . $user->set_user->kmess);
         $data['item_type'] = 'comment';
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
@@ -65,7 +65,7 @@ switch ($mod) {
         // Список тем Форума
         $data['item_type'] = 'topic';
         $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
-        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->set_user->kmess);
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT $start, " . $user->set_user->kmess);
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
@@ -97,7 +97,7 @@ switch ($mod) {
         $data['item_type'] = 'message';
         $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $user_data->id . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
         $req = $db->query(
-            "SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user_data->id . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, " . $user->set_user->kmess
+            "SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user_data->id . "' " . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT $start, " . $user->set_user->kmess
         );
 
         if ($req->rowCount()) {

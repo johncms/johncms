@@ -28,7 +28,7 @@ $sql2 = 'SELECT * FROM `cms_sessions` WHERE `lastdate` > ? AND `place` LIKE ? OR
 
 if ($id) {
     // Показываем общий список тех, кто в выбранной теме
-    $topic = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '${id}'")->fetchColumn();
+    $topic = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '$id'")->fetchColumn();
 
     if ($topic) {
         $params = [(time() - 300), '/forum?type=topic&id=' . $id . '%'];

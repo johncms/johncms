@@ -58,7 +58,7 @@ if (isset($_POST['deltopic'])) {
         exit;
     }
 
-    $req = $db->query("SELECT `id` FROM `forum_topic` WHERE `deleted` = '1' ${sort}");
+    $req = $db->query("SELECT `id` FROM `forum_topic` WHERE `deleted` = '1' $sort");
     while ($res = $req->fetch()) {
         $req_f = $db->query('SELECT * FROM `cms_forum_files` WHERE `topic` = ' . $res['id']);
         if ($req_f->rowCount()) {
@@ -72,11 +72,11 @@ if (isset($_POST['deltopic'])) {
         $db->exec('DELETE FROM `forum_messages` WHERE `topic_id` = ' . $res['id']);
     }
     // Удаляем темы
-    $db->exec("DELETE FROM `forum_topic` WHERE `deleted` = '1' ${sort}");
+    $db->exec("DELETE FROM `forum_topic` WHERE `deleted` = '1' $sort");
 
     header('Location: ?mod=htopics');
 } else {
-    $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = '1' ${sort}")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = '1' $sort")->fetchColumn();
     $req = $db->query(
         "SELECT `forum_topic`.*,
             `forum_topic`.`id` AS `fid`,
@@ -92,7 +92,7 @@ if (isset($_POST['deltopic'])) {
             `users`.`browser`,
             `users`.`ip_via_proxy`
             FROM `forum_topic` LEFT JOIN `users` ON `forum_topic`.`user_id` = `users`.`id`
-            WHERE `forum_topic`.`deleted` = '1' ${sort} ORDER BY `forum_topic`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess
+            WHERE `forum_topic`.`deleted` = '1' $sort ORDER BY `forum_topic`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess
     );
 
     if ($req->rowCount()) {

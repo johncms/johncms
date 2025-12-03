@@ -21,14 +21,14 @@ if ($id) {
     $error = false;
 
     // Скачивание прикрепленного файла Форума
-    $req = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = '${id}'");
+    $req = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = '$id'");
 
     if ($req->rowCount()) {
         $res = $req->fetch();
 
         if (file_exists(UPLOAD_PATH . 'forum/attach/' . $res['filename'])) {
             $dlcount = $res['dlcount'] + 1;
-            $db->exec("UPDATE `cms_forum_files` SET  `dlcount` = '${dlcount}' WHERE `id` = '${id}'");
+            $db->exec("UPDATE `cms_forum_files` SET  `dlcount` = '$dlcount' WHERE `id` = '$id'");
             header('location: ../upload/forum/attach/' . $res['filename']); //TODO: Разобраться со ссылкой
         } else {
             $error = true;

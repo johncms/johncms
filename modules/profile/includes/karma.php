@@ -110,7 +110,7 @@ if ($set_karma['on']) {
                     );
 
                     $sql = $type ? "`karma_plus` = '" . ($user_data['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user_data['karma_minus'] + $points) . "'";
-                    $db->query("UPDATE `users` SET ${sql} WHERE `id` = " . $user_data['id']);
+                    $db->query("UPDATE `users` SET $sql WHERE `id` = " . $user_data['id']);
 
                     // Добавляем уведомление пользователю
                     (new Notification())->create(
@@ -174,7 +174,7 @@ if ($set_karma['on']) {
             // Удаляем отдельный голос
             if ($user->rights === 9) {
                 $type = isset($_GET['type']) ? (int) $_GET['type'] : null;
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '${id}' AND `karma_user` = '" . $user_data['id'] . "'");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '$id' AND `karma_user` = '" . $user_data['id'] . "'");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
@@ -184,14 +184,14 @@ if ($set_karma['on']) {
                         $_SESSION['delete_token'] === $post['delete_token'] &&
                         $request->getMethod() === 'POST'
                     ) {
-                        $db->exec("DELETE FROM `karma_users` WHERE `id` = '${id}'");
+                        $db->exec("DELETE FROM `karma_users` WHERE `id` = '$id'");
                         if ($res['type']) {
                             $sql = "`karma_plus` = '" . ($user_data['karma_plus'] > $res['points'] ? $user_data['karma_plus'] - $res['points'] : 0) . "'";
                         } else {
                             $sql = "`karma_minus` = '" . ($user_data['karma_minus'] > $res['points'] ? $user_data['karma_minus'] - $res['points'] : 0) . "'";
                         }
 
-                        $db->exec("UPDATE `users` SET ${sql} WHERE `id` = " . $user_data['id']);
+                        $db->exec("UPDATE `users` SET $sql WHERE `id` = " . $user_data['id']);
                         header('Location: ?act=karma&user=' . $user_data['id'] . '&type=' . $type);
                     } else {
                         $delete_token = uniqid('', true);
@@ -253,7 +253,7 @@ if ($set_karma['on']) {
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
                 $items = [];
                 while ($res = $req->fetch()) {
                     $res['text'] = $tools->smilies($tools->checkout($res['text']));
@@ -301,9 +301,9 @@ if ($set_karma['on']) {
             ];
 
             $items = [];
-            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'"))->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "'" . ($type == 2 ? '' : " AND `type` = '$type'"))->fetchColumn();
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'") . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user_data['id'] . "'" . ($type == 2 ? '' : " AND `type` = '$type'") . " ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
                 while ($res = $req->fetch()) {
                     $res['text'] = $tools->smilies($tools->checkout($res['text']));
                     $res['display_date'] = $tools->displayDate($res['time']);

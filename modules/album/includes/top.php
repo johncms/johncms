@@ -185,7 +185,7 @@ unset($_SESSION['ref']);
 if ($mod === 'my_new_comm') {
     $total = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . $user->id . ' AND `unread_comments` = 1')->fetchColumn();
 } elseif (! isset($total)) {
-    $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` files WHERE ${where}")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` files WHERE $where")->fetchColumn();
 }
 
 $photos = [];

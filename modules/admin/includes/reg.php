@@ -82,10 +82,10 @@ switch ($mod) {
             exit;
         }
 
-        $req = $db->query("SELECT `id` FROM `users` WHERE `id` = '${id}' AND `preg` = '0'");
+        $req = $db->query("SELECT `id` FROM `users` WHERE `id` = '$id' AND `preg` = '0'");
         if ($req->rowCount()) {
-            $db->exec("DELETE FROM `users` WHERE `id` = '${id}'");
-            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '${id}' LIMIT 1");
+            $db->exec("DELETE FROM `users` WHERE `id` = '$id'");
+            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '$id' LIMIT 1");
         }
         echo $view->render(
             'system::pages/result',
@@ -119,13 +119,13 @@ switch ($mod) {
         $ip = isset($_GET['ip']) ? (int) ($_GET['ip']) : false;
 
         if ($ip) {
-            $req = $db->query("SELECT `id` FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
+            $req = $db->query("SELECT `id` FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
 
             while ($res = $req->fetch()) {
                 $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $res['id'] . "'");
             }
 
-            $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
+            $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
             $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
             echo $view->render(
                 'system::pages/result',

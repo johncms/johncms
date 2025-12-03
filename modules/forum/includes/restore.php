@@ -22,11 +22,11 @@ if (($user->rights != 3 && $user->rights < 6) || ! $id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
+$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'");
 
 if ($req->rowCount()) {
     $res = $req->fetch();
-    $db->exec("UPDATE `forum_topic` SET `deleted` = NULL, `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
+    $db->exec("UPDATE `forum_topic` SET `deleted` = NULL, `deleted_by` = '" . $user->name . "' WHERE `id` = '$id'");
 
     header('Location: ?type=topic&id=' . $id);
 } else {

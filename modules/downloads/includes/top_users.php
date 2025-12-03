@@ -35,7 +35,7 @@ if ($total) {
 SELECT COUNT(*) FROM download__files WHERE d.user_id = user_id AND `type` <> 3) AS cnt
 FROM download__files d
 JOIN users u ON u.id = d.user_id
-WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT ${start}, " . $user->config->kmess
+WHERE d.`type` <> 3 ORDER BY cnt DESC LIMIT $start, " . $user->config->kmess
     );
     while ($res_down = $req_down->fetch()) {
         $res_down['files_link'] = '<a href="?act=user_files&amp;id=' .

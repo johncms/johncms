@@ -74,7 +74,7 @@ if (
     $i = 0;
 
     while ($dirid != '0' && $dirid != '') {
-        $res = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '${dirid}' LIMIT 1")->fetch();
+        $res = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '$dirid' LIMIT 1")->fetch();
         if ($i) {
             $sql .= ' OR ';
         }
@@ -83,7 +83,7 @@ if (
         ++$i;
     }
 
-    $db->exec("UPDATE `download__category` SET `total` = (`total`-1) WHERE ${sql}");
+    $db->exec("UPDATE `download__category` SET `total` = (`total`-1) WHERE $sql");
     $db->exec('DELETE FROM `download__files` WHERE `id` = ' . $id);
     $db->query('OPTIMIZE TABLE `download__files`');
     header('Location: ?id=' . $res_down['refid']);

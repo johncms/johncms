@@ -22,7 +22,7 @@ $config = di('config')['johncms'];
 
 // Загрузка выбранного файла и обработка счетчика скачиваний
 $error = [];
-$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}'");
+$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
 
 if ($req->rowCount()) {
     $res = $req->fetch();
@@ -50,10 +50,10 @@ if ($req->rowCount()) {
 }
 if (! $error) {
     // Счетчик скачиваний
-    if (! $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '${img}'")->fetchColumn()) {
-        $db->exec("INSERT INTO `cms_album_downloads` SET `user_id` = '" . $user->id . "', `file_id` = '${img}', `time` = '" . time() . "'");
-        $downloads = $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `file_id` = '${img}'")->fetchColumn();
-        $db->exec("UPDATE `cms_album_files` SET `downloads` = '${downloads}' WHERE `id` = '${img}'");
+    if (! $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '$img'")->fetchColumn()) {
+        $db->exec("INSERT INTO `cms_album_downloads` SET `user_id` = '" . $user->id . "', `file_id` = '$img', `time` = '" . time() . "'");
+        $downloads = $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `file_id` = '$img'")->fetchColumn();
+        $db->exec("UPDATE `cms_album_files` SET `downloads` = '$downloads' WHERE `id` = '$img'");
     }
     // Отдаем файл
     header('location: ' . $config['homeurl'] . '/upload/users/album/' . $res['user_id'] . '/' . $res['img_name']);

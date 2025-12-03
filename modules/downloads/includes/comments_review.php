@@ -48,7 +48,7 @@ if ($total) {
 	    LEFT JOIN `users` ON `download__comments`.`user_id` = `users`.`id`
 	    LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id`
 	    ORDER BY `download__comments`.`time` DESC
-	    LIMIT ${start}, " . $user->config->kmess
+	    LIMIT $start, " . $user->config->kmess
     );
 
     // Выводим список

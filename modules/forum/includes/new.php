@@ -142,7 +142,7 @@ WHERE `last_post_date` > ? AND (`deleted` <> 1 OR deleted IS NULL) ORDER BY `las
                 LEFT JOIN forum_sections rzd ON rzd.id = tpc.section_id
                 LEFT JOIN forum_sections frm ON frm.id = rzd.parent
                 WHERE " . ($user->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
-                ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, " . $user->config->kmess
+                ORDER BY `tpc`.`last_post_date` DESC LIMIT $start, " . $user->config->kmess
                 );
 
                 $topics = [];

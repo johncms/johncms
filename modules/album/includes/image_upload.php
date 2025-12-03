@@ -29,7 +29,7 @@ $title = __('Upload image');
 // Выгрузка фотографии
 if (($al && $foundUser['id'] === $user->id && empty($user->ban)) || $user->rights >= 7) {
     $nav_chain->add($title);
-    $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
+    $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $foundUser['id']);
     if (! $req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
         echo $view->render(

@@ -37,7 +37,7 @@ if (! $al) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}'");
+$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al'");
 
 if (! $req->rowCount()) {
     echo $view->render(
@@ -120,16 +120,16 @@ if (
 if ($show) {
     $itmOnPage = 1;
     $page = $request->getQuery('page', null, FILTER_SANITIZE_NUMBER_INT);
-    $start = isset($page) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}' AND `id` > '${img}'")->fetchColumn());
+    $start = isset($page) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al' AND `id` > '$img'")->fetchColumn());
 }
 
-$total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
+$total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al'")->fetchColumn();
 if ($total) {
     $req = $db->query(
         "SELECT `files`.*, `users`.`name` AS `user_name`, `cms_album_cat`.`name` AS `album_name` FROM `cms_album_files` as files
         LEFT JOIN `users` ON `files`.`user_id` = `users`.`id`
         LEFT JOIN `cms_album_cat` ON `files`.`album_id` = `cms_album_cat`.`id`
-        WHERE files.`user_id` = '" . $foundUser['id'] . "' AND files.`album_id` = '${al}' ORDER BY files.`id` DESC LIMIT ${start}, ${itmOnPage}"
+        WHERE files.`user_id` = '" . $foundUser['id'] . "' AND files.`album_id` = '$al' ORDER BY files.`id` DESC LIMIT $start, $itmOnPage"
     );
 
     $photos = [];
@@ -154,7 +154,7 @@ if ($total) {
             if (! $db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '" . $user->id . "' AND `file_id` = " . $res['id'])->fetchColumn()) {
                 $db->exec("INSERT INTO `cms_album_views` SET `user_id` = '" . $user->id . "', `file_id` = '" . $res['id'] . "', `time` = " . time());
                 $views = $db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'")->fetchColumn();
-                $db->exec("UPDATE `cms_album_files` SET `views` = '${views}' WHERE `id` = " . $res['id']);
+                $db->exec("UPDATE `cms_album_files` SET `views` = '$views' WHERE `id` = " . $res['id']);
             }
         }
     }

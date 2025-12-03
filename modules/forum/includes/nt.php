@@ -97,8 +97,8 @@ $data = [
 ];
 
 if ($user->rights > 0) {
-    $data['meta_keywords'] = $request->getPost('meta_keywords');
-    $data['meta_description'] = $request->getPost('meta_description');
+    $data['meta_keywords'] = (string) $request->getPost('meta_keywords');
+    $data['meta_description'] = (string) $request->getPost('meta_description');
 }
 
 $errors = [];

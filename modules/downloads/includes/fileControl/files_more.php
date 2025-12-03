@@ -57,7 +57,7 @@ $nav_chain->add(__('Additional files'));
 if ($edit) {
     // Изменяем файл
     $name_link = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
-    $req_file_more = $db->query("SELECT `rus_name` FROM `download__more` WHERE `id` = '${edit}' LIMIT 1");
+    $req_file_more = $db->query("SELECT `rus_name` FROM `download__more` WHERE `id` = '$edit' LIMIT 1");
 
     /** @noinspection NotOptimalIfConditionsInspection */
     if ($name_link && $request->getMethod() === 'POST' && $req_file_more->rowCount()) {
@@ -95,7 +95,7 @@ if ($edit) {
     }
 } elseif ($del) {
     // Удаление файла
-    $req_file_more = $db->query("SELECT `name` FROM `download__more` WHERE `id` = '${del}'");
+    $req_file_more = $db->query("SELECT `name` FROM `download__more` WHERE `id` = '$del'");
 
     if (isset($get['yes'], $post['delete_token']) && $_SESSION['delete_token'] === $post['delete_token'] && $req_file_more->rowCount()) {
         $res_file_more = $req_file_more->fetch();
@@ -104,7 +104,7 @@ if ($edit) {
             unlink($res_down['dir'] . '/' . $res_file_more['name']);
         }
 
-        $db->exec("DELETE FROM `download__more` WHERE `id` = '${del}' LIMIT 1");
+        $db->exec("DELETE FROM `download__more` WHERE `id` = '$del' LIMIT 1");
         header('Location: ?act=files_more&id=' . $id);
     } else {
         $delete_token = uniqid('', true);
@@ -202,8 +202,8 @@ if ($edit) {
             }
 
             if ($link_file) {
-                $up_file = copy('http://' . $link_file, "{$res_down['dir']}/${fname}");
-                $fsize = filesize("{$res_down['dir']}/${fname}");
+                $up_file = copy('http://' . $link_file, "{$res_down['dir']}/$fname");
+                $fsize = filesize("{$res_down['dir']}/$fname");
             } else {
                 $uploaded_file->moveTo($res_down['dir'] . '/' . $fname);
                 $up_file = $uploaded_file->isMoved();

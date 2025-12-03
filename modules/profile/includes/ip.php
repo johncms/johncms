@@ -29,7 +29,7 @@ if (! $user->rights && $user->id !== $user_data->id) {
 
 $total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user_data->id . "'")->fetchColumn();
 if ($total) {
-    $req = $db->query("SELECT * FROM `cms_users_iphistory` WHERE `user_id` = '" . $user_data->id . "' ORDER BY `time` DESC LIMIT ${start}, " . $user->set_user->kmess);
+    $req = $db->query("SELECT * FROM `cms_users_iphistory` WHERE `user_id` = '" . $user_data->id . "' ORDER BY `time` DESC LIMIT $start, " . $user->set_user->kmess);
     $items = [];
     while ($res = $req->fetch()) {
         $res['ip'] = long2ip((int) $res['ip']);

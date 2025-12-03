@@ -58,7 +58,7 @@ switch ($mod) {
                     $error = __('You have no rights to ban in this section');
                 }
 
-                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '${term}'")->fetchColumn()) {
+                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '$term'")->fetchColumn()) {
                     $error = __('Ban already active');
                 }
 
@@ -202,7 +202,7 @@ switch ($mod) {
                 ]
             );
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user_data['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user_data['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -214,7 +214,7 @@ switch ($mod) {
 
                 if (! $error) {
                     if (isset($_POST['submit'])) {
-                        $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '${ban}'");
+                        $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '$ban'");
                         echo $view->render(
                             'system::pages/result',
                             [
@@ -279,7 +279,7 @@ switch ($mod) {
                 ]
             );
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user_data['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user_data['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -291,7 +291,7 @@ switch ($mod) {
                         `karma_minus` = '" . ($user_data['karma_minus'] > $points ? $user_data['karma_minus'] - $points : 0) . "'
                         WHERE `id` = " . $user_data['id']
                     );
-                    $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '${ban}'");
+                    $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '$ban'");
                     echo $view->render(
                         'system::pages/result',
                         [
@@ -382,7 +382,7 @@ switch ($mod) {
         $data['user_name'] = $user_data['name'];
         $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "'")->fetchColumn();
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, " . $user->set_user->kmess);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user_data['id'] . "' ORDER BY `ban_time` DESC LIMIT $start, " . $user->set_user->kmess);
             $i = 0;
 
             $types = [

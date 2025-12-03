@@ -17,7 +17,7 @@ $title = __('Contacts');
 $nav_chain->add($title);
 
 if ($id) {
-    $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
+    $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
     if (! $req->rowCount()) {
         echo $view->render(
@@ -108,7 +108,7 @@ if ($id) {
 			    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 			    AND `cms_contact`.`ban`!='1'
 			    ORDER BY `users`.`name` ASC
-			    LIMIT ${start}, " . $user->config->kmess
+			    LIMIT $start, " . $user->config->kmess
         );
 
         $items = [];

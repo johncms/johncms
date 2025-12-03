@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
-    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
+    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id'")->fetchColumn();
 
     if ($topic_vote == 0) {
         echo $view->render(
@@ -38,8 +38,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
 
     if (isset($_GET['delvote']) && ! empty($_GET['vote'])) {
         $vote = abs((int) ($_GET['vote']));
-        $totalvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `id` = '${vote}' AND `topic` = '${id}'")->fetchColumn();
-        $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'")->fetchColumn();
+        $totalvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `id` = '$vote' AND `topic` = '$id'")->fetchColumn();
+        $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'")->fetchColumn();
 
         if ($countvote <= 2) {
             header('location: ?act=editvote&id=' . $id . '');
@@ -47,12 +47,12 @@ if ($user->rights == 3 || $user->rights >= 6) {
 
         if ($totalvote != 0) {
             if (isset($_GET['yes'])) {
-                $db->exec("DELETE FROM `cms_forum_vote` WHERE `id` = '${vote}'");
-                $countus = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `vote` = '${vote}' AND `topic` = '${id}'")->fetchColumn();
-                $topic_vote = $db->query("SELECT `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
+                $db->exec("DELETE FROM `cms_forum_vote` WHERE `id` = '$vote'");
+                $countus = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `vote` = '$vote' AND `topic` = '$id'")->fetchColumn();
+                $topic_vote = $db->query("SELECT `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
                 $totalcount = $topic_vote['count'] - $countus;
-                $db->exec("UPDATE `cms_forum_vote` SET  `count` = '${totalcount}'   WHERE `type` = '1' AND `topic` = '${id}'");
-                $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `vote` = '${vote}'");
+                $db->exec("UPDATE `cms_forum_vote` SET  `count` = '$totalcount'   WHERE `type` = '1' AND `topic` = '$id'");
+                $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `vote` = '$vote'");
                 header('location: ?act=editvote&id=' . $id . '');
             } else {
                 echo $view->render(
@@ -75,7 +75,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
             $vote_name = mb_substr(trim($_POST['name_vote']), 0, 50);
 
             if (! empty($vote_name)) {
-                $db->exec('UPDATE `cms_forum_vote` SET  `name` = ' . $db->quote($vote_name) . "  WHERE `topic` = '${id}' AND `type` = '1'");
+                $db->exec('UPDATE `cms_forum_vote` SET  `name` = ' . $db->quote($vote_name) . "  WHERE `topic` = '$id' AND `type` = '1'");
             }
 
             $vote_result = $db->query("SELECT `id` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "'");
@@ -92,7 +92,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
             for ($vote = $countvote; $vote < 20; $vote++) {
                 if (! empty($_POST[$vote])) {
                     $text = mb_substr(trim($_POST[$vote]), 0, 30);
-                    $db->exec('INSERT INTO `cms_forum_vote` SET `name` = ' . $db->quote($text) . ",  `type` = '2', `topic` = '${id}'");
+                    $db->exec('INSERT INTO `cms_forum_vote` SET `name` = ' . $db->quote($text) . ",  `type` = '2', `topic` = '$id'");
                 }
             }
             echo $view->render(
@@ -109,9 +109,9 @@ if ($user->rights == 3 || $user->rights >= 6) {
             exit;
         }
         // Форма редактирования опроса
-        $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'")->fetchColumn();
-        $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
-        $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'");
+        $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'")->fetchColumn();
+        $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
+        $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'");
 
         $votes = [];
         $i = 0;

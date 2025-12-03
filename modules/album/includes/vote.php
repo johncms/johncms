@@ -38,7 +38,7 @@ if (! $img) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` != " . $user->id);
+$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` != " . $user->id);
 
 if ($req->rowCount()) {
     $res = $req->fetch();
@@ -53,11 +53,11 @@ if ($req->rowCount()) {
                 $db->exec(
                     "INSERT INTO `cms_album_votes` SET
                 `user_id` = '" . $user->id . "',
-                `file_id` = '${img}',
+                `file_id` = '$img',
                 `vote` = '1'
             "
                 );
-                $db->exec("UPDATE `cms_album_files` SET `vote_plus` = '" . ($res['vote_plus'] + 1) . "' WHERE `id` = '${img}'");
+                $db->exec("UPDATE `cms_album_files` SET `vote_plus` = '" . ($res['vote_plus'] + 1) . "' WHERE `id` = '$img'");
                 break;
 
             case 'minus':
@@ -67,11 +67,11 @@ if ($req->rowCount()) {
                 $db->exec(
                     "INSERT INTO `cms_album_votes` SET
                 `user_id` = '" . $user->id . "',
-                `file_id` = '${img}',
+                `file_id` = '$img',
                 `vote` = '-1'
             "
                 );
-                $db->exec("UPDATE `cms_album_files` SET `vote_minus` = '" . ($res['vote_minus'] + 1) . "' WHERE `id` = '${img}'");
+                $db->exec("UPDATE `cms_album_files` SET `vote_minus` = '" . ($res['vote_minus'] + 1) . "' WHERE `id` = '$img'");
                 break;
         }
         header('Location: ' . $ref);

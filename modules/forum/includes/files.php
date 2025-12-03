@@ -70,11 +70,11 @@ if ($c) {
 if ($c || $s || $t) {
     // Получаем имя нужной категории форума
     if (! empty($t)) {
-        $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'");
     } elseif (! empty($s)) {
-        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
+        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id'");
     } elseif (! empty($c)) {
-        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
+        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id'");
     }
 
     if ($req->rowCount()) {
@@ -100,7 +100,7 @@ $nav_chain->add($caption);
 
 if ($do || isset($_GET['new'])) {
     // Выводим список файлов нужного раздела
-    $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE ' . (isset($_GET['new']) ? " `time` > '${new}'" : " `filetype` = '${do}'") . $sql)->fetchColumn();
+    $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE ' . (isset($_GET['new']) ? " `time` > '$new'" : " `filetype` = '$do'") . $sql)->fetchColumn();
 
     if (isset($_GET['new'])) {
         $caption = __('New Files');
@@ -125,8 +125,8 @@ FROM `cms_forum_files` files
 JOIN `forum_messages` mess ON `files`.`post` = `mess`.`id`
 JOIN `forum_topic` AS `topicname` ON `files`.`topic` = `topicname`.`id`
 JOIN `users` u ON u.`id` = `mess`.`user_id`
-WHERE ' . (isset($_GET['new']) ? " `files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($user->rights >= 7 ? '' : " AND `del` <> '1'") . $sql . "
-ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+WHERE ' . (isset($_GET['new']) ? " `files`.`time` > '$new'" : " `filetype` = '$do'") . ($user->rights >= 7 ? '' : " AND `del` <> '1'") . $sql . "
+ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
 
         while ($res = $req->fetch()) {
             $text = mb_substr($res['text'], 0, 500);
@@ -185,12 +185,12 @@ ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 }
 
 // Выводим список разделов, в которых есть файлы
-$countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE `time` > '${new}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+$countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE `time` > '$new'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
 $link = [];
 $total = 0;
 $sections = [];
 foreach ($types as $key => $type) {
-    $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE `filetype` = '${key}'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+    $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` `files` WHERE `filetype` = '$key'" . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     if ($count > 0) {
         $sections[] = [
             'url'   => '/forum/?act=files&amp;do=' . $key . $lnk,

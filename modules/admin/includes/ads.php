@@ -229,20 +229,20 @@ switch ($mod) {
     case 'down':
         // Перемещаем на позицию вниз
         if ($id) {
-            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '${id}'");
+            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $mesto = $res['mesto'];
 
-                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` > '${mesto}' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` ASC");
+                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` > '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` ASC");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $mesto2 = $res['mesto'];
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto2}' WHERE `id` = '${id}'");
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto}' WHERE `id` = '${id2}'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
                 }
             }
         }
@@ -252,20 +252,20 @@ switch ($mod) {
     case 'up':
         // Перемещаем на позицию вверх
         if ($id) {
-            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '${id}'");
+            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $mesto = $res['mesto'];
 
-                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` < '${mesto}' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` DESC");
+                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` < '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` DESC");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $mesto2 = $res['mesto'];
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto2}' WHERE `id` = '${id}'");
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto}' WHERE `id` = '${id2}'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
                 }
             }
         }
@@ -278,7 +278,7 @@ switch ($mod) {
             $title = __('Delete');
             $nav_chain->add($title);
             if (isset($_POST['submit'])) {
-                $db->exec("DELETE FROM `cms_ads` WHERE `id` = '${id}'");
+                $db->exec("DELETE FROM `cms_ads` WHERE `id` = '$id'");
                 header('Location: ' . $_POST['ref']);
             } else {
                 $data['hidden_fields'] = [
@@ -326,11 +326,11 @@ switch ($mod) {
     case 'show':
         // Восстанавливаем / скрываем ссылку
         if ($id) {
-            $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '${id}'");
+            $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
-                $db->exec("UPDATE `cms_ads` SET `to`='" . ($res['to'] ? 0 : 1) . "' WHERE `id` = '${id}'");
+                $db->exec("UPDATE `cms_ads` SET `to`='" . ($res['to'] ? 0 : 1) . "' WHERE `id` = '$id'");
             }
         }
         header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -373,10 +373,10 @@ switch ($mod) {
             __('Users'),
         ];
 
-        $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '${type}'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '$type'")->fetchColumn();
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '${type}' ORDER BY `mesto` ASC LIMIT " . $start . ',' . $user->config->kmess);
+            $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '$type' ORDER BY `mesto` ASC LIMIT " . $start . ',' . $user->config->kmess);
             $items = [];
             while ($res = $req->fetch()) {
                 $name = str_replace('|', '; ', $res['name']);

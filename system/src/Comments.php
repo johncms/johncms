@@ -372,7 +372,7 @@ class Comments
                             if ($req_u->rowCount()) {
                                 $res_u = $req_u->fetch();
                                 $count = $res_u['komm'] > $count ? $res_u['komm'] - $count : 0;
-                                $this->db->exec("UPDATE `users` SET `komm` = '${count}' WHERE `id` = '" . $res['user_id'] . "'");
+                                $this->db->exec("UPDATE `users` SET `komm` = '$count' WHERE `id` = '" . $res['user_id'] . "'");
                             }
 
                             // Обновляем счетчик комментариев
@@ -428,7 +428,7 @@ class Comments
                     $req = $this->db->query(
                         'SELECT `' . $this->comments_table . '`.*, `' . $this->comments_table . '`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                     FROM `' . $this->comments_table . '` LEFT JOIN `users` ON `' . $this->comments_table . "`.`user_id` = `users`.`id`
-                    WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT ${start}, ${kmess}"
+                    WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT $start, $kmess"
                     );
 
                     while ($res = $req->fetch()) {
@@ -630,7 +630,7 @@ class Comments
 
         if ($update) {
             // Обновляем счетчики в таблице объекта
-            $this->db->exec('UPDATE `' . $this->object_table . "` SET `comm_count` = '${total}' WHERE `id` = '" . $this->sub_id . "'");
+            $this->db->exec('UPDATE `' . $this->object_table . "` SET `comm_count` = '$total' WHERE `id` = '" . $this->sub_id . "'");
         }
 
         return (int) $total;

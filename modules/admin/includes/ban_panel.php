@@ -64,7 +64,7 @@ switch ($mod) {
 
                         if ($ban_left < 2592000) {
                             $amnesty_msg = __('Amnesty');
-                            $db->exec("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--${amnesty_msg}--' WHERE `id` = '" . $res['id'] . "'");
+                            $db->exec("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--$amnesty_msg--' WHERE `id` = '" . $res['id'] . "'");
                         }
                     }
                     echo $view->render(

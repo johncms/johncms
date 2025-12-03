@@ -45,9 +45,9 @@ if ($search && empty($error)) {
     $search_db = $db->quote($search_db);
     $sql = ($id ? '`about`' : '`rus_name`') . ' LIKE ' . $search_db;
 
-    $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND ${sql}")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND $sql")->fetchColumn();
     if ($total) {
-        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND ${sql} ORDER BY `rus_name` LIMIT ${start}, " . $user->config->kmess);
+        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND $sql ORDER BY `rus_name` LIMIT $start, " . $user->config->kmess);
         $files = [];
         while ($res_down = $req_down->fetch()) {
             $files[] = Download::displayFile($res_down);

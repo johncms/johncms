@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if ($user->rights >= 7) {
-    $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
+    $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'");
 
     if (! $req->rowCount()) {
         echo $view->render(
@@ -39,7 +39,7 @@ if ($user->rights >= 7) {
     $topic = $req->fetch();
     $req = $db->query("SELECT `fm`.`user_id`, `fm`.`user_name` FROM `forum_messages` fm
 JOIN `users` u ON `u`.`id`=`fm`.`user_id`
-WHERE `topic_id` = '${id}' AND `u`.`rights` < 6 AND `u`.`rights` <> 3
+WHERE `topic_id` = '$id' AND `u`.`rights` < 6 AND `u`.`rights` <> 3
 GROUP BY `fm`.`user_id`, `fm`.`user_name` ORDER BY `fm`.`user_name`");
     $total = $req->rowCount();
     $curators = [];
@@ -63,7 +63,7 @@ GROUP BY `fm`.`user_id`, `fm`.`user_name` ORDER BY `fm`.`user_name`");
         }
 
         if (isset($_POST['submit'])) {
-            $db->exec('UPDATE `forum_topic` SET `curators`=' . $db->quote(serialize($curators)) . " WHERE `id` = '${id}'");
+            $db->exec('UPDATE `forum_topic` SET `curators`=' . $db->quote(serialize($curators)) . " WHERE `id` = '$id'");
             $saved = true;
         }
     }

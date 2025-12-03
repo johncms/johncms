@@ -202,13 +202,13 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             ]
         );
         $title = $res_down_cat['rus_name'];
-        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
+        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
             $new_url = $url . '?act=new_files&amp;id=' . $id;
         }
     } else {
-        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old}")->fetchColumn();
+        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old")->fetchColumn();
 
         if ($total_new) {
             $new_url = $url . '?act=new_files';
@@ -282,7 +282,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             }
 
             // Выводи данные
-            $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` ${sql_sort} LIMIT ${start}, " . $user->config->kmess);
+            $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` $sql_sort LIMIT $start, " . $user->config->kmess);
             $files = [];
             while ($res_down = $req_down->fetch()) {
                 $files[] = Download::displayFile($res_down);

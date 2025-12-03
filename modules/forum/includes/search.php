@@ -84,7 +84,7 @@ switch ($mod) {
                 $total = $db->query(
                     "
                 SELECT COUNT(*) FROM `forum_messages`
-                WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
+                WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
                 " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)")
                 )->fetchColumn();
             }
@@ -99,17 +99,17 @@ switch ($mod) {
                     WHERE `name` LIKE ' . $query . '
                     ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `name` DESC
-                    LIMIT ${start}, " . $user->config->kmess
+                    LIMIT $start, " . $user->config->kmess
                     );
                 } else {
                     $req = $db->query(
                         "
-                    SELECT *, MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE) as `rel`
+                    SELECT *, MATCH (`text`) AGAINST ($query IN BOOLEAN MODE) as `rel`
                     FROM `forum_messages`
-                    WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
+                    WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
                     " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `rel` DESC
-                    LIMIT ${start}, " . $user->config->kmess
+                    LIMIT $start, " . $user->config->kmess
                     );
                 }
 

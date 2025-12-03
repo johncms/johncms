@@ -164,7 +164,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                             $i = 0;
 
                             while ($dirid != '0' && $dirid != '') {
-                                $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '${dirid}' LIMIT 1")->fetch();
+                                $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '$dirid' LIMIT 1")->fetch();
                                 if ($i) {
                                     $sql .= ' OR ';
                                 }
@@ -173,7 +173,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                                 ++$i;
                             }
 
-                            $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE ${sql}");
+                            $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
                         }
 
                         echo $view->render(

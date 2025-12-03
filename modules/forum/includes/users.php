@@ -18,7 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}'")->fetchColumn();
+$topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id'")->fetchColumn();
 
 if ($topic_vote == 0 || $user->rights < 7) {
     http_response_code(404);
@@ -34,13 +34,13 @@ if ($topic_vote == 0 || $user->rights < 7) {
     );
     exit;
 }
-$topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
-$total = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `topic`='${id}'")->fetchColumn();
+$topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
+$total = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `topic`='$id'")->fetchColumn();
 $req = $db->query(
     "SELECT `cms_forum_vote_users`.*, `users`.`rights`, `users`.`lastdate`, `users`.`name`, `users`.`sex`, `users`.`status`, `users`.`datereg`,
        `users`.`id`, users.ip, users.ip_via_proxy, users.browser
     FROM `cms_forum_vote_users` LEFT JOIN `users` ON `cms_forum_vote_users`.`user` = `users`.`id`
-    WHERE `cms_forum_vote_users`.`topic`='${id}' LIMIT ${start}, " . $user->config->kmess
+    WHERE `cms_forum_vote_users`.`topic`='$id' LIMIT $start, " . $user->config->kmess
 );
 
 $items = [];

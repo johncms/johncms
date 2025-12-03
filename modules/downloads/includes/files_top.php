@@ -64,7 +64,7 @@ if ($id === 2 && ($config['mod_down_comm'] || $user->rights >= 7)) {
 }
 
 // Выводим список
-$req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 ORDER BY ${sql} DESC LIMIT " . $set_down['top']);
+$req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = 2 ORDER BY $sql DESC LIMIT " . $set_down['top']);
 $files = [];
 while ($res_down = $req_down->fetch()) {
     $files[] = Download::displayFile($res_down);

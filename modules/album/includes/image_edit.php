@@ -24,7 +24,7 @@ $title = __('Edit image');
 
 // Редактировать картинку
 if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = " . $foundUser['id']);
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $foundUser['id']);
 
     if (! $req->rowCount()) {
         // Если альбома не существует, завершаем скрипт
@@ -46,7 +46,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
     if ($request->getMethod() === 'POST') {
         $description = trim($request->getPost('description', ''));
         $description = mb_substr($description, 0, 1500);
-        $db->exec('UPDATE `cms_album_files` SET `description` = ' . $db->quote($description) . " WHERE `id` = '${img}'");
+        $db->exec('UPDATE `cms_album_files` SET `description` = ' . $db->quote($description) . " WHERE `id` = '$img'");
         echo $view->render(
             'system::pages/result',
             [

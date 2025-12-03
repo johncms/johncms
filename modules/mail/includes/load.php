@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = __('Mail');
 
 if ($id) {
-    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '${id}' AND `file_name` != '' AND `delete`!='" . $user->id . "' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '$id' AND `file_name` != '' AND `delete`!='" . $user->id . "' LIMIT 1");
 
     if (! $req->rowCount()) {
         //Выводим ошибку
@@ -29,7 +29,7 @@ if ($id) {
     $res = $req->fetch();
 
     if (file_exists(UPLOAD_PATH . 'mail/' . $res['file_name'])) {
-        $db->exec("UPDATE `cms_mail` SET `count` = `count`+1 WHERE `id` = '${id}' LIMIT 1");
+        $db->exec("UPDATE `cms_mail` SET `count` = `count`+1 WHERE `id` = '$id' LIMIT 1");
         header('Location: ../upload/mail/' . $res['file_name']);
         exit;
     }

@@ -107,14 +107,14 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $sort = $res['sort'];
-                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` < '${sort}' ORDER BY `sort` DESC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort2}' WHERE `id` = '${id}'");
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort}' WHERE `id` = '${id2}'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }
@@ -130,14 +130,14 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $sort = $res['sort'];
-                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` > '${sort}' ORDER BY `sort` ASC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort2}' WHERE `id` = '${id}'");
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort}' WHERE `id` = '${id2}'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }

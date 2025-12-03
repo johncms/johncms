@@ -49,7 +49,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 // Список файлов
 $files = [];
 if ($total) {
-    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `user_id` = " . $id . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `user_id` = " . $id . " ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
     while ($res_down = $req_down->fetch()) {
         $files[] = Download::displayFile($res_down);
     }

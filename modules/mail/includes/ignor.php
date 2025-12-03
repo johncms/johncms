@@ -39,7 +39,7 @@ if (isset($_GET['del'])) {
             if (! $q->rowCount()) {
                 $message = __('User not blocked');
             } else {
-                $db->exec("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='" . $user->id . "' AND `from_id`='${id}' AND `ban`='1'");
+                $db->exec("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='" . $user->id . "' AND `from_id`='$id' AND `ban`='1'");
                 $message = __('User is unblocked');
             }
             echo $view->render(
@@ -124,8 +124,8 @@ if (isset($_GET['del'])) {
 					`ban`='1'"
                     );
                 } else {
-                    $db->exec("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='" . $user->id . "' AND `from_id`='${id}'");
-                    $db->exec("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='${id}' AND `from_id`='" . $user->id . "'");
+                    $db->exec("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='" . $user->id . "' AND `from_id`='$id'");
+                    $db->exec("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='$id' AND `from_id`='" . $user->id . "'");
                 }
 
                 echo $view->render(
@@ -192,7 +192,7 @@ if (isset($_GET['del'])) {
 		    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 		    AND `ban`='1'
 		    ORDER BY `cms_contact`.`time` DESC
-		    LIMIT ${start}, " . $user->config->kmess
+		    LIMIT $start, " . $user->config->kmess
         );
 
         $items = [];

@@ -35,7 +35,7 @@ if (! $user->isValid() || ! $id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}' " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"));
+$req = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id' " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"));
 
 if ($req->rowCount()) {
     // Предварительные проверки
@@ -50,7 +50,7 @@ if ($req->rowCount()) {
 
     $page = ceil(
         $db->query(
-            "SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($user->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : '')
+            "SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '$id'" . ($user->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : '')
         )->fetchColumn() / $user->config->kmess
     );
     $posts = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
@@ -121,11 +121,11 @@ if (! $error) {
                 $db->exec("UPDATE `users` SET `postforum` = '" . ($res_u['postforum'] + 1) . "' WHERE `id` = '" . $res['user_id'] . "'");
             }
 
-            $db->exec('UPDATE `forum_messages` SET `deleted` = NULL, `deleted_by` = ' . $db->quote($user->name) . " WHERE `id` = '${id}'");
-            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '${id}'");
+            $db->exec('UPDATE `forum_messages` SET `deleted` = NULL, `deleted_by` = ' . $db->quote($user->name) . " WHERE `id` = '$id'");
+            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
             if ($req_f->rowCount()) {
-                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '${id}'");
+                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id'");
             }
             $tools->recountForumTopic($res['topic_id']);
             header('Location: ' . $link);
@@ -183,7 +183,7 @@ if (! $error) {
 
             if ($user->rights == 9 && ! isset($_GET['hide'])) {
                 // Удаление поста (для Супервизоров)
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '${id}'");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
                 if ($req_f->rowCount()) {
                     // Если есть прикрепленные файлы, удаляем их
@@ -194,8 +194,8 @@ if (! $error) {
                 $db->exec('DELETE FROM `cms_forum_files` WHERE `post` = ' . $id);
 
                 // Формируем ссылку на нужную страницу темы
-                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>' : '<') . " '${id}'")->fetchColumn() / $user->config->kmess);
-                $db->exec("DELETE FROM `forum_messages` WHERE `id` = '${id}'");
+                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>' : '<') . " '$id'")->fetchColumn() / $user->config->kmess);
+                $db->exec("DELETE FROM `forum_messages` WHERE `id` = '$id'");
 
                 if ($posts < 2) {
                     // Пересылка на удаление всей темы
@@ -205,11 +205,11 @@ if (! $error) {
                 }
             } else {
                 // Скрытие поста
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '${id}'");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
                 if ($req_f->rowCount()) {
                     // Если есть прикрепленные файлы, скрываем их
-                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '${id}'");
+                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '$id'");
                 }
 
                 if ($posts == 1) {
@@ -219,7 +219,7 @@ if (! $error) {
 
                     header('Location: ?type=topics&id=' . $res_l['section_id']);
                 } else {
-                    $db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
+                    $db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = '" . $user->name . "' WHERE `id` = '$id'");
                     // Пересчитываем топик
                     $tools->recountForumTopic($res['topic_id']);
                     header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);

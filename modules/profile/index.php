@@ -105,7 +105,7 @@ function is_contact($id = 0)
 
     if (null === $user_id || $id != $user_id) {
         $user_id = $id;
-        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $user->id . "' AND `from_id` = '${id}'");
+        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $user->id . "' AND `from_id` = '$id'");
 
         if ($req->rowCount()) {
             $res = $req->fetch();

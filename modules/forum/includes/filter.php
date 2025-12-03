@@ -36,7 +36,7 @@ switch ($do) {
         // Удаляем фильтр
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
-        header("Location: ?type=topic&id=${id}");
+        header("Location: ?type=topic&id=$id");
         break;
 
     case 'set':
@@ -66,14 +66,14 @@ switch ($do) {
 
         $_SESSION['fsort_id'] = $id;
         $_SESSION['fsort_users'] = serialize($array);
-        header("Location: ?type=topic&id=${id}");
+        header("Location: ?type=topic&id=$id");
         break;
 
     default:
         /** @var PDO $db */
         $db = di(PDO::class);
         // Показываем список авторов темы, с возможностью выбора
-        $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '${id}' GROUP BY `user_id` ORDER BY `user_name`");
+        $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '$id' GROUP BY `user_id` ORDER BY `user_name`");
         $total = $req->rowCount();
         if ($total) {
             $list = [];

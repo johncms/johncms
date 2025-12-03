@@ -106,11 +106,11 @@ if ($request->getMethod() === 'POST') {
             ]
         );
     } else {
-        if (file_exists("${load_cat}/${fname}")) {
+        if (file_exists("$load_cat/$fname")) {
             $fname = time() . $fname;
         }
 
-        if (copy('http://' . $url, "${load_cat}/${fname}")) {
+        if (copy('http://' . $url, "$load_cat/$fname")) {
             $stmt = $db->prepare(
                 "
                     INSERT INTO `download__files`
@@ -172,7 +172,7 @@ if ($request->getMethod() === 'POST') {
             $i = 0;
 
             while ($dirid != '0' && $dirid != '') {
-                $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '${dirid}' LIMIT 1")->fetch();
+                $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '$dirid' LIMIT 1")->fetch();
                 if ($i) {
                     $sql .= ' OR ';
                 }
@@ -181,7 +181,7 @@ if ($request->getMethod() === 'POST') {
                 ++$i;
             }
 
-            $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE ${sql}");
+            $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
 
             echo $view->render(
                 'downloads::file_import_result',

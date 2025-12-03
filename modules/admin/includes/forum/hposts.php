@@ -57,7 +57,7 @@ if (isset($_POST['delpost'])) {
         exit;
     }
 
-    $req = $db->query("SELECT `id` FROM `forum_messages` WHERE `deleted` = '1' ${sort}");
+    $req = $db->query("SELECT `id` FROM `forum_messages` WHERE `deleted` = '1' $sort");
 
     while ($res = $req->fetch()) {
         $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
@@ -72,11 +72,11 @@ if (isset($_POST['delpost'])) {
     }
 
     // Удаляем посты
-    $db->exec("DELETE FROM `forum_messages` WHERE `deleted` = '1' ${sort}");
+    $db->exec("DELETE FROM `forum_messages` WHERE `deleted` = '1' $sort");
 
     header('Location: ?mod=hposts');
 } else {
-    $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = '1' ${sort}")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = '1' $sort")->fetchColumn();
     $req = $db->query(
         "SELECT `forum_messages`.*,
             `forum_messages`.`id` AS `fid`,
@@ -89,7 +89,7 @@ if (isset($_POST['delpost'])) {
             `users`.`status`,
             `users`.`datereg`
             FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-            WHERE `forum_messages`.`deleted` = '1' ${sort} ORDER BY `forum_messages`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess
+            WHERE `forum_messages`.`deleted` = '1' $sort ORDER BY `forum_messages`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess
     );
 
     if ($req->rowCount()) {

@@ -24,7 +24,7 @@ $title = __('Move image');
 $nav_chain->add($title);
 // Перемещение картинки в другой альбом
 if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = " . $foundUser['id']);
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $foundUser['id']);
     if (! $req->rowCount()) {
         // Если альбома не существует, завершаем скрипт
         echo $view->render(
@@ -41,15 +41,15 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
     $image = $req->fetch();
     if ($request->getMethod() === 'POST') {
         $al = $request->getPost('al', 0, FILTER_SANITIZE_NUMBER_INT);
-        $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
+        $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $foundUser['id']);
 
         if ($req_a->rowCount()) {
             $res_a = $req_a->fetch();
             $db->exec(
                 "UPDATE `cms_album_files` SET
-                    `album_id` = '${al}',
+                    `album_id` = '$al',
                     `access` = '" . $res_a['access'] . "'
-                    WHERE `id` = '${img}'
+                    WHERE `id` = '$img'
                 "
             );
             echo $view->render(

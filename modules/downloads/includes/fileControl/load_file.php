@@ -30,7 +30,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
 $more = isset($_GET['more']) ? abs((int) ($_GET['more'])) : false;
 
 if ($more) {
-    $req_more = $db->query("SELECT * FROM `download__more` WHERE `refid` = '" . $id . "' AND `id` = '${more}' LIMIT 1");
+    $req_more = $db->query("SELECT * FROM `download__more` WHERE `refid` = '" . $id . "' AND `id` = '$more' LIMIT 1");
     $res_more = $req_more->fetch();
 
     if (! $req_more->rowCount() || ! is_file($res_down['dir'] . '/' . $res_more['name'])) {

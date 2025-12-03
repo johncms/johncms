@@ -55,7 +55,7 @@ if (! $id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}' AND (`deleted` != '1' OR `deleted` IS NULL)");
+$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id' AND (`deleted` != '1' OR `deleted` IS NULL)");
 
 if (! $req->rowCount()) {
     http_response_code(404);
@@ -74,7 +74,7 @@ if (! $req->rowCount()) {
 
 if (isset($_POST['submit'])) {
     $type1 = $req->fetch();
-    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . ' ORDER BY `id` ASC');
+    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '$id'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . ' ORDER BY `id` ASC');
     $mod = (int) ($_POST['mod']);
 
     switch ($mod) {
@@ -96,11 +96,11 @@ if (isset($_POST['submit'])) {
             $num = time() . $id;
             $fp = fopen(UPLOAD_PATH . 'forum/topics/' . $num . '.txt', 'a+');
             flock($fp, LOCK_EX);
-            fwrite($fp, "${text}\r\n");
+            fwrite($fp, "$text\r\n");
             fflush($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
-            @chmod("${fp}", 0777);
+            @chmod("$fp", 0777);
             @chmod(UPLOAD_PATH . 'forum/topics/' . $num . '.txt', 0777);
             $link_to_download = '/forum/?act=loadtem&amp;n=' . $num;
             break;
@@ -136,22 +136,22 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $txt_tmp = di(Johncms\System\Legacy\Bbcode::class)->tags($txt_tmp);
                 $txt_tmp = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $txt_tmp);
                 $txt_tmp = str_replace("\r\n", '<br>', $txt_tmp);
-                $stroka = "${div} <b>" . $arr['user_name'] . '</b>(' . date(
+                $stroka = "$div <b>" . $arr['user_name'] . '</b>(' . date(
                     'd.m.Y/H:i',
                     $arr['date']
-                ) . ")<br>${txt_tmp}</div>";
-                $text = "${text} ${stroka}";
+                ) . ")<br>$txt_tmp</div>";
+                $text = "$text $stroka";
                 ++$i;
             }
             $text = $text . '<p>' . __('This theme was downloaded from the forum site') . ': <b>' . $config['copyright'] . '</b></p></body></html>';
             $num = time() . $id;
             $fp = fopen(UPLOAD_PATH . 'forum/topics/' . $num . '.htm', 'a+');
             flock($fp, LOCK_EX);
-            fwrite($fp, "${text}\r\n");
+            fwrite($fp, "$text\r\n");
             fflush($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
-            @chmod("${fp}", 0777);
+            @chmod("$fp", 0777);
             @chmod(UPLOAD_PATH . 'forum/topics/' . $num . '.htm', 0777);
             $link_to_download = '/forum/?act=loadtem&amp;n=' . $num;
             break;

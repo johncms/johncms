@@ -76,7 +76,7 @@ if ($request->getMethod() === 'POST') {
     $validator = new Validator($form_data, $rules);
     if ($validator->isValid()) {
         $current_topic->update($form_data);
-        header("Location: ?type=topic&id=${id}");
+        header("Location: ?type=topic&id=$id");
         exit;
     }
     $errors = $validator->getErrors();

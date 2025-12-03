@@ -16,7 +16,7 @@ $title = __('Deleting messages');
 
 if ($id) {
     //Проверяем наличие сообщения
-    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '${id}' AND `delete`!='" . $user->id . "' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '$id' AND `delete`!='" . $user->id . "' LIMIT 1");
 
     if (! $req->rowCount()) {
         //Выводим ошибку
@@ -36,7 +36,7 @@ if ($id) {
     if (isset($_POST['submit'])) { //Если кнопка "Подвердить" нажата
         //Удаляем системное сообщение
         if ($res['sys']) {
-            $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `id` = '${id}' AND `sys`='1' LIMIT 1");
+            $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `id` = '$id' AND `sys`='1' LIMIT 1");
             echo $view->render(
                 'system::pages/result',
                 [
@@ -55,16 +55,16 @@ if ($id) {
                     @unlink(UPLOAD_PATH . 'mail/' . $res['file_name']);
                 }
 
-                $db->exec("DELETE FROM `cms_mail` WHERE `user_id`='" . $user->id . "' AND `id` = '${id}' LIMIT 1");
+                $db->exec("DELETE FROM `cms_mail` WHERE `user_id`='" . $user->id . "' AND `id` = '$id' LIMIT 1");
             } elseif ($res['delete']) {
                 //Удаляем файл
                 if ($res['file_name']) {
                     @unlink(UPLOAD_PATH . 'mail/' . $res['file_name']);
                 }
 
-                $db->exec("DELETE FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '${id}' LIMIT 1");
+                $db->exec("DELETE FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `id` = '$id' LIMIT 1");
             } else {
-                $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user->id . "' WHERE `id` = '${id}' LIMIT 1");
+                $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user->id . "' WHERE `id` = '$id' LIMIT 1");
             }
             echo $view->render(
                 'system::pages/result',

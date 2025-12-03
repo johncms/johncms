@@ -22,7 +22,7 @@ $title = __('Mail');
 $nav_chain->add($title);
 
 if ($id) {
-    $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}' LIMIT 1");
+    $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
 
     if (! $req->rowCount()) {
         echo $view->render(
@@ -45,14 +45,14 @@ if ($id) {
         if (isset($_POST['clear'])) {
             $count_message = $db->query(
                 "SELECT COUNT(*) FROM `cms_mail`
-                WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}'))
+                WHERE ((`user_id`='$id' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='$id'))
                 AND `delete`!='" . $user->id . "'"
             )->fetchColumn();
 
             if ($count_message) {
                 $req = $db->query(
                     "SELECT `cms_mail`.* FROM `cms_mail`
-                    WHERE ((`cms_mail`.`user_id`='${id}' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='${id}'))
+                    WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='$id'))
                     AND `cms_mail`.`delete`!='" . $user->id . "' LIMIT " . $count_message
                 );
 
@@ -403,7 +403,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         $rres = $db->query(
             'SELECT * FROM `cms_mail`
         WHERE `user_id` = ' . $user->id . "
-        AND `from_id` = ${id}
+        AND `from_id` = $id
         ORDER BY `id` DESC
         LIMIT 1
         "
@@ -449,7 +449,7 @@ if (empty($user->ban['1']) && empty($user->ban['3']) && ! $tools->isIgnor($id)) 
 
 if ($id) {
     $total = $db->query(
-        "SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}')) AND `sys`!='1' AND `delete`!='" . $user->id . "' AND `spam`='0'"
+        "SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='$id')) AND `sys`!='1' AND `delete`!='" . $user->id . "' AND `spam`='0'"
     )->fetchColumn();
 
     if ($total) {
@@ -457,7 +457,7 @@ if ($id) {
             "SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
             FROM `cms_mail`
             LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
-            WHERE ((`cms_mail`.`user_id`='${id}' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='${id}'))
+            WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='" . $user->id . "') OR (`cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='$id'))
             AND `cms_mail`.`delete`!='" . $user->id . "'
             AND `cms_mail`.`sys`!='1'
             AND `cms_mail`.`spam`='0'

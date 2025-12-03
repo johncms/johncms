@@ -25,7 +25,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
     $title = __('Delete image');
     $post = $request->getParsedBody();
 
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
     if ($req->rowCount()) {
         $res = $req->fetch();
         $album = $res['album_id'];
@@ -39,9 +39,9 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
             @unlink(UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/' . $res['tmb_name']);
 
             // Удаляем записи из таблиц
-            $db->exec("DELETE FROM `cms_album_files` WHERE `id` = '${img}'");
-            $db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '${img}'");
-            $db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '${img}'");
+            $db->exec("DELETE FROM `cms_album_files` WHERE `id` = '$img'");
+            $db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '$img'");
+            $db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '$img'");
 
             header('Location: ./show?al=' . $album . '&user=' . $foundUser['id']);
         } else {

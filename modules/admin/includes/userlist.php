@@ -43,7 +43,7 @@ switch ($sort) {
 }
 
 $total = $db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
-$req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY ${order} LIMIT ${start}, " . $user->config->kmess);
+$req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY $order LIMIT $start, " . $user->config->kmess);
 
 echo $view->render(
     'admin::userlist',

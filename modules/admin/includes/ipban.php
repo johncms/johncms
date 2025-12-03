@@ -123,7 +123,7 @@ switch ($mod) {
 
             if (! $error) {
                 // Проверка на конфликты адресов
-                $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE ('${ip1}' BETWEEN `ip1` AND `ip2`) OR ('${ip2}' BETWEEN `ip1` AND `ip2`) OR (`ip1` >= '${ip1}' AND `ip2` <= '${ip2}')");
+                $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE ('$ip1' BETWEEN `ip1` AND `ip2`) OR ('$ip2' BETWEEN `ip1` AND `ip2`) OR (`ip1` >= '$ip1' AND `ip2` <= '$ip2')");
                 $total = $req->rowCount();
 
                 if ($total) {
@@ -333,7 +333,7 @@ switch ($mod) {
 
         if ($id) {
             // Поиск адреса по ссылке (ID)
-            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE `id` = '${id}'");
+            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE `id` = '$id'");
             $get_ip = '';
         } elseif (isset($_POST['ip'])) {
             // Поиск адреса по запросу из формы
@@ -356,7 +356,7 @@ switch ($mod) {
                 exit;
             }
 
-            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '${get_ip}' BETWEEN `ip1` AND `ip2` LIMIT 1");
+            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '$get_ip' BETWEEN `ip1` AND `ip2` LIMIT 1");
         } else {
             echo $view->render(
                 'system::pages/result',
@@ -431,7 +431,7 @@ switch ($mod) {
         // Удаление выбранного IP из базы
         if ($id) {
             if (isset($_GET['yes'])) {
-                $db->exec("DELETE FROM `cms_ban_ip` WHERE `id`='${id}'");
+                $db->exec("DELETE FROM `cms_ban_ip` WHERE `id`='$id'");
                 $db->query('OPTIMIZE TABLE `cms_ban_ip`');
                 echo $view->render(
                     'system::pages/result',

@@ -19,8 +19,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 if ($user->rights == 3 || $user->rights >= 6) {
-    $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id`='${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
-    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
+    $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id`='$id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
+    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id'")->fetchColumn();
 
     if ($topic_vote != 0 || $topic == 0) {
         echo $view->render(
@@ -46,10 +46,10 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 `name`=' . $db->quote($vote_name) . ",
                 `time`='" . time() . "',
                 `type` = '1',
-                `topic`='${id}'
+                `topic`='$id'
             "
             );
-            $db->exec("UPDATE `forum_topic` SET `has_poll` = '1'  WHERE `id` = '${id}'");
+            $db->exec("UPDATE `forum_topic` SET `has_poll` = '1'  WHERE `id` = '$id'");
             $vote_count = abs((int) ($_POST['count_vote']));
 
             if ($vote_count > 20) {
@@ -71,7 +71,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
                     'INSERT INTO `cms_forum_vote` SET
                     `name`=' . $db->quote($text) . ",
                     `type` = '2',
-                    `topic`='${id}'
+                    `topic`='$id'
                 "
                 );
             }

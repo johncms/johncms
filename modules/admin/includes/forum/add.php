@@ -26,7 +26,7 @@ $nav_chain->add($title);
 // Добавление категории
 if ($id) {
     // Проверяем наличие категории
-    $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '${id}'");
+    $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '$id'");
 
     if ($req->rowCount()) {
         $res = $req->fetch();
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 
     if (! $error) {
         // Добавляем в базу категорию
-        $req = $db->query('SELECT `sort`, parent FROM `forum_sections` WHERE ' . ($id ? "`parent` = '${id}'" : '1=1') . ' ORDER BY `sort` DESC LIMIT 1');
+        $req = $db->query('SELECT `sort`, parent FROM `forum_sections` WHERE ' . ($id ? "`parent` = '$id'" : '1=1') . ' ORDER BY `sort` DESC LIMIT 1');
 
         if ($req->rowCount()) {
             $res = $req->fetch();

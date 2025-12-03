@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 if (($al && $foundUser['id'] === $user->id) || $user->rights >= 6) {
     $post = $request->getParsedBody();
 
-    $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
+    $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1");
     if ($req_a->rowCount()) {
         $res_a = $req_a->fetch();
         $title = __('Delete album:') . ' ' . $tools->checkout($res_a['name']);

@@ -42,7 +42,7 @@ if ($total) {
     $req_down = $db->query(
         'SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
     FROM `download__files` LEFT JOIN `download__bookmark` ON `download__files`.`id` = `download__bookmark`.`file_id`
-    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, " . $user->config->kmess
+    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT $start, " . $user->config->kmess
     );
     $files = [];
     while ($res_down = $req_down->fetch()) {

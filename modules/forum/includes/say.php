@@ -58,7 +58,7 @@ function forum_link($m)
 
     if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
         $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
-        $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
+        $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '$thid' AND (`deleted` != '1' OR deleted IS NULL)");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
@@ -106,7 +106,7 @@ switch ($post_type) {
             exit;
         }
 
-        $type1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'")->fetch();
+        $type1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'")->fetch();
         // Добавление простого сообщения
         if (($type1['deleted'] == 1 || $type1['closed'] == 1) && $user->rights < 7) {
             // Проверка, закрыта ли тема
@@ -254,8 +254,8 @@ switch ($post_type) {
                 }
             }
 
-            $cnt_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
-            $cnt_all_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${id}'")->fetchColumn();
+            $cnt_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
+            $cnt_all_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$id'")->fetchColumn();
 
             // Пересчитываем топик
             $tools->recountForumTopic($id);
@@ -279,7 +279,7 @@ switch ($post_type) {
             if (isset($_POST['addfiles'])) {
                 $db->query(
                     "INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
-                VALUES ('${id}', '" . $user->id . "', '" . time() . "')
+                VALUES ('$id', '" . $user->id . "', '" . time() . "')
                 ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
                 );
                 if ($update) {
@@ -322,7 +322,7 @@ switch ($post_type) {
 
     case 'reply':
         // Добавление сообщения с цитированием поста
-        $type1 = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetch();
+        $type1 = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetch();
 
         if (empty($type1)) {
             echo $view->render(
@@ -354,7 +354,7 @@ switch ($post_type) {
             exit;
         }
 
-        $th1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${th}'")->fetch();
+        $th1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$th'")->fetch();
 
         if (($th1['deleted'] == 1 || $th1['closed'] == 1) && $user->rights < 7) {
             echo $view->render(
@@ -515,8 +515,8 @@ switch ($post_type) {
 
             $fadd = $db->lastInsertId();
 
-            $cnt_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${th}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
-            $cnt_all_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${th}'")->fetchColumn();
+            $cnt_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$th' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
+            $cnt_all_messages = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$th'")->fetchColumn();
 
             // Обновляем статистику юзера
             $db->exec(
@@ -559,9 +559,9 @@ switch ($post_type) {
             }
 
             if (isset($_POST['addfiles'])) {
-                header("Location: ?type=topic&id=${fadd}&act=addfile");
+                header("Location: ?type=topic&id=$fadd&act=addfile");
             } else {
-                header("Location: ?type=topic&id=${th}&page=${page}");
+                header("Location: ?type=topic&id=$th&page=$page");
             }
             exit;
         }

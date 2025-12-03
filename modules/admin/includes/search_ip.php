@@ -95,9 +95,9 @@ if ($search && ! $error) {
 
     // Выводим результаты поиска
     if ($mod === 'history') {
-        $total = $db->query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}")->fetchColumn();
+        $total = $db->query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2")->fetchColumn();
     } else {
-        $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2")->fetchColumn();
     }
 
 
@@ -119,12 +119,12 @@ FROM `cms_users_iphistory` hst
 JOIN `users` u ON u.id = hst.user_id
 JOIN (SELECT user_id, MAX(`time`) `mtime` FROM `cms_users_iphistory` GROUP BY user_id) t
 ON t.mtime = hst.`time` AND t.user_id = u.id
-WHERE hst.`ip` BETWEEN ${ip1} AND ${ip2} OR hst.`ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
+WHERE hst.`ip` BETWEEN $ip1 AND $ip2 OR hst.`ip_via_proxy` BETWEEN $ip1 AND $ip2
 ORDER BY hst.`time` DESC, u.`name` ASC LIMIT " . $start . ',' . $user->config->kmess);
         } else {
             $req = $db->query(
                 "SELECT * FROM `users`
-            WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
+            WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2
             ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess
             );
         }

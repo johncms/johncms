@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 // Проверяем наличие комментируемого объекта
-$req_obj = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}'");
+$req_obj = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
 
 if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
@@ -79,7 +79,7 @@ if ($req_obj->rowCount()) {
 
     // Ставим метку прочтения
     if ($user->id === $owner['id'] && $res_obj['unread_comments']) {
-        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '${img}' LIMIT 1");
+        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
     }
 
     // Показываем комментарии
@@ -87,7 +87,7 @@ if ($req_obj->rowCount()) {
 
     // Обрабатываем метки непрочитанных комментариев
     if ($comm->added && $user->id !== $owner['id']) {
-        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '${img}' LIMIT 1");
+        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
     }
 } else {
     echo $view->render(

@@ -51,7 +51,7 @@ if ($id) {
 $files = [];
 $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 if ($total) {
-    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '3' ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
+    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '3' ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
     while ($res_down = $req_down->fetch()) {
         $file = Download::displayFile($res_down);
         $file['accept_url'] = '?act=mod_files&amp;id=' . $res_down['id'];

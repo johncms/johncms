@@ -47,7 +47,7 @@ if ($user->rights > 6) {
     $catId = isset($get['catId']) ? (int) ($get['catId']) : 0;
 
     if ($catId) {
-        $queryDir = $db->query("SELECT * FROM `download__category` WHERE `id` = '${catId}' LIMIT 1");
+        $queryDir = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catId' LIMIT 1");
 
         if (! $queryDir->rowCount()) {
             $catId = 0;
@@ -137,7 +137,7 @@ if ($user->rights > 6) {
             );
         }
     } else {
-        $queryCat = $db->query("SELECT * FROM `download__category` WHERE `refid` = '${catId}'");
+        $queryCat = $db->query("SELECT * FROM `download__category` WHERE `refid` = '$catId'");
         $sections = [];
         while ($resCat = $queryCat->fetch()) {
             $resCat['rus_name'] = htmlspecialchars($resCat['rus_name']);

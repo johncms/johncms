@@ -23,17 +23,17 @@ switch ($mod) {
     case 'up':
         // Передвигаем альбом на позицию вверх
         if ($al && $foundUser['id'] == $user->id || $user->rights >= 7) {
-            $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
+            $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $foundUser['id']);
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $sort = $res['sort'];
-                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' AND `sort` < '${sort}' ORDER BY `sort` DESC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' AND `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '${sort2}' WHERE `id` = '${al}'");
-                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '${sort}' WHERE `id` = '${id2}'");
+                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '$sort2' WHERE `id` = '$al'");
+                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }
@@ -42,17 +42,17 @@ switch ($mod) {
     case 'down':
         // Передвигаем альбом на позицию вниз
         if ($al && $foundUser['id'] == $user->id || $user->rights >= 7) {
-            $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
+            $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $foundUser['id']);
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $sort = $res['sort'];
-                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' AND `sort` > '${sort}' ORDER BY `sort` ASC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' AND `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    $db->query("UPDATE `cms_album_cat` SET `sort` = '${sort2}' WHERE `id` = '${al}'");
-                    $db->query("UPDATE `cms_album_cat` SET `sort` = '${sort}' WHERE `id` = '${id2}'");
+                    $db->query("UPDATE `cms_album_cat` SET `sort` = '$sort2' WHERE `id` = '$al'");
+                    $db->query("UPDATE `cms_album_cat` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }

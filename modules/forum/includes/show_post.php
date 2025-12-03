@@ -40,7 +40,7 @@ if (empty($_GET['id'])) {
 $res = $db->query(
     "SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-WHERE `forum_messages`.`id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1'
+WHERE `forum_messages`.`id` = '$id'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1'
 )->fetch();
 
 if (! $res) {
@@ -107,7 +107,7 @@ if ($freq->rowCount()) {
 $post = $res;
 
 // Вычисляем, на какой странице сообщение?
-$page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'")->fetchColumn() / $user->config->kmess);
+$page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '$id'")->fetchColumn() / $user->config->kmess);
 
 $canonical = $config['homeurl'] . '/forum/?type=topic&id=' . $res['topic_id'];
 if ($page > 1) {
