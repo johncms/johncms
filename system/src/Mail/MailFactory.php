@@ -67,8 +67,6 @@ class MailFactory
         return match ($transport) {
             'smtp' => $this->smtpDsn($options),
             'sendmail' => $this->sendmailDsn($options),
-            'file' => $this->fileDsn($options),
-            'memory' => 'in-memory://',
 
             default => throw new \RuntimeException(
                 sprintf('Unknown mail transport "%s"', $transport)
@@ -106,11 +104,5 @@ class MailFactory
     {
         $cmd = $opt['command'] ?? '/usr/sbin/sendmail -bs';
         return sprintf('sendmail://default?command=%s', urlencode($cmd));
-    }
-
-    private function fileDsn(array $opt): string
-    {
-        $path = rtrim($opt['path'] ?? sys_get_temp_dir(), '/') . '/';
-        return sprintf('file://%s', $path);
     }
 }

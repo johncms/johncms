@@ -12,25 +12,18 @@ declare(strict_types=1);
 
 return [
     'mail' => [
-        // Default transport (can be sendmail, smtp, file or memory)
+        // Default transport (can be sendmail, smtp)
         'transport' => 'sendmail',
 
         // Transport settings
         'options'   => [
             'smtp' => [
-                'name'              => 'localhost.localdomain',
-                'host'              => '127.0.0.1',
-                'connection_class'  => 'plain',
-                'connection_config' => [
-                    'username' => 'user',
-                    'password' => 'pass',
-                ],
-            ],
-            'file' => [
-                'path'     => DATA_PATH . 'mail/',
-                'callback' => static function () {
-                    return 'Message_' . microtime(true) . '_' . mt_rand() . '.txt';
-                },
+                'name'       => 'example.com',
+                'host'       => '127.0.0.1',
+                'username'   => 'mail@example.com',
+                'password'   => 'password',
+                'port'       => 465,
+                'encryption' => 'tls',
             ],
         ],
     ],
