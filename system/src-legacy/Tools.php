@@ -327,7 +327,7 @@ class Tools
         $user = [];
 
         if ($id > 0) {
-            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
+            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
                 $user = $req->fetch();
@@ -355,7 +355,7 @@ class Tools
         if (null === $user_id || $id != $user_id) {
             $user_id = $id;
             $req = $this->db->query(
-                "SELECT * FROM `cms_contact` WHERE `user_id` = '${id}' AND `from_id` = " . $this->user->id
+                "SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . $this->user->id
             );
 
             if ($req->rowCount()) {
@@ -584,11 +584,11 @@ class Tools
     public function recountForumTopic($topic_id)
     {
         $topic_id = (int) $topic_id;
-        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn(); // phpcs:ignore
-        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}'")->fetchColumn(); // phpcs:ignore
+        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn(); // phpcs:ignore
+        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id'")->fetchColumn();                                         // phpcs:ignore
 
-        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
-        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
+        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch(); // phpcs:ignore
+        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' ORDER BY id DESC LIMIT 1")->fetch();                                         // phpcs:ignore
 
         // Обновляем время топика
         $this->db->exec(
@@ -603,7 +603,7 @@ class Tools
             `mod_last_post_author` = '" . $mod_last_post['user_id'] . "',
             `mod_last_post_author_name` = '" . $mod_last_post['user_name'] . "',
             `mod_last_message_id` = '" . $mod_last_post['id'] . "'
-            WHERE `id` = '${topic_id}'
+            WHERE `id` = '$topic_id'
         "
         );
     }
@@ -640,7 +640,7 @@ class Tools
      */
     public function getSections(array &$items, $parent): array
     {
-        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '${parent}'")->fetch();
+        $res = $this->db->query("SELECT `id`, `name`, `section_type`, `parent` FROM `forum_sections` WHERE `id` = '$parent'")->fetch();
         if ($res != false) {
             $items[] = $res;
             return $this->getSections($items, $res['parent']);
@@ -651,7 +651,7 @@ class Tools
 
     public function getSectionsTree(array &$section_tree, $parent = 0, $mark = ''): array
     {
-        $req = $this->db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${parent}' ORDER BY `sort` ASC");
+        $req = $this->db->query("SELECT * FROM `forum_sections` WHERE `parent` = '$parent' ORDER BY `sort` ASC");
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 $section_tree[] = [

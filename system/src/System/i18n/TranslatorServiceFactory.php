@@ -43,7 +43,7 @@ class TranslatorServiceFactory
         return $translator;
     }
 
-    private function determineLocale(string $userLng, string $systemLng, array $lngList, string $setLng = null): string
+    private function determineLocale(string $userLng, string $systemLng, array $lngList, ?string $setLng = null): string
     {
         if (null !== $setLng && array_key_exists($setLng, $lngList)) {
             $locale = trim($setLng);

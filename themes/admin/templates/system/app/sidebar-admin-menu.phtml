@@ -29,7 +29,7 @@ $news_counters = $counters->news();
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
             </svg>
             <span class="flex-grow-1"><?= d__('admin', 'Users') ?></span>
-            <?php if ($regtotal): ?>
+            <?php if (isset($regtotal)): ?>
                 <div class="badge bg-danger rounded-pill ms-2">+&nbsp;<?= $regtotal ?></div>
             <?php endif ?>
         </div>
@@ -51,7 +51,7 @@ $news_counters = $counters->news();
                     <span class="flex-grow-1 text-info"><?= d__('admin', 'Search') ?></span>
                 </a>
             </li>
-            <?php if ($regtotal): ?>
+            <?php if (isset($regtotal)): ?>
                 <li class="<?= isset($usr_menu['reg']) ? 'active' : '' ?>">
                     <a href="/admin/reg/">
                         <svg class="icon">
@@ -68,7 +68,7 @@ $news_counters = $counters->news();
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#users"/>
                     </svg>
                     <span class="flex-grow-1"><?= d__('admin', 'Users') ?></span>
-                    <span class="badge rounded-pill text-bg-light"><?= $tools->formatNumber($countusers) ?></span>
+                    <span class="badge rounded-pill text-bg-light"><?= $tools->formatNumber($countusers ?? 0) ?></span>
                 </a>
             </li>
             <li class="<?= isset($usr_menu['adminlist']) ? 'active' : '' ?>">
@@ -77,7 +77,7 @@ $news_counters = $counters->news();
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#user"/>
                     </svg>
                     <span class="flex-grow-1"><?= d__('admin', 'Administration') ?></span>
-                    <span class="badge rounded-pill text-bg-light"><?= $tools->formatNumber($countadm) ?></span>
+                    <span class="badge rounded-pill text-bg-light"><?= $tools->formatNumber($countadm ?? 0) ?></span>
                 </a>
             </li>
             <li class="<?= isset($usr_menu['ban_panel']) ? 'active' : '' ?>">
@@ -86,7 +86,7 @@ $news_counters = $counters->news();
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#slash"/>
                     </svg>
                     <span class="flex-grow-1"><?= d__('admin', 'Ban Panel') ?></span>
-                    <span class="badge rounded-pill text-bg-light"><?= $tools->formatNumber($bantotal) ?></span>
+                    <span class="badge rounded-pill text-bg-light"><?= $tools->formatNumber($bantotal ?? 0) ?></span>
                 </a>
             </li>
             <?php if ($user->rights === 9): ?>
