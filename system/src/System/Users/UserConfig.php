@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
+#[\AllowDynamicProperties]
 class UserConfig
 {
     /** @var int Разрешить прямые Внешние ссылки */
