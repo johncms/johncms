@@ -11,6 +11,13 @@
   --bs-list-group-color: #fff;
 }
 
+.list-items {
+  .list-item {
+    background: #2c2c2c;
+    text-decoration: none;
+  }
+}
+
 .post-item {
   background: transparent;
   border-bottom: 1px solid var(--bs-border-color);
@@ -133,6 +140,10 @@ label {
 .new_post-item {
   .post-title {
     color: #dddddd;
+  }
+
+  &.post-unread {
+    background: rgb(36 36 36 / 98%);
   }
 }
 

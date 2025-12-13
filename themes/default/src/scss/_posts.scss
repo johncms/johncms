@@ -229,6 +229,10 @@
   .post-footer {
     // margin-bottom: 20px;
   }
+
+  &.post-unread {
+    background: var(--bs-yellow-light);
+  }
 }
 
 .new_post-header {

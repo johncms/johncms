@@ -76,7 +76,7 @@ $this->layout(
 <?php endif; ?>
 
 <?php foreach ($data['items'] as $item): ?>
-    <div class="new_post-item border-bottom shadow mb-2 <?= ! $item['read'] ? ' bg-yellow-light' : '' ?>">
+    <div class="new_post-item border-bottom shadow mb-2 <?= ! $item['read'] ? ' post-unread' : '' ?>">
         <div class="new_post-header d-flex justify-content-between">
             <div class="post-user">
                 <?php if (! empty($item['user_profile_link'])): ?>
