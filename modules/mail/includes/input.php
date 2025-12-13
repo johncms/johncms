@@ -34,17 +34,24 @@ $total = $db->query(
 
 if ($total) {
     $req = $db->query(
-        "SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
-		FROM `cms_mail`
-		LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
-		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
-		WHERE `cms_mail`.`from_id`='" . $user->id . "'
-		AND `cms_mail`.`delete`!='" . $user->id . "'
-		AND `cms_mail`.`sys`='0'
-		AND `cms_contact`.`ban`!='1'
-		GROUP BY `cms_mail`.`user_id`
-		ORDER BY MAX(`cms_mail`.`time`) DESC
-		LIMIT " . $start . ',' . $user->config->kmess
+        "SELECT u.*, m.last_time AS `time`
+     FROM (
+         SELECT
+             `user_id`,
+             MAX(`time`) AS last_time
+         FROM `cms_mail`
+         WHERE `from_id` = '" . $user->id . "'
+           AND `delete` != '" . $user->id . "'
+           AND `sys` = '0'
+         GROUP BY `user_id`
+     ) AS m
+     INNER JOIN `users` AS u ON u.`id` = m.`user_id`
+     LEFT JOIN `cms_contact` AS c
+       ON c.`from_id` = m.`user_id`
+      AND c.`user_id` = '" . $user->id . "'
+     WHERE c.`ban` != '1'
+     ORDER BY m.last_time DESC
+     LIMIT " . $start . ", " . $user->config->kmess
     );
 
     while ($row = $req->fetch()) {
