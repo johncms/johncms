@@ -44,7 +44,7 @@ if (DEBUG) {
     ini_set('log_errors', 'On');
     ini_set('error_log', LOG_PATH . 'errors-' . date('Y-m-d') . '.log');
 } else {
-    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+    error_reporting(E_ALL & ~E_DEPRECATED);
     ini_set('display_errors', 'Off');
     ini_set('log_errors', 'Off');
 }
