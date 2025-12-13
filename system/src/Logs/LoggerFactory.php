@@ -11,7 +11,7 @@ use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
-class LoggerFactory
+final readonly class LoggerFactory
 {
     public function __invoke(ContainerInterface $container): Logger
     {
