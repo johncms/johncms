@@ -19,6 +19,7 @@ $sort = htmlspecialchars((string) $request->getQuery('sort', 'read'));
 
 $title = __('Rating articles');
 $nav_chain->add($title);
+$req = null;
 
 $data = [];
 $data['filters'] = [
@@ -42,9 +43,9 @@ $data['filters'] = [
 $field = $sort === 'comm' ? '`comm_count`' : '`count_views`';
 
 if ($sort === 'read' || $sort === 'comm') {
-    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . $field . ' > 0 ORDER BY ' . $field . ' DESC LIMIT 20')->fetchColumn();
+    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . $field . ' > 0')->fetchColumn();
 } else {
-    $total = $db->query('SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20')->fetchColumn(0);
+    $total = $db->query('SELECT COUNT(*) FROM `cms_library_rating`')->fetchColumn(0);
 }
 
 if ($total) {
