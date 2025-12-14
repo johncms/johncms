@@ -26,7 +26,11 @@ if (! is_file('config/autoload/database.local.php')) {
 require 'system/bootstrap.php';
 
 $container = Johncms\System\Container\Factory::getContainer();
-(new \Johncms\Logs\GlobalErrorHandler($container->get(\Psr\Log\LoggerInterface::class), [E_WARNING]))->registerHandlers();
+$logger = $container->get(\Psr\Log\LoggerInterface::class);
+(new \Johncms\Logs\GlobalErrorHandler(
+    logger:    $logger,
+    container: $container
+))->registerHandlers();
 $dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
 
 $match = $dispatcher->dispatch(

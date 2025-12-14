@@ -9,6 +9,10 @@ define('CONSOLE_MODE', true);
 require 'bootstrap.php';
 
 $container = Johncms\System\Container\Factory::getContainer();
-(new \Johncms\Logs\GlobalErrorHandler($container->get(\Psr\Log\LoggerInterface::class)))->registerHandlers();
+$logger = $container->get(\Psr\Log\LoggerInterface::class);
+(new \Johncms\Logs\GlobalErrorHandler(
+    logger:    $logger,
+    container: $container
+))->registerHandlers();
 
 EmailSender::send();
