@@ -14,7 +14,7 @@ $ads_array = $ads->getAds();
 $theme = di(\Johncms\System\View\Theme::class);
 $request = di(\Johncms\System\Http\Request::class);
 if ($request->getQuery('setTheme')) {
-    $setTheme = $request->getQuery('setTheme', 'auto', FILTER_SANITIZE_STRING);
+    $setTheme = $request->getQuery('setTheme', 'auto');
     $theme->setTheme($setTheme);
     redirect($request->getQueryString(['setTheme']));
 }
