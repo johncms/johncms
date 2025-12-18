@@ -148,9 +148,10 @@ ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
             $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['post'];
             $res['topic_url'] = '/forum/?type=topic&id=' . $res['topic'] . '&amp;page=' . $page;
 
-            $fls = @filesize(UPLOAD_PATH . 'forum/attach/' . $res['filename']);
+            $file = UPLOAD_PATH . 'forum/attach/' . $res['filename'];
+            $fls = is_file($file) ? @filesize($file) : 0;
             $res['file_size'] = round($fls / 1024, 0);
-            $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $res['filename'], PATHINFO_EXTENSION));
+            $att_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
             $pic_ext = [
                 'gif',
                 'jpg',
