@@ -25,7 +25,7 @@ $view->addData(
     ]
 );
 
-$request_locale = $request->getQuery('set_locale', null, FILTER_SANITIZE_STRING);
+$request_locale = $request->getQuery('set_locale');
 
 $lng_list = Languages::getLngList();
 

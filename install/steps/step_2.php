@@ -26,8 +26,8 @@ $check_extensions = [
     [
         'name'        => __('PHP version'),
         'value'       => PHP_VERSION,
-        'error'       => (PHP_VERSION_ID < 70300),
-        'description' => __('The PHP version must be at least %s', '7.3'),
+        'error'       => (PHP_VERSION_ID < 80200),
+        'description' => __('The PHP version must be at least %s', '8.2'),
     ],
     [
         'name'        => 'PDO',
@@ -70,6 +70,7 @@ $error_extensions = array_filter(
 
 $folders = [
     'data/cache/',
+    'data/logs/',
     'upload/downloads/files/',
     'upload/downloads/screen/',
     'upload/forum/attach/',
