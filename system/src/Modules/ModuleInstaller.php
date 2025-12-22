@@ -42,6 +42,13 @@ class ModuleInstaller
 
     protected function getInstallerClassName(): string
     {
-        return '\\' . ucfirst($this->module_name) . '\Install\Installer';
+        // Check old namespace format
+        $className = '\\' . ucfirst($this->module_name) . '\Install\Installer';
+        if (class_exists($className)) {
+            return $className;
+        }
+
+        // Check new namespace format
+        return '\\Johncms\\Modules\\' . ucfirst($this->module_name) . '\Install\Installer';
     }
 }

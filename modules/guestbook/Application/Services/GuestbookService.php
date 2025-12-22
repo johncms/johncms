@@ -10,14 +10,15 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Services;
+namespace Johncms\Modules\Guestbook\Application\Services;
 
 use Exception;
-use Guestbook\Models\Guestbook;
-use Guestbook\Resources\PostResource;
-use Guestbook\Resources\ResourceCollection;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Files\FileStorage;
+use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
+use Johncms\Modules\Guestbook\Application\Resources\PostResource;
+use Johncms\Modules\Guestbook\Application\Resources\ResourceCollection;
+use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;

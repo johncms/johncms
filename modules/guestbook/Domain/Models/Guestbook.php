@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Models;
+namespace Johncms\Modules\Guestbook\Domain\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

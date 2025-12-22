@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Resources;
+namespace Johncms\Modules\Guestbook\Application\Resources;
 
-use Guestbook\Models\Guestbook;
+use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
 use Johncms\Users\User;
 
 /**

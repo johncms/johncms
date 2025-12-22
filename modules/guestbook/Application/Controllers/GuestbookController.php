@@ -10,18 +10,18 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Controllers;
+namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Exception;
-use Guestbook\Models\Guestbook;
-use Guestbook\Services\GuestbookForm;
-use Guestbook\Services\GuestbookService;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
+use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\Users\User;

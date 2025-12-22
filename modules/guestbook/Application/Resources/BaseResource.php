@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Guestbook\Resources;
+namespace Johncms\Modules\Guestbook\Application\Resources;
 
 abstract class BaseResource
 {

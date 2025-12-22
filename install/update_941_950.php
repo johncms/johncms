@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Blueprint;
 use Johncms\Checker\DBChecker;
 
 const CONSOLE_MODE = true;
@@ -76,7 +76,7 @@ if (empty($_SESSION['converted_posts'])) {
     $_SESSION['converted_posts'] = [];
 }
 $tools = di(\Johncms\System\Legacy\Tools::class);
-$posts = (new \Guestbook\Models\Guestbook())->get();
+$posts = (new \Johncms\Modules\Guestbook\Domain\Models\Guestbook())->get();
 foreach ($posts as $post) {
     if (! in_array($post->id, $_SESSION['converted_posts'])) {
         $post->text = $tools->checkout($post->text, 1, 1);

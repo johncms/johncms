@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Admin\Controllers\System\SystemCheckController;
 use Admin\Controllers\Users\UsersController;
 use FastRoute\RouteCollector;
-use Guestbook\Controllers\GuestbookController;
+use Johncms\Modules\Guestbook\Application\Controllers\GuestbookController;
 use Johncms\System\Users\User;
 use News\Controllers\Admin\AdminArticleController;
 use News\Controllers\Admin\AdminController;
