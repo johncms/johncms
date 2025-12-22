@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Resources;
 
-use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
+use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Users\User;
 
 /**
  * Class PostResource
  *
  * @package Guestbook\Resources
- * @property Guestbook $model
+ * @property GuestbookEntry $model
  */
 class PostResource extends BaseResource
 {

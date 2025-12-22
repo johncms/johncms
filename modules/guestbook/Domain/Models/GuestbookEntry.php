@@ -50,7 +50,7 @@ use Johncms\Users\User;
  * @property string $reply_text
  * @property bool $is_online
  */
-class Guestbook extends Model
+class GuestbookEntry extends Model
 {
     protected $table = 'guest';
 

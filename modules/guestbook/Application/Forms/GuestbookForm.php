@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Forms;
 
-use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
+use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 
@@ -59,7 +59,7 @@ class GuestbookForm
                 'NotEmpty',
                 'StringLength'   => ['min' => 4],
                 'ModelNotExists' => [
-                    'model'   => Guestbook::class,
+                    'model'   => GuestbookEntry::class,
                     'field'   => 'text',
                     'exclude' => function ($query) {
                         $query->where('user_id', $this->user->id)->where('time', '>', (time() - 600));

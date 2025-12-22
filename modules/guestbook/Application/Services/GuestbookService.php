@@ -18,7 +18,7 @@ use Johncms\Files\FileStorage;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Resources\PostResource;
 use Johncms\Modules\Guestbook\Application\Resources\ResourceCollection;
-use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
+use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
@@ -56,7 +56,7 @@ class GuestbookService
     public function getPosts(): array
     {
         $admin_club = (isset($_SESSION['ga']) && ($this->user->rights >= 1 || in_array($this->user->id, $this->guest_access)));
-        $messages = (new Guestbook())
+        $messages = (new GuestbookEntry())
             ->with('user')
             ->where('adm', $admin_club)
             ->orderByDesc('time')
@@ -132,9 +132,9 @@ class GuestbookService
     /**
      * Adding a post to the guestbook.
      *
-     * @return Guestbook
+     * @return GuestbookEntry
      */
-    public function create(): Guestbook
+    public function create(): GuestbookEntry
     {
         $form = di(GuestbookForm::class);
         $env = di(Environment::class);
@@ -143,7 +143,7 @@ class GuestbookService
 
         $validator = new Validator($fields, $validation_rules);
         if ($validator->isValid()) {
-            $message = (new Guestbook())->create(
+            $message = (new GuestbookEntry())->create(
                 [
                     'adm'            => ! $this->isGuestbook(),
                     'time'           => time(),
@@ -204,7 +204,7 @@ class GuestbookService
         switch ($period) {
             case '1':
                 // Clean messages older than 1 day
-                $messages = (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 86400))->get();
+                $messages = (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 86400))->get();
                 foreach ($messages as $message) {
                     if (! empty($message->attached_files)) {
                         foreach ($message->attached_files as $attached_file) {
@@ -216,12 +216,12 @@ class GuestbookService
                     }
                 }
 
-                (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 86400))->delete();
+                (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 86400))->delete();
                 return __('All messages older than 1 day were deleted');
 
             case '2':
                 // Perform a full cleanup
-                $messages = (new Guestbook())->where('adm', $adm)->get();
+                $messages = (new GuestbookEntry())->where('adm', $adm)->get();
                 foreach ($messages as $message) {
                     if (! empty($message->attached_files)) {
                         foreach ($message->attached_files as $attached_file) {
@@ -232,12 +232,12 @@ class GuestbookService
                         }
                     }
                 }
-                (new Guestbook())->where('adm', $adm)->delete();
+                (new GuestbookEntry())->where('adm', $adm)->delete();
                 return __('Full clearing is finished');
 
             default:
                 // Clean messages older than 1 week""
-                $messages = (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 604800))->get();
+                $messages = (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 604800))->get();
                 foreach ($messages as $message) {
                     if (! empty($message->attached_files)) {
                         foreach ($message->attached_files as $attached_file) {
@@ -248,7 +248,7 @@ class GuestbookService
                         }
                     }
                 }
-                (new Guestbook())->where('adm', $adm)->where('time', '<', (time() - 604800))->delete();
+                (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 604800))->delete();
                 return __('All messages older than 1 week were deleted');
         }
     }

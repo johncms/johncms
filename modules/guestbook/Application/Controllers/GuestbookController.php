@@ -21,7 +21,7 @@ use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
-use Johncms\Modules\Guestbook\Domain\Models\Guestbook;
+use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\Users\User;
@@ -157,7 +157,7 @@ class GuestbookController extends BaseController
             }
             // We clean the Guest, according to the specified parameters
             $id = $request->getPost('id', 0, FILTER_VALIDATE_INT);
-            $post = (new Guestbook())->find($id);
+            $post = (new GuestbookEntry())->find($id);
             if (! empty($post->attached_files)) {
                 foreach ($post->attached_files as $attached_file) {
                     try {
@@ -191,7 +191,7 @@ class GuestbookController extends BaseController
         $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
 
         try {
-            $message = (new Guestbook())->findOrFail($id);
+            $message = (new GuestbookEntry())->findOrFail($id);
         } catch (ModelNotFoundException $exception) {
             pageNotFound();
         }
@@ -256,7 +256,7 @@ class GuestbookController extends BaseController
         $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
 
         try {
-            $message = (new Guestbook())->findOrFail($id);
+            $message = (new GuestbookEntry())->findOrFail($id);
         } catch (ModelNotFoundException $exception) {
             pageNotFound();
         }
