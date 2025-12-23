@@ -56,7 +56,8 @@ switch ($match[0]) {
                 class_exists($match[1][0]) &&
                 is_subclass_of($match[1][0], AbstractController::class)
             ) {
-                echo (new $match[1][0]())->runAction($match[1][1], $match[2]);
+                $container = di(\Psr\Container\ContainerInterface::class);
+                echo $container->get($match[1][0])->runAction($match[1][1], $match[2]);
             } else {
                 include ROOT_PATH . $match[1];
             }

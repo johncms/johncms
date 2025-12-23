@@ -34,6 +34,7 @@ return [
             MailFactory::class              => MailFactory::class,
             HTMLPurifier::class             => HTMLPurifier::class,
             \Psr\Log\LoggerInterface::class => \Johncms\Logs\LoggerFactory::class,
+            \Psr\Container\ContainerInterface::class => \Johncms\Container\PSRContainerFactory::class
         ],
     ],
 ];
