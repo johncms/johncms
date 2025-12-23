@@ -7,7 +7,17 @@
 [![PHP-CI](https://github.com/johncms/johncms/workflows/PHP-CI/badge.svg?branch=develop)](https://github.com/johncms/johncms/actions)
 [![Crowdin](https://badges.crowdin.net/johncms/localized.svg)](https://crowdin.com/project/johncms)
 
-This version is at an early stage of development. Many things may not work or work not as intended.
+## About the branch
+
+This branch contains experimental work initially intended for a future major release (JohnCMS 10).
+
+During development it became clear that the scope of changes was too large to be released safely as a single major version. As a result, this branch is now **frozen** and will not be released in its current form.
+
+The current active development continues in the `9.x` branch, following an incremental and evolutionary approach.
+
+Some ideas, architectural decisions, and individual components from this branch may be **gradually and selectively ported** to `9.x` where they prove to be stable, useful, and compatible with the existing codebase.
+
+This branch is kept for reference purposes only.
 
 ## System requirements
 
