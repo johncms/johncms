@@ -19,6 +19,14 @@ return static function (ContainerConfigurator $container): void {
         ->public();
 
     $services->load(
+        'Johncms\\Modules\\Guestbook\\Application\\Forms\\',
+        MODULES_PATH . 'guestbook/Application/Forms'
+    )
+        ->autowire()
+        ->autoconfigure()
+        ->public();
+
+    $services->load(
         'Johncms\\Modules\\Guestbook\\Application\\Services\\',
         MODULES_PATH . 'guestbook/Application/Services'
     )

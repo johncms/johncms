@@ -38,9 +38,9 @@ class UserFactory
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->db = $container->get(\PDO::class);
-        $this->env = $container->get(Environment::class);
-        $this->request = $container->get(Request::class);
+        $this->db = di(\PDO::class);
+        $this->env = di(Environment::class);
+        $this->request = di(Request::class);
         return new User($this->getUserData());
     }
 

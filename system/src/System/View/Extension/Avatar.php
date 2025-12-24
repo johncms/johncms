@@ -21,9 +21,13 @@ class Avatar implements ExtensionInterface
     /** @var Assets */
     private $assets;
 
+    public function __construct()
+    {
+        $this->assets = di(Assets::class);
+    }
+
     public function __invoke(ContainerInterface $container): self
     {
-        $this->assets = $container->get(Assets::class);
         return $this;
     }
 

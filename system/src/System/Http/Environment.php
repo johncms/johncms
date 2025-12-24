@@ -31,10 +31,14 @@ class Environment
     /** @var Request */
     private $request;
 
+    public function __construct()
+    {
+        $this->request = di(Request::class);
+        $this->ipLog();
+    }
+
     public function __invoke(ContainerInterface $container)
     {
-        $this->request = $container->get(Request::class);
-        $this->ipLog();
         return $this;
     }
 

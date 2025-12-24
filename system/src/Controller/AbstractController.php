@@ -16,6 +16,7 @@ use BadMethodCallException;
 use Illuminate\Container\Container;
 use Johncms\System\Container\Factory;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use ReflectionException;
 use ReflectionMethod;
 
@@ -58,14 +59,17 @@ abstract class AbstractController
             if ($parameter['class'] !== null) {
                 // TODO: Replace container
                 $containerNew = di(ContainerInterface::class);
-                $container = Factory::getContainer();
                 if ($containerNew->has($parameter['class'])) {
                     $injected_parameters[$parameter['name']] = $containerNew->get($parameter['class']);
-                } elseif ($container->has($parameter['class'])) {
-                    $injected_parameters[$parameter['name']] = $container->get($parameter['class']);
                 } else {
+                    // TODO: Remove it after replace container
                     $injector = Container::getInstance();
                     $injected_parameters[$parameter['name']] = $injector->get($parameter['class']);
+                    di(LoggerInterface::class)->debug('Call old container', [
+                        'class' => static::class,
+                        'method' => $action_name,
+                        'parameters' => $parameter,
+                    ]);
                 }
             } elseif (array_key_exists($parameter['name'], $param_values)) {
                 $injected_parameters[$parameter['name']] = $this->castValue($parameter['type'], $param_values[$parameter['name']]);

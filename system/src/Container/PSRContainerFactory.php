@@ -30,7 +30,7 @@ class PSRContainerFactory
     {
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/config')
+            new FileLocator(ROOT_PATH . 'system/config')
         );
 
         $loader->load('services.php');
