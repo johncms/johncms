@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Services;
@@ -16,8 +8,6 @@ use Exception;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Files\FileStorage;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
-use Johncms\Modules\Guestbook\Application\Resources\PostResource;
-use Johncms\Modules\Guestbook\Application\Resources\ResourceCollection;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
@@ -48,26 +38,9 @@ class GuestbookService
         $this->guest_access = [];
     }
 
-    /**
-     * Retrieves a list of entries in the guestbook.
-     *
-     * @return array
-     */
-    public function getPosts(): array
+    public function isAdminClub(): bool
     {
-        $admin_club = (isset($_SESSION['ga']) && ($this->user->rights >= 1 || in_array($this->user->id, $this->guest_access)));
-        $messages = (new GuestbookEntry())
-            ->with('user')
-            ->where('adm', $admin_club)
-            ->orderByDesc('time')
-            ->paginate($this->user->config->kmess);
-
-        $posts = new ResourceCollection($messages, PostResource::class);
-
-        return [
-            'posts'      => $posts->toArray(),
-            'pagination' => $messages->render(),
-        ];
+        return (isset($_SESSION['ga']) && ($this->user->rights >= 1 || in_array($this->user->id, $this->guest_access)));
     }
 
     /**

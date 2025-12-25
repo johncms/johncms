@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
@@ -21,6 +13,7 @@ use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
+use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
@@ -62,7 +55,7 @@ class GuestbookController extends BaseController
         }
     }
 
-    public function index(GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
+    public function index(ListGuestbookEntriesUseCase $guestbookEntries, GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
     {
         $this->render->addData(['title' => $this->page_title, 'page_title' => $this->page_title]);
 
@@ -80,12 +73,14 @@ class GuestbookController extends BaseController
             }
         }
 
-        $posts = $guestbook->getPosts();
+        $posts = $guestbookEntries->execute();
 
         return $this->render->render(
             'guestbook::index',
             [
-                'data' => [
+                'posts'      => $posts['posts'],
+                'pagination' => $posts['pagination'],
+                'data'       => [
                     'message'      => $session->getFlash('message'),
                     'errors'       => $errors,
                     'form_data'    => $form->getFormData(),
@@ -94,8 +89,6 @@ class GuestbookController extends BaseController
                     'can_clear'    => $guestbook->canClear(),
                     'is_guestbook' => $guestbook->isGuestbook(),
                     'captcha'      => $guestbook->getCaptcha(),
-                    'posts'        => $posts['posts'],
-                    'pagination'   => $posts['pagination'],
                 ],
             ]
         );
