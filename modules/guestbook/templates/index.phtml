@@ -1,11 +1,14 @@
 <?php
 /**
  * @var \Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryDTO[] $posts
- * @var $pagination string
+ * @var string $pagination
+ * @var bool $canWrite
+ * @var bool $isClosed
+ * @var bool $canClear
  */
 
 $this->layout('system::layout/default') ?>
-<?php if ($data['is_closed']): ?>
+<?php if ($isClosed): ?>
     <!-- Уведомление о закрытой гостевой -->
     <?= $this->fetch(
         'system::app/alert',
@@ -24,7 +27,7 @@ $this->layout('system::layout/default') ?>
         ]
     ) ?>
 <?php endif; ?>
-<?php if ($data['can_write']): ?>
+<?php if ($canWrite): ?>
     <div class="row">
         <div class="col-12">
             <?php if (! empty($data['errors']['csrf_token'])): ?>
@@ -179,7 +182,7 @@ $this->layout('system::layout/default') ?>
                     <?php endif; ?>
                 </div>
                 <div class="d-flex">
-                    <?php if ($data['can_write'] && $post->user?->id !== $user->id): ?>
+                    <?php if ($canWrite && $post->user?->id !== $user->id): ?>
                         <div class="ms-3">
                             <a href="#" onclick="reply_to_post('<?= $post->name ?>')"><?= __('Reply') ?></a>
                         </div>
@@ -209,7 +212,7 @@ $this->layout('system::layout/default') ?>
         <div class="mt-4"><?= $pagination ?></div>
     <?php endif; ?>
 <?php endif; ?>
-<?php if ($data['can_clear']): ?>
+<?php if ($canClear): ?>
     <div class="d-flex mt-4 pb-2">
         <button type="button" class="btn btn-danger" data-url="/guestbook/clean" data-bs-toggle="modal" data-bs-target=".ajax_modal"><?= __('Clear') ?></button>
     </div>

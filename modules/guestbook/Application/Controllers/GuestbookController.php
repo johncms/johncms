@@ -11,6 +11,7 @@ use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
@@ -55,15 +56,21 @@ class GuestbookController extends BaseController
         }
     }
 
-    public function index(ListGuestbookEntriesUseCase $guestbookEntries, GuestbookService $guestbook, GuestbookForm $form, Request $request, Session $session): string
-    {
+    public function index(
+        ListGuestbookEntriesUseCase $guestbookEntries,
+        GuestbookAccess $access,
+        GuestbookService $guestbook,
+        GuestbookForm $form,
+        Request $request,
+        Session $session
+    ): string {
         $this->render->addData(['title' => $this->page_title, 'page_title' => $this->page_title]);
 
         $flash_errors = $session->getFlash('errors');
         $errors = $flash_errors ?? [];
 
         // If the form was sent using POST method, then try to create the new post.
-        if ($request->getMethod() === 'POST' && $guestbook->canWrite()) {
+        if ($request->getMethod() === 'POST' && $access->canWrite()) {
             try {
                 $guestbook->create();
                 $session->flash('message', __('Your message was added successfully'));
@@ -80,14 +87,13 @@ class GuestbookController extends BaseController
             [
                 'posts'      => $posts['posts'],
                 'pagination' => $posts['pagination'],
+                'isClosed'    => $access->isClosed(),
+                'canWrite'    => $access->canWrite(),
+                'canClear'    => $access->canClear(),
                 'data'       => [
                     'message'      => $session->getFlash('message'),
                     'errors'       => $errors,
                     'form_data'    => $form->getFormData(),
-                    'is_closed'    => $guestbook->isClosed(),
-                    'can_write'    => $guestbook->canWrite(),
-                    'can_clear'    => $guestbook->canClear(),
-                    'is_guestbook' => $guestbook->isGuestbook(),
                     'captcha'      => $guestbook->getCaptcha(),
                 ],
             ]
