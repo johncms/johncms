@@ -16,6 +16,9 @@ use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 
+/**
+ * @deprecated Use ControllerContext instead
+ */
 class BaseController extends AbstractController
 {
     /** @var Render */

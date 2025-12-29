@@ -58,7 +58,6 @@ switch ($match[0]) {
             if (
                 is_array($handler)
                 && class_exists($handler[0])
-                && is_subclass_of($handler[0], AbstractController::class)
             ) {
                 echo $container
                     ->get($handler[0])
@@ -71,7 +70,6 @@ switch ($match[0]) {
             if (
                 is_string($handler)
                 && class_exists($handler)
-                && is_subclass_of($handler, AbstractController::class)
                 && method_exists($handler, '__invoke')
             ) {
                 echo $container->get($handler)($vars);
