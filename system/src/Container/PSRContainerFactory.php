@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Container;
 
+use Johncms\System\i18n\Translator;
+use Johncms\System\View\Render;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +30,10 @@ class PSRContainerFactory
 
     private function loadCoreServices(ContainerBuilder $container): void
     {
+        // Add old service instances
+        $container->set(Translator::class, di(Translator::class));
+        $container->set(Render::class, di(Render::class));
+
         $loader = new PhpFileLoader(
             $container,
             new FileLocator(ROOT_PATH . 'system/config')

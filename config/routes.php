@@ -46,7 +46,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/guestbook/otvet[/]', [GuestbookController::class, 'reply']);
     }
     if ($user->isValid() && $user->rights >= 7) {
-        $map->addRoute(['GET', 'POST'], '/guestbook/clean[/]', [GuestbookController::class, 'clean']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/clean[/]', \Johncms\Modules\Guestbook\Application\Controllers\ClearGuestbookController::class);
     }
 
     $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Help

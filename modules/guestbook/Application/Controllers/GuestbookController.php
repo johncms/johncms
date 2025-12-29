@@ -112,33 +112,6 @@ class GuestbookController extends BaseController
      * Cleaning the guestbook
      *
      * @param Request $request
-     * @param GuestbookService $guestbook
-     * @param Session $session
-     * @return string
-     */
-    public function clean(Request $request, GuestbookService $guestbook, Session $session): string
-    {
-        if ($request->getMethod() === 'POST') {
-            $validator = new Validator(['csrf_token' => $request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
-            if (! $validator->isValid()) {
-                $session->flash('errors', $validator->getErrors());
-                redirect($this->base_url);
-            }
-            // We clean the Guest, according to the specified parameters
-            $period = $request->getPost('cl', 0, FILTER_VALIDATE_INT);
-            $message = $guestbook->clear($period);
-            // Set result message
-            $session->flash('message', $message);
-            redirect($this->base_url);
-        }
-        // Request cleaning options
-        return $this->render->render('guestbook::clear');
-    }
-
-    /**
-     * Cleaning the guestbook
-     *
-     * @param Request $request
      * @param Session $session
      * @param FileStorage $storage
      * @return string
