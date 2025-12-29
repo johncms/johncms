@@ -51,15 +51,38 @@ switch ($match[0]) {
         new Johncms\System\Users\UserStat($container);
         $container->setService('route', $match[2]);
         try {
+            $handler = $match[1];
+            $vars = $match[2];
+            $container = di(\Psr\Container\ContainerInterface::class);
+
             if (
-                is_array($match[1]) &&
-                class_exists($match[1][0]) &&
-                is_subclass_of($match[1][0], AbstractController::class)
+                is_array($handler)
+                && class_exists($handler[0])
+                && is_subclass_of($handler[0], AbstractController::class)
             ) {
-                $container = di(\Psr\Container\ContainerInterface::class);
-                echo $container->get($match[1][0])->runAction($match[1][1], $match[2]);
-            } else {
-                include ROOT_PATH . $match[1];
+                echo $container
+                    ->get($handler[0])
+                    ->runAction($handler[1], $vars);
+
+                break;
+            }
+
+            // Invokable controller
+            if (
+                is_string($handler)
+                && class_exists($handler)
+                && is_subclass_of($handler, AbstractController::class)
+                && method_exists($handler, '__invoke')
+            ) {
+                echo $container->get($handler)($vars);
+
+                break;
+            }
+
+            // Legacy include
+            if (is_string($handler)) {
+                include ROOT_PATH . $handler;
+                break;
             }
         } catch (PageNotFoundException $exception) {
             pageNotFound($exception->getTemplate(), $exception->getTitle(), $exception->getMessage());
