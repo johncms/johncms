@@ -5,6 +5,10 @@
  * @var bool $canWrite
  * @var bool $isClosed
  * @var bool $canClear
+ * @var array $errors
+ * @var array $formData
+ * @var string $captcha
+ * @var mixed|null $message
  */
 
 $this->layout('system::layout/default') ?>
@@ -18,20 +22,20 @@ $this->layout('system::layout/default') ?>
         ]
     ) ?>
 <?php endif; ?>
-<?php if (! empty($data['message'])): ?>
+<?php if (! empty($message)): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-success',
-            'alert'      => $data['message'],
+            'alert'      => $message,
         ]
     ) ?>
 <?php endif; ?>
 <?php if ($canWrite): ?>
     <div class="row">
         <div class="col-12">
-            <?php if (! empty($data['errors']['csrf_token'])): ?>
-                <div class="alert alert-danger"><?= implode(', ', $data['errors']['csrf_token']) ?></div>
+            <?php if (! empty($errors['csrf_token'])): ?>
+                <div class="alert alert-danger"><?= implode(', ', $errors['csrf_token']) ?></div>
             <?php endif ?>
             <form name="form" action="/guestbook/" method="post">
                 <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
@@ -39,16 +43,16 @@ $this->layout('system::layout/default') ?>
                     <div class="form-group">
                         <label for="name"><?= __('Name') ?></label>
                         <input type="text"
-                               class="form-control <?= ! empty($data['errors']['name']) ? 'is-invalid' : '' ?>"
+                               class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>"
                                maxlength="25"
                                name="name"
                                id="name"
                                required
-                               value="<?= $this->e($data['form_data']['name']) ?>"
+                               value="<?= $this->e($formData['name']) ?>"
                                placeholder="<?= __('Name') ?>"
                         >
-                        <?php if (! empty($data['errors']['name'])): ?>
-                            <div class="invalid-feedback d-block"><?= implode(', ', $data['errors']['name']) ?></div>
+                        <?php if (! empty($errors['name'])): ?>
+                            <div class="invalid-feedback d-block"><?= implode(', ', $errors['name']) ?></div>
                         <?php endif ?>
                     </div>
                 <?php endif; ?>
@@ -56,17 +60,17 @@ $this->layout('system::layout/default') ?>
                     'guestbook::ckeditor',
                     [
                         'label'  => __('Message'),
-                        'errors' => implode(', ', $data['errors']['message'] ?? []),
-                        'value'  => $this->e($data['form_data']['message']),
+                        'errors' => implode(', ', $errors['message'] ?? []),
+                        'value'  => $this->e($formData['message']),
                     ]
                 ) ?>
 
                 <?php if (! $user->isValid()): ?>
-                    <img alt="<?= __('Verification code') ?>" src="<?= $data['captcha'] ?>">
+                    <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
                     <div class="form-group">
                         <label for="code"><?= __('Symbols on the picture') ?></label>
                         <input type="text"
-                               class="form-control <?= (isset($data['errors']['code']) ? 'is-invalid' : '') ?>"
+                               class="form-control <?= (isset($errors['code']) ? 'is-invalid' : '') ?>"
                                maxlength="6"
                                name="code"
                                id="code"
@@ -74,8 +78,8 @@ $this->layout('system::layout/default') ?>
                                required
                                placeholder="<?= __('Symbols on the picture') ?>"
                         >
-                        <?php if (isset($data['errors']['code'])): ?>
-                            <div class="invalid-feedback"><?= implode(', ', $data['errors']['code']) ?></div>
+                        <?php if (isset($errors['code'])): ?>
+                            <div class="invalid-feedback"><?= implode(', ', $errors['code']) ?></div>
                         <?php endif ?>
                         <div class="text-muted small">
                             <?= __('If you cannot see the image code, enable graphics in your browser and refresh this page') ?>

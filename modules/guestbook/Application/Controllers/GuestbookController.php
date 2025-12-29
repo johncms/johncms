@@ -12,6 +12,7 @@ use Johncms\Exceptions\ValidationException;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
+use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
@@ -87,27 +88,23 @@ class GuestbookController extends BaseController
             [
                 'posts'      => $posts['posts'],
                 'pagination' => $posts['pagination'],
-                'isClosed'    => $access->isClosed(),
-                'canWrite'    => $access->canWrite(),
-                'canClear'    => $access->canClear(),
-                'data'       => [
-                    'message'      => $session->getFlash('message'),
-                    'errors'       => $errors,
-                    'form_data'    => $form->getFormData(),
-                    'captcha'      => $guestbook->getCaptcha(),
-                ],
+                'isClosed'   => $access->isClosed(),
+                'canWrite'   => $access->canWrite(),
+                'canClear'   => $access->canClear(),
+                'errors'     => $errors,
+                'formData'   => $form->getFormData(),
+                'captcha'    => $guestbook->getCaptcha(),
+                'message'    => $session->getFlash('message'),
             ]
         );
     }
 
     /**
      * Switching the mode of operation Guest / admin club
-     *
-     * @param GuestbookService $guestbook
      */
-    public function switchGuestbookType(GuestbookService $guestbook): void
+    public function switchGuestbookType(GuestbookMode $guestbookMode, Request $request): void
     {
-        $guestbook->switchGuestbookType();
+        $guestbookMode->switch($request);
         redirect($this->base_url);
     }
 

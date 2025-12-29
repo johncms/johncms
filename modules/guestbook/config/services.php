@@ -12,33 +12,14 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->load(
-        'Johncms\\Modules\\Guestbook\\Application\\Controllers\\',
-        MODULES_PATH . 'guestbook/Application/Controllers'
+        'Johncms\\Modules\\Guestbook\\Application\\',
+        MODULES_PATH . 'guestbook/Application'
     )
-        ->autowire()
-        ->autoconfigure()
-        ->public();
-
-    $services->load(
-        'Johncms\\Modules\\Guestbook\\Application\\Forms\\',
-        MODULES_PATH . 'guestbook/Application/Forms'
-    )
-        ->autowire()
-        ->autoconfigure()
-        ->public();
-
-    $services->load(
-        'Johncms\\Modules\\Guestbook\\Application\\Services\\',
-        MODULES_PATH . 'guestbook/Application/Services'
-    )
-        ->autowire()
-        ->autoconfigure()
-        ->public();
-
-    $services->load(
-        'Johncms\\Modules\\Guestbook\\Application\\UseCases\\',
-        MODULES_PATH . 'guestbook/Application/UseCases'
-    )
+        ->exclude(
+            [
+                MODULES_PATH . 'guestbook/Application/DTO',
+            ]
+        )
         ->autowire()
         ->autoconfigure()
         ->public();
