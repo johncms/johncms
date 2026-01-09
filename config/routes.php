@@ -35,7 +35,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', [GuestbookController::class, 'switchGuestbookType']);
     if ($user->isValid()) {
-        $map->addRoute(['GET', 'POST'], '/guestbook/upload_file[/]', [GuestbookController::class, 'loadFile']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/upload_file[/]', \Johncms\Modules\Guestbook\Application\Controllers\UploadFileController::class);
     }
 
     if ($user->isValid() && $user->rights > 0) {
