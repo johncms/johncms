@@ -39,7 +39,7 @@ return static function (RouteCollector $map, User $user) {
     }
 
     if ($user->isValid() && $user->rights > 0) {
-        $map->addRoute(['GET', 'POST'], '/guestbook/edit[/]', [GuestbookController::class, 'edit']);
+        $map->addRoute(['GET', 'POST'], '/guestbook/edit[/]', \Johncms\Modules\Guestbook\Application\Controllers\EditEntryController::class);
         $map->addRoute(['GET', 'POST'], '/guestbook/delpost[/]', \Johncms\Modules\Guestbook\Application\Controllers\DeleteEntryController::class);
     }
     if ($user->isValid() && $user->rights >= 6) {
