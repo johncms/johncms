@@ -33,7 +33,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                          // Forum
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
-    $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', [GuestbookController::class, 'switchGuestbookType']);
+    $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', \Johncms\Modules\Guestbook\Application\Controllers\SwitchTypeController::class);
     if ($user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/guestbook/upload_file[/]', \Johncms\Modules\Guestbook\Application\Controllers\UploadFileController::class);
     }

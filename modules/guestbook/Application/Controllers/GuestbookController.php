@@ -7,7 +7,6 @@ namespace Johncms\Modules\Guestbook\Application\Controllers;
 use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
-use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
@@ -89,14 +88,5 @@ class GuestbookController extends BaseController
                 'message'    => $session->getFlash('message'),
             ]
         );
-    }
-
-    /**
-     * Switching the mode of operation Guest / admin club
-     */
-    public function switchGuestbookType(GuestbookMode $guestbookMode, Request $request): void
-    {
-        $guestbookMode->switch($request);
-        redirect($this->base_url);
     }
 }
