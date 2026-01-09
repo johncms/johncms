@@ -32,7 +32,13 @@ class PSRContainerFactory
     {
         // Add old service instances
         $container->set(Translator::class, di(Translator::class));
-        $container->set(Render::class, di(Render::class));
+
+        // Do not register the Render service for the admin panel.
+        // In admin area the Render factory is overridden, so the service must not be
+        // instantiated before the admin-specific factory is applied.
+        if (empty($_SERVER['REQUEST_URI']) || ! preg_match('/^\/admin\//', $_SERVER['REQUEST_URI'])) {
+            $container->set(Render::class, di(Render::class));
+        }
 
         $loader = new PhpFileLoader(
             $container,
