@@ -80,7 +80,7 @@
         "psr-4": {
             "Johncms\\": "system/src/",
             "Johncms\\System\\Legacy\\": "system/src-legacy/",
-            "Johncms\\Modules\\Guestbook\\": "modules/guestbook/"
+            "Johncms\\Modules\\Guestbook\\": "modules/guestbook/src/"
         }
     },
     "bin": [

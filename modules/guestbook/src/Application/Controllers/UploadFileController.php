@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
+use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Controller\ControllerContext;
 use Johncms\FileInfo;
