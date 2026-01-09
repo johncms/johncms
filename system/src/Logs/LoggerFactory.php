@@ -15,7 +15,7 @@ final readonly class LoggerFactory
 {
     public function __invoke(ContainerInterface $container): Logger
     {
-        $loggingConfig = $container->get('config')['logging'];
+        $loggingConfig = di('config')['logging'];
         $defaultHandler = $loggingConfig['default'] ?? 'file';
         $handlersConfig = $loggingConfig['handlers'] ?? [];
 

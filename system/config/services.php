@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Container\PSRContainerFactory;
+use Johncms\Files\FileStorage;
 use Johncms\Logs\LoggerFactory;
 use Johncms\System\Database\PdoFactory;
 use Johncms\System\Http\Request;
@@ -38,6 +39,7 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure()
         ->public();
 
+    $services->set(FileStorage::class, FileStorage::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
     $services->set(ContainerInterface::class)->factory(service(PSRContainerFactory::class));
     $services->set(Request::class)->factory(service(RequestFactory::class));
