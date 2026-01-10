@@ -33,13 +33,14 @@ $db = di(PDO::class);
 $user = di(User::class);
 $tools = di(Tools::class);
 $view = di(Render::class);
-$route = di('route');
 
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
 
 /** @var Request $request */
 $request = di(Request::class);
+
+$route = $request->getCurrentRouteParams();
 
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('album', __DIR__ . '/locale');

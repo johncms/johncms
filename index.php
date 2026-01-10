@@ -49,7 +49,9 @@ switch ($match[0]) {
     case Dispatcher::FOUND:
         // Register the location of the visitor on the site
         new Johncms\System\Users\UserStat($container);
-        $container->setService('route', $match[2]);
+
+        // Set the current route parameters to the request object
+        $container->get(\Johncms\System\Http\Request::class)->setCurrentRouteParams($match[2]);
         try {
             $handler = $match[1];
             $vars = $match[2];

@@ -39,7 +39,7 @@ $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 /** @var Request $request */
 $request = di(Request::class);
-$route = di('route');
+$route = $request->getCurrentRouteParams();
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('admin', __DIR__ . '/templates/');

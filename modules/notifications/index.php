@@ -36,7 +36,7 @@ $nav_chain = di(NavChain::class);
 /** @var Tools $tools */
 $tools = di(Tools::class);
 
-$route = di('route');
+$route = di(\Johncms\System\Http\Request::class)->getCurrentRouteParams();
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('notifications', __DIR__ . '/templates/');

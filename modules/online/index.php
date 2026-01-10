@@ -30,7 +30,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $assets = di(Assets::class);
 $config = config('johncms');
 $db = di(PDO::class);
-$route = di('route');
+$route = di(\Johncms\System\Http\Request::class)->getCurrentRouteParams();
 $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);

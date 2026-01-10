@@ -21,7 +21,7 @@ use Laminas\ServiceManager\Exception\ServiceNotFoundException;
  * @param string $service
  * @return mixed
  */
-function di(string $service)
+function di(string $service): mixed
 {
     // For backward compatibility return config()
     if ($service === 'config') {
@@ -40,6 +40,25 @@ function di(string $service)
             E_USER_DEPRECATED
         );
         return config();
+    }
+
+    // For backward compatibility return current route
+    if ($service === 'route') {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $caller = $trace[1] ?? null;
+
+        $location = $caller && isset($caller['file'], $caller['line'])
+            ? sprintf('%s:%d', $caller['file'], $caller['line'])
+            : 'unknown location';
+
+        @trigger_error(
+            sprintf(
+                'Calling di("route") is deprecated. Use di(\Johncms\System\Http\Request::class)->getCurrentRouteParams() instead. Called at %s.',
+                $location
+            ),
+            E_USER_DEPRECATED
+        );
+        return di(\Johncms\System\Http\Request::class)->getCurrentRouteParams();
     }
 
     try {

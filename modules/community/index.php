@@ -31,7 +31,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $assets = di(Assets::class);
 $config = config('johncms');
 $db = di(PDO::class);
-$route = di('route');
 $tools = di(Tools::class);
 $user = di(User::class);
 $view = di(Render::class);
@@ -41,6 +40,7 @@ $nav_chain = di(NavChain::class);
 
 /** @var Request $request */
 $request = di(Request::class);
+$route = $request->getCurrentRouteParams();
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('users', __DIR__ . '/templates/');

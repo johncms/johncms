@@ -21,6 +21,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Request extends ServerRequest
 {
+    private array $currentRouteParams = [];
+
     /**
      * Return a ServerRequest populated with superglobals:
      * $_GET
@@ -170,5 +172,15 @@ class Request extends ServerRequest
         }
 
         return false;
+    }
+
+    public function setCurrentRouteParams(array $route): void
+    {
+        $this->currentRouteParams = $route;
+    }
+
+    public function getCurrentRouteParams(): array
+    {
+        return $this->currentRouteParams;
     }
 }
