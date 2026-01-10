@@ -31,7 +31,7 @@ class AdminSectionController extends BaseAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->config = di('config')['news'] ?? [];
+        $this->config = config('news') ?? [];
         $this->nav_chain->add(__('News'), '/admin/news/');
         $this->render->addData(
             [

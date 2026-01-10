@@ -86,7 +86,7 @@ echo $view->render(
                     $res['ratingView'] = $rate->viewRate(1);
 
                     $uploader = $res['uploader_id']
-                        ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
+                        ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
                         : $tools->checkout($res['uploader']);
 
                     $res['who'] = $uploader . ' (' . $tools->displayDate($res['time']) . ')';

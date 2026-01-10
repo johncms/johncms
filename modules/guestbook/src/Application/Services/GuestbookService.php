@@ -31,7 +31,7 @@ class GuestbookService
     public function __construct()
     {
         $this->user = di(User::class);
-        $this->config = di('config')['johncms'];
+        $this->config = config('johncms');
 
         // Here you can (separated by commas) add the ID of those users who are not in the administration.
         // But who are allowed to read and write in the admin club

@@ -18,7 +18,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 // Загрузка выбранного файла и обработка счетчика скачиваний
 $error = [];

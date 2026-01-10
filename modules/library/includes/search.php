@@ -68,7 +68,7 @@ if ($search && ! $error) {
             $res['text'] = $tools->checkout(mb_substr($res['text'], ($pos - 100), 400), 1);
             $res['time'] = $tools->displayDate($res['time']);
             $res['author'] = $res['uploader_id']
-                ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
                 : $tools->checkout($res['uploader']);
             foreach ($array as $val) {
                 if ($search_t) {

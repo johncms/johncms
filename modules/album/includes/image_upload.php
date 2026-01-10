@@ -22,7 +22,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\NavChain $nav_chain
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 $data = [];
 $title = __('Upload image');

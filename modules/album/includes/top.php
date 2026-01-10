@@ -21,7 +21,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Http\Request $request
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 $mod = (string) $request->getQuery('mod', '');
 

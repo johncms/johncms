@@ -120,7 +120,7 @@ class Comments
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
         $this->back_url = ! empty($arg['back_url']) ? $arg['back_url'] : '';
         $this->templates_namespace = ! empty($arg['templates_namespace']) ? $arg['templates_namespace'] : 'system';
-        $homeurl = $container->get('config')['johncms']['homeurl'];
+        $homeurl = config('johncms.homeurl', '');
 
         if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];

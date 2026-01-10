@@ -34,7 +34,7 @@ class MetaTagsManager
 
     public function __construct()
     {
-        $this->config = di('config')['news'] ?? [];
+        $this->config = config('news') ?? [];
         $this->title = $this->config['title'] ? $this->config['title'] : __('News');
         $this->page_title = $this->config['title'] ? $this->config['title'] : __('News');
         $this->keywords = $this->config['meta_keywords'] ?? '';

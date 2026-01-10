@@ -24,7 +24,7 @@ class RenderEngineFactory
 {
     public function __invoke(ContainerInterface $container): Render
     {
-        $config = $container->get('config')['johncms'];
+        $config = config('johncms');
         $engine = new Render('phtml');
         $engine->setTheme($config['skindef']);
         $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));

@@ -16,7 +16,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 $title = __('Smilies');
 $nav_chain->add($title);

@@ -27,7 +27,7 @@ if ($user->rights < 9) {
 /** @var Request $request */
 $request = di(Request::class);
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $nav_chain->add(__('System Settings'));
 
 if (isset($_POST['submit'])) {

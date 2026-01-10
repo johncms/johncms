@@ -28,14 +28,14 @@ class TranslatorServiceFactory
         $userConfig = $container->get(User::class)->config;
 
         // Configure the translator
-        $config = $container->get('config');
+        $config = config('johncms', []);
 
         $translator = new Translator();
         $translator->setLocale(
             $this->determineLocale(
                 $userConfig->lng,
-                $config['johncms']['lng'] ?? 'en',
-                $config['johncms']['lng_list'] ?? [],
+                $config['lng'] ?? 'en',
+                $config['lng_list'] ?? [],
                 $request->getPost('setlng')
             )
         );

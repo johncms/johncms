@@ -138,7 +138,7 @@ trait TopicMutators
             return $this->meta_description;
         }
 
-        $config = di('config')['forum']['settings'];
+        $config = config('forum')['settings'];
         $template = $config['topic_description'] ?? '';
         return str_replace('#name#', $this->name, $template);
     }
@@ -154,7 +154,7 @@ trait TopicMutators
             return $this->meta_keywords;
         }
 
-        $config = di('config')['forum']['settings'];
+        $config = config('forum')['settings'];
         $template = $config['topic_keywords'] ?? '';
         return str_replace('#name#', $this->name, $template);
     }

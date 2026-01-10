@@ -42,7 +42,7 @@ class UserStat
         $this->db = $container->get(\PDO::class);
         $this->env = $container->get(Environment::class);
         $this->user = $container->get(User::class);
-        $this->config = $container->get('config');
+        $this->config = config();
 
         if ($this->user->isValid()) {
             $this->processUser();

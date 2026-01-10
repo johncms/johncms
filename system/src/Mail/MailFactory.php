@@ -26,13 +26,13 @@ class MailFactory
 
     public function __invoke(ContainerInterface $container): self
     {
-        $config = di('config')['mail'];
+        $config = config('mail');
 
         $dsn = $this->buildDsn($config);
         $transport = Transport::fromDsn($dsn);
         $this->mailer = new Mailer($transport);
 
-        $site_config = di('config')['johncms'];
+        $site_config = config('johncms');
         $this->defaultFromEmail = $site_config['email'];
         $this->defaultFromName = $site_config['copyright'];
 

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $errorMsg = false;
 $title = __('Permissions');
 $nav_chain->add($title);

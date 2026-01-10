@@ -25,7 +25,7 @@ use Johncms\Users\User;
  * @var NavChain $nav_chain
  */
 
-$forum_settings = di('config')['forum']['settings'];
+$forum_settings = config('forum')['settings'];
 
 try {
     $current_section = (new ForumSection());

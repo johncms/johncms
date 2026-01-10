@@ -33,7 +33,7 @@ class Filesystem
 
     public function __construct()
     {
-        $this->config = di('config')['filesystem'];
+        $this->config = config('filesystem');
     }
 
     public function __invoke(): Filesystem

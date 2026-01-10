@@ -35,7 +35,7 @@ $user = di(User::class);
 /** @var Request $request */
 $request = di(Request::class);
 
-$forum_settings = di('config')['forum']['settings'];
+$forum_settings = config('forum')['settings'];
 
 try {
     $current_section = (new ForumSection());

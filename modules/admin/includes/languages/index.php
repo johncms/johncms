@@ -25,7 +25,7 @@ if ($user->rights < 9) {
     exit(__('Access denied'));
 }
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 $view->addData(['title' => __('Languages'), 'page_title' => __('Languages')]);
 

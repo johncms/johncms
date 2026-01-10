@@ -26,7 +26,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Render $view
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);

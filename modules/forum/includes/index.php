@@ -33,7 +33,7 @@ $sections = (new ForumSection())
     ->orderBy('sort')
     ->get();
 
-$forum_settings = di('config')['forum']['settings'];
+$forum_settings = config('forum')['settings'];
 
 // Считаем файлы
 if ($forum_settings['file_counters']) {

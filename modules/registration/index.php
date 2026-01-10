@@ -22,7 +22,7 @@ use Johncms\Validator\Validator;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 /** @var Tools $tools */
 $tools = di(Tools::class);

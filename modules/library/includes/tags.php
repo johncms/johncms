@@ -40,7 +40,7 @@ if (isset($_GET['tag'])) {
                 $res['name'] = $tools->checkout($res['name']);
                 $res['text'] = $tools->checkout($db->query('SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=' . $res['id'])->fetchColumn(), 0, 2);
                 $uploader = $res['uploader_id']
-                    ? '<a href="' . di('config')['johncms']['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
+                    ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
                     : $tools->checkout($res['uploader']);
 
                 $res['who'] = $uploader . ' (' . $tools->displayDate($res['time']) . ')';

@@ -19,7 +19,7 @@ class Modules
 
     public function __construct()
     {
-        $this->config = di('config')['modules'] ?? [];
+        $this->config = config('modules', []);
     }
 
     public function getInstalled(): array

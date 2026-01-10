@@ -36,9 +36,9 @@ class TimeToDate implements CastsAttributes
             $user = di(User::class);
             /** @var Translator $translator */
             $translator = di(Translator::class);
-            $config = di('config')['johncms'];
+            $timeshift = (int) config('johncms.timeshift', 0);
 
-            return Carbon::createFromTimestamp($value, ($user->set_user->timeshift + $config['timeshift']))
+            return Carbon::createFromTimestamp($value, ($user->set_user->timeshift + $timeshift))
                 ->locale($translator->getLocale())
                 ->calendar(
                     null,

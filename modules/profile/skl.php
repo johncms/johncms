@@ -16,7 +16,7 @@ use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 // Register the module languages domain and folder
 /** @var Translator $translator */

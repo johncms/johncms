@@ -64,7 +64,7 @@ if ($request->getMethod() === 'POST') {
     $validator = new Validator($fields, $rules);
     if ($validator->isValid()) {
         // Получаем конфиг по умолчанию
-        $config = di('config')['johncms'];
+        $config = config('johncms');
 
         // Изменяем некоторые параметры
         $config['homeurl'] = $fields['homeurl'];

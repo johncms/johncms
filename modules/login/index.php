@@ -26,7 +26,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var NavChain $nav_chain
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $request = di(Request::class);
 $user = di(User::class);
 $view = di(Render::class);

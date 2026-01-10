@@ -28,7 +28,7 @@ class AdminController extends BaseAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->config = di('config')['news'] ?? [];
+        $this->config = config('news') ?? [];
 
         $this->render->addData(
             [
@@ -169,7 +169,7 @@ class AdminController extends BaseAdminController
             'article_meta_description' => '',
         ];
 
-        $config = di('config')['news'] ?? [];
+        $config = config('news') ?? [];
         $data['current_settings'] = array_merge($default_settings, $config);
 
         // Выводим шаблон настроек уведомлений

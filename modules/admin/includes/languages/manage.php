@@ -22,7 +22,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 
 $view->addData(
     [

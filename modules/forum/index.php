@@ -31,7 +31,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var NavChain $nav_chain
  */
 $assets = di(Assets::class);
-$config = di('config')['johncms'];
+$config = config('johncms');
 $counters = di('counters');
 $db = di(PDO::class);
 $user = di(User::class);

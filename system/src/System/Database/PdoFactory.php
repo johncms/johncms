@@ -15,15 +15,12 @@ namespace Johncms\System\Database;
 use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use PDO;
-use Psr\Container\ContainerInterface;
 
 class PdoFactory
 {
-    public function __invoke(ContainerInterface $container): PDO
+    public function __invoke(): PDO
     {
-        $config = $container->has('database')
-            ? (array) $container->get('database')
-            : [];
+        $config = config('pdo', []);
 
         $capsule = new Capsule();
         $capsule->addConnection(

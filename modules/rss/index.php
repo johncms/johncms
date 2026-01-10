@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @var PDO $db
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $db = di(PDO::class);
 
 header('content-type: application/rss+xml');

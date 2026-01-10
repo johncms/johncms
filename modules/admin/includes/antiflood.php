@@ -16,7 +16,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
  * @var PDO $db
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $set_af = $config['antiflood'];
 
 $title = __('Antiflood Settings');

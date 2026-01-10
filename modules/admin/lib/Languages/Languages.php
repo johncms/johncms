@@ -41,7 +41,7 @@ class Languages
      */
     public static function updateList(): void
     {
-        $config = di('config')['johncms'];
+        $config = config('johncms');
         $config['lng_list'] = self::getLngList();
         $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
         if (! file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
@@ -61,7 +61,7 @@ class Languages
      */
     public static function remove($language): void
     {
-        $config = di('config')['johncms'];
+        $config = config('johncms');
         if (array_key_exists($language, $config['lng_list'])) {
             $arr_files = glob(ROOT_PATH . 'modules/*/locale/' . $language . '.lng.php');
             $arr_files[] = ROOT_PATH . 'system/locale/' . $language . '.ini';

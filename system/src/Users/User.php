@@ -189,7 +189,7 @@ class User extends Model
     {
         $query->where('preg', '=', 1);
 
-        $config = di('config')['johncms'];
+        $config = config('johncms');
         if (! empty($config['user_email_confirmation'])) {
             $query->where('email_confirmed', '=', 1);
         }

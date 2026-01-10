@@ -40,7 +40,7 @@ $user = di(User::class);
 /** @var Request $request */
 $request = di(Request::class);
 
-$forum_settings = di('config')['forum']['settings'];
+$forum_settings = config('forum')['settings'];
 
 // Getting data for the current topic
 try {
@@ -114,7 +114,7 @@ if ($current_topic->has_poll) {
     $poll_data['show_form'] = (! $current_topic->closed && ! isset($_GET['vote_result']) && $user->is_valid && $topic_vote->vote_user !== 1);
     $poll_data['results'] = [];
 
-    $color_classes = di('config')['forum']['answer_colors'];
+    $color_classes = config('forum')['answer_colors'];
     foreach ($topic_vote->answers as $answer) {
         $vote = $answer->toArray();
         $count_vote = $topic_vote->count ? round(100 / $topic_vote->count * $vote['count']) : 0;

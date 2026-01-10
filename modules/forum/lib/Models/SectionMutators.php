@@ -48,7 +48,7 @@ trait SectionMutators
             return $this->meta_description;
         }
 
-        $config = di('config')['forum']['settings'];
+        $config = config('forum')['settings'];
         $template = $config['section_description'] ?? '';
         return trim(
             str_replace(
@@ -76,7 +76,7 @@ trait SectionMutators
             return $this->meta_keywords;
         }
 
-        $config = di('config')['forum']['settings'];
+        $config = config('forum')['settings'];
         $template = $config['section_keywords'] ?? '';
         return trim(
             str_replace(

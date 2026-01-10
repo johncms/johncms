@@ -24,7 +24,6 @@ class AdminRenderEngineFactory
 {
     public function __invoke(ContainerInterface $container): Render
     {
-        $config = $container->get('config')['johncms'];
         $engine = new Render('phtml');
         $engine->setTheme('admin');
         $engine->addFolder('system', realpath(THEMES_PATH . 'admin/templates/system'));
@@ -33,7 +32,7 @@ class AdminRenderEngineFactory
         $engine->addData(
             [
                 'container'  => $container,
-                'config'     => $config,
+                'config'     => config('johncms'),
                 'locale'     => $container->get(Translator::class)->getLocale(),
                 'user'       => $container->get(User::class),
                 'tools'      => $container->get(Tools::class),

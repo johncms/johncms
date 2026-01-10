@@ -51,13 +51,11 @@ class Bbcode
     public function __invoke(ContainerInterface $container)
     {
         $this->asset = $container->get(Assets::class);
-        $config = $container->get('config');
-        $this->config = $config['johncms'];
+        $this->config = config('johncms');
         $this->user = $container->get(User::class);
         $this->userConfig = $this->user->config;
 
-        $globalcnf = $container->get('config');
-        $this->tags = $globalcnf['bbcode'] ?? [];
+        $this->tags = config('bbcode', []);
 
         $this->codeId = uniqid('', true);
         $this->codeIndex = 0;

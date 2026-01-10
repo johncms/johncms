@@ -30,7 +30,7 @@ class Utils
      */
     public static function redir404(): void
     {
-        $config = di('config')['johncms'];
+        $config = config('johncms');
         ob_get_level() && ob_end_clean();
         header('Location: ' . $config['homeurl'] . '/?err');
         exit;

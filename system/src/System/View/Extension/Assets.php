@@ -25,7 +25,7 @@ class Assets implements ExtensionInterface
 
     public function __invoke(ContainerInterface $container): self
     {
-        $this->config = $container->get('config')['johncms'];
+        $this->config = config('johncms');
 
         return $this;
     }

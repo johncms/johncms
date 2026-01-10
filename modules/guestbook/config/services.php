@@ -38,6 +38,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(GuestbookAccess::class)
         ->autowire()
-        ->arg('$config', di('config')['johncms'])
+        ->arg('$config', config('johncms'))
         ->public();
 };

@@ -8,14 +8,13 @@ use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Container\ContainerInterface;
 use RuntimeException;
 
 final readonly class LoggerFactory
 {
-    public function __invoke(ContainerInterface $container): Logger
+    public function __invoke(): Logger
     {
-        $loggingConfig = di('config')['logging'];
+        $loggingConfig = config('logging');
         $defaultHandler = $loggingConfig['default'] ?? 'file';
         $handlersConfig = $loggingConfig['handlers'] ?? [];
 

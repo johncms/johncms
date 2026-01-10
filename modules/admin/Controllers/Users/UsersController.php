@@ -36,7 +36,7 @@ class UsersController extends BaseAdminController
             ]
         );
 
-        $config = di('config')['johncms'];
+        $config = config('johncms');
         $db = di(\PDO::class);
 
         $error = [];

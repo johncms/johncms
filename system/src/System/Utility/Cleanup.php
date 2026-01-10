@@ -33,7 +33,7 @@ class Cleanup
             $this->cleanupTable('cms_users_iphistory', 'time', time() - 7776000);
 
             // Delete unconfirmed users
-            $config = di('config')['johncms'];
+            $config = config('johncms');
             if (! empty($config['user_email_confirmation'])) {
                 (new User())->where('datereg', '<', time() - 86400)->whereNull('email_confirmed')->delete();
             }

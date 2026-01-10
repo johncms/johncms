@@ -28,7 +28,7 @@ if ($user->rights < 9) {
 /** @var Request $request */
 $request = di(Request::class);
 
-$forum_config = di('config')['forum'];
+$forum_config = config('forum');
 $nav_chain->add(__('Forum Settings'));
 
 if ($request->getMethod() === 'POST') {

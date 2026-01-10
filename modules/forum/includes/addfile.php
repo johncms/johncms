@@ -23,7 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var array $config
  */
 
-$extensions = new Collection(di('config')['forum']['extensions']);
+$extensions = new Collection(config('forum')['extensions']);
 
 /** @var Request $request */
 $request = di(Request::class);

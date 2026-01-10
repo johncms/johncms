@@ -31,7 +31,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
  * @var NavChain $nav_chain
  */
 
-$config = di('config')['johncms'];
+$config = config('johncms');
 $db = di(PDO::class);
 $tools = di(Tools::class);
 $user = di(User::class);

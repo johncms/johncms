@@ -28,7 +28,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $assets = di(Assets::class);
-$config = di('config')['johncms'];
+$config = config('johncms');
 $db = di(PDO::class);
 $route = di('route');
 $tools = di(Tools::class);

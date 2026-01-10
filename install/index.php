@@ -23,6 +23,10 @@ if (PHP_VERSION_ID < 80200) {
 
 require '../system/vendor/autoload.php';
 
+// Load the configuration
+$config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();
+\Johncms\Config\ConfigRepository::init($config);
+
 session_name('SESID');
 session_start();
 

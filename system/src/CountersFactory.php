@@ -25,7 +25,7 @@ class CountersFactory
             $container->get(PDO::class),
             $container->get(Tools::class),
             $container->get(User::class),
-            $container->get('config')['johncms']['homeurl']
+            config('johncms.homeurl', '')
         );
     }
 }

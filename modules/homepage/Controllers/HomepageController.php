@@ -23,8 +23,8 @@ class HomepageController extends BaseController
         define('_IS_HOMEPAGE', 1);
         $this->nav_chain->showHomePage(false);
 
-        $config = di('config')['johncms'];
-        $news_config = di('config')['news'];
+        $config = config('johncms');
+        $news_config = config('news');
         $this->render->addData(
             [
                 'title'       => $config['meta_title'] ?? '',

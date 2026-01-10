@@ -23,6 +23,25 @@ use Laminas\ServiceManager\Exception\ServiceNotFoundException;
  */
 function di(string $service)
 {
+    // For backward compatibility return config()
+    if ($service === 'config') {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $caller = $trace[1] ?? null;
+
+        $location = $caller && isset($caller['file'], $caller['line'])
+            ? sprintf('%s:%d', $caller['file'], $caller['line'])
+            : 'unknown location';
+
+        @trigger_error(
+            sprintf(
+                'Calling di("config") is deprecated. Use config() helper instead. Called at %s.',
+                $location
+            ),
+            E_USER_DEPRECATED
+        );
+        return config();
+    }
+
     try {
         return Factory::getContainer()->get($service);
     } catch (ServiceNotFoundException $exception) {

@@ -61,7 +61,7 @@ class Download // phpcs:ignore
         /** @var Johncms\System\Legacy\Tools $tools */
         $tools = di(Johncms\System\Legacy\Tools::class);
 
-        $config = di('config')['johncms'];
+        $config = config('johncms');
 
         $file['icon'] = $assets->url('images/old/system/' . $icon_id . '.png');
         $file['detail_url'] = '?act=view&amp;id=' . $res_down['id'];

@@ -56,8 +56,7 @@ class Tools
     {
         $this->container = $container;
         $this->assets = $container->get(Assets::class);
-        $config = $container->get('config');
-        $this->config = $config['johncms'] ?? [];
+        $this->config = config('johncms', []);
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(User::class);
         $this->userConfig = $this->user->config;
