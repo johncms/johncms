@@ -39,6 +39,11 @@ class MailFactory
         return $this;
     }
 
+    public static function create(ContainerInterface $container)
+    {
+        return (new self())($container);
+    }
+
     /**
      * Создать новый Email с default from и UTF-8
      */

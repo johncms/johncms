@@ -34,6 +34,11 @@ class Theme
         return new self();
     }
 
+    public static function create(): Theme
+    {
+        return new self();
+    }
+
     public function setTheme(string $theme): void
     {
         if (! in_array($theme, $this->themes)) {

@@ -12,27 +12,13 @@ declare(strict_types=1);
 
 namespace Johncms\System\Container;
 
-use Laminas\ServiceManager\ServiceManager;
+use Johncms\Container\PSRContainerFactory;
+use Psr\Container\ContainerInterface;
 
 class Factory
 {
-    /** @var null|ServiceManager */
-    private static $containerInstance;
-
-    public static function getContainer(): ServiceManager
+    public static function getContainer(): ContainerInterface
     {
-        if (null === self::$containerInstance) {
-            // Build configuration
-            $config = (new Config())();
-            $dependencies = $config['dependencies'];
-            $dependencies['services']['database'] = $config['pdo'] ?? [];
-            unset($config['dependencies'], $config['pdo']);
-            $dependencies['services']['config'] = $config;
-
-            // Build container
-            self::$containerInstance = new ServiceManager($dependencies);
-        }
-
-        return self::$containerInstance;
+        return PSRContainerFactory::getContainer();
     }
 }

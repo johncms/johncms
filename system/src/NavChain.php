@@ -28,6 +28,11 @@ class NavChain
         return $this;
     }
 
+    public static function create(): self
+    {
+        return new self();
+    }
+
     /**
      * Добавление элемента в навигационную цепочку
      *

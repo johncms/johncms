@@ -21,6 +21,11 @@ class Csrf
         return $this;
     }
 
+    public static function create(): self
+    {
+        return new self();
+    }
+
     /**
      * Get the generated token
      *

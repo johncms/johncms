@@ -26,8 +26,15 @@ class RenderEngineFactory
     {
         $config = config('johncms');
         $engine = new Render('phtml');
-        $engine->setTheme($config['skindef']);
-        $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
+
+        if ($this->isAdmin()) {
+            $engine->setTheme('admin');
+            $engine->addFolder('system', realpath(THEMES_PATH . 'admin/templates/system'));
+        } else {
+            $engine->setTheme($config['skindef']);
+            $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
+        }
+
         $engine->loadExtension($container->get(Assets::class));
         $engine->loadExtension($container->get(Avatar::class));
         $engine->addData(
@@ -42,5 +49,10 @@ class RenderEngineFactory
         );
 
         return $engine;
+    }
+
+    private function isAdmin(): bool
+    {
+        return str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/admin/');
     }
 }

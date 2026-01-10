@@ -64,6 +64,11 @@ class Tools
         return $this;
     }
 
+    public static function create(ContainerInterface $container)
+    {
+        return (new self())($container);
+    }
+
     public function antiflood()
     {
         $config = $this->config['antiflood'];

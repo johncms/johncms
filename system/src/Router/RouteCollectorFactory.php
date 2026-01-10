@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Johncms\System\Router;
+namespace Johncms\Router;
 
-use FastRoute\RouteCollector;
 use FastRoute\DataGenerator\GroupCountBased;
+use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std as RouteParser;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;

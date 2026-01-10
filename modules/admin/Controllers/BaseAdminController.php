@@ -13,20 +13,12 @@ declare(strict_types=1);
 namespace Admin\Controllers;
 
 use Johncms\Controller\BaseController;
-use Johncms\System\Container\Factory;
-use Johncms\System\View\AdminRenderEngineFactory;
-use Johncms\System\View\Extension\AdminAssets;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
 use PDO;
 
 class BaseAdminController extends BaseController
 {
     public function __construct()
     {
-        $container = Factory::getContainer();
-        $container->setFactory(Assets::class, AdminAssets::class);
-        $container->setFactory(Render::class, AdminRenderEngineFactory::class);
         parent::__construct();
 
         $this->translator->addTranslationDomain('admin', MODULES_PATH . 'admin/locale', false);

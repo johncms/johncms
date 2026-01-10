@@ -14,18 +14,11 @@ use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
-use Johncms\System\View\AdminRenderEngineFactory;
-use Johncms\System\View\Extension\AdminAssets;
-use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\System\i18n\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
-
-$container = Johncms\System\Container\Factory::getContainer();
-$container->setFactory(Assets::class, AdminAssets::class);
-$container->setFactory(Render::class, AdminRenderEngineFactory::class);
 
 /** @var PDO $db */
 $db = di(PDO::class);

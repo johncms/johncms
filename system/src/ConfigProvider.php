@@ -15,19 +15,8 @@ namespace Johncms;
 use FastRoute\RouteCollector;
 use Johncms\Files\Filesystem;
 use Johncms\Media\MediaEmbed;
-use Johncms\System\{Database\PdoFactory,
-    Http\Environment,
-    Http\Request,
-    Http\RequestFactory,
-    i18n\Translator,
-    i18n\TranslatorServiceFactory,
-    Router\RouteCollectorFactory,
-    Users\User,
-    Users\UserFactory,
-    View\Render,
-    View\RenderEngineFactory,
-    View\Theme
-};
+use Johncms\Router\RouteCollectorFactory;
+use Johncms\System\{Database\PdoFactory, Http\Environment, Http\Request, Http\RequestFactory, i18n\Translator, i18n\TranslatorServiceFactory, Users\User, Users\UserFactory, View\Render, View\RenderEngineFactory, View\Theme};
 use Johncms\System\View\Extension\{Assets, Avatar};
 use PDO;
 use Psr\Http\Message\ServerRequestInterface;

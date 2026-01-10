@@ -39,4 +39,9 @@ class MediaEmbed
         ];
         return new Embed($providers);
     }
+
+    public static function create(): Embed
+    {
+        return (new self())();
+    }
 }

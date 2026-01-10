@@ -31,6 +31,11 @@ class Avatar implements ExtensionInterface
         return $this;
     }
 
+    public static function create(): self
+    {
+        return new self();
+    }
+
     public function register(Engine $engine): void
     {
         $engine->registerFunction('avatar', [$this, 'getUserAvatar']);

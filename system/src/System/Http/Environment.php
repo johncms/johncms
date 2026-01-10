@@ -42,6 +42,11 @@ class Environment
         return $this;
     }
 
+    public static function create(): self
+    {
+        return new self();
+    }
+
     public function getIp(bool $return_long = true)
     {
         if (! $return_long) {

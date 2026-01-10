@@ -34,4 +34,9 @@ class Cache extends Repository
     {
         return new self();
     }
+
+    public static function create(): self
+    {
+        return new self();
+    }
 }

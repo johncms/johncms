@@ -55,7 +55,6 @@ switch ($match[0]) {
         try {
             $handler = $match[1];
             $vars = $match[2];
-            $container = di(\Psr\Container\ContainerInterface::class);
 
             if (
                 is_array($handler)

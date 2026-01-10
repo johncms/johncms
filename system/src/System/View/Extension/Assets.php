@@ -30,6 +30,11 @@ class Assets implements ExtensionInterface
         return $this;
     }
 
+    public static function create(ContainerInterface $container)
+    {
+        return (new self())($container);
+    }
+
     public function register(Engine $engine): void
     {
         $engine->registerFunction('asset', [$this, 'url']);
@@ -38,6 +43,19 @@ class Assets implements ExtensionInterface
     public function url(string $url, bool $versionStamp = false): string
     {
         $url = ltrim($url, '/');
+
+        if ($this->isAdmin()) {
+            $file = (string) realpath(THEMES_PATH . 'admin/assets/' . $url);
+            $resultUrl = $this->urlFromPath($file, ROOT_PATH);
+
+            if (is_file($file)) {
+                return $versionStamp
+                    ? $resultUrl . '?v=' . filemtime($file)
+                    : $resultUrl;
+            }
+
+            throw new InvalidArgumentException('Unable to locate the asset: ' . $url);
+        }
 
         foreach ([$this->config['skindef'], 'default'] as $skin) {
             $file = (string) realpath(THEMES_PATH . $skin . '/assets/' . $url);
@@ -56,5 +74,10 @@ class Assets implements ExtensionInterface
     public function urlFromPath(string $path, string $rootPath): string
     {
         return Str::after(realpath($path), realpath($rootPath));
+    }
+
+    private function isAdmin(): bool
+    {
+        return str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/admin/');
     }
 }

@@ -64,6 +64,11 @@ class Bbcode
         return $this;
     }
 
+    public static function create(ContainerInterface $container)
+    {
+        return (new self())($container);
+    }
+
     // Обработка тэгов и ссылок
     public function tags(string $var): string
     {
