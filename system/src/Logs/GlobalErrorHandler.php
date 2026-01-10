@@ -41,6 +41,11 @@ final class GlobalErrorHandler
         return in_array($level, [E_DEPRECATED, E_USER_DEPRECATED], true);
     }
 
+    private function isWarning(int $level): bool
+    {
+        return in_array($level, [E_WARNING, E_USER_WARNING, E_NOTICE, E_USER_NOTICE], true);
+    }
+
     /**
      * Handle regular errors
      *
@@ -61,7 +66,7 @@ final class GlobalErrorHandler
             'ip'     => $_SERVER['REMOTE_ADDR'] ?? null,
         ];
 
-        if ($this->isDeprecation($level) || in_array($level, [E_WARNING, E_USER_WARNING, E_NOTICE, E_USER_NOTICE], true)) {
+        if ($this->isDeprecation($level) || $this->isWarning($level)) {
             $this->logger->warning($message, $logContext);
             return true;
         }
@@ -89,20 +94,46 @@ final class GlobalErrorHandler
     public function handleShutdown(): void
     {
         $lastError = error_get_last();
-        if (
-            is_array($lastError) &&
-            (error_reporting() & $lastError['type'])
-        ) {
-            $this->handleAppException(
-                new ErrorException(
-                    $lastError['message'],
-                    0,
-                    $lastError['type'],
-                    $lastError['file'],
-                    $lastError['line']
-                )
-            );
+
+        if (! is_array($lastError)) {
+            return;
         }
+
+        $type = $lastError['type'];
+
+        if (in_array($type, $this->ignoredErrors, true)) {
+            return;
+        }
+
+        if (! (error_reporting() & $type)) {
+            return;
+        }
+
+        if ($this->isDeprecation($type) || $this->isWarning($type)) {
+            $this->logger->warning(
+                $lastError['message'],
+                [
+                    'level'  => $type,
+                    'file'   => $lastError['file'],
+                    'line'   => $lastError['line'],
+                    'url'    => $_SERVER['REQUEST_URI'] ?? null,
+                    'method' => $_SERVER['REQUEST_METHOD'] ?? null,
+                    'ip'     => $_SERVER['REMOTE_ADDR'] ?? null,
+                ]
+            );
+
+            return;
+        }
+
+        $this->handleAppException(
+            new ErrorException(
+                $lastError['message'],
+                0,
+                $lastError['type'],
+                $lastError['file'],
+                $lastError['line']
+            )
+        );
     }
 
     /**
