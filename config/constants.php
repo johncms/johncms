@@ -15,6 +15,10 @@ const CMS_VERSION = '9.7';
 
 const USE_CRON = false;
 
+// Cache container. Recommended for production mode.
+// Remove the data/cache/container.php file to clear the cache. It creates automatically.
+const CACHE_CONTAINER = true;
+
 // Включаем режим отладки
 const DEBUG = true;
 

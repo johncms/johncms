@@ -7,6 +7,7 @@ namespace Johncms\Container;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class PSRContainerFactory
@@ -15,12 +16,37 @@ class PSRContainerFactory
 
     public function __invoke(): ContainerInterface
     {
+        $cachePath = CACHE_PATH . 'container.php';
+        if (CACHE_CONTAINER && file_exists($cachePath)) {
+            require_once $cachePath;
+            $container = new \ProjectServiceContainer();
+
+            $container->set(ContainerInterface::class, $container);
+
+            self::$containerInstance = $container;
+
+            return $container;
+        }
+
         $container = new ContainerBuilder();
 
         $this->loadCoreServices($container);
         $this->loadModuleServices($container);
 
         $container->compile();
+
+        if (CACHE_CONTAINER) {
+            $dumper = new PhpDumper($container);
+            file_put_contents(
+                $cachePath,
+                $dumper->dump(
+                    [
+                        'class'    => 'ProjectServiceContainer',
+                        'as_files' => false,
+                    ]
+                )
+            );
+        }
 
         self::$containerInstance = $container;
 
