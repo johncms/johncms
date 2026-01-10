@@ -11,14 +11,10 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class PSRContainerFactory
 {
-    private static $containerInstance;
+    private static ?ContainerInterface $containerInstance = null;
 
     public function __invoke(): ContainerInterface
     {
-        if (self::$containerInstance !== null) {
-            return self::$containerInstance;
-        }
-
         $container = new ContainerBuilder();
 
         $this->loadCoreServices($container);
@@ -41,6 +37,7 @@ class PSRContainerFactory
 
     private function loadCoreServices(ContainerBuilder $container): void
     {
+        $container->set(ContainerInterface::class, $container);
         $loader = new PhpFileLoader(
             $container,
             new FileLocator(ROOT_PATH . 'system/config')

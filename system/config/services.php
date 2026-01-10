@@ -64,9 +64,9 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure()
         ->public();
 
+    $services->set(ContainerInterface::class)->synthetic();
     $services->set(FileStorage::class, FileStorage::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
-    $services->set(ContainerInterface::class)->factory(service(PSRContainerFactory::class));
     $services->set(Request::class)->factory(service(RequestFactory::class));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class))->lazy();
