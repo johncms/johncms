@@ -69,7 +69,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
     $services->set(Request::class)->factory(service(RequestFactory::class));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
-    $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class))->lazy();
+    $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\System\Users\User::class)->factory(service(UserFactory::class));
 
     $services->set(Bbcode::class)->factory([Bbcode::class, 'create']);
