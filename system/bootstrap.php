@@ -37,6 +37,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+// Load the configuration
+$config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();
+\Johncms\Config\ConfigRepository::init($config);
+
 // Error handling
 if (DEBUG) {
     error_reporting(E_ALL);

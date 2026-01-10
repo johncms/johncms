@@ -31,10 +31,10 @@ class GuestbookController extends BaseController
         $this->page_title = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
         $this->nav_chain->add($this->page_title, $this->base_url);
 
-        $config = di('config')['johncms'];
+        $guestbookIsClosed = config('johncms.mod_guest');
         $user = di(User::class);
         // If the guest is closed, display a message and close access (except for Admins)
-        if (! $config['mod_guest'] && $user->rights < 7) {
+        if (! $guestbookIsClosed && $user->rights < 7) {
             echo $this->render->render(
                 'system::pages/result',
                 [

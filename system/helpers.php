@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Aura\Autoload\Loader;
 use Illuminate\Container\Container;
+use Johncms\Config\ConfigRepository;
 use Johncms\System\Container\Factory;
 use Johncms\System\View\Render;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
@@ -164,4 +165,20 @@ function redirect(string $url)
 {
     header('Location: ' . $url);
     exit;
+}
+
+/**
+ * Get config value
+ *
+ * @param string|null $key    - config key with dot notation
+ * @param mixed|null $default - default value
+ * @return mixed
+ */
+function config(?string $key = null, mixed $default = null): mixed
+{
+    if ($key === null) {
+        return ConfigRepository::all();
+    }
+
+    return ConfigRepository::get($key, $default);
 }

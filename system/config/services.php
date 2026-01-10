@@ -29,6 +29,7 @@ return static function (ContainerConfigurator $container): void {
             [
                 ROOT_PATH . 'system/src/Counters.php',
                 ROOT_PATH . 'system/src/FileInfo.php',
+                ROOT_PATH . 'system/src/Config',
                 ROOT_PATH . 'system/src/Files',
                 ROOT_PATH . 'system/src/Modules',
                 ROOT_PATH . 'system/src/Validator',
