@@ -16,7 +16,7 @@ $this->layout(
     ]
 );
 
-/** @var \News\Models\NewsSection $sections */
+/** @var \Johncms\Modules\News\Domain\Models\NewsSection $sections */
 $sections = $data['sections'];
 
 /** @var \Illuminate\Pagination\LengthAwarePaginator $articles */
@@ -56,7 +56,7 @@ $articles = $data['articles'];
     <?php if ($sections->count() > 0 || $articles->count() > 0): ?>
         <?php foreach ($sections as $section): ?>
             <!-- List of sections -->
-            <?php /** @var \News\Models\NewsSection $section */ ?>
+            <?php /** @var \Johncms\Modules\News\Domain\Models\NewsSection $section */ ?>
             <tr>
                 <th scope="row" style="width: 58px;" class="border-end-0">
                     <div class="dropdown">
@@ -83,7 +83,7 @@ $articles = $data['articles'];
         <?php endforeach; ?>
         <?php foreach ($articles as $article): ?>
             <!-- List of articles -->
-            <?php /** @var \News\Models\NewsArticle $article */ ?>
+            <?php /** @var \Johncms\Modules\News\Domain\Models\NewsArticle $article */ ?>
             <tr>
                 <th scope="row" style="width: 40px;" class="border-end-0">
                     <div class="dropdown">

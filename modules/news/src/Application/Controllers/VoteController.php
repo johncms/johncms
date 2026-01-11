@@ -10,13 +10,13 @@
 
 declare(strict_types=1);
 
-namespace News\Controllers;
+namespace Johncms\Modules\News\Application\Controllers;
 
-use Johncms\Controller\BaseController;
-use Johncms\Users\User;
-use News\Models\NewsArticle;
-use News\Utils\Helpers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Controller\BaseController;
+use Johncms\Modules\News\Application\Utils\Helpers;
+use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\Users\User;
 
 class VoteController extends BaseController
 {

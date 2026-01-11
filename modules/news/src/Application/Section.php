@@ -10,15 +10,14 @@
 
 declare(strict_types=1);
 
-namespace News;
+namespace Johncms\Modules\News\Application;
 
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\Cache;
 use Johncms\Exceptions\PageNotFoundException;
+use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
-use News\Models\NewsSection;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class Section

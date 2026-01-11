@@ -1,15 +1,15 @@
 <?php
 
-namespace News\Models;
+namespace Johncms\Modules\News\Domain\Models;
 
-use Johncms\Casts\FormattedDate;
-use News\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Johncms\Casts\FormattedDate;
 use Johncms\Casts\SpecialChars;
+use Johncms\Modules\News\Application\Section;
 
 /**
  * @mixin Builder

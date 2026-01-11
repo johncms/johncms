@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace News\Controllers;
+namespace Johncms\Modules\News\Application\Controllers;
 
 use Johncms\Controller\BaseController;
-use News\Article;
-use News\MetaTagsManager;
-use News\Section;
+use Johncms\Modules\News\Application\Article;
+use Johncms\Modules\News\Application\MetaTagsManager;
+use Johncms\Modules\News\Application\Section;
 
 class SectionController extends BaseController
 {

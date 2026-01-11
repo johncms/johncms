@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace News;
+namespace Johncms\Modules\News\Application;
 
-use News\Models\NewsArticle;
-use News\Models\NewsSection;
+use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\Modules\News\Domain\Models\NewsSection;
 
 class MetaTagsManager
 {

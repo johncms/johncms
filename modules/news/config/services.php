@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use News\Article;
-use News\Section;
+use Johncms\Modules\News\Application\Article;
+use Johncms\Modules\News\Application\Section;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->load(
-        'News\\Controllers\\',
-        MODULES_PATH . 'news/Controllers'
+        'Johncms\\Modules\\News\\Application\\Controllers\\',
+        MODULES_PATH . 'news/src/Application/Controllers'
     )
         ->autowire()
         ->autoconfigure()

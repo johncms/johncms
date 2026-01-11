@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace News;
+namespace Johncms\Modules\News\Application;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Johncms\Exceptions\PageNotFoundException;
+use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
-use News\Models\NewsArticle;
 
 class Article
 {

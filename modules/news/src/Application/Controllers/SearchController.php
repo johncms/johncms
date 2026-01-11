@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace News\Controllers;
+namespace Johncms\Modules\News\Application\Controllers;
 
 use Johncms\Controller\BaseController;
+use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\System\Http\Request;
-use News\Models\NewsArticle;
 
 class SearchController extends BaseController
 {

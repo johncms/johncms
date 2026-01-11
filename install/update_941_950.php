@@ -90,7 +90,7 @@ if (empty($_SESSION['converted_comments'])) {
     $_SESSION['converted_comments'] = [];
 }
 $tools = di(\Johncms\System\Legacy\Tools::class);
-$posts = (new \News\Models\NewsComments())->get();
+$posts = (new \Johncms\Modules\News\Domain\Models\NewsComments())->get();
 foreach ($posts as $post) {
     if (! in_array($post->id, $_SESSION['converted_comments'])) {
         $post->text = $tools->checkout($post->text, 1, 1);

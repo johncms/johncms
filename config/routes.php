@@ -14,15 +14,15 @@ use Admin\Controllers\System\SystemCheckController;
 use Admin\Controllers\Users\UsersController;
 use FastRoute\RouteCollector;
 use Johncms\Modules\Guestbook\Application\Controllers\GuestbookController;
+use Johncms\Modules\News\Application\Controllers\Admin\AdminArticleController;
+use Johncms\Modules\News\Application\Controllers\Admin\AdminController;
+use Johncms\Modules\News\Application\Controllers\Admin\AdminSectionController;
+use Johncms\Modules\News\Application\Controllers\ArticleController;
+use Johncms\Modules\News\Application\Controllers\CommentsController;
+use Johncms\Modules\News\Application\Controllers\SearchController;
+use Johncms\Modules\News\Application\Controllers\SectionController;
+use Johncms\Modules\News\Application\Controllers\VoteController;
 use Johncms\System\Users\User;
-use News\Controllers\Admin\AdminArticleController;
-use News\Controllers\Admin\AdminController;
-use News\Controllers\Admin\AdminSectionController;
-use News\Controllers\ArticleController;
-use News\Controllers\CommentsController;
-use News\Controllers\SearchController;
-use News\Controllers\SectionController;
-use News\Controllers\VoteController;
 
 return static function (RouteCollector $map, User $user) {
     $map->get('/', [\Johncms\Modules\Homepage\Controllers\HomepageController::class, 'index']);                                // Home Page

@@ -82,7 +82,7 @@
             "Johncms\\Modules\\Guestbook\\": "modules/guestbook/src/",
             "Admin\\": "modules/admin/",
             "Johncms\\Modules\\Homepage\\": "modules/homepage/src/",
-            "News\\": "modules/news/"
+            "Johncms\\Modules\\News\\": "modules/news/src/"
         }
     },
     "bin": [

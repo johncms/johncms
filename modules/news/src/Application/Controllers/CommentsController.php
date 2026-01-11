@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace News\Controllers;
+namespace Johncms\Modules\News\Application\Controllers;
 
 use Carbon\Carbon;
 use Exception;
@@ -22,6 +22,9 @@ use Johncms\Controller\BaseController;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Media\MediaEmbed;
+use Johncms\Modules\News\Application\Utils\Helpers;
+use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\Modules\News\Domain\Models\NewsComments;
 use Johncms\Security\HTMLPurifier;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
@@ -29,9 +32,6 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Avatar;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
-use News\Models\NewsArticle;
-use News\Models\NewsComments;
-use News\Utils\Helpers;
 
 class CommentsController extends BaseController
 {

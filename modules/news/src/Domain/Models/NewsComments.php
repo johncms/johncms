@@ -1,6 +1,6 @@
 <?php
 
-namespace News\Models;
+namespace Johncms\Modules\News\Domain\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

@@ -1,6 +1,6 @@
 <?php
 
-namespace News\Models;
+namespace Johncms\Modules\News\Domain\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Casts\FormattedDate;
 use Johncms\Casts\SpecialChars;
 use Johncms\Media\MediaEmbed;
+use Johncms\Modules\News\Application\Section;
+use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Users\User;
-use News\Section;
-use News\Utils\Helpers;
 
 /**
  * @mixin Builder

@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
-namespace News\Controllers\Admin;
+namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Admin\Controllers\BaseAdminController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\News\Application\Utils\Helpers;
+use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\System\Http\Request;
-use News\Models\NewsArticle;
-use News\Models\NewsSection;
-use News\Utils\Helpers;
 
 class AdminController extends BaseAdminController
 {

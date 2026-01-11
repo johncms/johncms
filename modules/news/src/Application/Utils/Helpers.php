@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace News\Utils;
+namespace Johncms\Modules\News\Application\Utils;
 
-use Johncms\Security\HTMLPurifier;
-use News\Models\NewsSection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
+use Johncms\Security\HTMLPurifier;
 
 class Helpers
 {
