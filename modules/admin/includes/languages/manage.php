@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Admin\Languages\Languages;
+use Johncms\Modules\Admin\Application\Languages;
 use Johncms\NavChain;
 
 defined('_IN_JOHNADM') || die('Error: restricted access');

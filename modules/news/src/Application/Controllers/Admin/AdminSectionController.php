@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
-use Admin\Controllers\BaseAdminController;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
 use Johncms\Modules\News\Application\Section;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;

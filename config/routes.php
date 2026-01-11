@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-use Admin\Controllers\System\SystemCheckController;
-use Admin\Controllers\Users\UsersController;
 use FastRoute\RouteCollector;
+use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
+use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Guestbook\Application\Controllers\GuestbookController;
 use Johncms\Modules\News\Application\Controllers\Admin\AdminArticleController;
 use Johncms\Modules\News\Application\Controllers\Admin\AdminController;

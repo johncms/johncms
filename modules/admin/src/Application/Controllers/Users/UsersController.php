@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Admin\Controllers\Users;
+namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Admin\Controllers\BaseAdminController;
 use Illuminate\Support\Str;
+use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
 use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
 use Mobicms\Captcha\Code;

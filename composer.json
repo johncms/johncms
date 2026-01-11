@@ -80,7 +80,7 @@
             "Johncms\\": "system/src/",
             "Johncms\\System\\Legacy\\": "system/src-legacy/",
             "Johncms\\Modules\\Guestbook\\": "modules/guestbook/src/",
-            "Admin\\": "modules/admin/",
+            "Johncms\\Modules\\Admin\\": "modules/admin/src/",
             "Johncms\\Modules\\Homepage\\": "modules/homepage/src/",
             "Johncms\\Modules\\News\\": "modules/news/src/"
         }

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Admin\Controllers;
+namespace Johncms\Modules\Admin\Application\Controllers;
 
 use Johncms\Controller\BaseController;
 use PDO;

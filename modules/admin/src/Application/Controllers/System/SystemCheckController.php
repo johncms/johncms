@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Admin\Controllers\System;
+namespace Johncms\Modules\Admin\Application\Controllers\System;
 
-use Admin\Controllers\BaseAdminController;
 use Johncms\Checker\SystemChecker;
+use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
 
 class SystemCheckController extends BaseAdminController
 {

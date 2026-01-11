@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
-use Admin\Controllers\BaseAdminController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;

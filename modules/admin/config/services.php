@@ -8,8 +8,8 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->load(
-        'Admin\\Controllers\\',
-        MODULES_PATH . 'admin/Controllers'
+        'Johncms\\Modules\\Admin\\Application\\Controllers\\',
+        MODULES_PATH . 'admin/src/Application/Controllers'
     )
         ->autowire()
         ->autoconfigure()
