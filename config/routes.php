@@ -25,12 +25,12 @@ use News\Controllers\SectionController;
 use News\Controllers\VoteController;
 
 return static function (RouteCollector $map, User $user) {
-    $map->get('/', [Homepage\Controllers\HomepageController::class, 'index']);                                // Home Page
-    $map->get('/rss[/]', 'modules/rss/index.php');                                                    // RSS
-    $map->addRoute(['GET', 'POST'], '/album[/[{action}]]', 'modules/album/index.php');                          // Photo Album
-    $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php'); // Users community
-    $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                  // Downloads
-    $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                          // Forum
+    $map->get('/', [\Johncms\Modules\Homepage\Controllers\HomepageController::class, 'index']);                                // Home Page
+    $map->get('/rss[/]', 'modules/rss/index.php');                                                                             // RSS
+    $map->addRoute(['GET', 'POST'], '/album[/[{action}]]', 'modules/album/index.php');                                         // Photo Album
+    $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php');                          // Users community
+    $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                                           // Downloads
+    $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                                                   // Forum
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', [GuestbookController::class, 'index']);                // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', \Johncms\Modules\Guestbook\Application\Controllers\SwitchTypeController::class);

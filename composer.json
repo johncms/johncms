@@ -81,7 +81,7 @@
             "Johncms\\System\\Legacy\\": "system/src-legacy/",
             "Johncms\\Modules\\Guestbook\\": "modules/guestbook/src/",
             "Admin\\": "modules/admin/",
-            "Homepage\\": "modules/homepage/",
+            "Johncms\\Modules\\Homepage\\": "modules/homepage/src/",
             "News\\": "modules/news/"
         }
     },

@@ -8,7 +8,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Homepage\Controllers;
+namespace Johncms\Modules\Homepage\Controllers;
 
 use Johncms\Controller\BaseController;
 use Johncms\Counters;
