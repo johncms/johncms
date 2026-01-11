@@ -17,7 +17,7 @@ const USE_CRON = false;
 
 // Cache container. Recommended for production mode.
 // Remove the data/cache/container.php file to clear the cache. It creates automatically.
-const CACHE_CONTAINER = true;
+const CACHE_CONTAINER = false;
 
 // Включаем режим отладки
 const DEBUG = true;

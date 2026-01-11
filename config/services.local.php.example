@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * Custom service configuration override.
+ *
+ * This file is intended for project-level customization and allows
+ * overriding or extending services without modifying core or module code.
+ *
+ * Typical use cases:
+ * - Inject custom configuration into existing services
+ * - Replace service arguments
+ * - Override service implementations for a specific project
+ *
+ * This configuration is loaded after core and module service definitions,
+ * so it has higher priority.
+ *
+ * NOTE:
+ * This file is intentionally empty by default.
+ * Uncomment and adapt examples below when customization is needed.
+ */
+
+declare(strict_types=1);
+
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+return static function (ContainerConfigurator $container): void {
+    $services = $container->services();
+
+
+    /**
+     * Example custom configuration.
+     *
+     * This array simulates project-specific settings that are injected
+     * into a service to alter its behavior.
+     */
+    // $exampleCustomConfig = [
+    //    'example_feature' => [
+    //        'enabled' => true,
+    //    ],
+    // ];
+
+    /**
+     * Example service override.
+     *
+     * - ExampleService is used ONLY to demonstrate the override mechanism
+     * - Autowiring is preserved for all other constructor arguments
+     * - The `$config` argument is explicitly overridden
+     *
+     * Replace ExampleService with any real service class when applying
+     * this pattern in a real project.
+     */
+    // $services->set(\ExampleService::class)
+    //    ->autowire()
+    //    ->arg('$config', $exampleCustomConfig)
+    //    ->public();
+};

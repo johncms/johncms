@@ -32,6 +32,7 @@ class PSRContainerFactory
 
         $this->loadCoreServices($container);
         $this->loadModuleServices($container);
+        $this->loadOverrideServices($container);
 
         $container->compile();
 
@@ -82,5 +83,19 @@ class PSRContainerFactory
 
             $loader->load('services.php');
         }
+    }
+
+    private function loadOverrideServices(ContainerBuilder $container): void
+    {
+        if (! is_file(CONFIG_PATH . 'services.local.php')) {
+            return;
+        }
+
+        $loader = new PhpFileLoader(
+            $container,
+            new FileLocator(CONFIG_PATH)
+        );
+
+        $loader->load('services.local.php');
     }
 }
