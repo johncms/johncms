@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\System\Database;
+namespace Johncms\Database;
 
 use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
