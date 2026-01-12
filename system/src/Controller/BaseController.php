@@ -19,7 +19,7 @@ use Johncms\System\View\Render;
 /**
  * @deprecated Use ControllerContext instead
  */
-class BaseController extends AbstractController
+class BaseController
 {
     /** @var Render */
     protected $render;

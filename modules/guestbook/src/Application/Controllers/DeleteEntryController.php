@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Exception;
-use Johncms\Controller\ControllerContext;
 use Johncms\Files\FileStorage;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;

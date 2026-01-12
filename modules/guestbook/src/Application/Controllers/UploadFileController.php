@@ -6,9 +6,9 @@ namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
-use Johncms\Controller\ControllerContext;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\System\Http\Request;
 use League\Flysystem\FilesystemException;
 

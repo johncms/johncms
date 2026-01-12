@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Controller;
+namespace Johncms\Http\Controller;
 
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;

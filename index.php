@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 use FastRoute\Dispatcher;
@@ -51,6 +43,7 @@ switch ($match[0]) {
 
         // Set the current route parameters to the request object
         $container->get(\Johncms\System\Http\Request::class)->setCurrentRouteParams($match[2]);
+        $invoker = $container->get(\Johncms\Http\Controller\ActionInvoker::class);
         try {
             $handler = $match[1];
             $vars = $match[2];
@@ -59,10 +52,12 @@ switch ($match[0]) {
                 is_array($handler)
                 && class_exists($handler[0])
             ) {
-                echo $container
-                    ->get($handler[0])
-                    ->runAction($handler[1], $vars);
-
+                $controller = $container->get($handler[0]);
+                echo $invoker->invoke(
+                    controller:  $controller,
+                    method:      $handler[1],
+                    routeParams: $vars,
+                );
                 break;
             }
 
@@ -72,8 +67,12 @@ switch ($match[0]) {
                 && class_exists($handler)
                 && method_exists($handler, '__invoke')
             ) {
-                echo $container->get($handler)($vars);
-
+                $controller = $container->get($handler);
+                echo $invoker->invoke(
+                    controller:  $controller,
+                    method:      '__invoke',
+                    routeParams: $vars,
+                );
                 break;
             }
 

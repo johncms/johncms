@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Johncms\Controller\ControllerContext;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
