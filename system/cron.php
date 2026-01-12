@@ -8,7 +8,7 @@ define('CONSOLE_MODE', true);
 
 require 'bootstrap.php';
 
-$container = Johncms\System\Container\Factory::getContainer();
+$container = \Johncms\Container\PSRContainerFactory::getContainer();
 $logger = $container->get(\Psr\Log\LoggerInterface::class);
 (new \Johncms\Logs\GlobalErrorHandler(
     logger:    $logger,

@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
-use Johncms\System\Container\Factory;
 use PDO;
 
 class UserClean

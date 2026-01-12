@@ -14,7 +14,6 @@ namespace Johncms\Controller;
 
 use BadMethodCallException;
 use Illuminate\Container\Container;
-use Johncms\System\Container\Factory;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use ReflectionException;

@@ -12,9 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\System\Legacy;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Container\PSRContainerFactory;
 use Johncms\System\Users\User;
-use Johncms\System\Container\Factory;
 use Johncms\System\Users\UserConfig;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
@@ -115,7 +114,7 @@ class Bbcode
         $smiles = ! empty($this->user->smileys) ? unserialize($this->user->smileys, ['allowed_classes' => false]) : [];
 
         /** @var Tools $tools */
-        $tools = Factory::getContainer()->get(Tools::class);
+        $tools = PSRContainerFactory::getContainer()->get(Tools::class);
         $arr_smiles = [];
         foreach ($smiles as $smile) {
             $arr_smiles[] = [

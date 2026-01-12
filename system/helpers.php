@@ -11,11 +11,8 @@
 declare(strict_types=1);
 
 use Aura\Autoload\Loader;
-use Illuminate\Container\Container;
 use Johncms\Config\ConfigRepository;
-use Johncms\System\Container\Factory;
 use Johncms\System\View\Render;
-use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
 /**
  * @param string $service
@@ -61,11 +58,7 @@ function di(string $service): mixed
         return di(\Johncms\System\Http\Request::class)->getCurrentRouteParams();
     }
 
-    try {
-        return Factory::getContainer()->get($service);
-    } catch (ServiceNotFoundException $exception) {
-        return Container::getInstance()->get($service);
-    }
+    return \Johncms\Container\PSRContainerFactory::getContainer()->get($service);
 }
 
 function pathToUrl(string $path): string

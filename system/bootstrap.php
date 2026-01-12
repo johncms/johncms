@@ -54,7 +54,7 @@ if (DEBUG) {
 }
 
 /** @var ContainerInterface $container */
-$container = Johncms\System\Container\Factory::getContainer();
+$container = \Johncms\Container\PSRContainerFactory::getContainer();
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');

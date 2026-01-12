@@ -13,7 +13,6 @@ declare(strict_types=1);
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
-use Johncms\Controller\AbstractController;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Mail\EmailSender;
 
@@ -25,7 +24,7 @@ if (! is_file('config/autoload/database.local.php')) {
 
 require 'system/bootstrap.php';
 
-$container = Johncms\System\Container\Factory::getContainer();
+$container = \Johncms\Container\PSRContainerFactory::getContainer();
 $logger = $container->get(\Psr\Log\LoggerInterface::class);
 (new \Johncms\Logs\GlobalErrorHandler(
     logger:    $logger,
