@@ -4,41 +4,47 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Johncms\Controller\BaseController;
 use Johncms\Exceptions\ValidationException;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
+use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
+use Johncms\System\View\Render;
 use Johncms\Users\User;
 
-class GuestbookController extends BaseController
+final readonly class GuestbookController
 {
-    protected $module_name = 'guestbook';
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private NavChain $navChain,
+        private Request $request,
+        private Session $session,
+        private GuestbookService $guestbook,
+        private GuestbookAccess $access,
+        private ListGuestbookEntriesUseCase $guestbookEntries,
+        private GuestbookForm $form,
+        private User $user,
+    ) {
+        $this->controllerContext->initModule('guestbook');
+    }
 
-    /** @var string */
-    protected $page_title = '';
-
-    /** @var string */
-    protected $base_url = '/guestbook/';
-
-    public function __construct()
+    public function __invoke(): string
     {
-        parent::__construct();
-        $guestbook = di(GuestbookService::class);
-        $this->page_title = $guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
-        $this->nav_chain->add($this->page_title, $this->base_url);
+        $pageTitle = $this->guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
+        $baseUrl = '/guestbook/';
+        $this->navChain->add($pageTitle, $baseUrl);
 
         $guestbookIsClosed = config('johncms.mod_guest');
-        $user = di(User::class);
-        // If the guest is closed, display a message and close access (except for Admins)
-        if (! $guestbookIsClosed && $user->rights < 7) {
+        if (! $guestbookIsClosed && $this->user->rights < 7) {
             echo $this->render->render(
                 'system::pages/result',
                 [
-                    'title'    => $this->page_title,
+                    'title'    => $pageTitle,
                     'message'  => __('Guestbook is closed'),
                     'type'     => 'alert-danger',
                     'back_url' => '/',
@@ -46,46 +52,37 @@ class GuestbookController extends BaseController
             );
             exit;
         }
-    }
 
-    public function index(
-        ListGuestbookEntriesUseCase $guestbookEntries,
-        GuestbookAccess $access,
-        GuestbookService $guestbook,
-        GuestbookForm $form,
-        Request $request,
-        Session $session
-    ): string {
-        $this->render->addData(['title' => $this->page_title, 'page_title' => $this->page_title]);
+        $this->render->addData(['title' => $pageTitle, 'page_title' => $pageTitle]);
 
-        $flash_errors = $session->getFlash('errors');
+        $flash_errors = $this->session->getFlash('errors');
         $errors = $flash_errors ?? [];
 
         // If the form was sent using POST method, then try to create the new post.
-        if ($request->getMethod() === 'POST' && $access->canWrite()) {
+        if ($this->request->getMethod() === 'POST' && $this->access->canWrite()) {
             try {
-                $guestbook->create();
-                $session->flash('message', __('Your message was added successfully'));
-                redirect($this->base_url);
+                $this->guestbook->create();
+                $this->session->flash('message', __('Your message was added successfully'));
+                redirect($baseUrl);
             } catch (ValidationException $exception) {
                 $errors = $exception->getErrors();
             }
         }
 
-        $posts = $guestbookEntries->execute();
+        $posts = $this->guestbookEntries->execute();
 
         return $this->render->render(
             'guestbook::index',
             [
                 'posts'      => $posts['posts'],
                 'pagination' => $posts['pagination'],
-                'isClosed'   => $access->isClosed(),
-                'canWrite'   => $access->canWrite(),
-                'canClear'   => $access->canClear(),
+                'isClosed'   => $this->access->isClosed(),
+                'canWrite'   => $this->access->canWrite(),
+                'canClear'   => $this->access->canClear(),
                 'errors'     => $errors,
-                'formData'   => $form->getFormData(),
-                'captcha'    => $guestbook->getCaptcha(),
-                'message'    => $session->getFlash('message'),
+                'formData'   => $this->form->getFormData(),
+                'captcha'    => $this->guestbook->getCaptcha(),
+                'message'    => $this->session->getFlash('message'),
             ]
         );
     }

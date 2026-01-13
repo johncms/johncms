@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 use Johncms\Modules\Modules;
@@ -15,7 +7,6 @@ use Johncms\Security\BanIP;
 use Johncms\System\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
-use Psr\Container\ContainerInterface;
 
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
@@ -53,7 +44,6 @@ if (DEBUG) {
     ini_set('log_errors', 'Off');
 }
 
-/** @var ContainerInterface $container */
 $container = \Johncms\Container\PSRContainerFactory::getContainer();
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
