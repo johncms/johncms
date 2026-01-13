@@ -1,27 +1,29 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 namespace Johncms\Modules\Homepage\Controllers;
 
-use Johncms\Controller\BaseController;
 use Johncms\Counters;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\NavChain;
+use Johncms\System\View\Render;
 
-class HomepageController extends BaseController
+final readonly class HomepageController
 {
-    protected $module_name = 'homepage';
+    public function __construct(
+        private ControllerContext $context,
+        private NavChain $navChain,
+        private Render $render,
+    ) {
+        $this->context->initModule('homepage');
+    }
 
-    public function index(): string
+    public function __invoke(): string
     {
         define('_IS_HOMEPAGE', 1);
-        $this->nav_chain->showHomePage(false);
+        $this->navChain->showHomePage(false);
 
         $config = config('johncms');
         $news_config = config('news');
@@ -44,7 +46,6 @@ class HomepageController extends BaseController
         }
 
         $data['news'] = $news ?? [];
-        // TODO: Если приживется, объединить со счетчиками в меню для избежания лишних запросов
         /** @var Counters $counters */
         $counters = di('counters');
         $count['forum'] = $counters->forumCounters();

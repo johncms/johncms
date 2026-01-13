@@ -25,7 +25,7 @@ use Johncms\Modules\News\Application\Controllers\VoteController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
-    $map->get('/', [\Johncms\Modules\Homepage\Controllers\HomepageController::class, 'index']);                                // Home Page
+    $map->get('/', \Johncms\Modules\Homepage\Controllers\HomepageController::class);                                           // Home Page
     $map->get('/rss[/]', 'modules/rss/index.php');                                                                             // RSS
     $map->addRoute(['GET', 'POST'], '/album[/[{action}]]', 'modules/album/index.php');                                         // Photo Album
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php');                          // Users community
