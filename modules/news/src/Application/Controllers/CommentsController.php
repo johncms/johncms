@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
@@ -16,11 +8,10 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use Johncms\Controller\BaseController;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -33,9 +24,13 @@ use Johncms\System\View\Extension\Avatar;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
 
-class CommentsController extends BaseController
+final readonly class CommentsController
 {
-    protected $module_name = 'news';
+    public function __construct(
+        private ControllerContext $controllerContext,
+    ) {
+        $this->controllerContext->initModule('news');
+    }
 
     /**
      * The list of comments
@@ -52,7 +47,6 @@ class CommentsController extends BaseController
             Helpers::returnJson(['error' => __('Bad Request')]);
         }
 
-        /** @var LengthAwarePaginator $comments */
         $comments = (new NewsComments())->with('user')->where('article_id', $article_id)->paginate();
 
         $purifier = di(HTMLPurifier::class);

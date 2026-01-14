@@ -1,32 +1,27 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
-use Johncms\Controller\BaseController;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\NavChain;
 use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
 
-class SearchController extends BaseController
+final class SearchController
 {
-    protected $module_name = 'news';
+    protected array $config;
 
-    protected $config;
-
-    public function __construct()
-    {
-        parent::__construct();
+    public function __construct(
+        private readonly ControllerContext $controllerContext,
+        private readonly NavChain $navChain,
+        private readonly Render $render,
+    ) {
+        $this->controllerContext->initModule('news');
         $this->config = config('news') ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
+        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -38,7 +33,7 @@ class SearchController extends BaseController
     public function index(Request $request): string
     {
         $page_title = __('Search');
-        $this->nav_chain->add($page_title, '');
+        $this->navChain->add($page_title, '');
         $this->render->addData(
             [
                 'title'       => $page_title,
@@ -76,7 +71,7 @@ class SearchController extends BaseController
     public function byTags(Request $request): string
     {
         $page_title = __('Search by tags');
-        $this->nav_chain->add($page_title, '');
+        $this->navChain->add($page_title, '');
         $this->render->addData(
             [
                 'title'       => $page_title,

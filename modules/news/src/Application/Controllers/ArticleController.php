@@ -1,38 +1,26 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
-use Johncms\Controller\BaseController;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\News\Application\Article;
 use Johncms\Modules\News\Application\MetaTagsManager;
 use Johncms\Modules\News\Application\Section;
+use Johncms\NavChain;
+use Johncms\System\View\Render;
 
-class ArticleController extends BaseController
+final readonly class ArticleController
 {
-    protected $module_name = 'news';
-
-    /** @var array */
-    protected $config;
-
-    /** @var MetaTagsManager */
-    protected $meta_tags;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->config = config('news') ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->meta_tags = new MetaTagsManager();
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private NavChain $navChain,
+        private MetaTagsManager $metaTagsManager,
+    ) {
+        $this->controllerContext->initModule('news');
+        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -48,11 +36,11 @@ class ArticleController extends BaseController
     {
         $section->checkPath($category);
         $current_article = $article->getArticle($article_code);
-        $this->render->addData($this->meta_tags->setForArticle($current_article)->toArray());
+        $this->render->addData($this->metaTagsManager->setForArticle($current_article)->toArray());
         return $this->render->render(
             'news::public/article',
             [
-                'article'         => $current_article,
+                'article' => $current_article,
                 'current_section' => $section->getLastSection(),
             ]
         );

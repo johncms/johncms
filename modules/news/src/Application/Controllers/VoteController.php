@@ -1,26 +1,22 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\Controller\BaseController;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Users\User;
 
-class VoteController extends BaseController
+final readonly class VoteController
 {
-    protected $module_name = 'news';
+    public function __construct(
+        private ControllerContext $controllerContext,
+    ) {
+        $this->controllerContext->initModule('news');
+    }
 
     /**
      * Add vote

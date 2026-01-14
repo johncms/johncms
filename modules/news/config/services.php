@@ -11,8 +11,8 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->load(
-        'Johncms\\Modules\\News\\Application\\Controllers\\',
-        MODULES_PATH . 'news/src/Application/Controllers'
+        'Johncms\\Modules\\News\\Application\\',
+        MODULES_PATH . 'news/src/Application'
     )
         ->autowire()
         ->autoconfigure()

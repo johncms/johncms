@@ -1,38 +1,26 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
-use Johncms\Controller\BaseController;
+use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\News\Application\Article;
 use Johncms\Modules\News\Application\MetaTagsManager;
 use Johncms\Modules\News\Application\Section;
+use Johncms\NavChain;
+use Johncms\System\View\Render;
 
-class SectionController extends BaseController
+final readonly class SectionController
 {
-    protected $module_name = 'news';
-
-    /** @var array */
-    protected $config;
-
-    /** @var MetaTagsManager */
-    protected $meta_tags;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->config = config('news') ?? [];
-        $this->nav_chain->add(__('News'), '/news/');
-        $this->meta_tags = new MetaTagsManager();
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private NavChain $navChain,
+        private MetaTagsManager $metaTagsManager,
+        private Render $render,
+    ) {
+        $this->controllerContext->initModule('news');
+        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -47,12 +35,12 @@ class SectionController extends BaseController
     {
         $section->checkPath($category);
         $current_section = $section->getLastSection();
-        $this->render->addData($this->meta_tags->setForSection($current_section)->toArray());
+        $this->render->addData($this->metaTagsManager->setForSection($current_section)->toArray());
         return $this->render->render(
             'news::public/index',
             [
-                'sections'        => $section->getSections($current_section->id ?? 0),
-                'articles'        => $article->getArticles($section->getCachedSubsections($current_section)),
+                'sections' => $section->getSections($current_section->id ?? 0),
+                'articles' => $article->getArticles($section->getCachedSubsections($current_section)),
                 'current_section' => $current_section,
             ]
         );
