@@ -1,27 +1,25 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Illuminate\Support\Str;
-use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
+use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\System\Http\Request;
 use Johncms\System\Users\User;
+use Johncms\System\View\Render;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 
-class UsersController extends BaseAdminController
+final readonly class UsersController
 {
-    protected $module_name = 'admin';
+    public function __construct(
+        private AdminControllerContext $controllerContext,
+        private Render $render,
+    ) {
+        $this->controllerContext->initModule('admin');
+    }
 
     public function login(User $user, Request $request): string
     {
@@ -43,7 +41,7 @@ class UsersController extends BaseAdminController
         $captcha = false;
         $display_form = 1;
         $user_login = trim((string) $request->getPost('n', ''));
-        $user_pass  = trim((string) $request->getPost('p', ''));
+        $user_pass = trim((string) $request->getPost('p', ''));
         $captchaCode = trim((string) $request->getPost('code', ''));
 
         if (empty($user_login)) {

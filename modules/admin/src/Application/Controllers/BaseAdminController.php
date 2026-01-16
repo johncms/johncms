@@ -15,6 +15,9 @@ namespace Johncms\Modules\Admin\Application\Controllers;
 use Johncms\Controller\BaseController;
 use PDO;
 
+/**
+ * @deprecated Use AdminControllerContext instead
+ */
 class BaseAdminController extends BaseController
 {
     public function __construct()

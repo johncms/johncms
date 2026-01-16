@@ -1,34 +1,34 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Checker\SystemChecker;
-use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
+use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\NavChain;
+use Johncms\System\View\Render;
 
-class SystemCheckController extends BaseAdminController
+final readonly class SystemCheckController
 {
-    protected $module_name = 'admin';
+    public function __construct(
+        private AdminControllerContext $controllerContext,
+        private Render $render,
+        private NavChain $navChain,
+    ) {
+        $this->controllerContext->initModule('admin');
+    }
 
     public function index(SystemChecker $checker): string
     {
         $this->render->addData(
             [
-                'title'      => __('System check'),
+                'title' => __('System check'),
                 'page_title' => __('System check'),
-                'sys_menu'   => ['system_check' => true],
+                'sys_menu' => ['system_check' => true],
             ]
         );
-        $this->nav_chain->add(__('System check'));
+        $this->navChain->add(__('System check'));
 
         $check_extensions = $checker->checkExtensions();
         $recommendations = $checker->recommendations();
