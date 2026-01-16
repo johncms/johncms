@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers\Admin;
@@ -15,24 +7,24 @@ namespace Johncms\Modules\News\Application\Controllers\Admin;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\Modules\Admin\Application\Controllers\BaseAdminController;
+use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\News\Application\Section;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
+use Johncms\NavChain;
 use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
 
-class AdminSectionController extends BaseAdminController
+final readonly class AdminSectionController
 {
-    protected $module_name = 'news';
-
-    protected $config;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->config = config('news') ?? [];
-        $this->nav_chain->add(__('News'), '/admin/news/');
+    public function __construct(
+        private AdminControllerContext $controllerContext,
+        private Render $render,
+        private NavChain $navChain,
+    ) {
+        $this->controllerContext->initModule('news');
+        $this->navChain->add(__('News'), '/admin/news/');
         $this->render->addData(
             [
                 'title'       => __('News'),
@@ -40,7 +32,7 @@ class AdminSectionController extends BaseAdminController
                 'module_menu' => ['news' => true],
             ]
         );
-        $this->nav_chain->add(__('Section list'), '/admin/news/content/');
+        $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
 
     /**
@@ -67,13 +59,13 @@ class AdminSectionController extends BaseAdminController
                 Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
-                $this->nav_chain->add($current_section->name, '/admin/news/content/' . $current_section->id);
+                $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
         }
 
-        $this->nav_chain->add(__('Create section'));
+        $this->navChain->add(__('Create section'));
 
         $data = [
             'action_url' => '/admin/news/add_section/' . $section_id,
@@ -143,7 +135,7 @@ class AdminSectionController extends BaseAdminController
      */
     public function edit(int $section_id, Request $request): string
     {
-        $this->nav_chain->add(__('Edit section'));
+        $this->navChain->add(__('Edit section'));
         $this->render->addData(
             [
                 'title'      => __('Edit section'),
