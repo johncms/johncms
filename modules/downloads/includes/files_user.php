@@ -1,17 +1,8 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 use Downloads\Download;
-use Psr\Http\Message\ServerRequestInterface;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -19,12 +10,11 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var PDO $db
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
- * @var ServerRequestInterface $request
  */
 
 $title = __('User Files');
 
-$request = di(ServerRequestInterface::class);
+$request = di(\Johncms\System\Http\Request::class);
 $get = $request->getQueryParams();
 
 $id = isset($get['id']) ? (int) $get['id'] : 0;
