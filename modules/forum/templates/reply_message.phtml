@@ -83,11 +83,16 @@ $this->layout(
             </div>
         <?php endif; ?>
     <?php endif; ?>
-    <div class="form-group">
-        <label for="msg"><?= __('Message') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
-    </div>
+
+    <?= $this->fetch(
+        'system::app/ckeditor',
+        [
+            'label'  => __('Message'),
+            'errors' => implode(', ', $errors['message'] ?? []),
+            'value'  => $msg,
+            'name'   => 'msg',
+        ]
+    ) ?>
     <div class="custom-control custom-checkbox mb-3">
         <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles" <?= $add_file ? 'checked="checked"' : '' ?>>
         <label class="custom-control-label" for="addfiles"><?= __('Add File') ?></label>

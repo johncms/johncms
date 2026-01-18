@@ -300,7 +300,6 @@ if (! $error) {
                     'title'             => __('Edit Message'),
                     'page_title'        => __('Edit Message'),
                     'id'                => $id,
-                    'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('edit_post', 'msg'),
                     'msg'               => $message,
                     'start'             => $start,
                     'back_url'          => $link,

@@ -65,11 +65,15 @@ $this->layout(
 <?php endif; ?>
 
 <form name="edit_post" action="/forum/?act=editpost&amp;id=<?= $id ?>&amp;start=<?= $start ?>" method="post">
-    <div class="form-group">
-        <label for="msg"><?= __('Message') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"><?= $msg ?></textarea>
-    </div>
+    <?= $this->fetch(
+        'system::app/ckeditor',
+        [
+            'label'  => __('Message'),
+            'errors' => implode(', ', $errors['message'] ?? []),
+            'value'  => $msg,
+            'name'   => 'msg',
+        ]
+    ) ?>
     <div>
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
         <?php if (! empty($settings_forum['preview'])): ?>

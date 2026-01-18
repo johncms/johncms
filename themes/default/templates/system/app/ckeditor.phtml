@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var string $label
+ * @var string $value
+ * @var string $errors
+ * @var string $locale
+ * @var string $name
+ */
+
+if ($locale !== 'en') {
+    try {
+        echo '<script src="' . $this->asset('ckeditor5/translations/' . $locale . '.js', true) . '"></script>';
+    } catch (Exception $exception) {
+    }
+}
+// TODO: replace upload_url
+?>
+<script src="<?= $this->asset('ckeditor5/ckeditor.js', true) ?>"></script>
+<div class="vue_app">
+    <ckeditor-input-component
+        upload_url="/"
+        name="<?= $name ?>"
+        language="<?= $locale ?>"
+        errors="<?= $errors ?>"
+        id="<?= $name ?>"
+        label="<?= $label ?>"
+        value="<?= $value ?>"
+    ></ckeditor-input-component>
+</div>
