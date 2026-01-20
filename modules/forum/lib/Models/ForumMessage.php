@@ -18,8 +18,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Ip;
 use Johncms\Casts\TimeToDate;
+use Johncms\Media\MediaEmbed;
+use Johncms\Security\HTMLPurifier;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Simba77\EmbedMedia\Embed;
 
 /**
  * Class Message
@@ -123,6 +126,9 @@ class ForumMessage extends Model
      */
     protected $current_user;
 
+    protected \HTMLPurifier $purifier;
+    protected Embed $media;
+
     /**
      * @var Tools
      */
@@ -131,8 +137,10 @@ class ForumMessage extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
+        $this->purifier = di(HTMLPurifier::class);
         $this->current_user = di(User::class);
         $this->tools = di(Tools::class);
+        $this->media = di(MediaEmbed::class);
     }
 
     /**

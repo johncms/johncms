@@ -90,7 +90,8 @@ trait MessageMutators
      */
     public function getPostTextAttribute(): string
     {
-        $text = $this->tools->checkout($this->text, 1, 1);
+        $text = $this->purifier->purify($this->text);
+        $text = $this->media->embedMedia($text);
         $text = $this->tools->smilies($text, $this->rights ? 1 : 0);
         return $text;
     }
