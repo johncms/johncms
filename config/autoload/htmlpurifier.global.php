@@ -34,6 +34,9 @@ return [
             'image-style-align-right',
             'image-style-align-left',
             'image-style-align-center',
+
+            // Forum
+            'gray',
         ],
     ],
 ];
