@@ -207,10 +207,10 @@ switch ($post_type) {
                     $newpost = $res['text'];
 
                     if (strpos($newpost, '[timestamp]') === false) {
-                        $newpost = '[timestamp]' . date('d.m.Y H:i', $res['date']) . '[/timestamp]' . PHP_EOL . $newpost;
+                        $newpost = '<small class="gray">' . date('d.m.Y H:i', $res['date']) . '</small>' . PHP_EOL . $newpost;
                     }
 
-                    $newpost .= PHP_EOL . PHP_EOL . '[timestamp]' . date('d.m.Y H:i', time()) . '[/timestamp]' . PHP_EOL . $msg;
+                    $newpost .= PHP_EOL . PHP_EOL . '<small class="gray">' . date('d.m.Y H:i', time()) . '</small>' . PHP_EOL . $msg;
 
                     // Обновляем пост
                     $db->prepare(
@@ -392,12 +392,12 @@ switch ($post_type) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
             $citata = di(Johncms\System\Legacy\Bbcode::class)->notags($citata);
-            $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
+            $citata = preg_replace('#<blockquote>(.*?)</blockquote>#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date('d.m.Y H:i', $type1['date']);
-            $msg = '[c][url=' . $config['homeurl'] . '/forum/?act=show_post&id=' .
-                $type1['id'] . ']#[/url] [url=' . $config['homeurl'] . '/profile/?user=' . $type1['user_id'] . ']' . $type1['user_name'] . '[/url]'
-                . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
+            $msg = '<blockquote><a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' .
+                $type1['id'] . '">#</a> <a href="' . $config['homeurl'] . '/profile/?user=' . $type1['user_id'] . '">' . $type1['user_name'] . '</a>'
+                . ' (<span class="time" data-type="time">' . $tp . "</time>)\n" . $citata . '</blockquote>' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
