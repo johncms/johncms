@@ -215,7 +215,6 @@ echo $view->render(
         'th'                => $data['name'],
         'add_files'         => ($data['add_files'] === 1),
         'msg'               => $tools->checkout($data['message'], 0, 0),
-        'bbcode'            => di(Johncms\System\Legacy\Bbcode::class)->buttons('new_topic', 'msg'),
         'back_url'          => $current_section->url,
         'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $request->getPost('submit', null),
         'preview_message'   => $msg_pre,

@@ -75,13 +75,15 @@ $this->layout('system::layout/default');
         <?php endif ?>
     </div>
     <div class="form-group">
-        <label for="msg"><?= __('Message') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg"
-                  class="form-control <?= ! empty($errors['message']) ? 'is-invalid' : '' ?>"><?= $msg ?></textarea>
-        <?php if (! empty($errors['message'])): ?>
-            <div class="invalid-feedback d-block"><?= implode(', ', $errors['message']) ?></div>
-        <?php endif ?>
+        <?= $this->fetch(
+            'system::app/ckeditor',
+            [
+                'label'  => __('Message'),
+                'errors' => implode(', ', $errors['message'] ?? []),
+                'value'  => $msg,
+                'name'   => 'msg',
+            ]
+        ) ?>
     </div>
     <?php if ($user->rights > 0): ?>
         <div class="form-group">
