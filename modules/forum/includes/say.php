@@ -406,7 +406,7 @@ switch ($post_type) {
                     break;
 
                 case 3:
-                    $repl = $type1['user_name'] . ', ' . __('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
+                    $repl = $type1['user_name'] . ', ' . __('respond to Your message') . ' (<a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . '">' . $vr . '</a>): ';
                     break;
 
                 default:
@@ -565,17 +565,17 @@ switch ($post_type) {
             exit;
         }
         $qt = $type1['text'];
-        $msg_pre = $tools->checkout($msg, 1, 1);
-        $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-        $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-        $qt = str_replace('<br>', "\r\n", $qt);
-        $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
-        $qt = $tools->checkout($qt, 0, 2);
 
         $type1['time_formatted'] = $vr;
 
         $token = mt_rand(1000, 100000);
         $_SESSION['token'] = $token;
+
+        $isQuote = isset($_GET['cyt']);
+
+        if($isQuote) {
+            $msg .= '<blockquote>'. $qt .'</blockquote><p>' . $msg . '</p>';
+        }
 
         echo $view->render(
             'forum::reply_message',
@@ -587,15 +587,14 @@ switch ($post_type) {
                 'topic'             => $th1,
                 'form_action'       => '/forum/?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : ''),
                 'txt'               => $txt ?? null,
-                'is_quote'          => isset($_GET['cyt']),
+                'is_quote'          => $isQuote,
                 'add_file'          => isset($_POST['addfiles']),
-                'msg'               => (empty($_POST['msg']) ? '' : $tools->checkout($msg, 0, 0)),
+                'msg'               => (empty($msg) ? '' : $tools->checkout($msg, 0, 0)),
                 'quote_msg'         => empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'], 0, 0),
                 'message'           => $type1,
                 'settings_forum'    => $set_forum,
                 'show_post_preview' => (! empty($_POST['msg']) && ! isset($_POST['submit'])),
                 'back_url'          => '?type=topic&id=' . $th1['id'] . '&amp;start=' . $start,
-                'preview_message'   => $msg_pre,
                 'is_new_message'    => false,
             ]
         );

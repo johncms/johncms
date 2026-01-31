@@ -284,13 +284,6 @@ if (! $error) {
                 header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 exit;
             }
-            $msg_pre = $tools->checkout($msg, 1, 1);
-            $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-            $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-
-            if ($msg && ! isset($_POST['submit'])) {
-                $foundUser = (new User())->find($res['user_id']);
-            }
 
             $message = (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'], 0, 0));
 
@@ -305,8 +298,6 @@ if (! $error) {
                     'back_url'          => $link,
                     'settings_forum'    => $set_forum,
                     'show_post_preview' => $msg && ! isset($_POST['submit']),
-                    'preview_message'   => $msg_pre,
-                    'message_author'    => $foundUser ?? null,
                 ]
             );
     }
