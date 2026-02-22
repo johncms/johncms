@@ -115,9 +115,16 @@ $this->layout('system::layout/default');
         <?php if (! empty($settings_forum['farea'])): ?>
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">
-                <label for="msg"><?= __('Message') ?></label>
-                <div><?= $bbcode ?></div>
-                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                <?= $this->fetch(
+                    'system::app/ckeditor',
+                    [
+                        'label'        => __('Message'),
+                        'errors'       => implode(', ', $errors['message'] ?? []),
+                        'value'        => '',
+                        'name'         => 'msg',
+                        'allow_upload' => false,
+                    ]
+                ) ?>
             </div>
             <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
@@ -125,9 +132,6 @@ $this->layout('system::layout/default');
             </div>
             <div>
                 <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
-                <?php if (! empty($settings_forum['preview'])): ?>
-                    <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
-                <?php endif; ?>
             </div>
         <?php else: ?>
             <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
@@ -422,9 +426,16 @@ $this->layout('system::layout/default');
         <?php if (! empty($settings_forum['farea'])): ?>
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">
-                <label for="msg"><?= __('Message') ?></label>
-                <div><?= $bbcode ?></div>
-                <textarea rows="<?= $user->config->fieldHeight ?>" name="msg" id="msg" required class="form-control"></textarea>
+                <?= $this->fetch(
+                    'system::app/ckeditor',
+                    [
+                        'label'        => __('Message'),
+                        'errors'       => implode(', ', $errors['message'] ?? []),
+                        'value'        => '',
+                        'name'         => 'msg',
+                        'allow_upload' => false,
+                    ]
+                ) ?>
             </div>
             <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
@@ -432,9 +443,6 @@ $this->layout('system::layout/default');
             </div>
             <div>
                 <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
-                <?php if (! empty($settings_forum['preview'])): ?>
-                    <button type="submit" class="btn btn-secondary"><?= __('Preview') ?></button>
-                <?php endif; ?>
             </div>
         <?php else: ?>
             <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Write') ?></button>
