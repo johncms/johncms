@@ -106,9 +106,9 @@ switch ($post_type) {
             exit;
         }
 
-        $type1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'")->fetch();
+        $sourceMessage = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'")->fetch();
         // Добавление простого сообщения
-        if (($type1['deleted'] == 1 || $type1['closed'] == 1) && $user->rights < 7) {
+        if (($sourceMessage['deleted'] == 1 || $sourceMessage['closed'] == 1) && $user->rights < 7) {
             // Проверка, закрыта ли тема
             echo $view->render(
                 'system::pages/result',
@@ -306,7 +306,7 @@ switch ($post_type) {
                 'page_title'        => __('New message'),
                 'id'                => $id,
                 'token'             => $token,
-                'topic'             => $type1,
+                'topic'             => $sourceMessage,
                 'form_action'       => '?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start,
                 'add_file'          => isset($_POST['addfiles']),
                 'msg'               => (empty($_POST['msg']) ? '' : $tools->checkout($msg, 0, 0)),
@@ -321,9 +321,9 @@ switch ($post_type) {
 
     case 'reply':
         // Добавление сообщения с цитированием поста
-        $type1 = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetch();
+        $sourceMessage = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetch();
 
-        if (empty($type1)) {
+        if (empty($sourceMessage)) {
             echo $view->render(
                 'system::pages/result',
                 [
@@ -337,7 +337,7 @@ switch ($post_type) {
             exit;
         }
 
-        $th = $type1['topic_id'];
+        $th = $sourceMessage['topic_id'];
 
         if ($flood) {
             echo $view->render(
@@ -369,7 +369,7 @@ switch ($post_type) {
             exit;
         }
 
-        if ($type1['user_id'] == $user->id) {
+        if ($sourceMessage['user_id'] == $user->id) {
             echo $view->render(
                 'system::pages/result',
                 [
@@ -384,7 +384,7 @@ switch ($post_type) {
         }
 
         $shift = ($config['timeshift'] + $user->config->timeshift) * 3600;
-        $vr = date('d.m.Y / H:i', $type1['date'] + $shift);
+        $vr = date('d.m.Y / H:i', $sourceMessage['date'] + $shift);
         $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
         $txt = isset($_POST['txt']) ? (int) ($_POST['txt']) : false;
 
@@ -394,23 +394,23 @@ switch ($post_type) {
             $citata = di(Johncms\System\Legacy\Bbcode::class)->notags($citata);
             $citata = preg_replace('#<blockquote>(.*?)</blockquote>#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
-            $tp = date('d.m.Y H:i', $type1['date']);
+            $tp = date('d.m.Y H:i', $sourceMessage['date']);
             $msg = '<blockquote><a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' .
-                $type1['id'] . '">#</a> <a href="' . $config['homeurl'] . '/profile/?user=' . $type1['user_id'] . '">' . $type1['user_name'] . '</a>'
+                $sourceMessage['id'] . '">#</a> <a href="' . $config['homeurl'] . '/profile/?user=' . $sourceMessage['user_id'] . '">' . $sourceMessage['user_name'] . '</a>'
                 . ' (<span class="time" data-type="time">' . $tp . "</time>)\n" . $citata . '</blockquote>' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
                 case 2:
-                    $repl = $type1['user_name'] . ', ' . __('I am glad to answer you') . ', ';
+                    $repl = $sourceMessage['user_name'] . ', ' . __('I am glad to answer you') . ', ';
                     break;
 
                 case 3:
-                    $repl = $type1['user_name'] . ', ' . __('respond to Your message') . ' (<a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . '">' . $vr . '</a>): ';
+                    $repl = $sourceMessage['user_name'] . ', ' . __('respond to Your message') . ' (<a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' . $sourceMessage['id'] . '">' . $vr . '</a>): ';
                     break;
 
                 default:
-                    $repl = $type1['user_name'] . ', ';
+                    $repl = $sourceMessage['user_name'] . ', ';
             }
             $msg = $repl . ' ' . $msg;
         }
@@ -535,14 +535,14 @@ switch ($post_type) {
                 [
                     'module'     => 'forum',
                     'event_type' => 'new_message',
-                    'user_id'    => $type1['user_id'],
+                    'user_id'    => $sourceMessage['user_id'],
                     'sender_id'  => $user->id,
                     'entity_id'  => $fadd,
                     'fields'     => [
                         'topic_name'       => htmlspecialchars($th1['name']),
                         'user_name'        => htmlspecialchars($user->name),
                         'topic_url'        => '/forum/?type=topic&amp;id=' . $th,
-                        'reply_to_message' => '/forum/?act=show_post&id=' . $type1['id'],
+                        'reply_to_message' => '/forum/?act=show_post&id=' . $sourceMessage['id'],
                         'message'          => $preview_message,
                         'post_id'          => $fadd,
                         'topic_id'         => $th,
@@ -564,17 +564,19 @@ switch ($post_type) {
             }
             exit;
         }
-        $qt = $type1['text'];
+        $qt = $sourceMessage['text'];
 
-        $type1['time_formatted'] = $vr;
+        $sourceMessage['time_formatted'] = $vr;
 
         $token = mt_rand(1000, 100000);
         $_SESSION['token'] = $token;
 
         $isQuote = isset($_GET['cyt']);
 
-        if($isQuote) {
-            $msg .= '<blockquote>'. $qt .'</blockquote><p>' . $msg . '</p>';
+        if ($isQuote) {
+            $msg .= '<blockquote>' . $qt . '</blockquote><p>' . $msg . '</p>';
+        } else {
+            $msg .= '<p>' . $sourceMessage['user_name'] . ',&nbsp;' . $msg . '</p>';
         }
 
         echo $view->render(
@@ -591,7 +593,7 @@ switch ($post_type) {
                 'add_file'          => isset($_POST['addfiles']),
                 'msg'               => (empty($msg) ? '' : $tools->checkout($msg, 0, 0)),
                 'quote_msg'         => empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'], 0, 0),
-                'message'           => $type1,
+                'message'           => $sourceMessage,
                 'settings_forum'    => $set_forum,
                 'show_post_preview' => (! empty($_POST['msg']) && ! isset($_POST['submit'])),
                 'back_url'          => '?type=topic&id=' . $th1['id'] . '&amp;start=' . $start,
