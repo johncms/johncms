@@ -39,10 +39,11 @@ $this->layout(
     <?= $this->fetch(
         'system::app/ckeditor',
         [
-            'label'  => __('Message'),
-            'errors' => implode(', ', $errors['message'] ?? []),
-            'value'  => $msg,
-            'name'   => 'msg',
+            'label'        => __('Message'),
+            'errors'       => implode(', ', $errors['message'] ?? []),
+            'value'        => $msg,
+            'name'         => 'msg',
+            'allow_upload' => false,
         ]
     ) ?>
     <div class="custom-control custom-checkbox mb-3">

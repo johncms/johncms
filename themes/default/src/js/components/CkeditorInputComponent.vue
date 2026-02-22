@@ -2,81 +2,79 @@
   <div>
     <div class="form-group">
       <label :for="id">{{ label }}</label>
-      <textarea :name="name" :id="id" class="form-control" :class="classes + (errors ? 'is-invalid' : '')" v-model="model_value"></textarea>
+      <textarea
+        :name="name"
+        :id="id"
+        class="form-control"
+        :class="[classes, errors ? 'is-invalid' : '']"
+        v-model="model_value"
+      ></textarea>
       <div class="invalid-feedback d-block" v-if="errors">{{ errors }}</div>
     </div>
-    <div v-for="file in attached_files">
-      <input type="hidden" name="attached_files[]" v-model="file.id">
+
+    <div v-for="file in attached_files" :key="file.id">
+      <input type="hidden" name="attached_files[]" :value="file.id">
     </div>
   </div>
 </template>
+<script setup>
+import { ref, onMounted } from 'vue';
 
-<script>
-export default {
-  name: "CkeditorInputComponent",
-  props: {
-    label: {
-      type: String,
-      default: 'Message'
-    },
-    id: {
-      type: String,
-      default: ''
-    },
-    name: {
-      type: String,
-      default: ''
-    },
-    classes: {
-      type: String,
-      default: ''
-    },
-    value: {
-      type: String,
-      default: ''
-    },
-    errors: {
-      type: String,
-      default: ''
-    },
-    language: {
-      type: String,
-      default: 'en'
-    },
-    upload_url: {
-      type: String,
-      default: ''
-    },
-  },
-  data()
-  {
-    return {
-      model_value: this.value,
-      attached_files: [],
-    }
-  },
-  mounted()
-  {
-    const self = this;
-    let config = {
-      simpleUpload: {
-        uploadUrl: this.upload_url,
-        withCredentials: false,
-        savedCallback: function (file) {
-          self.attached_files.push(file);
-        },
-      },
-      language: this.language
-    };
+const props = defineProps({
+  label: { type: String, default: 'Message' },
+  id: { type: String, default: '' },
+  name: { type: String, default: '' },
+  classes: { type: String, default: '' },
+  value: { type: String, default: '' },
+  errors: { type: String, default: '' },
+  language: { type: String, default: 'en' },
+  upload_url: { type: String, default: '' },
+  allow_upload: { type: Boolean, default: true }
+});
 
-    ClassicEditor
-      .create(document.querySelector('#' + this.id), config)
-      .then(editor => {
-        window.editor = editor;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+const model_value = ref(props.value);
+const attached_files = ref([]);
+
+onMounted(() => {
+  const toolbarItems = [
+    'heading', '|', 'bold', 'italic', 'link', 'fontColor',
+    'bulletedList', 'numberedList', 'removeFormat', '|',
+    'codeBlock'
+  ];
+
+  if (props.allow_upload) {
+    toolbarItems.push('insertImage');
   }
-}
+
+  toolbarItems.push('blockQuote', 'insertTable', 'mediaEmbed', 'undo', 'redo');
+
+  const config = {
+    language: props.language,
+    toolbar: {
+      items: toolbarItems
+    }
+  };
+
+  if (props.allow_upload && props.upload_url) {
+    config.simpleUpload = {
+      uploadUrl: props.upload_url,
+      withCredentials: false,
+      savedCallback: (file) => {
+        attached_files.value.push(file);
+      },
+    };
+  }
+
+  ClassicEditor
+    .create(document.querySelector(`#${props.id}`), config)
+    .then(editor => {
+      editor.model.document.on('change:data', () => {
+        model_value.value = editor.getData();
+      });
+      window.editor = editor;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+});
 </script>
