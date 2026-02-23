@@ -80,7 +80,6 @@ switch ($mod) {
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $post['text'] = strip_tags($post['text']);
                 $text = mb_strimwidth($post['text'], 0, 300, '...');
-                $text = $tools->checkout($text, 2, 1);
 
                 $row = [
                     'topic_url'     => '/forum/?type=topic&id=' . $res['id'],
@@ -113,8 +112,6 @@ switch ($mod) {
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $res['text'] = strip_tags($res['text']);
                 $text = mb_strimwidth($res['text'], 0, 300, '...');
-                $text = $tools->checkout($text, 2, 1);
-                $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
                 $row = [
                     'topic_url'     => '/forum/?type=topic&id=' . $topic['id'],
