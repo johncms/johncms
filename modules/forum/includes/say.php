@@ -199,18 +199,18 @@ switch ($post_type) {
                 $res = $req->fetch();
                 if (
                     ! isset($_POST['addfiles']) &&
-                    $res['date'] + 3600 < strtotime('+ 1 hour') &&
+                    $res['date'] + 3600 > time() &&
                     $res['strlen'] + strlen($msg) < 65536 &&
                     $res['user_id'] == $user->id &&
                     empty($check_files)
                 ) {
                     $newpost = $res['text'];
 
-                    if (strpos($newpost, '[timestamp]') === false) {
+                    if (strpos($newpost, '<small class="gray date">') === false) {
                         $newpost = '<small class="gray">' . date('d.m.Y H:i', $res['date']) . '</small>' . PHP_EOL . $newpost;
                     }
 
-                    $newpost .= PHP_EOL . PHP_EOL . '<small class="gray">' . date('d.m.Y H:i', time()) . '</small>' . PHP_EOL . $msg;
+                    $newpost .= PHP_EOL . PHP_EOL . '<small class="gray date">' . date('d.m.Y H:i', time()) . '</small>' . PHP_EOL . $msg;
 
                     // Обновляем пост
                     $db->prepare(
@@ -386,41 +386,6 @@ switch ($post_type) {
         $shift = ($config['timeshift'] + $user->config->timeshift) * 3600;
         $vr = date('d.m.Y / H:i', $sourceMessage['date'] + $shift);
         $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
-        $txt = isset($_POST['txt']) ? (int) ($_POST['txt']) : false;
-
-        if (! empty($_POST['citata'])) {
-            // Если была цитата, форматируем ее и обрабатываем
-            $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
-            $citata = di(Johncms\System\Legacy\Bbcode::class)->notags($citata);
-            $citata = preg_replace('#<blockquote>(.*?)</blockquote>#si', '', $citata);
-            $citata = mb_substr($citata, 0, 200);
-            $tp = date('d.m.Y H:i', $sourceMessage['date']);
-            $msg = '<blockquote><a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' .
-                $sourceMessage['id'] . '">#</a> <a href="' . $config['homeurl'] . '/profile/?user=' . $sourceMessage['user_id'] . '">' . $sourceMessage['user_name'] . '</a>'
-                . ' (<span class="time" data-type="time">' . $tp . "</time>)\n" . $citata . '</blockquote>' . $msg;
-        } elseif (isset($_POST['txt'])) {
-            // Если был ответ, обрабатываем реплику
-            switch ($txt) {
-                case 2:
-                    $repl = $sourceMessage['user_name'] . ', ' . __('I am glad to answer you') . ', ';
-                    break;
-
-                case 3:
-                    $repl = $sourceMessage['user_name'] . ', ' . __('respond to Your message') . ' (<a href="' . $config['homeurl'] . '/forum/?act=show_post&id=' . $sourceMessage['id'] . '">' . $vr . '</a>): ';
-                    break;
-
-                default:
-                    $repl = $sourceMessage['user_name'] . ', ';
-            }
-            $msg = $repl . ' ' . $msg;
-        }
-
-        //Обрабатываем ссылки
-        $msg = preg_replace_callback(
-            '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-            'forum_link',
-            $msg
-        );
 
         if (
             isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
@@ -588,7 +553,6 @@ switch ($post_type) {
                 'token'             => $token,
                 'topic'             => $th1,
                 'form_action'       => '/forum/?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : ''),
-                'txt'               => $txt ?? null,
                 'is_quote'          => $isQuote,
                 'add_file'          => isset($_POST['addfiles']),
                 'msg'               => (empty($msg) ? '' : $tools->checkout($msg, 0, 0)),
