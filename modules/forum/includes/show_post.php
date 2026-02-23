@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\FileInfo;
+use Johncms\Media\MediaEmbed;
 use Johncms\UserProperties;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -20,6 +21,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  */
+
+$purifier = di(\Johncms\Security\HTMLPurifier::class);
+$media = di(MediaEmbed::class);
 
 if (empty($_GET['id'])) {
     http_response_code(404);
@@ -78,7 +82,9 @@ $res['post_time'] = $tools->displayDate($res['date']);
 $res['edit_time'] = $res['edit_count'] ? $tools->displayDate($res['edit_time']) : '';
 
 $text = $res['text'];
-$text = $tools->checkout($text, 1, 1);
+
+$text = $purifier->purify($text);
+$text = $media->embedMedia($text);
 $text = $tools->smilies($text, $res['rights'] ? 1 : 0);
 $res['post_text'] = $text;
 
