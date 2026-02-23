@@ -45,49 +45,6 @@ if (
 
 // Проверка на флуд
 $flood = $tools->antiflood();
-
-// Вспомогательная Функция обработки ссылок форума
-function forum_link($m)
-{
-    global $db, $config;
-
-    if (! isset($m[3])) {
-        return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
-    }
-    $p = parse_url($m[3]);
-
-    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
-        $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
-        $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '$thid' AND (`deleted` != '1' OR deleted IS NULL)");
-
-        if ($req->rowCount()) {
-            $res = $req->fetch();
-            $name = strtr(
-                $res['name'],
-                [
-                    '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
-                    '&#039;' => '',
-                    '['      => '',
-                    ']'      => '',
-                ]
-            );
-
-            if (mb_strlen($name) > 40) {
-                $name = mb_substr($name, 0, 40) . '...';
-            }
-
-            return '[url=' . $m[3] . ']' . $name . '[/url]';
-        }
-
-        return $m[3];
-    }
-
-    return $m[3];
-}
-
 $post_type = $_REQUEST['type'] ?? 'post';
 
 switch ($post_type) {
@@ -124,12 +81,6 @@ switch ($post_type) {
         }
 
         $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
-        //Обрабатываем ссылки
-        $msg = preg_replace_callback(
-            '~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-            'forum_link',
-            $msg
-        );
 
         if (
             isset($_POST['submit'])
