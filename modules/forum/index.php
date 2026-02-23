@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Aura\Autoload\Loader;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\Counters;
@@ -44,11 +43,6 @@ di(Translator::class)->addTranslationDomain('forum', __DIR__ . '/locale');
 
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('forum', __DIR__ . '/templates/');
-
-// Регистрируем автозагрузчик
-$loader = new Loader();
-$loader->register();
-$loader->addPrefix('Forum', __DIR__ . '/lib');
 
 // Добавляем раздел в навигационную цепочку
 $nav_chain->add(__('Forum'), '/forum/');

@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-use Forum\ForumUtils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Forum\Models\ForumSection;
 use Johncms\Counters;
+use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\GuestSession;

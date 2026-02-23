@@ -11,14 +11,14 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Forum\ForumUtils;
-use Forum\Models\ForumMessage;
-use Forum\Models\ForumTopic;
-use Forum\Models\ForumUnread;
-use Forum\Models\ForumVote;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Johncms\Counters;
+use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Modules\Forum\Domain\Models\ForumMessage;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Modules\Forum\Domain\Models\ForumUnread;
+use Johncms\Modules\Forum\Domain\Models\ForumVote;
 use Johncms\NavChain;
 use Johncms\Notifications\Notification;
 use Johncms\System\Http\Request;

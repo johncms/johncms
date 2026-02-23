@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Forum;
+namespace Johncms\Modules\Forum\Application;
 
-use Forum\Models\ForumMessage;
-use Forum\Models\ForumTopic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\Forum\Domain\Models\ForumMessage;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;

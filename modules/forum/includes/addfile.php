@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-use Forum\Models\ForumFile;
-use Forum\Models\ForumMessage;
 use Illuminate\Support\Collection;
 use Johncms\FileInfo;
+use Johncms\Modules\Forum\Domain\Models\ForumFile;
+use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 

@@ -82,7 +82,8 @@
             "Johncms\\Modules\\Guestbook\\": "modules/guestbook/src/",
             "Johncms\\Modules\\Admin\\": "modules/admin/src/",
             "Johncms\\Modules\\Homepage\\": "modules/homepage/src/",
-            "Johncms\\Modules\\News\\": "modules/news/src/"
+            "Johncms\\Modules\\News\\": "modules/news/src/",
+            "Johncms\\Modules\\Forum\\": "modules/forum/src/"
         }
     },
     "bin": [

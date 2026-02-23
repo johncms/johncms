@@ -23,7 +23,7 @@ return [
                 'name'    => d__('system', 'New reply on the forum'),
                 'message' => static function ($fields = []) {
                     if (! empty($fields['post_id']) && ! empty($fields['topic_id'])) {
-                        $post_page = \Forum\ForumUtils::getPostPage((int) $fields['post_id'], (int) $fields['topic_id']);
+                        $post_page = \Johncms\Modules\Forum\Application\ForumUtils::getPostPage((int) $fields['post_id'], (int) $fields['topic_id']);
                         $post_page .= '#post_' . $fields['post_id'];
                     } else {
                         $post_page = '/forum/';

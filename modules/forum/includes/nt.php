@@ -11,12 +11,12 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Forum\ForumUtils;
-use Forum\Models\ForumMessage;
-use Forum\Models\ForumSection;
-use Forum\Models\ForumTopic;
-use Forum\Models\ForumUnread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Modules\Forum\Domain\Models\ForumMessage;
+use Johncms\Modules\Forum\Domain\Models\ForumSection;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
