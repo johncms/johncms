@@ -528,7 +528,7 @@ switch ($post_type) {
             $tools->recountForumTopic($th);
 
             // Добавляем уведомление об ответе
-            $preview_message = strip_tags($tools->checkout(trim($_POST['msg']), 1, 1));
+            $preview_message = strip_tags(trim($_POST['msg']));
             $preview_message = strlen($preview_message) > 200 ? mb_substr($preview_message, 0, 200) . '...' : $preview_message;
             $preview_message = $tools->smilies($preview_message, ($user->rights > 0));
             (new Notification())->create(
