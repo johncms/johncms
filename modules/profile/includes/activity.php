@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Media\MediaEmbed;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -45,6 +46,8 @@ $data['filters'] = [
 ];
 
 $activity = [];
+$purifier = di(\Johncms\Security\HTMLPurifier::class);
+$media = di(MediaEmbed::class);
 
 switch ($mod) {
     case 'comments':
@@ -54,7 +57,9 @@ switch ($mod) {
         $data['item_type'] = 'comment';
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
-                $res['text'] = $tools->checkout($res['text'], 1, 1);
+                $res['text'] = $purifier->purify($res['text']);
+                $res['text'] = $media->embedMedia($res['text']);
+                $res['text'] = $tools->smilies($res['text'], ($user !== null && $user->rights >= 1));
                 $res['display_date'] = $tools->displayDate($res['time']);
                 $activity[] = $res;
             }
@@ -73,6 +78,7 @@ switch ($mod) {
                 $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . ' ORDER BY `id` ASC LIMIT 1')->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
+                $post['text'] = strip_tags($post['text']);
                 $text = mb_strimwidth($post['text'], 0, 300, '...');
                 $text = $tools->checkout($text, 2, 1);
 
@@ -105,6 +111,7 @@ switch ($mod) {
                 $topic = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $topic['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
+                $res['text'] = strip_tags($res['text']);
                 $text = mb_strimwidth($res['text'], 0, 300, '...');
                 $text = $tools->checkout($text, 2, 1);
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
