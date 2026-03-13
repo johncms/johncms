@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
+
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
@@ -26,4 +29,6 @@ return static function (ContainerConfigurator $container): void {
     )
         ->autowire()
         ->autoconfigure();
+
+    $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
 };
