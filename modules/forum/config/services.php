@@ -17,6 +17,7 @@ return static function (ContainerConfigurator $container): void {
         ->exclude(
             [
                 MODULES_PATH . 'forum/src/Application/DTO',
+                MODULES_PATH . 'forum/src/Application/Exceptions',
             ]
         )
         ->autowire()
