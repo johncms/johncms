@@ -12,6 +12,7 @@ use Johncms\Modules\Forum\Application\Exceptions\UploadException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Exceptions\MessageNotFoundException;
+use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Users\User;
 
@@ -19,6 +20,7 @@ final readonly class AttachFileToPostUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
+        private ForumFileRepositoryInterface $fileRepository,
         private User $currentUser,
     ) {
     }
@@ -78,17 +80,14 @@ final readonly class AttachFileToPostUseCase
         $message->loadMissing(['topic.section']);
         $fileType = $this->resolveFileType($extension, $extensionsCollection);
         $forumFile = new ForumFile();
-        $forumFile->create(
-            [
-                'cat'      => $message->topic->section->parent,
-                'subcat'   => $message->topic->section_id,
-                'topic'    => $message->topic_id,
-                'post'     => $message->id,
-                'time'     => $message->date,
-                'filename' => $fileName,
-                'filetype' => $fileType,
-            ]
-        );
+        $forumFile->cat = $message->topic->section->parent;
+        $forumFile->subcat = $message->topic->section_id;
+        $forumFile->topic = $message->topic_id;
+        $forumFile->post = $message->id;
+        $forumFile->time = $message->date;
+        $forumFile->filename = $fileName;
+        $forumFile->filetype = $fileType;
+        $this->fileRepository->save($forumFile);
 
         $page = $this->getMessagePage((int) $message->topic_id);
 

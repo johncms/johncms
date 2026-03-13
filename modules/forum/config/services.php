@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
 
 return static function (ContainerConfigurator $container): void {
@@ -32,4 +34,5 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
+    $services->set(ForumFileRepositoryInterface::class, ForumFileRepository::class)->public();
 };
