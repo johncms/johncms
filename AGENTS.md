@@ -97,6 +97,19 @@ coding rules that should be followed when making changes.
 - Keep error messages actionable and specific.
 - Prefer early return/guard clauses for invalid state.
 
+## Access Guard Style
+- For actions that combine access checks and a state-changing operation, split the flow into three use cases:
+  - `Ensure*AccessUseCase`: access/ownership/time-window checks only, no DTOs, throws exceptions.
+  - `Get*ContextUseCase`: returns context DTO (e.g., topicId/page) without access checks.
+  - `*UseCase`: performs the action only, no HTTP knowledge, no repeated access checks.
+- Include/controller flow: guard -> context -> action (action only on POST).
+- Exceptions mapping (module-specific naming allowed):
+  - Access denied exceptions -> HTTP 403.
+  - Not found/ownership mismatch exceptions -> user-facing “Wrong data”.
+  - Expired window exceptions -> user-facing timeout message.
+  - Validation/upload exceptions -> user-facing validation/upload errors.
+- Do not register exceptions as DI services (exclude `Application/Exceptions` from service autoload).
+
 ## Commit Message Rules
 - Commit messages are reviewed by the technical team.
 - Use Conventional Commits format (`type: subject`).
