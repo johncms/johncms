@@ -1,128 +1,198 @@
 # AGENTS.md
 
-## Purpose & Scope
-This document helps contributors and automated agents work consistently in this
-codebase. It captures the project context, architecture expectations, and
-coding rules that should be followed when making changes.
+## Purpose
 
-## Project Overview
-- JohnCMS is a CMS for building websites.
-- The project is multilingual and has a long-lived codebase.
-- We are gradually refactoring the system over time.
+This document guides contributors and automated agents when working in this codebase. Follow these rules to keep architecture and refactoring consistent.
 
-## Tech Stack
-- Backend: PHP 8.2, MySQL
-- Frontend: Bootstrap, selective Vue components
-- Bundler: Webpack
-- Templates: Plates (near-native PHP templates)
+## Project Context
 
-## Quick Start
-- Install PHP deps: `composer install`
-- Install JS deps: `npm ci`
-- Initialize env: `cp .env.example .env`
+JohnCMS is a multilingual CMS with a long-lived codebase that is gradually being refactored.
 
-## Build & Assets
-- Public site build: `npm run prod`
-- Admin build: `npm run prod-admin`
+Tech stack:
 
-## Admin vs Public UI
-- Admin and public UI have separate templates and build outputs.
-- Admin templates live in `themes/admin/`.
-- Public templates live in `themes/default/`.
-
-## Architecture & Modules
-- Modules live in `modules/`.
-- Typical layers per context:
-  - Application: controllers, DTOs, use cases, handlers
-  - Domain: entities, enums, interfaces, pure services
-  - Infrastructure: repository implementations, adapters
+* PHP 8.2
+* MySQL
+* Bootstrap
+* selective Vue components
+* Webpack
+* Plates templates
 
 ## Project Structure
-- `modules/` holds the standard modules.
-- `system/src/` contains the primary application code.
-- `system/src-legacy/` is legacy code targeted for removal after refactoring.
-- `themes/` contains admin and public templates.
-- `assets/` holds shared static assets.
-- `config/` contains configuration files.
-- `data/` is used for cache, logs, and temporary data.
-- `install/` contains installer assets.
-- `upload/` contains user uploads.
 
-## i18n
-- The project uses gettext for localization.
-- Core locale files live in `system/locale/`.
-- Module-specific locale files live inside each module.
+* `modules/` — application modules
+* `system/src/` — primary application code
+* `system/src-legacy/` — legacy code targeted for gradual removal
+* `themes/` — admin and public templates
+* `assets/` — shared static assets
+* `config/` — configuration files
+* `data/` — cache, logs, temporary files
+* `install/` — installer assets
+* `upload/` — user uploads
 
-## Refactoring Approach
-- Refactor in small, safe steps and preserve existing behavior.
-- Current priority: move code toward controllers, repositories, models, and use cases.
+## Architecture
 
-## Dependency Rules
-- Prefer Application -> Domain dependencies.
-- Keep infrastructure details out of controllers and use cases.
-- Define repository contracts in Domain as `*RepositoryInterface`.
-- Implement repository contracts in Infrastructure.
-- Inject interfaces into services, use cases, and controllers.
+Typical module layers:
+
+Application
+
+* controllers
+* DTOs
+* use cases
+* handlers
+
+Domain
+
+* entities
+* enums
+* interfaces
+* pure services
+
+Infrastructure
+
+* repository implementations
+* adapters
+
+### Dependency Rules
+
+* Prefer **Application → Domain** dependencies.
+* Controllers and use cases must not depend on infrastructure details.
+* Repository contracts must be defined in **Domain** as `*RepositoryInterface`.
+* Implement repository contracts in **Infrastructure**.
+* Inject interfaces into services, use cases, and controllers.
+
+## Refactoring Principles
+
+Refactor in **small, safe steps** while preserving existing behavior.
+
+Guidelines:
+
+* Extract logic into use cases or services.
+* Move database logic out of controllers.
+* Introduce repository interfaces when persistence is involved.
+* Avoid large rewrites.
+* Keep changes minimal and focused.
+* Do not modify unrelated modules.
+* Do not introduce new architecture or patterns unless they already exist in the codebase.
+* Prefer modifying existing code over introducing new abstractions.
+* Do not change public APIs or method signatures unless required by the task.
+
+### Legacy Code Rules
+
+Legacy code lives in `system/src-legacy`.
+
+Rules:
+
+* Do not introduce new features into legacy code.
+* Only modify legacy code when required for refactoring.
+* Move extracted logic into `system/src`.
+
+## Access Guard Pattern
+
+For actions that combine access checks and a state-changing operation, split the flow into three use cases:
+
+* `Ensure*AccessUseCase`
+
+    * performs access, ownership, and time-window checks
+    * throws exceptions on failure
+    * contains no DTOs
+
+* `Get*ContextUseCase`
+
+    * returns a context DTO (for example `topicId` or `page`)
+    * performs no access checks
+
+* `*UseCase`
+
+    * performs the action itself
+    * contains no HTTP knowledge
+    * does not repeat access checks
+
+Controller flow:
+
+guard → context → action
+
+Execute the action only for write operations (for example POST requests in forms or equivalent command-style operations).
+
+### Exception Mapping
+
+* Access denied → HTTP 403
+* Not found / ownership mismatch → user-facing “Wrong data”
+* Expired window → timeout message
+* Validation or upload errors → user-facing validation errors
+
+Do not register exceptions as DI services.
+Exclude `Application/Exceptions` from service autoload.
 
 ## PHP Style Rules
-- Always include `declare(strict_types=1);`.
-- Namespace must mirror directory structure (PSR-4).
-- Use 4 spaces indentation.
-- Keep imports explicit and tidy.
-- Prefer one class per file.
-- Use typed properties, arguments, and returns.
-- Use PHPDoc for generic arrays/lists/shapes when needed.
-- Use constructor injection and property promotion.
-- Prefer immutable design when possible.
-- Prefer `final` classes unless extension is intentional.
-- Prefer `readonly` for immutable service/DTO classes.
-- Keep methods focused and short where practical.
-- Keep HTTP mapping logic in controllers; business logic elsewhere.
+
+* Always include `declare(strict_types=1);`
+* Namespace must follow PSR-4 and match the directory structure.
+* Use 4-space indentation.
+* Prefer one class per file.
+* Use typed properties, arguments, and return types.
+* Use PHPDoc only when types cannot be expressed with native PHP types.
+* Use constructor injection with property promotion.
+* Prefer immutable design.
+* Prefer `final` classes for new code.
+* Do not change inheritance structure of existing classes unless explicitly required.
+* Use `readonly` only for new immutable service or DTO classes.
+* Do not introduce `readonly` to legacy classes during refactoring.
+* Keep methods focused and reasonably short.
+* Keep HTTP mapping logic in controllers only.
 
 ## Naming Conventions
-- Class names: PascalCase.
-- Methods/variables/properties: camelCase.
-- Interface suffix: `Interface`.
-- Data transfer objects: `*DTO`.
-- Use cases: `*UseCase`.
-- Controllers: `*Controller`.
-- Commands/Queries: `*Command`, `*Query`.
-- Handlers: `*Handler`.
-- Compilers/mappers: clear intent names (`*Compiler`, `*Mapper`).
 
-## Error Handling Guidelines
-- Throw domain/app-specific exceptions for business failures.
-- In HTTP layer, map missing resources to 404.
-- Avoid swallowing exceptions silently.
-- Keep error messages actionable and specific.
-- Prefer early return/guard clauses for invalid state.
+Classes: `PascalCase`
+Methods / properties: `camelCase`
 
-## Access Guard Style
-- For actions that combine access checks and a state-changing operation, split the flow into three use cases:
-  - `Ensure*AccessUseCase`: access/ownership/time-window checks only, no DTOs, throws exceptions.
-  - `Get*ContextUseCase`: returns context DTO (e.g., topicId/page) without access checks.
-  - `*UseCase`: performs the action only, no HTTP knowledge, no repeated access checks.
-- Include/controller flow: guard -> context -> action (action only on POST).
-- Exceptions mapping (module-specific naming allowed):
-  - Access denied exceptions -> HTTP 403.
-  - Not found/ownership mismatch exceptions -> user-facing “Wrong data”.
-  - Expired window exceptions -> user-facing timeout message.
-  - Validation/upload exceptions -> user-facing validation/upload errors.
-- Do not register exceptions as DI services (exclude `Application/Exceptions` from service autoload).
+Suffix rules:
 
-## Commit Message Rules
-- Commit messages are reviewed by the technical team.
-- Use Conventional Commits format (`type: subject`).
-- If a change belongs to a specific module, include the module name as a scope:
-  `type(module): subject`.
-- If a change is cross-cutting or global, omit the scope.
-- Use infinitive/imperative English subjects (e.g. `refactor: extract homepage use case`).
-- Keep commit subjects short and concise.
-- Do not add long descriptions unless explicitly requested.
+* `*Controller`
+* `*UseCase`
+* `*DTO`
+* `*RepositoryInterface`
+* `*Command`
+* `*Query`
+* `*Handler`
+* `*Mapper`
+* `*Compiler`
+
+## Error Handling
+
+* Throw domain or application-specific exceptions for business failures.
+* Do not silently swallow exceptions.
+* Prefer guard clauses and early returns.
+* Error messages should be actionable and specific.
+
+## Commit Messages
+
+Use **Conventional Commits**.
+
+Format:
+
+type(scope): subject
+
+Examples:
+
+refactor(home): extract homepage use case
+fix(user): correct password validation
+
+Rules:
+
+* Use imperative English verbs.
+* Keep commit subjects short.
+* Use module name as scope when applicable.
+* Omit scope for global changes.
 
 ## Pre-Commit Checklist
-- Changes are scoped to the task.
-- No unrelated files are modified.
-- Backend style check passes: `composer cs-check`.
-- Frontend build passes for UI-impacting changes.
-- New repositories/services are injected via interfaces.
+
+Before committing:
+
+* Changes are scoped to the task.
+* No unrelated files were modified.
+* Backend style check passes:
+
+composer cs-check
+
+* UI build succeeds if frontend code was changed.
+* Services and repositories are injected via interfaces.
