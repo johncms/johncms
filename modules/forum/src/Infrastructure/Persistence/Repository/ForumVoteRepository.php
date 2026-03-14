@@ -91,4 +91,38 @@ final class ForumVoteRepository implements ForumVoteRepositoryInterface
             ->where('topic', $topicId)
             ->delete();
     }
+
+    public function hasUserVoted(int $topicId, int $userId): bool
+    {
+        return ForumVoteUser::query()
+            ->where('topic', $topicId)
+            ->where('user', $userId)
+            ->exists();
+    }
+
+    public function addUserVote(int $topicId, int $userId, int $voteId): void
+    {
+        ForumVoteUser::query()->create(
+            [
+                'topic' => $topicId,
+                'user'  => $userId,
+                'vote'  => $voteId,
+            ]
+        );
+    }
+
+    public function incrementAnswerCount(int $voteId): void
+    {
+        ForumVote::query()
+            ->where('id', $voteId)
+            ->increment('count');
+    }
+
+    public function incrementPollCount(int $topicId): void
+    {
+        ForumVote::query()
+            ->where('topic', $topicId)
+            ->where('type', 1)
+            ->increment('count');
+    }
 }

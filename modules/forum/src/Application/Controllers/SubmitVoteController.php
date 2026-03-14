@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\SubmitVoteWrongDataException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureSubmitVoteAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetSubmitVoteContextUseCase;
+use Johncms\Modules\Forum\Application\UseCases\SubmitVoteUseCase;
+use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+
+final readonly class SubmitVoteController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private User $user,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private EnsureSubmitVoteAccessUseCase $accessUseCase,
+        private GetSubmitVoteContextUseCase $contextUseCase,
+        private SubmitVoteUseCase $submitVoteUseCase,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(int $id): string
+    {
+        try {
+            $this->forumAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                $this->forumAccessResponseBuilder->forException($exception)
+            );
+        }
+
+        try {
+            $this->accessUseCase->execute();
+            $voteId = (int) $this->request->getPost('vote', 0);
+            $context = $this->contextUseCase->execute($id, $voteId, $this->user->id);
+        } catch (AccessDeniedException) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Access forbidden'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access forbidden'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        } catch (SubmitVoteWrongDataException) {
+            pageNotFound();
+        }
+
+        $this->submitVoteUseCase->execute($context->topicId, $context->voteId, $this->user->id);
+
+        $referer = htmlspecialchars((string) $this->request->getServer('HTTP_REFERER', '/forum/'));
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'         => __('Forum'),
+                'page_title'    => __('Forum'),
+                'type'          => 'alert-success',
+                'message'       => __('Vote accepted'),
+                'back_url'      => $referer,
+                'back_url_name' => __('Back'),
+            ]
+        );
+    }
+}

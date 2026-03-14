@@ -30,6 +30,7 @@ use Johncms\Modules\Forum\Application\Controllers\CloseTopicController;
 use Johncms\Modules\Forum\Application\Controllers\DeleteTopicController;
 use Johncms\Modules\Forum\Application\Controllers\PinTopicController;
 use Johncms\Modules\Forum\Application\Controllers\RestoreTopicController;
+use Johncms\Modules\Forum\Application\Controllers\SubmitVoteController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -48,6 +49,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/forum/delete-topic/{id:\d+}[/]', DeleteTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/pin-topic/{id:\d+}[/]', PinTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/restore-topic/{id:\d+}[/]', RestoreTopicController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/poll-vote/{id:\d+}[/]', SubmitVoteController::class);
     }
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', GuestbookController::class);                // Guestbook, mini-chat

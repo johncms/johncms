@@ -32,4 +32,12 @@ interface ForumVoteRepositoryInterface
     public function deleteVotesByTopic(int $topicId): void;
 
     public function deleteVoteUsersByTopic(int $topicId): void;
+
+    public function hasUserVoted(int $topicId, int $userId): bool;
+
+    public function addUserVote(int $topicId, int $userId, int $voteId): void;
+
+    public function incrementAnswerCount(int $voteId): void;
+
+    public function incrementPollCount(int $topicId): void;
 }
