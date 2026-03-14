@@ -6,8 +6,12 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumTopicRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumVoteRepository;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -35,4 +39,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
     $services->set(ForumFileRepositoryInterface::class, ForumFileRepository::class)->public();
+    $services->set(ForumTopicRepositoryInterface::class, ForumTopicRepository::class)->public();
+    $services->set(ForumVoteRepositoryInterface::class, ForumVoteRepository::class)->public();
 };

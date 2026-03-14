@@ -25,13 +25,13 @@ $this->layout(
     ]
 );
 ?>
-<form name="new_topic" action="/forum/?act=addvote&amp;id=<?= $id ?>" method="post">
+<form name="new_topic" action="/forum/addvote/<?= $id ?>/" method="post">
     <input type="hidden" name="count_vote" value="<?= $count_vote ?>">
     <div class="form-group">
         <label for="name_vote"><?= __('Poll') ?></label>
         <input type="text" class="form-control" id="name_vote" placeholder="<?= __('Poll') ?>"
-               name="name_vote" value="<?= $poll_name ?>" maxlength="150" required>
-        <div class="small text-muted"><?= __('Maximum length: 150 characters') ?></div>
+               name="name_vote" value="<?= $poll_name ?>" maxlength="200" required>
+        <div class="small text-muted"><?= __('Maximum length: 200 characters') ?></div>
     </div>
 
     <h4><?= __('Answers') ?></h4>
@@ -39,8 +39,8 @@ $this->layout(
         <div class="form-group">
             <label for="vote_<?= $vote['input_name'] ?>"><?= $vote['input_label'] ?></label>
             <input type="text" class="form-control" id="vote_<?= $vote['input_name'] ?>" placeholder="<?= $vote['input_label'] ?>"
-                   name="<?= $vote['input_name'] ?>" value="<?= $vote['input_value'] ?>" maxlength="50">
-            <div class="small text-muted"><?= __('Maximum length: 50 characters') ?></div>
+                   name="<?= $vote['input_name'] ?>" value="<?= $vote['input_value'] ?>" maxlength="150">
+            <div class="small text-muted"><?= __('Maximum length: 150 characters') ?></div>
         </div>
     <?php endforeach; ?>
 

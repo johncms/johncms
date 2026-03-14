@@ -6,15 +6,17 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadExpiredException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
 use Johncms\Modules\Forum\Application\UseCases\AttachFileToPostUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureAttachFileAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAttachFileContextUseCase;
 use Johncms\Modules\Forum\Domain\Exceptions\MessageNotFoundException;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class AddFileController
 {
@@ -22,7 +24,8 @@ final readonly class AddFileController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private User $user,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
         private EnsureAttachFileAccessUseCase $accessUseCase,
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
@@ -36,25 +39,12 @@ final readonly class AddFileController
         $forumConfig = config('forum');
         $page = (int) $this->request->getQuery('page', 1);
 
-        if (! $config['mod_forum'] && $this->user->rights < 7) {
+        try {
+            $this->forumAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
             return $this->render->render(
                 'system::pages/result',
-                [
-                    'title'   => __('Forum'),
-                    'type'    => 'alert-danger',
-                    'message' => __('Forum is closed'),
-                ]
-            );
-        }
-
-        if ($config['mod_forum'] === 1 && ! $this->user->isValid()) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Forum'),
-                    'type'    => 'alert-danger',
-                    'message' => __('For registered users only'),
-                ]
+                $this->forumAccessResponseBuilder->forException($exception)
             );
         }
 

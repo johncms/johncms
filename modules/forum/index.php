@@ -103,7 +103,6 @@ $show_type = $_REQUEST['type'] ?? 'section';
 
 // Переключаем режимы работы
 $mods = [
-    'addvote',
     'close',
     'deltema',
     'delvote',
