@@ -385,7 +385,7 @@ $this->layout('system::layout/default');
             <div class="dropdown-menu" aria-labelledby="actions">
                 <?php if ($topic_vote): ?>
                     <a class="dropdown-item" href="/forum/editvote/<?= $id ?>/"><?= __('Edit Poll') ?></a>
-                    <a class="dropdown-item" href="/forum/?act=delvote&amp;id=<?= $id ?>"><?= __('Delete Poll') ?></a>
+                    <a class="dropdown-item" href="/forum/delvote/<?= $id ?>/"><?= __('Delete Poll') ?></a>
                 <?php else: ?>
                     <a class="dropdown-item" href="/forum/addvote/<?= $id ?>/"><?= __('Add Poll') ?></a>
                 <?php endif; ?>

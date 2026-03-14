@@ -28,4 +28,8 @@ interface ForumVoteRepositoryInterface
     public function deleteAnswerVotes(int $answerId, int $topicId): void;
 
     public function deleteAnswer(ForumVote $answer): void;
+
+    public function deleteVotesByTopic(int $topicId): void;
+
+    public function deleteVoteUsersByTopic(int $topicId): void;
 }

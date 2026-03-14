@@ -26,4 +26,11 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where('id', $topicId)
             ->update(['has_poll' => 1]);
     }
+
+    public function clearHasPoll(int $topicId): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->update(['has_poll' => null]);
+    }
 }

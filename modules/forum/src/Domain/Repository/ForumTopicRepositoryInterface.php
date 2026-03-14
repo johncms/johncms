@@ -11,4 +11,6 @@ interface ForumTopicRepositoryInterface
     public function findActiveById(int $topicId): ?ForumTopic;
 
     public function markHasPoll(int $topicId): void;
+
+    public function clearHasPoll(int $topicId): void;
 }

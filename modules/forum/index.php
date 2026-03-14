@@ -105,7 +105,6 @@ $show_type = $_REQUEST['type'] ?? 'section';
 $mods = [
     'close',
     'deltema',
-    'delvote',
     'editpost',
     'file',
     'files',

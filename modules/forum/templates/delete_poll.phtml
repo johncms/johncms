@@ -12,6 +12,7 @@
  * @var $title
  * @var $page_title
  * @var $back_url
+ * @var $delete_url
  */
 
 $this->layout(
@@ -28,8 +29,7 @@ $this->layout(
         <?= __('Do you really want to delete a poll?') ?>
     </div>
     <div>
-        <a href="/forum/?act=delvote&amp;id=<?= $id ?>&amp;yes" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
+        <a href="<?= $delete_url ?>" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
         <a href="<?= $back_url ?>" class="me-2 btn btn-primary btn-sm"><?= __('Cancel') ?></a>
     </div>
 </div>
-

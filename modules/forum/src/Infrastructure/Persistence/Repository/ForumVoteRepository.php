@@ -77,4 +77,18 @@ final class ForumVoteRepository implements ForumVoteRepositoryInterface
     {
         $answer->delete();
     }
+
+    public function deleteVotesByTopic(int $topicId): void
+    {
+        ForumVote::query()
+            ->where('topic', $topicId)
+            ->delete();
+    }
+
+    public function deleteVoteUsersByTopic(int $topicId): void
+    {
+        ForumVoteUser::query()
+            ->where('topic', $topicId)
+            ->delete();
+    }
 }
