@@ -139,6 +139,7 @@ Exclude `Application/Exceptions` from service autoload.
 * Do not introduce `readonly` to legacy classes during refactoring.
 * Keep methods focused and reasonably short.
 * Keep HTTP mapping logic in controllers only.
+* If a caught exception variable is unused, omit it (e.g. `catch (EditVoteWrongDataException)`).
 
 ## Naming Conventions
 
