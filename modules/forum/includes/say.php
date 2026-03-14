@@ -234,9 +234,9 @@ switch ($post_type) {
                 ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)"
                 );
                 if ($update) {
-                    header('Location: ?type=topic&id=' . $res['id'] . '&act=addfile');
+                    header('Location: /forum/addfile/' . $res['id'] . '/');
                 } else {
-                    header('Location: ?type=topic&id=' . $fadd . '&act=addfile');
+                    header('Location: /forum/addfile/' . $fadd . '/');
                 }
             } else {
                 header('Location: ?type=topic&id=' . $id . '&page=' . $page);
@@ -474,7 +474,7 @@ switch ($post_type) {
             }
 
             if (isset($_POST['addfiles'])) {
-                header("Location: ?type=topic&id=$fadd&act=addfile");
+                header('Location: /forum/addfile/' . $fadd . '/');
             } else {
                 header("Location: ?type=topic&id=$th&page=$page");
             }

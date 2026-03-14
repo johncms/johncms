@@ -183,7 +183,7 @@ if ($request->getPost('submit', null)) {
         );
 
         if ($data['add_files'] === 1) {
-            header("Location: ?id=" . $message->id . "&act=addfile");
+            header('Location: /forum/addfile/' . $message->id . '/');
         } else {
             header("Location: " . htmlspecialchars_decode($topic->url));
         }

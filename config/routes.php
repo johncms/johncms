@@ -22,6 +22,7 @@ use Johncms\Modules\News\Application\Controllers\CommentsController;
 use Johncms\Modules\News\Application\Controllers\SearchController;
 use Johncms\Modules\News\Application\Controllers\SectionController;
 use Johncms\Modules\News\Application\Controllers\VoteController;
+use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -31,6 +32,9 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php');                          // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                                           // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                                                   // Forum
+    if ($user->isValid()) {
+        $map->addRoute(['GET', 'POST'], '/forum/addfile/{id:\d+}[/]', AddFileController::class);
+    }
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', GuestbookController::class);                // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', \Johncms\Modules\Guestbook\Application\Controllers\SwitchTypeController::class);

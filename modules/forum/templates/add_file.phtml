@@ -29,11 +29,11 @@ $this->layout(
         <?= __('File attached'); ?>
     </div>
     <div class="mt-3">
-        <a href="/forum/?act=addfile&id=<?= $id ?>" class="btn btn-primary"><?= __('Add more') ?></a>
+        <a href="/forum/addfile/<?= $id ?>/" class="btn btn-primary"><?= __('Add more') ?></a>
         <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
     </div>
 <?php else: ?>
-    <form name="new_topic" action="/forum/?act=addfile&amp;id=<?= $id ?>" method="post" enctype="multipart/form-data">
+    <form name="new_topic" action="/forum/addfile/<?= $id ?>/" method="post" enctype="multipart/form-data">
         <div class="input-group">
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>
