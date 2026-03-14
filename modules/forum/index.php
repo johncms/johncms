@@ -119,7 +119,6 @@ $mods = [
     'search',
     'tema',
     'users',
-    'vip',
     'vote',
     'who',
     'curators',

@@ -21,4 +21,6 @@ interface ForumTopicRepositoryInterface
     public function markDeleted(int $topicId, string $deletedBy): void;
 
     public function deleteById(int $topicId): void;
+
+    public function setPinned(int $topicId, bool $pinned): void;
 }

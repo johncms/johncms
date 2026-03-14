@@ -59,4 +59,11 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where('id', $topicId)
             ->delete();
     }
+
+    public function setPinned(int $topicId, bool $pinned): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->update(['pinned' => $pinned ? 1 : null]);
+    }
 }
