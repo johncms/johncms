@@ -16,4 +16,11 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->with(['files', 'topic'])
             ->find($id);
     }
+
+    public function deleteByTopicId(int $topicId): void
+    {
+        ForumMessage::query()
+            ->where('topic_id', $topicId)
+            ->delete();
+    }
 }

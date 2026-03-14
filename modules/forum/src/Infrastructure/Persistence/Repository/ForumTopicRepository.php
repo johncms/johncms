@@ -45,4 +45,18 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where('id', $topicId)
             ->update(['closed' => $closed]);
     }
+
+    public function markDeleted(int $topicId, string $deletedBy): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->update(['deleted' => true, 'deleted_by' => $deletedBy]);
+    }
+
+    public function deleteById(int $topicId): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->delete();
+    }
 }

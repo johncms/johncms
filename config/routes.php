@@ -27,6 +27,7 @@ use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
 use Johncms\Modules\Forum\Application\Controllers\EditVoteController;
 use Johncms\Modules\Forum\Application\Controllers\DeleteVoteController;
 use Johncms\Modules\Forum\Application\Controllers\CloseTopicController;
+use Johncms\Modules\Forum\Application\Controllers\DeleteTopicController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -42,6 +43,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/forum/editvote/{id:\d+}[/]', EditVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/delvote/{id:\d+}[/]', DeleteVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/close/{id:\d+}[/]', CloseTopicController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/delete-topic/{id:\d+}[/]', DeleteTopicController::class);
     }
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', GuestbookController::class);                // Guestbook, mini-chat

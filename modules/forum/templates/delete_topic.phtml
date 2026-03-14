@@ -11,8 +11,9 @@
 /**
  * @var $title
  * @var $page_title
- * @var $file_attached
+ * @var $can_hard_delete
  * @var $back_url
+ * @var $delete_url
  */
 
 $this->layout(
@@ -24,7 +25,7 @@ $this->layout(
 );
 ?>
 
-<form action="/forum/?act=deltema&amp;id=<?= $id ?>" method="post">
+<form action="<?= $delete_url ?>" method="post">
     <div class="alert alert-danger">
         <div class="pb-2">
             <?= __('Do you really want to delete?') ?>
@@ -34,7 +35,7 @@ $this->layout(
                 <input type="radio" id="hide_topic" name="del" checked="checked" value="1" class="custom-control-input">
                 <label class="custom-control-label" for="hide_topic"><?= __('Hide') ?></label>
             </div>
-            <?php if ($user->rights == 9): ?>
+            <?php if ($can_hard_delete): ?>
                 <div class="custom-control custom-radio">
                     <input type="radio" id="del_topic" name="del" value="2" class="custom-control-input">
                     <label class="custom-control-label" for="del_topic"><?= __('Delete') ?></label>

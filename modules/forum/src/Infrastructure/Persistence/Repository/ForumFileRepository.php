@@ -13,4 +13,26 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
     {
         $file->save();
     }
+
+    public function getByTopicId(int $topicId): array
+    {
+        return ForumFile::query()
+            ->where('topic', $topicId)
+            ->get()
+            ->all();
+    }
+
+    public function markDeletedByTopicId(int $topicId): void
+    {
+        ForumFile::query()
+            ->where('topic', $topicId)
+            ->update(['del' => 1]);
+    }
+
+    public function deleteByTopicId(int $topicId): void
+    {
+        ForumFile::query()
+            ->where('topic', $topicId)
+            ->delete();
+    }
 }

@@ -199,7 +199,7 @@ if (! $error) {
 
                 if ($posts < 2) {
                     // Пересылка на удаление всей темы
-                    header('Location: ?act=deltema&id=' . $res['topic_id']);
+                    header('Location: /forum/delete-topic/' . $res['topic_id'] . '/');
                 } else {
                     header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 }

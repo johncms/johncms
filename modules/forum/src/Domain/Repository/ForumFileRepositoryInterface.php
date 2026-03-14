@@ -9,4 +9,13 @@ use Johncms\Modules\Forum\Domain\Models\ForumFile;
 interface ForumFileRepositoryInterface
 {
     public function save(ForumFile $file): void;
+
+    /**
+     * @return ForumFile[]
+     */
+    public function getByTopicId(int $topicId): array;
+
+    public function markDeletedByTopicId(int $topicId): void;
+
+    public function deleteByTopicId(int $topicId): void;
 }

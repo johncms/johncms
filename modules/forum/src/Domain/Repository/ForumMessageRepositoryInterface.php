@@ -9,4 +9,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 interface ForumMessageRepositoryInterface
 {
     public function findById(int $id): ?ForumMessage;
+
+    public function deleteByTopicId(int $topicId): void;
 }

@@ -17,4 +17,8 @@ interface ForumTopicRepositoryInterface
     public function clearHasPoll(int $topicId): void;
 
     public function setClosed(int $topicId, bool $closed): void;
+
+    public function markDeleted(int $topicId, string $deletedBy): void;
+
+    public function deleteById(int $topicId): void;
 }

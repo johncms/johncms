@@ -1,0 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Domain\Repository;
+
+interface ForumUnreadRepositoryInterface
+{
+    public function deleteByTopicId(int $topicId): void;
+}
