@@ -116,7 +116,6 @@ $mods = [
     'change_topic',
     'say',
     'search',
-    'tema',
     'users',
     'who',
     'curators',

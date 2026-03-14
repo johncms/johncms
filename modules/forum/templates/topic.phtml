@@ -449,7 +449,7 @@ $this->layout('system::layout/default');
         <?php endif; ?>
     </form>
 <?php endif; ?>
-
+feat(forum): remove topic download feature
 <div>
     <div><?= __('Total') ?>: <?= $total ?></div>
     <!-- Page switching -->
@@ -469,9 +469,6 @@ $this->layout('system::layout/default');
         <?php else: ?>
             <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Filter by author') ?></a>
         <?php endif; ?>
-    </div>
-    <div>
-        <a href="?act=tema&amp;id=<?= $id ?>"><?= __('Download Topic') ?></a>
     </div>
 </div>
 
