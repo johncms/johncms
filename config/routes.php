@@ -24,6 +24,7 @@ use Johncms\Modules\News\Application\Controllers\SectionController;
 use Johncms\Modules\News\Application\Controllers\VoteController;
 use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
+use Johncms\Modules\Forum\Application\Controllers\EditVoteController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -36,6 +37,7 @@ return static function (RouteCollector $map, User $user) {
     if ($user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/forum/addfile/{id:\d+}[/]', AddFileController::class);
         $map->addRoute(['GET', 'POST'], '/forum/addvote/{id:\d+}[/]', AddVoteController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/editvote/{id:\d+}[/]', EditVoteController::class);
     }
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', GuestbookController::class);                // Guestbook, mini-chat

@@ -107,7 +107,6 @@ $mods = [
     'deltema',
     'delvote',
     'editpost',
-    'editvote',
     'file',
     'files',
     'filter',
