@@ -9,6 +9,11 @@ use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
 final class ForumTopicRepository implements ForumTopicRepositoryInterface
 {
+    public function findById(int $topicId): ?ForumTopic
+    {
+        return ForumTopic::query()->find($topicId);
+    }
+
     public function findActiveById(int $topicId): ?ForumTopic
     {
         return ForumTopic::query()
@@ -32,5 +37,12 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
         ForumTopic::query()
             ->where('id', $topicId)
             ->update(['has_poll' => null]);
+    }
+
+    public function setClosed(int $topicId, bool $closed): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->update(['closed' => $closed]);
     }
 }

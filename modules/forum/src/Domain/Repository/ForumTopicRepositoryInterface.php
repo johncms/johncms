@@ -8,9 +8,13 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 
 interface ForumTopicRepositoryInterface
 {
+    public function findById(int $topicId): ?ForumTopic;
+
     public function findActiveById(int $topicId): ?ForumTopic;
 
     public function markHasPoll(int $topicId): void;
 
     public function clearHasPoll(int $topicId): void;
+
+    public function setClosed(int $topicId, bool $closed): void;
 }
