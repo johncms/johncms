@@ -23,4 +23,6 @@ interface ForumTopicRepositoryInterface
     public function deleteById(int $topicId): void;
 
     public function setPinned(int $topicId, bool $pinned): void;
+
+    public function restoreById(int $topicId, string $restoredBy): void;
 }

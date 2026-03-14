@@ -114,7 +114,6 @@ $mods = [
     'per',
     'show_post',
     'change_topic',
-    'restore',
     'say',
     'search',
     'tema',

@@ -66,4 +66,11 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where('id', $topicId)
             ->update(['pinned' => $pinned ? 1 : null]);
     }
+
+    public function restoreById(int $topicId, string $restoredBy): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->update(['deleted' => null, 'deleted_by' => $restoredBy]);
+    }
 }
