@@ -12,6 +12,14 @@ interface ForumMessageRepositoryInterface
 
     public function deleteByTopicId(int $topicId): void;
 
+    public function save(ForumMessage $message): void;
+
+    public function findLastMessageByUser(int $userId): ?ForumMessage;
+
+    public function findLastMessageInTopic(int $topicId, bool $includeDeleted): ?ForumMessage;
+
+    public function countByTopicId(int $topicId, bool $includeDeleted): int;
+
     /**
      * @return array<array{user_id:int, user_name:string}>
      */

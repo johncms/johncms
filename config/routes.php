@@ -32,6 +32,8 @@ use Johncms\Modules\Forum\Application\Controllers\CloseTopicController;
 use Johncms\Modules\Forum\Application\Controllers\DeleteTopicController;
 use Johncms\Modules\Forum\Application\Controllers\NewTopicController;
 use Johncms\Modules\Forum\Application\Controllers\PinTopicController;
+use Johncms\Modules\Forum\Application\Controllers\NewMessageController;
+use Johncms\Modules\Forum\Application\Controllers\ReplyMessageController;
 use Johncms\Modules\Forum\Application\Controllers\RestoreTopicController;
 use Johncms\Modules\Forum\Application\Controllers\SubmitVoteController;
 use Johncms\System\Users\User;
@@ -51,6 +53,8 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/forum/editvote/{id:\d+}[/]', EditVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/delvote/{id:\d+}[/]', DeleteVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/new-topic/{id:\d+}[/]', NewTopicController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/new-message/{id:\d+}[/]', NewMessageController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/reply-message/{id:\d+}[/]', ReplyMessageController::class);
         $map->addRoute(['GET', 'POST'], '/forum/close/{id:\d+}[/]', CloseTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/delete-topic/{id:\d+}[/]', DeleteTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/pin-topic/{id:\d+}[/]', PinTopicController::class);

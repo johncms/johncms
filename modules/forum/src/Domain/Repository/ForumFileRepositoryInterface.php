@@ -10,6 +10,8 @@ interface ForumFileRepositoryInterface
 {
     public function save(ForumFile $file): void;
 
+    public function hasFilesForPost(int $postId): bool;
+
     /**
      * @return ForumFile[]
      */

@@ -24,6 +24,51 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->delete();
     }
 
+    public function save(ForumMessage $message): void
+    {
+        $message->save();
+    }
+
+    public function findLastMessageByUser(int $userId): ?ForumMessage
+    {
+        return ForumMessage::query()
+            ->where('user_id', $userId)
+            ->orderByDesc('date')
+            ->first();
+    }
+
+    public function findLastMessageInTopic(int $topicId, bool $includeDeleted): ?ForumMessage
+    {
+        $query = ForumMessage::query()
+            ->where('topic_id', $topicId);
+
+        if (! $includeDeleted) {
+            $query->where(static function ($query): void {
+                $query->whereNull('deleted')
+                    ->orWhere('deleted', '!=', 1);
+            });
+        }
+
+        return $query
+            ->orderByDesc('date')
+            ->first();
+    }
+
+    public function countByTopicId(int $topicId, bool $includeDeleted): int
+    {
+        $query = ForumMessage::query()
+            ->where('topic_id', $topicId);
+
+        if (! $includeDeleted) {
+            $query->where(static function ($query): void {
+                $query->whereNull('deleted')
+                    ->orWhere('deleted', '!=', 1);
+            });
+        }
+
+        return (int) $query->count();
+    }
+
     public function getTopicCuratorCandidates(int $topicId): array
     {
         $rows = ForumMessage::query()

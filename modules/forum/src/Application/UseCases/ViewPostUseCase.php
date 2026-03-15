@@ -150,8 +150,8 @@ final readonly class ViewPostUseCase
         $quoteUrl = null;
 
         if ($this->currentUser->isValid() && $authorId !== null && $this->currentUser->id !== $authorId) {
-            $replyUrl = '/forum/?act=say&amp;type=reply&amp;id=' . $postId . '&amp;start=' . $start;
-            $quoteUrl = '/forum/?act=say&amp;type=reply&amp;id=' . $postId . '&amp;start=' . $start . '&amp;cyt';
+            $replyUrl = '/forum/reply-message/' . $postId . '/?start=' . $start;
+            $quoteUrl = '/forum/reply-message/' . $postId . '/?start=' . $start . '&amp;quote=1';
         }
 
         return new PostActionsDTO($replyUrl, $quoteUrl);

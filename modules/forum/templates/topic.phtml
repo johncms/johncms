@@ -111,7 +111,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if ($write_access && $settings_forum['upfp']): ?>
-    <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mb-3">
+    <form name="new_message" action="/forum/new-message/<?= $id ?>/?start=<?= $start ?>" method="post" class="mb-3">
         <?php if (! empty($settings_forum['farea'])): ?>
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">
@@ -422,7 +422,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if ($write_access && ! $settings_forum['upfp']): ?>
-    <form name="new_message" action="/forum/?act=say&amp;type=post&amp;id=<?= $id ?>" method="post" class="mt-1 mb-2">
+    <form name="new_message" action="/forum/new-message/<?= $id ?>/?start=<?= $start ?>" method="post" class="mt-1 mb-2">
         <?php if (! empty($settings_forum['farea'])): ?>
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">

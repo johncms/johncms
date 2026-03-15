@@ -20,7 +20,7 @@
  * @var $is_quote
  * @var $message
  * @var $add_file
- * @var $topic
+ * @var \Johncms\Modules\Forum\Domain\Models\ForumTopic $topic
  */
 
 $this->layout(
@@ -34,7 +34,7 @@ $this->layout(
 
 <form name="message_form" action="<?= $form_action ?>" method="post">
     <input type="hidden" name="token" value="<?= $token ?>">
-    <div class="h4"><?= __('Topic') ?>: <?= $topic['name'] ?></div>
+    <div class="h4"><?= __('Topic') ?>: <?= $topic->name ?></div>
 
     <?= $this->fetch(
         'system::app/ckeditor',

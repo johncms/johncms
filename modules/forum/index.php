@@ -111,7 +111,6 @@ $mods = [
     'new',
     'per',
     'show_post',
-    'say',
     'search',
     'users',
     'who',

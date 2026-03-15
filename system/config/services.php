@@ -36,6 +36,7 @@ use Johncms\System\View\RenderEngineFactory;
 use Johncms\System\View\Theme;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Simba77\EmbedMedia\Embed;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services()
@@ -80,6 +81,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set('counters', Counters::class)->factory(service(CountersFactory::class));
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
+    $services->set(\HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
+    $services->set(\HTMLPurifier::class, \HTMLPurifier::class);
 
     $services->set(Assets::class)->factory([Assets::class, 'create']);
     $services->set(Avatar::class)->factory([Avatar::class, 'create']);
@@ -89,5 +92,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
+    $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Theme::class)->factory([Theme::class, 'create']);
 };

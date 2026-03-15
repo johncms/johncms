@@ -167,8 +167,8 @@ $messages = $message->getItems()->map(
         }
 
         if ($user->id !== $message->user_id && $user->is_valid) {
-            $message->reply_url = '/forum/?act=say&type=reply&amp;id=' . $message->id . '&start=' . $start;
-            $message->quote_url = '/forum/?act=say&type=reply&amp;id=' . $message->id . '&start=' . $start . '&cyt';
+            $message->reply_url = '/forum/reply-message/' . $message->id . '/?start=' . $start;
+            $message->quote_url = '/forum/reply-message/' . $message->id . '/?start=' . $start . '&amp;quote=1';
         }
 
         $i++;

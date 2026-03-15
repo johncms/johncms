@@ -22,6 +22,13 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
             ->all();
     }
 
+    public function hasFilesForPost(int $postId): bool
+    {
+        return ForumFile::query()
+            ->where('post', $postId)
+            ->exists();
+    }
+
     public function markDeletedByTopicId(int $topicId): void
     {
         ForumFile::query()

@@ -22,6 +22,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Simba77\EmbedMedia\Embed;
 
 final readonly class NewTopicController
 {
@@ -30,6 +31,8 @@ final readonly class NewTopicController
         private Render $render,
         private Request $request,
         private Tools $tools,
+        private \HTMLPurifier $purifier,
+        private Embed $embed,
         private NavChain $navChain,
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
@@ -152,11 +155,8 @@ final readonly class NewTopicController
             $errors = $validator->getErrors();
         }
 
-        $purifier = di(\Johncms\Security\HTMLPurifier::class);
-        $embed = di(\Johncms\Media\MediaEmbed::class);
-
-        $msgPreview = $purifier->purify((string) $data['message']);
-        $msgPreview = $embed->embedMedia($msgPreview);
+        $msgPreview = $this->purifier->purify((string) $data['message']);
+        $msgPreview = $this->embed->embedMedia($msgPreview);
         $msgPreview = $this->tools->smilies($msgPreview, $this->currentUser->rights > 0);
 
         ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
