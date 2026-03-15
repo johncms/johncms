@@ -391,7 +391,7 @@ $this->layout('system::layout/default');
                 <?php endif; ?>
 
                 <?php if ($user->rights >= 7): ?>
-                    <a class="dropdown-item" href="/forum/?act=curators&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Curators of the Topic') ?></a>
+                    <a class="dropdown-item" href="/forum/curators/<?= $id ?>/?start=<?= $start ?>"><?= __('Curators of the Topic') ?></a>
                 <?php endif; ?>
 
                 <a class="dropdown-item" href="/forum/change-topic/<?= $id ?>/"><?= __('Change the topic') ?></a>

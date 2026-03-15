@@ -11,4 +11,9 @@ interface ForumMessageRepositoryInterface
     public function findById(int $id): ?ForumMessage;
 
     public function deleteByTopicId(int $topicId): void;
+
+    /**
+     * @return array<array{user_id:int, user_name:string}>
+     */
+    public function getTopicCuratorCandidates(int $topicId): array;
 }

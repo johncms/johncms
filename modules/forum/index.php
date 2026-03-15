@@ -116,7 +116,6 @@ $mods = [
     'search',
     'users',
     'who',
-    'curators',
 ];
 
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
