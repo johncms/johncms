@@ -88,7 +88,7 @@ final readonly class ReplyMessageUseCase
                     'topic_name'       => htmlspecialchars($topic->name),
                     'user_name'        => htmlspecialchars($this->currentUser->name),
                     'topic_url'        => '/forum/?type=topic&amp;id=' . $topic->id,
-                    'reply_to_message' => '/forum/?act=show_post&id=' . $sourceMessage->id,
+                    'reply_to_message' => '/forum/post/' . $sourceMessage->id . '/',
                     'message'          => $previewMessage,
                     'post_id'          => $postId,
                     'topic_id'         => $topic->id,

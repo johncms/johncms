@@ -160,13 +160,13 @@ switch ($mod) {
                     $res['formatted_text'] = $text;
                     $res['read_more'] = '';
                     if (mb_strlen($res['text'] ?? '') > 500) {
-                        $res['read_more'] = '/forum/?act=show_post&amp;id=' . $res['id'];
+                        $res['read_more'] = '/forum/post/' . $res['id'] . '/';
                     }
                     $res['topic_url'] = '/forum/?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']);
 
                     $res['post_url'] = '';
                     if (! $search_t) {
-                        $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['id'];
+                        $res['post_url'] = '/forum/post/' . $res['id'] . '/';
                     }
 
                     $results[] = $res;

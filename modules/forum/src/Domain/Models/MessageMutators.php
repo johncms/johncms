@@ -35,7 +35,7 @@ trait MessageMutators
      */
     public function getUrlAttribute(): string
     {
-        return '/forum/?act=show_post&amp;id=' . $this->id;
+        return '/forum/post/' . $this->id . '/';
     }
 
     /**

@@ -118,7 +118,7 @@ switch ($mod) {
                     'topic_name'    => $topic['name'],
                     'topic_id'      => $topic['id'],
                     'text'          => $text,
-                    'message_url'   => '/forum/?act=show_post&amp;id=' . $res['id'],
+                    'message_url'   => '/forum/post/' . $res['id'] . '/',
                     'display_date'  => $tools->displayDate($res['date']),
                     'category_name' => $category['name'],
                     'category_url'  => '/forum/?id=' . $category['id'],

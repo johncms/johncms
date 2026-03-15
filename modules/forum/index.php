@@ -115,7 +115,6 @@ $mods = [
     'files',
     'filter',
     'new',
-    'show_post',
     'search',
     'users',
     'who',

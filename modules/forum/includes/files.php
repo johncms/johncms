@@ -145,7 +145,7 @@ ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
             $res['user_rights_name'] = $user_rights_names[$res['rights']] ?? '';
             $res['user_name'] = $res['name'];
 
-            $res['post_url'] = '/forum/?act=show_post&amp;id=' . $res['post'];
+            $res['post_url'] = '/forum/post/' . $res['post'] . '/';
             $res['topic_url'] = '/forum/?type=topic&id=' . $res['topic'] . '&amp;page=' . $page;
 
             $file = UPLOAD_PATH . 'forum/attach/' . $res['filename'];

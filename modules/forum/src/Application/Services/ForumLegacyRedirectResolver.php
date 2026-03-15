@@ -20,6 +20,22 @@ final class ForumLegacyRedirectResolver
             return '/forum/';
         }
 
+        if ($act === 'show_post') {
+            $id = isset($query['id']) ? abs((int) $query['id']) : 0;
+            if ($id <= 0) {
+                return '/forum/';
+            }
+
+            $url = '/forum/post/' . $id . '/';
+
+            $start = isset($query['start']) ? abs((int) $query['start']) : 0;
+            if ($start > 0) {
+                $url .= '?start=' . $start;
+            }
+
+            return $url;
+        }
+
         return null;
     }
 }
