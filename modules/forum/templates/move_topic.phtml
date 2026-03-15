@@ -11,8 +11,12 @@
 /**
  * @var $title
  * @var $page_title
- * @var $current_section
+ * @var \Johncms\Modules\Forum\Domain\Models\ForumSection $current_section
+ * @var \Johncms\Modules\Forum\Domain\Models\ForumSection[] $current_sections
+ * @var \Johncms\Modules\Forum\Domain\Models\ForumSection[] $other_categories
  * @var $back_url
+ * @var $form_action
+ * @var $csrf_token
  */
 
 $this->layout(
@@ -23,17 +27,18 @@ $this->layout(
     ]
 );
 ?>
-<form name="move_topic" class="card card-body shadow" action="/forum/?act=per&amp;id=<?= $id ?>" method="post">
+<form name="move_topic" class="card card-body shadow" action="<?= $form_action ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="mb-2">
         <div><?= __('Category') ?></div>
-        <b><?= $current_section['name'] ?></b>
+        <b><?= $current_section->name ?></b>
     </div>
     <?php if (! empty($current_sections)): ?>
         <div class="form-group">
             <label for="section"><?= __('New section') ?></label>
             <select class="form-control" name="razd" id="section">
                 <?php foreach ($current_sections as $section): ?>
-                    <option value="<?= $section['id'] ?>"><?= $section['name'] ?></option>
+                    <option value="<?= $section->id ?>"><?= $section->name ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -52,7 +57,7 @@ $this->layout(
             <ul class="list-group list-group-flush">
                 <?php foreach ($other_categories as $category): ?>
                     <li class="list-group-item">
-                        <a href="?act=per&amp;id=<?= $id ?>&amp;other=<?= $category['id'] ?>"><?= $category['name'] ?></a>
+                        <a href="/forum/move-topic/<?= $id ?>/?other=<?= $category->id ?>"><?= $category->name ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

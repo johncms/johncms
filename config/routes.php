@@ -34,6 +34,7 @@ use Johncms\Modules\Forum\Application\Controllers\DeletePostController;
 use Johncms\Modules\Forum\Application\Controllers\DeletePostFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
 use Johncms\Modules\Forum\Application\Controllers\NewTopicController;
+use Johncms\Modules\Forum\Application\Controllers\MoveTopicController;
 use Johncms\Modules\Forum\Application\Controllers\PinTopicController;
 use Johncms\Modules\Forum\Application\Controllers\NewMessageController;
 use Johncms\Modules\Forum\Application\Controllers\ReplyMessageController;
@@ -60,6 +61,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/forum/new-message/{id:\d+}[/]', NewMessageController::class);
         $map->addRoute(['GET', 'POST'], '/forum/reply-message/{id:\d+}[/]', ReplyMessageController::class);
         $map->addRoute(['GET', 'POST'], '/forum/edit-post/{id:\d+}[/]', EditPostController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/move-topic/{id:\d+}[/]', MoveTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/delete-post/{id:\d+}[/]', DeletePostController::class);
         $map->addRoute(['GET', 'POST'], '/forum/restore-post/{id:\d+}[/]', RestorePostController::class);
         $map->addRoute(['GET', 'POST'], '/forum/delete-post-file/{id:\d+}/{fid:\d+}[/]', DeletePostFileController::class);
