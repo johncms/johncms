@@ -149,6 +149,6 @@ class ForumFile extends Model
      */
     public function getDeleteUrlAttribute(): string
     {
-        return '/forum/?act=editpost&amp;do=delfile&amp;fid=' . $this->id . '&amp;id=' . $this->post;
+        return '/forum/delete-post-file/' . $this->post . '/' . $this->id . '/';
     }
 }

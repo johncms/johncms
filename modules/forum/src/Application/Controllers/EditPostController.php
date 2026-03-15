@@ -1,0 +1,148 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\Exceptions\EditPostAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\EditPostNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
+use Johncms\Security\Csrf;
+use Johncms\System\Http\Request;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\Validator\Validator;
+
+final readonly class EditPostController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private Tools $tools,
+        private Csrf $csrf,
+        private User $currentUser,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private GetEditPostContextUseCase $contextUseCase,
+        private EnsureEditPostAccessUseCase $accessUseCase,
+        private EditPostUseCase $editPostUseCase,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(int $id): string
+    {
+        try {
+            $this->forumAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render('system::pages/result', $this->forumAccessResponseBuilder->forException($exception));
+        }
+
+        try {
+            $context = $this->contextUseCase->execute($id, $this->getForumSettings());
+            $this->accessUseCase->execute($context);
+        } catch (EditPostNotFoundException) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Error'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Message does not exists or has been deleted'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Forum'),
+                ]
+            );
+        } catch (EditPostAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Error'),
+                    'type'          => 'alert-danger',
+                    'message'       => $exception->getMessage(),
+                    'back_url'      => $context->backUrl ?? '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        if ($this->request->getPost('submit') !== null) {
+            $msg = trim((string) $this->request->getPost('msg', ''));
+            if ($msg === '') {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You have not entered the message'),
+                        'back_url'      => '/forum/edit-post/' . $id . '/?start=' . (int) $this->request->getQuery('start', 0),
+                        'back_url_name' => __('Repeat'),
+                    ]
+                );
+            }
+
+            $validator = new Validator(
+                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => ['Csrf']]
+            );
+            if (! $validator->isValid()) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/edit-post/' . $id . '/',
+                        'back_url_name' => __('Back'),
+                    ]
+                );
+            }
+
+            $this->editPostUseCase->execute($context, $msg);
+            redirect('/forum/?type=topic&id=' . $context->topic->id . '&page=' . $context->page);
+        }
+
+        $message = $this->request->getPost('msg') === null
+            ? htmlentities((string) $context->message->getRawOriginal('text'), ENT_QUOTES, 'UTF-8')
+            : $this->tools->checkout((string) $this->request->getPost('msg'), 0, 0);
+
+        return $this->render->render(
+            'forum::edit_post',
+            [
+                'title'          => __('Edit Message'),
+                'page_title'     => __('Edit Message'),
+                'id'             => $id,
+                'msg'            => $message,
+                'start'          => (int) $this->request->getQuery('start', 0),
+                'back_url'       => $context->backUrl,
+                'settings_forum' => $this->getForumSettings(),
+                'csrf_token'     => $this->csrf->getToken(),
+            ]
+        );
+    }
+
+    private function getForumSettings(): array
+    {
+        $setForumDefault = [
+            'farea'    => 0,
+            'upfp'     => 0,
+            'preview'  => 1,
+            'postclip' => 1,
+            'postcut'  => 2,
+        ];
+
+        $setForum = [];
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
+            $setForum = (array) $this->currentUser->set_forum;
+        }
+
+        return array_merge($setForumDefault, $setForum);
+    }
+}

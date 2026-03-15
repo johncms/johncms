@@ -12,9 +12,8 @@
  * @var $title
  * @var $page_title
  * @var $back_url
- * @var $posts
+ * @var $restore_action
  * @var $csrf_token
- * @var $delete_action
  */
 
 $this->layout(
@@ -26,18 +25,15 @@ $this->layout(
 );
 ?>
 
-<div class="alert alert-danger">
+<div class="alert alert-info">
     <div class="pb-2">
-        <?= __('Do you really want to delete?') ?>
+        <?= __('Do you really want to restore this post?') ?>
     </div>
     <div>
-        <form action="<?= $delete_action ?>" method="post">
+        <form action="<?= $restore_action ?>" method="post">
             <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
-            <button type="submit" name="delfile" value="1" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
+            <button type="submit" name="submit" value="1" class="btn btn-primary btn-sm"><?= __('Restore') ?></button>
             <a href="<?= $back_url ?>" class="btn btn-outline-secondary btn-sm"><?= __('Cancel') ?></a>
         </form>
-    </div>
-    <div class="mt-2 text-muted small">
-        <?= __('After deleting, one point will be subtracted from the counter of forum posts') ?>
     </div>
 </div>

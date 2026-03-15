@@ -1,0 +1,143 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\Exceptions\EditPostAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\EditPostFileNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\EditPostNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\DeletePostFileUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetDeletePostFileContextUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
+use Johncms\Security\Csrf;
+use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\Validator\Validator;
+
+final readonly class DeletePostFileController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private Csrf $csrf,
+        private User $currentUser,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private GetEditPostContextUseCase $contextUseCase,
+        private EnsureEditPostAccessUseCase $accessUseCase,
+        private GetDeletePostFileContextUseCase $fileContextUseCase,
+        private DeletePostFileUseCase $deletePostFileUseCase,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(int $id, int $fid): string
+    {
+        try {
+            $this->forumAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render('system::pages/result', $this->forumAccessResponseBuilder->forException($exception));
+        }
+
+        try {
+            $context = $this->contextUseCase->execute($id, $this->getForumSettings());
+            $this->accessUseCase->execute($context);
+            $file = $this->fileContextUseCase->execute($id, $fid);
+        } catch (EditPostNotFoundException) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Error'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Message does not exists or has been deleted'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Forum'),
+                ]
+            );
+        } catch (EditPostFileNotFoundException) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Edit Message'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Wrong data'),
+                    'back_url'      => $context->backUrl ?? '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        } catch (EditPostAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Error'),
+                    'type'          => 'alert-danger',
+                    'message'       => $exception->getMessage(),
+                    'back_url'      => $context->backUrl ?? '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        if ($this->request->getMethod() === 'POST' && $this->request->getPost('delfile') !== null) {
+            $validator = new Validator(
+                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => ['Csrf']]
+            );
+
+            if (! $validator->isValid()) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Delete file'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
+                        'back_url_name' => __('Back'),
+                    ]
+                );
+            }
+
+            $this->deletePostFileUseCase->execute($file->id, $file->filename);
+            redirect($context->backUrl);
+        }
+
+        return $this->render->render(
+            'forum::delete_file',
+            [
+                'title'         => __('Delete file'),
+                'page_title'    => __('Delete file'),
+                'id'            => $id,
+                'fid'           => $fid,
+                'back_url'      => $context->backUrl,
+                'csrf_token'    => $this->csrf->getToken(),
+                'delete_action' => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
+            ]
+        );
+    }
+
+    private function getForumSettings(): array
+    {
+        $setForumDefault = [
+            'farea'    => 0,
+            'upfp'     => 0,
+            'preview'  => 1,
+            'postclip' => 1,
+            'postcut'  => 2,
+        ];
+
+        $setForum = [];
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
+            $setForum = (array) $this->currentUser->set_forum;
+        }
+
+        return array_merge($setForumDefault, $setForum);
+    }
+}

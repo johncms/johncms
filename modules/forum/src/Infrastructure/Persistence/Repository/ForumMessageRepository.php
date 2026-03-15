@@ -54,6 +54,31 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->first();
     }
 
+    public function findLastByTopicId(int $topicId, bool $includeDeleted): ?ForumMessage
+    {
+        $query = ForumMessage::query()
+            ->where('topic_id', $topicId);
+
+        if (! $includeDeleted) {
+            $query->where(static function ($query): void {
+                $query->whereNull('deleted')
+                    ->orWhere('deleted', '!=', 1);
+            });
+        }
+
+        return $query
+            ->orderByDesc('id')
+            ->first();
+    }
+
+    public function findFirstByTopicId(int $topicId): ?ForumMessage
+    {
+        return ForumMessage::query()
+            ->where('topic_id', $topicId)
+            ->orderBy('id')
+            ->first();
+    }
+
     public function countByTopicId(int $topicId, bool $includeDeleted): int
     {
         $query = ForumMessage::query()
@@ -67,6 +92,48 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
         }
 
         return (int) $query->count();
+    }
+
+    public function countByTopicIdWithComparison(
+        int $topicId,
+        int $messageId,
+        bool $upfp,
+        bool $includeDeleted,
+        bool $strict,
+    ): int {
+        $query = ForumMessage::query()
+            ->where('topic_id', $topicId)
+            ->where('id', $upfp ? ($strict ? '>' : '>=') : ($strict ? '<' : '<='), $messageId);
+
+        if (! $includeDeleted) {
+            $query->where(static function ($query): void {
+                $query->whereNull('deleted')
+                    ->orWhere('deleted', '!=', 1);
+            });
+        }
+
+        return (int) $query->count();
+    }
+
+    public function markDeletedById(int $messageId, string $deletedBy): void
+    {
+        ForumMessage::query()
+            ->where('id', $messageId)
+            ->update(['deleted' => 1, 'deleted_by' => $deletedBy]);
+    }
+
+    public function restoreById(int $messageId, string $restoredBy): void
+    {
+        ForumMessage::query()
+            ->where('id', $messageId)
+            ->update(['deleted' => null, 'deleted_by' => $restoredBy]);
+    }
+
+    public function deleteById(int $messageId): void
+    {
+        ForumMessage::query()
+            ->where('id', $messageId)
+            ->delete();
     }
 
     public function getTopicCuratorCandidates(int $topicId): array

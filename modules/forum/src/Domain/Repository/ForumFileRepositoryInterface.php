@@ -12,6 +12,23 @@ interface ForumFileRepositoryInterface
 
     public function hasFilesForPost(int $postId): bool;
 
+    public function findById(int $fileId): ?ForumFile;
+
+    public function findByIdAndPostId(int $fileId, int $postId): ?ForumFile;
+
+    public function deleteById(int $fileId): void;
+
+    public function deleteByPostId(int $postId): void;
+
+    public function markDeletedByPostId(int $postId): void;
+
+    public function restoreByPostId(int $postId): void;
+
+    /**
+     * @return ForumFile[]
+     */
+    public function getByPostId(int $postId): array;
+
     /**
      * @return ForumFile[]
      */

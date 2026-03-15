@@ -13,6 +13,9 @@
  * @var $page_title
  * @var $back_url
  * @var $posts
+ * @var $csrf_token
+ * @var $can_hard_delete
+ * @var $delete_action
  */
 
 $this->layout(
@@ -34,11 +37,14 @@ $this->layout(
         <?= __('Do you really want to delete?') ?>
     </div>
     <div>
-        <a href="/forum/?act=editpost&amp;do=delete&amp;id=<?= $id ?>" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
-        <?php if ($user->rights == 9): ?>
-            <a href="/forum/?act=editpost&amp;do=delete&amp;hide&amp;id=<?= $id ?>" class="me-2 btn btn-primary btn-sm"><?= __('Hide') ?></a>
-        <?php endif; ?>
-        <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
+        <form action="<?= $delete_action ?>" method="post" class="d-inline">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+            <button type="submit" name="action" value="delete" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></button>
+            <?php if ($can_hard_delete): ?>
+                <button type="submit" name="action" value="hide" class="me-2 btn btn-primary btn-sm"><?= __('Hide') ?></button>
+            <?php endif; ?>
+            <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
+        </form>
     </div>
     <div class="mt-2 text-muted small">
         <?= __('After deleting, one point will be subtracted from the counter of forum posts') ?>

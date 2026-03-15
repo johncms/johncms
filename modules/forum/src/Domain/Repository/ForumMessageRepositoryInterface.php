@@ -18,7 +18,25 @@ interface ForumMessageRepositoryInterface
 
     public function findLastMessageInTopic(int $topicId, bool $includeDeleted): ?ForumMessage;
 
+    public function findLastByTopicId(int $topicId, bool $includeDeleted): ?ForumMessage;
+
+    public function findFirstByTopicId(int $topicId): ?ForumMessage;
+
     public function countByTopicId(int $topicId, bool $includeDeleted): int;
+
+    public function countByTopicIdWithComparison(
+        int $topicId,
+        int $messageId,
+        bool $upfp,
+        bool $includeDeleted,
+        bool $strict,
+    ): int;
+
+    public function markDeletedById(int $messageId, string $deletedBy): void;
+
+    public function restoreById(int $messageId, string $restoredBy): void;
+
+    public function deleteById(int $messageId): void;
 
     /**
      * @return array<array{user_id:int, user_name:string}>

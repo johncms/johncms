@@ -29,6 +29,55 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
             ->exists();
     }
 
+    public function findById(int $fileId): ?ForumFile
+    {
+        return ForumFile::query()->find($fileId);
+    }
+
+    public function findByIdAndPostId(int $fileId, int $postId): ?ForumFile
+    {
+        return ForumFile::query()
+            ->where('id', $fileId)
+            ->where('post', $postId)
+            ->first();
+    }
+
+    public function deleteById(int $fileId): void
+    {
+        ForumFile::query()
+            ->where('id', $fileId)
+            ->delete();
+    }
+
+    public function deleteByPostId(int $postId): void
+    {
+        ForumFile::query()
+            ->where('post', $postId)
+            ->delete();
+    }
+
+    public function markDeletedByPostId(int $postId): void
+    {
+        ForumFile::query()
+            ->where('post', $postId)
+            ->update(['del' => 1]);
+    }
+
+    public function restoreByPostId(int $postId): void
+    {
+        ForumFile::query()
+            ->where('post', $postId)
+            ->update(['del' => 0]);
+    }
+
+    public function getByPostId(int $postId): array
+    {
+        return ForumFile::query()
+            ->where('post', $postId)
+            ->get()
+            ->all();
+    }
+
     public function markDeletedByTopicId(int $topicId): void
     {
         ForumFile::query()

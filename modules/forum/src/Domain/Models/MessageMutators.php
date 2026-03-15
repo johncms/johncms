@@ -45,7 +45,7 @@ trait MessageMutators
      */
     public function getEditUrlAttribute(): string
     {
-        return '/forum/?act=editpost&amp;id=' . $this->id;
+        return '/forum/edit-post/' . $this->id . '/';
     }
 
     /**
@@ -55,7 +55,7 @@ trait MessageMutators
      */
     public function getDeleteUrlAttribute(): string
     {
-        return '/forum/?act=editpost&amp;do=del&amp;id=' . $this->id;
+        return '/forum/delete-post/' . $this->id . '/';
     }
 
     /**
@@ -66,7 +66,7 @@ trait MessageMutators
     public function getRestoreUrlAttribute(): string
     {
         if ($this->current_user->rights >= 7 && $this->deleted) {
-            return '/forum/?act=editpost&amp;do=restore&amp;id=' . $this->id;
+            return '/forum/restore-post/' . $this->id . '/';
         }
         return '';
     }
