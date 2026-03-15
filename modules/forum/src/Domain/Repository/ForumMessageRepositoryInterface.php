@@ -39,6 +39,17 @@ interface ForumMessageRepositoryInterface
     public function deleteById(int $messageId): void;
 
     /**
+     * @param int[] $ids
+     * @return int[]
+     */
+    public function getExistingIdsByTopic(int $topicId, array $ids): array;
+
+    /**
+     * @param int[] $ids
+     */
+    public function markDeletedByIds(array $ids, string $deletedBy): void;
+
+    /**
      * @return array<array{user_id:int, user_name:string}>
      */
     public function getTopicCuratorCandidates(int $topicId): array;

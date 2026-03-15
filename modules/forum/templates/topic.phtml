@@ -193,7 +193,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if ($user->rights === 3 || $user->rights >= 6): ?>
-<form action="?act=massdel" method="post">
+<form action="/forum/bulk-delete-posts/<?= $id ?>/" method="post">
     <?php endif; ?>
 
     <?php foreach ($messages as $message): ?>
@@ -274,7 +274,7 @@ $this->layout('system::layout/default');
 
                 <?php if ($user->rights === 3 || $user->rights >= 6): ?>
                     <div class="custom-control custom-checkbox d-inline float-right">
-                        <input type="checkbox" class="custom-control-input" name="delch[]" value="<?= $message->id ?>" id="check_<?= $message->id ?>">
+                        <input type="checkbox" class="custom-control-input" name="post_ids[]" value="<?= $message->id ?>" id="check_<?= $message->id ?>">
                         <label class="custom-control-label" for="check_<?= $message->id ?>"></label>
                     </div>
                 <?php endif; ?>

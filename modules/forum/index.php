@@ -106,7 +106,6 @@ $mods = [
     'file',
     'files',
     'filter',
-    'massdel',
     'new',
     'show_post',
     'search',

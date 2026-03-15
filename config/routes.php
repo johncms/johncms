@@ -26,6 +26,7 @@ use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
 use Johncms\Modules\Forum\Application\Controllers\ChangeTopicController;
 use Johncms\Modules\Forum\Application\Controllers\CuratorsController;
+use Johncms\Modules\Forum\Application\Controllers\BulkDeletePostsController;
 use Johncms\Modules\Forum\Application\Controllers\EditVoteController;
 use Johncms\Modules\Forum\Application\Controllers\DeleteVoteController;
 use Johncms\Modules\Forum\Application\Controllers\CloseTopicController;
@@ -55,6 +56,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/forum/addvote/{id:\d+}[/]', AddVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/change-topic/{id:\d+}[/]', ChangeTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/curators/{id:\d+}[/]', CuratorsController::class);
+        $map->addRoute(['GET', 'POST'], '/forum/bulk-delete-posts/{id:\d+}[/]', BulkDeletePostsController::class);
         $map->addRoute(['GET', 'POST'], '/forum/editvote/{id:\d+}[/]', EditVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/delvote/{id:\d+}[/]', DeleteVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/new-topic/{id:\d+}[/]', NewTopicController::class);

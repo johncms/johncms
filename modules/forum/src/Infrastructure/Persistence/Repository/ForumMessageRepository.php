@@ -136,6 +136,31 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->delete();
     }
 
+    public function getExistingIdsByTopic(int $topicId, array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        return ForumMessage::query()
+            ->where('topic_id', $topicId)
+            ->whereIn('id', $ids)
+            ->pluck('id')
+            ->map(static fn ($id): int => (int) $id)
+            ->all();
+    }
+
+    public function markDeletedByIds(array $ids, string $deletedBy): void
+    {
+        if ($ids === []) {
+            return;
+        }
+
+        ForumMessage::query()
+            ->whereIn('id', $ids)
+            ->update(['deleted' => 1, 'deleted_by' => $deletedBy]);
+    }
+
     public function getTopicCuratorCandidates(int $topicId): array
     {
         $rows = ForumMessage::query()

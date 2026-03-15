@@ -12,7 +12,9 @@
  * @var $title
  * @var $page_title
  * @var $back_url
- * @var $posts
+ * @var $form_action
+ * @var $csrf_token
+ * @var int[] $ids
  */
 
 $this->layout(
@@ -29,7 +31,14 @@ $this->layout(
         <?= __('Do you really want to delete?') ?>
     </div>
     <div>
-        <a href="/forum/?act=massdel&amp;yes" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></a>
-        <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
+        <form action="<?= $form_action ?>" method="post" class="d-inline">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+            <input type="hidden" name="confirm" value="1">
+            <?php foreach ($ids as $id): ?>
+                <input type="hidden" name="ids[]" value="<?= $id ?>">
+            <?php endforeach; ?>
+            <button type="submit" class="me-2 btn btn-danger btn-sm"><?= __('Delete') ?></button>
+            <a href="<?= $back_url ?>"><?= __('Cancel') ?></a>
+        </form>
     </div>
 </div>
