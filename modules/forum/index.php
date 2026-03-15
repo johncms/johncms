@@ -109,7 +109,6 @@ $mods = [
     'filter',
     'massdel',
     'new',
-    'nt',
     'per',
     'show_post',
     'say',

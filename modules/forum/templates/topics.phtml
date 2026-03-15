@@ -43,7 +43,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 <?php if ($create_access): ?>
     <div class="mb-3">
-        <form action="?act=nt&amp;id=<?= $id ?>" method="post">
+        <form action="/forum/new-topic/<?= $id ?>/" method="post">
             <button type="submit" class="btn btn-primary"><?= __('New Topic') ?></button>
         </form>
     </div>
@@ -123,4 +123,3 @@ $this->layout('system::layout/default');
         'who_name' => __('Who in Forum'),
     ]
 ) ?>
-

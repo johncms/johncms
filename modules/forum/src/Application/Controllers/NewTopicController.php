@@ -1,0 +1,206 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\NewTopicSectionNotFoundException;
+use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureNewTopicAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
+use Johncms\Modules\Forum\Domain\Models\ForumMessage;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\Validator\Validator;
+
+final readonly class NewTopicController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private Tools $tools,
+        private NavChain $navChain,
+        private User $currentUser,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private EnsureNewTopicAccessUseCase $accessUseCase,
+        private GetNewTopicContextUseCase $contextUseCase,
+        private CreateTopicUseCase $createTopicUseCase,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(int $id): string
+    {
+        $start = (int) $this->request->getQuery('start', 0);
+
+        try {
+            $this->forumAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                $this->forumAccessResponseBuilder->forException($exception)
+            );
+        }
+
+        try {
+            $this->accessUseCase->execute();
+        } catch (AccessDeniedException) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Access forbidden'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access forbidden'),
+                    'back_url'      => '/forum/?type=topics&id=' . $id,
+                    'back_url_name' => __('Go to Section'),
+                ]
+            );
+        }
+
+        try {
+            $context = $this->contextUseCase->execute($id);
+        } catch (NewTopicSectionNotFoundException) {
+            pageNotFound();
+        }
+
+        $section = $context->section;
+
+        $flood = $this->tools->antiflood();
+        if ($flood) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('New Topic'),
+                    'type'          => 'alert-danger',
+                    'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                    'back_url'      => $section->url . '&amp;start=' . $start,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        $data = [
+            'name'       => $this->request->getPost('th', '', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]),
+            'message'    => ForumUtils::topicLink($this->request->getPost('msg', '')),
+            'csrf_token' => $this->request->getPost('csrf_token', ''),
+            'add_files'  => (int) $this->request->getPost('addfiles', 0),
+        ];
+
+        if ($this->currentUser->rights > 0) {
+            $data['meta_keywords'] = (string) $this->request->getPost('meta_keywords');
+            $data['meta_description'] = (string) $this->request->getPost('meta_description');
+        }
+
+        $errors = [];
+        if ($this->request->getPost('submit')) {
+            $rules = [
+                'name'       => [
+                    'NotEmpty',
+                    'StringLength'   => ['min' => 3, 'max' => 200],
+                    'ModelNotExists' => [
+                        'model'   => ForumTopic::class,
+                        'field'   => 'name',
+                        'exclude' => static function ($query) use ($id) {
+                            $query->where('section_id', $id);
+                        },
+                    ],
+                ],
+                'message'    => [
+                    'NotEmpty',
+                    'StringLength'   => ['min' => 4],
+                    'ModelNotExists' => [
+                        'model'   => ForumMessage::class,
+                        'field'   => 'text',
+                        'exclude' => function ($query) {
+                            $query->where('user_id', $this->currentUser->id);
+                        },
+                    ],
+                ],
+                'csrf_token' => ['Csrf'],
+            ];
+
+            $validator = new Validator($data, $rules);
+            if ($validator->isValid()) {
+                $result = $this->createTopicUseCase->execute(
+                    section: $section,
+                    topicName: (string) $data['name'],
+                    messageText: (string) $data['message'],
+                    metaKeywords: $data['meta_keywords'] ?? null,
+                    metaDescription: $data['meta_description'] ?? null,
+                );
+
+                if ($data['add_files'] === 1) {
+                    redirect('/forum/addfile/' . $result->messageId . '/');
+                }
+
+                redirect(htmlspecialchars_decode($result->topicUrl));
+            }
+
+            $errors = $validator->getErrors();
+        }
+
+        $purifier = di(\Johncms\Security\HTMLPurifier::class);
+        $embed = di(\Johncms\Media\MediaEmbed::class);
+
+        $msgPreview = $purifier->purify((string) $data['message']);
+        $msgPreview = $embed->embedMedia($msgPreview);
+        $msgPreview = $this->tools->smilies($msgPreview, $this->currentUser->rights > 0);
+
+        ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
+        $this->navChain->add(__('New Topic'));
+
+        $this->render->addData(
+            [
+                'title'      => __('New Topic'),
+                'page_title' => __('New Topic'),
+            ]
+        );
+
+        return $this->render->render(
+            'forum::new_topic',
+            [
+                'settings_forum'    => $this->getForumSettings(),
+                'id'                => $section->id,
+                'th'                => $data['name'],
+                'add_files'         => ($data['add_files'] === 1),
+                'msg'               => $this->tools->checkout((string) $data['message'], 0, 0),
+                'back_url'          => $section->url,
+                'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $this->request->getPost('submit'),
+                'preview_message'   => $msgPreview,
+                'errors'            => $errors,
+                'data'              => $data,
+            ]
+        );
+    }
+
+    private function getForumSettings(): array
+    {
+        $setForumDefault = [
+            'farea'    => 0,
+            'upfp'     => 0,
+            'preview'  => 1,
+            'postclip' => 1,
+            'postcut'  => 2,
+        ];
+
+        $setForum = [];
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
+            $setForum = (array) $this->currentUser->set_forum;
+        }
+
+        return array_merge($setForumDefault, $setForum);
+    }
+}

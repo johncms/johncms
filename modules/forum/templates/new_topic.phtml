@@ -62,7 +62,7 @@ $this->layout('system::layout/default');
     </div>
 <?php endif; ?>
 
-<form name="new_topic" action="/forum/?act=nt&amp;id=<?= $id ?>" method="post">
+<form name="new_topic" action="/forum/new-topic/<?= $id ?>/" method="post">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
     <?php if (! empty($errors['csrf_token'])): ?>
         <div class="alert alert-danger"><?= implode(', ', $errors['csrf_token']) ?></div>
