@@ -73,4 +73,9 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where('id', $topicId)
             ->update(['deleted' => null, 'deleted_by' => $restoredBy]);
     }
+
+    public function save(ForumTopic $topic): void
+    {
+        $topic->save();
+    }
 }

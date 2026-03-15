@@ -1,0 +1,127 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ChangeTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureChangeTopicAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
+use Johncms\Validator\Validator;
+
+final readonly class ChangeTopicController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private EnsureChangeTopicAccessUseCase $accessUseCase,
+        private GetChangeTopicContextUseCase $contextUseCase,
+        private ChangeTopicUseCase $changeTopicUseCase,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(int $id): string
+    {
+        try {
+            $this->forumAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                $this->forumAccessResponseBuilder->forException($exception)
+            );
+        }
+
+        try {
+            $this->accessUseCase->execute();
+            $context = $this->contextUseCase->execute($id);
+        } catch (AccessDeniedException) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Access forbidden'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access forbidden'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        } catch (ChangeTopicNotFoundException) {
+            pageNotFound();
+        }
+
+        $topic = $context->topic;
+
+        $formData = [
+            'name'             => $this->request->getPost('name', $topic->name),
+            'meta_keywords'    => $this->request->getPost('meta_keywords', $topic->meta_keywords),
+            'meta_description' => $this->request->getPost('meta_description', $topic->meta_description),
+            'csrf_token'       => $this->request->getPost('csrf_token', ''),
+        ];
+
+        $errors = [];
+        if ($this->request->getMethod() === 'POST') {
+            $rules = [
+                'name'          => [
+                    'NotEmpty',
+                    'StringLength'   => ['min' => 3, 'max' => 200],
+                    'ModelNotExists' => [
+                        'model'   => ForumTopic::class,
+                        'field'   => 'name',
+                        'exclude' => static function ($query) use ($topic, $id) {
+                            $query->where('section_id', $topic->section_id)
+                                ->where('id', '!=', $id);
+                        },
+                    ],
+                ],
+                'meta_keywords' => [
+                    'StringLength' => ['max' => 250],
+                ],
+                'meta_description' => [
+                    'StringLength' => ['max' => 65000],
+                ],
+                'csrf_token'    => ['Csrf'],
+            ];
+
+            $validator = new Validator($formData, $rules);
+            if ($validator->isValid()) {
+                $this->changeTopicUseCase->execute(
+                    topic:           $topic,
+                    name:            $formData['name'],
+                    metaKeywords:    $formData['meta_keywords'],
+                    metaDescription: $formData['meta_description'],
+                );
+
+                redirect('/forum/?type=topic&id=' . $topic->id);
+            }
+
+            $errors = $validator->getErrors();
+        }
+
+        return $this->render->render(
+            'forum::change_topic',
+            [
+                'title'      => __('Change the topic'),
+                'page_title' => __('Change the topic'),
+                'id'         => $topic->id,
+                'topic'      => $topic,
+                'form_data'  => $formData,
+                'back_url'   => '/forum/?type=topic&id=' . $topic->id,
+                'errors'     => $errors,
+            ]
+        );
+    }
+}
