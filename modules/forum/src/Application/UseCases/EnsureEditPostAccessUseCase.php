@@ -53,5 +53,9 @@ final readonly class EnsureEditPostAccessUseCase
         if ($lastMessage === null || $lastMessage->user_id !== $this->currentUser->id) {
             throw new EditPostAccessDeniedException(__('Your message not already latest, you cannot change it'));
         }
+
+        if ($message->date < time() - 300) {
+            throw new EditPostAccessDeniedException(__('You cannot edit your posts after 5 minutes'));
+        }
     }
 }
