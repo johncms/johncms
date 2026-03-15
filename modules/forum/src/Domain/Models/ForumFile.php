@@ -139,7 +139,7 @@ class ForumFile extends Model
      */
     public function getFileUrlAttribute(): string
     {
-        return '/forum/?act=file&amp;id=' . $this->id;
+        return '/forum/download-file/' . $this->id . '/';
     }
 
     /**

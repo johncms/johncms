@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use Johncms\Counters;
+use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Render;
 use Johncms\NavChain;
@@ -37,6 +38,14 @@ $user = di(User::class);
 $tools = di(Tools::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
+
+$legacyRedirectResolver = di(ForumLegacyRedirectResolver::class);
+$legacyRedirectUrl = $legacyRedirectResolver->resolve($_GET);
+if ($legacyRedirectUrl !== null) {
+    http_response_code(301);
+    header('Location: ' . $legacyRedirectUrl);
+    exit;
+}
 
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('forum', __DIR__ . '/locale');
@@ -103,7 +112,6 @@ $show_type = $_REQUEST['type'] ?? 'section';
 
 // Переключаем режимы работы
 $mods = [
-    'file',
     'files',
     'filter',
     'new',

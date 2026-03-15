@@ -160,7 +160,7 @@ ORDER BY `time` DESC LIMIT $start, " . $user->config->kmess);
             ];
 
             $res['file_preview'] = '';
-            $res['file_url'] = '/forum/?act=file&amp;id=' . $res['id'];
+            $res['file_url'] = '/forum/download-file/' . $res['id'] . '/';
             if (in_array($att_ext, $pic_ext)) {
                 $res['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . (urlencode($res['filename']));
             }
