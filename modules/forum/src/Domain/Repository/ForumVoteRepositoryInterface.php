@@ -14,6 +14,13 @@ interface ForumVoteRepositoryInterface
 
     public function findPollByTopic(int $topicId): ?ForumVote;
 
+    public function countUsersByTopic(int $topicId): int;
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getUsersByTopic(int $topicId, int $start, int $limit): array;
+
     /**
      * @return ForumVote[]
      */

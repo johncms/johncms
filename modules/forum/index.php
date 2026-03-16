@@ -114,12 +114,13 @@ $show_type = $_REQUEST['type'] ?? 'section';
 $mods = [
     'filter',
     'search',
-    'users',
     'who',
 ];
 
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
+} elseif ($act === 'users') {
+    pageNotFound();
 } elseif ($id) {
     switch ($show_type) {
         case 'section':

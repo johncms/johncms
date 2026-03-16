@@ -31,6 +31,38 @@ final class ForumVoteRepository implements ForumVoteRepositoryInterface
             ->first();
     }
 
+    public function countUsersByTopic(int $topicId): int
+    {
+        return ForumVoteUser::query()
+            ->where('topic', $topicId)
+            ->count();
+    }
+
+    public function getUsersByTopic(int $topicId, int $start, int $limit): array
+    {
+        return ForumVoteUser::query()
+            ->leftJoin('users', 'cms_forum_vote_users.user', '=', 'users.id')
+            ->where('cms_forum_vote_users.topic', $topicId)
+            ->select([
+                'cms_forum_vote_users.*',
+                'users.rights',
+                'users.lastdate',
+                'users.name',
+                'users.sex',
+                'users.status',
+                'users.datereg',
+                'users.id',
+                'users.ip',
+                'users.ip_via_proxy',
+                'users.browser',
+            ])
+            ->offset($start)
+            ->limit($limit)
+            ->get()
+            ->map(static fn (ForumVoteUser $voteUser): array => $voteUser->toArray())
+            ->all();
+    }
+
     public function getAnswersByTopic(int $topicId): array
     {
         return ForumVote::query()
