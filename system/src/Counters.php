@@ -133,7 +133,7 @@ class Counters
         }
 
         if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
-            $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/?act=new">+' . $new_msg . '</a></span>';
+            $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/unread/">+' . $new_msg . '</a></span>';
         }
 
         return $top . '&#160;/&#160;' . $msg . $new;
@@ -161,13 +161,13 @@ class Counters
             )->fetchColumn();
 
             if ($mod) {
-                return $total ? '<a href="?act=new" class="pr-2">' . d__('system', 'Unread') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '';
+                return $total ? '<a href="/forum/unread/" class="pr-2">' . d__('system', 'Unread') . '</a><span class="badge badge-pill badge-danger mr-3">' . $total . '</span>' : '';
             }
 
             return $total;
         }
         if ($mod) {
-            return '<a href="?act=new">' . d__('system', 'Last activity') . '</a>';
+            return '<a href="/forum/latest-topics/">' . d__('system', 'Last activity') . '</a>';
         }
 
         return false;

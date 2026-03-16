@@ -12,6 +12,25 @@ interface ForumTopicRepositoryInterface
 
     public function findActiveById(int $topicId): ?ForumTopic;
 
+    public function countUnreadForUser(int $userId, bool $includeDeleted): int;
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getUnreadForUser(int $userId, bool $includeDeleted, int $start, int $limit): array;
+
+    public function countForPeriod(int $fromTime, bool $includeDeleted, bool $useModerationDate): int;
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getForPeriod(int $fromTime, bool $includeDeleted, bool $useModerationDate, int $start, int $limit): array;
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getLatest(int $limit): array;
+
     public function markHasPoll(int $topicId): void;
 
     public function clearHasPoll(int $topicId): void;

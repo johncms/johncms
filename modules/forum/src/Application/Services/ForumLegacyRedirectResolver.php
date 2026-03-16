@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Services;
 
+use Johncms\Users\User;
+
 final class ForumLegacyRedirectResolver
 {
+    public function __construct(
+        private User $currentUser,
+    ) {
+    }
+
     public function resolve(array $query): ?string
     {
         $act = isset($query['act']) ? trim((string) $query['act']) : '';
@@ -69,6 +76,40 @@ final class ForumLegacyRedirectResolver
             }
 
             return $url;
+        }
+
+        if ($act === 'new') {
+            $do = isset($query['do']) ? trim((string) $query['do']) : '';
+
+            if ($do === 'period') {
+                $params = [];
+                $vr = isset($query['vr']) ? abs((int) $query['vr']) : 0;
+                if ($vr > 0) {
+                    $params['vr'] = $vr;
+                }
+
+                $start = isset($query['start']) ? abs((int) $query['start']) : 0;
+                if ($start > 0) {
+                    $params['start'] = $start;
+                }
+
+                return '/forum/topics-period/' . ($params === [] ? '' : '?' . http_build_query($params));
+            }
+
+            if ($do === 'reset') {
+                return $this->currentUser->isValid() ? '/forum/unread/' : '/forum/latest-topics/';
+            }
+
+            if ($this->currentUser->isValid()) {
+                $start = isset($query['start']) ? abs((int) $query['start']) : 0;
+                if ($start > 0) {
+                    return '/forum/unread/?' . http_build_query(['start' => $start]);
+                }
+
+                return '/forum/unread/';
+            }
+
+            return '/forum/latest-topics/';
         }
 
         return null;

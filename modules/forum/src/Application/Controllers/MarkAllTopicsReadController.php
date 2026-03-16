@@ -1,0 +1,76 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\MarkAllTopicsReadUseCase;
+use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
+use Johncms\Validator\Validator;
+
+final readonly class MarkAllTopicsReadController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private MarkAllTopicsReadUseCase $markAllTopicsReadUseCase,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(): string
+    {
+        try {
+            $this->forumAccessUseCase->execute();
+            $this->forumUserAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                $this->forumAccessResponseBuilder->forException($exception)
+            );
+        }
+
+        $validator = new Validator(
+            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => ['Csrf']]
+        );
+
+        if (! $validator->isValid()) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Unread'),
+                    'page_title'    => __('Unread'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Wrong data'),
+                    'back_url'      => '/forum/unread/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        $this->markAllTopicsReadUseCase->execute();
+
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'         => __('Unread'),
+                'page_title'    => __('Unread'),
+                'type'          => 'alert-success',
+                'message'       => __('All topics marked as read'),
+                'back_url'      => '/forum/',
+                'back_url_name' => __('Forum'),
+            ]
+        );
+    }
+}

@@ -166,7 +166,7 @@ if ($id) {
                     break;
 
                 case 'new':
-                    $place = '<a href="?act=new">' . __('In the unreads') . '</a>';
+                    $place = '<a href="' . ($user->isValid() ? '/forum/unread/' : '/forum/latest-topics/') . '">' . __('In the unreads') . '</a>';
                     break;
 
                 case 'search':

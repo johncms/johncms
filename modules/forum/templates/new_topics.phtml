@@ -31,7 +31,7 @@ $this->layout(
 ?>
 <?php if (! empty($show_period)): ?>
     <div class="row">
-        <form action="?act=new&amp;do=period" method="post" class="col-md-4">
+        <form action="<?= $period_action ?? '/forum/topics-period/' ?>" method="post" class="col-md-4">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" maxlength="3" name="vr" placeholder="<?= __('Period') ?>" aria-label="<?= __('Period') ?>">
                 <div class="input-group-append">
@@ -112,13 +112,15 @@ $this->layout(
 </div>
 
 <div class="mt-3">
-    <?php if (! empty($mark_as_read) && ! empty($total)): ?>
+    <?php if (! empty($mark_as_read_enabled) && ! empty($mark_as_read_action)): ?>
         <div>
-            <a href="/forum/?act=new&amp;do=reset"><?= __('Mark as read') ?></a>
+            <form action="<?= $mark_as_read_action ?>" method="post">
+                <input type="hidden" name="csrf_token" value="<?= $csrf_token ?? '' ?>">
+                <button type="submit" class="btn btn-link p-0"><?= __('Mark as read') ?></button>
+            </form>
         </div>
     <?php endif; ?>
     <div>
         <a href="/forum/"><?= __('Forum') ?></a>
     </div>
 </div>
-

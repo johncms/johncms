@@ -27,7 +27,7 @@
         <?php if ($user->isValid()): ?>
             <?php if (! empty($unread_count)): ?>
                 <div class="d-flex align-items-center pe-2">
-                    <a href="?act=new" class="pe-2 d-flex">
+                    <a href="/forum/unread/" class="pe-2 d-flex">
                         <span class="d-none d-sm-inline"><?= __('Unread') ?></span>
                         <div class="icon_with_badge">
                             <svg class="icon d-sm-none">
@@ -40,7 +40,7 @@
                 </div>
             <?php endif; ?>
             <div class="pe-3">
-                <a href="?act=new&amp;do=period">
+                <a href="/forum/topics-period/">
                     <span class="d-none d-sm-inline"><?= __('Show for Period') ?></span>
                     <svg class="icon d-sm-none">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#calendar"/>
@@ -49,7 +49,7 @@
             </div>
         <?php else: ?>
             <div class="pe-3">
-                <a href="?act=new">
+                <a href="/forum/latest-topics/">
                     <span class="d-none d-sm-inline"><?= __('Last activity') ?></span>
                     <svg class="icon d-sm-none">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#calendar"/>

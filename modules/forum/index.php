@@ -113,7 +113,6 @@ $show_type = $_REQUEST['type'] ?? 'section';
 // Переключаем режимы работы
 $mods = [
     'filter',
-    'new',
     'search',
     'users',
     'who',

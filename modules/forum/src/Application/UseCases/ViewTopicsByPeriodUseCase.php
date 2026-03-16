@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\UseCases;
+
+use Johncms\Modules\Forum\Application\DTO\TopicsPeriodQueryDTO;
+use Johncms\Modules\Forum\Application\DTO\TopicsPeriodResultDTO;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Johncms\System\Legacy\Tools;
+use Johncms\Users\User;
+
+final readonly class ViewTopicsByPeriodUseCase
+{
+    public function __construct(
+        private ForumTopicRepositoryInterface $topicRepository,
+        private Tools $tools,
+        private User $currentUser,
+    ) {
+    }
+
+    public function execute(TopicsPeriodQueryDTO $query): TopicsPeriodResultDTO
+    {
+        $useModerationDate = $this->currentUser->rights === 9;
+        $includeDeleted = $useModerationDate;
+        $fromTime = time() - $query->hours * 3600;
+        $total = $this->topicRepository->countForPeriod($fromTime, $includeDeleted, $useModerationDate);
+        $topics = [];
+
+        if ($total > 0) {
+            $topics = $this->mapTopics(
+                $this->topicRepository->getForPeriod(
+                    fromTime: $fromTime,
+                    includeDeleted: $includeDeleted,
+                    useModerationDate: $useModerationDate,
+                    start: $query->start,
+                    limit: (int) $this->currentUser->config->kmess,
+                )
+            );
+        }
+
+        return new TopicsPeriodResultDTO($topics, $total, $query->hours);
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function mapTopics(array $rows): array
+    {
+        $topics = [];
+
+        foreach ($rows as $row) {
+            if ($this->currentUser->rights >= 7) {
+                $pagesCount = (int) ceil((int) $row['mod_post_count'] / $this->currentUser->config->kmess);
+                $row['show_posts_count'] = $this->tools->formatNumber((int) $row['mod_post_count']);
+                $row['show_last_author'] = $row['mod_last_post_author_name'];
+                $row['show_last_post_date'] = $this->tools->displayDate((int) $row['mod_last_post_date']);
+            } else {
+                $pagesCount = (int) ceil((int) $row['post_count'] / $this->currentUser->config->kmess);
+                $row['show_posts_count'] = $this->tools->formatNumber((int) $row['post_count']);
+                $row['show_last_author'] = $row['last_post_author_name'];
+                $row['show_last_post_date'] = $this->tools->displayDate((int) $row['last_post_date']);
+            }
+
+            $row['has_icons'] = ! empty($row['pinned']) || ! empty($row['has_poll']) || ! empty($row['closed']) || ! empty($row['deleted']);
+            $row['url'] = '/forum/?type=topic&amp;id=' . $row['id'];
+            $row['last_page_url'] = $row['url'];
+            if ($pagesCount > 1) {
+                $row['last_page_url'] = '/forum/?type=topic&amp;id=' . $row['id'] . '&amp;page=' . $pagesCount;
+            }
+
+            $row['forum_url'] = '';
+            $row['section_url'] = '';
+            $topics[] = $row;
+        }
+
+        return $topics;
+    }
+}
