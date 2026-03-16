@@ -183,4 +183,26 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
 
         return $candidates;
     }
+
+    public function getTopicAuthorFilterOptions(int $topicId): array
+    {
+        $rows = ForumMessage::query()
+            ->selectRaw('forum_messages.user_id, forum_messages.user_name, COUNT(*) as count')
+            ->where('forum_messages.topic_id', $topicId)
+            ->groupBy('forum_messages.user_id', 'forum_messages.user_name')
+            ->orderBy('forum_messages.user_name')
+            ->orderBy('forum_messages.user_id')
+            ->get();
+
+        $authors = [];
+        foreach ($rows as $row) {
+            $authors[] = [
+                'user_id'   => (int) $row->user_id,
+                'user_name' => (string) $row->user_name,
+                'count'     => (int) $row->count,
+            ];
+        }
+
+        return $authors;
+    }
 }

@@ -53,4 +53,9 @@ interface ForumMessageRepositoryInterface
      * @return array<array{user_id:int, user_name:string}>
      */
     public function getTopicCuratorCandidates(int $topicId): array;
+
+    /**
+     * @return array<int, array{user_id:int, user_name:string, count:int}>
+     */
+    public function getTopicAuthorFilterOptions(int $topicId): array;
 }

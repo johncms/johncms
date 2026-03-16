@@ -16,6 +16,10 @@
  * @var $start
  * @var $topic
  * @var $saved
+ * @var $selected_user_ids
+ * @var $set_filter_action
+ * @var $clear_filter_action
+ * @var $csrf_token
  */
 
 $this->layout(
@@ -30,7 +34,8 @@ $this->layout(
 <?php if ($saved): ?>
     <div class="alert alert-success"><?= __('Changes saved') ?></div>
 <?php endif; ?>
-<form action="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;do=set" method="post">
+<form action="<?= $set_filter_action ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <?php if (empty($list)): ?>
         <div class="alert alert-info">
             <?= __('The list is empty') ?>
@@ -44,7 +49,7 @@ $this->layout(
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="custom-control custom-checkbox">
                                 <input class="custom-control-input" type="checkbox" name="users[]" value="<?= $item['user_id'] ?>"
-                                       id="user_<?= $item['user_id'] ?>">
+                                       id="user_<?= $item['user_id'] ?>"<?= in_array($item['user_id'], $selected_user_ids ?? [], true) ? ' checked' : '' ?>>
                                 <label class="custom-control-label" for="user_<?= $item['user_id'] ?>"><?= $item['user_name'] ?></label>
                             </div>
                             <div class="badge rounded-pill text-bg-secondary"><?= $item['count'] ?></div>
@@ -57,6 +62,9 @@ $this->layout(
     <div>
         <?php if (! empty($list)): ?>
             <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Filter') ?></button>
+            <?php if (! empty($selected_user_ids)): ?>
+                <button type="submit" formaction="<?= $clear_filter_action ?>" class="btn btn-outline-secondary"><?= __('Cancel Filter') ?></button>
+            <?php endif; ?>
         <?php endif; ?>
         <a href="<?= $back_url ?>" class="btn btn-secondary"><?= __('Back to topic') ?></a>
     </div>

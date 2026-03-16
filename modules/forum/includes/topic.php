@@ -21,6 +21,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Models\ForumVote;
 use Johncms\NavChain;
 use Johncms\Notifications\Notification;
+use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\GuestSession;
@@ -82,7 +83,7 @@ $order = $set_forum['upfp'] ? 'DESC' : 'ASC';
 $filter_by_users = [];
 $filter = isset($_SESSION['fsort_id']) && $_SESSION['fsort_id'] === $id ? 1 : 0;
 if ($filter && ! empty($_SESSION['fsort_users'])) {
-    $filter_by_users = unserialize($_SESSION['fsort_users'], ['allowed_classes' => false]);
+    $filter_by_users = is_array($_SESSION['fsort_users']) ? array_map('intval', $_SESSION['fsort_users']) : [];
 }
 
 // List of messages
@@ -244,5 +245,6 @@ echo $view->render(
         'unread_count'     => $tools->formatNumber($counters->forumUnreadCount()),
         'filter_by_author' => $filter,
         'poll_data'        => $poll_data,
+        'csrf_token'       => di(Csrf::class)->getToken(),
     ]
 );

@@ -23,6 +23,7 @@
  * @var \Johncms\Modules\Forum\Domain\Models\ForumMessage $first_post
  * @var \Johncms\Modules\Forum\Domain\Models\ForumFile $file
  * @var \Johncms\Modules\Forum\Domain\Models\ForumVote $topic_vote
+ * @var $csrf_token
  */
 
 $this->layout('system::layout/default');
@@ -41,7 +42,10 @@ $this->layout('system::layout/default');
         <div>
             <?= __('Filter by author is activated') ?>
         </div>
-        <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= __('Cancel Filter') ?></a>
+        <form action="/forum/filter/<?= $id ?>/clear/" method="post" class="mt-2">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+            <button type="submit" class="btn btn-link p-0"><?= __('Cancel Filter') ?></button>
+        </form>
     </div>
 <?php endif; ?>
 
@@ -464,9 +468,12 @@ $this->layout('system::layout/default');
 <div>
     <div>
         <?php if ($filter_by_author): ?>
-            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;do=unset"><?= __('Cancel Filter') ?></a>
+            <form action="/forum/filter/<?= $id ?>/clear/" method="post">
+                <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+                <button type="submit" class="btn btn-link p-0"><?= __('Cancel Filter') ?></button>
+            </form>
         <?php else: ?>
-            <a href="/forum/?act=filter&amp;id=<?= $id ?>&amp;start=<?= $start ?>"><?= __('Filter by author') ?></a>
+            <a href="/forum/filter/<?= $id ?>/?start=<?= $start ?>"><?= __('Filter by author') ?></a>
         <?php endif; ?>
     </div>
 </div>
