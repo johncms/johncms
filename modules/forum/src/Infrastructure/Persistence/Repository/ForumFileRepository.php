@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
+use Johncms\Modules\Forum\Domain\Query\ForumFileCountQuery;
+use Johncms\Modules\Forum\Domain\Query\ForumFileListingQuery;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 
 final class ForumFileRepository implements ForumFileRepositoryInterface
@@ -90,5 +92,102 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
         ForumFile::query()
             ->where('topic', $topicId)
             ->delete();
+    }
+
+    public function countForListing(ForumFileCountQuery $query): int
+    {
+        return $this->countByQuery($query);
+    }
+
+    public function getListingItems(ForumFileListingQuery $query): array
+    {
+        $comparison = $query->upfp ? '>=' : '<=';
+        $start = max(0, $query->start);
+        $limit = max(1, $query->limit);
+
+        return ForumFile::query()
+            ->from('cms_forum_files as files')
+            ->when(
+                $query->filter->isNew,
+                static fn($builder) => $builder->where('files.time', '>', $query->filter->newFrom),
+                static fn($builder) => $builder->where('files.filetype', $query->filter->fileType),
+            )
+            ->when(
+                ! $query->filter->scope->includeDeleted,
+                static fn($builder) => $builder->where('files.del', '!=', 1),
+            )
+            ->when(
+                $query->filter->scope->categoryId !== null,
+                static fn($builder) => $builder->where('files.cat', $query->filter->scope->categoryId),
+            )
+            ->when(
+                $query->filter->scope->categoryId === null && $query->filter->scope->sectionId !== null,
+                static fn($builder) => $builder->where('files.subcat', $query->filter->scope->sectionId),
+            )
+            ->when(
+                $query->filter->scope->categoryId === null
+                    && $query->filter->scope->sectionId === null
+                    && $query->filter->scope->topicId !== null,
+                static fn($builder) => $builder->where('files.topic', $query->filter->scope->topicId),
+            )
+            ->join('forum_messages as mess', 'files.post', '=', 'mess.id')
+            ->join('users as u', 'u.id', '=', 'mess.user_id')
+            ->select([
+                'files.*',
+                'mess.user_id',
+                'mess.text',
+                'u.name',
+                'u.rights',
+                'u.lastdate',
+                'u.status',
+            ])
+            ->selectSub(
+                static function ($subQuery) use ($comparison): void {
+                    $subQuery
+                        ->from('forum_messages')
+                        ->selectRaw('COUNT(*)')
+                        ->whereColumn('topic_id', 'files.topic')
+                        ->whereColumn('id', $comparison, 'files.post');
+                },
+                'page'
+            )
+            ->orderByDesc('files.time')
+            ->offset($start)
+            ->limit($limit)
+            ->toBase()
+            ->get()
+            ->map(static fn(object $row): array => (array) $row)
+            ->all();
+    }
+
+    public function countByQuery(ForumFileCountQuery $query): int
+    {
+        return (int) ForumFile::query()
+            ->from('cms_forum_files as files')
+            ->when(
+                $query->isNew,
+                static fn($builder) => $builder->where('files.time', '>', $query->newFrom),
+                static fn($builder) => $builder->where('files.filetype', $query->fileType),
+            )
+            ->when(
+                ! $query->scope->includeDeleted,
+                static fn($builder) => $builder->where('files.del', '!=', 1),
+            )
+            ->when(
+                $query->scope->categoryId !== null,
+                static fn($builder) => $builder->where('files.cat', $query->scope->categoryId),
+            )
+            ->when(
+                $query->scope->categoryId === null && $query->scope->sectionId !== null,
+                static fn($builder) => $builder->where('files.subcat', $query->scope->sectionId),
+            )
+            ->when(
+                $query->scope->categoryId === null
+                    && $query->scope->sectionId === null
+                    && $query->scope->topicId !== null,
+                static fn($builder) => $builder->where('files.topic', $query->scope->topicId),
+            )
+            ->toBase()
+            ->count();
     }
 }

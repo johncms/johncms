@@ -162,7 +162,7 @@ if ($id) {
                     break;
 
                 case 'files':
-                    $place = '<a href="?act=files">' . __('Looking forum files') . '</a>';
+                    $place = '<a href="/forum/files/">' . __('Looking forum files') . '</a>';
                     break;
 
                 case 'new':

@@ -10,6 +10,41 @@ final class ForumLegacyRedirectResolver
     {
         $act = isset($query['act']) ? trim((string) $query['act']) : '';
 
+        if ($act === 'files') {
+            $params = [];
+
+            $c = isset($query['c']) ? abs((int) $query['c']) : 0;
+            $s = isset($query['s']) ? abs((int) $query['s']) : 0;
+            $t = isset($query['t']) ? abs((int) $query['t']) : 0;
+            if ($c > 0) {
+                $params['c'] = $c;
+            } elseif ($s > 0) {
+                $params['s'] = $s;
+            } elseif ($t > 0) {
+                $params['t'] = $t;
+            }
+
+            $do = isset($query['do']) ? (int) $query['do'] : 0;
+            if ($do > 0 && $do < 10) {
+                $params['do'] = $do;
+            }
+
+            if (array_key_exists('new', $query)) {
+                $params['new'] = 1;
+            }
+
+            $start = isset($query['start']) ? abs((int) $query['start']) : 0;
+            if ($start > 0) {
+                $params['start'] = $start;
+            }
+
+            if ($params === []) {
+                return '/forum/files/';
+            }
+
+            return '/forum/files/?' . http_build_query($params);
+        }
+
         if ($act === 'file') {
             $id = isset($query['id']) ? abs((int) $query['id']) : 0;
 

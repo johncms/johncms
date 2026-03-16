@@ -35,6 +35,7 @@ use Johncms\Modules\Forum\Application\Controllers\DeletePostController;
 use Johncms\Modules\Forum\Application\Controllers\DeletePostFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
 use Johncms\Modules\Forum\Application\Controllers\DownloadFileController;
+use Johncms\Modules\Forum\Application\Controllers\ForumFilesController;
 use Johncms\Modules\Forum\Application\Controllers\ShowPostController;
 use Johncms\Modules\Forum\Application\Controllers\NewTopicController;
 use Johncms\Modules\Forum\Application\Controllers\MoveTopicController;
@@ -54,6 +55,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                                           // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                                                   // Forum
     $map->addRoute(['GET'], '/forum/download-file/{id:\d+}[/]', DownloadFileController::class);
+    $map->addRoute(['GET'], '/forum/files[/]', ForumFilesController::class);
     $map->addRoute(['GET'], '/forum/post/{id:\d+}[/]', ShowPostController::class);
     if ($user->isValid()) {
         $map->addRoute(['GET', 'POST'], '/forum/addfile/{id:\d+}[/]', AddFileController::class);
