@@ -112,12 +112,11 @@ $show_type = $_REQUEST['type'] ?? 'section';
 
 // Переключаем режимы работы
 $mods = [
-    'search',
 ];
 
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
-} elseif ($act === 'filter' || $act === 'users' || $act === 'who') {
+} elseif ($act === 'filter' || $act === 'users' || $act === 'who' || $act === 'search') {
     pageNotFound();
 } elseif ($id) {
     switch ($show_type) {

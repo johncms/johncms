@@ -41,6 +41,8 @@ final readonly class ForumVisitorPlaceFormatter
             $place = 'new';
         } elseif ($path === '/forum/files') {
             $place = 'files';
+        } elseif ($path === '/forum/search' || str_starts_with($path, '/forum/search/')) {
+            $place = 'search';
         } elseif ($path === '/forum/visitors' || preg_match('~^/forum/topic-visitors/\d+$~', $path) === 1) {
             $place = 'who';
         } elseif (preg_match('~^/forum/new-message/(\d+)$~', $path, $matches) === 1) {
@@ -68,7 +70,7 @@ final readonly class ForumVisitorPlaceFormatter
             'who' => __('Here, in the List'),
             'files' => '<a href="/forum/files/">' . __('Looking forum files') . '</a>',
             'new' => '<a href="' . ($this->currentUser->isValid() ? '/forum/unread/' : '/forum/latest-topics/') . '">' . __('In the unreads') . '</a>',
-            'search' => '<a href="/forum/?act=search">' . __('Forum search') . '</a>',
+            'search' => '<a href="/forum/search/">' . __('Forum search') . '</a>',
             'section' => $this->formatCategoryPlace($placeId),
             'topics' => $this->formatSectionPlace($placeId),
             'say', 'topic' => $this->formatTopicPlace($place, $placeId, $actType),

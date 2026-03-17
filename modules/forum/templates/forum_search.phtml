@@ -26,7 +26,7 @@ $this->layout(
 );
 ?>
 
-<form action="/forum/?act=search" method="post">
+<form action="/forum/search/" method="get">
     <div class="form-group">
         <label for="search_query"><?= __('Search query') ?></label>
         <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
@@ -39,7 +39,7 @@ $this->layout(
             <label class="custom-control-label" for="search_t"><?= __('Search in the topic names') ?></label>
         </div>
     </div>
-    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
+    <button type="submit" class="btn btn-primary"><?= __('Search') ?></button>
 </form>
 
 <?php if (! empty($query) && empty($total)): ?>
@@ -79,13 +79,17 @@ $this->layout(
     </div>
 <?php endif; ?>
 <?php if (! empty($search_history)): ?>
-    <div class="mb-2 alert alert-secondary">
-        <div class="h5"><?= __('Search History') ?></div>
-        <div><?= implode(' / ', $search_history) ?></div>
+    <div class="forum-section mb-2">
+        <div class="h5 mb-2"><?= __('Search History') ?></div>
+        <div>
+            <?php foreach ($search_history as $index => $search_term): ?>
+                <?php if ($index > 0): ?> / <?php endif; ?>
+                <a href="/forum/search/?search=<?= urlencode($search_term) ?>" class="text-reset"><?= htmlspecialchars($search_term) ?></a>
+            <?php endforeach; ?>
+        </div>
         <div class="mt-1">
-            <a href="<?= $history_reset_url ?>"><?= __('Clear history') ?></a>
+            <a href="<?= $history_reset_url ?>" class="text-reset"><?= __('Clear history') ?></a>
         </div>
     </div>
 <?php endif; ?>
 <a href="/forum/" class="mb-2"><?= __('Forum') ?></a>
-

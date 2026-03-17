@@ -37,6 +37,7 @@ use Johncms\Modules\Forum\Application\Controllers\DeletePostFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
 use Johncms\Modules\Forum\Application\Controllers\DownloadFileController;
 use Johncms\Modules\Forum\Application\Controllers\ForumFilesController;
+use Johncms\Modules\Forum\Application\Controllers\ForumSearchController;
 use Johncms\Modules\Forum\Application\Controllers\FilterByAuthorController;
 use Johncms\Modules\Forum\Application\Controllers\LatestTopicsController;
 use Johncms\Modules\Forum\Application\Controllers\MarkAllTopicsReadController;
@@ -55,6 +56,7 @@ use Johncms\Modules\Forum\Application\Controllers\TopicsPeriodController;
 use Johncms\Modules\Forum\Application\Controllers\UnreadTopicsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
+use Johncms\Modules\Forum\Application\Controllers\ClearForumSearchHistoryController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -66,6 +68,8 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                                                   // Forum
     $map->addRoute(['GET'], '/forum/download-file/{id:\d+}[/]', DownloadFileController::class);
     $map->addRoute(['GET'], '/forum/files[/]', ForumFilesController::class);
+    $map->addRoute(['GET'], '/forum/search[/]', ForumSearchController::class);
+    $map->addRoute(['GET', 'POST'], '/forum/search/history/clear[/]', ClearForumSearchHistoryController::class);
     $map->addRoute(['GET'], '/forum/filter/{id:\d+}[/]', FilterByAuthorController::class);
     $map->addRoute(['POST'], '/forum/filter/{id:\d+}/clear[/]', ClearFilterByAuthorController::class);
     $map->addRoute(['POST'], '/forum/filter/{id:\d+}/set[/]', SetFilterByAuthorController::class);
