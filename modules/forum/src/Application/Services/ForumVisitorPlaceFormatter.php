@@ -1,0 +1,148 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Services;
+
+use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Johncms\Users\User;
+
+final readonly class ForumVisitorPlaceFormatter
+{
+    public function __construct(
+        private ForumSectionRepositoryInterface $sectionRepository,
+        private ForumTopicRepositoryInterface $topicRepository,
+        private ForumMessageRepositoryInterface $messageRepository,
+        private User $currentUser,
+    ) {
+    }
+
+    public function format(string $placeUrl): string
+    {
+        if ($placeUrl === '') {
+            return '';
+        }
+
+        $parsedUrl = parse_url($placeUrl);
+        $parsedQuery = [];
+        $path = rtrim((string) ($parsedUrl['path'] ?? ''), '/');
+
+        if (! empty($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $parsedQuery);
+        }
+
+        $place = 'forum';
+        $placeId = 0;
+        $actType = '';
+
+        if ($path === '/forum/unread' || $path === '/forum/latest-topics') {
+            $place = 'new';
+        } elseif ($path === '/forum/files') {
+            $place = 'files';
+        } elseif ($path === '/forum/visitors' || preg_match('~^/forum/topic-visitors/\d+$~', $path) === 1) {
+            $place = 'who';
+        } elseif (preg_match('~^/forum/new-message/(\d+)$~', $path, $matches) === 1) {
+            $place = 'say';
+            $placeId = (int) $matches[1];
+            $actType = 'post';
+        } elseif (preg_match('~^/forum/reply-message/(\d+)$~', $path, $matches) === 1) {
+            $place = 'say';
+            $placeId = (int) $matches[1];
+            $actType = 'reply';
+        } elseif (! empty($parsedQuery['act'])) {
+            $place = (string) $parsedQuery['act'];
+            $placeId = (int) ($parsedQuery['id'] ?? 0);
+            $actType = (string) ($parsedQuery['type'] ?? '');
+        } elseif (! empty($parsedQuery['type'])) {
+            $place = (string) $parsedQuery['type'];
+            $placeId = (int) ($parsedQuery['id'] ?? 0);
+        } elseif (! empty($parsedQuery['id'])) {
+            $place = 'section';
+            $placeId = (int) $parsedQuery['id'];
+        }
+
+        return match ($place) {
+            'forum' => '<a href="/forum/">' . __('In the forum Main') . '</a>',
+            'who' => __('Here, in the List'),
+            'files' => '<a href="/forum/files/">' . __('Looking forum files') . '</a>',
+            'new' => '<a href="' . ($this->currentUser->isValid() ? '/forum/unread/' : '/forum/latest-topics/') . '">' . __('In the unreads') . '</a>',
+            'search' => '<a href="/forum/?act=search">' . __('Forum search') . '</a>',
+            'section' => $this->formatCategoryPlace($placeId),
+            'topics' => $this->formatSectionPlace($placeId),
+            'say', 'topic' => $this->formatTopicPlace($place, $placeId, $actType),
+            'show_post' => $this->formatShowPostPlace($placeId),
+            default => '<a href="/forum/">' . __('In the forum Main') . '</a>',
+        };
+    }
+
+    private function formatCategoryPlace(int $sectionId): string
+    {
+        $section = $this->sectionRepository->findById($sectionId);
+        if ($section === null) {
+            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+        }
+
+        return __('In the Category') . ' &quot;<a href="/forum/?id=' . $section->id . '">' . $this->escapeName($section->name) . '</a>&quot;';
+    }
+
+    private function formatSectionPlace(int $sectionId): string
+    {
+        $section = $this->sectionRepository->findById($sectionId);
+        if ($section === null) {
+            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+        }
+
+        return __('In the Section') . ' &quot;<a href="/forum/?type=topics&id=' . $section->id . '">' . $this->escapeName($section->name) . '</a>&quot;';
+    }
+
+    private function formatTopicPlace(string $place, int $placeId, string $actType): string
+    {
+        $topic = null;
+
+        if ($place === 'say' && $actType !== 'post') {
+            $message = $this->messageRepository->findById($placeId);
+            if ($message !== null && $message->topic !== null) {
+                $topic = $message->topic;
+            }
+        }
+
+        if ($topic === null) {
+            $topic = $this->topicRepository->findById($placeId);
+        }
+
+        if ($topic === null) {
+            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+        }
+
+        $link = '<a href="/forum/?type=topic&id=' . $topic->id . '">' . $this->escapeName($topic->name) . '</a>';
+
+        if ($actType === 'reply') {
+            return __('Answers in the Topic') . ' &quot;' . $link . '&quot;';
+        }
+
+        if ($place === 'say') {
+            return __('Writes in the Topic') . ' &quot;' . $link . '&quot;';
+        }
+
+        return __('In the Topic') . ' &quot;' . $link . '&quot;';
+    }
+
+    private function formatShowPostPlace(int $messageId): string
+    {
+        $message = $this->messageRepository->findById($messageId);
+        if ($message === null || $message->topic === null) {
+            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+        }
+
+        return __('In the Topic') . ' &quot;<a href="/forum/?type=topic&id=' . $message->topic->id . '">' . $this->escapeName($message->topic->name) . '</a>&quot;';
+    }
+
+    private function escapeName(?string $name): string
+    {
+        $name = $name ?? '';
+
+        return $name === '' ? '-----' : htmlentities($name, ENT_QUOTES, 'UTF-8');
+    }
+}

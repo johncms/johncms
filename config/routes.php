@@ -53,6 +53,8 @@ use Johncms\Modules\Forum\Application\Controllers\RestoreTopicController;
 use Johncms\Modules\Forum\Application\Controllers\SubmitVoteController;
 use Johncms\Modules\Forum\Application\Controllers\TopicsPeriodController;
 use Johncms\Modules\Forum\Application\Controllers\UnreadTopicsController;
+use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
+use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -70,6 +72,8 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET'], '/forum/latest-topics[/]', LatestTopicsController::class);
     $map->addRoute(['GET'], '/forum/post/{id:\d+}[/]', ShowPostController::class);
     $map->addRoute(['GET'], '/forum/poll-voters/{id:\d+}[/]', PollVotersController::class);
+    $map->addRoute(['GET'], '/forum/visitors[/]', ViewForumVisitorsController::class);
+    $map->addRoute(['GET'], '/forum/topic-visitors/{id:\d+}[/]', ViewTopicVisitorsController::class);
     $map->addRoute(['GET'], '/forum/unread[/]', UnreadTopicsController::class);
     $map->addRoute(['POST'], '/forum/unread/mark-read[/]', MarkAllTopicsReadController::class);
     $map->addRoute(['GET', 'POST'], '/forum/topics-period[/]', TopicsPeriodController::class);

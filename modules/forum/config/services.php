@@ -10,12 +10,14 @@ use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSectionRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumTopicRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumUnreadRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumVoteRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumWhoRepository;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -47,4 +49,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ForumTopicRepositoryInterface::class, ForumTopicRepository::class)->public();
     $services->set(ForumUnreadRepositoryInterface::class, ForumUnreadRepository::class)->public();
     $services->set(ForumVoteRepositoryInterface::class, ForumVoteRepository::class)->public();
+    $services->set(ForumWhoRepositoryInterface::class, ForumWhoRepository::class)->public();
 };

@@ -14,7 +14,7 @@ return [
     '/community'       => '<a href="#home#/community/">' . d__('system', 'Users') . '</a>',
     '/community/users' => '<a href="#home#/community/users/">' . d__('system', 'Users List') . '</a>',
     '/downloads'       => '<a href="#home#/downloads/">' . d__('system', 'Downloads') . '</a>',
-    '/forum'           => '<a href="#home#/forum/">' . d__('system', 'Forum') . '</a>&#160;/&#160;<a href="#home#/forum/?act=who">&gt;&gt;</a>', // phpcs:ignore
+    '/forum'           => '<a href="#home#/forum/">' . d__('system', 'Forum') . '</a>&#160;/&#160;<a href="#home#/forum/visitors/">&gt;&gt;</a>', // phpcs:ignore
     '/guestbook'       => '<a href="#home#/guestbook/">' . d__('system', 'Guestbook') . '</a>',
     '/help'            => '<a href="#home#/help/">' . d__('system', 'Reading the FAQ') . '</a>',
     '/library'         => '<a href="#home#/library/">' . d__('system', 'Library') . '</a>',

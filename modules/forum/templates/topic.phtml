@@ -493,7 +493,7 @@ $this->layout('system::layout/default');
     'forum::footer',
     [
         'online'   => $online,
-        'who_url'  => '/forum/?act=who&id=' . $id,
+        'who_url'  => '/forum/topic-visitors/' . $id . '/',
         'who_name' => __('Who is here'),
     ]
 ) ?>

@@ -1,0 +1,105 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Forum\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumVisitorsTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
+use Johncms\Modules\Forum\Application\UseCases\ViewTopicVisitorsUseCase;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+
+final readonly class ViewTopicVisitorsController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private NavChain $navChain,
+        private Tools $tools,
+        private User $currentUser,
+        private EnsureForumAccessUseCase $forumAccessUseCase,
+        private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
+        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ViewTopicVisitorsUseCase $viewTopicVisitorsUseCase,
+        private ForumTopicRepositoryInterface $topicRepository,
+    ) {
+        $this->controllerContext->initModule('forum');
+    }
+
+    public function __invoke(int $id): string
+    {
+        try {
+            $this->forumAccessUseCase->execute();
+            $this->forumUserAccessUseCase->execute();
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                $this->forumAccessResponseBuilder->forException($exception)
+            );
+        }
+
+        $showGuests = $this->request->getQuery('mode') === 'guests';
+
+        try {
+            $result = $this->viewTopicVisitorsUseCase->execute(
+                $id,
+                new ForumVisitorsQueryDTO(
+                    start: max(0, (int) $this->request->getQuery('start', 0)),
+                    guests: $showGuests,
+                )
+            );
+        } catch (ForumVisitorsTopicNotFoundException) {
+            http_response_code(404);
+
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Who in Topic'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Wrong data'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Forum'),
+                ]
+            );
+        }
+
+        $topic = $this->topicRepository->findById($id);
+        $caption = __('Who in Topic');
+        $this->navChain->add(__('Forum'), '/forum/');
+        $this->navChain->add($caption);
+
+        return $this->render->render(
+            'forum::who',
+            [
+                'title'           => $caption,
+                'page_title'      => $caption,
+                'empty_message'   => __('The list is empty'),
+                'items'           => $result->items,
+                'pagination'      => $this->tools->displayPagination(
+                    '/forum/topic-visitors/' . $id . '/?' . ($showGuests ? 'mode=guests&amp;' : ''),
+                    $result->start,
+                    $result->total,
+                    $this->currentUser->config->kmess
+                ),
+                'total'           => $result->total,
+                'topic'           => $topic !== null ? htmlentities((string) $topic->name, ENT_QUOTES, 'UTF-8') : '',
+                'is_users'        => ! $showGuests,
+                'users_list_url'  => '/forum/topic-visitors/' . $id . '/',
+                'guests_list_url' => '/forum/topic-visitors/' . $id . '/?mode=guests',
+                'show_period'     => false,
+                'id'              => $id,
+            ]
+        );
+    }
+}

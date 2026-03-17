@@ -76,6 +76,17 @@ Guidelines:
 * Prefer modifying existing code over introducing new abstractions.
 * Do not change public APIs or method signatures unless required by the task.
 
+### Repository Rules
+
+* Keep repositories thin: repository methods should only build and execute data queries.
+* Repositories must not contain business rules, access checks, URL/place parsing, or HTTP/presentation logic.
+* Complex decision logic (domain branching, post-filtering in PHP, cross-entity interpretation) belongs in Application use cases or Domain services.
+* Prefer SQL/query builder expressions (joins, subqueries, `exists`, `where`) over loading broad datasets and filtering in PHP.
+* Repository methods should return query results; UI-oriented mapping and formatting must be done outside repositories.
+* If a repository method needs non-trivial loops, regex parsing, or deep condition trees, move that logic out of the repository.
+* Prefer model query builder `get()` in repositories and return typed collections when downstream code needs model fields, mutators, and IDE autocompletion.
+* Use `toBase()` only when raw DB rows are explicitly required; do not mix model and raw-row contracts in the same repository API.
+
 ### Legacy Code Rules
 
 Legacy code lives in `system/src-legacy`.
@@ -130,6 +141,7 @@ Exclude `Application/Exceptions` from service autoload.
 * Use 4-space indentation.
 * Prefer one class per file.
 * Use typed properties, arguments, and return types.
+* Avoid redundant scalar casts (`(int)`, `(string)`, `(bool)`) when the type is already guaranteed by signatures or framework/API contracts.
 * Use PHPDoc only when types cannot be expressed with native PHP types.
 * Use constructor injection with property promotion.
 * Prefer immutable design.
