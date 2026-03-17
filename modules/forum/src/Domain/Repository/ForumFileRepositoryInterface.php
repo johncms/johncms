@@ -12,6 +12,8 @@ interface ForumFileRepositoryInterface
 {
     public function save(ForumFile $file): void;
 
+    public function countAll(): int;
+
     public function hasFilesForPost(int $postId): bool;
 
     public function findById(int $fileId): ?ForumFile;

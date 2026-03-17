@@ -10,59 +10,8 @@
 
 declare(strict_types=1);
 
-use Johncms\Counters;
-use Johncms\Modules\Forum\Domain\Models\ForumFile;
-use Johncms\Modules\Forum\Domain\Models\ForumSection;
-use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
-use Johncms\Users\GuestSession;
-use Johncms\Users\User;
-
-/**
- * @var Tools $tools
- * @var Counters $counters
- * @var NavChain $nav_chain
- */
-
-// Forum categories
-$sections = (new ForumSection())
-    ->withCount('subsections', 'topics')
-    ->with('subsections')
-    ->where('parent', '=', 0)
-    ->orWhereNull('parent')
-    ->orderBy('sort')
-    ->get();
-
-$forum_settings = config('forum')['settings'];
-
-// Считаем файлы
-if ($forum_settings['file_counters']) {
-    $files_count = (new ForumFile())->count();
-}
-
-// Считаем пользователей онлайн
-$online = [
-    'online_u' => (new User())->online()->where('place', 'like', '/forum%')->count(),
-    'online_g' => (new GuestSession())->online()->where('place', 'like', '/forum%')->count(),
-];
+use Johncms\Modules\Forum\Application\Controllers\ForumIndexController;
 
 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
-$view->addData(
-    [
-        'keywords'    => $forum_settings['forum_keywords'],
-        'description' => $forum_settings['forum_description'],
-    ]
-);
-
-echo $view->render(
-    'forum::index',
-    [
-        'title'        => __('Forum'),
-        'page_title'   => __('Forum'),
-        'sections'     => $sections,
-        'online'       => $online,
-        'files_count'  => $forum_settings['file_counters'] ? $tools->formatNumber($files_count) : 0,
-        'unread_count' => $tools->formatNumber($counters->forumUnreadCount()),
-    ]
-);
+echo di(ForumIndexController::class)();

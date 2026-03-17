@@ -16,6 +16,11 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
         $file->save();
     }
 
+    public function countAll(): int
+    {
+        return ForumFile::query()->count();
+    }
+
     public function getByTopicId(int $topicId): array
     {
         return ForumFile::query()
