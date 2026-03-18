@@ -124,10 +124,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             require 'includes/section.php';
             break;
 
-        case 'topics':
-            require 'includes/topics.php';
-            break;
-
         case 'topic':
             require 'includes/topic.php';
             break;
