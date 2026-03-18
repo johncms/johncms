@@ -196,6 +196,7 @@ Rules:
 * Keep commit subjects short.
 * Use module name as scope when applicable.
 * Omit scope for global changes.
+* You may add a commit body (for example with multiple `-m` flags) to document key changes such as new URLs, migrations, or architectural refactoring details.
 
 ## Pre-Commit Checklist
 
