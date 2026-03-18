@@ -15,6 +15,7 @@ namespace Johncms\Modules\Forum\Application;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
@@ -40,7 +41,8 @@ class ForumUtils
         $tree = [];
         $tools->getSections($tree, $parent);
         foreach ($tree as $item) {
-            $nav_chain->add($item['name'], '/forum/?' . ($item['section_type'] === 1 ? 'type=topics&amp;' : '') . 'id=' . $item['id']);
+            $section = di(ForumSectionRepositoryInterface::class)->findById((int) $item['id']);
+            $nav_chain->add($item['name'], $section !== null ? $section->url : '/forum/');
         }
 
         if (! empty($current_item_name)) {

@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\DeleteTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -29,6 +30,7 @@ final readonly class DeleteTopicController
         private EnsureDeleteTopicAccessUseCase $accessUseCase,
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
+        private ForumSectionPathService $sectionPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -85,7 +87,7 @@ final readonly class DeleteTopicController
                 $this->deleteTopicUseCase->hideTopic($context->topicId, $this->user->name);
             }
 
-            redirect('/forum/?type=topics&id=' . $context->sectionId);
+            redirect($this->sectionPathService->getSectionUrlById($context->sectionId) ?? '/forum/');
         }
 
         return $this->render->render(

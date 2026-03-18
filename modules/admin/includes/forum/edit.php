@@ -52,6 +52,45 @@ module_lib_loader('forum');
 
 $section = (new ForumSection())->find($id);
 if ($section) {
+    $reservedSlugs = [
+        'addfile', 'addvote', 'bulk-delete-posts', 'change-topic', 'close', 'delete-post',
+        'delete-post-file', 'delete-topic', 'delvote', 'download-file', 'edit-post', 'editvote',
+        'files', 'filter', 'latest-topics', 'move-topic', 'new-message', 'new-topic', 'pin-topic',
+        'poll-vote', 'poll-voters', 'post', 'reply-message', 'restore-post', 'restore-topic',
+        'search', 'topic-visitors', 'topics-period', 'unread', 'visitors',
+    ];
+
+    $generateSlug = static function (PDO $db, string $name, int $parentId, int $excludeId) use ($reservedSlugs): string {
+        $baseSlug = \Illuminate\Support\Str::slug($name);
+        if ($baseSlug === '') {
+            $baseSlug = 'section';
+        }
+
+        if (in_array($baseSlug, $reservedSlugs, true)) {
+            $baseSlug .= '-section';
+        }
+
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (true) {
+            $statement = $db->prepare('SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = :parent AND `slug` = :slug AND `id` != :id');
+            $statement->bindValue(':parent', $parentId, PDO::PARAM_INT);
+            $statement->bindValue(':slug', $slug, PDO::PARAM_STR);
+            $statement->bindValue(':id', $excludeId, PDO::PARAM_INT);
+            $statement->execute();
+
+            if ((int) $statement->fetchColumn() === 0) {
+                break;
+            }
+
+            $slug = $baseSlug . '-' . $suffix;
+            ++$suffix;
+        }
+
+        return $slug;
+    };
+
     $form_data = [
         'name'         => $request->getPost('name', $section->name),
         'description'  => $request->getPost('description', $section->description),
@@ -107,6 +146,8 @@ if ($section) {
                     ->where('subcat', $section->id)
                     ->update(['cat' => $form_data['parent']]);
             }
+
+            $form_data['slug'] = $generateSlug($db, (string) $form_data['name'], (int) $form_data['parent'], $section->id);
 
             // Записываем в базу
             $section->update($form_data);

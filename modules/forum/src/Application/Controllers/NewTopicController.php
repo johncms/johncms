@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\NewTopicSectionNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureNewTopicAccessUseCase;
@@ -40,6 +41,7 @@ final readonly class NewTopicController
         private EnsureNewTopicAccessUseCase $accessUseCase,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
+        private ForumSectionPathService $sectionPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -67,7 +69,7 @@ final readonly class NewTopicController
                     'title'         => __('Access forbidden'),
                     'type'          => 'alert-danger',
                     'message'       => __('Access forbidden'),
-                    'back_url'      => '/forum/?type=topics&id=' . $id,
+                    'back_url'      => $this->sectionPathService->getSectionUrlById($id) ?? '/forum/',
                     'back_url_name' => __('Go to Section'),
                 ]
             );
@@ -89,7 +91,7 @@ final readonly class NewTopicController
                     'title'         => __('New Topic'),
                     'type'          => 'alert-danger',
                     'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $section->url . '&amp;start=' . $start,
+                    'back_url'      => $section->url . ($start > 0 ? '?start=' . $start : ''),
                     'back_url_name' => __('Back'),
                 ]
             );

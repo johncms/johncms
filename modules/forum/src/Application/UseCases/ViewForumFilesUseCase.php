@@ -62,7 +62,7 @@ final readonly class ViewForumFilesUseCase
             return [
                 'caption'     => __('Category Files'),
                 'contextName' => $section->name,
-                'contextUrl'  => '/forum/?id=' . $section->id,
+                'contextUrl'  => $section->url,
                 'categoryId'  => $section->id,
                 'sectionId'   => null,
                 'topicId'     => null,
@@ -79,7 +79,7 @@ final readonly class ViewForumFilesUseCase
             return [
                 'caption'     => __('Section files'),
                 'contextName' => $section->name,
-                'contextUrl'  => '/forum/?type=topics&id=' . $section->id,
+                'contextUrl'  => $section->url,
                 'categoryId'  => null,
                 'sectionId'   => $section->id,
                 'topicId'     => null,

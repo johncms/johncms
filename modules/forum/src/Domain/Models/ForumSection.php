@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $parent
  * @property string $name
+ * @property string $slug
  * @property string $description
  * @property string $meta_description
  * @property string $meta_keywords
@@ -65,6 +66,7 @@ class ForumSection extends Model
     protected $fillable = [
         'parent',
         'name',
+        'slug',
         'description',
         'meta_description',
         'meta_keywords',

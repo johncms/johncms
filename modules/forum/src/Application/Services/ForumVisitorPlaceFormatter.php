@@ -13,6 +13,7 @@ final readonly class ForumVisitorPlaceFormatter
 {
     public function __construct(
         private ForumSectionRepositoryInterface $sectionRepository,
+        private ForumSectionPathService $sectionPathService,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumMessageRepositoryInterface $messageRepository,
         private User $currentUser,
@@ -53,6 +54,16 @@ final readonly class ForumVisitorPlaceFormatter
             $place = 'say';
             $placeId = (int) $matches[1];
             $actType = 'reply';
+        } elseif (preg_match('~^/forum/post/(\d+)$~', $path, $matches) === 1) {
+            $place = 'show_post';
+            $placeId = (int) $matches[1];
+        } elseif (str_starts_with($path, '/forum/')) {
+            $sectionPath = trim(substr($path, strlen('/forum/')), '/');
+            $section = $this->sectionPathService->findSectionByPath($sectionPath);
+            if ($section !== null) {
+                $place = $section->section_type === 1 ? 'topics' : 'section';
+                $placeId = $section->id;
+            }
         } elseif (! empty($parsedQuery['act'])) {
             $place = (string) $parsedQuery['act'];
             $placeId = (int) ($parsedQuery['id'] ?? 0);
@@ -86,7 +97,7 @@ final readonly class ForumVisitorPlaceFormatter
             return '<a href="/forum/">' . __('In the forum Main') . '</a>';
         }
 
-        return __('In the Category') . ' &quot;<a href="/forum/?id=' . $section->id . '">' . $this->escapeName($section->name) . '</a>&quot;';
+        return __('In the Category') . ' &quot;<a href="' . $section->url . '">' . $this->escapeName($section->name) . '</a>&quot;';
     }
 
     private function formatSectionPlace(int $sectionId): string
@@ -96,7 +107,7 @@ final readonly class ForumVisitorPlaceFormatter
             return '<a href="/forum/">' . __('In the forum Main') . '</a>';
         }
 
-        return __('In the Section') . ' &quot;<a href="/forum/?type=topics&id=' . $section->id . '">' . $this->escapeName($section->name) . '</a>&quot;';
+        return __('In the Section') . ' &quot;<a href="' . $section->url . '">' . $this->escapeName($section->name) . '</a>&quot;';
     }
 
     private function formatTopicPlace(string $place, int $placeId, string $actType): string

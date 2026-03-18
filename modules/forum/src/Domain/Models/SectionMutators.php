@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
+use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+
 /**
  * Trait SectionMutators
  *
@@ -28,13 +30,7 @@ trait SectionMutators
      */
     public function getUrlAttribute(): string
     {
-        if (empty($this->parent)) {
-            $type = ! empty($this->section_type) ? 'type=topics&' : '';
-        } else {
-            $type = ! empty($this->section_type) ? 'type=topics&' : 'type=section&';
-        }
-
-        return '/forum/?' . $type . 'id=' . $this->id;
+        return di(ForumSectionPathService::class)->getSectionUrl($this);
     }
 
     /**

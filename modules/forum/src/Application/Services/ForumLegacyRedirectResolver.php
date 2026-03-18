@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Services;
 
+use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Users\User;
 
 final class ForumLegacyRedirectResolver
 {
     public function __construct(
         private User $currentUser,
+        private ForumSectionRepositoryInterface $sectionRepository,
+        private ForumSectionPathService $sectionPathService,
     ) {
     }
 
@@ -110,6 +113,28 @@ final class ForumLegacyRedirectResolver
             }
 
             return '/forum/latest-topics/';
+        }
+
+        $legacyType = isset($query['type']) ? trim((string) $query['type']) : '';
+        $legacyId = isset($query['id']) ? abs((int) $query['id']) : 0;
+
+        if ($legacyId > 0 && ($legacyType === '' || $legacyType === 'section' || $legacyType === 'topics')) {
+            $section = $this->sectionRepository->findById($legacyId);
+            if ($section === null) {
+                return '/forum/';
+            }
+
+            $url = $this->sectionPathService->getSectionUrl($section);
+            $page = isset($query['page']) ? abs((int) $query['page']) : 0;
+            if ($legacyType === 'topics' && $page > 1) {
+                $url .= '?' . http_build_query(['page' => $page]);
+            }
+
+            return $url;
+        }
+
+        if ($legacyId > 0 && $legacyType !== '' && $legacyType !== 'topic') {
+            return '/forum/';
         }
 
         return null;

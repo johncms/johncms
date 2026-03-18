@@ -50,6 +50,52 @@ if ($id) {
 }
 
 if (isset($_POST['submit'])) {
+    $reservedSlugs = [
+        'addfile', 'addvote', 'bulk-delete-posts', 'change-topic', 'close', 'delete-post',
+        'delete-post-file', 'delete-topic', 'delvote', 'download-file', 'edit-post', 'editvote',
+        'files', 'filter', 'latest-topics', 'move-topic', 'new-message', 'new-topic', 'pin-topic',
+        'poll-vote', 'poll-voters', 'post', 'reply-message', 'restore-post', 'restore-topic',
+        'search', 'topic-visitors', 'topics-period', 'unread', 'visitors',
+    ];
+
+    $generateSlug = static function (PDO $db, string $name, int $parentId, ?int $excludeId = null) use ($reservedSlugs): string {
+        $baseSlug = \Illuminate\Support\Str::slug($name);
+        if ($baseSlug === '') {
+            $baseSlug = 'section';
+        }
+
+        if (in_array($baseSlug, $reservedSlugs, true)) {
+            $baseSlug .= '-section';
+        }
+
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (true) {
+            $query = 'SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = :parent AND `slug` = :slug';
+            if ($excludeId !== null) {
+                $query .= ' AND `id` != :id';
+            }
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':parent', $parentId, PDO::PARAM_INT);
+            $statement->bindValue(':slug', $slug, PDO::PARAM_STR);
+            if ($excludeId !== null) {
+                $statement->bindValue(':id', $excludeId, PDO::PARAM_INT);
+            }
+            $statement->execute();
+
+            if ((int) $statement->fetchColumn() === 0) {
+                break;
+            }
+
+            $slug = $baseSlug . '-' . $suffix;
+            ++$suffix;
+        }
+
+        return $slug;
+    };
+
     // Принимаем данные
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';
     $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
@@ -87,6 +133,7 @@ if (isset($_POST['submit'])) {
                   INSERT INTO `forum_sections` SET
                   `parent` = ?,
                   `name` = ?,
+                  `slug` = ?,
                   `description` = ?,
                   `access` = ?,
                   `section_type` = ?,
@@ -96,6 +143,7 @@ if (isset($_POST['submit'])) {
             [
                 ($id ? $id : 0),
                 $name,
+                $generateSlug($db, $name, ($id ? $id : 0)),
                 $desc,
                 $allow,
                 $section_type,

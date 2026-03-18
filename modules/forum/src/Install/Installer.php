@@ -112,12 +112,15 @@ class Installer extends \Johncms\Modules\Installer
                 $table->increments('id');
                 $table->integer('parent')->nullable()->index('parent');
                 $table->string('name');
+                $table->string('slug')->nullable();
                 $table->text('description')->nullable();
                 $table->text('meta_description')->nullable();
                 $table->string('meta_keywords')->nullable();
                 $table->integer('sort')->default('100');
                 $table->integer('access')->nullable();
                 $table->integer('section_type')->nullable();
+
+                $table->unique(['parent', 'slug'], 'forum_sections_parent_slug_unique');
             }
         );
 

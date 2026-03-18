@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Domain\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 trait SectionRelations
 {
@@ -22,6 +23,11 @@ trait SectionRelations
     public function subsections(): HasMany
     {
         return $this->hasMany(self::class, 'parent', 'id');
+    }
+
+    public function parentSection(): HasOne
+    {
+        return $this->hasOne(self::class, 'id', 'parent');
     }
 
     /**

@@ -15,6 +15,34 @@ final class ForumSectionRepository implements ForumSectionRepositoryInterface
         return ForumSection::query()->find($sectionId);
     }
 
+    public function findByParentAndSlug(int $parentId, string $slug): ?ForumSection
+    {
+        return ForumSection::query()
+            ->where('slug', $slug)
+            ->where(static function ($query) use ($parentId): void {
+                $query->where('parent', $parentId);
+
+                if ($parentId === 0) {
+                    $query->orWhereNull('parent');
+                }
+            })
+            ->first();
+    }
+
+    public function findWithCategoryFilesCountById(int $sectionId): ?ForumSection
+    {
+        return ForumSection::query()
+            ->withCount('categoryFiles')
+            ->find($sectionId);
+    }
+
+    public function findWithSectionFilesCountById(int $sectionId): ?ForumSection
+    {
+        return ForumSection::query()
+            ->withCount('sectionFiles')
+            ->find($sectionId);
+    }
+
     public function getRootSectionsWithSubsections(): Collection
     {
         return ForumSection::query()
@@ -22,6 +50,15 @@ final class ForumSectionRepository implements ForumSectionRepositoryInterface
             ->with('subsections')
             ->where('parent', 0)
             ->orWhereNull('parent')
+            ->orderBy('sort')
+            ->get();
+    }
+
+    public function getChildrenWithCounts(int $parentId): Collection
+    {
+        return ForumSection::query()
+            ->withCount(['subsections', 'topics'])
+            ->where('parent', $parentId)
             ->orderBy('sort')
             ->get();
     }

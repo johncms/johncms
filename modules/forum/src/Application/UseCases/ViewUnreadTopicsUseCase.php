@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsResultDTO;
+use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -14,6 +15,7 @@ final readonly class ViewUnreadTopicsUseCase
 {
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumSectionPathService $sectionPathService,
         private Tools $tools,
         private User $currentUser,
     ) {
@@ -69,12 +71,12 @@ final readonly class ViewUnreadTopicsUseCase
 
             $row['forum_url'] = '';
             if (! empty($row['frm_id'])) {
-                $row['forum_url'] = '/forum/?id=' . $row['frm_id'];
+                $row['forum_url'] = $this->sectionPathService->getSectionUrlById((int) $row['frm_id']) ?? '';
             }
 
             $row['section_url'] = '';
             if (! empty($row['section_id'])) {
-                $row['section_url'] = '/forum/?type=topics&id=' . $row['section_id'];
+                $row['section_url'] = $this->sectionPathService->getSectionUrlById((int) $row['section_id']) ?? '';
             }
 
             $topics[] = $row;

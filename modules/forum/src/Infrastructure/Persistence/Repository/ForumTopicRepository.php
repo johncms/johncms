@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
@@ -161,6 +162,16 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->get()
             ->map(static fn(object $row): array => (array) $row)
             ->all();
+    }
+
+    public function paginateReadBySectionId(int $sectionId, int $perPage): LengthAwarePaginator
+    {
+        return ForumTopic::query()
+            ->read()
+            ->where('section_id', $sectionId)
+            ->orderByDesc('pinned')
+            ->orderByDesc('last_post_date')
+            ->paginate(max(1, $perPage));
     }
 
     public function markHasPoll(int $topicId): void

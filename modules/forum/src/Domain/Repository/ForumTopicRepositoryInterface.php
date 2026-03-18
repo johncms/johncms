@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Repository;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 
 interface ForumTopicRepositoryInterface
@@ -30,6 +31,8 @@ interface ForumTopicRepositoryInterface
      * @return array<int, array<string, mixed>>
      */
     public function getLatest(int $limit): array;
+
+    public function paginateReadBySectionId(int $sectionId, int $perPage): LengthAwarePaginator;
 
     public function markHasPoll(int $topicId): void;
 

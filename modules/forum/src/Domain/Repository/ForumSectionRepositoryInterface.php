@@ -11,10 +11,21 @@ interface ForumSectionRepositoryInterface
 {
     public function findById(int $sectionId): ?ForumSection;
 
+    public function findByParentAndSlug(int $parentId, string $slug): ?ForumSection;
+
+    public function findWithCategoryFilesCountById(int $sectionId): ?ForumSection;
+
+    public function findWithSectionFilesCountById(int $sectionId): ?ForumSection;
+
     /**
      * @return Collection<int, ForumSection>
      */
     public function getRootSectionsWithSubsections(): Collection;
+
+    /**
+     * @return Collection<int, ForumSection>
+     */
+    public function getChildrenWithCounts(int $parentId): Collection;
 
     /**
      * @return ForumSection[]
