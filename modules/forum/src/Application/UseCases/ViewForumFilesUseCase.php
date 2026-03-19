@@ -16,6 +16,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Simba77\EmbedMedia\Embed;
 
 final readonly class ViewForumFilesUseCase
 {
@@ -25,6 +26,8 @@ final readonly class ViewForumFilesUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
         private Tools $tools,
+        private \HTMLPurifier $purifier,
+        private Embed $embed,
         private User $currentUser,
     ) {
     }
@@ -236,8 +239,9 @@ final readonly class ViewForumFilesUseCase
 
         foreach ($rows as $row) {
             $text = mb_substr((string) ($row['text'] ?? ''), 0, 500);
-            $text = $this->tools->checkout($text, 1, 0);
-            $text = preg_replace('/\[\/?(\w+).*?\]/is', '', $text) ?: '';
+            $text = $this->purifier->purify($text);
+            $text = $this->embed->embedMedia($text);
+            $text = $this->tools->smilies($text, ! empty($row['rights']) ? 1 : 0);
 
             $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->config->kmess);
             $row['post_text'] = $text;
