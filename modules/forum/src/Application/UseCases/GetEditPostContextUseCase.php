@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\EditPostNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Users\User;
@@ -14,6 +15,7 @@ final readonly class GetEditPostContextUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
+        private ForumTopicPathService $topicPathService,
         private User $currentUser,
     ) {
     }
@@ -57,7 +59,7 @@ final readonly class GetEditPostContextUseCase
             effectiveRights: $effectiveRights,
             page: $page,
             posts: $posts,
-            backUrl: '/forum/?type=topic&id=' . $message->topic_id . '&page=' . $page,
+            backUrl: $this->topicPathService->getTopicUrl($message->topic, $page > 1 ? $page : null),
         );
     }
 

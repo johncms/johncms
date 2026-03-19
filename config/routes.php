@@ -37,7 +37,7 @@ use Johncms\Modules\Forum\Application\Controllers\DeletePostFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
 use Johncms\Modules\Forum\Application\Controllers\DownloadFileController;
 use Johncms\Modules\Forum\Application\Controllers\ForumFilesController;
-use Johncms\Modules\Forum\Application\Controllers\ForumSectionController;
+use Johncms\Modules\Forum\Application\Controllers\ForumPathController;
 use Johncms\Modules\Forum\Application\Controllers\ForumSearchController;
 use Johncms\Modules\Forum\Application\Controllers\FilterByAuthorController;
 use Johncms\Modules\Forum\Application\Controllers\LatestTopicsController;
@@ -104,7 +104,7 @@ return static function (RouteCollector $map, User $user) {
         $map->addRoute(['GET', 'POST'], '/forum/restore-topic/{id:\d+}[/]', RestoreTopicController::class);
         $map->addRoute(['GET', 'POST'], '/forum/poll-vote/{id:\d+}[/]', SubmitVoteController::class);
     }
-    $map->addRoute(['GET'], '/forum/{sectionPath:[a-z0-9\\-/]+}[/]', ForumSectionController::class);
+    $map->addRoute(['GET'], '/forum/{sectionPath:[a-z0-9\\-/]+}[/]', ForumPathController::class);
 
     $map->addRoute(['GET', 'POST'], '/guestbook[/]', GuestbookController::class);                // Guestbook, mini-chat
     $map->addRoute(['GET', 'POST'], '/guestbook/ga[/]', \Johncms\Modules\Guestbook\Application\Controllers\SwitchTypeController::class);

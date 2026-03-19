@@ -30,6 +30,7 @@ use Johncms\Users\User;
  * @property int $id
  * @property int $section_id
  * @property string $name
+ * @property string $slug
  * @property string $description
  * @property string $meta_description
  * @property string $meta_keywords
@@ -109,6 +110,7 @@ class ForumTopic extends Model
     protected $fillable = [
         'section_id',
         'name',
+        'slug',
         'description',
         'meta_description',
         'meta_keywords',

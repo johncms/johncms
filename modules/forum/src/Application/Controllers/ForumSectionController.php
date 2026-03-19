@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumSectionNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
@@ -19,7 +18,6 @@ use Johncms\System\View\Render;
 final readonly class ForumSectionController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
         private Tools $tools,
@@ -28,7 +26,6 @@ final readonly class ForumSectionController
         private ForumAccessResponseBuilder $forumAccessResponseBuilder,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(string $sectionPath): string

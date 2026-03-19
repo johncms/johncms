@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
@@ -16,6 +17,7 @@ final readonly class ViewUnreadTopicsUseCase
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumSectionPathService $sectionPathService,
+        private ForumTopicPathService $topicPathService,
         private Tools $tools,
         private User $currentUser,
     ) {
@@ -63,10 +65,10 @@ final readonly class ViewUnreadTopicsUseCase
             }
 
             $row['has_icons'] = ! empty($row['pinned']) || ! empty($row['has_poll']) || ! empty($row['closed']) || ! empty($row['deleted']);
-            $row['url'] = '/forum/?type=topic&amp;id=' . $row['id'];
+            $row['url'] = $this->topicPathService->getTopicUrlById((int) $row['id']) ?? '/forum/';
             $row['last_page_url'] = $row['url'];
             if ($pagesCount > 1) {
-                $row['last_page_url'] = '/forum/?type=topic&amp;id=' . $row['id'] . '&amp;page=' . $pagesCount;
+                $row['last_page_url'] = $this->topicPathService->getTopicUrlById((int) $row['id'], $pagesCount) ?? $row['url'];
             }
 
             $row['forum_url'] = '';

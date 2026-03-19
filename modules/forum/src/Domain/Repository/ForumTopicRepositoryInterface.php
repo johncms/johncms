@@ -11,6 +11,10 @@ interface ForumTopicRepositoryInterface
 {
     public function findById(int $topicId): ?ForumTopic;
 
+    public function findByIdWithSection(int $topicId, bool $withFilesCount): ?ForumTopic;
+
+    public function existsBySectionAndSlug(int $sectionId, string $slug, ?int $excludeTopicId = null): bool;
+
     public function findActiveById(int $topicId): ?ForumTopic;
 
     public function countUnreadForUser(int $userId, bool $includeDeleted): int;
@@ -49,4 +53,6 @@ interface ForumTopicRepositoryInterface
     public function restoreById(int $topicId, string $restoredBy): void;
 
     public function save(ForumTopic $topic): void;
+
+    public function incrementViewCount(int $topicId): void;
 }

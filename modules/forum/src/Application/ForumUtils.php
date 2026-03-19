@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
@@ -145,7 +146,8 @@ class ForumUtils
             ->paginate($user->config->kmess);
 
         $page = $message->lastPage();
+        $topicUrl = di(ForumTopicPathService::class)->getTopicUrlById($topic_id, $page > 1 ? $page : null);
 
-        return '/forum/?type=topic&id=' . $topic_id . ($page > 1 ? '&page=' . $page : '');
+        return $topicUrl ?? '/forum/';
     }
 }

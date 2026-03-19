@@ -15,6 +15,29 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
         return ForumTopic::query()->find($topicId);
     }
 
+    public function findByIdWithSection(int $topicId, bool $withFilesCount): ?ForumTopic
+    {
+        return ForumTopic::query()
+            ->when(
+                $withFilesCount,
+                static fn($query) => $query->withCount('files')
+            )
+            ->with('section')
+            ->find($topicId);
+    }
+
+    public function existsBySectionAndSlug(int $sectionId, string $slug, ?int $excludeTopicId = null): bool
+    {
+        return ForumTopic::query()
+            ->where('section_id', $sectionId)
+            ->where('slug', $slug)
+            ->when(
+                $excludeTopicId !== null,
+                static fn($query) => $query->where('id', '!=', $excludeTopicId)
+            )
+            ->exists();
+    }
+
     public function findActiveById(int $topicId): ?ForumTopic
     {
         return ForumTopic::query()
@@ -226,5 +249,12 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
     public function save(ForumTopic $topic): void
     {
         $topic->save();
+    }
+
+    public function incrementViewCount(int $topicId): void
+    {
+        ForumTopic::query()
+            ->where('id', $topicId)
+            ->increment('view_count');
     }
 }

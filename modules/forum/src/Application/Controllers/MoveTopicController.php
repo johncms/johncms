@@ -112,7 +112,7 @@ final readonly class MoveTopicController
                 );
             }
 
-            redirect('/forum/?type=topic&id=' . $context->topic->id);
+            redirect($context->topic->url);
         }
 
         return $this->render->render(
@@ -124,7 +124,7 @@ final readonly class MoveTopicController
                 'current_section'  => $context->currentSection,
                 'current_sections' => $context->currentSections,
                 'other_categories' => $context->otherCategories,
-                'back_url'         => '/forum/?type=topic&id=' . $id,
+                'back_url'         => $context->topic->url,
                 'form_action'      => '/forum/move-topic/' . $id . '/',
                 'csrf_token'       => $this->csrf->getToken(),
             ]

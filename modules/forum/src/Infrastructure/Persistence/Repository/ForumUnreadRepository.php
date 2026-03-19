@@ -17,6 +17,15 @@ final class ForumUnreadRepository implements ForumUnreadRepositoryInterface
             ->delete();
     }
 
+    public function markTopicAsRead(int $topicId, int $userId, int $time): void
+    {
+        ForumUnread::query()
+            ->updateOrInsert(
+                ['topic_id' => $topicId, 'user_id' => $userId],
+                ['time' => $time]
+            );
+    }
+
     public function markAllAsRead(int $userId): void
     {
         $topics = ForumTopic::query()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 
@@ -74,6 +75,35 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
     public function findFirstByTopicId(int $topicId): ?ForumMessage
     {
         return ForumMessage::query()
+            ->where('topic_id', $topicId)
+            ->orderBy('id')
+            ->first();
+    }
+
+    public function paginateByTopicIdWithUsersAndFiles(
+        int $topicId,
+        bool $upfp,
+        int $perPage,
+        array $filterUserIds = [],
+    ): LengthAwarePaginator {
+        $query = ForumMessage::query()
+            ->users()
+            ->with('files')
+            ->where('topic_id', $topicId);
+
+        if ($filterUserIds !== []) {
+            $query->whereIn('user_id', $filterUserIds);
+        }
+
+        return $query
+            ->orderBy('id', $upfp ? 'DESC' : 'ASC')
+            ->paginate(max(1, $perPage));
+    }
+
+    public function findFirstByTopicIdWithUsers(int $topicId): ?ForumMessage
+    {
+        return ForumMessage::query()
+            ->users()
             ->where('topic_id', $topicId)
             ->orderBy('id')
             ->first();

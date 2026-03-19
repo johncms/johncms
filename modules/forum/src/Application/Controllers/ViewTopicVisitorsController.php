@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumVisitorsTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicVisitorsUseCase;
@@ -33,6 +34,7 @@ final readonly class ViewTopicVisitorsController
         private ForumAccessResponseBuilder $forumAccessResponseBuilder,
         private ViewTopicVisitorsUseCase $viewTopicVisitorsUseCase,
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -99,6 +101,7 @@ final readonly class ViewTopicVisitorsController
                 'guests_list_url' => '/forum/topic-visitors/' . $id . '/?mode=guests',
                 'show_period'     => false,
                 'id'              => $id,
+                'topic_url'       => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
             ]
         );
     }

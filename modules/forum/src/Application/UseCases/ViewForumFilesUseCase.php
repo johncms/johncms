@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumFilesContextNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Query\ForumFileCountQuery;
 use Johncms\Modules\Forum\Domain\Query\ForumFileListingQuery;
 use Johncms\Modules\Forum\Domain\Query\ForumFileScopeQuery;
@@ -22,6 +23,7 @@ final readonly class ViewForumFilesUseCase
         private ForumFileRepositoryInterface $fileRepository,
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumTopicPathService $topicPathService,
         private Tools $tools,
         private User $currentUser,
     ) {
@@ -96,7 +98,7 @@ final readonly class ViewForumFilesUseCase
             return [
                 'caption'     => __('Topic Files'),
                 'contextName' => $topic->name,
-                'contextUrl'  => '/forum/?type=topic&id=' . $topic->id,
+                'contextUrl'  => $topic->url,
                 'categoryId'  => null,
                 'sectionId'   => null,
                 'topicId'     => $topic->id,
@@ -214,7 +216,7 @@ final readonly class ViewForumFilesUseCase
             viewData: [
                 'title'      => $context['caption'],
                 'page_title' => $context['caption'],
-                'back_url'   => '?type=topic&id=' . $context['contextId'],
+                'back_url'   => $context['contextUrl'] ?? '/forum/',
                 'sections'   => $sections,
                 'total'      => $total,
                 'new_url'    => '/forum/files/?new' . $lnk,
@@ -249,7 +251,7 @@ final readonly class ViewForumFilesUseCase
             $row['user_rights_name'] = $userRightsNames[(int) $row['rights']] ?? '';
             $row['user_name'] = $row['name'];
             $row['post_url'] = '/forum/post/' . $row['post'] . '/';
-            $row['topic_url'] = '/forum/?type=topic&id=' . $row['topic'] . '&amp;page=' . $page;
+            $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) $row['topic'], $page > 1 ? $page : null) ?? '/forum/';
 
             $filePath = UPLOAD_PATH . 'forum/attach/' . $row['filename'];
             $fileSize = is_file($filePath) ? @filesize($filePath) : 0;

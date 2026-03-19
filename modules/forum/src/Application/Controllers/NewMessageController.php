@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\NewMessageTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsurePostMessageAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
@@ -38,6 +39,7 @@ final readonly class NewMessageController
         private EnsurePostMessageAccessUseCase $accessUseCase,
         private GetNewMessageContextUseCase $contextUseCase,
         private PostMessageUseCase $postMessageUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -65,7 +67,7 @@ final readonly class NewMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => __('Access forbidden'),
-                    'back_url'      => '/forum/?type=topic&id=' . $id,
+                    'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -86,7 +88,7 @@ final readonly class NewMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => __('You cannot write in a closed topic'),
-                    'back_url'      => '/forum/?type=topic&id=' . $topic->id,
+                    'back_url'      => $topic->url,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -100,7 +102,7 @@ final readonly class NewMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                    'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -121,7 +123,7 @@ final readonly class NewMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Text is too short'),
-                        'back_url'      => '/forum/?type=topic&id=' . $topic->id,
+                        'back_url'      => $topic->url,
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -135,7 +137,7 @@ final readonly class NewMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Message already exists'),
-                        'back_url'      => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                        'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -158,7 +160,7 @@ final readonly class NewMessageController
                 redirect('/forum/addfile/' . $result->messageId . '/');
             }
 
-            redirect('/forum/?type=topic&id=' . $result->topicId . '&page=' . $result->page);
+            redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
         }
 
         $token = $this->regenerateToken();
@@ -180,7 +182,7 @@ final readonly class NewMessageController
                 'msg'               => $msg === '' ? '' : $this->tools->checkout($msg, 0, 0),
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($msg !== '' && $this->request->getPost('submit') === null),
-                'back_url'          => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                'back_url'          => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                 'preview_message'   => $msgPreview,
                 'is_new_message'    => true,
             ]

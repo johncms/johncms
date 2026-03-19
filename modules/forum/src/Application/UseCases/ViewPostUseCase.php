@@ -11,6 +11,7 @@ use Johncms\Modules\Forum\Application\DTO\PostFileDTO;
 use Johncms\Modules\Forum\Application\DTO\PostModerationDTO;
 use Johncms\Modules\Forum\Application\DTO\ViewPostDTO;
 use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Exceptions\MessageNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -22,6 +23,7 @@ final readonly class ViewPostUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
+        private ForumTopicPathService $topicPathService,
         private User $currentUser,
         private Tools $tools,
     ) {
@@ -69,12 +71,8 @@ final readonly class ViewPostUseCase
         $actions = $this->getActions($message->id, $message->user_id, $start);
 
         $page = $this->getMessagePage($message, $forumSettings);
-        $backToTopicUrl = '/forum/?type=topic&id=' . $message->topic_id . '&page=' . $page;
-
-        $canonical = $homeUrl . '/forum/?type=topic&id=' . $message->topic_id;
-        if ($page > 1) {
-            $canonical .= '&page=' . $page;
-        }
+        $backToTopicUrl = $this->topicPathService->getTopicUrl($message->topic, $page);
+        $canonical = $homeUrl . $this->topicPathService->getTopicUrl($message->topic, $page > 1 ? $page : null);
 
         $post = new ViewPostDTO(
             id: $message->id,

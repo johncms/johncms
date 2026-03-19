@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ReplyMessageNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsurePostMessageAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
@@ -38,6 +39,7 @@ final readonly class ReplyMessageController
         private EnsurePostMessageAccessUseCase $accessUseCase,
         private GetReplyMessageContextUseCase $contextUseCase,
         private ReplyMessageUseCase $replyMessageUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -87,7 +89,7 @@ final readonly class ReplyMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => __('You cannot write in a closed topic'),
-                    'back_url'      => '/forum/?type=topic&id=' . $topic->id,
+                    'back_url'      => $topic->url,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -100,7 +102,7 @@ final readonly class ReplyMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => __('You can not reply to your own message'),
-                    'back_url'      => '/forum/?type=topic&id=' . $topic->id,
+                    'back_url'      => $topic->url,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -114,7 +116,7 @@ final readonly class ReplyMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                    'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -147,7 +149,7 @@ final readonly class ReplyMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Text is too short'),
-                        'back_url'      => '/forum/?type=topic&id=' . $topic->id,
+                        'back_url'      => $topic->url,
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -161,7 +163,7 @@ final readonly class ReplyMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Message already exists'),
-                        'back_url'      => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                        'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -185,7 +187,7 @@ final readonly class ReplyMessageController
                 redirect('/forum/addfile/' . $result->messageId . '/');
             }
 
-            redirect('/forum/?type=topic&id=' . $result->topicId . '&page=' . $result->page);
+            redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
         }
 
         $token = $this->regenerateToken();
@@ -218,7 +220,7 @@ final readonly class ReplyMessageController
                 'message'           => $sourceMessage,
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($this->request->getPost('submit') === null && $this->request->getPost('msg') !== null),
-                'back_url'          => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                'back_url'          => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                 'is_new_message'    => false,
                 'preview_message'   => $msgPreview,
             ]

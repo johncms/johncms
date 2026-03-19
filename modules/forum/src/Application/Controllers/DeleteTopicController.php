@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\DeleteTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -31,6 +32,7 @@ final readonly class DeleteTopicController
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
         private ForumSectionPathService $sectionPathService,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -96,7 +98,7 @@ final readonly class DeleteTopicController
                 'title'           => __('Delete Topic'),
                 'page_title'      => __('Delete Topic'),
                 'id'              => $context->topicId,
-                'back_url'        => '/forum/?type=topic&id=' . $context->topicId,
+                'back_url'        => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
                 'can_hard_delete' => $this->user->rights === 9,
                 'delete_url'      => '/forum/delete-topic/' . $context->topicId . '/',
             ]

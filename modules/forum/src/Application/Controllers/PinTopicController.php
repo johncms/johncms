@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\PinTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsurePinTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetPinTopicContextUseCase;
@@ -27,6 +28,7 @@ final readonly class PinTopicController
         private EnsurePinTopicAccessUseCase $accessUseCase,
         private GetPinTopicContextUseCase $contextUseCase,
         private PinTopicUseCase $pinTopicUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -63,6 +65,6 @@ final readonly class PinTopicController
 
         $pin = $this->request->getQuery('pin') !== null;
         $this->pinTopicUseCase->execute($topicId, $pin);
-        redirect('/forum/?type=topic&id=' . $topicId);
+        redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
     }
 }

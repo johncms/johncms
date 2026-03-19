@@ -78,7 +78,7 @@ $this->layout('system::layout/default');
             <?php endforeach; ?>
             <div class="mt-2">
                 <button type="submit" name="submit" value="1" class="btn btn-success btn-sm"><?= __('Vote') ?></button>
-                <a class="btn btn-outline-secondary btn-sm" href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;vote_result<?= $poll_data['clip'] ?>"><?= __('Results') ?></a>
+                <a class="btn btn-outline-secondary btn-sm" href="<?= $topic->url ?>?vote_result=1<?= $poll_data['clip'] ?>"><?= __('Results') ?></a>
             </div>
         </form>
     <?php else: ?>
@@ -107,7 +107,7 @@ $this->layout('system::layout/default');
             </div>
             <?php if ($topic_vote->vote_user !== 1 && $user->isValid()): ?>
                 <div>
-                    <a href="/forum/?type=topic&amp;id=<?= $id ?>&amp;start=<?= $start . $poll_data['clip'] ?>"><?= __('Vote') ?></a>
+                    <a href="<?= $topic->url ?>?clip=1"><?= __('Vote') ?></a>
                 </div>
             <?php endif; ?>
         </div>

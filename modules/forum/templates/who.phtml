@@ -59,6 +59,6 @@ $this->layout(
 
 <?php if (! empty($id)): ?>
     <div>
-        <a href="/forum/?type=topic&id=<?= $id ?>"><?= __('Go to Topic') ?></a>
+        <a href="<?= $topic_url ?? '/forum/' ?>"><?= __('Go to Topic') ?></a>
     </div>
 <?php endif; ?>

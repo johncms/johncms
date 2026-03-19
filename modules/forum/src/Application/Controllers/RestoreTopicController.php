@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\RestoreTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureRestoreTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetRestoreTopicContextUseCase;
@@ -27,6 +28,7 @@ final readonly class RestoreTopicController
         private EnsureRestoreTopicAccessUseCase $accessUseCase,
         private GetRestoreTopicContextUseCase $contextUseCase,
         private RestoreTopicUseCase $restoreTopicUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -62,6 +64,6 @@ final readonly class RestoreTopicController
         }
 
         $this->restoreTopicUseCase->execute($topicId, $this->user->name);
-        redirect('/forum/?type=topic&id=' . $topicId);
+        redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
     }
 }

@@ -105,7 +105,7 @@ final readonly class ChangeTopicController
                     metaDescription: $formData['meta_description'],
                 );
 
-                redirect('/forum/?type=topic&id=' . $topic->id);
+                redirect($topic->url);
             }
 
             $errors = $validator->getErrors();
@@ -119,7 +119,7 @@ final readonly class ChangeTopicController
                 'id'         => $topic->id,
                 'topic'      => $topic,
                 'form_data'  => $formData,
-                'back_url'   => '/forum/?type=topic&id=' . $topic->id,
+                'back_url'   => $topic->url,
                 'errors'     => $errors,
             ]
         );

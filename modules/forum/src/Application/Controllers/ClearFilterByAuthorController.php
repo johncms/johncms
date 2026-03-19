@@ -55,7 +55,7 @@ final readonly class ClearFilterByAuthorController
                     'page_title'    => __('Filter by author'),
                     'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/?type=topic&id=' . $id . '&amp;start=' . $start,
+                    'back_url'      => '/forum/filter/' . $id . '/?start=' . $start,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -79,6 +79,6 @@ final readonly class ClearFilterByAuthorController
 
         $this->clearFilterByAuthorUseCase->execute();
 
-        redirect('/forum/?type=topic&id=' . $topic->id);
+        redirect($topic->url);
     }
 }

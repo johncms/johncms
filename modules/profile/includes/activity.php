@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\Media\MediaEmbed;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
@@ -48,6 +49,7 @@ $data['filters'] = [
 $activity = [];
 $purifier = di(\Johncms\Security\HTMLPurifier::class);
 $media = di(MediaEmbed::class);
+$topicPathService = di(ForumTopicPathService::class);
 
 switch ($mod) {
     case 'comments':
@@ -82,7 +84,7 @@ switch ($mod) {
                 $text = mb_strimwidth($post['text'], 0, 300, '...');
 
                 $row = [
-                    'topic_url'     => '/forum/?type=topic&id=' . $res['id'],
+                    'topic_url'     => $topicPathService->getTopicUrlById((int) $res['id']) ?? '/forum/',
                     'topic_name'    => $res['name'],
                     'topic_id'      => $res['id'],
                     'text'          => $text,
@@ -114,7 +116,7 @@ switch ($mod) {
                 $text = mb_strimwidth($res['text'], 0, 300, '...');
 
                 $row = [
-                    'topic_url'     => '/forum/?type=topic&id=' . $topic['id'],
+                    'topic_url'     => $topicPathService->getTopicUrlById((int) $topic['id']) ?? '/forum/',
                     'topic_name'    => $topic['name'],
                     'topic_id'      => $topic['id'],
                     'text'          => $text,

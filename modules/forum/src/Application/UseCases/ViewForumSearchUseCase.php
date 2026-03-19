@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumSearchInvalidLengthException;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchRepositoryInterface;
 use Johncms\System\Legacy\Tools;
@@ -17,6 +18,7 @@ final readonly class ViewForumSearchUseCase
     public function __construct(
         private ForumSearchRepositoryInterface $searchRepository,
         private ForumSearchHistoryRepositoryInterface $searchHistoryRepository,
+        private ForumTopicPathService $topicPathService,
         private Tools $tools,
         private User $currentUser,
     ) {
@@ -79,7 +81,7 @@ final readonly class ViewForumSearchUseCase
                 $row['post_url'] = '';
                 $row['read_more'] = '';
                 $row['formatted_text'] = '';
-                $row['topic_url'] = '/forum/?type=topic&id=' . (int) ($row['id'] ?? 0);
+                $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) ($row['id'] ?? 0)) ?? '/forum/';
             } else {
                 $messageText = (string) ($row['text'] ?? '');
                 $plainMessageText = $this->extractPlainText($messageText);
@@ -87,7 +89,7 @@ final readonly class ViewForumSearchUseCase
                 $row['name'] = (string) ($row['topic_name'] ?? '');
                 $row['formatted_text'] = $this->buildMessagePreview($plainMessageText, $searchParts);
                 $row['read_more'] = mb_strlen($plainMessageText) > 500 ? '/forum/post/' . (int) ($row['id'] ?? 0) . '/' : '';
-                $row['topic_url'] = '/forum/?type=topic&id=' . (int) ($row['topic_id'] ?? 0);
+                $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) ($row['topic_id'] ?? 0)) ?? '/forum/';
                 $row['post_url'] = '/forum/post/' . (int) ($row['id'] ?? 0) . '/';
             }
 

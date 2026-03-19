@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
@@ -24,6 +25,7 @@ final readonly class DeletePostUseCase
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
         private ForumSectionPathService $sectionPathService,
+        private ForumTopicPathService $topicPathService,
         private Tools $tools,
         private User $currentUser,
     ) {
@@ -77,7 +79,7 @@ final readonly class DeletePostUseCase
                 $redirectUrl = $this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/';
                 $shouldRecountTopic = false;
             } else {
-                $redirectUrl = '/forum/?type=topic&id=' . $topic->id . '&page=' . $page;
+                $redirectUrl = $this->topicPathService->getTopicUrl($topic, $page > 1 ? $page : null);
             }
         } else {
             $this->fileRepository->markDeletedByPostId($message->id);
@@ -88,7 +90,7 @@ final readonly class DeletePostUseCase
                 $shouldRecountTopic = false;
             } else {
                 $this->messageRepository->markDeletedById($message->id, $this->currentUser->name);
-                $redirectUrl = '/forum/?type=topic&id=' . $topic->id . '&page=' . $context->page;
+                $redirectUrl = $this->topicPathService->getTopicUrl($topic, $context->page > 1 ? $context->page : null);
             }
         }
 

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\NewTopicResultDTO;
+use Johncms\Modules\Forum\Application\Services\ForumTopicSlugService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -19,6 +20,7 @@ final readonly class CreateTopicUseCase
 {
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumTopicSlugService $topicSlugService,
         private Tools $tools,
         private Environment $environment,
         private User $currentUser,
@@ -38,6 +40,7 @@ final readonly class CreateTopicUseCase
         $topic->user_id = $this->currentUser->id;
         $topic->user_name = $this->currentUser->name;
         $topic->name = $topicName;
+        $topic->slug = $this->topicSlugService->generateUniqueSlug($topicName, $section->id);
         $topic->meta_keywords = $metaKeywords;
         $topic->meta_description = $metaDescription;
         $topic->last_post_date = time();

@@ -13,6 +13,7 @@ final class ForumLegacyRedirectResolver
         private User $currentUser,
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumSectionPathService $sectionPathService,
+        private ForumTopicPathService $topicPathService,
     ) {
     }
 
@@ -128,6 +129,33 @@ final class ForumLegacyRedirectResolver
             $page = isset($query['page']) ? abs((int) $query['page']) : 0;
             if ($legacyType === 'topics' && $page > 1) {
                 $url .= '?' . http_build_query(['page' => $page]);
+            }
+
+            return $url;
+        }
+
+        if ($legacyType === 'topic' && $legacyId > 0) {
+            $page = isset($query['page']) ? abs((int) $query['page']) : 0;
+            $start = isset($query['start']) ? abs((int) $query['start']) : 0;
+            if ($page <= 1 && $start > 0) {
+                $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+            }
+
+            $url = $this->topicPathService->getTopicUrlById($legacyId, $page > 1 ? $page : null);
+            if ($url === null) {
+                return '/forum/';
+            }
+
+            $params = [];
+            if (array_key_exists('clip', $query)) {
+                $params['clip'] = 1;
+            }
+            if (array_key_exists('vote_result', $query)) {
+                $params['vote_result'] = 1;
+            }
+
+            if ($params !== []) {
+                $url .= '?' . http_build_query($params);
             }
 
             return $url;

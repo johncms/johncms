@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadExpiredException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\AttachFileToPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureAttachFileAccessUseCase;
@@ -29,6 +30,7 @@ final readonly class AddFileController
         private EnsureAttachFileAccessUseCase $accessUseCase,
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -81,7 +83,7 @@ final readonly class AddFileController
                     'title'         => __('Add file'),
                     'type'          => 'alert-danger',
                     'message'       => __('The time allotted for the file upload has expired'),
-                    'back_url'      => '/forum/?type=topic&id=' . $exception->getTopicId() . '&amp;page=' . $exception->getPage(),
+                    'back_url'      => $this->getTopicUrl($exception->getTopicId(), $exception->getPage()),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -137,9 +139,14 @@ final readonly class AddFileController
                 'id'            => $id,
                 'file_attached' => $fileAttached,
                 'topic_id'      => $topicId,
-                'back_url'      => '/forum/?type=topic&id=' . $topicId . '&amp;page=' . $page,
+                'back_url'      => $this->getTopicUrl($topicId, $page),
                 'config'        => $config,
             ]
         );
+    }
+
+    private function getTopicUrl(int $topicId, int $page): string
+    {
+        return $this->topicPathService->getTopicUrlById($topicId, $page > 1 ? $page : null) ?? '/forum/';
     }
 }

@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\EditVoteWrongDataException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteAnswerUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditVoteAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -29,6 +30,7 @@ final readonly class EditVoteController
         private GetEditVoteContextUseCase $contextUseCase,
         private UpdateVoteUseCase $updateVoteUseCase,
         private DeleteVoteAnswerUseCase $deleteVoteAnswerUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -120,7 +122,7 @@ final readonly class EditVoteController
                     'page_title'    => __('Edit Poll'),
                     'type'          => 'alert-success',
                     'message'       => __('Poll changed'),
-                    'back_url'      => '/forum/?type=topic&amp;id=' . $context->topicId,
+                    'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
                     'back_url_name' => __('Continue'),
                 ]
             );
@@ -173,7 +175,7 @@ final readonly class EditVoteController
                 'title'      => __('Edit Poll'),
                 'page_title' => __('Edit Poll'),
                 'id'         => $context->topicId,
-                'back_url'   => '/forum/?type=topic&id=' . $context->topicId,
+                'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
                 'saved_vote' => $context->savedVote,
                 'count_vote' => $countVote,
                 'poll_name'  => htmlentities($context->pollName, ENT_QUOTES, 'UTF-8'),

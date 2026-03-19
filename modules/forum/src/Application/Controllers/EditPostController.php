@@ -106,7 +106,7 @@ final readonly class EditPostController
             }
 
             $this->editPostUseCase->execute($context, $msg);
-            redirect('/forum/?type=topic&id=' . $context->topic->id . '&page=' . $context->page);
+            redirect($context->topic->url . ($context->page > 1 ? '?page=' . $context->page : ''));
         }
 
         $message = $this->request->getPost('msg') === null

@@ -6,12 +6,14 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\BulkDeletePostsContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\BulkDeleteTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
 final readonly class GetBulkDeletePostsContextUseCase
 {
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumTopicPathService $topicPathService,
     ) {
     }
 
@@ -24,7 +26,7 @@ final readonly class GetBulkDeletePostsContextUseCase
 
         return new BulkDeletePostsContextDTO(
             topicId: $topic->id,
-            backUrl: '/forum/?type=topic&id=' . $topic->id,
+            backUrl: $this->topicPathService->getTopicUrl($topic),
         );
     }
 }

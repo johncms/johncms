@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\CloseTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CloseTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureCloseTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -27,6 +28,7 @@ final readonly class CloseTopicController
         private EnsureCloseTopicAccessUseCase $accessUseCase,
         private GetCloseTopicContextUseCase $contextUseCase,
         private CloseTopicUseCase $closeTopicUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -63,6 +65,6 @@ final readonly class CloseTopicController
 
         $closed = $this->request->getQuery('closed') !== null;
         $this->closeTopicUseCase->execute($context->topicId, $closed);
-        redirect('/forum/?type=topic&id=' . $context->topicId);
+        redirect($this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/');
     }
 }

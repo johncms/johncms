@@ -112,7 +112,7 @@ final readonly class CuratorsController
                 'page_title'    => __('Curators'),
                 'id'            => $topic->id,
                 'start'         => $start,
-                'back_url'      => '/forum/?type=topic&id=' . $topic->id . '&amp;start=' . $start,
+                'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
                 'total'         => $total,
                 'curators_list' => $curatorsList,
                 'topic'         => $topic,

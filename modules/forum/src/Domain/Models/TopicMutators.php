@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
@@ -35,7 +36,7 @@ trait TopicMutators
      */
     public function getUrlAttribute(): string
     {
-        return '/forum/?type=topic&id=' . $this->id;
+        return di(ForumTopicPathService::class)->getTopicUrl($this);
     }
 
     /**
@@ -85,13 +86,13 @@ trait TopicMutators
     public function getLastPageUrlAttribute(): string
     {
         if ($this->current_user->rights >= 7) {
-            $page = ceil($this->mod_post_count / $this->current_user->set_user->kmess);
+            $page = (int) ceil($this->mod_post_count / $this->current_user->set_user->kmess);
         } else {
-            $page = ceil($this->post_count / $this->current_user->set_user->kmess);
+            $page = (int) ceil($this->post_count / $this->current_user->set_user->kmess);
         }
 
         if ($page > 1) {
-            return '/forum/?type=topic&id=' . $this->id . '&page=' . $page;
+            return di(ForumTopicPathService::class)->getTopicUrl($this, $page);
         }
 
         return '';

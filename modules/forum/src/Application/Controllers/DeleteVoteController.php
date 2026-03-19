@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\DeleteVoteWrongDataException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteVoteAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -25,6 +26,7 @@ final readonly class DeleteVoteController
         private ForumAccessResponseBuilder $forumAccessResponseBuilder,
         private EnsureDeleteVoteAccessUseCase $accessUseCase,
         private DeleteVoteUseCase $deleteVoteUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -75,7 +77,7 @@ final readonly class DeleteVoteController
                     'title'         => __('Delete Poll'),
                     'type'          => 'alert-success',
                     'message'       => __('Poll deleted'),
-                    'back_url'      => '/forum/?type=topic&id=' . $id,
+                    'back_url'      => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -87,7 +89,7 @@ final readonly class DeleteVoteController
                 'title'      => __('Delete Poll'),
                 'page_title' => __('Delete Poll'),
                 'id'         => $id,
-                'back_url'   => '/forum/?type=topic&id=' . $id,
+                'back_url'   => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
                 'delete_url' => '/forum/delvote/' . $id . '/?yes',
             ]
         );

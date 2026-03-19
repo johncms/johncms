@@ -94,6 +94,6 @@ final readonly class SetFilterByAuthorController
 
         $this->setFilterByAuthorUseCase->execute($topic->id, $users);
 
-        redirect('/forum/?type=topic&id=' . $topic->id);
+        redirect($topic->url);
     }
 }

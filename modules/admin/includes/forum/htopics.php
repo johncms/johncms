@@ -22,6 +22,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $title = __('Hidden topics');
 $nav_chain->add($title);
+$topicPathService = di(\Johncms\Modules\Forum\Application\Services\ForumTopicPathService::class);
 
 // Управление скрытыми темами форума
 $sort = '';
@@ -101,7 +102,7 @@ if (isset($_POST['deltopic'])) {
             $cat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $subcat['parent'] . "'")->fetch();
 
             $res['display_date'] = $tools->displayDate($res['mod_last_post_date']);
-            $res['topic_url'] = '/forum/?type=topic&id=' . $res['fid'];
+            $res['topic_url'] = $topicPathService->getTopicUrlById((int) $res['fid']) ?? '/forum/';
             $res['buttons'] = [
                 [
                     'url'  => '?mod=htopics&amp;rsort=' . $res['section_id'],

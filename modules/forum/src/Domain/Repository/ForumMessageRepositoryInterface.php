@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Repository;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 
 interface ForumMessageRepositoryInterface
@@ -21,6 +22,18 @@ interface ForumMessageRepositoryInterface
     public function findLastByTopicId(int $topicId, bool $includeDeleted): ?ForumMessage;
 
     public function findFirstByTopicId(int $topicId): ?ForumMessage;
+
+    /**
+     * @param int[] $filterUserIds
+     */
+    public function paginateByTopicIdWithUsersAndFiles(
+        int $topicId,
+        bool $upfp,
+        int $perPage,
+        array $filterUserIds = [],
+    ): LengthAwarePaginator;
+
+    public function findFirstByTopicIdWithUsers(int $topicId): ?ForumMessage;
 
     public function countByTopicId(int $topicId, bool $includeDeleted): int;
 

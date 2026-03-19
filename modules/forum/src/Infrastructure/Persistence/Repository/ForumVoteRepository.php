@@ -31,6 +31,16 @@ final class ForumVoteRepository implements ForumVoteRepositoryInterface
             ->first();
     }
 
+    public function findPollByTopicWithAnswers(int $topicId): ?ForumVote
+    {
+        return ForumVote::query()
+            ->voteUser()
+            ->with('answers')
+            ->where('type', 1)
+            ->where('topic', $topicId)
+            ->first();
+    }
+
     public function countUsersByTopic(int $topicId): int
     {
         return ForumVoteUser::query()

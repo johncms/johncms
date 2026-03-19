@@ -22,6 +22,7 @@ defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $title = __('Hidden posts');
 $nav_chain->add($title);
+$topicPathService = di(\Johncms\Modules\Forum\Application\Services\ForumTopicPathService::class);
 
 // Управление скрытыми постави форума
 $sort = '';
@@ -106,7 +107,7 @@ if (isset($_POST['delpost'])) {
 
             $theme = $db->query("SELECT `id`, `name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
             $res['topic_name'] = $theme['name'];
-            $res['topic_url'] = '/forum/?type=topic&id=' . $theme['id'] . '&amp;page=' . $page;
+            $res['topic_url'] = $topicPathService->getTopicUrlById((int) $theme['id'], $page > 1 ? (int) $page : null) ?? '/forum/';
             $res['buttons'] = [
                 [
                     'url'  => '?mod=hposts&amp;tsort=' . $theme['id'],

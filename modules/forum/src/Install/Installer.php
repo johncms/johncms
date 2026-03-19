@@ -130,6 +130,7 @@ class Installer extends \Johncms\Modules\Installer
                 $table->increments('id');
                 $table->integer('section_id')->unsigned()->nullable();
                 $table->string('name');
+                $table->string('slug')->nullable();
                 $table->text('description')->nullable();
                 $table->text('meta_description')->nullable();
                 $table->string('meta_keywords')->nullable();
@@ -154,6 +155,8 @@ class Installer extends \Johncms\Modules\Installer
                 $table->mediumText('curators')->nullable();
                 $table->boolean('pinned')->nullable();
                 $table->boolean('has_poll')->nullable();
+
+                $table->unique(['section_id', 'slug'], 'forum_topic_section_slug_unique');
             }
         );
     }

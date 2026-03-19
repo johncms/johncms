@@ -14,6 +14,8 @@ interface ForumVoteRepositoryInterface
 
     public function findPollByTopic(int $topicId): ?ForumVote;
 
+    public function findPollByTopicWithAnswers(int $topicId): ?ForumVote;
+
     public function countUsersByTopic(int $topicId): int;
 
     /**

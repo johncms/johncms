@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\PollVotersWrongDataException;
 use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsurePollVotersAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewPollVotersUseCase;
@@ -32,6 +33,7 @@ final readonly class PollVotersController
         private ForumAccessResponseBuilder $forumAccessResponseBuilder,
         private EnsurePollVotersAccessUseCase $accessUseCase,
         private ViewPollVotersUseCase $viewPollVotersUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -103,6 +105,7 @@ final readonly class PollVotersController
                 ),
                 'total'         => $result->total,
                 'id'            => $id,
+                'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
             ]
         );
     }

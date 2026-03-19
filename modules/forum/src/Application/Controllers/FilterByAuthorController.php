@@ -55,7 +55,7 @@ final readonly class FilterByAuthorController
                     'page_title'    => __('Filter by author'),
                     'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/?type=topic&id=' . $id . '&amp;start=' . $start,
+                    'back_url'      => '/forum/filter/' . $id . '/?start=' . $start,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -72,7 +72,7 @@ final readonly class FilterByAuthorController
         }
 
         $this->navChain->add(__('Forum'), '/forum/');
-        $this->navChain->add(htmlspecialchars_decode($context->topic->name), '/forum/?type=topic&id=' . $context->topic->id);
+        $this->navChain->add(htmlspecialchars_decode($context->topic->name), $context->topic->url);
         $this->navChain->add(__('Filter by author'));
 
         return $this->render->render(
@@ -82,7 +82,7 @@ final readonly class FilterByAuthorController
                 'page_title'          => __('Filter by author'),
                 'id'                  => $context->topic->id,
                 'start'               => $start,
-                'back_url'            => '/forum/?type=topic&id=' . $context->topic->id . '&amp;start=' . $start,
+                'back_url'            => $context->topic->url . ($start > 0 ? '?start=' . $start : ''),
                 'total'               => count($context->authors),
                 'list'                => $context->authors,
                 'topic'               => $context->topic,

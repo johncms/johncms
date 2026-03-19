@@ -14,6 +14,7 @@ final readonly class ForumVisitorPlaceFormatter
     public function __construct(
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumSectionPathService $sectionPathService,
+        private ForumTopicPathService $topicPathService,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumMessageRepositoryInterface $messageRepository,
         private User $currentUser,
@@ -58,11 +59,17 @@ final readonly class ForumVisitorPlaceFormatter
             $place = 'show_post';
             $placeId = (int) $matches[1];
         } elseif (str_starts_with($path, '/forum/')) {
-            $sectionPath = trim(substr($path, strlen('/forum/')), '/');
-            $section = $this->sectionPathService->findSectionByPath($sectionPath);
-            if ($section !== null) {
-                $place = $section->section_type === 1 ? 'topics' : 'section';
-                $placeId = $section->id;
+            $topicPathData = $this->topicPathService->parseTopicPath($path);
+            if ($topicPathData !== null) {
+                $place = 'topic';
+                $placeId = $topicPathData['topicId'];
+            } else {
+                $sectionPath = trim(substr($path, strlen('/forum/')), '/');
+                $section = $this->sectionPathService->findSectionByPath($sectionPath);
+                if ($section !== null) {
+                    $place = $section->section_type === 1 ? 'topics' : 'section';
+                    $placeId = $section->id;
+                }
             }
         } elseif (! empty($parsedQuery['act'])) {
             $place = (string) $parsedQuery['act'];
@@ -129,7 +136,7 @@ final readonly class ForumVisitorPlaceFormatter
             return '<a href="/forum/">' . __('In the forum Main') . '</a>';
         }
 
-        $link = '<a href="/forum/?type=topic&id=' . $topic->id . '">' . $this->escapeName($topic->name) . '</a>';
+        $link = '<a href="' . $this->topicPathService->getTopicUrl($topic) . '">' . $this->escapeName($topic->name) . '</a>';
 
         if ($actType === 'reply') {
             return __('Answers in the Topic') . ' &quot;' . $link . '&quot;';
@@ -149,7 +156,7 @@ final readonly class ForumVisitorPlaceFormatter
             return '<a href="/forum/">' . __('In the forum Main') . '</a>';
         }
 
-        return __('In the Topic') . ' &quot;<a href="/forum/?type=topic&id=' . $message->topic->id . '">' . $this->escapeName($message->topic->name) . '</a>&quot;';
+        return __('In the Topic') . ' &quot;<a href="' . $this->topicPathService->getTopicUrl($message->topic) . '">' . $this->escapeName($message->topic->name) . '</a>&quot;';
     }
 
     private function escapeName(?string $name): string
