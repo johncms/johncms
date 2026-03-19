@@ -37,6 +37,7 @@ use Johncms\Modules\Forum\Application\Controllers\DeletePostFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
 use Johncms\Modules\Forum\Application\Controllers\DownloadFileController;
 use Johncms\Modules\Forum\Application\Controllers\ForumFilesController;
+use Johncms\Modules\Forum\Application\Controllers\ForumIndexController;
 use Johncms\Modules\Forum\Application\Controllers\ForumPathController;
 use Johncms\Modules\Forum\Application\Controllers\ForumSearchController;
 use Johncms\Modules\Forum\Application\Controllers\FilterByAuthorController;
@@ -66,7 +67,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/album[/[{action}]]', 'modules/album/index.php');                                         // Photo Album
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php');                          // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                                           // Downloads
-    $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');                                                   // Forum
+    $map->addRoute(['GET', 'POST'], '/forum[/]', ForumIndexController::class);                                                  // Forum
     $map->addRoute(['GET'], '/forum/download-file/{id:\d+}[/]', DownloadFileController::class);
     $map->addRoute(['GET'], '/forum/files[/]', ForumFilesController::class);
     $map->addRoute(['GET'], '/forum/search[/]', ForumSearchController::class);
