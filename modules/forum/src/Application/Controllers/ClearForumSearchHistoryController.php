@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ClearForumSearchHistoryUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
@@ -21,7 +21,7 @@ final readonly class ClearForumSearchHistoryController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ClearForumSearchHistoryUseCase $clearForumSearchHistoryUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -33,10 +33,7 @@ final readonly class ClearForumSearchHistoryController
             $this->forumAccessUseCase->execute();
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         if ($this->request->getPost('submit') !== null) {

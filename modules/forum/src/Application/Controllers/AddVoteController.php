@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\AddVoteWrongDataException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureAddVoteAccessUseCase;
@@ -24,7 +23,7 @@ final readonly class AddVoteController
         private Render $render,
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureAddVoteAccessUseCase $accessUseCase,
         private GetAddVoteContextUseCase $contextUseCase,
         private CreateVoteUseCase $createVoteUseCase,
@@ -38,34 +37,28 @@ final readonly class AddVoteController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute($id);
             $context = $this->contextUseCase->execute($id);
-        } catch (AccessDeniedException $exception) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (AddVoteWrongDataException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumValidationException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Add Poll'),
                     'page_title'    => __('Add Poll'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),

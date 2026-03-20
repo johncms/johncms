@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\SubmitVoteContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\SubmitVoteWrongDataException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 
@@ -21,16 +21,16 @@ final readonly class GetSubmitVoteContextUseCase
     {
         $topic = $this->topicRepository->findActiveById($topicId);
         if ($topic === null) {
-            throw new SubmitVoteWrongDataException('Topic not found.');
+            throw new ForumValidationException('Topic not found.');
         }
 
         $answer = $this->voteRepository->findAnswerById($voteId);
         if ($answer === null || $answer->topic !== $topicId) {
-            throw new SubmitVoteWrongDataException('Vote answer not found.');
+            throw new ForumValidationException('Vote answer not found.');
         }
 
         if ($this->voteRepository->hasUserVoted($topicId, $userId)) {
-            throw new SubmitVoteWrongDataException('User already voted.');
+            throw new ForumValidationException('User already voted.');
         }
 
         return new SubmitVoteContextDTO($topicId, $voteId);

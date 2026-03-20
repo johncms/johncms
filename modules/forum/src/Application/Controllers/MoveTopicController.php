@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\MoveTopicNotFoundException;
-use Johncms\Modules\Forum\Application\Exceptions\MoveTopicSectionNotFoundException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureMoveTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetMoveTopicContextUseCase;
@@ -27,7 +25,7 @@ final readonly class MoveTopicController
         private Request $request,
         private Csrf $csrf,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureMoveTopicAccessUseCase $accessUseCase,
         private GetMoveTopicContextUseCase $contextUseCase,
         private MoveTopicUseCase $moveTopicUseCase,
@@ -40,10 +38,7 @@ final readonly class MoveTopicController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
@@ -51,25 +46,11 @@ final readonly class MoveTopicController
             $other = $this->request->getQuery('other', null, FILTER_VALIDATE_INT);
             $otherCategoryId = $other !== null && $other > 0 ? $other : null;
             $context = $this->contextUseCase->execute($id, $otherCategoryId);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
-                    'back_url'      => '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        } catch (MoveTopicNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Wrong data'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
@@ -99,9 +80,10 @@ final readonly class MoveTopicController
 
             try {
                 $this->moveTopicUseCase->execute($context->topic, $targetSectionId);
-            } catch (MoveTopicSectionNotFoundException) {
-                return $this->render->render(
-                    'system::pages/result',
+            } catch (ForumNotFoundException $exception) {
+                return $this->forumErrorRenderer->render(
+                    $this->render,
+                    $exception,
                     [
                         'title'         => __('Wrong data'),
                         'type'          => 'alert-danger',

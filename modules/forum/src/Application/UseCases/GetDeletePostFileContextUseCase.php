@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Exceptions\EditPostFileNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 
@@ -19,7 +19,7 @@ final readonly class GetDeletePostFileContextUseCase
     {
         $file = $this->fileRepository->findByIdAndPostId($fileId, $messageId);
         if ($file === null) {
-            throw new EditPostFileNotFoundException('File not found.');
+            throw new ForumNotFoundException('File not found.');
         }
 
         return $file;

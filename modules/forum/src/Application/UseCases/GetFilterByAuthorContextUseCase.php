@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Exceptions\FilterByAuthorWrongDataException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
@@ -19,7 +19,7 @@ final readonly class GetFilterByAuthorContextUseCase
     {
         $topic = $this->topicRepository->findById($topicId);
         if ($topic === null) {
-            throw new FilterByAuthorWrongDataException('Topic not found.');
+            throw new ForumValidationException('Topic not found.');
         }
 
         return $topic;

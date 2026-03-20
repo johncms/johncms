@@ -7,8 +7,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumVisitorsTopicNotFoundException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
@@ -31,7 +31,7 @@ final readonly class ViewTopicVisitorsController
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewTopicVisitorsUseCase $viewTopicVisitorsUseCase,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
@@ -45,9 +45,16 @@ final readonly class ViewTopicVisitorsController
             $this->forumAccessUseCase->execute();
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
+                [
+                    'title'         => __('Who in Topic'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Wrong data'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Forum'),
+                ]
             );
         }
 
@@ -61,11 +68,10 @@ final readonly class ViewTopicVisitorsController
                     guests: $showGuests,
                 )
             );
-        } catch (ForumVisitorsTopicNotFoundException) {
-            http_response_code(404);
-
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Who in Topic'),
                     'type'          => 'alert-danger',

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumSectionNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
 use Johncms\NavChain;
@@ -23,7 +23,7 @@ final readonly class ForumSectionController
         private Tools $tools,
         private NavChain $navChain,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
     ) {
     }
@@ -35,17 +35,17 @@ final readonly class ForumSectionController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
             $result = $this->viewForumSectionUseCase->execute($sectionPath, $page);
-        } catch (ForumSectionNotFoundException) {
+        } catch (ForumNotFoundException $exception) {
+            $errorCode = $exception->getErrorCode();
+            http_response_code($errorCode->httpStatus());
+            $this->render->addData(["error_code" => $errorCode->value]);
             pageNotFound();
         }
 

@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\PollVotersResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\PollVotersWrongDataException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Users\User;
 
@@ -22,7 +22,7 @@ final readonly class ViewPollVotersUseCase
     {
         $poll = $this->voteRepository->findPollByTopic($query->topicId);
         if ($poll === null) {
-            throw new PollVotersWrongDataException('Poll not found.');
+            throw new ForumValidationException('Poll not found.');
         }
 
         $total = $this->voteRepository->countUsersByTopic($query->topicId);

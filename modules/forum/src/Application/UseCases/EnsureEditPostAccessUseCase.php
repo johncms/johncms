@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\EditPostAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Users\User;
 
@@ -26,7 +26,7 @@ final readonly class EnsureEditPostAccessUseCase
                 $author = User::query()->find($message->user_id);
 
                 if ($author !== null && $author->rights > $context->effectiveRights) {
-                    throw new EditPostAccessDeniedException(__('You cannot edit posts of higher administration'));
+                    throw new ForumAccessDeniedException(__('You cannot edit posts of higher administration'));
                 }
             }
 
@@ -34,7 +34,7 @@ final readonly class EnsureEditPostAccessUseCase
         }
 
         if ($message->user_id !== $this->currentUser->id) {
-            throw new EditPostAccessDeniedException(__('You are trying to change another\'s post'));
+            throw new ForumAccessDeniedException(__('You are trying to change another\'s post'));
         }
 
         $check = true;
@@ -51,11 +51,11 @@ final readonly class EnsureEditPostAccessUseCase
 
         $lastMessage = $this->messageRepository->findLastByTopicId($message->topic_id, false);
         if ($lastMessage === null || $lastMessage->user_id !== $this->currentUser->id) {
-            throw new EditPostAccessDeniedException(__('Your message not already latest, you cannot change it'));
+            throw new ForumAccessDeniedException(__('Your message not already latest, you cannot change it'));
         }
 
         if ($message->date < time() - 300) {
-            throw new EditPostAccessDeniedException(__('You cannot edit your posts after 5 minutes'));
+            throw new ForumAccessDeniedException(__('You cannot edit your posts after 5 minutes'));
         }
     }
 }

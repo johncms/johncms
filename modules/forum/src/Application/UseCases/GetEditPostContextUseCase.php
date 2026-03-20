@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\EditPostNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -24,12 +24,12 @@ final readonly class GetEditPostContextUseCase
     {
         $message = $this->messageRepository->findById($messageId);
         if ($message === null) {
-            throw new EditPostNotFoundException('Message does not exist or has been deleted.');
+            throw new ForumNotFoundException('Message does not exist or has been deleted.');
         }
 
         $message->loadMissing(['topic.section']);
         if ($message->topic === null || $message->topic->section === null) {
-            throw new EditPostNotFoundException('Message topic not found.');
+            throw new ForumNotFoundException('Message topic not found.');
         }
 
         /** @var ForumSection $section */

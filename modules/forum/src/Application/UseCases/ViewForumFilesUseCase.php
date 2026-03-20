@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumFilesContextNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Query\ForumFileCountQuery;
 use Johncms\Modules\Forum\Domain\Query\ForumFileListingQuery;
@@ -61,7 +61,7 @@ final readonly class ViewForumFilesUseCase
         if ($query->contextCategoryId > 0) {
             $section = $this->sectionRepository->findById($query->contextCategoryId);
             if ($section === null) {
-                throw new ForumFilesContextNotFoundException('Category context not found.');
+                throw new ForumNotFoundException('Category context not found.');
             }
 
             return [
@@ -78,7 +78,7 @@ final readonly class ViewForumFilesUseCase
         if ($query->contextSectionId > 0) {
             $section = $this->sectionRepository->findById($query->contextSectionId);
             if ($section === null) {
-                throw new ForumFilesContextNotFoundException('Section context not found.');
+                throw new ForumNotFoundException('Section context not found.');
             }
 
             return [
@@ -95,7 +95,7 @@ final readonly class ViewForumFilesUseCase
         if ($query->contextTopicId > 0) {
             $topic = $this->topicRepository->findById($query->contextTopicId);
             if ($topic === null) {
-                throw new ForumFilesContextNotFoundException('Topic context not found.');
+                throw new ForumNotFoundException('Topic context not found.');
             }
 
             return [

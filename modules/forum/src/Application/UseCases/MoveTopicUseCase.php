@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Exceptions\MoveTopicSectionNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
@@ -21,7 +21,7 @@ final readonly class MoveTopicUseCase
     {
         $targetSection = $this->sectionRepository->findById($targetSectionId);
         if ($targetSection === null || $targetSection->section_type !== 1) {
-            throw new MoveTopicSectionNotFoundException('Section not found.');
+            throw new ForumNotFoundException('Section not found.');
         }
 
         $topic->section_id = $targetSection->id;

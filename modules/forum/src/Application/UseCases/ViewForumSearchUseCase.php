@@ -6,7 +6,8 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\ForumSearchQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumSearchInvalidLengthException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumErrorCode;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchRepositoryInterface;
@@ -30,7 +31,7 @@ final readonly class ViewForumSearchUseCase
         $search = trim($search);
 
         if ($search !== '' && (mb_strlen($search) < 4 || mb_strlen($search) > 64)) {
-            throw new ForumSearchInvalidLengthException('Invalid search query length.');
+            throw new ForumValidationException(ForumErrorCode::FORUM_SEARCH_INVALID_LENGTH, 'Invalid search query length.');
         }
 
         $includeDeleted = $this->currentUser->rights >= 7;

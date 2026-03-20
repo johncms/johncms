@@ -7,7 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewUnreadTopicsUseCase;
@@ -30,7 +30,7 @@ final readonly class UnreadTopicsController
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewUnreadTopicsUseCase $viewUnreadTopicsUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -42,10 +42,7 @@ final readonly class UnreadTopicsController
             $this->forumAccessUseCase->execute();
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $result = $this->viewUnreadTopicsUseCase->execute(

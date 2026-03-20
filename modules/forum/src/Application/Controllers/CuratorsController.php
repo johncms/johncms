@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\CuratorsTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureCuratorsAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetCuratorsContextUseCase;
@@ -23,7 +22,7 @@ final readonly class CuratorsController
         private Render $render,
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureCuratorsAccessUseCase $accessUseCase,
         private GetCuratorsContextUseCase $contextUseCase,
         private UpdateCuratorsUseCase $updateCuratorsUseCase,
@@ -36,34 +35,28 @@ final readonly class CuratorsController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute();
             $context = $this->contextUseCase->execute($id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (CuratorsTopicNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Curators'),
                     'page_title'    => __('Curators'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Topic has been deleted or does not exists'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),

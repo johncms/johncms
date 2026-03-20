@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\BulkDeletePostsContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\BulkDeleteTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
@@ -21,7 +21,7 @@ final readonly class GetBulkDeletePostsContextUseCase
     {
         $topic = $this->topicRepository->findById($topicId);
         if ($topic === null) {
-            throw new BulkDeleteTopicNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         return new BulkDeletePostsContextDTO(

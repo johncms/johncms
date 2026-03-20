@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAuthRequiredException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumClosedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumErrorCode;
 use Johncms\Users\User;
 
 final readonly class EnsureForumAccessUseCase
@@ -24,11 +23,11 @@ final readonly class EnsureForumAccessUseCase
         $config = config('johncms');
 
         if (! $config['mod_forum'] && $this->currentUser->rights < 7) {
-            throw new ForumClosedException('Forum is closed.');
+            throw new ForumAccessDeniedException(ForumErrorCode::FORUM_CLOSED, 'Forum is closed.');
         }
 
         if ($config['mod_forum'] === 1 && ! $this->currentUser->isValid()) {
-            throw new ForumAuthRequiredException('Forum is available for registered users only.');
+            throw new ForumAccessDeniedException(ForumErrorCode::FORUM_AUTH_REQUIRED, 'Forum is available for registered users only.');
         }
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\ForumSectionPageResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumSectionNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
@@ -24,14 +24,14 @@ final readonly class ViewForumSectionUseCase
     }
 
     /**
-     * @throws ForumSectionNotFoundException
+     * @throws ForumNotFoundException
      */
     public function execute(string $sectionPath, int $page): ForumSectionPageResultDTO
     {
         $forumSettings = config('forum')['settings'];
         $section = $this->sectionPathService->findSectionByPath($sectionPath);
         if ($section === null) {
-            throw new ForumSectionNotFoundException('Section path not found.');
+            throw new ForumNotFoundException('Section path not found.');
         }
 
         if ($section->section_type === 1) {
@@ -40,7 +40,7 @@ final readonly class ViewForumSectionUseCase
                 : $this->sectionRepository->findById($section->id);
 
             if ($currentSection === null) {
-                throw new ForumSectionNotFoundException('Section not found.');
+                throw new ForumNotFoundException('Section not found.');
             }
 
             $topics = $this->topicRepository->paginateReadBySectionId($currentSection->id, (int) $this->currentUser->config->kmess);
@@ -71,7 +71,7 @@ final readonly class ViewForumSectionUseCase
             : $this->sectionRepository->findById($section->id);
 
         if ($currentSection === null) {
-            throw new ForumSectionNotFoundException('Category not found.');
+            throw new ForumNotFoundException('Category not found.');
         }
 
         $children = $this->sectionRepository->getChildrenWithCounts($currentSection->id);

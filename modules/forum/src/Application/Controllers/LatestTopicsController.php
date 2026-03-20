@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewLatestTopicsUseCase;
 use Johncms\NavChain;
@@ -19,7 +19,7 @@ final readonly class LatestTopicsController
         private Render $render,
         private NavChain $navChain,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewLatestTopicsUseCase $viewLatestTopicsUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -30,10 +30,7 @@ final readonly class LatestTopicsController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $result = $this->viewLatestTopicsUseCase->execute();

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\ReplyMessageContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ReplyMessageNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Users\User;
@@ -23,16 +23,16 @@ final readonly class GetReplyMessageContextUseCase
     {
         $message = $this->messageRepository->findById($messageId);
         if ($message === null) {
-            throw new ReplyMessageNotFoundException('Message not found.');
+            throw new ForumNotFoundException('Message not found.');
         }
 
         if ($this->currentUser->rights < 7 && $message->deleted) {
-            throw new ReplyMessageNotFoundException('Message not found.');
+            throw new ForumNotFoundException('Message not found.');
         }
 
         $topic = $this->topicRepository->findById((int) $message->topic_id);
         if ($topic === null) {
-            throw new ReplyMessageNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         return new ReplyMessageContextDTO($message, $topic);

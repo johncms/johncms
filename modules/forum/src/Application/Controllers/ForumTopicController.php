@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumTopicPathNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
@@ -27,7 +27,7 @@ final readonly class ForumTopicController
         private User $currentUser,
         private NavChain $navChain,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private Csrf $csrf,
         private Bbcode $bbcode,
@@ -39,10 +39,7 @@ final readonly class ForumTopicController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $setForum = $this->getForumSettings();
@@ -73,7 +70,10 @@ final readonly class ForumTopicController
                 filterTopicId: $filterTopicId,
                 filterByUsers: $filterByUsers,
             );
-        } catch (ForumTopicPathNotFoundException) {
+        } catch (ForumNotFoundException $exception) {
+            $errorCode = $exception->getErrorCode();
+            http_response_code($errorCode->httpStatus());
+            $this->render->addData(["error_code" => $errorCode->value]);
             ForumUtils::notFound();
         }
 

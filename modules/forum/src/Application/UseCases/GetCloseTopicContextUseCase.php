@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\CloseTopicContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\CloseTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
 final readonly class GetCloseTopicContextUseCase
@@ -19,7 +19,7 @@ final readonly class GetCloseTopicContextUseCase
     {
         $topic = $this->topicRepository->findById($topicId);
         if ($topic === null) {
-            throw new CloseTopicNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         return new CloseTopicContextDTO($topic->id);

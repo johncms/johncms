@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\DeleteVoteWrongDataException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteVoteAccessUseCase;
@@ -23,7 +22,7 @@ final readonly class DeleteVoteController
         private Render $render,
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureDeleteVoteAccessUseCase $accessUseCase,
         private DeleteVoteUseCase $deleteVoteUseCase,
         private ForumTopicPathService $topicPathService,
@@ -36,32 +35,26 @@ final readonly class DeleteVoteController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute($id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (DeleteVoteWrongDataException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumValidationException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Delete Poll'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),

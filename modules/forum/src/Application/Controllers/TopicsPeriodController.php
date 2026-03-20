@@ -7,7 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\TopicsPeriodQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicsByPeriodUseCase;
@@ -28,7 +28,7 @@ final readonly class TopicsPeriodController
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewTopicsByPeriodUseCase $viewTopicsByPeriodUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -40,10 +40,7 @@ final readonly class TopicsPeriodController
             $this->forumAccessUseCase->execute();
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $hours = (int) ($this->request->getPost('vr', $this->request->getQuery('vr', 24)) ?? 24);

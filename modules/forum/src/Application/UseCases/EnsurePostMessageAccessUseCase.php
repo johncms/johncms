@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Users\User;
 
 final readonly class EnsurePostMessageAccessUseCase
@@ -24,7 +24,7 @@ final readonly class EnsurePostMessageAccessUseCase
             || isset($this->currentUser->ban[11])
             || (! $this->currentUser->rights && $config['mod_forum'] === 3)
         ) {
-            throw new AccessDeniedException('Access denied to post message.');
+            throw new ForumAccessDeniedException('Access denied to post message.');
         }
     }
 }

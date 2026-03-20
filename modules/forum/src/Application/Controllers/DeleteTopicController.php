@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\DeleteTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
@@ -27,7 +26,7 @@ final readonly class DeleteTopicController
         private Request $request,
         private User $user,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureDeleteTopicAccessUseCase $accessUseCase,
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
@@ -45,34 +44,28 @@ final readonly class DeleteTopicController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute();
             $context = $this->contextUseCase->execute($id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (DeleteTopicNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Curators'),
                     'page_title'    => __('Curators'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Topic has been deleted or does not exists'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),

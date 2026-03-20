@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Exceptions;
 
-final class ForumAccessDeniedException extends ForumException
+class ForumValidationException extends ForumException
 {
     public function __construct(
-        ForumErrorCode|string $errorCode = ForumErrorCode::FORUM_ACCESS_DENIED,
+        ForumErrorCode|string $errorCode = ForumErrorCode::FORUM_WRONG_DATA,
         ?string $message = null,
     ) {
         if (is_string($errorCode)) {
-            parent::__construct(ForumErrorCode::FORUM_ACCESS_DENIED, $errorCode);
+            parent::__construct(ForumErrorCode::FORUM_WRONG_DATA, $errorCode);
             return;
         }
 

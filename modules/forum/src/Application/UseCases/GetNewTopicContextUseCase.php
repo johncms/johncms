@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\NewTopicContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\NewTopicSectionNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 
 final readonly class GetNewTopicContextUseCase
@@ -18,7 +18,7 @@ final readonly class GetNewTopicContextUseCase
             ->first();
 
         if ($section === null) {
-            throw new NewTopicSectionNotFoundException('Section not found.');
+            throw new ForumNotFoundException('Section not found.');
         }
 
         return new NewTopicContextDTO($section);

@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ChangeTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureChangeTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -25,7 +24,7 @@ final readonly class ChangeTopicController
         private Render $render,
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureChangeTopicAccessUseCase $accessUseCase,
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
@@ -38,19 +37,9 @@ final readonly class ChangeTopicController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
-        }
-
-        try {
-            $this->accessUseCase->execute();
-            $context = $this->contextUseCase->execute($id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Access forbidden'),
                     'type'          => 'alert-danger',
@@ -59,7 +48,21 @@ final readonly class ChangeTopicController
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (ChangeTopicNotFoundException) {
+        }
+
+        try {
+            $this->accessUseCase->execute();
+            $context = $this->contextUseCase->execute($id);
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
+                [
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        } catch (ForumNotFoundException) {
             pageNotFound();
         }
 

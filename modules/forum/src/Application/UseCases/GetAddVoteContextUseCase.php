@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\AddVoteContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\AddVoteWrongDataException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
 final readonly class GetAddVoteContextUseCase
@@ -19,7 +19,7 @@ final readonly class GetAddVoteContextUseCase
     {
         $topic = $this->topicRepository->findActiveById($topicId);
         if ($topic === null) {
-            throw new AddVoteWrongDataException('Topic not found.');
+            throw new ForumValidationException('Topic not found.');
         }
 
         return new AddVoteContextDTO($topic->id);

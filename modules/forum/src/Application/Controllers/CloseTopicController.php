@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\CloseTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CloseTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureCloseTopicAccessUseCase;
@@ -24,7 +23,7 @@ final readonly class CloseTopicController
         private Render $render,
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureCloseTopicAccessUseCase $accessUseCase,
         private GetCloseTopicContextUseCase $contextUseCase,
         private CloseTopicUseCase $closeTopicUseCase,
@@ -38,28 +37,22 @@ final readonly class CloseTopicController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute();
             $context = $this->contextUseCase->execute($id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (CloseTopicNotFoundException) {
+        } catch (ForumNotFoundException) {
             pageNotFound();
         }
 

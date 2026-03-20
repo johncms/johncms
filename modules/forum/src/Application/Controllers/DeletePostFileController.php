@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\EditPostAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\EditPostFileNotFoundException;
-use Johncms\Modules\Forum\Application\Exceptions\EditPostNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\DeletePostFileUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -30,7 +28,7 @@ final readonly class DeletePostFileController
         private Csrf $csrf,
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
         private EnsureEditPostAccessUseCase $accessUseCase,
         private GetDeletePostFileContextUseCase $fileContextUseCase,
@@ -44,41 +42,30 @@ final readonly class DeletePostFileController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render('system::pages/result', $this->forumAccessResponseBuilder->forException($exception));
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
             $this->accessUseCase->execute($context);
             $file = $this->fileContextUseCase->execute($id, $fid);
-        } catch (EditPostNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Error'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Message does not exists or has been deleted'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Forum'),
                 ]
             );
-        } catch (EditPostFileNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Edit Message'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
-                    'back_url'      => $context->backUrl ?? '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        } catch (EditPostAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Error'),
-                    'type'          => 'alert-danger',
                     'message'       => $exception->getMessage(),
                     'back_url'      => $context->backUrl ?? '/forum/',
                     'back_url_name' => __('Back'),

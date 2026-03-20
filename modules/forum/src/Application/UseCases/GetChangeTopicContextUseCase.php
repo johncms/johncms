@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\ChangeTopicContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ChangeTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
 final readonly class GetChangeTopicContextUseCase
@@ -19,7 +19,7 @@ final readonly class GetChangeTopicContextUseCase
     {
         $topic = $this->topicRepository->findById($topicId);
         if ($topic === null) {
-            throw new ChangeTopicNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         return new ChangeTopicContextDTO($topic);

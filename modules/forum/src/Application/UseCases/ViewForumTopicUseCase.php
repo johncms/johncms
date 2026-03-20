@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\ForumTopicPageResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumTopicPathNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -38,7 +38,7 @@ final readonly class ViewForumTopicUseCase
 
     /**
      * @param int[] $filterByUsers
-     * @throws ForumTopicPathNotFoundException
+     * @throws ForumNotFoundException
      */
     public function execute(
         string $path,
@@ -54,7 +54,7 @@ final readonly class ViewForumTopicUseCase
     ): ForumTopicPageResultDTO {
         $parsedPath = $this->topicPathService->parseTopicPath('/forum/' . ltrim($path, '/'));
         if ($parsedPath === null) {
-            throw new ForumTopicPathNotFoundException('Topic path is invalid.');
+            throw new ForumNotFoundException('Topic path is invalid.');
         }
 
         $forumSettings = config('forum')['settings'];
@@ -64,15 +64,15 @@ final readonly class ViewForumTopicUseCase
         );
 
         if ($topic === null || $topic->section === null) {
-            throw new ForumTopicPathNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         if ($this->sectionPathService->getSectionPath($topic->section) !== $parsedPath['sectionPath']) {
-            throw new ForumTopicPathNotFoundException('Topic path does not match section path.');
+            throw new ForumNotFoundException('Topic path does not match section path.');
         }
 
         if ($this->topicPathService->getTopicSlug($topic) !== $parsedPath['topicSlug']) {
-            throw new ForumTopicPathNotFoundException('Topic slug does not match canonical slug.');
+            throw new ForumNotFoundException('Topic slug does not match canonical slug.');
         }
 
         if ($incrementViewCount) {

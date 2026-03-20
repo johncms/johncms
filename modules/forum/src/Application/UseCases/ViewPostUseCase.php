@@ -10,9 +10,9 @@ use Johncms\Modules\Forum\Application\DTO\PostEditInfoDTO;
 use Johncms\Modules\Forum\Application\DTO\PostFileDTO;
 use Johncms\Modules\Forum\Application\DTO\PostModerationDTO;
 use Johncms\Modules\Forum\Application\DTO\ViewPostDTO;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
-use Johncms\Modules\Forum\Domain\Exceptions\MessageNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -36,11 +36,11 @@ final readonly class ViewPostUseCase
     {
         $message = $this->messageRepository->findById($postId);
         if ($message === null) {
-            throw new MessageNotFoundException(sprintf('Message with id "%s" could not be found.', $postId));
+            throw new ForumNotFoundException(sprintf('Message with id "%s" could not be found.', $postId));
         }
 
         if ($this->currentUser->rights < 7 && $message->deleted) {
-            throw new AccessDeniedException(sprintf('Access denied to message with id "%d".', $postId));
+            throw new ForumAccessDeniedException(sprintf('Access denied to message with id "%d".', $postId));
         }
 
         $message->loadMissing(['files', 'topic']);

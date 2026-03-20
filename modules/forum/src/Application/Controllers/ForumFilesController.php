@@ -7,8 +7,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumFilesContextNotFoundException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumFilesUseCase;
 use Johncms\NavChain;
@@ -23,7 +23,7 @@ final readonly class ForumFilesController
         private Request $request,
         private NavChain $navChain,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumFilesUseCase $viewForumFilesUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -34,10 +34,7 @@ final readonly class ForumFilesController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $query = new ForumFilesQueryDTO(
@@ -51,13 +48,13 @@ final readonly class ForumFilesController
 
         try {
             $result = $this->viewForumFilesUseCase->execute($query);
-        } catch (ForumFilesContextNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Forum Files'),
                     'page_title'    => __('Forum Files'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),

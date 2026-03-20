@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\DeleteTopicContextDTO;
-use Johncms\Modules\Forum\Application\Exceptions\DeleteTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
 final readonly class GetDeleteTopicContextUseCase
@@ -19,7 +19,7 @@ final readonly class GetDeleteTopicContextUseCase
     {
         $topic = $this->topicRepository->findById($topicId);
         if ($topic === null) {
-            throw new DeleteTopicNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         return new DeleteTopicContextDTO(

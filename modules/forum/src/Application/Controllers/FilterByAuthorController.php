@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\FilterByAuthorWrongDataException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewFilterByAuthorUseCase;
 use Johncms\NavChain;
@@ -26,7 +26,7 @@ final readonly class FilterByAuthorController
         private NavChain $navChain,
         private Csrf $csrf,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private ViewFilterByAuthorUseCase $viewFilterByAuthorUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -37,23 +37,20 @@ final readonly class FilterByAuthorController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         $start = max(0, (int) $this->request->getQuery('start', 0));
 
         try {
             $context = $this->viewFilterByAuthorUseCase->execute($id);
-        } catch (FilterByAuthorWrongDataException) {
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumValidationException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
                     'title'         => __('Filter by author'),
                     'page_title'    => __('Filter by author'),
-                    'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
                     'back_url'      => '/forum/filter/' . $id . '/?start=' . $start,
                     'back_url_name' => __('Back'),

@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\SubmitVoteWrongDataException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureSubmitVoteAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetSubmitVoteContextUseCase;
@@ -25,7 +24,7 @@ final readonly class SubmitVoteController
         private Request $request,
         private User $user,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureSubmitVoteAccessUseCase $accessUseCase,
         private GetSubmitVoteContextUseCase $contextUseCase,
         private SubmitVoteUseCase $submitVoteUseCase,
@@ -38,30 +37,22 @@ final readonly class SubmitVoteController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
-            );
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute();
             $voteId = (int) $this->request->getPost('vote', 0);
             $context = $this->contextUseCase->execute($id, $voteId, $this->user->id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException | ForumValidationException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (SubmitVoteWrongDataException) {
-            pageNotFound();
         }
 
         $this->submitVoteUseCase->execute($context->topicId, $context->voteId, $this->user->id);

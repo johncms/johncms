@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\BulkDeleteTopicNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\BulkDeletePostsUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureBulkDeletePostsAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -28,7 +27,7 @@ final readonly class BulkDeletePostsController
         private User $currentUser,
         private Csrf $csrf,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureBulkDeletePostsAccessUseCase $accessUseCase,
         private GetBulkDeletePostsContextUseCase $contextUseCase,
         private BulkDeletePostsUseCase $bulkDeletePostsUseCase,
@@ -41,31 +40,17 @@ final readonly class BulkDeletePostsController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render('system::pages/result', $this->forumAccessResponseBuilder->forException($exception));
+            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         try {
             $this->accessUseCase->execute();
             $context = $this->contextUseCase->execute($id);
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
-                    'back_url'      => '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        } catch (BulkDeleteTopicNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Wrong data'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]

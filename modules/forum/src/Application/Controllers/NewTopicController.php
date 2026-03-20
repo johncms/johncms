@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\AccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\NewTopicSectionNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
-use Johncms\Modules\Forum\Application\Services\ForumAccessResponseBuilder;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -37,7 +36,7 @@ final readonly class NewTopicController
         private NavChain $navChain,
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumAccessResponseBuilder $forumAccessResponseBuilder,
+        private ForumErrorRenderer $forumErrorRenderer,
         private EnsureNewTopicAccessUseCase $accessUseCase,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
@@ -53,22 +52,23 @@ final readonly class NewTopicController
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->render->render(
-                'system::pages/result',
-                $this->forumAccessResponseBuilder->forException($exception)
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
+                [
+                    'back_url'      => $this->sectionPathService->getSectionUrlById($id) ?? '/forum/',
+                    'back_url_name' => __('Go to Section'),
+                ]
             );
         }
 
         try {
             $this->accessUseCase->execute();
-        } catch (AccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
+        } catch (ForumAccessDeniedException $exception) {
+            return $this->forumErrorRenderer->render(
+                $this->render,
+                $exception,
                 [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
                     'back_url'      => $this->sectionPathService->getSectionUrlById($id) ?? '/forum/',
                     'back_url_name' => __('Go to Section'),
                 ]
@@ -77,7 +77,7 @@ final readonly class NewTopicController
 
         try {
             $context = $this->contextUseCase->execute($id);
-        } catch (NewTopicSectionNotFoundException) {
+        } catch (ForumNotFoundException) {
             pageNotFound();
         }
 

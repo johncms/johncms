@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\DTO\AttachFileToPostResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\UploadException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
-use Johncms\Modules\Forum\Domain\Exceptions\MessageNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Users\User;
@@ -37,7 +37,7 @@ final readonly class AttachFileToPostUseCase
     ): AttachFileToPostResultDTO {
         $message = $this->messageRepository->findById($messageId);
         if ($message === null) {
-            throw new MessageNotFoundException(sprintf('Message with id "%s" could not be found.', $messageId));
+            throw new ForumNotFoundException(sprintf('Message with id "%s" could not be found.', $messageId));
         }
 
         $topicId = (int) $message->topic_id;

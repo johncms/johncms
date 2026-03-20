@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Exceptions\ForumAuthRequiredException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumErrorCode;
 use Johncms\Users\User;
 
 final readonly class EnsureForumUserAccessUseCase
@@ -17,7 +18,7 @@ final readonly class EnsureForumUserAccessUseCase
     public function execute(): void
     {
         if (! $this->currentUser->isValid()) {
-            throw new ForumAuthRequiredException('Forum is available for registered users only.');
+            throw new ForumAccessDeniedException(ForumErrorCode::FORUM_AUTH_REQUIRED, 'Forum is available for registered users only.');
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumVisitorsTopicNotFoundException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumVisitorRowMapper;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
@@ -26,7 +26,7 @@ final readonly class ViewTopicVisitorsUseCase
     {
         $topic = $this->topicRepository->findById($topicId);
         if ($topic === null) {
-            throw new ForumVisitorsTopicNotFoundException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         $limit = (int) $this->currentUser->config->kmess;
