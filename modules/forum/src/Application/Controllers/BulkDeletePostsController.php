@@ -9,7 +9,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\BulkDeletePostsUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureBulkDeletePostsAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetBulkDeletePostsContextUseCase;
 use Johncms\Security\Csrf;
@@ -28,7 +27,6 @@ final readonly class BulkDeletePostsController
         private Csrf $csrf,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureBulkDeletePostsAccessUseCase $accessUseCase,
         private GetBulkDeletePostsContextUseCase $contextUseCase,
         private BulkDeletePostsUseCase $bulkDeletePostsUseCase,
     ) {
@@ -44,28 +42,13 @@ final readonly class BulkDeletePostsController
         }
 
         try {
-            $this->accessUseCase->execute();
-            $context = $this->contextUseCase->execute($id);
+            $backUrl = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
                 $exception,
                 [
                     'back_url'      => '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
-        if ($this->request->getMethod() !== 'POST') {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Delete posts'),
-                    'page_title'    => __('Delete posts'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
-                    'back_url'      => $context->backUrl,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -88,7 +71,7 @@ final readonly class BulkDeletePostsController
                         'page_title'    => __('Delete posts'),
                         'type'          => 'alert-danger',
                         'message'       => __('Wrong data'),
-                        'back_url'      => $context->backUrl,
+                        'back_url'      => $backUrl,
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -102,13 +85,13 @@ final readonly class BulkDeletePostsController
                         'page_title'    => __('Delete posts'),
                         'type'          => 'alert-danger',
                         'message'       => __('You did not choose something to delete'),
-                        'back_url'      => $context->backUrl,
+                        'back_url'      => $backUrl,
                         'back_url_name' => __('Back'),
                     ]
                 );
             }
 
-            $this->bulkDeletePostsUseCase->execute($context->topicId, $confirmIds, $this->currentUser->name);
+            $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->name);
 
             return $this->render->render(
                 'system::pages/result',
@@ -117,7 +100,7 @@ final readonly class BulkDeletePostsController
                     'page_title'    => __('Delete posts'),
                     'type'          => 'alert-success',
                     'message'       => __('Marked posts are deleted'),
-                    'back_url'      => $context->backUrl,
+                    'back_url'      => $backUrl,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -131,7 +114,7 @@ final readonly class BulkDeletePostsController
                     'page_title'    => __('Delete posts'),
                     'type'          => 'alert-danger',
                     'message'       => __('You did not choose something to delete'),
-                    'back_url'      => $context->backUrl,
+                    'back_url'      => $backUrl,
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -142,8 +125,8 @@ final readonly class BulkDeletePostsController
             [
                 'title'       => __('Delete posts'),
                 'page_title'  => __('Delete posts'),
-                'back_url'    => $context->backUrl,
-                'form_action' => '/forum/bulk-delete-posts/' . $context->topicId . '/',
+                'back_url'    => $backUrl,
+                'form_action' => '/forum/bulk-delete-posts/' . $id . '/',
                 'csrf_token'  => $this->csrf->getToken(),
                 'ids'         => $ids,
             ]
