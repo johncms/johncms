@@ -46,7 +46,7 @@ final readonly class ViewForumVisitorsController
         $showGuests = $this->request->getQuery('mode') === 'guests';
         $result = $this->viewForumVisitorsUseCase->execute(
             new ForumVisitorsQueryDTO(
-                start: max(0, (int) $this->request->getQuery('start', 0)),
+                start: $this->resolveStart(),
                 guests: $showGuests,
             )
         );
@@ -75,5 +75,12 @@ final readonly class ViewForumVisitorsController
                 'show_period'     => false,
             ]
         );
+    }
+
+    private function resolveStart(): int
+    {
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+
+        return ($page - 1) * (int) $this->currentUser->config->kmess;
     }
 }

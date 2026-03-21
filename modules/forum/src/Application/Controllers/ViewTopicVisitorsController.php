@@ -64,7 +64,7 @@ final readonly class ViewTopicVisitorsController
             $result = $this->viewTopicVisitorsUseCase->execute(
                 $id,
                 new ForumVisitorsQueryDTO(
-                    start: max(0, (int) $this->request->getQuery('start', 0)),
+                    start: $this->resolveStart(),
                     guests: $showGuests,
                 )
             );
@@ -110,5 +110,12 @@ final readonly class ViewTopicVisitorsController
                 'topic_url'       => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
             ]
         );
+    }
+
+    private function resolveStart(): int
+    {
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+
+        return ($page - 1) * (int) $this->currentUser->config->kmess;
     }
 }
