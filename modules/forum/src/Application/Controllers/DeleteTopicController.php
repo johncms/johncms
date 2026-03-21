@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
 use Johncms\System\Http\Request;
@@ -27,7 +26,6 @@ final readonly class DeleteTopicController
         private User $user,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureDeleteTopicAccessUseCase $accessUseCase,
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
         private ForumSectionPathService $sectionPathService,
@@ -48,8 +46,7 @@ final readonly class DeleteTopicController
         }
 
         try {
-            $this->accessUseCase->execute();
-            $context = $this->contextUseCase->execute($id);
+            $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
@@ -77,12 +74,12 @@ final readonly class DeleteTopicController
             $deleteMode = (int) $this->request->getPost('del', 0);
 
             if ($deleteMode === 2 && $this->user->rights === 9) {
-                $this->deleteTopicUseCase->deleteTopic($context->topicId);
+                $this->deleteTopicUseCase->deleteTopic($topic->id);
             } else {
-                $this->deleteTopicUseCase->hideTopic($context->topicId, $this->user->name);
+                $this->deleteTopicUseCase->hideTopic($topic->id, $this->user->name);
             }
 
-            redirect($this->sectionPathService->getSectionUrlById($context->sectionId) ?? '/forum/');
+            redirect($this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/');
         }
 
         return $this->render->render(
@@ -90,10 +87,10 @@ final readonly class DeleteTopicController
             [
                 'title'           => __('Delete Topic'),
                 'page_title'      => __('Delete Topic'),
-                'id'              => $context->topicId,
-                'back_url'        => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                'id'              => $topic->id,
+                'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
                 'can_hard_delete' => $this->user->rights === 9,
-                'delete_url'      => '/forum/delete-topic/' . $context->topicId . '/',
+                'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
             ]
         );
     }
