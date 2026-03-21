@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteAnswerUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureEditVoteAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateVoteUseCase;
@@ -25,7 +24,6 @@ final readonly class EditVoteController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureEditVoteAccessUseCase $accessUseCase,
         private GetEditVoteContextUseCase $contextUseCase,
         private UpdateVoteUseCase $updateVoteUseCase,
         private DeleteVoteAnswerUseCase $deleteVoteAnswerUseCase,
@@ -43,7 +41,6 @@ final readonly class EditVoteController
         }
 
         try {
-            $this->accessUseCase->execute($id);
             $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
