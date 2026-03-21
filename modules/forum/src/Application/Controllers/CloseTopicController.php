@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CloseTopicUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureCloseTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetCloseTopicContextUseCase;
 use Johncms\System\Http\Request;
@@ -24,7 +23,6 @@ final readonly class CloseTopicController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureCloseTopicAccessUseCase $accessUseCase,
         private GetCloseTopicContextUseCase $contextUseCase,
         private CloseTopicUseCase $closeTopicUseCase,
         private ForumTopicPathService $topicPathService,
@@ -41,8 +39,7 @@ final readonly class CloseTopicController
         }
 
         try {
-            $this->accessUseCase->execute();
-            $context = $this->contextUseCase->execute($id);
+            $topicId = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
@@ -57,7 +54,7 @@ final readonly class CloseTopicController
         }
 
         $closed = $this->request->getQuery('closed') !== null;
-        $this->closeTopicUseCase->execute($context->topicId, $closed);
-        redirect($this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/');
+        $this->closeTopicUseCase->execute($topicId, $closed);
+        redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
     }
 }
