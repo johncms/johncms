@@ -124,6 +124,18 @@ guard → context → action
 
 Execute the action only for write operations (for example POST requests in forms or equivalent command-style operations).
 
+#### When NOT to create `Ensure*AccessUseCase`
+
+Do not introduce a separate `Ensure*AccessUseCase` if all conditions below are true:
+
+* guard logic is trivial (for example: 1–2 simple rights/ownership checks)
+* guard is used by only one controller/action
+* keeping guard separate would duplicate repository reads already needed in `Get*ContextUseCase`
+
+In this case, move guard checks into `Get*ContextUseCase` and keep one preflight call in controller.
+
+If guard logic grows (multiple branches, time windows, reusable policy, or shared usage in 2+ controllers), extract it back into dedicated `Ensure*AccessUseCase`.
+
 ### Exception Mapping
 
 * Access denied → HTTP 403
