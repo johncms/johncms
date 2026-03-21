@@ -69,7 +69,6 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php');                          // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                                           // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', ForumIndexController::class);                                                  // Forum
-    $map->addRoute(['GET', 'POST'], '/forum/index.php[/]', ForumIndexController::class);                                        // Forum legacy index.php
     $map->addRoute(['GET'], '/forum/download-file/{id:\d+}[/]', DownloadFileController::class);
     $map->addRoute(['GET'], '/forum/files[/]', ForumFilesController::class);
     $map->addRoute(['GET'], '/forum/search[/]', ForumSearchController::class);

@@ -32,7 +32,12 @@ $match = $dispatcher->dispatch(
             $uri = substr($uri, 0, $pos);
         }
 
-        return rawurldecode($uri);
+        $uri = rawurldecode($uri);
+        if ($uri === '/forum/index.php' || $uri === '/forum/index.php/') {
+            return '/forum';
+        }
+
+        return $uri;
     })()
 );
 
