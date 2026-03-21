@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\AttachFileToPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureAttachFileAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAttachFileContextUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\System\Http\Request;
@@ -26,7 +25,6 @@ final readonly class AddFileController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureAttachFileAccessUseCase $accessUseCase,
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
         private ForumTopicPathService $topicPathService,
@@ -47,7 +45,6 @@ final readonly class AddFileController
         }
 
         try {
-            $this->accessUseCase->execute($id, $page);
             $context = $this->contextUseCase->execute($id, $page);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->render(
