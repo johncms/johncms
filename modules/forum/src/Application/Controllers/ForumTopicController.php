@@ -132,9 +132,9 @@ final readonly class ForumTopicController
 
         $settings = [];
         if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
-            $settings = unserialize((string) $this->currentUser->set_forum, ['allowed_classes' => false]) ?: [];
+            $settings = (array) $this->currentUser->set_forum;
         }
 
-        return array_merge($default, (array) $settings);
+        return array_merge($default, $settings);
     }
 }
