@@ -56,6 +56,7 @@ use Johncms\Modules\Forum\Application\Controllers\RestoreTopicController;
 use Johncms\Modules\Forum\Application\Controllers\SubmitVoteController;
 use Johncms\Modules\Forum\Application\Controllers\TopicsPeriodController;
 use Johncms\Modules\Forum\Application\Controllers\UnreadTopicsController;
+use Johncms\Modules\Forum\Application\Controllers\UploadFileController;
 use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ClearForumSearchHistoryController;
@@ -84,6 +85,7 @@ return static function (RouteCollector $map, User $user) {
     $map->addRoute(['POST'], '/forum/unread/mark-read[/]', MarkAllTopicsReadController::class);
     $map->addRoute(['GET', 'POST'], '/forum/topics-period[/]', TopicsPeriodController::class);
     if ($user->isValid()) {
+        $map->addRoute(['POST'], '/forum/upload_file[/]', UploadFileController::class);
         $map->addRoute(['GET', 'POST'], '/forum/addfile/{id:\d+}[/]', AddFileController::class);
         $map->addRoute(['GET', 'POST'], '/forum/addvote/{id:\d+}[/]', AddVoteController::class);
         $map->addRoute(['GET', 'POST'], '/forum/change-topic/{id:\d+}[/]', ChangeTopicController::class);

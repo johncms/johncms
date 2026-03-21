@@ -9,6 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
+use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
@@ -36,6 +37,7 @@ final readonly class NewMessageController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewMessageContextUseCase $contextUseCase,
         private PostMessageUseCase $postMessageUseCase,
+        private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
         private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
@@ -104,6 +106,7 @@ final readonly class NewMessageController
 
         $msg = trim((string) $this->request->getPost('msg', ''));
         $addFiles = $this->request->getPost('addfiles') !== null;
+        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
 
         if (
             $this->request->getPost('submit') !== null
@@ -148,6 +151,10 @@ final readonly class NewMessageController
                 messageText: $msg,
                 addFiles: $addFiles,
                 forumSettings: $this->getForumSettings()
+            );
+            $this->attachUploadedFilesUseCase->execute(
+                messageId: $result->messageId,
+                attachedFileIds: $attachedFiles,
             );
 
             if ($addFiles) {

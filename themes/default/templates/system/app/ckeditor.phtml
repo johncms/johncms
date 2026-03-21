@@ -5,6 +5,7 @@
  * @var string $errors
  * @var string $locale
  * @var string $name
+ * @var string $upload_url
  */
 
 if ($locale !== 'en') {
@@ -13,12 +14,11 @@ if ($locale !== 'en') {
     } catch (Exception $exception) {
     }
 }
-// TODO: replace upload_url
 ?>
 <script src="<?= $this->asset('ckeditor5/ckeditor.js', true) ?>"></script>
 <div class="vue_app">
     <ckeditor-input-component
-        upload_url="/"
+        upload_url="<?= $this->e($upload_url ?? '') ?>"
         name="<?= $name ?>"
         language="<?= $locale ?>"
         errors="<?= $errors ?>"

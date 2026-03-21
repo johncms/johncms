@@ -12,6 +12,7 @@ use Johncms\Cache;
 use Johncms\Counters;
 use Johncms\CountersFactory;
 use Johncms\Database\PdoFactory;
+use Johncms\Files\Filesystem;
 use Johncms\Files\FileStorage;
 use Johncms\ImageManagerFactory;
 use Johncms\Logs\LoggerFactory;
@@ -65,6 +66,7 @@ return static function (ContainerConfigurator $container): void {
         ->public();
 
     $services->set(ContainerInterface::class)->synthetic();
+    $services->set(Filesystem::class, Filesystem::class);
     $services->set(FileStorage::class, FileStorage::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
     $services->set(Request::class)->factory(service(RequestFactory::class));

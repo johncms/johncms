@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
@@ -14,6 +15,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSectionRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSearchHistoryRepository;
@@ -48,6 +50,7 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
+    $services->set(ForumMessageFileRepositoryInterface::class, ForumMessageFileRepository::class)->public();
     $services->set(ForumFileRepositoryInterface::class, ForumFileRepository::class)->public();
     $services->set(ForumSectionRepositoryInterface::class, ForumSectionRepository::class)->public();
     $services->set(ForumSearchRepositoryInterface::class, ForumSearchRepository::class)->autowire()->public();

@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Exception;
+use Johncms\Files\FileStorage;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use League\Flysystem\FilesystemException;
 
 final readonly class DeletePostUseCase
 {
@@ -22,12 +26,14 @@ final readonly class DeletePostUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumFileRepositoryInterface $fileRepository,
+        private ForumMessageFileRepositoryInterface $messageFileRepository,
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
         private Tools $tools,
         private User $currentUser,
+        private FileStorage $fileStorage,
     ) {
     }
 
@@ -47,6 +53,9 @@ final readonly class DeletePostUseCase
 
         $redirectUrl = $context->backUrl;
         if ($hardDelete && $this->currentUser->rights === 9) {
+            $linkedFileIds = $this->messageFileRepository->getFileIdsByMessageId((int) $message->id);
+            $this->messageFileRepository->deleteByMessageId((int) $message->id);
+
             $files = $this->fileRepository->getByPostId($message->id);
             foreach ($files as $file) {
                 $filePath = UPLOAD_PATH . 'forum/attach/' . $file->filename;
@@ -56,6 +65,7 @@ final readonly class DeletePostUseCase
             }
 
             $this->fileRepository->deleteByPostId($message->id);
+            $this->deleteOrphanedMessageFiles($linkedFileIds);
 
             $strictPageCount = $this->messageRepository->countByTopicIdWithComparison(
                 topicId: $topic->id,
@@ -99,5 +109,23 @@ final readonly class DeletePostUseCase
         }
 
         return new DeletePostResultDTO($redirectUrl);
+    }
+
+    /**
+     * @param int[] $fileIds
+     */
+    private function deleteOrphanedMessageFiles(array $fileIds): void
+    {
+        if ($fileIds === []) {
+            return;
+        }
+
+        $orphanedFileIds = $this->messageFileRepository->getOrphanedFileIds($fileIds);
+        foreach ($orphanedFileIds as $fileId) {
+            try {
+                $this->fileStorage->delete($fileId);
+            } catch (FilesystemException | Exception) {
+            }
+        }
     }
 }

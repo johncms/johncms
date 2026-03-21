@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
@@ -38,6 +39,7 @@ final readonly class NewTopicController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
+        private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
         private ForumSectionPathService $sectionPathService,
     ) {
         $this->controllerContext->initModule('forum');
@@ -94,6 +96,7 @@ final readonly class NewTopicController
             'message'    => ForumUtils::topicLink($this->request->getPost('msg', '')),
             'csrf_token' => $this->request->getPost('csrf_token', ''),
             'add_files'  => (int) $this->request->getPost('addfiles', 0),
+            'attached_files' => (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT),
         ];
 
         if ($this->currentUser->rights > 0) {
@@ -137,6 +140,10 @@ final readonly class NewTopicController
                     messageText: (string) $data['message'],
                     metaKeywords: $data['meta_keywords'] ?? null,
                     metaDescription: $data['meta_description'] ?? null,
+                );
+                $this->attachUploadedFilesUseCase->execute(
+                    messageId: $result->messageId,
+                    attachedFileIds: $data['attached_files'],
                 );
 
                 if ($data['add_files'] === 1) {

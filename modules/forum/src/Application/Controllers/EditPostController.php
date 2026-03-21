@@ -8,6 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -33,6 +34,7 @@ final readonly class EditPostController
         private GetEditPostContextUseCase $contextUseCase,
         private EnsureEditPostAccessUseCase $accessUseCase,
         private EditPostUseCase $editPostUseCase,
+        private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -74,6 +76,7 @@ final readonly class EditPostController
 
         if ($this->request->getPost('submit') !== null) {
             $msg = trim((string) $this->request->getPost('msg', ''));
+            $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
             if ($msg === '') {
                 return $this->render->render(
                     'system::pages/result',
@@ -105,6 +108,10 @@ final readonly class EditPostController
             }
 
             $this->editPostUseCase->execute($context, $msg);
+            $this->attachUploadedFilesUseCase->execute(
+                messageId: $context->message->id,
+                attachedFileIds: $attachedFiles,
+            );
             redirect($context->topic->url . ($context->page > 1 ? '?page=' . $context->page : ''));
         }
 

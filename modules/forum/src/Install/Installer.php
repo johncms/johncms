@@ -159,5 +159,17 @@ class Installer extends \Johncms\Modules\Installer
                 $table->unique(['section_id', 'slug'], 'forum_topic_section_slug_unique');
             }
         );
+
+        $schema->create(
+            'forum_message_files',
+            static function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->bigInteger('message_id')->unsigned()->index('forum_message_files_message_id');
+                $table->bigInteger('file_id')->unsigned()->index('forum_message_files_file_id');
+                $table->dateTime('created_at')->nullable();
+
+                $table->unique(['message_id', 'file_id'], 'forum_message_files_message_file_unique');
+            }
+        );
     }
 }

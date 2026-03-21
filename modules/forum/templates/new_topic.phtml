@@ -82,7 +82,8 @@ $this->layout('system::layout/default');
                 'errors'       => implode(', ', $errors['message'] ?? []),
                 'value'        => $msg,
                 'name'         => 'msg',
-                'allow_upload' => false,
+                'allow_upload' => true,
+                'upload_url'   => '/forum/upload_file/',
             ]
         ) ?>
     </div>
