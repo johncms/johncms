@@ -14,6 +14,7 @@ use Johncms\Modules\Forum\Application\UseCases\ViewForumFilesUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 
 final readonly class ForumFilesController
 {
@@ -22,6 +23,7 @@ final readonly class ForumFilesController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
+        private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumFilesUseCase $viewForumFilesUseCase,
@@ -38,7 +40,7 @@ final readonly class ForumFilesController
         }
 
         $query = new ForumFilesQueryDTO(
-            start: max(0, (int) $this->request->getQuery('start', 0)),
+            start: $this->resolveStart(),
             contextCategoryId: max(0, (int) $this->request->getQuery('c', 0)),
             contextSectionId: max(0, (int) $this->request->getQuery('s', 0)),
             contextTopicId: max(0, (int) $this->request->getQuery('t', 0)),
@@ -74,5 +76,12 @@ final readonly class ForumFilesController
     private function normalizeFileType(int $fileType): int
     {
         return $fileType > 0 && $fileType < 10 ? $fileType : 0;
+    }
+
+    private function resolveStart(): int
+    {
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+
+        return ($page - 1) * (int) $this->currentUser->config->kmess;
     }
 }
