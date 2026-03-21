@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureNewTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -37,7 +36,6 @@ final readonly class NewTopicController
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureNewTopicAccessUseCase $accessUseCase,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
         private ForumSectionPathService $sectionPathService,
@@ -63,7 +61,7 @@ final readonly class NewTopicController
         }
 
         try {
-            $this->accessUseCase->execute();
+            $section = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
@@ -73,15 +71,9 @@ final readonly class NewTopicController
                     'back_url_name' => __('Go to Section'),
                 ]
             );
-        }
-
-        try {
-            $context = $this->contextUseCase->execute($id);
         } catch (ForumNotFoundException) {
             pageNotFound();
         }
-
-        $section = $context->section;
 
         $flood = $this->tools->antiflood();
         if ($flood) {

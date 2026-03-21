@@ -4,14 +4,31 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\DTO\NewTopicContextDTO;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
+use Johncms\Users\User;
 
 final readonly class GetNewTopicContextUseCase
 {
-    public function execute(int $sectionId): NewTopicContextDTO
+    public function __construct(
+        private User $currentUser,
+    ) {
+    }
+
+    public function execute(int $sectionId): ForumSection
     {
+        $config = config('johncms');
+
+        if (
+            ! $this->currentUser->is_valid
+            || isset($this->currentUser->ban['1'])
+            || isset($this->currentUser->ban['11'])
+            || (! $this->currentUser->rights && $config['mod_forum'] === 3)
+        ) {
+            throw new ForumAccessDeniedException('Access denied to create topic.');
+        }
+
         $section = ForumSection::query()
             ->where('section_type', 1)
             ->where('id', $sectionId)
@@ -21,6 +38,6 @@ final readonly class GetNewTopicContextUseCase
             throw new ForumNotFoundException('Section not found.');
         }
 
-        return new NewTopicContextDTO($section);
+        return $section;
     }
 }
