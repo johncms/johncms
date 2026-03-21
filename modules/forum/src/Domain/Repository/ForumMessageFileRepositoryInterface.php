@@ -36,4 +36,9 @@ interface ForumMessageFileRepositoryInterface
      * @return int[]
      */
     public function getOrphanedFileIds(array $fileIds): array;
+
+    /**
+     * @return int[]
+     */
+    public function getOrphanStorageFileIds(string $pathPrefix, string $createdBefore, int $limit): array;
 }

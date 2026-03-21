@@ -92,4 +92,17 @@ final class ForumMessageFileRepository implements ForumMessageFileRepositoryInte
 
         return array_values(array_diff($fileIds, $linkedIds));
     }
+
+    public function getOrphanStorageFileIds(string $pathPrefix, string $createdBefore, int $limit): array
+    {
+        return Capsule::table('files as f')
+            ->leftJoin('forum_message_files as mf', 'mf.file_id', '=', 'f.id')
+            ->whereNull('mf.file_id')
+            ->where('f.path', 'like', $pathPrefix . '/%')
+            ->where('f.created_at', '<=', $createdBefore)
+            ->orderBy('f.id')
+            ->limit(max(1, $limit))
+            ->pluck('f.id')
+            ->all();
+    }
 }
