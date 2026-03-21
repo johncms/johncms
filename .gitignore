@@ -45,3 +45,4 @@ docker-compose.override.yml
 !/upload/library/images/orig/.gitkeep
 /upload/library/images/small/*
 !/upload/library/images/small/.gitkeep
+/upload/forum_files/*
