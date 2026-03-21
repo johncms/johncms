@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateVoteUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureAddVoteAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAddVoteContextUseCase;
 use Johncms\System\Http\Request;
@@ -24,7 +23,6 @@ final readonly class AddVoteController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureAddVoteAccessUseCase $accessUseCase,
         private GetAddVoteContextUseCase $contextUseCase,
         private CreateVoteUseCase $createVoteUseCase,
         private ForumTopicPathService $topicPathService,
@@ -41,8 +39,7 @@ final readonly class AddVoteController
         }
 
         try {
-            $this->accessUseCase->execute($id);
-            $context = $this->contextUseCase->execute($id);
+            $topicId = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
@@ -90,7 +87,7 @@ final readonly class AddVoteController
                     $answers[] = $text;
                 }
 
-                $this->createVoteUseCase->execute($context->topicId, $voteName, $answers);
+                $this->createVoteUseCase->execute($topicId, $voteName, $answers);
 
                 return $this->render->render(
                     'system::pages/result',
@@ -99,7 +96,7 @@ final readonly class AddVoteController
                         'page_title'    => __('Add Poll'),
                         'type'          => 'alert-success',
                         'message'       => __('Poll added'),
-                        'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                        'back_url'      => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
                         'back_url_name' => __('Continue'),
                     ]
                 );
@@ -112,7 +109,7 @@ final readonly class AddVoteController
                     'page_title'    => __('Add Poll'),
                     'type'          => 'alert-danger',
                     'message'       => __('The required fields are not filled'),
-                    'back_url'      => '/forum/addvote/' . $context->topicId . '/',
+                    'back_url'      => '/forum/addvote/' . $topicId . '/',
                     'back_url_name' => __('Repeat'),
                 ]
             );
@@ -132,8 +129,8 @@ final readonly class AddVoteController
             [
                 'title'      => __('Add File'),
                 'page_title' => __('Add File'),
-                'id'         => $context->topicId,
-                'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                'id'         => $topicId,
+                'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
                 'count_vote' => $countVote,
                 'poll_name'  => htmlentities((string) $this->request->getPost('name_vote', ''), ENT_QUOTES, 'UTF-8'),
                 'votes'      => $votes,
