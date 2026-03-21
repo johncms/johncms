@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsurePostMessageAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -35,7 +34,6 @@ final readonly class ReplyMessageController
         private ForumMessageRepositoryInterface $messageRepository,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsurePostMessageAccessUseCase $accessUseCase,
         private GetReplyMessageContextUseCase $contextUseCase,
         private ReplyMessageUseCase $replyMessageUseCase,
         private ForumTopicPathService $topicPathService,
@@ -61,7 +59,7 @@ final readonly class ReplyMessageController
         }
 
         try {
-            $this->accessUseCase->execute();
+            $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
@@ -73,10 +71,6 @@ final readonly class ReplyMessageController
                     'back_url_name' => __('Back'),
                 ]
             );
-        }
-
-        try {
-            $context = $this->contextUseCase->execute($id);
         } catch (ForumNotFoundException) {
             pageNotFound();
         }
