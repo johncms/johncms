@@ -9,7 +9,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureSubmitVoteAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetSubmitVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\SubmitVoteUseCase;
 use Johncms\System\Http\Request;
@@ -25,7 +24,6 @@ final readonly class SubmitVoteController
         private User $user,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureSubmitVoteAccessUseCase $accessUseCase,
         private GetSubmitVoteContextUseCase $contextUseCase,
         private SubmitVoteUseCase $submitVoteUseCase,
     ) {
@@ -41,7 +39,6 @@ final readonly class SubmitVoteController
         }
 
         try {
-            $this->accessUseCase->execute();
             $voteId = (int) $this->request->getPost('vote', 0);
             $context = $this->contextUseCase->execute($id, $voteId, $this->user->id);
         } catch (ForumAccessDeniedException | ForumValidationException $exception) {
