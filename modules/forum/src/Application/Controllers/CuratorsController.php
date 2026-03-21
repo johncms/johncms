@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureCuratorsAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetCuratorsContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateCuratorsUseCase;
@@ -23,7 +22,6 @@ final readonly class CuratorsController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureCuratorsAccessUseCase $accessUseCase,
         private GetCuratorsContextUseCase $contextUseCase,
         private UpdateCuratorsUseCase $updateCuratorsUseCase,
     ) {
@@ -39,7 +37,6 @@ final readonly class CuratorsController
         }
 
         try {
-            $this->accessUseCase->execute();
             $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
@@ -64,9 +61,9 @@ final readonly class CuratorsController
             );
         }
 
-        $topic = $context->topic;
+        $topic = $context['topic'];
         $start = (int) $this->request->getQuery('start', 0);
-        $total = count($context->candidates);
+        $total = count($context['candidates']);
 
         $selectedUsers = ! empty($topic->curators) ? $topic->curators : [];
         $saved = false;
@@ -80,7 +77,7 @@ final readonly class CuratorsController
 
         $curatorsList = [];
         $curators = [];
-        foreach ($context->candidates as $candidate) {
+        foreach ($context['candidates'] as $candidate) {
             $checked = array_key_exists($candidate['user_id'], $selectedUsers);
             if ($checked) {
                 $curators[$candidate['user_id']] = $candidate['user_name'];
