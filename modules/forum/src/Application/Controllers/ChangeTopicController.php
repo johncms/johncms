@@ -9,7 +9,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureChangeTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -25,7 +24,6 @@ final readonly class ChangeTopicController
         private Request $request,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureChangeTopicAccessUseCase $accessUseCase,
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
     ) {
@@ -51,22 +49,20 @@ final readonly class ChangeTopicController
         }
 
         try {
-            $this->accessUseCase->execute();
-            $context = $this->contextUseCase->execute($id);
-        } catch (ForumAccessDeniedException $exception) {
+            $topic = $this->contextUseCase->execute($id);
+        } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
                 $exception,
                 [
+                    'title'         => __('Change the topic'),
+                    'page_title'    => __('Change the topic'),
+                    'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (ForumNotFoundException) {
-            pageNotFound();
         }
-
-        $topic = $context->topic;
 
         $formData = [
             'name'             => $this->request->getPost('name', $topic->name),
