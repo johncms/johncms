@@ -8,9 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureRestoreTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetRestoreTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\RestoreTopicUseCase;
 use Johncms\System\View\Render;
@@ -24,10 +22,8 @@ final readonly class RestoreTopicController
         private User $user,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private EnsureRestoreTopicAccessUseCase $accessUseCase,
         private GetRestoreTopicContextUseCase $contextUseCase,
         private RestoreTopicUseCase $restoreTopicUseCase,
-        private ForumTopicPathService $topicPathService,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -41,8 +37,7 @@ final readonly class RestoreTopicController
         }
 
         try {
-            $this->accessUseCase->execute();
-            $topicId = $this->contextUseCase->execute($id);
+            $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render(
                 $this->render,
@@ -56,7 +51,7 @@ final readonly class RestoreTopicController
             pageNotFound();
         }
 
-        $this->restoreTopicUseCase->execute($topicId, $this->user->name);
-        redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
+        $this->restoreTopicUseCase->execute($topic->id, $this->user->name);
+        redirect($topic->url);
     }
 }
