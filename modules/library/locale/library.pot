@@ -153,7 +153,7 @@ msgstr ""
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
-#: modules/library/templates/moder.phtml:75
+#: modules/library/templates/moder.phtml:77
 msgid "Tags"
 msgstr ""
 
@@ -162,15 +162,15 @@ msgstr ""
 msgid "Rating articles"
 msgstr ""
 
-#: modules/library/includes/top.php:26
+#: modules/library/includes/top.php:27
 msgid "Most readings"
 msgstr ""
 
-#: modules/library/includes/top.php:31
+#: modules/library/includes/top.php:32
 msgid "By rating"
 msgstr ""
 
-#: modules/library/includes/top.php:36
+#: modules/library/includes/top.php:37
 msgid "By comments"
 msgstr ""
 
@@ -206,28 +206,28 @@ msgstr ""
 #: modules/library/templates/addnew.phtml:53
 #: modules/library/templates/mkdir.phtml:50
 #: modules/library/templates/mkdir.phtml:51
-#: modules/library/templates/moder.phtml:47
-#: modules/library/templates/moder.phtml:48
+#: modules/library/templates/moder.phtml:49
+#: modules/library/templates/moder.phtml:50
 msgid "Title"
 msgstr ""
 
 #: modules/library/templates/addnew.phtml:57
-#: modules/library/templates/moder.phtml:58
+#: modules/library/templates/moder.phtml:60
 msgid "Announce"
 msgstr ""
 
 #: modules/library/templates/addnew.phtml:62
-#: modules/library/templates/moder.phtml:66
+#: modules/library/templates/moder.phtml:68
 msgid "Text"
 msgstr ""
 
 #: modules/library/templates/addnew.phtml:69
-#: modules/library/templates/moder.phtml:124
+#: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
 msgstr ""
 
 #: modules/library/templates/addnew.phtml:74
-#: modules/library/templates/moder.phtml:42
+#: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 
 #: modules/library/templates/addnew.phtml:89
 #: modules/library/templates/mkdir.phtml:70
-#: modules/library/templates/moder.phtml:133
+#: modules/library/templates/moder.phtml:135
 msgid "Save"
 msgstr ""
 
@@ -252,7 +252,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:128
 #: modules/library/templates/del.phtml:140
 #: modules/library/templates/mkdir.phtml:71
-#: modules/library/templates/moder.phtml:134
+#: modules/library/templates/moder.phtml:136
 msgid "Cancel"
 msgstr ""
 
@@ -324,7 +324,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:148
 #: modules/library/templates/del.phtml:157
 #: modules/library/templates/lastcom.phtml:43
-#: modules/library/templates/moder.phtml:138
+#: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
 msgstr ""
@@ -338,7 +338,7 @@ msgid "Move"
 msgstr ""
 
 #: modules/library/templates/del.phtml:53
-#: modules/library/templates/moder.phtml:106
+#: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
 msgstr ""
 
@@ -407,22 +407,22 @@ msgid "Section created"
 msgstr ""
 
 #: modules/library/templates/mkdir.phtml:55
-#: modules/library/templates/moder.phtml:53
+#: modules/library/templates/moder.phtml:55
 msgid "Section description"
 msgstr ""
 
 #: modules/library/templates/mkdir.phtml:59
-#: modules/library/templates/moder.phtml:82
+#: modules/library/templates/moder.phtml:84
 msgid "Section type"
 msgstr ""
 
 #: modules/library/templates/mkdir.phtml:62
-#: modules/library/templates/moder.phtml:85
+#: modules/library/templates/moder.phtml:87
 msgid "Articles"
 msgstr ""
 
 #: modules/library/templates/mkdir.phtml:66
-#: modules/library/templates/moder.phtml:89
+#: modules/library/templates/moder.phtml:91
 msgid "Sections"
 msgstr ""
 
@@ -430,27 +430,27 @@ msgstr ""
 msgid "Changed"
 msgstr ""
 
-#: modules/library/templates/moder.phtml:71
+#: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
 msgstr ""
 
-#: modules/library/templates/moder.phtml:94
+#: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
 msgstr ""
 
-#: modules/library/templates/moder.phtml:97
+#: modules/library/templates/moder.phtml:99
 msgid "Yes"
 msgstr ""
 
-#: modules/library/templates/moder.phtml:101
+#: modules/library/templates/moder.phtml:103
 msgid "No"
 msgstr ""
 
-#: modules/library/templates/moder.phtml:120
+#: modules/library/templates/moder.phtml:122
 msgid "Verified"
 msgstr ""
 
-#: modules/library/templates/moder.phtml:127
+#: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
 msgstr ""
 

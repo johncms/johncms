@@ -3,7 +3,7 @@ msgstr ""
 "X-Domain: album\n"
 
 #: modules/album/includes/comments.php:36
-#: modules/album/index.php:92
+#: modules/album/index.php:93
 msgid "User does not exists"
 msgstr ""
 
@@ -239,12 +239,12 @@ msgstr ""
 msgid "You cannot vote for this photo."
 msgstr ""
 
-#: modules/album/index.php:54
+#: modules/album/index.php:55
 #: modules/album/templates/index.phtml:36
 msgid "Albums"
 msgstr ""
 
-#: modules/album/index.php:76
+#: modules/album/index.php:77
 msgid "For registered users only"
 msgstr ""
 

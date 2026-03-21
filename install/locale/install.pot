@@ -2,30 +2,30 @@ msgid ""
 msgstr ""
 "X-Domain: install\n"
 
-#: install/index.php:62
+#: install/index.php:66
 #: install/steps/step_1.php:23
 msgid "Preparing for installation"
 msgstr ""
 
-#: install/index.php:67
+#: install/index.php:71
 #: install/steps/step_2.php:20
 #: install/steps/step_2.php:21
 msgid "Checking parameters"
 msgstr ""
 
-#: install/index.php:72
+#: install/index.php:76
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
 msgstr ""
 
-#: install/index.php:77
+#: install/index.php:81
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
 msgstr ""
 
-#: install/index.php:82
+#: install/index.php:86
 msgid "Completion"
 msgstr ""
 
@@ -90,36 +90,36 @@ msgstr ""
 msgid "PHP extension fileinfo must be installed"
 msgstr ""
 
-#: install/steps/step_3.php:98
+#: install/steps/step_3.php:99
 msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
 msgstr ""
 
-#: install/steps/step_3.php:99
+#: install/steps/step_3.php:100
 #, php-format
 msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
 msgstr ""
 
-#: install/steps/step_3.php:103
+#: install/steps/step_3.php:104
 msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: install/steps/step_3.php:104
+#: install/steps/step_3.php:105
 msgid "Please contact your hosting provider's technical support to resolve this issue."
 msgstr ""
 
-#: install/steps/step_3.php:108
+#: install/steps/step_3.php:109
 msgid "ERROR: Can't write database.local.php"
 msgstr ""
 
-#: install/steps/step_3.php:114
+#: install/steps/step_3.php:115
 msgid "Invalid database host name"
 msgstr ""
 
-#: install/steps/step_3.php:116
+#: install/steps/step_3.php:117
 msgid "Invalid database user or password"
 msgstr ""
 
-#: install/steps/step_3.php:118
+#: install/steps/step_3.php:119
 msgid "Database does not exist"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" cl
 msgstr ""
 
 #: install/templates/step_5.phtml:12
-msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://johncms.com/documentation/\" class=\"text-underline\">the documentation</a>"
+msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
 msgstr ""
 
 #: install/templates/step_5.phtml:15

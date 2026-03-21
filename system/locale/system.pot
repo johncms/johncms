@@ -4,7 +4,7 @@ msgstr ""
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:49
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:51
 msgid "Forum"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:100
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
 msgstr ""
 
@@ -47,20 +47,20 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:170
-#: system/src/Comments.php:206
-#: system/src/Comments.php:239
-#: system/src/Comments.php:265
-#: system/src/Comments.php:306
-#: system/src/Comments.php:338
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:75
+#: system/src/Comments.php:168
+#: system/src/Comments.php:204
+#: system/src/Comments.php:237
+#: system/src/Comments.php:263
+#: system/src/Comments.php:304
+#: system/src/Comments.php:336
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:62
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Reading the FAQ"
 msgstr ""
 
 #: config/places.global.php:20
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:88
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Select language"
 msgstr ""
 
-#: modules/language/templates/index.phtml:30
+#: modules/language/templates/index.phtml:28
 msgid "Apply"
 msgstr ""
 
@@ -307,36 +307,36 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/index.phtml:44
-#: system/src/Comments.php:174
-#: system/src/Comments.php:210
-#: system/src/Comments.php:223
-#: system/src/Comments.php:243
-#: system/src/Comments.php:269
-#: system/src/Comments.php:310
-#: system/src/Comments.php:322
-#: system/src/Comments.php:342
+#: system/src/Comments.php:172
+#: system/src/Comments.php:208
+#: system/src/Comments.php:221
+#: system/src/Comments.php:241
+#: system/src/Comments.php:267
+#: system/src/Comments.php:308
+#: system/src/Comments.php:320
+#: system/src/Comments.php:340
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
 
-#: system/helpers.php:68
+#: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
-#: system/src-legacy/Bbcode.php:155
+#: system/src-legacy/Bbcode.php:158
 msgid "Added"
 msgstr ""
 
-#: system/src-legacy/Tools.php:171
+#: system/src-legacy/Tools.php:175
 msgid "ERROR"
 msgstr ""
 
-#: system/src-legacy/Tools.php:311
+#: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
 msgstr ""
 
-#: system/src-legacy/Tools.php:502
+#: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
@@ -439,54 +439,54 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:159
-#: system/src/Comments.php:228
-#: system/src/Comments.php:229
+#: system/src/Comments.php:157
+#: system/src/Comments.php:226
+#: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:172
+#: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:241
-#: system/src/Comments.php:340
+#: system/src/Comments.php:239
+#: system/src/Comments.php:338
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:253
-#: system/src/Comments.php:327
-#: system/src/Comments.php:328
+#: system/src/Comments.php:251
+#: system/src/Comments.php:325
+#: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:267
+#: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:352
-#: system/src/Comments.php:392
-#: system/src/Comments.php:393
+#: system/src/Comments.php:350
+#: system/src/Comments.php:390
+#: system/src/Comments.php:391
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:595
+#: system/src/Comments.php:592
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:601
+#: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:601
+#: system/src/Comments.php:598
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:609
+#: system/src/Comments.php:606
 msgid "Message already exists"
 msgstr ""
 
@@ -498,36 +498,36 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
-#: system/src/NavChain.php:58
+#: system/src/NavChain.php:63
 msgid "Home"
 msgstr ""
 
-#: system/src/UserProperties.php:69
+#: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:70
+#: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:71
+#: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:72
+#: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
 msgstr ""
 
-#: system/src/UserProperties.php:73
+#: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
 msgstr ""
 
-#: system/src/UserProperties.php:74
+#: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
 msgstr ""
@@ -674,24 +674,32 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:37
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:111
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:122
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:133
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:142
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:183
+msgid "Set Light Theme"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:183
+msgid "Set Dark Theme"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23

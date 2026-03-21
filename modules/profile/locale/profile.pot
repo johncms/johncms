@@ -2,13 +2,13 @@ msgid ""
 msgstr ""
 "X-Domain: profile\n"
 
-#: modules/profile/includes/activity.php:23
+#: modules/profile/includes/activity.php:25
 #: modules/profile/templates/index.phtml:253
 #: modules/profile/templates/stat.phtml:50
 msgid "Activity"
 msgstr ""
 
-#: modules/profile/includes/activity.php:25
+#: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
 #: modules/profile/includes/guestbook.php:15
 #: modules/profile/includes/images.php:159
@@ -17,22 +17,22 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: modules/profile/includes/activity.php:25
+#: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
 #: modules/profile/includes/images.php:159
 #: modules/profile/includes/index.php:24
 msgid "My Profile"
 msgstr ""
 
-#: modules/profile/includes/activity.php:31
+#: modules/profile/includes/activity.php:33
 msgid "Messages"
 msgstr ""
 
-#: modules/profile/includes/activity.php:36
+#: modules/profile/includes/activity.php:38
 msgid "Themes"
 msgstr ""
 
-#: modules/profile/includes/activity.php:41
+#: modules/profile/includes/activity.php:43
 #: modules/profile/includes/ban.php:392
 #: modules/profile/templates/ban.phtml:45
 #: modules/profile/templates/stat.phtml:54
@@ -161,7 +161,7 @@ msgstr ""
 
 #: modules/profile/includes/ban.php:393
 #: modules/profile/includes/settings.php:45
-#: modules/profile/includes/settings.php:87
+#: modules/profile/includes/settings.php:99
 #: modules/profile/templates/ban.phtml:55
 #: modules/profile/templates/stat.phtml:52
 msgid "Forum"
@@ -437,23 +437,35 @@ msgid "Settings"
 msgstr ""
 
 #: modules/profile/includes/settings.php:40
-#: modules/profile/includes/settings.php:140
+#: modules/profile/includes/settings.php:152
 msgid "General setting"
 msgstr ""
 
 #: modules/profile/includes/settings.php:50
-#: modules/profile/includes/settings.php:58
+#: modules/profile/includes/settings.php:70
 msgid "Mail"
 msgstr ""
 
-#: modules/profile/includes/settings.php:70
-#: modules/profile/includes/settings.php:113
-#: modules/profile/includes/settings.php:195
+#: modules/profile/includes/settings.php:57
+msgid "Auto"
+msgstr ""
+
+#: modules/profile/includes/settings.php:60
+msgid "Light"
+msgstr ""
+
+#: modules/profile/includes/settings.php:63
+msgid "Dark"
+msgstr ""
+
+#: modules/profile/includes/settings.php:82
+#: modules/profile/includes/settings.php:125
+#: modules/profile/includes/settings.php:208
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/profile/includes/settings.php:123
-#: modules/profile/includes/settings.php:200
+#: modules/profile/includes/settings.php:135
+#: modules/profile/includes/settings.php:213
 msgid "Default settings are set"
 msgstr ""
 
@@ -584,7 +596,7 @@ msgstr ""
 #: modules/profile/templates/karma_vote.phtml:66
 #: modules/profile/templates/mail_settings.phtml:57
 #: modules/profile/templates/password.phtml:63
-#: modules/profile/templates/settings.phtml:114
+#: modules/profile/templates/settings.phtml:125
 msgid "Cancel"
 msgstr ""
 
@@ -825,7 +837,7 @@ msgstr ""
 #: modules/profile/templates/images.phtml:59
 #: modules/profile/templates/mail_settings.phtml:56
 #: modules/profile/templates/password.phtml:62
-#: modules/profile/templates/settings.phtml:113
+#: modules/profile/templates/settings.phtml:124
 msgid "Save"
 msgstr ""
 
@@ -862,7 +874,7 @@ msgid "Never"
 msgstr ""
 
 #: modules/profile/templates/forum_settings.phtml:75
-#: modules/profile/templates/settings.phtml:117
+#: modules/profile/templates/settings.phtml:128
 msgid "Reset Settings"
 msgstr ""
 
@@ -1122,11 +1134,15 @@ msgid "Size of Lists"
 msgstr ""
 
 #: modules/profile/templates/settings.phtml:99
-#: modules/profile/templates/settings.phtml:101
+msgid "Theme"
+msgstr ""
+
+#: modules/profile/templates/settings.phtml:110
+#: modules/profile/templates/settings.phtml:112
 msgid "Select Language"
 msgstr ""
 
-#: modules/profile/templates/settings.phtml:106
+#: modules/profile/templates/settings.phtml:117
 msgid "Site Default"
 msgstr ""
 

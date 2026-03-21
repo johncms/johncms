@@ -15,8 +15,8 @@ msgstr ""
 #: modules/downloads/includes/files_moderation.php:34
 #: modules/downloads/includes/files_moderation.php:46
 #: modules/downloads/includes/files_new.php:39
-#: modules/downloads/includes/files_user.php:38
-#: modules/downloads/includes/files_user.php:42
+#: modules/downloads/includes/files_user.php:28
+#: modules/downloads/includes/files_user.php:32
 #: modules/downloads/includes/folder_add.php:36
 #: modules/downloads/includes/folder_add.php:153
 #: modules/downloads/includes/folder_add.php:154
@@ -307,12 +307,12 @@ msgstr ""
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/downloads/includes/files_user.php:25
+#: modules/downloads/includes/files_user.php:15
 #: modules/downloads/includes/top_users.php:42
 msgid "User Files"
 msgstr ""
 
-#: modules/downloads/includes/files_user.php:40
+#: modules/downloads/includes/files_user.php:30
 msgid "User does not exists"
 msgstr ""
 

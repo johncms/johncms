@@ -19,54 +19,54 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:161
+#: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:167
+#: modules/homepage/templates/index.phtml:169
 msgid "Responsive Layout"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:170
+#: modules/homepage/templates/index.phtml:172
 msgid "Your site will appear equally well on both computers and mobile devices."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:177
+#: modules/homepage/templates/index.phtml:179
 msgid "Template System"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:180
+#: modules/homepage/templates/index.phtml:182
 msgid "Using templates, you can completely change the style of your site so that it becomes unique and not like the others."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:187
+#: modules/homepage/templates/index.phtml:189
 msgid "High Performance"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:190
+#: modules/homepage/templates/index.phtml:192
 msgid "When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:197
+#: modules/homepage/templates/index.phtml:199
 msgid "Multilingual"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:200
+#: modules/homepage/templates/index.phtml:202
 msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:209
+#: modules/homepage/templates/index.phtml:211
 msgid "Modularity"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:212
+#: modules/homepage/templates/index.phtml:214
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:216
+#: modules/homepage/templates/index.phtml:218
 msgid "Free License"
 msgstr ""
 
-#: modules/homepage/templates/index.phtml:226
+#: modules/homepage/templates/index.phtml:228
 msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
 msgstr ""

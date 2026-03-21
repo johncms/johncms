@@ -35,7 +35,7 @@ msgstr ""
 #: modules/mail/includes/deluser.php:53
 #: modules/mail/includes/ignor.php:220
 #: modules/mail/includes/index.php:134
-#: modules/mail/includes/input.php:100
+#: modules/mail/includes/input.php:107
 #: modules/mail/includes/output.php:99
 #: modules/mail/includes/write.php:91
 #: modules/mail/templates/messages.phtml:176
@@ -87,7 +87,7 @@ msgstr ""
 #: modules/mail/includes/ignor.php:138
 #: modules/mail/includes/ignor.php:166
 #: modules/mail/includes/index.php:66
-#: modules/mail/includes/input.php:75
+#: modules/mail/includes/input.php:82
 #: modules/mail/includes/output.php:74
 msgid "Continue"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 
 #: modules/mail/includes/ignor.php:216
 #: modules/mail/includes/index.php:130
-#: modules/mail/includes/input.php:96
+#: modules/mail/includes/input.php:103
 #: modules/mail/includes/output.php:95
 msgid "Correspondence"
 msgstr ""
@@ -160,7 +160,7 @@ msgid "Add"
 msgstr ""
 
 #: modules/mail/includes/index.php:138
-#: modules/mail/includes/input.php:104
+#: modules/mail/includes/input.php:111
 #: modules/mail/includes/output.php:103
 msgid "Block User"
 msgstr ""

@@ -2,50 +2,6 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
-#: modules/admin/Controllers/BaseAdminController.php:46
-#: modules/admin/index.php:57
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/ip_whois.phtml:8
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
-msgstr ""
-
-#: modules/admin/Controllers/System/SystemCheckController.php:26
-#: modules/admin/Controllers/System/SystemCheckController.php:27
-#: modules/admin/Controllers/System/SystemCheckController.php:31
-#: modules/admin/templates/sidebar-admin-menu.phtml:233
-msgid "System check"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:34
-#: modules/admin/Controllers/Users/UsersController.php:35
-#: modules/admin/templates/users/captcha.phtml:4
-#: modules/admin/templates/users/captcha.phtml:5
-#: modules/admin/templates/users/login.phtml:4
-#: modules/admin/templates/users/login.phtml:5
-#: modules/admin/templates/users/login.phtml:45
-msgid "Login"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:50
-msgid "You have not entered login"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:54
-msgid "You have not entered password"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:72
-msgid "The security code is not correct"
-msgstr ""
-
-#: modules/admin/Controllers/Users/UsersController.php:116
-#: modules/admin/Controllers/Users/UsersController.php:120
-msgid "Authorization failed"
-msgstr ""
-
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
@@ -275,7 +231,7 @@ msgstr ""
 #: modules/admin/includes/languages/index.php:25
 #: modules/admin/includes/settings.php:24
 #: modules/admin/includes/usr_del.php:22
-#: modules/admin/index.php:65
+#: modules/admin/index.php:58
 #: modules/admin/templates/access.phtml:52
 #: modules/admin/templates/access.phtml:70
 #: modules/admin/templates/access.phtml:88
@@ -306,7 +262,7 @@ msgstr ""
 
 #: modules/admin/includes/antispy.php:206
 #: modules/admin/includes/forum/add.php:45
-#: modules/admin/includes/forum/add.php:119
+#: modules/admin/includes/forum/add.php:167
 #: modules/admin/includes/forum/del.php:35
 #: modules/admin/includes/forum/del.php:70
 #: modules/admin/includes/forum/del.php:89
@@ -316,8 +272,8 @@ msgstr ""
 #: modules/admin/includes/forum/del.php:198
 #: modules/admin/includes/forum/del.php:213
 #: modules/admin/includes/forum/edit.php:45
-#: modules/admin/includes/forum/hposts.php:54
-#: modules/admin/includes/forum/htopics.php:55
+#: modules/admin/includes/forum/hposts.php:55
+#: modules/admin/includes/forum/htopics.php:56
 #: modules/admin/includes/ipban.php:63
 #: modules/admin/includes/ipban.php:239
 #: modules/admin/includes/ipban.php:276
@@ -463,11 +419,11 @@ msgstr ""
 msgid "Invalid ID"
 msgstr ""
 
-#: modules/admin/includes/forum/add.php:63
+#: modules/admin/includes/forum/add.php:109
 msgid "You have not entered Title"
 msgstr ""
 
-#: modules/admin/includes/forum/add.php:67
+#: modules/admin/includes/forum/add.php:113
 #: modules/admin/templates/ads_add.phtml:47
 #: modules/admin/templates/ads_add.phtml:48
 #: modules/admin/templates/counters_add_confirm.phtml:41
@@ -480,11 +436,11 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/admin/includes/forum/add.php:67
+#: modules/admin/includes/forum/add.php:113
 msgid "Invalid length"
 msgstr ""
 
-#: modules/admin/includes/forum/add.php:71
+#: modules/admin/includes/forum/add.php:117
 msgid "Description should be at least 2 characters in length"
 msgstr ""
 
@@ -545,7 +501,7 @@ msgstr ""
 msgid "Edit Section"
 msgstr ""
 
-#: modules/admin/includes/forum/edit.php:119
+#: modules/admin/includes/forum/edit.php:160
 msgid "Please select a valid parent"
 msgstr ""
 
@@ -554,20 +510,20 @@ msgstr ""
 msgid "Hidden posts"
 msgstr ""
 
-#: modules/admin/includes/forum/hposts.php:35
-#: modules/admin/includes/forum/hposts.php:113
+#: modules/admin/includes/forum/hposts.php:36
+#: modules/admin/includes/forum/hposts.php:114
 msgid "by topic"
 msgstr ""
 
-#: modules/admin/includes/forum/hposts.php:39
-#: modules/admin/includes/forum/hposts.php:117
-#: modules/admin/includes/forum/htopics.php:34
-#: modules/admin/includes/forum/htopics.php:108
+#: modules/admin/includes/forum/hposts.php:40
+#: modules/admin/includes/forum/hposts.php:118
+#: modules/admin/includes/forum/htopics.php:35
+#: modules/admin/includes/forum/htopics.php:109
 msgid "by author"
 msgstr ""
 
-#: modules/admin/includes/forum/hposts.php:49
-#: modules/admin/includes/forum/htopics.php:50
+#: modules/admin/includes/forum/hposts.php:50
+#: modules/admin/includes/forum/htopics.php:51
 msgid "Access forbidden"
 msgstr ""
 
@@ -576,8 +532,8 @@ msgstr ""
 msgid "Hidden topics"
 msgstr ""
 
-#: modules/admin/includes/forum/htopics.php:40
-#: modules/admin/includes/forum/htopics.php:112
+#: modules/admin/includes/forum/htopics.php:41
+#: modules/admin/includes/forum/htopics.php:113
 msgid "by section"
 msgstr ""
 
@@ -846,6 +802,50 @@ msgstr ""
 
 #: modules/admin/includes/usr_del.php:44
 msgid "User does not exists"
+msgstr ""
+
+#: modules/admin/index.php:50
+#: modules/admin/src/Application/Controllers/BaseAdminController.php:41
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/ip_whois.phtml:8
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
+#: modules/admin/templates/sidebar-admin-menu.phtml:233
+msgid "System check"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:32
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:33
+#: modules/admin/templates/users/captcha.phtml:4
+#: modules/admin/templates/users/captcha.phtml:5
+#: modules/admin/templates/users/login.phtml:4
+#: modules/admin/templates/users/login.phtml:5
+#: modules/admin/templates/users/login.phtml:45
+msgid "Login"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:48
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:52
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:70
+msgid "The security code is not correct"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:114
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:118
+msgid "Authorization failed"
 msgstr ""
 
 #: modules/admin/templates/access.phtml:36
