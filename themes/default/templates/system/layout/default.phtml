@@ -18,6 +18,13 @@ if ($request->getQuery('setTheme')) {
     $theme->setTheme($setTheme);
     redirect($request->getQueryString(['setTheme']));
 }
+
+$baseTitle = isset($title) ? (string) $title : (string) $config['copyright'];
+$documentTitle = $baseTitle;
+$isHomePage = (string) $request->getUri()->getPath() === '/';
+if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['copyright']) {
+    $documentTitle = $baseTitle . ' | ' . $config['copyright'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
@@ -49,7 +56,7 @@ if ($request->getQuery('setTheme')) {
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
-    <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
+    <title><?= $this->e($documentTitle) ?></title>
 </head>
 <body class="<?= $theme->getCurrentTheme() ?>">
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">

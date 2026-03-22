@@ -83,7 +83,7 @@ final readonly class ForumTopicController
         $this->render->addData(
             [
                 'canonical'   => $result->canonical,
-                'title'       => $result->title,
+                'title'       => $this->buildTopicDocumentTitle($result->title, $page),
                 'page_title'  => $result->title,
                 'keywords'    => $result->viewData['topic']->calculated_meta_keywords,
                 'description' => $result->viewData['topic']->calculated_meta_description,
@@ -136,5 +136,14 @@ final readonly class ForumTopicController
         }
 
         return array_merge($default, $settings);
+    }
+
+    private function buildTopicDocumentTitle(string $topicTitle, int $page): string
+    {
+        if ($page <= 1) {
+            return $topicTitle;
+        }
+
+        return $topicTitle . ' — ' . d__('system', 'Page') . ' ' . $page;
     }
 }
