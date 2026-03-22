@@ -124,8 +124,9 @@ final readonly class ViewForumTopicUseCase
         }
 
         $i = 1;
+        $canReplyInClosedTopic = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
         $messages = $messagesPaginator->getCollection()->map(
-            function (ForumMessage $message) use ($curator, $setForum, $access, &$i, $start, $total): ForumMessage {
+            function (ForumMessage $message) use ($curator, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic): ForumMessage {
                 if (
                     (
                         (($this->currentUser->rights === 3 || $this->currentUser->rights >= 6 || $curator)
@@ -148,7 +149,11 @@ final readonly class ViewForumTopicUseCase
                     $message->can_edit = true;
                 }
 
-                if ($this->currentUser->id !== $message->user_id && $this->currentUser->isValid()) {
+                if (
+                    $this->currentUser->id !== $message->user_id
+                    && $this->currentUser->isValid()
+                    && (! $topic->closed || $canReplyInClosedTopic)
+                ) {
                     $message->reply_url = '/forum/reply-message/' . $message->id . '/?start=' . $start;
                     $message->quote_url = '/forum/reply-message/' . $message->id . '/?start=' . $start . '&amp;quote=1';
                 }

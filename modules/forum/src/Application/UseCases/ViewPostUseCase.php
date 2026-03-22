@@ -68,7 +68,7 @@ final readonly class ViewPostUseCase
 
         $files = $this->getFiles($message);
         $moderation = $this->getModerationInfo($message);
-        $actions = $this->getActions($message->id, $message->user_id, $start);
+        $actions = $this->getActions($message->id, $message->user_id, $start, (bool) $message->topic?->closed);
 
         $page = $this->getMessagePage($message, $forumSettings);
         $backToTopicUrl = $this->topicPathService->getTopicUrl($message->topic, $page);
@@ -142,12 +142,18 @@ final readonly class ViewPostUseCase
         );
     }
 
-    private function getActions(int $postId, ?int $authorId, int $start): PostActionsDTO
+    private function getActions(int $postId, ?int $authorId, int $start, bool $isTopicClosed): PostActionsDTO
     {
         $replyUrl = null;
         $quoteUrl = null;
+        $canReplyInClosedTopic = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
 
-        if ($this->currentUser->isValid() && $authorId !== null && $this->currentUser->id !== $authorId) {
+        if (
+            $this->currentUser->isValid()
+            && $authorId !== null
+            && $this->currentUser->id !== $authorId
+            && (! $isTopicClosed || $canReplyInClosedTopic)
+        ) {
             $replyUrl = '/forum/reply-message/' . $postId . '/?start=' . $start;
             $quoteUrl = '/forum/reply-message/' . $postId . '/?start=' . $start . '&amp;quote=1';
         }
