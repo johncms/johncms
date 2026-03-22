@@ -10,6 +10,8 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewPostUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -21,6 +23,7 @@ final readonly class ShowPostController
         private Render $render,
         private Request $request,
         private User $currentUser,
+        private NavChain $navChain,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewPostUseCase $viewPostUseCase,
@@ -75,6 +78,12 @@ final readonly class ShowPostController
                 'title'      => __('Show post'),
                 'page_title' => __('Show post'),
             ]
+        );
+        $this->navChain->add(__('Forum'), '/forum/');
+        ForumUtils::buildBreadcrumbs(
+            (int) $result['topic']->section_id,
+            (string) $result['topic']->name,
+            (string) $result['topic']->url
         );
 
         return $this->render->render(

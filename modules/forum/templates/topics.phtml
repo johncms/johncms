@@ -85,7 +85,7 @@ $this->layout('system::layout/default');
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
-                <a href="<?= $topic->url ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $topic->name ?></a>
+                <a href="<?= $this->e($topic->url) ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $this->e($topic->name) ?></a>
                 <?php if ($topic->deleted): ?>
                     <div class="ms-3">
                         <span class="badge bg-danger"><?= __('Deleted topic') ?></span>

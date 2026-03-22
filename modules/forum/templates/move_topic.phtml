@@ -31,14 +31,14 @@ $this->layout(
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <div class="mb-2">
         <div><?= __('Category') ?></div>
-        <b><?= $current_section->name ?></b>
+        <b><?= $this->e($current_section->name) ?></b>
     </div>
     <?php if (! empty($current_sections)): ?>
         <div class="form-group">
             <label for="section"><?= __('New section') ?></label>
             <select class="form-control" name="razd" id="section">
                 <?php foreach ($current_sections as $section): ?>
-                    <option value="<?= $section->id ?>"><?= $section->name ?></option>
+                    <option value="<?= $section->id ?>"><?= $this->e($section->name) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -57,7 +57,7 @@ $this->layout(
             <ul class="list-group list-group-flush">
                 <?php foreach ($other_categories as $category): ?>
                     <li class="list-group-item">
-                        <a href="/forum/move-topic/<?= $id ?>/?other=<?= $category->id ?>"><?= $category->name ?></a>
+                        <a href="/forum/move-topic/<?= $id ?>/?other=<?= $category->id ?>"><?= $this->e($category->name) ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

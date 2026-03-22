@@ -37,7 +37,7 @@ $this->layout(
             <div class="shadow border-radius-12 forum-section post-item mb-2">
                 <div class="section-header border-0 pb-0">
                     <div class="d-flex align-items-center">
-                        <a href="<?= $section['url'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
+                        <a href="<?= $this->e($section['url']) ?>" class="text-dark-brown"><?= $this->e($section['name']) ?></a>
                         <span class="badge rounded-pill text-bg-light border ms-3"><?= $section['count'] ?></span>
                     </div>
                 </div>

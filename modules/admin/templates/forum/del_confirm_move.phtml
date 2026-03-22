@@ -30,12 +30,12 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     </div>
 </div>
 <div>
-    <form action="<?= $data['form_action'] ?>" method="post">
+    <form action="<?= $this->e($data['form_action']) ?>" method="post">
         <div class="form-group">
             <label for="category" class="h3 mt-3"><?= __('Category') ?></label>
             <select name="category" id="category" class="form-control">
                 <?php foreach ($data['categories'] as $category): ?>
-                    <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $category['name'] ?></option>
+                    <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $this->e($category['name']) ?></option>
                 <?php endforeach; ?>
             </select>
             <div class="text-muted">
@@ -43,7 +43,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
             </div>
         </div>
         <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Move') ?></button>
-        <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
+        <a href="<?= $this->e($data['back_url']) ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
     </form>
 </div>
 <?php if ($user->rights === 9): ?>

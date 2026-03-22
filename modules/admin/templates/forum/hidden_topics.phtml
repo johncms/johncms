@@ -26,8 +26,8 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 
 <?php if (! empty($data['filtered_by'])): ?>
     <div class="alert alert-warning">
-        <?= __('Filtered:') ?> <?= $data['filtered_by'] ?><br>
-        <a href="<?= $data['reset_filter'] ?>"><?= __('Cancel') ?></a>
+        <?= __('Filtered:') ?> <?= $this->e($data['filtered_by']) ?><br>
+        <a href="<?= $this->e($data['reset_filter']) ?>"><?= __('Cancel') ?></a>
     </div>
 <?php endif; ?>
 
@@ -61,7 +61,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                         <span class="me-1"><?= __('Path:') ?></span>
                         <?php foreach ($item['path'] as $k => $path_item): ?>
                             <?= ($k > 0 ? '<span class="me-1 ms-1"> / </span>' : '') ?>
-                            <a href="<?= $path_item['url'] ?>"><?= $path_item['name'] ?></a>
+                            <a href="<?= $this->e($path_item['url']) ?>"><?= $this->e($path_item['name']) ?></a>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -123,4 +123,4 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     </div>
 <?php endif ?>
 
-<a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+<a href="<?= $this->e($data['back_url']) ?>"><?= __('Back') ?></a>

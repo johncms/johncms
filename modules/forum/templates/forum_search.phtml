@@ -30,7 +30,7 @@ $this->layout(
     <div class="form-group">
         <label for="search_query"><?= __('Search query') ?></label>
         <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
-               name="search" value="<?= $query ?>" maxlength="150" minlength="4" required>
+               name="search" value="<?= $this->e($query) ?>" maxlength="150" minlength="4" required>
         <div class="small text-muted"><?= __('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') ?></div>
     </div>
     <div class="form-group">
@@ -52,7 +52,7 @@ $this->layout(
     <div class="forum-section">
         <div class="section-header">
             <div class="d-flex align-items-center w-100">
-                <a href="<?= $result['topic_url'] ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $result['name'] ?></a>
+                <a href="<?= $this->e($result['topic_url']) ?>" class="section-name flex-grow-1 flex-md-grow-0"><?= $result['name'] ?></a>
             </div>
         </div>
         <div class="small pt-2 text-muted">

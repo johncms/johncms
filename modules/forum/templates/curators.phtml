@@ -26,7 +26,7 @@ $this->layout(
     ]
 );
 ?>
-<h3><?= $topic->name ?></h3>
+<h3><?= $this->e($topic->name) ?></h3>
 <?php if ($saved): ?>
     <div class="alert alert-success"><?= __('Changes saved') ?></div>
 <?php endif; ?>

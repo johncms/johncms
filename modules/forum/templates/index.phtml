@@ -42,7 +42,7 @@ $this->layout(
     <div class="forum-section">
         <div class="section-header">
             <div class="d-flex align-items-center">
-                <a href="<?= $section->url ?>" class="section-name"><?= $section->name ?></a>
+                <a href="<?= $this->e($section->url) ?>" class="section-name"><?= $this->e($section->name) ?></a>
                 <span class="badge rounded-pill counter-badge ms-3"><?= ($section->section_type ? $section->topics_count : $section->subsections_count) ?></span>
             </div>
             <?php if (! empty($section->subsections_count)): ?>
@@ -58,7 +58,7 @@ $this->layout(
             <div class="collapse subsections" id="subsections_<?= $section->id ?>">
                 <div class="pt-2">
                     <?php foreach ($section->subsections as $subsection): ?>
-                        <span class="pe-2">&raquo;</span><a href="<?= $subsection->url ?>" class="text-dark-brown"><?= $subsection->name ?></a><br>
+                        <span class="pe-2">&raquo;</span><a href="<?= $this->e($subsection->url) ?>" class="text-dark-brown"><?= $this->e($subsection->name) ?></a><br>
                     <?php endforeach; ?>
                 </div>
             </div>

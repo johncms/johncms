@@ -35,7 +35,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 <?php endif; ?>
 <form action="<?= $data['form_action'] ?>" method="post">
     <?php if (! empty($data['id'])): ?>
-        <h3><?= __('Parent section:') ?> <?= $data['parent_section_name'] ?></h3>
+        <h3><?= __('Parent section:') ?> <?= $this->e($data['parent_section_name']) ?></h3>
         <input type="hidden" value="<?= $data['id'] ?>" name="id">
     <?php endif; ?>
     <div class="form-group">
@@ -82,6 +82,6 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 
     <div class="mt-3">
         <input type="submit" name="submit" value="<?= __('Add') ?>" class="btn btn-primary">
-        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <a href="<?= $this->e($data['back_url']) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>

@@ -77,7 +77,8 @@ final readonly class ViewForumSearchUseCase
 
         foreach ($rows as $row) {
             if ($searchInTopicNames) {
-                $row['name'] = $this->highlightMany((string) ($row['name'] ?? ''), $searchParts);
+                $safeTopicName = htmlspecialchars((string) ($row['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+                $row['name'] = $this->highlightMany($safeTopicName, $searchParts);
                 $date = $includeDeleted ? (int) ($row['mod_last_post_date'] ?? 0) : (int) ($row['last_post_date'] ?? 0);
                 $row['post_url'] = '';
                 $row['read_more'] = '';
@@ -87,7 +88,7 @@ final readonly class ViewForumSearchUseCase
                 $messageText = (string) ($row['text'] ?? '');
                 $plainMessageText = $this->extractPlainText($messageText);
                 $date = (int) ($row['date'] ?? 0);
-                $row['name'] = (string) ($row['topic_name'] ?? '');
+                $row['name'] = htmlspecialchars((string) ($row['topic_name'] ?? ''), ENT_QUOTES, 'UTF-8');
                 $row['formatted_text'] = $this->buildMessagePreview($plainMessageText, $searchParts);
                 $row['read_more'] = mb_strlen($plainMessageText) > 500 ? '/forum/post/' . (int) ($row['id'] ?? 0) . '/' : '';
                 $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) ($row['topic_id'] ?? 0)) ?? '/forum/';

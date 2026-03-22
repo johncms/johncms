@@ -96,7 +96,7 @@ $errors = $data['errors'];
         <label for="parent" class="h3 mt-3"><?= __('Category') ?></label>
         <select name="parent" id="parent" class="form-control">
             <?php foreach ($data['categories'] as $category): ?>
-                <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $category['name'] ?></option>
+                <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $this->e($category['name']) ?></option>
             <?php endforeach; ?>
         </select>
     </div>
