@@ -50,6 +50,16 @@ $activity = [];
 $purifier = di(\Johncms\Security\HTMLPurifier::class);
 $media = di(MediaEmbed::class);
 $topicPathService = di(ForumTopicPathService::class);
+$prepareForumPreview = static function (string $rawText, int $rights) use ($purifier, $media, $tools): string {
+    $text = $purifier->purify($rawText);
+    $text = $media->embedMedia($text);
+    $text = $tools->smilies($text, $rights > 0);
+    $text = strip_tags($text);
+    $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $text = trim((string) (preg_replace('/\s+/u', ' ', $text) ?? $text));
+
+    return mb_strimwidth($text, 0, 300, '...');
+};
 
 switch ($mod) {
     case 'comments':
@@ -80,8 +90,7 @@ switch ($mod) {
                 $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($user->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . ' ORDER BY `id` ASC LIMIT 1')->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
-                $post['text'] = strip_tags($post['text']);
-                $text = mb_strimwidth($post['text'], 0, 300, '...');
+                $text = $prepareForumPreview((string) ($post['text'] ?? ''), (int) ($post['rights'] ?? 0));
 
                 $row = [
                     'topic_url'     => $topicPathService->getTopicUrlById((int) $res['id']) ?? '/forum/',
@@ -112,8 +121,7 @@ switch ($mod) {
                 $topic = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $topic['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
-                $res['text'] = strip_tags($res['text']);
-                $text = mb_strimwidth($res['text'], 0, 300, '...');
+                $text = $prepareForumPreview((string) ($res['text'] ?? ''), (int) ($res['rights'] ?? 0));
 
                 $row = [
                     'topic_url'     => $topicPathService->getTopicUrlById((int) $topic['id']) ?? '/forum/',

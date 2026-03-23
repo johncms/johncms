@@ -25,7 +25,7 @@ $this->layout(
 
 <div class="btn-group mb-3" role="group">
     <?php foreach ($data['filters'] as $filter): ?>
-        <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
+        <a href="<?= $this->e($filter['url']) ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $this->e($filter['name']) ?></a>
     <?php endforeach; ?>
 </div>
 
