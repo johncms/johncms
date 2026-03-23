@@ -92,7 +92,7 @@ final readonly class NewTopicController
         }
 
         $data = [
-            'name'       => $this->request->getPost('th', '', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]),
+            'name'       => $this->request->getPost('th', ''),
             'message'    => ForumUtils::topicLink($this->request->getPost('msg', '')),
             'csrf_token' => $this->request->getPost('csrf_token', ''),
             'add_files'  => (int) $this->request->getPost('addfiles', 0),
@@ -150,7 +150,7 @@ final readonly class NewTopicController
                     redirect('/forum/addfile/' . $result->messageId . '/');
                 }
 
-                redirect(htmlspecialchars_decode($result->topicUrl));
+                redirect($result->topicUrl);
             }
 
             $errors = $validator->getErrors();

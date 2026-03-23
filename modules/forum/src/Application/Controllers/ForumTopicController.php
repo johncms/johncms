@@ -86,7 +86,10 @@ final readonly class ForumTopicController
                 'title'       => $this->buildTopicDocumentTitle($result->title, $page),
                 'page_title'  => $result->title,
                 'keywords'    => $result->viewData['topic']->calculated_meta_keywords,
-                'description' => $result->viewData['topic']->calculated_meta_description,
+                'description' => $this->buildTopicDescription(
+                    (string) $result->viewData['topic']->calculated_meta_description,
+                    $page
+                ),
             ]
         );
 
@@ -145,5 +148,14 @@ final readonly class ForumTopicController
         }
 
         return $topicTitle . ' — ' . d__('system', 'Page') . ' ' . $page;
+    }
+
+    private function buildTopicDescription(string $description, int $page): string
+    {
+        if ($page <= 1 || $description === '') {
+            return $description;
+        }
+
+        return $description . ' — ' . d__('system', 'Page') . ' ' . $page;
     }
 }

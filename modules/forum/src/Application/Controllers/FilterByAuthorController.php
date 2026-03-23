@@ -69,7 +69,7 @@ final readonly class FilterByAuthorController
         }
 
         $this->navChain->add(__('Forum'), '/forum/');
-        $this->navChain->add(htmlspecialchars_decode($context->topic->name), $context->topic->url);
+        $this->navChain->add($context->topic->name, $context->topic->url);
         $this->navChain->add(__('Filter by author'));
 
         return $this->render->render(

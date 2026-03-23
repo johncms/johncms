@@ -57,8 +57,8 @@ final readonly class ForumSectionController
                 'canonical'   => $result->canonical,
                 'keywords'    => $result->section->calculated_meta_keywords,
                 'description' => $result->section->calculated_meta_description,
-                'title'       => htmlspecialchars_decode($result->section->name),
-                'page_title'  => htmlspecialchars_decode($result->section->name),
+                'title'       => $result->section->name,
+                'page_title'  => $result->section->name,
             ]
         );
 

@@ -231,7 +231,7 @@ final readonly class ViewForumTopicUseCase
                 'poll_data'        => $pollData,
             ],
             canonical: $canonical,
-            title: htmlspecialchars_decode((string) $topic->name),
+            title: (string) $topic->name,
         );
     }
 
