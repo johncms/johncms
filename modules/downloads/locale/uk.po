@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/downloads/includes/bookmark.php:29
 #: modules/downloads/includes/comments.php:31
@@ -67,7 +67,7 @@ msgstr "Тільки для зареєстрованих користувачі�
 #: modules/downloads/includes/bookmark.php:57
 #: modules/downloads/templates/index.phtml:163
 msgid "Favorites"
-msgstr "Улюблені"
+msgstr "Уподобання"
 
 #: modules/downloads/includes/comments.php:27
 #: modules/downloads/includes/comments.php:57
@@ -137,19 +137,19 @@ msgstr "Обов'язкові поля не заповнені"
 #: modules/downloads/includes/folder_add.php:138
 #: modules/downloads/includes/folder_edit.php:98
 msgid "Repeat"
-msgstr "Повторити"
+msgstr "Повторіть"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:38
 #: modules/downloads/includes/fileControl/edit_screen.php:107
 #: modules/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
-msgstr "Додати скріншот"
+msgstr "Завантажити скріншот"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:109
 #: modules/downloads/templates/file_import_result.phtml:34
 #: modules/downloads/templates/file_upload_result.phtml:34
 msgid "Screenshot is attached"
-msgstr "Скріншот додано"
+msgstr "Скріншот прикріплено"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:111
 #: modules/downloads/includes/fileControl/files_more.php:237
@@ -162,13 +162,13 @@ msgstr "Скріншот додано"
 #: modules/downloads/templates/file_import_result.phtml:44
 #: modules/downloads/templates/view.phtml:171
 msgid "Back"
-msgstr "Назад"
+msgstr "Повернутися"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:120
 #: modules/downloads/templates/file_import_result.phtml:36
 #: modules/downloads/templates/file_upload_result.phtml:36
 msgid "Screenshot not attached"
-msgstr "Скріншот не додано"
+msgstr "Скріншот не прикріплено"
 
 #: modules/downloads/includes/fileControl/files_more.php:56
 msgid "Additional files"
@@ -179,7 +179,7 @@ msgstr "Додаткові файли"
 #: modules/downloads/includes/files_import.php:55
 #: modules/downloads/includes/files_import.php:94
 msgid "Invalid Link"
-msgstr "Неправильне посилання"
+msgstr "Невірне посилання"
 
 #: modules/downloads/includes/fileControl/files_more.php:155
 #: modules/downloads/includes/fileControl/files_more.php:252
@@ -198,14 +198,14 @@ msgstr "Занадто великий розмір файлу"
 #: modules/downloads/includes/files_import.php:83
 #: modules/downloads/includes/files_upload.php:78
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
-msgstr "Заборонений тип файлу!<br>Дозволені лише файли, що мають наступні розширення"
+msgstr "Заборонений тип файлу!<br>До завантаження дозволені файли, що мають наступні розширення"
 
 #: modules/downloads/includes/fileControl/files_more.php:233
 #: modules/downloads/includes/fileControl/files_more.php:235
 #: modules/downloads/templates/file_import_result.phtml:32
 #: modules/downloads/templates/file_upload_result.phtml:32
 msgid "File attached"
-msgstr "Файл додано"
+msgstr "Файл прикріплено"
 
 #: modules/downloads/includes/fileControl/files_more.php:242
 #: modules/downloads/includes/fileControl/files_more.php:245
@@ -213,7 +213,7 @@ msgstr "Файл додано"
 #: modules/downloads/includes/files_upload.php:197
 #: modules/downloads/includes/files_upload.php:210
 msgid "File not attached"
-msgstr "Файл не додано"
+msgstr "Файл не прікріплено"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:62
 #: modules/downloads/includes/fileControl/transfer_file.php:119
@@ -271,7 +271,7 @@ msgstr "Файли на модерації"
 
 #: modules/downloads/includes/files_moderation.php:32
 msgid "File accepted"
-msgstr "Файл прийнято"
+msgstr "Файл прийнятий"
 
 #: modules/downloads/includes/files_moderation.php:44
 msgid "All files accepted"
@@ -285,17 +285,17 @@ msgstr "Нові файли"
 #: modules/downloads/includes/files_top.php:25
 #: modules/downloads/includes/files_top.php:37
 msgid "Most Commented"
-msgstr "За коментарями"
+msgstr "Найбільш коментовані"
 
 #: modules/downloads/includes/files_top.php:27
 #: modules/downloads/includes/files_top.php:50
 msgid "Most Downloaded"
-msgstr "За завантаженнями"
+msgstr "Найбільш завантажувані"
 
 #: modules/downloads/includes/files_top.php:29
 #: modules/downloads/includes/files_top.php:44
 msgid "Popular Files"
-msgstr "За рейтингом"
+msgstr "Популярні файли"
 
 #: modules/downloads/includes/files_upload.php:85
 #: modules/downloads/includes/files_upload.php:195
@@ -325,7 +325,7 @@ msgstr "Файли користувача"
 
 #: modules/downloads/includes/files_user.php:30
 msgid "User does not exists"
-msgstr "Такого користувача не існує"
+msgstr "Користувача не існує"
 
 #: modules/downloads/includes/folder_add.php:20
 #: modules/downloads/includes/folder_add.php:32
@@ -345,7 +345,7 @@ msgstr "Неприпустимі символи"
 #: modules/downloads/includes/folder_edit.php:87
 #: modules/downloads/templates/folder_form.phtml:56
 msgid "You can write only the following extensions"
-msgstr "Ви можете вказати тільки такі розширення"
+msgstr "Ви можете писати тільки такі розширення"
 
 #: modules/downloads/includes/folder_add.php:125
 msgid "The Folder is created"
@@ -355,7 +355,7 @@ msgstr "Папку створено"
 #: modules/downloads/templates/file_import_result.phtml:40
 #: modules/downloads/templates/file_upload_result.phtml:46
 msgid "Continue"
-msgstr "Далі"
+msgstr "Продовжити"
 
 #: modules/downloads/includes/folder_add.php:136
 msgid "Error creating categories"
@@ -371,11 +371,11 @@ msgstr "Видалити папку"
 
 #: modules/downloads/includes/folder_delete.php:31
 msgid "Before removing, delete subdirectories"
-msgstr "Перед видаленням, видаліть підпапки"
+msgstr "Перед видаленням видаліть підкаталоги"
 
 #: modules/downloads/includes/folder_edit.php:29
 msgid "Edit Folder"
-msgstr "Редагувати папку"
+msgstr "Редагувати теку"
 
 #: modules/downloads/includes/scan_dir.php:77
 #: modules/downloads/templates/index.phtml:146
@@ -406,7 +406,7 @@ msgstr "Пошук"
 
 #: modules/downloads/includes/search.php:35
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
-msgstr "Неприпустима довжина імені файлу. Дозволено від 3 до 64 символів."
+msgstr "Неприпустима довжина імені файлу. Дозволено не менше 3 і не більше 64 символів."
 
 #: modules/downloads/includes/search.php:82
 #: modules/downloads/includes/search.php:83
@@ -445,7 +445,7 @@ msgstr "Тривалість"
 #: modules/downloads/templates/edit_file_form.phtml:53
 #: modules/downloads/templates/edit_file_form.phtml:54
 msgid "Artist"
-msgstr "Виконавець"
+msgstr "Художник"
 
 #: modules/downloads/includes/view.php:124
 #: modules/downloads/templates/edit_file_form.phtml:58
@@ -525,7 +525,7 @@ msgstr "Список порожній"
 
 #: modules/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
-msgstr "Змінено:"
+msgstr "Відредаговано:"
 
 #: modules/downloads/templates/comments_review.phtml:58
 msgid "Edited"
@@ -596,7 +596,7 @@ msgstr "Зберегти"
 #: modules/downloads/templates/edit_file_form.phtml:31
 #: modules/downloads/templates/edit_file_form.phtml:32
 msgid "Name for display"
-msgstr "Назва для відображення"
+msgstr "Ім'я для відображення"
 
 #: modules/downloads/templates/edit_file_form.phtml:41
 #: modules/downloads/templates/file_upload.phtml:67
@@ -621,7 +621,7 @@ msgstr "Додати скріншот"
 #: modules/downloads/templates/file_upload.phtml:32
 #: modules/downloads/templates/files_more.phtml:52
 msgid "Choose file"
-msgstr "Вибрати файл"
+msgstr "Виберіть файл"
 
 #: modules/downloads/templates/edit_screen.phtml:57
 #: modules/downloads/templates/file_upload.phtml:35
@@ -650,14 +650,14 @@ msgstr "Зберегти як"
 #: modules/downloads/templates/files_more.phtml:67
 #: modules/downloads/templates/import.phtml:40
 msgid "max. 100 characters"
-msgstr "макс. 100 символів"
+msgstr "макс. 100 знаків"
 
 #: modules/downloads/templates/file_upload.phtml:47
 #: modules/downloads/templates/file_upload.phtml:48
 #: modules/downloads/templates/import.phtml:44
 #: modules/downloads/templates/import.phtml:45
 msgid "File Name"
-msgstr "Назва файлу"
+msgstr "Ім’я файлу"
 
 #: modules/downloads/templates/file_upload.phtml:50
 #: modules/downloads/templates/import.phtml:47
@@ -692,7 +692,7 @@ msgstr "Прийняти всі файли"
 
 #: modules/downloads/templates/files_more.phtml:29
 msgid "Current files"
-msgstr "Поточні файли"
+msgstr "Поточний файл"
 
 #: modules/downloads/templates/files_more.phtml:47
 #: modules/downloads/templates/index.phtml:128
@@ -716,7 +716,7 @@ msgstr "Завантажити додатковий файл"
 #: modules/downloads/templates/folder_form.phtml:32
 #: modules/downloads/templates/folder_form.phtml:33
 msgid "Folder name"
-msgstr "Назва папки"
+msgstr "Назва теки"
 
 #: modules/downloads/templates/folder_form.phtml:35
 msgid "Only latin characters and numbers"
@@ -777,7 +777,7 @@ msgstr "Імпорт файлу"
 
 #: modules/downloads/templates/index.phtml:138
 msgid "Section actions"
-msgstr "Дії з розділом"
+msgstr "Розділ дії"
 
 #: modules/downloads/templates/index.phtml:142
 msgid "Update Files"
@@ -818,7 +818,7 @@ msgstr "Поточна папка та всі підпапки"
 #: modules/downloads/templates/scan_dir.phtml:44
 #: modules/downloads/templates/scan_dir.phtml:65
 msgid "Entire Downloads"
-msgstr "Всі Завантаження"
+msgstr "Всього завантажень"
 
 #: modules/downloads/templates/scan_dir.phtml:51
 msgid "Added"
@@ -844,11 +844,11 @@ msgstr "Пошуковий запит"
 
 #: modules/downloads/templates/search.phtml:46
 msgid "Search in description"
-msgstr "Шукати в описі"
+msgstr "Пошук в описі"
 
 #: modules/downloads/templates/search.phtml:72
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max."
-msgstr "Пошук за назвою файлу без врахування регістру.<br>Довжина запиту від 2 до 64 символів"
+msgstr "Пошук по імені файлу і без урахування регістра. тривалість запиту: 2 хв."
 
 #: modules/downloads/templates/search.phtml:78
 msgid "New Search"
@@ -864,7 +864,7 @@ msgstr "Скріншот:"
 
 #: modules/downloads/templates/view.phtml:94
 msgid "File name:"
-msgstr "Файл:"
+msgstr "Ім'я файлу:"
 
 #: modules/downloads/templates/view.phtml:95
 msgid "Uploaded by:"
@@ -872,7 +872,7 @@ msgstr "Завантажено:"
 
 #: modules/downloads/templates/view.phtml:96
 msgid "Downloads:"
-msgstr "Скачано:"
+msgstr "Завантаження:"
 
 #: modules/downloads/templates/view.phtml:97
 msgid "Rating:"
@@ -880,11 +880,11 @@ msgstr "Рейтинг:"
 
 #: modules/downloads/templates/view.phtml:145
 msgid "Actions"
-msgstr "Дії"
+msgstr "Дія"
 
 #: modules/downloads/templates/view.phtml:150
 msgid "Managing Screenshots"
-msgstr "Керування скріншотами"
+msgstr "Управління скріншотами"
 
 #: modules/downloads/templates/view.phtml:152
 msgid "Delete File"
@@ -892,7 +892,7 @@ msgstr "Видалити файл"
 
 #: modules/downloads/templates/view.phtml:162
 msgid "Remove from Favorites"
-msgstr "Видалити з обраних"
+msgstr "Видалити з обраного"
 
 #: modules/downloads/templates/view.phtml:164
 msgid "Add to Favorites"
