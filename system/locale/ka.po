@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "ჩამოტვირთვები"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "სტუმრის წიგნაკი"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -95,7 +95,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
-msgstr ""
+msgstr "შესვლა"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "ენის არჩევა"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "გამოყენება"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "პირადი"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "უსაფრთხოების კოდი არ არის სწორი"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "რეგისტრაცია"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,11 +218,11 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "უარყოფა"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "შეტყობინებები გასუფთავებულია"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
@@ -230,92 +230,92 @@ msgstr ""
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "სტატია გადის მოდერაციას"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "ჩამოტვირთვები გადის მოდერაციას"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "ბანი"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "ფორუმის ახალი პოსტები"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "ელფოსტა"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "კომენტარები"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "პარამეტრები"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "პარამეტრები შენახულია!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "შეტყობინებები"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "ყველა შეტყობინება წაკითხულია"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "სულ"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "შეტყობინებების გასუფთავება"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "ფორუმში წაუკითხავი მესიჯების რაოდენობის ჩვენება"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "შენახვა"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "გადამისამართება გარე ბმულზე"
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "გარე ბმული"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "ყურადღება!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "თქვენ აპირებთ დატოვოთ საიტი და გადახვიდეთ გარე ბმულზე"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "ჩვენი საიტის ადმინისტრაცია პასუხს არ აგებს გარე საიტის შემცველობაზე"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "მკაცრად რეკომენდებულია, რომ გარე საიტებზე არ მიუთითოთ პირადი მონაცემები (მეტსახელი, პაროლი), რომელიც მითითებული გაქვთ საიტზე %s"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "ბმულზე გადასვლა"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "უკან"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "რასაც თქვენ ეძებთ არ არსებობს, ან შეცვლილი აქვს მდებარეობა"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -355,12 +355,12 @@ msgstr[1] ""
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
-msgstr ""
+msgstr "PHP ვერსია"
 
 #: system/src/Checker/SystemChecker.php:34
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "PHP ვერსია  უნდა იყოს %s ან მეტი"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -371,7 +371,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "Yes"
-msgstr ""
+msgstr "კი"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -382,23 +382,23 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "No"
-msgstr ""
+msgstr "არა"
 
 #: system/src/Checker/SystemChecker.php:42
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PHP-ს PDO დამატება უნდა იყოს დაინსტალებული"
 
 #: system/src/Checker/SystemChecker.php:45
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Imagick ან GD დამატება"
 
 #: system/src/Checker/SystemChecker.php:50
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "თქვენ უნდა დააინსტალოთ დამატება  Imagick ან GD"
 
 #: system/src/Checker/SystemChecker.php:53
 msgid "zlib extension"
-msgstr ""
+msgstr "zlib დამატება"
 
 #: system/src/Checker/SystemChecker.php:58
 msgid "PHP extension zlib must be installed"
@@ -406,7 +406,7 @@ msgstr ""
 
 #: system/src/Checker/SystemChecker.php:61
 msgid "mbstring extension"
-msgstr ""
+msgstr "mbstring დამატება"
 
 #: system/src/Checker/SystemChecker.php:66
 msgid "PHP extension mbstring must be installed"
@@ -455,27 +455,27 @@ msgstr ""
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "პასუხი"
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "ადმინისტრატორმა უკვე უპასუხა ამ მესიჯს"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "არასწორი მონაცემები"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "შეცვლა"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "თქვენ ვერ შეცვლით წოდებით თქვენზე უფოსის პოსტს"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -483,11 +483,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "წაშლა"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "ტექსტი ძალიან მოკლეა"
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
@@ -495,57 +495,57 @@ msgstr ""
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "წამი"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "მესიჯი უკვე არსებობს"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "წაუკითხავი"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "უკანასკნელი აქტივობა"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "საწყისი"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
-msgstr ""
+msgstr "ფორუმის მოდერატორი"
 
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "ჩამოტვირთვების მოდერატორი"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "ბიბლიოთეკის მოდერატორი"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
-msgstr ""
+msgstr "სუპერ მოდერატორი"
 
 #: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
-msgstr ""
+msgstr "ადმინისტრატორი"
 
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "ხელმძღვანელი"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "თქვენ გადევთ ბანი"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
@@ -567,7 +567,7 @@ msgstr ""
 #: system/src/Validator/messages.php:37
 #: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
-msgstr ""
+msgstr "მნიშვნელობა აუცილებელია და არ შეიძლება იყოს ცარიელი"
 
 #: system/src/Validator/messages.php:41
 #, php-format
@@ -763,11 +763,11 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
 #: themes/default/templates/system/mail/templates/registration.phtml:27
 msgid "Confirm"
-msgstr ""
+msgstr "დადასტურება"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
+msgstr "თუ თქვენ არ გაგივლიათ რეგისტრაცია ჩვენს საიტზე, მაშინ უგულებელყავით ეს წერილი."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
@@ -781,12 +781,12 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:18
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
 msgid "Your login:"
-msgstr ""
+msgstr "თქველი მეტსახელი:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
 msgid "Your password:"
-msgstr ""
+msgstr "თქვენი პაროლი:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 msgid "The one you specified when registering"
@@ -804,7 +804,7 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password.phtml:9
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
 msgid "Password recovery"
-msgstr ""
+msgstr "პაროლის აღდგენა"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
@@ -817,11 +817,11 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:22
 msgid "Restore"
-msgstr ""
+msgstr "აღდგენა"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:25
 msgid "Link valid for 1 hour"
-msgstr ""
+msgstr "ლინკი ვალიდურია 1 საათის განმავლობაში"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:27
 msgid "If you receive this mail by mistake, just ignore this letter"
