@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -77,7 +77,7 @@ msgstr ""
 #: modules/forum/templates/new_topic.phtml:111
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Back"
-msgstr "Назад"
+msgstr "Повернутися"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:63
 #: modules/forum/src/Application/Controllers/AddFileController.php:97
@@ -87,7 +87,7 @@ msgstr "Додати файл"
 #: modules/forum/src/Application/Controllers/AddFileController.php:64
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
-msgstr "Час відведений для завантаження файлу минув"
+msgstr "Час відведений для вивантаження файлу минув"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:98
 #: modules/forum/src/Application/Controllers/AddFileController.php:99
@@ -97,7 +97,7 @@ msgstr "Час відведений для завантаження файлу �
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
-msgstr "Помилка завантаження файлу"
+msgstr "Помилка додавання файлу"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:101
 #: modules/forum/src/Application/Controllers/AddVoteController.php:113
@@ -157,7 +157,7 @@ msgstr "Додати опитування"
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
-msgstr "Неправильні дані"
+msgstr "Невірні дані"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:98
 msgid "Poll added"
@@ -166,7 +166,7 @@ msgstr "Опитування додано"
 #: modules/forum/src/Application/Controllers/AddVoteController.php:100
 #: modules/forum/src/Application/Controllers/EditVoteController.php:116
 msgid "Continue"
-msgstr "Далі"
+msgstr "Продовжити"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:111
 msgid "The required fields are not filled"
@@ -176,7 +176,7 @@ msgstr "Обов'язкові поля не заповнені"
 #: modules/forum/src/Application/Controllers/EditVoteController.php:145
 #: modules/forum/src/Application/Controllers/EditVoteController.php:157
 msgid "Answer"
-msgstr "Відповісти"
+msgstr "Відповідь"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
@@ -189,7 +189,7 @@ msgstr "Відповісти"
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:126
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:127
 msgid "Delete posts"
-msgstr "Видалити пости"
+msgstr "Видалити останній"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:116
@@ -215,7 +215,7 @@ msgstr "Доступ заборонено"
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:117
 #: modules/forum/templates/topic.phtml:402
 msgid "Change the topic"
-msgstr "Редагувати тему"
+msgstr "Змінити тему"
 
 #: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:51
 #: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:52
@@ -244,7 +244,7 @@ msgstr "Фільтр по автору"
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
-msgstr "Шукає на форумі"
+msgstr "Пошук по форуму"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:55
 #: modules/forum/src/Application/Controllers/CuratorsController.php:56
@@ -348,7 +348,7 @@ msgstr "Опитування видалено"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:57
 msgid "Download file"
-msgstr "Звантажити файл"
+msgstr "Завантаження файлу"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:59
 msgid "File does not exist"
@@ -393,11 +393,11 @@ msgstr "Файли форуму"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
-msgstr "Неприпустима кількість символів"
+msgstr "Невірна довжина"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
-msgstr ""
+msgstr "Останні 10"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
@@ -426,7 +426,7 @@ msgstr "Всі теми відмічені як прочитані"
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:103
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:104
 msgid "Move topic"
-msgstr ""
+msgstr "Перемістити тему"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:70
 #: modules/forum/src/Application/Controllers/NewMessageController.php:84
@@ -526,7 +526,7 @@ msgstr "Всього за період %d годин"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "За вибраний період нового на форумі немає"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
@@ -571,19 +571,19 @@ msgstr ""
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:136
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:156
 msgid "In the forum Main"
-msgstr "На головній сторінці форуму"
+msgstr "На головній форуму"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:88
 msgid "Here, in the List"
-msgstr "Дивиться цей список"
+msgstr "Тут, у списку"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:89
 msgid "Looking forum files"
-msgstr "Дивиться файли форуму"
+msgstr "Перегляд файлів форуму"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:90
 msgid "In the unreads"
-msgstr "Читає непрочитані"
+msgstr "У непрочитаних"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:107
 msgid "In the Category"
@@ -595,16 +595,16 @@ msgstr "У розділі"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
 msgid "Answers in the Topic"
-msgstr "Пише відповідь"
+msgstr "Відповідає в темі"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:146
 msgid "Writes in the Topic"
-msgstr "Пише пост"
+msgstr "Пише в тему"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:149
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:159
 msgid "In the Topic"
-msgstr "Читає"
+msgstr "У темі"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:43
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:71
@@ -621,13 +621,13 @@ msgstr "Модератор форуму"
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:283
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:89
 msgid "Download moderator"
-msgstr "Модератор Завантажень"
+msgstr "Модератор завантажень"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:94
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:284
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
 msgid "Library moderator"
-msgstr "Модератор Бібліотеки"
+msgstr "Модератор бібліотеки"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:95
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:285
@@ -645,11 +645,11 @@ msgstr "Адміністратор"
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:287
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:93
 msgid "Supervisor"
-msgstr "Супервайзер"
+msgstr "Супервізор"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:55
 msgid "File size exceed"
-msgstr "Завеликий розмір файлу"
+msgstr "Вага файлу перевищує"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:61
 msgid "The forbidden file format.<br>You can upload files of the following extension"
@@ -657,7 +657,7 @@ msgstr "Заборонений тип файлу!<br>Дозволені типи
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:29
 msgid "You cannot edit posts of higher administration"
-msgstr "Ви не можете редагувати пости вищого за рангом"
+msgstr "Ви не можете редагувати пости вищої за вас адміністрації"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:37
 msgid "You are trying to change another's post"
@@ -733,7 +733,7 @@ msgstr "Інше"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
-msgstr "Файл додано"
+msgstr "Файл прикріплено"
 
 #: modules/forum/templates/add_file.phtml:32
 msgid "Add more"
@@ -753,7 +753,7 @@ msgstr "Повернутися до теми"
 
 #: modules/forum/templates/add_file.phtml:40
 msgid "Choose file"
-msgstr "Вибрати файл"
+msgstr "Виберіть файл"
 
 #: modules/forum/templates/add_file.phtml:44
 msgid "Max. Size"
@@ -761,7 +761,7 @@ msgstr "Макс. розмір"
 
 #: modules/forum/templates/add_file.phtml:47
 msgid "Upload"
-msgstr "Завантажити"
+msgstr "Завантаження"
 
 #: modules/forum/templates/add_poll.phtml:31
 #: modules/forum/templates/add_poll.phtml:32
@@ -778,7 +778,7 @@ msgstr ""
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
 msgid "Answers"
-msgstr "Відповіді"
+msgstr "Відповідь"
 
 #: modules/forum/templates/add_poll.phtml:43
 #: modules/forum/templates/edit_poll.phtml:53
@@ -805,17 +805,17 @@ msgstr "Зберегти"
 #: modules/forum/templates/change_topic.phtml:29
 #: modules/forum/templates/change_topic.phtml:30
 msgid "Topic name"
-msgstr ""
+msgstr "Назва теми"
 
 #: modules/forum/templates/change_topic.phtml:37
 #: modules/forum/templates/new_topic.phtml:96
 msgid "Meta keywords"
-msgstr "Мета-теги"
+msgstr "Ключові слова"
 
 #: modules/forum/templates/change_topic.phtml:44
 #: modules/forum/templates/new_topic.phtml:92
 msgid "Meta description"
-msgstr "Мета-опис"
+msgstr "Опис"
 
 #: modules/forum/templates/clear_search_history.phtml:28
 msgid "Do you really want to clear the search history?"
@@ -823,7 +823,7 @@ msgstr "Ви дійсно хочете очистити історію пошу�
 
 #: modules/forum/templates/clear_search_history.phtml:31
 msgid "Clear"
-msgstr "Чисто"
+msgstr "Очистити"
 
 #: modules/forum/templates/clear_search_history.phtml:32
 #: modules/forum/templates/delete_answer.phtml:33
@@ -870,7 +870,7 @@ msgstr "Ви дійсно бажаєте видалити?"
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
-msgstr "У разі видалення, лічильник постів форуму зменшиться на 1"
+msgstr "У разі видалення, з лічильника постів форуму зніметься один бал"
 
 #: modules/forum/templates/delete_poll.phtml:29
 msgid "Do you really want to delete a poll?"
@@ -932,7 +932,7 @@ msgstr "Фільтрація дозволить відображати пост�
 
 #: modules/forum/templates/filter_by_author.phtml:64
 msgid "Filter"
-msgstr "Фільтрувати"
+msgstr "Фільтр"
 
 #: modules/forum/templates/filter_by_author.phtml:66
 #: modules/forum/templates/topic.phtml:47
@@ -978,15 +978,15 @@ msgstr "Перейти до повідомлення"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr ""
+msgstr "Історія пошуку"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
-msgstr ""
+msgstr "Очистити історію"
 
 #: modules/forum/templates/header.phtml:22
 msgid "Read only"
-msgstr "Тільки перегляд"
+msgstr "Лише для читання"
 
 #: modules/forum/templates/header.phtml:44
 msgid "Show for Period"
@@ -998,19 +998,19 @@ msgstr "Остання активність"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr ""
+msgstr "Файли"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
-msgstr ""
+msgstr "Категорія"
 
 #: modules/forum/templates/move_topic.phtml:38
 msgid "New section"
-msgstr ""
+msgstr "Новий розділ"
 
 #: modules/forum/templates/move_topic.phtml:47
 msgid "Category is empty"
-msgstr ""
+msgstr "Категорія порожня"
 
 #: modules/forum/templates/move_topic.phtml:51
 msgid "Move"
@@ -1018,11 +1018,11 @@ msgstr "Перемістити"
 
 #: modules/forum/templates/move_topic.phtml:56
 msgid "Other categories"
-msgstr ""
+msgstr "Інші категорії"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
-msgstr "Заголовок"
+msgstr "Назва"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
@@ -1035,7 +1035,7 @@ msgstr "Написати"
 
 #: modules/forum/templates/new_topic.phtml:107
 msgid "Preview"
-msgstr "Попередній перегляд"
+msgstr "Прев'ю"
 
 #: modules/forum/templates/new_topics.phtml:36
 msgid "Period"
@@ -1090,16 +1090,16 @@ msgstr "Відновити"
 
 #: modules/forum/templates/section.phtml:36
 msgid "Section Files"
-msgstr ""
+msgstr "Файли розділу"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr ""
+msgstr "У даній категорії немає розділів"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr "Змінено:"
+msgstr "Відредаговано:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
@@ -1114,12 +1114,12 @@ msgstr "Прикріплені файли"
 #: modules/forum/templates/show_post.phtml:135
 #: modules/forum/templates/topic.phtml:353
 msgid "Reply"
-msgstr "Відповісти"
+msgstr "Відповідь"
 
 #: modules/forum/templates/show_post.phtml:140
 #: modules/forum/templates/topic.phtml:358
 msgid "Quote"
-msgstr "Цитувати"
+msgstr "Цитата"
 
 #: modules/forum/templates/topic.phtml:43
 msgid "Filter by author is activated"
@@ -1152,7 +1152,7 @@ msgstr "Всього голосів"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr "Пост видалено:"
+msgstr "Повідомлень видалено:"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
@@ -1160,11 +1160,11 @@ msgstr "Видалено"
 
 #: modules/forum/templates/topic.phtml:267
 msgid "Post restored by:"
-msgstr "Пост відновив:"
+msgstr "Пост відновлено:"
 
 #: modules/forum/templates/topic.phtml:268
 msgid "Restored"
-msgstr "Відновлено"
+msgstr "Відновити"
 
 #: modules/forum/templates/topic.phtml:369
 msgid "Edit"
@@ -1172,7 +1172,7 @@ msgstr "Редагувати"
 
 #: modules/forum/templates/topic.phtml:384
 msgid "Delete selected"
-msgstr "Видалити обране"
+msgstr "Видалити вибране"
 
 #: modules/forum/templates/topic.phtml:388
 msgid "Actions with topic"
@@ -1212,7 +1212,7 @@ msgstr "Хто тут"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr ""
+msgstr "У даному розділі немає жодної теми"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"
@@ -1225,9 +1225,9 @@ msgstr "Перейти в тему"
 
 #: modules/forum/templates/who.phtml:38
 msgid "Users"
-msgstr "Користувачів"
+msgstr "Користувачі"
 
 #: modules/forum/templates/who.phtml:39
 msgid "Guests"
-msgstr "Гостей"
+msgstr "Гості"
 
