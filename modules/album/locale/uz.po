@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/album/includes/comments.php:36
 #: modules/album/index.php:93
 msgid "User does not exists"
-msgstr ""
+msgstr "Foydalanuvchi mavjud emas"
 
 #: modules/album/includes/comments.php:56
 #: modules/album/includes/image_download.php:37
 msgid "Access forbidden"
-msgstr ""
+msgstr "Ruxsat yo‘q"
 
 #: modules/album/includes/comments.php:74
 #: modules/album/templates/show_one.phtml:119
 msgid "Comments"
-msgstr ""
+msgstr "Sharxlar"
 
 #: modules/album/includes/comments.php:98
 #: modules/album/includes/delete.php:83
@@ -47,238 +47,238 @@ msgstr ""
 #: modules/album/includes/vote.php:35
 #: modules/album/includes/vote.php:95
 msgid "Wrong data"
-msgstr ""
+msgstr "Noto'g'ri ma'lumotlar"
 
 #: modules/album/includes/delete.php:29
 msgid "Delete album:"
-msgstr ""
+msgstr "Albomni o'chirish"
 
 #: modules/album/includes/delete.php:56
 msgid "Album deleted"
-msgstr ""
+msgstr "Albom o‘chirildi"
 
 #: modules/album/includes/delete.php:66
 msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
-msgstr ""
+msgstr "Haqiqatan ham ushbu albomni yo'q qilmoqchimisiz? Agar fotosuratlar bo'lsa, ular ham o'chiriladi."
 
 #: modules/album/includes/edit.php:28
 msgid "Edit Album"
-msgstr ""
+msgstr "Albomni tahrirlash"
 
 #: modules/album/includes/edit.php:49
 #: modules/album/templates/list.phtml:31
 msgid "Create Album"
-msgstr ""
+msgstr "Albom yaratish"
 
 #: modules/album/includes/edit.php:70
 #: modules/album/templates/album_form.phtml:38
 msgid "Title"
-msgstr ""
+msgstr "Sarlavha"
 
 #: modules/album/includes/edit.php:70
 #: modules/album/includes/edit.php:78
 msgid "Invalid length"
-msgstr ""
+msgstr "Juda uzun"
 
 #: modules/album/includes/edit.php:76
 msgid "You have not entered password"
-msgstr ""
+msgstr "Parolni kiritmadingiz"
 
 #: modules/album/includes/edit.php:78
 #: modules/album/templates/album_form.phtml:46
 #: modules/album/templates/enter_password.phtml:38
 msgid "Password"
-msgstr ""
+msgstr "Parol"
 
 #: modules/album/includes/edit.php:89
 msgid "The album already exists"
-msgstr ""
+msgstr "Albom allaqachon mavjud"
 
 #: modules/album/includes/edit.php:155
 msgid "Album successfully changed"
-msgstr ""
+msgstr "Albom muvaffaqiyatli o'zgardi"
 
 #: modules/album/includes/edit.php:155
 msgid "Album successfully created"
-msgstr ""
+msgstr "Albom muvaffaqiyatli yaratildi"
 
 #: modules/album/includes/image_delete.php:25
 msgid "Delete image"
-msgstr ""
+msgstr "Rasmni o`chirish"
 
 #: modules/album/includes/image_delete.php:53
 msgid "Are you sure you want to delete this image?"
-msgstr ""
+msgstr "Haqiqatan ham ushbu rasmni o‘chirmoqchimisiz?"
 
 #: modules/album/includes/image_download.php:46
 msgid "File does not exist"
-msgstr ""
+msgstr "Fayl mavjud emas"
 
 #: modules/album/includes/image_download.php:61
 #: modules/album/templates/show_one.phtml:157
 msgid "Back"
-msgstr ""
+msgstr "Ortga"
 
 #: modules/album/includes/image_edit.php:23
 msgid "Edit image"
-msgstr ""
+msgstr "Rasmni tahrirlash"
 
 #: modules/album/includes/image_edit.php:55
 msgid "Image successfully changed"
-msgstr ""
+msgstr "Rasm muvaffaqiyatli o'zgardi"
 
 #: modules/album/includes/image_edit.php:57
 #: modules/album/includes/image_move.php:62
 #: modules/album/includes/image_move.php:104
 #: modules/album/includes/image_upload.php:134
 msgid "Continue"
-msgstr ""
+msgstr "Davom etish"
 
 #: modules/album/includes/image_move.php:23
 msgid "Move image"
-msgstr ""
+msgstr "Rasmni ko'chirish"
 
 #: modules/album/includes/image_move.php:60
 msgid "Image successfully moved to the selected album"
-msgstr ""
+msgstr "Rasm muvaffaqtiyatli tanlangan albomga ko'chirildi"
 
 #: modules/album/includes/image_move.php:102
 msgid "You must create at least one additional album in order to move the image"
-msgstr ""
+msgstr "Rasmni ko'chirish uchun siz kamida bitta qo'shimcha albom yaratishingiz kerak"
 
 #: modules/album/includes/image_upload.php:28
 msgid "Upload image"
-msgstr ""
+msgstr "Rasm yuklash"
 
 #: modules/album/includes/image_upload.php:57
 msgid "The weight of the file exceeds"
-msgstr ""
+msgstr "Faylning hajmi oshib ketdi"
 
 #: modules/album/includes/image_upload.php:132
 msgid "Image uploaded"
-msgstr ""
+msgstr "Rasm yuklandi"
 
 #: modules/album/includes/list.php:75
 msgid "Your albums"
-msgstr ""
+msgstr "Sizning albomlaringiz"
 
 #: modules/album/includes/list.php:78
 msgid "User albums:"
-msgstr ""
+msgstr "Foydalanuvchi albomlari:"
 
 #: modules/album/includes/list.php:79
 msgid "User albums"
-msgstr ""
+msgstr "Foydalanuvchi albomlari:"
 
 #: modules/album/includes/show.php:61
 msgid "View photo"
-msgstr ""
+msgstr "Rasmni ko‘rish"
 
 #: modules/album/includes/show.php:81
 msgid "Access denied"
-msgstr ""
+msgstr "Kirish rad etildi."
 
 #: modules/album/includes/show.php:83
 #: modules/album/templates/show_one.phtml:158
 msgid "Album List"
-msgstr ""
+msgstr "Albom Ro'yxati"
 
 #: modules/album/includes/show.php:100
 msgid "Incorrect Password"
-msgstr ""
+msgstr "Noto‘g‘ri parol kiritildi."
 
 #: modules/album/includes/show.php:150
 msgid "Photo added to the profile"
-msgstr ""
+msgstr "Rasm profilga qo'shildi"
 
 #: modules/album/includes/top.php:45
 msgid "Unread Comments"
-msgstr ""
+msgstr "O'qilmagan sharxlar"
 
 #: modules/album/includes/top.php:66
 msgid "Recent comments"
-msgstr ""
+msgstr "So'ngi sharxlar"
 
 #: modules/album/includes/top.php:84
 #: modules/album/templates/index.phtml:59
 msgid "Top Views"
-msgstr ""
+msgstr "Eng ko'p ko'rilganlar"
 
 #: modules/album/includes/top.php:100
 #: modules/album/templates/index.phtml:58
 msgid "Top Downloads"
-msgstr ""
+msgstr "Eng ko'p yuklanganlar"
 
 #: modules/album/includes/top.php:116
 #: modules/album/templates/index.phtml:60
 msgid "Top Comments"
-msgstr ""
+msgstr "Eng ko'p sharxlanganlar"
 
 #: modules/album/includes/top.php:132
 #: modules/album/templates/index.phtml:57
 msgid "Top Votes"
-msgstr ""
+msgstr "Eng ko'p ovozlilar"
 
 #: modules/album/includes/top.php:149
 #: modules/album/templates/index.phtml:61
 msgid "Top Worst"
-msgstr ""
+msgstr "Eng past ovozlilar"
 
 #: modules/album/includes/top.php:166
 msgid "New photos"
-msgstr ""
+msgstr "Yangi rasmlar"
 
 #: modules/album/includes/users.php:22
 msgid "List of users"
-msgstr ""
+msgstr "Foydalanuvchilar ro‘yxati"
 
 #: modules/album/includes/users.php:46
 msgid "All"
-msgstr ""
+msgstr "Barcha"
 
 #: modules/album/includes/users.php:51
 #: modules/album/templates/index.phtml:40
 msgid "Guys"
-msgstr ""
+msgstr "Yigitlar"
 
 #: modules/album/includes/users.php:56
 #: modules/album/templates/index.phtml:44
 msgid "Girls"
-msgstr ""
+msgstr "Qizlar"
 
 #: modules/album/includes/vote.php:84
 msgid "You cannot vote for this photo."
-msgstr ""
+msgstr "Bu foto uchun ovoz berish mumkin emas."
 
 #: modules/album/index.php:55
 #: modules/album/templates/index.phtml:36
 msgid "Albums"
-msgstr ""
+msgstr "Albomlar"
 
 #: modules/album/index.php:77
 msgid "For registered users only"
-msgstr ""
+msgstr "Faqat ro'yxatdan o'tgan foydalanuvchilar uchun"
 
 #: modules/album/templates/add_photo.phtml:40
 msgid "Choose file"
-msgstr ""
+msgstr "Faylni tanlang"
 
 #: modules/album/templates/add_photo.phtml:43
 #, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
-msgstr ""
+msgstr "Ruxsat rasm formatlar: JPG, PNG, GIF JPEG<br>Fayl hajmi %d kb dan oshmasligi kerak."
 
 #: modules/album/templates/add_photo.phtml:47
 #: modules/album/templates/album_form.phtml:42
 #: modules/album/templates/edit_photo.phtml:43
 msgid "Description"
-msgstr ""
+msgstr "Tavsif"
 
 #: modules/album/templates/add_photo.phtml:51
 #: modules/album/templates/album_form.phtml:66
 #: modules/album/templates/edit_photo.phtml:47
 msgid "Save"
-msgstr ""
+msgstr "Saqlash"
 
 #: modules/album/templates/add_photo.phtml:52
 #: modules/album/templates/album_form.phtml:67
@@ -287,153 +287,153 @@ msgstr ""
 #: modules/album/templates/image_delete.phtml:34
 #: modules/album/templates/move_photo.phtml:39
 msgid "Cancel"
-msgstr ""
+msgstr "Bekor"
 
 #: modules/album/templates/album_form.phtml:50
 msgid "Access"
-msgstr ""
+msgstr "Kirish huquqi"
 
 #: modules/album/templates/album_form.phtml:54
 msgid "Everyone"
-msgstr ""
+msgstr "Hamma"
 
 #: modules/album/templates/album_form.phtml:58
 msgid "With Password"
-msgstr ""
+msgstr "Parol Bilan"
 
 #: modules/album/templates/album_form.phtml:62
 msgid "Only for me"
-msgstr ""
+msgstr "Faqat men uchun"
 
 #: modules/album/templates/enter_password.phtml:36
 msgid "You must type a password to view this album"
-msgstr ""
+msgstr "Ushbu albomni ko'rish uchun parolni kiritish kerak"
 
 #: modules/album/templates/enter_password.phtml:44
 msgid "Enter"
-msgstr ""
+msgstr "Kirish"
 
 #: modules/album/templates/image_delete.phtml:33
 #: modules/album/templates/list.phtml:53
 #: modules/album/templates/show_one.phtml:138
 msgid "Delete"
-msgstr ""
+msgstr "O‘chirish"
 
 #: modules/album/templates/index.phtml:28
 msgid "New Photos"
-msgstr ""
+msgstr "Yangi Rasmlar"
 
 #: modules/album/templates/index.phtml:32
 msgid "New Comments"
-msgstr ""
+msgstr "Yangi sharxlar"
 
 #: modules/album/templates/index.phtml:49
 msgid "My Album"
-msgstr ""
+msgstr "Mening Albomim"
 
 #: modules/album/templates/index.phtml:54
 #: modules/album/templates/show_one.phtml:73
 msgid "Rating"
-msgstr ""
+msgstr "Reyting"
 
 #: modules/album/templates/list.phtml:50
 msgid "Up"
-msgstr ""
+msgstr "Yuqoriga"
 
 #: modules/album/templates/list.phtml:51
 msgid "Down"
-msgstr ""
+msgstr "Pastga"
 
 #: modules/album/templates/list.phtml:52
 #: modules/album/templates/show_one.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "Tahrirlash"
 
 #: modules/album/templates/move_photo.phtml:29
 msgid "Select Album"
-msgstr ""
+msgstr "Albomni tanlang"
 
 #: modules/album/templates/move_photo.phtml:38
 #: modules/album/templates/show_one.phtml:137
 msgid "Move"
-msgstr ""
+msgstr "Ko‘chirib o‘tkazish"
 
 #: modules/album/templates/show.phtml:33
 #: modules/album/templates/show_one.phtml:35
 #: modules/album/templates/top.phtml:33
 #: modules/album/templates/users.phtml:37
 msgid "The list is empty"
-msgstr ""
+msgstr "Ro‘yxat bo‘sh"
 
 #: modules/album/templates/show.phtml:42
 msgid "Add image"
-msgstr ""
+msgstr "Surat qo‘shish"
 
 #: modules/album/templates/show.phtml:60
 #: modules/album/templates/top.phtml:49
 msgid "User:"
-msgstr ""
+msgstr "Foydalanuvchi"
 
 #: modules/album/templates/show.phtml:63
 #: modules/album/templates/top.phtml:52
 msgid "Album:"
-msgstr ""
+msgstr "Albom:"
 
 #: modules/album/templates/show.phtml:127
 #: modules/album/templates/show_one.phtml:153
 #: modules/album/templates/top.phtml:116
 msgid "Total"
-msgstr ""
+msgstr "Jami"
 
 #: modules/album/templates/show_one.phtml:51
 msgid "Photo"
-msgstr ""
+msgstr "Fotosurat"
 
 #: modules/album/templates/show_one.phtml:63
 msgid "Views"
-msgstr ""
+msgstr "Ko'rishlar"
 
 #: modules/album/templates/show_one.phtml:64
 msgid "Downloads"
-msgstr ""
+msgstr "Yuklab olishlar"
 
 #: modules/album/templates/show_one.phtml:65
 msgid "Date"
-msgstr ""
+msgstr "Sana"
 
 #: modules/album/templates/show_one.phtml:67
 msgid "User"
-msgstr ""
+msgstr "Foydalanuvchi"
 
 #: modules/album/templates/show_one.phtml:70
 msgid "Album"
-msgstr ""
+msgstr "Albom"
 
 #: modules/album/templates/show_one.phtml:111
 msgid "Download"
-msgstr ""
+msgstr "Yuklab olish"
 
 #: modules/album/templates/show_one.phtml:127
 msgid "Actions"
-msgstr ""
+msgstr "Harakatlar"
 
 #: modules/album/templates/show_one.phtml:133
 msgid "Add to Profile"
-msgstr ""
+msgstr "Profilga qo'shish"
 
 #: modules/album/templates/user_row.phtml:33
 msgid "album"
 msgid_plural "albums"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Albom"
+msgstr[1] "Albomlar"
 
 #: modules/album/templates/user_row.phtml:34
 msgid "photo"
 msgid_plural "photos"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Foto"
+msgstr[1] "Fotolar"
 
 #: modules/album/templates/users.phtml:51
 msgid "Total:"
-msgstr ""
+msgstr "Jami"
 
