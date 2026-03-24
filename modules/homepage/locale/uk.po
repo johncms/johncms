@@ -11,74 +11,74 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 13:17\n"
 
 #: modules/homepage/templates/index.phtml:13
 msgid "Free, Open Source content management system"
-msgstr ""
+msgstr "Безкоштовна система управління контентом з відкритим кодом"
 
 #: modules/homepage/templates/index.phtml:20
 msgid "Download"
-msgstr ""
+msgstr "Завантажити"
 
 #: modules/homepage/templates/index.phtml:26
 msgid "Documentation"
-msgstr ""
+msgstr "Документація"
 
 #: modules/homepage/templates/index.phtml:53
 #: modules/homepage/templates/index.phtml:137
 msgid "News"
-msgstr ""
+msgstr "Новини"
 
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
-msgstr ""
+msgstr "Особливості"
 
 #: modules/homepage/templates/index.phtml:169
 msgid "Responsive Layout"
-msgstr ""
+msgstr "Адаптивна розмітка "
 
 #: modules/homepage/templates/index.phtml:172
 msgid "Your site will appear equally well on both computers and mobile devices."
-msgstr ""
+msgstr "Ваш сайт буде однаково добре виглядати як на комп'ютерах, так і на мобільних пристроях."
 
 #: modules/homepage/templates/index.phtml:179
 msgid "Template System"
-msgstr ""
+msgstr "Система шаблонів"
 
 #: modules/homepage/templates/index.phtml:182
 msgid "Using templates, you can completely change the style of your site so that it becomes unique and not like the others."
-msgstr ""
+msgstr "Використовуючи шаблони, ви можете повністю змінити стиль вашого сайту, щоб він став унікальним і не схожим на інші."
 
 #: modules/homepage/templates/index.phtml:189
 msgid "High Performance"
-msgstr ""
+msgstr "Висока продуктивність"
 
 #: modules/homepage/templates/index.phtml:192
 msgid "When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible."
-msgstr ""
+msgstr "Під час розробки JohnCMS ми приділяємо особливу увагу продуктивності системи.<br>Ваш сайт працюватиме швидко навіть на найдешевшому хостингу"
 
 #: modules/homepage/templates/index.phtml:199
 msgid "Multilingual"
-msgstr ""
+msgstr "Багатомовність"
 
 #: modules/homepage/templates/index.phtml:202
 msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
-msgstr ""
+msgstr "Досягніть максимального охоплення на різних мовах. У систему вже вбудовано декілька популярних мов. А якщо у нас немає потрібної мови, ви можете легко додати її, використовуючи сучасні інструменти перекладу, які підтримують johnCMS."
 
 #: modules/homepage/templates/index.phtml:211
 msgid "Modularity"
-msgstr ""
+msgstr "Модульність"
 
 #: modules/homepage/templates/index.phtml:214
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
-msgstr ""
+msgstr "Найбільш популярні модулі вже вбудовані в систему.<br>Ви можете встановити додаткові готові модулі, створити їх самостійно або замовити розробку нових модулів у інших розробників."
 
 #: modules/homepage/templates/index.phtml:218
 msgid "Free License"
-msgstr ""
+msgstr "Безкоштовна ліцензія"
 
 #: modules/homepage/templates/index.phtml:228
 msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
-msgstr ""
+msgstr "Ліцензія GNU GPL-3 надає вам право поширювати та змінювати JohnCMS."
 
