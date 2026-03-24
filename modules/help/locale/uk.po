@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
@@ -40,7 +40,7 @@ msgstr "Аватар успішно встановлений"
 
 #: modules/help/includes/avatars.php:39
 msgid "Continue"
-msgstr "Далі"
+msgstr "Продовжити"
 
 #: modules/help/includes/avatars.php:48
 msgid "An error occurred"
@@ -56,7 +56,7 @@ msgstr "Виникла помилка"
 #: modules/help/templates/smiles.phtml:48
 #: modules/help/templates/smiles_list.phtml:88
 msgid "Back"
-msgstr "Назад"
+msgstr "Повернутися"
 
 #: modules/help/includes/avatars.php:55
 msgid "Set to Profile"
@@ -64,7 +64,7 @@ msgstr "Встановити до профілю"
 
 #: modules/help/includes/avatars.php:58
 msgid "Are you sure you want to set yourself this avatar?"
-msgstr "Ви впевнені, що хочете встановити собі цей аватар?"
+msgstr "Ви дійсно хочете встановити собі цей аватар?"
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
@@ -83,7 +83,7 @@ msgstr "Мої смайли"
 
 #: modules/help/includes/smilies.php:19
 msgid "Smiles"
-msgstr "Смайли"
+msgstr "Смайлики"
 
 #: modules/help/includes/tags.php:15
 #: modules/help/templates/index.phtml:29
@@ -162,7 +162,7 @@ msgstr "PHP код"
 
 #: modules/help/templates/bbcode.phtml:33
 msgid "Link name"
-msgstr "Назва посилання"
+msgstr "Ім'я посилання"
 
 #: modules/help/templates/bbcode.phtml:34
 msgid "URL Link"
@@ -178,7 +178,7 @@ msgstr "Курсив"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
-msgstr "Підкреслений"
+msgstr "Підкреслення"
 
 #: modules/help/templates/bbcode.phtml:50
 msgid "Strike"
@@ -210,11 +210,11 @@ msgstr "Цитата"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
-msgstr "Маркований список"
+msgstr "Маркірований список"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Title"
-msgstr "Заголовок"
+msgstr "Назва"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Text"
@@ -250,7 +250,7 @@ msgstr "Повідомлення, явно ображаючі когось, ос
 
 #: modules/help/templates/forum_rules.phtml:32
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
-msgstr "Навмисно спотворювати написання нікнеймів інших користувачів з метою додання повідомленню образливого змісту"
+msgstr "Навмисно спотворювати написання ників інших користувачів з метою додання повідомленню образливого відтінку"
 
 #: modules/help/templates/forum_rules.phtml:33
 msgid "Publishing deleted by moderator messages repeatedly"
@@ -290,7 +290,7 @@ msgstr "Публікувати повідомлення, які містять �
 
 #: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages written in translite"
-msgstr "Писати повідомлення, написані транслітом"
+msgstr "Відправляти повідомлення, написані транслітом"
 
 #: modules/help/templates/forum_rules.phtml:49
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
