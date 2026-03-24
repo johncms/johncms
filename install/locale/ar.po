@@ -11,30 +11,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: install/index.php:66
 #: install/steps/step_1.php:23
 msgid "Preparing for installation"
-msgstr ""
+msgstr "يتم الآن البدء في التثبيت..."
 
 #: install/index.php:71
 #: install/steps/step_2.php:20
 #: install/steps/step_2.php:21
 msgid "Checking parameters"
-msgstr ""
+msgstr "مسح المعلمات"
 
 #: install/index.php:76
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
-msgstr ""
+msgstr "قواعد البيانات"
 
 #: install/index.php:81
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
-msgstr ""
+msgstr "المشهدد"
 
 #: install/index.php:86
 msgid "Completion"
