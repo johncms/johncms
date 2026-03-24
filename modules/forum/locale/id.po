@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -77,17 +77,17 @@ msgstr ""
 #: modules/forum/templates/new_topic.phtml:111
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:63
 #: modules/forum/src/Application/Controllers/AddFileController.php:97
 msgid "Add file"
-msgstr ""
+msgstr "Tambahkan file"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:64
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
-msgstr ""
+msgstr "Batas waktu untuk mengunggah berkas telah habis"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:98
 #: modules/forum/src/Application/Controllers/AddFileController.php:99
@@ -97,7 +97,7 @@ msgstr ""
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
-msgstr ""
+msgstr "Gagal mengunggah berkas"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:101
 #: modules/forum/src/Application/Controllers/AddVoteController.php:113
@@ -105,7 +105,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:67
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:139
 msgid "Repeat"
-msgstr ""
+msgstr "Ulangi"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:114
 #: modules/forum/src/Application/Controllers/AddFileController.php:115
@@ -116,7 +116,7 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:136
 #: modules/forum/templates/topic.phtml:448
 msgid "Add File"
-msgstr ""
+msgstr "Tambahkan Berkas"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:57
 #: modules/forum/src/Application/Controllers/AddVoteController.php:58
@@ -126,7 +126,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/AddVoteController.php:109
 #: modules/forum/templates/topic.phtml:395
 msgid "Add Poll"
-msgstr ""
+msgstr "Tambahkan tanggapan"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:59
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:73
@@ -157,26 +157,26 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
-msgstr ""
+msgstr "Data salah"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:98
 msgid "Poll added"
-msgstr ""
+msgstr "Tanggapan ditambahkan"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:100
 #: modules/forum/src/Application/Controllers/EditVoteController.php:116
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:111
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Kolom yang dibutuhkan kosong"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:122
 #: modules/forum/src/Application/Controllers/EditVoteController.php:145
 #: modules/forum/src/Application/Controllers/EditVoteController.php:157
 msgid "Answer"
-msgstr ""
+msgstr "Balasan"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
@@ -189,16 +189,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:126
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:127
 msgid "Delete posts"
-msgstr ""
+msgstr "Menghapus posting"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:116
 msgid "You did not choose something to delete"
-msgstr ""
+msgstr "Anda tidak memilih pos yang akan dihapus"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:102
 msgid "Marked posts are deleted"
-msgstr ""
+msgstr "Pos ditandai berhasil dihapus"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:42
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:44
@@ -207,7 +207,7 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
-msgstr ""
+msgstr "Akses ditolak"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:58
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:59
@@ -234,7 +234,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:83
 #: modules/forum/templates/topic.phtml:478
 msgid "Filter by author"
-msgstr ""
+msgstr "Saring berdasarkan penulis"
 
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:47
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:48
@@ -244,7 +244,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
-msgstr ""
+msgstr "Pencarian forum"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:55
 #: modules/forum/src/Application/Controllers/CuratorsController.php:56
@@ -254,13 +254,13 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:65
 #: modules/forum/templates/topic.phtml:467
 msgid "Curators"
-msgstr ""
+msgstr "Kurator"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:57
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:66
 #: modules/forum/src/Application/ForumUtils.php:71
 msgid "Topic has been deleted or does not exists"
-msgstr ""
+msgstr "Topik tidak tersedia"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:54
 #: modules/forum/src/Application/Controllers/DeletePostController.php:65
@@ -271,14 +271,14 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/RestorePostController.php:54
 #: modules/forum/src/Application/Controllers/RestorePostController.php:65
 msgid "Error"
-msgstr ""
+msgstr "Kesalahan"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:55
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:58
 #: modules/forum/src/Application/Controllers/EditPostController.php:59
 #: modules/forum/src/Application/Controllers/RestorePostController.php:55
 msgid "Message does not exists or has been deleted"
-msgstr ""
+msgstr "Pesan tidak tersedia"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:57
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:60
@@ -320,19 +320,19 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeletePostController.php:101
 #: modules/forum/src/Application/Controllers/DeletePostController.php:102
 msgid "Delete Message"
-msgstr ""
+msgstr "Hapus pesan"
 
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:86
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:102
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:103
 msgid "Delete file"
-msgstr ""
+msgstr "Menghapus file"
 
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:88
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:89
 #: modules/forum/templates/topic.phtml:414
 msgid "Delete Topic"
-msgstr ""
+msgstr "Hapus Topik"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
@@ -340,31 +340,31 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:83
 #: modules/forum/templates/topic.phtml:393
 msgid "Delete Poll"
-msgstr ""
+msgstr "Hapus tanggapan"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:72
 msgid "Poll deleted"
-msgstr ""
+msgstr "Tanggapan dihapus"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:57
 msgid "Download file"
-msgstr ""
+msgstr "Unduh berkas"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:59
 msgid "File does not exist"
-msgstr ""
+msgstr "Berkas tidak ada"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:84
 #: modules/forum/src/Application/Controllers/EditPostController.php:101
 #: modules/forum/src/Application/Controllers/EditPostController.php:125
 #: modules/forum/src/Application/Controllers/EditPostController.php:126
 msgid "Edit Message"
-msgstr ""
+msgstr "Sunting Pesan"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
 msgid "You have not entered the message"
-msgstr ""
+msgstr "Anda belum memasukkan pesan"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:59
 #: modules/forum/src/Application/Controllers/EditVoteController.php:60
@@ -374,30 +374,30 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/EditVoteController.php:166
 #: modules/forum/templates/topic.phtml:392
 msgid "Edit Poll"
-msgstr ""
+msgstr "Sunting tanggapan"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:79
 #: modules/forum/src/Application/Controllers/EditVoteController.php:80
 msgid "Delete Answer"
-msgstr ""
+msgstr "Menghapus Jawaban"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:114
 msgid "Poll changed"
-msgstr ""
+msgstr "Tanggah disunting"
 
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:56
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:57
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:113
 msgid "Forum Files"
-msgstr ""
+msgstr "Berkas Forum"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
-msgstr ""
+msgstr "Panjang tidak valid"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
-msgstr ""
+msgstr "10 topik terakhir"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
@@ -408,7 +408,7 @@ msgstr ""
 #: modules/forum/templates/files_sections.phtml:49
 #: modules/forum/templates/filter_by_author.phtml:41
 msgid "The list is empty"
-msgstr ""
+msgstr "Daftar ini kosong"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:50
@@ -417,16 +417,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:54
 #: modules/forum/templates/header.phtml:31
 msgid "Unread"
-msgstr ""
+msgstr "Belum dibaca"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:67
 msgid "All topics marked as read"
-msgstr ""
+msgstr "Semua topik ditandai telah dibaca"
 
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:103
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:104
 msgid "Move topic"
-msgstr ""
+msgstr "Pindah topik"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:70
 #: modules/forum/src/Application/Controllers/NewMessageController.php:84
@@ -443,34 +443,34 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:148
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:162
 msgid "New message"
-msgstr ""
+msgstr "Tulis pesan"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:89
 msgid "You cannot write in a closed topic"
-msgstr ""
+msgstr "Anda tidak dapat menulis di topik tertutup"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:100
 #: modules/forum/src/Application/Controllers/NewTopicController.php:87
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:116
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Anda tidak dapat mengirim pesan terlalu sering<br> mohon tunggu %d detik."
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:122
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
 msgid "Text is too short"
-msgstr ""
+msgstr "Isi terlalu pendek"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:136
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:164
 msgid "Message already exists"
-msgstr ""
+msgstr "Pesan sudah ada"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:60
 #: modules/forum/src/Application/Controllers/NewTopicController.php:73
 msgid "Go to Section"
-msgstr ""
+msgstr "Ke bagian"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:85
 #: modules/forum/src/Application/Controllers/NewTopicController.php:164
@@ -478,25 +478,25 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/NewTopicController.php:169
 #: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
-msgstr ""
+msgstr "Topik baru"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:71
 #: modules/forum/src/Application/Controllers/PollVotersController.php:79
 msgid "Who voted in the poll"
-msgstr ""
+msgstr "Yang menanggapi tanggapan"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:88
 msgid "No one has voted in this poll yet"
-msgstr ""
+msgstr "Tidak ada tanggapan"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:102
 msgid "You can not reply to your own message"
-msgstr ""
+msgstr "Anda tidak bisa membalas pesan anda sendiri"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:214
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:215
 msgid "Reply to message"
-msgstr ""
+msgstr "Membalas pesan"
 
 #: modules/forum/src/Application/Controllers/RestorePostController.php:83
 #: modules/forum/src/Application/Controllers/RestorePostController.php:99
@@ -506,27 +506,27 @@ msgstr ""
 
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:85
 msgid "You have not selected any author"
-msgstr ""
+msgstr "Anda belum memilih penulis"
 
 #: modules/forum/src/Application/Controllers/ShowPostController.php:40
 #: modules/forum/src/Application/Controllers/ShowPostController.php:63
 #: modules/forum/src/Application/Controllers/ShowPostController.php:75
 #: modules/forum/src/Application/Controllers/ShowPostController.php:76
 msgid "Show post"
-msgstr ""
+msgstr "Tampilkan posting"
 
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
 msgid "Vote accepted"
-msgstr ""
+msgstr "Tanggapan diterima"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
 #, php-format
 msgid "All for period %d hours"
-msgstr ""
+msgstr "Semua riwayat untuk %d jam"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "Untuk jangka waktu yang dipilih tidak ada yang baru di forum"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
@@ -542,23 +542,23 @@ msgstr ""
 #: modules/forum/templates/section.phtml:68
 #: modules/forum/templates/topics.phtml:123
 msgid "Who in Forum"
-msgstr ""
+msgstr "Yang di Forum"
 
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:52
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:76
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:86
 #: modules/forum/templates/who.phtml:32
 msgid "Who in Topic"
-msgstr ""
+msgstr "Yang di topik"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:49
 msgid "For registered users only"
-msgstr ""
+msgstr "Hanya untuk pengguna terdaftar"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:50
 #: modules/forum/templates/header.phtml:20
 msgid "Forum is closed"
-msgstr ""
+msgstr "Forum ditutup"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:54
 msgid "Search query must be between 2 and 64 characters"
@@ -571,137 +571,137 @@ msgstr ""
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:136
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:156
 msgid "In the forum Main"
-msgstr ""
+msgstr "Di Forum Utama"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:88
 msgid "Here, in the List"
-msgstr ""
+msgstr "Disini, di daftar aktif"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:89
 msgid "Looking forum files"
-msgstr ""
+msgstr "Melihat berkas forum"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:90
 msgid "In the unreads"
-msgstr ""
+msgstr "Di belum dibaca"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:107
 msgid "In the Category"
-msgstr ""
+msgstr "Di kategori"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:117
 msgid "In the Section"
-msgstr ""
+msgstr "Di bagian"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
 msgid "Answers in the Topic"
-msgstr ""
+msgstr "Balasan di topik"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:146
 msgid "Writes in the Topic"
-msgstr ""
+msgstr "Menulis topik"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:149
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:159
 msgid "In the Topic"
-msgstr ""
+msgstr "Di topik"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:43
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:71
 msgid "Guest"
-msgstr ""
+msgstr "Pengunjung"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:92
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:282
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:88
 msgid "Forum moderator"
-msgstr ""
+msgstr "Moderator Forum"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:93
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:283
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:89
 msgid "Download moderator"
-msgstr ""
+msgstr "Moderator Unduhan"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:94
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:284
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
 msgid "Library moderator"
-msgstr ""
+msgstr "Moderator Perpustakaan"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:95
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:285
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:91
 msgid "Super moderator"
-msgstr ""
+msgstr "Super Moderator"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:96
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:286
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:92
 msgid "Administrator"
-msgstr ""
+msgstr "Pengurus"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:97
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:287
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:93
 msgid "Supervisor"
-msgstr ""
+msgstr "Pembimbing"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:55
 msgid "File size exceed"
-msgstr ""
+msgstr "Ukuran berkas melebihi batas"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:61
 msgid "The forbidden file format.<br>You can upload files of the following extension"
-msgstr ""
+msgstr "Format berkas tidak diizinkan.<br> Anda dapat mengunggah berkas dengan ekstensi berikut"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:29
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Anda tidak bisa menyunting pos lebih tinggi dari Pengurus"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:37
 msgid "You are trying to change another's post"
-msgstr ""
+msgstr "Anda mencoba menyunting post orang lain"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:54
 msgid "Your message not already latest, you cannot change it"
-msgstr ""
+msgstr "Pesan Anda sudah lama, Anda tidak bisa menyuntingnya"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:58
 msgid "You cannot edit your posts after 5 minutes"
-msgstr ""
+msgstr "Anda tidak bisa menyunting pos setelah 5 menit"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:68
 #: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
-msgstr ""
+msgstr "Kategori Berkas"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:85
 msgid "Section files"
-msgstr ""
+msgstr "Bagian Berkas"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:102
 #: modules/forum/templates/topic.phtml:37
 msgid "Topic Files"
-msgstr ""
+msgstr "Berkas Topik"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:142
 #: modules/forum/templates/files_list.phtml:28
 #: modules/forum/templates/files_sections.phtml:28
 msgid "New Files"
-msgstr ""
+msgstr "Berkas Baru"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:172
 msgid "List of sections"
-msgstr ""
+msgstr "Daftar Bagian"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:297
 msgid "Windows applications"
-msgstr ""
+msgstr "Aplikasi Windows"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
 msgid "Java applications"
-msgstr ""
+msgstr "Aplikasi Java"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
 msgid "SIS"
@@ -713,15 +713,15 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
 msgid "Pictures"
-msgstr ""
+msgstr "Gambar"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
 msgid "Archive"
-msgstr ""
+msgstr "Arsip"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
 msgid "Videos"
-msgstr ""
+msgstr "Video"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
 msgid "MP3"
@@ -729,15 +729,15 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "Other"
-msgstr ""
+msgstr "Lainnya"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
-msgstr ""
+msgstr "Berkas dilampirkan"
 
 #: modules/forum/templates/add_file.phtml:32
 msgid "Add more"
-msgstr ""
+msgstr "Tambahkan lebih banyak"
 
 #: modules/forum/templates/add_file.phtml:33
 #: modules/forum/templates/add_file.phtml:48
@@ -749,26 +749,26 @@ msgstr ""
 #: modules/forum/templates/move_topic.phtml:52
 #: modules/forum/templates/show_post.phtml:148
 msgid "Back to topic"
-msgstr ""
+msgstr "Kembali ke Topik"
 
 #: modules/forum/templates/add_file.phtml:40
 msgid "Choose file"
-msgstr ""
+msgstr "Pilih file"
 
 #: modules/forum/templates/add_file.phtml:44
 msgid "Max. Size"
-msgstr ""
+msgstr "Ukuran Maks"
 
 #: modules/forum/templates/add_file.phtml:47
 msgid "Upload"
-msgstr ""
+msgstr "Unggah"
 
 #: modules/forum/templates/add_poll.phtml:31
 #: modules/forum/templates/add_poll.phtml:32
 #: modules/forum/templates/edit_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:35
 msgid "Poll"
-msgstr ""
+msgstr "Jajak pendapat"
 
 #: modules/forum/templates/add_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:37
@@ -778,34 +778,34 @@ msgstr ""
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
 msgid "Answers"
-msgstr ""
+msgstr "Jawaban"
 
 #: modules/forum/templates/add_poll.phtml:43
 #: modules/forum/templates/edit_poll.phtml:53
 msgid "Maximum length: 150 characters"
-msgstr ""
+msgstr "Panjang maksimum: 150 karakter"
 
 #: modules/forum/templates/add_poll.phtml:49
 #: modules/forum/templates/edit_poll.phtml:59
 msgid "Add Answer"
-msgstr ""
+msgstr "Tambahkan Balasan"
 
 #: modules/forum/templates/add_poll.phtml:52
 #: modules/forum/templates/edit_poll.phtml:62
 msgid "Delete last"
-msgstr ""
+msgstr "Hapus pos terakhir"
 
 #: modules/forum/templates/add_poll.phtml:56
 #: modules/forum/templates/change_topic.phtml:51
 #: modules/forum/templates/edit_poll.phtml:66
 #: modules/forum/templates/edit_post.phtml:45
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: modules/forum/templates/change_topic.phtml:29
 #: modules/forum/templates/change_topic.phtml:30
 msgid "Topic name"
-msgstr ""
+msgstr "Judul topik"
 
 #: modules/forum/templates/change_topic.phtml:37
 #: modules/forum/templates/new_topic.phtml:96
@@ -819,11 +819,11 @@ msgstr ""
 
 #: modules/forum/templates/clear_search_history.phtml:28
 msgid "Do you really want to clear the search history?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus riwayat pencarian?"
 
 #: modules/forum/templates/clear_search_history.phtml:31
 msgid "Clear"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/forum/templates/clear_search_history.phtml:32
 #: modules/forum/templates/delete_answer.phtml:33
@@ -834,20 +834,20 @@ msgstr ""
 #: modules/forum/templates/mass_delete.phtml:41
 #: modules/forum/templates/restore_post.phtml:36
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: modules/forum/templates/curators.phtml:31
 #: modules/forum/templates/filter_by_author.phtml:35
 msgid "Changes saved"
-msgstr ""
+msgstr "Perubahan disimpan"
 
 #: modules/forum/templates/curators.phtml:51
 msgid "Assign"
-msgstr ""
+msgstr "Terapkan"
 
 #: modules/forum/templates/delete_answer.phtml:29
 msgid "Do you really want to delete the answer?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus jawaban ini?"
 
 #: modules/forum/templates/delete_answer.phtml:32
 #: modules/forum/templates/delete_file.phtml:36
@@ -858,36 +858,36 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:325
 #: modules/forum/templates/topic.phtml:370
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/forum/templates/delete_file.phtml:31
 #: modules/forum/templates/delete_post.phtml:37
 #: modules/forum/templates/delete_topic.phtml:31
 #: modules/forum/templates/mass_delete.phtml:31
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Anda yakin ingin menghapus?"
 
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
-msgstr ""
+msgstr "Setelah menghapus, jumlah poin posting forum akan dikurangi"
 
 #: modules/forum/templates/delete_poll.phtml:29
 msgid "Do you really want to delete a poll?"
-msgstr ""
+msgstr "Anda yakin menghapus tanggapan?"
 
 #: modules/forum/templates/delete_post.phtml:33
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
-msgstr ""
+msgstr "PERINGATAN! Ini adalah pos terakhir dari topik. Jika dihapus topik akan terhapus."
 
 #: modules/forum/templates/delete_post.phtml:44
 #: modules/forum/templates/delete_topic.phtml:36
 msgid "Hide"
-msgstr ""
+msgstr "Sembunyikan"
 
 #: modules/forum/templates/delete_topic.phtml:47
 msgid "Perform"
-msgstr ""
+msgstr "Tampilkan"
 
 #: modules/forum/templates/edit_post.phtml:36
 #: modules/forum/templates/new_topic.phtml:81
@@ -895,26 +895,26 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:125
 #: modules/forum/templates/topic.phtml:437
 msgid "Message"
-msgstr ""
+msgstr "Pesan"
 
 #: modules/forum/templates/edit_post.phtml:48
 #: modules/forum/templates/new_topic.phtml:116
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Smilies"
-msgstr ""
+msgstr "Smile"
 
 #: modules/forum/templates/files_list.phtml:80
 #: modules/forum/templates/topic.phtml:243
 msgid "Link to post"
-msgstr ""
+msgstr "Link ke posting"
 
 #: modules/forum/templates/files_list.phtml:131
 msgid "To message"
-msgstr ""
+msgstr "Untuk pesan"
 
 #: modules/forum/templates/files_list.phtml:134
 msgid "To topic"
-msgstr ""
+msgstr "Untuk topik"
 
 #: modules/forum/templates/files_list.phtml:144
 #: modules/forum/templates/forum_search.phtml:74
@@ -928,101 +928,101 @@ msgstr ""
 
 #: modules/forum/templates/filter_by_author.phtml:44
 msgid "Filter will be display posts from selected authors only"
-msgstr ""
+msgstr "Penyaringan hanya menampilkan pos dari penulis yang dipilih"
 
 #: modules/forum/templates/filter_by_author.phtml:64
 msgid "Filter"
-msgstr ""
+msgstr "Saring"
 
 #: modules/forum/templates/filter_by_author.phtml:66
 #: modules/forum/templates/topic.phtml:47
 #: modules/forum/templates/topic.phtml:475
 msgid "Cancel Filter"
-msgstr ""
+msgstr "Batal saring"
 
 #: modules/forum/templates/footer.phtml:29
 msgid "Forum rules"
-msgstr ""
+msgstr "Ketentuan Forum"
 
 #: modules/forum/templates/forum_search.phtml:31
 #: modules/forum/templates/forum_search.phtml:32
 msgid "Search query"
-msgstr ""
+msgstr "Pencarian query"
 
 #: modules/forum/templates/forum_search.phtml:34
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
-msgstr ""
+msgstr "Panjang teks pencarian: 4min., 64maks.<br>Pencarian tidak sensitif huruf <br>Hasil diurutkan berdasarkan relevansi."
 
 #: modules/forum/templates/forum_search.phtml:39
 msgid "Search in the topic names"
-msgstr ""
+msgstr "Cari berdasarkan judul topik"
 
 #: modules/forum/templates/forum_search.phtml:42
 #: modules/forum/templates/header.phtml:73
 msgid "Search"
-msgstr ""
+msgstr "Cari"
 
 #: modules/forum/templates/forum_search.phtml:47
 msgid "Your search did not match any results"
-msgstr ""
+msgstr "Pencarian Anda tidak ditemukan"
 
 #: modules/forum/templates/forum_search.phtml:59
 #: modules/forum/templates/new_topics.phtml:96
 #: modules/forum/templates/topics.phtml:105
 msgid "Author"
-msgstr ""
+msgstr "Oleh"
 
 #: modules/forum/templates/forum_search.phtml:62
 msgid "Go to Message"
-msgstr ""
+msgstr "Ke Pesan"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr ""
+msgstr "Riwayat Pencarian"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
-msgstr ""
+msgstr "Hapus riwayat"
 
 #: modules/forum/templates/header.phtml:22
 msgid "Read only"
-msgstr ""
+msgstr "Hanya Baca"
 
 #: modules/forum/templates/header.phtml:44
 msgid "Show for Period"
-msgstr ""
+msgstr "Lihat Riwayat"
 
 #: modules/forum/templates/header.phtml:53
 msgid "Last activity"
-msgstr ""
+msgstr "Aktivitas Terakhir"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr ""
+msgstr "Berkas"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: modules/forum/templates/move_topic.phtml:38
 msgid "New section"
-msgstr ""
+msgstr "Bagian baru"
 
 #: modules/forum/templates/move_topic.phtml:47
 msgid "Category is empty"
-msgstr ""
+msgstr "Kategori kosong"
 
 #: modules/forum/templates/move_topic.phtml:51
 msgid "Move"
-msgstr ""
+msgstr "Pindah"
 
 #: modules/forum/templates/move_topic.phtml:56
 msgid "Other categories"
-msgstr ""
+msgstr "Kategori lain"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
@@ -1031,53 +1031,53 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:451
 #: modules/forum/templates/topic.phtml:454
 msgid "Write"
-msgstr ""
+msgstr "Tulis"
 
 #: modules/forum/templates/new_topic.phtml:107
 msgid "Preview"
-msgstr ""
+msgstr "Tinjauan"
 
 #: modules/forum/templates/new_topics.phtml:36
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 #: modules/forum/templates/new_topics.phtml:38
 msgid "Show period"
-msgstr ""
+msgstr "Tampilkan Riwayat"
 
 #: modules/forum/templates/new_topics.phtml:62
 #: modules/forum/templates/topics.phtml:59
 msgid "Pinned topic"
-msgstr ""
+msgstr "Disematkan topik"
 
 #: modules/forum/templates/new_topics.phtml:69
 #: modules/forum/templates/topics.phtml:66
 msgid "Topic has poll"
-msgstr ""
+msgstr "Topik jajak pendapat"
 
 #: modules/forum/templates/new_topics.phtml:76
 #: modules/forum/templates/topics.phtml:73
 msgid "Closed topic"
-msgstr ""
+msgstr "Tertutup topik"
 
 #: modules/forum/templates/new_topics.phtml:83
 #: modules/forum/templates/topics.phtml:80
 #: modules/forum/templates/topics.phtml:91
 msgid "Deleted topic"
-msgstr ""
+msgstr "Dihapus topik"
 
 #: modules/forum/templates/new_topics.phtml:97
 #: modules/forum/templates/topics.phtml:106
 msgid "Last post"
-msgstr ""
+msgstr "Posting terakhir"
 
 #: modules/forum/templates/new_topics.phtml:119
 msgid "Mark as read"
-msgstr ""
+msgstr "Tandai telah dibaca"
 
 #: modules/forum/templates/reply_message.phtml:37
 msgid "Topic"
-msgstr ""
+msgstr "Topik"
 
 #: modules/forum/templates/restore_post.phtml:30
 msgid "Do you really want to restore this post?"
@@ -1086,89 +1086,89 @@ msgstr ""
 #: modules/forum/templates/restore_post.phtml:35
 #: modules/forum/templates/topic.phtml:372
 msgid "Restore"
-msgstr ""
+msgstr "Pulihkan"
 
 #: modules/forum/templates/section.phtml:36
 msgid "Section Files"
-msgstr ""
+msgstr "Bagian Berkas"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr ""
+msgstr "Tidak ada bagian di kategori"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr ""
+msgstr "Diedit:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
 msgid "Edited"
-msgstr ""
+msgstr "Diedit"
 
 #: modules/forum/templates/show_post.phtml:80
 #: modules/forum/templates/topic.phtml:293
 msgid "Attached files"
-msgstr ""
+msgstr "Data terlampir"
 
 #: modules/forum/templates/show_post.phtml:135
 #: modules/forum/templates/topic.phtml:353
 msgid "Reply"
-msgstr ""
+msgstr "Balas"
 
 #: modules/forum/templates/show_post.phtml:140
 #: modules/forum/templates/topic.phtml:358
 msgid "Quote"
-msgstr ""
+msgstr "Kutipan"
 
 #: modules/forum/templates/topic.phtml:43
 msgid "Filter by author is activated"
-msgstr ""
+msgstr "Saring berdasarkan penulis diaktifkan"
 
 #: modules/forum/templates/topic.phtml:54
 msgid "Topic closed"
-msgstr ""
+msgstr "Topik ditutup"
 
 #: modules/forum/templates/topic.phtml:60
 msgid "Topic deleted by"
-msgstr ""
+msgstr "Topik dihapus oleh"
 
 #: modules/forum/templates/topic.phtml:64
 msgid "Undelete topic"
-msgstr ""
+msgstr "Batalkan menghapus topik"
 
 #: modules/forum/templates/topic.phtml:80
 #: modules/forum/templates/topic.phtml:110
 msgid "Vote"
-msgstr ""
+msgstr "Beri Nilai"
 
 #: modules/forum/templates/topic.phtml:81
 msgid "Results"
-msgstr ""
+msgstr "Hasil"
 
 #: modules/forum/templates/topic.phtml:101
 msgid "Total votes"
-msgstr ""
+msgstr "Total penilai"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr ""
+msgstr "Posting dihapus:"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
-msgstr ""
+msgstr "Dihapus"
 
 #: modules/forum/templates/topic.phtml:267
 msgid "Post restored by:"
-msgstr ""
+msgstr "Posting dipulihkan oleh:"
 
 #: modules/forum/templates/topic.phtml:268
 msgid "Restored"
-msgstr ""
+msgstr "Dipulihkan"
 
 #: modules/forum/templates/topic.phtml:369
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: modules/forum/templates/topic.phtml:384
 msgid "Delete selected"
@@ -1176,58 +1176,58 @@ msgstr ""
 
 #: modules/forum/templates/topic.phtml:388
 msgid "Actions with topic"
-msgstr ""
+msgstr "Tindakan dengan topik"
 
 #: modules/forum/templates/topic.phtml:399
 msgid "Curators of the Topic"
-msgstr ""
+msgstr "Kurator Topik"
 
 #: modules/forum/templates/topic.phtml:405
 msgid "Open Topic"
-msgstr ""
+msgstr "Buka topik"
 
 #: modules/forum/templates/topic.phtml:407
 msgid "Close Topic"
-msgstr ""
+msgstr "Tutup Topik"
 
 #: modules/forum/templates/topic.phtml:411
 msgid "Restore Topic"
-msgstr ""
+msgstr "Pulihkan Topik"
 
 #: modules/forum/templates/topic.phtml:417
 msgid "Unfix Topic"
-msgstr ""
+msgstr "Lepas topik disematkan"
 
 #: modules/forum/templates/topic.phtml:419
 msgid "Pin Topic"
-msgstr ""
+msgstr "Sematkan topik"
 
 #: modules/forum/templates/topic.phtml:422
 msgid "Move Topic"
-msgstr ""
+msgstr "Pindh topik"
 
 #: modules/forum/templates/topic.phtml:499
 msgid "Who is here"
-msgstr ""
+msgstr "Yang di sini"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr ""
+msgstr "Tidak ada topik di bagian"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"
-msgstr ""
+msgstr "Halaman terakhir"
 
 #: modules/forum/templates/voted_users.phtml:54
 #: modules/forum/templates/who.phtml:62
 msgid "Go to Topic"
-msgstr ""
+msgstr "Ke Topik"
 
 #: modules/forum/templates/who.phtml:38
 msgid "Users"
-msgstr ""
+msgstr "Pengguna"
 
 #: modules/forum/templates/who.phtml:39
 msgid "Guests"
-msgstr ""
+msgstr "Tamu"
 
