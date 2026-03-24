@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -46,7 +46,7 @@ msgstr "Мүмкүн эмес кодировканын файлы,  мисалы
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr "Жүктөө катасы"
+msgstr "Жүктөөдө катачылык"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
@@ -59,7 +59,7 @@ msgstr "Сиз тексти жазган жоксуз"
 #: modules/library/includes/addnew.php:112
 #: modules/library/includes/moder.php:79
 msgid "Photo uploading error"
-msgstr "Сүрөт жүктөө катасы"
+msgstr "Сүрөттөрдү жүктөөдөгү ката"
 
 #: modules/library/includes/comments.php:24
 #: modules/library/includes/comments.php:43
@@ -69,7 +69,7 @@ msgstr "Кирүүгө тыюу салынган"
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr "Пикирлер"
+msgstr "Билдирүүлөр"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
@@ -90,12 +90,12 @@ msgstr "Өчүрүү"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr "Бөлүк жок"
+msgstr "Бөлүм жок"
 
 #: modules/library/includes/del.php:88
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr "Ийгиликтүү өчүрүлдү:<br>Бөлүктөрдү: (%d)<br>-Макалаларды: (%d)<br>Белгилерди: (%d)<br>Пикирлерди: (%d)<br>Сүрөттөрдү: (%d)"
+msgstr "Ийгиликтүү өчүрүлдү:<br>Категорияларды: (%d)<br>-Макалаларды: (%d)<br>Белгилерди: (%d)<br>Пикирлерди: (%d)<br>Сүрөттөрдү: (%d)"
 
 #: modules/library/includes/del.php:106
 msgid "Articles do not exist"
@@ -103,7 +103,7 @@ msgstr "Мындай макала жок"
 
 #: modules/library/includes/download.php:51
 msgid "Author name"
-msgstr "Аты"
+msgstr "Автордун аты-жөнү"
 
 #: modules/library/includes/download.php:52
 msgid "Author last name"
@@ -120,12 +120,12 @@ msgstr "Датасы"
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr "Соңку пикирлер"
+msgstr "Акыркы ой-пикирлер"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
 msgid "Create Section"
-msgstr "Бөлүк түзүү "
+msgstr "Бөлүм түзүү "
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
@@ -137,7 +137,7 @@ msgstr "Тамыры"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr "Бөлүктү түзөтүү"
+msgstr "Бөлүмдү оңдоо"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
@@ -156,11 +156,11 @@ msgstr "Издөө"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr "Алфавит боюнча иреттөө"
+msgstr "Алфавит боюнча топтоо"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr "Актуалдуулук боюнча иреттөө"
+msgstr "Актуалдуулук топтоо"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
@@ -183,7 +183,7 @@ msgstr "Рейтинги боюнча"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr "Пикирлер боюнча"
+msgstr "Билдирүүлөр боюнча"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
@@ -211,7 +211,7 @@ msgstr "Бизге жазганыңыз үчүн рахмат. Модерато�
 #: modules/library/templates/addnew.phtml:37
 #: modules/library/templates/mkdir.phtml:34
 msgid "To Section"
-msgstr "Бөлүккө"
+msgstr "Бөлүмгө"
 
 #: modules/library/templates/addnew.phtml:52
 #: modules/library/templates/addnew.phtml:53
@@ -235,7 +235,7 @@ msgstr "Текст"
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr "Макалага пикир билдирүү"
+msgstr "Макалага комментарий беребиз"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
@@ -297,14 +297,14 @@ msgstr "Окулган:"
 #: modules/library/templates/tags.phtml:43
 #: modules/library/templates/top.phtml:50
 msgid "Comments:"
-msgstr "Пикирлер:"
+msgstr "Билдирүүлөр"
 
 #: modules/library/templates/book.phtml:82
 #: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr "Өзгөртүү"
+msgstr "Оңдоо"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr "Өзгөртүү"
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr "Автору:"
+msgstr "Автору"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -351,7 +351,7 @@ msgstr "Жылдыруу"
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
-msgstr "Бөлүккө жылдыруу"
+msgstr "Бөлүмгө жылдыруу"
 
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
@@ -360,7 +360,7 @@ msgstr "Ырастоо"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
-msgstr "Бөлүктөр жок жылдыруу үчүн"
+msgstr "Бөлүмдөр жок жылдыруу үчүн"
 
 #: modules/library/templates/del.phtml:81
 msgid "Are you sure you want to delete content?"
@@ -368,7 +368,7 @@ msgstr "Чын эле мазмунду жок кылгыңыз келеби?"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr "Бөлүк бош эмес"
+msgstr "Бөлүм бош эмес"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
@@ -376,11 +376,11 @@ msgstr "Аракетти тандаңыз"
 
 #: modules/library/templates/del.phtml:97
 msgid "Delete with movement"
-msgstr "Жылдыруу менен өчүрүңүз"
+msgstr "Жылдыруу менен жок кылыңыз"
 
 #: modules/library/templates/del.phtml:101
 msgid "Delete all Sections and Articles"
-msgstr "Бардык бөлүктөрдү жана макалаларды өчүрүү"
+msgstr "Бардык бөлүмдөр жана макалалар жок кылыңыз"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
@@ -390,12 +390,12 @@ msgstr "Аткаруу"
 #: modules/library/templates/del.phtml:125
 #: modules/library/templates/del.phtml:137
 msgid "Delete confirmation"
-msgstr "Өчүрүүнү ырастаңыз"
+msgstr "Жок кылууну ырастаңыз"
 
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr "Өчүрүлдү"
+msgstr "Өчүрүлгөн"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
@@ -415,17 +415,17 @@ msgstr "Төмөн"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
-msgstr "Бөлүк түзүлдү"
+msgstr "Бөлүм түзүлдү"
 
 #: modules/library/templates/mkdir.phtml:55
 #: modules/library/templates/moder.phtml:55
 msgid "Section description"
-msgstr "Бөлүктүн сүрөттөлүшү"
+msgstr "Бөлүмдүн сүрөттөлүшү"
 
 #: modules/library/templates/mkdir.phtml:59
 #: modules/library/templates/moder.phtml:84
 msgid "Section type"
-msgstr "Бөлүктүн түрү"
+msgstr "Бөлүмдүн түрү"
 
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
@@ -435,7 +435,7 @@ msgstr "Макалалар"
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr "Бөлүктөр"
+msgstr "Бөлүмдөр"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
@@ -463,12 +463,12 @@ msgstr "Текшерилди"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr "Окуулардын саны"
+msgstr "Окулган"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr "Бөлүк:"
+msgstr "Бөлүм:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -497,7 +497,7 @@ msgstr "Маалыматтар базасына кошулду"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr "Баарын кабыл алуу"
+msgstr "Баарын бекитүү"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
@@ -527,5 +527,5 @@ msgstr "Белгилер топтому"
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr "Иреттөө"
+msgstr "Сорттоо"
 
