@@ -11,43 +11,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 11:10\n"
+"PO-Revision-Date: 2026-03-24 13:17\n"
 
 #: modules/online/includes/guest.php:24
 #: modules/online/includes/history.php:24
 #: modules/online/includes/index.php:25
 #: modules/online/includes/ip.php:21
 msgid "Users"
-msgstr ""
+msgstr "Колдонуучулар"
 
 #: modules/online/includes/guest.php:29
 #: modules/online/includes/history.php:29
 #: modules/online/includes/index.php:30
 #: modules/online/includes/ip.php:26
 msgid "History"
-msgstr ""
+msgstr "Тарыхы"
 
 #: modules/online/includes/guest.php:37
 #: modules/online/includes/history.php:37
 #: modules/online/includes/index.php:38
 #: modules/online/includes/ip.php:34
 msgid "Guests"
-msgstr ""
+msgstr "Коноктор"
 
 #: modules/online/includes/guest.php:42
 #: modules/online/includes/history.php:42
 #: modules/online/includes/index.php:43
 #: modules/online/includes/ip.php:39
 msgid "IP Activity"
-msgstr ""
+msgstr "IP аракеттер"
 
 #: modules/online/includes/guest.php:61
 msgid "Guest"
-msgstr ""
+msgstr "Конок"
 
 #: modules/online/includes/index.php:48
 msgid "Who is online?"
-msgstr ""
+msgstr "Ким желеде?"
 
 #: modules/online/index.php:55
 #: modules/online/index.php:63
@@ -61,10 +61,10 @@ msgstr ""
 #: modules/online/templates/ip.phtml:51
 #: modules/online/templates/users.phtml:38
 msgid "List is empty"
-msgstr ""
+msgstr "Тизмеси бош"
 
 #: modules/online/templates/ip.phtml:58
 #: modules/online/templates/users.phtml:45
 msgid "Total"
-msgstr ""
+msgstr "Баары"
 
