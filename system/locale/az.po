@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "Yüklə"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "Qonaq Otaqi"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -95,7 +95,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
-msgstr ""
+msgstr "Daxil ol"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "Dil seçin"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "Müraciət"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "Şəxsi"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "Təhlükəsizlik kodu düzgün deyil"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "Qeydiyyat"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,23 +218,23 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv et"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Bildiriş silinəcək!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "İstifadəçilər qeydiyyat"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Məqalələr moderatsiya"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Yuklmeme moderatsiya"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
@@ -242,80 +242,80 @@ msgstr ""
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Forumdakı sonuncu xeberler"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "E-poçt"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Şərhlər"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Parametrlər"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Parametrlər yadda saxlanıldı."
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "Bildirişlər"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Bütün bildirişlər artıq oxunub"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Ümumi"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Bildirişləri təmizlə"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "oxunmmiş forumlarin sayi"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Saxla"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "Yönlendirme xarici link"
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "Xarici Linklər"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "Diqqət!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "Olacaq tərk bizim site və getmək xarici link"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "Administrasiya və sayt məsuliyyət daşımır məzmunu xarici saytlar"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "Tövsiyə göstərməmək, öz data aid %s (istifadəçi adı, parolu), üçüncü tərəf saytları"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "Linki ilə keçin"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "Siz axtarır, bir şey mövcud deyil və ya idi köçürülüb"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -455,27 +455,27 @@ msgstr ""
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "Cavab ver"
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "Admin artıq cavab bu mesajı"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "Səhv məlumatlar"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "Düzəliş edin"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Siz rehberi sile bilmersiz"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -483,35 +483,35 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "Mətn çox qısadır."
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
+msgstr "Yeni mesaj yazmaq üçün %d dəq gözləyin"
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "saniyə"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "Email artıq mövcuddur"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "Oxunmamış"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "Son Aktivlik"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "Əsas Səhifə"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
@@ -521,153 +521,153 @@ msgstr ""
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "Yuklmeme moderatsiya"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "Kitabxana moderator"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
-msgstr ""
+msgstr "Super Moderatorlar"
 
 #: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
-msgstr ""
+msgstr "Adminlər"
 
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "SV"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "%s adlı cihazınız var"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
-msgstr ""
+msgstr "Olduğu kimi deyil, əslən gözlənilən saytında"
 
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr ""
+msgstr "Yeni mesaj yazmaq üçün %value% dəq gözləyin"
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
-msgstr ""
+msgstr "Tapılmışdı rekord müvafiq giriş"
 
 #: system/src/Validator/messages.php:33
 msgid "No record matching the input was found"
-msgstr ""
+msgstr "Tapılmışdı rekord müvafiq giriş"
 
 #: system/src/Validator/messages.php:37
 #: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
-msgstr ""
+msgstr "İstədiyiniz dəyəri ola bilməz boş"
 
 #: system/src/Validator/messages.php:41
 #, php-format
 msgid "The input is less than %min% characters long"
-msgstr ""
+msgstr "Giriş siqnalı daha az %min% simvol"
 
 #: system/src/Validator/messages.php:42
 #, php-format
 msgid "The input is more than %max% characters long"
-msgstr ""
+msgstr "Giriş siqnalı daha az %max% simvol"
 
 #: system/src/Validator/messages.php:46
 msgid "The input was not found in the haystack"
-msgstr ""
+msgstr "Obyekt sistemdə tapılmayıb"
 
 #: system/src/Validator/messages.php:50
 #: system/src/Validator/messages.php:61
 msgid "Invalid type given. String expected"
-msgstr ""
+msgstr "Yolverilməz növü verdi. Gözlənilirdi simli"
 
 #: system/src/Validator/messages.php:51
 msgid "The input is not a valid email address. Use the basic format local-part@hostname"
-msgstr ""
+msgstr "Giriş-bu, həqiqi elektron poçt ünvanı. İstifadə standart format yerli hissəsi@host adı"
 
 #: system/src/Validator/messages.php:52
 #, php-format
 msgid "'%hostname%' is not a valid hostname for the email address"
-msgstr ""
+msgstr "'%hostname%' etibarlı deyil adı qovşağı e-poçt ünvanı"
 
 #: system/src/Validator/messages.php:53
 #, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
-msgstr ""
+msgstr "'%hostname% göstərmir hər hansı həqiqi MX və ya Bir qeyd üçün elektron poçt ünvanları"
 
 #: system/src/Validator/messages.php:54
 #, php-format
 msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
-msgstr ""
+msgstr "'%hostname% deyil seqment şəbəkə, marşrutlaşdırma. E-mail ünvanı deyil, öz həllini tapmalıdır ilə ictimai şəbəkə"
 
 #: system/src/Validator/messages.php:55
 #, php-format
 msgid "'%localPart%' can not be matched against dot-atom format"
-msgstr ""
+msgstr "'%localPart% deyil eşlenen bilər nöqtə-atom formatında"
 
 #: system/src/Validator/messages.php:56
 #, php-format
 msgid "'%localPart%' can not be matched against quoted-string format"
-msgstr ""
+msgstr "'%localPart% deyil eşlenen bilər nöqtə-atom formatında"
 
 #: system/src/Validator/messages.php:57
 msgid "'%localPart%' is not a valid local part for the email address"
-msgstr ""
+msgstr "'%hostname%' etibarlı deyil adı qovşağı e-poçt ünvanı"
 
 #: system/src/Validator/messages.php:58
 msgid "The input exceeds the allowed length"
-msgstr ""
+msgstr "Giriş çoxdur yol verilən uzunluğu"
 
 #: system/src/Validator/messages.php:60
 msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
-msgstr ""
+msgstr "Giriş görünür, DNS-host adını, lakin bu notation bu Punycode ola bilməz декодирован"
 
 #: system/src/Validator/messages.php:62
 msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
-msgstr ""
+msgstr "Giriş görünür, host adı DNS, amma ehtiva xətt çəkilir, bu mümkün mövqe"
 
 #: system/src/Validator/messages.php:63
 msgid "The input does not match the expected structure for a DNS hostname"
-msgstr ""
+msgstr "Giriş verilənlərinə uyğun deyil gözlənilən strukturunda DNS-host adı"
 
 #: system/src/Validator/messages.php:64
 msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
-msgstr ""
+msgstr "Giriş görünür, DNS-host adını, lakin heç bir oyunda qarşı sxemi node üçün %tld% дву\""
 
 #: system/src/Validator/messages.php:65
 msgid "The input does not appear to be a valid local network name"
-msgstr ""
+msgstr "Giriş verilənlərinə olmur etibarlı ad lan"
 
 #: system/src/Validator/messages.php:66
 msgid "The input does not appear to be a valid URI hostname"
-msgstr ""
+msgstr "Giriş verilənlərinə olmur etibarlı ad lan"
 
 #: system/src/Validator/messages.php:67
 msgid "The input appears to be an IP address, but IP addresses are not allowed"
-msgstr ""
+msgstr "Giriş görünür, bir IP-ünvanı, amma IP-ünvanları yol verilmir"
 
 #: system/src/Validator/messages.php:68
 msgid "The input appears to be a local network name but local network names are not allowed"
-msgstr ""
+msgstr "Giriş görünür, adı, lokal şəbəkə, həm də yerli adları şəbəkə yol verilmir"
 
 #: system/src/Validator/messages.php:69
 msgid "The input appears to be a DNS hostname but cannot extract TLD part"
-msgstr ""
+msgstr "Giriş görünür, DNS-host adını, lakin istifadə edə bilər дву hissələri"
 
 #: system/src/Validator/messages.php:70
 msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
-msgstr ""
+msgstr "Giriş görünür, DNS-host adını, lakin istifadə edə bilər дву hissələri"
 
 #: system/src/Validator/messages.php:75
 msgid "Invalid type given. String, integer, float, boolean or array expected"
-msgstr ""
+msgstr "Yolverilməz növü verdi. Simli, tam вещественное, məntiqli ya-sıra"
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
@@ -715,15 +715,15 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
-msgstr ""
+msgstr "Daxil ol"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
-msgstr ""
+msgstr "Çıxış"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
-msgstr ""
+msgstr "Məktub avtomatik olaraq yaradılan. Edin de. <br> üçün bizə müraciət edin əlaqə məlumatları bizim saytda."
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
@@ -736,21 +736,21 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 #, php-format
 msgid "Hello, %s!"
-msgstr ""
+msgstr "Salam, "
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
 #, php-format
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Siz prosesinə başladıq dəyişikliklər e-poçt ünvanları saytda <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
 msgid "The new email address is:"
-msgstr ""
+msgstr "Yeni bir e-poçt ünvanı:"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
 msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
-msgstr ""
+msgstr "Əgər siz hələ başlamamışıq proseduru növbədə elektron poçt, xahiş edirik, bizimlə əlaqə saxlayın, hər hansı istifadəçi sizin üçün bir yoldur."
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
@@ -758,16 +758,16 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
-msgstr ""
+msgstr "Davam etdirmək üçün Təsdiqləmə düyməsini basın"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
 #: themes/default/templates/system/mail/templates/registration.phtml:27
 msgid "Confirm"
-msgstr ""
+msgstr "Təsdiqlə"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
+msgstr "Əgər siz hələ də qeydiyyatdan saytda edin проигнорируйте bu məktubu."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
@@ -776,91 +776,91 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format
 msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Siz uğurla qeydiyyatdan saytda <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:18
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
 msgid "Your login:"
-msgstr ""
+msgstr "Sizin istifadəçi:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
 msgid "Your password:"
-msgstr ""
+msgstr "Sənin şifrən"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 msgid "The one you specified when registering"
-msgstr ""
+msgstr "O ki, siz dediyiniz qeydiyyat zamanı"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:22
 #, php-format
 msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
+msgstr "Aktivləşdirmək üçün hesabınızla, təsdiq Edin ki, sizin saytda qeydiyyatdan %s."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:31
 msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
-msgstr ""
+msgstr "Əgər siz hələ də qeydiyyatdan saytda edin проигнорируйте bu məktubu. Bu halda hesabı olmayacaqdır aktiv və avtomatik olaraq silinəcək."
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:9
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
 msgid "Password recovery"
-msgstr ""
+msgstr "Şifrənin bərpa edilməsi"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Siz başlamaq, bərpa prosiesi parol saytda <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:17
 msgid "In order to recover your password, you must click on the link:"
-msgstr ""
+msgstr "Bərpa etmək üçün parol lazımdır keçid:"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:22
 msgid "Restore"
-msgstr ""
+msgstr "Geri yüklə"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:25
 msgid "Link valid for 1 hour"
-msgstr ""
+msgstr "Link fəaliyyət göstərir ərzində 1 saat"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:27
 msgid "If you receive this mail by mistake, just ignore this letter"
-msgstr ""
+msgstr "Əgər siz var bu məktubu səhvən yalnız проигнорируйте bu məktub"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
 #, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Siz uğurla qeydiyyatdan saytda <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
 msgid "After logging in, you can change your password to new one."
-msgstr ""
+msgstr "Sonra giriş edə bilərsiniz dəyişdirə və yeni parol."
 
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Həqiqətən silmək istəyirsiniz?"
 
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
-msgstr ""
+msgstr "Təmizlə"
 
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
-msgstr ""
+msgstr "Mesaj"
 
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
-msgstr ""
+msgstr "Göndər"
 
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "Siyahı boşdur"
 
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
-msgstr ""
+msgstr "Redaktə:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
+msgstr "Redaktə"
 
