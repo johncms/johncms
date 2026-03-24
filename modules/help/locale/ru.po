@@ -11,40 +11,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 13:16\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
 msgid "For administration"
-msgstr ""
+msgstr "Для администрации"
 
 #: modules/help/includes/admsmilies.php:21
 #: modules/help/includes/my_smilies.php:22
 #: modules/help/includes/usersmilies.php:39
 #: modules/help/templates/index.phtml:31
 msgid "Smilies"
-msgstr ""
+msgstr "Смайлы"
 
 #: modules/help/includes/admsmilies.php:32
 msgid "Access forbidden"
-msgstr ""
+msgstr "Доступ запрещен"
 
 #: modules/help/includes/avatars.php:20
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
-msgstr ""
+msgstr "Аватары"
 
 #: modules/help/includes/avatars.php:37
 msgid "Avatar has been successfully applied"
-msgstr ""
+msgstr "Аватар успешно установлен"
 
 #: modules/help/includes/avatars.php:39
 msgid "Continue"
-msgstr ""
+msgstr "Продолжить"
 
 #: modules/help/includes/avatars.php:48
 msgid "An error occurred"
-msgstr ""
+msgstr "Произошла ошибка"
 
 #: modules/help/includes/avatars.php:50
 #: modules/help/templates/avatar_list.phtml:65
@@ -56,91 +56,91 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:48
 #: modules/help/templates/smiles_list.phtml:88
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: modules/help/includes/avatars.php:55
 msgid "Set to Profile"
-msgstr ""
+msgstr "Установить в анкету"
 
 #: modules/help/includes/avatars.php:58
 msgid "Are you sure you want to set yourself this avatar?"
-msgstr ""
+msgstr "Вы уверены, что хотите установить себе этот аватар?"
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: modules/help/includes/forum.php:15
 #: modules/help/templates/index.phtml:28
 msgid "Forum rules"
-msgstr ""
+msgstr "Правила форума"
 
 #: modules/help/includes/my_smilies.php:21
 #: modules/help/includes/smilies.php:27
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
-msgstr ""
+msgstr "Мои смайлы"
 
 #: modules/help/includes/smilies.php:19
 msgid "Smiles"
-msgstr ""
+msgstr "Смайлы"
 
 #: modules/help/includes/tags.php:15
 #: modules/help/templates/index.phtml:29
 msgid "bbCode Tags"
-msgstr ""
+msgstr "bbCode Теги"
 
 #: modules/help/index.php:54
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Информация, FAQ"
 
 #: modules/help/index.php:64
 msgid "Animals"
-msgstr ""
+msgstr "Животные"
 
 #: modules/help/index.php:65
 msgid "Brawl, Weapons"
-msgstr ""
+msgstr "Драки, Оружие"
 
 #: modules/help/index.php:66
 msgid "Emotions"
-msgstr ""
+msgstr "Эмоции"
 
 #: modules/help/index.php:67
 msgid "Flowers"
-msgstr ""
+msgstr "Цветы"
 
 #: modules/help/index.php:68
 msgid "Food, Alcohol"
-msgstr ""
+msgstr "Еда, алкоголь"
 
 #: modules/help/index.php:69
 msgid "Gestures"
-msgstr ""
+msgstr "Жесты"
 
 #: modules/help/index.php:70
 msgid "Holidays"
-msgstr ""
+msgstr "Праздники"
 
 #: modules/help/index.php:71
 msgid "Love"
-msgstr ""
+msgstr "Любовь"
 
 #: modules/help/index.php:72
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Разное"
 
 #: modules/help/index.php:73
 msgid "Music, Dancing"
-msgstr ""
+msgstr "Музыка, танцы"
 
 #: modules/help/index.php:74
 msgid "Sports"
-msgstr ""
+msgstr "Спорт"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr ""
+msgstr "Технологии"
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -148,176 +148,176 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:34
 #: modules/help/templates/smiles_list.phtml:33
 msgid "The list is empty"
-msgstr ""
+msgstr "Список пуст"
 
 #: modules/help/templates/avatar_list.phtml:61
 #: modules/help/templates/my_smiles_list.phtml:77
 #: modules/help/templates/smiles_list.phtml:84
 msgid "Total:"
-msgstr ""
+msgstr "Всего:"
 
 #: modules/help/templates/bbcode.phtml:30
 msgid "PHP code"
-msgstr ""
+msgstr "PHP код"
 
 #: modules/help/templates/bbcode.phtml:33
 msgid "Link name"
-msgstr ""
+msgstr "Имя ссылки"
 
 #: modules/help/templates/bbcode.phtml:34
 msgid "URL Link"
-msgstr ""
+msgstr "URL-ссылка"
 
 #: modules/help/templates/bbcode.phtml:38
 msgid "Bold"
-msgstr ""
+msgstr "Жирный"
 
 #: modules/help/templates/bbcode.phtml:42
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
-msgstr ""
+msgstr "Подчёркнутый"
 
 #: modules/help/templates/bbcode.phtml:50
 msgid "Strike"
-msgstr ""
+msgstr "Зачеркнутый"
 
 #: modules/help/templates/bbcode.phtml:54
 msgid "Red"
-msgstr ""
+msgstr "Красный"
 
 #: modules/help/templates/bbcode.phtml:58
 msgid "Green"
-msgstr ""
+msgstr "Зеленый"
 
 #: modules/help/templates/bbcode.phtml:62
 msgid "Blue"
-msgstr ""
+msgstr "Синий"
 
 #: modules/help/templates/bbcode.phtml:66
 msgid "Text Color"
-msgstr ""
+msgstr "Цвет текста"
 
 #: modules/help/templates/bbcode.phtml:70
 msgid "Background Color"
-msgstr ""
+msgstr "Цвет фона"
 
 #: modules/help/templates/bbcode.phtml:74
 msgid "Quote"
-msgstr ""
+msgstr "Цитата"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
-msgstr ""
+msgstr "Маркированный список"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: modules/help/templates/bbcode.phtml:82
 msgid "Spoiler"
-msgstr ""
+msgstr "Спойлер"
 
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: modules/help/templates/forum_rules.phtml:26
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "ЗАПРЕЩЕНО"
 
 #: modules/help/templates/forum_rules.phtml:28
 msgid "Advertising messages"
-msgstr ""
+msgstr "Рекламные сообщения"
 
 #: modules/help/templates/forum_rules.phtml:29
 msgid "The messages containing direct propagation of racial, national and religious animosity"
-msgstr ""
+msgstr "Сообщения, содержащие прямую пропаганду расовой, национальной и религиозной вражды"
 
 #: modules/help/templates/forum_rules.phtml:30
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
-msgstr ""
+msgstr "Оскорбительный, непристойный, вульгарный, клеветнический, ненавистный, угрожающий, сексуально-ориентированный, или любой другой материал, который может нарушить любые применимые законы"
 
 #: modules/help/templates/forum_rules.phtml:31
 msgid "The messages obviously offending someone, espcially forum users"
-msgstr ""
+msgstr "Сообщения, явно оскорбляющие кого-то"
 
 #: modules/help/templates/forum_rules.phtml:32
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
-msgstr ""
+msgstr "Намеренно искажать написание ников других пользователей с целью придания сообщению оскорбительного оттенка"
 
 #: modules/help/templates/forum_rules.phtml:33
 msgid "Publishing deleted by moderator messages repeatedly"
-msgstr ""
+msgstr "Повторная публикация сообщений, удаленных модератором"
 
 #: modules/help/templates/forum_rules.phtml:34
 msgid "Post messages not related to the topic"
-msgstr ""
+msgstr "Отправлять сообщения, не относящиеся к теме"
 
 #: modules/help/templates/forum_rules.phtml:35
 msgid "Continuing topics that have been closed by moderator"
-msgstr ""
+msgstr "Продолжать темы, которые были закрыты Модератором"
 
 #: modules/help/templates/forum_rules.phtml:38
 msgid "ABSOLUTELY FORBIDDEN"
-msgstr ""
+msgstr "КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО"
 
 #: modules/help/templates/forum_rules.phtml:40
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
-msgstr ""
+msgstr "Выражать в публичных разделах недовольство неадекватными действиями других пользователей и обсуждать работу модераторов. Для этого используйте личные сообщения"
 
 #: modules/help/templates/forum_rules.phtml:41
 msgid "Register the nicknames having offensive tone for other users"
-msgstr ""
+msgstr "Регистрация ников, имеющих оскорбительный тон для других пользователей"
 
 #: modules/help/templates/forum_rules.phtml:44
 msgid "UNACCEPTABLE"
-msgstr ""
+msgstr "НЕЖЕЛАТЕЛЬНО"
 
 #: modules/help/templates/forum_rules.phtml:46
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
-msgstr ""
+msgstr "Цитата полного сообщения предыдущего пользователя и цитировать сообщения, уже содержащие другие цитаты"
 
 #: modules/help/templates/forum_rules.phtml:47
 msgid "Post messages only contains external link"
-msgstr ""
+msgstr "Размещать сообщения, которые содержат только внешнюю ссылку"
 
 #: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages written in translite"
-msgstr ""
+msgstr "Размещать сообщения написанные на транслите"
 
 #: modules/help/templates/forum_rules.phtml:49
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
-msgstr ""
+msgstr "Размещение бессмысленных сообщений состоящих только из смайлов или типа \"ок\", \"что?\", \"Кто тут?\", и т. д."
 
 #: modules/help/templates/forum_rules.phtml:54
 msgid "Message posted despite the above warnings will be changed or deleted."
-msgstr ""
+msgstr "Сообщения, опубликованные несмотря на вышеуказанные предупреждения, будут изменены или удалены."
 
 #: modules/help/templates/forum_rules.phtml:55
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
-msgstr ""
+msgstr "Это правило распространяется на всех участников и модераторов, повторные действия могут привести к бану, или даже блокировке Вашей учетной записи."
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"
-msgstr ""
+msgstr "Добавить смайлы"
 
 #: modules/help/templates/my_smiles_list.phtml:55
 #: modules/help/templates/smiles_list.phtml:62
 msgid "or"
-msgstr ""
+msgstr "или"
 
 #: modules/help/templates/my_smiles_list.phtml:64
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: modules/help/templates/smiles_list.phtml:71
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
