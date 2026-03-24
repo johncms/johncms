@@ -11,38 +11,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: install/index.php:66
 #: install/steps/step_1.php:23
 msgid "Preparing for installation"
-msgstr ""
+msgstr "Paigaldamise ettevalmistamine"
 
 #: install/index.php:71
 #: install/steps/step_2.php:20
 #: install/steps/step_2.php:21
 msgid "Checking parameters"
-msgstr ""
+msgstr "Parameetrite kontrollimine"
 
 #: install/index.php:76
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
-msgstr ""
+msgstr "Andmebaas"
 
 #: install/index.php:81
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
-msgstr ""
+msgstr "Seaded"
 
 #: install/index.php:86
 msgid "Completion"
-msgstr ""
+msgstr "Edenemine"
 
 #: install/steps/step_2.php:27
 msgid "PHP version"
-msgstr ""
+msgstr "PHP versioon"
 
 #: install/steps/step_2.php:30
 #, php-format
@@ -55,7 +55,7 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "Yes"
-msgstr ""
+msgstr "Jah"
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40
@@ -63,35 +63,35 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 #: install/steps/step_2.php:36
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PHP laiendus PDO peab olema paigaldatud"
 
 #: install/steps/step_2.php:39
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Imagick või GD laiendus"
 
 #: install/steps/step_2.php:42
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "Pead paigaldama PHP laienduse Imagick või GD"
 
 #: install/steps/step_2.php:45
 msgid "zlib extension"
-msgstr ""
+msgstr "zlib laiendus"
 
 #: install/steps/step_2.php:48
 msgid "PHP extension zlib must be installed"
-msgstr ""
+msgstr "PHP laiendus zlib peab olema paigaldatud"
 
 #: install/steps/step_2.php:51
 msgid "mbstring extension"
-msgstr ""
+msgstr "mbstring laiend"
 
 #: install/steps/step_2.php:54
 msgid "PHP extension mbstring must be installed"
-msgstr ""
+msgstr "PHP laiendus mbstring peab olema paigaldatud"
 
 #: install/steps/step_2.php:57
 msgid "fileinfo extension"
@@ -120,44 +120,44 @@ msgstr ""
 
 #: install/steps/step_3.php:109
 msgid "ERROR: Can't write database.local.php"
-msgstr ""
+msgstr "VIGA: Faili database.local.php ei saa kirjutada"
 
 #: install/steps/step_3.php:115
 msgid "Invalid database host name"
-msgstr ""
+msgstr "Vigane andmebaasi hostinimi"
 
 #: install/steps/step_3.php:117
 msgid "Invalid database user or password"
-msgstr ""
+msgstr "Vigane andmebaas või parool"
 
 #: install/steps/step_3.php:119
 msgid "Database does not exist"
-msgstr ""
+msgstr "Andmebaasi pole olemas"
 
 #: install/steps/step_4.php:118
 msgid "ERROR: Can't write system.local.php"
-msgstr ""
+msgstr "VIGA: Faili system.local.php ei saa kirjutada"
 
 #: install/steps/step_5.php:15
 #: install/steps/step_5.php:16
 msgid "Complete the installation"
-msgstr ""
+msgstr "Lõpeta paigaldamine"
 
 #: install/templates/step_1.phtml:3
 msgid "Welcome to JohnCMS installation wizard"
-msgstr ""
+msgstr "Teretulemast JohnCMS paigaldamise juhendajasse"
 
 #: install/templates/step_1.phtml:6
 msgid "During the installation process, a basic check of the hosting will be performed for compliance with the CMS requirements."
-msgstr ""
+msgstr "Paigaldamise ajal kontrollitakse veebimajutuse pakkuja serverit, et kas see vastab CMS-i nõuetele."
 
 #: install/templates/step_1.phtml:7
 msgid "If errors occurred during the installation stage and you do not know how to solve them, you can ask for help on <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">our forum.</a>"
-msgstr ""
+msgstr "Kui paigaldamise ajal tekib tõrkeid ning sa ei tea, kuidas neid lahendada, siis küsi abi <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">meie foorumist.</a>"
 
 #: install/templates/step_1.phtml:11
 msgid "Choose language"
-msgstr ""
+msgstr "Vali keel"
 
 #: install/templates/step_1.phtml:28
 #: install/templates/step_2.phtml:34
@@ -165,32 +165,32 @@ msgstr ""
 #: install/templates/step_3.phtml:92
 #: install/templates/step_4.phtml:81
 msgid "Continue"
-msgstr ""
+msgstr "Jätka"
 
 #: install/templates/step_2.phtml:3
 msgid "Checking extensions"
-msgstr ""
+msgstr "Laiendite kontrollimine"
 
 #: install/templates/step_2.phtml:20
 msgid "Permissions check (chmod)"
-msgstr ""
+msgstr "Õiguste (chmod) kontroll"
 
 #: install/templates/step_2.phtml:22
 msgid "Everything is good"
-msgstr ""
+msgstr "Kõik on korras"
 
 #: install/templates/step_2.phtml:29
 msgid "For the specified directories, you must set the permissions to allow writing (777)."
-msgstr ""
+msgstr "Teatud kaustadel peab olema kirjutusõigus (777)."
 
 #: install/templates/step_3.phtml:10
 msgid "Database connection settings"
-msgstr ""
+msgstr "Andmebaasi ühenduse seaded"
 
 #: install/templates/step_3.phtml:21
 #: install/templates/step_3.phtml:28
 msgid "DB Host"
-msgstr ""
+msgstr "Andmebaasi host"
 
 #: install/templates/step_3.phtml:35
 #: install/templates/step_3.phtml:42
@@ -200,17 +200,17 @@ msgstr ""
 #: install/templates/step_3.phtml:49
 #: install/templates/step_3.phtml:56
 msgid "DB Name"
-msgstr ""
+msgstr "Andmebaasi nimi"
 
 #: install/templates/step_3.phtml:63
 #: install/templates/step_3.phtml:70
 msgid "DB User"
-msgstr ""
+msgstr "Andmebaasi kasutaja"
 
 #: install/templates/step_3.phtml:77
 #: install/templates/step_3.phtml:83
 msgid "DB Password"
-msgstr ""
+msgstr "Andmebaasi parool"
 
 #: install/templates/step_3.phtml:92
 msgid "Continue anyway"
@@ -218,60 +218,60 @@ msgstr ""
 
 #: install/templates/step_4.phtml:10
 msgid "Website settings"
-msgstr ""
+msgstr "Veebisaidi seaded"
 
 #: install/templates/step_4.phtml:18
 #: install/templates/step_4.phtml:25
 msgid "Site address"
-msgstr ""
+msgstr "Saidi aadress"
 
 #: install/templates/step_4.phtml:32
 #: install/templates/step_4.phtml:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-post"
 
 #: install/templates/step_4.phtml:46
 msgid "Administrator data"
-msgstr ""
+msgstr "Administraatori andmed"
 
 #: install/templates/step_4.phtml:48
 #: install/templates/step_4.phtml:55
 msgid "Admin login"
-msgstr ""
+msgstr "Administraatori kasutajanimi"
 
 #: install/templates/step_4.phtml:62
 #: install/templates/step_4.phtml:68
 msgid "Admin password"
-msgstr ""
+msgstr "Administraatori parool"
 
 #: install/templates/step_4.phtml:74
 msgid "Additionally"
-msgstr ""
+msgstr "Lisaks"
 
 #: install/templates/step_4.phtml:77
 msgid "Install demo data"
-msgstr ""
+msgstr "Paigalda näidisandmed"
 
 #: install/templates/step_5.phtml:3
 msgid "Congratulations!"
-msgstr ""
+msgstr "Õnnitlused!"
 
 #: install/templates/step_5.phtml:4
 #, php-format
 msgid "JohnCMS %s installation completed successfully."
-msgstr ""
+msgstr "JohnCMS %s paigaldamine on lõpetatud."
 
 #: install/templates/step_5.phtml:7
 msgid "ATTENTION!"
-msgstr ""
+msgstr "TÄHELEPANU!"
 
 #: install/templates/step_5.phtml:8
 msgid "Now you need to delete the folder <b>/install/</b>"
-msgstr ""
+msgstr "Pead kustutama kausta <b>/install/</b>"
 
 #: install/templates/step_5.phtml:11
 msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" class=\"text-underline\">our forum</a>."
-msgstr ""
+msgstr "Kui vajad abi, siis külasta <a href=\"https://johncms.com/forum/\" class=\"text-underline\">meie foorumit</a>."
 
 #: install/templates/step_5.phtml:12
 msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
@@ -279,5 +279,5 @@ msgstr ""
 
 #: install/templates/step_5.phtml:15
 msgid "Go to website"
-msgstr ""
+msgstr "Mine veebileheküljele"
 
