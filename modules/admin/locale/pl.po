@@ -11,47 +11,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2026-03-24 11:05\n"
+"PO-Revision-Date: 2026-03-24 13:15\n"
 
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
-msgstr ""
+msgstr "Uprawnienia dostępu"
 
 #: modules/admin/includes/adminlist.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
-msgstr ""
+msgstr "Administracja"
 
 #: modules/admin/includes/adminlist.php:36
 msgid "Supervisors"
-msgstr ""
+msgstr "Szefowie portalu"
 
 #: modules/admin/includes/adminlist.php:56
 msgid "Administrators"
-msgstr ""
+msgstr "Administratorzy"
 
 #: modules/admin/includes/adminlist.php:76
 msgid "Super Moderators"
-msgstr ""
+msgstr "Super Moderatorzy"
 
 #: modules/admin/includes/adminlist.php:96
 msgid "Moderators"
-msgstr ""
+msgstr "Moderatorzy"
 
 #: modules/admin/includes/ads.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:169
 msgid "Advertisement"
-msgstr ""
+msgstr "Ogłoszenia"
 
 #: modules/admin/includes/ads.php:28
 msgid "Edit link"
-msgstr ""
+msgstr "Edytuj link"
 
 #: modules/admin/includes/ads.php:28
 #: modules/admin/templates/ads_index.phtml:85
 msgid "Add link"
-msgstr ""
+msgstr "Dodaj link"
 
 #: modules/admin/includes/ads.php:43
 #: modules/admin/includes/counters.php:91
@@ -68,33 +68,33 @@ msgstr ""
 #: modules/admin/includes/reg.php:146
 #: modules/admin/includes/usr_del.php:47
 msgid "Wrong data"
-msgstr ""
+msgstr "Nieprawidłowe dane"
 
 #: modules/admin/includes/ads.php:71
 #: modules/admin/includes/counters.php:230
 #: modules/admin/includes/counters.php:320
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Wymagane pola nie są wypełnione"
 
 #: modules/admin/includes/ads.php:82
 msgid "This place is occupied"
-msgstr ""
+msgstr "To miejsce jest zajęte"
 
 #: modules/admin/includes/ads.php:88
 msgid "Invalid characters"
-msgstr ""
+msgstr "Nieprawidłowe znaki"
 
 #: modules/admin/includes/ads.php:91
 msgid "Color is specified incorrectly"
-msgstr ""
+msgstr "Kolor jest nieprawidłowy"
 
 #: modules/admin/includes/ads.php:199
 msgid "Link successfully changed"
-msgstr ""
+msgstr "Link pomyślnie zmieniony"
 
 #: modules/admin/includes/ads.php:199
 msgid "Link successfully added"
-msgstr ""
+msgstr "Link dodany pomyślnie"
 
 #: modules/admin/includes/ads.php:201
 #: modules/admin/includes/antispy.php:228
@@ -108,7 +108,7 @@ msgstr ""
 #: modules/admin/includes/usr_clean.php:75
 #: modules/admin/templates/users/captcha.phtml:34
 msgid "Continue"
-msgstr ""
+msgstr "Kontynuuj"
 
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ipban.php:452
@@ -125,99 +125,99 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:36
 #: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"
 
 #: modules/admin/includes/ads.php:290
 msgid "Are you sure want to delete link?"
-msgstr ""
+msgstr "Na pewno chcesz usunąć link?"
 
 #: modules/admin/includes/ads.php:312
 msgid "Are you sure you want to delete all inactive links?"
-msgstr ""
+msgstr "Na pewno chcesz usunąć wszystkie nieaktywne linki?"
 
 #: modules/admin/includes/ads.php:345
 #: modules/admin/templates/ads_add.phtml:82
 msgid "Before the menu"
-msgstr ""
+msgstr "Przed menu"
 
 #: modules/admin/includes/ads.php:350
 #: modules/admin/templates/ads_add.phtml:86
 msgid "After the menu"
-msgstr ""
+msgstr "Po menu"
 
 #: modules/admin/includes/ads.php:355
 #: modules/admin/templates/ads_add.phtml:90
 msgid "At the top of the page"
-msgstr ""
+msgstr "Na górze strony"
 
 #: modules/admin/includes/ads.php:360
 #: modules/admin/templates/ads_add.phtml:94
 msgid "At the bottom of the page"
-msgstr ""
+msgstr "Na dole strony"
 
 #: modules/admin/includes/ads.php:366
 #: modules/admin/templates/ads_add.phtml:99
 msgid "All pages"
-msgstr ""
+msgstr "Wszystkie strony"
 
 #: modules/admin/includes/ads.php:367
 #: modules/admin/templates/ads_add.phtml:103
 msgid "Only on Homepage"
-msgstr ""
+msgstr "Tylko na stronie głównej"
 
 #: modules/admin/includes/ads.php:368
 #: modules/admin/templates/ads_add.phtml:107
 msgid "On all, except Homepage"
-msgstr ""
+msgstr "Na wszystkich, z wyjątkiem strony głównej"
 
 #: modules/admin/includes/ads.php:371
 #: modules/admin/templates/ads_add.phtml:69
 msgid "Everyone"
-msgstr ""
+msgstr "Wszyscy"
 
 #: modules/admin/includes/ads.php:372
 #: modules/admin/templates/ads_add.phtml:73
 msgid "Guests"
-msgstr ""
+msgstr "Goście"
 
 #: modules/admin/includes/ads.php:373
 #: modules/admin/templates/ads_add.phtml:77
 #: modules/admin/templates/sidebar-admin-menu.phtml:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:70
 msgid "Users"
-msgstr ""
+msgstr "Użytkownicy"
 
 #: modules/admin/includes/ads.php:395
 #: modules/admin/includes/ads.php:398
 msgid "hits"
-msgstr ""
+msgstr "odsłon"
 
 #: modules/admin/includes/ads.php:415
 msgid "Color:"
-msgstr ""
+msgstr "Kolor:"
 
 #: modules/admin/includes/ads.php:418
 #: modules/admin/templates/ads_add.phtml:112
 msgid "Bold"
-msgstr ""
+msgstr "Pogrubienie"
 
 #: modules/admin/includes/ads.php:421
 #: modules/admin/templates/ads_add.phtml:116
 msgid "Italic"
-msgstr ""
+msgstr "Pochylenie"
 
 #: modules/admin/includes/ads.php:424
 #: modules/admin/templates/ads_add.phtml:120
 msgid "Underline"
-msgstr ""
+msgstr "Podkreślenie"
 
 #: modules/admin/includes/antiflood.php:22
 msgid "Antiflood Settings"
-msgstr ""
+msgstr "Ustawienia antiflood"
 
 #: modules/admin/includes/antiflood.php:76
 msgid "ERROR: Can not write system.local.php"
-msgstr ""
+msgstr "BŁĄD: Nie można zapisać system.local.php"
 
 #: modules/admin/includes/antiflood.php:82
 #: modules/admin/includes/karma.php:76
@@ -225,12 +225,12 @@ msgstr ""
 #: modules/admin/templates/forum/settings.phtml:14
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
-msgstr ""
+msgstr "Ustawienia zapisane pomyślnie"
 
 #: modules/admin/includes/antispy.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:263
 msgid "Anti-Spyware"
-msgstr ""
+msgstr "Anty-Spyware"
 
 #: modules/admin/includes/antispy.php:31
 #: modules/admin/includes/counters.php:31
@@ -249,27 +249,27 @@ msgstr ""
 #: modules/admin/templates/access.phtml:111
 #: modules/admin/templates/access.phtml:148
 msgid "Access denied"
-msgstr ""
+msgstr "Odmowa dostępu"
 
 #: modules/admin/includes/antispy.php:168
 #: modules/admin/templates/antispy.phtml:30
 msgid "Snapshot scan"
-msgstr ""
+msgstr "Skanowanie"
 
 #: modules/admin/includes/antispy.php:175
 msgid "Snapshot is not created"
-msgstr ""
+msgstr "Migawka nie jest tworzony"
 
 #: modules/admin/includes/antispy.php:180
 #: modules/admin/includes/antispy.php:214
 #: modules/admin/templates/antispy.phtml:36
 #: modules/admin/templates/antispy_create_confirm.phtml:37
 msgid "Create snapshot"
-msgstr ""
+msgstr "Tworzenie migawki"
 
 #: modules/admin/includes/antispy.php:201
 msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
+msgstr "Doskonale! <br> Wszystkie pliki są zgodne z wcześniej wykonanymi zdjęciami."
 
 #: modules/admin/includes/antispy.php:206
 #: modules/admin/includes/forum/add.php:45
@@ -308,30 +308,30 @@ msgstr ""
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
-msgstr ""
+msgstr "Powrót"
 
 #: modules/admin/includes/antispy.php:223
 msgid "Snapshot successfully created"
-msgstr ""
+msgstr "Migawka pomyślnie utworzona"
 
 #: modules/admin/includes/ban_panel.php:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
-msgstr ""
+msgstr "Panel banu"
 
 #: modules/admin/includes/ban_panel.php:36
 msgid "Amnesty is available for supervisors only"
-msgstr ""
+msgstr "Amnestia jest dostępna tylko dla administracji"
 
 #: modules/admin/includes/ban_panel.php:41
 #: modules/admin/includes/ban_panel.php:66
 #: modules/admin/templates/ban_panel.phtml:62
 msgid "Amnesty"
-msgstr ""
+msgstr "Amnestia"
 
 #: modules/admin/includes/ban_panel.php:54
 msgid "Amnesty has been successful"
-msgstr ""
+msgstr "Amnestia była udana"
 
 #: modules/admin/includes/ban_panel.php:75
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
@@ -577,16 +577,16 @@ msgstr ""
 #: modules/admin/includes/ipban.php:81
 #: modules/admin/includes/search_ip.php:53
 msgid "First IP is entered incorrectly"
-msgstr ""
+msgstr "Pierwszy adres IP został wprowadzony niepoprawnie"
 
 #: modules/admin/includes/ipban.php:89
 #: modules/admin/includes/search_ip.php:61
 msgid "Second IP is entered incorrectly"
-msgstr ""
+msgstr "Drugie IP zostało wprowadzone niepoprawnie"
 
 #: modules/admin/includes/ipban.php:130
 msgid "Address you entered conflicts with other who in the database"
-msgstr ""
+msgstr "Podany przez Ciebie adres, powoduje konflikty z innymi adresami w bazie danych"
 
 #: modules/admin/includes/ipban.php:138
 #: modules/admin/includes/ipban.php:199
