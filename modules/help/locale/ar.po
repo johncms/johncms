@@ -11,40 +11,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
 msgid "For administration"
-msgstr ""
+msgstr "الإدارة"
 
 #: modules/help/includes/admsmilies.php:21
 #: modules/help/includes/my_smilies.php:22
 #: modules/help/includes/usersmilies.php:39
 #: modules/help/templates/index.phtml:31
 msgid "Smilies"
-msgstr ""
+msgstr "الابتسامات"
 
 #: modules/help/includes/admsmilies.php:32
 msgid "Access forbidden"
-msgstr ""
+msgstr "ممنوع الوصول"
 
 #: modules/help/includes/avatars.php:20
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
-msgstr ""
+msgstr "الصورة الشخصية"
 
 #: modules/help/includes/avatars.php:37
 msgid "Avatar has been successfully applied"
-msgstr ""
+msgstr "تم بنجاح إزالة الحظر"
 
 #: modules/help/includes/avatars.php:39
 msgid "Continue"
-msgstr ""
+msgstr "الاستمرار"
 
 #: modules/help/includes/avatars.php:48
 msgid "An error occurred"
-msgstr ""
+msgstr "حدث خطأ"
 
 #: modules/help/includes/avatars.php:50
 #: modules/help/templates/avatar_list.phtml:65
@@ -56,91 +56,91 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:48
 #: modules/help/templates/smiles_list.phtml:88
 msgid "Back"
-msgstr ""
+msgstr "الرجوع"
 
 #: modules/help/includes/avatars.php:55
 msgid "Set to Profile"
-msgstr ""
+msgstr "تعيين ملف تعريف"
 
 #: modules/help/includes/avatars.php:58
 msgid "Are you sure you want to set yourself this avatar?"
-msgstr ""
+msgstr "هل ترغب فعلا في استعمال الصّورة الرمزيّة الافتراضية؟"
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: modules/help/includes/forum.php:15
 #: modules/help/templates/index.phtml:28
 msgid "Forum rules"
-msgstr ""
+msgstr "قواعد المنتدى"
 
 #: modules/help/includes/my_smilies.php:21
 #: modules/help/includes/smilies.php:27
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
-msgstr ""
+msgstr "ابتساماتي"
 
 #: modules/help/includes/smilies.php:19
 msgid "Smiles"
-msgstr ""
+msgstr "ابتسامات"
 
 #: modules/help/includes/tags.php:15
 #: modules/help/templates/index.phtml:29
 msgid "bbCode Tags"
-msgstr ""
+msgstr "علامات الـ bbCode"
 
 #: modules/help/index.php:54
 msgid "Information, FAQ"
-msgstr ""
+msgstr "معلومات، أسئلة وأجوبة"
 
 #: modules/help/index.php:64
 msgid "Animals"
-msgstr ""
+msgstr "الحيوانات"
 
 #: modules/help/index.php:65
 msgid "Brawl, Weapons"
-msgstr ""
+msgstr "شجار، الأسلحة"
 
 #: modules/help/index.php:66
 msgid "Emotions"
-msgstr ""
+msgstr "العواطف"
 
 #: modules/help/index.php:67
 msgid "Flowers"
-msgstr ""
+msgstr "زهور"
 
 #: modules/help/index.php:68
 msgid "Food, Alcohol"
-msgstr ""
+msgstr "الغذاء والكحول (لا ينصح به)"
 
 #: modules/help/index.php:69
 msgid "Gestures"
-msgstr ""
+msgstr "الحركات"
 
 #: modules/help/index.php:70
 msgid "Holidays"
-msgstr ""
+msgstr "الاجازات"
 
 #: modules/help/index.php:71
 msgid "Love"
-msgstr ""
+msgstr "الحب"
 
 #: modules/help/index.php:72
 msgid "Miscellaneous"
-msgstr ""
+msgstr "منوعات"
 
 #: modules/help/index.php:73
 msgid "Music, Dancing"
-msgstr ""
+msgstr "الموسيقى والرقص"
 
 #: modules/help/index.php:74
 msgid "Sports"
-msgstr ""
+msgstr "الرياضة"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr ""
+msgstr "تكنولوجيا"
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -148,176 +148,176 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:34
 #: modules/help/templates/smiles_list.phtml:33
 msgid "The list is empty"
-msgstr ""
+msgstr "القائمة فارغة"
 
 #: modules/help/templates/avatar_list.phtml:61
 #: modules/help/templates/my_smiles_list.phtml:77
 #: modules/help/templates/smiles_list.phtml:84
 msgid "Total:"
-msgstr ""
+msgstr "مجموع"
 
 #: modules/help/templates/bbcode.phtml:30
 msgid "PHP code"
-msgstr ""
+msgstr "كود PHP"
 
 #: modules/help/templates/bbcode.phtml:33
 msgid "Link name"
-msgstr ""
+msgstr "اسم الرابط"
 
 #: modules/help/templates/bbcode.phtml:34
 msgid "URL Link"
-msgstr ""
+msgstr "رابط URL"
 
 #: modules/help/templates/bbcode.phtml:38
 msgid "Bold"
-msgstr ""
+msgstr "عريض"
 
 #: modules/help/templates/bbcode.phtml:42
 msgid "Italic"
-msgstr ""
+msgstr "مائل"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
-msgstr ""
+msgstr "تسطير"
 
 #: modules/help/templates/bbcode.phtml:50
 msgid "Strike"
-msgstr ""
+msgstr "الإضراب"
 
 #: modules/help/templates/bbcode.phtml:54
 msgid "Red"
-msgstr ""
+msgstr "احمر"
 
 #: modules/help/templates/bbcode.phtml:58
 msgid "Green"
-msgstr ""
+msgstr "أخضر"
 
 #: modules/help/templates/bbcode.phtml:62
 msgid "Blue"
-msgstr ""
+msgstr "أزرق"
 
 #: modules/help/templates/bbcode.phtml:66
 msgid "Text Color"
-msgstr ""
+msgstr "لون الخط"
 
 #: modules/help/templates/bbcode.phtml:70
 msgid "Background Color"
-msgstr ""
+msgstr "لون الخلفية"
 
 #: modules/help/templates/bbcode.phtml:74
 msgid "Quote"
-msgstr ""
+msgstr "اقتباس"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
-msgstr ""
+msgstr "قائمة ذات تعداد نقطي"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Title"
-msgstr ""
+msgstr "العنوان"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Text"
-msgstr ""
+msgstr "تحرير"
 
 #: modules/help/templates/bbcode.phtml:82
 msgid "Spoiler"
-msgstr ""
+msgstr "تالف"
 
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء الأمر"
 
 #: modules/help/templates/forum_rules.phtml:26
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "ممنوع"
 
 #: modules/help/templates/forum_rules.phtml:28
 msgid "Advertising messages"
-msgstr ""
+msgstr "حذف المراسلات"
 
 #: modules/help/templates/forum_rules.phtml:29
 msgid "The messages containing direct propagation of racial, national and religious animosity"
-msgstr ""
+msgstr "الرسائل التي تحتوي على الانتشار المباشر من العنصرية والقومية والدينية العداء"
 
 #: modules/help/templates/forum_rules.phtml:30
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
-msgstr ""
+msgstr "أي الرسائل المسيئة فاحشة والمبتذلة، افتراء، والبغيضة، وتهديد وتوجها جنسياً أو غيرها من المواد التي قد تنتهك أي من القوانين المعمول بها"
 
 #: modules/help/templates/forum_rules.phtml:31
 msgid "The messages obviously offending someone, espcially forum users"
-msgstr ""
+msgstr "الرسائل الواضح الإساءة إلى شخص ما ، espcially المنتدى المستخدمين"
 
 #: modules/help/templates/forum_rules.phtml:32
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
-msgstr ""
+msgstr "عمدا تشويه كتابة الأسماء المستعارة للمستخدمين الآخرين قصد إعطاء رسالة ظل الهجومية"
 
 #: modules/help/templates/forum_rules.phtml:33
 msgid "Publishing deleted by moderator messages repeatedly"
-msgstr ""
+msgstr "حذف من قبل مشرف رسائل مرارا وتكرارا النشر"
 
 #: modules/help/templates/forum_rules.phtml:34
 msgid "Post messages not related to the topic"
-msgstr ""
+msgstr "نشر الرسائل التي لا تتصل بالموضوع"
 
 #: modules/help/templates/forum_rules.phtml:35
 msgid "Continuing topics that have been closed by moderator"
-msgstr ""
+msgstr "استمرار المواضيع التي تم إغلاقها بواسطة مدير"
 
 #: modules/help/templates/forum_rules.phtml:38
 msgid "ABSOLUTELY FORBIDDEN"
-msgstr ""
+msgstr "ممنوع تماما"
 
 #: modules/help/templates/forum_rules.phtml:40
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
-msgstr ""
+msgstr "الكتابة في المواضيع العامة عدم الرضا غير لائقة من المستخدمين الآخرين ومناقشة حول المشرفين العامل. استخدام الرسائل الخاصة لهذا الغرض"
 
 #: modules/help/templates/forum_rules.phtml:41
 msgid "Register the nicknames having offensive tone for other users"
-msgstr ""
+msgstr "تسجيل الأسماء المستعارة الغير لائقة لهجة هجومية للمستخدمين الآخرين"
 
 #: modules/help/templates/forum_rules.phtml:44
 msgid "UNACCEPTABLE"
-msgstr ""
+msgstr "غير مقبول"
 
 #: modules/help/templates/forum_rules.phtml:46
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
-msgstr ""
+msgstr "واقتبس الرسائل الكاملة للمستخدم السابقة واقتبس رسائل الفعل تحتوي على عروض الأسعار الأخرى"
 
 #: modules/help/templates/forum_rules.phtml:47
 msgid "Post messages only contains external link"
-msgstr ""
+msgstr "رسائل البريد فقط يحتوي على ارتباط خارجي"
 
 #: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages written in translite"
-msgstr ""
+msgstr "آخر رسائل مكتوبة في translite"
 
 #: modules/help/templates/forum_rules.phtml:49
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
-msgstr ""
+msgstr "نشر الرسائل بلا هدف: تتكون من الابتسامات فقط أو الوظائف مثل \"موافق\"، \"ماذا؟\"، \"من هناك؟\"، إلخ."
 
 #: modules/help/templates/forum_rules.phtml:54
 msgid "Message posted despite the above warnings will be changed or deleted."
-msgstr ""
+msgstr "اي رسالة نشرت على الرغم من التحذيرات أعلاه سيتم تعديلها أو حذفها."
 
 #: modules/help/templates/forum_rules.phtml:55
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
-msgstr ""
+msgstr "تنطبق هذه القاعدة على جميع الأعضاء و المشرفين الإجراءات المتكررة سوف تجعلك تحصل على الحظر أو حتى تفقد حسابك."
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"
-msgstr ""
+msgstr "إضافة الابتسامات"
 
 #: modules/help/templates/my_smiles_list.phtml:55
 #: modules/help/templates/smiles_list.phtml:62
 msgid "or"
-msgstr ""
+msgstr "او"
 
 #: modules/help/templates/my_smiles_list.phtml:64
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: modules/help/templates/smiles_list.phtml:71
 msgid "Add"
-msgstr ""
+msgstr "اضف"
 
