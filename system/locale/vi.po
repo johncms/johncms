@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "Tải xuống"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "Phòng trò truyện"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -95,7 +95,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
-msgstr ""
+msgstr "Đăng nhập"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "Chọn ngôn ngữ"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "Áp dụng"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "Cá nhân"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "Mã bảo mật không đúng"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "Đăng ký Thành Viên"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,104 +218,104 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "Hủy bỏ"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Thông báo đã được xóa!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "Người dùng đăng ký"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Bài viết cần kiểm duyệt"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Tệp tin cần kiểm duyệt"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "Cấm"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Bài đăng mới"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "Thư"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Bình luận"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Cài đặt"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Cài đặt đã được lưu!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "Thông báo"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Tất cả các thông báo đã được đọc"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Tổng cộng"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Xóa thông báo"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "Hiển thị số tin chưa đọc trong diễn đàn"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Lưu lại"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "Chuyển hướng sang một liên kết bên ngoài "
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "Liên kết Ngoài"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "Chú Ý!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "Bạn đang rời bỏ trang web của chúng tôi và đi đến một liên kết bên ngoài"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "Quản lý trang web của chúng tôi không chịu trách nhiệm về nội dung trang bên ngoài"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "Không nên nhập %s (Tài khoản, Mật khẩu), trên các trang thứ ba"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "Đi đến liên Kết"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "Bạn đang tìm kiếm một cái gì đó không tồn tại hay đã bị xóa"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -354,12 +354,12 @@ msgstr[0] ""
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
-msgstr ""
+msgstr "Phiên bản PHP"
 
 #: system/src/Checker/SystemChecker.php:34
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "Phiên bản PHP thấp nhất là %s"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -370,7 +370,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "Yes"
-msgstr ""
+msgstr "Có"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -381,19 +381,19 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "No"
-msgstr ""
+msgstr "Không"
 
 #: system/src/Checker/SystemChecker.php:42
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "Tiện ích mở rộng PDO của PHP phải được cài đặt"
 
 #: system/src/Checker/SystemChecker.php:45
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Tiện ích Imagick hoặc GD"
 
 #: system/src/Checker/SystemChecker.php:50
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "Bạn cần kích hoạt tiện ích PHP Imagick hoặc GD"
 
 #: system/src/Checker/SystemChecker.php:53
 msgid "zlib extension"
@@ -401,7 +401,7 @@ msgstr ""
 
 #: system/src/Checker/SystemChecker.php:58
 msgid "PHP extension zlib must be installed"
-msgstr ""
+msgstr "Tiện ích PHP zlib cần được cài đặt"
 
 #: system/src/Checker/SystemChecker.php:61
 msgid "mbstring extension"
@@ -409,7 +409,7 @@ msgstr ""
 
 #: system/src/Checker/SystemChecker.php:66
 msgid "PHP extension mbstring must be installed"
-msgstr ""
+msgstr "Tiện ích mở rộng PHP mbstring cần được cài đặt"
 
 #: system/src/Checker/SystemChecker.php:69
 msgid "fileinfo extension"
@@ -417,7 +417,7 @@ msgstr ""
 
 #: system/src/Checker/SystemChecker.php:74
 msgid "PHP extension fileinfo must be installed"
-msgstr ""
+msgstr "Tiện ích PHP fileinfo cần được cài đặt"
 
 #: system/src/Checker/SystemChecker.php:86
 msgid "opcache extension"
@@ -425,20 +425,20 @@ msgstr ""
 
 #: system/src/Checker/SystemChecker.php:91
 msgid "It is recommended to install the php opcache extension for better performance."
-msgstr ""
+msgstr "Bạn nên cài đặt phần mở rộng php opcache để có hiệu suất tốt hơn."
 
 #: system/src/Checker/SystemChecker.php:99
 msgid "It is recommended to enable the php opcache extension to improve performance."
-msgstr ""
+msgstr "Bạn nên kích hoạt phần mở rộng php opcache để có hiệu suất tốt hơn."
 
 #: system/src/Checker/SystemChecker.php:112
 msgid "Version of the database server"
-msgstr ""
+msgstr "Phiên bản của máy chủ cơ sở dữ liệu"
 
 #: system/src/Checker/SystemChecker.php:117
 #, php-format
 msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
-msgstr ""
+msgstr "Hệ thống yêu cầu máy chủ MySQL phiên bản %s trở lên hoặc MariaDB %s trở lên."
 
 #: system/src/Checker/SystemChecker.php:120
 msgid "mysqlnd test"
@@ -447,34 +447,35 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:125
 msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
-msgstr ""
+msgstr "Chúng tôi sử dụng kiểm tra kiểu dữ liệu nghiêm ngặt khi phát triển hệ thống. CMS sẽ không hoạt động chính xác nếu trình điều khiển làm việc với cơ sở dữ liệu trả về kiểu dữ liệu không chính xác.\n"
+"PHP sẽ hoạt động với trình điều khiển mặc định: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 
 #: system/src/Comments.php:157
 #: system/src/Comments.php:226
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "Trả lời"
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "Quản trị đã trả lời tin nhắn này"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "Lỗi dữ liệu"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Bạn không thể chỉnh sửa bài viết của người sử dụng cấp trên"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -482,191 +483,191 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "Văn bản được nhập quá ngắn"
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
+msgstr "Bạn không thể thêm những tin nhắn quá nhanh<br>Vui lòng chờ."
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "giây"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "Tin nhắn đã tồn tại"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "Chưa đọc"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "Hoạt động cuối"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "Trang chủ"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
-msgstr ""
+msgstr "Quản trị diễn đàn"
 
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "Quản trị tải lên"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "Quản trị thư viện ảnh"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
-msgstr ""
+msgstr "SuperMod"
 
 #: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
-msgstr ""
+msgstr "Quản trị viên cấp cao"
 
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "Giám sát viên"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "Tài khoản cuả bạn bị khoá"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
-msgstr ""
+msgstr "Các dữ liêụ bạn nhập không có nguồn gốc từ trang web này"
 
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr ""
+msgstr "Bạn không được thêm tin nhắn quá nhanh. Xin vui lòng, chờ %value% giây."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
-msgstr ""
+msgstr "Một hồ sơ phù hợp với đầu vào đã được tìm thấy"
 
 #: system/src/Validator/messages.php:33
 msgid "No record matching the input was found"
-msgstr ""
+msgstr "Không có hồ sơ kết hợp đầu vào đã được tìm thấy"
 
 #: system/src/Validator/messages.php:37
 #: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
-msgstr ""
+msgstr "Giá trị là bắt buộc, không được để trống"
 
 #: system/src/Validator/messages.php:41
 #, php-format
 msgid "The input is less than %min% characters long"
-msgstr ""
+msgstr "Đầu vào phải ít hơn %min% kí tự"
 
 #: system/src/Validator/messages.php:42
 #, php-format
 msgid "The input is more than %max% characters long"
-msgstr ""
+msgstr "Đầu vào phải nhiều hơn %max% kí tự"
 
 #: system/src/Validator/messages.php:46
 msgid "The input was not found in the haystack"
-msgstr ""
+msgstr "Dữ liệu đầu vào không được tìm thấy trong haystack"
 
 #: system/src/Validator/messages.php:50
 #: system/src/Validator/messages.php:61
 msgid "Invalid type given. String expected"
-msgstr ""
+msgstr "Không đúng loại dữ liệu. Dữ liệu phải là chuỗi"
 
 #: system/src/Validator/messages.php:51
 msgid "The input is not a valid email address. Use the basic format local-part@hostname"
-msgstr ""
+msgstr "Đầu vào của bạn không phải là một email hợp lệ. Hãy sử dụng theo chuẩn local-part@hostname"
 
 #: system/src/Validator/messages.php:52
 #, php-format
 msgid "'%hostname%' is not a valid hostname for the email address"
-msgstr ""
+msgstr "'%hostname%' là tên máy chủ không hợp lệ cho địa chỉ email"
 
 #: system/src/Validator/messages.php:53
 #, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
-msgstr ""
+msgstr "'%hostname%' không xuất hiện để có bất kỳ MX nào hợp lệ hoặc Một hồ sơ cho các địa chỉ email"
 
 #: system/src/Validator/messages.php:54
 #, php-format
 msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
-msgstr ""
+msgstr "'%hostname%' không phải là một mạng định tuyến. Địa chỉ email này không được công khai trên mạng"
 
 #: system/src/Validator/messages.php:55
 #, php-format
 msgid "'%localPart%' can not be matched against dot-atom format"
-msgstr ""
+msgstr "'%localPart%' không khớp với dạng dot-atom"
 
 #: system/src/Validator/messages.php:56
 #, php-format
 msgid "'%localPart%' can not be matched against quoted-string format"
-msgstr ""
+msgstr "'%localPart%' không khớp với dạng quoted-string"
 
 #: system/src/Validator/messages.php:57
 msgid "'%localPart%' is not a valid local part for the email address"
-msgstr ""
+msgstr "'%localPart%' là một phần không hợp lệ cho địa địa chỉ email"
 
 #: system/src/Validator/messages.php:58
 msgid "The input exceeds the allowed length"
-msgstr ""
+msgstr "Đầu vào vượt quá mức cho phép dài"
 
 #: system/src/Validator/messages.php:60
 msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
-msgstr ""
+msgstr "Dữ liệu vừa nhập là một DNS nhưng không thể giải mã punycode"
 
 #: system/src/Validator/messages.php:62
 msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
-msgstr ""
+msgstr "Dữ liệu vừa nhập là một DNS nhưng dường như nó chứa một dấu gạch ngang ở vị trí không hợp lệ"
 
 #: system/src/Validator/messages.php:63
 msgid "The input does not match the expected structure for a DNS hostname"
-msgstr ""
+msgstr "Dữ liệu đầu vào không khớp với cấu trúc dự kiến cho tên máy chủ DNS"
 
 #: system/src/Validator/messages.php:64
 msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
-msgstr ""
+msgstr "Dữ liễu đầu vào có vẻ là tên máy chủ DNS nhưng không thể khớp với lược đồ tên máy chủ của TLD '% tld%'"
 
 #: system/src/Validator/messages.php:65
 msgid "The input does not appear to be a valid local network name"
-msgstr ""
+msgstr "Dữ liệu đầu vào dường như không phải là một tên mạng cục bộ hợp lệ"
 
 #: system/src/Validator/messages.php:66
 msgid "The input does not appear to be a valid URI hostname"
-msgstr ""
+msgstr "Dữ liệu đầu vào dường như không phải là tên máy chủ URI hợp lệ"
 
 #: system/src/Validator/messages.php:67
 msgid "The input appears to be an IP address, but IP addresses are not allowed"
-msgstr ""
+msgstr "Dữ liệu đầu vào có vẻ là một địa chỉ IP, nhưng địa chỉ IP này không được cấp phép"
 
 #: system/src/Validator/messages.php:68
 msgid "The input appears to be a local network name but local network names are not allowed"
-msgstr ""
+msgstr "Dữ liệu đầu vào dường như là một tên mạng cục bộ nhưng tên mạng cục bộ này không được phép"
 
 #: system/src/Validator/messages.php:69
 msgid "The input appears to be a DNS hostname but cannot extract TLD part"
-msgstr ""
+msgstr "Dữ liệu đầu vào có vẻ là tên máy chủ DNS nhưng không thể trích xuất TLD"
 
 #: system/src/Validator/messages.php:70
 msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
-msgstr ""
+msgstr "Dữ liệu đầu vào dường như là tên máy chủ DNS nhưng không thể khớp TLD với danh sách đã biết"
 
 #: system/src/Validator/messages.php:75
 msgid "Invalid type given. String, integer, float, boolean or array expected"
-msgstr ""
+msgstr "Kiểu dữ liệu không được phép. Vui lòng dùng chuỗi, số nguyên, số thực, so sánh hoặc mảng."
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
@@ -714,15 +715,15 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
-msgstr ""
+msgstr "Đăng nhập"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
-msgstr ""
+msgstr "Thoát ra"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
-msgstr ""
+msgstr "Email được tạo ra tự động. Xin đừng trả lời nó. <br> Để liên lạc với chúng tôi, sử dụng, các thông tin liên lạc của chúng tôi trên trang web."
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
@@ -735,21 +736,21 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 #, php-format
 msgid "Hello, %s!"
-msgstr ""
+msgstr "Xin chào, %s!"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
 #, php-format
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Bạn đã bắt đầu quá trình thay đổi địa chỉ email trên website <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
 msgid "The new email address is:"
-msgstr ""
+msgstr "Địa chỉ email mới : "
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
 msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
-msgstr ""
+msgstr "Nếu bạn đã không bắt đầu quy trình thay đổi email, xin hãy liên lạc với chúng tôi với bất kỳ cách nào thuận tiện cho bạn."
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
@@ -757,7 +758,7 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
-msgstr ""
+msgstr "Để có thể tiếp tục vui lòng nhấn nút xác nhận"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
 #: themes/default/templates/system/mail/templates/registration.phtml:27
@@ -766,7 +767,7 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
+msgstr "Nếu bạn không đăng ký trên trang web của chúng tôi, xin vui lòng bỏ qua email này."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
@@ -775,91 +776,91 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format
 msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Bạn đã thành công đăng ký trên <a href=\"%s\">%s</a> trang web"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:18
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
 msgid "Your login:"
-msgstr ""
+msgstr "Tên đăng nhập của bạn:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
 msgid "Your password:"
-msgstr ""
+msgstr "Mật khẩu của bạn:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 msgid "The one you specified when registering"
-msgstr ""
+msgstr "Một trong những bạn chỉ định khi đăng ký"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:22
 #, php-format
 msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
+msgstr "Để kích hoạt tài khoản của bạn, xin vui lòng xác nhận trên %s trang web."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:31
 msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
-msgstr ""
+msgstr "Nếu bạn không có đăng ký trên trang web của chúng tôi, xin vui lòng bỏ qua email này. Trong trường hợp này, tài khoản sẽ không được kích hoạt và sẽ được tự động đã bị xóa."
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:9
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
 msgid "Password recovery"
-msgstr ""
+msgstr "Khôi phục mật khẩu"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Bạn bắt đầu quá trình phục hồi mật khẩu trên <a href=\"%s\">%s</a> trang web"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:17
 msgid "In order to recover your password, you must click on the link:"
-msgstr ""
+msgstr "Để phục hồi mật khẩu của bạn, bạn phải bấm vào liên kết:"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:22
 msgid "Restore"
-msgstr ""
+msgstr "Khôi phục"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:25
 msgid "Link valid for 1 hour"
-msgstr ""
+msgstr "Liên kết hợp lệ trong 1 giờ"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:27
 msgid "If you receive this mail by mistake, just ignore this letter"
-msgstr ""
+msgstr "Nếu em nhận được thư này bằng cách sai lầm, chỉ cần bỏ qua lá thư này"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
 #, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Bạn có thay đổi mật khẩu trên <a href=\"%s\">%s</a> trang web"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
 msgid "After logging in, you can change your password to new one."
-msgstr ""
+msgstr "Sau khi đăng nhập bạn có thể thay đổi mật khẩu để mới."
 
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa không?"
 
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
-msgstr ""
+msgstr "Xoá"
 
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
-msgstr ""
+msgstr "Nội dung tin nhắn"
 
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
-msgstr ""
+msgstr "Gửi"
 
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "Danh sách này trống"
 
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
-msgstr ""
+msgstr "Chỉnh sửa:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
+msgstr "Chỉnh sửa"
 
