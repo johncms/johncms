@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
@@ -64,7 +64,7 @@ msgstr "Установить в анкету"
 
 #: modules/help/includes/avatars.php:58
 msgid "Are you sure you want to set yourself this avatar?"
-msgstr "Вы уверены, что хотите установить себе этот аватар?"
+msgstr "Вы действительно хотите установить себе этот аватар?"
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
@@ -140,7 +140,7 @@ msgstr "Спорт"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr "Технологии"
+msgstr "Техника"
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -174,7 +174,7 @@ msgstr "Жирный"
 
 #: modules/help/templates/bbcode.phtml:42
 msgid "Italic"
-msgstr "Курсив"
+msgstr "Наклонный"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
@@ -306,7 +306,7 @@ msgstr "Это правило распространяется на всех у�
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"
-msgstr "Добавить смайлы"
+msgstr "Добавить Смайлы"
 
 #: modules/help/templates/my_smiles_list.phtml:55
 #: modules/help/templates/smiles_list.phtml:62
