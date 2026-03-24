@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/registration/index.php:50
 #: modules/registration/templates/index.phtml:4
@@ -23,7 +23,7 @@ msgstr ""
 #: modules/registration/templates/registration_result.phtml:4
 #: modules/registration/templates/registration_result.phtml:5
 msgid "Registration"
-msgstr ""
+msgstr "Rejestracja"
 
 #: modules/registration/index.php:169
 msgid "Registration on the website"
@@ -48,28 +48,28 @@ msgstr ""
 
 #: modules/registration/templates/index.phtml:13
 msgid "You can get authorized on the site after confirmation of your registration."
-msgstr ""
+msgstr "Możesz dostać się do witryny tylko po potwierdzeniu rejestracji."
 
 #: modules/registration/templates/index.phtml:21
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
-msgstr ""
+msgstr "Proszę nie rejestrować nazw typu 12345, 2222, gkkkk, sssss, nr. telefonu, etc. Będą usuwane. <br> Również wszystkie profile rejestrowane przez serwery proxy lub Tora zostaną usunięte!"
 
 #: modules/registration/templates/index.phtml:25
 msgid "Choose Nickname"
-msgstr ""
+msgstr "Zmiana Nicku"
 
 #: modules/registration/templates/index.phtml:34
 msgid "Username"
-msgstr ""
+msgstr "Nazwa użytkownika"
 
 #: modules/registration/templates/index.phtml:40
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
-msgstr ""
+msgstr "Min. 2, Max. 15 znaków.<br>Dozwolona jest cyrylica, alfabet łaciński, cyfry i symbole - = @ ! ? ~ _ ( ) [ ] . * (bez zera)"
 
 #: modules/registration/templates/index.phtml:44
 #: modules/registration/templates/index.phtml:53
 msgid "Assign a password"
-msgstr ""
+msgstr "Przypisz hasło"
 
 #: modules/registration/templates/index.phtml:61
 #: modules/registration/templates/index.phtml:68
@@ -78,41 +78,41 @@ msgstr ""
 
 #: modules/registration/templates/index.phtml:76
 msgid "Select Gender"
-msgstr ""
+msgstr "Wybierz płeć"
 
 #: modules/registration/templates/index.phtml:79
 msgid "Man"
-msgstr ""
+msgstr "Mężczyzna"
 
 #: modules/registration/templates/index.phtml:80
 msgid "Woman"
-msgstr ""
+msgstr "Kobieta"
 
 #: modules/registration/templates/index.phtml:87
 #: modules/registration/templates/index.phtml:94
 msgid "Your name"
-msgstr ""
+msgstr "Twój nick"
 
 #: modules/registration/templates/index.phtml:101
 msgid "Tell us a little about yourself"
-msgstr ""
+msgstr "Opowiedz nam trochę o sobie"
 
 #: modules/registration/templates/index.phtml:108
 #: modules/registration/templates/index.phtml:118
 msgid "Verification code"
-msgstr ""
+msgstr "Kod weryfikacyjny"
 
 #: modules/registration/templates/index.phtml:110
 msgid "Enter verification code"
-msgstr ""
+msgstr "Wprowadź kod weryfikacyjny"
 
 #: modules/registration/templates/index.phtml:124
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Jeżeli nie widzisz nic na obrazku, włącz grafikę w przeglądarce i odśwież stronę"
 
 #: modules/registration/templates/registration_closed.phtml:12
 msgid "Registration is temporarily closed"
-msgstr ""
+msgstr "Rejestracja tymczasowo zamknięta"
 
 #: modules/registration/templates/registration_result.phtml:9
 msgid "Your registration data"
@@ -124,15 +124,15 @@ msgstr ""
 
 #: modules/registration/templates/registration_result.phtml:14
 msgid "Your ID"
-msgstr ""
+msgstr "Twoje ID"
 
 #: modules/registration/templates/registration_result.phtml:15
 msgid "Your Username"
-msgstr ""
+msgstr "Twoja nazwa użytkownika"
 
 #: modules/registration/templates/registration_result.phtml:16
 msgid "Your Password"
-msgstr ""
+msgstr "Twoje hasło"
 
 #: modules/registration/templates/registration_result.phtml:19
 msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
@@ -140,9 +140,9 @@ msgstr ""
 
 #: modules/registration/templates/registration_result.phtml:21
 msgid "Please, wait until a moderator approves your registration"
-msgstr ""
+msgstr "Proszę poczekaj, aż moderator zatwierdzi rejestrację"
 
 #: modules/registration/templates/registration_result.phtml:23
 msgid "Enter"
-msgstr ""
+msgstr "Wejdź"
 
