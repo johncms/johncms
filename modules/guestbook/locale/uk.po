@@ -11,36 +11,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 13:16\n"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
-msgstr ""
+msgstr "Повідомлення видалено"
 
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:34
 #: modules/guestbook/templates/edit.phtml:3
 msgid "Edit message"
-msgstr ""
+msgstr "Редагувати повідомлення"
 
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:69
 msgid "The message was saved"
-msgstr ""
+msgstr "Повідомлення збережено"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Guestbook"
-msgstr ""
+msgstr "Гостьова книга"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Admin Club"
-msgstr ""
+msgstr "Адмін-клуб"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
 msgid "Guestbook is closed"
-msgstr ""
+msgstr "Гостьова книга закрита"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
 msgid "Your message was added successfully"
-msgstr ""
+msgstr "Ваше повідомлення успішно додано"
 
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:34
 #: modules/guestbook/templates/index.phtml:191
@@ -48,75 +48,75 @@ msgstr ""
 #: modules/guestbook/templates/reply.phtml:11
 #: modules/guestbook/templates/reply.phtml:24
 msgid "Reply"
-msgstr ""
+msgstr "Відповісти"
 
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:69
 msgid "Your reply to the message was saved"
-msgstr ""
+msgstr "Ваша відповідь на повідомлення була збережена"
 
 #: modules/guestbook/src/Application/Controllers/UploadFileController.php:35
 msgid "Only images are allowed"
-msgstr ""
+msgstr "Дозволено лише зображення!"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:193
 msgid "All messages older than 1 day were deleted"
-msgstr ""
+msgstr "Всі повідомлення старіші за 1 день було видалено"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:209
 msgid "Full clearing is finished"
-msgstr ""
+msgstr "Повне очищення завершено"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:225
 msgid "All messages older than 1 week were deleted"
-msgstr ""
+msgstr "Всі повідомлення старіші за 1 тиждень було видалено"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
-msgstr ""
+msgstr "Очистити гостьову книгу"
 
 #: modules/guestbook/templates/clear.phtml:10
 msgid "Clearing parameters"
-msgstr ""
+msgstr "Параметри видалення"
 
 #: modules/guestbook/templates/clear.phtml:13
 msgid "Older than 1 week"
-msgstr ""
+msgstr "Старіше 1 тижня"
 
 #: modules/guestbook/templates/clear.phtml:17
 msgid "Older than 1 day"
-msgstr ""
+msgstr "Старіше 1 дня"
 
 #: modules/guestbook/templates/clear.phtml:21
 msgid "Clear all"
-msgstr ""
+msgstr "Очистити все"
 
 #: modules/guestbook/templates/clear.phtml:25
 #: modules/guestbook/templates/index.phtml:221
 msgid "Clear"
-msgstr ""
+msgstr "Чисто"
 
 #: modules/guestbook/templates/clear.phtml:26
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
-msgstr ""
+msgstr "Скасувати"
 
 #: modules/guestbook/templates/confirm_delete.phtml:6
 msgid "Delete message"
-msgstr ""
+msgstr "Видалити повідомлення"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Ви дійсно бажаєте видалити?"
 
 #: modules/guestbook/templates/confirm_delete.phtml:14
 #: modules/guestbook/templates/index.phtml:206
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: modules/guestbook/templates/edit.phtml:10
 #: modules/guestbook/templates/reply.phtml:18
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 #: modules/guestbook/templates/edit.phtml:15
 #: modules/guestbook/templates/index.phtml:62
@@ -126,12 +126,12 @@ msgstr ""
 #: modules/guestbook/templates/edit.phtml:21
 #: modules/guestbook/templates/reply.phtml:30
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: modules/guestbook/templates/edit.phtml:22
 #: modules/guestbook/templates/reply.phtml:31
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: modules/guestbook/templates/index.phtml:21
 msgid "The guestbook is closed"
@@ -140,16 +140,16 @@ msgstr ""
 #: modules/guestbook/templates/index.phtml:44
 #: modules/guestbook/templates/index.phtml:52
 msgid "Name"
-msgstr ""
+msgstr "Назва"
 
 #: modules/guestbook/templates/index.phtml:69
 msgid "Verification code"
-msgstr ""
+msgstr "Код перевірки"
 
 #: modules/guestbook/templates/index.phtml:71
 #: modules/guestbook/templates/index.phtml:79
 msgid "Symbols on the picture"
-msgstr ""
+msgstr "Символи, які зображені на картинці"
 
 #: modules/guestbook/templates/index.phtml:85
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
@@ -157,7 +157,7 @@ msgstr ""
 
 #: modules/guestbook/templates/index.phtml:90
 msgid "Write"
-msgstr ""
+msgstr "Написати"
 
 #: modules/guestbook/templates/index.phtml:101
 msgid "For registered users only"
@@ -165,21 +165,21 @@ msgstr ""
 
 #: modules/guestbook/templates/index.phtml:109
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
-msgstr ""
+msgstr "Гостьова книга порожня.<br><strong>Бедь першим! :)</strong>"
 
 #: modules/guestbook/templates/index.phtml:146
 msgid "Guest"
-msgstr ""
+msgstr "Гість"
 
 #: modules/guestbook/templates/index.phtml:154
 msgid "Edited:"
-msgstr ""
+msgstr "Змінено:"
 
 #: modules/guestbook/templates/index.phtml:155
 msgid "Edited"
-msgstr ""
+msgstr "Відредаговано"
 
 #: modules/guestbook/templates/index.phtml:205
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
