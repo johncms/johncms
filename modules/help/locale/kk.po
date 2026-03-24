@@ -11,28 +11,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
 msgid "For administration"
-msgstr ""
+msgstr "Әкімшілік"
 
 #: modules/help/includes/admsmilies.php:21
 #: modules/help/includes/my_smilies.php:22
 #: modules/help/includes/usersmilies.php:39
 #: modules/help/templates/index.phtml:31
 msgid "Smilies"
-msgstr ""
+msgstr "Смайлдар"
 
 #: modules/help/includes/admsmilies.php:32
 msgid "Access forbidden"
-msgstr ""
+msgstr "Рұқсат жоқ"
 
 #: modules/help/includes/avatars.php:20
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
-msgstr ""
+msgstr "Аватарлар"
 
 #: modules/help/includes/avatars.php:37
 msgid "Avatar has been successfully applied"
@@ -40,11 +40,11 @@ msgstr ""
 
 #: modules/help/includes/avatars.php:39
 msgid "Continue"
-msgstr ""
+msgstr "Жалғастыру"
 
 #: modules/help/includes/avatars.php:48
 msgid "An error occurred"
-msgstr ""
+msgstr "Қате пайда болды"
 
 #: modules/help/includes/avatars.php:50
 #: modules/help/templates/avatar_list.phtml:65
@@ -56,7 +56,7 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:48
 #: modules/help/templates/smiles_list.phtml:88
 msgid "Back"
-msgstr ""
+msgstr "Артқа"
 
 #: modules/help/includes/avatars.php:55
 msgid "Set to Profile"
@@ -68,12 +68,12 @@ msgstr ""
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/help/includes/forum.php:15
 #: modules/help/templates/index.phtml:28
 msgid "Forum rules"
-msgstr ""
+msgstr "Форум ережелері"
 
 #: modules/help/includes/my_smilies.php:21
 #: modules/help/includes/smilies.php:27
@@ -83,64 +83,64 @@ msgstr ""
 
 #: modules/help/includes/smilies.php:19
 msgid "Smiles"
-msgstr ""
+msgstr "Күлміс"
 
 #: modules/help/includes/tags.php:15
 #: modules/help/templates/index.phtml:29
 msgid "bbCode Tags"
-msgstr ""
+msgstr "BBCode тегтер"
 
 #: modules/help/index.php:54
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Ақпарат сұрақтар мен жауаптар  (FAQ.KG)"
 
 #: modules/help/index.php:64
 msgid "Animals"
-msgstr ""
+msgstr "Жануарлар"
 
 #: modules/help/index.php:65
 msgid "Brawl, Weapons"
-msgstr ""
+msgstr "Төбелес, Қару-Жарақ"
 
 #: modules/help/index.php:66
 msgid "Emotions"
-msgstr ""
+msgstr "Эмоциялар"
 
 #: modules/help/index.php:67
 msgid "Flowers"
-msgstr ""
+msgstr "Гүлдер"
 
 #: modules/help/index.php:68
 msgid "Food, Alcohol"
-msgstr ""
+msgstr "Азық-Түлік, Алкоголь"
 
 #: modules/help/index.php:69
 msgid "Gestures"
-msgstr ""
+msgstr "Бұлғау"
 
 #: modules/help/index.php:70
 msgid "Holidays"
-msgstr ""
+msgstr "Мерекелер"
 
 #: modules/help/index.php:71
 msgid "Love"
-msgstr ""
+msgstr "Махаббат"
 
 #: modules/help/index.php:72
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Әр түрлі"
 
 #: modules/help/index.php:73
 msgid "Music, Dancing"
-msgstr ""
+msgstr "Музыка, Би"
 
 #: modules/help/index.php:74
 msgid "Sports"
-msgstr ""
+msgstr "Спорт"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr ""
+msgstr "«Технология»"
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -148,17 +148,17 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:34
 #: modules/help/templates/smiles_list.phtml:33
 msgid "The list is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: modules/help/templates/avatar_list.phtml:61
 #: modules/help/templates/my_smiles_list.phtml:77
 #: modules/help/templates/smiles_list.phtml:84
 msgid "Total:"
-msgstr ""
+msgstr "Барлығы:"
 
 #: modules/help/templates/bbcode.phtml:30
 msgid "PHP code"
-msgstr ""
+msgstr "PHP коды"
 
 #: modules/help/templates/bbcode.phtml:33
 msgid "Link name"
@@ -166,75 +166,75 @@ msgstr ""
 
 #: modules/help/templates/bbcode.phtml:34
 msgid "URL Link"
-msgstr ""
+msgstr "URL-Сілтеме"
 
 #: modules/help/templates/bbcode.phtml:38
 msgid "Bold"
-msgstr ""
+msgstr "Жуан"
 
 #: modules/help/templates/bbcode.phtml:42
 msgid "Italic"
-msgstr ""
+msgstr "Көлбеу"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
-msgstr ""
+msgstr "Асты сызылған"
 
 #: modules/help/templates/bbcode.phtml:50
 msgid "Strike"
-msgstr ""
+msgstr "Соққы"
 
 #: modules/help/templates/bbcode.phtml:54
 msgid "Red"
-msgstr ""
+msgstr "Қызыл"
 
 #: modules/help/templates/bbcode.phtml:58
 msgid "Green"
-msgstr ""
+msgstr "Жасыл"
 
 #: modules/help/templates/bbcode.phtml:62
 msgid "Blue"
-msgstr ""
+msgstr "Көк"
 
 #: modules/help/templates/bbcode.phtml:66
 msgid "Text Color"
-msgstr ""
+msgstr "Текст түсі"
 
 #: modules/help/templates/bbcode.phtml:70
 msgid "Background Color"
-msgstr ""
+msgstr "Фонның Түсі"
 
 #: modules/help/templates/bbcode.phtml:74
 msgid "Quote"
-msgstr ""
+msgstr "Дәйексөз"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
-msgstr ""
+msgstr "Таңбаланған тізім"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Title"
-msgstr ""
+msgstr "Тақырып"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: modules/help/templates/bbcode.phtml:82
 msgid "Spoiler"
-msgstr ""
+msgstr "Спойлер"
 
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: modules/help/templates/forum_rules.phtml:26
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "Тыйым салынған"
 
 #: modules/help/templates/forum_rules.phtml:28
 msgid "Advertising messages"
-msgstr ""
+msgstr "Жарнамалық хабарлар"
 
 #: modules/help/templates/forum_rules.phtml:29
 msgid "The messages containing direct propagation of racial, national and religious animosity"
@@ -311,13 +311,13 @@ msgstr ""
 #: modules/help/templates/my_smiles_list.phtml:55
 #: modules/help/templates/smiles_list.phtml:62
 msgid "or"
-msgstr ""
+msgstr "немесе"
 
 #: modules/help/templates/my_smiles_list.phtml:64
 msgid "Delete"
-msgstr ""
+msgstr "Өшіру"
 
 #: modules/help/templates/smiles_list.phtml:71
 msgid "Add"
-msgstr ""
+msgstr "Қосу"
 
