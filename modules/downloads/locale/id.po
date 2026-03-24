@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/downloads/includes/bookmark.php:29
 #: modules/downloads/includes/comments.php:31
@@ -55,19 +55,19 @@ msgstr ""
 #: modules/downloads/templates/top_users.phtml:43
 #: modules/downloads/templates/view.phtml:174
 msgid "Downloads"
-msgstr ""
+msgstr "Unduhan"
 
 #: modules/downloads/includes/bookmark.php:31
 #: modules/downloads/index.php:81
 msgid "For registered users only"
-msgstr ""
+msgstr "Hanya untuk pengguna"
 
 #: modules/downloads/includes/bookmark.php:37
 #: modules/downloads/includes/bookmark.php:56
 #: modules/downloads/includes/bookmark.php:57
 #: modules/downloads/templates/index.phtml:163
 msgid "Favorites"
-msgstr ""
+msgstr "Favorit"
 
 #: modules/downloads/includes/comments.php:27
 #: modules/downloads/includes/comments.php:57
@@ -76,14 +76,14 @@ msgstr ""
 #: modules/downloads/templates/comments_review.phtml:78
 #: modules/downloads/templates/view.phtml:137
 msgid "Comments"
-msgstr ""
+msgstr "Komentar"
 
 #: modules/downloads/includes/comments.php:29
 #: modules/downloads/includes/comments_review.php:28
 #: modules/downloads/includes/comments_review.php:30
 #: modules/downloads/templates/comments_review.phtml:30
 msgid "Comments are disabled"
-msgstr ""
+msgstr "Komentar dinonaktifkan"
 
 #: modules/downloads/includes/comments.php:45
 #: modules/downloads/includes/comments.php:47
@@ -98,12 +98,12 @@ msgstr ""
 #: modules/downloads/includes/view.php:33
 #: modules/downloads/includes/view.php:35
 msgid "File not found"
-msgstr ""
+msgstr "Berkas tidak ditemukan"
 
 #: modules/downloads/includes/comments_review.php:38
 #: modules/downloads/templates/index.phtml:161
 msgid "Review comments"
-msgstr ""
+msgstr "Tinjauan komentar"
 
 #: modules/downloads/includes/fileControl/edit_file.php:34
 #: modules/downloads/includes/fileControl/edit_file.php:108
@@ -113,7 +113,7 @@ msgstr ""
 #: modules/downloads/includes/fileControl/files_more.php:115
 #: modules/downloads/templates/view.phtml:149
 msgid "Edit File"
-msgstr ""
+msgstr "Sunting berkas"
 
 #: modules/downloads/includes/fileControl/edit_file.php:110
 #: modules/downloads/includes/fileControl/files_more.php:184
@@ -122,7 +122,7 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:54
 #: modules/downloads/includes/folder_edit.php:66
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Kolom yang dibutuhkan kosong"
 
 #: modules/downloads/includes/fileControl/edit_file.php:112
 #: modules/downloads/includes/fileControl/edit_screen.php:122
@@ -137,19 +137,19 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:138
 #: modules/downloads/includes/folder_edit.php:98
 msgid "Repeat"
-msgstr ""
+msgstr "Ulangi"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:38
 #: modules/downloads/includes/fileControl/edit_screen.php:107
 #: modules/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
-msgstr ""
+msgstr "Meng-Upload screenshot"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:109
 #: modules/downloads/templates/file_import_result.phtml:34
 #: modules/downloads/templates/file_upload_result.phtml:34
 msgid "Screenshot is attached"
-msgstr ""
+msgstr "Cuplikan dilampirkan"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:111
 #: modules/downloads/includes/fileControl/files_more.php:237
@@ -162,24 +162,24 @@ msgstr ""
 #: modules/downloads/templates/file_import_result.phtml:44
 #: modules/downloads/templates/view.phtml:171
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:120
 #: modules/downloads/templates/file_import_result.phtml:36
 #: modules/downloads/templates/file_upload_result.phtml:36
 msgid "Screenshot not attached"
-msgstr ""
+msgstr "Cuplikan tidak dilampirkan"
 
 #: modules/downloads/includes/fileControl/files_more.php:56
 msgid "Additional files"
-msgstr ""
+msgstr "File-file tambahan"
 
 #: modules/downloads/includes/fileControl/files_more.php:138
 #: modules/downloads/includes/fileControl/files_more.php:147
 #: modules/downloads/includes/files_import.php:55
 #: modules/downloads/includes/files_import.php:94
 msgid "Invalid Link"
-msgstr ""
+msgstr "Tautan tidak valid"
 
 #: modules/downloads/includes/fileControl/files_more.php:155
 #: modules/downloads/includes/fileControl/files_more.php:252
@@ -187,25 +187,25 @@ msgstr ""
 #: modules/downloads/includes/scan_dir.php:95
 #: modules/downloads/includes/search.php:61
 msgid "Error"
-msgstr ""
+msgstr "Kesalahan"
 
 #: modules/downloads/includes/fileControl/files_more.php:188
 #: modules/downloads/includes/files_upload.php:74
 msgid "The weight of the file exceeds"
-msgstr ""
+msgstr "Ukuran berkas melebihi batas"
 
 #: modules/downloads/includes/fileControl/files_more.php:192
 #: modules/downloads/includes/files_import.php:83
 #: modules/downloads/includes/files_upload.php:78
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
-msgstr ""
+msgstr "Jenis berkas tidak diizinkan<br>Unggah berkas diizinkan dengan ekstensi berikut"
 
 #: modules/downloads/includes/fileControl/files_more.php:233
 #: modules/downloads/includes/fileControl/files_more.php:235
 #: modules/downloads/templates/file_import_result.phtml:32
 #: modules/downloads/templates/file_upload_result.phtml:32
 msgid "File attached"
-msgstr ""
+msgstr "Berkas dilampirkan"
 
 #: modules/downloads/includes/fileControl/files_more.php:242
 #: modules/downloads/includes/fileControl/files_more.php:245
@@ -213,7 +213,7 @@ msgstr ""
 #: modules/downloads/includes/files_upload.php:197
 #: modules/downloads/includes/files_upload.php:210
 msgid "File not attached"
-msgstr ""
+msgstr "Berkas tidak dilampirkan"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:62
 #: modules/downloads/includes/fileControl/transfer_file.php:119
@@ -221,21 +221,21 @@ msgstr ""
 #: modules/downloads/includes/fileControl/transfer_file.php:160
 #: modules/downloads/templates/view.phtml:153
 msgid "Move File"
-msgstr ""
+msgstr "Pindah berkas"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:64
 msgid "This is the current directory"
-msgstr ""
+msgstr "Ini adalah direktori saat ini"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:121
 msgid "The file has been moved"
-msgstr ""
+msgstr "Berkas berhasil dipindah"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:123
 #: modules/downloads/templates/index.phtml:147
 #: modules/downloads/templates/scan_dir.phtml:63
 msgid "Update counters"
-msgstr ""
+msgstr "Perbarui konter"
 
 #: modules/downloads/includes/files_import.php:38
 #: modules/downloads/includes/files_new.php:37
@@ -246,15 +246,15 @@ msgstr ""
 #: modules/downloads/includes/scan_dir.php:97
 #: modules/downloads/index.php:187
 msgid "The directory does not exist"
-msgstr ""
+msgstr "Folder tidak ada"
 
 #: modules/downloads/includes/files_import.php:87
 msgid "The file name length must not exceed 100 characters"
-msgstr ""
+msgstr "Nama berkas tidak boleh melebihi 100 karakter"
 
 #: modules/downloads/includes/files_import.php:91
 msgid "The file name contains invalid characters"
-msgstr ""
+msgstr "Nama berkas terdapat karakter tidak valid"
 
 #: modules/downloads/includes/files_import.php:101
 #: modules/downloads/includes/files_import.php:189
@@ -263,39 +263,39 @@ msgstr ""
 #: modules/downloads/includes/files_import.php:215
 #: modules/downloads/includes/files_import.php:216
 msgid "File import"
-msgstr ""
+msgstr "Impor berkas"
 
 #: modules/downloads/includes/files_moderation.php:23
 msgid "Files on moderation"
-msgstr ""
+msgstr "Berkas dimoderasi"
 
 #: modules/downloads/includes/files_moderation.php:32
 msgid "File accepted"
-msgstr ""
+msgstr "Berkas diterima"
 
 #: modules/downloads/includes/files_moderation.php:44
 msgid "All files accepted"
-msgstr ""
+msgstr "Semua berkas diterima"
 
 #: modules/downloads/includes/files_new.php:23
 #: modules/downloads/templates/index.phtml:40
 msgid "New Files"
-msgstr ""
+msgstr "Berkas baru"
 
 #: modules/downloads/includes/files_top.php:25
 #: modules/downloads/includes/files_top.php:37
 msgid "Most Commented"
-msgstr ""
+msgstr "Komentar paling banyak"
 
 #: modules/downloads/includes/files_top.php:27
 #: modules/downloads/includes/files_top.php:50
 msgid "Most Downloaded"
-msgstr ""
+msgstr "Unduh paling banyak"
 
 #: modules/downloads/includes/files_top.php:29
 #: modules/downloads/includes/files_top.php:44
 msgid "Popular Files"
-msgstr ""
+msgstr "Berkas populer"
 
 #: modules/downloads/includes/files_upload.php:85
 #: modules/downloads/includes/files_upload.php:195
@@ -303,7 +303,7 @@ msgstr ""
 #: modules/downloads/includes/files_upload.php:234
 #: modules/downloads/includes/files_upload.php:246
 msgid "Upload file"
-msgstr ""
+msgstr "Meng-Upload file"
 
 #: modules/downloads/includes/files_upload.php:182
 #: modules/downloads/includes/files_upload.php:183
@@ -312,20 +312,20 @@ msgstr ""
 #: modules/downloads/templates/index.phtml:131
 #: modules/downloads/templates/index.phtml:153
 msgid "Upload File"
-msgstr ""
+msgstr "Unggah berkas"
 
 #: modules/downloads/includes/files_upload.php:236
 msgid "Access forbidden"
-msgstr ""
+msgstr "Akses ditolak"
 
 #: modules/downloads/includes/files_user.php:15
 #: modules/downloads/includes/top_users.php:42
 msgid "User Files"
-msgstr ""
+msgstr "Berkas pengguna"
 
 #: modules/downloads/includes/files_user.php:30
 msgid "User does not exists"
-msgstr ""
+msgstr "Pengguna tidak ada"
 
 #: modules/downloads/includes/folder_add.php:20
 #: modules/downloads/includes/folder_add.php:32
@@ -335,31 +335,31 @@ msgstr ""
 #: modules/downloads/includes/folder_edit.php:94
 #: modules/downloads/templates/index.phtml:141
 msgid "Create Folder"
-msgstr ""
+msgstr "Buat Folder"
 
 #: modules/downloads/includes/folder_add.php:58
 msgid "Invalid characters"
-msgstr ""
+msgstr "Karakter tidak valid"
 
 #: modules/downloads/includes/folder_add.php:64
 #: modules/downloads/includes/folder_edit.php:87
 #: modules/downloads/templates/folder_form.phtml:56
 msgid "You can write only the following extensions"
-msgstr ""
+msgstr "Anda dapat menbuat hanya dengan ekstensi berikut"
 
 #: modules/downloads/includes/folder_add.php:125
 msgid "The Folder is created"
-msgstr ""
+msgstr "Folder berhasil dibuat"
 
 #: modules/downloads/includes/folder_add.php:127
 #: modules/downloads/templates/file_import_result.phtml:40
 #: modules/downloads/templates/file_upload_result.phtml:46
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #: modules/downloads/includes/folder_add.php:136
 msgid "Error creating categories"
-msgstr ""
+msgstr "Gagal membuat kategori"
 
 #: modules/downloads/includes/folder_delete.php:21
 #: modules/downloads/includes/folder_delete.php:29
@@ -367,69 +367,69 @@ msgstr ""
 #: modules/downloads/includes/folder_delete.php:77
 #: modules/downloads/templates/index.phtml:145
 msgid "Delete Folder"
-msgstr ""
+msgstr "Hapus Folder"
 
 #: modules/downloads/includes/folder_delete.php:31
 msgid "Before removing, delete subdirectories"
-msgstr ""
+msgstr "Sebelum menghapus, hapus sub-kategori"
 
 #: modules/downloads/includes/folder_edit.php:29
 msgid "Edit Folder"
-msgstr ""
+msgstr "Mengedit Folder"
 
 #: modules/downloads/includes/scan_dir.php:77
 #: modules/downloads/templates/index.phtml:146
 #: modules/downloads/templates/scan_dir.phtml:60
 msgid "Remove missing files"
-msgstr ""
+msgstr "Hapus berkas hilang"
 
 #: modules/downloads/includes/scan_dir.php:79
 msgid "Database successfully updated"
-msgstr ""
+msgstr "Basis data berhasil diperbarui"
 
 #: modules/downloads/includes/scan_dir.php:226
 #: modules/downloads/templates/file_upload.phtml:56
 #: modules/downloads/templates/import.phtml:53
 msgid "Download"
-msgstr ""
+msgstr "Unduh"
 
 #: modules/downloads/includes/scan_dir.php:335
 #: modules/downloads/includes/scan_dir.php:336
 msgid "Update"
-msgstr ""
+msgstr "Perbarui"
 
 #: modules/downloads/includes/search.php:29
 #: modules/downloads/templates/index.phtml:43
 #: modules/downloads/templates/search.phtml:49
 msgid "Search"
-msgstr ""
+msgstr "Cari"
 
 #: modules/downloads/includes/search.php:35
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
-msgstr ""
+msgstr "Panjang nama berkas tidak valid. Diizinkan min. 3 dan maks. 64 karakter."
 
 #: modules/downloads/includes/search.php:82
 #: modules/downloads/includes/search.php:83
 msgid "Search results"
-msgstr ""
+msgstr "Hasil pencarian"
 
 #: modules/downloads/includes/top_users.php:20
 #: modules/downloads/templates/index.phtml:45
 msgid "Top Users"
-msgstr ""
+msgstr "Pengguna terbaik"
 
 #: modules/downloads/includes/view.php:50
 #: modules/downloads/includes/view.php:52
 msgid "The file is on moderation"
-msgstr ""
+msgstr "Berkas ini dimoderasi"
 
 #: modules/downloads/includes/view.php:98
 msgid "Channels"
-msgstr ""
+msgstr "Saluran"
 
 #: modules/downloads/includes/view.php:102
 msgid "Sample rate"
-msgstr ""
+msgstr "Laju sampel"
 
 #: modules/downloads/includes/view.php:106
 #: modules/downloads/includes/view.php:173
@@ -439,19 +439,19 @@ msgstr ""
 #: modules/downloads/includes/view.php:110
 #: modules/downloads/includes/view.php:179
 msgid "Duration"
-msgstr ""
+msgstr "Durasi"
 
 #: modules/downloads/includes/view.php:118
 #: modules/downloads/templates/edit_file_form.phtml:53
 #: modules/downloads/templates/edit_file_form.phtml:54
 msgid "Artist"
-msgstr ""
+msgstr "Artis"
 
 #: modules/downloads/includes/view.php:124
 #: modules/downloads/templates/edit_file_form.phtml:58
 #: modules/downloads/templates/edit_file_form.phtml:59
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: modules/downloads/includes/view.php:130
 #: modules/downloads/templates/edit_file_form.phtml:63
@@ -463,13 +463,13 @@ msgstr ""
 #: modules/downloads/templates/edit_file_form.phtml:68
 #: modules/downloads/templates/edit_file_form.phtml:69
 msgid "Genre"
-msgstr ""
+msgstr "Aliran"
 
 #: modules/downloads/includes/view.php:142
 #: modules/downloads/templates/edit_file_form.phtml:73
 #: modules/downloads/templates/edit_file_form.phtml:74
 msgid "Year"
-msgstr ""
+msgstr "Tahun"
 
 #: modules/downloads/includes/view.php:161
 msgid "Codec"
@@ -481,7 +481,7 @@ msgstr ""
 
 #: modules/downloads/includes/view.php:185
 msgid "Resolution"
-msgstr ""
+msgstr "Resolusi"
 
 #: modules/downloads/index.php:79
 #: modules/downloads/templates/bookmarks.phtml:31
@@ -492,11 +492,11 @@ msgstr ""
 #: modules/downloads/templates/top_users.phtml:30
 #: modules/downloads/templates/view.phtml:29
 msgid "Downloads are closed"
-msgstr ""
+msgstr "Unduhan ditutup"
 
 #: modules/downloads/index.php:185
 msgid "Wrong data"
-msgstr ""
+msgstr "Data salah"
 
 #: modules/downloads/templates/bookmarks.phtml:36
 #: modules/downloads/templates/index.phtml:117
@@ -504,7 +504,7 @@ msgstr ""
 #: modules/downloads/templates/top.phtml:43
 #: modules/downloads/templates/top_users.phtml:35
 msgid "List is empty"
-msgstr ""
+msgstr "Daftar kosong"
 
 #: modules/downloads/templates/bookmarks.phtml:45
 #: modules/downloads/templates/files_moderation.phtml:46
@@ -521,11 +521,11 @@ msgstr ""
 #: modules/downloads/templates/move_file.phtml:42
 #: modules/downloads/templates/new_files.phtml:29
 msgid "The list is empty"
-msgstr ""
+msgstr "Daftar ini kosong"
 
 #: modules/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
-msgstr ""
+msgstr "Diedit:"
 
 #: modules/downloads/templates/comments_review.phtml:58
 msgid "Edited"
@@ -535,7 +535,7 @@ msgstr ""
 #: modules/downloads/templates/files_more.phtml:39
 #: modules/downloads/templates/index.phtml:73
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: modules/downloads/templates/comments_review.phtml:112
 #: modules/downloads/templates/delete_additional.phtml:35
@@ -546,13 +546,13 @@ msgstr ""
 #: modules/downloads/templates/folder_delete.phtml:33
 #: modules/downloads/templates/index.phtml:74
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/downloads/templates/delete_additional.phtml:30
 #: modules/downloads/templates/delete_file.phtml:30
 #: modules/downloads/templates/folder_delete.phtml:29
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus ini?"
 
 #: modules/downloads/templates/delete_additional.phtml:36
 #: modules/downloads/templates/delete_file.phtml:36
@@ -568,7 +568,7 @@ msgstr ""
 #: modules/downloads/templates/move_file.phtml:50
 #: modules/downloads/templates/move_file_confirm.phtml:33
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: modules/downloads/templates/edit_additional_form.phtml:30
 #: modules/downloads/templates/edit_additional_form.phtml:31
@@ -581,7 +581,7 @@ msgstr ""
 #: modules/downloads/templates/import.phtml:51
 #: modules/downloads/templates/import.phtml:52
 msgid "Link to download file"
-msgstr ""
+msgstr "Tautan unduh berkas"
 
 #: modules/downloads/templates/edit_additional_form.phtml:36
 #: modules/downloads/templates/edit_file_form.phtml:82
@@ -591,51 +591,51 @@ msgstr ""
 #: modules/downloads/templates/folder_form.phtml:60
 #: modules/downloads/templates/import.phtml:74
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: modules/downloads/templates/edit_file_form.phtml:31
 #: modules/downloads/templates/edit_file_form.phtml:32
 msgid "Name for display"
-msgstr ""
+msgstr "Nama tampilan"
 
 #: modules/downloads/templates/edit_file_form.phtml:41
 #: modules/downloads/templates/file_upload.phtml:67
 #: modules/downloads/templates/folder_form.phtml:44
 #: modules/downloads/templates/import.phtml:64
 msgid "Description"
-msgstr ""
+msgstr "Deskripsi"
 
 #: modules/downloads/templates/edit_file_form.phtml:49
 msgid "Edit MP3 Tags"
-msgstr ""
+msgstr "Sunting tag MP3"
 
 #: modules/downloads/templates/edit_screen.phtml:30
 msgid "Current screenshots"
-msgstr ""
+msgstr "Saat ini screenshots"
 
 #: modules/downloads/templates/edit_screen.phtml:49
 msgid "Add screenshot"
-msgstr ""
+msgstr "Menambahkan screenshot"
 
 #: modules/downloads/templates/edit_screen.phtml:54
 #: modules/downloads/templates/file_upload.phtml:32
 #: modules/downloads/templates/files_more.phtml:52
 msgid "Choose file"
-msgstr ""
+msgstr "Pilih file"
 
 #: modules/downloads/templates/edit_screen.phtml:57
 #: modules/downloads/templates/file_upload.phtml:35
 #: modules/downloads/templates/files_more.phtml:55
 msgid "Max. Size"
-msgstr ""
+msgstr "Ukuran Maks"
 
 #: modules/downloads/templates/file_import_result.phtml:43
 msgid "Import more"
-msgstr ""
+msgstr "Impor lebih"
 
 #: modules/downloads/templates/file_row.phtml:31
 msgid "Accept"
-msgstr ""
+msgstr "Terima"
 
 #: modules/downloads/templates/file_upload.phtml:40
 #: modules/downloads/templates/file_upload.phtml:41
@@ -644,30 +644,30 @@ msgstr ""
 #: modules/downloads/templates/import.phtml:37
 #: modules/downloads/templates/import.phtml:38
 msgid "Save as"
-msgstr ""
+msgstr "Simpan sebagai"
 
 #: modules/downloads/templates/file_upload.phtml:43
 #: modules/downloads/templates/files_more.phtml:67
 #: modules/downloads/templates/import.phtml:40
 msgid "max. 100 characters"
-msgstr ""
+msgstr "max. 100 karakter"
 
 #: modules/downloads/templates/file_upload.phtml:47
 #: modules/downloads/templates/file_upload.phtml:48
 #: modules/downloads/templates/import.phtml:44
 #: modules/downloads/templates/import.phtml:45
 msgid "File Name"
-msgstr ""
+msgstr "Nama berkas"
 
 #: modules/downloads/templates/file_upload.phtml:50
 #: modules/downloads/templates/import.phtml:47
 msgid "max. 200 characters"
-msgstr ""
+msgstr "max. 200 karakter"
 
 #: modules/downloads/templates/file_upload.phtml:62
 #: modules/downloads/templates/import.phtml:59
 msgid "Choose screenshot"
-msgstr ""
+msgstr "Memilih screenshot"
 
 #: modules/downloads/templates/file_upload.phtml:73
 #: modules/downloads/templates/files_more.phtml:77
@@ -676,187 +676,187 @@ msgstr ""
 #: modules/downloads/templates/import.phtml:70
 #: modules/downloads/templates/index.phtml:63
 msgid "Allowed extensions"
-msgstr ""
+msgstr "Ekstensi diizinkan"
 
 #: modules/downloads/templates/file_upload_result.phtml:42
 msgid "If you pass moderation, it will be added to the Downloads"
-msgstr ""
+msgstr "Jika Anda melewati moderasi, berkas akan ditambahkan ke Unduhan"
 
 #: modules/downloads/templates/file_upload_result.phtml:51
 msgid "Upload more"
-msgstr ""
+msgstr "Upload lagi"
 
 #: modules/downloads/templates/files_moderation.phtml:41
 msgid "Accept all files"
-msgstr ""
+msgstr "Terima semua berkas"
 
 #: modules/downloads/templates/files_more.phtml:29
 msgid "Current files"
-msgstr ""
+msgstr "Saat ini file"
 
 #: modules/downloads/templates/files_more.phtml:47
 #: modules/downloads/templates/index.phtml:128
 msgid "Add file"
-msgstr ""
+msgstr "Tambahkan file"
 
 #: modules/downloads/templates/files_more.phtml:59
 msgid "Or link to it"
-msgstr ""
+msgstr "Atau tautan untuk itu"
 
 #: modules/downloads/templates/files_more.phtml:60
 #: modules/downloads/templates/import.phtml:31
 #: modules/downloads/templates/import.phtml:32
 msgid "Link to file"
-msgstr ""
+msgstr "Tautan berkas"
 
 #: modules/downloads/templates/files_more.phtml:73
 msgid "Download the additional file"
-msgstr ""
+msgstr "Unduh berkas tambahan"
 
 #: modules/downloads/templates/folder_form.phtml:32
 #: modules/downloads/templates/folder_form.phtml:33
 msgid "Folder name"
-msgstr ""
+msgstr "Nama Folder"
 
 #: modules/downloads/templates/folder_form.phtml:35
 msgid "Only latin characters and numbers"
-msgstr ""
+msgstr "Hanya karakter latin dan angka"
 
 #: modules/downloads/templates/folder_form.phtml:39
 #: modules/downloads/templates/folder_form.phtml:40
 msgid "Title to display"
-msgstr ""
+msgstr "Judul untuk ditampilkan"
 
 #: modules/downloads/templates/folder_form.phtml:50
 msgid "Allow users to upload files"
-msgstr ""
+msgstr "Izinkan pengguna untuk mengunggah berkas"
 
 #: modules/downloads/templates/index.phtml:44
 msgid "Top Files"
-msgstr ""
+msgstr "Berkas terbaik"
 
 #: modules/downloads/templates/index.phtml:70
 msgid "Up"
-msgstr ""
+msgstr "Naik"
 
 #: modules/downloads/templates/index.phtml:71
 msgid "Down"
-msgstr ""
+msgstr "Turun"
 
 #: modules/downloads/templates/index.phtml:81
 msgid "List of files"
-msgstr ""
+msgstr "Daftar file"
 
 #: modules/downloads/templates/index.phtml:86
 msgid "Sorting"
-msgstr ""
+msgstr "Mengurutkan"
 
 #: modules/downloads/templates/index.phtml:88
 msgid "by time"
-msgstr ""
+msgstr "berdasarkan waktu"
 
 #: modules/downloads/templates/index.phtml:89
 msgid "by name"
-msgstr ""
+msgstr "berdasarkan nama"
 
 #: modules/downloads/templates/index.phtml:93
 msgid "descending"
-msgstr ""
+msgstr "menurun"
 
 #: modules/downloads/templates/index.phtml:94
 msgid "ascending"
-msgstr ""
+msgstr "naik"
 
 #: modules/downloads/templates/index.phtml:96
 msgid "Sort"
-msgstr ""
+msgstr "Urutan"
 
 #: modules/downloads/templates/index.phtml:132
 msgid "Import File"
-msgstr ""
+msgstr "Impor berkas"
 
 #: modules/downloads/templates/index.phtml:138
 msgid "Section actions"
-msgstr ""
+msgstr "Bagian tindakan"
 
 #: modules/downloads/templates/index.phtml:142
 msgid "Update Files"
-msgstr ""
+msgstr "Perbarui berkas"
 
 #: modules/downloads/templates/index.phtml:144
 msgid "Change Folder"
-msgstr ""
+msgstr "Ubah folder"
 
 #: modules/downloads/templates/move_file.phtml:28
 msgid "Select a section to move"
-msgstr ""
+msgstr "Pilih bagian untuk bergerak"
 
 #: modules/downloads/templates/move_file.phtml:35
 msgid "Move file to this section"
-msgstr ""
+msgstr "Memindahkan file untuk bagian ini"
 
 #: modules/downloads/templates/move_file.phtml:46
 msgid "Move file here"
-msgstr ""
+msgstr "Memindahkan file di sini"
 
 #: modules/downloads/templates/move_file_confirm.phtml:29
 msgid "Are you sure you want to move the file?"
-msgstr ""
+msgstr "Apakah anda yakin anda ingin memindahkan file?"
 
 #: modules/downloads/templates/move_file_confirm.phtml:32
 msgid "Move file"
-msgstr ""
+msgstr "Memindahkan file"
 
 #: modules/downloads/templates/scan_dir.phtml:37
 msgid "Current folder"
-msgstr ""
+msgstr "Folder saat ini"
 
 #: modules/downloads/templates/scan_dir.phtml:40
 msgid "Current folder and all subfolders"
-msgstr ""
+msgstr "Folder saat ini dan sub-folder"
 
 #: modules/downloads/templates/scan_dir.phtml:44
 #: modules/downloads/templates/scan_dir.phtml:65
 msgid "Entire Downloads"
-msgstr ""
+msgstr "Seluruh Unduhan"
 
 #: modules/downloads/templates/scan_dir.phtml:51
 msgid "Added"
-msgstr ""
+msgstr "Ditambahkan"
 
 #: modules/downloads/templates/scan_dir.phtml:52
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
 #: modules/downloads/templates/scan_dir.phtml:53
 msgid "Files"
-msgstr ""
+msgstr "Berkas"
 
 #: modules/downloads/templates/scan_dir.phtml:54
 #: modules/downloads/templates/view.phtml:151
 msgid "Additional Files"
-msgstr ""
+msgstr "Berkas tambahan"
 
 #: modules/downloads/templates/search.phtml:39
 #: modules/downloads/templates/search.phtml:40
 msgid "Search query"
-msgstr ""
+msgstr "Pencarian query"
 
 #: modules/downloads/templates/search.phtml:46
 msgid "Search in description"
-msgstr ""
+msgstr "Cari berdasarkan deskripsi"
 
 #: modules/downloads/templates/search.phtml:72
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max."
-msgstr ""
+msgstr "Pencarian berdasarkan Nama file dan bersifat case sensitive.<br>panjang permintaan: 2 min. 64 max."
 
 #: modules/downloads/templates/search.phtml:78
 msgid "New Search"
-msgstr ""
+msgstr "Cari lagi"
 
 #: modules/downloads/templates/view.phtml:37
 msgid "Vote accepted"
-msgstr ""
+msgstr "Tanggapan diterima"
 
 #: modules/downloads/templates/view.phtml:49
 msgid "Screenshot:"
@@ -864,15 +864,15 @@ msgstr ""
 
 #: modules/downloads/templates/view.phtml:94
 msgid "File name:"
-msgstr ""
+msgstr "Nama File:"
 
 #: modules/downloads/templates/view.phtml:95
 msgid "Uploaded by:"
-msgstr ""
+msgstr "Upload by:"
 
 #: modules/downloads/templates/view.phtml:96
 msgid "Downloads:"
-msgstr ""
+msgstr "Download:"
 
 #: modules/downloads/templates/view.phtml:97
 msgid "Rating:"
@@ -880,21 +880,21 @@ msgstr ""
 
 #: modules/downloads/templates/view.phtml:145
 msgid "Actions"
-msgstr ""
+msgstr "Tindakan"
 
 #: modules/downloads/templates/view.phtml:150
 msgid "Managing Screenshots"
-msgstr ""
+msgstr "Kelola cuplikan"
 
 #: modules/downloads/templates/view.phtml:152
 msgid "Delete File"
-msgstr ""
+msgstr "Hapus Berkas"
 
 #: modules/downloads/templates/view.phtml:162
 msgid "Remove from Favorites"
-msgstr ""
+msgstr "Hapus dari Favorit"
 
 #: modules/downloads/templates/view.phtml:164
 msgid "Add to Favorites"
-msgstr ""
+msgstr "Tambahkan ke Favorit"
 
