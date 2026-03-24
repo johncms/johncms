@@ -11,17 +11,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Lithuanian\n"
 "Language: lt_LT\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:51
 msgid "Forum"
-msgstr ""
+msgstr "Forumas"
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Naujas atsakyti forume"
 
 #: config/notifications.global.php:32
 #, php-format
@@ -34,28 +34,28 @@ msgstr ""
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Naujas balsavimo karma"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "Vartotojo <b>#user_name#</b> balsavo <a href=\"#karma_url#\">jūsų karma</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "Į pagrindinį puslapį"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Peržiurinėją fotoalbumą"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "Vartotojai"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "Vartotojų sąrašas"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "Svečių Knyga"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Skaito DUK"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Biblioteka"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "Prisijungti"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Asmeninis susirašinėjimas"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "Skaito naujienas"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Profilius"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Pereina į kitą svetainė per nuorodą"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Rėgistruojasi svetainei"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "Vartotojų sąrašas"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "Kas Prisijungę?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "Asmeninės"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Atsijungti"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Jus neįvedėte slapyvardžio"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Jus neįvedėte slaptažodžio"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,20 +164,20 @@ msgstr "Neteisingas apsaugos kodas"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Autorizavimas nepavyko"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Patvirtinimo kodas"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Įveskite patvirtinimo kodą"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Tęsti"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
@@ -185,25 +185,25 @@ msgstr ""
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Atsiprašome, bet jūsų prašymo įregistruoti nėra laikomas dar. Prašome, būkite kantrūs."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Autorizacija"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "Vartotojo vardas"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Slaptažodis"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Pamiršote slaptažodį?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Registracija"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Ar tikrai jūs norite palikti svetainę?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,23 +337,23 @@ msgstr "Puslapio, kuri jus ieskote neegzistuoje, arba buvo perkeltas"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Pridėta"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "KLAIDA"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Kažkur apie svetainę"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Dieną"
+msgstr[1] "Dienos"
+msgstr[2] "Dienos"
+msgstr[3] "Dienos"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -673,39 +673,39 @@ msgstr ""
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "Sql užklausą žurnalas"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "Užklausa"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Apkaustai"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Laikas"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Naujienų archyvas"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Nuotraukų Albumai"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Informacija, klausimai ir atsakymai"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Administravimo panelė"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
-msgstr ""
+msgstr "Admin pokalbiai"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Light Theme"
