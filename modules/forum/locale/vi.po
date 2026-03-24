@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -77,17 +77,17 @@ msgstr ""
 #: modules/forum/templates/new_topic.phtml:111
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:63
 #: modules/forum/src/Application/Controllers/AddFileController.php:97
 msgid "Add file"
-msgstr ""
+msgstr "Thêm tập tin"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:64
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
-msgstr ""
+msgstr "Thời gian được phân bổ cho các tập tin tải lên đã hết hạn"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:98
 #: modules/forum/src/Application/Controllers/AddFileController.php:99
@@ -97,7 +97,7 @@ msgstr ""
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
-msgstr ""
+msgstr "Lỗi tải lên tập tin"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:101
 #: modules/forum/src/Application/Controllers/AddVoteController.php:113
@@ -105,7 +105,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:67
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:139
 msgid "Repeat"
-msgstr ""
+msgstr "Lặp lại"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:114
 #: modules/forum/src/Application/Controllers/AddFileController.php:115
@@ -116,7 +116,7 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:136
 #: modules/forum/templates/topic.phtml:448
 msgid "Add File"
-msgstr ""
+msgstr "Thêm tập tin"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:57
 #: modules/forum/src/Application/Controllers/AddVoteController.php:58
@@ -126,7 +126,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/AddVoteController.php:109
 #: modules/forum/templates/topic.phtml:395
 msgid "Add Poll"
-msgstr ""
+msgstr "Thêm Thăm dò"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:59
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:73
@@ -157,26 +157,26 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
-msgstr ""
+msgstr "Lỗi dữ liệu"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:98
 msgid "Poll added"
-msgstr ""
+msgstr "Thêm bỏ phiếu"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:100
 #: modules/forum/src/Application/Controllers/EditVoteController.php:116
 msgid "Continue"
-msgstr ""
+msgstr "Tiếp tục"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:111
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Chưa Nhập Nội Dung"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:122
 #: modules/forum/src/Application/Controllers/EditVoteController.php:145
 #: modules/forum/src/Application/Controllers/EditVoteController.php:157
 msgid "Answer"
-msgstr ""
+msgstr "Trả lời"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
@@ -189,16 +189,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:126
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:127
 msgid "Delete posts"
-msgstr ""
+msgstr "Xóa bài viết"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:116
 msgid "You did not choose something to delete"
-msgstr ""
+msgstr "Bạn chưa chọn thứ bạn muốn loại bỏ"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:102
 msgid "Marked posts are deleted"
-msgstr ""
+msgstr "Báo cáo loại bỏ bài viết này"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:42
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:44
@@ -207,7 +207,7 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
-msgstr ""
+msgstr "Truy cập bị từ chối"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:58
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:59
@@ -215,7 +215,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:117
 #: modules/forum/templates/topic.phtml:402
 msgid "Change the topic"
-msgstr ""
+msgstr "Thay đổi chủ đề"
 
 #: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:51
 #: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:52
@@ -234,7 +234,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:83
 #: modules/forum/templates/topic.phtml:478
 msgid "Filter by author"
-msgstr ""
+msgstr "Lọc theo tác giả"
 
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:47
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:48
@@ -244,7 +244,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
-msgstr ""
+msgstr "Về tìm kiếm"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:55
 #: modules/forum/src/Application/Controllers/CuratorsController.php:56
@@ -254,13 +254,13 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:65
 #: modules/forum/templates/topic.phtml:467
 msgid "Curators"
-msgstr ""
+msgstr "Giám Tuyển"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:57
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:66
 #: modules/forum/src/Application/ForumUtils.php:71
 msgid "Topic has been deleted or does not exists"
-msgstr ""
+msgstr "Chủ đề đã được loại bỏ, hoặc không tồn tại"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:54
 #: modules/forum/src/Application/Controllers/DeletePostController.php:65
@@ -271,14 +271,14 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/RestorePostController.php:54
 #: modules/forum/src/Application/Controllers/RestorePostController.php:65
 msgid "Error"
-msgstr ""
+msgstr "Lỗi"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:55
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:58
 #: modules/forum/src/Application/Controllers/EditPostController.php:59
 #: modules/forum/src/Application/Controllers/RestorePostController.php:55
 msgid "Message does not exists or has been deleted"
-msgstr ""
+msgstr "Bài viết không tồn tại hoặc đã bị xóa"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:57
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:60
@@ -314,25 +314,25 @@ msgstr ""
 #: modules/forum/templates/new_topics.phtml:124
 #: modules/forum/templates/show_post.phtml:149
 msgid "Forum"
-msgstr ""
+msgstr "Diễn đàn"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:83
 #: modules/forum/src/Application/Controllers/DeletePostController.php:101
 #: modules/forum/src/Application/Controllers/DeletePostController.php:102
 msgid "Delete Message"
-msgstr ""
+msgstr "Xóa Tin nhắn"
 
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:86
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:102
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:103
 msgid "Delete file"
-msgstr ""
+msgstr "Xóa tập tin"
 
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:88
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:89
 #: modules/forum/templates/topic.phtml:414
 msgid "Delete Topic"
-msgstr ""
+msgstr "Xóa chủ đề này"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
@@ -340,31 +340,31 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:83
 #: modules/forum/templates/topic.phtml:393
 msgid "Delete Poll"
-msgstr ""
+msgstr "Xóa bình chọn"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:72
 msgid "Poll deleted"
-msgstr ""
+msgstr "Thăm dò đã được xóa"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:57
 msgid "Download file"
-msgstr ""
+msgstr "Tải tập tin"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:59
 msgid "File does not exist"
-msgstr ""
+msgstr "Tập tin không tồn tại"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:84
 #: modules/forum/src/Application/Controllers/EditPostController.php:101
 #: modules/forum/src/Application/Controllers/EditPostController.php:125
 #: modules/forum/src/Application/Controllers/EditPostController.php:126
 msgid "Edit Message"
-msgstr ""
+msgstr "Chỉnh sửa Tin nhắn"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
 msgid "You have not entered the message"
-msgstr ""
+msgstr "Bạn chưa nhập thông điệp"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:59
 #: modules/forum/src/Application/Controllers/EditVoteController.php:60
@@ -374,30 +374,30 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/EditVoteController.php:166
 #: modules/forum/templates/topic.phtml:392
 msgid "Edit Poll"
-msgstr ""
+msgstr "Sửa Thăm dò"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:79
 #: modules/forum/src/Application/Controllers/EditVoteController.php:80
 msgid "Delete Answer"
-msgstr ""
+msgstr "Xóa câu trả lời"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:114
 msgid "Poll changed"
-msgstr ""
+msgstr "Thay đổi bỏ phiếu"
 
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:56
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:57
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:113
 msgid "Forum Files"
-msgstr ""
+msgstr "Diễn Tập Tin"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
-msgstr ""
+msgstr "Chiều dài không hợp lệ"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
-msgstr ""
+msgstr "10 bài mới nhất chưa đọc"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
@@ -408,7 +408,7 @@ msgstr ""
 #: modules/forum/templates/files_sections.phtml:49
 #: modules/forum/templates/filter_by_author.phtml:41
 msgid "The list is empty"
-msgstr ""
+msgstr "Danh sách này là trống rỗng"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:50
@@ -417,16 +417,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:54
 #: modules/forum/templates/header.phtml:31
 msgid "Unread"
-msgstr ""
+msgstr "Chưa đọc"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:67
 msgid "All topics marked as read"
-msgstr ""
+msgstr "Tất cả các chủ đề được đánh dấu là đã đọc thành công"
 
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:103
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:104
 msgid "Move topic"
-msgstr ""
+msgstr "Di chuyển chủ đề"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:70
 #: modules/forum/src/Application/Controllers/NewMessageController.php:84
@@ -443,34 +443,34 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:148
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:162
 msgid "New message"
-msgstr ""
+msgstr "Tin nhắn mới"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:89
 msgid "You cannot write in a closed topic"
-msgstr ""
+msgstr "Bạn không thể gửi bài viết trong một chủ đề đã đóng cửa"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:100
 #: modules/forum/src/Application/Controllers/NewTopicController.php:87
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:116
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Bạn không thể thêm những tin nhắn vì vậy often<br>Please, chờ %d giây."
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:122
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
 msgid "Text is too short"
-msgstr ""
+msgstr "Văn bản được quá ngắn"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:136
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:164
 msgid "Message already exists"
-msgstr ""
+msgstr "Bài viết đã tồn tại"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:60
 #: modules/forum/src/Application/Controllers/NewTopicController.php:73
 msgid "Go to Section"
-msgstr ""
+msgstr "Tới phần"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:85
 #: modules/forum/src/Application/Controllers/NewTopicController.php:164
@@ -478,25 +478,25 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/NewTopicController.php:169
 #: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
-msgstr ""
+msgstr "Viết bài mới"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:71
 #: modules/forum/src/Application/Controllers/PollVotersController.php:79
 msgid "Who voted in the poll"
-msgstr ""
+msgstr "Danh sách người tham gia thăm dò"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:88
 msgid "No one has voted in this poll yet"
-msgstr ""
+msgstr "Không một ai đã tham gia bỏ phiếu cho thăm dò này"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:102
 msgid "You can not reply to your own message"
-msgstr ""
+msgstr "Bạn không thể trả lời tin nhắn của bạn"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:214
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:215
 msgid "Reply to message"
-msgstr ""
+msgstr "Trả lời tin nhắn"
 
 #: modules/forum/src/Application/Controllers/RestorePostController.php:83
 #: modules/forum/src/Application/Controllers/RestorePostController.php:99
@@ -506,27 +506,27 @@ msgstr ""
 
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:85
 msgid "You have not selected any author"
-msgstr ""
+msgstr "Bạn chưa chọn tác giả muốn xem"
 
 #: modules/forum/src/Application/Controllers/ShowPostController.php:40
 #: modules/forum/src/Application/Controllers/ShowPostController.php:63
 #: modules/forum/src/Application/Controllers/ShowPostController.php:75
 #: modules/forum/src/Application/Controllers/ShowPostController.php:76
 msgid "Show post"
-msgstr ""
+msgstr "Hiển thị bài viết"
 
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
 msgid "Vote accepted"
-msgstr ""
+msgstr "Bình chọn chấp nhận"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
 #, php-format
 msgid "All for period %d hours"
-msgstr ""
+msgstr "Tất cả cho thời gian %d giờ"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "Đối với thời gian được chọn, diễn đàn không có bài viết nào mới trong khoảng thời gian này"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
@@ -542,23 +542,23 @@ msgstr ""
 #: modules/forum/templates/section.phtml:68
 #: modules/forum/templates/topics.phtml:123
 msgid "Who in Forum"
-msgstr ""
+msgstr "Ai đang ở diễn đàn"
 
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:52
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:76
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:86
 #: modules/forum/templates/who.phtml:32
 msgid "Who in Topic"
-msgstr ""
+msgstr "Ai đang xem chủ đề"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:49
 msgid "For registered users only"
-msgstr ""
+msgstr "Cho người dùng đăng ký"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:50
 #: modules/forum/templates/header.phtml:20
 msgid "Forum is closed"
-msgstr ""
+msgstr "Diễn đàn tạm thời đóng cửa"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:54
 msgid "Search query must be between 2 and 64 characters"
@@ -571,63 +571,63 @@ msgstr ""
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:136
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:156
 msgid "In the forum Main"
-msgstr ""
+msgstr "Trong diễn đàn chính"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:88
 msgid "Here, in the List"
-msgstr ""
+msgstr "Ở đây, trong danh sách"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:89
 msgid "Looking forum files"
-msgstr ""
+msgstr "Hãy tìm các tập tin diễn đàn"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:90
 msgid "In the unreads"
-msgstr ""
+msgstr "Chủ đề chưa đọc"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:107
 msgid "In the Category"
-msgstr ""
+msgstr "Trong các thể loại"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:117
 msgid "In the Section"
-msgstr ""
+msgstr "Về phần"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
 msgid "Answers in the Topic"
-msgstr ""
+msgstr "Gặp gỡ trong chủ đề"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:146
 msgid "Writes in the Topic"
-msgstr ""
+msgstr "Gửi bài viết cho chủ đề này"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:149
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:159
 msgid "In the Topic"
-msgstr ""
+msgstr "Về chủ đề"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:43
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:71
 msgid "Guest"
-msgstr ""
+msgstr "Khách"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:92
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:282
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:88
 msgid "Forum moderator"
-msgstr ""
+msgstr "Quản trị viên diễn đàn"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:93
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:283
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:89
 msgid "Download moderator"
-msgstr ""
+msgstr "Quản trị viên Download"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:94
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:284
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
 msgid "Library moderator"
-msgstr ""
+msgstr "Quản trị viên thư viện"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:95
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:285
@@ -649,59 +649,59 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:55
 msgid "File size exceed"
-msgstr ""
+msgstr "Dung lượng tập tin vượt quá"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:61
 msgid "The forbidden file format.<br>You can upload files of the following extension"
-msgstr ""
+msgstr "Định dạng tập tin không hợp lệ.<br>Bạn có thể tải lên các tập tin của phần mở rộng sau"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:29
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Bạn không thể chỉnh sửa bài viết của người sử dụng cấp trên"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:37
 msgid "You are trying to change another's post"
-msgstr ""
+msgstr "Bạn đang cố gắng để thay đổi bài viết của người khác"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:54
 msgid "Your message not already latest, you cannot change it"
-msgstr ""
+msgstr "Bài đăng của bạn sẽ chỉnh sửa được trong 1 khoảng thời gian và khi hết khoảng thời gian đó bạn không thể thay đổi nó"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:58
 msgid "You cannot edit your posts after 5 minutes"
-msgstr ""
+msgstr "Từ khi bài viết được gửi trong khoảng 5 phút và nếu quá thời hạn bạn không thể chỉnh sửa nó"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:68
 #: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
-msgstr ""
+msgstr "Tập tin thể loại"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:85
 msgid "Section files"
-msgstr ""
+msgstr "Tập tin phần"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:102
 #: modules/forum/templates/topic.phtml:37
 msgid "Topic Files"
-msgstr ""
+msgstr "Tập tin chủ đề"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:142
 #: modules/forum/templates/files_list.phtml:28
 #: modules/forum/templates/files_sections.phtml:28
 msgid "New Files"
-msgstr ""
+msgstr "Các Tập Tin Mới"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:172
 msgid "List of sections"
-msgstr ""
+msgstr "Danh sách các phần"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:297
 msgid "Windows applications"
-msgstr ""
+msgstr "Các ứng dụng Windows"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
 msgid "Java applications"
-msgstr ""
+msgstr "Ứng dụng Java"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
 msgid "SIS"
@@ -713,15 +713,15 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
 msgid "Pictures"
-msgstr ""
+msgstr "Hình ảnh"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
 msgid "Archive"
-msgstr ""
+msgstr "Tập tin nén"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
 msgid "Videos"
-msgstr ""
+msgstr "Video"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
 msgid "MP3"
@@ -729,15 +729,15 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "Other"
-msgstr ""
+msgstr "Khác"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
-msgstr ""
+msgstr "Tập tin đính kèm thành công"
 
 #: modules/forum/templates/add_file.phtml:32
 msgid "Add more"
-msgstr ""
+msgstr "Thêm nữa"
 
 #: modules/forum/templates/add_file.phtml:33
 #: modules/forum/templates/add_file.phtml:48
@@ -749,26 +749,26 @@ msgstr ""
 #: modules/forum/templates/move_topic.phtml:52
 #: modules/forum/templates/show_post.phtml:148
 msgid "Back to topic"
-msgstr ""
+msgstr "Quay lại chủ đề"
 
 #: modules/forum/templates/add_file.phtml:40
 msgid "Choose file"
-msgstr ""
+msgstr "Chọn tập tin"
 
 #: modules/forum/templates/add_file.phtml:44
 msgid "Max. Size"
-msgstr ""
+msgstr "Dung lượng lớn nhất"
 
 #: modules/forum/templates/add_file.phtml:47
 msgid "Upload"
-msgstr ""
+msgstr "Tải lên"
 
 #: modules/forum/templates/add_poll.phtml:31
 #: modules/forum/templates/add_poll.phtml:32
 #: modules/forum/templates/edit_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:35
 msgid "Poll"
-msgstr ""
+msgstr "Thăm dò ý kiến"
 
 #: modules/forum/templates/add_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:37
@@ -778,52 +778,52 @@ msgstr ""
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
 msgid "Answers"
-msgstr ""
+msgstr "Những câu trả lời"
 
 #: modules/forum/templates/add_poll.phtml:43
 #: modules/forum/templates/edit_poll.phtml:53
 msgid "Maximum length: 150 characters"
-msgstr ""
+msgstr "Độ dài tối đa: 150 ký tự"
 
 #: modules/forum/templates/add_poll.phtml:49
 #: modules/forum/templates/edit_poll.phtml:59
 msgid "Add Answer"
-msgstr ""
+msgstr "Thêm trả lời"
 
 #: modules/forum/templates/add_poll.phtml:52
 #: modules/forum/templates/edit_poll.phtml:62
 msgid "Delete last"
-msgstr ""
+msgstr "Xóa mới nhất"
 
 #: modules/forum/templates/add_poll.phtml:56
 #: modules/forum/templates/change_topic.phtml:51
 #: modules/forum/templates/edit_poll.phtml:66
 #: modules/forum/templates/edit_post.phtml:45
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 #: modules/forum/templates/change_topic.phtml:29
 #: modules/forum/templates/change_topic.phtml:30
 msgid "Topic name"
-msgstr ""
+msgstr "Tiêu đề"
 
 #: modules/forum/templates/change_topic.phtml:37
 #: modules/forum/templates/new_topic.phtml:96
 msgid "Meta keywords"
-msgstr ""
+msgstr "Từ khóa mô tả"
 
 #: modules/forum/templates/change_topic.phtml:44
 #: modules/forum/templates/new_topic.phtml:92
 msgid "Meta description"
-msgstr ""
+msgstr "Thông tin mô tả Meta"
 
 #: modules/forum/templates/clear_search_history.phtml:28
 msgid "Do you really want to clear the search history?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa lịch sử tìm kiếm?"
 
 #: modules/forum/templates/clear_search_history.phtml:31
 msgid "Clear"
-msgstr ""
+msgstr "Xoá"
 
 #: modules/forum/templates/clear_search_history.phtml:32
 #: modules/forum/templates/delete_answer.phtml:33
@@ -834,20 +834,20 @@ msgstr ""
 #: modules/forum/templates/mass_delete.phtml:41
 #: modules/forum/templates/restore_post.phtml:36
 msgid "Cancel"
-msgstr ""
+msgstr "Hủy bỏ"
 
 #: modules/forum/templates/curators.phtml:31
 #: modules/forum/templates/filter_by_author.phtml:35
 msgid "Changes saved"
-msgstr ""
+msgstr "Đã lưu thay đổi"
 
 #: modules/forum/templates/curators.phtml:51
 msgid "Assign"
-msgstr ""
+msgstr "Chỉ định"
 
 #: modules/forum/templates/delete_answer.phtml:29
 msgid "Do you really want to delete the answer?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa câu trả lời?"
 
 #: modules/forum/templates/delete_answer.phtml:32
 #: modules/forum/templates/delete_file.phtml:36
@@ -858,36 +858,36 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:325
 #: modules/forum/templates/topic.phtml:370
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: modules/forum/templates/delete_file.phtml:31
 #: modules/forum/templates/delete_post.phtml:37
 #: modules/forum/templates/delete_topic.phtml:31
 #: modules/forum/templates/mass_delete.phtml:31
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa?"
 
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
-msgstr ""
+msgstr "Trong trường hợp các bài viết của diễn đàn bị loại bỏ, tổng số bài viết truy cập sẽ bị trừ một điểm"
 
 #: modules/forum/templates/delete_poll.phtml:29
 msgid "Do you really want to delete a poll?"
-msgstr ""
+msgstr "Bạn có thực sự muốn cuộc thăm dò này?"
 
 #: modules/forum/templates/delete_post.phtml:33
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
-msgstr ""
+msgstr "Lỗi!<br>Đây là bài cuối cùng của chủ đề. Chủ đề sẽ bị xóa (hoặc ẩn) và sẽ quay lại phần của chủ đề"
 
 #: modules/forum/templates/delete_post.phtml:44
 #: modules/forum/templates/delete_topic.phtml:36
 msgid "Hide"
-msgstr ""
+msgstr "Ẩn đi"
 
 #: modules/forum/templates/delete_topic.phtml:47
 msgid "Perform"
-msgstr ""
+msgstr "Hiện"
 
 #: modules/forum/templates/edit_post.phtml:36
 #: modules/forum/templates/new_topic.phtml:81
@@ -895,13 +895,13 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:125
 #: modules/forum/templates/topic.phtml:437
 msgid "Message"
-msgstr ""
+msgstr "Mặt cười"
 
 #: modules/forum/templates/edit_post.phtml:48
 #: modules/forum/templates/new_topic.phtml:116
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Smilies"
-msgstr ""
+msgstr "Mặt cười"
 
 #: modules/forum/templates/files_list.phtml:80
 #: modules/forum/templates/topic.phtml:243
@@ -910,11 +910,11 @@ msgstr ""
 
 #: modules/forum/templates/files_list.phtml:131
 msgid "To message"
-msgstr ""
+msgstr "Tin nhắn"
 
 #: modules/forum/templates/files_list.phtml:134
 msgid "To topic"
-msgstr ""
+msgstr "Cho chủ đề"
 
 #: modules/forum/templates/files_list.phtml:144
 #: modules/forum/templates/forum_search.phtml:74
@@ -924,105 +924,105 @@ msgstr ""
 #: modules/forum/templates/voted_users.phtml:44
 #: modules/forum/templates/who.phtml:52
 msgid "Total"
-msgstr ""
+msgstr "Tổng số"
 
 #: modules/forum/templates/filter_by_author.phtml:44
 msgid "Filter will be display posts from selected authors only"
-msgstr ""
+msgstr "Bộ lọc sẽ được hiển thị chỉ những bài viết của các tác giả bạn chọn"
 
 #: modules/forum/templates/filter_by_author.phtml:64
 msgid "Filter"
-msgstr ""
+msgstr "Lọc"
 
 #: modules/forum/templates/filter_by_author.phtml:66
 #: modules/forum/templates/topic.phtml:47
 #: modules/forum/templates/topic.phtml:475
 msgid "Cancel Filter"
-msgstr ""
+msgstr "Huỷ bộ lọc"
 
 #: modules/forum/templates/footer.phtml:29
 msgid "Forum rules"
-msgstr ""
+msgstr "Nội quy diễn đàn"
 
 #: modules/forum/templates/forum_search.phtml:31
 #: modules/forum/templates/forum_search.phtml:32
 msgid "Search query"
-msgstr ""
+msgstr "Truy vấn tìm kiếm"
 
 #: modules/forum/templates/forum_search.phtml:34
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
-msgstr ""
+msgstr "Chiều dài của từ khóa chỉ được phép có từ 4-64 kí tự.<br>Tìm kiếm là trường hợp bài viết hay chủ đề <br>Kết quả được sắp xếp theo độ liên quan."
 
 #: modules/forum/templates/forum_search.phtml:39
 msgid "Search in the topic names"
-msgstr ""
+msgstr "Tìm kiếm trong chủ đề"
 
 #: modules/forum/templates/forum_search.phtml:42
 #: modules/forum/templates/header.phtml:73
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: modules/forum/templates/forum_search.phtml:47
 msgid "Your search did not match any results"
-msgstr ""
+msgstr "Tìm kiếm của bạn không phù hợp"
 
 #: modules/forum/templates/forum_search.phtml:59
 #: modules/forum/templates/new_topics.phtml:96
 #: modules/forum/templates/topics.phtml:105
 msgid "Author"
-msgstr ""
+msgstr "Tác giả"
 
 #: modules/forum/templates/forum_search.phtml:62
 msgid "Go to Message"
-msgstr ""
+msgstr "Đi để tin Nhắn"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr ""
+msgstr "Tìm kiếm lịch sử"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
-msgstr ""
+msgstr "Xóa lịch sử"
 
 #: modules/forum/templates/header.phtml:22
 msgid "Read only"
-msgstr ""
+msgstr "Chỉ đọc"
 
 #: modules/forum/templates/header.phtml:44
 msgid "Show for Period"
-msgstr ""
+msgstr "Hiển thị theo giai đoạn"
 
 #: modules/forum/templates/header.phtml:53
 msgid "Last activity"
-msgstr ""
+msgstr "Lần hoạt động cuối"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr ""
+msgstr "Tập tin"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
-msgstr ""
+msgstr "Thể loại"
 
 #: modules/forum/templates/move_topic.phtml:38
 msgid "New section"
-msgstr ""
+msgstr "Phần mới"
 
 #: modules/forum/templates/move_topic.phtml:47
 msgid "Category is empty"
-msgstr ""
+msgstr "Mục rỗng"
 
 #: modules/forum/templates/move_topic.phtml:51
 msgid "Move"
-msgstr ""
+msgstr "Di chuyển"
 
 #: modules/forum/templates/move_topic.phtml:56
 msgid "Other categories"
-msgstr ""
+msgstr "Các chuyên mục"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
-msgstr ""
+msgstr "Tiêu đề"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
@@ -1031,53 +1031,53 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:451
 #: modules/forum/templates/topic.phtml:454
 msgid "Write"
-msgstr ""
+msgstr "Soạn thảo"
 
 #: modules/forum/templates/new_topic.phtml:107
 msgid "Preview"
-msgstr ""
+msgstr "Xem trước"
 
 #: modules/forum/templates/new_topics.phtml:36
 msgid "Period"
-msgstr ""
+msgstr "Giai đoạn"
 
 #: modules/forum/templates/new_topics.phtml:38
 msgid "Show period"
-msgstr ""
+msgstr "Hiển thị thời gian"
 
 #: modules/forum/templates/new_topics.phtml:62
 #: modules/forum/templates/topics.phtml:59
 msgid "Pinned topic"
-msgstr ""
+msgstr "Chủ Đề Đã Ghim"
 
 #: modules/forum/templates/new_topics.phtml:69
 #: modules/forum/templates/topics.phtml:66
 msgid "Topic has poll"
-msgstr ""
+msgstr "Chủ đề có phiếu bầu"
 
 #: modules/forum/templates/new_topics.phtml:76
 #: modules/forum/templates/topics.phtml:73
 msgid "Closed topic"
-msgstr ""
+msgstr "Chủ đề đã đóng cửa"
 
 #: modules/forum/templates/new_topics.phtml:83
 #: modules/forum/templates/topics.phtml:80
 #: modules/forum/templates/topics.phtml:91
 msgid "Deleted topic"
-msgstr ""
+msgstr "chủ đề đã xóa"
 
 #: modules/forum/templates/new_topics.phtml:97
 #: modules/forum/templates/topics.phtml:106
 msgid "Last post"
-msgstr ""
+msgstr "Bài gửi cuối"
 
 #: modules/forum/templates/new_topics.phtml:119
 msgid "Mark as read"
-msgstr ""
+msgstr "Đánh dấu là đã đọc"
 
 #: modules/forum/templates/reply_message.phtml:37
 msgid "Topic"
-msgstr ""
+msgstr "Chủ đề"
 
 #: modules/forum/templates/restore_post.phtml:30
 msgid "Do you really want to restore this post?"
@@ -1086,148 +1086,148 @@ msgstr ""
 #: modules/forum/templates/restore_post.phtml:35
 #: modules/forum/templates/topic.phtml:372
 msgid "Restore"
-msgstr ""
+msgstr "Khôi phục"
 
 #: modules/forum/templates/section.phtml:36
 msgid "Section Files"
-msgstr ""
+msgstr "Tập tin phần"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr ""
+msgstr "Trong thể loại này không có phân vùng"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr ""
+msgstr "Đã chỉnh sửa:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
 msgid "Edited"
-msgstr ""
+msgstr "Đã sửa"
 
 #: modules/forum/templates/show_post.phtml:80
 #: modules/forum/templates/topic.phtml:293
 msgid "Attached files"
-msgstr ""
+msgstr "Các tập tin đính kèm:"
 
 #: modules/forum/templates/show_post.phtml:135
 #: modules/forum/templates/topic.phtml:353
 msgid "Reply"
-msgstr ""
+msgstr "Trả lời"
 
 #: modules/forum/templates/show_post.phtml:140
 #: modules/forum/templates/topic.phtml:358
 msgid "Quote"
-msgstr ""
+msgstr "Trích dẫn"
 
 #: modules/forum/templates/topic.phtml:43
 msgid "Filter by author is activated"
-msgstr ""
+msgstr "Bộ lọc của tác giả được kích hoạt"
 
 #: modules/forum/templates/topic.phtml:54
 msgid "Topic closed"
-msgstr ""
+msgstr "Chủ đề đã đóng cửa"
 
 #: modules/forum/templates/topic.phtml:60
 msgid "Topic deleted by"
-msgstr ""
+msgstr "Chủ đề bị xóa bởi"
 
 #: modules/forum/templates/topic.phtml:64
 msgid "Undelete topic"
-msgstr ""
+msgstr "Chủ đề bị xóa, được khôi phục bởi"
 
 #: modules/forum/templates/topic.phtml:80
 #: modules/forum/templates/topic.phtml:110
 msgid "Vote"
-msgstr ""
+msgstr "Bình chọn"
 
 #: modules/forum/templates/topic.phtml:81
 msgid "Results"
-msgstr ""
+msgstr "Kết quả"
 
 #: modules/forum/templates/topic.phtml:101
 msgid "Total votes"
-msgstr ""
+msgstr "Tổng số bình chọn"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr ""
+msgstr "Bài viết đã xoá"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
-msgstr ""
+msgstr "Đã xóa"
 
 #: modules/forum/templates/topic.phtml:267
 msgid "Post restored by:"
-msgstr ""
+msgstr "Bài được phục hồi bởi:"
 
 #: modules/forum/templates/topic.phtml:268
 msgid "Restored"
-msgstr ""
+msgstr "Đã khôi phục"
 
 #: modules/forum/templates/topic.phtml:369
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: modules/forum/templates/topic.phtml:384
 msgid "Delete selected"
-msgstr ""
+msgstr "Xóa mục đã chọn"
 
 #: modules/forum/templates/topic.phtml:388
 msgid "Actions with topic"
-msgstr ""
+msgstr "Hành động với chủ đề"
 
 #: modules/forum/templates/topic.phtml:399
 msgid "Curators of the Topic"
-msgstr ""
+msgstr "Giám tuyển chủ đề"
 
 #: modules/forum/templates/topic.phtml:405
 msgid "Open Topic"
-msgstr ""
+msgstr "Mở cửa chủ đề"
 
 #: modules/forum/templates/topic.phtml:407
 msgid "Close Topic"
-msgstr ""
+msgstr "Đóng cửa chủ đề"
 
 #: modules/forum/templates/topic.phtml:411
 msgid "Restore Topic"
-msgstr ""
+msgstr "Khôi phục chủ đề"
 
 #: modules/forum/templates/topic.phtml:417
 msgid "Unfix Topic"
-msgstr ""
+msgstr "Tháo chủ đề"
 
 #: modules/forum/templates/topic.phtml:419
 msgid "Pin Topic"
-msgstr ""
+msgstr "Pin Chủ Đề"
 
 #: modules/forum/templates/topic.phtml:422
 msgid "Move Topic"
-msgstr ""
+msgstr "Di chuyển chủ đề"
 
 #: modules/forum/templates/topic.phtml:499
 msgid "Who is here"
-msgstr ""
+msgstr "Ai đang ở đây"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr ""
+msgstr "Không có bài viết trong chuyên mục này!"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"
-msgstr ""
+msgstr "Trang cuối"
 
 #: modules/forum/templates/voted_users.phtml:54
 #: modules/forum/templates/who.phtml:62
 msgid "Go to Topic"
-msgstr ""
+msgstr "Tới chủ đề"
 
 #: modules/forum/templates/who.phtml:38
 msgid "Users"
-msgstr ""
+msgstr "Thành viên"
 
 #: modules/forum/templates/who.phtml:39
 msgid "Guests"
-msgstr ""
+msgstr "Khách"
 
