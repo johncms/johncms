@@ -1,0 +1,459 @@
+msgid ""
+msgstr ""
+"X-Domain: news\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/news/locale/news.pot\n"
+"X-Crowdin-File-ID: 494\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"PO-Revision-Date: 2026-03-24 13:17\n"
+
+#: modules/news/src/Application/Article.php:52
+msgid "The requested article was not found."
+msgstr ""
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:33
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:36
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:37
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:27
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:28
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:32
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:27
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:30
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:31
+#: modules/news/src/Application/Controllers/ArticleController.php:23
+#: modules/news/src/Application/Controllers/SearchController.php:24
+#: modules/news/src/Application/Controllers/SectionController.php:23
+#: modules/news/src/Application/MetaTagsManager.php:38
+#: modules/news/src/Application/MetaTagsManager.php:39
+msgid "News"
+msgstr "Новини"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:41
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:48
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:35
+msgid "Section list"
+msgstr "Список розділів"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:56
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:57
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:74
+#: modules/news/templates/admin/sections.phtml:39
+msgid "Add article"
+msgstr "Додати статтю"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:103
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:205
+msgid "The article name cannot be empty"
+msgstr "Назва статті не може бути порожньою"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:133
+msgid "The article was created successfully"
+msgstr "Стаття була успішно створена"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:137
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:236
+msgid "An article with this code already exists"
+msgstr "Стаття з цим кодом вже існує"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:158
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:159
+msgid "Edit article"
+msgstr "Редагувати статю"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:232
+msgid "The article was updated successfully"
+msgstr "Стаття була успішно оновлена"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:285
+msgid "The article was successfully deleted"
+msgstr "Стаття була видалена"
+
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:311
+#: modules/news/src/Application/Controllers/CommentsController.php:217
+msgid "Only images are allowed"
+msgstr "Дозволено лише зображення!"
+
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:97
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:98
+#: modules/news/templates/admin/index.phtml:34
+msgid "Settings"
+msgstr "Налаштування"
+
+#: modules/news/src/Application/Controllers/Admin/AdminController.php:139
+msgid "Settings saved!"
+msgstr "Налаштування збережені!"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:50
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:51
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:68
+msgid "Create section"
+msgstr "Створити розділ"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:90
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:172
+msgid "The section name cannot be empty"
+msgstr "Назва розділу не може бути порожньою"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:116
+msgid "The section was created successfully"
+msgstr "Розділ був успішно створений"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:120
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:195
+msgid "A section with this code already exists"
+msgstr "Розділ з цим кодом вже існує"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:138
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:141
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:142
+msgid "Edit section"
+msgstr "Редагувати розділ"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:191
+msgid "The section was updated successfully"
+msgstr "Розділ успішно оновлено"
+
+#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:240
+msgid "The section was successfully deleted"
+msgstr "Розділ успішно видалено"
+
+#: modules/news/src/Application/Controllers/CommentsController.php:47
+msgid "Bad Request"
+msgstr ""
+
+#: modules/news/src/Application/Controllers/CommentsController.php:131
+msgid "You have a ban!"
+msgstr "У Вас бан!"
+
+#: modules/news/src/Application/Controllers/CommentsController.php:136
+msgid "You are not logged in"
+msgstr "Ви на авторизовані"
+
+#: modules/news/src/Application/Controllers/CommentsController.php:160
+msgid "The comment was added successfully"
+msgstr "Коментар успішно додано"
+
+#: modules/news/src/Application/Controllers/CommentsController.php:163
+msgid "Enter the comment text"
+msgstr "Введіть текст коментаря"
+
+#: modules/news/src/Application/Controllers/CommentsController.php:192
+msgid "The comment was deleted successfully"
+msgstr "Коментар був успішно видалений"
+
+#: modules/news/src/Application/Controllers/CommentsController.php:199
+msgid "Access denied"
+msgstr "У доступі відмовлено"
+
+#: modules/news/src/Application/Controllers/SearchController.php:35
+msgid "Search"
+msgstr "Пошук"
+
+#: modules/news/src/Application/Controllers/SearchController.php:73
+msgid "Search by tags"
+msgstr "Пошук за тегами"
+
+#: modules/news/src/Application/Controllers/VoteController.php:32
+msgid "The user is not authorized"
+msgstr "Користувач не авторизований"
+
+#: modules/news/src/Application/Controllers/VoteController.php:48
+msgid "Your vote is accepted"
+msgstr "Ваш голос зараховано"
+
+#: modules/news/src/Application/Section.php:76
+msgid "The requested section was not found."
+msgstr "Розділ не знайдено"
+
+#: modules/news/templates/admin/add_article.phtml:21
+msgid "Active"
+msgstr "Активний"
+
+#: modules/news/templates/admin/add_article.phtml:25
+#: modules/news/templates/admin/add_article.phtml:33
+msgid "Article name"
+msgstr "Назва статті"
+
+#: modules/news/templates/admin/add_article.phtml:37
+#: modules/news/templates/admin/add_article.phtml:45
+msgid "Page title"
+msgstr "Заголовок сторінки"
+
+#: modules/news/templates/admin/add_article.phtml:49
+#: modules/news/templates/admin/add_article.phtml:56
+msgid "Active from"
+msgstr "Активно від"
+
+#: modules/news/templates/admin/add_article.phtml:60
+#: modules/news/templates/admin/add_article.phtml:67
+msgid "Active to"
+msgstr "Активно до"
+
+#: modules/news/templates/admin/add_article.phtml:71
+#: modules/news/templates/admin/add_article.phtml:78
+msgid "Article code"
+msgstr "Код статті"
+
+#: modules/news/templates/admin/add_article.phtml:80
+#: modules/news/templates/admin/add_section.phtml:39
+msgid "Leave it empty for automatic generation"
+msgstr "Залиште його порожнім для автоматичної генерації"
+
+#: modules/news/templates/admin/add_article.phtml:83
+#: modules/news/templates/admin/add_article.phtml:90
+#: modules/news/templates/admin/add_section.phtml:42
+#: modules/news/templates/admin/add_section.phtml:49
+#: modules/news/templates/admin/settings.phtml:61
+#: modules/news/templates/admin/settings.phtml:68
+#: modules/news/templates/admin/settings.phtml:89
+#: modules/news/templates/admin/settings.phtml:96
+#: modules/news/templates/admin/settings.phtml:119
+#: modules/news/templates/admin/settings.phtml:126
+msgid "Keywords"
+msgstr "Ключові слова"
+
+#: modules/news/templates/admin/add_article.phtml:94
+#: modules/news/templates/admin/add_article.phtml:101
+#: modules/news/templates/admin/add_section.phtml:53
+#: modules/news/templates/admin/add_section.phtml:60
+#: modules/news/templates/admin/settings.phtml:72
+#: modules/news/templates/admin/settings.phtml:100
+#: modules/news/templates/admin/settings.phtml:130
+msgid "Description"
+msgstr "Опис"
+
+#: modules/news/templates/admin/add_article.phtml:105
+#: modules/news/templates/admin/add_article.phtml:112
+msgid "Tags"
+msgstr "Теги"
+
+#: modules/news/templates/admin/add_article.phtml:114
+msgid "Enter words or phrases separated by commas"
+msgstr "Введіть слова або фрази розділені комами"
+
+#: modules/news/templates/admin/add_article.phtml:119
+msgid "Preview text"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:131
+msgid "Text"
+msgstr ""
+
+#: modules/news/templates/admin/add_article.phtml:139
+#: modules/news/templates/admin/add_section.phtml:68
+#: modules/news/templates/admin/settings.phtml:138
+msgid "Save"
+msgstr "Зберегти"
+
+#: modules/news/templates/admin/add_article.phtml:140
+#: modules/news/templates/admin/add_section.phtml:69
+#: modules/news/templates/public/article.phtml:92
+msgid "Back"
+msgstr "Назад"
+
+#: modules/news/templates/admin/add_section.phtml:18
+#: modules/news/templates/admin/add_section.phtml:26
+msgid "Section name"
+msgstr "Назва розділу"
+
+#: modules/news/templates/admin/add_section.phtml:30
+#: modules/news/templates/admin/add_section.phtml:37
+msgid "Section code"
+msgstr "Код розділу"
+
+#: modules/news/templates/admin/add_section.phtml:64
+msgid "Text after a list"
+msgstr "Текст після списку"
+
+#: modules/news/templates/admin/del.phtml:11
+msgid "Confirm the action"
+msgstr "Підтвердіть дію"
+
+#: modules/news/templates/admin/del.phtml:20
+msgid "Section:"
+msgstr "Розділ:"
+
+#: modules/news/templates/admin/del.phtml:23
+msgid "Article:"
+msgstr "Стаття:"
+
+#: modules/news/templates/admin/del.phtml:25
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: modules/news/templates/admin/del.phtml:28
+#: modules/news/templates/admin/sections.phtml:70
+#: modules/news/templates/admin/sections.phtml:97
+#: modules/news/templates/public/article.phtml:59
+msgid "Delete"
+msgstr "Видалити"
+
+#: modules/news/templates/admin/del.phtml:29
+#: modules/news/templates/admin/settings.phtml:139
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: modules/news/templates/admin/index.phtml:22
+msgid "Content management"
+msgstr "Управління контентом"
+
+#: modules/news/templates/admin/sections.phtml:40
+msgid "Add section"
+msgstr "Додати розділ"
+
+#: modules/news/templates/admin/sections.phtml:48
+#: modules/news/templates/admin/sections.phtml:102
+msgid "Name"
+msgstr "Назва"
+
+#: modules/news/templates/admin/sections.phtml:49
+#: modules/news/templates/admin/sections.phtml:78
+#: modules/news/templates/admin/sections.phtml:103
+msgid "Code"
+msgstr "Код"
+
+#: modules/news/templates/admin/sections.phtml:50
+#: modules/news/templates/admin/sections.phtml:79
+#: modules/news/templates/admin/sections.phtml:104
+msgid "Type"
+msgstr "Тип"
+
+#: modules/news/templates/admin/sections.phtml:51
+#: modules/news/templates/admin/sections.phtml:80
+#: modules/news/templates/admin/sections.phtml:105
+msgid "Created at"
+msgstr "Створено"
+
+#: modules/news/templates/admin/sections.phtml:52
+#: modules/news/templates/admin/sections.phtml:81
+#: modules/news/templates/admin/sections.phtml:106
+msgid "Updated at"
+msgstr "Оновлено"
+
+#: modules/news/templates/admin/sections.phtml:69
+#: modules/news/templates/admin/sections.phtml:96
+msgid "Edit"
+msgstr "Редагувати"
+
+#: modules/news/templates/admin/sections.phtml:79
+msgid "Section"
+msgstr "Розділ"
+
+#: modules/news/templates/admin/sections.phtml:104
+msgid "Article"
+msgstr "Стаття"
+
+#: modules/news/templates/admin/sections.phtml:111
+#: modules/news/templates/public/article.phtml:63
+#: modules/news/templates/public/index.phtml:82
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: modules/news/templates/admin/settings.phtml:30
+msgid "Home page settings"
+msgstr "Параметри домашньої сторінки"
+
+#: modules/news/templates/admin/settings.phtml:35
+msgid "Show on home page"
+msgstr "Показувати на головній сторінці"
+
+#: modules/news/templates/admin/settings.phtml:39
+msgid "Quantity of news"
+msgstr "Кількість новин"
+
+#: modules/news/templates/admin/settings.phtml:43
+msgid "How many days to show?"
+msgstr "Скільки днів показувати?"
+
+#: modules/news/templates/admin/settings.phtml:45
+msgid "0 - always display."
+msgstr "0 - завжди показувати."
+
+#: modules/news/templates/admin/settings.phtml:48
+msgid "Meta tags for the main page"
+msgstr "Мета-теги для головної сторінки"
+
+#: modules/news/templates/admin/settings.phtml:50
+#: modules/news/templates/admin/settings.phtml:57
+msgid "Module name"
+msgstr "Назва модуля"
+
+#: modules/news/templates/admin/settings.phtml:76
+msgid "Meta tag templates for sections"
+msgstr "Шаблони мета-тегів для секцій"
+
+#: modules/news/templates/admin/settings.phtml:78
+#: modules/news/templates/admin/settings.phtml:85
+#: modules/news/templates/admin/settings.phtml:108
+#: modules/news/templates/admin/settings.phtml:115
+msgid "Title"
+msgstr "Заголовок"
+
+#: modules/news/templates/admin/settings.phtml:106
+msgid "Meta tag templates for articles"
+msgstr "Шаблони мета-тегів для новин"
+
+#: modules/news/templates/public/article.phtml:25
+msgid "Published:"
+msgstr "Опубліковано:"
+
+#: modules/news/templates/public/article.phtml:27
+msgid "Author:"
+msgstr "Автор:"
+
+#: modules/news/templates/public/article.phtml:30
+msgid "Tags:"
+msgstr "Теги:"
+
+#: modules/news/templates/public/article.phtml:36
+msgid "Rating:"
+msgstr "Рейтинг:"
+
+#: modules/news/templates/public/article.phtml:57
+msgid "Write a comment"
+msgstr "Написати коментар"
+
+#: modules/news/templates/public/article.phtml:58
+msgid "Send"
+msgstr "Надіслати"
+
+#: modules/news/templates/public/article.phtml:60
+msgid "Quote"
+msgstr "Цитата"
+
+#: modules/news/templates/public/article.phtml:61
+msgid "Reply"
+msgstr "Відповісти"
+
+#: modules/news/templates/public/article.phtml:62
+msgid "Comments"
+msgstr "Коментарі"
+
+#: modules/news/templates/public/article.phtml:86
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
+msgstr "Ви не ввійшли. Ви повинні <a href=\"/login/\">увійти в систему</a> , щоб залишити коментар."
+
+#: modules/news/templates/public/index.phtml:16
+msgid "Admin panel"
+msgstr "Адмін-панель"
+
+#: modules/news/templates/public/index.phtml:23
+#: modules/news/templates/public/search.phtml:14
+msgid "Search query"
+msgstr "Пошуковий запит"
+
+#: modules/news/templates/public/search.phtml:63
+#: modules/news/templates/public/search_by_tags.phtml:63
+msgid "The search didn't yield any results."
+msgstr "Пошук не дав жодних результатів."
+
+#: modules/news/templates/public/search_by_tags.phtml:14
+msgid "Enter a tag"
+msgstr "Введіть тег"
+

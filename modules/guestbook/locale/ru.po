@@ -1,0 +1,185 @@
+msgid ""
+msgstr ""
+"X-Domain: guestbook\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/guestbook/locale/guestbook.pot\n"
+"X-Crowdin-File-ID: 484\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2026-03-24 13:16\n"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
+msgid "The message was deleted"
+msgstr "Сообщение удалено"
+
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:34
+#: modules/guestbook/templates/edit.phtml:3
+msgid "Edit message"
+msgstr "Изменить сообщение"
+
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:69
+msgid "The message was saved"
+msgstr "Сообщение сохранено"
+
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+msgid "Admin Club"
+msgstr "Админ клуб"
+
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
+msgid "Guestbook is closed"
+msgstr "Гостевая закрыта"
+
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
+msgid "Your message was added successfully"
+msgstr "Сообщение успешно отправлено"
+
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:34
+#: modules/guestbook/templates/index.phtml:191
+#: modules/guestbook/templates/index.phtml:203
+#: modules/guestbook/templates/reply.phtml:11
+#: modules/guestbook/templates/reply.phtml:24
+msgid "Reply"
+msgstr "Ответить"
+
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:69
+msgid "Your reply to the message was saved"
+msgstr "Ваш ответ на сообщение сохранён"
+
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:35
+msgid "Only images are allowed"
+msgstr "Разрешены только изображения"
+
+#: modules/guestbook/src/Application/Services/GuestbookService.php:193
+msgid "All messages older than 1 day were deleted"
+msgstr "Удалены все сообщения, старше 1 дня"
+
+#: modules/guestbook/src/Application/Services/GuestbookService.php:209
+msgid "Full clearing is finished"
+msgstr "Полная очистка завершена"
+
+#: modules/guestbook/src/Application/Services/GuestbookService.php:225
+msgid "All messages older than 1 week were deleted"
+msgstr "Удалены все сообщения, старше 1 недели"
+
+#: modules/guestbook/templates/clear.phtml:5
+msgid "Clear guestbook"
+msgstr "Очистить гостевую"
+
+#: modules/guestbook/templates/clear.phtml:10
+msgid "Clearing parameters"
+msgstr "Параметры очистки"
+
+#: modules/guestbook/templates/clear.phtml:13
+msgid "Older than 1 week"
+msgstr "Старше 1 недели"
+
+#: modules/guestbook/templates/clear.phtml:17
+msgid "Older than 1 day"
+msgstr "Старше 1 дня"
+
+#: modules/guestbook/templates/clear.phtml:21
+msgid "Clear all"
+msgstr "Очистить всё"
+
+#: modules/guestbook/templates/clear.phtml:25
+#: modules/guestbook/templates/index.phtml:221
+msgid "Clear"
+msgstr "Очистить"
+
+#: modules/guestbook/templates/clear.phtml:26
+#: modules/guestbook/templates/confirm_delete.phtml:15
+msgid "Cancel"
+msgstr "Отмена"
+
+#: modules/guestbook/templates/confirm_delete.phtml:6
+msgid "Delete message"
+msgstr "Удалить сообщение"
+
+#: modules/guestbook/templates/confirm_delete.phtml:11
+msgid "Do you really want to delete?"
+msgstr "Вы действительно хотите удалить?"
+
+#: modules/guestbook/templates/confirm_delete.phtml:14
+#: modules/guestbook/templates/index.phtml:206
+msgid "Delete"
+msgstr "Удалить"
+
+#: modules/guestbook/templates/edit.phtml:10
+#: modules/guestbook/templates/reply.phtml:18
+msgid "Author"
+msgstr "Автор"
+
+#: modules/guestbook/templates/edit.phtml:15
+#: modules/guestbook/templates/index.phtml:62
+msgid "Message"
+msgstr ""
+
+#: modules/guestbook/templates/edit.phtml:21
+#: modules/guestbook/templates/reply.phtml:30
+msgid "Save"
+msgstr "Сохранить"
+
+#: modules/guestbook/templates/edit.phtml:22
+#: modules/guestbook/templates/reply.phtml:31
+msgid "Back"
+msgstr "Назад"
+
+#: modules/guestbook/templates/index.phtml:21
+msgid "The guestbook is closed"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:44
+#: modules/guestbook/templates/index.phtml:52
+msgid "Name"
+msgstr "Имя"
+
+#: modules/guestbook/templates/index.phtml:69
+msgid "Verification code"
+msgstr "Проверочный код"
+
+#: modules/guestbook/templates/index.phtml:71
+#: modules/guestbook/templates/index.phtml:79
+msgid "Symbols on the picture"
+msgstr "Код с картинки"
+
+#: modules/guestbook/templates/index.phtml:85
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:90
+msgid "Write"
+msgstr "Написать"
+
+#: modules/guestbook/templates/index.phtml:101
+msgid "For registered users only"
+msgstr ""
+
+#: modules/guestbook/templates/index.phtml:109
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr "В Гостевой сообщений нет<br><strong>Будь первым! :)</strong>"
+
+#: modules/guestbook/templates/index.phtml:146
+msgid "Guest"
+msgstr "Гость"
+
+#: modules/guestbook/templates/index.phtml:154
+msgid "Edited:"
+msgstr "Изменено:"
+
+#: modules/guestbook/templates/index.phtml:155
+msgid "Edited"
+msgstr "Изменено"
+
+#: modules/guestbook/templates/index.phtml:205
+msgid "Edit"
+msgstr "Изменить"
+

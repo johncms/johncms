@@ -1,0 +1,283 @@
+msgid ""
+msgstr ""
+"X-Domain: install\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/install/locale/install.pot\n"
+"X-Crowdin-File-ID: 506\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
+
+#: install/index.php:66
+#: install/steps/step_1.php:23
+msgid "Preparing for installation"
+msgstr "Подготовка к установке"
+
+#: install/index.php:71
+#: install/steps/step_2.php:20
+#: install/steps/step_2.php:21
+msgid "Checking parameters"
+msgstr "Проверка параметров"
+
+#: install/index.php:76
+#: install/steps/step_3.php:25
+#: install/steps/step_3.php:26
+msgid "Database"
+msgstr "База данных"
+
+#: install/index.php:81
+#: install/steps/step_4.php:28
+#: install/steps/step_4.php:29
+msgid "Setting"
+msgstr "Настройка"
+
+#: install/index.php:86
+msgid "Completion"
+msgstr "Завершение"
+
+#: install/steps/step_2.php:27
+msgid "PHP version"
+msgstr "Версия PHP"
+
+#: install/steps/step_2.php:30
+#, php-format
+msgid "The PHP version must be at least %s"
+msgstr "Версия PHP должна быть не ниже %s"
+
+#: install/steps/step_2.php:34
+#: install/steps/step_2.php:40
+#: install/steps/step_2.php:46
+#: install/steps/step_2.php:52
+#: install/steps/step_2.php:58
+msgid "Yes"
+msgstr "Да"
+
+#: install/steps/step_2.php:34
+#: install/steps/step_2.php:40
+#: install/steps/step_2.php:46
+#: install/steps/step_2.php:52
+#: install/steps/step_2.php:58
+msgid "No"
+msgstr "Нет"
+
+#: install/steps/step_2.php:36
+msgid "PHP extension PDO must be installed"
+msgstr "PHP расширение PDO должно быть установлено"
+
+#: install/steps/step_2.php:39
+msgid "Imagick or GD extension"
+msgstr "Расширения Imagick или GD"
+
+#: install/steps/step_2.php:42
+msgid "You must install the php extension Imagick or GD"
+msgstr "Вы должны установить расширение php Imagick или GD"
+
+#: install/steps/step_2.php:45
+msgid "zlib extension"
+msgstr "Расширение zlib"
+
+#: install/steps/step_2.php:48
+msgid "PHP extension zlib must be installed"
+msgstr "Необходимо установить расширение PHP zlib"
+
+#: install/steps/step_2.php:51
+msgid "mbstring extension"
+msgstr "Расширение mbstring"
+
+#: install/steps/step_2.php:54
+msgid "PHP extension mbstring must be installed"
+msgstr "Необходимо установить расширение PHP mbstring"
+
+#: install/steps/step_2.php:57
+msgid "fileinfo extension"
+msgstr "Расширение fileinfo"
+
+#: install/steps/step_2.php:60
+msgid "PHP extension fileinfo must be installed"
+msgstr "Необходимо установить PHP расширение fileinfo"
+
+#: install/steps/step_3.php:99
+msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
+msgstr "Правильная работа JohnCMS не гарантирована с версией mysql сервера, которая у вас установлена.<br> Вы можете проигнорировать это предупреждение на свой страх и риск."
+
+#: install/steps/step_3.php:100
+#, php-format
+msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
+msgstr "Имя сервера: <b>%s</b>. <br>Версия вашего mysql сервера: <b>%s</b>. Требуется: <b>%s</b>"
+
+#: install/steps/step_3.php:104
+msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
+msgstr "Для работы системы требуется <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
+
+#: install/steps/step_3.php:105
+msgid "Please contact your hosting provider's technical support to resolve this issue."
+msgstr "Пожалуйста, свяжитесь с технической поддержкой вашего хостинг-провайдера, чтобы решить эту проблему."
+
+#: install/steps/step_3.php:109
+msgid "ERROR: Can't write database.local.php"
+msgstr "ОШИБКА: Невозможно записать database.local.php"
+
+#: install/steps/step_3.php:115
+msgid "Invalid database host name"
+msgstr "Неверное имя хоста базы данных"
+
+#: install/steps/step_3.php:117
+msgid "Invalid database user or password"
+msgstr "Неверный пользователь или пароль базы данных"
+
+#: install/steps/step_3.php:119
+msgid "Database does not exist"
+msgstr "База данных не существует"
+
+#: install/steps/step_4.php:118
+msgid "ERROR: Can't write system.local.php"
+msgstr "ОШИБКА: Невозможно записать system.local.php"
+
+#: install/steps/step_5.php:15
+#: install/steps/step_5.php:16
+msgid "Complete the installation"
+msgstr "Завершение установки"
+
+#: install/templates/step_1.phtml:3
+msgid "Welcome to JohnCMS installation wizard"
+msgstr "Добро пожаловать в мастер установки JohnCMS"
+
+#: install/templates/step_1.phtml:6
+msgid "During the installation process, a basic check of the hosting will be performed for compliance with the CMS requirements."
+msgstr "В процессе установки будет выполнена проверка хостинга на соответствие требованиям CMS."
+
+#: install/templates/step_1.phtml:7
+msgid "If errors occurred during the installation stage and you do not know how to solve them, you can ask for help on <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">our forum.</a>"
+msgstr "Если на этапе установки возникли ошибки, и вы не знаете, как их решить, вы можете обратиться за помощью на <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">наш форум.</a>"
+
+#: install/templates/step_1.phtml:11
+msgid "Choose language"
+msgstr "Выберите язык"
+
+#: install/templates/step_1.phtml:28
+#: install/templates/step_2.phtml:34
+#: install/templates/step_2.phtml:36
+#: install/templates/step_3.phtml:92
+#: install/templates/step_4.phtml:81
+msgid "Continue"
+msgstr "Продолжить"
+
+#: install/templates/step_2.phtml:3
+msgid "Checking extensions"
+msgstr "Проверка расширений"
+
+#: install/templates/step_2.phtml:20
+msgid "Permissions check (chmod)"
+msgstr "Проверка прав доступа (chmod)"
+
+#: install/templates/step_2.phtml:22
+msgid "Everything is good"
+msgstr "Все в порядке"
+
+#: install/templates/step_2.phtml:29
+msgid "For the specified directories, you must set the permissions to allow writing (777)."
+msgstr "Для указанных каталогов необходимо установить права разрешающие запись (777)."
+
+#: install/templates/step_3.phtml:10
+msgid "Database connection settings"
+msgstr "Настройки соединения с БД."
+
+#: install/templates/step_3.phtml:21
+#: install/templates/step_3.phtml:28
+msgid "DB Host"
+msgstr "Сервер БД"
+
+#: install/templates/step_3.phtml:35
+#: install/templates/step_3.phtml:42
+msgid "Port"
+msgstr "Порт"
+
+#: install/templates/step_3.phtml:49
+#: install/templates/step_3.phtml:56
+msgid "DB Name"
+msgstr "Название БД"
+
+#: install/templates/step_3.phtml:63
+#: install/templates/step_3.phtml:70
+msgid "DB User"
+msgstr "Пользователь БД"
+
+#: install/templates/step_3.phtml:77
+#: install/templates/step_3.phtml:83
+msgid "DB Password"
+msgstr "Пароль БД"
+
+#: install/templates/step_3.phtml:92
+msgid "Continue anyway"
+msgstr "Все равно продолжить"
+
+#: install/templates/step_4.phtml:10
+msgid "Website settings"
+msgstr "Настройки сайта"
+
+#: install/templates/step_4.phtml:18
+#: install/templates/step_4.phtml:25
+msgid "Site address"
+msgstr "Адрес сайта"
+
+#: install/templates/step_4.phtml:32
+#: install/templates/step_4.phtml:39
+msgid "E-mail"
+msgstr "E-mail"
+
+#: install/templates/step_4.phtml:46
+msgid "Administrator data"
+msgstr "Данные администратора"
+
+#: install/templates/step_4.phtml:48
+#: install/templates/step_4.phtml:55
+msgid "Admin login"
+msgstr "Логин администратора"
+
+#: install/templates/step_4.phtml:62
+#: install/templates/step_4.phtml:68
+msgid "Admin password"
+msgstr "Пароль администратора"
+
+#: install/templates/step_4.phtml:74
+msgid "Additionally"
+msgstr "Дополнительно"
+
+#: install/templates/step_4.phtml:77
+msgid "Install demo data"
+msgstr "Установить демо-данные"
+
+#: install/templates/step_5.phtml:3
+msgid "Congratulations!"
+msgstr "Поздравляем!"
+
+#: install/templates/step_5.phtml:4
+#, php-format
+msgid "JohnCMS %s installation completed successfully."
+msgstr "Установка JohnCMS %s успешно завершена."
+
+#: install/templates/step_5.phtml:7
+msgid "ATTENTION!"
+msgstr "ВНИМАНИЕ!"
+
+#: install/templates/step_5.phtml:8
+msgid "Now you need to delete the folder <b>/install/</b>"
+msgstr "Теперь вам нужно удалить папку <b>/install/</b>"
+
+#: install/templates/step_5.phtml:11
+msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" class=\"text-underline\">our forum</a>."
+msgstr "Если вам нужна помощь, вы можете посетить <a href=\"https://johncms.com/forum/\" class=\"text-underline\">наш форум</a>."
+
+#: install/templates/step_5.phtml:12
+msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
+msgstr "Также, при необходимости, вы можете ознакомиться с <a href=\"https://docs.johncms.com/\" class=\"text-underline\">документацией</a>."
+
+#: install/templates/step_5.phtml:15
+msgid "Go to website"
+msgstr "Перейти на сайт"
+

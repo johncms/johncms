@@ -1,0 +1,868 @@
+msgid ""
+msgstr ""
+"X-Domain: system\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/system/locale/system.pot\n"
+"X-Crowdin-File-ID: 504\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
+
+#: config/notifications.global.php:20
+#: config/places.global.php:17
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:51
+msgid "Forum"
+msgstr ""
+
+#: config/notifications.global.php:23
+msgid "New reply on the forum"
+msgstr ""
+
+#: config/notifications.global.php:32
+#, php-format
+msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
+msgstr ""
+
+#: config/notifications.global.php:39
+msgid "Karma"
+msgstr ""
+
+#: config/notifications.global.php:42
+msgid "New vote in karma"
+msgstr ""
+
+#: config/notifications.global.php:43
+msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
+msgstr ""
+
+#: config/places.global.php:12
+msgid "On the Homepage"
+msgstr ""
+
+#: config/places.global.php:13
+msgid "Watching the photo album"
+msgstr ""
+
+#: config/places.global.php:14
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:102
+msgid "Users"
+msgstr ""
+
+#: config/places.global.php:15
+msgid "Users List"
+msgstr ""
+
+#: config/places.global.php:16
+#: system/src/Comments.php:168
+#: system/src/Comments.php:204
+#: system/src/Comments.php:237
+#: system/src/Comments.php:263
+#: system/src/Comments.php:304
+#: system/src/Comments.php:336
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:77
+msgid "Downloads"
+msgstr "Descarcari"
+
+#: config/places.global.php:18
+#: modules/notifications/includes/index.php:90
+#: modules/notifications/includes/index.php:109
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:64
+msgid "Guestbook"
+msgstr ""
+
+#: config/places.global.php:19
+msgid "Reading the FAQ"
+msgstr ""
+
+#: config/places.global.php:20
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:90
+msgid "Library"
+msgstr ""
+
+#: config/places.global.php:21
+#: modules/login/index.php:68
+#: modules/login/templates/captcha.phtml:4
+#: modules/login/templates/captcha.phtml:5
+#: modules/login/templates/confirm.phtml:10
+#: modules/login/templates/confirm.phtml:11
+#: modules/login/templates/login.phtml:4
+#: modules/login/templates/login.phtml:5
+#: modules/login/templates/login.phtml:38
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+msgid "Login"
+msgstr "Logare"
+
+#: config/places.global.php:22
+msgid "Personal correspondence"
+msgstr ""
+
+#: config/places.global.php:23
+msgid "Reading the news"
+msgstr ""
+
+#: config/places.global.php:24
+msgid "Profile"
+msgstr ""
+
+#: config/places.global.php:25
+msgid "Redirect on external link to another site"
+msgstr ""
+
+#: config/places.global.php:26
+msgid "Registered on the site"
+msgstr ""
+
+#: config/places.global.php:27
+msgid "List of users"
+msgstr ""
+
+#: config/places.global.php:28
+#: config/places.global.php:29
+#: config/places.global.php:30
+#: config/places.global.php:31
+msgid "Who is online?"
+msgstr ""
+
+#: modules/language/templates/index.phtml:10
+msgid "Select language"
+msgstr "Selecteaza Limba"
+
+#: modules/language/templates/index.phtml:28
+msgid "Apply"
+msgstr "Aplica"
+
+#: modules/login/index.php:53
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+msgid "Personal"
+msgstr ""
+
+#: modules/login/index.php:54
+#: modules/login/templates/logout.phtml:4
+#: modules/login/templates/logout.phtml:5
+#: modules/login/templates/logout.phtml:11
+msgid "Logout"
+msgstr ""
+
+#: modules/login/index.php:78
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/login/index.php:82
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/login/index.php:100
+#: system/src/Validator/messages.php:17
+msgid "The security code is not correct"
+msgstr "Codul de securitate este incorect"
+
+#: modules/login/index.php:150
+#: modules/login/index.php:154
+msgid "Authorization failed"
+msgstr ""
+
+#: modules/login/templates/captcha.phtml:10
+#: modules/login/templates/captcha.phtml:19
+msgid "Verification code"
+msgstr ""
+
+#: modules/login/templates/captcha.phtml:12
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/login/templates/captcha.phtml:28
+msgid "Continue"
+msgstr ""
+
+#: modules/login/templates/confirm.phtml:20
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/login/templates/confirm.phtml:28
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr ""
+
+#: modules/login/templates/login.phtml:10
+msgid "Authorization"
+msgstr ""
+
+#: modules/login/templates/login.phtml:15
+#: modules/login/templates/login.phtml:23
+msgid "Username"
+msgstr ""
+
+#: modules/login/templates/login.phtml:27
+#: modules/login/templates/login.phtml:35
+msgid "Password"
+msgstr ""
+
+#: modules/login/templates/login.phtml:39
+msgid "Forgot password?"
+msgstr ""
+
+#: modules/login/templates/login.phtml:41
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
+msgid "Registration"
+msgstr "Inregistrare"
+
+#: modules/login/templates/logout.phtml:9
+msgid "Are you sure you want to leave the site?"
+msgstr ""
+
+#: modules/login/templates/logout.phtml:12
+#: modules/notifications/templates/settings.phtml:50
+#: themes/default/templates/system/pages/comments_delete.phtml:26
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: modules/notifications/includes/clear.php:23
+msgid "Notifications are cleared!"
+msgstr "Notificările sunt șterse!"
+
+#: modules/notifications/includes/index.php:29
+msgid "Users on registration"
+msgstr "Utilizatori la înregistrare"
+
+#: modules/notifications/includes/index.php:39
+msgid "Articles on moderation"
+msgstr "Fisiere cu moderare"
+
+#: modules/notifications/includes/index.php:49
+msgid "Downloads on moderation"
+msgstr "Descărcări la moderare"
+
+#: modules/notifications/includes/index.php:60
+msgid "Ban"
+msgstr ""
+
+#: modules/notifications/includes/index.php:70
+msgid "New forum posts"
+msgstr "Postări noi pe forum"
+
+#: modules/notifications/includes/index.php:80
+msgid "Mail"
+msgstr ""
+
+#: modules/notifications/includes/index.php:100
+msgid "Comments"
+msgstr "Comentarii"
+
+#: modules/notifications/includes/settings.php:18
+#: modules/notifications/templates/index.phtml:80
+msgid "Settings"
+msgstr "Setari"
+
+#: modules/notifications/includes/settings.php:44
+msgid "Settings saved!"
+msgstr "Setări salvate!"
+
+#: modules/notifications/index.php:47
+#: modules/notifications/templates/index.phtml:11
+#: modules/notifications/templates/index.phtml:12
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+msgid "Notifications"
+msgstr "Notificări"
+
+#: modules/notifications/templates/index.phtml:27
+msgid "All notifications have already been read"
+msgstr "Toate notificările au fost deja citite"
+
+#: modules/notifications/templates/index.phtml:67
+msgid "Total"
+msgstr "Toatal"
+
+#: modules/notifications/templates/index.phtml:75
+msgid "Clear notifications"
+msgstr "Ștergeți notificările"
+
+#: modules/notifications/templates/settings.phtml:45
+msgid "Display the number of unread messages in the forum"
+msgstr "Afișează numărul de mesaje necitite în forum"
+
+#: modules/notifications/templates/settings.phtml:49
+msgid "Save"
+msgstr "Salveaza"
+
+#: modules/redirect/index.php:30
+msgid "Redirect to an external link"
+msgstr "Redirecționare către un link extern"
+
+#: modules/redirect/templates/index.phtml:27
+msgid "External Link"
+msgstr "Link extern"
+
+#: modules/redirect/templates/index.phtml:28
+msgid "ATTENTION!"
+msgstr "ATENŢIE!"
+
+#: modules/redirect/templates/index.phtml:30
+msgid "You are going to leave our site and go to an external link"
+msgstr "Veți părăsi site-ul nostru și veți merge la un link extern"
+
+#: modules/redirect/templates/index.phtml:34
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Administrarea site-ului nostru nu este responsabilă pentru conținutul site-urilor externe"
+
+#: modules/redirect/templates/index.phtml:36
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Este recomandat să nu specificați datele dvs., referitoare la %s (Login, Parolă), pe site-uri terțe părți"
+
+#: modules/redirect/templates/index.phtml:40
+msgid "Go to Link"
+msgstr "Du-te la link"
+
+#: modules/redirect/templates/index.phtml:44
+#: system/src/Comments.php:172
+#: system/src/Comments.php:208
+#: system/src/Comments.php:221
+#: system/src/Comments.php:241
+#: system/src/Comments.php:267
+#: system/src/Comments.php:308
+#: system/src/Comments.php:320
+#: system/src/Comments.php:340
+#: themes/default/templates/system/pages/comments_list.phtml:156
+#: themes/default/templates/system/pages/result.phtml:33
+msgid "Back"
+msgstr "Inapoi"
+
+#: system/helpers.php:100
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr "Căutați ceva care nu există sau care s-a mutat"
+
+#: system/src-legacy/Bbcode.php:158
+msgid "Added"
+msgstr ""
+
+#: system/src-legacy/Tools.php:175
+msgid "ERROR"
+msgstr ""
+
+#: system/src-legacy/Tools.php:315
+msgid "Somewhere on the site"
+msgstr ""
+
+#: system/src-legacy/Tools.php:506
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: system/src/Checker/SystemChecker.php:29
+msgid "PHP version"
+msgstr "Versiune PHP"
+
+#: system/src/Checker/SystemChecker.php:34
+#, php-format
+msgid "The PHP version must be at least %s"
+msgstr "Versiunea PHP trebuie să fie cel putin %s"
+
+#: system/src/Checker/SystemChecker.php:39
+#: system/src/Checker/SystemChecker.php:47
+#: system/src/Checker/SystemChecker.php:55
+#: system/src/Checker/SystemChecker.php:63
+#: system/src/Checker/SystemChecker.php:71
+#: system/src/Checker/SystemChecker.php:88
+#: system/src/Checker/SystemChecker.php:96
+#: system/src/Checker/SystemChecker.php:122
+msgid "Yes"
+msgstr "Da"
+
+#: system/src/Checker/SystemChecker.php:39
+#: system/src/Checker/SystemChecker.php:47
+#: system/src/Checker/SystemChecker.php:55
+#: system/src/Checker/SystemChecker.php:63
+#: system/src/Checker/SystemChecker.php:71
+#: system/src/Checker/SystemChecker.php:88
+#: system/src/Checker/SystemChecker.php:96
+#: system/src/Checker/SystemChecker.php:122
+msgid "No"
+msgstr "Nu"
+
+#: system/src/Checker/SystemChecker.php:42
+msgid "PHP extension PDO must be installed"
+msgstr "Extensia PHP PDO trebuie instalata"
+
+#: system/src/Checker/SystemChecker.php:45
+msgid "Imagick or GD extension"
+msgstr "Imagine sau extensie GD"
+
+#: system/src/Checker/SystemChecker.php:50
+msgid "You must install the php extension Imagick or GD"
+msgstr "Trebuie sa instalati extensia php Imagick sau GD"
+
+#: system/src/Checker/SystemChecker.php:53
+msgid "zlib extension"
+msgstr "extensie zlib"
+
+#: system/src/Checker/SystemChecker.php:58
+msgid "PHP extension zlib must be installed"
+msgstr "Extensia PHP zlib trebuie instalata"
+
+#: system/src/Checker/SystemChecker.php:61
+msgid "mbstring extension"
+msgstr "Extensie mbstring"
+
+#: system/src/Checker/SystemChecker.php:66
+msgid "PHP extension mbstring must be installed"
+msgstr "Extensia PHP mbstring trebuie instalata"
+
+#: system/src/Checker/SystemChecker.php:69
+msgid "fileinfo extension"
+msgstr "extensie fileinfo"
+
+#: system/src/Checker/SystemChecker.php:74
+msgid "PHP extension fileinfo must be installed"
+msgstr "Fisierul extensiei PHP fileinfo trebuie instalat"
+
+#: system/src/Checker/SystemChecker.php:86
+msgid "opcache extension"
+msgstr "extensie opcache"
+
+#: system/src/Checker/SystemChecker.php:91
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr "Este recomandat sa instalezi extensia php opcache pentru o performanta mai buna."
+
+#: system/src/Checker/SystemChecker.php:99
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr "Este recomandat sa activezi extensia php opcache pentru a imbunatati performanta."
+
+#: system/src/Checker/SystemChecker.php:112
+msgid "Version of the database server"
+msgstr "Versiunea serverului bazei de date"
+
+#: system/src/Checker/SystemChecker.php:117
+#, php-format
+msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
+msgstr "Sistemul necesită versiunea serverului MySQL %s sau superior sau MariaDB %s sau mai mare."
+
+#: system/src/Checker/SystemChecker.php:120
+msgid "mysqlnd test"
+msgstr "test mysqlnd"
+
+#: system/src/Checker/SystemChecker.php:125
+msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
+"PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+msgstr "Atunci când dezvoltăm sistemul, folosim verificări stricte de tip de date. CMS nu va funcționa corect în cazul în care șoferul de lucru cu baza de date returnează tipuri de date incorecte.\n"
+"PHP ar trebui să funcționeze cu șoferul implicit: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+
+#: system/src/Comments.php:157
+#: system/src/Comments.php:226
+#: system/src/Comments.php:227
+#: themes/default/templates/system/pages/comments_list.phtml:124
+msgid "Reply"
+msgstr "Raspunde"
+
+#: system/src/Comments.php:170
+msgid "Administrator already replied to this message"
+msgstr "Administratorul a răspuns deja la acest mesaj"
+
+#: system/src/Comments.php:239
+#: system/src/Comments.php:338
+msgid "Wrong data"
+msgstr "Date gresite"
+
+#: system/src/Comments.php:251
+#: system/src/Comments.php:325
+#: system/src/Comments.php:326
+#: themes/default/templates/system/pages/comments_list.phtml:136
+msgid "Edit"
+msgstr "Editeaza"
+
+#: system/src/Comments.php:265
+msgid "You cannot edit posts of higher administration"
+msgstr "Nu poti edita postarile celor cu functii mai mari"
+
+#: system/src/Comments.php:350
+#: system/src/Comments.php:390
+#: system/src/Comments.php:391
+#: themes/default/templates/system/pages/comments_delete.phtml:24
+#: themes/default/templates/system/pages/comments_list.phtml:139
+msgid "Delete"
+msgstr "Sterge"
+
+#: system/src/Comments.php:592
+msgid "Text is too short"
+msgstr "Textul este prea scurt"
+
+#: system/src/Comments.php:598
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde"
+
+#: system/src/Comments.php:598
+msgid "seconds"
+msgstr "secunde"
+
+#: system/src/Comments.php:606
+msgid "Message already exists"
+msgstr "Mesajul deja exista"
+
+#: system/src/Counters.php:164
+msgid "Unread"
+msgstr "Necitit"
+
+#: system/src/Counters.php:170
+msgid "Last activity"
+msgstr "Ultima activitate"
+
+#: system/src/NavChain.php:63
+msgid "Home"
+msgstr "Acasa"
+
+#: system/src/UserProperties.php:68
+#: system/src/Users/UserMutators.php:61
+msgid "Forum moderator"
+msgstr "Moderator Forum"
+
+#: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:62
+msgid "Download moderator"
+msgstr "Moderator Descarcari"
+
+#: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:63
+msgid "Library moderator"
+msgstr "Moderator Librarie"
+
+#: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:64
+msgid "Super moderator"
+msgstr "Super Moderatori"
+
+#: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:65
+msgid "Administrator"
+msgstr "Adnistratori"
+
+#: system/src/UserProperties.php:73
+#: system/src/Users/UserMutators.php:66
+msgid "Supervisor"
+msgstr "Administrator Principal"
+
+#: system/src/Validator/messages.php:13
+msgid "You have a ban"
+msgstr "Ati fost banat"
+
+#: system/src/Validator/messages.php:21
+msgid "The form submitted did not originate from the expected site"
+msgstr "Formularul trimis nu a fost originar de la site-ul aşteptat"
+
+#: system/src/Validator/messages.php:25
+#, php-format
+msgid "You cannot add the message so often. Please, wait %value% seconds."
+msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde"
+
+#: system/src/Validator/messages.php:29
+msgid "A record matching the input was found"
+msgstr "A fost găsită o înregistrare cu datele introduse"
+
+#: system/src/Validator/messages.php:33
+msgid "No record matching the input was found"
+msgstr "Nu a fost găsită nici o înregistrare cu datele introduse"
+
+#: system/src/Validator/messages.php:37
+#: system/src/Validator/messages.php:74
+msgid "Value is required and can't be empty"
+msgstr "Valoarea este necesară și nu poate fi goală"
+
+#: system/src/Validator/messages.php:41
+#, php-format
+msgid "The input is less than %min% characters long"
+msgstr "Intrarea este mai mică de %min% caractere"
+
+#: system/src/Validator/messages.php:42
+#, php-format
+msgid "The input is more than %max% characters long"
+msgstr "Intrarea are mai mult de %max% caractere"
+
+#: system/src/Validator/messages.php:46
+msgid "The input was not found in the haystack"
+msgstr "Intrarea nu a fost găsită"
+
+#: system/src/Validator/messages.php:50
+#: system/src/Validator/messages.php:61
+msgid "Invalid type given. String expected"
+msgstr "Tip nevalid trimis. Șir așteptat"
+
+#: system/src/Validator/messages.php:51
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "Intrarea nu este o adresă de e-mail validă. Utilizați formatul de bază local-part@hostname"
+
+#: system/src/Validator/messages.php:52
+#, php-format
+msgid "'%hostname%' is not a valid hostname for the email address"
+msgstr "'%hostname%' nu este un nume de gazdă valid pentru adresa de e-mail"
+
+#: system/src/Validator/messages.php:53
+#, php-format
+msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
+msgstr "'%hostname%' nu pare să aibă înregistrări MX sau A valide pentru adresa de e-mail"
+
+#: system/src/Validator/messages.php:54
+#, php-format
+msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
+msgstr "'%hostname%' nu se află într-un segment de rețea care poate fi redirecționat. Adresa de e-mail nu trebuie rezolvată din rețeaua publică"
+
+#: system/src/Validator/messages.php:55
+#, php-format
+msgid "'%localPart%' can not be matched against dot-atom format"
+msgstr "'%localPart%' nu poate fi potrivit împotriva formatului dot-atom"
+
+#: system/src/Validator/messages.php:56
+#, php-format
+msgid "'%localPart%' can not be matched against quoted-string format"
+msgstr "'%localPart%' nu poate fi potrivit după formatul de șir de citate"
+
+#: system/src/Validator/messages.php:57
+msgid "'%localPart%' is not a valid local part for the email address"
+msgstr "'%hostname%' nu este un nume de gazdă valid pentru adresa de e-mail"
+
+#: system/src/Validator/messages.php:58
+msgid "The input exceeds the allowed length"
+msgstr "Intrarea depășește lungimea permisă"
+
+#: system/src/Validator/messages.php:60
+msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
+msgstr "Intrarea pare a fi un nume de gazdă DNS, dar notația de punycode dată nu poate fi decodată"
+
+#: system/src/Validator/messages.php:62
+msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
+msgstr "Intrarea pare să fie un nume de gazdă DNS, dar conține un dash într-o poziție nevalidă"
+
+#: system/src/Validator/messages.php:63
+msgid "The input does not match the expected structure for a DNS hostname"
+msgstr "Intrarea nu se potrivește cu structura așteptată pentru un nume de gazdă DNS"
+
+#: system/src/Validator/messages.php:64
+msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
+msgstr "Intrarea pare a fi un nume de gazdă DNS, dar nu se poate potrivi cu schema de nume gazdă pentru TLD '%tld%'"
+
+#: system/src/Validator/messages.php:65
+msgid "The input does not appear to be a valid local network name"
+msgstr "Intrarea nu pare a fi un nume valid de rețea locală"
+
+#: system/src/Validator/messages.php:66
+msgid "The input does not appear to be a valid URI hostname"
+msgstr "Intrarea nu pare a fi un nume de gazdă URI valid"
+
+#: system/src/Validator/messages.php:67
+msgid "The input appears to be an IP address, but IP addresses are not allowed"
+msgstr "Intrarea pare să fie o adresă IP, dar adresele IP nu sunt permise"
+
+#: system/src/Validator/messages.php:68
+msgid "The input appears to be a local network name but local network names are not allowed"
+msgstr "Intrarea pare să fie un nume de rețea locală, dar numele locale ale rețelei nu sunt permise"
+
+#: system/src/Validator/messages.php:69
+msgid "The input appears to be a DNS hostname but cannot extract TLD part"
+msgstr "Intrarea pare a fi un nume de gazdă DNS, dar nu poate extrage partea TLD"
+
+#: system/src/Validator/messages.php:70
+msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
+msgstr "Intrarea pare să fie un nume de gazdă DNS, dar nu se poate potrivi cu TLD cu lista cunoscută"
+
+#: system/src/Validator/messages.php:75
+msgid "Invalid type given. String, integer, float, boolean or array expected"
+msgstr "Tip nevalid dat. Șir, întreg, float, boolean sau array așteptat"
+
+#: themes/default/templates/system/app/debug.phtml:15
+msgid "Sql query log"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:26
+msgid "Query"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:27
+msgid "Bindings"
+msgstr ""
+
+#: themes/default/templates/system/app/debug.phtml:28
+msgid "Time"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:39
+msgid "News archive"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:113
+msgid "Photo Albums"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:124
+msgid "Information, FAQ"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:135
+msgid "Admin Panel"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:144
+msgid "Admin Chat"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:183
+msgid "Set Light Theme"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:183
+msgid "Set Dark Theme"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+msgid "Log In"
+msgstr "Autentificare"
+
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+msgid "Exit"
+msgstr "Ieșire"
+
+#: themes/default/templates/system/mail/layouts/default.phtml:115
+msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
+msgstr "E-mailul este generat automat. Vă rugăm să nu răspundeți la acesta. <br> Pentru a ne contacta, folosiți informațiile de contact de pe site-ul nostru."
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
+msgid "Changing email address"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
+#: themes/default/templates/system/mail/templates/registration.phtml:13
+#: themes/default/templates/system/mail/templates/restore_password.phtml:12
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
+#, php-format
+msgid "Hello, %s!"
+msgstr "Salut, %s!"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
+#, php-format
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr "Ați început procesul de modificare a adresei de e-mail pe site-ul <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
+msgid "The new email address is:"
+msgstr "Adresa ta de email este {0}."
+
+#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr "Dacă nu ați început procedura de schimbare a e-mailului, vă rugăm să ne contactați în orice mod convenabil pentru dvs."
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
+msgid "Confirm email change"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
+msgid "To continue please click the confirm button"
+msgstr "Pentru a continua, faceţi clic pe butonul de confirmare"
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
+#: themes/default/templates/system/mail/templates/registration.phtml:27
+msgid "Confirm"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
+msgid "If you have not registered on our site, please ignore this email."
+msgstr "Dacă nu v-aţi înregistrat pe site-ul nostru, vă rugăm să ignoraţi acest mesaj."
+
+#: themes/default/templates/system/mail/templates/registration.phtml:10
+msgid "Registration on the website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/registration.phtml:15
+#, php-format
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr "V-ați înregistrat cu succes pe site-ul <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/registration.phtml:18
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
+msgid "Your login:"
+msgstr "Numele Tau"
+
+#: themes/default/templates/system/mail/templates/registration.phtml:19
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
+msgid "Your password:"
+msgstr "Parola Ta"
+
+#: themes/default/templates/system/mail/templates/registration.phtml:19
+msgid "The one you specified when registering"
+msgstr "Cea pe care ai specificat-o la înregistrare"
+
+#: themes/default/templates/system/mail/templates/registration.phtml:22
+#, php-format
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr "Pentru a vă activa contul, vă rugăm să confirmaţi înregistrarea pe site-ul %s."
+
+#: themes/default/templates/system/mail/templates/registration.phtml:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
+msgstr "Dacă nu v-ați înregistrat pe site-ul nostru, vă rugăm să ignorați acest email. În acest caz, contul nu va fi activat și va fi șters automat."
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:9
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
+msgid "Password recovery"
+msgstr "Recuperare parola"
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:14
+#, php-format
+msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
+msgstr "Începeți procesul de recuperare a parolei pe site-ul <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:17
+msgid "In order to recover your password, you must click on the link:"
+msgstr "Pentru a vă recupera parola, trebuie să faceţi clic pe link:"
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:22
+msgid "Restore"
+msgstr "Restabilire"
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:25
+msgid "Link valid for 1 hour"
+msgstr "Link valabil pentru o oră"
+
+#: themes/default/templates/system/mail/templates/restore_password.phtml:27
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Dacă primiți acest e-mail din greșeală, ignorați doar această scrisoare"
+
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
+#, php-format
+msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
+msgstr "V-ați schimbat parola pe site-ul <a href=\"%s\">%s</a>"
+
+#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
+msgid "After logging in, you can change your password to new one."
+msgstr "După autentificare, vă puteţi schimba parola în una nouă."
+
+#: themes/default/templates/system/pages/comments_delete.phtml:21
+msgid "Do you really want to delete?"
+msgstr "Sigur vrei sa stergi?"
+
+#: themes/default/templates/system/pages/comments_delete.phtml:25
+msgid "Clear"
+msgstr "Sterge"
+
+#: themes/default/templates/system/pages/comments_form.phtml:22
+msgid "Message"
+msgstr "Mesaj"
+
+#: themes/default/templates/system/pages/comments_form.phtml:29
+msgid "Send"
+msgstr "Trimite"
+
+#: themes/default/templates/system/pages/comments_list.phtml:39
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: themes/default/templates/system/pages/comments_list.phtml:84
+msgid "Edited:"
+msgstr "Editat:"
+
+#: themes/default/templates/system/pages/comments_list.phtml:85
+msgid "Edited"
+msgstr "Editat:"
+
