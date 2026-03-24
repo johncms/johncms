@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"X-Domain: online\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/online/locale/online.pot\n"
+"X-Crowdin-File-ID: 496\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"PO-Revision-Date: 2026-03-24 11:10\n"
+
+#: modules/online/includes/guest.php:24
+#: modules/online/includes/history.php:24
+#: modules/online/includes/index.php:25
+#: modules/online/includes/ip.php:21
+msgid "Users"
+msgstr ""
+
+#: modules/online/includes/guest.php:29
+#: modules/online/includes/history.php:29
+#: modules/online/includes/index.php:30
+#: modules/online/includes/ip.php:26
+msgid "History"
+msgstr ""
+
+#: modules/online/includes/guest.php:37
+#: modules/online/includes/history.php:37
+#: modules/online/includes/index.php:38
+#: modules/online/includes/ip.php:34
+msgid "Guests"
+msgstr ""
+
+#: modules/online/includes/guest.php:42
+#: modules/online/includes/history.php:42
+#: modules/online/includes/index.php:43
+#: modules/online/includes/ip.php:39
+msgid "IP Activity"
+msgstr ""
+
+#: modules/online/includes/guest.php:61
+msgid "Guest"
+msgstr ""
+
+#: modules/online/includes/index.php:48
+msgid "Who is online?"
+msgstr ""
+
+#: modules/online/index.php:55
+#: modules/online/index.php:63
+msgid "Online"
+msgstr ""
+
+#: modules/online/index.php:57
+msgid "For registered users only"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:51
+#: modules/online/templates/users.phtml:38
+msgid "List is empty"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:58
+#: modules/online/templates/users.phtml:45
+msgid "Total"
+msgstr ""
+
