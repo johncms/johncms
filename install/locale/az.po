@@ -11,38 +11,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: install/index.php:66
 #: install/steps/step_1.php:23
 msgid "Preparing for installation"
-msgstr ""
+msgstr "Hazırlıq quraşdırılması"
 
 #: install/index.php:71
 #: install/steps/step_2.php:20
 #: install/steps/step_2.php:21
 msgid "Checking parameters"
-msgstr ""
+msgstr "Ayarları təmizləmək"
 
 #: install/index.php:76
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
-msgstr ""
+msgstr "Məlumat bazası"
 
 #: install/index.php:81
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
-msgstr ""
+msgstr "Parametrlər"
 
 #: install/index.php:86
 msgid "Completion"
-msgstr ""
+msgstr "Tamamlama"
 
 #: install/steps/step_2.php:27
 msgid "PHP version"
-msgstr ""
+msgstr "PHP Versiyası"
 
 #: install/steps/step_2.php:30
 #, php-format
@@ -55,7 +55,7 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "Yes"
-msgstr ""
+msgstr "Bəli"
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40
@@ -63,35 +63,35 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "No"
-msgstr ""
+msgstr "Xeyr"
 
 #: install/steps/step_2.php:36
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PHP uzadılması PDO saplardan müəyyən edilməlidir"
 
 #: install/steps/step_2.php:39
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "İmagick və ya genişləndirilməsi dövlət dumasının"
 
 #: install/steps/step_2.php:42
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "Yüklemek üçün lazımdır genişləndirilməsi PHP İmagick və ya dövlət dumasının"
 
 #: install/steps/step_2.php:45
 msgid "zlib extension"
-msgstr ""
+msgstr "iş genişləndirilməsi ilə zlib"
 
 #: install/steps/step_2.php:48
 msgid "PHP extension zlib must be installed"
-msgstr ""
+msgstr "PHP uzadılması PDO saplardan müəyyən edilməlidir"
 
 #: install/steps/step_2.php:51
 msgid "mbstring extension"
-msgstr ""
+msgstr "iş genişləndirilməsi mbstring"
 
 #: install/steps/step_2.php:54
 msgid "PHP extension mbstring must be installed"
-msgstr ""
+msgstr "PHP uzadılması PDO saplardan müəyyən edilməlidir"
 
 #: install/steps/step_2.php:57
 msgid "fileinfo extension"
@@ -120,44 +120,44 @@ msgstr ""
 
 #: install/steps/step_3.php:109
 msgid "ERROR: Can't write database.local.php"
-msgstr ""
+msgstr "Səhv: system.local.php yazılmır"
 
 #: install/steps/step_3.php:115
 msgid "Invalid database host name"
-msgstr ""
+msgstr "Yaramaz hostname bazası"
 
 #: install/steps/step_3.php:117
 msgid "Invalid database user or password"
-msgstr ""
+msgstr "İstifadəçi adı və ya parolu düzgün deyildir"
 
 #: install/steps/step_3.php:119
 msgid "Database does not exist"
-msgstr ""
+msgstr "Məlumatların silinməsi"
 
 #: install/steps/step_4.php:118
 msgid "ERROR: Can't write system.local.php"
-msgstr ""
+msgstr "Səhv: system.local.php yazılmır"
 
 #: install/steps/step_5.php:15
 #: install/steps/step_5.php:16
 msgid "Complete the installation"
-msgstr ""
+msgstr "Quraşdırılması başa"
 
 #: install/templates/step_1.phtml:3
 msgid "Welcome to JohnCMS installation wizard"
-msgstr ""
+msgstr "Xoş gəlmisiniz JohnCMS setup wizard"
 
 #: install/templates/step_1.phtml:6
 msgid "During the installation process, a basic check of the hosting will be performed for compliance with the CMS requirements."
-msgstr ""
+msgstr "Quraşdırma prosesi zamanı əsas yoxlamaq hosting keçiriləcəkdir tələblərinə uyğunluğu eksperiment CMS."
 
 #: install/templates/step_1.phtml:7
 msgid "If errors occurred during the installation stage and you do not know how to solve them, you can ask for help on <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">our forum.</a>"
-msgstr ""
+msgstr "Əgər baş səhv quraşdırma mərhələsində, və siz heç bilirsiniz necə, onları həll etmək üçün müraciət edə bilər köməyi azn <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">bizim forumda.</a>"
 
 #: install/templates/step_1.phtml:11
 msgid "Choose language"
-msgstr ""
+msgstr "Dil seçin"
 
 #: install/templates/step_1.phtml:28
 #: install/templates/step_2.phtml:34
@@ -165,32 +165,32 @@ msgstr ""
 #: install/templates/step_3.phtml:92
 #: install/templates/step_4.phtml:81
 msgid "Continue"
-msgstr ""
+msgstr "Davam"
 
 #: install/templates/step_2.phtml:3
 msgid "Checking extensions"
-msgstr ""
+msgstr "Yoxlama uzantıları"
 
 #: install/templates/step_2.phtml:20
 msgid "Permissions check (chmod)"
-msgstr ""
+msgstr "Yoxlamaq üçün icazələrin (chmod)"
 
 #: install/templates/step_2.phtml:22
 msgid "Everything is good"
-msgstr ""
+msgstr "Hər şey qaydasında görsənir"
 
 #: install/templates/step_2.phtml:29
 msgid "For the specified directories, you must set the permissions to allow writing (777)."
-msgstr ""
+msgstr "Üçün göstərilən kataloqlarda, siz yüklemek üçün icazə rekord (777)."
 
 #: install/templates/step_3.phtml:10
 msgid "Database connection settings"
-msgstr ""
+msgstr "Parametrlərini verilənlər bazası"
 
 #: install/templates/step_3.phtml:21
 #: install/templates/step_3.phtml:28
 msgid "DB Host"
-msgstr ""
+msgstr "DB host"
 
 #: install/templates/step_3.phtml:35
 #: install/templates/step_3.phtml:42
@@ -200,17 +200,17 @@ msgstr ""
 #: install/templates/step_3.phtml:49
 #: install/templates/step_3.phtml:56
 msgid "DB Name"
-msgstr ""
+msgstr "Adı DB"
 
 #: install/templates/step_3.phtml:63
 #: install/templates/step_3.phtml:70
 msgid "DB User"
-msgstr ""
+msgstr "İstifadəçi DB"
 
 #: install/templates/step_3.phtml:77
 #: install/templates/step_3.phtml:83
 msgid "DB Password"
-msgstr ""
+msgstr "Parol"
 
 #: install/templates/step_3.phtml:92
 msgid "Continue anyway"
@@ -218,60 +218,60 @@ msgstr ""
 
 #: install/templates/step_4.phtml:10
 msgid "Website settings"
-msgstr ""
+msgstr "Saytda qəbulu"
 
 #: install/templates/step_4.phtml:18
 #: install/templates/step_4.phtml:25
 msgid "Site address"
-msgstr ""
+msgstr "Ünvan sayt"
 
 #: install/templates/step_4.phtml:32
 #: install/templates/step_4.phtml:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-poçt"
 
 #: install/templates/step_4.phtml:46
 msgid "Administrator data"
-msgstr ""
+msgstr "Adminlər"
 
 #: install/templates/step_4.phtml:48
 #: install/templates/step_4.phtml:55
 msgid "Admin login"
-msgstr ""
+msgstr "Admin giriş"
 
 #: install/templates/step_4.phtml:62
 #: install/templates/step_4.phtml:68
 msgid "Admin password"
-msgstr ""
+msgstr "Admin şifrə"
 
 #: install/templates/step_4.phtml:74
 msgid "Additionally"
-msgstr ""
+msgstr "Əlavə"
 
 #: install/templates/step_4.phtml:77
 msgid "Install demo data"
-msgstr ""
+msgstr "Səs datasını quraşdırın"
 
 #: install/templates/step_5.phtml:3
 msgid "Congratulations!"
-msgstr ""
+msgstr "Təbriklər!"
 
 #: install/templates/step_5.phtml:4
 #, php-format
 msgid "JohnCMS %s installation completed successfully."
-msgstr ""
+msgstr "Qurğu JohnCMS %s uğurla başa çatmışdır."
 
 #: install/templates/step_5.phtml:7
 msgid "ATTENTION!"
-msgstr ""
+msgstr "Diqqət!"
 
 #: install/templates/step_5.phtml:8
 msgid "Now you need to delete the folder <b>/install/</b>"
-msgstr ""
+msgstr "İndi sizə lazım olan qovluğu silmək <b>/install/</b>"
 
 #: install/templates/step_5.phtml:11
 msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" class=\"text-underline\">our forum</a>."
-msgstr ""
+msgstr "Sizə yardım lazım olduqda,, siz müraciət edə bilərsiniz, bizim forum <a href=\"https://johncms.com/forum/\" class=\"text-underline\"></a>."
 
 #: install/templates/step_5.phtml:12
 msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
@@ -279,5 +279,5 @@ msgstr ""
 
 #: install/templates/step_5.phtml:15
 msgid "Go to website"
-msgstr ""
+msgstr "Veb sayta get"
 
