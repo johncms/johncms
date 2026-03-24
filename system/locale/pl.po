@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "Pliki do pobrania"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "Księga gości"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "Wybierz język"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "Zatwierdź"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "Panel"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "Kod zabezpieczający nie jest poprawny"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "Rejestracja"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,23 +218,23 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Powiadomienia są wyczyszczone!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "Rejestracja użytkownika"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Plik znajduje się w moderacji"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Pliki w moderacji"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
@@ -242,80 +242,80 @@ msgstr ""
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Nowe wpisy na forum"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "Wiadomości"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Komentarze"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Ustawienia"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Ustawienia zapisane!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "Powiadomienia"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Wszystkie powiadomienia zostały już przeczytane"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Wszystkich"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Wyczyść powiadomienia"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "Wyświetl liczbę nieprzeczytanych wiadomości na forum"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "Przekieruj na link zewnętrzny"
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "Link zewnętrzny"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "UWAGA!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "Zamierzasz opuścić naszą stronę i przejść na link zewnętrzny"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "Administracja naszego serwisu nie ponosi odpowiedzialności za treści zewnętrznych stron internetowych"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "Zaleca się, aby nie podawać swoich danych, odnoszące się do %s (login, hasło), na innych stronach internetowych"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "Przejdź do linku"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "Powrót"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "Szukasz czegoś, co nie istnieje lub zostało przeniesione"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -357,12 +357,12 @@ msgstr[3] ""
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
-msgstr ""
+msgstr "Wersja PHP"
 
 #: system/src/Checker/SystemChecker.php:34
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "Wersja PHP musi być co najmniej %s"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -373,7 +373,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "Yes"
-msgstr ""
+msgstr "Jo"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -384,100 +384,101 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: system/src/Checker/SystemChecker.php:42
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PHP rozszerzenie PDO musi być zainstalowane"
 
 #: system/src/Checker/SystemChecker.php:45
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Rozszerzenie Imagick lub GD"
 
 #: system/src/Checker/SystemChecker.php:50
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "Musisz zainstalować rozszerzenie php Imagick lub GD"
 
 #: system/src/Checker/SystemChecker.php:53
 msgid "zlib extension"
-msgstr ""
+msgstr "rozszerzenie zlib"
 
 #: system/src/Checker/SystemChecker.php:58
 msgid "PHP extension zlib must be installed"
-msgstr ""
+msgstr "PHP rozszerzenie zlib musi być zainstalowane"
 
 #: system/src/Checker/SystemChecker.php:61
 msgid "mbstring extension"
-msgstr ""
+msgstr "Rozszerzenie mbstring"
 
 #: system/src/Checker/SystemChecker.php:66
 msgid "PHP extension mbstring must be installed"
-msgstr ""
+msgstr "PHP rozszerzenie mbstring musi być zainstalowane"
 
 #: system/src/Checker/SystemChecker.php:69
 msgid "fileinfo extension"
-msgstr ""
+msgstr "rozszerzenie fileinfo"
 
 #: system/src/Checker/SystemChecker.php:74
 msgid "PHP extension fileinfo must be installed"
-msgstr ""
+msgstr "PHP rozszerzenie musi być zainstalowane"
 
 #: system/src/Checker/SystemChecker.php:86
 msgid "opcache extension"
-msgstr ""
+msgstr "rozszerzenie opcache"
 
 #: system/src/Checker/SystemChecker.php:91
 msgid "It is recommended to install the php opcache extension for better performance."
-msgstr ""
+msgstr "Zalecane jest zainstalowanie rozszerzenia php opcache w celu poprawy wydajności."
 
 #: system/src/Checker/SystemChecker.php:99
 msgid "It is recommended to enable the php opcache extension to improve performance."
-msgstr ""
+msgstr "Zaleca się włączenie rozszerzenia php opcache w celu poprawy wydajności."
 
 #: system/src/Checker/SystemChecker.php:112
 msgid "Version of the database server"
-msgstr ""
+msgstr "Wersja serwera bazy danych"
 
 #: system/src/Checker/SystemChecker.php:117
 #, php-format
 msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
-msgstr ""
+msgstr "System wymaga wersji serwera MySQL %s lub wyższej lub MariaDB %s lub wyższej."
 
 #: system/src/Checker/SystemChecker.php:120
 msgid "mysqlnd test"
-msgstr ""
+msgstr "test mysqlnd"
 
 #: system/src/Checker/SystemChecker.php:125
 msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
-msgstr ""
+msgstr "Rozwijając system, stosujemy ścisłe sprawdzanie typu danych. CMS nie będzie działać poprawnie, jeśli sterownik do pracy z bazą danych zwróci nieprawidłowe typy danych.\n"
+"PHP powinien pracować z domyślnym sterownikiem: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 
 #: system/src/Comments.php:157
 #: system/src/Comments.php:226
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "Odpowiedź"
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "Administrator odpowiedział na ten post"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "Nieprawidłowe dane"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "Edytuj"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Nie możesz edytować postów wyższej administracji"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -485,50 +486,50 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "Tekst jest za krótki"
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
+msgstr "Nie możesz dodać wiadomości tak często<br>Proszę, czekaj"
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "sekundy"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "Taka wiadomość już istnieje"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "Nieprzeczytane"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "Ostatnia aktywność"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "Strona główna"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
-msgstr ""
+msgstr "Moderator forum"
 
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "Moderator pobierania"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "Moderator biblioteki"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
@@ -543,85 +544,85 @@ msgstr ""
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "Szef portalu"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "Masz bana"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
-msgstr ""
+msgstr "Przesłany formularz nie pochodzi z oczekiwanej strony"
 
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr ""
+msgstr "Nie możesz dodawać wiadomości tak często. Proszę poczekać %value% sekund."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
-msgstr ""
+msgstr "Znaleziono rekord pasujący do danych wejściowych"
 
 #: system/src/Validator/messages.php:33
 msgid "No record matching the input was found"
-msgstr ""
+msgstr "Nie znaleziono rekordu pasującego do danych wejściowych"
 
 #: system/src/Validator/messages.php:37
 #: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
-msgstr ""
+msgstr "Wartość jest wymagana i nie może być pusta"
 
 #: system/src/Validator/messages.php:41
 #, php-format
 msgid "The input is less than %min% characters long"
-msgstr ""
+msgstr "Podana wartość jest mniejsza niż %min% znaków"
 
 #: system/src/Validator/messages.php:42
 #, php-format
 msgid "The input is more than %max% characters long"
-msgstr ""
+msgstr "Podana wartość ma więcej niż %max% znaków"
 
 #: system/src/Validator/messages.php:46
 msgid "The input was not found in the haystack"
-msgstr ""
+msgstr "Wejście nie zostało znalezione w haystacku"
 
 #: system/src/Validator/messages.php:50
 #: system/src/Validator/messages.php:61
 msgid "Invalid type given. String expected"
-msgstr ""
+msgstr "Podano nieprawidłowy typ. Oczekiwano ciągu znaków"
 
 #: system/src/Validator/messages.php:51
 msgid "The input is not a valid email address. Use the basic format local-part@hostname"
-msgstr ""
+msgstr "Podana wartość nie jest prawidłowym adresem e-mail. Użyj podstawowego formatu local-part@hostname"
 
 #: system/src/Validator/messages.php:52
 #, php-format
 msgid "'%hostname%' is not a valid hostname for the email address"
-msgstr ""
+msgstr "'%hostname%' nie jest poprawną nazwą hosta dla adresu e-mail"
 
 #: system/src/Validator/messages.php:53
 #, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
-msgstr ""
+msgstr "'%hostname%' nie wydaje się posiadać żadnych prawidłowych rekordów MX lub A dla adresu e-mail"
 
 #: system/src/Validator/messages.php:54
 #, php-format
 msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
-msgstr ""
+msgstr "'%hostname%' nie jest w rutynowym segmencie sieciowym. Adres e-mail nie powinien być rozwiązany z sieci publicznej"
 
 #: system/src/Validator/messages.php:55
 #, php-format
 msgid "'%localPart%' can not be matched against dot-atom format"
-msgstr ""
+msgstr "'%localPart%' nie może być dopasowany do formatu dot-atom"
 
 #: system/src/Validator/messages.php:56
 #, php-format
 msgid "'%localPart%' can not be matched against quoted-string format"
-msgstr ""
+msgstr "'%localPart%' nie może być dopasowany do formatu cytowanego ciągu znaków"
 
 #: system/src/Validator/messages.php:57
 msgid "'%localPart%' is not a valid local part for the email address"
-msgstr ""
+msgstr "'%localPart%' nie jest poprawną częścią lokalną dla adresu e-mail"
 
 #: system/src/Validator/messages.php:58
 msgid "The input exceeds the allowed length"
@@ -717,11 +718,11 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
-msgstr ""
+msgstr "Zaloguj"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
-msgstr ""
+msgstr "Wyjście"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
@@ -840,29 +841,29 @@ msgstr ""
 
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Czy na pewno chcesz usunąć?"
 
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
-msgstr ""
+msgstr "Wyczyść"
 
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
-msgstr ""
+msgstr "Wiadomość"
 
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
-msgstr ""
+msgstr "Wyślij"
 
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "Lista jest pusta"
 
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
-msgstr ""
+msgstr "Edytowane:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
+msgstr "Edytowane"
 
