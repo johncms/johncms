@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/downloads/includes/bookmark.php:29
 #: modules/downloads/includes/comments.php:31
@@ -55,19 +55,19 @@ msgstr ""
 #: modules/downloads/templates/top_users.phtml:43
 #: modules/downloads/templates/view.phtml:174
 msgid "Downloads"
-msgstr ""
+msgstr "Жүктеулер"
 
 #: modules/downloads/includes/bookmark.php:31
 #: modules/downloads/index.php:81
 msgid "For registered users only"
-msgstr ""
+msgstr "Тек қана тіркелген қолданушылар үшін"
 
 #: modules/downloads/includes/bookmark.php:37
 #: modules/downloads/includes/bookmark.php:56
 #: modules/downloads/includes/bookmark.php:57
 #: modules/downloads/templates/index.phtml:163
 msgid "Favorites"
-msgstr ""
+msgstr "Таңдаулылар"
 
 #: modules/downloads/includes/comments.php:27
 #: modules/downloads/includes/comments.php:57
@@ -76,14 +76,14 @@ msgstr ""
 #: modules/downloads/templates/comments_review.phtml:78
 #: modules/downloads/templates/view.phtml:137
 msgid "Comments"
-msgstr ""
+msgstr "Пікірлер"
 
 #: modules/downloads/includes/comments.php:29
 #: modules/downloads/includes/comments_review.php:28
 #: modules/downloads/includes/comments_review.php:30
 #: modules/downloads/templates/comments_review.phtml:30
 msgid "Comments are disabled"
-msgstr ""
+msgstr "Пікірлер жабық"
 
 #: modules/downloads/includes/comments.php:45
 #: modules/downloads/includes/comments.php:47
@@ -98,12 +98,12 @@ msgstr ""
 #: modules/downloads/includes/view.php:33
 #: modules/downloads/includes/view.php:35
 msgid "File not found"
-msgstr ""
+msgstr "Файл табылмады"
 
 #: modules/downloads/includes/comments_review.php:38
 #: modules/downloads/templates/index.phtml:161
 msgid "Review comments"
-msgstr ""
+msgstr "Пікірлерді көру"
 
 #: modules/downloads/includes/fileControl/edit_file.php:34
 #: modules/downloads/includes/fileControl/edit_file.php:108
@@ -113,7 +113,7 @@ msgstr ""
 #: modules/downloads/includes/fileControl/files_more.php:115
 #: modules/downloads/templates/view.phtml:149
 msgid "Edit File"
-msgstr ""
+msgstr "Файлды түзету"
 
 #: modules/downloads/includes/fileControl/edit_file.php:110
 #: modules/downloads/includes/fileControl/files_more.php:184
@@ -122,7 +122,7 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:54
 #: modules/downloads/includes/folder_edit.php:66
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Міндетті жолдар толтырылмаған"
 
 #: modules/downloads/includes/fileControl/edit_file.php:112
 #: modules/downloads/includes/fileControl/edit_screen.php:122
@@ -137,19 +137,19 @@ msgstr ""
 #: modules/downloads/includes/folder_add.php:138
 #: modules/downloads/includes/folder_edit.php:98
 msgid "Repeat"
-msgstr ""
+msgstr "Қайталау"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:38
 #: modules/downloads/includes/fileControl/edit_screen.php:107
 #: modules/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
-msgstr ""
+msgstr "Скриншотты жүктеңіз"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:109
 #: modules/downloads/templates/file_import_result.phtml:34
 #: modules/downloads/templates/file_upload_result.phtml:34
 msgid "Screenshot is attached"
-msgstr ""
+msgstr "Скриншот тіркелген"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:111
 #: modules/downloads/includes/fileControl/files_more.php:237
@@ -162,24 +162,24 @@ msgstr ""
 #: modules/downloads/templates/file_import_result.phtml:44
 #: modules/downloads/templates/view.phtml:171
 msgid "Back"
-msgstr ""
+msgstr "Артқа"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:120
 #: modules/downloads/templates/file_import_result.phtml:36
 #: modules/downloads/templates/file_upload_result.phtml:36
 msgid "Screenshot not attached"
-msgstr ""
+msgstr "Скриншот тіркелген жоқ"
 
 #: modules/downloads/includes/fileControl/files_more.php:56
 msgid "Additional files"
-msgstr ""
+msgstr "Қосымша файлдар"
 
 #: modules/downloads/includes/fileControl/files_more.php:138
 #: modules/downloads/includes/fileControl/files_more.php:147
 #: modules/downloads/includes/files_import.php:55
 #: modules/downloads/includes/files_import.php:94
 msgid "Invalid Link"
-msgstr ""
+msgstr "Жарамсыз сілтеме"
 
 #: modules/downloads/includes/fileControl/files_more.php:155
 #: modules/downloads/includes/fileControl/files_more.php:252
@@ -187,25 +187,25 @@ msgstr ""
 #: modules/downloads/includes/scan_dir.php:95
 #: modules/downloads/includes/search.php:61
 msgid "Error"
-msgstr ""
+msgstr "Қате"
 
 #: modules/downloads/includes/fileControl/files_more.php:188
 #: modules/downloads/includes/files_upload.php:74
 msgid "The weight of the file exceeds"
-msgstr ""
+msgstr "Файл көлемі асып кетті"
 
 #: modules/downloads/includes/fileControl/files_more.php:192
 #: modules/downloads/includes/files_import.php:83
 #: modules/downloads/includes/files_upload.php:78
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
-msgstr ""
+msgstr "Тыйым салынған файл түрі!<br>Келесі кеңейтімдері бар файлдарды жүктеуге рұқсат етіледі"
 
 #: modules/downloads/includes/fileControl/files_more.php:233
 #: modules/downloads/includes/fileControl/files_more.php:235
 #: modules/downloads/templates/file_import_result.phtml:32
 #: modules/downloads/templates/file_upload_result.phtml:32
 msgid "File attached"
-msgstr ""
+msgstr "Файл тіркелген"
 
 #: modules/downloads/includes/fileControl/files_more.php:242
 #: modules/downloads/includes/fileControl/files_more.php:245
@@ -213,7 +213,7 @@ msgstr ""
 #: modules/downloads/includes/files_upload.php:197
 #: modules/downloads/includes/files_upload.php:210
 msgid "File not attached"
-msgstr ""
+msgstr "Файл тіркелген жоқ"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:62
 #: modules/downloads/includes/fileControl/transfer_file.php:119
@@ -221,21 +221,21 @@ msgstr ""
 #: modules/downloads/includes/fileControl/transfer_file.php:160
 #: modules/downloads/templates/view.phtml:153
 msgid "Move File"
-msgstr ""
+msgstr "Файлды жылжыту"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:64
 msgid "This is the current directory"
-msgstr ""
+msgstr "Бұл ағымдағы каталог"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:121
 msgid "The file has been moved"
-msgstr ""
+msgstr "Файл жылжытылды"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:123
 #: modules/downloads/templates/index.phtml:147
 #: modules/downloads/templates/scan_dir.phtml:63
 msgid "Update counters"
-msgstr ""
+msgstr "Есептегішті жаңарту"
 
 #: modules/downloads/includes/files_import.php:38
 #: modules/downloads/includes/files_new.php:37
@@ -246,15 +246,15 @@ msgstr ""
 #: modules/downloads/includes/scan_dir.php:97
 #: modules/downloads/index.php:187
 msgid "The directory does not exist"
-msgstr ""
+msgstr "Каталог жоқ"
 
 #: modules/downloads/includes/files_import.php:87
 msgid "The file name length must not exceed 100 characters"
-msgstr ""
+msgstr "Файл атауының ұзындығы 30 таңбадан аспауы керек"
 
 #: modules/downloads/includes/files_import.php:91
 msgid "The file name contains invalid characters"
-msgstr ""
+msgstr "Файл атауында жарамсыз таңбалар бар"
 
 #: modules/downloads/includes/files_import.php:101
 #: modules/downloads/includes/files_import.php:189
@@ -263,39 +263,39 @@ msgstr ""
 #: modules/downloads/includes/files_import.php:215
 #: modules/downloads/includes/files_import.php:216
 msgid "File import"
-msgstr ""
+msgstr "Файлды импорттау"
 
 #: modules/downloads/includes/files_moderation.php:23
 msgid "Files on moderation"
-msgstr ""
+msgstr "Модерацияда файлдар"
 
 #: modules/downloads/includes/files_moderation.php:32
 msgid "File accepted"
-msgstr ""
+msgstr "Файл қабылданды"
 
 #: modules/downloads/includes/files_moderation.php:44
 msgid "All files accepted"
-msgstr ""
+msgstr "Барлық файлдар қабылданған"
 
 #: modules/downloads/includes/files_new.php:23
 #: modules/downloads/templates/index.phtml:40
 msgid "New Files"
-msgstr ""
+msgstr "Жаңа Файлдар"
 
 #: modules/downloads/includes/files_top.php:25
 #: modules/downloads/includes/files_top.php:37
 msgid "Most Commented"
-msgstr ""
+msgstr "Ең көптеген пікірлер"
 
 #: modules/downloads/includes/files_top.php:27
 #: modules/downloads/includes/files_top.php:50
 msgid "Most Downloaded"
-msgstr ""
+msgstr "Ең көп жүктелген"
 
 #: modules/downloads/includes/files_top.php:29
 #: modules/downloads/includes/files_top.php:44
 msgid "Popular Files"
-msgstr ""
+msgstr "Кең танымал файлдар"
 
 #: modules/downloads/includes/files_upload.php:85
 #: modules/downloads/includes/files_upload.php:195
@@ -303,7 +303,7 @@ msgstr ""
 #: modules/downloads/includes/files_upload.php:234
 #: modules/downloads/includes/files_upload.php:246
 msgid "Upload file"
-msgstr ""
+msgstr "Файлды жүктеу"
 
 #: modules/downloads/includes/files_upload.php:182
 #: modules/downloads/includes/files_upload.php:183
@@ -312,20 +312,20 @@ msgstr ""
 #: modules/downloads/templates/index.phtml:131
 #: modules/downloads/templates/index.phtml:153
 msgid "Upload File"
-msgstr ""
+msgstr "Файлды жүктеу"
 
 #: modules/downloads/includes/files_upload.php:236
 msgid "Access forbidden"
-msgstr ""
+msgstr "Рұқсат жоқ"
 
 #: modules/downloads/includes/files_user.php:15
 #: modules/downloads/includes/top_users.php:42
 msgid "User Files"
-msgstr ""
+msgstr "Пайдаланушының файлдары"
 
 #: modules/downloads/includes/files_user.php:30
 msgid "User does not exists"
-msgstr ""
+msgstr "Пайдаланушы жоқ"
 
 #: modules/downloads/includes/folder_add.php:20
 #: modules/downloads/includes/folder_add.php:32
@@ -335,31 +335,31 @@ msgstr ""
 #: modules/downloads/includes/folder_edit.php:94
 #: modules/downloads/templates/index.phtml:141
 msgid "Create Folder"
-msgstr ""
+msgstr "Жаңа бума құру"
 
 #: modules/downloads/includes/folder_add.php:58
 msgid "Invalid characters"
-msgstr ""
+msgstr "Жазуға болмайтын таңбалар"
 
 #: modules/downloads/includes/folder_add.php:64
 #: modules/downloads/includes/folder_edit.php:87
 #: modules/downloads/templates/folder_form.phtml:56
 msgid "You can write only the following extensions"
-msgstr ""
+msgstr "Сіз тек келесі кеңейтімдерді енгізе аласыз"
 
 #: modules/downloads/includes/folder_add.php:125
 msgid "The Folder is created"
-msgstr ""
+msgstr "Бума құрылды"
 
 #: modules/downloads/includes/folder_add.php:127
 #: modules/downloads/templates/file_import_result.phtml:40
 #: modules/downloads/templates/file_upload_result.phtml:46
 msgid "Continue"
-msgstr ""
+msgstr "Жалғастыру"
 
 #: modules/downloads/includes/folder_add.php:136
 msgid "Error creating categories"
-msgstr ""
+msgstr "Санаттарды құру кезінде қате пайда болды"
 
 #: modules/downloads/includes/folder_delete.php:21
 #: modules/downloads/includes/folder_delete.php:29
@@ -367,65 +367,65 @@ msgstr ""
 #: modules/downloads/includes/folder_delete.php:77
 #: modules/downloads/templates/index.phtml:145
 msgid "Delete Folder"
-msgstr ""
+msgstr "Буманы жою"
 
 #: modules/downloads/includes/folder_delete.php:31
 msgid "Before removing, delete subdirectories"
-msgstr ""
+msgstr "Алдымен барлық бөлімдерді жойыңыз"
 
 #: modules/downloads/includes/folder_edit.php:29
 msgid "Edit Folder"
-msgstr ""
+msgstr "Бөлімді өзгерту"
 
 #: modules/downloads/includes/scan_dir.php:77
 #: modules/downloads/templates/index.phtml:146
 #: modules/downloads/templates/scan_dir.phtml:60
 msgid "Remove missing files"
-msgstr ""
+msgstr "Жоқ файлдарды өшіру"
 
 #: modules/downloads/includes/scan_dir.php:79
 msgid "Database successfully updated"
-msgstr ""
+msgstr "Деректер қоры сәтті жаңартылды"
 
 #: modules/downloads/includes/scan_dir.php:226
 #: modules/downloads/templates/file_upload.phtml:56
 #: modules/downloads/templates/import.phtml:53
 msgid "Download"
-msgstr ""
+msgstr "Жүктеу"
 
 #: modules/downloads/includes/scan_dir.php:335
 #: modules/downloads/includes/scan_dir.php:336
 msgid "Update"
-msgstr ""
+msgstr "Жаңарту"
 
 #: modules/downloads/includes/search.php:29
 #: modules/downloads/templates/index.phtml:43
 #: modules/downloads/templates/search.phtml:49
 msgid "Search"
-msgstr ""
+msgstr "Іздеу"
 
 #: modules/downloads/includes/search.php:35
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
-msgstr ""
+msgstr "Файл атауының ұзындығы жарамсыз. 3-тен кем емес және 64 таңбадан аспауға рұқсат етіледі."
 
 #: modules/downloads/includes/search.php:82
 #: modules/downloads/includes/search.php:83
 msgid "Search results"
-msgstr ""
+msgstr "Іздеу нәтижелері"
 
 #: modules/downloads/includes/top_users.php:20
 #: modules/downloads/templates/index.phtml:45
 msgid "Top Users"
-msgstr ""
+msgstr "ТОП Пайдаланушылар"
 
 #: modules/downloads/includes/view.php:50
 #: modules/downloads/includes/view.php:52
 msgid "The file is on moderation"
-msgstr ""
+msgstr "Модерацияда файлдар"
 
 #: modules/downloads/includes/view.php:98
 msgid "Channels"
-msgstr ""
+msgstr "Арналар"
 
 #: modules/downloads/includes/view.php:102
 msgid "Sample rate"
@@ -434,46 +434,46 @@ msgstr ""
 #: modules/downloads/includes/view.php:106
 #: modules/downloads/includes/view.php:173
 msgid "Bitrate"
-msgstr ""
+msgstr "Битрейт"
 
 #: modules/downloads/includes/view.php:110
 #: modules/downloads/includes/view.php:179
 msgid "Duration"
-msgstr ""
+msgstr "Ұзақтығы"
 
 #: modules/downloads/includes/view.php:118
 #: modules/downloads/templates/edit_file_form.phtml:53
 #: modules/downloads/templates/edit_file_form.phtml:54
 msgid "Artist"
-msgstr ""
+msgstr "Əртіс"
 
 #: modules/downloads/includes/view.php:124
 #: modules/downloads/templates/edit_file_form.phtml:58
 #: modules/downloads/templates/edit_file_form.phtml:59
 msgid "Title"
-msgstr ""
+msgstr "Тақырып"
 
 #: modules/downloads/includes/view.php:130
 #: modules/downloads/templates/edit_file_form.phtml:63
 #: modules/downloads/templates/edit_file_form.phtml:64
 msgid "Album"
-msgstr ""
+msgstr "Альбом"
 
 #: modules/downloads/includes/view.php:136
 #: modules/downloads/templates/edit_file_form.phtml:68
 #: modules/downloads/templates/edit_file_form.phtml:69
 msgid "Genre"
-msgstr ""
+msgstr "Жанры"
 
 #: modules/downloads/includes/view.php:142
 #: modules/downloads/templates/edit_file_form.phtml:73
 #: modules/downloads/templates/edit_file_form.phtml:74
 msgid "Year"
-msgstr ""
+msgstr "Жыл"
 
 #: modules/downloads/includes/view.php:161
 msgid "Codec"
-msgstr ""
+msgstr "Кодек"
 
 #: modules/downloads/includes/view.php:167
 msgid "Frame rate"
@@ -496,7 +496,7 @@ msgstr ""
 
 #: modules/downloads/index.php:185
 msgid "Wrong data"
-msgstr ""
+msgstr "Мәліметтер дұрыс емес"
 
 #: modules/downloads/templates/bookmarks.phtml:36
 #: modules/downloads/templates/index.phtml:117
@@ -513,7 +513,7 @@ msgstr ""
 #: modules/downloads/templates/new_files.phtml:38
 #: modules/downloads/templates/search.phtml:62
 msgid "Total"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/downloads/templates/comments_review.phtml:36
 #: modules/downloads/templates/files_moderation.phtml:31
@@ -525,17 +525,17 @@ msgstr ""
 
 #: modules/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
-msgstr ""
+msgstr "Өзгертілген:"
 
 #: modules/downloads/templates/comments_review.phtml:58
 msgid "Edited"
-msgstr ""
+msgstr "Өзгертілген"
 
 #: modules/downloads/templates/comments_review.phtml:109
 #: modules/downloads/templates/files_more.phtml:39
 #: modules/downloads/templates/index.phtml:73
 msgid "Edit"
-msgstr ""
+msgstr "Өзгерту"
 
 #: modules/downloads/templates/comments_review.phtml:112
 #: modules/downloads/templates/delete_additional.phtml:35
@@ -546,13 +546,13 @@ msgstr ""
 #: modules/downloads/templates/folder_delete.phtml:33
 #: modules/downloads/templates/index.phtml:74
 msgid "Delete"
-msgstr ""
+msgstr "Өшіру"
 
 #: modules/downloads/templates/delete_additional.phtml:30
 #: modules/downloads/templates/delete_file.phtml:30
 #: modules/downloads/templates/folder_delete.phtml:29
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Сіз шынымен жойғыңыз келеді ме?"
 
 #: modules/downloads/templates/delete_additional.phtml:36
 #: modules/downloads/templates/delete_file.phtml:36
@@ -568,7 +568,7 @@ msgstr ""
 #: modules/downloads/templates/move_file.phtml:50
 #: modules/downloads/templates/move_file_confirm.phtml:33
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: modules/downloads/templates/edit_additional_form.phtml:30
 #: modules/downloads/templates/edit_additional_form.phtml:31
@@ -591,7 +591,7 @@ msgstr ""
 #: modules/downloads/templates/folder_form.phtml:60
 #: modules/downloads/templates/import.phtml:74
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/downloads/templates/edit_file_form.phtml:31
 #: modules/downloads/templates/edit_file_form.phtml:32
@@ -603,7 +603,7 @@ msgstr ""
 #: modules/downloads/templates/folder_form.phtml:44
 #: modules/downloads/templates/import.phtml:64
 msgid "Description"
-msgstr ""
+msgstr "Сипаттамасы"
 
 #: modules/downloads/templates/edit_file_form.phtml:49
 msgid "Edit MP3 Tags"
@@ -635,7 +635,7 @@ msgstr ""
 
 #: modules/downloads/templates/file_row.phtml:31
 msgid "Accept"
-msgstr ""
+msgstr "Қабылдау"
 
 #: modules/downloads/templates/file_upload.phtml:40
 #: modules/downloads/templates/file_upload.phtml:41
@@ -644,25 +644,25 @@ msgstr ""
 #: modules/downloads/templates/import.phtml:37
 #: modules/downloads/templates/import.phtml:38
 msgid "Save as"
-msgstr ""
+msgstr "Қалай сақтау"
 
 #: modules/downloads/templates/file_upload.phtml:43
 #: modules/downloads/templates/files_more.phtml:67
 #: modules/downloads/templates/import.phtml:40
 msgid "max. 100 characters"
-msgstr ""
+msgstr "Max. 100 таңбалар"
 
 #: modules/downloads/templates/file_upload.phtml:47
 #: modules/downloads/templates/file_upload.phtml:48
 #: modules/downloads/templates/import.phtml:44
 #: modules/downloads/templates/import.phtml:45
 msgid "File Name"
-msgstr ""
+msgstr "Файлдың Аты"
 
 #: modules/downloads/templates/file_upload.phtml:50
 #: modules/downloads/templates/import.phtml:47
 msgid "max. 200 characters"
-msgstr ""
+msgstr "Max. 200 таңбалар"
 
 #: modules/downloads/templates/file_upload.phtml:62
 #: modules/downloads/templates/import.phtml:59
@@ -684,7 +684,7 @@ msgstr ""
 
 #: modules/downloads/templates/file_upload_result.phtml:51
 msgid "Upload more"
-msgstr ""
+msgstr "Тағы жүктеу"
 
 #: modules/downloads/templates/files_moderation.phtml:41
 msgid "Accept all files"
@@ -826,75 +826,75 @@ msgstr ""
 
 #: modules/downloads/templates/scan_dir.phtml:52
 msgid "Categories"
-msgstr ""
+msgstr "Бөлімдер"
 
 #: modules/downloads/templates/scan_dir.phtml:53
 msgid "Files"
-msgstr ""
+msgstr "Файлдар"
 
 #: modules/downloads/templates/scan_dir.phtml:54
 #: modules/downloads/templates/view.phtml:151
 msgid "Additional Files"
-msgstr ""
+msgstr "Қосымша файлдар"
 
 #: modules/downloads/templates/search.phtml:39
 #: modules/downloads/templates/search.phtml:40
 msgid "Search query"
-msgstr ""
+msgstr "Іздеу сұранысы"
 
 #: modules/downloads/templates/search.phtml:46
 msgid "Search in description"
-msgstr ""
+msgstr "Іздеу сипаттамалары"
 
 #: modules/downloads/templates/search.phtml:72
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max."
-msgstr ""
+msgstr "Файл атауы бойынша іздеу регистрге байланысты емес. <br> Сұраныс ұзақтығы: мин. 2 макс 64 таңба."
 
 #: modules/downloads/templates/search.phtml:78
 msgid "New Search"
-msgstr ""
+msgstr "Жаңа Іздеу"
 
 #: modules/downloads/templates/view.phtml:37
 msgid "Vote accepted"
-msgstr ""
+msgstr "Дауыс қабылданды"
 
 #: modules/downloads/templates/view.phtml:49
 msgid "Screenshot:"
-msgstr ""
+msgstr "Скриншот:"
 
 #: modules/downloads/templates/view.phtml:94
 msgid "File name:"
-msgstr ""
+msgstr "Файлдың аты:"
 
 #: modules/downloads/templates/view.phtml:95
 msgid "Uploaded by:"
-msgstr ""
+msgstr "Жүктелген:"
 
 #: modules/downloads/templates/view.phtml:96
 msgid "Downloads:"
-msgstr ""
+msgstr "Жүктеулер"
 
 #: modules/downloads/templates/view.phtml:97
 msgid "Rating:"
-msgstr ""
+msgstr "Рейтинг"
 
 #: modules/downloads/templates/view.phtml:145
 msgid "Actions"
-msgstr ""
+msgstr "Іс-әрекеттер"
 
 #: modules/downloads/templates/view.phtml:150
 msgid "Managing Screenshots"
-msgstr ""
+msgstr "Скриншотты басқару"
 
 #: modules/downloads/templates/view.phtml:152
 msgid "Delete File"
-msgstr ""
+msgstr "Файлды жою"
 
 #: modules/downloads/templates/view.phtml:162
 msgid "Remove from Favorites"
-msgstr ""
+msgstr "Таңдаулылардан алу"
 
 #: modules/downloads/templates/view.phtml:164
 msgid "Add to Favorites"
-msgstr ""
+msgstr "Таңдаулыларға"
 
