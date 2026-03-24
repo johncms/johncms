@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -21,7 +21,7 @@ msgstr ""
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Nowa odpowiedź na forum"
 
 #: config/notifications.global.php:32
 #, php-format
@@ -34,28 +34,28 @@ msgstr ""
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Nowy głos w karmie"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "Użytkownik <b>#user_name#</b> zagłosował w <a href=\"#karma_url#\">twojej karmie</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "Na stronie głównej"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Ogląda albumy zdjęć"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "Użytkownicy"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "Lista użytkowników"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "Księga gości"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Czytanie FAQ"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Biblioteka"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr ""
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Korespondencja osobista"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "Czytanie wiadomości"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Przekieruj na link zewnętrzny do innej witryny"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Zarejestrowane na stronie"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "Lista użytkowników"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "Kto jest online?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "Panel"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Wyloguj"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Nie podałeś loginu"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Nie wpisałeś hasła"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,20 +164,20 @@ msgstr "Kod zabezpieczający nie jest poprawny"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Autoryzacja nie powiodła się"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Kod weryfikacyjny"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Wprowadź kod weryfikacyjny"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Kontynuuj"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
@@ -185,25 +185,25 @@ msgstr ""
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Przepraszamy, ale Twoja prośba o rejestrację jest jeszcze rozpatrywana. Prosimy o cierpliwość."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Autoryzacja"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "Login"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Hasło"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Zapomniałeś hasła?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Rejestracja"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Na pewno chcesz opuścić tę witrynę?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,23 +337,23 @@ msgstr "Szukasz czegoś, co nie istnieje lub zostało przeniesione"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Dodano"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "BŁĄD"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Gdzieś na stronie"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Dzień"
+msgstr[1] "Dni"
+msgstr[2] "Dni"
+msgstr[3] "Dni"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -674,39 +674,39 @@ msgstr ""
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "Dziennik zapytań Sql"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "Zapytanie"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Powiązania"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Czas"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Archiwum aktualności"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Albumy zdjęć"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Informacje, pytania i odpowiedzi"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Panel Administratora"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
-msgstr ""
+msgstr "Czat administracyjny"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Light Theme"
