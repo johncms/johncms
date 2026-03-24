@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -97,7 +97,7 @@ msgstr "Файл жүктөө убакыты аяктады"
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
-msgstr "Файл жүктөөдө катачылык"
+msgstr "Жүктөөдө катачылык"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:101
 #: modules/forum/src/Application/Controllers/AddVoteController.php:113
@@ -260,7 +260,7 @@ msgstr "Кураторлор"
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:66
 #: modules/forum/src/Application/ForumUtils.php:71
 msgid "Topic has been deleted or does not exists"
-msgstr "Тема өчүрүлгөн же жок"
+msgstr "Тема өчрүлгөн же болгон эмес"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:54
 #: modules/forum/src/Application/Controllers/DeletePostController.php:65
@@ -332,7 +332,7 @@ msgstr "Файлды өчүрүү"
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:89
 #: modules/forum/templates/topic.phtml:414
 msgid "Delete Topic"
-msgstr "Теманы өчүрүү"
+msgstr "Теманы жок кылуу"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
@@ -359,7 +359,7 @@ msgstr "Мындай файл жок"
 #: modules/forum/src/Application/Controllers/EditPostController.php:125
 #: modules/forum/src/Application/Controllers/EditPostController.php:126
 msgid "Edit Message"
-msgstr "Билдирүүнү оңдоо"
+msgstr "Билдирүү оңдоо"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
@@ -393,11 +393,11 @@ msgstr "Форумдун файлдары"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
-msgstr "Узундугу туура эмес"
+msgstr "Жараксыз узундук"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
-msgstr ""
+msgstr "Акыркы 10 темалар"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
@@ -426,7 +426,7 @@ msgstr "Бардык темалар окулган деп белгиленди"
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:103
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:104
 msgid "Move topic"
-msgstr ""
+msgstr "Теманы жылдыруу"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:70
 #: modules/forum/src/Application/Controllers/NewMessageController.php:84
@@ -455,7 +455,7 @@ msgstr "Сиз жабык темага жаза албайсыз"
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:116
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr "Сиз билдирүүлөрдү мынчалык көп кошууга мүмкүн эмес<br>Кичипейилдикке, күтө туруңуз %d секунд."
+msgstr "Сиз билдирүүлөрдү мынчалык көп кошууга мүмкүн эмес<br>PКичипейилдикке, күтө туруңуз %d секунд."
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:122
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
@@ -470,7 +470,7 @@ msgstr "Мындай билдирүү мурда болгон"
 #: modules/forum/src/Application/Controllers/NewTopicController.php:60
 #: modules/forum/src/Application/Controllers/NewTopicController.php:73
 msgid "Go to Section"
-msgstr "Бөлүккө жылдыруу"
+msgstr "Бөлүмгө жылдыруу"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:85
 #: modules/forum/src/Application/Controllers/NewTopicController.php:164
@@ -517,7 +517,7 @@ msgstr "Билдирүүнү кароо"
 
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
 msgid "Vote accepted"
-msgstr "Добуш кабыл алынды"
+msgstr "Сиздин добушуңуз кабыл алынды"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
 #, php-format
@@ -526,7 +526,7 @@ msgstr "Бардык мезгилде %d саат"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "Тандалган мезгил үчүн жаңы форум жок"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
@@ -553,7 +553,7 @@ msgstr "Ким темада"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:49
 msgid "For registered users only"
-msgstr "Сайтта катталган колдонуучулар үчүн"
+msgstr "Сайтта катталган колдонуучулар үчүн гана"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:50
 #: modules/forum/templates/header.phtml:20
@@ -587,19 +587,19 @@ msgstr "Окула электер"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:107
 msgid "In the Category"
-msgstr "Бөлүмүндө"
+msgstr "Категориясында"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:117
 msgid "In the Section"
-msgstr "Бөлүгүндө"
+msgstr "- Бөлүмүндө"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
 msgid "Answers in the Topic"
-msgstr "Темага жооп берет"
+msgstr "Тема боюнча жооп берүү"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:146
 msgid "Writes in the Topic"
-msgstr "Тема боюнча жазат"
+msgstr "Темага жазуу"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:149
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:159
@@ -674,11 +674,11 @@ msgstr "Билдирүү жазылгандан бери 5 мүнөттөн аш
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:68
 #: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
-msgstr "Бөлүмдөр файлы"
+msgstr "Файлдар бөлүмдөрү"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:85
 msgid "Section files"
-msgstr "Бөлүктүн файлдары"
+msgstr "Бөлүмдүн файлдары"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:102
 #: modules/forum/templates/topic.phtml:37
@@ -693,7 +693,7 @@ msgstr "Жаңы файлдар"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:172
 msgid "List of sections"
-msgstr "Бөлүктөрдүн тизмеси"
+msgstr "Бөлүмдөрдүн тизмеси"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:297
 msgid "Windows applications"
@@ -721,7 +721,7 @@ msgstr "Архив"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
 msgid "Videos"
-msgstr "Видео"
+msgstr "Тасма"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
 msgid "MP3"
@@ -805,7 +805,7 @@ msgstr "Сактоо"
 #: modules/forum/templates/change_topic.phtml:29
 #: modules/forum/templates/change_topic.phtml:30
 msgid "Topic name"
-msgstr ""
+msgstr "Теманын аталышы"
 
 #: modules/forum/templates/change_topic.phtml:37
 #: modules/forum/templates/new_topic.phtml:96
@@ -865,12 +865,12 @@ msgstr "Өчүрүү"
 #: modules/forum/templates/delete_topic.phtml:31
 #: modules/forum/templates/mass_delete.phtml:31
 msgid "Do you really want to delete?"
-msgstr "Чын эле өчүргүңүз келеби?"
+msgstr "Чын эле жок кылгыңыз келеби?"
 
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
-msgstr "Өчүрүлгөн учурда, форумдун билдирүүлөрүнүн эсептегичинен бир балл чыгарылат"
+msgstr "Жок кылынган учурда, форумдун билдирүүлөрүнүн эсептегичинен бир балл чыгарылат"
 
 #: modules/forum/templates/delete_poll.phtml:29
 msgid "Do you really want to delete a poll?"
@@ -883,7 +883,7 @@ msgstr "ЭСКЕРТҮҮ! <br> Бул теманын акыркы билдирү
 #: modules/forum/templates/delete_post.phtml:44
 #: modules/forum/templates/delete_topic.phtml:36
 msgid "Hide"
-msgstr "Жашыруу"
+msgstr "Жаап-жашыруу"
 
 #: modules/forum/templates/delete_topic.phtml:47
 msgid "Perform"
@@ -964,7 +964,7 @@ msgstr "Издөө"
 
 #: modules/forum/templates/forum_search.phtml:47
 msgid "Your search did not match any results"
-msgstr "Сурамыңыз боюнча эч нерсе табылган жок"
+msgstr "Издөөңүз эч кандай натыйжага дал келген жок"
 
 #: modules/forum/templates/forum_search.phtml:59
 #: modules/forum/templates/new_topics.phtml:96
@@ -978,11 +978,11 @@ msgstr "Билдирүүгө өтүү"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr ""
+msgstr "Издөө сурамдардын тарыхы"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
-msgstr ""
+msgstr "Тарыхты тазалоо"
 
 #: modules/forum/templates/header.phtml:22
 msgid "Read only"
@@ -998,19 +998,19 @@ msgstr "Акыркы аракет"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr ""
+msgstr "Файлдар"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
-msgstr ""
+msgstr "Бөлүмдөр"
 
 #: modules/forum/templates/move_topic.phtml:38
 msgid "New section"
-msgstr ""
+msgstr "Жаңы бөлүм"
 
 #: modules/forum/templates/move_topic.phtml:47
 msgid "Category is empty"
-msgstr ""
+msgstr "Категория бош"
 
 #: modules/forum/templates/move_topic.phtml:51
 msgid "Move"
@@ -1018,7 +1018,7 @@ msgstr "Жылдыруу"
 
 #: modules/forum/templates/move_topic.phtml:56
 msgid "Other categories"
-msgstr ""
+msgstr "Башка бөлүмдөрү"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
@@ -1058,7 +1058,7 @@ msgstr "Бул темада сурамжылоо бар"
 #: modules/forum/templates/new_topics.phtml:76
 #: modules/forum/templates/topics.phtml:73
 msgid "Closed topic"
-msgstr "Тема жабык"
+msgstr "Теманы жабуу"
 
 #: modules/forum/templates/new_topics.phtml:83
 #: modules/forum/templates/topics.phtml:80
@@ -1090,21 +1090,21 @@ msgstr "Калыбына келтирүү"
 
 #: modules/forum/templates/section.phtml:36
 msgid "Section Files"
-msgstr ""
+msgstr "Бөлүмдүн файлдары"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr ""
+msgstr "Бул  категорияда бөлүмдөр жок"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr "Өзгөртүлгөн:"
+msgstr "Өзгөртүлдү:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
 msgid "Edited"
-msgstr "Өзгөртүлгөн"
+msgstr "Өзгөртүүлөр"
 
 #: modules/forum/templates/show_post.phtml:80
 #: modules/forum/templates/topic.phtml:293
@@ -1152,7 +1152,7 @@ msgstr "Жалпы добуштар"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr "Билдирүү өчүрүлгөн:"
+msgstr "Билдирүү жок кылынды:"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
@@ -1176,7 +1176,7 @@ msgstr "Тандалганды өчүрүү"
 
 #: modules/forum/templates/topic.phtml:388
 msgid "Actions with topic"
-msgstr "Тема менен аракеттер"
+msgstr "Тема менен иш-аракеттер"
 
 #: modules/forum/templates/topic.phtml:399
 msgid "Curators of the Topic"
@@ -1212,7 +1212,7 @@ msgstr "Ким бул жерде"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr ""
+msgstr "Бул бөлүмдө эч кандай темалар жок"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"
