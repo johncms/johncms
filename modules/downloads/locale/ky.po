@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/downloads/includes/bookmark.php:29
 #: modules/downloads/includes/comments.php:31
@@ -55,12 +55,12 @@ msgstr ""
 #: modules/downloads/templates/top_users.phtml:43
 #: modules/downloads/templates/view.phtml:174
 msgid "Downloads"
-msgstr "Жүктөөлөр"
+msgstr "Жүктөө"
 
 #: modules/downloads/includes/bookmark.php:31
 #: modules/downloads/index.php:81
 msgid "For registered users only"
-msgstr "Сайтта катталган колдонуучулар үчүн"
+msgstr "Сайтта катталган колдонуучулар үчүн гана"
 
 #: modules/downloads/includes/bookmark.php:37
 #: modules/downloads/includes/bookmark.php:56
@@ -103,7 +103,7 @@ msgstr "Файл табылган жок"
 #: modules/downloads/includes/comments_review.php:38
 #: modules/downloads/templates/index.phtml:161
 msgid "Review comments"
-msgstr "Пикирлерди көрүү"
+msgstr "Комментарийлерди көрүү"
 
 #: modules/downloads/includes/fileControl/edit_file.php:34
 #: modules/downloads/includes/fileControl/edit_file.php:108
@@ -113,7 +113,7 @@ msgstr "Пикирлерди көрүү"
 #: modules/downloads/includes/fileControl/files_more.php:115
 #: modules/downloads/templates/view.phtml:149
 msgid "Edit File"
-msgstr "Файлды түзөтүү"
+msgstr "Файлды оңдоо"
 
 #: modules/downloads/includes/fileControl/edit_file.php:110
 #: modules/downloads/includes/fileControl/files_more.php:184
@@ -143,7 +143,7 @@ msgstr "Кайталоо"
 #: modules/downloads/includes/fileControl/edit_screen.php:107
 #: modules/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
-msgstr "Скриншотту кошуу"
+msgstr "Скриншотту жүктөп бериңиз"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:109
 #: modules/downloads/templates/file_import_result.phtml:34
@@ -229,7 +229,7 @@ msgstr "Бул учурдагы каталогу"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:121
 msgid "The file has been moved"
-msgstr "Файл жылдырылган"
+msgstr "Файл буга чейын жылдырылган"
 
 #: modules/downloads/includes/fileControl/transfer_file.php:123
 #: modules/downloads/templates/index.phtml:147
@@ -285,7 +285,7 @@ msgstr "Жаңы файлдар"
 #: modules/downloads/includes/files_top.php:25
 #: modules/downloads/includes/files_top.php:37
 msgid "Most Commented"
-msgstr "Эң көп пикир калтыргандар"
+msgstr "Эң көп ой-пикирлер "
 
 #: modules/downloads/includes/files_top.php:27
 #: modules/downloads/includes/files_top.php:50
@@ -339,7 +339,7 @@ msgstr "Папканы түзүү"
 
 #: modules/downloads/includes/folder_add.php:58
 msgid "Invalid characters"
-msgstr "Жол берилбеген белгилер"
+msgstr "Жол берилбеген символдор"
 
 #: modules/downloads/includes/folder_add.php:64
 #: modules/downloads/includes/folder_edit.php:87
@@ -359,7 +359,7 @@ msgstr "Улантуу"
 
 #: modules/downloads/includes/folder_add.php:136
 msgid "Error creating categories"
-msgstr "Бөлүмдөрдү түзүүдө ката кетти"
+msgstr "Категорияларды түзүүдө ката кетти"
 
 #: modules/downloads/includes/folder_delete.php:21
 #: modules/downloads/includes/folder_delete.php:29
@@ -367,21 +367,21 @@ msgstr "Бөлүмдөрдү түзүүдө ката кетти"
 #: modules/downloads/includes/folder_delete.php:77
 #: modules/downloads/templates/index.phtml:145
 msgid "Delete Folder"
-msgstr "Папканы өчүрүү"
+msgstr "Папканы жок кылуу"
 
 #: modules/downloads/includes/folder_delete.php:31
 msgid "Before removing, delete subdirectories"
-msgstr "Адегенде бардык бөлүкчөлөрдү өчүрүңүз"
+msgstr "Адегенде бардык бөлүмчөлөрдү жок кылыңыз"
 
 #: modules/downloads/includes/folder_edit.php:29
 msgid "Edit Folder"
-msgstr "Бөлүктү өзгөртүү"
+msgstr "Бөлүмдү өзгөртүү"
 
 #: modules/downloads/includes/scan_dir.php:77
 #: modules/downloads/templates/index.phtml:146
 #: modules/downloads/templates/scan_dir.phtml:60
 msgid "Remove missing files"
-msgstr "Жетишпеген файлдарды өчүрүү"
+msgstr "Жетишпеген файлдарды жок кылыңыз"
 
 #: modules/downloads/includes/scan_dir.php:79
 msgid "Database successfully updated"
@@ -406,7 +406,7 @@ msgstr "Издөө"
 
 #: modules/downloads/includes/search.php:35
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
-msgstr "Файлдын аталышынын узундугу жараксыз. 3 төн кем эмес жана 64 белгиден ашпоого уруксат берилет."
+msgstr "Файлдын аталышынын узундугу жараксыз. 3төн кем эмес жана 64 белгиден ашпоого уруксат берилет."
 
 #: modules/downloads/includes/search.php:82
 #: modules/downloads/includes/search.php:83
@@ -416,7 +416,7 @@ msgstr "Издөө натыйжалары"
 #: modules/downloads/includes/top_users.php:20
 #: modules/downloads/templates/index.phtml:45
 msgid "Top Users"
-msgstr "Мыкты колдонуучулар"
+msgstr "ТОП Колдонуучулар"
 
 #: modules/downloads/includes/view.php:50
 #: modules/downloads/includes/view.php:52
@@ -525,7 +525,7 @@ msgstr "Тизмеси бош"
 
 #: modules/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
-msgstr "Өзгөртүлгөн:"
+msgstr "Өзгөртүлдү:"
 
 #: modules/downloads/templates/comments_review.phtml:58
 msgid "Edited"
@@ -552,7 +552,7 @@ msgstr "Өчүрүү"
 #: modules/downloads/templates/delete_file.phtml:30
 #: modules/downloads/templates/folder_delete.phtml:29
 msgid "Do you really want to delete?"
-msgstr "Чын эле өчүргүңүз келеби?"
+msgstr "Чын эле жок кылгыңыз келеби?"
 
 #: modules/downloads/templates/delete_additional.phtml:36
 #: modules/downloads/templates/delete_file.phtml:36
@@ -603,7 +603,7 @@ msgstr "Көрсөтүлө турган аты"
 #: modules/downloads/templates/folder_form.phtml:44
 #: modules/downloads/templates/import.phtml:64
 msgid "Description"
-msgstr "Сүрөттөмө"
+msgstr "Баяндама"
 
 #: modules/downloads/templates/edit_file_form.phtml:49
 msgid "Edit MP3 Tags"
@@ -716,7 +716,7 @@ msgstr "Кошумча файлды жүктөп алыңыз"
 #: modules/downloads/templates/folder_form.phtml:32
 #: modules/downloads/templates/folder_form.phtml:33
 msgid "Folder name"
-msgstr "Бөлүктүн аталышы"
+msgstr "Бөлүмдүн аталышы"
 
 #: modules/downloads/templates/folder_form.phtml:35
 msgid "Only latin characters and numbers"
@@ -777,7 +777,7 @@ msgstr "Файлды импорттоо"
 
 #: modules/downloads/templates/index.phtml:138
 msgid "Section actions"
-msgstr "Бөлүктүн аракеттери"
+msgstr "Бөлүмдүн иш-аракеттери"
 
 #: modules/downloads/templates/index.phtml:142
 msgid "Update Files"
@@ -789,7 +789,7 @@ msgstr "Папканы өзгөртүү"
 
 #: modules/downloads/templates/move_file.phtml:28
 msgid "Select a section to move"
-msgstr "Жылдыруу үчүн бөлүктү тандаңыз"
+msgstr "Жылдыруу үчүн бөлүмүн тандаңыз"
 
 #: modules/downloads/templates/move_file.phtml:35
 msgid "Move file to this section"
@@ -844,7 +844,7 @@ msgstr "Издөө сурамы"
 
 #: modules/downloads/templates/search.phtml:46
 msgid "Search in description"
-msgstr "Сүрөттөмөлөрдөн издөө"
+msgstr "Сүрөттөөлөрдөн издөө"
 
 #: modules/downloads/templates/search.phtml:72
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max."
@@ -872,7 +872,7 @@ msgstr "Жүктөдү:"
 
 #: modules/downloads/templates/view.phtml:96
 msgid "Downloads:"
-msgstr "Жүктөөлөрдөрдүн саны:"
+msgstr "Жүктөөлөр"
 
 #: modules/downloads/templates/view.phtml:97
 msgid "Rating:"
@@ -880,7 +880,7 @@ msgstr "Рейтинги:"
 
 #: modules/downloads/templates/view.phtml:145
 msgid "Actions"
-msgstr "Аракеттер"
+msgstr "Иш-аракеттер"
 
 #: modules/downloads/templates/view.phtml:150
 msgid "Managing Screenshots"
@@ -892,9 +892,9 @@ msgstr "Файлды өчүрүү"
 
 #: modules/downloads/templates/view.phtml:162
 msgid "Remove from Favorites"
-msgstr "Тандалмалардан алып салуу"
+msgstr "Сүйүктүүлөрдөн алып салуу"
 
 #: modules/downloads/templates/view.phtml:164
 msgid "Add to Favorites"
-msgstr "Тандалмаларга кошуу"
+msgstr "Сүйүктүүлөргө"
 
