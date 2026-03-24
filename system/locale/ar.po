@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "التنزيلات"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "سجل الزوار"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -95,7 +95,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
-msgstr ""
+msgstr "تسجيل دخول"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "حدد اللغة"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "تطبيق"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "الملف الشخصي"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "رمز الأمان غير صحيح"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "تسجيل"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,104 +218,104 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء الأمر"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "تم مسح الإخطارات!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "المستخدمون عند التسجيل"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "مقالات عن الاعتدال"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "التنزيلات على الاعتدال"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "الحظر"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "مشاركات منتدى جديدة"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "البريـــد"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "التعليقات"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "تم حفظ الإعدادات!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "تنبيهات"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "تمت قراءة جميع الإخطارات بالفعل"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "مجموع"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "مسح الإشعارات"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "عرض عدد الرسائل غير المقروءة في المنتدى"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "إعادة التوجيه إلى رابط خارجي"
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "رابط خارجي"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "تنبيه!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "أنت ذاهب لمغادرة موقعنا والذهاب إلى رابط خارجي"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "إدارة موقعنا غير مسؤولة عن محتوى المواقع الخارجية"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "من المستحسن عدم تحديد بياناتك المتعلقة بـ %s (تسجيل الدخول، كلمة المرور) في مواقع طرف ثالث"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "الذهاب إلى الرابط"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "رجوع"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "أنت تبحث عن شيء غير موجود أو قد يكون قد نقل"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -364,7 +364,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:34
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "يجب أن يكون إصدار PHP %s على الأقل"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -375,7 +375,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "Yes"
-msgstr ""
+msgstr "بله"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -386,7 +386,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "No"
-msgstr ""
+msgstr "نه"
 
 #: system/src/Checker/SystemChecker.php:42
 msgid "PHP extension PDO must be installed"
@@ -459,27 +459,27 @@ msgstr ""
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "رد "
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "قام المسؤول بالفعل بالرد على هذه الرسالة"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "بيانات خاطئة"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "تحرير"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "لا يمكنك تحرير وظائف الإدارة العليا"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -487,191 +487,191 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "النص قصير جداً"
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
+msgstr "لا يمكنك إضافة هذه المادة في كثير من الأحيان <br>الرجاء الانتظار"
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "ثواني"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "الرسالة موجوده بالفعل"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "لم يُقرأ بعد"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "آخر نشاط"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "الصفحة الرّئيسية"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
-msgstr ""
+msgstr "مشرف المنتدى"
 
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "تحميل مشرف"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "مكتبة مشرف"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
-msgstr ""
+msgstr "المشرف الممتاز"
 
 #: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
-msgstr ""
+msgstr "مدير النظام"
 
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "مشرف"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "انت معك %s"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
-msgstr ""
+msgstr "شكل المقدمة لم تنشأ من المتوقع الموقع"
 
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr ""
+msgstr "لا يمكنك إضافة الرسالة حتى غالباً. الرجاء الانتظار %d ثانية."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
-msgstr ""
+msgstr "سجل مطابقة المدخلات وجد"
 
 #: system/src/Validator/messages.php:33
 msgid "No record matching the input was found"
-msgstr ""
+msgstr "سجل مطابقة المدخلات وجد"
 
 #: system/src/Validator/messages.php:37
 #: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
-msgstr ""
+msgstr "القيمة مطلوبة ولا يمكن أن تكون فارغاً"
 
 #: system/src/Validator/messages.php:41
 #, php-format
 msgid "The input is less than %min% characters long"
-msgstr ""
+msgstr "مدخلات أقل من %min% حرفا"
 
 #: system/src/Validator/messages.php:42
 #, php-format
 msgid "The input is more than %max% characters long"
-msgstr ""
+msgstr "مدخلات أقل من %min% حرفا"
 
 #: system/src/Validator/messages.php:46
 msgid "The input was not found in the haystack"
-msgstr ""
+msgstr "لم يتم العثور على الكائن في النظام الخاص بك"
 
 #: system/src/Validator/messages.php:50
 #: system/src/Validator/messages.php:61
 msgid "Invalid type given. String expected"
-msgstr ""
+msgstr "غير صالح نوع معين. سلسلة المتوقع"
 
 #: system/src/Validator/messages.php:51
 msgid "The input is not a valid email address. Use the basic format local-part@hostname"
-msgstr ""
+msgstr "إن لم يكن إدخال عنوان بريد إلكتروني صالح. استخدام الشكل الأساسي المحلية جزءا@المضيف"
 
 #: system/src/Validator/messages.php:52
 #, php-format
 msgid "'%hostname%' is not a valid hostname for the email address"
-msgstr ""
+msgstr "'%hostname%' غير صالحة المضيف على عنوان البريد الإلكتروني"
 
 #: system/src/Validator/messages.php:53
 #, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
-msgstr ""
+msgstr "'%hostname%' لا يبدو أن لديها أي صالحة MX أو سجلات البريد الإلكتروني"
 
 #: system/src/Validator/messages.php:54
 #, php-format
 msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
-msgstr ""
+msgstr "'%hostname%' ليس في للتوجيه قطعة شبكة الاتصال. عنوان البريد الإلكتروني يجب أن لا يكون حلها من الشبكة العامة"
 
 #: system/src/Validator/messages.php:55
 #, php-format
 msgid "'%localPart%' can not be matched against dot-atom format"
-msgstr ""
+msgstr "'%localPart%' لا يمكن أن تكون مطابقة ضد دوت ذرة تنسيق"
 
 #: system/src/Validator/messages.php:56
 #, php-format
 msgid "'%localPart%' can not be matched against quoted-string format"
-msgstr ""
+msgstr "'%localPart%' لا يمكن أن تكون مطابقة ضد دوت ذرة تنسيق"
 
 #: system/src/Validator/messages.php:57
 msgid "'%localPart%' is not a valid local part for the email address"
-msgstr ""
+msgstr "'%hostname%' غير صالحة المضيف على عنوان البريد الإلكتروني"
 
 #: system/src/Validator/messages.php:58
 msgid "The input exceeds the allowed length"
-msgstr ""
+msgstr "يتجاوز الإدخال طول المسموح به"
 
 #: system/src/Validator/messages.php:60
 msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
-msgstr ""
+msgstr "المدخلات يبدو مضيف DNS ولكن نظرا بيونيكود التدوين لا يمكن فك الشفرة"
 
 #: system/src/Validator/messages.php:62
 msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
-msgstr ""
+msgstr "يبدو أن الإدخال هو اسم مضيف DNS ولكن يحتوي على شرطة في موضع غير صالح"
 
 #: system/src/Validator/messages.php:63
 msgid "The input does not match the expected structure for a DNS hostname"
-msgstr ""
+msgstr "الإدخال لا يتطابق مع الهيكل المتوقع لاستضافة DNS"
 
 #: system/src/Validator/messages.php:64
 msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
-msgstr ""
+msgstr "يبدو أن الإدخال هو اسم مضيف DNS ولكن لا يمكن أن يتطابق مع مخطط اسم المضيف لـ TLD%tld%'"
 
 #: system/src/Validator/messages.php:65
 msgid "The input does not appear to be a valid local network name"
-msgstr ""
+msgstr "لا يبدو أن الإدخال هو اسم شبكة محلية صالح"
 
 #: system/src/Validator/messages.php:66
 msgid "The input does not appear to be a valid URI hostname"
-msgstr ""
+msgstr "لا يبدو أن الإدخال هو اسم شبكة محلية صالح"
 
 #: system/src/Validator/messages.php:67
 msgid "The input appears to be an IP address, but IP addresses are not allowed"
-msgstr ""
+msgstr "يبدو أن الإدخال هو عنوان IP ولكن عناوين IP غير مسموح بها"
 
 #: system/src/Validator/messages.php:68
 msgid "The input appears to be a local network name but local network names are not allowed"
-msgstr ""
+msgstr "يبدو أن الإدخال هو اسم شبكة محلية ولكن لا يسمح بأسماء الشبكة المحلية"
 
 #: system/src/Validator/messages.php:69
 msgid "The input appears to be a DNS hostname but cannot extract TLD part"
-msgstr ""
+msgstr "يبدو أن الإدخال هو اسم مضيف DNS ولكن لا يمكن استخراج جزء TLD"
 
 #: system/src/Validator/messages.php:70
 msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
-msgstr ""
+msgstr "يبدو أن الإدخال هو اسم مضيف DNS ولكن لا يمكن مطابقة TLD مع القائمة المعروفة"
 
 #: system/src/Validator/messages.php:75
 msgid "Invalid type given. String, integer, float, boolean or array expected"
-msgstr ""
+msgstr "نوع غير صالح. السلسلة ، عدد صحيح، عوامة ، منطقية أو مصفوفة متوقعة"
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
@@ -719,15 +719,15 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
-msgstr ""
+msgstr "انهاء"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
-msgstr ""
+msgstr "يتم إنشاء البريد الإلكتروني تلقائيًا. الرجاء عدم الإجابة عليه. <br> للاتصال بنا، استخدم معلومات الاتصال على موقعنا."
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
@@ -740,21 +740,21 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 #, php-format
 msgid "Hello, %s!"
-msgstr ""
+msgstr "مرحبًا، %s"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
 #, php-format
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "لقد بدأت عملية تغيير عنوان البريد الإلكتروني على موقع <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
 msgid "The new email address is:"
-msgstr ""
+msgstr "إضافة بريد إلكتروني جديد"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
 msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
-msgstr ""
+msgstr "إذا لم تكن قد بدأت إجراءات تغيير البريد الإلكتروني, يرجى الاتصال بنا في أي وسيلة مريحة بالنسبة لك."
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
@@ -762,16 +762,16 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
-msgstr ""
+msgstr "للمتابعة يرجى النقر على زر التأكيد"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
 #: themes/default/templates/system/mail/templates/registration.phtml:27
 msgid "Confirm"
-msgstr ""
+msgstr "تأكيد؟"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
+msgstr "إذا لم تقم بالتسجيل في موقعنا، يرجى تجاهل هذا البريد الإلكتروني."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
@@ -780,91 +780,91 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format
 msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "لقد قمت بالتسجيل بنجاح على موقع <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:18
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
 msgid "Your login:"
-msgstr ""
+msgstr "تسجيل الدخول الخاص بك:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
 msgid "Your password:"
-msgstr ""
+msgstr "كلمة المرور الخاصة بك"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 msgid "The one you specified when registering"
-msgstr ""
+msgstr "الذي حددته عند التسجيل"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:22
 #, php-format
 msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
+msgstr "لتنشيط حسابك، يرجى تأكيد تسجيلك على موقع %s."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:31
 msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
-msgstr ""
+msgstr "إذا لم تقم بالتسجيل في موقعنا، يرجى تجاهل هذا البريد الإلكتروني. في هذه الحالة لن يتم تنشيط الحساب وسيتم حذفه تلقائيًا."
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:9
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
 msgid "Password recovery"
-msgstr ""
+msgstr "استعادة كلمة المرور"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "البدء في عملية استعادة كلمة السر على <a href=\"%s\">%s</a> الموقع"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:17
 msgid "In order to recover your password, you must click on the link:"
-msgstr ""
+msgstr "من أجل استعادة كلمة المرور الخاصة بك، يجب عليك النقر على الرابط:"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:22
 msgid "Restore"
-msgstr ""
+msgstr "استعادة"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:25
 msgid "Link valid for 1 hour"
-msgstr ""
+msgstr "رابط صالح لمدة 1 ساعة"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:27
 msgid "If you receive this mail by mistake, just ignore this letter"
-msgstr ""
+msgstr "إذا تلقيت هذا البريد عن طريق الخطأ، فقط تجاهل هذه الرسالة"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
 #, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "لقد قمت بتغيير كلمة المرور الخاصة بك على موقع <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
 msgid "After logging in, you can change your password to new one."
-msgstr ""
+msgstr "بعد تسجيل الدخول، يمكنك تغيير كلمة المرور الخاصة بك إلى كلمة مرور جديدة."
 
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "هل ترغب بالحذف ؟"
 
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
-msgstr ""
+msgstr "تنظيف"
 
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
-msgstr ""
+msgstr "الرسالة"
 
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
-msgstr ""
+msgstr "إرسال"
 
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "فارغة"
 
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
-msgstr ""
+msgstr "تحرير:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
+msgstr "تحرير:"
 
