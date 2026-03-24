@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-03-24 11:10\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/profile/includes/activity.php:25
 #: modules/profile/templates/index.phtml:253
 #: modules/profile/templates/stat.phtml:50
 msgid "Activity"
-msgstr ""
+msgstr "Activitate"
 
 #: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
@@ -26,57 +26,57 @@ msgstr ""
 #: modules/profile/includes/reset.php:20
 #: modules/profile/templates/office.phtml:32
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
 #: modules/profile/includes/images.php:159
 #: modules/profile/includes/index.php:24
 msgid "My Profile"
-msgstr ""
+msgstr "Profilul meu"
 
 #: modules/profile/includes/activity.php:33
 msgid "Messages"
-msgstr ""
+msgstr "Mesaje"
 
 #: modules/profile/includes/activity.php:38
 msgid "Themes"
-msgstr ""
+msgstr "Teme"
 
 #: modules/profile/includes/activity.php:43
 #: modules/profile/includes/ban.php:392
 #: modules/profile/templates/ban.phtml:45
 #: modules/profile/templates/stat.phtml:54
 msgid "Comments"
-msgstr ""
+msgstr "Comentarii"
 
 #: modules/profile/includes/ban.php:16
 msgid "Ban the User"
-msgstr ""
+msgstr "Baneaza Utilizator"
 
 #: modules/profile/includes/ban.php:30
 msgid "You do not have enought rights to ban this user"
-msgstr ""
+msgstr "Nu ai permisiunea necesara sa banezi acest utilizator"
 
 #: modules/profile/includes/ban.php:44
 msgid "Reason not specified"
-msgstr ""
+msgstr "Motivul nu este specificat"
 
 #: modules/profile/includes/ban.php:48
 msgid "There is no required data"
-msgstr ""
+msgstr "Nu necesita date"
 
 #: modules/profile/includes/ban.php:58
 msgid "You have no rights to ban in this section"
-msgstr ""
+msgstr "Nu ai nici o permisiune sa banezi in aceasta sectiune"
 
 #: modules/profile/includes/ban.php:62
 msgid "Ban already active"
-msgstr ""
+msgstr "Ban deja activ"
 
 #: modules/profile/includes/ban.php:143
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: modules/profile/includes/ban.php:147
 #: modules/profile/includes/index.php:151
@@ -85,11 +85,11 @@ msgstr ""
 
 #: modules/profile/includes/ban.php:158
 msgid "User banned"
-msgstr ""
+msgstr "Utilizator banat"
 
 #: modules/profile/includes/ban.php:192
 msgid "Ban termination"
-msgstr ""
+msgstr "Terminarea banarii"
 
 #: modules/profile/includes/ban.php:200
 #: modules/profile/includes/ban.php:258
@@ -97,35 +97,35 @@ msgstr ""
 #: modules/profile/includes/ban.php:324
 #: modules/profile/skl.php:141
 msgid "Wrong data"
-msgstr ""
+msgstr "Date invalide"
 
 #: modules/profile/includes/ban.php:212
 msgid "Ban not active"
-msgstr ""
+msgstr "Banare inactiva"
 
 #: modules/profile/includes/ban.php:223
 msgid "Ban terminated"
-msgstr ""
+msgstr "Banare terminata"
 
 #: modules/profile/includes/ban.php:228
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
-msgstr ""
+msgstr "Timpul banarii se apropie de sfarsit. Date vor fi salvate in istoricul bazei de date"
 
 #: modules/profile/includes/ban.php:229
 msgid "Terminate Ban"
-msgstr ""
+msgstr "Inceteaza banare"
 
 #: modules/profile/includes/ban.php:268
 msgid "Delete ban"
-msgstr ""
+msgstr "Sterge Ban"
 
 #: modules/profile/includes/ban.php:300
 msgid "Ban deleted"
-msgstr ""
+msgstr "Banare stearsa"
 
 #: modules/profile/includes/ban.php:305
 msgid "Removing ban along with a record in the bans history"
-msgstr ""
+msgstr "Inlatura banare impreuna cu istoricul banarii"
 
 #: modules/profile/includes/ban.php:306
 #: modules/profile/includes/index.php:145
@@ -133,42 +133,42 @@ msgstr ""
 #: modules/profile/templates/edit.phtml:128
 #: modules/profile/templates/karma_delete.phtml:33
 msgid "Delete"
-msgstr ""
+msgstr "Sterge"
 
 #: modules/profile/includes/ban.php:334
 msgid "Violations history"
-msgstr ""
+msgstr "Istoricul incalcarii"
 
 #: modules/profile/includes/ban.php:344
 msgid "Violations history cleared"
-msgstr ""
+msgstr "Istoricul incalcarii sters"
 
 #: modules/profile/includes/ban.php:349
 msgid "Are you sure want to clean entire history of user violations?"
-msgstr ""
+msgstr "Esti sigur ca vrei sa stergi intregul istoric al incalcarilor a acestui utilizator?"
 
 #: modules/profile/includes/ban.php:350
 msgid "Clear"
-msgstr ""
+msgstr "Sterge"
 
 #: modules/profile/includes/ban.php:368
 msgid "Violations history can be cleared by Supervisor only"
-msgstr ""
+msgstr "Istoricul incalcarilor poate fi sters doar de Administratorul Principal"
 
 #: modules/profile/includes/ban.php:377
 msgid "Violations History"
-msgstr ""
+msgstr "Istoric Incalcari"
 
 #: modules/profile/includes/ban.php:389
 #: modules/profile/templates/ban.phtml:37
 msgid "Full block"
-msgstr ""
+msgstr "Blocare totala"
 
 #: modules/profile/includes/ban.php:390
 #: modules/profile/includes/ban.php:391
 #: modules/profile/templates/ban.phtml:41
 msgid "Private messages"
-msgstr ""
+msgstr "Mesaje private"
 
 #: modules/profile/includes/ban.php:393
 #: modules/profile/includes/settings.php:45
@@ -191,35 +191,35 @@ msgstr ""
 #: modules/profile/includes/ban.php:395
 #: modules/profile/templates/ban.phtml:61
 msgid "Library"
-msgstr ""
+msgstr "Librarie"
 
 #: modules/profile/includes/ban.php:405
 #: modules/profile/templates/ban.phtml:87
 msgid "Till cancel"
-msgstr ""
+msgstr "Pana se anuleaza"
 
 #: modules/profile/includes/ban.php:416
 msgid "Cancel Ban"
-msgstr ""
+msgstr "Anuleaza Ban"
 
 #: modules/profile/includes/ban.php:422
 msgid "Delete Ban"
-msgstr ""
+msgstr "Sterge ban"
 
 #: modules/profile/includes/confirm_new_email.php:19
 #: modules/profile/includes/confirm_new_email.php:20
 msgid "Email confirmation"
-msgstr ""
+msgstr "Asteapta confirmarea"
 
 #: modules/profile/includes/edit.php:20
 #: modules/profile/templates/office.phtml:86
 msgid "Edit Profile"
-msgstr ""
+msgstr "Editeaza Profil"
 
 #: modules/profile/includes/edit.php:35
 #: modules/profile/includes/images.php:23
 msgid "You cannot edit profile of higher administration"
-msgstr ""
+msgstr "Nu poti edita profilul unui utilizator cu permisiuni mai mari ca ale tale"
 
 #: modules/profile/includes/edit.php:47
 #: modules/profile/includes/ip.php:24
@@ -227,40 +227,40 @@ msgstr ""
 #: modules/profile/includes/password.php:25
 #: modules/profile/includes/settings.php:31
 msgid "Access forbidden"
-msgstr ""
+msgstr "Acess interzis"
 
 #: modules/profile/includes/edit.php:86
 msgid "Avatar is successfully removed"
-msgstr ""
+msgstr "Avatarul a fost inlaturat cu sucess"
 
 #: modules/profile/includes/edit.php:93
 msgid "Photo is successfully removed"
-msgstr ""
+msgstr "Poza a fost inlaturata cu sucess"
 
 #: modules/profile/includes/edit.php:169
 msgid "Confirm email change"
-msgstr ""
+msgstr "Confirmă schimbarea adresei de e-mail"
 
 #: modules/profile/includes/edit.php:186
 msgid "The procedure for changing the email address was started"
-msgstr ""
+msgstr "Procedura de schimbare a adresei de e-mail a fost începută"
 
 #: modules/profile/includes/edit.php:196
 msgid "Data saved"
-msgstr ""
+msgstr "Date salvate"
 
 #: modules/profile/includes/images.php:36
 msgid "Upload Avatar"
-msgstr ""
+msgstr "Incarca Avatar"
 
 #: modules/profile/includes/images.php:42
 #: modules/profile/includes/images.php:94
 msgid "The weight of the file exceeds"
-msgstr ""
+msgstr "Dimensiunea fisierului este depasita"
 
 #: modules/profile/includes/images.php:64
 msgid "The avatar is successfully uploaded"
-msgstr ""
+msgstr "Avatarul a fost incarcat cu sucess"
 
 #: modules/profile/includes/images.php:66
 #: modules/profile/includes/images.php:135
@@ -268,54 +268,54 @@ msgstr ""
 #: modules/profile/includes/password.php:83
 #: modules/profile/templates/restore_password.phtml:43
 msgid "Continue"
-msgstr ""
+msgstr "Continua"
 
 #: modules/profile/includes/images.php:81
 #: modules/profile/includes/images.php:150
 #: modules/profile/includes/password.php:94
 msgid "Repeat"
-msgstr ""
+msgstr "Repeta"
 
 #: modules/profile/includes/images.php:88
 msgid "Upload Photo"
-msgstr ""
+msgstr "Incarca poza"
 
 #: modules/profile/includes/images.php:133
 msgid "The photo is successfully uploaded"
-msgstr ""
+msgstr "Poza a fost incarcata cu sucess"
 
 #: modules/profile/includes/index.php:24
 #: modules/profile/includes/karma.php:20
 #: modules/profile/index.php:58
 #: modules/profile/index.php:78
 msgid "User Profile"
-msgstr ""
+msgstr "Profil utilizator"
 
 #: modules/profile/includes/index.php:94
 #: modules/profile/templates/stat.phtml:32
 msgid "Pending confirmation"
-msgstr ""
+msgstr "Asteapta confirmarea"
 
 #: modules/profile/includes/index.php:99
 msgid "E-mail address is not confirmed"
-msgstr ""
+msgstr "Adresa de e-mail a fost confirmata!"
 
 #: modules/profile/includes/index.php:126
 msgid "Add to Contacts"
-msgstr ""
+msgstr "Adauga la prieteni"
 
 #: modules/profile/includes/index.php:131
 msgid "Remove from Contacts"
-msgstr ""
+msgstr "Sterge de la prieteni"
 
 #: modules/profile/includes/index.php:139
 msgid "Edit"
-msgstr ""
+msgstr "Editeaza"
 
 #: modules/profile/includes/ip.php:15
 #: modules/profile/templates/index.phtml:86
 msgid "IP History"
-msgstr ""
+msgstr "Istoric IP"
 
 #: modules/profile/includes/karma.php:17
 #: modules/profile/includes/karma.php:21
@@ -325,29 +325,29 @@ msgstr ""
 
 #: modules/profile/includes/karma.php:42
 msgid "It is forbidden to vote for administration"
-msgstr ""
+msgstr "Este interzis sa votezi in administrator"
 
 #: modules/profile/includes/karma.php:46
 msgid "Cheating karma is forbidden"
-msgstr ""
+msgstr "Interzis inselaciune"
 
 #: modules/profile/includes/karma.php:51
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
-msgstr ""
+msgstr "Utilizatorii pot lua parte la votare daca au stat mai mult de %s pe site si scorul in postarile pe forum este de %d"
 
 #: modules/profile/includes/karma.php:52
 msgid "days"
-msgstr ""
+msgstr "zile"
 
 #: modules/profile/includes/karma.php:60
 msgid "You can vote for single user just one time for 24 hours"
-msgstr ""
+msgstr "Poti vota un singur utilizator,doar o singura data, in timp de 24 de ore\""
 
 #: modules/profile/includes/karma.php:66
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
-msgstr ""
+msgstr "Ai deposit limita de voturi. Noi voturi vor fi adaugate %s"
 
 #: modules/profile/includes/karma.php:77
 #: modules/profile/includes/karma.php:167
@@ -357,100 +357,100 @@ msgstr ""
 #: modules/profile/templates/restore_password_result.phtml:19
 #: modules/profile/templates/stat.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "Inapoi"
 
 #: modules/profile/includes/karma.php:136
 msgid "You have successfully voted"
-msgstr ""
+msgstr "Ai votat cu sucess"
 
 #: modules/profile/includes/karma.php:147
 msgid "Vote for"
-msgstr ""
+msgstr "Voteaza pentru"
 
 #: modules/profile/includes/karma.php:165
 msgid "You are not allowed to vote for users"
-msgstr ""
+msgstr "Nu poti vota acest utilizator"
 
 #: modules/profile/includes/karma.php:201
 msgid "Do you really want to delete comment?"
-msgstr ""
+msgstr "Esti sigur ca vrei sa stergi comentariul?"
 
 #: modules/profile/includes/karma.php:234
 msgid "Do you really want to delete all reviews about user?"
-msgstr ""
+msgstr "Esti sigur ca vrei sa stergi toare recenziile despre utilizator?"
 
 #: modules/profile/includes/karma.php:252
 msgid "New responses"
-msgstr ""
+msgstr "Raspunsuri noi"
 
 #: modules/profile/includes/karma.php:287
 msgid "All"
-msgstr ""
+msgstr "Toate"
 
 #: modules/profile/includes/karma.php:292
 #: modules/profile/templates/index.phtml:134
 #: modules/profile/templates/karma_vote.phtml:41
 msgid "Positive"
-msgstr ""
+msgstr "Pozitiv"
 
 #: modules/profile/includes/karma.php:297
 #: modules/profile/templates/index.phtml:140
 #: modules/profile/templates/karma_vote.phtml:45
 msgid "Negative"
-msgstr ""
+msgstr "Negativ"
 
 #: modules/profile/includes/office.php:15
 #: modules/profile/includes/settings.php:22
 msgid "My Account"
-msgstr ""
+msgstr "Contul meu"
 
 #: modules/profile/includes/password.php:15
 #: modules/profile/includes/password.php:16
 #: modules/profile/templates/edit.phtml:278
 #: modules/profile/templates/office.phtml:87
 msgid "Change Password"
-msgstr ""
+msgstr "Schimba parola"
 
 #: modules/profile/includes/password.php:43
 #: modules/profile/includes/password.php:46
 msgid "It is necessary to fill in all fields"
-msgstr ""
+msgstr "Este necesar sa completezi toate campurile"
 
 #: modules/profile/includes/password.php:51
 msgid "Old password entered incorrectly"
-msgstr ""
+msgstr "Parola veche nu este corecta"
 
 #: modules/profile/includes/password.php:55
 msgid "The password confirmation you entered is wrong"
-msgstr ""
+msgstr "Confirmarea parolei a fost introdusa gresit"
 
 #: modules/profile/includes/password.php:59
 msgid "The password must contain at least 3 characters"
-msgstr ""
+msgstr "Parola trebuie sa contina cel putin 3 caractere"
 
 #: modules/profile/includes/password.php:81
 msgid "Password successfully changed"
-msgstr ""
+msgstr "Parola schimbata cu sucess"
 
 #: modules/profile/includes/reset.php:19
 msgid "Reset user settings"
-msgstr ""
+msgstr "Reseteaza setari"
 
 #: modules/profile/includes/reset.php:36
 #, php-format
 msgid "For user %s default settings were set."
-msgstr ""
+msgstr "Pentru utilizatorul %s setarile au fost setate la implicit"
 
 #: modules/profile/includes/settings.php:17
 #: modules/profile/includes/settings.php:23
 #: modules/profile/templates/office.phtml:83
 msgid "Settings"
-msgstr ""
+msgstr "Setari"
 
 #: modules/profile/includes/settings.php:40
 #: modules/profile/includes/settings.php:152
 msgid "General setting"
-msgstr ""
+msgstr "Setari generale"
 
 #: modules/profile/includes/settings.php:50
 #: modules/profile/includes/settings.php:70
@@ -473,27 +473,27 @@ msgstr ""
 #: modules/profile/includes/settings.php:125
 #: modules/profile/includes/settings.php:208
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "Setari salvate cu sucess"
 
 #: modules/profile/includes/settings.php:135
 #: modules/profile/includes/settings.php:213
 msgid "Default settings are set"
-msgstr ""
+msgstr "Setarile implicite sunt setate"
 
 #: modules/profile/includes/stat.php:16
 #: modules/profile/includes/stat.php:19
 #: modules/profile/templates/index.phtml:265
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
-msgstr ""
+msgstr "Statistici"
 
 #: modules/profile/index.php:60
 msgid "For registered users only"
-msgstr ""
+msgstr "Doar pentru utilizatori inregistrati"
 
 #: modules/profile/index.php:80
 msgid "This User does not exists"
-msgstr ""
+msgstr "Acest utilizator nu exista"
 
 #: modules/profile/skl.php:42
 #: modules/profile/templates/restore_password.phtml:4
@@ -503,100 +503,100 @@ msgstr ""
 #: modules/profile/templates/restore_password_result.phtml:5
 #: modules/profile/templates/restore_password_result.phtml:10
 msgid "Restore password"
-msgstr ""
+msgstr "Restaurează parola"
 
 #: modules/profile/skl.php:70
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Campurile necesare nu au fost completate"
 
 #: modules/profile/skl.php:72
 msgid "Incorrect code"
-msgstr ""
+msgstr "Codul este incorect"
 
 #: modules/profile/skl.php:86
 msgid "Invalid Email address"
-msgstr ""
+msgstr "Adresa de e-mail invalida"
 
 #: modules/profile/skl.php:90
 msgid "Password can be recovered 1 time per day"
-msgstr ""
+msgstr "Parola poate fi recuperate doar o data pe zi"
 
 #: modules/profile/skl.php:93
 #: modules/profile/skl.php:160
 msgid "User does not exists"
-msgstr ""
+msgstr "Utilizatorul nu exista"
 
 #: modules/profile/skl.php:109
 msgid "Password recovery"
-msgstr ""
+msgstr "Recuperare parola"
 
 #: modules/profile/skl.php:119
 msgid "Check your e-mail for further information"
-msgstr ""
+msgstr "Verifica e-mail pentru mai multe informatii"
 
 #: modules/profile/skl.php:151
 msgid "Password recovery is impossible"
-msgstr ""
+msgstr "Recuperarea parolei este imposibila"
 
 #: modules/profile/skl.php:155
 msgid "Time allotted for the password recovery has been exceeded"
-msgstr ""
+msgstr "Timpul alocat pentru recuperarea parolei a fost depasit"
 
 #: modules/profile/skl.php:176
 msgid "Your new password"
-msgstr ""
+msgstr "Parola ta noua"
 
 #: modules/profile/skl.php:187
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
-msgstr ""
+msgstr "Parola a fost schimbata.<br>Noua parola va fi trimisa pe adresa ta de E-mail."
 
 #: modules/profile/templates/activity.phtml:37
 #: modules/profile/templates/ip_history.phtml:46
 #: modules/profile/templates/karma.phtml:38
 msgid "The list is empty"
-msgstr ""
+msgstr "Lista este goala"
 
 #: modules/profile/templates/activity.phtml:53
 #: modules/profile/templates/ip_history.phtml:66
 #: modules/profile/templates/karma.phtml:82
 msgid "Total:"
-msgstr ""
+msgstr "Total"
 
 #: modules/profile/templates/ban.phtml:31
 msgid "Ban:"
-msgstr ""
+msgstr "Ban"
 
 #: modules/profile/templates/ban.phtml:33
 msgid "Ban type"
-msgstr ""
+msgstr "Tipul banarii"
 
 #: modules/profile/templates/ban.phtml:65
 msgid "Ban time"
-msgstr ""
+msgstr "Durata banarii"
 
 #: modules/profile/templates/ban.phtml:67
 msgid "Time"
-msgstr ""
+msgstr "Timpul"
 
 #: modules/profile/templates/ban.phtml:72
 msgid "Minutes (60 max.)"
-msgstr ""
+msgstr "Minute (max. 60)"
 
 #: modules/profile/templates/ban.phtml:76
 msgid "Hours (24 max.)"
-msgstr ""
+msgstr "Ore (max. 24)"
 
 #: modules/profile/templates/ban.phtml:81
 msgid "Days (30 max.)"
-msgstr ""
+msgstr "Zile (max. 30)"
 
 #: modules/profile/templates/ban.phtml:92
 msgid "Reason"
-msgstr ""
+msgstr "Motiv"
 
 #: modules/profile/templates/ban.phtml:98
 msgid "Apply Ban"
-msgstr ""
+msgstr "Aplica ban"
 
 #: modules/profile/templates/ban.phtml:99
 #: modules/profile/templates/ban_cancel.phtml:32
@@ -609,63 +609,63 @@ msgstr ""
 #: modules/profile/templates/password.phtml:63
 #: modules/profile/templates/settings.phtml:125
 msgid "Cancel"
-msgstr ""
+msgstr "Anuleaza"
 
 #: modules/profile/templates/ban_history.phtml:25
 msgid "User:"
-msgstr ""
+msgstr "Utilizator"
 
 #: modules/profile/templates/ban_history.phtml:37
 msgid "Active"
-msgstr ""
+msgstr "Activ"
 
 #: modules/profile/templates/ban_history.phtml:46
 msgid "Blocked by:"
-msgstr ""
+msgstr "Blocat de:"
 
 #: modules/profile/templates/ban_history.phtml:50
 msgid "Time:"
-msgstr ""
+msgstr "Timpul"
 
 #: modules/profile/templates/ban_history.phtml:54
 msgid "Remains:"
-msgstr ""
+msgstr "Ramas"
 
 #: modules/profile/templates/ban_history.phtml:73
 msgid "List is empty"
-msgstr ""
+msgstr "Lista este goală"
 
 #: modules/profile/templates/ban_history.phtml:80
 msgid "Total"
-msgstr ""
+msgstr "Toatal"
 
 #: modules/profile/templates/ban_history.phtml:90
 msgid "Clear history"
-msgstr ""
+msgstr "Sterge istoric"
 
 #: modules/profile/templates/confirm_new_email.phtml:12
 msgid "User is not found"
-msgstr ""
+msgstr "Utilizatorul nu a fost gasit"
 
 #: modules/profile/templates/confirm_new_email.phtml:14
 msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
+msgstr "Multumesc! Adresa dvs. de e-mail a fost confirmata cu succes."
 
 #: modules/profile/templates/confirm_new_email.phtml:16
 msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
+msgstr "Eroare la confirmarea e-mailului. Cod de confirmare invalid."
 
 #: modules/profile/templates/edit.phtml:52
 #: modules/profile/templates/restore_password.phtml:12
 #: modules/profile/templates/restore_password.phtml:18
 msgid "Username"
-msgstr ""
+msgstr "Nume"
 
 #: modules/profile/templates/edit.phtml:57
 #: modules/profile/templates/edit.phtml:64
 #: modules/profile/templates/edit.phtml:75
 msgid "Nickname"
-msgstr ""
+msgstr "Nume utilizator"
 
 #: modules/profile/templates/edit.phtml:71
 msgid "Min.2, Max. 20"
@@ -675,7 +675,7 @@ msgstr ""
 #: modules/profile/templates/edit.phtml:85
 #: modules/profile/templates/index.phtml:165
 msgid "Status"
-msgstr ""
+msgstr "Stare:"
 
 #: modules/profile/templates/edit.phtml:91
 msgid "Max. 50"
@@ -683,69 +683,69 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:95
 msgid "Avatar"
-msgstr ""
+msgstr "Avatare"
 
 #: modules/profile/templates/edit.phtml:103
 #: modules/profile/templates/edit.phtml:126
 msgid "Upload"
-msgstr ""
+msgstr "Incarca"
 
 #: modules/profile/templates/edit.phtml:105
 msgid "Select in Catalog"
-msgstr ""
+msgstr "Selecteaza din Catalog"
 
 #: modules/profile/templates/edit.phtml:115
 #: modules/profile/templates/edit.phtml:119
 #: modules/profile/templates/index.phtml:157
 msgid "Photo"
-msgstr ""
+msgstr "Poza"
 
 #: modules/profile/templates/edit.phtml:133
 msgid "Personal info"
-msgstr ""
+msgstr "Informatii personale"
 
 #: modules/profile/templates/edit.phtml:136
 #: modules/profile/templates/edit.phtml:142
 msgid "Your name"
-msgstr ""
+msgstr "Numele tau"
 
 #: modules/profile/templates/edit.phtml:150
 msgid "Date of birth (d.m.y)"
-msgstr ""
+msgstr "Data de nastere (z.l.a)"
 
 #: modules/profile/templates/edit.phtml:153
 msgid "Day"
-msgstr ""
+msgstr "Ziua"
 
 #: modules/profile/templates/edit.phtml:161
 msgid "Month"
-msgstr ""
+msgstr "Lună"
 
 #: modules/profile/templates/edit.phtml:169
 msgid "Year"
-msgstr ""
+msgstr "Anul"
 
 #: modules/profile/templates/edit.phtml:179
 #: modules/profile/templates/edit.phtml:185
 #: modules/profile/templates/index.phtml:189
 msgid "City, Country"
-msgstr ""
+msgstr "Oras, Tara"
 
 #: modules/profile/templates/edit.phtml:192
 msgid "About myself"
-msgstr ""
+msgstr "Despre mine"
 
 #: modules/profile/templates/edit.phtml:196
 #: modules/profile/templates/office.phtml:70
 #: modules/profile/templates/office.phtml:74
 msgid "Contacts"
-msgstr ""
+msgstr "Contacte"
 
 #: modules/profile/templates/edit.phtml:198
 #: modules/profile/templates/edit.phtml:204
 #: modules/profile/templates/index.phtml:204
 msgid "Phone number"
-msgstr ""
+msgstr "Numar de telefon"
 
 #: modules/profile/templates/edit.phtml:211
 #: modules/profile/templates/edit.phtml:217
@@ -755,19 +755,19 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:224
 msgid "The new email address is:"
-msgstr ""
+msgstr "Adresa ta de email este {0}."
 
 #: modules/profile/templates/edit.phtml:225
 msgid "Please check your email and confirm it."
-msgstr ""
+msgstr "Va rugam sa verificati adresa de e-mail si sa o confirmati."
 
 #: modules/profile/templates/edit.phtml:232
 msgid "Show in Profile"
-msgstr ""
+msgstr "Arata in profil"
 
 #: modules/profile/templates/edit.phtml:234
 msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
-msgstr ""
+msgstr "ATENTIE! Scrie adresa de e-mail correct. PArola ta va fi trimisa pe adresa de e-mail in cazul in care o vei uita"
 
 #: modules/profile/templates/edit.phtml:237
 #: modules/profile/templates/edit.phtml:243
@@ -783,65 +783,65 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:265
 msgid "Administrative Functions"
-msgstr ""
+msgstr "Functii Administrative"
 
 #: modules/profile/templates/edit.phtml:268
 msgid "Admin notes"
-msgstr ""
+msgstr "Note administrative"
 
 #: modules/profile/templates/edit.phtml:275
 msgid "Prohibit Karma"
-msgstr ""
+msgstr "Interzice Karma"
 
 #: modules/profile/templates/edit.phtml:280
 msgid "Reset User options to default"
-msgstr ""
+msgstr "Reseteaza optiunile utilizatorului la implicit"
 
 #: modules/profile/templates/edit.phtml:284
 msgid "Select gender"
-msgstr ""
+msgstr "Selecteaza SEX"
 
 #: modules/profile/templates/edit.phtml:287
 #: modules/profile/templates/index.phtml:179
 msgid "Man"
-msgstr ""
+msgstr "Barbat"
 
 #: modules/profile/templates/edit.phtml:291
 #: modules/profile/templates/index.phtml:181
 msgid "Woman"
-msgstr ""
+msgstr "Femeie"
 
 #: modules/profile/templates/edit.phtml:295
 msgid "Position on the Site"
-msgstr ""
+msgstr "Pozitia pe site"
 
 #: modules/profile/templates/edit.phtml:298
 msgid "User"
-msgstr ""
+msgstr "Utilizator"
 
 #: modules/profile/templates/edit.phtml:302
 msgid "Forum Moderator"
-msgstr ""
+msgstr "Moderator Forum"
 
 #: modules/profile/templates/edit.phtml:306
 msgid "Download Moderator"
-msgstr ""
+msgstr "Moderator Descarcari"
 
 #: modules/profile/templates/edit.phtml:310
 msgid "Library Moderator"
-msgstr ""
+msgstr "Moderator Librarie"
 
 #: modules/profile/templates/edit.phtml:314
 msgid "Super Moderator"
-msgstr ""
+msgstr "Super Moderatori"
 
 #: modules/profile/templates/edit.phtml:320
 msgid "Administrator"
-msgstr ""
+msgstr "Adnistratori"
 
 #: modules/profile/templates/edit.phtml:324
 msgid "Supervisor"
-msgstr ""
+msgstr "Administrator Principal"
 
 #: modules/profile/templates/edit.phtml:332
 #: modules/profile/templates/forum_settings.phtml:73
@@ -850,59 +850,59 @@ msgstr ""
 #: modules/profile/templates/password.phtml:62
 #: modules/profile/templates/settings.phtml:124
 msgid "Save"
-msgstr ""
+msgstr "Salveaza"
 
 #: modules/profile/templates/forum_settings.phtml:42
 msgid "Basic settings"
-msgstr ""
+msgstr "Setari de baza"
 
 #: modules/profile/templates/forum_settings.phtml:46
 msgid "Inverse sorting"
-msgstr ""
+msgstr "Sortare inversa"
 
 #: modules/profile/templates/forum_settings.phtml:50
 msgid "Use the form of a quick answer"
-msgstr ""
+msgstr "Foloseste formularul pentru a raspunde mai rapid"
 
 #: modules/profile/templates/forum_settings.phtml:54
 msgid "Preview of messages"
-msgstr ""
+msgstr "Previzualizare mesaje"
 
 #: modules/profile/templates/forum_settings.phtml:57
 msgid "Attach first post"
-msgstr ""
+msgstr "Ataseaza primul mesaj"
 
 #: modules/profile/templates/forum_settings.phtml:61
 msgid "Always"
-msgstr ""
+msgstr "Intotdeauna"
 
 #: modules/profile/templates/forum_settings.phtml:65
 msgid "In unread topics"
-msgstr ""
+msgstr "In topicuri necitite"
 
 #: modules/profile/templates/forum_settings.phtml:69
 msgid "Never"
-msgstr ""
+msgstr "Niciodata"
 
 #: modules/profile/templates/forum_settings.phtml:75
 #: modules/profile/templates/settings.phtml:128
 msgid "Reset Settings"
-msgstr ""
+msgstr "Reseteaza setari"
 
 #: modules/profile/templates/images.phtml:51
 msgid "Choose file"
-msgstr ""
+msgstr "Selecteaza Fisier"
 
 #: modules/profile/templates/images.phtml:54
 #, php-format
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
-msgstr ""
+msgstr "Format imagine permis: JPG, PNG, GIF. Fisierul nu trebuie sa fie mai mare de %d kb.<br> Imaginea noua o va inlocui pe cea veche (daca exista)"
 
 #: modules/profile/templates/index.phtml:44
 #: modules/profile/templates/index.phtml:69
 #: modules/profile/templates/stat.phtml:45
 msgid "Last visit"
-msgstr ""
+msgstr "Ultima vizita"
 
 #: modules/profile/templates/index.phtml:44
 msgid "Online"
@@ -910,19 +910,19 @@ msgstr ""
 
 #: modules/profile/templates/index.phtml:56
 msgid "User is banned"
-msgstr ""
+msgstr "Utilizator banat"
 
 #: modules/profile/templates/index.phtml:59
 msgid "Reason:"
-msgstr ""
+msgstr "Motiv"
 
 #: modules/profile/templates/index.phtml:65
 msgid "Violations"
-msgstr ""
+msgstr "Incalcare"
 
 #: modules/profile/templates/index.phtml:74
 msgid "User Agent"
-msgstr ""
+msgstr "Agent utilizator"
 
 #: modules/profile/templates/index.phtml:76
 msgid "Ip"
@@ -935,216 +935,216 @@ msgstr ""
 
 #: modules/profile/templates/index.phtml:95
 msgid "Write"
-msgstr ""
+msgstr "Scrie"
 
 #: modules/profile/templates/index.phtml:98
 msgid "Block"
-msgstr ""
+msgstr "Blocheaza"
 
 #: modules/profile/templates/index.phtml:100
 msgid "Unblock"
-msgstr ""
+msgstr "Deblocheaza"
 
 #: modules/profile/templates/index.phtml:104
 msgid "Actions"
-msgstr ""
+msgstr "Actiuni"
 
 #: modules/profile/templates/index.phtml:113
 msgid "Edit profile"
-msgstr ""
+msgstr "Editeaza Profil"
 
 #: modules/profile/templates/index.phtml:126
 msgid "vote"
 msgid_plural "votes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Voteaza"
+msgstr[1] "Voturi"
+msgstr[2] "Voturi"
 
 #: modules/profile/templates/index.phtml:146
 #: modules/profile/templates/karma_vote.phtml:65
 msgid "Vote"
-msgstr ""
+msgstr "Voteaza"
 
 #: modules/profile/templates/index.phtml:154
 msgid "Information"
-msgstr ""
+msgstr "Informatii"
 
 #: modules/profile/templates/index.phtml:171
 msgid "Birthday"
-msgstr ""
+msgstr "Ziua de nastere"
 
 #: modules/profile/templates/index.phtml:176
 msgid "Gender"
-msgstr ""
+msgstr "Sex"
 
 #: modules/profile/templates/index.phtml:183
 msgid "Not specified"
-msgstr ""
+msgstr "Nespecificat"
 
 #: modules/profile/templates/index.phtml:213
 msgid "hidden"
-msgstr ""
+msgstr "ascuns"
 
 #: modules/profile/templates/index.phtml:236
 msgid "Admin Notes"
-msgstr ""
+msgstr "Note administrative"
 
 #: modules/profile/templates/index.phtml:277
 #: modules/profile/templates/office.phtml:38
 msgid "Photo Album"
-msgstr ""
+msgstr "Album foto"
 
 #: modules/profile/templates/ip_history.phtml:38
 msgid "IP address"
-msgstr ""
+msgstr "Adresa IP"
 
 #: modules/profile/templates/ip_history.phtml:39
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: modules/profile/templates/karma.phtml:71
 msgid "Reset Karma"
-msgstr ""
+msgstr "Reseteaza Karma"
 
 #: modules/profile/templates/karma_vote.phtml:38
 msgid "Type of vote"
-msgstr ""
+msgstr "Tipul de vot"
 
 #: modules/profile/templates/karma_vote.phtml:49
 msgid "Votes quantity"
-msgstr ""
+msgstr "Cantitatea voturilor"
 
 #: modules/profile/templates/karma_vote.phtml:58
 msgid "Comment"
-msgstr ""
+msgstr "Comenteaza"
 
 #: modules/profile/templates/karma_vote.phtml:60
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "Min. 2, Max. 500 de caractere"
 
 #: modules/profile/templates/mail_settings.phtml:44
 msgid "Who can write you?"
-msgstr ""
+msgstr "Cine iti poate scrie"
 
 #: modules/profile/templates/mail_settings.phtml:48
 msgid "All can write"
-msgstr ""
+msgstr "Toata lumea"
 
 #: modules/profile/templates/mail_settings.phtml:52
 msgid "Only my contacts"
-msgstr ""
+msgstr "Doar prietenii"
 
 #: modules/profile/templates/message_row.phtml:29
 msgid "To message"
-msgstr ""
+msgstr "Adaugă mesaj"
 
 #: modules/profile/templates/office.phtml:28
 msgid "My Pages"
-msgstr ""
+msgstr "Paginile mele"
 
 #: modules/profile/templates/office.phtml:35
 msgid "Statistics"
-msgstr ""
+msgstr "Statistica"
 
 #: modules/profile/templates/office.phtml:47
 msgid "My Mailbox"
-msgstr ""
+msgstr "Cutia mea poștală"
 
 #: modules/profile/templates/office.phtml:51
 msgid "Received"
-msgstr ""
+msgstr "Primite"
 
 #: modules/profile/templates/office.phtml:58
 msgid "Sent"
-msgstr ""
+msgstr "Trimise"
 
 #: modules/profile/templates/office.phtml:65
 msgid "Files"
-msgstr ""
+msgstr "Fisiere"
 
 #: modules/profile/templates/office.phtml:78
 msgid "Blocked"
-msgstr ""
+msgstr "Blocate"
 
 #: modules/profile/templates/office.phtml:88
 msgid "System Settings"
-msgstr ""
+msgstr "Setari sistem"
 
 #: modules/profile/templates/password.phtml:30
 #: modules/profile/templates/password.phtml:36
 msgid "Enter old password"
-msgstr ""
+msgstr "Introdu parola veche"
 
 #: modules/profile/templates/password.phtml:42
 #: modules/profile/templates/password.phtml:48
 msgid "Enter new password"
-msgstr ""
+msgstr "Introdu parola noua"
 
 #: modules/profile/templates/password.phtml:52
 #: modules/profile/templates/password.phtml:58
 msgid "Repeat password"
-msgstr ""
+msgstr "Repeta parola"
 
 #: modules/profile/templates/restore_password.phtml:22
 #: modules/profile/templates/restore_password.phtml:28
 msgid "Your E-mail"
-msgstr ""
+msgstr "Adresa ta de E-mail"
 
 #: modules/profile/templates/restore_password.phtml:31
 #: modules/profile/templates/restore_password.phtml:40
 msgid "Verification code"
-msgstr ""
+msgstr "Cod de verificare"
 
 #: modules/profile/templates/restore_password.phtml:33
 msgid "Enter verification code"
-msgstr ""
+msgstr "Introduceți codul de verificare"
 
 #: modules/profile/templates/restore_password.phtml:46
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
-msgstr ""
+msgstr "Parola va fi trimisa la adresa de e-mail specificata in profilul tau.<br />ATENTIE !! Daca adresa de e-mail nu a fost specificata in profil, nu iti poti recupera parola."
 
 #: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
-msgstr ""
+msgstr "Setari de timp"
 
 #: modules/profile/templates/settings.phtml:47
 #: modules/profile/templates/settings.phtml:55
 msgid "Shift of time"
-msgstr ""
+msgstr "Schimbari ale timpului"
 
 #: modules/profile/templates/settings.phtml:58
 msgid "System time"
-msgstr ""
+msgstr "Timpul Sistemului"
 
 #: modules/profile/templates/settings.phtml:62
 msgid "System Functions"
-msgstr ""
+msgstr "Functionarile Sistemului"
 
 #: modules/profile/templates/settings.phtml:65
 msgid "Direct URL"
-msgstr ""
+msgstr "URL Direct"
 
 #: modules/profile/templates/settings.phtml:69
 msgid "Youtube Player"
-msgstr ""
+msgstr "Playerul YouTube"
 
 #: modules/profile/templates/settings.phtml:72
 msgid "Text entering"
-msgstr ""
+msgstr "Introducerea textului"
 
 #: modules/profile/templates/settings.phtml:74
 #: modules/profile/templates/settings.phtml:81
 msgid "Height of field"
-msgstr ""
+msgstr "Inaltimea campului"
 
 #: modules/profile/templates/settings.phtml:85
 msgid "Appearance"
-msgstr ""
+msgstr "Aspect"
 
 #: modules/profile/templates/settings.phtml:87
 #: modules/profile/templates/settings.phtml:94
 msgid "Size of Lists"
-msgstr ""
+msgstr "Marimea listei"
 
 #: modules/profile/templates/settings.phtml:99
 msgid "Theme"
@@ -1153,21 +1153,21 @@ msgstr ""
 #: modules/profile/templates/settings.phtml:110
 #: modules/profile/templates/settings.phtml:112
 msgid "Select Language"
-msgstr ""
+msgstr "Selecteaza Limba"
 
 #: modules/profile/templates/settings.phtml:117
 msgid "Site Default"
-msgstr ""
+msgstr "Implicit"
 
 #: modules/profile/templates/stat.phtml:34
 msgid "Registration confirmed"
-msgstr ""
+msgstr "Inregistrare confirmata"
 
 #: modules/profile/templates/stat.phtml:36
 msgid "Free registration"
-msgstr ""
+msgstr "Inregistrare gratuita"
 
 #: modules/profile/templates/stat.phtml:41
 msgid "Registered"
-msgstr ""
+msgstr "Inregistrat"
 
