@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 13:16\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -77,17 +77,17 @@ msgstr ""
 #: modules/forum/templates/new_topic.phtml:111
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:63
 #: modules/forum/src/Application/Controllers/AddFileController.php:97
 msgid "Add file"
-msgstr ""
+msgstr "Добавить файл"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:64
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
-msgstr ""
+msgstr "Время отведенное для выгрузки файла истекло"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:98
 #: modules/forum/src/Application/Controllers/AddFileController.php:99
@@ -97,7 +97,7 @@ msgstr ""
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
-msgstr ""
+msgstr "Ошибка выгрузки файла"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:101
 #: modules/forum/src/Application/Controllers/AddVoteController.php:113
@@ -105,7 +105,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:67
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:139
 msgid "Repeat"
-msgstr ""
+msgstr "Повторить"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:114
 #: modules/forum/src/Application/Controllers/AddFileController.php:115
@@ -116,7 +116,7 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:136
 #: modules/forum/templates/topic.phtml:448
 msgid "Add File"
-msgstr ""
+msgstr "Добавить файл"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:57
 #: modules/forum/src/Application/Controllers/AddVoteController.php:58
@@ -126,7 +126,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/AddVoteController.php:109
 #: modules/forum/templates/topic.phtml:395
 msgid "Add Poll"
-msgstr ""
+msgstr "Добавить опрос"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:59
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:73
@@ -157,26 +157,26 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
-msgstr ""
+msgstr "Неверные данные"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:98
 msgid "Poll added"
-msgstr ""
+msgstr "Опрос добавлен"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:100
 #: modules/forum/src/Application/Controllers/EditVoteController.php:116
 msgid "Continue"
-msgstr ""
+msgstr "Далее"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:111
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Не заполнены обязательные поля"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:122
 #: modules/forum/src/Application/Controllers/EditVoteController.php:145
 #: modules/forum/src/Application/Controllers/EditVoteController.php:157
 msgid "Answer"
-msgstr ""
+msgstr "Ответ"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
@@ -189,16 +189,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:126
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:127
 msgid "Delete posts"
-msgstr ""
+msgstr "Удалить посты"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:116
 msgid "You did not choose something to delete"
-msgstr ""
+msgstr "Вы ничего не выбрали для удаления"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:102
 msgid "Marked posts are deleted"
-msgstr ""
+msgstr "Отмеченные посты удалены"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:42
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:44
@@ -207,7 +207,7 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
-msgstr ""
+msgstr "Доступ запрещен"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:58
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:59
@@ -215,7 +215,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:117
 #: modules/forum/templates/topic.phtml:402
 msgid "Change the topic"
-msgstr ""
+msgstr "Изменить тему"
 
 #: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:51
 #: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:52
@@ -234,7 +234,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:83
 #: modules/forum/templates/topic.phtml:478
 msgid "Filter by author"
-msgstr ""
+msgstr "Фильтр по автору"
 
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:47
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:48
@@ -244,7 +244,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
-msgstr ""
+msgstr "Поиск форума"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:55
 #: modules/forum/src/Application/Controllers/CuratorsController.php:56
@@ -254,13 +254,13 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:65
 #: modules/forum/templates/topic.phtml:467
 msgid "Curators"
-msgstr ""
+msgstr "Кураторы"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:57
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:66
 #: modules/forum/src/Application/ForumUtils.php:71
 msgid "Topic has been deleted or does not exists"
-msgstr ""
+msgstr "Тема удалена, или не существует"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:54
 #: modules/forum/src/Application/Controllers/DeletePostController.php:65
@@ -271,14 +271,14 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/RestorePostController.php:54
 #: modules/forum/src/Application/Controllers/RestorePostController.php:65
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:55
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:58
 #: modules/forum/src/Application/Controllers/EditPostController.php:59
 #: modules/forum/src/Application/Controllers/RestorePostController.php:55
 msgid "Message does not exists or has been deleted"
-msgstr ""
+msgstr "Пост не существует, или был удален"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:57
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:60
@@ -314,25 +314,25 @@ msgstr ""
 #: modules/forum/templates/new_topics.phtml:124
 #: modules/forum/templates/show_post.phtml:149
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:83
 #: modules/forum/src/Application/Controllers/DeletePostController.php:101
 #: modules/forum/src/Application/Controllers/DeletePostController.php:102
 msgid "Delete Message"
-msgstr ""
+msgstr "Удалить сообщение"
 
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:86
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:102
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:103
 msgid "Delete file"
-msgstr ""
+msgstr "Удалить файл"
 
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:88
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:89
 #: modules/forum/templates/topic.phtml:414
 msgid "Delete Topic"
-msgstr ""
+msgstr "Удалить тему"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
@@ -340,31 +340,31 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:83
 #: modules/forum/templates/topic.phtml:393
 msgid "Delete Poll"
-msgstr ""
+msgstr "Удалить опрос"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:72
 msgid "Poll deleted"
-msgstr ""
+msgstr "Опрос удален"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:57
 msgid "Download file"
-msgstr ""
+msgstr "Скачать файл"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:59
 msgid "File does not exist"
-msgstr ""
+msgstr "Файла не существует"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:84
 #: modules/forum/src/Application/Controllers/EditPostController.php:101
 #: modules/forum/src/Application/Controllers/EditPostController.php:125
 #: modules/forum/src/Application/Controllers/EditPostController.php:126
 msgid "Edit Message"
-msgstr ""
+msgstr "Изменить сообщение"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
 msgid "You have not entered the message"
-msgstr ""
+msgstr "Вы не ввели сообщение"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:59
 #: modules/forum/src/Application/Controllers/EditVoteController.php:60
@@ -374,30 +374,30 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/EditVoteController.php:166
 #: modules/forum/templates/topic.phtml:392
 msgid "Edit Poll"
-msgstr ""
+msgstr "Изменить опрос"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:79
 #: modules/forum/src/Application/Controllers/EditVoteController.php:80
 msgid "Delete Answer"
-msgstr ""
+msgstr "Удалить ответ"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:114
 msgid "Poll changed"
-msgstr ""
+msgstr "Опрос изменен"
 
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:56
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:57
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:113
 msgid "Forum Files"
-msgstr ""
+msgstr "Файлы Форума"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
-msgstr ""
+msgstr "Недопустимая длина"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
-msgstr ""
+msgstr "Последние 10 тем"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
@@ -408,7 +408,7 @@ msgstr ""
 #: modules/forum/templates/files_sections.phtml:49
 #: modules/forum/templates/filter_by_author.phtml:41
 msgid "The list is empty"
-msgstr ""
+msgstr "Список пуст"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:50
@@ -417,16 +417,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:54
 #: modules/forum/templates/header.phtml:31
 msgid "Unread"
-msgstr ""
+msgstr "Непрочитанные"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:67
 msgid "All topics marked as read"
-msgstr ""
+msgstr "Все темы отмечены как прочитанные"
 
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:103
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:104
 msgid "Move topic"
-msgstr ""
+msgstr "Переместить тему"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:70
 #: modules/forum/src/Application/Controllers/NewMessageController.php:84
@@ -443,34 +443,34 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:148
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:162
 msgid "New message"
-msgstr ""
+msgstr "Новое сообщение"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:89
 msgid "You cannot write in a closed topic"
-msgstr ""
+msgstr "Вы не можете писать в закрытую тему"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:100
 #: modules/forum/src/Application/Controllers/NewTopicController.php:87
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:116
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:122
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
 msgid "Text is too short"
-msgstr ""
+msgstr "Слишком короткий текст"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:136
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:164
 msgid "Message already exists"
-msgstr ""
+msgstr "Такое сообщение уже было"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:60
 #: modules/forum/src/Application/Controllers/NewTopicController.php:73
 msgid "Go to Section"
-msgstr ""
+msgstr "В раздел"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:85
 #: modules/forum/src/Application/Controllers/NewTopicController.php:164
@@ -478,91 +478,91 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/NewTopicController.php:169
 #: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
-msgstr ""
+msgstr "Новая тема"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:71
 #: modules/forum/src/Application/Controllers/PollVotersController.php:79
 msgid "Who voted in the poll"
-msgstr ""
+msgstr "Пользователи, принявшие участие в опросе"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:88
 msgid "No one has voted in this poll yet"
-msgstr ""
+msgstr "В этом опросе пока никто не участвовал"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:102
 msgid "You can not reply to your own message"
-msgstr ""
+msgstr "Вы не можете отвечать на собственное сообщение"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:214
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:215
 msgid "Reply to message"
-msgstr ""
+msgstr "Ответить на сообщение"
 
 #: modules/forum/src/Application/Controllers/RestorePostController.php:83
 #: modules/forum/src/Application/Controllers/RestorePostController.php:99
 #: modules/forum/src/Application/Controllers/RestorePostController.php:100
 msgid "Restore Message"
-msgstr ""
+msgstr "Восстановить сообщение"
 
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:85
 msgid "You have not selected any author"
-msgstr ""
+msgstr "Вы не выбрали ни одного автора"
 
 #: modules/forum/src/Application/Controllers/ShowPostController.php:40
 #: modules/forum/src/Application/Controllers/ShowPostController.php:63
 #: modules/forum/src/Application/Controllers/ShowPostController.php:75
 #: modules/forum/src/Application/Controllers/ShowPostController.php:76
 msgid "Show post"
-msgstr ""
+msgstr "Просмотр поста"
 
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
 msgid "Vote accepted"
-msgstr ""
+msgstr "Голос принят"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
 #, php-format
 msgid "All for period %d hours"
-msgstr ""
+msgstr "Всего за период %d часов"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "Нет новых сообщений за выбранный период"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ запрещен"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:62
 msgid "Only images are allowed"
-msgstr ""
+msgstr "Разрешены только изображения"
 
 #: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:54
 #: modules/forum/templates/index.phtml:77
 #: modules/forum/templates/section.phtml:68
 #: modules/forum/templates/topics.phtml:123
 msgid "Who in Forum"
-msgstr ""
+msgstr "Кто в форуме"
 
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:52
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:76
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:86
 #: modules/forum/templates/who.phtml:32
 msgid "Who in Topic"
-msgstr ""
+msgstr "Кто в теме"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:49
 msgid "For registered users only"
-msgstr ""
+msgstr "Только для зарегистрированных посетителей"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:50
 #: modules/forum/templates/header.phtml:20
 msgid "Forum is closed"
-msgstr ""
+msgstr "Форум закрыт"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:54
 msgid "Search query must be between 2 and 64 characters"
-msgstr ""
+msgstr "Поисковый запрос должен быть от 2 до 64 символов"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:87
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:96
@@ -571,173 +571,173 @@ msgstr ""
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:136
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:156
 msgid "In the forum Main"
-msgstr ""
+msgstr "На главной форума"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:88
 msgid "Here, in the List"
-msgstr ""
+msgstr "Тут, в списке"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:89
 msgid "Looking forum files"
-msgstr ""
+msgstr "Смотрит файлы форума"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:90
 msgid "In the unreads"
-msgstr ""
+msgstr "Смотрит непрочитанное"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:107
 msgid "In the Category"
-msgstr ""
+msgstr "В категории"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:117
 msgid "In the Section"
-msgstr ""
+msgstr "В разделе"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
 msgid "Answers in the Topic"
-msgstr ""
+msgstr "Отвечает в теме"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:146
 msgid "Writes in the Topic"
-msgstr ""
+msgstr "Пишет в тему"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:149
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:159
 msgid "In the Topic"
-msgstr ""
+msgstr "В теме"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:43
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:71
 msgid "Guest"
-msgstr ""
+msgstr "Гость"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:92
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:282
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:88
 msgid "Forum moderator"
-msgstr ""
+msgstr "Модератор Форума"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:93
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:283
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:89
 msgid "Download moderator"
-msgstr ""
+msgstr "Модератор Загрузок"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:94
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:284
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
 msgid "Library moderator"
-msgstr ""
+msgstr "Модератор Библиотеки"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:95
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:285
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:91
 msgid "Super moderator"
-msgstr ""
+msgstr "Супермодератор"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:96
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:286
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:92
 msgid "Administrator"
-msgstr ""
+msgstr "Администратор"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:97
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:287
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:93
 msgid "Supervisor"
-msgstr ""
+msgstr "Супервайзор"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:55
 msgid "File size exceed"
-msgstr ""
+msgstr "Вес файла превышает"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:61
 msgid "The forbidden file format.<br>You can upload files of the following extension"
-msgstr ""
+msgstr "Запрещенный тип файла!<br>К отправке разрешены только файлы, имеющие следующее расширения"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:29
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Вы не можете редактировать анкету старшего Вас по должности"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:37
 msgid "You are trying to change another's post"
-msgstr ""
+msgstr "Вы пытаетесь изменить чужой пост"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:54
 msgid "Your message not already latest, you cannot change it"
-msgstr ""
+msgstr "Ваш пост уже не последний и Вы не можете его менять"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:58
 msgid "You cannot edit your posts after 5 minutes"
-msgstr ""
+msgstr "С момента создания поста прошло более 5 минут и Вы не можете его редактировать"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:68
 #: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
-msgstr ""
+msgstr "Файлы категории"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:85
 msgid "Section files"
-msgstr ""
+msgstr "Файлы раздела"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:102
 #: modules/forum/templates/topic.phtml:37
 msgid "Topic Files"
-msgstr ""
+msgstr "Файлы топика"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:142
 #: modules/forum/templates/files_list.phtml:28
 #: modules/forum/templates/files_sections.phtml:28
 msgid "New Files"
-msgstr ""
+msgstr "Новые файлы"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:172
 msgid "List of sections"
-msgstr ""
+msgstr "Список разделов"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:297
 msgid "Windows applications"
-msgstr ""
+msgstr "Приложения Windows"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
 msgid "Java applications"
-msgstr ""
+msgstr "Приложения Java"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
 msgid "SIS"
-msgstr ""
+msgstr "Приложения SIS"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:300
 msgid "txt"
-msgstr ""
+msgstr "Текстовые файлы"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
 msgid "Pictures"
-msgstr ""
+msgstr "Картинки"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
 msgid "Archive"
-msgstr ""
+msgstr "Архивы"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
 msgid "Videos"
-msgstr ""
+msgstr "Видео"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
 msgid "MP3"
-msgstr ""
+msgstr "МР3"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "Other"
-msgstr ""
+msgstr "Другое"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
-msgstr ""
+msgstr "Файл прикреплен"
 
 #: modules/forum/templates/add_file.phtml:32
 msgid "Add more"
-msgstr ""
+msgstr "Добавить ещё"
 
 #: modules/forum/templates/add_file.phtml:33
 #: modules/forum/templates/add_file.phtml:48
@@ -749,81 +749,81 @@ msgstr ""
 #: modules/forum/templates/move_topic.phtml:52
 #: modules/forum/templates/show_post.phtml:148
 msgid "Back to topic"
-msgstr ""
+msgstr "Вернуться в тему"
 
 #: modules/forum/templates/add_file.phtml:40
 msgid "Choose file"
-msgstr ""
+msgstr "Выберите файл"
 
 #: modules/forum/templates/add_file.phtml:44
 msgid "Max. Size"
-msgstr ""
+msgstr "Макс. размер"
 
 #: modules/forum/templates/add_file.phtml:47
 msgid "Upload"
-msgstr ""
+msgstr "Загрузить"
 
 #: modules/forum/templates/add_poll.phtml:31
 #: modules/forum/templates/add_poll.phtml:32
 #: modules/forum/templates/edit_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:35
 msgid "Poll"
-msgstr ""
+msgstr "Опрос"
 
 #: modules/forum/templates/add_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:37
 msgid "Maximum length: 200 characters"
-msgstr ""
+msgstr "Максимальная длина: 200 символов"
 
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
 msgid "Answers"
-msgstr ""
+msgstr "Ответы"
 
 #: modules/forum/templates/add_poll.phtml:43
 #: modules/forum/templates/edit_poll.phtml:53
 msgid "Maximum length: 150 characters"
-msgstr ""
+msgstr "Максимальная длина: 150 символов"
 
 #: modules/forum/templates/add_poll.phtml:49
 #: modules/forum/templates/edit_poll.phtml:59
 msgid "Add Answer"
-msgstr ""
+msgstr "Добавить ответ"
 
 #: modules/forum/templates/add_poll.phtml:52
 #: modules/forum/templates/edit_poll.phtml:62
 msgid "Delete last"
-msgstr ""
+msgstr "Удалить последнее"
 
 #: modules/forum/templates/add_poll.phtml:56
 #: modules/forum/templates/change_topic.phtml:51
 #: modules/forum/templates/edit_poll.phtml:66
 #: modules/forum/templates/edit_post.phtml:45
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: modules/forum/templates/change_topic.phtml:29
 #: modules/forum/templates/change_topic.phtml:30
 msgid "Topic name"
-msgstr ""
+msgstr "Название темы"
 
 #: modules/forum/templates/change_topic.phtml:37
 #: modules/forum/templates/new_topic.phtml:96
 msgid "Meta keywords"
-msgstr ""
+msgstr "Ключевые слова (Meta)"
 
 #: modules/forum/templates/change_topic.phtml:44
 #: modules/forum/templates/new_topic.phtml:92
 msgid "Meta description"
-msgstr ""
+msgstr "Описание (Meta)"
 
 #: modules/forum/templates/clear_search_history.phtml:28
 msgid "Do you really want to clear the search history?"
-msgstr ""
+msgstr "Вы действительно хотите очистить историю поиска?"
 
 #: modules/forum/templates/clear_search_history.phtml:31
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
 #: modules/forum/templates/clear_search_history.phtml:32
 #: modules/forum/templates/delete_answer.phtml:33
@@ -834,20 +834,20 @@ msgstr ""
 #: modules/forum/templates/mass_delete.phtml:41
 #: modules/forum/templates/restore_post.phtml:36
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: modules/forum/templates/curators.phtml:31
 #: modules/forum/templates/filter_by_author.phtml:35
 msgid "Changes saved"
-msgstr ""
+msgstr "Изменения сохранены"
 
 #: modules/forum/templates/curators.phtml:51
 msgid "Assign"
-msgstr ""
+msgstr "Назначить"
 
 #: modules/forum/templates/delete_answer.phtml:29
 msgid "Do you really want to delete the answer?"
-msgstr ""
+msgstr "Вы действительно хотите удалить вариант ответа?"
 
 #: modules/forum/templates/delete_answer.phtml:32
 #: modules/forum/templates/delete_file.phtml:36
@@ -858,36 +858,36 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:325
 #: modules/forum/templates/topic.phtml:370
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: modules/forum/templates/delete_file.phtml:31
 #: modules/forum/templates/delete_post.phtml:37
 #: modules/forum/templates/delete_topic.phtml:31
 #: modules/forum/templates/mass_delete.phtml:31
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Вы действительно хотите удалить?"
 
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
-msgstr ""
+msgstr "В случае удаления, из счетчика постов форума будет вычтен один балл"
 
 #: modules/forum/templates/delete_poll.phtml:29
 msgid "Do you really want to delete a poll?"
-msgstr ""
+msgstr "Вы действительно хотите удалить опрос?"
 
 #: modules/forum/templates/delete_post.phtml:33
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
-msgstr ""
+msgstr "ВНИМАНИЕ!<br>Это последний пост темы. Вместе с ним будет удалена (или скрыта) и сама тема"
 
 #: modules/forum/templates/delete_post.phtml:44
 #: modules/forum/templates/delete_topic.phtml:36
 msgid "Hide"
-msgstr ""
+msgstr "Скрыть"
 
 #: modules/forum/templates/delete_topic.phtml:47
 msgid "Perform"
-msgstr ""
+msgstr "Выполнить"
 
 #: modules/forum/templates/edit_post.phtml:36
 #: modules/forum/templates/new_topic.phtml:81
@@ -895,26 +895,26 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:125
 #: modules/forum/templates/topic.phtml:437
 msgid "Message"
-msgstr ""
+msgstr "Сообщение"
 
 #: modules/forum/templates/edit_post.phtml:48
 #: modules/forum/templates/new_topic.phtml:116
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Smilies"
-msgstr ""
+msgstr "Смайлы"
 
 #: modules/forum/templates/files_list.phtml:80
 #: modules/forum/templates/topic.phtml:243
 msgid "Link to post"
-msgstr ""
+msgstr "Ссылка на пост"
 
 #: modules/forum/templates/files_list.phtml:131
 msgid "To message"
-msgstr ""
+msgstr "К сообщению"
 
 #: modules/forum/templates/files_list.phtml:134
 msgid "To topic"
-msgstr ""
+msgstr "В тему"
 
 #: modules/forum/templates/files_list.phtml:144
 #: modules/forum/templates/forum_search.phtml:74
@@ -924,105 +924,105 @@ msgstr ""
 #: modules/forum/templates/voted_users.phtml:44
 #: modules/forum/templates/who.phtml:52
 msgid "Total"
-msgstr ""
+msgstr "Всего"
 
 #: modules/forum/templates/filter_by_author.phtml:44
 msgid "Filter will be display posts from selected authors only"
-msgstr ""
+msgstr "Фильтрация позволит отображать посты только от выбранных авторов"
 
 #: modules/forum/templates/filter_by_author.phtml:64
 msgid "Filter"
-msgstr ""
+msgstr "Фильтр"
 
 #: modules/forum/templates/filter_by_author.phtml:66
 #: modules/forum/templates/topic.phtml:47
 #: modules/forum/templates/topic.phtml:475
 msgid "Cancel Filter"
-msgstr ""
+msgstr "Отменить фильтрацию"
 
 #: modules/forum/templates/footer.phtml:29
 msgid "Forum rules"
-msgstr ""
+msgstr "Правила форума"
 
 #: modules/forum/templates/forum_search.phtml:31
 #: modules/forum/templates/forum_search.phtml:32
 msgid "Search query"
-msgstr ""
+msgstr "Запрос"
 
 #: modules/forum/templates/forum_search.phtml:34
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
-msgstr ""
+msgstr "Длина запроса: 4 мин., 64 макс.<br>Поиск нечувствителен к регистру букв<br>Результаты выводятся с сортировкой по релевантности."
 
 #: modules/forum/templates/forum_search.phtml:39
 msgid "Search in the topic names"
-msgstr ""
+msgstr "Искать в названиях тем"
 
 #: modules/forum/templates/forum_search.phtml:42
 #: modules/forum/templates/header.phtml:73
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #: modules/forum/templates/forum_search.phtml:47
 msgid "Your search did not match any results"
-msgstr ""
+msgstr "По Вашему запросу ничего не найдено"
 
 #: modules/forum/templates/forum_search.phtml:59
 #: modules/forum/templates/new_topics.phtml:96
 #: modules/forum/templates/topics.phtml:105
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 #: modules/forum/templates/forum_search.phtml:62
 msgid "Go to Message"
-msgstr ""
+msgstr "Перейти к сообщению"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr ""
+msgstr "История поиска"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
-msgstr ""
+msgstr "Очистить историю"
 
 #: modules/forum/templates/header.phtml:22
 msgid "Read only"
-msgstr ""
+msgstr "Только для чтения"
 
 #: modules/forum/templates/header.phtml:44
 msgid "Show for Period"
-msgstr ""
+msgstr "Показать за период"
 
 #: modules/forum/templates/header.phtml:53
 msgid "Last activity"
-msgstr ""
+msgstr "Последняя активность"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr ""
+msgstr "Файлы форума"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
-msgstr ""
+msgstr "Категория"
 
 #: modules/forum/templates/move_topic.phtml:38
 msgid "New section"
-msgstr ""
+msgstr "Новый раздел"
 
 #: modules/forum/templates/move_topic.phtml:47
 msgid "Category is empty"
-msgstr ""
+msgstr "Категория пуста"
 
 #: modules/forum/templates/move_topic.phtml:51
 msgid "Move"
-msgstr ""
+msgstr "Переместить"
 
 #: modules/forum/templates/move_topic.phtml:56
 msgid "Other categories"
-msgstr ""
+msgstr "Другие категории"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
@@ -1031,203 +1031,203 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:451
 #: modules/forum/templates/topic.phtml:454
 msgid "Write"
-msgstr ""
+msgstr "Написать"
 
 #: modules/forum/templates/new_topic.phtml:107
 msgid "Preview"
-msgstr ""
+msgstr "Предпросмотр"
 
 #: modules/forum/templates/new_topics.phtml:36
 msgid "Period"
-msgstr ""
+msgstr "Период"
 
 #: modules/forum/templates/new_topics.phtml:38
 msgid "Show period"
-msgstr ""
+msgstr "Показать за период"
 
 #: modules/forum/templates/new_topics.phtml:62
 #: modules/forum/templates/topics.phtml:59
 msgid "Pinned topic"
-msgstr ""
+msgstr "Тема закреплена"
 
 #: modules/forum/templates/new_topics.phtml:69
 #: modules/forum/templates/topics.phtml:66
 msgid "Topic has poll"
-msgstr ""
+msgstr "В теме есть опрос"
 
 #: modules/forum/templates/new_topics.phtml:76
 #: modules/forum/templates/topics.phtml:73
 msgid "Closed topic"
-msgstr ""
+msgstr "Тема закрыта"
 
 #: modules/forum/templates/new_topics.phtml:83
 #: modules/forum/templates/topics.phtml:80
 #: modules/forum/templates/topics.phtml:91
 msgid "Deleted topic"
-msgstr ""
+msgstr "Тема удалена"
 
 #: modules/forum/templates/new_topics.phtml:97
 #: modules/forum/templates/topics.phtml:106
 msgid "Last post"
-msgstr ""
+msgstr "Последний пост"
 
 #: modules/forum/templates/new_topics.phtml:119
 msgid "Mark as read"
-msgstr ""
+msgstr "Отметить как прочитанное"
 
 #: modules/forum/templates/reply_message.phtml:37
 msgid "Topic"
-msgstr ""
+msgstr "Тема"
 
 #: modules/forum/templates/restore_post.phtml:30
 msgid "Do you really want to restore this post?"
-msgstr ""
+msgstr "Вы действительно хотите восстановить этот пост?"
 
 #: modules/forum/templates/restore_post.phtml:35
 #: modules/forum/templates/topic.phtml:372
 msgid "Restore"
-msgstr ""
+msgstr "Восстановить"
 
 #: modules/forum/templates/section.phtml:36
 msgid "Section Files"
-msgstr ""
+msgstr "Файлы раздела"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr ""
+msgstr "В этой категории нет разделов"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr ""
+msgstr "Изменено:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
 msgid "Edited"
-msgstr ""
+msgstr "Изменено"
 
 #: modules/forum/templates/show_post.phtml:80
 #: modules/forum/templates/topic.phtml:293
 msgid "Attached files"
-msgstr ""
+msgstr "Прикрепленные файлы"
 
 #: modules/forum/templates/show_post.phtml:135
 #: modules/forum/templates/topic.phtml:353
 msgid "Reply"
-msgstr ""
+msgstr "Ответ"
 
 #: modules/forum/templates/show_post.phtml:140
 #: modules/forum/templates/topic.phtml:358
 msgid "Quote"
-msgstr ""
+msgstr "Цитата"
 
 #: modules/forum/templates/topic.phtml:43
 msgid "Filter by author is activated"
-msgstr ""
+msgstr "Активирован фильтр по автору"
 
 #: modules/forum/templates/topic.phtml:54
 msgid "Topic closed"
-msgstr ""
+msgstr "Тема закрыта"
 
 #: modules/forum/templates/topic.phtml:60
 msgid "Topic deleted by"
-msgstr ""
+msgstr "Тему удалил"
 
 #: modules/forum/templates/topic.phtml:64
 msgid "Undelete topic"
-msgstr ""
+msgstr "Отменил удаление темы"
 
 #: modules/forum/templates/topic.phtml:80
 #: modules/forum/templates/topic.phtml:110
 msgid "Vote"
-msgstr ""
+msgstr "Голосовать"
 
 #: modules/forum/templates/topic.phtml:81
 msgid "Results"
-msgstr ""
+msgstr "Результаты"
 
 #: modules/forum/templates/topic.phtml:101
 msgid "Total votes"
-msgstr ""
+msgstr "Всего голосов"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr ""
+msgstr "Пост удален:"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
-msgstr ""
+msgstr "Удалено"
 
 #: modules/forum/templates/topic.phtml:267
 msgid "Post restored by:"
-msgstr ""
+msgstr "Пост восстановил:"
 
 #: modules/forum/templates/topic.phtml:268
 msgid "Restored"
-msgstr ""
+msgstr "Восстановлено"
 
 #: modules/forum/templates/topic.phtml:369
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: modules/forum/templates/topic.phtml:384
 msgid "Delete selected"
-msgstr ""
+msgstr "Удалить выбранное"
 
 #: modules/forum/templates/topic.phtml:388
 msgid "Actions with topic"
-msgstr ""
+msgstr "Действия с темой"
 
 #: modules/forum/templates/topic.phtml:399
 msgid "Curators of the Topic"
-msgstr ""
+msgstr "Кураторы темы"
 
 #: modules/forum/templates/topic.phtml:405
 msgid "Open Topic"
-msgstr ""
+msgstr "Открыть тему"
 
 #: modules/forum/templates/topic.phtml:407
 msgid "Close Topic"
-msgstr ""
+msgstr "Закрыть тему"
 
 #: modules/forum/templates/topic.phtml:411
 msgid "Restore Topic"
-msgstr ""
+msgstr "Восстановить тему"
 
 #: modules/forum/templates/topic.phtml:417
 msgid "Unfix Topic"
-msgstr ""
+msgstr "Открепить тему"
 
 #: modules/forum/templates/topic.phtml:419
 msgid "Pin Topic"
-msgstr ""
+msgstr "Закрепить тему"
 
 #: modules/forum/templates/topic.phtml:422
 msgid "Move Topic"
-msgstr ""
+msgstr "Переместить тему"
 
 #: modules/forum/templates/topic.phtml:499
 msgid "Who is here"
-msgstr ""
+msgstr "Кто здесь"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr ""
+msgstr "В этом разделе нет тем"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"
-msgstr ""
+msgstr "Последняя страница"
 
 #: modules/forum/templates/voted_users.phtml:54
 #: modules/forum/templates/who.phtml:62
 msgid "Go to Topic"
-msgstr ""
+msgstr "В тему"
 
 #: modules/forum/templates/who.phtml:38
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #: modules/forum/templates/who.phtml:39
 msgid "Guests"
-msgstr ""
+msgstr "Гости"
 
