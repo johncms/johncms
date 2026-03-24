@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -23,57 +23,57 @@ msgstr ""
 #: modules/library/templates/tags.phtml:58
 #: modules/library/templates/top.phtml:60
 msgid "The list is empty"
-msgstr ""
+msgstr "Daftar ini kosong"
 
 #: modules/library/includes/addnew.php:28
 #: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
-msgstr ""
+msgstr "Tulis Artikel"
 
 #: modules/library/includes/addnew.php:43
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Anda tidak bisa menambah artikel terlalu sering <br> Mohon tunggu %d detik."
 
 #: modules/library/includes/addnew.php:46
 #: modules/library/includes/mkdir.php:30
 msgid "You have not entered the name"
-msgstr ""
+msgstr "Anda belum memasukkan nama"
 
 #: modules/library/includes/addnew.php:59
 msgid "The file is invalid encoding, preferably UTF-8"
-msgstr ""
+msgstr "Encoding berkas tidak valid, sebaiknya UTF-8"
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr ""
+msgstr "Mengunggah gagal"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
-msgstr ""
+msgstr "Format berkas tidak valid, diizinkan *.txt"
 
 #: modules/library/includes/addnew.php:70
 msgid "You have not entered text"
-msgstr ""
+msgstr "Anda belum memasukkan isi"
 
 #: modules/library/includes/addnew.php:112
 #: modules/library/includes/moder.php:79
 msgid "Photo uploading error"
-msgstr ""
+msgstr "Mengunggah foto gagal"
 
 #: modules/library/includes/comments.php:24
 #: modules/library/includes/comments.php:43
 #: modules/library/index.php:70
 msgid "Access forbidden"
-msgstr ""
+msgstr "Akses ditolak"
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr ""
+msgstr "Komentar"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
-msgstr ""
+msgstr "Data salah"
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
@@ -86,132 +86,132 @@ msgstr ""
 #: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr ""
+msgstr "Bagian tidak ada"
 
 #: modules/library/includes/del.php:88
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr ""
+msgstr "Berhasil dihapus:<br>Folder: (%d)<br>Artikel: (%d)<br>Tags: (%d)<br>Komentar: (%d) <br> Gambar: (%d)"
 
 #: modules/library/includes/del.php:106
 msgid "Articles do not exist"
-msgstr ""
+msgstr "Artikel tidak ada"
 
 #: modules/library/includes/download.php:51
 msgid "Author name"
-msgstr ""
+msgstr "Nama penulis"
 
 #: modules/library/includes/download.php:52
 msgid "Author last name"
-msgstr ""
+msgstr "Nama belakang penulis"
 
 #: modules/library/includes/download.php:54
 msgid "Name of the book"
-msgstr ""
+msgstr "Nama buku"
 
 #: modules/library/includes/download.php:56
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr ""
+msgstr "Komentar terbaru"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
 msgid "Create Section"
-msgstr ""
+msgstr "Buat Bagian"
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
-msgstr ""
+msgstr "Ulangi"
 
 #: modules/library/includes/moder.php:147
 msgid "The ROOT"
-msgstr ""
+msgstr "Utama"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr ""
+msgstr "Sunting Bagian"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
-msgstr ""
+msgstr "Sunting Artikel"
 
 #: modules/library/includes/new.php:27
 #: modules/library/templates/main.phtml:34
 msgid "New Articles"
-msgstr ""
+msgstr "Tulis Artikel"
 
 #: modules/library/includes/search.php:23
 #: modules/library/templates/main.phtml:37
 #: modules/library/templates/search.phtml:37
 msgid "Search"
-msgstr ""
+msgstr "Cari"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr ""
+msgstr "Urutkan berdasar abjad"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr ""
+msgstr "Urutkan berdasar relevansi"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
 #: modules/library/templates/moder.phtml:77
 msgid "Tags"
-msgstr ""
+msgstr "Tag"
 
 #: modules/library/includes/top.php:20
 #: modules/library/templates/main.phtml:39
 msgid "Rating articles"
-msgstr ""
+msgstr "Rating Artikel"
 
 #: modules/library/includes/top.php:27
 msgid "Most readings"
-msgstr ""
+msgstr "Paling banyak dibaca"
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
-msgstr ""
+msgstr "Berdasar Rating"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr ""
+msgstr "Berdasar komentar"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
-msgstr ""
+msgstr "Perpustakaan"
 
 #: modules/library/index.php:68
 #: modules/library/templates/main.phtml:28
 msgid "Library is closed"
-msgstr ""
+msgstr "Perpustakaan ditutup"
 
 #: modules/library/templates/addnew.phtml:30
 msgid "Article added"
-msgstr ""
+msgstr "Artikel berhasil ditambahkan"
 
 #: modules/library/templates/addnew.phtml:34
 msgid "To Article"
-msgstr ""
+msgstr "Artikel"
 
 #: modules/library/templates/addnew.phtml:36
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
-msgstr ""
+msgstr "Terima kasih untuk apa yang Anda tulis. Setelah disetujui pengurus artikel Anda akan tampil di Perpustkaan."
 
 #: modules/library/templates/addnew.phtml:37
 #: modules/library/templates/mkdir.phtml:34
 msgid "To Section"
-msgstr ""
+msgstr "Pada bagian"
 
 #: modules/library/templates/addnew.phtml:52
 #: modules/library/templates/addnew.phtml:53
@@ -220,41 +220,41 @@ msgstr ""
 #: modules/library/templates/moder.phtml:49
 #: modules/library/templates/moder.phtml:50
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
 msgid "Announce"
-msgstr ""
+msgstr "Mengumumkan"
 
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
 msgid "Text"
-msgstr ""
+msgstr "Isi"
 
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr ""
+msgstr "Komentar Artikel"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
-msgstr ""
+msgstr "Unggah foto"
 
 #: modules/library/templates/addnew.phtml:79
 msgid "Select the text file"
-msgstr ""
+msgstr "Pilih berkas teks"
 
 #: modules/library/templates/addnew.phtml:80
 msgid "Text entry field will be ignored"
-msgstr ""
+msgstr "Kolom entri teks akan diabaikan"
 
 #: modules/library/templates/addnew.phtml:89
 #: modules/library/templates/mkdir.phtml:70
 #: modules/library/templates/moder.phtml:135
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: modules/library/templates/addnew.phtml:90
 #: modules/library/templates/del.phtml:43
@@ -265,19 +265,19 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:71
 #: modules/library/templates/moder.phtml:136
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
-msgstr ""
+msgstr "Unduh berkas"
 
 #: modules/library/templates/book.phtml:50
 msgid "The Tags:"
-msgstr ""
+msgstr "Tag:"
 
 #: modules/library/templates/book.phtml:55
 msgid "Who added:"
-msgstr ""
+msgstr "Yang ditambahkan:"
 
 #: modules/library/templates/book.phtml:59
 #: modules/library/templates/booklist.phtml:33
@@ -290,21 +290,21 @@ msgstr ""
 #: modules/library/templates/search.phtml:49
 #: modules/library/templates/tags.phtml:39
 msgid "Number of readings:"
-msgstr ""
+msgstr "Jumlah bacaan:"
 
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:42
 #: modules/library/templates/tags.phtml:43
 #: modules/library/templates/top.phtml:50
 msgid "Comments:"
-msgstr ""
+msgstr "Komentar:"
 
 #: modules/library/templates/book.phtml:82
 #: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr ""
+msgstr "Penulis:"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -327,7 +327,7 @@ msgstr ""
 
 #: modules/library/templates/del.phtml:34
 msgid "Successful transfer"
-msgstr ""
+msgstr "Berhasil ditransfer"
 
 #: modules/library/templates/del.phtml:36
 #: modules/library/templates/del.phtml:71
@@ -338,137 +338,137 @@ msgstr ""
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
-msgstr ""
+msgstr "Apakah Anda yakin memindahkan isi?"
 
 #: modules/library/templates/del.phtml:42
 msgid "Move"
-msgstr ""
+msgstr "Pindah"
 
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
-msgstr ""
+msgstr "Pindah ke Bagian"
 
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
 msgid "Approve"
-msgstr ""
+msgstr "Terima"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
-msgstr ""
+msgstr "Tidak ada Bagian yang akan dipindah"
 
 #: modules/library/templates/del.phtml:81
 msgid "Are you sure you want to delete content?"
-msgstr ""
+msgstr "Apalah Anda yakin menghapus isi?"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr ""
+msgstr "Bagian tidak kosong"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
-msgstr ""
+msgstr "Pilih Aksi"
 
 #: modules/library/templates/del.phtml:97
 msgid "Delete with movement"
-msgstr ""
+msgstr "Hapus dengan memindah"
 
 #: modules/library/templates/del.phtml:101
 msgid "Delete all Sections and Articles"
-msgstr ""
+msgstr "Hapus semua Bagian dsn Artikel"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
-msgstr ""
+msgstr "Lakukan"
 
 #: modules/library/templates/del.phtml:113
 #: modules/library/templates/del.phtml:125
 #: modules/library/templates/del.phtml:137
 msgid "Delete confirmation"
-msgstr ""
+msgstr "Konfirmasi menghapus"
 
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr ""
+msgstr "Dihapus"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
-msgstr ""
+msgstr "Pilih rating:"
 
 #: modules/library/templates/helpers/printvote.phtml:8
 msgid "Vote"
-msgstr ""
+msgstr "Beri Nilai"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
 msgid "Up"
-msgstr ""
+msgstr "Naik"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
 msgid "Down"
-msgstr ""
+msgstr "Turun"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
-msgstr ""
+msgstr "Bagian berhasil dibuat"
 
 #: modules/library/templates/mkdir.phtml:55
 #: modules/library/templates/moder.phtml:55
 msgid "Section description"
-msgstr ""
+msgstr "Deskripsi Bagian"
 
 #: modules/library/templates/mkdir.phtml:59
 #: modules/library/templates/moder.phtml:84
 msgid "Section type"
-msgstr ""
+msgstr "Tipe Bagian"
 
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
 msgid "Articles"
-msgstr ""
+msgstr "Artikel"
 
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr ""
+msgstr "Bagian"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
-msgstr ""
+msgstr "Disunting"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
+msgstr "Isi artikel tidak dapat disunting, data terlalu besar!!!"
 
 #: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
-msgstr ""
+msgstr "Izinkan pengguna menulis artikel?"
 
 #: modules/library/templates/moder.phtml:99
 msgid "Yes"
-msgstr ""
+msgstr "Ya"
 
 #: modules/library/templates/moder.phtml:103
 msgid "No"
-msgstr ""
+msgstr "Tidak"
 
 #: modules/library/templates/moder.phtml:122
 msgid "Verified"
-msgstr ""
+msgstr "Terverifikasi"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr ""
+msgstr "Jumlah dibaca"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr ""
+msgstr "Bagian:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -476,49 +476,49 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:54
 msgid "To Library"
-msgstr ""
+msgstr "Perpustakaan"
 
 #: modules/library/templates/premod.phtml:20
 #: modules/library/templates/premod.phtml:21
 msgid "Moderation Articles"
-msgstr ""
+msgstr "Moderasi Artikel"
 
 #: modules/library/templates/premod.phtml:27
 msgid "All Articles added in database"
-msgstr ""
+msgstr "Semua artikel ditambahkan ke basis data"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Article"
-msgstr ""
+msgstr "Artikel"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
-msgstr ""
+msgstr "Ditambahkan ke basis data"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr ""
+msgstr "Terima semua"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr ""
+msgstr "Pencarian query"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"
-msgstr ""
+msgstr "Cari judul artikel"
 
 #: modules/library/templates/search.phtml:68
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
-msgstr ""
+msgstr "Panjang kueri: min. 4, maks. 64<br>Pencarian menggunakan huruf tidak sensitif<br>Hasil diurutkan berdasarkan relevansi"
 
 #: modules/library/templates/search.phtml:75
 msgid "New Search"
-msgstr ""
+msgstr "Cari lagi"
 
 #: modules/library/templates/sectionslist.phtml:63
 msgid "Create"
-msgstr ""
+msgstr "Buat"
 
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Tag Cloud"
@@ -527,5 +527,5 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr ""
+msgstr "Urutan"
 
