@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
-"PO-Revision-Date: 2026-03-24 13:19\n"
+"PO-Revision-Date: 2026-03-24 21:42\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -21,12 +21,12 @@ msgstr ""
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Forumda yangi javob"
 
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
+msgstr "<a href=\"%s\"> Foydalanuvchi <b>% s </b>% s mavzusidagi xabaringizga javob berdi </a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
@@ -34,28 +34,28 @@ msgstr ""
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Karmaga yangi ovoz"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "<a href=\"#karma_url#\"> sizning karma </a> da <b> #user_name# </b> foydalanuvchisi ovoz berdi."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "Bosh sahifada"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Fotoalbomni ko‘rmoqda"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "Foydalanuvchilar"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "Foydalanuvchilar ro‘yxati"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "Mehmonxona"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "FAQ ni o‘qiyapti"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Kutubxona"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "Kirish"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Shaxsiy yozishmalar"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "Yangiliklarni o‘qiyapti"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Tashqi manzil orqali boshqa saytga yo‘naltirilmoqda"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Saytda ro‘yxatdan o‘tgan"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "Foydalanuvchilar ro‘yxati"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "Kim online?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "Shaxsiy"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Chiqish"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Loginni kiritmadingiz"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Parolni kiritmadingiz"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,46 +164,46 @@ msgstr "Himoya kodi xato kiritildi"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Saytga kirish amalga oshmadi"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Tekshiruv kodi"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Tekshiruv kodini kiriting"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Davom etish"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "Siz elektron pochta manzilingizni tasdiqlamadingiz. Iltimos, elektron pochtangizni tekshiring va undagi ko'rsatmalarga amal qiling."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Kechirasiz, ro‘yxatdan o‘tish haqidagi so‘rovingiz hali ko‘rib chiqilmadi. Iltimos, sabrli bo‘ling."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Kirish"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "Login"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Parol"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Parolni unutdingizmi?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Ro‘yxatdan o‘tish"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Rostdan ham saytdan chiqmoqchimisiz?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,21 +337,21 @@ msgstr "Siz mavjud bo'lmagan yoki ko'chirilgan narsani qidirmoqdasiz"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Qo'shildi"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "XATOLIK"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Saytning biron bir joyida"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Kun"
+msgstr[1] "Kunlar"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -672,35 +672,35 @@ msgstr ""
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "Sql so'rovlari jurnali"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "So'rov"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Bo'g'lash"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Vaqt"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Yangiliklar arxivi"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Foto Albomlar"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Ma'lumot, FAQ"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Boshqaruv Paneli"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
