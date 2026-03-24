@@ -11,47 +11,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:05\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
-msgstr ""
+msgstr "التراخيص"
 
 #: modules/admin/includes/adminlist.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
-msgstr ""
+msgstr "الإدارة"
 
 #: modules/admin/includes/adminlist.php:36
 msgid "Supervisors"
-msgstr ""
+msgstr "المشرف"
 
 #: modules/admin/includes/adminlist.php:56
 msgid "Administrators"
-msgstr ""
+msgstr "مدير النظام"
 
 #: modules/admin/includes/adminlist.php:76
 msgid "Super Moderators"
-msgstr ""
+msgstr "سوبر المشرفين"
 
 #: modules/admin/includes/adminlist.php:96
 msgid "Moderators"
-msgstr ""
+msgstr "المشرفين"
 
 #: modules/admin/includes/ads.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:169
 msgid "Advertisement"
-msgstr ""
+msgstr "الاعلانات"
 
 #: modules/admin/includes/ads.php:28
 msgid "Edit link"
-msgstr ""
+msgstr "تحرير رابط"
 
 #: modules/admin/includes/ads.php:28
 #: modules/admin/templates/ads_index.phtml:85
 msgid "Add link"
-msgstr ""
+msgstr "اضافة رابط"
 
 #: modules/admin/includes/ads.php:43
 #: modules/admin/includes/counters.php:91
@@ -68,33 +68,33 @@ msgstr ""
 #: modules/admin/includes/reg.php:146
 #: modules/admin/includes/usr_del.php:47
 msgid "Wrong data"
-msgstr ""
+msgstr "بيانات خاطئة"
 
 #: modules/admin/includes/ads.php:71
 #: modules/admin/includes/counters.php:230
 #: modules/admin/includes/counters.php:320
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "لا يتم ملء الحقول المطلوبة"
 
 #: modules/admin/includes/ads.php:82
 msgid "This place is occupied"
-msgstr ""
+msgstr "المكان ممتلى"
 
 #: modules/admin/includes/ads.php:88
 msgid "Invalid characters"
-msgstr ""
+msgstr "احرف غير صالحه"
 
 #: modules/admin/includes/ads.php:91
 msgid "Color is specified incorrectly"
-msgstr ""
+msgstr "لون غير صحيح"
 
 #: modules/admin/includes/ads.php:199
 msgid "Link successfully changed"
-msgstr ""
+msgstr "تم تغيير الرابط بنجاح"
 
 #: modules/admin/includes/ads.php:199
 msgid "Link successfully added"
-msgstr ""
+msgstr "تم اضافة الرابط بنجاح"
 
 #: modules/admin/includes/ads.php:201
 #: modules/admin/includes/antispy.php:228
@@ -108,7 +108,7 @@ msgstr ""
 #: modules/admin/includes/usr_clean.php:75
 #: modules/admin/templates/users/captcha.phtml:34
 msgid "Continue"
-msgstr ""
+msgstr "متابعه"
 
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ipban.php:452
@@ -125,99 +125,99 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:36
 #: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: modules/admin/includes/ads.php:290
 msgid "Are you sure want to delete link?"
-msgstr ""
+msgstr "هل ترغب بالحذف؟"
 
 #: modules/admin/includes/ads.php:312
 msgid "Are you sure you want to delete all inactive links?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد حذف كافة الارتباطات غير نشط؟"
 
 #: modules/admin/includes/ads.php:345
 #: modules/admin/templates/ads_add.phtml:82
 msgid "Before the menu"
-msgstr ""
+msgstr "قبل القائمة"
 
 #: modules/admin/includes/ads.php:350
 #: modules/admin/templates/ads_add.phtml:86
 msgid "After the menu"
-msgstr ""
+msgstr "بعد القائمة"
 
 #: modules/admin/includes/ads.php:355
 #: modules/admin/templates/ads_add.phtml:90
 msgid "At the top of the page"
-msgstr ""
+msgstr "في الجزء العلوي من الصفحة"
 
 #: modules/admin/includes/ads.php:360
 #: modules/admin/templates/ads_add.phtml:94
 msgid "At the bottom of the page"
-msgstr ""
+msgstr "في الجزء السفلي من الصفحة"
 
 #: modules/admin/includes/ads.php:366
 #: modules/admin/templates/ads_add.phtml:99
 msgid "All pages"
-msgstr ""
+msgstr "كل الصفحات"
 
 #: modules/admin/includes/ads.php:367
 #: modules/admin/templates/ads_add.phtml:103
 msgid "Only on Homepage"
-msgstr ""
+msgstr "فقط على الصفحه الرئيسيه"
 
 #: modules/admin/includes/ads.php:368
 #: modules/admin/templates/ads_add.phtml:107
 msgid "On all, except Homepage"
-msgstr ""
+msgstr "على كل شئ عدا الصفحه الرئيسية"
 
 #: modules/admin/includes/ads.php:371
 #: modules/admin/templates/ads_add.phtml:69
 msgid "Everyone"
-msgstr ""
+msgstr "الجميع"
 
 #: modules/admin/includes/ads.php:372
 #: modules/admin/templates/ads_add.phtml:73
 msgid "Guests"
-msgstr ""
+msgstr "الزوار"
 
 #: modules/admin/includes/ads.php:373
 #: modules/admin/templates/ads_add.phtml:77
 #: modules/admin/templates/sidebar-admin-menu.phtml:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:70
 msgid "Users"
-msgstr ""
+msgstr "الاعضاء"
 
 #: modules/admin/includes/ads.php:395
 #: modules/admin/includes/ads.php:398
 msgid "hits"
-msgstr ""
+msgstr "عدد الزيارات"
 
 #: modules/admin/includes/ads.php:415
 msgid "Color:"
-msgstr ""
+msgstr "اللون:"
 
 #: modules/admin/includes/ads.php:418
 #: modules/admin/templates/ads_add.phtml:112
 msgid "Bold"
-msgstr ""
+msgstr "عريض"
 
 #: modules/admin/includes/ads.php:421
 #: modules/admin/templates/ads_add.phtml:116
 msgid "Italic"
-msgstr ""
+msgstr "مائل"
 
 #: modules/admin/includes/ads.php:424
 #: modules/admin/templates/ads_add.phtml:120
 msgid "Underline"
-msgstr ""
+msgstr "تسطير"
 
 #: modules/admin/includes/antiflood.php:22
 msgid "Antiflood Settings"
-msgstr ""
+msgstr "إعدادات أنتيفلود"
 
 #: modules/admin/includes/antiflood.php:76
 msgid "ERROR: Can not write system.local.php"
-msgstr ""
+msgstr "خطأ: لا يمكن الكتابة system.local.php"
 
 #: modules/admin/includes/antiflood.php:82
 #: modules/admin/includes/karma.php:76
@@ -225,12 +225,12 @@ msgstr ""
 #: modules/admin/templates/forum/settings.phtml:14
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
-msgstr ""
+msgstr "تم حفظ الاعدادات بنجاح"
 
 #: modules/admin/includes/antispy.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:263
 msgid "Anti-Spyware"
-msgstr ""
+msgstr "مضاد-برامج التجسس"
 
 #: modules/admin/includes/antispy.php:31
 #: modules/admin/includes/counters.php:31
@@ -249,27 +249,27 @@ msgstr ""
 #: modules/admin/templates/access.phtml:111
 #: modules/admin/templates/access.phtml:148
 msgid "Access denied"
-msgstr ""
+msgstr "الوصول مرفوض"
 
 #: modules/admin/includes/antispy.php:168
 #: modules/admin/templates/antispy.phtml:30
 msgid "Snapshot scan"
-msgstr ""
+msgstr "مسح اللقطة"
 
 #: modules/admin/includes/antispy.php:175
 msgid "Snapshot is not created"
-msgstr ""
+msgstr "لم يتم إنشاء اللقطة"
 
 #: modules/admin/includes/antispy.php:180
 #: modules/admin/includes/antispy.php:214
 #: modules/admin/templates/antispy.phtml:36
 #: modules/admin/templates/antispy_create_confirm.phtml:37
 msgid "Create snapshot"
-msgstr ""
+msgstr "إنشاء لقطة"
 
 #: modules/admin/includes/antispy.php:201
 msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
+msgstr "ممتازة! <br>كافة الملفات التي تتفق مع الصورة تم إجراؤه من قبل."
 
 #: modules/admin/includes/antispy.php:206
 #: modules/admin/includes/forum/add.php:45
@@ -308,97 +308,97 @@ msgstr ""
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
-msgstr ""
+msgstr "رجوع"
 
 #: modules/admin/includes/antispy.php:223
 msgid "Snapshot successfully created"
-msgstr ""
+msgstr "اللقطة التي تم إنشاؤها بنجاح"
 
 #: modules/admin/includes/ban_panel.php:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
-msgstr ""
+msgstr "لوحة الحظر"
 
 #: modules/admin/includes/ban_panel.php:36
 msgid "Amnesty is available for supervisors only"
-msgstr ""
+msgstr "العفو متاح للمشرفين فقط"
 
 #: modules/admin/includes/ban_panel.php:41
 #: modules/admin/includes/ban_panel.php:66
 #: modules/admin/templates/ban_panel.phtml:62
 msgid "Amnesty"
-msgstr ""
+msgstr "العفو"
 
 #: modules/admin/includes/ban_panel.php:54
 msgid "Amnesty has been successful"
-msgstr ""
+msgstr "العفو نجحت"
 
 #: modules/admin/includes/ban_panel.php:75
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
-msgstr ""
+msgstr "جميع المستخدمين النشطين الحظر كان غير ممنوع (باستثناء الحظر &quot;حتى إلغاء&quot;)"
 
 #: modules/admin/includes/ban_panel.php:97
 msgid "Term"
-msgstr ""
+msgstr "مصطلح"
 
 #: modules/admin/includes/ban_panel.php:102
 msgid "Violations"
-msgstr ""
+msgstr "الانتهاكات"
 
 #: modules/admin/includes/ban_panel.php:133
 msgid "Violations history"
-msgstr ""
+msgstr "سجل الانتهاكات"
 
 #: modules/admin/includes/counters.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:178
 msgid "Counters"
-msgstr ""
+msgstr "عدادات"
 
 #: modules/admin/includes/counters.php:45
 #: modules/admin/templates/counters_form.phtml:82
 msgid "Viewing"
-msgstr ""
+msgstr "مشاهدة"
 
 #: modules/admin/includes/counters.php:59
 msgid "On all pages showing option 1"
-msgstr ""
+msgstr "في كافة صفحات عرض الخيار 1"
 
 #: modules/admin/includes/counters.php:63
 msgid "On all pages showing option 2"
-msgstr ""
+msgstr "في كافة صفحات عرض الخيار 2"
 
 #: modules/admin/includes/counters.php:67
 msgid "On the main showing option 1, on the other pages option 2"
-msgstr ""
+msgstr "على خيار الاداء الرئيسي 1، على خيار الصفحات الأخرى 2"
 
 #: modules/admin/includes/counters.php:175
 msgid "Counter deleted"
-msgstr ""
+msgstr "تم حذف جهة الاتصال"
 
 #: modules/admin/includes/counters.php:186
 msgid "Delete:"
-msgstr ""
+msgstr "حذف:"
 
 #: modules/admin/includes/counters.php:187
 #: modules/admin/includes/forum/del.php:302
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "هل ترغب بالحذف ؟"
 
 #: modules/admin/includes/counters.php:404
 msgid "Counter successfully changed"
-msgstr ""
+msgstr "تم تغيير الرابط بنجاح"
 
 #: modules/admin/includes/counters.php:404
 msgid "Counter successfully added"
-msgstr ""
+msgstr "تم اضافة الرابط بنجاح"
 
 #: modules/admin/includes/emoticons.php:21
 msgid "Smilies"
-msgstr ""
+msgstr "الابتسامات"
 
 #: modules/admin/includes/emoticons.php:61
 msgid "Smilie cache updated successfully"
-msgstr ""
+msgstr "تحديث بنجاح ذاكرة التخزين المؤقت الابتسامات"
 
 #: modules/admin/includes/emoticons.php:61
 #: modules/admin/templates/forum/hidden_posts.phtml:122
@@ -406,23 +406,23 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:31
 #: modules/admin/templates/userlist.phtml:28
 msgid "Total"
-msgstr ""
+msgstr "مجموع"
 
 #: modules/admin/includes/emoticons.php:75
 msgid "Error updating cache"
-msgstr ""
+msgstr "حدث خطأ أثناء تحديث ذاكرة التخزين المؤقت"
 
 #: modules/admin/includes/forum.php:23
 msgid "Forum Management"
-msgstr ""
+msgstr "إدارة المنتدى"
 
 #: modules/admin/includes/forum/add.php:23
 msgid "Add Section"
-msgstr ""
+msgstr "إضافة أقسام"
 
 #: modules/admin/includes/forum/add.php:23
 msgid "Add Category"
-msgstr ""
+msgstr "اضافة فئة"
 
 #: modules/admin/includes/forum/add.php:40
 #: modules/admin/includes/forum/del.php:30
@@ -432,7 +432,7 @@ msgstr ""
 
 #: modules/admin/includes/forum/add.php:109
 msgid "You have not entered Title"
-msgstr ""
+msgstr "لم تقم بإدخال العنوان"
 
 #: modules/admin/includes/forum/add.php:113
 #: modules/admin/templates/ads_add.phtml:47
@@ -445,108 +445,108 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:38
 #: modules/admin/templates/settings.phtml:66
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: modules/admin/includes/forum/add.php:113
 msgid "Invalid length"
-msgstr ""
+msgstr "طول غير صالح"
 
 #: modules/admin/includes/forum/add.php:117
 msgid "Description should be at least 2 characters in length"
-msgstr ""
+msgstr "يجب أن يكون الوصف على الأقل 2 حرفاً في الطول"
 
 #: modules/admin/includes/forum/cat.php:24
 #: modules/admin/templates/forum/index.phtml:41
 msgid "Forum structure"
-msgstr ""
+msgstr "هيكل المنتدى"
 
 #: modules/admin/includes/forum/cat.php:34
 msgid "List of sections"
-msgstr ""
+msgstr "قائمة الأقسام"
 
 #: modules/admin/includes/forum/cat.php:52
 msgid "List of categories"
-msgstr ""
+msgstr "قائمة الفئات"
 
 #: modules/admin/includes/forum/del.php:45
 msgid "Delete section"
-msgstr ""
+msgstr "حذف القسم"
 
 #: modules/admin/includes/forum/del.php:45
 msgid "Delete category"
-msgstr ""
+msgstr "حذف فئة"
 
 #: modules/admin/includes/forum/del.php:111
 #: modules/admin/includes/forum/del.php:293
 msgid "Category deleted"
-msgstr ""
+msgstr "تم حذف الفئة"
 
 #: modules/admin/includes/forum/del.php:113
 #: modules/admin/includes/forum/del.php:193
 msgid "All content has been moved to"
-msgstr ""
+msgstr "تم نقل كافة المحتويات"
 
 #: modules/admin/includes/forum/del.php:113
 msgid "selected category"
-msgstr ""
+msgstr "الفئة المحددة"
 
 #: modules/admin/includes/forum/del.php:191
 #: modules/admin/includes/forum/del.php:293
 msgid "Section deleted"
-msgstr ""
+msgstr "أقسام محذوفة"
 
 #: modules/admin/includes/forum/del.php:193
 msgid "selected section"
-msgstr ""
+msgstr "مقاطع مختارة"
 
 #: modules/admin/includes/forum/del.php:249
 msgid "Section with all contents are removed"
-msgstr ""
+msgstr "تتم إزالة القسم مع كافة المحتويات"
 
 #: modules/admin/includes/forum/del.php:254
 #: modules/admin/includes/forum/del.php:298
 msgid "Go to category"
-msgstr ""
+msgstr "انتقل إلى الفئة"
 
 #: modules/admin/includes/forum/edit.php:28
 msgid "Edit Section"
-msgstr ""
+msgstr "تعديل القسم"
 
 #: modules/admin/includes/forum/edit.php:160
 msgid "Please select a valid parent"
-msgstr ""
+msgstr "الرجاء تحديد والد صالح"
 
 #: modules/admin/includes/forum/hposts.php:23
 #: modules/admin/templates/forum/index.phtml:42
 msgid "Hidden posts"
-msgstr ""
+msgstr "المشاركات المخفية"
 
 #: modules/admin/includes/forum/hposts.php:36
 #: modules/admin/includes/forum/hposts.php:114
 msgid "by topic"
-msgstr ""
+msgstr "حسب الموضوع"
 
 #: modules/admin/includes/forum/hposts.php:40
 #: modules/admin/includes/forum/hposts.php:118
 #: modules/admin/includes/forum/htopics.php:35
 #: modules/admin/includes/forum/htopics.php:109
 msgid "by author"
-msgstr ""
+msgstr "حسب الكاتب"
 
 #: modules/admin/includes/forum/hposts.php:50
 #: modules/admin/includes/forum/htopics.php:51
 msgid "Access forbidden"
-msgstr ""
+msgstr "ممنوع الوصول"
 
 #: modules/admin/includes/forum/htopics.php:23
 #: modules/admin/templates/forum/index.phtml:43
 msgid "Hidden topics"
-msgstr ""
+msgstr "المواضيع المخفية"
 
 #: modules/admin/includes/forum/htopics.php:41
 #: modules/admin/includes/forum/htopics.php:113
 msgid "by section"
-msgstr ""
+msgstr "قسم"
 
 #: modules/admin/includes/forum/settings.php:32
 #: modules/admin/templates/forum/settings.phtml:7
@@ -556,12 +556,12 @@ msgstr ""
 #: modules/admin/includes/ipban.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:271
 msgid "Ban by IP"
-msgstr ""
+msgstr "حظر بواسطة طريق IP"
 
 #: modules/admin/includes/ipban.php:43
 #: modules/admin/templates/ipban_add_confirm.phtml:61
 msgid "Add Ban"
-msgstr ""
+msgstr "إضافة حظر"
 
 #: modules/admin/includes/ipban.php:58
 #: modules/admin/includes/ipban.php:106
@@ -572,21 +572,21 @@ msgstr ""
 #: modules/admin/includes/search_ip.php:78
 #: modules/admin/includes/search_ip.php:85
 msgid "Invalid IP"
-msgstr ""
+msgstr "IP غير صالح"
 
 #: modules/admin/includes/ipban.php:81
 #: modules/admin/includes/search_ip.php:53
 msgid "First IP is entered incorrectly"
-msgstr ""
+msgstr "أولا IP يتم إدخالها بشكل غير صحيح"
 
 #: modules/admin/includes/ipban.php:89
 #: modules/admin/includes/search_ip.php:61
 msgid "Second IP is entered incorrectly"
-msgstr ""
+msgstr "الثانية IP يتم إدخالها بشكل غير صحيح"
 
 #: modules/admin/includes/ipban.php:130
 msgid "Address you entered conflicts with other who in the database"
-msgstr ""
+msgstr "العنوان دخلت الصراعات مع الآخرين الذين في قاعدة البيانات"
 
 #: modules/admin/includes/ipban.php:138
 #: modules/admin/includes/ipban.php:199
@@ -595,7 +595,7 @@ msgstr ""
 #: modules/admin/templates/ads_index.phtml:52
 #: modules/admin/templates/ipban_add.phtml:53
 msgid "Redirect"
-msgstr ""
+msgstr "إعادة التوجيه"
 
 #: modules/admin/includes/ipban.php:142
 #: modules/admin/includes/ipban.php:204
@@ -604,7 +604,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:136
 #: modules/admin/templates/ipban_add.phtml:49
 msgid "Registration"
-msgstr ""
+msgstr "تسجيل اشتراگ جديد"
 
 #: modules/admin/includes/ipban.php:146
 #: modules/admin/includes/ipban.php:208
@@ -612,42 +612,42 @@ msgstr ""
 #: modules/admin/includes/ipban.php:504
 #: modules/admin/templates/ipban_add.phtml:45
 msgid "Block"
-msgstr ""
+msgstr "حظر"
 
 #: modules/admin/includes/ipban.php:175
 msgid "Ban impossible. Your own IP address in the range"
-msgstr ""
+msgstr "حظر مستحيلة. عنوان IP الخاص بك في نطاق"
 
 #: modules/admin/includes/ipban.php:183
 msgid "Ban range address"
-msgstr ""
+msgstr "عنوان نطاق الحظر"
 
 #: modules/admin/includes/ipban.php:188
 msgid "Ban on the subnet mask"
-msgstr ""
+msgstr "فرض حظر على قناع الشبكة الفرعية"
 
 #: modules/admin/includes/ipban.php:193
 msgid "Ban IP address"
-msgstr ""
+msgstr "حظر عنوان IP"
 
 #: modules/admin/includes/ipban.php:200
 #: modules/admin/templates/ads_index.phtml:53
 #: modules/admin/templates/counters_form.phtml:60
 msgid "Default"
-msgstr ""
+msgstr "افتراضي"
 
 #: modules/admin/includes/ipban.php:216
 #: modules/admin/includes/ipban.php:413
 msgid "Not specified"
-msgstr ""
+msgstr "غير محدد"
 
 #: modules/admin/includes/ipban.php:314
 msgid "Are you sure you wan to unban all IP?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد مسح كافة ملفات تعريف الارتباط؟"
 
 #: modules/admin/includes/ipban.php:316
 msgid "Perform"
-msgstr ""
+msgstr "أداء"
 
 #: modules/admin/includes/ipban.php:318
 #: modules/admin/includes/ipban.php:454
@@ -674,23 +674,23 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:37
 #: modules/admin/templates/usr_del.phtml:58
 msgid "Cancel"
-msgstr ""
+msgstr "الغاء"
 
 #: modules/admin/includes/ipban.php:332
 msgid "Ban details"
-msgstr ""
+msgstr "تفاصيل الحظر"
 
 #: modules/admin/includes/ipban.php:383
 msgid "This address not in the database"
-msgstr ""
+msgstr "هذا العنوان ليس في قاعدة البيانات"
 
 #: modules/admin/includes/ipban.php:441
 msgid "Ban has been successfully removed"
-msgstr ""
+msgstr "تم بنجاح إزالة الحظر"
 
 #: modules/admin/includes/ipban.php:450
 msgid "Are you sure you want to remove the ban?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد إزالة الحظر؟"
 
 #: modules/admin/includes/ipban.php:469
 #: modules/admin/templates/ip_whois.phtml:19
@@ -699,121 +699,121 @@ msgstr ""
 #: modules/admin/templates/search_ip.phtml:41
 #: modules/admin/templates/sidebar-admin-menu.phtml:51
 msgid "Search"
-msgstr ""
+msgstr "البحث عن"
 
 #: modules/admin/includes/karma.php:23
 #: modules/admin/templates/sidebar-admin-menu.phtml:114
 msgid "Karma"
-msgstr ""
+msgstr "الاعجاب"
 
 #: modules/admin/includes/karma.php:43
 msgid "Karma is cleared"
-msgstr ""
+msgstr "يتم مسح المعجبين"
 
 #: modules/admin/includes/karma.php:45
 msgid "You really want to clear the Karma?"
-msgstr ""
+msgstr "كنت حقا ترغب في مسح المعجبين؟"
 
 #: modules/admin/includes/languages.php:25
 #: modules/admin/includes/languages/index.php:30
 msgid "Languages"
-msgstr ""
+msgstr "اللغات"
 
 #: modules/admin/includes/languages/delete.php:26
 msgid "The language was successfully deleted"
-msgstr ""
+msgstr "تم حذف اللغة بنجاح"
 
 #: modules/admin/includes/languages/install.php:26
 msgid "The language was successfully installed"
-msgstr ""
+msgstr "تم تثبيت اللغة بنجاح"
 
 #: modules/admin/includes/languages/manage.php:29
 #: modules/admin/includes/languages/manage.php:30
 #: modules/admin/includes/languages/manage.php:34
 #: modules/admin/templates/languages/index.phtml:32
 msgid "Managing languages"
-msgstr ""
+msgstr "إدارة اللغات"
 
 #: modules/admin/includes/languages/update.php:26
 msgid "The language was successfully updated"
-msgstr ""
+msgstr "تم تحديث اللغة بنجاح"
 
 #: modules/admin/includes/reg.php:23
 msgid "Registration confirmation"
-msgstr ""
+msgstr "التسجيل أكتمل"
 
 #: modules/admin/includes/reg.php:49
 #: modules/admin/includes/reg.php:64
 msgid "Registration is confirmed"
-msgstr ""
+msgstr "تأكيد التسجيل"
 
 #: modules/admin/includes/reg.php:95
 #: modules/admin/includes/usr_del.php:116
 msgid "User deleted"
-msgstr ""
+msgstr "تم حذف المستخدم"
 
 #: modules/admin/includes/reg.php:110
 msgid "All unconfirmed registrations were removed"
-msgstr ""
+msgstr "تم إزالة كافة التسجيلات غير مؤكدة"
 
 #: modules/admin/includes/reg.php:135
 msgid "All unconfirmed registrations with selected IP were deleted"
-msgstr ""
+msgstr "تم حذف كافة تسجيلات غير مؤكدة مع IP المحدد"
 
 #: modules/admin/includes/reg.php:164
 msgid "Approve"
-msgstr ""
+msgstr "الموافقة على"
 
 #: modules/admin/includes/reg.php:172
 msgid "Remove IP"
-msgstr ""
+msgstr "إزالة الايبي"
 
 #: modules/admin/includes/search_ip.php:28
 #: modules/admin/templates/search_ip.phtml:37
 #: modules/admin/templates/search_ip.phtml:39
 msgid "Search IP"
-msgstr ""
+msgstr "البحث IP"
 
 #: modules/admin/includes/search_ip.php:34
 msgid "Actual IP"
-msgstr ""
+msgstr "IP الفعلي"
 
 #: modules/admin/includes/search_ip.php:39
 msgid "IP history"
-msgstr ""
+msgstr "سجل ip"
 
 #: modules/admin/includes/settings.php:31
 #: modules/admin/templates/settings.phtml:8
 #: modules/admin/templates/sidebar-admin-menu.phtml:209
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
-msgstr ""
+msgstr "إعدادات النظام"
 
 #: modules/admin/includes/userlist.php:25
 #: modules/admin/templates/userlist.phtml:3
 msgid "List of Users"
-msgstr ""
+msgstr "قائمة المستخدمين"
 
 #: modules/admin/includes/usr_clean.php:20
 #: modules/admin/templates/sidebar-admin-menu.phtml:98
 msgid "Database cleanup"
-msgstr ""
+msgstr "تنظيف قاعدة البيانات"
 
 #: modules/admin/includes/usr_clean.php:73
 msgid "Inactive profiles deleted"
-msgstr ""
+msgstr "التشكيلات الجانبية نشطة حذف"
 
 #: modules/admin/includes/usr_del.php:25
 msgid "Delete user"
-msgstr ""
+msgstr "حذف المستخدم"
 
 #: modules/admin/includes/usr_del.php:41
 msgid "You cannot delete higher administration"
-msgstr ""
+msgstr "لا يمكنك حذف الإدارة العليا"
 
 #: modules/admin/includes/usr_del.php:44
 msgid "User does not exists"
-msgstr ""
+msgstr "المستخدم غير موجود"
 
 #: modules/admin/index.php:50
 #: modules/admin/src/Application/Controllers/BaseAdminController.php:41
@@ -823,7 +823,7 @@ msgstr ""
 #: modules/admin/templates/smilies.phtml:8
 #: modules/admin/templates/userlist.phtml:3
 msgid "Admin Panel"
-msgstr ""
+msgstr "لوحة الادارة"
 
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
@@ -863,7 +863,7 @@ msgstr ""
 #: modules/admin/templates/sidebar-admin-menu.phtml:153
 #: modules/admin/templates/usr_del.phtml:51
 msgid "Forum"
-msgstr ""
+msgstr "منتديات"
 
 #: modules/admin/templates/access.phtml:40
 #: modules/admin/templates/access.phtml:62
@@ -872,7 +872,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:126
 #: modules/admin/templates/access.phtml:140
 msgid "Access is allowed"
-msgstr ""
+msgstr "ممنوع الوصول"
 
 #: modules/admin/templates/access.phtml:44
 #: modules/admin/templates/access.phtml:66
@@ -880,41 +880,41 @@ msgstr ""
 #: modules/admin/templates/access.phtml:107
 #: modules/admin/templates/access.phtml:130
 msgid "Only for authorized"
-msgstr ""
+msgstr "فقط للاذن"
 
 #: modules/admin/templates/access.phtml:48
 msgid "Read only"
-msgstr ""
+msgstr "للقراءة فقط"
 
 #: modules/admin/templates/access.phtml:58
 msgid "Guestbook"
-msgstr ""
+msgstr "سجل الزوار"
 
 #: modules/admin/templates/access.phtml:76
 msgid "Library"
-msgstr ""
+msgstr "المكتبة"
 
 #: modules/admin/templates/access.phtml:93
 #: modules/admin/templates/access.phtml:116
 #: modules/admin/templates/usr_del.phtml:44
 msgid "Comments"
-msgstr ""
+msgstr "التعليقات"
 
 #: modules/admin/templates/access.phtml:99
 msgid "Downloads"
-msgstr ""
+msgstr "التنزيلات"
 
 #: modules/admin/templates/access.phtml:122
 msgid "Community"
-msgstr ""
+msgstr "المجتمع"
 
 #: modules/admin/templates/access.phtml:144
 msgid "With moderation"
-msgstr ""
+msgstr "مع الاعتدال"
 
 #: modules/admin/templates/access.phtml:154
 msgid "Administrators always have access to all closed modules and comments"
-msgstr ""
+msgstr "المسؤولين دائماً حق الوصول إلى وحدات كلها مغلقة والتعليقات"
 
 #: modules/admin/templates/access.phtml:156
 #: modules/admin/templates/ads_add.phtml:123
@@ -928,7 +928,7 @@ msgstr ""
 #: modules/admin/templates/languages/index.phtml:28
 #: modules/admin/templates/settings.phtml:86
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: modules/admin/templates/admin_list.phtml:32
 #: modules/admin/templates/ads_index.phtml:69
@@ -940,7 +940,7 @@ msgstr ""
 #: modules/admin/templates/ipban.phtml:47
 #: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "فارغة"
 
 #: modules/admin/templates/admin_list.phtml:46
 #: modules/admin/templates/ads_index.phtml:80
@@ -950,96 +950,96 @@ msgstr ""
 #: modules/admin/templates/reg_list.phtml:56
 #: modules/admin/templates/search_ip.phtml:76
 msgid "Total:"
-msgstr ""
+msgstr "المجموع:"
 
 #: modules/admin/templates/ads_add.phtml:38
 #: modules/admin/templates/ads_add.phtml:39
 msgid "Link"
-msgstr ""
+msgstr "رابط"
 
 #: modules/admin/templates/ads_add.phtml:43
 #: modules/admin/templates/ads_index.phtml:52
 msgid "Direct Link"
-msgstr ""
+msgstr "رابط مباشر"
 
 #: modules/admin/templates/ads_add.phtml:44
 msgid "Click statistics won't be counted, If the direct link is turned on"
-msgstr ""
+msgstr "لن تحسب فوق الإحصاءات، إذا تم تشغيل وصلة مباشرة"
 
 #: modules/admin/templates/ads_add.phtml:49
 msgid "To change the name when updating pages, you must wtite names trought the symbol |"
-msgstr ""
+msgstr "لتغيير اسم عند تحديث الصفحات، يجب أن تكتب أسماء من خلال رمز |"
 
 #: modules/admin/templates/ads_add.phtml:52
 #: modules/admin/templates/ads_add.phtml:53
 msgid "Color"
-msgstr ""
+msgstr "لون"
 
 #: modules/admin/templates/ads_add.phtml:54
 msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
-msgstr ""
+msgstr "في التنسيق FFFFFF، إذا كنت لا تريد استخدام لون الارتباط، ببساطة عدم ملء هذا الحقل"
 
 #: modules/admin/templates/ads_add.phtml:57
 #: modules/admin/templates/ads_add.phtml:58
 msgid "Hits"
-msgstr ""
+msgstr "عدد الزيارات"
 
 #: modules/admin/templates/ads_add.phtml:59
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "عدد الزيارات لوجود الارتباط الذي سيتم إزالته تلقائياً من الصفحه <br> 0 غير محدود"
 
 #: modules/admin/templates/ads_add.phtml:62
 #: modules/admin/templates/ads_add.phtml:63
 msgid "Days"
-msgstr ""
+msgstr "ايام"
 
 #: modules/admin/templates/ads_add.phtml:64
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "عدد الأيام لوجود الارتباط الذي سيتم إزالته تلقائياً من الصفحة <br>0-غير محدود"
 
 #: modules/admin/templates/ads_add.phtml:66
 #: modules/admin/templates/ads_index.phtml:49
 #: modules/admin/templates/ads_index.phtml:60
 msgid "Show"
-msgstr ""
+msgstr "اظهار"
 
 #: modules/admin/templates/ads_add.phtml:79
 msgid "Place"
-msgstr ""
+msgstr "مكان"
 
 #: modules/admin/templates/ads_add.phtml:96
 msgid "Layout"
-msgstr ""
+msgstr "التصميم"
 
 #: modules/admin/templates/ads_add.phtml:109
 msgid "Styling links"
-msgstr ""
+msgstr "روابط التصميم"
 
 #: modules/admin/templates/ads_index.phtml:40
 #: modules/admin/templates/counters.phtml:52
 msgid "On"
-msgstr ""
+msgstr "تشغيل"
 
 #: modules/admin/templates/ads_index.phtml:42
 #: modules/admin/templates/counters.phtml:54
 msgid "Off"
-msgstr ""
+msgstr "متوقف"
 
 #: modules/admin/templates/ads_index.phtml:47
 msgid "Start date"
-msgstr ""
+msgstr "تاريخ البدء"
 
 #: modules/admin/templates/ads_index.phtml:48
 msgid "Disposition"
-msgstr ""
+msgstr "التصرف"
 
 #: modules/admin/templates/ads_index.phtml:50
 msgid "Agreement"
-msgstr ""
+msgstr "اتفاقية"
 
 #: modules/admin/templates/ads_index.phtml:51
 msgid "Remains"
-msgstr ""
+msgstr "متبقى"
 
 #: modules/admin/templates/ads_index.phtml:52
 msgid "Link type"
@@ -1047,213 +1047,213 @@ msgstr ""
 
 #: modules/admin/templates/ads_index.phtml:53
 msgid "Style settings"
-msgstr ""
+msgstr "إعدادات النمط"
 
 #: modules/admin/templates/ads_index.phtml:56
 #: modules/admin/templates/counters.phtml:59
 msgid "Up"
-msgstr ""
+msgstr "فوق"
 
 #: modules/admin/templates/ads_index.phtml:57
 #: modules/admin/templates/counters.phtml:60
 msgid "Down"
-msgstr ""
+msgstr "تحت"
 
 #: modules/admin/templates/ads_index.phtml:58
 #: modules/admin/templates/counters.phtml:61
 #: modules/admin/templates/counters_view.phtml:59
 #: modules/admin/templates/forum/structure.phtml:54
 msgid "Edit"
-msgstr ""
+msgstr "تحرير"
 
 #: modules/admin/templates/ads_index.phtml:60
 msgid "Hide"
-msgstr ""
+msgstr "اخفي"
 
 #: modules/admin/templates/ads_index.phtml:86
 msgid "Delete inactive links"
-msgstr ""
+msgstr "حدف الروابط غير النشطه"
 
 #: modules/admin/templates/amnesty.phtml:32
 msgid "Unban all"
-msgstr ""
+msgstr "رفع الحظر كل"
 
 #: modules/admin/templates/amnesty.phtml:36
 msgid "Clear Ban database"
-msgstr ""
+msgstr "قاعدة الحظر واضحة"
 
 #: modules/admin/templates/amnesty.phtml:40
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
-msgstr ""
+msgstr "&quot;كل إلغاء الحظر&quot; - إنهاء جميع النشطة bans<br>&quot;قاعدة بيانات واضحة&quot; - إنهاء كل أشكال الحظر ويزيل وهي جرائم التاريخ"
 
 #: modules/admin/templates/antiflood.phtml:37
 msgid "Operation mode"
-msgstr ""
+msgstr "وضع التشغيل"
 
 #: modules/admin/templates/antiflood.phtml:41
 #: modules/admin/templates/antiflood.phtml:60
 msgid "Day"
-msgstr ""
+msgstr "اليوم"
 
 #: modules/admin/templates/antiflood.phtml:45
 #: modules/admin/templates/antiflood.phtml:64
 msgid "Night"
-msgstr ""
+msgstr "ليلة"
 
 #: modules/admin/templates/antiflood.phtml:49
 msgid "Day / Night"
-msgstr ""
+msgstr "اليوم / الليل"
 
 #: modules/admin/templates/antiflood.phtml:50
 msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
+msgstr "تغيير تلقائي من يوم إلى الوضع الليلي، وفقا لمجموعة الوقت المحدد"
 
 #: modules/admin/templates/antiflood.phtml:54
 msgid "Adaptive"
-msgstr ""
+msgstr "التكيف"
 
 #: modules/admin/templates/antiflood.phtml:55
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
+msgstr "إذا كان أحد من الإدارة على الإنترنت (في الموقع)، عمل النظام في وضع \"اليوم\"، إذا كانت الإدارة دون اتصال، قم بالتبديل إلى \"ليلة\""
 
 #: modules/admin/templates/antiflood.phtml:58
 msgid "Time limit"
-msgstr ""
+msgstr "الوقت المحدد :"
 
 #: modules/admin/templates/antiflood.phtml:67
 msgid "Day mode"
-msgstr ""
+msgstr "الوضع اليوم"
 
 #: modules/admin/templates/antiflood.phtml:69
 msgid "Beginning of day"
-msgstr ""
+msgstr "بداية يوم"
 
 #: modules/admin/templates/antiflood.phtml:73
 msgid "End of day"
-msgstr ""
+msgstr "نهاية اليوم"
 
 #: modules/admin/templates/antispy.phtml:26
 msgid "Scan mode"
-msgstr ""
+msgstr "وضع الالتقاط بالماسح"
 
 #: modules/admin/templates/antispy.phtml:32
 msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
+msgstr "قارن بين القائمة الملفات والمجاميع الاختبارية للملفات بطريقة مسبقة الصنع. يسمح لك بتحديد غير معروف في الملفات، والتغييرات غير المصرح بها."
 
 #: modules/admin/templates/antispy.phtml:38
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
+msgstr "يأخذ لقطة من كافة ملفات البرنامج النصي من الموقع يحسب بها اختبارية والمخزنة في قاعدة البيانات."
 
 #: modules/admin/templates/antispy_create_confirm.phtml:29
 msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
+msgstr "تحذير!!! <br>قبل مواصلة التأكد من أن كافة الملفات قد تم تحديدها في التوزيع وضع المسح الضوئي موثوق بها وتحتوي على أي تعديلات غير مصرح بها."
 
 #: modules/admin/templates/antispy_create_confirm.phtml:33
 msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
+msgstr "هذا الإجراء بإنشاء قائمة من كافة ملفات البرامج النصية إلى موقع الويب الخاص بك ويحسب الاختبارية للملفات والكتابة إلى قاعدة بيانات للمقارنة فيما بعد."
 
 #: modules/admin/templates/antispy_scan_result.phtml:29
 msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
+msgstr "لقطة عدم تناسق <br>تحذير! تحتاج إلى إيلاء الاهتمام لكافة الملفات من القائمة. قد تم إضافتها أو تعديلها منذ إنشاء الصورة."
 
 #: modules/admin/templates/antispy_scan_result.phtml:34
 msgid "List of files"
-msgstr ""
+msgstr "قائمة الملفات"
 
 #: modules/admin/templates/ban_panel.phtml:30
 #: modules/admin/templates/userlist.phtml:10
 msgid "Sort"
-msgstr ""
+msgstr "الترتيب"
 
 #: modules/admin/templates/counters.phtml:71
 #: modules/admin/templates/forum/add.phtml:84
 #: modules/admin/templates/forum/structure.phtml:61
 #: modules/admin/templates/ipban.phtml:74
 msgid "Add"
-msgstr ""
+msgstr "اضافة"
 
 #: modules/admin/templates/counters_add_confirm.phtml:44
 #: modules/admin/templates/counters_form.phtml:46
 #: modules/admin/templates/counters_form.phtml:68
 #: modules/admin/templates/counters_view.phtml:42
 msgid "Option 1"
-msgstr ""
+msgstr "الخيار 1"
 
 #: modules/admin/templates/counters_add_confirm.phtml:47
 #: modules/admin/templates/counters_form.phtml:51
 #: modules/admin/templates/counters_form.phtml:72
 #: modules/admin/templates/counters_view.phtml:45
 msgid "Option 2"
-msgstr ""
+msgstr "الخيار 2"
 
 #: modules/admin/templates/counters_add_confirm.phtml:59
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
+msgstr "إذا لم يتم عرض العداد بشكل صحيح وبدون أخطاء، انقر فوق &quot;Save&quot;.<br> وإلا، انقر فوق الزر مرة أخرى وتصحيح الأخطاء."
 
 #: modules/admin/templates/counters_form.phtml:42
 #: modules/admin/templates/counters_form.phtml:43
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #: modules/admin/templates/counters_form.phtml:48
 msgid "Code for main page"
-msgstr ""
+msgstr "انتقل للصفحة الرئيسية"
 
 #: modules/admin/templates/counters_form.phtml:53
 msgid "Code for other pages"
-msgstr ""
+msgstr "انتقل لصفحات اخرئ"
 
 #: modules/admin/templates/counters_form.phtml:56
 msgid "Display mode"
-msgstr ""
+msgstr "وضع العرض"
 
 #: modules/admin/templates/counters_form.phtml:63
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
+msgstr "الرئيسية يظهر الخيار 1 على صفحات أخرى الخيار 2.<br>If &quot;خيار 2&quot; لا شغل العداد سوف تظهر فقط في الصفحة الرئيسية."
 
 #: modules/admin/templates/counters_form.phtml:76
 msgid "WARNING!"
-msgstr ""
+msgstr "تحذير!"
 
 #: modules/admin/templates/counters_form.phtml:77
 msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
-msgstr ""
+msgstr "تأكد من أنك قمت بإدخال الرمز بشكل صحيح. يجب أن يفي بمعايير XML"
 
 #: modules/admin/templates/counters_form.phtml:78
 msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
+msgstr "إذا قمت بالنقر &quot;عرض&quot; و XHTML الأخطاء التي حدثت، ثم انقر فوق &quot;زر الرجوع&quot; في المتصفح الخاص بك، ثم العودة إلى هذا النموذج وتصحيح الأخطاء."
 
 #: modules/admin/templates/counters_view.phtml:34
 msgid "Status:"
-msgstr ""
+msgstr "الحالة:"
 
 #: modules/admin/templates/counters_view.phtml:36
 msgid "Enabled"
-msgstr ""
+msgstr "تمكين"
 
 #: modules/admin/templates/counters_view.phtml:38
 msgid "Disabled"
-msgstr ""
+msgstr "معطل"
 
 #: modules/admin/templates/counters_view.phtml:48
 msgid "Display mode:"
-msgstr ""
+msgstr "وضع العرض"
 
 #: modules/admin/templates/counters_view.phtml:55
 msgid "Disable"
-msgstr ""
+msgstr "تعطيل"
 
 #: modules/admin/templates/counters_view.phtml:57
 msgid "Enable"
-msgstr ""
+msgstr "تمكين"
 
 #: modules/admin/templates/forum/add.phtml:38
 msgid "Parent section:"
-msgstr ""
+msgstr "القسم الأصل:"
 
 #: modules/admin/templates/forum/add.phtml:44
 msgid "Min. 2, Max. 30 characters"
-msgstr ""
+msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
 
 #: modules/admin/templates/forum/add.phtml:48
 #: modules/admin/templates/forum/edit.phtml:53
@@ -1265,105 +1265,105 @@ msgstr ""
 #: modules/admin/templates/system/system_check.phtml:49
 #: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
-msgstr ""
+msgstr "الوصف"
 
 #: modules/admin/templates/forum/add.phtml:50
 #: modules/admin/templates/forum/edit.phtml:55
 msgid "Optional field"
-msgstr ""
+msgstr "حقل اختياري"
 
 #: modules/admin/templates/forum/add.phtml:50
 #: modules/admin/templates/forum/edit.phtml:55
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
 
 #: modules/admin/templates/forum/add.phtml:54
 #: modules/admin/templates/forum/add.phtml:57
 #: modules/admin/templates/forum/edit.phtml:67
 #: modules/admin/templates/forum/edit.phtml:70
 msgid "Common access"
-msgstr ""
+msgstr "الوصول المشترك"
 
 #: modules/admin/templates/forum/add.phtml:61
 #: modules/admin/templates/forum/edit.phtml:74
 msgid "Assign the newly created authors as curators"
-msgstr ""
+msgstr "تعيين الكتاب الذي تم إنشاؤه حديثا كأمناء المتاحف"
 
 #: modules/admin/templates/forum/add.phtml:65
 #: modules/admin/templates/forum/edit.phtml:78
 msgid "Allow authors to edit the 1st post"
-msgstr ""
+msgstr "السماح للكتاب لتحرير الوظيفة الأولى"
 
 #: modules/admin/templates/forum/add.phtml:69
 #: modules/admin/templates/forum/edit.phtml:82
 msgid "Only for reading"
-msgstr ""
+msgstr "للقراءة فقط"
 
 #: modules/admin/templates/forum/add.phtml:73
 #: modules/admin/templates/forum/edit.phtml:85
 msgid "Section type"
-msgstr ""
+msgstr "نوع القسم"
 
 #: modules/admin/templates/forum/add.phtml:76
 #: modules/admin/templates/forum/edit.phtml:88
 msgid "For subsections"
-msgstr ""
+msgstr "للمقالات الفرعية"
 
 #: modules/admin/templates/forum/add.phtml:80
 #: modules/admin/templates/forum/edit.phtml:92
 msgid "For topics"
-msgstr ""
+msgstr "للمواضيع"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:29
 msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
+msgstr "<h3>تحذير!</h3> وهناك أجزاء فرعية. نقلها إلى فئة أخرى."
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:35
 #: modules/admin/templates/forum/edit.phtml:96
 msgid "Category"
-msgstr ""
+msgstr "فئة"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:42
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr ""
+msgstr "سيتم نقل جميع الفئات والمواضيع والملفات ضمن الفئة المحددة. سيتم إزالة الفئة القديمة."
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:45
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:51
 msgid "Move"
-msgstr ""
+msgstr "نقل"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:51
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:55
 msgid "Complete removal"
-msgstr ""
+msgstr "إزالة كاملة"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:53
 msgid "If you want to destroy all the information, first remove"
-msgstr ""
+msgstr "إذا كنت تريد أن تدمر جميع المعلومات، قم أولاً بإزالة"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:54
 msgid "subsections"
-msgstr ""
+msgstr "الأقسام الفرعية"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:29
 msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
+msgstr "<h3>تحذير!</h3> وهناك مواضيع في القسم. ويجب نقلها إلى قسم آخر."
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:34
 msgid "Select section"
-msgstr ""
+msgstr "حذف القسم"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:41
 msgid "Other category"
-msgstr ""
+msgstr "والفئة الأخرى"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:48
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
+msgstr "جميع المواضيع و الملفات التي سيتم نقلها إلى الجزء المحدد. القسم القديم سيتم حذف."
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:56
 msgid "WARNING! All the information will be deleted"
-msgstr ""
+msgstr "تحذير! سيتم حذف جميع المعلومات"
 
 #: modules/admin/templates/forum/edit.phtml:43
 msgid "Min. 2, Max. 150 characters"
@@ -1372,11 +1372,11 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:47
 #: modules/admin/templates/forum/edit.phtml:48
 msgid "Order"
-msgstr ""
+msgstr "طلب"
 
 #: modules/admin/templates/forum/edit.phtml:49
 msgid "Only numbers"
-msgstr ""
+msgstr "الأرقام فقط"
 
 #: modules/admin/templates/forum/edit.phtml:59
 msgid "Meta description"
@@ -1389,82 +1389,82 @@ msgstr ""
 #: modules/admin/templates/forum/hidden_posts.phtml:29
 #: modules/admin/templates/forum/hidden_topics.phtml:29
 msgid "Filtered:"
-msgstr ""
+msgstr "تصفية:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:48
 msgid "Go to page"
-msgstr ""
+msgstr "الذهاب إلى الصفحة"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:61
 #: modules/admin/templates/forum/hidden_topics.phtml:57
 msgid "Topic:"
-msgstr ""
+msgstr "مواضيع"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:85
 msgid "Edited:"
-msgstr ""
+msgstr "تحرير:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:89
 msgid "Post deleted:"
-msgstr ""
+msgstr "حذف المنشور:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:91
 msgid "Post restored by:"
-msgstr ""
+msgstr "استعاد المنشور بواسطة:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:95
 #: modules/admin/templates/forum/hidden_topics.phtml:91
 msgid "Filter:"
-msgstr ""
+msgstr "فلترة"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:115
 #: modules/admin/templates/forum/hidden_topics.phtml:111
 #: modules/admin/templates/reg_list.phtml:59
 msgid "Delete all"
-msgstr ""
+msgstr "حذف جميع"
 
 #: modules/admin/templates/forum/hidden_topics.phtml:61
 msgid "Path:"
-msgstr ""
+msgstr "المسار:"
 
 #: modules/admin/templates/forum/hidden_topics.phtml:87
 msgid "Topic deleted:"
-msgstr ""
+msgstr "تم حذف الموضوع"
 
 #: modules/admin/templates/forum/index.phtml:27
 msgid "Statistic"
-msgstr ""
+msgstr "الإحصائيات"
 
 #: modules/admin/templates/forum/index.phtml:29
 msgid "Categories"
-msgstr ""
+msgstr "التصنيفات"
 
 #: modules/admin/templates/forum/index.phtml:30
 #: modules/admin/templates/forum/settings.phtml:35
 msgid "Sections"
-msgstr ""
+msgstr "الأقسام"
 
 #: modules/admin/templates/forum/index.phtml:31
 #: modules/admin/templates/forum/settings.phtml:46
 msgid "Topics"
-msgstr ""
+msgstr "مواضيع"
 
 #: modules/admin/templates/forum/index.phtml:32
 msgid "Messages"
-msgstr ""
+msgstr "الرسائل"
 
 #: modules/admin/templates/forum/index.phtml:33
 msgid "Files"
-msgstr ""
+msgstr "الملفات"
 
 #: modules/admin/templates/forum/index.phtml:34
 msgid "Votes"
-msgstr ""
+msgstr "الأصوات"
 
 #: modules/admin/templates/forum/index.phtml:36
 #: modules/admin/templates/forum/index.phtml:39
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: modules/admin/templates/forum/settings.phtml:19
 msgid "Common settings"
@@ -1514,36 +1514,36 @@ msgstr ""
 
 #: modules/admin/templates/forum/structure.phtml:47
 msgid "View"
-msgstr ""
+msgstr "عرض"
 
 #: modules/admin/templates/index.phtml:3
 msgid "Dashboard"
-msgstr ""
+msgstr "لوحة التحكم"
 
 #: modules/admin/templates/index.phtml:6
 msgid "Show admin menu"
-msgstr ""
+msgstr "إظهار قائمة المشرف"
 
 #: modules/admin/templates/index.phtml:14
 msgid "registered visitors today"
-msgstr ""
+msgstr "الزوار المسجلون اليوم"
 
 #: modules/admin/templates/index.phtml:22
 msgid "users registered today"
-msgstr ""
+msgstr "المستخدمون المسجلون اليوم"
 
 #: modules/admin/templates/index.phtml:30
 msgid "posts on the forum today"
-msgstr ""
+msgstr "المشاركات في المنتدى اليوم"
 
 #: modules/admin/templates/ip_whois.phtml:15
 msgid "IP Address"
-msgstr ""
+msgstr "عنوان IP"
 
 #: modules/admin/templates/ip_whois.phtml:25
 #: modules/admin/templates/search_ip.phtml:64
 msgid "Search results"
-msgstr ""
+msgstr "نتائج البحث"
 
 #: modules/admin/templates/ipban.phtml:39
 #: modules/admin/templates/ipban_add.phtml:38
@@ -1551,151 +1551,151 @@ msgstr ""
 #: modules/admin/templates/ipban_search.phtml:32
 #: modules/admin/templates/ipban_search.phtml:33
 msgid "IP address"
-msgstr ""
+msgstr "عنوان IP"
 
 #: modules/admin/templates/ipban.phtml:40
 #: modules/admin/templates/ipban_add.phtml:63
 #: modules/admin/templates/ipban_add_confirm.phtml:47
 msgid "Reason"
-msgstr ""
+msgstr "السبب"
 
 #: modules/admin/templates/ipban.phtml:77
 msgid "Unban all IP"
-msgstr ""
+msgstr "رفع الحظر كل"
 
 #: modules/admin/templates/ipban_add.phtml:42
 #: modules/admin/templates/ipban_add_confirm.phtml:40
 msgid "Ban type"
-msgstr ""
+msgstr "نوع الحظر"
 
 #: modules/admin/templates/ipban_add.phtml:57
 #: modules/admin/templates/ipban_add.phtml:58
 msgid "Redirect URL"
-msgstr ""
+msgstr "إعادة توجيه URL"
 
 #: modules/admin/templates/ipban_add.phtml:59
 msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
+msgstr "إذا كان الحظر المفروض على إعادة توجيه، قم بتحديد عنوان URL"
 
 #: modules/admin/templates/ipban_add.phtml:68
 msgid "Example:"
-msgstr ""
+msgstr "مثال:"
 
 #: modules/admin/templates/ipban_add.phtml:69
 msgid "Ban one address"
-msgstr ""
+msgstr "حظر عنوان واحد"
 
 #: modules/admin/templates/ipban_add.phtml:70
 msgid "Ban range of address"
-msgstr ""
+msgstr "نطاق حظر العنوان"
 
 #: modules/admin/templates/ipban_add.phtml:71
 msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
+msgstr "حظر على الأقنعة. سيكون هناك حظر من الشبكة الفرعية للمدخلات، يبدأ بالعنوان 0 وينتهي بـ 255"
 
 #: modules/admin/templates/ipban_add_confirm.phtml:37
 msgid "Ban mode"
-msgstr ""
+msgstr "وضع الحظر"
 
 #: modules/admin/templates/ipban_add_confirm.phtml:44
 msgid "Redirect URL:"
-msgstr ""
+msgstr "إعادة توجيه URL"
 
 #: modules/admin/templates/ipban_add_confirm.phtml:57
 msgid "Please, check up correctness of the input data"
-msgstr ""
+msgstr "الرجاء فحص صحة إدخال البيانات"
 
 #: modules/admin/templates/ipban_detail.phtml:33
 msgid "Ban type:"
-msgstr ""
+msgstr "نوع الحظر"
 
 #: modules/admin/templates/ipban_detail.phtml:37
 msgid "Redirect to:"
-msgstr ""
+msgstr "إعادة التوجيه إلى:"
 
 #: modules/admin/templates/ipban_detail.phtml:41
 msgid "Reason:"
-msgstr ""
+msgstr "السبب"
 
 #: modules/admin/templates/ipban_detail.phtml:44
 msgid "Banned by:"
-msgstr ""
+msgstr "محظور بواسطة:"
 
 #: modules/admin/templates/ipban_detail.phtml:47
 msgid "Date:"
-msgstr ""
+msgstr "تاريخ"
 
 #: modules/admin/templates/ipban_detail.phtml:50
 msgid "Time:"
-msgstr ""
+msgstr "الوقت"
 
 #: modules/admin/templates/ipban_detail.phtml:53
 msgid "Delete Ban"
-msgstr ""
+msgstr "حذف الحظر"
 
 #: modules/admin/templates/ipban_search.phtml:36
 msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
+msgstr "أدخل واحد عنوان وقناع ومجموعة غير مسموح"
 
 #: modules/admin/templates/karma.phtml:39
 msgid "Voices per day"
-msgstr ""
+msgstr "مرات باليوم"
 
 #: modules/admin/templates/karma.phtml:43
 msgid "Restriction for vote"
-msgstr ""
+msgstr "قيود على التصويت"
 
 #: modules/admin/templates/karma.phtml:46
 msgid "Forum posts"
-msgstr ""
+msgstr "مشاركات المنتدى"
 
 #: modules/admin/templates/karma.phtml:50
 msgid "General Settings"
-msgstr ""
+msgstr "الإعدادات العامة"
 
 #: modules/admin/templates/karma.phtml:54
 msgid "Switch module ON"
-msgstr ""
+msgstr "وحدة التبديل على"
 
 #: modules/admin/templates/karma.phtml:59
 msgid "Forbid to vote for the administration"
-msgstr ""
+msgstr "يمنع التصويت للإدارة"
 
 #: modules/admin/templates/karma.phtml:66
 msgid "Clear Karma"
-msgstr ""
+msgstr "مسح الاعجاب"
 
 #: modules/admin/templates/karma_clean_confirm.phtml:34
 msgid "Clear"
-msgstr ""
+msgstr "تنظيف"
 
 #: modules/admin/templates/languages/index.phtml:12
 msgid "Descriptions have been updated successfully"
-msgstr ""
+msgstr "تم تحديث التفاصيل بنجاح"
 
 #: modules/admin/templates/languages/index.phtml:17
 msgid "Default language"
-msgstr ""
+msgstr "اللغة الافتراضية"
 
 #: modules/admin/templates/languages/index.phtml:29
 msgid "Update List"
-msgstr ""
+msgstr "تحديث القائمة"
 
 #: modules/admin/templates/languages/manage.phtml:24
 msgid "Version:"
-msgstr ""
+msgstr "الإصدار:"
 
 #: modules/admin/templates/languages/manage.phtml:26
 msgid "New version:"
-msgstr ""
+msgstr "إصدار جديد:"
 
 #: modules/admin/templates/languages/manage.phtml:29
 msgid "Installed"
-msgstr ""
+msgstr "مثبت"
 
 #: modules/admin/templates/languages/manage.phtml:31
 msgid "Not installed"
-msgstr ""
+msgstr "لم يتم تثبيته"
 
 #: modules/admin/templates/languages/manage.phtml:36
 msgid "The language files of this language are not writable! "
@@ -1703,119 +1703,119 @@ msgstr ""
 
 #: modules/admin/templates/languages/manage.phtml:41
 msgid "Install"
-msgstr ""
+msgstr "تثبيت"
 
 #: modules/admin/templates/languages/manage.phtml:44
 msgid "Update"
-msgstr ""
+msgstr "تحديث"
 
 #: modules/admin/templates/reg_list.phtml:58
 msgid "Confirm all"
-msgstr ""
+msgstr "تاكيد الجميع"
 
 #: modules/admin/templates/search_ip.phtml:45
 msgid "Sample queries:"
-msgstr ""
+msgstr "عينة من الاستفسار:"
 
 #: modules/admin/templates/search_ip.phtml:46
 msgid "Search for a single address"
-msgstr ""
+msgstr "البحث عن عنوان واحد"
 
 #: modules/admin/templates/search_ip.phtml:47
 msgid "Search a range address (forbidden to use mask symbol *)"
-msgstr ""
+msgstr "البحث عن عنوان نطاق (يحظر استخدام رمز القناع *)"
 
 #: modules/admin/templates/search_ip.phtml:48
 msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
+msgstr "قناع البحث. سيتم العثور على جميع عناوين الشبكة الفرعية بدءاً من 0 وانتهاءً بـ 255"
 
 #: modules/admin/templates/search_ip.phtml:60
 msgid "At your request, nothing found"
-msgstr ""
+msgstr "بناء على طلبك ، وجدت شيئا"
 
 #: modules/admin/templates/settings.phtml:21
 msgid "Common Settings"
-msgstr ""
+msgstr "إعدادات عامة"
 
 #: modules/admin/templates/settings.phtml:23
 msgid "Web site address without the slash at the end"
-msgstr ""
+msgstr "عنوان موقع ويب دون المتسبب في نهاية"
 
 #: modules/admin/templates/settings.phtml:27
 msgid "Site copyright"
-msgstr ""
+msgstr "الموقع حقوق الطبع والنشر"
 
 #: modules/admin/templates/settings.phtml:31
 msgid "Site Email"
-msgstr ""
+msgstr "بريد الموقع الإلكتروني"
 
 #: modules/admin/templates/settings.phtml:35
 msgid "Max. file size"
-msgstr ""
+msgstr "حد. حجم الملف"
 
 #: modules/admin/templates/settings.phtml:40
 msgid "Gzip compression"
-msgstr ""
+msgstr "ضغط Gzip"
 
 #: modules/admin/templates/settings.phtml:45
 msgid "E-mail is required for registration"
-msgstr ""
+msgstr "البريد الإلكتروني مطلوب للتسجيل"
 
 #: modules/admin/templates/settings.phtml:49
 msgid "Request a confirmation email to activate the user's account."
-msgstr ""
+msgstr "طلب رسالة تأكيد بالبريد الإلكتروني لتفعيل حساب المستخدم."
 
 #: modules/admin/templates/settings.phtml:53
 msgid "Time shift"
-msgstr ""
+msgstr "وقت التحويل"
 
 #: modules/admin/templates/settings.phtml:59
 msgid "System Time"
-msgstr ""
+msgstr "نظام الوقت"
 
 #: modules/admin/templates/settings.phtml:64
 msgid "META tags"
-msgstr ""
+msgstr "العلامات الفوقية"
 
 #: modules/admin/templates/settings.phtml:70
 msgid "Keywords"
-msgstr ""
+msgstr "الكلمات الرئيسية"
 
 #: modules/admin/templates/settings.phtml:79
 msgid "Themes"
-msgstr ""
+msgstr "الثيمات"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:60
 msgid "On registration"
-msgstr ""
+msgstr "في التسجيل"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:106
 msgid "Antiflood"
-msgstr ""
+msgstr "أنتيفلود"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:128
 msgid "Modules"
-msgstr ""
+msgstr "الإضافات"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:161
 msgid "News"
-msgstr ""
+msgstr "اخبار الموقع"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:192
 msgid "System"
-msgstr ""
+msgstr "النظام"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:217
 msgid "Update Smilies"
-msgstr ""
+msgstr "تحديث الابتسامات"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:225
 msgid "Language Settings"
-msgstr ""
+msgstr "إعدادات اللغة"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:246
 msgid "Security"
-msgstr ""
+msgstr "الأمان"
 
 #: modules/admin/templates/system/system_check.phtml:3
 msgid "Required parameters"
@@ -1846,15 +1846,15 @@ msgstr ""
 
 #: modules/admin/templates/user_clean_confirm.phtml:29
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr ""
+msgstr "وهذه الفئة تشمل الملامح، سجلت أكثر من 6 أشهر، مع تاريخ آخر زيارة قام بها لأكثر من 5 أشهر، ومع انعدام النشاط. <br>بأمان يمكن إزالتها."
 
 #: modules/admin/templates/userlist.phtml:13
 msgid "Nickname"
-msgstr ""
+msgstr "الكنية"
 
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
-msgstr ""
+msgstr "القائمة فارغة"
 
 #: modules/admin/templates/users/captcha.phtml:16
 #: modules/admin/templates/users/captcha.phtml:25
@@ -1881,13 +1881,13 @@ msgstr ""
 
 #: modules/admin/templates/usr_del.phtml:31
 msgid "Delete user:"
-msgstr ""
+msgstr "حذف المستخدم"
 
 #: modules/admin/templates/usr_del.phtml:32
 msgid "Are you sure that you want to delete this user?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد حذف هذا المستخدم؟"
 
 #: modules/admin/templates/usr_del.phtml:54
 msgid "All threads and posts created by the user go in the hidden state"
-msgstr ""
+msgstr "جميع المواضيع والمشاركات التي تم إنشاؤها بواسطة المستخدم الذهاب في الدولة الخفية"
 
