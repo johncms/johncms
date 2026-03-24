@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 21:42\n"
 
 #: modules/registration/index.php:50
 #: modules/registration/templates/index.phtml:4
@@ -23,7 +23,7 @@ msgstr ""
 #: modules/registration/templates/registration_result.phtml:4
 #: modules/registration/templates/registration_result.phtml:5
 msgid "Registration"
-msgstr ""
+msgstr "A'zo bo'lish"
 
 #: modules/registration/index.php:169
 msgid "Registration on the website"
@@ -48,28 +48,28 @@ msgstr ""
 
 #: modules/registration/templates/index.phtml:13
 msgid "You can get authorized on the site after confirmation of your registration."
-msgstr ""
+msgstr "Siz ro'yxatdan o'tishni tasdiqlaganingizdan so'ng saytga kirish huquqini olishingiz mumkin."
 
 #: modules/registration/templates/index.phtml:21
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
-msgstr ""
+msgstr "Iltimos, 111, shhhh, uuuu va hokazo kabi nomlarni ro'yxatdan o'tkazmang, ular o'chiriladi. <br /> Shuningdek, proksi-serverlar orqali ro'yxatdan o'tgan barcha profillar o'chiriladi"
 
 #: modules/registration/templates/index.phtml:25
 msgid "Choose Nickname"
-msgstr ""
+msgstr "Tahallusingiz"
 
 #: modules/registration/templates/index.phtml:34
 msgid "Username"
-msgstr ""
+msgstr "Ismingiz"
 
 #: modules/registration/templates/index.phtml:40
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
-msgstr ""
+msgstr "Min. 2, Maks. 20 ta belgi. <br /> Rus va lotin alifbolarining harflari, raqamlar va belgilar - = @! ? ~ _ () []. * (No'ldan tashqari)"
 
 #: modules/registration/templates/index.phtml:44
 #: modules/registration/templates/index.phtml:53
 msgid "Assign a password"
-msgstr ""
+msgstr "Parolingizni kiriting"
 
 #: modules/registration/templates/index.phtml:61
 #: modules/registration/templates/index.phtml:68
@@ -78,41 +78,41 @@ msgstr ""
 
 #: modules/registration/templates/index.phtml:76
 msgid "Select Gender"
-msgstr ""
+msgstr "Jinsni tanlang"
 
 #: modules/registration/templates/index.phtml:79
 msgid "Man"
-msgstr ""
+msgstr "Erkak"
 
 #: modules/registration/templates/index.phtml:80
 msgid "Woman"
-msgstr ""
+msgstr "Ayol"
 
 #: modules/registration/templates/index.phtml:87
 #: modules/registration/templates/index.phtml:94
 msgid "Your name"
-msgstr ""
+msgstr "Ismingiz"
 
 #: modules/registration/templates/index.phtml:101
 msgid "Tell us a little about yourself"
-msgstr ""
+msgstr "O'zingiz haqingizda (majburiy emas)"
 
 #: modules/registration/templates/index.phtml:108
 #: modules/registration/templates/index.phtml:118
 msgid "Verification code"
-msgstr ""
+msgstr "Tekshiruv ko'di"
 
 #: modules/registration/templates/index.phtml:110
 msgid "Enter verification code"
-msgstr ""
+msgstr "Tekshiruv ko'dini kiriting"
 
 #: modules/registration/templates/index.phtml:124
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Agar siz rasm kodini ko'rmasangiz, brauzeringizda grafikani yoqing va ushbu sahifani yangilang"
 
 #: modules/registration/templates/registration_closed.phtml:12
 msgid "Registration is temporarily closed"
-msgstr ""
+msgstr "Saytga a'zo bo'lish yopilgan"
 
 #: modules/registration/templates/registration_result.phtml:9
 msgid "Your registration data"
@@ -124,15 +124,15 @@ msgstr ""
 
 #: modules/registration/templates/registration_result.phtml:14
 msgid "Your ID"
-msgstr ""
+msgstr "Sizning ID"
 
 #: modules/registration/templates/registration_result.phtml:15
 msgid "Your Username"
-msgstr ""
+msgstr "Sizning tahallus"
 
 #: modules/registration/templates/registration_result.phtml:16
 msgid "Your Password"
-msgstr ""
+msgstr "Sizning parol"
 
 #: modules/registration/templates/registration_result.phtml:19
 msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
@@ -140,9 +140,9 @@ msgstr ""
 
 #: modules/registration/templates/registration_result.phtml:21
 msgid "Please, wait until a moderator approves your registration"
-msgstr ""
+msgstr "Iltimos, moderator sizning ro'yxatdan o'tganingizni tasdiqlashini kuting..."
 
 #: modules/registration/templates/registration_result.phtml:23
 msgid "Enter"
-msgstr ""
+msgstr "Kirish"
 
