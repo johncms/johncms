@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -23,12 +23,12 @@ msgstr ""
 #: modules/library/templates/tags.phtml:58
 #: modules/library/templates/top.phtml:60
 msgid "The list is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: modules/library/includes/addnew.php:28
 #: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
-msgstr ""
+msgstr "Мақаланы жазу"
 
 #: modules/library/includes/addnew.php:43
 #, php-format
@@ -46,7 +46,7 @@ msgstr ""
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr ""
+msgstr "Жүктеу кезінде қате пайда болды"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
@@ -69,11 +69,11 @@ msgstr ""
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr ""
+msgstr "Пікірлер"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
-msgstr ""
+msgstr "Мәліметтер дұрыс емес"
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
@@ -86,11 +86,11 @@ msgstr ""
 #: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
-msgstr ""
+msgstr "Өшіру"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr ""
+msgstr "Бөлім жоқ"
 
 #: modules/library/includes/del.php:88
 #, php-format
@@ -115,12 +115,12 @@ msgstr ""
 
 #: modules/library/includes/download.php:56
 msgid "Date"
-msgstr ""
+msgstr "Күні"
 
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr ""
+msgstr "Соңғы пікірлер"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
@@ -129,11 +129,11 @@ msgstr ""
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
-msgstr ""
+msgstr "Қайталау"
 
 #: modules/library/includes/moder.php:147
 msgid "The ROOT"
-msgstr ""
+msgstr "Тамыры"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
@@ -141,18 +141,18 @@ msgstr ""
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
-msgstr ""
+msgstr "Мақаланы өңдеу "
 
 #: modules/library/includes/new.php:27
 #: modules/library/templates/main.phtml:34
 msgid "New Articles"
-msgstr ""
+msgstr "Жаңа мақалалар"
 
 #: modules/library/includes/search.php:23
 #: modules/library/templates/main.phtml:37
 #: modules/library/templates/search.phtml:37
 msgid "Search"
-msgstr ""
+msgstr "Іздеу"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
@@ -179,7 +179,7 @@ msgstr ""
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
-msgstr ""
+msgstr "Рейтинг бойынша"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
@@ -189,7 +189,7 @@ msgstr ""
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
-msgstr ""
+msgstr "Кітапхана"
 
 #: modules/library/index.php:68
 #: modules/library/templates/main.phtml:28
@@ -220,7 +220,7 @@ msgstr ""
 #: modules/library/templates/moder.phtml:49
 #: modules/library/templates/moder.phtml:50
 msgid "Title"
-msgstr ""
+msgstr "Тақырып"
 
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
@@ -230,7 +230,7 @@ msgstr ""
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
 msgid "Text"
-msgstr ""
+msgstr "Мәтін"
 
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
@@ -254,7 +254,7 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:70
 #: modules/library/templates/moder.phtml:135
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/library/templates/addnew.phtml:90
 #: modules/library/templates/del.phtml:43
@@ -265,7 +265,7 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:71
 #: modules/library/templates/moder.phtml:136
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
@@ -284,7 +284,7 @@ msgstr ""
 #: modules/library/templates/new.phtml:38
 #: modules/library/templates/top.phtml:46
 msgid "Rating:"
-msgstr ""
+msgstr "Рейтинг: "
 
 #: modules/library/templates/book.phtml:63
 #: modules/library/templates/search.phtml:49
@@ -304,7 +304,7 @@ msgstr ""
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr ""
+msgstr "Өзгерту"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr ""
+msgstr "Автор:"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -323,7 +323,7 @@ msgstr ""
 #: modules/library/templates/sectionslist.phtml:56
 #: modules/library/templates/tags.phtml:50
 msgid "Total"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/library/templates/del.phtml:34
 msgid "Successful transfer"
@@ -338,7 +338,7 @@ msgstr ""
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr ""
+msgstr "Артқа"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
@@ -346,7 +346,7 @@ msgstr ""
 
 #: modules/library/templates/del.phtml:42
 msgid "Move"
-msgstr ""
+msgstr "Көшіру"
 
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
@@ -356,7 +356,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
 msgid "Approve"
-msgstr ""
+msgstr "Растау"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
@@ -368,7 +368,7 @@ msgstr ""
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr ""
+msgstr "Бөлім бос емес"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
@@ -395,7 +395,7 @@ msgstr ""
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr ""
+msgstr "Өшіру"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
@@ -403,15 +403,15 @@ msgstr ""
 
 #: modules/library/templates/helpers/printvote.phtml:8
 msgid "Vote"
-msgstr ""
+msgstr "Day'ys bery'"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
 msgid "Up"
-msgstr ""
+msgstr "Жоғары"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
 msgid "Down"
-msgstr ""
+msgstr "Төмен"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
@@ -430,16 +430,16 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
 msgid "Articles"
-msgstr ""
+msgstr "Мақалалар"
 
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr ""
+msgstr "Бөлімдер"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
-msgstr ""
+msgstr "Өзгерді"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
@@ -451,15 +451,15 @@ msgstr ""
 
 #: modules/library/templates/moder.phtml:99
 msgid "Yes"
-msgstr ""
+msgstr "Иә"
 
 #: modules/library/templates/moder.phtml:103
 msgid "No"
-msgstr ""
+msgstr "Жоқ"
 
 #: modules/library/templates/moder.phtml:122
 msgid "Verified"
-msgstr ""
+msgstr "Тексерілді"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
@@ -468,7 +468,7 @@ msgstr ""
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr ""
+msgstr "Бөлім:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -476,7 +476,7 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:54
 msgid "To Library"
-msgstr ""
+msgstr "Кітапханаға"
 
 #: modules/library/templates/premod.phtml:20
 #: modules/library/templates/premod.phtml:21
@@ -489,7 +489,7 @@ msgstr ""
 
 #: modules/library/templates/premod.phtml:30
 msgid "Article"
-msgstr ""
+msgstr "Мақала"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
@@ -497,12 +497,12 @@ msgstr ""
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr ""
+msgstr "Бәрін құптау"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr ""
+msgstr "Іздеу сұранысы"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"
@@ -514,11 +514,11 @@ msgstr ""
 
 #: modules/library/templates/search.phtml:75
 msgid "New Search"
-msgstr ""
+msgstr "Жаңа Іздеу"
 
 #: modules/library/templates/sectionslist.phtml:63
 msgid "Create"
-msgstr ""
+msgstr "Құру"
 
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Tag Cloud"
@@ -527,5 +527,5 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr ""
+msgstr "Сұрыптау"
 
