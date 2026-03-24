@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/mail/includes/delete.php:15
 msgid "Deleting messages"
@@ -83,7 +83,7 @@ msgstr "Чёрный список"
 #: modules/mail/includes/write.php:33
 #: modules/mail/includes/write.php:148
 msgid "User does not exists"
-msgstr "Пользователь не существует"
+msgstr "Такого пользователя не существует"
 
 #: modules/mail/includes/ignor.php:40
 msgid "User not blocked"
@@ -101,7 +101,7 @@ msgstr "Пользователь разблокирован"
 #: modules/mail/includes/input.php:82
 #: modules/mail/includes/output.php:74
 msgid "Continue"
-msgstr "Далее"
+msgstr "Продолжить"
 
 #: modules/mail/includes/ignor.php:58
 msgid "You really want to unblock contact?"
