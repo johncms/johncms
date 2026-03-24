@@ -11,152 +11,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 13:16\n"
 
 #: modules/community/includes/administration.php:33
 #: modules/community/includes/administration.php:39
 #: modules/community/includes/administration.php:40
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
-msgstr ""
+msgstr "Администратор"
 
 #: modules/community/includes/birthdays.php:25
 #: modules/community/includes/birthdays.php:31
 #: modules/community/includes/birthdays.php:32
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
-msgstr ""
+msgstr "Туулган күндөр"
 
 #: modules/community/includes/search.php:23
 #: modules/community/templates/search.phtml:81
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
-msgstr ""
+msgstr "Колдонуучуну издөө"
 
 #: modules/community/includes/search.php:32
 #: modules/community/includes/search.php:36
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
-msgstr ""
+msgstr "Ник"
 
 #: modules/community/includes/search.php:32
 msgid "Invalid length"
-msgstr ""
+msgstr "Узундугу туура эмес"
 
 #: modules/community/includes/search.php:36
 msgid "Invalid characters"
-msgstr ""
+msgstr "Жол берилбеген белгилер"
 
 #: modules/community/includes/top.php:21
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: modules/community/includes/top.php:26
 msgid "Guestbook"
-msgstr ""
+msgstr "Конок китеби"
 
 #: modules/community/includes/top.php:31
 msgid "Comments"
-msgstr ""
+msgstr "Пикирлер"
 
 #: modules/community/includes/top.php:39
 msgid "Karma"
-msgstr ""
+msgstr "Карма"
 
 #: modules/community/includes/top.php:50
 msgid "Most active in Guestbook"
-msgstr ""
+msgstr "Эң аракетчил  Конок китебинде"
 
 #: modules/community/includes/top.php:57
 msgid "Most commentators"
-msgstr ""
+msgstr "Эң көп пикирлер"
 
 #: modules/community/includes/top.php:65
 msgid "Best Karma"
-msgstr ""
+msgstr "Эң жакшы Карма"
 
 #: modules/community/includes/top.php:73
 msgid "Most active in Forum"
-msgstr ""
+msgstr "Эң аракетчил форумда"
 
 #: modules/community/includes/users.php:28
 #: modules/community/includes/users.php:34
 #: modules/community/includes/users.php:35
 msgid "List of users"
-msgstr ""
+msgstr "Колдонуучулардын тизмеси"
 
 #: modules/community/index.php:55
 msgid "Community"
-msgstr ""
+msgstr "Коомчулук"
 
 #: modules/community/index.php:66
 msgid "For registered users only"
-msgstr ""
+msgstr "Сайтта катталган колдонуучулар үчүн"
 
 #: modules/community/templates/index.phtml:30
 #: modules/community/templates/search.phtml:43
 msgid "Look for the User"
-msgstr ""
+msgstr "Колдонуучуларды издөө"
 
 #: modules/community/templates/index.phtml:34
 #: modules/community/templates/search.phtml:47
 msgid "Search"
-msgstr ""
+msgstr "Издөө"
 
 #: modules/community/templates/index.phtml:37
 #: modules/community/templates/search.phtml:50
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
+msgstr "Издөө Ник менен ишке ашырылат жана регистрди эске албайт."
 
 #: modules/community/templates/index.phtml:41
 msgid "Users"
-msgstr ""
+msgstr "Колдонуучулар"
 
 #: modules/community/templates/index.phtml:55
 msgid "Top Activity"
-msgstr ""
+msgstr "Эң аракетчилдер"
 
 #: modules/community/templates/search.phtml:45
 msgid "Username"
-msgstr ""
+msgstr "Колдонуучу аты"
 
 #: modules/community/templates/search.phtml:64
 #: modules/community/templates/top.phtml:40
 #: modules/community/templates/users.phtml:33
 msgid "List is empty"
-msgstr ""
+msgstr "Тизмеси бош"
 
 #: modules/community/templates/search.phtml:71
 #: modules/community/templates/users.phtml:40
 msgid "Total"
-msgstr ""
+msgstr "Баары"
 
 #: modules/community/templates/search.phtml:84
 #: modules/community/templates/top.phtml:47
 #: modules/community/templates/users.phtml:53
 msgid "Back"
-msgstr ""
+msgstr "Артка"
 
 #: modules/community/templates/user_row.phtml:61
 #: modules/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "билдирүү"
+msgstr[1] "билдирүүлөр"
 
 #: modules/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "пикир"
+msgstr[1] "пикирлер"
 
 #: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "упай"
+msgstr[1] "упайлар"
 
 #: modules/community/templates/user_row.phtml:89
 msgid "Delete"
-msgstr ""
+msgstr "Өчүрүү"
 
