@@ -11,43 +11,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Lithuanian\n"
 "Language: lt_LT\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: install/index.php:66
 #: install/steps/step_1.php:23
 msgid "Preparing for installation"
-msgstr ""
+msgstr "Ruošiama diegti"
 
 #: install/index.php:71
 #: install/steps/step_2.php:20
 #: install/steps/step_2.php:21
 msgid "Checking parameters"
-msgstr ""
+msgstr "Parametru tikrinimas"
 
 #: install/index.php:76
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
-msgstr ""
+msgstr "Duomenu baze"
 
 #: install/index.php:81
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
-msgstr ""
+msgstr "Nustatymai"
 
 #: install/index.php:86
 msgid "Completion"
-msgstr ""
+msgstr "Baigimas"
 
 #: install/steps/step_2.php:27
 msgid "PHP version"
-msgstr ""
+msgstr "PHP versija"
 
 #: install/steps/step_2.php:30
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "PHP versija turi buti ne mazesnia nei "
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40
@@ -55,7 +55,7 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "Yes"
-msgstr ""
+msgstr "Taip"
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40
@@ -63,15 +63,15 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: install/steps/step_2.php:36
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PDO turi buti irasyta"
 
 #: install/steps/step_2.php:39
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Imagick arba GD"
 
 #: install/steps/step_2.php:42
 msgid "You must install the php extension Imagick or GD"
