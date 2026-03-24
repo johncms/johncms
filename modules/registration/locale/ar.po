@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:10\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/registration/index.php:50
 #: modules/registration/templates/index.phtml:4
@@ -23,126 +23,126 @@ msgstr ""
 #: modules/registration/templates/registration_result.phtml:4
 #: modules/registration/templates/registration_result.phtml:5
 msgid "Registration"
-msgstr ""
+msgstr "تسجيل اشتراك جديد"
 
 #: modules/registration/index.php:169
 msgid "Registration on the website"
-msgstr ""
+msgstr "التسجيل في الموقع"
 
 #: modules/registration/templates/email_confirmed.phtml:11
 #: modules/registration/templates/email_confirmed.phtml:12
 msgid "Email confirmation"
-msgstr ""
+msgstr "تأكيد البريد الإلكتروني"
 
 #: modules/registration/templates/email_confirmed.phtml:17
 msgid "User is not found"
-msgstr ""
+msgstr "المستخدم غير موجود"
 
 #: modules/registration/templates/email_confirmed.phtml:19
 msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
+msgstr "وذلك بفضل! البريد الإلكتروني الخاص بك بنجاح تأكيد."
 
 #: modules/registration/templates/email_confirmed.phtml:26
 msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
+msgstr "خطأ عند تأكيد البريد الإلكتروني. صالح رمز التأكيد."
 
 #: modules/registration/templates/index.phtml:13
 msgid "You can get authorized on the site after confirmation of your registration."
-msgstr ""
+msgstr "ويمكن الحصول على إذن على الموقع بعد تأكيد التسجيل الخاص بك."
 
 #: modules/registration/templates/index.phtml:21
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
-msgstr ""
+msgstr "من فضلك، لم تقم بتسجيل أسماء مثل 111، shhhh، أووو، إلخ. أنها ستحذف. < br/> ستحذف أيضا كافة التشكيلات الجانبية المسجلة عبر ملقمات الوكيل"
 
 #: modules/registration/templates/index.phtml:25
 msgid "Choose Nickname"
-msgstr ""
+msgstr "اختر اسمگ المستعار"
 
 #: modules/registration/templates/index.phtml:34
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: modules/registration/templates/index.phtml:40
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
-msgstr ""
+msgstr "دقيقة. 2, Max. 20 حرفا.<br />Allowed الحروف الروسية واللاتينية الحروف الهجائية والأرقام والرموز - = @ ! ? ~ _ ( ) [ ] . * (ما عدا الصفر)"
 
 #: modules/registration/templates/index.phtml:44
 #: modules/registration/templates/index.phtml:53
 msgid "Assign a password"
-msgstr ""
+msgstr "تعيين كلمة المرور"
 
 #: modules/registration/templates/index.phtml:61
 #: modules/registration/templates/index.phtml:68
 msgid "E-mail"
-msgstr ""
+msgstr "البريد الإلكتروني"
 
 #: modules/registration/templates/index.phtml:76
 msgid "Select Gender"
-msgstr ""
+msgstr "اختر الجنس"
 
 #: modules/registration/templates/index.phtml:79
 msgid "Man"
-msgstr ""
+msgstr "رجل"
 
 #: modules/registration/templates/index.phtml:80
 msgid "Woman"
-msgstr ""
+msgstr "امرأة"
 
 #: modules/registration/templates/index.phtml:87
 #: modules/registration/templates/index.phtml:94
 msgid "Your name"
-msgstr ""
+msgstr "اسمُك"
 
 #: modules/registration/templates/index.phtml:101
 msgid "Tell us a little about yourself"
-msgstr ""
+msgstr "أخبرنا قليلاً عن نفسك"
 
 #: modules/registration/templates/index.phtml:108
 #: modules/registration/templates/index.phtml:118
 msgid "Verification code"
-msgstr ""
+msgstr "رمز التحقق"
 
 #: modules/registration/templates/index.phtml:110
 msgid "Enter verification code"
-msgstr ""
+msgstr "أدخل رمز التحقق"
 
 #: modules/registration/templates/index.phtml:124
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "إذا كنت لا ترى رمز الصورة، يرجى تمكين الرسومات في المستعرض الخاص بك ثم قم بتحديث هذه الصفحة"
 
 #: modules/registration/templates/registration_closed.phtml:12
 msgid "Registration is temporarily closed"
-msgstr ""
+msgstr "التسجيل مغلق مؤقتا"
 
 #: modules/registration/templates/registration_result.phtml:9
 msgid "Your registration data"
-msgstr ""
+msgstr "بيانات التسجيل الخاصه بك"
 
 #: modules/registration/templates/registration_result.phtml:11
 msgid "Congratulations! You have successfully registered on the site."
-msgstr ""
+msgstr "تهانينا! لقد أتقنت الرخ بنجاح."
 
 #: modules/registration/templates/registration_result.phtml:14
 msgid "Your ID"
-msgstr ""
+msgstr "المعرف"
 
 #: modules/registration/templates/registration_result.phtml:15
 msgid "Your Username"
-msgstr ""
+msgstr "اسم العضوية"
 
 #: modules/registration/templates/registration_result.phtml:16
 msgid "Your Password"
-msgstr ""
+msgstr "كلمة المرور الخاصه بك"
 
 #: modules/registration/templates/registration_result.phtml:19
 msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "الآن تحتاج فقط إلى تأكيد عنوان البريد الإلكتروني الخاص بك.<br> يرجى التحقق من البريد الإلكتروني الخاص بك واتبع التعليمات في ذلك."
 
 #: modules/registration/templates/registration_result.phtml:21
 msgid "Please, wait until a moderator approves your registration"
-msgstr ""
+msgstr "من فضلگ انتظر حتى يقوم المشرف بتفعيل عضويتگ"
 
 #: modules/registration/templates/registration_result.phtml:23
 msgid "Enter"
-msgstr ""
+msgstr "ادخل"
 
