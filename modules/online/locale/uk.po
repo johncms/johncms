@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/online/includes/guest.php:24
 #: modules/online/includes/history.php:24
@@ -47,16 +47,16 @@ msgstr "Гість"
 
 #: modules/online/includes/index.php:48
 msgid "Who is online?"
-msgstr "Хто онлайн?"
+msgstr "Хто в мережі?"
 
 #: modules/online/index.php:55
 #: modules/online/index.php:63
 msgid "Online"
-msgstr ""
+msgstr "В мережі"
 
 #: modules/online/index.php:57
 msgid "For registered users only"
-msgstr ""
+msgstr "Тільки для зареєстрованих користувачів"
 
 #: modules/online/templates/ip.phtml:51
 #: modules/online/templates/users.phtml:38
@@ -66,5 +66,5 @@ msgstr "Список порожній"
 #: modules/online/templates/ip.phtml:58
 #: modules/online/templates/users.phtml:45
 msgid "Total"
-msgstr "Всього"
+msgstr "Разом"
 
