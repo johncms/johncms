@@ -11,149 +11,149 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/community/includes/administration.php:33
 #: modules/community/includes/administration.php:39
 #: modules/community/includes/administration.php:40
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
-msgstr ""
+msgstr "Quản trị"
 
 #: modules/community/includes/birthdays.php:25
 #: modules/community/includes/birthdays.php:31
 #: modules/community/includes/birthdays.php:32
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
-msgstr ""
+msgstr "Sinh nhật"
 
 #: modules/community/includes/search.php:23
 #: modules/community/templates/search.phtml:81
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
-msgstr ""
+msgstr "Tìm người dùng"
 
 #: modules/community/includes/search.php:32
 #: modules/community/includes/search.php:36
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
-msgstr ""
+msgstr "Biệt danh"
 
 #: modules/community/includes/search.php:32
 msgid "Invalid length"
-msgstr ""
+msgstr "Chiều dài không hợp lệ"
 
 #: modules/community/includes/search.php:36
 msgid "Invalid characters"
-msgstr ""
+msgstr "Ký tự không hợp lệ"
 
 #: modules/community/includes/top.php:21
 msgid "Forum"
-msgstr ""
+msgstr "Diễn đàn"
 
 #: modules/community/includes/top.php:26
 msgid "Guestbook"
-msgstr ""
+msgstr "Phòng trò truyện"
 
 #: modules/community/includes/top.php:31
 msgid "Comments"
-msgstr ""
+msgstr "Bình luận"
 
 #: modules/community/includes/top.php:39
 msgid "Karma"
-msgstr ""
+msgstr "Nghiệp chướng"
 
 #: modules/community/includes/top.php:50
 msgid "Most active in Guestbook"
-msgstr ""
+msgstr "Hoạt động nhiều nhất trong Lưu bút"
 
 #: modules/community/includes/top.php:57
 msgid "Most commentators"
-msgstr ""
+msgstr "Đầu trang bình luận"
 
 #: modules/community/includes/top.php:65
 msgid "Best Karma"
-msgstr ""
+msgstr "Tốt Nhất Karma"
 
 #: modules/community/includes/top.php:73
 msgid "Most active in Forum"
-msgstr ""
+msgstr "Hoạt động nhiều nhất trong Diễn đàn"
 
 #: modules/community/includes/users.php:28
 #: modules/community/includes/users.php:34
 #: modules/community/includes/users.php:35
 msgid "List of users"
-msgstr ""
+msgstr "Danh sách người dùng"
 
 #: modules/community/index.php:55
 msgid "Community"
-msgstr ""
+msgstr "Cộng đồng"
 
 #: modules/community/index.php:66
 msgid "For registered users only"
-msgstr ""
+msgstr "Chỉ dành cho thành viên đã đăng ký"
 
 #: modules/community/templates/index.phtml:30
 #: modules/community/templates/search.phtml:43
 msgid "Look for the User"
-msgstr ""
+msgstr "Tìm kiếm người dùng"
 
 #: modules/community/templates/index.phtml:34
 #: modules/community/templates/search.phtml:47
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: modules/community/templates/index.phtml:37
 #: modules/community/templates/search.phtml:50
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
+msgstr "Tìm kiếm được thực hiện bằng biệt hiệu và được quản."
 
 #: modules/community/templates/index.phtml:41
 msgid "Users"
-msgstr ""
+msgstr "Thành viên"
 
 #: modules/community/templates/index.phtml:55
 msgid "Top Activity"
-msgstr ""
+msgstr "Hoạt động nhiều nhất"
 
 #: modules/community/templates/search.phtml:45
 msgid "Username"
-msgstr ""
+msgstr "Tên tài khoản"
 
 #: modules/community/templates/search.phtml:64
 #: modules/community/templates/top.phtml:40
 #: modules/community/templates/users.phtml:33
 msgid "List is empty"
-msgstr ""
+msgstr "Danh sách trống"
 
 #: modules/community/templates/search.phtml:71
 #: modules/community/templates/users.phtml:40
 msgid "Total"
-msgstr ""
+msgstr "Tổng số"
 
 #: modules/community/templates/search.phtml:84
 #: modules/community/templates/top.phtml:47
 #: modules/community/templates/users.phtml:53
 msgid "Back"
-msgstr ""
+msgstr "Trở lại"
 
 #: modules/community/templates/user_row.phtml:61
 #: modules/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
-msgstr[0] ""
+msgstr[0] "bài viết"
 
 #: modules/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] ""
+msgstr[0] "bình luận"
 
 #: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
-msgstr[0] ""
+msgstr[0] "điểm"
 
 #: modules/community/templates/user_row.phtml:89
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
