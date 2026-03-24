@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -77,17 +77,17 @@ msgstr ""
 #: modules/forum/templates/new_topic.phtml:111
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "Orqaga"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:63
 #: modules/forum/src/Application/Controllers/AddFileController.php:97
 msgid "Add file"
-msgstr ""
+msgstr "Fayl qo‘shish"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:64
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
-msgstr ""
+msgstr "Faylni yuklashga ajratilgan vaqt tugadi"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:98
 #: modules/forum/src/Application/Controllers/AddFileController.php:99
@@ -97,7 +97,7 @@ msgstr ""
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
-msgstr ""
+msgstr "Faylni yuklashda xatolik yuz berdi"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:101
 #: modules/forum/src/Application/Controllers/AddVoteController.php:113
@@ -105,7 +105,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:67
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:139
 msgid "Repeat"
-msgstr ""
+msgstr "Takrorlash"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:114
 #: modules/forum/src/Application/Controllers/AddFileController.php:115
@@ -116,7 +116,7 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:136
 #: modules/forum/templates/topic.phtml:448
 msgid "Add File"
-msgstr ""
+msgstr "Fayl qo‘shish"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:57
 #: modules/forum/src/Application/Controllers/AddVoteController.php:58
@@ -126,7 +126,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/AddVoteController.php:109
 #: modules/forum/templates/topic.phtml:395
 msgid "Add Poll"
-msgstr ""
+msgstr "So‘rovnoma qo‘shish"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:59
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:73
@@ -157,26 +157,26 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
-msgstr ""
+msgstr "Noto'g'ri ma'lumotlar"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:98
 msgid "Poll added"
-msgstr ""
+msgstr "So‘rovnoma qo‘shildi"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:100
 #: modules/forum/src/Application/Controllers/EditVoteController.php:116
 msgid "Continue"
-msgstr ""
+msgstr "Davom etish"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:111
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Zaruriy maydonlar to‘ldirilmadi"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:122
 #: modules/forum/src/Application/Controllers/EditVoteController.php:145
 #: modules/forum/src/Application/Controllers/EditVoteController.php:157
 msgid "Answer"
-msgstr ""
+msgstr "Javob berish"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
@@ -189,16 +189,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:126
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:127
 msgid "Delete posts"
-msgstr ""
+msgstr "Xabarlarni o'chirish"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:116
 msgid "You did not choose something to delete"
-msgstr ""
+msgstr "O'chirish uchun hechnima tanlamadingiz"
 
 #: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:102
 msgid "Marked posts are deleted"
-msgstr ""
+msgstr "Belgilangan xabarlar o'chirildi"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:42
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:44
@@ -207,7 +207,7 @@ msgstr ""
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
-msgstr ""
+msgstr "Ruxsat yo‘q"
 
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:58
 #: modules/forum/src/Application/Controllers/ChangeTopicController.php:59
@@ -234,7 +234,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:83
 #: modules/forum/templates/topic.phtml:478
 msgid "Filter by author"
-msgstr ""
+msgstr "Muallif tomonidan filtrlash"
 
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:47
 #: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:48
@@ -244,7 +244,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
-msgstr ""
+msgstr "Forumdan qidirish"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:55
 #: modules/forum/src/Application/Controllers/CuratorsController.php:56
@@ -254,13 +254,13 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:65
 #: modules/forum/templates/topic.phtml:467
 msgid "Curators"
-msgstr ""
+msgstr "Nazoratichilar"
 
 #: modules/forum/src/Application/Controllers/CuratorsController.php:57
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:66
 #: modules/forum/src/Application/ForumUtils.php:71
 msgid "Topic has been deleted or does not exists"
-msgstr ""
+msgstr "Mavzu o‘chirilgan yoki mavjud emas"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:54
 #: modules/forum/src/Application/Controllers/DeletePostController.php:65
@@ -271,14 +271,14 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/RestorePostController.php:54
 #: modules/forum/src/Application/Controllers/RestorePostController.php:65
 msgid "Error"
-msgstr ""
+msgstr "Xatolik yuz berdi"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:55
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:58
 #: modules/forum/src/Application/Controllers/EditPostController.php:59
 #: modules/forum/src/Application/Controllers/RestorePostController.php:55
 msgid "Message does not exists or has been deleted"
-msgstr ""
+msgstr "Xabar mavjud emas yoki o‘chirilgan"
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:57
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:60
@@ -320,19 +320,19 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeletePostController.php:101
 #: modules/forum/src/Application/Controllers/DeletePostController.php:102
 msgid "Delete Message"
-msgstr ""
+msgstr "Xabarni o‘chirish"
 
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:86
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:102
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:103
 msgid "Delete file"
-msgstr ""
+msgstr "Faylni o‘chirish"
 
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:88
 #: modules/forum/src/Application/Controllers/DeleteTopicController.php:89
 #: modules/forum/templates/topic.phtml:414
 msgid "Delete Topic"
-msgstr ""
+msgstr "Mavzuni o‘chirish"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
@@ -340,31 +340,31 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:83
 #: modules/forum/templates/topic.phtml:393
 msgid "Delete Poll"
-msgstr ""
+msgstr "So‘rovnomani o‘chirish"
 
 #: modules/forum/src/Application/Controllers/DeleteVoteController.php:72
 msgid "Poll deleted"
-msgstr ""
+msgstr "So‘rovnoma o‘chirildi"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:57
 msgid "Download file"
-msgstr ""
+msgstr "Yuklab olish"
 
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:59
 msgid "File does not exist"
-msgstr ""
+msgstr "Fayl mavjud emas"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:84
 #: modules/forum/src/Application/Controllers/EditPostController.php:101
 #: modules/forum/src/Application/Controllers/EditPostController.php:125
 #: modules/forum/src/Application/Controllers/EditPostController.php:126
 msgid "Edit Message"
-msgstr ""
+msgstr "Xabarni tahrirlash"
 
 #: modules/forum/src/Application/Controllers/EditPostController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
 msgid "You have not entered the message"
-msgstr ""
+msgstr "Xabarni kiritmadingiz"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:59
 #: modules/forum/src/Application/Controllers/EditVoteController.php:60
@@ -374,30 +374,30 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/EditVoteController.php:166
 #: modules/forum/templates/topic.phtml:392
 msgid "Edit Poll"
-msgstr ""
+msgstr "So‘rovnomani tahrirlash"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:79
 #: modules/forum/src/Application/Controllers/EditVoteController.php:80
 msgid "Delete Answer"
-msgstr ""
+msgstr "Javobni o‘chirish"
 
 #: modules/forum/src/Application/Controllers/EditVoteController.php:114
 msgid "Poll changed"
-msgstr ""
+msgstr "So‘rovnoma tahrirlandi"
 
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:56
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:57
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:113
 msgid "Forum Files"
-msgstr ""
+msgstr "Forum Fayllari"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
-msgstr ""
+msgstr "Juda uzun"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
-msgstr ""
+msgstr "Oxirgi 10 mavzu"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
@@ -408,7 +408,7 @@ msgstr ""
 #: modules/forum/templates/files_sections.phtml:49
 #: modules/forum/templates/filter_by_author.phtml:41
 msgid "The list is empty"
-msgstr ""
+msgstr "Ro‘yxat bo‘sh"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:50
@@ -417,16 +417,16 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:54
 #: modules/forum/templates/header.phtml:31
 msgid "Unread"
-msgstr ""
+msgstr "O‘qilmagan"
 
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:67
 msgid "All topics marked as read"
-msgstr ""
+msgstr "Barcha mavzular o'qilgan deb belgilangan"
 
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:103
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:104
 msgid "Move topic"
-msgstr ""
+msgstr "Mavzuni ko`chirish"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:70
 #: modules/forum/src/Application/Controllers/NewMessageController.php:84
@@ -443,34 +443,34 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:148
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:162
 msgid "New message"
-msgstr ""
+msgstr "Yangi xabar"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:86
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:89
 msgid "You cannot write in a closed topic"
-msgstr ""
+msgstr "Mavzu yopilgan yozish mumkin emas!"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:100
 #: modules/forum/src/Application/Controllers/NewTopicController.php:87
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:116
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Siz xabarni tez-tez qo'sha olmaysiz <br> Iltimos, %d soniya kuting."
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:122
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
 msgid "Text is too short"
-msgstr ""
+msgstr "Matn juda qisqa"
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:136
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:164
 msgid "Message already exists"
-msgstr ""
+msgstr "Xabar allaqachon mavjud"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:60
 #: modules/forum/src/Application/Controllers/NewTopicController.php:73
 msgid "Go to Section"
-msgstr ""
+msgstr "Bo'limga o'tish"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:85
 #: modules/forum/src/Application/Controllers/NewTopicController.php:164
@@ -478,25 +478,25 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/NewTopicController.php:169
 #: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
-msgstr ""
+msgstr "Yangi Mavzu"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:71
 #: modules/forum/src/Application/Controllers/PollVotersController.php:79
 msgid "Who voted in the poll"
-msgstr ""
+msgstr "So'rovnomaga kim ovoz berdi"
 
 #: modules/forum/src/Application/Controllers/PollVotersController.php:88
 msgid "No one has voted in this poll yet"
-msgstr ""
+msgstr "Ushbu so'rivnomaga hozircha hech kim ovoz bermagan"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:102
 msgid "You can not reply to your own message"
-msgstr ""
+msgstr "Siz o'z xabaringizga javob yozolmaysiz"
 
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:214
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:215
 msgid "Reply to message"
-msgstr ""
+msgstr "Xabarga javob"
 
 #: modules/forum/src/Application/Controllers/RestorePostController.php:83
 #: modules/forum/src/Application/Controllers/RestorePostController.php:99
@@ -506,27 +506,27 @@ msgstr ""
 
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:85
 msgid "You have not selected any author"
-msgstr ""
+msgstr "Siz muallifni tanlamadingiz"
 
 #: modules/forum/src/Application/Controllers/ShowPostController.php:40
 #: modules/forum/src/Application/Controllers/ShowPostController.php:63
 #: modules/forum/src/Application/Controllers/ShowPostController.php:75
 #: modules/forum/src/Application/Controllers/ShowPostController.php:76
 msgid "Show post"
-msgstr ""
+msgstr "Xabarni ko'rish"
 
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
 msgid "Vote accepted"
-msgstr ""
+msgstr "Ovoz qabul qilinadi"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
 #, php-format
 msgid "All for period %d hours"
-msgstr ""
+msgstr "Jami %d soat"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "Ushbu forumda tanlangan davr uchun yangilik yo'q"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
@@ -542,23 +542,23 @@ msgstr ""
 #: modules/forum/templates/section.phtml:68
 #: modules/forum/templates/topics.phtml:123
 msgid "Who in Forum"
-msgstr ""
+msgstr "Forumdagilar"
 
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:52
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:76
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:86
 #: modules/forum/templates/who.phtml:32
 msgid "Who in Topic"
-msgstr ""
+msgstr "Kim Mavzuda"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:49
 msgid "For registered users only"
-msgstr ""
+msgstr "Faqat ro‘yxatdan o‘tgan foydalanuvchilar uchun"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:50
 #: modules/forum/templates/header.phtml:20
 msgid "Forum is closed"
-msgstr ""
+msgstr "Forum yopiq"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:54
 msgid "Search query must be between 2 and 64 characters"
@@ -571,137 +571,138 @@ msgstr ""
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:136
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:156
 msgid "In the forum Main"
-msgstr ""
+msgstr "Forum Bosh menyusi"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:88
 msgid "Here, in the List"
-msgstr ""
+msgstr "Kim shu yerda"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:89
 msgid "Looking forum files"
-msgstr ""
+msgstr "Forum fayllarida"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:90
 msgid "In the unreads"
-msgstr ""
+msgstr "O‘qilmaganlar"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:107
 msgid "In the Category"
-msgstr ""
+msgstr "Kategoriyada"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:117
 msgid "In the Section"
-msgstr ""
+msgstr "Bo‘limda"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
 msgid "Answers in the Topic"
-msgstr ""
+msgstr "Mavzuda javob qoldirish"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:146
 msgid "Writes in the Topic"
-msgstr ""
+msgstr "Mavzuda javob qoldirish"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:149
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:159
 msgid "In the Topic"
-msgstr ""
+msgstr "Mavzuda"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:43
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:71
 msgid "Guest"
-msgstr ""
+msgstr "Mehmon"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:92
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:282
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:88
 msgid "Forum moderator"
-msgstr ""
+msgstr "Forum moderatori"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:93
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:283
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:89
 msgid "Download moderator"
-msgstr ""
+msgstr "Yuklamalar moderatori"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:94
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:284
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
 msgid "Library moderator"
-msgstr ""
+msgstr "Kutubxona moderatori"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:95
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:285
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:91
 msgid "Super moderator"
-msgstr ""
+msgstr "Katta moderator"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:96
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:286
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:92
 msgid "Administrator"
-msgstr ""
+msgstr "Ma‘mur"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:97
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:287
 #: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:93
 msgid "Supervisor"
-msgstr ""
+msgstr "Superma‘mur"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:55
 msgid "File size exceed"
-msgstr ""
+msgstr "Fayl hajmi katta"
 
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:61
 msgid "The forbidden file format.<br>You can upload files of the following extension"
-msgstr ""
+msgstr "Ruxsat etilmagan fayl formati.<br>\n"
+"Siz quyidagi turdagi fayllarni yuklashingiz mumkin"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:29
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Siz o‘zingizdan yuqori lavozimdagi foydalanuvchi xabarini tahrirlay olmaysiz"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:37
 msgid "You are trying to change another's post"
-msgstr ""
+msgstr "Siz boshqa foydalanuvchi xabarlarini tahriray olmaysiz"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:54
 msgid "Your message not already latest, you cannot change it"
-msgstr ""
+msgstr "Sizdan xabaringizdan keyin xabar yozilgani sababli siz ushbu xabarni tahrirlay olmaysiz"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:58
 msgid "You cannot edit your posts after 5 minutes"
-msgstr ""
+msgstr "Siz o‘z xabarlaringizni 5 daqiqa o‘tib bo‘lgandan so‘ng tahrirlay olmaysiz"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:68
 #: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
-msgstr ""
+msgstr "Kategoriya fayllari"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:85
 msgid "Section files"
-msgstr ""
+msgstr "Bo'limda fayllar"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:102
 #: modules/forum/templates/topic.phtml:37
 msgid "Topic Files"
-msgstr ""
+msgstr "Mavzu Fayllari"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:142
 #: modules/forum/templates/files_list.phtml:28
 #: modules/forum/templates/files_sections.phtml:28
 msgid "New Files"
-msgstr ""
+msgstr "Yangi fayllar"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:172
 msgid "List of sections"
-msgstr ""
+msgstr "Bo'limlar ro'yxati"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:297
 msgid "Windows applications"
-msgstr ""
+msgstr "Windows dasturlari"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
 msgid "Java applications"
-msgstr ""
+msgstr "Java dasturlari"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
 msgid "SIS"
@@ -709,19 +710,19 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:300
 msgid "txt"
-msgstr ""
+msgstr "matn"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
 msgid "Pictures"
-msgstr ""
+msgstr "Rasmlar"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
 msgid "Archive"
-msgstr ""
+msgstr "Arxiv"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
 msgid "Videos"
-msgstr ""
+msgstr "Videolar"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
 msgid "MP3"
@@ -729,15 +730,15 @@ msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "Other"
-msgstr ""
+msgstr "Boshqalar"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
-msgstr ""
+msgstr "Fayl biriktirilgan"
 
 #: modules/forum/templates/add_file.phtml:32
 msgid "Add more"
-msgstr ""
+msgstr "Yana qo‘shish"
 
 #: modules/forum/templates/add_file.phtml:33
 #: modules/forum/templates/add_file.phtml:48
@@ -749,26 +750,26 @@ msgstr ""
 #: modules/forum/templates/move_topic.phtml:52
 #: modules/forum/templates/show_post.phtml:148
 msgid "Back to topic"
-msgstr ""
+msgstr "Mavzuga qaytish"
 
 #: modules/forum/templates/add_file.phtml:40
 msgid "Choose file"
-msgstr ""
+msgstr "Faylni tanlang"
 
 #: modules/forum/templates/add_file.phtml:44
 msgid "Max. Size"
-msgstr ""
+msgstr "Maksimal hajmi"
 
 #: modules/forum/templates/add_file.phtml:47
 msgid "Upload"
-msgstr ""
+msgstr "Yuklash"
 
 #: modules/forum/templates/add_poll.phtml:31
 #: modules/forum/templates/add_poll.phtml:32
 #: modules/forum/templates/edit_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:35
 msgid "Poll"
-msgstr ""
+msgstr "So‘rovnoma"
 
 #: modules/forum/templates/add_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:37
@@ -778,34 +779,34 @@ msgstr ""
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
 msgid "Answers"
-msgstr ""
+msgstr "Javoblar"
 
 #: modules/forum/templates/add_poll.phtml:43
 #: modules/forum/templates/edit_poll.phtml:53
 msgid "Maximum length: 150 characters"
-msgstr ""
+msgstr "Maksimal uzunligi: 150 belgi"
 
 #: modules/forum/templates/add_poll.phtml:49
 #: modules/forum/templates/edit_poll.phtml:59
 msgid "Add Answer"
-msgstr ""
+msgstr "Javob qo‘shish"
 
 #: modules/forum/templates/add_poll.phtml:52
 #: modules/forum/templates/edit_poll.phtml:62
 msgid "Delete last"
-msgstr ""
+msgstr "Oxirgisini o‘chirish"
 
 #: modules/forum/templates/add_poll.phtml:56
 #: modules/forum/templates/change_topic.phtml:51
 #: modules/forum/templates/edit_poll.phtml:66
 #: modules/forum/templates/edit_post.phtml:45
 msgid "Save"
-msgstr ""
+msgstr "Saqlash"
 
 #: modules/forum/templates/change_topic.phtml:29
 #: modules/forum/templates/change_topic.phtml:30
 msgid "Topic name"
-msgstr ""
+msgstr "Mavzu nomi"
 
 #: modules/forum/templates/change_topic.phtml:37
 #: modules/forum/templates/new_topic.phtml:96
@@ -819,11 +820,11 @@ msgstr ""
 
 #: modules/forum/templates/clear_search_history.phtml:28
 msgid "Do you really want to clear the search history?"
-msgstr ""
+msgstr "Rostdan ham qidiruvlar tarixini tozalamoqchimisiz?"
 
 #: modules/forum/templates/clear_search_history.phtml:31
 msgid "Clear"
-msgstr ""
+msgstr "Tozalash"
 
 #: modules/forum/templates/clear_search_history.phtml:32
 #: modules/forum/templates/delete_answer.phtml:33
@@ -834,20 +835,20 @@ msgstr ""
 #: modules/forum/templates/mass_delete.phtml:41
 #: modules/forum/templates/restore_post.phtml:36
 msgid "Cancel"
-msgstr ""
+msgstr "Bekor qilish"
 
 #: modules/forum/templates/curators.phtml:31
 #: modules/forum/templates/filter_by_author.phtml:35
 msgid "Changes saved"
-msgstr ""
+msgstr "O‘zgarishlar saqlandi"
 
 #: modules/forum/templates/curators.phtml:51
 msgid "Assign"
-msgstr ""
+msgstr "Biriktirish"
 
 #: modules/forum/templates/delete_answer.phtml:29
 msgid "Do you really want to delete the answer?"
-msgstr ""
+msgstr "Siz rostdan ham ushbu javobni o‘chirmoqchimisiz?"
 
 #: modules/forum/templates/delete_answer.phtml:32
 #: modules/forum/templates/delete_file.phtml:36
@@ -858,36 +859,38 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:325
 #: modules/forum/templates/topic.phtml:370
 msgid "Delete"
-msgstr ""
+msgstr "O‘chirish"
 
 #: modules/forum/templates/delete_file.phtml:31
 #: modules/forum/templates/delete_post.phtml:37
 #: modules/forum/templates/delete_topic.phtml:31
 #: modules/forum/templates/mass_delete.phtml:31
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Rostdan ham o‘chirmoqchimisiz?"
 
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
-msgstr ""
+msgstr "O‘chirilgandan so‘ng foydalanuvchi forumi xabarlaridan 1 qiymat olib tashlanadi"
 
 #: modules/forum/templates/delete_poll.phtml:29
 msgid "Do you really want to delete a poll?"
-msgstr ""
+msgstr "Rostdan ham so‘rovnomani o‘chirmoqchimisiz?"
 
 #: modules/forum/templates/delete_post.phtml:33
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
-msgstr ""
+msgstr "DIQQAT!<br>\n"
+"Bu mavzudagi oxirgi xabar. \n"
+"Ushbu xabar o‘chirilsa mavzu ham qo‘shib o‘chiriladi (yashiriladi)"
 
 #: modules/forum/templates/delete_post.phtml:44
 #: modules/forum/templates/delete_topic.phtml:36
 msgid "Hide"
-msgstr ""
+msgstr "Yashirish"
 
 #: modules/forum/templates/delete_topic.phtml:47
 msgid "Perform"
-msgstr ""
+msgstr "Amalga oshirish"
 
 #: modules/forum/templates/edit_post.phtml:36
 #: modules/forum/templates/new_topic.phtml:81
@@ -895,26 +898,26 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:125
 #: modules/forum/templates/topic.phtml:437
 msgid "Message"
-msgstr ""
+msgstr "Xabar"
 
 #: modules/forum/templates/edit_post.phtml:48
 #: modules/forum/templates/new_topic.phtml:116
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Smilies"
-msgstr ""
+msgstr "Kulgichlar"
 
 #: modules/forum/templates/files_list.phtml:80
 #: modules/forum/templates/topic.phtml:243
 msgid "Link to post"
-msgstr ""
+msgstr "Xabarga link"
 
 #: modules/forum/templates/files_list.phtml:131
 msgid "To message"
-msgstr ""
+msgstr "Xabarga o‘tish"
 
 #: modules/forum/templates/files_list.phtml:134
 msgid "To topic"
-msgstr ""
+msgstr "Mavzuga"
 
 #: modules/forum/templates/files_list.phtml:144
 #: modules/forum/templates/forum_search.phtml:74
@@ -924,105 +927,105 @@ msgstr ""
 #: modules/forum/templates/voted_users.phtml:44
 #: modules/forum/templates/who.phtml:52
 msgid "Total"
-msgstr ""
+msgstr "Jami"
 
 #: modules/forum/templates/filter_by_author.phtml:44
 msgid "Filter will be display posts from selected authors only"
-msgstr ""
+msgstr "Filtr faqat tanlangan mualliflarning xabarlarini namoyish etadi"
 
 #: modules/forum/templates/filter_by_author.phtml:64
 msgid "Filter"
-msgstr ""
+msgstr "Filtr"
 
 #: modules/forum/templates/filter_by_author.phtml:66
 #: modules/forum/templates/topic.phtml:47
 #: modules/forum/templates/topic.phtml:475
 msgid "Cancel Filter"
-msgstr ""
+msgstr "Filtrni bekor qilish"
 
 #: modules/forum/templates/footer.phtml:29
 msgid "Forum rules"
-msgstr ""
+msgstr "Forum qoidalari"
 
 #: modules/forum/templates/forum_search.phtml:31
 #: modules/forum/templates/forum_search.phtml:32
 msgid "Search query"
-msgstr ""
+msgstr "Qidiruv so'rovi"
 
 #: modules/forum/templates/forum_search.phtml:34
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
-msgstr ""
+msgstr "So'rov uzunligi: 4min, 64maks. <br> Katta-kichikk harflar farqlanmaydi. Natijalar dolzarbligi bo'yicha saralanadi."
 
 #: modules/forum/templates/forum_search.phtml:39
 msgid "Search in the topic names"
-msgstr ""
+msgstr "Mavzu nomlari bo'yicha qidiruv"
 
 #: modules/forum/templates/forum_search.phtml:42
 #: modules/forum/templates/header.phtml:73
 msgid "Search"
-msgstr ""
+msgstr "Izlash"
 
 #: modules/forum/templates/forum_search.phtml:47
 msgid "Your search did not match any results"
-msgstr ""
+msgstr "Qidiruvingiz hech qanday natijaga mos kelmadi"
 
 #: modules/forum/templates/forum_search.phtml:59
 #: modules/forum/templates/new_topics.phtml:96
 #: modules/forum/templates/topics.phtml:105
 msgid "Author"
-msgstr ""
+msgstr "Muallif"
 
 #: modules/forum/templates/forum_search.phtml:62
 msgid "Go to Message"
-msgstr ""
+msgstr "Xabarga borish"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr ""
+msgstr "Qidiruv tarixi"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
-msgstr ""
+msgstr "Tarixni tozalash"
 
 #: modules/forum/templates/header.phtml:22
 msgid "Read only"
-msgstr ""
+msgstr "Faqat o'qish uchun"
 
 #: modules/forum/templates/header.phtml:44
 msgid "Show for Period"
-msgstr ""
+msgstr "Davr uchun ko'rsatish"
 
 #: modules/forum/templates/header.phtml:53
 msgid "Last activity"
-msgstr ""
+msgstr "Oxirgi faollik"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr ""
+msgstr "Fayllar"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
-msgstr ""
+msgstr "Kategoriya"
 
 #: modules/forum/templates/move_topic.phtml:38
 msgid "New section"
-msgstr ""
+msgstr "Yangi bo'lim"
 
 #: modules/forum/templates/move_topic.phtml:47
 msgid "Category is empty"
-msgstr ""
+msgstr "Kategoriya bo'sh"
 
 #: modules/forum/templates/move_topic.phtml:51
 msgid "Move"
-msgstr ""
+msgstr "Ko'chir"
 
 #: modules/forum/templates/move_topic.phtml:56
 msgid "Other categories"
-msgstr ""
+msgstr "Boshqa kategoriyalar"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
-msgstr ""
+msgstr "Sarlavha"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
@@ -1031,53 +1034,53 @@ msgstr ""
 #: modules/forum/templates/topic.phtml:451
 #: modules/forum/templates/topic.phtml:454
 msgid "Write"
-msgstr ""
+msgstr "Yozish"
 
 #: modules/forum/templates/new_topic.phtml:107
 msgid "Preview"
-msgstr ""
+msgstr "Oldindan ko‘rish"
 
 #: modules/forum/templates/new_topics.phtml:36
 msgid "Period"
-msgstr ""
+msgstr "Davr"
 
 #: modules/forum/templates/new_topics.phtml:38
 msgid "Show period"
-msgstr ""
+msgstr "Davrni ko'rsatish"
 
 #: modules/forum/templates/new_topics.phtml:62
 #: modules/forum/templates/topics.phtml:59
 msgid "Pinned topic"
-msgstr ""
+msgstr "Belgilangan mavzu"
 
 #: modules/forum/templates/new_topics.phtml:69
 #: modules/forum/templates/topics.phtml:66
 msgid "Topic has poll"
-msgstr ""
+msgstr "Mavzuda so'rovnoma bor"
 
 #: modules/forum/templates/new_topics.phtml:76
 #: modules/forum/templates/topics.phtml:73
 msgid "Closed topic"
-msgstr ""
+msgstr "Mavzuni yopish"
 
 #: modules/forum/templates/new_topics.phtml:83
 #: modules/forum/templates/topics.phtml:80
 #: modules/forum/templates/topics.phtml:91
 msgid "Deleted topic"
-msgstr ""
+msgstr "Mavzuni o‘chirish"
 
 #: modules/forum/templates/new_topics.phtml:97
 #: modules/forum/templates/topics.phtml:106
 msgid "Last post"
-msgstr ""
+msgstr "Oxirgi post"
 
 #: modules/forum/templates/new_topics.phtml:119
 msgid "Mark as read"
-msgstr ""
+msgstr "O‘qilgan deb belgilash"
 
 #: modules/forum/templates/reply_message.phtml:37
 msgid "Topic"
-msgstr ""
+msgstr "Mavzu"
 
 #: modules/forum/templates/restore_post.phtml:30
 msgid "Do you really want to restore this post?"
@@ -1086,148 +1089,148 @@ msgstr ""
 #: modules/forum/templates/restore_post.phtml:35
 #: modules/forum/templates/topic.phtml:372
 msgid "Restore"
-msgstr ""
+msgstr "Tiklash"
 
 #: modules/forum/templates/section.phtml:36
 msgid "Section Files"
-msgstr ""
+msgstr "Bo'lim fayllari"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr ""
+msgstr "Bu kategoriyada bo'limlar yo'q"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr ""
+msgstr "Tahrirlangan:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
 msgid "Edited"
-msgstr ""
+msgstr "Tahrirladi"
 
 #: modules/forum/templates/show_post.phtml:80
 #: modules/forum/templates/topic.phtml:293
 msgid "Attached files"
-msgstr ""
+msgstr "Biriktirilgan fayllar"
 
 #: modules/forum/templates/show_post.phtml:135
 #: modules/forum/templates/topic.phtml:353
 msgid "Reply"
-msgstr ""
+msgstr "Javob qaytarish"
 
 #: modules/forum/templates/show_post.phtml:140
 #: modules/forum/templates/topic.phtml:358
 msgid "Quote"
-msgstr ""
+msgstr "Iqtibos"
 
 #: modules/forum/templates/topic.phtml:43
 msgid "Filter by author is activated"
-msgstr ""
+msgstr "Muallif filtri faollashtirilgan"
 
 #: modules/forum/templates/topic.phtml:54
 msgid "Topic closed"
-msgstr ""
+msgstr "Mavzu yopiq"
 
 #: modules/forum/templates/topic.phtml:60
 msgid "Topic deleted by"
-msgstr ""
+msgstr "Mavzu o‘chirilgan"
 
 #: modules/forum/templates/topic.phtml:64
 msgid "Undelete topic"
-msgstr ""
+msgstr "Mavzuni o'chirish bekor qilindi"
 
 #: modules/forum/templates/topic.phtml:80
 #: modules/forum/templates/topic.phtml:110
 msgid "Vote"
-msgstr ""
+msgstr "Ovoz berish"
 
 #: modules/forum/templates/topic.phtml:81
 msgid "Results"
-msgstr ""
+msgstr "Natijalar"
 
 #: modules/forum/templates/topic.phtml:101
 msgid "Total votes"
-msgstr ""
+msgstr "Barcha ovozlar"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr ""
+msgstr "Xabarni o‘chirdi:"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
-msgstr ""
+msgstr "Xabar o‘chirildi"
 
 #: modules/forum/templates/topic.phtml:267
 msgid "Post restored by:"
-msgstr ""
+msgstr "Xabarni tikladi:"
 
 #: modules/forum/templates/topic.phtml:268
 msgid "Restored"
-msgstr ""
+msgstr "Tikladi"
 
 #: modules/forum/templates/topic.phtml:369
 msgid "Edit"
-msgstr ""
+msgstr "Tahrirlash"
 
 #: modules/forum/templates/topic.phtml:384
 msgid "Delete selected"
-msgstr ""
+msgstr "Belgilanganlarni o‘chirish"
 
 #: modules/forum/templates/topic.phtml:388
 msgid "Actions with topic"
-msgstr ""
+msgstr "Mavzu bo'yicha harakatlar"
 
 #: modules/forum/templates/topic.phtml:399
 msgid "Curators of the Topic"
-msgstr ""
+msgstr "Mavzu murabbiylari"
 
 #: modules/forum/templates/topic.phtml:405
 msgid "Open Topic"
-msgstr ""
+msgstr "Mavzuni ochish"
 
 #: modules/forum/templates/topic.phtml:407
 msgid "Close Topic"
-msgstr ""
+msgstr "Mavzuni yopish"
 
 #: modules/forum/templates/topic.phtml:411
 msgid "Restore Topic"
-msgstr ""
+msgstr "Mavzuni Qayta Tiklash"
 
 #: modules/forum/templates/topic.phtml:417
 msgid "Unfix Topic"
-msgstr ""
+msgstr "Mavzuni ochish"
 
 #: modules/forum/templates/topic.phtml:419
 msgid "Pin Topic"
-msgstr ""
+msgstr "Mavzuni qistirish"
 
 #: modules/forum/templates/topic.phtml:422
 msgid "Move Topic"
-msgstr ""
+msgstr "Mavzuni ko`chirish"
 
 #: modules/forum/templates/topic.phtml:499
 msgid "Who is here"
-msgstr ""
+msgstr "Kim bu yerda"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr ""
+msgstr "Ushbu bo'limda mavzular yo'q"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"
-msgstr ""
+msgstr "Oxirgi sahifa"
 
 #: modules/forum/templates/voted_users.phtml:54
 #: modules/forum/templates/who.phtml:62
 msgid "Go to Topic"
-msgstr ""
+msgstr "Mavzuga borish"
 
 #: modules/forum/templates/who.phtml:38
 msgid "Users"
-msgstr ""
+msgstr "Azolar"
 
 #: modules/forum/templates/who.phtml:39
 msgid "Guests"
-msgstr ""
+msgstr "Mehmonlar"
 
