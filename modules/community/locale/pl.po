@@ -11,41 +11,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/community/includes/administration.php:33
 #: modules/community/includes/administration.php:39
 #: modules/community/includes/administration.php:40
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
-msgstr ""
+msgstr "Administracja"
 
 #: modules/community/includes/birthdays.php:25
 #: modules/community/includes/birthdays.php:31
 #: modules/community/includes/birthdays.php:32
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
-msgstr ""
+msgstr "Urodziny"
 
 #: modules/community/includes/search.php:23
 #: modules/community/templates/search.phtml:81
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
-msgstr ""
+msgstr "Wyszukiwanie użytkowników"
 
 #: modules/community/includes/search.php:32
 #: modules/community/includes/search.php:36
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
-msgstr ""
+msgstr "Nazwa użytkownika"
 
 #: modules/community/includes/search.php:32
 msgid "Invalid length"
-msgstr ""
+msgstr "Nieprawidłowa długość"
 
 #: modules/community/includes/search.php:36
 msgid "Invalid characters"
-msgstr ""
+msgstr "Nieprawidłowe znaki"
 
 #: modules/community/includes/top.php:21
 msgid "Forum"
@@ -53,11 +53,11 @@ msgstr ""
 
 #: modules/community/includes/top.php:26
 msgid "Guestbook"
-msgstr ""
+msgstr "Księga gości"
 
 #: modules/community/includes/top.php:31
 msgid "Comments"
-msgstr ""
+msgstr "Komentarze"
 
 #: modules/community/includes/top.php:39
 msgid "Karma"
@@ -65,77 +65,77 @@ msgstr ""
 
 #: modules/community/includes/top.php:50
 msgid "Most active in Guestbook"
-msgstr ""
+msgstr "Najbardziej aktywni w księdze gości"
 
 #: modules/community/includes/top.php:57
 msgid "Most commentators"
-msgstr ""
+msgstr "Większość komentatorów"
 
 #: modules/community/includes/top.php:65
 msgid "Best Karma"
-msgstr ""
+msgstr "Najlepsza karma"
 
 #: modules/community/includes/top.php:73
 msgid "Most active in Forum"
-msgstr ""
+msgstr "Najbardziej aktywni na forum"
 
 #: modules/community/includes/users.php:28
 #: modules/community/includes/users.php:34
 #: modules/community/includes/users.php:35
 msgid "List of users"
-msgstr ""
+msgstr "Lista użytkowników"
 
 #: modules/community/index.php:55
 msgid "Community"
-msgstr ""
+msgstr "Społeczność"
 
 #: modules/community/index.php:66
 msgid "For registered users only"
-msgstr ""
+msgstr "Tylko dla zarejestrowanych"
 
 #: modules/community/templates/index.phtml:30
 #: modules/community/templates/search.phtml:43
 msgid "Look for the User"
-msgstr ""
+msgstr "Znajdź użytkownika"
 
 #: modules/community/templates/index.phtml:34
 #: modules/community/templates/search.phtml:47
 msgid "Search"
-msgstr ""
+msgstr "Szukaj"
 
 #: modules/community/templates/index.phtml:37
 #: modules/community/templates/search.phtml:50
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
+msgstr "Wyszukiwanie jest wykonywane przez nick i jest rozróżniana wielkość liter."
 
 #: modules/community/templates/index.phtml:41
 msgid "Users"
-msgstr ""
+msgstr "Użytkownicy"
 
 #: modules/community/templates/index.phtml:55
 msgid "Top Activity"
-msgstr ""
+msgstr "Najbardziej aktywni"
 
 #: modules/community/templates/search.phtml:45
 msgid "Username"
-msgstr ""
+msgstr "Login"
 
 #: modules/community/templates/search.phtml:64
 #: modules/community/templates/top.phtml:40
 #: modules/community/templates/users.phtml:33
 msgid "List is empty"
-msgstr ""
+msgstr "Lista jest pusta"
 
 #: modules/community/templates/search.phtml:71
 #: modules/community/templates/users.phtml:40
 msgid "Total"
-msgstr ""
+msgstr "Wszystkich"
 
 #: modules/community/templates/search.phtml:84
 #: modules/community/templates/top.phtml:47
 #: modules/community/templates/users.phtml:53
 msgid "Back"
-msgstr ""
+msgstr "Powrót"
 
 #: modules/community/templates/user_row.phtml:61
 #: modules/community/templates/user_row.phtml:67
@@ -149,20 +149,20 @@ msgstr[3] ""
 #: modules/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "komentarz"
+msgstr[1] "komentarze"
+msgstr[2] "komentarze"
+msgstr[3] "komentarze"
 
 #: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "punkt"
+msgstr[1] "punkty"
+msgstr[2] "punktów"
+msgstr[3] "punktów"
 
 #: modules/community/templates/user_row.phtml:89
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"
 
