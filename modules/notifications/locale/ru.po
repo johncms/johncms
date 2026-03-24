@@ -11,81 +11,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Уведомления очищены!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "Пользователи на регистрации"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Статьи на модерации"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Загрузки на модерации"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "Бан"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Новые сообщения на форуме"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "Почта"
 
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 msgid "Guestbook"
-msgstr ""
+msgstr "Гостевая книга"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Настройки сохранены!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Все уведомления уже прочитаны"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Всего"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Очистить уведомления"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "Показывать количество непрочитанных сообщений на форуме"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: modules/notifications/templates/settings.phtml:50
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
