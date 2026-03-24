@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:51
 msgid "Forum"
-msgstr ""
+msgstr "Diễn đàn"
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Một trả lời bình luận của bạn trên diễn đàn"
 
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
+msgstr "<a href=\"%s\">Người dùng <b>%s</b> đã trả lời bạn trong bài viết %s</a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
@@ -34,28 +34,28 @@ msgstr ""
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Đánh giá mới trong karma"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "Người dùng <b>#user_name#</b> đã đánh giá bạn <a href=\"#karma_url#\"> trong karma</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "Trên Trang Chủ"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Xem album ảnh"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "Thành viên"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "Danh sách người dùng"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "Phòng trò truyện"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Đọc câu hỏi thường gặp (FAQ)"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Thư viện"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "Đăng nhập"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Thư cá nhân"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "Đọc tin tức"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Hồ sơ"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Chuyển hướng liên kết tới trang web khác"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Đã đăng ký trên trang web"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "Danh sách người dùng"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "Ai đang trực tuyến?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "Cá nhân"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Đăng xuất"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Bạn chưa nhập đủ thông tin"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Bạn chưa nhập mật khẩu"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,46 +164,46 @@ msgstr "Mã bảo mật không đúng"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Xác thực thất bại."
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Mã xác minh"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Nhập mã xác minh"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Tiếp tục"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "Bạn chưa xác nhận email. Vui lòng kiểm tra email và làm theo hướng dẫn"
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Xin lỗi, nhưng yêu cầu đăng ký của bạn không được chấp thuận. Xin vui lòng thử lại sau."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Xác thực"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "Tên tài khoản"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Mật khẩu"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Quên mật khẩu?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Đăng ký Thành Viên"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn rời khỏi trang này không?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,20 +337,20 @@ msgstr "Bạn đang tìm kiếm một cái gì đó không tồn tại hay đã 
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Đã thêm"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "LỖI"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Ở đâu đó trên trang web"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
+msgstr[0] "Ngày"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -675,35 +675,35 @@ msgstr ""
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "Truy vấn"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Ràng buộc"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Thời gian"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Tin tức lưu trữ"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Albums hình ảnh"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Thông tin, câu hỏi thường gặp"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Bảng Quản Trị"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
-msgstr ""
+msgstr "Quản Trị Nói Chuyện"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Light Theme"
@@ -727,7 +727,7 @@ msgstr "Email được tạo ra tự động. Xin đừng trả lời nó. <br> 
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
-msgstr ""
+msgstr "Thay đổi địa chỉ email"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
@@ -754,7 +754,7 @@ msgstr "Nếu bạn đã không bắt đầu quy trình thay đổi email, xin h
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
-msgstr ""
+msgstr "Xác nhận thay đổi email"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
@@ -771,7 +771,7 @@ msgstr "Nếu bạn không đăng ký trên trang web của chúng tôi, xin vui
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
-msgstr ""
+msgstr "Đăng ký trên trang web"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format
