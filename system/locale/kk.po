@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "Жүктеулер"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "Қонақ кітәпшасы"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -95,7 +95,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
-msgstr ""
+msgstr "Кіру"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "Тілді таңдаңыз"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "Қолдану"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "Жеке"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "Тексеру коды дұрыс емес терілді"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "Тіркелу"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,104 +218,104 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Хабарландырулар жойылды!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "Пайдаланушыларды тіркеу"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Модерацияда мақалалар"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Модерацияда жүктеу"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "Тыйым салу"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Форумдаға ең жаңа хаттар"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "Пошта"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Пікірлер"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Баптаулар"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Баптаулар сақталады!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "Хабарландырулар"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Барлық хабарландырулар оқылған."
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Ескертуді тазалау."
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "Форумның оқылмаған жазбаларының санын көрсету"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "Сыртқы сілтемеге қайта бағыттау"
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "Сыртқы Сілтеме"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "Назар аударыңыз!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "Сіз біздің сайтымыздан шығып, сыртқы сілтемені ұстанғыңыз келеді"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "Біздің сайттың әкімшілігі сыртқы сайттардың мазмұнына жауап бермейді"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "Үшінші тарап сайттарында, %s (логин, құпия сөз), қатысты деректеріңізді көрсетпеу ұсынылады"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "Сілтемеге өтіңіз"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "Артқа"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "Сіз іздеген бет жоқ немесе жылжытылған"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -355,12 +355,12 @@ msgstr[1] ""
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
-msgstr ""
+msgstr "PHP нұсқасы"
 
 #: system/src/Checker/SystemChecker.php:34
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "PHP нұсқасы кем дегенде %s болуы тиіс"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -371,7 +371,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "Yes"
-msgstr ""
+msgstr "Иә"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -382,47 +382,47 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "No"
-msgstr ""
+msgstr "Жоқ"
 
 #: system/src/Checker/SystemChecker.php:42
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PDO кеңейтімі орнатылуы керек"
 
 #: system/src/Checker/SystemChecker.php:45
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Imagick немесе GD кеңейтімі"
 
 #: system/src/Checker/SystemChecker.php:50
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "Сіз Imagick немесе GD PHP кеңейтімін орнатуыңыз тиіс"
 
 #: system/src/Checker/SystemChecker.php:53
 msgid "zlib extension"
-msgstr ""
+msgstr "zlib кеңейтімі"
 
 #: system/src/Checker/SystemChecker.php:58
 msgid "PHP extension zlib must be installed"
-msgstr ""
+msgstr "zlib кеңейтімі орнатылуы керек"
 
 #: system/src/Checker/SystemChecker.php:61
 msgid "mbstring extension"
-msgstr ""
+msgstr "mbstring кеңейтімі"
 
 #: system/src/Checker/SystemChecker.php:66
 msgid "PHP extension mbstring must be installed"
-msgstr ""
+msgstr "mbstring кеңейтімі орнатылуы керек"
 
 #: system/src/Checker/SystemChecker.php:69
 msgid "fileinfo extension"
-msgstr ""
+msgstr "fileinfo кеңейтімі"
 
 #: system/src/Checker/SystemChecker.php:74
 msgid "PHP extension fileinfo must be installed"
-msgstr ""
+msgstr "fileinfo кеңейтімі орнатылуы керек"
 
 #: system/src/Checker/SystemChecker.php:86
 msgid "opcache extension"
-msgstr ""
+msgstr "opcache кеңейтімі"
 
 #: system/src/Checker/SystemChecker.php:91
 msgid "It is recommended to install the php opcache extension for better performance."
@@ -455,27 +455,27 @@ msgstr ""
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "Жауап беру"
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "Әкімші бұл хабарға жауап берді"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "Мәліметтер дұрыс емес"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "Өзгерту"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Сіз өзіңіздің жоғары пайдаланушы профилін өзгерте алмайсыз"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -483,11 +483,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "Өшіру"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "Мәтін тым қысқа"
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
@@ -495,57 +495,57 @@ msgstr ""
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "секунд"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "Бұл хабарлама бұрыннан болған"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "Оқылмаған"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "Соңғы белсенділік"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "Басты бет"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
-msgstr ""
+msgstr "Форум модераторы"
 
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "Жүктеулер модераторы"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "Кітапхана модераторы"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
-msgstr ""
+msgstr "Супер модератор"
 
 #: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
-msgstr ""
+msgstr "Әкімшілер"
 
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "Супервайзер"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "Сізде бан бар"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
@@ -715,11 +715,11 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
-msgstr ""
+msgstr "Кіру"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
-msgstr ""
+msgstr "Шығу"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
@@ -736,7 +736,7 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 #, php-format
 msgid "Hello, %s!"
-msgstr ""
+msgstr "Сәлеметсіз бе, %s!"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
@@ -746,7 +746,7 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
 msgid "The new email address is:"
-msgstr ""
+msgstr "Жаңа электрондық пошта мекенжайы:"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
 msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
@@ -763,7 +763,7 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
 #: themes/default/templates/system/mail/templates/registration.phtml:27
 msgid "Confirm"
-msgstr ""
+msgstr "Растау"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
@@ -781,12 +781,12 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:18
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
 msgid "Your login:"
-msgstr ""
+msgstr "Сіздің логиніңіз:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
 msgid "Your password:"
-msgstr ""
+msgstr "Сіздің Құпиясөзіңіз"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 msgid "The one you specified when registering"
@@ -804,7 +804,7 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password.phtml:9
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
 msgid "Password recovery"
-msgstr ""
+msgstr "Кілтсөзді қалпына келтіру"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
@@ -817,7 +817,7 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:22
 msgid "Restore"
-msgstr ""
+msgstr "Қалпына келтіру:"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:25
 msgid "Link valid for 1 hour"
@@ -838,29 +838,29 @@ msgstr ""
 
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Сіз шынымен жойғыңыз келеді ме?"
 
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
-msgstr ""
+msgstr "Тазарту"
 
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
-msgstr ""
+msgstr "Хабарлама"
 
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
-msgstr ""
+msgstr "Жіберу"
 
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
-msgstr ""
+msgstr "Өзгертілген:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
+msgstr "Өзгертілген"
 
