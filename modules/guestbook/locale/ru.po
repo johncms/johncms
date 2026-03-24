@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
@@ -64,7 +64,7 @@ msgstr "Удалены все сообщения, старше 1 дня"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:209
 msgid "Full clearing is finished"
-msgstr "Полная очистка завершена"
+msgstr "Проведена полная очистка"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:225
 msgid "All messages older than 1 week were deleted"
@@ -88,7 +88,7 @@ msgstr "Старше 1 дня"
 
 #: modules/guestbook/templates/clear.phtml:21
 msgid "Clear all"
-msgstr "Очистить всё"
+msgstr "Очищаем все"
 
 #: modules/guestbook/templates/clear.phtml:25
 #: modules/guestbook/templates/index.phtml:221
@@ -106,7 +106,7 @@ msgstr "Удалить сообщение"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
-msgstr "Вы действительно хотите удалить?"
+msgstr "Действительно хотите удалить?"
 
 #: modules/guestbook/templates/confirm_delete.phtml:14
 #: modules/guestbook/templates/index.phtml:206
@@ -121,7 +121,7 @@ msgstr "Автор"
 #: modules/guestbook/templates/edit.phtml:15
 #: modules/guestbook/templates/index.phtml:62
 msgid "Message"
-msgstr ""
+msgstr "Сообщение"
 
 #: modules/guestbook/templates/edit.phtml:21
 #: modules/guestbook/templates/reply.phtml:30
@@ -135,7 +135,7 @@ msgstr "Назад"
 
 #: modules/guestbook/templates/index.phtml:21
 msgid "The guestbook is closed"
-msgstr ""
+msgstr "Гостевая закрыта"
 
 #: modules/guestbook/templates/index.phtml:44
 #: modules/guestbook/templates/index.phtml:52
@@ -153,7 +153,7 @@ msgstr "Код с картинки"
 
 #: modules/guestbook/templates/index.phtml:85
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Если Вы не видите рисунок с кодом, включите поддержку графики в настройках браузера и обновите страницу"
 
 #: modules/guestbook/templates/index.phtml:90
 msgid "Write"
@@ -161,7 +161,7 @@ msgstr "Написать"
 
 #: modules/guestbook/templates/index.phtml:101
 msgid "For registered users only"
-msgstr ""
+msgstr "Только для зарегистрированных посетителей"
 
 #: modules/guestbook/templates/index.phtml:109
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
