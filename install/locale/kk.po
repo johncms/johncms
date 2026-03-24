@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:12\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: install/index.php:66
 #: install/steps/step_1.php:23
@@ -28,17 +28,17 @@ msgstr ""
 #: install/steps/step_3.php:25
 #: install/steps/step_3.php:26
 msgid "Database"
-msgstr ""
+msgstr "Дерекқор"
 
 #: install/index.php:81
 #: install/steps/step_4.php:28
 #: install/steps/step_4.php:29
 msgid "Setting"
-msgstr ""
+msgstr "Баптаулар"
 
 #: install/index.php:86
 msgid "Completion"
-msgstr ""
+msgstr "Аяқтау"
 
 #: install/steps/step_2.php:27
 msgid "PHP version"
@@ -55,7 +55,7 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "Yes"
-msgstr ""
+msgstr "Иә"
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40
@@ -63,7 +63,7 @@ msgstr ""
 #: install/steps/step_2.php:52
 #: install/steps/step_2.php:58
 msgid "No"
-msgstr ""
+msgstr "Жоқ"
 
 #: install/steps/step_2.php:36
 msgid "PHP extension PDO must be installed"
@@ -165,7 +165,7 @@ msgstr ""
 #: install/templates/step_3.phtml:92
 #: install/templates/step_4.phtml:81
 msgid "Continue"
-msgstr ""
+msgstr "Жалғастыру"
 
 #: install/templates/step_2.phtml:3
 msgid "Checking extensions"
@@ -195,7 +195,7 @@ msgstr ""
 #: install/templates/step_3.phtml:35
 #: install/templates/step_3.phtml:42
 msgid "Port"
-msgstr ""
+msgstr "Порт"
 
 #: install/templates/step_3.phtml:49
 #: install/templates/step_3.phtml:56
