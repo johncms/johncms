@@ -58,6 +58,7 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
     <link rel="icon" type="image/png" sizes="16x16" href="<?= $this->asset('images/favicon-16x16.png') ?>">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <link rel="apple-touch-icon" href="<?= $this->asset('images/apple-touch-icon.png') ?>">
+    <link rel="mask-icon" href="<?= $this->asset('images/icon.svg') ?>" color="#586776">
     <link rel="manifest" href="<?= $this->asset('site.webmanifest') ?>">
     <?= $this->section('styles', '') ?>
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
