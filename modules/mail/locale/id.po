@@ -11,20 +11,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/mail/includes/delete.php:15
 msgid "Deleting messages"
-msgstr ""
+msgstr "Menghapus pesan"
 
 #: modules/mail/includes/delete.php:28
 msgid "Message does not exist"
-msgstr ""
+msgstr "Pesan tidak ada"
 
 #: modules/mail/includes/delete.php:45
 #: modules/mail/includes/delete.php:74
 msgid "Message deleted"
-msgstr ""
+msgstr "Pesan dihapus"
 
 #: modules/mail/includes/delete.php:47
 #: modules/mail/includes/delete.php:76
@@ -35,11 +35,11 @@ msgstr ""
 #: modules/mail/templates/files.phtml:76
 #: modules/mail/templates/messages.phtml:199
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: modules/mail/includes/delete.php:83
 msgid "You really want to remove the message?"
-msgstr ""
+msgstr "Apakah Anda yakin menghapus pesan ini?"
 
 #: modules/mail/includes/delete.php:85
 #: modules/mail/includes/deluser.php:15
@@ -51,27 +51,27 @@ msgstr ""
 #: modules/mail/includes/write.php:91
 #: modules/mail/templates/messages.phtml:176
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/mail/includes/delete.php:102
 msgid "The message for removal isn't chosen"
-msgstr ""
+msgstr "Pesan yang akan dihapus tidak dipilih"
 
 #: modules/mail/includes/deluser.php:43
 msgid "Contact deleted"
-msgstr ""
+msgstr "Kontak dihapus"
 
 #: modules/mail/includes/deluser.php:51
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
-msgstr ""
+msgstr "Jika Anda menghapus kontak, semua pesan akan dihapus <br> Apakah Anda yakin menghapus ini?"
 
 #: modules/mail/includes/deluser.php:70
 msgid "Contact for removal isn't chosen"
-msgstr ""
+msgstr "Kontak yang akan dihapus tidak dipilih"
 
 #: modules/mail/includes/files.php:15
 msgid "Files"
-msgstr ""
+msgstr "Berkas"
 
 #: modules/mail/includes/ignor.php:15
 msgid "Blacklist"
@@ -83,15 +83,15 @@ msgstr ""
 #: modules/mail/includes/write.php:33
 #: modules/mail/includes/write.php:148
 msgid "User does not exists"
-msgstr ""
+msgstr "Pengguna tidak ada"
 
 #: modules/mail/includes/ignor.php:40
 msgid "User not blocked"
-msgstr ""
+msgstr "Pengguna tidak diblokir"
 
 #: modules/mail/includes/ignor.php:43
 msgid "User is unblocked"
-msgstr ""
+msgstr "Pengguna tidak diblokir"
 
 #: modules/mail/includes/ignor.php:52
 #: modules/mail/includes/ignor.php:109
@@ -101,141 +101,141 @@ msgstr ""
 #: modules/mail/includes/input.php:82
 #: modules/mail/includes/output.php:74
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #: modules/mail/includes/ignor.php:58
 msgid "You really want to unblock contact?"
-msgstr ""
+msgstr "Apakah Anda yakin membatalkan blokir kontak ini?"
 
 #: modules/mail/includes/ignor.php:60
 #: modules/mail/includes/ignor.php:224
 msgid "Unblock"
-msgstr ""
+msgstr "Batal Blokir"
 
 #: modules/mail/includes/ignor.php:77
 #: modules/mail/includes/ignor.php:164
 msgid "Contact isn't chosen"
-msgstr ""
+msgstr "Kontak tidak dipilih"
 
 #: modules/mail/includes/ignor.php:107
 msgid "This user can not be blocked"
-msgstr ""
+msgstr "Pengguna ini tidak bisa diblokir"
 
 #: modules/mail/includes/ignor.php:136
 msgid "User is blocked"
-msgstr ""
+msgstr "Pengguna diblokir"
 
 #: modules/mail/includes/ignor.php:145
 msgid "You really want to block contact?"
-msgstr ""
+msgstr "Apakah Anda yakin memblokir kontak ini?"
 
 #: modules/mail/includes/ignor.php:147
 msgid "Block"
-msgstr ""
+msgstr "Blokir"
 
 #: modules/mail/includes/ignor.php:174
 #: modules/mail/includes/index.php:89
 msgid "My Contacts"
-msgstr ""
+msgstr "Kontak Saya"
 
 #: modules/mail/includes/ignor.php:179
 #: modules/mail/includes/index.php:94
 msgid "Blocklist"
-msgstr ""
+msgstr "Daftar blokir"
 
 #: modules/mail/includes/ignor.php:216
 #: modules/mail/includes/index.php:130
 #: modules/mail/includes/input.php:103
 #: modules/mail/includes/output.php:95
 msgid "Correspondence"
-msgstr ""
+msgstr "Pesan"
 
 #: modules/mail/includes/index.php:15
 msgid "Contacts"
-msgstr ""
+msgstr "Kontak"
 
 #: modules/mail/includes/index.php:42
 msgid "You cannot add yourself as a contact"
-msgstr ""
+msgstr "Anda tidak dapat menambahkan Anda sendiri ke kontak"
 
 #: modules/mail/includes/index.php:64
 msgid "User has been added to your contact list"
-msgstr ""
+msgstr "Pengguna telah ditambahkan ke daftar kontak Anda"
 
 #: modules/mail/includes/index.php:72
 msgid "You really want to add contact?"
-msgstr ""
+msgstr "Apakah Anda yakin menambahkan kontak?"
 
 #: modules/mail/includes/index.php:74
 msgid "Add"
-msgstr ""
+msgstr "Tambahkan"
 
 #: modules/mail/includes/index.php:138
 #: modules/mail/includes/input.php:111
 #: modules/mail/includes/output.php:103
 msgid "Block User"
-msgstr ""
+msgstr "Blokir pengguna"
 
 #: modules/mail/includes/input.php:17
 msgid "Incoming messages"
-msgstr ""
+msgstr "Kotak Masuk"
 
 #: modules/mail/includes/load.php:15
 #: modules/mail/includes/write.php:21
 #: modules/mail/index.php:77
 msgid "Mail"
-msgstr ""
+msgstr "Pesan"
 
 #: modules/mail/includes/load.php:24
 #: modules/mail/includes/load.php:36
 msgid "Such file does not exist"
-msgstr ""
+msgstr "Berkas tidak ada"
 
 #: modules/mail/includes/load.php:38
 msgid "No file selected"
-msgstr ""
+msgstr "Tidak ada file yang dipilih"
 
 #: modules/mail/includes/output.php:17
 msgid "Sent messages"
-msgstr ""
+msgstr "Pesan terkirim"
 
 #: modules/mail/includes/write.php:42
 #: modules/mail/templates/messages.phtml:184
 msgid "Clear messages"
-msgstr ""
+msgstr "Hapus pesan"
 
 #: modules/mail/includes/write.php:81
 msgid "Messages are deleted"
-msgstr ""
+msgstr "Pesan berhasil dihapus"
 
 #: modules/mail/includes/write.php:89
 msgid "Confirm the deletion of messages"
-msgstr ""
+msgstr "Konfirmasi menghapus pesan"
 
 #: modules/mail/includes/write.php:126
 msgid "Specify the recipient's login"
-msgstr ""
+msgstr "Pilih penerima pesan"
 
 #: modules/mail/includes/write.php:130
 msgid "Message cannot be empty"
-msgstr ""
+msgstr "Pesan tidak boleh kosong"
 
 #: modules/mail/includes/write.php:134
 msgid "You cannot send messages to yourself"
-msgstr ""
+msgstr "Anda tidak dapat mengirim pesan ke diri Anda sendiri"
 
 #: modules/mail/includes/write.php:140
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
-msgstr ""
+msgstr "Anda tidak dapat mengirim pesan terlalu sering. Mohon tunggu %d detik."
 
 #: modules/mail/includes/write.php:163
 msgid "To this user can write only contacts"
-msgstr ""
+msgstr "Untuk pengguna ini dapat menulis pesan hanya kontak"
 
 #: modules/mail/includes/write.php:169
 msgid "To this user can write only friends"
-msgstr ""
+msgstr "Untuk pengguna ini dapat menulis pesan hanya teman"
 
 #: modules/mail/includes/write.php:197
 #: modules/mail/includes/write.php:207
@@ -243,95 +243,95 @@ msgstr ""
 #: modules/mail/includes/write.php:394
 #: modules/mail/includes/write.php:397
 msgid "Error uploading file"
-msgstr ""
+msgstr "Gagal mengunggah berkas"
 
 #: modules/mail/includes/write.php:282
 msgid "It is forbidden to upload files without a name"
-msgstr ""
+msgstr "Tidak diizinkan mengunggah berkas tanpa nama"
 
 #: modules/mail/includes/write.php:286
 msgid "It is forbidden to upload files without extension"
-msgstr ""
+msgstr "Tidak diizinkan mengunggah berkas tanpa ekstensi"
 
 #: modules/mail/includes/write.php:290
 msgid "The size of the file exceeds the maximum allowable upload"
-msgstr ""
+msgstr "Ukuran berkas terlalu besar"
 
 #: modules/mail/includes/write.php:294
 msgid "File name contains invalid characters"
-msgstr ""
+msgstr "Nama berkas terdapat karakter tidak valid"
 
 #: modules/mail/includes/write.php:298
 msgid "Forbidden file type! By uploading permitted only files with the following extension"
-msgstr ""
+msgstr "Jenis berkas tidak diizinkan, mengunggah berkas hanya diizinkan untuk ekstensi berikut"
 
 #: modules/mail/includes/write.php:314
 msgid "The user at your ignore list. Sending the message is impossible."
-msgstr ""
+msgstr "Pengguna dalam daftar diabaikan, Anda tidak bisa mengirim pesan."
 
 #: modules/mail/includes/write.php:326
 msgid "The user added you in the ignore list. Sending the message isn't possible."
-msgstr ""
+msgstr "Pengguna ini ditambahkan ke daftar diabaikan. Anda sekarang tidak bisa mengirim pesan ke pengguna ini."
 
 #: modules/mail/includes/write.php:413
 msgid "Message already exists"
-msgstr ""
+msgstr "Pesan sudah ada"
 
 #: modules/mail/index.php:80
 msgid "My Account"
-msgstr ""
+msgstr "Akun Saya"
 
 #: modules/mail/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: modules/mail/templates/contact_list.phtml:38
 #: modules/mail/templates/conversations.phtml:31
 #: modules/mail/templates/files.phtml:31
 #: modules/mail/templates/messages.phtml:73
 msgid "The list is empty"
-msgstr ""
+msgstr "Daftar ini kosong"
 
 #: modules/mail/templates/contact_list.phtml:62
 #: modules/mail/templates/conversations.phtml:62
 msgid "message"
 msgid_plural "messages"
-msgstr[0] ""
+msgstr[0] "pesan"
 
 #: modules/mail/templates/contact_list.phtml:64
 msgid "unread message"
 msgid_plural "unread messages"
-msgstr[0] ""
+msgstr[0] "Hapus pesan"
 
 #: modules/mail/templates/contact_list.phtml:89
 #: modules/mail/templates/conversations.phtml:102
 #: modules/mail/templates/files.phtml:72
 #: modules/mail/templates/messages.phtml:195
 msgid "Total:"
-msgstr ""
+msgstr "Total"
 
 #: modules/mail/templates/conversations.phtml:65
 msgid "Last:"
-msgstr ""
+msgstr "Lalu:"
 
 #: modules/mail/templates/messages.phtml:40
 #: modules/mail/templates/messages.phtml:48
 msgid "To Whom"
-msgstr ""
+msgstr "Kepada"
 
 #: modules/mail/templates/messages.phtml:53
 msgid "Message"
-msgstr ""
+msgstr "Pesan"
 
 #: modules/mail/templates/messages.phtml:60
 msgid "Choose file"
-msgstr ""
+msgstr "Pilih file"
 
 #: modules/mail/templates/messages.phtml:63
 msgid "Send"
-msgstr ""
+msgstr "Kirim"
 
 #: modules/mail/templates/messages.phtml:128
 msgid "Attached files"
-msgstr ""
+msgstr "Data terlampir"
 
