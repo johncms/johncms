@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:15\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
@@ -844,20 +844,20 @@ msgstr "Вхід"
 
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:48
 msgid "You have not entered login"
-msgstr ""
+msgstr "Ви не ввели логін"
 
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:52
 msgid "You have not entered password"
-msgstr ""
+msgstr "Ви не ввели пароль"
 
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:70
 msgid "The security code is not correct"
-msgstr ""
+msgstr "Захисний код введено не вірно"
 
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:114
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:118
 msgid "Authorization failed"
-msgstr ""
+msgstr "Помилка авторизації"
 
 #: modules/admin/templates/access.phtml:36
 #: modules/admin/templates/sidebar-admin-menu.phtml:153
@@ -1787,7 +1787,7 @@ msgstr "Теми"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:60
 msgid "On registration"
-msgstr ""
+msgstr "На реєстрації"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:106
 msgid "Antiflood"
