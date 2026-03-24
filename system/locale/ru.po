@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 13:18\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -66,14 +66,14 @@ msgstr ""
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
 msgid "Downloads"
-msgstr ""
+msgstr "Загрузки"
 
 #: config/places.global.php:18
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
 msgid "Guestbook"
-msgstr ""
+msgstr "Гостевая"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
@@ -95,7 +95,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:38
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:71
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
@@ -130,16 +130,16 @@ msgstr ""
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
-msgstr ""
+msgstr "Выберите язык"
 
 #: modules/language/templates/index.phtml:28
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #: modules/login/index.php:53
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
-msgstr ""
+msgstr "Личное"
 
 #: modules/login/index.php:54
 #: modules/login/templates/logout.phtml:4
@@ -159,7 +159,7 @@ msgstr ""
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
+msgstr "Проверочный код введен неверно"
 
 #: modules/login/index.php:150
 #: modules/login/index.php:154
@@ -208,7 +208,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
 msgid "Registration"
-msgstr ""
+msgstr "Регистрация"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
@@ -218,104 +218,104 @@ msgstr ""
 #: modules/notifications/templates/settings.phtml:50
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Уведомления очищены!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "Пользователи на регистрации"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Статьи на модерации"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Загрузки на модерации"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "Бан"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Новые сообщения на форуме"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "Почта"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Настройки сохранены!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Все уведомления уже прочитаны"
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Всего"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Очистить уведомления"
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "Показывать количество непрочитанных сообщений на форуме"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: modules/redirect/index.php:30
 msgid "Redirect to an external link"
-msgstr ""
+msgstr "Перенаправление на внешнюю ссылку"
 
 #: modules/redirect/templates/index.phtml:27
 msgid "External Link"
-msgstr ""
+msgstr "Внешняя ссылка"
 
 #: modules/redirect/templates/index.phtml:28
 msgid "ATTENTION!"
-msgstr ""
+msgstr "Внимание!"
 
 #: modules/redirect/templates/index.phtml:30
 msgid "You are going to leave our site and go to an external link"
-msgstr ""
+msgstr "Вы собираетесь покинуть наш сайт и перейти по внешней ссылке"
 
 #: modules/redirect/templates/index.phtml:34
 msgid "Administration of our site is not responsible for the content of external sites"
-msgstr ""
+msgstr "Администрация нашего сайта не несет ответственности за содержание внешних сайтов"
 
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr ""
+msgstr "Рекомендуется не указывать ваши данные, относящиеся к %s (логин, пароль), на сторонних сайтах"
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
-msgstr ""
+msgstr "Перейти по ссылке"
 
 #: modules/redirect/templates/index.phtml:44
 #: system/src/Comments.php:172
@@ -329,11 +329,11 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
+msgstr "Страница, которую Вы ищете, не существует или была перемещена"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
@@ -357,12 +357,12 @@ msgstr[3] ""
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
-msgstr ""
+msgstr "Версия PHP"
 
 #: system/src/Checker/SystemChecker.php:34
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr ""
+msgstr "Версия PHP должна быть не ниже %s"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -373,7 +373,7 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: system/src/Checker/SystemChecker.php:39
 #: system/src/Checker/SystemChecker.php:47
@@ -384,100 +384,101 @@ msgstr ""
 #: system/src/Checker/SystemChecker.php:96
 #: system/src/Checker/SystemChecker.php:122
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: system/src/Checker/SystemChecker.php:42
 msgid "PHP extension PDO must be installed"
-msgstr ""
+msgstr "PHP расширение PDO должно быть установлено"
 
 #: system/src/Checker/SystemChecker.php:45
 msgid "Imagick or GD extension"
-msgstr ""
+msgstr "Расширения Imagick или GD"
 
 #: system/src/Checker/SystemChecker.php:50
 msgid "You must install the php extension Imagick or GD"
-msgstr ""
+msgstr "Вы должны установить расширение php Imagick или GD"
 
 #: system/src/Checker/SystemChecker.php:53
 msgid "zlib extension"
-msgstr ""
+msgstr "Расширение zlib"
 
 #: system/src/Checker/SystemChecker.php:58
 msgid "PHP extension zlib must be installed"
-msgstr ""
+msgstr "Необходимо установить расширение PHP zlib"
 
 #: system/src/Checker/SystemChecker.php:61
 msgid "mbstring extension"
-msgstr ""
+msgstr "Расширение mbstring"
 
 #: system/src/Checker/SystemChecker.php:66
 msgid "PHP extension mbstring must be installed"
-msgstr ""
+msgstr "Необходимо установить расширение PHP mbstring"
 
 #: system/src/Checker/SystemChecker.php:69
 msgid "fileinfo extension"
-msgstr ""
+msgstr "Расширение fileinfo"
 
 #: system/src/Checker/SystemChecker.php:74
 msgid "PHP extension fileinfo must be installed"
-msgstr ""
+msgstr "Необходимо установить PHP расширение fileinfo"
 
 #: system/src/Checker/SystemChecker.php:86
 msgid "opcache extension"
-msgstr ""
+msgstr "Расширение opcache"
 
 #: system/src/Checker/SystemChecker.php:91
 msgid "It is recommended to install the php opcache extension for better performance."
-msgstr ""
+msgstr "Рекомендуется установить расширение php opcache для повышения производительности."
 
 #: system/src/Checker/SystemChecker.php:99
 msgid "It is recommended to enable the php opcache extension to improve performance."
-msgstr ""
+msgstr "Рекомендуется включить расширение php opcache для повышения производительности."
 
 #: system/src/Checker/SystemChecker.php:112
 msgid "Version of the database server"
-msgstr ""
+msgstr "Версия сервера базы данных"
 
 #: system/src/Checker/SystemChecker.php:117
 #, php-format
 msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
-msgstr ""
+msgstr "Система требует MySQL сервера %s или выше или MariaDB %s или выше."
 
 #: system/src/Checker/SystemChecker.php:120
 msgid "mysqlnd test"
-msgstr ""
+msgstr "Тест mysqlnd"
 
 #: system/src/Checker/SystemChecker.php:125
 msgid "We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
-msgstr ""
+msgstr "Мы используем строгие проверки типов данных при разработке системы. CMS не будет корректно работать, если драйвер для работы с базой данных вернет неверные типы данных.\n"
+"PHP должен работать с драйвером по умолчанию: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 
 #: system/src/Comments.php:157
 #: system/src/Comments.php:226
 #: system/src/Comments.php:227
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
-msgstr ""
+msgstr "Ответить"
 
 #: system/src/Comments.php:170
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "Администратор уже ответил на это сообщение"
 
 #: system/src/Comments.php:239
 #: system/src/Comments.php:338
 msgid "Wrong data"
-msgstr ""
+msgstr "Неверные данные"
 
 #: system/src/Comments.php:251
 #: system/src/Comments.php:325
 #: system/src/Comments.php:326
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: system/src/Comments.php:265
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Вы не можете редактировать анкету старшего Вас по должности"
 
 #: system/src/Comments.php:350
 #: system/src/Comments.php:390
@@ -485,191 +486,191 @@ msgstr ""
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: system/src/Comments.php:592
 msgid "Text is too short"
-msgstr ""
+msgstr "Слишком короткий текст"
 
 #: system/src/Comments.php:598
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
+msgstr "Вы не можете так часто добавлять сообщения.<br>Пожалуйста, подождите"
 
 #: system/src/Comments.php:598
 msgid "seconds"
-msgstr ""
+msgstr "секунд"
 
 #: system/src/Comments.php:606
 msgid "Message already exists"
-msgstr ""
+msgstr "Такое сообщение уже было"
 
 #: system/src/Counters.php:164
 msgid "Unread"
-msgstr ""
+msgstr "Непрочитанное"
 
 #: system/src/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "Последняя активность"
 
 #: system/src/NavChain.php:63
 msgid "Home"
-msgstr ""
+msgstr "Главная"
 
 #: system/src/UserProperties.php:68
 #: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
-msgstr ""
+msgstr "Модератор Форума"
 
 #: system/src/UserProperties.php:69
 #: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
-msgstr ""
+msgstr "Модератор Загрузок"
 
 #: system/src/UserProperties.php:70
 #: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
-msgstr ""
+msgstr "Модератор Библиотеки"
 
 #: system/src/UserProperties.php:71
 #: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
-msgstr ""
+msgstr "Супермодератор"
 
 #: system/src/UserProperties.php:72
 #: system/src/Users/UserMutators.php:65
 msgid "Administrator"
-msgstr ""
+msgstr "Администратор"
 
 #: system/src/UserProperties.php:73
 #: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
-msgstr ""
+msgstr "Супервайзор"
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
-msgstr ""
+msgstr "У вас есть бан"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
-msgstr ""
+msgstr "Форма отправлена не с ожидаемого сайта."
 
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr ""
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %value% секунд."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
-msgstr ""
+msgstr "Была найдена запись, соответствующая введенной"
 
 #: system/src/Validator/messages.php:33
 msgid "No record matching the input was found"
-msgstr ""
+msgstr "Нет записей, соответствующих введенным данным"
 
 #: system/src/Validator/messages.php:37
 #: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
-msgstr ""
+msgstr "Поле является обязательным и не может быть пустым"
 
 #: system/src/Validator/messages.php:41
 #, php-format
 msgid "The input is less than %min% characters long"
-msgstr ""
+msgstr "Длина ввода меньше %min% символов"
 
 #: system/src/Validator/messages.php:42
 #, php-format
 msgid "The input is more than %max% characters long"
-msgstr ""
+msgstr "Ввод более %max% символов"
 
 #: system/src/Validator/messages.php:46
 msgid "The input was not found in the haystack"
-msgstr ""
+msgstr "Объект не найден в списке"
 
 #: system/src/Validator/messages.php:50
 #: system/src/Validator/messages.php:61
 msgid "Invalid type given. String expected"
-msgstr ""
+msgstr "Указан неверный тип. Ожидается строка"
 
 #: system/src/Validator/messages.php:51
 msgid "The input is not a valid email address. Use the basic format local-part@hostname"
-msgstr ""
+msgstr "Введен неверный адрес электронной почты. Используйте базовый формат local-part@hostname"
 
 #: system/src/Validator/messages.php:52
 #, php-format
 msgid "'%hostname%' is not a valid hostname for the email address"
-msgstr ""
+msgstr "'%hostname%' не является допустимым хостом для адреса электронной почты"
 
 #: system/src/Validator/messages.php:53
 #, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
-msgstr ""
+msgstr "'%hostname%' Похоже, что записи MX или A для адреса электронной почты не действительны"
 
 #: system/src/Validator/messages.php:54
 #, php-format
 msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
-msgstr ""
+msgstr "'%hostname%' не находится в маршрутизируемой сети. Адрес электронной почты не должен быть разрешен из публичной сети"
 
 #: system/src/Validator/messages.php:55
 #, php-format
 msgid "'%localPart%' can not be matched against dot-atom format"
-msgstr ""
+msgstr "'%localPart%' не может быть совпадает с форматом dot-atom"
 
 #: system/src/Validator/messages.php:56
 #, php-format
 msgid "'%localPart%' can not be matched against quoted-string format"
-msgstr ""
+msgstr "'%localPart%' не может быть сопоставлен с форматом quoted-string"
 
 #: system/src/Validator/messages.php:57
 msgid "'%localPart%' is not a valid local part for the email address"
-msgstr ""
+msgstr "'%localPart%' не является допустимой локальной частью для адреса электронной почты"
 
 #: system/src/Validator/messages.php:58
 msgid "The input exceeds the allowed length"
-msgstr ""
+msgstr "Значение превышает допустимую длину"
 
 #: system/src/Validator/messages.php:60
 msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
-msgstr ""
+msgstr "Значение похоже на DNS имя хоста, но указанная нотация не может быть декодирована"
 
 #: system/src/Validator/messages.php:62
 msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
-msgstr ""
+msgstr "Значение похоже на DNS имя хоста, но содержит тире в недопустимом месте"
 
 #: system/src/Validator/messages.php:63
 msgid "The input does not match the expected structure for a DNS hostname"
-msgstr ""
+msgstr "Введенные данные не соответствуют структуре DNS имени хоста"
 
 #: system/src/Validator/messages.php:64
 msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
-msgstr ""
+msgstr "Значение похоже на DNS имя хоста, но не соответствует схеме имен хостов для TLD '%tld%' "
 
 #: system/src/Validator/messages.php:65
 msgid "The input does not appear to be a valid local network name"
-msgstr ""
+msgstr "Значение не является допустимым локальным сетевым именем"
 
 #: system/src/Validator/messages.php:66
 msgid "The input does not appear to be a valid URI hostname"
-msgstr ""
+msgstr "Введенные данные не являются допустимым URI адресом"
 
 #: system/src/Validator/messages.php:67
 msgid "The input appears to be an IP address, but IP addresses are not allowed"
-msgstr ""
+msgstr "Значение похоже на IP адрес, но IP адреса не разрешены"
 
 #: system/src/Validator/messages.php:68
 msgid "The input appears to be a local network name but local network names are not allowed"
-msgstr ""
+msgstr "Значение похоже на локальное сетевое имя, но локальные сетевые имена не разрешены"
 
 #: system/src/Validator/messages.php:69
 msgid "The input appears to be a DNS hostname but cannot extract TLD part"
-msgstr ""
+msgstr "Значение похоже на DNS имя хоста, но не может извлечь TLD часть"
 
 #: system/src/Validator/messages.php:70
 msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
-msgstr ""
+msgstr "Значение похоже на DNS имя хоста, но не соответствует TLD с известным списком"
 
 #: system/src/Validator/messages.php:75
 msgid "Invalid type given. String, integer, float, boolean or array expected"
-msgstr ""
+msgstr "Недопустимый тип данных. Ожидается строка, целое число, число с плавающей точкой, логическое значение или массив"
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
@@ -717,15 +718,15 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
-msgstr ""
+msgstr "Авторизоваться"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
-msgstr ""
+msgstr "Выход"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
-msgstr ""
+msgstr "Email сгенерировано автоматически. Пожалуйста, не отвечайте на него. <br> Чтобы связаться с нами, используйте контактную информацию на нашем сайте."
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
@@ -738,21 +739,21 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 #, php-format
 msgid "Hello, %s!"
-msgstr ""
+msgstr "Здравствуйте, %s!"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
 #, php-format
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Вы начали процесс изменения адреса электронной почты на сайте <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
 msgid "The new email address is:"
-msgstr ""
+msgstr "Новый адрес электронной почты:"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
 msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
-msgstr ""
+msgstr "Если вы не начинали процедуру изменения электронной почты, пожалуйста, свяжитесь с нами любым удобным для вас способом."
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
@@ -760,16 +761,16 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
-msgstr ""
+msgstr "Чтобы продолжить, нажмите кнопку подтверждения"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
 #: themes/default/templates/system/mail/templates/registration.phtml:27
 msgid "Confirm"
-msgstr ""
+msgstr "Подтвердить"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
+msgstr "Если вы не регистрировались на нашем сайте – просто проигнорируйте это сообщение."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
@@ -778,91 +779,91 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format
 msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Вы успешно зарегистрировались на сайте <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:18
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
 msgid "Your login:"
-msgstr ""
+msgstr "Ваш логин:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
 msgid "Your password:"
-msgstr ""
+msgstr "Ваш пароль:"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:19
 msgid "The one you specified when registering"
-msgstr ""
+msgstr "Указанный вами при регистрации"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:22
 #, php-format
 msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
+msgstr "Для активации вашей учетной записи, пожалуйста, подтвердите вашу регистрацию на сайте %s."
 
 #: themes/default/templates/system/mail/templates/registration.phtml:31
 msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
-msgstr ""
+msgstr "Если вы еще не зарегистрированы на нашем сайте, пожалуйста, проигнорируйте это письмо. В этом случае учетная запись не будет активирована и будет автоматически удалена."
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:9
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
 msgid "Password recovery"
-msgstr ""
+msgstr "Восстановление пароля"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Вы начинаете процесс восстановления пароля на сайте <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:17
 msgid "In order to recover your password, you must click on the link:"
-msgstr ""
+msgstr "Для того, чтобы восстановить пароль, вам необходимо нажать на ссылку:"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:22
 msgid "Restore"
-msgstr ""
+msgstr "Восстановить"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:25
 msgid "Link valid for 1 hour"
-msgstr ""
+msgstr "Ссылка действует в течении 1 часа"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:27
 msgid "If you receive this mail by mistake, just ignore this letter"
-msgstr ""
+msgstr "Если вы получили это письмо по ошибке, просто проигнорируйте это письмо"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
 #, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
-msgstr ""
+msgstr "Вы изменили свой пароль на сайте <a href=\"%s\">%s</a>"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
 msgid "After logging in, you can change your password to new one."
-msgstr ""
+msgstr "После входа в систему вы можете сменить пароль на новый."
 
 #: themes/default/templates/system/pages/comments_delete.phtml:21
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Действительно хотите удалить?"
 
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
 #: themes/default/templates/system/pages/comments_form.phtml:22
 msgid "Message"
-msgstr ""
+msgstr "Сообщение"
 
 #: themes/default/templates/system/pages/comments_form.phtml:29
 msgid "Send"
-msgstr ""
+msgstr "Отправить"
 
 #: themes/default/templates/system/pages/comments_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "Список пуст"
 
 #: themes/default/templates/system/pages/comments_list.phtml:84
 msgid "Edited:"
-msgstr ""
+msgstr "Изменено:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
+msgstr "Изменен"
 
