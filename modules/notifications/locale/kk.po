@@ -11,81 +11,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/notifications/includes/clear.php:23
 msgid "Notifications are cleared!"
-msgstr ""
+msgstr "Хабарландырулар жойылды!"
 
 #: modules/notifications/includes/index.php:29
 msgid "Users on registration"
-msgstr ""
+msgstr "Пайдаланушыларды тіркеу"
 
 #: modules/notifications/includes/index.php:39
 msgid "Articles on moderation"
-msgstr ""
+msgstr "Модерация туралы мақалалар"
 
 #: modules/notifications/includes/index.php:49
 msgid "Downloads on moderation"
-msgstr ""
+msgstr "Модерацияны жүктеу"
 
 #: modules/notifications/includes/index.php:60
 msgid "Ban"
-msgstr ""
+msgstr "Тыйым салу"
 
 #: modules/notifications/includes/index.php:70
 msgid "New forum posts"
-msgstr ""
+msgstr "Форумдаға ең жаңа хаттар"
 
 #: modules/notifications/includes/index.php:80
 msgid "Mail"
-msgstr ""
+msgstr "Пошта"
 
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 msgid "Guestbook"
-msgstr ""
+msgstr "Қонақ кітәпшасы"
 
 #: modules/notifications/includes/index.php:100
 msgid "Comments"
-msgstr ""
+msgstr "Пікірлер"
 
 #: modules/notifications/includes/settings.php:18
 #: modules/notifications/templates/index.phtml:80
 msgid "Settings"
-msgstr ""
+msgstr "Баптаулар"
 
 #: modules/notifications/includes/settings.php:44
 msgid "Settings saved!"
-msgstr ""
+msgstr "Баптаулар сақталады!"
 
 #: modules/notifications/index.php:47
 #: modules/notifications/templates/index.phtml:11
 #: modules/notifications/templates/index.phtml:12
 msgid "Notifications"
-msgstr ""
+msgstr "Хабарландырулар"
 
 #: modules/notifications/templates/index.phtml:27
 msgid "All notifications have already been read"
-msgstr ""
+msgstr "Барлық хабарландырулар оқылған."
 
 #: modules/notifications/templates/index.phtml:67
 msgid "Total"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/notifications/templates/index.phtml:75
 msgid "Clear notifications"
-msgstr ""
+msgstr "Барлық ескертулерді тазалау."
 
 #: modules/notifications/templates/settings.phtml:45
 msgid "Display the number of unread messages in the forum"
-msgstr ""
+msgstr "Форумның оқылмаған жазбаларының санын көрсету"
 
 #: modules/notifications/templates/settings.phtml:49
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/notifications/templates/settings.phtml:50
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
