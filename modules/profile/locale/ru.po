@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 21:39\n"
+"PO-Revision-Date: 2026-03-25 18:37\n"
 
 #: modules/profile/includes/activity.php:25
 #: modules/profile/templates/index.phtml:253
@@ -459,15 +459,15 @@ msgstr "Почта"
 
 #: modules/profile/includes/settings.php:57
 msgid "Auto"
-msgstr ""
+msgstr "Автоматически"
 
 #: modules/profile/includes/settings.php:60
 msgid "Light"
-msgstr ""
+msgstr "Светлая"
 
 #: modules/profile/includes/settings.php:63
 msgid "Dark"
-msgstr ""
+msgstr "Тёмная"
 
 #: modules/profile/includes/settings.php:82
 #: modules/profile/includes/settings.php:125
@@ -773,7 +773,7 @@ msgstr "Внимание! Правильно указывайте свой ад�
 #: modules/profile/templates/edit.phtml:243
 #: modules/profile/templates/index.phtml:219
 msgid "Skype"
-msgstr ""
+msgstr "Skype"
 
 #: modules/profile/templates/edit.phtml:251
 #: modules/profile/templates/edit.phtml:257
@@ -922,7 +922,7 @@ msgstr "Нарушения"
 
 #: modules/profile/templates/index.phtml:74
 msgid "User Agent"
-msgstr ""
+msgstr "User Agent"
 
 #: modules/profile/templates/index.phtml:76
 msgid "Ip"
@@ -931,7 +931,7 @@ msgstr "IP"
 #: modules/profile/templates/index.phtml:77
 #: modules/profile/templates/index.phtml:80
 msgid "Whois"
-msgstr ""
+msgstr "Whois"
 
 #: modules/profile/templates/index.phtml:95
 msgid "Write"
@@ -1149,7 +1149,7 @@ msgstr "Размер списков"
 
 #: modules/profile/templates/settings.phtml:99
 msgid "Theme"
-msgstr ""
+msgstr "Тема"
 
 #: modules/profile/templates/settings.phtml:110
 #: modules/profile/templates/settings.phtml:112
