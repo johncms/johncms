@@ -11,11 +11,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 21:41\n"
+"PO-Revision-Date: 2026-03-25 18:37\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:51
+#: modules/homepage/templates/index.phtml:68
 msgid "Forum"
 msgstr ""
 
@@ -50,6 +51,7 @@ msgstr "Baxın foto albom"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
+#: modules/homepage/templates/index.phtml:128
 msgid "Users"
 msgstr "İstifadəçilərr"
 
@@ -65,6 +67,7 @@ msgstr "İstifadəçi Siyahıısı"
 #: system/src/Comments.php:304
 #: system/src/Comments.php:336
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:77
+#: modules/homepage/templates/index.phtml:98
 msgid "Downloads"
 msgstr "Yüklə"
 
@@ -72,6 +75,7 @@ msgstr "Yüklə"
 #: modules/notifications/includes/index.php:90
 #: modules/notifications/includes/index.php:109
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:64
+#: modules/homepage/templates/index.phtml:83
 msgid "Guestbook"
 msgstr "Qonaq Otaqi"
 
@@ -81,6 +85,7 @@ msgstr "Oxu suallar və cavabları"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
+#: modules/homepage/templates/index.phtml:113
 msgid "Library"
 msgstr "Kitabxana Hekayeler"
 
@@ -714,6 +719,7 @@ msgid "Set Dark Theme"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+#: modules/registration/templates/email_confirmed.phtml:22
 msgid "Log In"
 msgstr "Daxil ol"
 
@@ -863,4 +869,9 @@ msgstr "Redaktə:"
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
 msgstr "Redaktə"
+
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:150
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:159
+msgid "Page"
+msgstr ""
 

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 21:39\n"
+"PO-Revision-Date: 2026-03-25 18:37\n"
 
 #: modules/registration/index.php:50
 #: modules/registration/templates/index.phtml:4
@@ -74,7 +74,7 @@ msgstr "Придумайте пароль"
 #: modules/registration/templates/index.phtml:61
 #: modules/registration/templates/index.phtml:68
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: modules/registration/templates/index.phtml:76
 msgid "Select Gender"
