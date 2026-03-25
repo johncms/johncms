@@ -2,6 +2,17 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
+#: system/src/Http/Controller/AdminControllerContext.php:50
+#: modules/admin/index.php:50
+#: modules/admin/src/Application/Controllers/BaseAdminController.php:41
+#: modules/admin/templates/index.phtml:1
+#: modules/admin/templates/ip_whois.phtml:8
+#: modules/admin/templates/settings.phtml:8
+#: modules/admin/templates/smilies.phtml:8
+#: modules/admin/templates/userlist.phtml:3
+msgid "Admin Panel"
+msgstr ""
+
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
@@ -802,16 +813,6 @@ msgstr ""
 
 #: modules/admin/includes/usr_del.php:44
 msgid "User does not exists"
-msgstr ""
-
-#: modules/admin/index.php:50
-#: modules/admin/src/Application/Controllers/BaseAdminController.php:41
-#: modules/admin/templates/index.phtml:1
-#: modules/admin/templates/ip_whois.phtml:8
-#: modules/admin/templates/settings.phtml:8
-#: modules/admin/templates/smilies.phtml:8
-#: modules/admin/templates/userlist.phtml:3
-msgid "Admin Panel"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
