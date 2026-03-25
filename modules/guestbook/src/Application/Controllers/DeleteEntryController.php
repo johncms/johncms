@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Exception;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
@@ -12,8 +11,8 @@ use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
-use League\Flysystem\FilesystemException;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 final readonly class DeleteEntryController
 {
@@ -67,9 +66,14 @@ final readonly class DeleteEntryController
 
             if (! empty($post->attached_files)) {
                 foreach ($post->attached_files as $attached_file) {
+                    $fileId = filter_var($attached_file, FILTER_VALIDATE_INT);
+                    if ($fileId === false) {
+                        continue;
+                    }
+
                     try {
-                        $this->storage->delete($attached_file);
-                    } catch (Exception | FilesystemException $exception) {
+                        $this->storage->delete((int) $fileId);
+                    } catch (Throwable $exception) {
                         $this->logger->error($exception->getMessage(), [
                             'exception' => $exception,
                             'file'      => $attached_file,

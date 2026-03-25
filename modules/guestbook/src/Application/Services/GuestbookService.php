@@ -13,9 +13,9 @@ use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
-use League\Flysystem\FilesystemException;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
+use Throwable;
 
 class GuestbookService
 {
@@ -180,12 +180,7 @@ class GuestbookService
                 $messages = (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 86400))->get();
                 foreach ($messages as $message) {
                     if (! empty($message->attached_files)) {
-                        foreach ($message->attached_files as $attached_file) {
-                            try {
-                                $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
-                            }
-                        }
+                        $this->deleteAttachedFiles($storage, $message->attached_files);
                     }
                 }
 
@@ -197,12 +192,7 @@ class GuestbookService
                 $messages = (new GuestbookEntry())->where('adm', $adm)->get();
                 foreach ($messages as $message) {
                     if (! empty($message->attached_files)) {
-                        foreach ($message->attached_files as $attached_file) {
-                            try {
-                                $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
-                            }
-                        }
+                        $this->deleteAttachedFiles($storage, $message->attached_files);
                     }
                 }
                 (new GuestbookEntry())->where('adm', $adm)->delete();
@@ -213,16 +203,29 @@ class GuestbookService
                 $messages = (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 604800))->get();
                 foreach ($messages as $message) {
                     if (! empty($message->attached_files)) {
-                        foreach ($message->attached_files as $attached_file) {
-                            try {
-                                $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
-                            }
-                        }
+                        $this->deleteAttachedFiles($storage, $message->attached_files);
                     }
                 }
                 (new GuestbookEntry())->where('adm', $adm)->where('time', '<', (time() - 604800))->delete();
                 return __('All messages older than 1 week were deleted');
+        }
+    }
+
+    /**
+     * @param mixed[] $attachedFiles
+     */
+    private function deleteAttachedFiles(FileStorage $storage, array $attachedFiles): void
+    {
+        foreach ($attachedFiles as $attachedFile) {
+            $fileId = filter_var($attachedFile, FILTER_VALIDATE_INT);
+            if ($fileId === false) {
+                continue;
+            }
+
+            try {
+                $storage->delete((int) $fileId);
+            } catch (Throwable) {
+            }
         }
     }
 }
