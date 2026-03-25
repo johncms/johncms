@@ -67,7 +67,6 @@
       'Channels' => 'Kanallar',
       'Sample rate' => 'Oxşarlıq sürəti',
       'Bitrate' => 'Bit sürəti',
-      'Duration' => 'Duration',
       'Artist' => 'Sənətçi',
       'Title' => 'Başlıq',
       'Album' => 'Albom',

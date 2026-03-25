@@ -5,9 +5,7 @@
   array (
     '' => 
     array (
-      'Forum' => 'Forum',
       'New reply on the forum' => 'Baru membalas di forum',
-      'Karma' => 'Karma',
       'New vote in karma' => 'Suara baru di karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Pengguna <b>#username#</b> memilih <a href="#karma_url#">karma anda</a>.',
       'On the Homepage' => 'Pada Homepage',
@@ -29,7 +27,6 @@
       'Select language' => 'Pilih bahasa',
       'Apply' => 'Terapkan',
       'Personal' => 'Pribadi',
-      'Logout' => 'Logout',
       'You have not entered login' => 'Anda belum memasukkan login',
       'You have not entered password' => 'Ands belum memasukkan kata sandi',
       'The security code is not correct' => 'Kode verifikasi salah',
@@ -57,7 +54,6 @@
       'Settings saved!' => 'Pengaturan disimpan!',
       'Notifications' => 'Pemberitahuan',
       'All notifications have already been read' => 'Semua pemberitahuan telah membaca',
-      'Total' => 'Total',
       'Clear notifications' => 'Menghapus pemberitahuan',
       'Display the number of unread messages in the forum' => 'Menampilkan jumlah pesan yang belum dibaca di forum',
       'Save' => 'Simpan',
@@ -93,8 +89,6 @@
       'Super moderator' => 'Super Moderator',
       'Administrator' => 'Pengurus',
       'Supervisor' => 'Pembimbing',
-      'Sql query log' => 'Sql query log',
-      'Query' => 'Query',
       'Bindings' => 'Binding',
       'Time' => 'Lama',
       'News archive' => 'Arsip berita',
@@ -102,7 +96,6 @@
       'Information, FAQ' => 'Informasi, FAQ',
       'Admin Panel' => 'Panel admin',
       'Admin Chat' => 'Admin obrolan',
-      'Log In' => 'Log In',
       'Exit' => 'Keluar',
       'Do you really want to delete?' => 'Apakah Anda yakin ingin menghapus?',
       'Clear' => 'Hapus',

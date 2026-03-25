@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'Mesaji Dəyiş',
       'Guestbook' => 'Qonaq otağı',
       'Admin Club' => 'Admin klubu',
       'Guestbook is closed' => 'Qonaq kitabı bağlanıb',
-      'Edit message' => 'Mesaji Dəyiş',
       'Reply' => 'Cavab',
       'All messages older than 1 day were deleted' => 'Bütün mesajlar 1 gündən sonra silinir',
       'Full clearing is finished' => 'Tam təmizlənməsi başa çatıb',

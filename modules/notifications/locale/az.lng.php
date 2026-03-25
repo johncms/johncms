@@ -9,7 +9,6 @@
       'Users on registration' => 'Qeydiyyatlı istifadəçilər',
       'Articles on moderation' => 'Məqalələr moderatsiya',
       'Downloads on moderation' => 'Yuklmeme moderatsiya',
-      'Ban' => 'Ban',
       'New forum posts' => 'Forumdakı sonuncu xeberler',
       'Mail' => 'Mesaj',
       'Guestbook' => 'Qonaq Otaqı',

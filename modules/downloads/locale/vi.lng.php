@@ -70,7 +70,6 @@
       'Duration' => 'Thời lượng',
       'Artist' => 'Nghệ sĩ',
       'Title' => 'Tiêu đề',
-      'Album' => 'Album',
       'Genre' => 'Thể loại',
       'Year' => 'Năm',
       'Codec' => 'Bộ mã',

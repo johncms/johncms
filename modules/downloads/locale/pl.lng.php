@@ -70,7 +70,6 @@
       'Duration' => 'Czas trwania',
       'Artist' => 'Artysta',
       'Title' => 'Tytuł',
-      'Album' => 'Album',
       'Genre' => 'Gatunek',
       'Year' => 'Rok',
       'Codec' => 'Kodek',

@@ -16,7 +16,6 @@
       'When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?' => 'Jika Anda menghapus kontak, semua pesan akan dihapus <br> Apakah Anda yakin menghapus ini?',
       'Contact for removal isn\'t chosen' => 'Kontak yang akan dihapus tidak dipilih',
       'Files' => 'Berkas',
-      'Blacklist' => 'Blacklist',
       'User does not exists' => 'Pengguna tidak ada',
       'User not blocked' => 'Pengguna tidak diblokir',
       'User is unblocked' => 'Pengguna tidak diblokir',

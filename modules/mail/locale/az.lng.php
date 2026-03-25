@@ -27,7 +27,6 @@
       'This user can not be blocked' => 'Bu istifadəçi heç bağlana bilər',
       'User is blocked' => 'İstifadəçi oxunuş üçün',
       'You really want to block contact?' => 'Siz, həqiqətən, istədiyiniz kilidini açmaq əlaqə?',
-      'Block' => 'Block',
       'My Contacts' => 'Şəxslərim',
       'Blocklist' => 'Əngəlli siyahısı',
       'Correspondence' => 'Qiyabi oyun',

@@ -11,10 +11,8 @@
       'Nickname' => 'Nik',
       'Invalid length' => 'Yanlış vaxtölçən müddəti',
       'Invalid characters' => 'Səhv karakterlər',
-      'Forum' => 'Forum',
       'Guestbook' => 'Qonaq kitabı',
       'Comments' => 'Şərhlər',
-      'Karma' => 'Karma',
       'Most active in Guestbook' => 'Ən fəal xatirə kitabına ürək',
       'Most commentators' => 'Əksər şərhçilər',
       'Best Karma' => 'Ən Yaxşı Karma',
@@ -31,11 +29,6 @@
       'List is empty' => 'Siyahı boşdur',
       'Total' => 'Cəmi:',
       'Back' => 'Geri',
-      'post' => 
-      array (
-        0 => 'post',
-        1 => 'Mesajlar',
-      ),
       'comment' => 
       array (
         0 => 'Şərhlər',

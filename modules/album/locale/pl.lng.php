@@ -81,24 +81,15 @@
       'The list is empty' => 'Lista jest pusta',
       'Add image' => 'Dodaj obraz',
       'User:' => 'Użytkownik:',
-      'Album:' => 'Album:',
       'Total' => 'Wszystkich',
       'Photo' => 'Zdjęcie',
       'Views' => 'Oglądano',
       'Downloads' => 'Pobrań',
       'Date' => 'Data',
       'User' => 'Użytkownik',
-      'Album' => 'Album',
       'Download' => 'Pobierz',
       'Actions' => 'Akcje',
       'Add to Profile' => 'Dodaj do profilu',
-      'album' => 
-      array (
-        0 => 'album',
-        1 => 'albumy',
-        2 => 'albumy',
-        3 => 'albumy',
-      ),
       'photo' => 
       array (
         0 => 'zdjęcie',

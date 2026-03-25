@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'Mengedit pesan',
       'Guestbook' => 'Buku tamu',
       'Admin Club' => 'Klub Admin',
       'Guestbook is closed' => 'Buku tamu ditutup',
-      'Edit message' => 'Mengedit pesan',
       'Reply' => 'Balas',
       'All messages older than 1 day were deleted' => 'Semua pesan lebih dari 1 hari berhasil dihapus',
       'Full clearing is finished' => 'Semua pesan berhasil dihapus',

@@ -161,6 +161,8 @@ PHP должен работать с драйвером по умолчанию:
       'Information, FAQ' => 'Информация, FAQ',
       'Admin Panel' => 'Админ панель',
       'Admin Chat' => 'Админ Чат',
+      'Set Light Theme' => 'Установить светлую тему',
+      'Set Dark Theme' => 'Установить темную тему',
       'Log In' => 'Авторизоваться',
       'Exit' => 'Выход',
       'The email is generated automatically. Please don\'t answer it. <br> To contact us, use the contact information on our website.' => 'Email сгенерировано автоматически. Пожалуйста, не отвечайте на него. <br> Чтобы связаться с нами, используйте контактную информацию на нашем сайте.',
@@ -195,6 +197,7 @@ PHP должен работать с драйвером по умолчанию:
       'The list is empty' => 'Список пуст',
       'Edited:' => 'Изменено:',
       'Edited' => 'Изменен',
+      'Page' => 'Страница',
     ),
   ),
 );

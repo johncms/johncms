@@ -151,7 +151,6 @@
       'Delete user' => 'Foydalanuvchini o\'chirish',
       'You cannot delete higher administration' => 'Siz o‘zingizdan yuqori lavozimdagi foydalanuvchi xabarini tahrirlay olmaysiz',
       'User does not exists' => 'Bunday foydalanuvchi mavjud emas.',
-      'Forum' => 'Forum',
       'Access is allowed' => 'Kirishga ruxsat berilgan',
       'Only for authorized' => 'Faqat ro\'yhatdan o\'tganlar uchun',
       'Read only' => 'Faqat o\'qish uchun',

@@ -51,7 +51,6 @@
       'Bulleted list' => 'Daftar berbutir',
       'Title' => 'Judul',
       'Text' => 'Teks',
-      'Spoiler' => 'Spoiler',
       'Cancel' => 'Batal',
       'FORBIDDEN' => 'DILARANG',
       'Advertising messages' => 'Pesan Iklan',

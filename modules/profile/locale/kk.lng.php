@@ -115,7 +115,6 @@
       'About myself' => 'Өзіңіз туралы',
       'Contacts' => 'Менің контактілерім',
       'Phone number' => 'Телефон нөмірі',
-      'E-mail' => 'E-mail',
       'The new email address is:' => 'Жаңа электрондық пошта мекенжайы:',
       'Show in Profile' => 'Профилде көрсету',
       'Skype' => 'Скайп',

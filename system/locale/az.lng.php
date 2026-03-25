@@ -5,10 +5,8 @@
   array (
     '' => 
     array (
-      'Forum' => 'Forum',
       'New reply on the forum' => 'Yeni cavab forumda',
       '<a href="%s">User <b>%s</b> responded to your message in the topic %s</a>' => 'İstifadəçi <a href="%s"> <b>%s</b> cavab mesaj mövzu %s</a>',
-      'Karma' => 'Karma',
       'New vote in karma' => 'Yeni səsvermə karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'İstifadəçi <b>#istifadəçi adı#</b> səs <a href="#karma_url#">sizin karma</a>.',
       'On the Homepage' => 'Əsas səhifəyə',
@@ -51,7 +49,6 @@
       'Users on registration' => 'İstifadəçilər qeydiyyat',
       'Articles on moderation' => 'Məqalələr moderatsiya',
       'Downloads on moderation' => 'Yuklmeme moderatsiya',
-      'Ban' => 'Ban',
       'New forum posts' => 'Forumdakı sonuncu xeberler',
       'Mail' => 'E-poçt',
       'Comments' => 'Şərhlər',
@@ -93,7 +90,6 @@
       'Unread' => 'Oxunmamış',
       'Last activity' => 'Son Aktivlik',
       'Home' => 'Əsas Səhifə',
-      'Forum moderator' => 'Forum moderator',
       'Download moderator' => 'Yuklmeme moderatsiya',
       'Library moderator' => 'Kitabxana moderator',
       'Super moderator' => 'Super Moderatorlar',

@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'Redaguoti pranešimą',
       'Guestbook' => 'Svečių Knyga',
       'Admin Club' => 'Admin-Klubas',
       'Guestbook is closed' => 'Svečių knygą uždarytą',
-      'Edit message' => 'Redaguoti pranešimą',
       'Reply' => 'Atsakyti',
       'All messages older than 1 day were deleted' => 'Ištrinti visi pranešimai, vyresnieji už 1 dieną',
       'Full clearing is finished' => 'Viskas išvalytą sėkmingai',

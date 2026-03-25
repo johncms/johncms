@@ -11,7 +11,6 @@
       'Nickname' => 'Taxallus',
       'Invalid length' => 'Juda uzun',
       'Invalid characters' => 'Ruxsat etilmagan belgilar',
-      'Forum' => 'Forum',
       'Guestbook' => 'Mehmonlar kitobi',
       'Comments' => 'Sharxlar',
       'Karma' => 'Ovozlar',
@@ -31,11 +30,6 @@
       'List is empty' => 'Ro\'yhat bo\'sh',
       'Total' => 'Jami',
       'Back' => 'Ortga',
-      'post' => 
-      array (
-        0 => 'post',
-        1 => 'Postlar',
-      ),
       'comment' => 
       array (
         0 => 'Sharx',

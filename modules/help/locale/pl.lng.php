@@ -51,7 +51,6 @@
       'Bulleted list' => 'Lista punktowana',
       'Title' => 'Tytuł',
       'Text' => 'Tekst',
-      'Spoiler' => 'Spoiler',
       'Cancel' => 'Anuluj',
       'FORBIDDEN' => 'ZABRONIONE',
       'Advertising messages' => 'Treści reklamowe',

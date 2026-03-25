@@ -11,10 +11,8 @@
       'Nickname' => 'Nazwa użytkownika',
       'Invalid length' => 'Nieprawidłowa długość',
       'Invalid characters' => 'Nieprawidłowe znaki',
-      'Forum' => 'Forum',
       'Guestbook' => 'Księga gości',
       'Comments' => 'Komentarze',
-      'Karma' => 'Karma',
       'Most active in Guestbook' => 'Najbardziej aktywni w księdze gości',
       'Most commentators' => 'Większość komentatorów',
       'Best Karma' => 'Najlepsza karma',
@@ -31,13 +29,6 @@
       'List is empty' => 'Lista jest pusta',
       'Total' => 'Wszystkich',
       'Back' => 'Powrót',
-      'post' => 
-      array (
-        0 => 'post',
-        1 => 'posty',
-        2 => 'posty',
-        3 => 'posty',
-      ),
       'comment' => 
       array (
         0 => 'komentarz',

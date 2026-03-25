@@ -18,7 +18,6 @@
       'Username' => 'Қолданушы аты',
       'Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)' => 'Мин. 2, макс. 20 символ.<br>Орыс және Латын әліппесінің әріптері, цифрлер (нөлден басқа) және - = @ ! ? ~ _ ( ) [ ] * таңбалары рұқсат етілген.',
       'Assign a password' => 'Құпиясөз енгізіңіз',
-      'E-mail' => 'E-mail',
       'Select Gender' => 'Жынысыңызды таңдаңыз',
       'Man' => 'Ер адам',
       'Woman' => 'Әйел адам',

@@ -17,7 +17,6 @@
       'Username' => 'Nume',
       'Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)' => 'Min. 2, Max. 20 de caractere.<br>Sunt premise doar litere din alfabetul roman, numere si simbolurile - = @ ! ? ~ _ ( ) [ ] . * (Fara 0 (zero) )',
       'Assign a password' => 'Alege o parola',
-      'E-mail' => 'E-mail',
       'Select Gender' => 'Alege SEX',
       'Man' => 'Barbat',
       'Woman' => 'Femeie',

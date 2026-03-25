@@ -160,7 +160,6 @@
       'Please check your email and confirm it.' => 'الرجاء التحقق من بريدك الإلكتروني للحصول علي رمز التاكيد.',
       'Show in Profile' => 'عرض الملف الشخصي',
       'Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.' => 'تحذير! كتابة البريد الإلكتروني الخاص بك بشكل صحيح. سيتم إرسال كلمة المرور الخاصة بك إلى عنوان البريد الإلكتروني في سجل لهذا الحساب.',
-      'Skype' => 'Skype',
       'Site' => 'الموقع',
       'Administrative Functions' => 'المهام الإدارية',
       'Admin notes' => 'ملاحظات المشرف',

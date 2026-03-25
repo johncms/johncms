@@ -11,7 +11,6 @@
       'IP Activity' => 'Aktywność IP',
       'Guest' => 'Gość',
       'Who is online?' => 'Kto jest online?',
-      'Online' => 'Online',
       'For registered users only' => 'Tylko dla zarejestrowanych',
       'List is empty' => 'Lista jest pusta',
       'Total' => 'Wszystkich',

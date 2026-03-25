@@ -6,7 +6,6 @@
     '' => 
     array (
       'Admin Panel' => 'Trang quản trị',
-      'System check' => 'Kiểm tra hệ thống',
       'Permissions' => 'Quyền truy cập',
       'Administration' => 'Dành cho quản trị',
       'Supervisors' => 'Giám sát',
@@ -127,7 +126,6 @@
       'Ban has been successfully removed' => 'Lệnh cấm đã được thực hiện thành công',
       'Are you sure you want to remove the ban?' => 'Bạn có chắc bạn muốn loại bỏ lệnh cấm?',
       'Search' => 'Tìm kiếm',
-      'Karma' => 'Karma',
       'Karma is cleared' => 'Karma được xóa',
       'You really want to clear the Karma?' => 'Bạn thực sự muốn xóa Nghiệp?',
       'Languages' => 'Ngôn ngữ',
@@ -152,6 +150,7 @@
       'Delete user' => 'Xoá người dùng',
       'You cannot delete higher administration' => 'Bạn không thể xóa bài cũ của bạn',
       'User does not exists' => 'Người dùng không tồn tại',
+      'System check' => 'Kiểm tra hệ thống',
       'Forum' => 'Diễn đàn',
       'Access is allowed' => 'Được Phép Truy Cập',
       'Only for authorized' => 'Chỉ cho phép',
@@ -358,7 +357,6 @@ Nếu bạn nhấp vào &quot;Xem&quot; và XHTML đã xảy ra lỗi, sau đó 
       'Keywords' => 'Từ chìa khóa',
       'Themes' => 'Chủ đề',
       'On registration' => 'Tại đăng ký',
-      'Antiflood' => 'Antiflood',
       'Modules' => 'Các Mô-Đun',
       'News' => 'Tin tức',
       'System' => 'Hệ thống',

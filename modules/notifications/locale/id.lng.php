@@ -18,7 +18,6 @@
       'Settings saved!' => 'Pengaturan disimpan!',
       'Notifications' => 'Pemberitahuan',
       'All notifications have already been read' => 'Semua pemberitahuan telah membaca',
-      'Total' => 'Total',
       'Clear notifications' => 'Menghapus pemberitahuan',
       'Display the number of unread messages in the forum' => 'Menampilkan jumlah pesan yang belum dibaca di forum',
       'Save' => 'Simpan',

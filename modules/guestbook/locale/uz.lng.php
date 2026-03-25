@@ -5,10 +5,9 @@
   array (
     '' => 
     array (
-      'Guestbook' => 'Mehmonlar kitobi',
-      'Admin Club' => 'Admin Club',
-      'Guestbook is closed' => 'Mehmonlar kitobi yopiq',
       'Edit message' => 'Habarni tahrirlash',
+      'Guestbook' => 'Mehmonlar kitobi',
+      'Guestbook is closed' => 'Mehmonlar kitobi yopiq',
       'Reply' => 'Javob qaytarish',
       'All messages older than 1 day were deleted' => '1 kundan oldingi barcha xabarlar o\'chirildi',
       'Full clearing is finished' => 'To\'liq tozalash yakunlandi',

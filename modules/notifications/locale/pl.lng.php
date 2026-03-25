@@ -9,7 +9,6 @@
       'Users on registration' => 'Rejestracja użytkownika',
       'Articles on moderation' => 'Plik znajduje się w moderacji',
       'Downloads on moderation' => 'Pliki w moderacji',
-      'Ban' => 'Ban',
       'New forum posts' => 'Nowe posty na forum',
       'Mail' => 'Wiadomości',
       'Guestbook' => 'Księga gości',

@@ -48,7 +48,6 @@
       'To Section' => 'La sectiune',
       'Title' => 'Titlu',
       'Announce' => 'Anunt',
-      'Text' => 'Text',
       'Commenting on the Article' => 'Comenteaza in articol',
       'To upload a photo' => 'De a incarca o poza',
       'Select the text file' => 'Selecteaza textul fisierului',

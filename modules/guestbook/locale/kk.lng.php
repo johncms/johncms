@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'Хабарларды өзгерту',
       'Guestbook' => 'Қонақ кітәпшасы',
       'Admin Club' => 'Админ Чат',
       'Guestbook is closed' => 'Қонақ бөлмесі жабық',
-      'Edit message' => 'Хабарларды өзгерту',
       'Reply' => 'Жауап беру',
       'All messages older than 1 day were deleted' => '1 күннен асқан барлық хабарлар жойылады',
       'Full clearing is finished' => 'Толық тазалау аяқталды',

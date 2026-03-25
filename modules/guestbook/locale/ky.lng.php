@@ -5,11 +5,16 @@
   array (
     '' => 
     array (
+      'The message was deleted' => 'Билдирүү өчүрүлдү',
+      'Edit message' => 'Билдирүү оңдоо',
+      'The message was saved' => 'Билдирүү сакталды',
       'Guestbook' => 'Конок китеби',
       'Admin Club' => 'Админ клубу',
       'Guestbook is closed' => 'Конок китеби жабык',
-      'Edit message' => 'Билдирүү оңдоо',
+      'Your message was added successfully' => 'Билдирүү ийгиликтүү жөнөтүлдү',
       'Reply' => 'Жооп берүү',
+      'Your reply to the message was saved' => 'Билдирүүгө берген жообуңуз сакталды',
+      'Only images are allowed' => 'Сүрөттөргө гана уруксат берилет',
       'All messages older than 1 day were deleted' => 'Бардык билдирүүлөр, 1 күндөн ашканы өчүрүлдү',
       'Full clearing is finished' => 'Толук тазалоо бүттү',
       'All messages older than 1 week were deleted' => 'Бардык билдирүүлөр, 1 жумадан ашканы өчүрүлдү',

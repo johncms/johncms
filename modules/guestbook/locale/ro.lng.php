@@ -5,10 +5,9 @@
   array (
     '' => 
     array (
-      'Guestbook' => 'Guestbook',
+      'Edit message' => 'Editeaza mesaj',
       'Admin Club' => 'Club-Admin',
       'Guestbook is closed' => 'Guestbook este închis',
-      'Edit message' => 'Editeaza mesaj',
       'Reply' => 'Raspunde',
       'All messages older than 1 day were deleted' => 'Toate mesajele mai vechi de o zi au fost sterse',
       'Full clearing is finished' => 'Stergere totala finalizata',

@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'تحرير الرسالة',
       'Guestbook' => 'سجل الزوار',
       'Admin Club' => 'نادي المشرفين',
       'Guestbook is closed' => 'سجل الزوار مغلق',
-      'Edit message' => 'تحرير الرسالة',
       'Reply' => 'رد ',
       'All messages older than 1 day were deleted' => 'تم حذف جميع الرسائل الأقدم من يوم 1',
       'Full clearing is finished' => 'الانتهاء من تطهير كامل',

@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'Chỉnh sửa tin nhắn',
       'Guestbook' => 'Lưu bút Của Bạn',
       'Admin Club' => 'Dành cho BQT',
       'Guestbook is closed' => 'Lưu bị đóng cửa',
-      'Edit message' => 'Chỉnh sửa tin nhắn',
       'Reply' => 'Trả lời',
       'All messages older than 1 day were deleted' => 'Tất cả các tin nhắn cũ hơn 1 ngày đã bị xóa',
       'Full clearing is finished' => 'Toàn thanh toán bù trừ xong',

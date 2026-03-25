@@ -5,10 +5,10 @@
   array (
     '' => 
     array (
+      'Edit message' => 'Edytuj wiadomość',
       'Guestbook' => 'Księga gości',
       'Admin Club' => 'Klub Admina',
       'Guestbook is closed' => 'Księga gości jest zamknięta',
-      'Edit message' => 'Edytuj wiadomość',
       'Reply' => 'Odpowiedź',
       'All messages older than 1 day were deleted' => 'Wszystkie wiadomości starsze niż 1 dzień zostały usunięte',
       'Full clearing is finished' => 'Pełne czyszczenie zostało zakończone',

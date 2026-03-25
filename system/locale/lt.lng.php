@@ -7,7 +7,6 @@
     array (
       'Forum' => 'Forumas',
       'New reply on the forum' => 'Naujas atsakyti forume',
-      'Karma' => 'Karma',
       'New vote in karma' => 'Naujas balsavimo karma',
       'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Vartotojo <b>#user_name#</b> balsavo <a href="#karma_url#">jūsų karma</a>.',
       'On the Homepage' => 'Į pagrindinį puslapį',

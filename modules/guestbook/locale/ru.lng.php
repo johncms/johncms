@@ -5,13 +5,13 @@
   array (
     '' => 
     array (
+      'The message was deleted' => 'Сообщение удалено',
+      'Edit message' => 'Изменить сообщение',
+      'The message was saved' => 'Сообщение сохранено',
       'Guestbook' => 'Гостевая',
       'Admin Club' => 'Админ клуб',
       'Guestbook is closed' => 'Гостевая закрыта',
       'Your message was added successfully' => 'Сообщение успешно отправлено',
-      'The message was deleted' => 'Сообщение удалено',
-      'Edit message' => 'Изменить сообщение',
-      'The message was saved' => 'Сообщение сохранено',
       'Reply' => 'Ответить',
       'Your reply to the message was saved' => 'Ваш ответ на сообщение сохранён',
       'Only images are allowed' => 'Разрешены только изображения',

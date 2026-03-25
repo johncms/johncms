@@ -17,7 +17,6 @@
       'Username' => 'Tên tài khoản',
       'Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)' => 'Tối thiểu là 2, tối đa là 15 ký tự.<br>Được sử dụng chữ cái Latin, số và các ký hiệu khác - = @ ! ? ~ _ ( ) [ ] . * (Ngoại trừ số 0)',
       'Assign a password' => 'Chỉ định một mật khẩu',
-      'E-mail' => 'E-mail',
       'Select Gender' => 'Chọn Giới tính',
       'Man' => 'Hot Boy',
       'Woman' => 'Hot Girl',

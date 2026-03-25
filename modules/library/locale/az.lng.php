@@ -107,7 +107,6 @@
       'Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance' => 'Uzunluğu sorğu: 4 dəq 64 Max<br>axtarış asılı deyil reyestrinin məktubları<br>nəticələri sıralanır aidiyyəti üzrə',
       'New Search' => 'Yeni Axtarış',
       'Create' => 'Yarat',
-      'Tag Cloud' => 'Tag Cloud',
       'Sort' => 'sıralama',
     ),
   ),

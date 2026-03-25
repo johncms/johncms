@@ -14,7 +14,6 @@
       'Online' => 'Aktif',
       'For registered users only' => 'Hanya untuk pengguna',
       'List is empty' => 'Daftar kosong',
-      'Total' => 'Total',
     ),
   ),
 );

@@ -37,7 +37,6 @@
       'Total:' => 'Jami',
       'PHP code' => 'PHP kod',
       'Link name' => 'Link nomi',
-      'URL Link' => 'URL Link',
       'Bold' => 'Qalin',
       'Italic' => 'Og‘ma',
       'Underline' => 'Tagchiziqli',

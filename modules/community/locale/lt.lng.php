@@ -14,7 +14,6 @@
       'Forum' => 'Forumas',
       'Guestbook' => 'Svečių Knyga',
       'Comments' => 'Komentarai',
-      'Karma' => 'Karma',
       'Most active in Guestbook' => 'Aktyviausieji Svečių knygoje',
       'Most commentators' => 'Dažniausi komentatoriai',
       'Best Karma' => 'Geriausia Karma',

@@ -50,7 +50,6 @@
       'Quote' => 'Citeaza',
       'Bulleted list' => 'Lista cu marcatori',
       'Title' => 'Titlu',
-      'Text' => 'Text',
       'Spoiler' => 'Pumnal',
       'Cancel' => 'Anuleaza',
       'FORBIDDEN' => 'INTERZIS',
