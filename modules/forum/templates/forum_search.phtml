@@ -25,6 +25,9 @@ $this->layout(
     ]
 );
 ?>
+<?php $this->push('meta') ?>
+    <meta name="robots" content="noindex,follow">
+<?php $this->stop(); ?>
 
 <form action="/forum/search/" method="get">
     <div class="form-group">
