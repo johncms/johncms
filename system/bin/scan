@@ -29,7 +29,18 @@ if (!isset($xml) || false === $xml) {
     exit('[91mERROR: Configuration file not found, or contains errors.[0m');
 }
 
+$domains = [];
+$translations = [];
+
 foreach ($xml->domain as $domain) {
+    $domains[] = $domain;
+    $translations[] = Translations::create((string) $domain->name);
+}
+
+$phpScanner = new PhpScanner(...$translations);
+$phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
+
+foreach ($domains as $domain) {
     $list = [];
 
     foreach ($domain->sourceDir as $dirertory) {
@@ -43,16 +54,17 @@ foreach ($xml->domain as $domain) {
     }
 
     sort($list, SORT_STRING);
-    $phpScanner = new PhpScanner(Translations::create($domain->name));
-    $phpScanner->setDefaultDomain($domain->name);
-    $phpScanner->setFunctions(['__' => 'gettext', 'd__' => 'dgettext', 'n__' => 'ngettext', 'dn__' => 'dngettext']);
+    $phpScanner->setDefaultDomain((string) $domain->name);
 
     foreach ($list as $file) {
         $phpScanner->scanFile($file);
     }
+}
 
-    $name = (string)$domain->name;
-    $generator = new PoGenerator();
+$generator = new PoGenerator();
+
+foreach ($domains as $domain) {
+    $name = (string) $domain->name;
     $generator->generateFile($phpScanner->getTranslations()[$name], $domain->target . '/' . $name . '.pot');
 }
 
