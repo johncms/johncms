@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-25 18:43\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -44,7 +44,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/EditVoteController.php:51
 #: modules/forum/src/Application/Controllers/EditVoteController.php:63
 #: modules/forum/src/Application/Controllers/FilterByAuthorController.php:56
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:60
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:62
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:54
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:55
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:76
@@ -139,7 +139,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/EditPostController.php:103
 #: modules/forum/src/Application/Controllers/EditVoteController.php:61
 #: modules/forum/src/Application/Controllers/FilterByAuthorController.php:54
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:58
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:60
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:52
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:72
 #: modules/forum/src/Application/Controllers/MoveTopicController.php:74
@@ -149,8 +149,8 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/RestorePostController.php:85
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:54
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:70
-#: modules/forum/src/Application/Controllers/ShowPostController.php:42
-#: modules/forum/src/Application/Controllers/ShowPostController.php:65
+#: modules/forum/src/Application/Controllers/ShowPostController.php:45
+#: modules/forum/src/Application/Controllers/ShowPostController.php:68
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:54
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:78
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:42
@@ -285,7 +285,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/DownloadFileController.php:61
 #: modules/forum/src/Application/Controllers/EditPostController.php:61
 #: modules/forum/src/Application/Controllers/FilterByAuthorController.php:71
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:65
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:67
 #: modules/forum/src/Application/Controllers/ForumIndexController.php:53
 #: modules/forum/src/Application/Controllers/ForumIndexController.php:65
 #: modules/forum/src/Application/Controllers/ForumIndexController.php:66
@@ -297,8 +297,9 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/PollVotersController.php:74
 #: modules/forum/src/Application/Controllers/PollVotersController.php:80
 #: modules/forum/src/Application/Controllers/RestorePostController.php:57
-#: modules/forum/src/Application/Controllers/ShowPostController.php:44
-#: modules/forum/src/Application/Controllers/ShowPostController.php:67
+#: modules/forum/src/Application/Controllers/ShowPostController.php:47
+#: modules/forum/src/Application/Controllers/ShowPostController.php:70
+#: modules/forum/src/Application/Controllers/ShowPostController.php:82
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:61
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:62
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:59
@@ -385,8 +386,8 @@ msgstr ""
 msgid "Poll changed"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:56
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:57
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:58
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:59
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:113
 msgid "Forum Files"
 msgstr ""
@@ -508,10 +509,10 @@ msgstr ""
 msgid "You have not selected any author"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ShowPostController.php:40
-#: modules/forum/src/Application/Controllers/ShowPostController.php:63
-#: modules/forum/src/Application/Controllers/ShowPostController.php:75
-#: modules/forum/src/Application/Controllers/ShowPostController.php:76
+#: modules/forum/src/Application/Controllers/ShowPostController.php:43
+#: modules/forum/src/Application/Controllers/ShowPostController.php:66
+#: modules/forum/src/Application/Controllers/ShowPostController.php:78
+#: modules/forum/src/Application/Controllers/ShowPostController.php:79
 msgid "Show post"
 msgstr ""
 
